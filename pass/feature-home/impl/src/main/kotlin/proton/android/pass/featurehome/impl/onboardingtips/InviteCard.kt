@@ -34,10 +34,7 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.featurehome.impl.R
 
 @Composable
-fun InviteCard(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit
-) {
+fun InviteCard(modifier: Modifier = Modifier, onClick: () -> Unit) {
     SpotlightCard(
         modifier = modifier,
         backgroundColor = PassTheme.colors.backgroundMedium,
@@ -60,9 +57,7 @@ fun InviteCard(
 
 @Preview
 @Composable
-fun InviteCardPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun InviteCardPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             InviteCard(onClick = {})

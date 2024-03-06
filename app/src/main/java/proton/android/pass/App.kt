@@ -62,7 +62,7 @@ class App : Application(), ImageLoaderFactory {
                 },
                 onActivityStopped = { activity ->
                     PassLogger.i(TAG, "Stopped activity ${activity::class.java.simpleName}")
-                },
+                }
             )
         )
     }

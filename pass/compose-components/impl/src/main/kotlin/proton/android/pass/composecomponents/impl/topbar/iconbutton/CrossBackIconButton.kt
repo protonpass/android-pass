@@ -26,9 +26,7 @@ import me.proton.core.presentation.R
 
 @ExperimentalComposeUiApi
 @Composable
-fun CrossBackIconButton(
-    onUpClick: () -> Unit
-) {
+fun CrossBackIconButton(onUpClick: () -> Unit) {
     NavigationIconButton(onUpClick = onUpClick) {
         Icon(
             painter = painterResource(R.drawable.ic_proton_close),

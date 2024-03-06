@@ -33,7 +33,7 @@ import javax.inject.Inject
 class CanShareVaultImpl @Inject constructor(
     private val getVaultById: GetVaultById,
     private val getShareById: GetShareById,
-    private val getUserPlan: GetUserPlan,
+    private val getUserPlan: GetUserPlan
 ) : CanShareVault {
 
     override suspend fun invoke(shareId: ShareId): CanShareVaultStatus {

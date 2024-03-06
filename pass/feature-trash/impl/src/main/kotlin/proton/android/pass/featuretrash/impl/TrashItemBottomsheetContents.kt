@@ -85,56 +85,50 @@ fun TrashItemBottomSheetContents(
     }
 }
 
-private fun restoreItem(
-    item: ItemUiModel,
-    onRestoreItem: (ItemUiModel) -> Unit
-): BottomSheetItem = object : BottomSheetItem {
-    override val title: @Composable () -> Unit
-        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.trash_action_restore)) }
-    override val subtitle: (@Composable () -> Unit)?
-        get() = null
-    override val leftIcon: (@Composable () -> Unit)
-        get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_clock_rotate_left) }
-    override val endIcon: (@Composable () -> Unit)?
-        get() = null
-    override val onClick: () -> Unit
-        get() = { onRestoreItem(item) }
-    override val isDivider = false
-}
+private fun restoreItem(item: ItemUiModel, onRestoreItem: (ItemUiModel) -> Unit): BottomSheetItem =
+    object : BottomSheetItem {
+        override val title: @Composable () -> Unit
+            get() = { BottomSheetItemTitle(text = stringResource(id = R.string.trash_action_restore)) }
+        override val subtitle: (@Composable () -> Unit)?
+            get() = null
+        override val leftIcon: (@Composable () -> Unit)
+            get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_clock_rotate_left) }
+        override val endIcon: (@Composable () -> Unit)?
+            get() = null
+        override val onClick: () -> Unit
+            get() = { onRestoreItem(item) }
+        override val isDivider = false
+    }
 
-private fun deleteItem(
-    item: ItemUiModel,
-    onDeleteItem: (ItemUiModel) -> Unit
-): BottomSheetItem = object : BottomSheetItem {
-    override val title: @Composable () -> Unit
-        get() = {
-            BottomSheetItemTitle(
-                text = stringResource(id = R.string.bottomsheet_delete_permanently),
-                color = ProtonTheme.colors.notificationError
-            )
-        }
-    override val subtitle: (@Composable () -> Unit)?
-        get() = null
-    override val leftIcon: (@Composable () -> Unit)
-        get() = {
-            BottomSheetItemIcon(
-                iconId = CoreR.drawable.ic_proton_trash_cross,
-                tint = ProtonTheme.colors.notificationError
-            )
-        }
-    override val endIcon: (@Composable () -> Unit)?
-        get() = null
-    override val onClick: () -> Unit
-        get() = { onDeleteItem(item) }
-    override val isDivider = false
-}
+private fun deleteItem(item: ItemUiModel, onDeleteItem: (ItemUiModel) -> Unit): BottomSheetItem =
+    object : BottomSheetItem {
+        override val title: @Composable () -> Unit
+            get() = {
+                BottomSheetItemTitle(
+                    text = stringResource(id = R.string.bottomsheet_delete_permanently),
+                    color = ProtonTheme.colors.notificationError
+                )
+            }
+        override val subtitle: (@Composable () -> Unit)?
+            get() = null
+        override val leftIcon: (@Composable () -> Unit)
+            get() = {
+                BottomSheetItemIcon(
+                    iconId = CoreR.drawable.ic_proton_trash_cross,
+                    tint = ProtonTheme.colors.notificationError
+                )
+            }
+        override val endIcon: (@Composable () -> Unit)?
+            get() = null
+        override val onClick: () -> Unit
+            get() = { onDeleteItem(item) }
+        override val isDivider = false
+    }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
-fun TrashItemBottomSheetContentsPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun TrashItemBottomSheetContentsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             TrashItemBottomSheetContents(
@@ -150,7 +144,7 @@ fun TrashItemBottomSheetContentsPreview(
                     state = 0,
                     modificationTime = Clock.System.now(),
                     lastAutofillTime = Clock.System.now(),
-                    isPinned = false,
+                    isPinned = false
                 ),
                 onRestoreItem = { },
                 onDeleteItem = { },

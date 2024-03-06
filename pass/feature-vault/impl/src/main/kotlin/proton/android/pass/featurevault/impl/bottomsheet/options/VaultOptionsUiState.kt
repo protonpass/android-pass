@@ -32,6 +32,6 @@ sealed class VaultOptionsUiState {
         val showShare: Boolean,
         val showLeave: Boolean,
         val showManageAccess: Boolean,
-        val showViewMembers: Boolean,
+        val showViewMembers: Boolean
     ) : VaultOptionsUiState()
 }

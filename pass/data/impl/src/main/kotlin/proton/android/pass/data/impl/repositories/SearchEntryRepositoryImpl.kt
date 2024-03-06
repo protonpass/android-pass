@@ -35,7 +35,11 @@ class SearchEntryRepositoryImpl @Inject constructor(
     private val clock: Clock
 ) : SearchEntryRepository {
 
-    override suspend fun store(userId: UserId, shareId: ShareId, itemId: ItemId) {
+    override suspend fun store(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ) {
         val searchEntryEntity = SearchEntryEntity(
             itemId = itemId.id,
             shareId = shareId.id,
@@ -57,11 +61,10 @@ class SearchEntryRepositoryImpl @Inject constructor(
         localDataSource.deleteEntry(shareId, itemId)
     }
 
-    override fun observeAll(userId: UserId): Flow<List<SearchEntry>> =
-        localDataSource.observeAll(userId)
-            .map { list ->
-                list.map { it.toSearchEntry() }
-            }
+    override fun observeAll(userId: UserId): Flow<List<SearchEntry>> = localDataSource.observeAll(userId)
+        .map { list ->
+            list.map { it.toSearchEntry() }
+        }
 
     override fun observeAllByShare(shareId: ShareId): Flow<List<SearchEntry>> =
         localDataSource.observeAllByShare(shareId)

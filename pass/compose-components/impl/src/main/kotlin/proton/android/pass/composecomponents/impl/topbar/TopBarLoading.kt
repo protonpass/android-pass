@@ -30,9 +30,7 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.loading.Loading
 
 @Composable
-fun TopBarLoading(
-    modifier: Modifier = Modifier
-) {
+fun TopBarLoading(modifier: Modifier = Modifier) {
     Loading(
         modifier = modifier.size(20.dp),
         strokeWidth = 2.dp
@@ -41,9 +39,7 @@ fun TopBarLoading(
 
 @Preview
 @Composable
-fun TopBarLoadingPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun TopBarLoadingPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             TopBarLoading()

@@ -72,7 +72,7 @@ fun LoginContent(
             packageName = contents.packageInfoSet.minByOrNull { it.packageName.value }?.packageName?.value,
             canLoadExternalImages = canLoadExternalImages,
             onVaultClick = { onEvent(LoginDetailEvent.OnVaultClick) },
-            isPinned = itemUiModel.isPinned,
+            isPinned = itemUiModel.isPinned
         )
 
         PasskeysSection(
@@ -85,23 +85,23 @@ fun LoginContent(
             passwordScore = passwordScore,
             totpUiState = totpUiState,
             showViewAlias = showViewAlias,
-            onEvent = onEvent,
+            onEvent = onEvent
         )
 
         WebsiteSection(
             websites = contents.urls.toPersistentList(),
-            onEvent = onEvent,
+            onEvent = onEvent
         )
 
         NoteSection(
             text = itemUiModel.contents.note,
-            accentColor = PassTheme.colors.loginInteractionNorm,
+            accentColor = PassTheme.colors.loginInteractionNorm
         )
 
         if (customFields.isNotEmpty()) {
             CustomFieldDetails(
                 fields = customFields,
-                onEvent = { onEvent(LoginDetailEvent.OnCustomFieldEvent(it)) },
+                onEvent = { onEvent(LoginDetailEvent.OnCustomFieldEvent(it)) }
             )
         }
 
@@ -111,14 +111,14 @@ fun LoginContent(
                 modifiedInstant = itemUiModel.modificationTime,
                 onViewItemHistoryClicked = { onEvent(LoginDetailEvent.OnViewItemHistoryClicked) },
                 buttonBackgroundColor = PassTheme.colors.loginInteractionNormMinor2,
-                buttonTextColor = PassTheme.colors.loginInteractionNormMajor2,
+                buttonTextColor = PassTheme.colors.loginInteractionNormMajor2
             )
         }
 
         LinkedAppsListSection(
             packageInfoUiSet = contents.packageInfoSet.map { PackageInfoUi(it) }.toPersistentSet(),
             isEditable = false,
-            onLinkedAppDelete = {},
+            onLinkedAppDelete = {}
         )
 
         MoreInfo(moreInfoUiState = moreInfoUiState)

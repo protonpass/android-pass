@@ -71,14 +71,14 @@ fun CustomFieldNameDialogContent(
 
             Text(
                 text = stringResource(R.string.custom_field_dialog_body),
-                style = ProtonTheme.typography.defaultWeak,
+                style = ProtonTheme.typography.defaultWeak
             )
 
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .roundedContainerNorm()
-                    .padding(16.dp),
+                    .padding(16.dp)
             ) {
                 ProtonTextField(
                     modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),

@@ -50,7 +50,7 @@ class TestObserveUpgradeInfo @Inject constructor() : ObserveUpgradeInfo {
                 aliasLimit = PlanLimit.Limited(0),
                 totpLimit = PlanLimit.Limited(0),
                 updatedAt = 0,
-                hideUpgrade = false,
+                hideUpgrade = false
             ),
             totalVaults = 0,
             totalAlias = 0,

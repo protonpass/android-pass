@@ -103,7 +103,7 @@ class TestObserveItems @Inject constructor() : ObserveItems {
                     modificationTime = now,
                     createTime = now,
                     lastAutofillTime = None,
-                    isPinned = false,
+                    isPinned = false
                 )
             }
         }
@@ -159,7 +159,7 @@ class TestObserveItems @Inject constructor() : ObserveItems {
             itemId = itemId,
             itemContents = ItemContents.Note(
                 title = title,
-                note = note,
+                note = note
             )
         )
 

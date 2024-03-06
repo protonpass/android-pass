@@ -38,19 +38,19 @@ import javax.inject.Inject
 
 class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
     private val getVaultById: GetVaultById,
-    private val encryptionContextProvider: EncryptionContextProvider,
+    private val encryptionContextProvider: EncryptionContextProvider
 ) : ItemDetailsHandlerObserver {
 
     private val creditCardItemContentsFlow = MutableStateFlow<ItemContents.CreditCard?>(null)
 
     override fun observe(item: Item): Flow<ItemDetailState> = combine(
         observeCreditCardItemContents(item),
-        getVaultById(shareId = item.shareId),
+        getVaultById(shareId = item.shareId)
     ) { creditCardItemContents, vault ->
         ItemDetailState.CreditCard(
             contents = creditCardItemContents,
             isPinned = item.isPinned,
-            vault = vault,
+            vault = vault
         )
     }
 
@@ -66,18 +66,15 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
             }
 
 
-    override fun updateHiddenState(
-        hiddenFieldType: ItemDetailsFieldType.Hidden,
-        hiddenState: HiddenState,
-    ) {
+    override fun updateHiddenState(hiddenFieldType: ItemDetailsFieldType.Hidden, hiddenState: HiddenState) {
         creditCardItemContentsFlow.update { creditCardItemContents ->
             when (hiddenFieldType) {
                 ItemDetailsFieldType.Hidden.Cvv -> creditCardItemContents?.copy(
-                    cvv = hiddenState,
+                    cvv = hiddenState
                 )
 
                 ItemDetailsFieldType.Hidden.Pin -> creditCardItemContents?.copy(
-                    pin = hiddenState,
+                    pin = hiddenState
                 )
 
                 is ItemDetailsFieldType.Hidden.CustomField,

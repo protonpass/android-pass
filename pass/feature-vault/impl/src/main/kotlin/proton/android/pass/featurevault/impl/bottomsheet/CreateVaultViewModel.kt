@@ -56,7 +56,7 @@ class CreateVaultViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val savedStateHandleProvider: SavedStateHandleProvider,
     private val migrateItems: MigrateItems,
-    observeUpgradeInfo: ObserveUpgradeInfo,
+    observeUpgradeInfo: ObserveUpgradeInfo
 ) : BaseVaultViewModel() {
 
     private val nextAction = getNextAction()

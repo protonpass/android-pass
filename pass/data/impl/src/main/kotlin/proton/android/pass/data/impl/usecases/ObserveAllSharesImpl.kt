@@ -32,13 +32,12 @@ class ObserveAllSharesImpl @Inject constructor(
     private val shareRepository: ShareRepository
 ) : ObserveAllShares {
 
-    override fun invoke(userId: UserId?): Flow<List<Share>> =
-        if (userId == null) {
-            observeCurrentUser()
-                .flatMapLatest {
-                    shareRepository.observeAllShares(it.userId)
-                }
-        } else {
-            shareRepository.observeAllShares(userId)
-        }
+    override fun invoke(userId: UserId?): Flow<List<Share>> = if (userId == null) {
+        observeCurrentUser()
+            .flatMapLatest {
+                shareRepository.observeAllShares(it.userId)
+            }
+    } else {
+        shareRepository.observeAllShares(userId)
+    }
 }

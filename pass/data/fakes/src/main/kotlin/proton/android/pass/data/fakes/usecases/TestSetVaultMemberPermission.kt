@@ -35,7 +35,11 @@ class TestSetVaultMemberPermission @Inject constructor() : SetVaultMemberPermiss
         result = value
     }
 
-    override suspend fun invoke(shareId: ShareId, memberShareId: ShareId, role: ShareRole) {
+    override suspend fun invoke(
+        shareId: ShareId,
+        memberShareId: ShareId,
+        role: ShareRole
+    ) {
         memory.add(Payload(shareId, memberShareId, role))
         result.getOrThrow()
     }

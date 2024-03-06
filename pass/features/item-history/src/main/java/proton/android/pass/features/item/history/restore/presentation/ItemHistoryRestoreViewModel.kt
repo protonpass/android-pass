@@ -59,7 +59,7 @@ class ItemHistoryRestoreViewModel @Inject constructor(
     openItemRevision: OpenItemRevision,
     private val restoreItemRevision: RestoreItemRevision,
     private val itemDetailsHandler: ItemDetailsHandler,
-    private val snackbarDispatcher: SnackbarDispatcher,
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -82,47 +82,42 @@ class ItemHistoryRestoreViewModel @Inject constructor(
 
     internal val state = combine(
         itemDetailsStateFlow,
-        eventFlow,
+        eventFlow
     ) { itemDetailState, event ->
         ItemHistoryRestoreState.ItemDetails(
             itemRevision = itemRevision,
             itemDetailState = itemDetailState,
-            event = event,
+            event = event
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.Eagerly,
-        initialValue = ItemHistoryRestoreState.Initial,
+        initialValue = ItemHistoryRestoreState.Initial
     )
 
     internal fun onEventConsumed(event: ItemHistoryRestoreEvent) {
         eventFlow.compareAndSet(event, ItemHistoryRestoreEvent.Idle)
     }
 
-    internal fun onItemFieldClicked(
-        text: String,
-        plainFieldType: ItemDetailsFieldType.Plain,
-    ) = viewModelScope.launch {
+    internal fun onItemFieldClicked(text: String, plainFieldType: ItemDetailsFieldType.Plain) = viewModelScope.launch {
         itemDetailsHandler.onItemDetailsFieldClicked(text, plainFieldType)
     }
 
-    internal fun onItemHiddenFieldClicked(
-        hiddenState: HiddenState,
-        hiddenFieldType: ItemDetailsFieldType.Hidden,
-    ) = viewModelScope.launch {
-        itemDetailsHandler.onItemDetailsHiddenFieldClicked(hiddenState, hiddenFieldType)
-    }
+    internal fun onItemHiddenFieldClicked(hiddenState: HiddenState, hiddenFieldType: ItemDetailsFieldType.Hidden) =
+        viewModelScope.launch {
+            itemDetailsHandler.onItemDetailsHiddenFieldClicked(hiddenState, hiddenFieldType)
+        }
 
     internal fun onItemHiddenFieldToggled(
         isVisible: Boolean,
         hiddenState: HiddenState,
-        hiddenFieldType: ItemDetailsFieldType.Hidden,
+        hiddenFieldType: ItemDetailsFieldType.Hidden
     ) = viewModelScope.launch {
         itemDetailsHandler.onItemDetailsHiddenFieldToggled(
             isVisible = isVisible,
             hiddenState = hiddenState,
             hiddenFieldType = hiddenFieldType,
-            itemCategory = itemDetailsStateFlow.first().itemCategory,
+            itemCategory = itemDetailsStateFlow.first().itemCategory
         )
     }
 

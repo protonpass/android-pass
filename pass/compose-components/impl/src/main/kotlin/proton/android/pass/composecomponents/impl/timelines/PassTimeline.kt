@@ -25,16 +25,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun PassTimeline(
-    modifier: Modifier = Modifier,
-    nodes: List<PassTimelineNode>,
-) {
+fun PassTimeline(modifier: Modifier = Modifier, nodes: List<PassTimelineNode>) {
     LazyColumn(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize()
     ) {
         items(
             items = nodes,
-            key = { node -> node.id },
+            key = { node -> node.id }
         ) { node ->
             node.Render()
         }

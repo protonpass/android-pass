@@ -85,9 +85,7 @@ fun PinCarousel(
 
 @Preview
 @Composable
-fun PinCarouselPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun PinCarouselPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             PinCarousel(
@@ -103,7 +101,7 @@ fun PinCarouselPreview(
                         createTime = Clock.System.now(),
                         modificationTime = Clock.System.now(),
                         lastAutofillTime = Clock.System.now(),
-                        isPinned = true,
+                        isPinned = true
                     ),
                     ItemUiModel(
                         id = ItemId("2"),
@@ -123,8 +121,8 @@ fun PinCarouselPreview(
                         createTime = Clock.System.now(),
                         modificationTime = Clock.System.now(),
                         lastAutofillTime = Clock.System.now(),
-                        isPinned = true,
-                    ),
+                        isPinned = true
+                    )
                 ),
                 canLoadExternalImages = false,
                 onItemClick = { _ -> },

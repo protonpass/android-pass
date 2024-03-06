@@ -65,7 +65,7 @@ fun LoginOptionsBottomSheetContents(
     onEdit: (ShareId, ItemId) -> Unit,
     onMoveToTrash: (ItemUiModel) -> Unit,
     onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit,
-    isPinningFeatureEnabled: Boolean,
+    isPinningFeatureEnabled: Boolean
 ) {
     val contents = itemUiModel.contents as ItemContents.Login
 
@@ -85,14 +85,14 @@ fun LoginOptionsBottomSheetContents(
                     text = contents.title,
                     canLoadExternalImages = canLoadExternalImages,
                     website = website,
-                    packageName = packageName,
+                    packageName = packageName
                 )
             }
         )
 
         val bottomSheetItems = mutableListOf(
             copyUsername(contents.username, onCopyUsername),
-            copyPassword(contents.password.encrypted, onCopyPassword),
+            copyPassword(contents.password.encrypted, onCopyPassword)
         ).apply {
             if (isPinningFeatureEnabled) {
                 if (itemUiModel.isPinned) {
@@ -113,7 +113,7 @@ fun LoginOptionsBottomSheetContents(
         }
 
         BottomSheetItemList(
-            items = bottomSheetItems.withDividers().toPersistentList(),
+            items = bottomSheetItems.withDividers().toPersistentList()
         )
     }
 }
@@ -133,10 +133,7 @@ private fun copyUsername(username: String, onCopyUsername: (String) -> Unit): Bo
         override val isDivider = false
     }
 
-private fun copyPassword(
-    password: EncryptedString,
-    onCopyPassword: (EncryptedString) -> Unit
-): BottomSheetItem =
+private fun copyPassword(password: EncryptedString, onCopyPassword: (EncryptedString) -> Unit): BottomSheetItem =
     object : BottomSheetItem {
         override val title: @Composable () -> Unit
             get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_password)) }
@@ -178,7 +175,7 @@ fun LoginOptionsBottomSheetContentsPreview(
                     createTime = Clock.System.now(),
                     modificationTime = Clock.System.now(),
                     lastAutofillTime = Clock.System.now(),
-                    isPinned = false,
+                    isPinned = false
                 ),
                 isRecentSearch = input.second,
                 action = BottomSheetItemAction.None,
@@ -190,7 +187,7 @@ fun LoginOptionsBottomSheetContentsPreview(
                 onMoveToTrash = {},
                 onRemoveFromRecentSearch = { _, _ -> },
                 canLoadExternalImages = false,
-                isPinningFeatureEnabled = true,
+                isPinningFeatureEnabled = true
             )
         }
     }

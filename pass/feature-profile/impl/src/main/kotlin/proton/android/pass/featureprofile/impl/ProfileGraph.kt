@@ -72,9 +72,7 @@ sealed interface ProfileNavigation {
     object EnterPin : ProfileNavigation
 }
 
-fun NavGraphBuilder.profileGraph(
-    onNavigateEvent: (ProfileNavigation) -> Unit
-) {
+fun NavGraphBuilder.profileGraph(onNavigateEvent: (ProfileNavigation) -> Unit) {
     navigation(
         route = PROFILE_GRAPH,
         startDestination = Profile.route

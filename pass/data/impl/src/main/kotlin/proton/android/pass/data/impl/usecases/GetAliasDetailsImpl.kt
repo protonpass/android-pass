@@ -33,8 +33,7 @@ class GetAliasDetailsImpl @Inject constructor(
     private val aliasRepository: AliasRepository
 ) : GetAliasDetails {
 
-    override fun invoke(shareId: ShareId, itemId: ItemId): Flow<AliasDetails> =
-        observeCurrentUser()
-            .flatMapLatest { aliasRepository.getAliasDetails(it.userId, shareId, itemId) }
+    override fun invoke(shareId: ShareId, itemId: ItemId): Flow<AliasDetails> = observeCurrentUser()
+        .flatMapLatest { aliasRepository.getAliasDetails(it.userId, shareId, itemId) }
 }
 

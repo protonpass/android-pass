@@ -38,10 +38,7 @@ import proton.android.pass.composecomponents.impl.buttons.CircleIconButton
 import proton.android.pass.featurepassword.R
 
 @Composable
-fun GeneratePasswordBottomSheetTitle(
-    modifier: Modifier = Modifier,
-    onRegenerate: () -> Unit
-) {
+fun GeneratePasswordBottomSheetTitle(modifier: Modifier = Modifier, onRegenerate: () -> Unit) {
     Box(
         modifier = modifier.fillMaxWidth()
     ) {
@@ -67,9 +64,7 @@ fun GeneratePasswordBottomSheetTitle(
 
 @Preview
 @Composable
-fun GeneratePasswordBottomSheetTitlePreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun GeneratePasswordBottomSheetTitlePreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             GeneratePasswordBottomSheetTitle(onRegenerate = {})

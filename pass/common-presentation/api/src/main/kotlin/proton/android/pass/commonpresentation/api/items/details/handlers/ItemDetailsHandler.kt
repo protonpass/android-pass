@@ -29,21 +29,15 @@ interface ItemDetailsHandler {
 
     fun observeItemDetails(item: Item): Flow<ItemDetailState>
 
-    suspend fun onItemDetailsFieldClicked(
-        text: String,
-        plainFieldType: ItemDetailsFieldType.Plain,
-    )
+    suspend fun onItemDetailsFieldClicked(text: String, plainFieldType: ItemDetailsFieldType.Plain)
 
-    suspend fun onItemDetailsHiddenFieldClicked(
-        hiddenState: HiddenState,
-        hiddenFieldType: ItemDetailsFieldType.Hidden,
-    )
+    suspend fun onItemDetailsHiddenFieldClicked(hiddenState: HiddenState, hiddenFieldType: ItemDetailsFieldType.Hidden)
 
     fun onItemDetailsHiddenFieldToggled(
         isVisible: Boolean,
         hiddenState: HiddenState,
         hiddenFieldType: ItemDetailsFieldType.Hidden,
-        itemCategory: ItemCategory,
+        itemCategory: ItemCategory
     )
 
 }

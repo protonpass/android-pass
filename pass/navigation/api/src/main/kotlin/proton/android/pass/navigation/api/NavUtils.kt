@@ -30,10 +30,7 @@ import androidx.navigation.compose.dialog
 import androidx.navigation.get
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 
-fun NavGraphBuilder.composable(
-    navItem: NavItem,
-    content: @Composable (NavBackStackEntry) -> Unit
-) {
+fun NavGraphBuilder.composable(navItem: NavItem, content: @Composable (NavBackStackEntry) -> Unit) {
     composable(
         route = navItem.route,
         arguments = navItem.args
@@ -42,10 +39,7 @@ fun NavGraphBuilder.composable(
     }
 }
 
-fun NavGraphBuilder.bottomSheet(
-    navItem: NavItem,
-    content: @Composable (NavBackStackEntry) -> Unit
-) {
+fun NavGraphBuilder.bottomSheet(navItem: NavItem, content: @Composable (NavBackStackEntry) -> Unit) {
     passBottomSheet(
         route = navItem.route,
         arguments = navItem.args

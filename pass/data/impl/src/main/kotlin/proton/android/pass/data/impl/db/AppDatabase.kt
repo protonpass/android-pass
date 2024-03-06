@@ -173,7 +173,7 @@ import proton.android.pass.data.impl.db.entities.UserAccessDataEntity
     EventManagerConverters::class,
     ChallengeConverters::class,
     NotificationConverters::class,
-    PushConverters::class,
+    PushConverters::class
 )
 abstract class AppDatabase :
     BaseDatabase(),
@@ -217,13 +217,12 @@ abstract class AppDatabase :
             AppDatabaseMigrations.MIGRATION_35_36,
             AppDatabaseMigrations.MIGRATION_36_37,
             AppDatabaseMigrations.MIGRATION_40_41,
-            AppDatabaseMigrations.MIGRATION_42_43,
+            AppDatabaseMigrations.MIGRATION_42_43
         )
 
-        fun buildDatabase(context: Context): AppDatabase =
-            databaseBuilder<AppDatabase>(context, DB_NAME)
-                .apply { migrations.forEach { addMigrations(it) } }
-                .fallbackToDestructiveMigration()
-                .build()
+        fun buildDatabase(context: Context): AppDatabase = databaseBuilder<AppDatabase>(context, DB_NAME)
+            .apply { migrations.forEach { addMigrations(it) } }
+            .fallbackToDestructiveMigration()
+            .build()
     }
 }

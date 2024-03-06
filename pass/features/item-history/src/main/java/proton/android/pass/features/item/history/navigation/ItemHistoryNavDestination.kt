@@ -31,12 +31,12 @@ sealed interface ItemHistoryNavDestination {
     data class Restore(
         val shareId: ShareId,
         val itemId: ItemId,
-        val itemRevision: ItemRevision,
+        val itemRevision: ItemRevision
     ) : ItemHistoryNavDestination
 
     data class Timeline(
         val shareId: ShareId,
-        val itemId: ItemId,
+        val itemId: ItemId
     ) : ItemHistoryNavDestination
 
 }

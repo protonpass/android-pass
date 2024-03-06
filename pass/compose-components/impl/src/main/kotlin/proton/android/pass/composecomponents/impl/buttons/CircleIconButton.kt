@@ -49,7 +49,7 @@ fun CircleIconButton(
         modifier = modifier
             .clip(CircleShape)
             .background(backgroundColor),
-        onClick = onClick,
+        onClick = onClick
     ) { content() }
 }
 
@@ -63,7 +63,7 @@ fun CircleIconButton(
     size: Int? = null,
     enabled: Boolean = true,
     onDisabledClick: (() -> Unit)? = null,
-    iconContentDescription: String? = null,
+    iconContentDescription: String? = null
 ) {
     IconButton(
         modifier = modifier
@@ -76,28 +76,26 @@ fun CircleIconButton(
                 color = if (enabled) backgroundColor else backgroundColor.copy(alpha = 0.6f)
             ),
         enabled = enabled || onDisabledClick != null,
-        onClick = { if (enabled) onClick() else onDisabledClick?.invoke() },
+        onClick = { if (enabled) onClick() else onDisabledClick?.invoke() }
     ) {
         Icon(
             painter = iconPainter,
             contentDescription = iconContentDescription,
-            tint = if (enabled) tintColor else tintColor.copy(alpha = 0.2f),
+            tint = if (enabled) tintColor else tintColor.copy(alpha = 0.2f)
         )
     }
 }
 
 @Preview
 @Composable
-fun CircleIconButtonPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun CircleIconButtonPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             CircleIconButton(
                 iconPainter = painterResource(R.drawable.ic_proton_arrows_rotate),
                 backgroundColor = PassTheme.colors.aliasInteractionNormMajor1,
                 tintColor = PassTheme.colors.loginInteractionNormMajor1,
-                onClick = {},
+                onClick = {}
             )
         }
     }

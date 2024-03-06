@@ -31,24 +31,24 @@ import proton.android.pass.composecomponents.impl.R
 fun PassPasswordStrengthLabel(
     modifier: Modifier = Modifier,
     passwordStrength: PasswordStrength,
-    labelPrefix: String? = null,
+    labelPrefix: String? = null
 ) {
     val (labelResId, labelColor) = when (passwordStrength) {
         PasswordStrength.None -> return
 
         PasswordStrength.Strong -> Pair(
             R.string.label_password_strength_strong,
-            PassTheme.colors.signalSuccess,
+            PassTheme.colors.signalSuccess
         )
 
         PasswordStrength.Vulnerable -> Pair(
             R.string.label_password_strength_vulnerable,
-            PassTheme.colors.signalDanger,
+            PassTheme.colors.signalDanger
         )
 
         PasswordStrength.Weak -> Pair(
             R.string.label_password_strength_weak,
-            PassTheme.colors.signalWarning,
+            PassTheme.colors.signalWarning
         )
     }
 
@@ -59,6 +59,6 @@ fun PassPasswordStrengthLabel(
         modifier = modifier,
         text = text,
         color = labelColor,
-        style = PassTheme.typography.body3Norm(),
+        style = PassTheme.typography.body3Norm()
     )
 }

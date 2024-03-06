@@ -29,7 +29,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UpgradeActivityViewModel @Inject constructor(
-    private val accountOrchestrators: AccountOrchestrators,
+    private val accountOrchestrators: AccountOrchestrators
 ) : ViewModel() {
     fun register(context: ComponentActivity) {
         accountOrchestrators.register(context, listOf(Orchestrator.PlansOrchestrator))

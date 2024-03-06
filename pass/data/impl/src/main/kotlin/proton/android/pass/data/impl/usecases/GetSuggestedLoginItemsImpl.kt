@@ -38,13 +38,11 @@ class GetSuggestedLoginItemsImpl @Inject constructor(
     private val observeUsableVaults: ObserveUsableVaults
 ) : GetSuggestedLoginItems {
 
-    override fun invoke(
-        packageName: Option<String>,
-        url: Option<String>
-    ): Flow<List<Item>> = observeUsableVaults().flatMapLatest { usableVaults ->
-        observeActiveItems(filter = ItemTypeFilter.Logins, shareSelection = usableVaults)
-            .map { items -> suggestionItemFilter.filter(items, packageName, url) }
-            .map { suggestions -> suggestionSorter.sort(suggestions, url) }
-    }
+    override fun invoke(packageName: Option<String>, url: Option<String>): Flow<List<Item>> =
+        observeUsableVaults().flatMapLatest { usableVaults ->
+            observeActiveItems(filter = ItemTypeFilter.Logins, shareSelection = usableVaults)
+                .map { items -> suggestionItemFilter.filter(items, packageName, url) }
+                .map { suggestions -> suggestionSorter.sort(suggestions, url) }
+        }
 
 }

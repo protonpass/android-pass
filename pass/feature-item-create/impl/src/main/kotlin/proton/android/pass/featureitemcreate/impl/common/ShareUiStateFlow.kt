@@ -45,7 +45,7 @@ fun getShareUiStateFlow(
     navShareIdState,
     selectedShareIdState,
     observeAllVaultsFlow,
-    observeDefaultVaultFlow,
+    observeDefaultVaultFlow
 ) { navShareId, selectedShareId, allSharesResult, defaultVaultResult ->
     val allShares = when (allSharesResult) {
         is LoadingResult.Error -> return@combine ShareUiState.Error(ShareError.SharesNotAvailable)

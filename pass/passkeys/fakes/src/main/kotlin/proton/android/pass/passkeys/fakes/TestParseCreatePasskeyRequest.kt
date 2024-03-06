@@ -31,7 +31,7 @@ class TestParseCreatePasskeyRequest @Inject constructor() : ParseCreatePasskeyRe
             rpId = null,
             rpName = "rpName",
             userName = "userName",
-            userDisplayName = "userDisplayName",
+            userDisplayName = "userDisplayName"
         )
     )
 

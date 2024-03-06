@@ -72,9 +72,7 @@ fun EmptyTrashContent(modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-fun EmptyTrashContentPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun EmptyTrashContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             EmptyTrashContent()

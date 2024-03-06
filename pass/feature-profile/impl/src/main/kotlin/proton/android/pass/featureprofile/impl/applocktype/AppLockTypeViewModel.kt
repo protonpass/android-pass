@@ -91,49 +91,48 @@ class AppLockTypeViewModel @Inject constructor(
         return preferences
     }
 
-    fun onChanged(newPreference: AppLockTypePreference, contextHolder: ClassHolder<Context>) =
-        viewModelScope.launch {
-            val oldPreference = state.value.selected
-            if (oldPreference == newPreference) {
-                eventState.update { AppLockTypeEvent.Dismiss }
-            } else {
-                newPreferenceState.update { newPreference }
-                when (oldPreference) {
-                    Biometrics -> when (newPreference) {
-                        None -> openBiometrics(
-                            contextHolder = contextHolder,
-                            onSuccess = ::onBiometryAuthUnSet,
-                            onError = ::onBiometryError
-                        )
+    fun onChanged(newPreference: AppLockTypePreference, contextHolder: ClassHolder<Context>) = viewModelScope.launch {
+        val oldPreference = state.value.selected
+        if (oldPreference == newPreference) {
+            eventState.update { AppLockTypeEvent.Dismiss }
+        } else {
+            newPreferenceState.update { newPreference }
+            when (oldPreference) {
+                Biometrics -> when (newPreference) {
+                    None -> openBiometrics(
+                        contextHolder = contextHolder,
+                        onSuccess = ::onBiometryAuthUnSet,
+                        onError = ::onBiometryError
+                    )
 
-                        Pin -> openBiometrics(
-                            contextHolder = contextHolder,
-                            onSuccess = { eventState.update { AppLockTypeEvent.ConfigurePin } },
-                            onError = ::onBiometryError
-                        )
+                    Pin -> openBiometrics(
+                        contextHolder = contextHolder,
+                        onSuccess = { eventState.update { AppLockTypeEvent.ConfigurePin } },
+                        onError = ::onBiometryError
+                    )
 
-                        else -> {}
-                    }
+                    else -> {}
+                }
 
-                    None -> when (newPreference) {
-                        Biometrics -> openBiometrics(
-                            contextHolder = contextHolder,
-                            onSuccess = ::onBiometryAuthSet,
-                            onError = ::onBiometryError
-                        )
+                None -> when (newPreference) {
+                    Biometrics -> openBiometrics(
+                        contextHolder = contextHolder,
+                        onSuccess = ::onBiometryAuthSet,
+                        onError = ::onBiometryError
+                    )
 
-                        Pin -> eventState.update { AppLockTypeEvent.ConfigurePin }
-                        else -> {}
-                    }
+                    Pin -> eventState.update { AppLockTypeEvent.ConfigurePin }
+                    else -> {}
+                }
 
-                    Pin -> when (newPreference) {
-                        Biometrics -> eventState.update { AppLockTypeEvent.EnterPin }
-                        None -> eventState.update { AppLockTypeEvent.EnterPin }
-                        else -> {}
-                    }
+                Pin -> when (newPreference) {
+                    Biometrics -> eventState.update { AppLockTypeEvent.EnterPin }
+                    None -> eventState.update { AppLockTypeEvent.EnterPin }
+                    else -> {}
                 }
             }
         }
+    }
 
     fun onPinSuccessfullyEntered(contextHolder: ClassHolder<Context>) {
         val newPreference = newPreferenceState.value ?: return

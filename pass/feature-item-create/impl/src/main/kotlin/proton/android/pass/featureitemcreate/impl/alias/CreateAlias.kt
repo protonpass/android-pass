@@ -175,6 +175,6 @@ fun CreateAliasScreen(
         }
     )
     InAppReviewTriggerLaunchedEffect(
-        triggerCondition = uiState.baseAliasUiState.itemSavedState is ItemSavedState.Success,
+        triggerCondition = uiState.baseAliasUiState.itemSavedState is ItemSavedState.Success
     )
 }

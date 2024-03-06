@@ -76,7 +76,7 @@ fun VaultDrawerRow(
         ) {
             Text(
                 text = name,
-                color = PassTheme.colors.textNorm,
+                color = PassTheme.colors.textNorm
             )
             Text(
                 text = pluralStringResource(
@@ -84,7 +84,7 @@ fun VaultDrawerRow(
                     itemCount.toInt(),
                     itemCount
                 ),
-                color = PassTheme.colors.textWeak,
+                color = PassTheme.colors.textWeak
             )
         }
         if (isShared) {
@@ -142,7 +142,7 @@ fun NavigationDrawerVaultRowPreview(
                     VaultIcon(
                         icon = me.proton.core.presentation.R.drawable.ic_proton_house,
                         iconColor = PassPalette.MacaroniAndCheese100,
-                        backgroundColor = PassPalette.MacaroniAndCheese16,
+                        backgroundColor = PassPalette.MacaroniAndCheese16
                     )
                 },
                 isSelected = input.second.isSelected,

@@ -46,7 +46,7 @@ fun InviteOptionsContent(
     if (state.showResendInvite) {
         itemsList += resendInvite(
             enabled = enabled,
-            loading = state.loadingOption == LoadingOption.ResendInvite,
+            loading = state.loadingOption == LoadingOption.ResendInvite
         ) {
             onEvent(InviteOptionsUiEvent.ResendInvite)
         }
@@ -64,74 +64,76 @@ fun InviteOptionsContent(
     )
 }
 
-private fun resendInvite(enabled: Boolean, loading: Boolean, onClick: () -> Unit): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = {
-                val color = if (enabled) {
-                    PassTheme.colors.textNorm
-                } else {
-                    PassTheme.colors.textWeak
-                }
-                BottomSheetItemTitle(
-                    text = stringResource(id = R.string.sharing_bottomsheet_resend_invite),
-                    color = color
-                )
-            }
-        override val subtitle: (@Composable () -> Unit)?
-            get() = null
-        override val leftIcon: (@Composable () -> Unit)
-            get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_paper_plane) }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = if (loading) {
-                { CircularProgressIndicator(modifier = Modifier.size(24.dp)) }
+private fun resendInvite(
+    enabled: Boolean,
+    loading: Boolean,
+    onClick: () -> Unit
+): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = {
+            val color = if (enabled) {
+                PassTheme.colors.textNorm
             } else {
-                null
+                PassTheme.colors.textWeak
             }
-        override val onClick: (() -> Unit)?
-            get() = if (enabled) {
-                onClick
-            } else {
-                null
-            }
-        override val isDivider = false
-    }
+            BottomSheetItemTitle(
+                text = stringResource(id = R.string.sharing_bottomsheet_resend_invite),
+                color = color
+            )
+        }
+    override val subtitle: (@Composable () -> Unit)?
+        get() = null
+    override val leftIcon: (@Composable () -> Unit)
+        get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_paper_plane) }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = if (loading) {
+            { CircularProgressIndicator(modifier = Modifier.size(24.dp)) }
+        } else {
+            null
+        }
+    override val onClick: (() -> Unit)?
+        get() = if (enabled) {
+            onClick
+        } else {
+            null
+        }
+    override val isDivider = false
+}
 
 
 private fun cancelInvite(
     enabled: Boolean,
     loading: Boolean,
     onClick: () -> Unit
-): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = {
-                val color = if (enabled) {
-                    PassTheme.colors.textNorm
-                } else {
-                    PassTheme.colors.textWeak
-                }
-                BottomSheetItemTitle(
-                    text = stringResource(id = R.string.sharing_bottomsheet_cancel_invite),
-                    color = color
-                )
-            }
-        override val subtitle: (@Composable () -> Unit)?
-            get() = null
-        override val leftIcon: (@Composable () -> Unit)
-            get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_circle_slash) }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = if (loading) {
-                { CircularProgressIndicator(modifier = Modifier.size(24.dp)) }
+): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = {
+            val color = if (enabled) {
+                PassTheme.colors.textNorm
             } else {
-                null
+                PassTheme.colors.textWeak
             }
-        override val onClick: (() -> Unit)?
-            get() = if (enabled) {
-                onClick
-            } else {
-                null
-            }
-        override val isDivider = false
-    }
+            BottomSheetItemTitle(
+                text = stringResource(id = R.string.sharing_bottomsheet_cancel_invite),
+                color = color
+            )
+        }
+    override val subtitle: (@Composable () -> Unit)?
+        get() = null
+    override val leftIcon: (@Composable () -> Unit)
+        get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_circle_slash) }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = if (loading) {
+            { CircularProgressIndicator(modifier = Modifier.size(24.dp)) }
+        } else {
+            null
+        }
+    override val onClick: (() -> Unit)?
+        get() = if (enabled) {
+            onClick
+        } else {
+            null
+        }
+    override val isDivider = false
+}
 

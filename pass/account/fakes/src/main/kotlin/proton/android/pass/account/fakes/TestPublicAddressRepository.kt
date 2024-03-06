@@ -50,10 +50,7 @@ class TestPublicAddressRepository @Inject constructor() : PublicAddressRepositor
         )
     }
 
-    fun setAddressWithDefaultKey(
-        address: String,
-        recipientType: Int = Recipient.Internal.value
-    ) {
+    fun setAddressWithDefaultKey(address: String, recipientType: Int = Recipient.Internal.value) {
         val key = PublicKey(
             key = "InvitedKey",
             isPrimary = true,

@@ -108,9 +108,7 @@ fun StickyTotpOptions(
 
 @Preview
 @Composable
-fun StickyTotpOptionsPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
+fun StickyTotpOptionsPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
     PassTheme(isDark = input.first) {
         Surface {
             StickyTotpOptions(hasCamera = input.second, onPasteCode = {}, onScanCode = {})

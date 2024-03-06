@@ -74,7 +74,7 @@ fun TitleSection(
         placeholder = {
             ProtonTextFieldPlaceHolder(
                 text = stringResource(id = R.string.field_title_hint),
-                textStyle = PassTheme.typography.heroWeak(),
+                textStyle = PassTheme.typography.heroWeak()
             )
         },
         trailingIcon = if (value.isNotBlank() && enabled) {

@@ -38,6 +38,6 @@ fun ClearClipboardOptionsBottomSheet(
     ClearClipboardOptionsBottomSheetContents(
         modifier = modifier,
         clearClipboardPreference = state.clearClipboardPreference,
-        onClearClipboardSettingSelected = viewModel::onClearClipboardSettingSelected,
+        onClearClipboardSettingSelected = viewModel::onClearClipboardSettingSelected
     )
 }

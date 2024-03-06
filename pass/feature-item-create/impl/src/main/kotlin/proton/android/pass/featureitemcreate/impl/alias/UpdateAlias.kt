@@ -102,7 +102,7 @@ fun UpdateAlias(
                     isRounded = true,
                     onChange = viewModel::onTitleChange
                 )
-            },
+            }
         )
 
         ConfirmCloseDialog(
@@ -124,6 +124,6 @@ fun UpdateAlias(
         }
     )
     InAppReviewTriggerLaunchedEffect(
-        triggerCondition = uiState.baseAliasUiState.itemSavedState is ItemSavedState.Success,
+        triggerCondition = uiState.baseAliasUiState.itemSavedState is ItemSavedState.Success
     )
 }

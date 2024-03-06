@@ -46,10 +46,7 @@ class CheckCanAddressesBeInvitedImpl @Inject constructor(
     private val accountManager: AccountManager
 ) : CheckCanAddressesBeInvited {
 
-    override suspend fun invoke(
-        shareId: ShareId,
-        addresses: List<String>
-    ): CanAddressesBeInvitedResult {
+    override suspend fun invoke(shareId: ShareId, addresses: List<String>): CanAddressesBeInvitedResult {
         val settings = observeOrganizationSettings().firstOrNull() ?: run {
             PassLogger.w(TAG, "Organization settings not available")
             return CanAddressesBeInvitedResult.None

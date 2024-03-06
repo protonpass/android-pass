@@ -24,7 +24,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ItemRevisionResponse(
     @SerialName("Code") val code: Int,
-    @SerialName("Item") val item: ItemRevision,
+    @SerialName("Item") val item: ItemRevision
 )
 
 @Serializable
@@ -72,5 +72,5 @@ data class ItemRevision(
     @SerialName("RevisionTime")
     val revisionTime: Long,
     @SerialName("Pinned")
-    val isPinned: Boolean,
+    val isPinned: Boolean
 )

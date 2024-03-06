@@ -33,17 +33,20 @@ class UpdateVaultImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val shareRepository: ShareRepository
 ) : UpdateVault {
-    override suspend fun invoke(userId: SessionUserId?, shareId: ShareId, vault: NewVault): Share =
-        if (userId == null) {
-            val primaryUserId = accountManager.getPrimaryUserId().firstOrNull()
-            if (primaryUserId != null) {
-                performUpdate(primaryUserId, shareId, vault)
-            } else {
-                throw UserIdNotAvailableError()
-            }
+    override suspend fun invoke(
+        userId: SessionUserId?,
+        shareId: ShareId,
+        vault: NewVault
+    ): Share = if (userId == null) {
+        val primaryUserId = accountManager.getPrimaryUserId().firstOrNull()
+        if (primaryUserId != null) {
+            performUpdate(primaryUserId, shareId, vault)
         } else {
-            performUpdate(userId, shareId, vault)
+            throw UserIdNotAvailableError()
         }
+    } else {
+        performUpdate(userId, shareId, vault)
+    }
 
     private suspend fun performUpdate(
         userId: SessionUserId,

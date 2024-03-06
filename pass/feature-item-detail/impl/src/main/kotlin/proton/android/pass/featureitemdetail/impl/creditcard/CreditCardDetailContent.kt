@@ -42,20 +42,20 @@ fun CreditCardDetailContent(
     isDowngradedMode: Boolean,
     onEvent: (CreditCardDetailEvent) -> Unit,
     isPinned: Boolean,
-    isHistoryFeatureEnabled: Boolean,
+    isHistoryFeatureEnabled: Boolean
 ) {
     val model = contents.model.contents as ItemContents.CreditCard
 
     Column(
         modifier = modifier.padding(horizontal = Spacing.medium),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         CreditCardTitle(
             modifier = Modifier.padding(Spacing.none, 12.dp),
             title = model.title,
             vault = vault,
             onVaultClick = { onEvent(CreditCardDetailEvent.OnVaultClick) },
-            isPinned = isPinned,
+            isPinned = isPinned
         )
 
         MainCreditCardSection(
@@ -65,12 +65,12 @@ fun CreditCardDetailContent(
             pin = model.pin,
             expirationDate = model.expirationDate,
             isDowngradedMode = isDowngradedMode,
-            onEvent = onEvent,
+            onEvent = onEvent
         )
 
         NoteSection(
             text = model.note,
-            accentColor = PassTheme.colors.cardInteractionNorm,
+            accentColor = PassTheme.colors.cardInteractionNorm
         )
 
         if (isHistoryFeatureEnabled) {
@@ -79,7 +79,7 @@ fun CreditCardDetailContent(
                 modifiedInstant = contents.model.modificationTime,
                 onViewItemHistoryClicked = { onEvent(CreditCardDetailEvent.OnViewItemHistoryClicked) },
                 buttonBackgroundColor = PassTheme.colors.cardInteractionNormMinor2,
-                buttonTextColor = PassTheme.colors.cardInteractionNormMajor2,
+                buttonTextColor = PassTheme.colors.cardInteractionNormMajor2
             )
         }
 

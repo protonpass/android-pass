@@ -398,7 +398,7 @@ class HomeViewModel @Inject constructor(
         searchOptionsFlow,
         isInSeeAllPinsModeState,
         debouncedSearchQueryState,
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PINNING_V1),
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PINNING_V1)
     ) { pinnedItemsResult, searchOptions, isInSeeAllPinsMode, searchQuery, isPinningEnabled ->
         val pinnedItems = if (isPinningEnabled) {
             pinnedItemsResult.getOrNull()?.let { list ->
@@ -543,7 +543,7 @@ class HomeViewModel @Inject constructor(
         getUserPlan().asLoadingResult(),
         navEventState,
         pinningUiStateFlow,
-        bottomSheetItemActionFlow,
+        bottomSheetItemActionFlow
     ) { homeListUiState,
         searchUiState,
         userPlan,
@@ -557,7 +557,7 @@ class HomeViewModel @Inject constructor(
             accountType = AccountType.fromPlan(userPlan),
             navEvent = navEvent,
             action = bottomSheetItemAction,
-            isPinningFeatureEnabled = pinningUiState.isPinningEnabled,
+            isPinningFeatureEnabled = pinningUiState.isPinningEnabled
         )
     }
         .stateIn(
@@ -629,42 +629,41 @@ class HomeViewModel @Inject constructor(
         isRefreshing.update { IsRefreshingState.NotRefreshing }
     }
 
-    fun sendItemsToTrash(items: List<ItemUiModel>) =
-        viewModelScope.launch(coroutineExceptionHandler) {
-            if (items.isEmpty()) return@launch
-            actionStateFlow.update { ActionState.Loading }
+    fun sendItemsToTrash(items: List<ItemUiModel>) = viewModelScope.launch(coroutineExceptionHandler) {
+        if (items.isEmpty()) return@launch
+        actionStateFlow.update { ActionState.Loading }
 
-            val mappedItems = items.toShareIdItemId().toPersistentSet()
-            val itemTypes = homeUiState.value.homeListUiState.items
-                .flatMap { it.items }
-                .filter { (itemId: ItemId, shareId: ShareId) -> mappedItems.contains(shareId to itemId) }
+        val mappedItems = items.toShareIdItemId().toPersistentSet()
+        val itemTypes = homeUiState.value.homeListUiState.items
+            .flatMap { it.items }
+            .filter { (itemId: ItemId, shareId: ShareId) -> mappedItems.contains(shareId to itemId) }
 
-            val groupedItems = groupItems(mappedItems)
-            runCatching { trashItems(items = groupedItems) }
-                .onSuccess {
-                    clearSelection()
-                    if (itemTypes.size == 1) {
-                        when (itemTypes.first().contents) {
-                            is ItemContents.Alias -> snackbarDispatcher(AliasMovedToTrash)
-                            is ItemContents.Login -> snackbarDispatcher(LoginMovedToTrash)
-                            is ItemContents.Note -> snackbarDispatcher(NoteMovedToTrash)
-                            is ItemContents.CreditCard -> snackbarDispatcher(CreditCardMovedToTrash)
-                            is ItemContents.Unknown -> {}
-                        }
-                    } else {
-                        snackbarDispatcher(ItemsMovedToTrashSuccess)
+        val groupedItems = groupItems(mappedItems)
+        runCatching { trashItems(items = groupedItems) }
+            .onSuccess {
+                clearSelection()
+                if (itemTypes.size == 1) {
+                    when (itemTypes.first().contents) {
+                        is ItemContents.Alias -> snackbarDispatcher(AliasMovedToTrash)
+                        is ItemContents.Login -> snackbarDispatcher(LoginMovedToTrash)
+                        is ItemContents.Note -> snackbarDispatcher(NoteMovedToTrash)
+                        is ItemContents.CreditCard -> snackbarDispatcher(CreditCardMovedToTrash)
+                        is ItemContents.Unknown -> {}
                     }
+                } else {
+                    snackbarDispatcher(ItemsMovedToTrashSuccess)
                 }
-                .onFailure {
-                    PassLogger.e(TAG, it, "Trash items failed")
-                    if (itemTypes.size == 1) {
-                        snackbarDispatcher(MoveToTrashError)
-                    } else {
-                        snackbarDispatcher(ItemsMovedToTrashError)
-                    }
+            }
+            .onFailure {
+                PassLogger.e(TAG, it, "Trash items failed")
+                if (itemTypes.size == 1) {
+                    snackbarDispatcher(MoveToTrashError)
+                } else {
+                    snackbarDispatcher(ItemsMovedToTrashError)
                 }
-            actionStateFlow.update { ActionState.Done }
-        }
+            }
+        actionStateFlow.update { ActionState.Done }
+    }
 
     fun copyToClipboard(text: String, homeClipboardType: HomeClipboardType) {
         val sanitizedText = text.take(MAX_CLIPBOARD_LENGTH)
@@ -761,58 +760,56 @@ class HomeViewModel @Inject constructor(
         actionStateFlow.update { ActionState.Unknown }
     }
 
-    fun restoreItems(items: List<ItemUiModel>) =
-        viewModelScope.launch(coroutineExceptionHandler) {
-            if (items.isEmpty()) return@launch
-            actionStateFlow.update { ActionState.Loading }
+    fun restoreItems(items: List<ItemUiModel>) = viewModelScope.launch(coroutineExceptionHandler) {
+        if (items.isEmpty()) return@launch
+        actionStateFlow.update { ActionState.Loading }
 
-            val mappedItems = groupItems(items.toShareIdItemId().toPersistentSet())
-            runCatching { restoreItems(items = mappedItems) }
-                .onSuccess {
-                    clearSelection()
-                    snackbarDispatcher(RestoreItemsSuccess)
-                }
-                .onFailure {
-                    PassLogger.e(TAG, it, "Untrash items failed")
-                    snackbarDispatcher(RestoreItemsError)
-                }
-            actionStateFlow.update { ActionState.Done }
-        }
-
-    fun deleteItems(items: List<ItemUiModel>) =
-        viewModelScope.launch(coroutineExceptionHandler) {
-            if (items.isEmpty()) return@launch
-            actionStateFlow.update { ActionState.Loading }
-
-            val mappedItems = items.toShareIdItemId()
-            val itemTypes = homeUiState.value.homeListUiState.items
-                .flatMap { it.items }
-                .filter { (itemId: ItemId, shareId: ShareId) ->
-                    mappedItems.contains(shareId to itemId)
-                }
-                .map { EventItemType.from(it.contents) }
-
-            runCatching {
-                deleteItem(items = mappedItems.groupBy({ it.first }, { it.second }))
-            }.onSuccess {
-                PassLogger.i(TAG, "Items deleted successfully")
+        val mappedItems = groupItems(items.toShareIdItemId().toPersistentSet())
+        runCatching { restoreItems(items = mappedItems) }
+            .onSuccess {
                 clearSelection()
-                itemTypes.forEach { telemetryManager.sendEvent(ItemDelete(it)) }
-                if (items.size > 1) {
-                    snackbarDispatcher(DeleteItemsSuccess)
-                } else {
-                    snackbarDispatcher(DeleteItemSuccess)
-                }
-            }.onFailure {
-                PassLogger.e(TAG, it, "Error deleting items")
-                if (items.size > 1) {
-                    snackbarDispatcher(DeleteItemsError)
-                } else {
-                    snackbarDispatcher(DeleteItemError)
-                }
+                snackbarDispatcher(RestoreItemsSuccess)
             }
-            actionStateFlow.update { ActionState.Done }
+            .onFailure {
+                PassLogger.e(TAG, it, "Untrash items failed")
+                snackbarDispatcher(RestoreItemsError)
+            }
+        actionStateFlow.update { ActionState.Done }
+    }
+
+    fun deleteItems(items: List<ItemUiModel>) = viewModelScope.launch(coroutineExceptionHandler) {
+        if (items.isEmpty()) return@launch
+        actionStateFlow.update { ActionState.Loading }
+
+        val mappedItems = items.toShareIdItemId()
+        val itemTypes = homeUiState.value.homeListUiState.items
+            .flatMap { it.items }
+            .filter { (itemId: ItemId, shareId: ShareId) ->
+                mappedItems.contains(shareId to itemId)
+            }
+            .map { EventItemType.from(it.contents) }
+
+        runCatching {
+            deleteItem(items = mappedItems.groupBy({ it.first }, { it.second }))
+        }.onSuccess {
+            PassLogger.i(TAG, "Items deleted successfully")
+            clearSelection()
+            itemTypes.forEach { telemetryManager.sendEvent(ItemDelete(it)) }
+            if (items.size > 1) {
+                snackbarDispatcher(DeleteItemsSuccess)
+            } else {
+                snackbarDispatcher(DeleteItemSuccess)
+            }
+        }.onFailure {
+            PassLogger.e(TAG, it, "Error deleting items")
+            if (items.size > 1) {
+                snackbarDispatcher(DeleteItemsError)
+            } else {
+                snackbarDispatcher(DeleteItemError)
+            }
         }
+        actionStateFlow.update { ActionState.Done }
+    }
 
     fun clearTrash() = viewModelScope.launch {
         actionStateFlow.update { ActionState.Loading }
@@ -1018,9 +1015,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun List<ItemUiModel>.filterByType(
-        searchFilterType: SearchFilterType
-    ) = filter { item ->
+    private fun List<ItemUiModel>.filterByType(searchFilterType: SearchFilterType) = filter { item ->
         when (searchFilterType) {
             SearchFilterType.All -> true
             SearchFilterType.Alias -> item.contents is ItemContents.Alias
@@ -1044,28 +1039,24 @@ class HomeViewModel @Inject constructor(
     private fun groupItems(items: ImmutableSet<Pair<ShareId, ItemId>>): Map<ShareId, List<ItemId>> =
         items.groupBy({ it.first }, { it.second })
 
-    private fun List<ItemUiModel>.toShareIdItemId(): List<Pair<ShareId, ItemId>> =
-        map { it.shareId to it.id }
+    private fun List<ItemUiModel>.toShareIdItemId(): List<Pair<ShareId, ItemId>> = map { it.shareId to it.id }
 
-    private fun List<ItemUiModel>.sortItemLists(sortingOption: SortingOption) =
-        when (sortingOption.searchSortingType) {
-            SearchSortingType.MostRecent -> sortMostRecent()
-            SearchSortingType.TitleAsc -> sortByTitleAsc()
-            SearchSortingType.TitleDesc -> sortByTitleDesc()
-            SearchSortingType.CreationAsc -> sortByCreationAsc()
-            SearchSortingType.CreationDesc -> sortByCreationDesc()
-        }
-
-    private fun List<ItemUiModel>.groupedItemLists(
-        sortingOption: SortingOption,
-        instant: Instant
-    ) = when (sortingOption.searchSortingType) {
-        SearchSortingType.MostRecent -> groupAndSortByMostRecent(instant)
-        SearchSortingType.TitleAsc -> groupAndSortByTitleAsc()
-        SearchSortingType.TitleDesc -> groupAndSortByTitleDesc()
-        SearchSortingType.CreationAsc -> groupAndSortByCreationAsc()
-        SearchSortingType.CreationDesc -> groupAndSortByCreationDesc()
+    private fun List<ItemUiModel>.sortItemLists(sortingOption: SortingOption) = when (sortingOption.searchSortingType) {
+        SearchSortingType.MostRecent -> sortMostRecent()
+        SearchSortingType.TitleAsc -> sortByTitleAsc()
+        SearchSortingType.TitleDesc -> sortByTitleDesc()
+        SearchSortingType.CreationAsc -> sortByCreationAsc()
+        SearchSortingType.CreationDesc -> sortByCreationDesc()
     }
+
+    private fun List<ItemUiModel>.groupedItemLists(sortingOption: SortingOption, instant: Instant) =
+        when (sortingOption.searchSortingType) {
+            SearchSortingType.MostRecent -> groupAndSortByMostRecent(instant)
+            SearchSortingType.TitleAsc -> groupAndSortByTitleAsc()
+            SearchSortingType.TitleDesc -> groupAndSortByTitleDesc()
+            SearchSortingType.CreationAsc -> groupAndSortByCreationAsc()
+            SearchSortingType.CreationDesc -> groupAndSortByCreationDesc()
+        }
 
     private data class SelectionState(
         val selectedItems: List<ItemUiModel>,
@@ -1085,7 +1076,7 @@ class HomeViewModel @Inject constructor(
                 // Actions are only enabled if there are selected items and the pinning operation
                 // is not in progress
                 actionsEnabled = selectedItems.isNotEmpty() && !pinningLoadingState.value()
-            ),
+            )
         )
 
         companion object {

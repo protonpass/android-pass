@@ -43,7 +43,7 @@ fun SmallCrossIconButton(
         Icon(
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_cross_small),
             contentDescription = stringResource(R.string.small_cross_icon_content_description),
-            tint = tint,
+            tint = tint
         )
     }
 }

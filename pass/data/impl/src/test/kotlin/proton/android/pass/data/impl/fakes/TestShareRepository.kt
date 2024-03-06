@@ -103,33 +103,31 @@ class TestShareRepository : ShareRepository {
         getAddressForShareIdResult = value
     }
 
-    override suspend fun createVault(userId: SessionUserId, vault: NewVault): Share =
-        createVaultResult.getOrThrow()
+    override suspend fun createVault(userId: SessionUserId, vault: NewVault): Share = createVaultResult.getOrThrow()
 
     override suspend fun deleteVault(userId: UserId, shareId: ShareId) {
         deleteVaultMemory.add(shareId)
         deleteVault.getOrThrow()
     }
 
-    override suspend fun refreshShares(userId: UserId): RefreshSharesResult =
-        refreshSharesResult
+    override suspend fun refreshShares(userId: UserId): RefreshSharesResult = refreshSharesResult
 
     override suspend fun refreshShare(userId: UserId, shareId: ShareId) {
         refreshShareMemory.add(RefreshSharePayload(userId, shareId))
         refreshShareResult.getOrThrow()
     }
 
-    override fun observeAllShares(userId: SessionUserId): Flow<List<Share>> =
-        observeSharesFlow.map { it.getOrThrow() }
+    override fun observeAllShares(userId: SessionUserId): Flow<List<Share>> = observeSharesFlow.map { it.getOrThrow() }
 
-    override fun observeVaultCount(userId: UserId): Flow<Int> =
-        observeVaultCountFlow.map { it.getOrThrow() }
+    override fun observeVaultCount(userId: UserId): Flow<Int> = observeVaultCountFlow.map { it.getOrThrow() }
 
-    override suspend fun getById(userId: UserId, shareId: ShareId): Share =
-        getByIdResult.getOrThrow()
+    override suspend fun getById(userId: UserId, shareId: ShareId): Share = getByIdResult.getOrThrow()
 
-    override suspend fun updateVault(userId: UserId, shareId: ShareId, vault: NewVault): Share =
-        updateVaultResult.getOrThrow()
+    override suspend fun updateVault(
+        userId: UserId,
+        shareId: ShareId,
+        vault: NewVault
+    ): Share = updateVaultResult.getOrThrow()
 
     override suspend fun deleteSharesForUser(userId: UserId) = deleteSharesResult.getOrThrow()
 

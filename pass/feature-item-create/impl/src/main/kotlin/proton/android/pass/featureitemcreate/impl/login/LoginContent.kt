@@ -57,7 +57,7 @@ internal fun LoginContent(
     isUpdate: Boolean,
     onEvent: (LoginContentEvent) -> Unit,
     onNavigate: (BaseLoginNavigation) -> Unit,
-    titleSection: @Composable (ColumnScope.() -> Unit),
+    titleSection: @Composable (ColumnScope.() -> Unit)
 ) {
     BackHandler {
         onEvent(LoginContentEvent.Up)
@@ -164,7 +164,7 @@ internal fun LoginContent(
                 onNavigate(
                     BaseLoginNavigation.AliasOptions(
                         shareId = selectedShareId,
-                        showUpgrade = uiState.hasReachedAliasLimit,
+                        showUpgrade = uiState.hasReachedAliasLimit
                     )
                 )
             },

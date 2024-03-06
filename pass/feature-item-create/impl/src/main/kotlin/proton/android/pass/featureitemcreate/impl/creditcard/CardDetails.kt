@@ -37,7 +37,7 @@ fun CardDetails(
     onPinChanged: (String) -> Unit,
     onExpirationDateChanged: (String) -> Unit,
     onCVVFocusChange: (Boolean) -> Unit,
-    onPinFocusChange: (Boolean) -> Unit,
+    onPinFocusChange: (Boolean) -> Unit
 ) {
     Column(
         modifier = modifier.roundedContainerNorm()

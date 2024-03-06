@@ -26,12 +26,12 @@ import proton.android.pass.notifications.api.SnackbarType
 internal enum class ItemHistoryTimelineSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
-    override val isClipboard: Boolean = false,
+    override val isClipboard: Boolean = false
 ) : SnackbarMessage {
 
     FetchItemRevisionsError(
         id = R.string.item_history_timeline_snackbar_message_error,
-        type = SnackbarType.ERROR,
-    ),
+        type = SnackbarType.ERROR
+    )
 
 }

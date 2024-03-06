@@ -30,7 +30,7 @@ sealed interface FetchShareItemsStatus {
     object NotStarted : FetchShareItemsStatus
     data class Syncing(
         val current: Int,
-        val total: Int,
+        val total: Int
     ) : FetchShareItemsStatus
 
     @JvmInline

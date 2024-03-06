@@ -103,9 +103,7 @@ internal fun ItemRow(
 
 @Preview
 @Composable
-fun ItemRowPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
+fun ItemRowPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
     PassTheme(isDark = input.first) {
         Surface {
             ItemRow(

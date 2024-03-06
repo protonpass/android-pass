@@ -58,9 +58,7 @@ fun CardHolderRow(
 
 @Preview
 @Composable
-fun CardHolderRowPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
+fun CardHolderRowPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
     val name = if (input.second) "John Doe" else ""
     PassTheme(isDark = input.first) {
         Surface {

@@ -28,8 +28,5 @@ data class EncryptedUpdateVaultRequest(
 )
 
 interface UpdateVault {
-    fun createUpdateVaultRequest(
-        shareKey: ShareKey,
-        body: VaultV1.Vault
-    ): EncryptedUpdateVaultRequest
+    fun createUpdateVaultRequest(shareKey: ShareKey, body: VaultV1.Vault): EncryptedUpdateVaultRequest
 }

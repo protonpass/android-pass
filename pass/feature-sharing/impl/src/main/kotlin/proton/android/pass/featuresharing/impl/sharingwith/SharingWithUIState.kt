@@ -65,6 +65,6 @@ sealed interface SuggestionsUIState {
     data class Content(
         val groupDisplayName: String = "",
         val recentEmails: ImmutableList<Pair<String, Boolean>> = persistentListOf(),
-        val planEmails: ImmutableList<Pair<String, Boolean>> = persistentListOf(),
+        val planEmails: ImmutableList<Pair<String, Boolean>> = persistentListOf()
     ) : SuggestionsUIState
 }

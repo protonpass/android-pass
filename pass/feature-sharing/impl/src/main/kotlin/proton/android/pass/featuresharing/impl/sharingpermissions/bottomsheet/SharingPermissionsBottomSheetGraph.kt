@@ -53,7 +53,7 @@ object SharingEditPermissions : NavItem(
     baseRoute = "sharing/permissions/bottomsheet",
     navArgIds = listOf(EditPermissionsModeNavArgId),
     optionalArgIds = listOf(EmailNavArgId, PermissionNavArgId),
-    navItemType = NavItemType.Bottomsheet,
+    navItemType = NavItemType.Bottomsheet
 ) {
     fun buildRouteForEditAll(): String = "$baseRoute/${EditPermissionsMode.AllUsers.name}"
     fun buildRouteForEditOne(email: String, permission: SharingType) = buildString {
@@ -64,9 +64,7 @@ object SharingEditPermissions : NavItem(
     }
 }
 
-fun NavGraphBuilder.sharingPermissionsBottomsheetGraph(
-    onNavigateEvent: (SharingNavigation) -> Unit
-) {
+fun NavGraphBuilder.sharingPermissionsBottomsheetGraph(onNavigateEvent: (SharingNavigation) -> Unit) {
     bottomSheet(SharingEditPermissions) {
         SharingPermissionsBottomSheet(onNavigate = onNavigateEvent)
     }

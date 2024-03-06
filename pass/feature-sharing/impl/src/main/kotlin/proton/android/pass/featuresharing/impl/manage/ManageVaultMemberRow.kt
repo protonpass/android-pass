@@ -137,10 +137,7 @@ fun ManageVaultMemberRow(
 }
 
 @Composable
-private fun UserInfo(
-    modifier: Modifier = Modifier,
-    member: VaultMemberContent
-) {
+private fun UserInfo(modifier: Modifier = Modifier, member: VaultMemberContent) {
     val (titleTextModifier, titleText) = when (member) {
         VaultMemberContent.Loading ->
             Modifier
@@ -165,10 +162,7 @@ private fun UserInfo(
 }
 
 @Composable
-private fun UserInfoSubtitle(
-    modifier: Modifier = Modifier,
-    member: VaultMemberContent
-) {
+private fun UserInfoSubtitle(modifier: Modifier = Modifier, member: VaultMemberContent) {
     when (member) {
         VaultMemberContent.Loading -> {
             Text(

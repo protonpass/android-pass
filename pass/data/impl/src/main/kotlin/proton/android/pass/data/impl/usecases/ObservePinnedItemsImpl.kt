@@ -30,17 +30,16 @@ import javax.inject.Inject
 
 class ObservePinnedItemsImpl @Inject constructor(
     private val itemRepository: ItemRepository,
-    private val observeCurrentUser: ObserveCurrentUser,
+    private val observeCurrentUser: ObserveCurrentUser
 ) : ObservePinnedItems {
 
-    override fun invoke(filter: ItemTypeFilter, shareSelection: ShareSelection): Flow<List<Item>> =
-        observeCurrentUser()
-            .flatMapLatest {
-                itemRepository.observePinnedItems(
-                    userId = it.userId,
-                    shareSelection = shareSelection,
-                    itemTypeFilter = filter
-                )
-            }
+    override fun invoke(filter: ItemTypeFilter, shareSelection: ShareSelection): Flow<List<Item>> = observeCurrentUser()
+        .flatMapLatest {
+            itemRepository.observePinnedItems(
+                userId = it.userId,
+                shareSelection = shareSelection,
+                itemTypeFilter = filter
+            )
+        }
 }
 

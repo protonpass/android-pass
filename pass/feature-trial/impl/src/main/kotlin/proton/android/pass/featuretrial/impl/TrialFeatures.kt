@@ -37,9 +37,7 @@ import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.form.PassDivider
 
 @Composable
-fun TrialFeatures(
-    modifier: Modifier = Modifier
-) {
+fun TrialFeatures(modifier: Modifier = Modifier) {
     RoundedCornersColumn(
         modifier = modifier
             .fillMaxWidth()
@@ -90,9 +88,7 @@ fun TrialFeatures(
 
 @Preview
 @Composable
-fun TrialFeaturesPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun TrialFeaturesPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             TrialFeatures()

@@ -33,7 +33,11 @@ class SetVaultMemberPermissionImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val apiProvider: ApiProvider
 ) : SetVaultMemberPermission {
-    override suspend fun invoke(shareId: ShareId, memberShareId: ShareId, role: ShareRole) {
+    override suspend fun invoke(
+        shareId: ShareId,
+        memberShareId: ShareId,
+        role: ShareRole
+    ) {
         val userId = accountManager.getPrimaryUserId().filterNotNull().first()
         apiProvider.get<PasswordManagerApi>(userId)
             .invoke {

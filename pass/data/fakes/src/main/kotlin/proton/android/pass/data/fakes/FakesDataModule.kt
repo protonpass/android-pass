@@ -235,260 +235,158 @@ import proton.android.pass.data.fakes.usecases.items.FakeObserveItemRevisions
 abstract class FakesDataModule {
 
     @Binds
-    abstract fun bindGetSuggestedLoginItems(
-        impl: TestGetSuggestedLoginItems
-    ): GetSuggestedLoginItems
+    abstract fun bindGetSuggestedLoginItems(impl: TestGetSuggestedLoginItems): GetSuggestedLoginItems
 
     @Binds
-    abstract fun bindGetSuggestedCreditCardItems(
-        impl: TestGetSuggestedCreditCardItems
-    ): GetSuggestedCreditCardItems
+    abstract fun bindGetSuggestedCreditCardItems(impl: TestGetSuggestedCreditCardItems): GetSuggestedCreditCardItems
 
     @Binds
-    abstract fun bindItemRepository(
-        impl: TestItemRepository
-    ): ItemRepository
+    abstract fun bindItemRepository(impl: TestItemRepository): ItemRepository
 
     @Binds
-    abstract fun bindAliasRepository(
-        impl: TestAliasRepository
-    ): AliasRepository
+    abstract fun bindAliasRepository(impl: TestAliasRepository): AliasRepository
 
     @Binds
-    abstract fun bindDraftRepository(
-        impl: TestDraftRepository
-    ): DraftRepository
+    abstract fun bindDraftRepository(impl: TestDraftRepository): DraftRepository
 
     @Binds
-    abstract fun bindCreateAlias(
-        impl: TestCreateAlias
-    ): CreateAlias
+    abstract fun bindCreateAlias(impl: TestCreateAlias): CreateAlias
 
     @Binds
-    abstract fun bindCreateItem(
-        impl: TestCreateItem
-    ): CreateItem
+    abstract fun bindCreateItem(impl: TestCreateItem): CreateItem
 
     @Binds
-    abstract fun bindObserveActiveItems(
-        impl: TestObserveActiveItems
-    ): ObserveActiveItems
+    abstract fun bindObserveActiveItems(impl: TestObserveActiveItems): ObserveActiveItems
 
     @Binds
-    abstract fun bindObserveVaults(
-        impl: TestObserveVaults
-    ): ObserveVaults
+    abstract fun bindObserveVaults(impl: TestObserveVaults): ObserveVaults
 
     @Binds
-    abstract fun bindObserveCurrentUser(
-        impl: TestObserveCurrentUser
-    ): ObserveCurrentUser
+    abstract fun bindObserveCurrentUser(impl: TestObserveCurrentUser): ObserveCurrentUser
 
     @Binds
-    abstract fun bindObserveAliasOptions(
-        impl: TestObserveAliasOptions
-    ): ObserveAliasOptions
+    abstract fun bindObserveAliasOptions(impl: TestObserveAliasOptions): ObserveAliasOptions
 
     @Binds
-    abstract fun bindUpdateAlias(
-        impl: TestUpdateAlias
-    ): UpdateAlias
+    abstract fun bindUpdateAlias(impl: TestUpdateAlias): UpdateAlias
 
     @Binds
-    abstract fun bindUpdateAutofillItem(
-        impl: TestUpdateAutofillItem
-    ): UpdateAutofillItem
+    abstract fun bindUpdateAutofillItem(impl: TestUpdateAutofillItem): UpdateAutofillItem
 
     @Binds
-    abstract fun bindUpdateItem(
-        impl: TestUpdateItem
-    ): UpdateItem
+    abstract fun bindUpdateItem(impl: TestUpdateItem): UpdateItem
 
     @Binds
-    abstract fun bindGetShareById(
-        impl: TestGetShareById
-    ): GetShareById
+    abstract fun bindGetShareById(impl: TestGetShareById): GetShareById
 
     @Binds
-    abstract fun bindTrashItem(
-        impl: TestTrashItems
-    ): TrashItems
+    abstract fun bindTrashItem(impl: TestTrashItems): TrashItems
 
     @Binds
-    abstract fun bindUpdateVault(
-        impl: TestUpdateVault
-    ): UpdateVault
+    abstract fun bindUpdateVault(impl: TestUpdateVault): UpdateVault
 
     @Binds
-    abstract fun bindGetVaultById(
-        impl: TestGetVaultById
-    ): GetVaultById
+    abstract fun bindGetVaultById(impl: TestGetVaultById): GetVaultById
 
     @Binds
-    abstract fun bindObserveVaultsWithItemCount(
-        impl: TestObserveVaultsWithItemCount
-    ): ObserveVaultsWithItemCount
+    abstract fun bindObserveVaultsWithItemCount(impl: TestObserveVaultsWithItemCount): ObserveVaultsWithItemCount
 
     @Binds
-    abstract fun bindObserveItemCount(
-        impl: TestObserveItemCount
-    ): ObserveItemCount
+    abstract fun bindObserveItemCount(impl: TestObserveItemCount): ObserveItemCount
 
     @Binds
-    abstract fun bindMigrateItem(
-        impl: TestMigrateItems
-    ): MigrateItems
+    abstract fun bindMigrateItem(impl: TestMigrateItems): MigrateItems
 
     @Binds
-    abstract fun bindGetVaultWithItemCountById(
-        impl: TestGetVaultWithItemCountById
-    ): GetVaultWithItemCountById
+    abstract fun bindGetVaultWithItemCountById(impl: TestGetVaultWithItemCountById): GetVaultWithItemCountById
 
     @Binds
-    abstract fun bindCreateItemAndAlias(
-        impl: TestCreateItemAndAlias
-    ): CreateItemAndAlias
+    abstract fun bindCreateItemAndAlias(impl: TestCreateItemAndAlias): CreateItemAndAlias
 
     @Binds
-    abstract fun bindDeleteVault(
-        impl: TestDeleteVault
-    ): DeleteVault
+    abstract fun bindDeleteVault(impl: TestDeleteVault): DeleteVault
 
     @Binds
-    abstract fun bindGetUserPlan(
-        impl: TestGetUserPlan
-    ): GetUserPlan
+    abstract fun bindGetUserPlan(impl: TestGetUserPlan): GetUserPlan
 
 
     @Binds
-    abstract fun bindGetItemById(
-        impl: FakeGetItemById
-    ): GetItemById
+    abstract fun bindGetItemById(impl: FakeGetItemById): GetItemById
 
     @Binds
-    abstract fun bindObserveItemById(
-        impl: TestObserveItemById
-    ): ObserveItemById
+    abstract fun bindObserveItemById(impl: TestObserveItemById): ObserveItemById
 
     @Binds
-    abstract fun bindDeleteItem(
-        impl: TestDeleteItems
-    ): DeleteItems
+    abstract fun bindDeleteItem(impl: TestDeleteItems): DeleteItems
 
     @Binds
-    abstract fun bindRestoreItem(
-        impl: TestRestoreItems
-    ): RestoreItems
+    abstract fun bindRestoreItem(impl: TestRestoreItems): RestoreItems
 
     @Binds
-    abstract fun bindRefreshContent(
-        impl: TestRefreshContent
-    ): RefreshContent
+    abstract fun bindRefreshContent(impl: TestRefreshContent): RefreshContent
 
     @Binds
-    abstract fun bindApplyPendingEvents(
-        impl: TestApplyPendingEvents
-    ): ApplyPendingEvents
+    abstract fun bindApplyPendingEvents(impl: TestApplyPendingEvents): ApplyPendingEvents
 
     @Binds
-    abstract fun bindRestoreItems(
-        impl: TestRestoreAllItems
-    ): RestoreAllItems
+    abstract fun bindRestoreItems(impl: TestRestoreAllItems): RestoreAllItems
 
     @Binds
-    abstract fun bindClearTrash(
-        impl: TestClearTrash
-    ): ClearTrash
+    abstract fun bindClearTrash(impl: TestClearTrash): ClearTrash
 
     @Binds
-    abstract fun bindAddSearchEntry(
-        impl: TestAddSearchEntry
-    ): AddSearchEntry
+    abstract fun bindAddSearchEntry(impl: TestAddSearchEntry): AddSearchEntry
 
     @Binds
-    abstract fun bindDeleteSearchEntry(
-        impl: TestDeleteSearchEntry
-    ): DeleteSearchEntry
+    abstract fun bindDeleteSearchEntry(impl: TestDeleteSearchEntry): DeleteSearchEntry
 
     @Binds
-    abstract fun bindDeleteAllSearchEntry(
-        impl: TestDeleteAllSearchEntry
-    ): DeleteAllSearchEntry
+    abstract fun bindDeleteAllSearchEntry(impl: TestDeleteAllSearchEntry): DeleteAllSearchEntry
 
     @Binds
-    abstract fun bindObserveSearchEntry(
-        impl: TestObserveSearchEntry
-    ): ObserveSearchEntry
+    abstract fun bindObserveSearchEntry(impl: TestObserveSearchEntry): ObserveSearchEntry
 
     @Binds
-    abstract fun bindObserveItems(
-        impl: TestObserveItems
-    ): ObserveItems
+    abstract fun bindObserveItems(impl: TestObserveItems): ObserveItems
 
     @Binds
-    abstract fun bindObservePinnedItems(
-        impl: TestObservePinnedItems
-    ): ObservePinnedItems
+    abstract fun bindObservePinnedItems(impl: TestObservePinnedItems): ObservePinnedItems
 
     @Binds
-    abstract fun bindItemSyncStatusRepository(
-        impl: TestItemSyncStatusRepository
-    ): ItemSyncStatusRepository
+    abstract fun bindItemSyncStatusRepository(impl: TestItemSyncStatusRepository): ItemSyncStatusRepository
 
     @Binds
-    abstract fun bindGetItemByIdWithVault(
-        impl: TestGetItemByIdWithVault
-    ): GetItemByIdWithVault
+    abstract fun bindGetItemByIdWithVault(impl: TestGetItemByIdWithVault): GetItemByIdWithVault
 
     @Binds
-    abstract fun bindClearUserData(
-        impl: TestClearUserData
-    ): ClearUserData
+    abstract fun bindClearUserData(impl: TestClearUserData): ClearUserData
 
     @Binds
-    abstract fun bindGetUpgradeInfo(
-        impl: TestObserveUpgradeInfo
-    ): ObserveUpgradeInfo
+    abstract fun bindGetUpgradeInfo(impl: TestObserveUpgradeInfo): ObserveUpgradeInfo
 
     @Binds
-    abstract fun bindMigrateVault(
-        impl: TestMigrateVault
-    ): MigrateVault
+    abstract fun bindMigrateVault(impl: TestMigrateVault): MigrateVault
 
     @Binds
-    abstract fun bindObserveMFACount(
-        impl: TestObserveMFACount
-    ): ObserveMFACount
+    abstract fun bindObserveMFACount(impl: TestObserveMFACount): ObserveMFACount
 
     @Binds
-    abstract fun bindCreateVault(
-        impl: TestCreateVault
-    ): CreateVault
+    abstract fun bindCreateVault(impl: TestCreateVault): CreateVault
 
     @Binds
-    abstract fun bindCanPerformPaidAction(
-        impl: TestCanPerformPaidAction
-    ): CanPerformPaidAction
+    abstract fun bindCanPerformPaidAction(impl: TestCanPerformPaidAction): CanPerformPaidAction
 
     @Binds
-    abstract fun bindRefreshPlan(
-        impl: TestRefreshPlan
-    ): RefreshPlan
+    abstract fun bindRefreshPlan(impl: TestRefreshPlan): RefreshPlan
 
     @Binds
-    abstract fun bindGetAliasDetails(
-        impl: TestGetAliasDetails
-    ): GetAliasDetails
+    abstract fun bindGetAliasDetails(impl: TestGetAliasDetails): GetAliasDetails
 
     @Binds
-    abstract fun bindGetItemByAliasEmail(
-        impl: TestGetItemByAliasEmail
-    ): GetItemByAliasEmail
+    abstract fun bindGetItemByAliasEmail(impl: TestGetItemByAliasEmail): GetItemByAliasEmail
 
     @Binds
-    abstract fun bindCanDisplayTotp(
-        impl: TestCanDisplayTotp
-    ): CanDisplayTotp
+    abstract fun bindCanDisplayTotp(impl: TestCanDisplayTotp): CanDisplayTotp
 
     @Binds
     abstract fun bindCheckMasterPassword(impl: TestCheckMasterPassword): CheckMasterPassword
@@ -624,7 +522,7 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObserveVaultWithItemCountById(
-        impl: TestObserveVaultWithItemCountById,
+        impl: TestObserveVaultWithItemCountById
     ): ObserveVaultWithItemCountById
 
     @Binds

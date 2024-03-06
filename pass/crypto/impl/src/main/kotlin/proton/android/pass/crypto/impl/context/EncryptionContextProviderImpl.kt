@@ -43,10 +43,7 @@ class EncryptionContextProviderImpl @Inject constructor(
     }
 
     @Suppress("TooGenericExceptionCaught", "RethrowCaughtException")
-    override fun <R> withEncryptionContext(
-        key: EncryptionKey,
-        block: EncryptionContext.() -> R
-    ): R {
+    override fun <R> withEncryptionContext(key: EncryptionKey, block: EncryptionContext.() -> R): R {
         val context = EncryptionContextImpl(key)
         try {
             val res = block(context)
@@ -58,9 +55,7 @@ class EncryptionContextProviderImpl @Inject constructor(
         }
     }
 
-    override suspend fun <R> withEncryptionContextSuspendable(
-        block: suspend EncryptionContext.() -> R
-    ): R {
+    override suspend fun <R> withEncryptionContextSuspendable(block: suspend EncryptionContext.() -> R): R {
         val key = getKey()
         return withEncryptionContextSuspendable(key, block)
     }

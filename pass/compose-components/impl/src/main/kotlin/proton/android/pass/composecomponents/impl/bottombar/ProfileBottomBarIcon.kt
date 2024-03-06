@@ -37,10 +37,7 @@ import proton.android.pass.composecomponents.impl.R
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun ProfileBottomBarIcon(
-    modifier: Modifier = Modifier,
-    accountType: AccountType
-) {
+fun ProfileBottomBarIcon(modifier: Modifier = Modifier, accountType: AccountType) {
     Box(modifier = modifier.size(40.dp)) {
         when (accountType) {
             AccountType.Free -> {}
@@ -73,9 +70,7 @@ fun ProfileBottomBarIcon(
 
 @Preview
 @Composable
-fun ProfileBottomBarIconFreePreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun ProfileBottomBarIconFreePreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             ProfileBottomBarIcon(accountType = AccountType.Free)
@@ -85,9 +80,7 @@ fun ProfileBottomBarIconFreePreview(
 
 @Preview
 @Composable
-fun ProfileBottomBarIconTrialPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun ProfileBottomBarIconTrialPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             ProfileBottomBarIcon(accountType = AccountType.Trial)
@@ -97,9 +90,7 @@ fun ProfileBottomBarIconTrialPreview(
 
 @Preview
 @Composable
-fun ProfileBottomBarIconUnlimitedPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun ProfileBottomBarIconUnlimitedPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             ProfileBottomBarIcon(accountType = AccountType.Unlimited)

@@ -122,9 +122,7 @@ fun AcceptInviteContent(
 
 @Preview
 @Composable
-fun AcceptInviteContentPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
+fun AcceptInviteContentPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
     PassTheme(isDark = input.first) {
         Surface {
             AcceptInviteContent(

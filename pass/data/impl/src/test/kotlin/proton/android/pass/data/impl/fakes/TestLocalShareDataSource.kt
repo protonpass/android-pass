@@ -84,17 +84,14 @@ class TestLocalShareDataSource : LocalShareDataSource {
         upsertResponse.getOrThrow()
     }
 
-    override suspend fun getById(userId: UserId, shareId: ShareId): ShareEntity? =
-        getByIdResponse.getOrThrow()
+    override suspend fun getById(userId: UserId, shareId: ShareId): ShareEntity? = getByIdResponse.getOrThrow()
 
-    override fun getAllSharesForUser(userId: UserId): Flow<List<ShareEntity>> =
-        getAllSharesForUserFlow
+    override fun getAllSharesForUser(userId: UserId): Flow<List<ShareEntity>> = getAllSharesForUserFlow
 
     override fun observeAllActiveSharesForUser(userId: UserId): Flow<List<ShareEntity>> =
         getAllSharesForUserFlow.map { shares -> shares.filter { it.isActive } }
 
-    override fun getAllSharesForAddress(addressId: AddressId): Flow<List<ShareEntity>> =
-        getAllSharesForAddressFlow
+    override fun getAllSharesForAddress(addressId: AddressId): Flow<List<ShareEntity>> = getAllSharesForAddressFlow
 
     override suspend fun deleteShares(shareIds: Set<ShareId>): Boolean {
         deleteMemory.add(shareIds)
@@ -110,7 +107,11 @@ class TestLocalShareDataSource : LocalShareDataSource {
     override fun observeActiveVaultCount(userId: UserId): Flow<Int> = getShareCountFlow
         .map { it.getOrThrow() }
 
-    override suspend fun updateOwnershipStatus(userId: UserId, shareId: ShareId, isOwner: Boolean) {
+    override suspend fun updateOwnershipStatus(
+        userId: UserId,
+        shareId: ShareId,
+        isOwner: Boolean
+    ) {
         updateOwnershipStatusResult.getOrThrow()
     }
 

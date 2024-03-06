@@ -133,9 +133,8 @@ class ItemOptionsViewModel @Inject constructor(
         }
     }
 
-    private fun getNavArg(name: String): String =
-        savedStateHandle.get<String>(name)
-            ?: throw IllegalStateException("Missing $name nav argument")
+    private fun getNavArg(name: String): String = savedStateHandle.get<String>(name)
+        ?: throw IllegalStateException("Missing $name nav argument")
 
     companion object {
         private const val TAG = "AutofillItemOptionsViewModel"

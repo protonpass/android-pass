@@ -149,7 +149,7 @@ abstract class BaseLoginViewModel(
 
     data class Events(
         val itemSavedState: ItemSavedState,
-        val openScanState: OpenScanState,
+        val openScanState: OpenScanState
     )
 
     private val loginItemValidationErrorsState: MutableStateFlow<Set<LoginItemValidationErrors>> =
@@ -250,9 +250,9 @@ abstract class BaseLoginViewModel(
             loginItemFormMutableState.copy(
                 password = UIHiddenState.Revealed(
                     encrypted = encrypt(newPasswordValue),
-                    clearText = newPasswordValue,
+                    clearText = newPasswordValue
                 ),
-                passwordStrength = passwordStrengthCalculator.calculateStrength(newPasswordValue),
+                passwordStrength = passwordStrengthCalculator.calculateStrength(newPasswordValue)
             )
         }
     }
@@ -311,10 +311,9 @@ abstract class BaseLoginViewModel(
         loginItemFormMutableState = loginItemFormMutableState.copy(note = value)
     }
 
-    fun onEmitSnackbarMessage(snackbarMessage: LoginSnackbarMessages) =
-        viewModelScope.launch {
-            snackbarDispatcher(snackbarMessage)
-        }
+    fun onEmitSnackbarMessage(snackbarMessage: LoginSnackbarMessages) = viewModelScope.launch {
+        snackbarDispatcher(snackbarMessage)
+    }
 
     fun onAliasCreated(aliasItemFormState: AliasItemFormState) {
         onUserEditedContent()
@@ -486,17 +485,16 @@ abstract class BaseLoginViewModel(
         ) to false
     }
 
-    private fun sanitizeWebsites(websites: List<String>): List<String> =
-        websites.map { url ->
-            if (url.isBlank()) {
-                ""
-            } else {
-                UrlSanitizer.sanitize(url).fold(
-                    onSuccess = { it },
-                    onFailure = { url }
-                )
-            }
+    private fun sanitizeWebsites(websites: List<String>): List<String> = websites.map { url ->
+        if (url.isBlank()) {
+            ""
+        } else {
+            UrlSanitizer.sanitize(url).fold(
+                onSuccess = { it },
+                onFailure = { url }
+            )
         }
+    }
 
     fun onDeleteLinkedApp(packageInfo: PackageInfoUi) {
         onUserEditedContent()
@@ -631,11 +629,11 @@ abstract class BaseLoginViewModel(
                             loginItemFormMutableState = loginItemFormState.copy(
                                 password = UIHiddenState.Revealed(
                                     encrypted = encryptedPassword,
-                                    clearText = password,
+                                    clearText = password
                                 ),
                                 passwordStrength = passwordStrengthCalculator.calculateStrength(
                                     password
-                                ),
+                                )
                             )
                         }
                 }
@@ -693,10 +691,7 @@ abstract class BaseLoginViewModel(
         }
     }
 
-    private fun updateCustomFieldHiddenOnFocusChange(
-        field: LoginCustomField.CustomFieldHidden,
-        isFocused: Boolean
-    ) {
+    private fun updateCustomFieldHiddenOnFocusChange(field: LoginCustomField.CustomFieldHidden, isFocused: Boolean) {
         val customFields = loginItemFormState.customFields.toMutableList()
         val customFieldContent: UICustomFieldContent.Hidden? = customFields.getOrNull(field.index)
             as? UICustomFieldContent.Hidden
@@ -833,7 +828,7 @@ abstract class BaseLoginViewModel(
     protected fun updatePrimaryTotpIfNeeded(
         navTotpUri: String?,
         navTotpIndex: Int?,
-        currentValue: LoginItemFormState,
+        currentValue: LoginItemFormState
     ) = navTotpUri
         ?.takeIf { navTotpIndex == -1 }
         ?.let { decrypted ->
@@ -846,7 +841,7 @@ abstract class BaseLoginViewModel(
     protected fun updateCustomFieldsIfNeeded(
         navTotpUri: String?,
         navTotpIndex: Int,
-        currentValue: LoginItemFormState,
+        currentValue: LoginItemFormState
     ) = if (navTotpUri != null) {
         navTotpUri
             .takeIf { navTotpIndex >= 0 }

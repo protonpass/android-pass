@@ -104,7 +104,7 @@ fun LoginDetail(
 
             ProtonBottomSheetBackHandler(
                 bottomSheetState = bottomSheetState,
-                coroutineScope = scope,
+                coroutineScope = scope
             )
 
             var currentBottomSheet by remember { mutableStateOf(WebsiteOptions) }
@@ -148,17 +148,17 @@ fun LoginDetail(
                                     scope.launch { bottomSheetState.hide() }
                                     viewModel.pinItem(
                                         shareId = state.itemUiModel.shareId,
-                                        itemId = state.itemUiModel.id,
+                                        itemId = state.itemUiModel.id
                                     )
                                 },
                                 onUnpinned = {
                                     scope.launch { bottomSheetState.hide() }
                                     viewModel.unpinItem(
                                         shareId = state.itemUiModel.shareId,
-                                        itemId = state.itemUiModel.id,
+                                        itemId = state.itemUiModel.id
                                     )
                                 },
-                                isPinningFeatureEnabled = state.isPinningFeatureEnabled,
+                                isPinningFeatureEnabled = state.isPinningFeatureEnabled
                             )
 
                             ItemState.Trashed.value -> TrashItemBottomSheetContents(
@@ -182,7 +182,7 @@ fun LoginDetail(
                                         text = contents.title,
                                         canLoadExternalImages = canLoadExternalImages,
                                         website = website,
-                                        packageName = packageName,
+                                        packageName = packageName
                                     )
                                 }
                             )
@@ -210,7 +210,7 @@ fun LoginDetail(
                             onShareClick = {
                                 onShareClick(state.itemActions, onNavigate, state.itemUiModel)
                             },
-                            shouldShowMenu = state.itemActions.canMoveToTrash || state.isPinningFeatureEnabled,
+                            shouldShowMenu = state.itemActions.canMoveToTrash || state.isPinningFeatureEnabled
                         )
                     }
                 ) { padding ->
@@ -264,7 +264,7 @@ fun LoginDetail(
                                         onNavigate(
                                             ItemDetailNavigation.OnViewItem(
                                                 shareId = aliasItem.shareId,
-                                                itemId = aliasItem.itemId,
+                                                itemId = aliasItem.itemId
                                             )
                                         )
                                     }
@@ -301,7 +301,7 @@ fun LoginDetail(
                                 LoginDetailEvent.OnViewItemHistoryClicked -> onNavigate(
                                     ItemDetailNavigation.OnViewItemHistory(
                                         shareId = state.itemUiModel.shareId,
-                                        itemId = state.itemUiModel.id,
+                                        itemId = state.itemUiModel.id
                                     )
                                 )
                                 is LoginDetailEvent.OnSelectPasskey -> {
@@ -315,7 +315,7 @@ fun LoginDetail(
                                 }
                             }
                         },
-                        isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,
+                        isHistoryFeatureEnabled = state.isHistoryFeatureEnabled
                     )
                 }
                 ConfirmDeleteItemDialog(

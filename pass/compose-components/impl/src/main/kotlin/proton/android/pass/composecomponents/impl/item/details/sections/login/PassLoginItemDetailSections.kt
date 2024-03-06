@@ -45,11 +45,11 @@ internal fun PassLoginItemDetailSections(
     onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
     onHiddenSectionClick: (HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
     onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
-    onLinkClick: (String) -> Unit,
+    onLinkClick: (String) -> Unit
 ) = with(contents) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         PassLoginItemDetailMainSection(
             username = username,
@@ -59,7 +59,7 @@ internal fun PassLoginItemDetailSections(
             itemColors = itemColors,
             onSectionClick = onSectionClick,
             onHiddenSectionClick = onHiddenSectionClick,
-            onHiddenSectionToggle = onHiddenSectionToggle,
+            onHiddenSectionToggle = onHiddenSectionToggle
         )
 
         if (urls.isNotEmpty()) {
@@ -67,14 +67,14 @@ internal fun PassLoginItemDetailSections(
                 websiteUrls = urls.toPersistentList(),
                 itemColors = itemColors,
                 onSectionClick = onSectionClick,
-                onLinkClick = onLinkClick,
+                onLinkClick = onLinkClick
             )
         }
 
         if (note.isNotBlank()) {
             PassSharedItemDetailNoteSection(
                 note = note,
-                itemColors = itemColors,
+                itemColors = itemColors
             )
         }
 
@@ -84,7 +84,7 @@ internal fun PassLoginItemDetailSections(
                 itemColors = itemColors,
                 onSectionClick = onSectionClick,
                 onHiddenSectionClick = onHiddenSectionClick,
-                onHiddenSectionToggle = onHiddenSectionToggle,
+                onHiddenSectionToggle = onHiddenSectionToggle
             )
         }
     }

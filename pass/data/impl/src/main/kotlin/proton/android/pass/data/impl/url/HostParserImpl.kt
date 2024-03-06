@@ -37,12 +37,11 @@ class HostParserImpl @Inject constructor(
             getHostInfoFromDomain(protocol, domain)
         }
 
-    private fun getHostInfoFromDomain(protocol: String, domain: String): Result<HostInfo> =
-        if (isIp(domain)) {
-            Result.success(HostInfo.Ip(domain))
-        } else {
-            parseHostInfo(protocol, domain)
-        }
+    private fun getHostInfoFromDomain(protocol: String, domain: String): Result<HostInfo> = if (isIp(domain)) {
+        Result.success(HostInfo.Ip(domain))
+    } else {
+        parseHostInfo(protocol, domain)
+    }
 
     @Suppress("ReturnCount")
     private fun parseHostInfo(protocol: String, domain: String): Result<HostInfo.Host> {
@@ -91,19 +90,18 @@ class HostParserImpl @Inject constructor(
         protocol: String,
         domain: String,
         publicSuffixes: Set<String>
-    ): Result<HostInfo.Host> =
-        if (publicSuffixes.contains(domain)) {
-            Result.failure(IllegalArgumentException("host is a TLD"))
-        } else {
-            Result.success(
-                HostInfo.Host(
-                    protocol = protocol,
-                    subdomain = None,
-                    domain = domain,
-                    tld = None
-                )
+    ): Result<HostInfo.Host> = if (publicSuffixes.contains(domain)) {
+        Result.failure(IllegalArgumentException("host is a TLD"))
+    } else {
+        Result.success(
+            HostInfo.Host(
+                protocol = protocol,
+                subdomain = None,
+                domain = domain,
+                tld = None
             )
-        }
+        )
+    }
 
     private fun hostWithTld(
         protocol: String,

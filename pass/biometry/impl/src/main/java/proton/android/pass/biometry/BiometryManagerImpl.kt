@@ -49,85 +49,82 @@ class BiometryManagerImpl @Inject constructor(
     private val storeAuthSuccessful: StoreAuthSuccessful
 ) : BiometryManager {
 
-    override fun getBiometryStatus(): BiometryStatus =
-        when (val res = canAuthenticate()) {
-            BiometryResult.Success -> {
-                PassLogger.i(TAG, "Biometry")
-                BiometryStatus.CanAuthenticate
-            }
+    override fun getBiometryStatus(): BiometryStatus = when (val res = canAuthenticate()) {
+        BiometryResult.Success -> {
+            PassLogger.i(TAG, "Biometry")
+            BiometryStatus.CanAuthenticate
+        }
 
-            is BiometryResult.FailedToStart -> when (res.cause) {
-                BiometryStartupError.NoneEnrolled -> BiometryStatus.NotEnrolled
-                else -> BiometryStatus.NotAvailable
-            }
-
+        is BiometryResult.FailedToStart -> when (res.cause) {
+            BiometryStartupError.NoneEnrolled -> BiometryStatus.NotEnrolled
             else -> BiometryStatus.NotAvailable
         }
 
-    override fun launch(
-        contextHolder: ClassHolder<Context>,
-        biometryType: BiometryType
-    ): Flow<BiometryResult> = channelFlow {
-        val canAuthenticate = canAuthenticate()
-        if (canAuthenticate is BiometryResult.FailedToStart) {
-            trySend(canAuthenticate)
-            close()
-            return@channelFlow
-        }
-
-        val callback = object : BiometricPrompt.AuthenticationCallback() {
-            override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                PassLogger.i(TAG, "Auth error [code=$errorCode]: $errString")
-                trySend(BiometryResult.Error(BiometryAuthError.from(errorCode)))
-                close()
-            }
-
-            override fun onAuthenticationFailed() {
-                PassLogger.i(TAG, "Auth failed")
-                trySend(BiometryResult.Failed)
-            }
-
-            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                PassLogger.i(TAG, "Auth succeeded")
-                storeAuthSuccessful()
-                trySend(BiometryResult.Success)
-                close()
-            }
-        }
-
-        val ctx = when (val ctx = contextHolder.get()) {
-            None -> {
-                val message = "Received None context"
-                PassLogger.e(TAG, IllegalArgumentException(message), message)
-                trySend(BiometryResult.FailedToStart(BiometryStartupError.Unknown))
-                return@channelFlow
-            }
-
-            is Some -> ctx.value
-        }
-
-        val prompt = when (ctx) {
-            is FragmentActivity -> BiometricPrompt(
-                ctx,
-                ContextCompat.getMainExecutor(ctx),
-                callback
-            )
-
-            else -> {
-                val message = "Context is not FragmentActivity"
-                PassLogger.e(TAG, IllegalArgumentException(message), message)
-                trySend(BiometryResult.FailedToStart(BiometryStartupError.Unknown))
-                close()
-                return@channelFlow
-            }
-        }
-
-        PassLogger.i(TAG, "Starting biometry authentication")
-        val biometricSystemLock = userPreferencesRepository.getBiometricSystemLockPreference()
-            .first()
-        prompt.authenticate(getPromptInfo(ctx, biometricSystemLock, biometryType))
-        awaitClose()
+        else -> BiometryStatus.NotAvailable
     }
+
+    override fun launch(contextHolder: ClassHolder<Context>, biometryType: BiometryType): Flow<BiometryResult> =
+        channelFlow {
+            val canAuthenticate = canAuthenticate()
+            if (canAuthenticate is BiometryResult.FailedToStart) {
+                trySend(canAuthenticate)
+                close()
+                return@channelFlow
+            }
+
+            val callback = object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    PassLogger.i(TAG, "Auth error [code=$errorCode]: $errString")
+                    trySend(BiometryResult.Error(BiometryAuthError.from(errorCode)))
+                    close()
+                }
+
+                override fun onAuthenticationFailed() {
+                    PassLogger.i(TAG, "Auth failed")
+                    trySend(BiometryResult.Failed)
+                }
+
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    PassLogger.i(TAG, "Auth succeeded")
+                    storeAuthSuccessful()
+                    trySend(BiometryResult.Success)
+                    close()
+                }
+            }
+
+            val ctx = when (val ctx = contextHolder.get()) {
+                None -> {
+                    val message = "Received None context"
+                    PassLogger.e(TAG, IllegalArgumentException(message), message)
+                    trySend(BiometryResult.FailedToStart(BiometryStartupError.Unknown))
+                    return@channelFlow
+                }
+
+                is Some -> ctx.value
+            }
+
+            val prompt = when (ctx) {
+                is FragmentActivity -> BiometricPrompt(
+                    ctx,
+                    ContextCompat.getMainExecutor(ctx),
+                    callback
+                )
+
+                else -> {
+                    val message = "Context is not FragmentActivity"
+                    PassLogger.e(TAG, IllegalArgumentException(message), message)
+                    trySend(BiometryResult.FailedToStart(BiometryStartupError.Unknown))
+                    close()
+                    return@channelFlow
+                }
+            }
+
+            PassLogger.i(TAG, "Starting biometry authentication")
+            val biometricSystemLock = userPreferencesRepository.getBiometricSystemLockPreference()
+                .first()
+            prompt.authenticate(getPromptInfo(ctx, biometricSystemLock, biometryType))
+            awaitClose()
+        }
 
     private fun canAuthenticate(): BiometryResult {
         val biometricSystemLock = runBlocking {

@@ -55,10 +55,7 @@ object CreateLogin : NavItem(
     baseRoute = "login/create",
     optionalArgIds = listOf(CommonOptionalNavArgId.ShareId, CreateLoginDefaultUsernameArg)
 ) {
-    fun createNavRoute(
-        shareId: Option<ShareId> = None,
-        username: Option<String> = None
-    ) = buildString {
+    fun createNavRoute(shareId: Option<ShareId> = None, username: Option<String> = None) = buildString {
         append(baseRoute)
         val map = mutableMapOf<String, Any>()
         if (shareId is Some) {

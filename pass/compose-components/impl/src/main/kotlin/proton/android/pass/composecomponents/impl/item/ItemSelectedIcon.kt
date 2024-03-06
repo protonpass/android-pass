@@ -36,10 +36,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 
 @Composable
-fun ItemSelectedIcon(
-    modifier: Modifier = Modifier,
-    size: Int = 40,
-) {
+fun ItemSelectedIcon(modifier: Modifier = Modifier, size: Int = 40) {
     Box(
         modifier = modifier
             .size(size.dp)
@@ -65,9 +62,7 @@ fun ItemSelectedIcon(
 
 @Preview
 @Composable
-fun ItemSelectedIconPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun ItemSelectedIconPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             ItemSelectedIcon()

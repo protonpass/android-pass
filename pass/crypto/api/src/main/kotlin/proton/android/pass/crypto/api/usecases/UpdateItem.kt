@@ -25,7 +25,7 @@ data class EncryptedUpdateItemRequest(
     val keyRotation: Long,
     val lastRevision: Long,
     val contentFormatVersion: Int,
-    val content: String,
+    val content: String
 )
 
 interface UpdateItem {

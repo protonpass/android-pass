@@ -31,8 +31,5 @@ data class ItemWithVaultInfo(
 )
 
 interface GetItemByIdWithVault {
-    operator fun invoke(
-        shareId: ShareId,
-        itemId: ItemId
-    ): Flow<ItemWithVaultInfo>
+    operator fun invoke(shareId: ShareId, itemId: ItemId): Flow<ItemWithVaultInfo>
 }

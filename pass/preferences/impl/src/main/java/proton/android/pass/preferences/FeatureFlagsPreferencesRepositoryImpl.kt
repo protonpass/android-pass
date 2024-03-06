@@ -43,23 +43,23 @@ import javax.inject.Singleton
 class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val featureFlagManager: FeatureFlagRepository,
-    private val dataStore: DataStore<FeatureFlagsPreferences>,
+    private val dataStore: DataStore<FeatureFlagsPreferences>
 ) : FeatureFlagsPreferencesRepository {
 
     override fun <T> get(featureFlag: FeatureFlag): Flow<T> = when (featureFlag) {
         AUTOFILL_DEBUG_MODE -> getFeatureFlag(
             key = featureFlag.key,
-            defaultValue = featureFlag.isEnabledDefault,
+            defaultValue = featureFlag.isEnabledDefault
         ) { autofillDebugModeEnabled.value }
 
         PINNING_V1 -> getFeatureFlag(
             key = featureFlag.key,
-            defaultValue = featureFlag.isEnabledDefault,
+            defaultValue = featureFlag.isEnabledDefault
         ) { pinningV1Enabled.value }
 
         HISTORY_V1 -> getFeatureFlag(
             key = featureFlag.key,
-            defaultValue = featureFlag.isEnabledDefault,
+            defaultValue = featureFlag.isEnabledDefault
         ) { historyV1Enabled.value }
     }
 
@@ -81,32 +81,31 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
         key: String?,
         defaultValue: Boolean,
         prefGetter: FeatureFlagsPreferences.() -> BooleanPrefProto
-    ): Flow<T> =
-        if (key != null) {
-            accountManager.getPrimaryUserId()
-                .flatMapLatest { userId ->
-                    featureFlagManager.observe(
-                        userId = userId,
-                        featureId = FeatureId(id = key),
-                    )
-                }
-                .flatMapLatest { featureFlag ->
-                    dataStore.data
-                        .catch { exception -> handleExceptions(exception) }
-                        .map { preferences ->
-                            fromBooleanPrefProto(
-                                pref = prefGetter(preferences),
-                                default = featureFlag?.value ?: defaultValue,
-                            ) as T
-                        }
-                }
-        } else {
-            dataStore.data
-                .catch { exception -> handleExceptions(exception) }
-                .map {
-                    fromBooleanPrefProto(prefGetter(it)) as T
-                }
-        }
+    ): Flow<T> = if (key != null) {
+        accountManager.getPrimaryUserId()
+            .flatMapLatest { userId ->
+                featureFlagManager.observe(
+                    userId = userId,
+                    featureId = FeatureId(id = key)
+                )
+            }
+            .flatMapLatest { featureFlag ->
+                dataStore.data
+                    .catch { exception -> handleExceptions(exception) }
+                    .map { preferences ->
+                        fromBooleanPrefProto(
+                            pref = prefGetter(preferences),
+                            default = featureFlag?.value ?: defaultValue
+                        ) as T
+                    }
+            }
+    } else {
+        dataStore.data
+            .catch { exception -> handleExceptions(exception) }
+            .map {
+                fromBooleanPrefProto(prefGetter(it)) as T
+            }
+    }
 
     private fun setFeatureFlag(setter: FeatureFlagsPreferences.Builder.() -> Unit) = runCatching {
         runBlocking {
@@ -119,17 +118,13 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
         return@runCatching
     }
 
-    private fun <T> boolFlagPrefProto(
-        value: T?
-    ): BoolFlagPrefProto {
+    private fun <T> boolFlagPrefProto(value: T?): BoolFlagPrefProto {
         val builder = BoolFlagPrefProto.newBuilder()
         value?.let { builder.value = (it as Boolean).toBooleanPrefProto() }
         return builder.build()
     }
 
-    private suspend fun FlowCollector<FeatureFlagsPreferences>.handleExceptions(
-        exception: Throwable
-    ) {
+    private suspend fun FlowCollector<FeatureFlagsPreferences>.handleExceptions(exception: Throwable) {
         if (exception is IOException) {
             PassLogger.e("Cannot read preferences.", exception)
             emit(FeatureFlagsPreferences.getDefaultInstance())

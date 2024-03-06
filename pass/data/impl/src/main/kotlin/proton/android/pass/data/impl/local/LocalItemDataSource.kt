@@ -58,18 +58,23 @@ interface LocalItemDataSource {
     fun observeAllPinnedItemsForShares(
         userId: UserId,
         filter: ItemTypeFilter,
-        shareIds: List<ShareId>,
+        shareIds: List<ShareId>
     ): Flow<List<ItemEntity>>
 
-    fun observeItem(
-        shareId: ShareId,
-        itemId: ItemId,
-    ): Flow<ItemEntity>
+    fun observeItem(shareId: ShareId, itemId: ItemId): Flow<ItemEntity>
 
     suspend fun getById(shareId: ShareId, itemId: ItemId): ItemEntity?
     suspend fun getByIdList(shareId: ShareId, itemIds: List<ItemId>): List<ItemEntity>
-    suspend fun setItemState(shareId: ShareId, itemId: ItemId, itemState: ItemState)
-    suspend fun setItemStates(shareId: ShareId, itemIds: List<ItemId>, itemState: ItemState)
+    suspend fun setItemState(
+        shareId: ShareId,
+        itemId: ItemId,
+        itemState: ItemState
+    )
+    suspend fun setItemStates(
+        shareId: ShareId,
+        itemIds: List<ItemId>,
+        itemState: ItemState
+    )
     suspend fun getTrashedItems(userId: UserId): List<ItemEntity>
     suspend fun delete(shareId: ShareId, itemId: ItemId): Boolean
     suspend fun deleteList(shareId: ShareId, itemIds: List<ItemId>): Boolean
@@ -80,7 +85,11 @@ interface LocalItemDataSource {
         itemState: ItemState?
     ): Flow<ItemCountSummary>
 
-    suspend fun updateLastUsedTime(shareId: ShareId, itemId: ItemId, now: Long)
+    suspend fun updateLastUsedTime(
+        shareId: ShareId,
+        itemId: ItemId,
+        now: Long
+    )
     fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>>
     suspend fun getItemByAliasEmail(userId: UserId, aliasEmail: String): ItemEntity?
 

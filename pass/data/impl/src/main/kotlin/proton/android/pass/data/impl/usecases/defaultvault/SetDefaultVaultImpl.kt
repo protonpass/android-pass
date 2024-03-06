@@ -29,7 +29,6 @@ class SetDefaultVaultImpl @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository
 ) : SetDefaultVault {
 
-    override suspend fun invoke(shareId: ShareId): Result<Unit> =
-        userPreferencesRepository.setDefaultVault(shareId.id)
+    override suspend fun invoke(shareId: ShareId): Result<Unit> = userPreferencesRepository.setDefaultVault(shareId.id)
 
 }

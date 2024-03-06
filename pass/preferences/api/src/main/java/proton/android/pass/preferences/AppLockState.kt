@@ -27,10 +27,9 @@ sealed interface AppLockState {
     }
 }
 
-fun AppLockState.value(): Boolean =
-    when (this) {
-        AppLockState.Enabled -> true
-        AppLockState.Disabled -> false
-    }
+fun AppLockState.value(): Boolean = when (this) {
+    AppLockState.Enabled -> true
+    AppLockState.Disabled -> false
+}
 
 

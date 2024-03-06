@@ -45,8 +45,7 @@ class TestHomeSearchOptionsRepository @Inject constructor() : HomeSearchOptionsR
 
     override fun observeFilterOption(): Flow<FilterOption> = filterOptionFlow
 
-    override fun observeVaultSelectionOption(): Flow<VaultSelectionOption> =
-        vaultSelectionOptionFlow
+    override fun observeVaultSelectionOption(): Flow<VaultSelectionOption> = vaultSelectionOptionFlow
 
     override fun setSortingOption(sortingOption: SortingOption) {
         sortingOptionFlow.update { sortingOption }

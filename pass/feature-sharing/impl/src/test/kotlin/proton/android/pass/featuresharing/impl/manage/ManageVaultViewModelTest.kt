@@ -54,7 +54,7 @@ internal class ManageVaultViewModelTest {
             },
             snackbarDispatcher = TestSnackbarDispatcher(),
             confirmNewUserInvite = confirmNewUserInvite,
-            getUserPlan = TestGetUserPlan(),
+            getUserPlan = TestGetUserPlan()
         )
     }
 

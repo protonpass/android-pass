@@ -49,7 +49,7 @@ class InvitesInfoViewModel @Inject constructor(
             .map { share ->
                 InvitesInfoUiState(
                     remainingInvites = share.remainingInvites,
-                    maxMembers = share.maxMembers,
+                    maxMembers = share.maxMembers
                 )
             }
             .asLoadingResult()

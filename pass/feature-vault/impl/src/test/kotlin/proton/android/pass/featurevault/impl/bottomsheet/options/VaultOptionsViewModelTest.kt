@@ -279,7 +279,7 @@ class VaultOptionsViewModelTest {
         val vaults = listOf(
             vaultWith(owned = false),
             ownedVault,
-            vaultWith(owned = false),
+            vaultWith(owned = false)
         )
         setNavShareId(ownedVault.shareId)
         observeVaults.sendResult(Result.success(vaults))
@@ -299,7 +299,7 @@ class VaultOptionsViewModelTest {
         val vaults = listOf(
             vaultWith(owned = false),
             ownedVault,
-            vaultWith(owned = false),
+            vaultWith(owned = false)
         )
         setNavShareId(ownedVault.shareId)
         observeVaults.sendResult(Result.success(vaults))
@@ -313,10 +313,7 @@ class VaultOptionsViewModelTest {
         }
     }
 
-    private fun emitDefaultVault(
-        owned: Boolean = true,
-        shared: Boolean = true
-    ): Vault {
+    private fun emitDefaultVault(owned: Boolean = true, shared: Boolean = true): Vault {
         val defaultVault = Vault(
             shareId = ShareId(SHARE_ID),
             name = "Test vault",

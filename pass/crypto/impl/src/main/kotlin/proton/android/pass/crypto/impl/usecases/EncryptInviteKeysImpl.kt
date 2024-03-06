@@ -44,7 +44,7 @@ class EncryptInviteKeysImpl @Inject constructor(
     override fun invoke(
         inviterAddressKey: PrivateKey,
         shareKeys: List<ShareKey>,
-        targetAddressKey: PublicKey,
+        targetAddressKey: PublicKey
     ): EncryptedInviteShareKeyList {
         // Set up targetAddressKey
         val targetAddressPublicKeyRing = PublicKeyRing(listOf(targetAddressKey))

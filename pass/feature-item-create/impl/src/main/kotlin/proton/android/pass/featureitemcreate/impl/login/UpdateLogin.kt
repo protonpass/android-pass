@@ -54,7 +54,7 @@ fun UpdateLogin(
     navTotpUri: String? = null,
     navTotpIndex: Int? = null,
     onNavigate: (BaseLoginNavigation) -> Unit,
-    viewModel: UpdateLoginViewModel = hiltViewModel(),
+    viewModel: UpdateLoginViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.updateLoginUiState.collectAsStateWithLifecycle()
 
@@ -203,6 +203,6 @@ fun UpdateLogin(
         }
     )
     InAppReviewTriggerLaunchedEffect(
-        triggerCondition = uiState.baseLoginUiState.isItemSaved is ItemSavedState.Success,
+        triggerCondition = uiState.baseLoginUiState.isItemSaved is ItemSavedState.Success
     )
 }

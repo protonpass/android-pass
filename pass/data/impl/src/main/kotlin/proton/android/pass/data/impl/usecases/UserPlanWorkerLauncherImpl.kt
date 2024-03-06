@@ -34,7 +34,7 @@ import javax.inject.Inject
 
 class UserPlanWorkerLauncherImpl @Inject constructor(
     private val workManager: WorkManager,
-    private val eventWorkerManager: EventWorkerManager,
+    private val eventWorkerManager: EventWorkerManager
 ) : UserPlanWorkerLauncher {
 
     override fun start() {

@@ -53,20 +53,18 @@ fun CircledPin(
             .padding(2.dp * ratio)
             .background(
                 color = backgroundColor,
-                shape = CircleShape,
+                shape = CircleShape
             )
             .padding(4.dp * ratio),
         painter = painterResource(R.drawable.ic_pin_filled),
         tint = PassTheme.colors.backgroundNorm,
-        contentDescription = null,
+        contentDescription = null
     )
 }
 
 @Preview
 @Composable
-fun CircledPinPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun CircledPinPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             CircledPin(

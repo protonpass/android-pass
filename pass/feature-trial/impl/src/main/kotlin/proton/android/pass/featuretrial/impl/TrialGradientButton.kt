@@ -60,7 +60,7 @@ fun TrialGradientButton(
                 )
             )
             .clickable { onClick() }
-            .padding(vertical = 16.dp),
+            .padding(vertical = 16.dp)
     ) {
         Text(
             modifier = Modifier.fillMaxWidth(),
@@ -74,9 +74,7 @@ fun TrialGradientButton(
 
 @Preview
 @Composable
-fun TrialGradientButtonPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun TrialGradientButtonPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             TrialGradientButton(

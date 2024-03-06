@@ -27,9 +27,8 @@ sealed interface AllowScreenshotsPreference {
     }
 }
 
-fun AllowScreenshotsPreference.value(): Boolean =
-    when (this) {
-        AllowScreenshotsPreference.Enabled -> true
-        AllowScreenshotsPreference.Disabled -> false
-    }
+fun AllowScreenshotsPreference.value(): Boolean = when (this) {
+    AllowScreenshotsPreference.Enabled -> true
+    AllowScreenshotsPreference.Disabled -> false
+}
 

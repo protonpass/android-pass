@@ -32,7 +32,7 @@ internal sealed interface ItemHistoryRestoreState {
     data class ItemDetails(
         internal val itemDetailState: ItemDetailState,
         internal val itemRevision: ItemRevision,
-        internal val event: ItemHistoryRestoreEvent = ItemHistoryRestoreEvent.Idle,
+        internal val event: ItemHistoryRestoreEvent = ItemHistoryRestoreEvent.Idle
     ) : ItemHistoryRestoreState
 
 }

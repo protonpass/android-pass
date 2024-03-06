@@ -38,7 +38,7 @@ class ItemTitlePreviewProvider : PreviewParameterProvider<ItemTitleInput> {
                 ItemTitleInput(
                     vault = null,
                     isPinned = false,
-                    isHistoryFeatureEnabled = false,
+                    isHistoryFeatureEnabled = false
                 )
             )
             yield(
@@ -47,17 +47,17 @@ class ItemTitlePreviewProvider : PreviewParameterProvider<ItemTitleInput> {
                         shareId = ShareId("123"),
                         name = "A vault",
                         color = ShareColor.Color1,
-                        icon = ShareIcon.Icon1,
+                        icon = ShareIcon.Icon1
                     ),
                     isPinned = false,
-                    isHistoryFeatureEnabled = false,
+                    isHistoryFeatureEnabled = false
                 )
             )
             yield(
                 ItemTitleInput(
                     vault = null,
                     isPinned = true,
-                    isHistoryFeatureEnabled = false,
+                    isHistoryFeatureEnabled = false
                 )
             )
             yield(
@@ -66,10 +66,10 @@ class ItemTitlePreviewProvider : PreviewParameterProvider<ItemTitleInput> {
                         shareId = ShareId("123"),
                         name = "A vault",
                         color = ShareColor.Color1,
-                        icon = ShareIcon.Icon1,
+                        icon = ShareIcon.Icon1
                     ),
                     isPinned = true,
-                    isHistoryFeatureEnabled = false,
+                    isHistoryFeatureEnabled = false
                 )
             )
         }
@@ -82,15 +82,15 @@ data class ItemTitleInput(
         shareId = ShareId("123"),
         contents = ItemContents.Note(
             title = "A really long title to check if the element is multiline",
-            note = "Note body",
+            note = "Note body"
         ),
         state = 0,
         createTime = Instant.fromEpochMilliseconds(1_697_213_366_026),
         modificationTime = Instant.fromEpochMilliseconds(1_707_213_366_026),
         lastAutofillTime = null,
-        isPinned = false,
+        isPinned = false
     ),
     val vault: Vault?,
     val isPinned: Boolean,
-    val isHistoryFeatureEnabled: Boolean,
+    val isHistoryFeatureEnabled: Boolean
 )

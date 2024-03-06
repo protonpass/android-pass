@@ -49,7 +49,7 @@ fun CreatePasskeyAppContent(
     needsAuth: Boolean,
     navState: CreatePasskeyNavState.Ready,
     onEvent: (CreatePasskeyEvent) -> Unit,
-    onNavigate: (CreatePasskeyNavigation) -> Unit,
+    onNavigate: (CreatePasskeyNavigation) -> Unit
 ) {
     val startDestination = remember {
         if (needsAuth) {
@@ -67,11 +67,11 @@ fun CreatePasskeyAppContent(
 
     ProtonBottomSheetBackHandler(
         bottomSheetState = bottomSheetState,
-        coroutineScope = coroutineScope,
+        coroutineScope = coroutineScope
     )
 
     val appNavigator = rememberAppNavigator(
-        bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState),
+        bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState)
     )
 
     PassModalBottomSheetLayout(bottomSheetNavigator = appNavigator.passBottomSheetNavigator) {

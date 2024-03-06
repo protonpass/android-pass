@@ -48,7 +48,7 @@ fun CameraPermissionContent(
     modifier: Modifier = Modifier,
     onRequestPermission: () -> Unit,
     onOpenAppSettings: () -> Unit,
-    onDismiss: () -> Unit,
+    onDismiss: () -> Unit
 ) {
     LaunchedEffect(Unit) { onRequestPermission() }
     Box(modifier = modifier.fillMaxSize()) {
@@ -81,9 +81,7 @@ fun CameraPermissionContent(
 
 @Preview
 @Composable
-fun CameraPermissionContentPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun CameraPermissionContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             CameraPermissionContent(

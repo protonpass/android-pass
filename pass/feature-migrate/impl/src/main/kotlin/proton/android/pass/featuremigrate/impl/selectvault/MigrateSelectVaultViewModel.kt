@@ -60,7 +60,7 @@ class MigrateSelectVaultViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandleProvider,
     bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     observeVaults: ObserveVaultsWithItemCount,
-    snackbarDispatcher: SnackbarDispatcher,
+    snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     private val mode: Mode = getMode()

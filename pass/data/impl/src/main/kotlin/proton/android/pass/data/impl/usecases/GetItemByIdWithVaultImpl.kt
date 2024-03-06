@@ -33,20 +33,17 @@ import javax.inject.Singleton
 @Singleton
 class GetItemByIdWithVaultImpl @Inject constructor(
     private val getItemById: ObserveItemById,
-    private val observeVaults: ObserveVaults,
+    private val observeVaults: ObserveVaults
 ) : GetItemByIdWithVault {
 
-    override fun invoke(
-        shareId: ShareId,
-        itemId: ItemId,
-    ): Flow<ItemWithVaultInfo> = getItemById(shareId, itemId)
+    override fun invoke(shareId: ShareId, itemId: ItemId): Flow<ItemWithVaultInfo> = getItemById(shareId, itemId)
         .flatMapLatest { item ->
             observeVaults().map { vaults ->
                 ItemWithVaultInfo(
                     item = item,
                     hasMoreThanOneVault = vaults.size > 1,
                     vault = vaults.firstOrNull { it.shareId == item.shareId }
-                        ?: throw IllegalStateException("Vault not found"),
+                        ?: throw IllegalStateException("Vault not found")
                 )
             }
         }

@@ -32,13 +32,13 @@ import javax.inject.Inject
 class RestoreItemRevisionImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val updateItem: UpdateItem,
-    private val itemRepository: ItemRepository,
+    private val itemRepository: ItemRepository
 ) : RestoreItemRevision {
 
     override suspend fun invoke(
         shareId: ShareId,
         itemId: ItemId,
-        itemContents: ItemContents,
+        itemContents: ItemContents
     ) {
         accountManager
             .getPrimaryUserId()
@@ -48,7 +48,7 @@ class RestoreItemRevisionImpl @Inject constructor(
                     userId = userId,
                     shareId = shareId,
                     item = itemRepository.getById(shareId, itemId),
-                    contents = itemContents,
+                    contents = itemContents
                 )
             }
             ?: throw UserIdNotAvailableError()

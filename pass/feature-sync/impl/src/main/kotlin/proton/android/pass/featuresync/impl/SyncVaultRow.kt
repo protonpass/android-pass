@@ -116,9 +116,7 @@ private const val LOADING_ROW_WEIGHT = 0.2f
 
 @Preview
 @Composable
-fun SyncVaultLoadingRowPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun SyncVaultLoadingRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             Column {
@@ -136,9 +134,7 @@ fun SyncVaultLoadingRowPreview(
 
 @Preview
 @Composable
-fun SyncVaultNotLoadingRowPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun SyncVaultNotLoadingRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             Column {

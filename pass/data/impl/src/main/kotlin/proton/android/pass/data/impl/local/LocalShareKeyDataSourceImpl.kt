@@ -28,18 +28,14 @@ import javax.inject.Inject
 class LocalShareKeyDataSourceImpl @Inject constructor(
     private val passDatabase: PassDatabase
 ) : LocalShareKeyDataSource {
-    override fun getAllShareKeysForShare(
-        userId: UserId,
-        shareId: ShareId
-    ): Flow<List<ShareKeyEntity>> =
+    override fun getAllShareKeysForShare(userId: UserId, shareId: ShareId): Flow<List<ShareKeyEntity>> =
         passDatabase.shareKeysDao().getAllForShare(userId.id, shareId.id)
 
     override fun getForShareAndRotation(
         userId: UserId,
         shareId: ShareId,
         rotation: Long
-    ): Flow<ShareKeyEntity?> =
-        passDatabase.shareKeysDao().getByShareAndRotation(userId.id, shareId.id, rotation)
+    ): Flow<ShareKeyEntity?> = passDatabase.shareKeysDao().getByShareAndRotation(userId.id, shareId.id, rotation)
 
     override fun getLatestKeyForShare(shareId: ShareId): Flow<ShareKeyEntity> =
         passDatabase.shareKeysDao().getLatestKeyForShare(shareId.id)

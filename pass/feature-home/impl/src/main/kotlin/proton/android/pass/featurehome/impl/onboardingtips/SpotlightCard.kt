@@ -70,7 +70,7 @@ fun SpotlightCard(
         elevation = 10.dp
     ) {
         Box(
-            modifier = Modifier.background(backgroundColor),
+            modifier = Modifier.background(backgroundColor)
         ) {
             Row(
                 modifier = Modifier.padding(16.dp, 32.dp),
@@ -116,9 +116,7 @@ fun SpotlightCard(
 
 @Preview
 @Composable
-fun SpotlightCardPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun SpotlightCardPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             SpotlightCard(

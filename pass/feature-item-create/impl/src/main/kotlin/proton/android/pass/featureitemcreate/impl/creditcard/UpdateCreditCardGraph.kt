@@ -11,17 +11,14 @@ object EditCreditCard : NavItem(
     baseRoute = "creditcard/edit/screen",
     navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId)
 ) {
-    fun createNavRoute(shareId: ShareId, itemId: ItemId) =
-        "$baseRoute/${shareId.id}/${itemId.id}"
+    fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
 }
 
 sealed interface UpdateCreditCardNavigation : BaseCreditCardNavigation {
     data class ItemUpdated(val shareId: ShareId, val itemId: ItemId) : UpdateCreditCardNavigation
 }
 
-fun NavGraphBuilder.updateCreditCardGraph(
-    onNavigate: (BaseCreditCardNavigation) -> Unit,
-) {
+fun NavGraphBuilder.updateCreditCardGraph(onNavigate: (BaseCreditCardNavigation) -> Unit) {
     composable(EditCreditCard) {
         UpdateCreditCardScreen(
             onNavigate = onNavigate

@@ -47,17 +47,14 @@ object EditCustomFieldNameDialog : NavItem(
     navArgIds = listOf(CustomFieldIndexNavArgId, CustomFieldTitleNavArgId),
     navItemType = NavItemType.Dialog
 ) {
-    fun buildRoute(index: Int, currentValue: String) =
-        "$baseRoute/$index/${NavParamEncoder.encode(currentValue)}"
+    fun buildRoute(index: Int, currentValue: String) = "$baseRoute/$index/${NavParamEncoder.encode(currentValue)}"
 }
 
 sealed interface CustomFieldNameNavigation {
     object Close : CustomFieldNameNavigation
 }
 
-fun NavGraphBuilder.customFieldNameDialogGraph(
-    onNavigate: (CustomFieldNameNavigation) -> Unit
-) {
+fun NavGraphBuilder.customFieldNameDialogGraph(onNavigate: (CustomFieldNameNavigation) -> Unit) {
     dialog(CustomFieldNameDialog) {
         CustomFieldNameDialog(onNavigate = onNavigate)
     }

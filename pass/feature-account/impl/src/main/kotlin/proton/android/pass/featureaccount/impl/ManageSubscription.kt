@@ -32,10 +32,7 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.setting.ColorSettingOption
 
 @Composable
-fun ManageSubscription(
-    modifier: Modifier = Modifier,
-    onSubscriptionClick: () -> Unit
-) {
+fun ManageSubscription(modifier: Modifier = Modifier, onSubscriptionClick: () -> Unit) {
     ColorSettingOption(
         modifier = modifier.roundedContainerNorm(),
         text = stringResource(R.string.account_manage_subscription),
@@ -54,9 +51,7 @@ fun ManageSubscription(
 
 @Preview
 @Composable
-fun ManageSubscriptionPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun ManageSubscriptionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             ManageSubscription {}

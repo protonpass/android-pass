@@ -58,7 +58,7 @@ internal fun PassItemDetailsHiddenFieldRow(
     onToggle: ((Boolean) -> Unit)? = null,
     hiddenTextStyle: TextStyle = ProtonTheme.typography.defaultNorm,
     needsRevealedColors: Boolean = false,
-    contentInBetween: (@Composable () -> Unit)? = null,
+    contentInBetween: (@Composable () -> Unit)? = null
 ) {
     val subtitle = when (hiddenState) {
         is HiddenState.Empty -> AnnotatedString("")
@@ -67,7 +67,7 @@ internal fun PassItemDetailsHiddenFieldRow(
             hiddenState.clearText.toPasswordAnnotatedString(
                 digitColor = ProtonTheme.colors.notificationError,
                 symbolColor = ProtonTheme.colors.notificationSuccess,
-                letterColor = ProtonTheme.colors.textNorm,
+                letterColor = ProtonTheme.colors.textNorm
             )
         } else {
             hiddenState.clearText.asAnnotatedString()
@@ -83,20 +83,20 @@ internal fun PassItemDetailsHiddenFieldRow(
             )
             .padding(all = Spacing.medium),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Spacing.small),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
         Icon(
             painter = icon,
             contentDescription = null,
-            tint = itemColors.norm,
+            tint = itemColors.norm
         )
 
         Column(
-            modifier = Modifier.weight(weight = 1f),
+            modifier = Modifier.weight(weight = 1f)
         ) {
             SectionTitle(
                 modifier = Modifier.padding(start = Spacing.small),
-                text = title,
+                text = title
             )
 
             Spacer(modifier = Modifier.height(Spacing.small))
@@ -104,7 +104,7 @@ internal fun PassItemDetailsHiddenFieldRow(
             SectionSubtitle(
                 modifier = Modifier.padding(start = Spacing.small),
                 text = subtitle,
-                textStyle = hiddenTextStyle,
+                textStyle = hiddenTextStyle
             )
         }
 
@@ -121,7 +121,7 @@ internal fun PassItemDetailsHiddenFieldRow(
         PassVisibilityToggle(
             isVisible = isVisible,
             onToggle = { onToggle?.invoke(!isVisible) },
-            itemColors = itemColors,
+            itemColors = itemColors
         )
     }
 }

@@ -27,9 +27,8 @@ sealed interface HasDismissedNotificationBanner {
     }
 }
 
-fun HasDismissedNotificationBanner.value(): Boolean =
-    when (this) {
-        HasDismissedNotificationBanner.Dismissed -> true
-        HasDismissedNotificationBanner.NotDismissed -> false
-    }
+fun HasDismissedNotificationBanner.value(): Boolean = when (this) {
+    HasDismissedNotificationBanner.Dismissed -> true
+    HasDismissedNotificationBanner.NotDismissed -> false
+}
 

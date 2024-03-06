@@ -44,7 +44,7 @@ import javax.inject.Inject
 class SharingPermissionsViewModel @Inject constructor(
     bulkInviteRepository: BulkInviteRepository,
     getVaultById: GetVaultById,
-    savedStateHandleProvider: SavedStateHandleProvider,
+    savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
     private val shareId: ShareId = ShareId(

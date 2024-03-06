@@ -52,23 +52,23 @@ sealed interface PlanLimit {
 
 sealed class PlanType(
     val internalName: String,
-    val humanReadableName: String,
+    val humanReadableName: String
 ) {
 
     data class Free(
         private val name: String,
-        private val displayName: String,
+        private val displayName: String
     ) : PlanType(
         internalName = name,
-        humanReadableName = displayName,
+        humanReadableName = displayName
     )
 
     data class Unknown(
         private val name: String,
-        private val displayName: String,
+        private val displayName: String
     ) : PlanType(
         internalName = name,
-        humanReadableName = displayName,
+        humanReadableName = displayName
     )
 
     data class Trial(
@@ -77,31 +77,31 @@ sealed class PlanType(
         val remainingDays: Int
     ) : PlanType(
         internalName = name,
-        humanReadableName = displayName,
+        humanReadableName = displayName
     )
 
     sealed class Paid(
         internalName: String,
-        humanReadableName: String,
+        humanReadableName: String
     ) : PlanType(
         internalName = internalName,
-        humanReadableName = humanReadableName,
+        humanReadableName = humanReadableName
     ) {
 
         data class Business(
             private val name: String,
-            private val displayName: String,
+            private val displayName: String
         ) : Paid(
             internalName = name,
-            humanReadableName = displayName,
+            humanReadableName = displayName
         )
 
         data class Plus(
             private val name: String,
-            private val displayName: String,
+            private val displayName: String
         ) : Paid(
             internalName = name,
-            humanReadableName = displayName,
+            humanReadableName = displayName
         )
 
     }

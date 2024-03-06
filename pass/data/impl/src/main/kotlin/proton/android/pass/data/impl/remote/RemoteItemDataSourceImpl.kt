@@ -131,10 +131,7 @@ class RemoteItemDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getItems(
-        userId: UserId,
-        shareId: ShareId
-    ): List<ItemRevision> =
+    override suspend fun getItems(userId: UserId, shareId: ShareId): List<ItemRevision> =
         api.get<PasswordManagerApi>(userId)
             .invoke {
                 var sinceToken: String? = null
@@ -157,10 +154,7 @@ class RemoteItemDataSourceImpl @Inject constructor(
             }
             .valueOrThrow
 
-    override fun observeItems(
-        userId: UserId,
-        shareId: ShareId
-    ): Flow<ItemTotal> = flow {
+    override fun observeItems(userId: UserId, shareId: ShareId): Flow<ItemTotal> = flow {
         api.get<PasswordManagerApi>(userId)
             .invoke {
                 var sinceToken: String? = null
@@ -191,19 +185,17 @@ class RemoteItemDataSourceImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         body: TrashItemsRequest
-    ): TrashItemsResponse =
-        api.get<PasswordManagerApi>(userId)
-            .invoke { trashItems(shareId.id, body) }
-            .valueOrThrow
+    ): TrashItemsResponse = api.get<PasswordManagerApi>(userId)
+        .invoke { trashItems(shareId.id, body) }
+        .valueOrThrow
 
     override suspend fun untrash(
         userId: UserId,
         shareId: ShareId,
         body: TrashItemsRequest
-    ): TrashItemsResponse =
-        api.get<PasswordManagerApi>(userId)
-            .invoke { untrashItems(shareId.id, body) }
-            .valueOrThrow
+    ): TrashItemsResponse = api.get<PasswordManagerApi>(userId)
+        .invoke { untrashItems(shareId.id, body) }
+        .valueOrThrow
 
     override suspend fun delete(
         userId: UserId,
@@ -229,27 +221,25 @@ class RemoteItemDataSourceImpl @Inject constructor(
         shareId: ShareId,
         itemId: ItemId,
         body: MigrateItemRequest
-    ): ItemRevision =
-        api.get<PasswordManagerApi>(userId)
-            .invoke { migrateItem(shareId.id, itemId.id, body).item }
-            .valueOrThrow
-            .toDomain()
+    ): ItemRevision = api.get<PasswordManagerApi>(userId)
+        .invoke { migrateItem(shareId.id, itemId.id, body).item }
+        .valueOrThrow
+        .toDomain()
 
     override suspend fun migrateItems(
         userId: UserId,
         shareId: ShareId,
         body: MigrateItemsRequest
-    ): List<ItemRevision> =
-        api.get<PasswordManagerApi>(userId)
-            .invoke { migrateItems(shareId.id, body).items }
-            .valueOrThrow
-            .toDomain()
+    ): List<ItemRevision> = api.get<PasswordManagerApi>(userId)
+        .invoke { migrateItems(shareId.id, body).items }
+        .valueOrThrow
+        .toDomain()
 
 
     override suspend fun pinItem(
         userId: UserId,
         shareId: ShareId,
-        itemId: ItemId,
+        itemId: ItemId
     ): ItemRevision = api.get<PasswordManagerApi>(userId)
         .invoke { pinItem(shareId.id, itemId.id).item }
         .valueOrThrow
@@ -258,7 +248,7 @@ class RemoteItemDataSourceImpl @Inject constructor(
     override suspend fun unpinItem(
         userId: UserId,
         shareId: ShareId,
-        itemId: ItemId,
+        itemId: ItemId
     ): ItemRevision = api.get<PasswordManagerApi>(userId)
         .invoke { unpinItem(shareId.id, itemId.id).item }
         .valueOrThrow

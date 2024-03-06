@@ -35,12 +35,11 @@ class SuggestionSorterImpl @Inject constructor(
     private val hostParser: HostParser
 ) : SuggestionSorter {
 
-    override fun sort(items: List<Item>, url: Option<String>): List<Item> =
-        if (url is Some) {
-            sortWithUrl(items, url.value)
-        } else {
-            items
-        }
+    override fun sort(items: List<Item>, url: Option<String>): List<Item> = if (url is Some) {
+        sortWithUrl(items, url.value)
+    } else {
+        items
+    }
 
     private fun sortWithUrl(items: List<Item>, url: String): List<Item> {
         val parsed = hostParser.parse(url).fold(

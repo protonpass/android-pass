@@ -43,10 +43,7 @@ object Utils {
             emptyList()
     }
 
-    fun getTitle(
-        urlOption: Option<String>,
-        appNameOption: Option<String>
-    ): String = when (urlOption) {
+    fun getTitle(urlOption: Option<String>, appNameOption: Option<String>): String = when (urlOption) {
         None -> when (appNameOption) {
             None -> ""
             is Some -> appNameOption.value() ?: ""

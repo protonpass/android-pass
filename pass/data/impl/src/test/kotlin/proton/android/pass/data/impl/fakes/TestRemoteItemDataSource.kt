@@ -144,11 +144,19 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
         throw IllegalStateException("Not yet implemented")
     }
 
-    override suspend fun pinItem(userId: UserId, shareId: ShareId, itemId: ItemId): ItemRevision {
+    override suspend fun pinItem(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): ItemRevision {
         throw IllegalStateException("Not yet implemented")
     }
 
-    override suspend fun unpinItem(userId: UserId, shareId: ShareId, itemId: ItemId): ItemRevision {
+    override suspend fun unpinItem(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): ItemRevision {
         throw IllegalStateException("Not yet implemented")
     }
 
@@ -160,9 +168,9 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
         createItemRevision(
             TestItem.create(
                 shareId = shareId,
-                itemId = itemId,
-            ),
-        ),
+                itemId = itemId
+            )
+        )
     )
 
     data class CreateItemParams(
@@ -187,7 +195,7 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
                 lastUseTime = now,
                 revisionTime = now,
                 itemKey = null,
-                isPinned = false,
+                isPinned = false
             )
         }
     }

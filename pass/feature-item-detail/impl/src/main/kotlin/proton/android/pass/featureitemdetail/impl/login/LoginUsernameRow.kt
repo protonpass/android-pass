@@ -98,16 +98,14 @@ fun LoginUsernameRow(
 
 @Preview
 @Composable
-fun LoginUsernameRowPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
+fun LoginUsernameRowPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
     PassTheme(isDark = input.first) {
         Surface {
             LoginUsernameRow(
                 username = "some.username",
                 showViewAlias = input.second,
                 onUsernameClick = {},
-                onGoToAliasClick = {},
+                onGoToAliasClick = {}
             )
         }
     }

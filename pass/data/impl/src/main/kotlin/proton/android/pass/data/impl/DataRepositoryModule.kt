@@ -103,19 +103,13 @@ abstract class DataRepositoryModule {
     ): FetchShareItemsStatusRepository
 
     @Binds
-    abstract fun bindUserAccessDataRepository(
-        impl: UserAccessDataRepositoryImpl
-    ): UserAccessDataRepository
+    abstract fun bindUserAccessDataRepository(impl: UserAccessDataRepositoryImpl): UserAccessDataRepository
 
     @Binds
-    abstract fun bindBulkMoveToVaultRepository(
-        impl: BulkMoveToVaultRepositoryImpl
-    ): BulkMoveToVaultRepository
+    abstract fun bindBulkMoveToVaultRepository(impl: BulkMoveToVaultRepositoryImpl): BulkMoveToVaultRepository
 
     @Binds
-    abstract fun bindBulkInviteRepository(
-        impl: BulkInviteRepositoryImpl
-    ): BulkInviteRepository
+    abstract fun bindBulkInviteRepository(impl: BulkInviteRepositoryImpl): BulkInviteRepository
 
     @Binds
     abstract fun bindOrganizationSettingsRepository(

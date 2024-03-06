@@ -64,7 +64,7 @@ class ObserveUpgradeInfoImpl @Inject constructor(
                     plan = plan.copy(
                         vaultLimit = plan.vaultLimit,
                         aliasLimit = plan.aliasLimit,
-                        totpLimit = plan.totpLimit,
+                        totpLimit = plan.totpLimit
                     ),
                     totalVaults = vaultCount,
                     totalAlias = itemCount.alias.toInt(),

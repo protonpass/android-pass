@@ -28,7 +28,7 @@ import javax.inject.Inject
 
 class RefreshPlanImpl @Inject constructor(
     private val accountManager: AccountManager,
-    private val planRepository: PlanRepository,
+    private val planRepository: PlanRepository
 ) : RefreshPlan {
     override suspend fun invoke() {
         val userId = accountManager.getPrimaryUserId().firstOrNull()

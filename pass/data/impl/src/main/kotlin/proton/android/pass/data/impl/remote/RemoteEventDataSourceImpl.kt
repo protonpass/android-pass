@@ -40,17 +40,20 @@ class RemoteEventDataSourceImpl @Inject constructor(
         emit(eventId)
     }
 
-    override fun getEvents(userId: UserId, shareId: ShareId, since: String): Flow<EventList> =
-        flow {
-            val apiResult = api.get<PasswordManagerApi>(userId).invoke {
-                getEvents(shareId.id, since)
-            }
-            if (apiResult is ApiResult.Error.Http && apiResult.proton?.code == DELETED_SHARE_CODE) {
-                PassLogger.w(TAG, "Received DELETED_SHARE_CODE for ShareId: ${shareId.id}")
-                throw ShareNotAvailableError()
-            }
-            emit(apiResult.valueOrThrow.events)
+    override fun getEvents(
+        userId: UserId,
+        shareId: ShareId,
+        since: String
+    ): Flow<EventList> = flow {
+        val apiResult = api.get<PasswordManagerApi>(userId).invoke {
+            getEvents(shareId.id, since)
         }
+        if (apiResult is ApiResult.Error.Http && apiResult.proton?.code == DELETED_SHARE_CODE) {
+            PassLogger.w(TAG, "Received DELETED_SHARE_CODE for ShareId: ${shareId.id}")
+            throw ShareNotAvailableError()
+        }
+        emit(apiResult.valueOrThrow.events)
+    }
 
     companion object {
         private const val TAG = "RemoteEventDataSourceImpl"

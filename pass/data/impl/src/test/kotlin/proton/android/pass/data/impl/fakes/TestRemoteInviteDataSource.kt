@@ -78,8 +78,7 @@ class TestRemoteInviteDataSource @Inject constructor() : RemoteInviteDataSource 
         sendInviteResult.getOrThrow()
     }
 
-    override suspend fun fetchInvites(userId: UserId): List<PendingInviteResponse> =
-        fetchInvitesResult.getOrThrow()
+    override suspend fun fetchInvites(userId: UserId): List<PendingInviteResponse> = fetchInvitesResult.getOrThrow()
 
     override suspend fun acceptInvite(
         userId: UserId,

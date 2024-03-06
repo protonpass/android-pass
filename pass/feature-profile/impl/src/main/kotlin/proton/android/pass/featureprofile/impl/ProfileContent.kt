@@ -52,7 +52,7 @@ import proton.android.pass.composecomponents.impl.buttons.UpgradeButton
 fun ProfileContent(
     modifier: Modifier = Modifier,
     state: ProfileUiState,
-    onEvent: (ProfileUiEvent) -> Unit,
+    onEvent: (ProfileUiEvent) -> Unit
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -86,7 +86,7 @@ fun ProfileContent(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
                 .background(PassTheme.colors.backgroundStrong)
-                .padding(padding),
+                .padding(padding)
         ) {
             ItemSummary(
                 modifier = Modifier.padding(0.dp, 16.dp),
@@ -116,7 +116,7 @@ fun ProfileContent(
                     onFeedbackClick = { onEvent(ProfileUiEvent.OnFeedbackClick) },
                     onImportExportClick = { onEvent(ProfileUiEvent.OnImportExportClick) },
                     onRateAppClick = { onEvent(ProfileUiEvent.OnRateAppClick) },
-                    onTutorialClick = { onEvent(ProfileUiEvent.OnTutorialClick) },
+                    onTutorialClick = { onEvent(ProfileUiEvent.OnTutorialClick) }
                 )
                 Box(
                     modifier = Modifier

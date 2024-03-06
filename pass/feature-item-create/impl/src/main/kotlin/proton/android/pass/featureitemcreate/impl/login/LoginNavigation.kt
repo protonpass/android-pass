@@ -58,7 +58,7 @@ sealed interface BaseLoginNavigation {
 
     data class AliasOptions(
         val shareId: ShareId,
-        val showUpgrade: Boolean,
+        val showUpgrade: Boolean
     ) : BaseLoginNavigation
     object DeleteAlias : BaseLoginNavigation
     data class EditAlias(

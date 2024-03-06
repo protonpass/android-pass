@@ -30,17 +30,15 @@ class UnpinItemImpl @Inject constructor(
     private val unpinItems: UnpinItems
 ) : UnpinItem {
 
-    override suspend fun invoke(
-        shareId: ShareId,
-        itemId: ItemId,
-    ): Item = when (val result = unpinItems(listOf(shareId to itemId))) {
-        is PinItemsResult.NonePinned -> throw result.exception
-        is PinItemsResult.SomePinned -> {
-            throw IllegalStateException("Cannot return SomePinned if there is only 1 item")
+    override suspend fun invoke(shareId: ShareId, itemId: ItemId): Item =
+        when (val result = unpinItems(listOf(shareId to itemId))) {
+            is PinItemsResult.NonePinned -> throw result.exception
+            is PinItemsResult.SomePinned -> {
+                throw IllegalStateException("Cannot return SomePinned if there is only 1 item")
+            }
+            is PinItemsResult.AllPinned -> {
+                result.items.first()
+            }
         }
-        is PinItemsResult.AllPinned -> {
-            result.items.first()
-        }
-    }
 
 }

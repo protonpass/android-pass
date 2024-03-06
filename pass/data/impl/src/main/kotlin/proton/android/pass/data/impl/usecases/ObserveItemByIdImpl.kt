@@ -29,13 +29,10 @@ import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class ObserveItemByIdImpl @Inject constructor(
-    private val itemRepository: ItemRepository,
+    private val itemRepository: ItemRepository
 ) : ObserveItemById {
 
-    override fun invoke(
-        shareId: ShareId,
-        itemId: ItemId,
-    ): Flow<Item> = itemRepository
+    override fun invoke(shareId: ShareId, itemId: ItemId): Flow<Item> = itemRepository
         .observeById(shareId, itemId)
         .catch { error ->
             throw if (error is NullPointerException) ItemNotFoundError(itemId, shareId) else error

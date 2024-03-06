@@ -28,18 +28,18 @@ enum class FeatureFlag(
         title = "Autofill debug mode",
         description = "Enable autofill debug mode",
         key = null, // Cannot be activated server-side,
-        isEnabledDefault = false,
+        isEnabledDefault = false
     ),
     PINNING_V1(
         title = "Pinning (v1)",
         description = "Enable pinning",
         key = "PassPinningV1",
-        isEnabledDefault = true,
+        isEnabledDefault = true
     ),
     HISTORY_V1(
         title = "Item history (v1)",
         description = "Enable item history",
         key = "PassItemHistoryV1",
-        isEnabledDefault = false,
-    ),
+        isEnabledDefault = false
+    )
 }

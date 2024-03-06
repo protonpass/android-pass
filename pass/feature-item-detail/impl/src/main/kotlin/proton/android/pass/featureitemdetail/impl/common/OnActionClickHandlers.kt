@@ -72,7 +72,7 @@ fun onShareClick(
             CanShareVaultStatus.CannotShareReason.NotEnoughInvites -> {
                 onNavigate(
                     ItemDetailNavigation.CannotPerformAction(
-                        type = ItemDetailCannotPerformActionType.CannotShareBecauseLimitReached,
+                        type = ItemDetailCannotPerformActionType.CannotShareBecauseLimitReached
                     )
                 )
             }

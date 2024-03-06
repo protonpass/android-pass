@@ -43,10 +43,7 @@ import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultWithItemCount
 
 @Composable
-fun ManageVaultHeader(
-    modifier: Modifier = Modifier,
-    vault: VaultWithItemCount?
-) {
+fun ManageVaultHeader(modifier: Modifier = Modifier, vault: VaultWithItemCount?) {
     if (vault == null) return
 
     Column(
@@ -59,14 +56,14 @@ fun ManageVaultHeader(
             iconSize = 32,
             backgroundColor = vault.vault.color.toColor(isBackground = true),
             iconColor = vault.vault.color.toColor(isBackground = false),
-            icon = vault.vault.icon.toResource(),
+            icon = vault.vault.icon.toResource()
         )
 
         Text(
             text = vault.vault.name,
             color = PassTheme.colors.textNorm,
             style = PassTheme.typography.heroNorm(),
-            textAlign = TextAlign.Center,
+            textAlign = TextAlign.Center
         )
 
         Text(
@@ -82,16 +79,14 @@ fun ManageVaultHeader(
 
 @Preview
 @Composable
-fun ManageVaultHeaderPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun ManageVaultHeaderPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             ManageVaultHeader(
                 vault = VaultWithItemCount(
                     vault = Vault(
                         shareId = ShareId("123"),
-                        name = "Vault name",
+                        name = "Vault name"
                     ),
                     activeItemCount = 3,
                     trashedItemCount = 0

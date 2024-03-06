@@ -43,14 +43,11 @@ object EditLogin : NavItem(
     baseRoute = "login/edit",
     navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId)
 ) {
-    fun createNavRoute(shareId: ShareId, itemId: ItemId) =
-        "$baseRoute/${shareId.id}/${itemId.id}"
+    fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
 }
 
 @Suppress("LongParameterList")
-fun NavGraphBuilder.updateLoginGraph(
-    onNavigate: (BaseLoginNavigation) -> Unit
-) {
+fun NavGraphBuilder.updateLoginGraph(onNavigate: (BaseLoginNavigation) -> Unit) {
     navigation(
         route = EDIT_LOGIN_GRAPH,
         startDestination = EditLogin.route

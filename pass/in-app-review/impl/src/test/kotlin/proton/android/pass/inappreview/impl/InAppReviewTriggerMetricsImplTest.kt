@@ -74,36 +74,34 @@ class InAppReviewTriggerMetricsImplTest {
     }
 
     @Test
-    fun `should not increment app launch streak count when lastDateUsed is the same day as current time`() =
-        runTest {
-            internalSettingsRepository.setAppUsage(
-                AppUsageConfig(1, Instant.parse("2023-08-01T00:00:00Z"))
-            )
+    fun `should not increment app launch streak count when lastDateUsed is the same day as current time`() = runTest {
+        internalSettingsRepository.setAppUsage(
+            AppUsageConfig(1, Instant.parse("2023-08-01T00:00:00Z"))
+        )
 
-            inAppReviewTriggerMetrics.incrementAppLaunchStreakCount()
+        inAppReviewTriggerMetrics.incrementAppLaunchStreakCount()
 
-            internalSettingsRepository.getAppUsage().test {
-                val item = awaitItem()
-                assertThat(item.timesUsed).isEqualTo(1)
-                assertThat(item.lastDateUsed).isEqualTo(clock.now())
-            }
+        internalSettingsRepository.getAppUsage().test {
+            val item = awaitItem()
+            assertThat(item.timesUsed).isEqualTo(1)
+            assertThat(item.lastDateUsed).isEqualTo(clock.now())
         }
+    }
 
     @Test
-    fun `should reset app launch streak count when lastDateUsed is the previous day of current time`() =
-        runTest {
-            internalSettingsRepository.setAppUsage(
-                AppUsageConfig(2, Instant.parse("2023-07-30T00:00:00Z"))
-            )
+    fun `should reset app launch streak count when lastDateUsed is the previous day of current time`() = runTest {
+        internalSettingsRepository.setAppUsage(
+            AppUsageConfig(2, Instant.parse("2023-07-30T00:00:00Z"))
+        )
 
-            inAppReviewTriggerMetrics.incrementAppLaunchStreakCount()
+        inAppReviewTriggerMetrics.incrementAppLaunchStreakCount()
 
-            internalSettingsRepository.getAppUsage().test {
-                val item = awaitItem()
-                assertThat(item.timesUsed).isEqualTo(1)
-                assertThat(item.lastDateUsed).isEqualTo(clock.now())
-            }
+        internalSettingsRepository.getAppUsage().test {
+            val item = awaitItem()
+            assertThat(item.timesUsed).isEqualTo(1)
+            assertThat(item.lastDateUsed).isEqualTo(clock.now())
         }
+    }
 
     @Test
     fun `should increment app launch streak count on date is yesterday`() = runTest {

@@ -25,11 +25,10 @@ import proton.android.pass.domain.Share
 import proton.android.pass.domain.Vault
 import proton_pass_vault_v1.VaultV1
 
-fun Share.toVault(
-    encryptionContextProvider: EncryptionContextProvider
-): Option<Vault> = encryptionContextProvider.withEncryptionContext {
-    toVault(this)
-}
+fun Share.toVault(encryptionContextProvider: EncryptionContextProvider): Option<Vault> =
+    encryptionContextProvider.withEncryptionContext {
+        toVault(this)
+    }
 
 fun Share.toVault(encryptionContext: EncryptionContext): Option<Vault> = content
     .map {

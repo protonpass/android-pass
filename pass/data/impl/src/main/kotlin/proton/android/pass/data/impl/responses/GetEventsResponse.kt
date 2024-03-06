@@ -42,6 +42,6 @@ data class EventList(
     @SerialName("LatestEventID")
     val latestEventId: String,
     @SerialName("EventsPending")
-    val eventsPending: Boolean,
+    val eventsPending: Boolean
 )
 

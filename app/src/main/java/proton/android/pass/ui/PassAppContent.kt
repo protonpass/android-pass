@@ -82,7 +82,7 @@ fun PassAppContent(
 
     ProtonBottomSheetBackHandler(
         bottomSheetState = bottomSheetState,
-        coroutineScope = coroutineScope,
+        coroutineScope = coroutineScope
     )
 
     val bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState)
@@ -162,7 +162,7 @@ fun PassAppContent(
 
                         ProtonBottomSheetBackHandler(
                             bottomSheetState = unAuthBottomSheetState,
-                            coroutineScope = coroutineScope,
+                            coroutineScope = coroutineScope
                         )
 
                         val unAuthBottomSheetNavigator =
@@ -171,7 +171,7 @@ fun PassAppContent(
                         PassModalBottomSheetLayout(unAuthAppNavigator.passBottomSheetNavigator) {
                             PassUnAuthNavHost(
                                 appNavigator = unAuthAppNavigator,
-                                onNavigate = onNavigate,
+                                onNavigate = onNavigate
                             )
                         }
                     } else {
@@ -184,7 +184,7 @@ fun PassAppContent(
                                     onBottomSheetDismissed(
                                         coroutineScope = coroutineScope,
                                         modalBottomSheetState = bottomSheetState,
-                                        block = block,
+                                        block = block
                                     )
                                 }
                             )
@@ -219,7 +219,7 @@ private fun SnackBarLaunchedEffect(
 private fun onBottomSheetDismissed(
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
-    block: () -> Unit,
+    block: () -> Unit
 ) {
     coroutineScope.launch {
         if (modalBottomSheetState.isVisible) {

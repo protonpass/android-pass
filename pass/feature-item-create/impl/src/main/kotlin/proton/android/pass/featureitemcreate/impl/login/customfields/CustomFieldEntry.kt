@@ -33,7 +33,7 @@ fun CustomFieldEntry(
     canEdit: Boolean,
     onValueChange: (String) -> Unit,
     onFocusChange: (LoginCustomField, Boolean) -> Unit,
-    onOptionsClick: () -> Unit,
+    onOptionsClick: () -> Unit
 ) {
     when (entry) {
         is UICustomFieldContent.Text -> TextCustomFieldEntry(

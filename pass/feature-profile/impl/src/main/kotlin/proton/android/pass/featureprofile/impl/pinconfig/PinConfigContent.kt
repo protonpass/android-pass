@@ -65,7 +65,7 @@ fun PinConfigContent(
     onNavigateEvent: (ProfileNavigation) -> Unit,
     onPinChange: (String) -> Unit,
     onRepeatPinChange: (String) -> Unit,
-    onSubmit: () -> Unit,
+    onSubmit: () -> Unit
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),

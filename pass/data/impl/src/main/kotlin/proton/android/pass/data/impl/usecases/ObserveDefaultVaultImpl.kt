@@ -47,25 +47,24 @@ class ObserveDefaultVaultImpl @Inject constructor(
     private val observeVaults: ObserveVaults
 ) : ObserveDefaultVault {
 
-    override fun invoke(): Flow<Option<VaultWithItemCount>> =
-        preferencesRepository.getDefaultVault()
-            .flatMapLatest { defaultVault ->
-                when (defaultVault) {
-                    None -> {
-                        setDefaultVault()
-                        flowOf(None)
-                    }
-
-                    is Some -> getVaultWithItemCount(shareId = ShareId(defaultVault.value))
-                        .map { it.toOption() }
+    override fun invoke(): Flow<Option<VaultWithItemCount>> = preferencesRepository.getDefaultVault()
+        .flatMapLatest { defaultVault ->
+            when (defaultVault) {
+                None -> {
+                    setDefaultVault()
+                    flowOf(None)
                 }
+
+                is Some -> getVaultWithItemCount(shareId = ShareId(defaultVault.value))
+                    .map { it.toOption() }
             }
-            .catch {
-                PassLogger.w(TAG, "Could not find the default vault")
-                PassLogger.w(TAG, it)
-                setDefaultVault()
-                emit(None)
-            }
+        }
+        .catch {
+            PassLogger.w(TAG, "Could not find the default vault")
+            PassLogger.w(TAG, it)
+            setDefaultVault()
+            emit(None)
+        }
 
     private suspend fun setDefaultVault() {
         val vaults = observeVaults().firstOrNull() ?: run {

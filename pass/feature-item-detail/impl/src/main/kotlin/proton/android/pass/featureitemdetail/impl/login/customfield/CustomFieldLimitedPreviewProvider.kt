@@ -27,7 +27,7 @@ class CustomFieldLimitedPreviewProvider : PreviewParameterProvider<CustomFieldUi
         get() = sequenceOf(
             CustomFieldUiContent.Limited.Totp(label = "a totp field"),
             CustomFieldUiContent.Limited.Text(label = "a text field"),
-            CustomFieldUiContent.Limited.Hidden(label = "a hidden field"),
+            CustomFieldUiContent.Limited.Hidden(label = "a hidden field")
         )
 }
 

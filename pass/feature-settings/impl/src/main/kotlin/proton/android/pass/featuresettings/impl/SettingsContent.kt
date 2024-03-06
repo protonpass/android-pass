@@ -60,7 +60,7 @@ fun SettingsContent(
         ) {
             PreferencesSection(
                 theme = state.themePreference,
-                onEvent = onEvent,
+                onEvent = onEvent
             )
             PrivacySection(
                 useFavicons = state.useFavicons.value(),

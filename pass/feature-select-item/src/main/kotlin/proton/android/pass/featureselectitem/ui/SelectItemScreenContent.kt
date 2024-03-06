@@ -134,7 +134,7 @@ internal fun SelectItemScreenContent(
                     list = uiState.pinningUiState.unFilteredItems,
                     canLoadExternalImages = uiState.listUiState.canLoadExternalImages,
                     onItemClick = onItemClicked,
-                    onSeeAllClick = onSeeAllPinned,
+                    onSeeAllClick = onSeeAllPinned
                 )
 
                 if (uiState.pinningUiState.unFilteredItems.isNotEmpty()) {

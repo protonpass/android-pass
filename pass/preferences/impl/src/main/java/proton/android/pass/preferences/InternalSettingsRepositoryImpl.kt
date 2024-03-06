@@ -66,25 +66,21 @@ class InternalSettingsRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun setDeclinedUpdateVersion(
-        versionDeclined: String
-    ): Result<Unit> = setPreference { it.setDeclinedUpdateVersion(versionDeclined) }
+    override fun setDeclinedUpdateVersion(versionDeclined: String): Result<Unit> =
+        setPreference { it.setDeclinedUpdateVersion(versionDeclined) }
 
     override fun getDeclinedUpdateVersion(): Flow<String> = getPreference {
         it.declinedUpdateVersion
     }
 
-    override fun setHomeSortingOption(
-        sortingOption: SortingOptionPreference
-    ): Result<Unit> = setPreference { it.setHomeSortingOption(sortingOption.value()) }
+    override fun setHomeSortingOption(sortingOption: SortingOptionPreference): Result<Unit> =
+        setPreference { it.setHomeSortingOption(sortingOption.value()) }
 
     override fun getHomeSortingOption(): Flow<SortingOptionPreference> = getPreference {
         SortingOptionPreference.fromValue(it.homeSortingOption)
     }
 
-    override fun setHomeFilterOption(
-        filterOption: FilterOptionPreference,
-    ): Result<Unit> = setPreference { settings ->
+    override fun setHomeFilterOption(filterOption: FilterOptionPreference): Result<Unit> = setPreference { settings ->
         settings.setHomeFilteringOption(filterOption.value())
     }
 
@@ -92,26 +88,23 @@ class InternalSettingsRepositoryImpl @Inject constructor(
         FilterOptionPreference.fromValue(settings.homeFilteringOption)
     }
 
-    override fun setAutofillSortingOption(
-        sortingOption: SortingOptionPreference
-    ): Result<Unit> = setPreference { it.setAutofillSortingOption(sortingOption.value()) }
+    override fun setAutofillSortingOption(sortingOption: SortingOptionPreference): Result<Unit> =
+        setPreference { it.setAutofillSortingOption(sortingOption.value()) }
 
     override fun getAutofillSortingOption(): Flow<SortingOptionPreference> = dataStore.data
         .catch { exception -> handleExceptions(exception) }
         .map { settings -> SortingOptionPreference.fromValue(settings.autofillSortingOption) }
 
-    override fun setAutofillFilterOption(filterOption: FilterOptionPreference): Result<Unit> =
-        runCatching {
-            inMemoryPreferences.set(FilterOptionPreference::class.java.name, filterOption.value())
-        }
+    override fun setAutofillFilterOption(filterOption: FilterOptionPreference): Result<Unit> = runCatching {
+        inMemoryPreferences.set(FilterOptionPreference::class.java.name, filterOption.value())
+    }
 
     override fun getAutofillFilterOption(): Flow<FilterOptionPreference> =
         inMemoryPreferences.observe<Int>(FilterOptionPreference::class.java.name)
             .map { it?.let { FilterOptionPreference.fromValue(it) } ?: FilterOptionPreference.All }
 
-    override fun setSelectedVault(
-        selectedVault: SelectedVaultPreference
-    ): Result<Unit> = setPreference { it.setSelectedVault(selectedVault.value()) }
+    override fun setSelectedVault(selectedVault: SelectedVaultPreference): Result<Unit> =
+        setPreference { it.setSelectedVault(selectedVault.value()) }
 
     override fun getSelectedVault(): Flow<SelectedVaultPreference> = getPreference {
         SelectedVaultPreference.fromValue(it.selectedVault)
@@ -137,8 +130,7 @@ class InternalSettingsRepositoryImpl @Inject constructor(
         it.setInAppReviewTriggered(value)
     }
 
-    override fun getInAppReviewTriggered(): Flow<Boolean> =
-        getPreference { it.inAppReviewTriggered }
+    override fun getInAppReviewTriggered(): Flow<Boolean> = getPreference { it.inAppReviewTriggered }
 
     override fun setAppUsage(appUsageConfig: AppUsageConfig): Result<Unit> = setPreference {
         it.setAppUsage(
@@ -172,24 +164,21 @@ class InternalSettingsRepositoryImpl @Inject constructor(
 
     override fun clearSettings(): Result<Unit> = setPreference { it.clear() }
 
-    private fun setPreference(
-        mapper: (InternalSettings.Builder) -> InternalSettings.Builder
-    ): Result<Unit> = runCatching {
-        runBlocking {
-            dataStore.updateData {
-                mapper(it.toBuilder()).build()
+    private fun setPreference(mapper: (InternalSettings.Builder) -> InternalSettings.Builder): Result<Unit> =
+        runCatching {
+            runBlocking {
+                dataStore.updateData {
+                    mapper(it.toBuilder()).build()
+                }
             }
+            return@runCatching
         }
-        return@runCatching
-    }
 
     private fun <T> getPreference(mapper: (InternalSettings) -> T): Flow<T> = dataStore.data
         .catch { exception -> handleExceptions(exception) }
         .map { settings -> mapper(settings) }
 
-    private fun FlowCollector<InternalSettings>.handleExceptions(
-        exception: Throwable
-    ) {
+    private fun FlowCollector<InternalSettings>.handleExceptions(exception: Throwable) {
         if (exception is IOException) {
             PassLogger.e("Cannot read preferences.", exception)
             runBlocking { emit(InternalSettings.getDefaultInstance()) }

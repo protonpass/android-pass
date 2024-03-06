@@ -52,7 +52,7 @@ private const val PROGRESS_LIMIT_3 = 0.4f
 fun TotpProgress(
     modifier: Modifier = Modifier,
     remainingSeconds: Int,
-    totalSeconds: Int,
+    totalSeconds: Int
 ) {
     val currentProgress = remainingSeconds.toFloat() / totalSeconds.toFloat()
 
@@ -61,8 +61,8 @@ fun TotpProgress(
         targetValue = currentProgress,
         animationSpec = tween(
             durationMillis = PROGRESS_ANIMATION_DURATION_MILLIS,
-            easing = LinearEasing,
-        ),
+            easing = LinearEasing
+        )
     )
 
     val animatedProgressColor by animateColorAsState(
@@ -74,32 +74,30 @@ fun TotpProgress(
         },
         animationSpec = tween(
             durationMillis = PROGRESS_COLOR_ANIMATION_DURATION_MILLIS,
-            easing = LinearEasing,
+            easing = LinearEasing
         )
     )
 
     Box(
         modifier = modifier,
-        contentAlignment = Alignment.Center,
+        contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator(
             progress = animatedProgress,
             color = animatedProgressColor,
-            strokeWidth = 3.dp,
+            strokeWidth = 3.dp
         )
 
         Text(
             text = remainingSeconds.toString(),
-            style = ProtonTheme.typography.defaultSmallNorm,
+            style = ProtonTheme.typography.defaultSmallNorm
         )
     }
 }
 
 @Preview
 @Composable
-fun TotpTimePreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun TotpTimePreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             TotpProgress(remainingSeconds = 2, totalSeconds = 4)

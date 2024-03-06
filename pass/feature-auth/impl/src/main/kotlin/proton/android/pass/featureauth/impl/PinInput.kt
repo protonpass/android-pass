@@ -49,7 +49,7 @@ fun PinInput(
     modifier: Modifier = Modifier,
     state: EnterPinUiState,
     onPinChanged: (String) -> Unit,
-    onPinSubmit: () -> Unit,
+    onPinSubmit: () -> Unit
 ) {
     val data = state as? EnterPinUiState.Data
     val error = data?.pinError?.value()
@@ -62,7 +62,7 @@ fun PinInput(
             .onFocusChanged { focusState -> hasFocus = focusState.hasFocus }
             .roundedContainer(
                 backgroundColor = Color.Transparent,
-                borderColor = PassTheme.colors.inputBorderNorm,
+                borderColor = PassTheme.colors.inputBorderNorm
             )
             .padding(Spacing.medium),
         text = data?.pin.orEmpty(),
@@ -70,19 +70,19 @@ fun PinInput(
         isEnabled = data?.isLoadingState?.value() != true,
         textStyle = PassTheme.typography.heroNorm().copy(textAlign = TextAlign.Center),
         keyboardActions = KeyboardActions(
-            onDone = { onPinSubmit() },
+            onDone = { onPinSubmit() }
         ),
         keyboardOptions = KeyboardOptions(
             autoCorrect = false,
             keyboardType = KeyboardType.NumberPassword,
-            imeAction = ImeAction.Done,
+            imeAction = ImeAction.Done
         ),
         visualTransformation = PasswordVisualTransformation(),
-        errorText = stringResource(R.string.auth_error_pin_cannot_be_empty).takeIf { error is PinError.PinEmpty },
+        errorText = stringResource(R.string.auth_error_pin_cannot_be_empty).takeIf { error is PinError.PinEmpty }
     )
 
     RequestFocusLaunchedEffect(
         focusRequester = focusRequester,
-        requestFocus = !hasFocus,
+        requestFocus = !hasFocus
     )
 }

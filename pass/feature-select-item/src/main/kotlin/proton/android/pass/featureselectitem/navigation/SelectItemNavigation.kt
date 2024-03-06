@@ -39,7 +39,7 @@ sealed class SelectItemState(
 ) {
     sealed class Autofill(
         filter: ItemTypeFilter,
-        title: String,
+        title: String
     ) : SelectItemState(filter, title, showPinnedItems = true, showCreateButton = true) {
         data class Login(
             val title: String,
@@ -48,7 +48,7 @@ sealed class SelectItemState(
         ) : Autofill(ItemTypeFilter.Logins, title)
 
         data class CreditCard(
-            val title: String,
+            val title: String
         ) : Autofill(ItemTypeFilter.CreditCards, title)
     }
 

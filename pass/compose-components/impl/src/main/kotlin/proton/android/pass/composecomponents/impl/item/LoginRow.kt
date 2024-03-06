@@ -195,9 +195,7 @@ class ThemedLoginItemPreviewProvider : ThemePairPreviewProvider<LoginRowParamete
 
 @Preview
 @Composable
-fun LoginRowPreview(
-    @PreviewParameter(ThemedLoginItemPreviewProvider::class) input: Pair<Boolean, LoginRowParameter>
-) {
+fun LoginRowPreview(@PreviewParameter(ThemedLoginItemPreviewProvider::class) input: Pair<Boolean, LoginRowParameter>) {
     PassTheme(isDark = input.first) {
         Surface {
             LoginRow(

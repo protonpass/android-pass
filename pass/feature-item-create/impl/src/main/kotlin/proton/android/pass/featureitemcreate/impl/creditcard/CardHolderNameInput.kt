@@ -72,9 +72,7 @@ internal fun CardHolderNameInput(
 
 @Preview
 @Composable
-fun CardHolderNameInputPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun CardHolderNameInputPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             CardHolderNameInput(value = "John Doe", enabled = true, onChange = {})

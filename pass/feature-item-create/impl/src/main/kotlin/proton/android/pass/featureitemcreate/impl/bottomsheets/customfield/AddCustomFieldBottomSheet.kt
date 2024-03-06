@@ -38,16 +38,13 @@ import proton.android.pass.featureitemcreate.impl.R
 import me.proton.core.presentation.compose.R as CoreR
 
 @Composable
-fun AddCustomFieldBottomSheet(
-    modifier: Modifier = Modifier,
-    onNavigate: (AddCustomFieldNavigation) -> Unit
-) {
+fun AddCustomFieldBottomSheet(modifier: Modifier = Modifier, onNavigate: (AddCustomFieldNavigation) -> Unit) {
     BottomSheetItemList(
         modifier = modifier.bottomSheet(),
         items = listOf(
             textField { onNavigate(AddCustomFieldNavigation.AddText) },
             totpField { onNavigate(AddCustomFieldNavigation.AddTotp) },
-            hiddenField { onNavigate(AddCustomFieldNavigation.AddHidden) },
+            hiddenField { onNavigate(AddCustomFieldNavigation.AddHidden) }
         ).withDividers().toPersistentList()
     )
 }
@@ -109,9 +106,7 @@ private fun totpField(onClick: () -> Unit): BottomSheetItem = object : BottomShe
 
 @Preview
 @Composable
-fun AddCustomFieldBottomSheetPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun AddCustomFieldBottomSheetPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             AddCustomFieldBottomSheet(onNavigate = {})

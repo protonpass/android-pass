@@ -43,7 +43,7 @@ internal class ObserveItemRevisionsImplTest {
 
         observeItemRevisionsImpl = ObserveItemRevisionsImpl(
             accountManager = accountManager,
-            itemRepository = itemRepository,
+            itemRepository = itemRepository
         )
     }
 

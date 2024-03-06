@@ -20,7 +20,7 @@ package proton.android.pass.data.api.usecases
 
 enum class DefaultBrowser {
     Samsung,
-    Other;
+    Other
 }
 
 interface GetDefaultBrowser {

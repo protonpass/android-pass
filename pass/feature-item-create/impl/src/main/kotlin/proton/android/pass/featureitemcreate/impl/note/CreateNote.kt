@@ -171,6 +171,6 @@ fun CreateNoteScreen(
         }
     )
     InAppReviewTriggerLaunchedEffect(
-        triggerCondition = uiState.baseNoteUiState.itemSavedState is ItemSavedState.Success,
+        triggerCondition = uiState.baseNoteUiState.itemSavedState is ItemSavedState.Success
     )
 }

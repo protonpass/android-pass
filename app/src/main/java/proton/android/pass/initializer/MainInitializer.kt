@@ -71,7 +71,7 @@ class MainInitializer : Initializer<Unit> {
         DataMigrationInitializer::class.java,
         UnAuthSessionFetcherInitializer::class.java,
         UnredeemedPurchaseInitializer::class.java,
-        AccountListenerInitializer::class.java,
+        AccountListenerInitializer::class.java
     )
 
     companion object {

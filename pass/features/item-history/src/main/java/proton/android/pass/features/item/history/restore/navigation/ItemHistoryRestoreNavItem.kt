@@ -33,14 +33,14 @@ object ItemHistoryRestoreNavItem : NavItem(
     navArgIds = listOf(
         CommonNavArgId.ShareId,
         CommonNavArgId.ItemId,
-        ItemHistoryRevisionNavArgId,
-    ),
+        ItemHistoryRevisionNavArgId
+    )
 ) {
 
     fun createNavRoute(
         shareId: ShareId,
         itemId: ItemId,
-        itemRevision: ItemRevision,
+        itemRevision: ItemRevision
     ) = NavParamEncoder.encode(Json.encodeToString(value = itemRevision))
         .let { encodedItemRevision -> "$baseRoute/${shareId.id}/${itemId.id}/$encodedItemRevision" }
 

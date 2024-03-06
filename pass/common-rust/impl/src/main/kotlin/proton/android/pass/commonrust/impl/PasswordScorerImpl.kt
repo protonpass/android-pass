@@ -28,8 +28,7 @@ import proton.android.pass.commonrust.PasswordScorer as RustPasswordScorer
 @Singleton
 class PasswordScorerImpl @Inject constructor() : PasswordScorer {
 
-    override fun check(input: String): PasswordScore =
-        RustPasswordScorer().checkScore(input).toPasswordScore()
+    override fun check(input: String): PasswordScore = RustPasswordScorer().checkScore(input).toPasswordScore()
 }
 
 fun RustPasswordScore.toPasswordScore(): PasswordScore = when (this) {

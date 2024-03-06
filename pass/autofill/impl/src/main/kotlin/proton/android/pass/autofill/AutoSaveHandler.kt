@@ -47,7 +47,11 @@ object AutoSaveHandler {
 
     private const val TAG = "AutoSaveHandler"
 
-    fun handleOnSave(context: Context, request: SaveRequest, callback: SaveCallback) {
+    fun handleOnSave(
+        context: Context,
+        request: SaveRequest,
+        callback: SaveCallback
+    ) {
         val usernameFromState = request.clientState?.getUsernameFromState()
         val passwordFromState = request.clientState?.getPasswordFromState()
 
@@ -158,18 +162,21 @@ object AutoSaveHandler {
         )
     }
 
-    private fun getItemTitle(context: Context, packageName: String, url: Option<String>): String =
-        if (BROWSERS.contains(packageName)) {
-            when (url) {
-                None -> ""
-                is Some -> UrlSanitizer.getDomain(url.value).fold(
-                    onSuccess = { it },
-                    onFailure = { "" }
-                )
-            }
-        } else {
-            getApplicationName(context, packageName).value() ?: ""
+    private fun getItemTitle(
+        context: Context,
+        packageName: String,
+        url: Option<String>
+    ): String = if (BROWSERS.contains(packageName)) {
+        when (url) {
+            None -> ""
+            is Some -> UrlSanitizer.getDomain(url.value).fold(
+                onSuccess = { it },
+                onFailure = { "" }
+            )
         }
+    } else {
+        getApplicationName(context, packageName).value() ?: ""
+    }
 
     private fun launchSaveCredentialScreen(
         context: Context,

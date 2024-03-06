@@ -47,7 +47,7 @@ fun EditVaultScreen(
     }
 
     InAppReviewTriggerLaunchedEffect(
-        triggerCondition = state.isVaultCreatedEvent is IsVaultCreatedEvent.Created,
+        triggerCondition = state.isVaultCreatedEvent is IsVaultCreatedEvent.Created
     )
     LaunchedEffect(state.isVaultCreatedEvent) {
         if (state.isVaultCreatedEvent == IsVaultCreatedEvent.Created) {

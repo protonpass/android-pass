@@ -34,9 +34,7 @@ object DeleteVaultDialog : NavItem(
     fun createNavRoute(shareId: ShareId): String = "$baseRoute/${shareId.id}"
 }
 
-fun NavGraphBuilder.deleteVaultDialogGraph(
-    onNavigate: (VaultNavigation) -> Unit
-) {
+fun NavGraphBuilder.deleteVaultDialogGraph(onNavigate: (VaultNavigation) -> Unit) {
     dialog(DeleteVaultDialog) {
         DeleteVaultDialog(
             onNavigate = onNavigate

@@ -36,10 +36,7 @@ class TestConfirmNewUserInvite @Inject constructor() : ConfirmNewUserInvite {
         result = value
     }
 
-    override suspend fun invoke(
-        shareId: ShareId,
-        invite: VaultMember.NewUserInvitePending
-    ): Result<Unit> {
+    override suspend fun invoke(shareId: ShareId, invite: VaultMember.NewUserInvitePending): Result<Unit> {
         memory.add(Payload(shareId, invite))
         return result
     }

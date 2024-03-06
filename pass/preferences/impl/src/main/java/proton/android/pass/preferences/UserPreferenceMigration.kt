@@ -28,10 +28,9 @@ object UserPreferenceMigration {
             currentData.biometricLock == BooleanPrefProto.BOOLEAN_PREFERENCE_TRUE &&
                 currentData.appLockType == AppLockTypePrefProto.APP_LOCK_TYPE_UNSPECIFIED
 
-        override suspend fun migrate(currentData: UserPreferences): UserPreferences =
-            currentData.toBuilder()
-                .setAppLockType(AppLockTypePrefProto.APP_LOCK_TYPE_BIOMETRICS)
-                .build()
+        override suspend fun migrate(currentData: UserPreferences): UserPreferences = currentData.toBuilder()
+            .setAppLockType(AppLockTypePrefProto.APP_LOCK_TYPE_BIOMETRICS)
+            .build()
 
         override suspend fun cleanUp() = Unit
     }

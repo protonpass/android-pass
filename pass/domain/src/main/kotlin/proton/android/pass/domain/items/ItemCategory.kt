@@ -31,5 +31,5 @@ enum class ItemCategory(val value: Int) {
     Alias(ITEM_CATEGORY_ALIAS),
     Note(ITEM_CATEGORY_NOTE),
     Password(ITEM_CATEGORY_PASSWORD),
-    CreditCard(ITEM_CATEGORY_CREDIT_CARD),
+    CreditCard(ITEM_CATEGORY_CREDIT_CARD)
 }

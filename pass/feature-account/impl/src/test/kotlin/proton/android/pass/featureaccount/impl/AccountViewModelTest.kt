@@ -69,7 +69,7 @@ internal class AccountViewModelTest {
         val email = "test@email.local"
         val planType = PlanType.Paid.Plus(
             name = "internal",
-            displayName = "testplan",
+            displayName = "testplan"
         )
         val plan = Plan(
             planType = planType,

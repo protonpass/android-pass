@@ -23,5 +23,5 @@ import proton.android.pass.domain.ShareId
 
 class ItemNotFoundError(
     itemId: ItemId,
-    shareId: ShareId,
+    shareId: ShareId
 ) : Throwable("Cannot find an item with given itemId(${itemId.id}) and shareId(${shareId.id})")

@@ -25,13 +25,11 @@ import kotlinx.serialization.json.buildJsonObject
 
 object DimensionsSerializer {
 
-    fun serialize(dimensions: Map<String, String>): String =
-        buildJsonObject {
-            dimensions.forEach { key, value ->
-                put(key, JsonPrimitive(value))
-            }
-        }.toString()
+    fun serialize(dimensions: Map<String, String>): String = buildJsonObject {
+        dimensions.forEach { key, value ->
+            put(key, JsonPrimitive(value))
+        }
+    }.toString()
 
-    fun deserialize(dimensions: String): Map<String, JsonPrimitive> =
-        Json.decodeFromString(dimensions)
+    fun deserialize(dimensions: String): Map<String, JsonPrimitive> = Json.decodeFromString(dimensions)
 }

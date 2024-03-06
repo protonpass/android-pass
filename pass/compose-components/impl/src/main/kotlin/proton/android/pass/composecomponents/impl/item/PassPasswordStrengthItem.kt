@@ -36,14 +36,11 @@ import proton.android.pass.composecomponents.impl.icon.PassPasswordStrengthIcon
 import proton.android.pass.composecomponents.impl.labels.PassPasswordStrengthLabel
 
 @Composable
-fun PassPasswordStrengthItem(
-    passwordStrength: PasswordStrength,
-    modifier: Modifier = Modifier,
-) {
+fun PassPasswordStrengthItem(passwordStrength: PasswordStrength, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier.wrapContentSize(),
         horizontalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall),
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         PassPasswordStrengthIcon(passwordStrength = passwordStrength)
 
@@ -54,7 +51,7 @@ fun PassPasswordStrengthItem(
 @Preview
 @Composable
 fun PassPasswordStrengthItemPreview(
-    @PreviewParameter(ThemePassPasswordStrengthItemPreview::class) input: Pair<Boolean, PasswordStrength>,
+    @PreviewParameter(ThemePassPasswordStrengthItemPreview::class) input: Pair<Boolean, PasswordStrength>
 ) {
     val (isDark, passwordStrength) = input
 

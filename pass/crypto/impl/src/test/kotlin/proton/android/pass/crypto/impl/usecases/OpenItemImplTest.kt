@@ -59,7 +59,7 @@ class OpenItemImplTest {
         val output = instance.open(
             response = REVISION,
             share = getShare(),
-            shareKeys = listOf(getShareKey()),
+            shareKeys = listOf(getShareKey())
         )
         val item = output.item
         assertEquals(item.revision, REVISION.revision)
@@ -135,7 +135,7 @@ class OpenItemImplTest {
             modifyTime = 1664195804,
             lastUseTime = 1664195804,
             revisionTime = 1664195804,
-            isPinned = false,
+            isPinned = false
         )
     }
 }

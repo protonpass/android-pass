@@ -24,9 +24,6 @@ import proton.android.pass.domain.ShareId
 
 interface OpenItemRevision {
 
-    suspend operator fun invoke(
-        shareId: ShareId,
-        itemRevision: ItemRevision,
-    ): Item
+    suspend operator fun invoke(shareId: ShareId, itemRevision: ItemRevision): Item
 
 }

@@ -120,10 +120,10 @@ fun SelectVaultBottomsheetContentPreview(
     val selectedVault = VaultWithItemCount(
         vault = Vault(
             shareId = ShareId("123"),
-            name = "vault 1",
+            name = "vault 1"
         ),
         activeItemCount = 12,
-        trashedItemCount = 0,
+        trashedItemCount = 0
     )
     PassTheme(isDark = input.first) {
         Surface {
@@ -140,10 +140,10 @@ fun SelectVaultBottomsheetContentPreview(
                                     shareId = ShareId("other"),
                                     name = "vault 2",
                                     color = ShareColor.Color2,
-                                    icon = ShareIcon.Icon2,
+                                    icon = ShareIcon.Icon2
                                 ),
                                 activeItemCount = 1,
-                                trashedItemCount = 0,
+                                trashedItemCount = 0
                             ),
                             status = VaultStatus.Disabled(VaultStatus.Reason.ReadOnly)
                         ),
@@ -153,16 +153,16 @@ fun SelectVaultBottomsheetContentPreview(
                                     shareId = ShareId("another"),
                                     name = "vault 3",
                                     color = ShareColor.Color3,
-                                    icon = ShareIcon.Icon3,
+                                    icon = ShareIcon.Icon3
                                 ),
                                 activeItemCount = 1,
-                                trashedItemCount = 0,
+                                trashedItemCount = 0
                             ),
                             status = VaultStatus.Disabled(VaultStatus.Reason.Downgraded)
                         )
                     ),
                     selected = selectedVault,
-                    showUpgradeMessage = input.second,
+                    showUpgradeMessage = input.second
                 ),
                 onVaultClick = {},
                 onUpgrade = {}

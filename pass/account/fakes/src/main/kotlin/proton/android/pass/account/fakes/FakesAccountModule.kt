@@ -34,32 +34,20 @@ import proton.android.pass.account.api.AccountOrchestrators
 abstract class FakesAccountModule {
 
     @Binds
-    abstract fun bindAccountOrchestrators(
-        impl: TestAccountOrchestrators
-    ): AccountOrchestrators
+    abstract fun bindAccountOrchestrators(impl: TestAccountOrchestrators): AccountOrchestrators
 
     @Binds
-    abstract fun bindAccountManager(
-        impl: TestAccountManager
-    ): AccountManager
+    abstract fun bindAccountManager(impl: TestAccountManager): AccountManager
 
     @Binds
-    abstract fun bindPaymentManager(
-        impl: TestPaymentManager
-    ): PaymentManager
+    abstract fun bindPaymentManager(impl: TestPaymentManager): PaymentManager
 
     @Binds
-    abstract fun bindDeviceSettingsRepository(
-        impl: TestDeviceSettingsRepository
-    ): DeviceSettingsRepository
+    abstract fun bindDeviceSettingsRepository(impl: TestDeviceSettingsRepository): DeviceSettingsRepository
 
     @Binds
-    abstract fun bindPublicAddressRepository(
-        impl: TestPublicAddressRepository
-    ): PublicAddressRepository
+    abstract fun bindPublicAddressRepository(impl: TestPublicAddressRepository): PublicAddressRepository
 
     @Binds
-    abstract fun bindFeatureFlagRepository(
-        impl: TestFeatureFlagRepository
-    ): FeatureFlagRepository
+    abstract fun bindFeatureFlagRepository(impl: TestFeatureFlagRepository): FeatureFlagRepository
 }

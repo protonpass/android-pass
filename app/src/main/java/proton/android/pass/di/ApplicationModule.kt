@@ -47,19 +47,15 @@ object ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideAppStore() =
-        AppStore.GooglePlay
+    fun provideAppStore() = AppStore.GooglePlay
 
     @Provides
     @Singleton
-    fun provideRequiredAccountType(): AccountType =
-        AccountType.External
+    fun provideRequiredAccountType(): AccountType = AccountType.External
 
     @Provides
     @Singleton
-    fun provideWorkManager(
-        @ApplicationContext context: Context
-    ): WorkManager = WorkManager.getInstance(context)
+    fun provideWorkManager(@ApplicationContext context: Context): WorkManager = WorkManager.getInstance(context)
 
     @Provides
     @Singleton

@@ -82,9 +82,7 @@ fun ShareFromItemActionRow(
 
 @Preview
 @Composable
-fun ShareFromItemActionRowPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun ShareFromItemActionRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             ShareFromItemActionRow(

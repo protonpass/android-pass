@@ -49,7 +49,7 @@ internal fun PassCreditCardItemDetailMainSection(
     itemColors: PassItemColors,
     onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
     onHiddenSectionClick: (HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
-    onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
+    onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit
 ) {
 
     val sections = mutableListOf<@Composable (() -> Unit)?>()
@@ -60,7 +60,7 @@ internal fun PassCreditCardItemDetailMainSection(
             title = stringResource(R.string.item_details_credit_card_section_cardholder_title),
             subtitle = cardholder,
             itemColors = itemColors,
-            onClick = { onSectionClick(cardholder, ItemDetailsFieldType.Plain.Username) },
+            onClick = { onSectionClick(cardholder, ItemDetailsFieldType.Plain.Username) }
         ).takeIf { cardholder.isNotBlank() }
     }
 
@@ -80,7 +80,7 @@ internal fun PassCreditCardItemDetailMainSection(
             icon = painterResource(CoreR.drawable.ic_proton_calendar_day),
             title = stringResource(R.string.item_details_credit_card_section_expiration_date_title),
             maskedSubtitle = TextMask.ExpirationDate(expirationDate),
-            itemColors = itemColors,
+            itemColors = itemColors
         ).takeIf { expirationDate.isNotBlank() }
     }
 
@@ -94,7 +94,7 @@ internal fun PassCreditCardItemDetailMainSection(
             onClick = { onHiddenSectionClick(cvv, ItemDetailsFieldType.Hidden.Cvv) },
             onToggle = { isVisible ->
                 onHiddenSectionToggle(isVisible, cvv, ItemDetailsFieldType.Hidden.Cvv)
-            },
+            }
         ).takeIf { cvv !is HiddenState.Empty }
     }
 
@@ -107,7 +107,7 @@ internal fun PassCreditCardItemDetailMainSection(
             itemColors = itemColors,
             onToggle = { isVisible ->
                 onHiddenSectionToggle(isVisible, pin, ItemDetailsFieldType.Hidden.Pin)
-            },
+            }
         ).takeIf { pin !is HiddenState.Empty }
     }
 

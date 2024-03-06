@@ -54,7 +54,7 @@ fun TotpUpgradeContent(
 ) {
     Row(
         modifier = modifier.padding(start = 16.dp, top = 12.dp, end = 12.dp, bottom = 12.dp),
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
             painter = painterResource(CoreR.drawable.ic_proton_lock),
@@ -64,7 +64,7 @@ fun TotpUpgradeContent(
         Column(modifier = Modifier.padding(start = 8.dp)) {
             SectionTitle(
                 modifier = Modifier.padding(start = 8.dp),
-                text = label,
+                text = label
             )
             Row(
                 modifier = Modifier
@@ -93,9 +93,7 @@ fun TotpUpgradeContent(
 
 @Preview
 @Composable
-fun TotpUpgradeContentPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun TotpUpgradeContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             TotpUpgradeContent {}

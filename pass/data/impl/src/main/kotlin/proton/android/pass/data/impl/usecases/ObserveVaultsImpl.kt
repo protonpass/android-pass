@@ -33,7 +33,7 @@ import javax.inject.Inject
 
 class ObserveVaultsImpl @Inject constructor(
     private val observeAllShares: ObserveAllShares,
-    private val encryptionContextProvider: EncryptionContextProvider,
+    private val encryptionContextProvider: EncryptionContextProvider
 ) : ObserveVaults {
 
     override fun invoke(): Flow<List<Vault>> = observeAllShares()

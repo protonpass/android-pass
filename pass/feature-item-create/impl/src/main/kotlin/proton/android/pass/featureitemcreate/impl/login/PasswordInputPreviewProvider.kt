@@ -33,73 +33,73 @@ class PasswordInputPreviewProvider : PreviewParameterProvider<PasswordInputPrevi
             PasswordInputPreviewParams(
                 hiddenState = UIHiddenState.Revealed(PASSWORD_EMPTY, PASSWORD_EMPTY),
                 passwordStrength = PasswordStrength.None,
-                isEditAllowed = false,
+                isEditAllowed = false
             ),
             PasswordInputPreviewParams(
                 hiddenState = UIHiddenState.Revealed(PASSWORD_ENCRYPTED, PASSWORD_PLAIN),
                 passwordStrength = PasswordStrength.Strong,
-                isEditAllowed = false,
+                isEditAllowed = false
             ),
             PasswordInputPreviewParams(
                 hiddenState = UIHiddenState.Revealed(PASSWORD_ENCRYPTED, PASSWORD_PLAIN),
                 passwordStrength = PasswordStrength.Vulnerable,
-                isEditAllowed = false,
+                isEditAllowed = false
             ),
             PasswordInputPreviewParams(
                 hiddenState = UIHiddenState.Revealed(PASSWORD_ENCRYPTED, PASSWORD_PLAIN),
                 passwordStrength = PasswordStrength.Weak,
-                isEditAllowed = false,
+                isEditAllowed = false
             ),
             PasswordInputPreviewParams(
                 hiddenState = UIHiddenState.Revealed(PASSWORD_EMPTY, PASSWORD_EMPTY),
                 passwordStrength = PasswordStrength.None,
-                isEditAllowed = true,
+                isEditAllowed = true
             ),
             PasswordInputPreviewParams(
                 hiddenState = UIHiddenState.Revealed(PASSWORD_ENCRYPTED, PASSWORD_PLAIN),
                 passwordStrength = PasswordStrength.Strong,
-                isEditAllowed = true,
+                isEditAllowed = true
             ),
             PasswordInputPreviewParams(
                 hiddenState = UIHiddenState.Revealed(PASSWORD_ENCRYPTED, PASSWORD_PLAIN),
                 passwordStrength = PasswordStrength.Vulnerable,
-                isEditAllowed = true,
+                isEditAllowed = true
             ),
             PasswordInputPreviewParams(
                 hiddenState = UIHiddenState.Revealed(PASSWORD_ENCRYPTED, PASSWORD_PLAIN),
                 passwordStrength = PasswordStrength.Weak,
-                isEditAllowed = true,
+                isEditAllowed = true
             ),
             PasswordInputPreviewParams(
                 hiddenState = UIHiddenState.Concealed(PASSWORD_ENCRYPTED),
                 passwordStrength = PasswordStrength.Strong,
-                isEditAllowed = false,
+                isEditAllowed = false
             ),
             PasswordInputPreviewParams(
                 hiddenState = UIHiddenState.Concealed(PASSWORD_ENCRYPTED),
                 passwordStrength = PasswordStrength.Vulnerable,
-                isEditAllowed = false,
+                isEditAllowed = false
             ),
             PasswordInputPreviewParams(
                 hiddenState = UIHiddenState.Concealed(PASSWORD_ENCRYPTED),
                 passwordStrength = PasswordStrength.Weak,
-                isEditAllowed = false,
+                isEditAllowed = false
             ),
             PasswordInputPreviewParams(
                 hiddenState = UIHiddenState.Concealed(PASSWORD_ENCRYPTED),
                 passwordStrength = PasswordStrength.Strong,
-                isEditAllowed = true,
+                isEditAllowed = true
             ),
             PasswordInputPreviewParams(
                 hiddenState = UIHiddenState.Concealed(PASSWORD_ENCRYPTED),
                 passwordStrength = PasswordStrength.Vulnerable,
-                isEditAllowed = true,
+                isEditAllowed = true
             ),
             PasswordInputPreviewParams(
                 hiddenState = UIHiddenState.Concealed(PASSWORD_ENCRYPTED),
                 passwordStrength = PasswordStrength.Weak,
-                isEditAllowed = true,
-            ),
+                isEditAllowed = true
+            )
         )
 
 }
@@ -107,5 +107,5 @@ class PasswordInputPreviewProvider : PreviewParameterProvider<PasswordInputPrevi
 data class PasswordInputPreviewParams(
     internal val hiddenState: UIHiddenState,
     internal val passwordStrength: PasswordStrength,
-    internal val isEditAllowed: Boolean,
+    internal val isEditAllowed: Boolean
 )

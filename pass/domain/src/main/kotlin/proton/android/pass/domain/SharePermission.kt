@@ -28,17 +28,12 @@ data class SharePermission(val value: Int) {
 }
 
 fun SharePermission.hasFlag(flag: SharePermissionFlag): Boolean = value.hasFlag(flag.value)
-fun SharePermission.flags(): List<SharePermissionFlag> =
-    SharePermissionFlag.map.values.filter { hasFlag(it) }.toList()
+fun SharePermission.flags(): List<SharePermissionFlag> = SharePermissionFlag.map.values.filter { hasFlag(it) }.toList()
 
-fun SharePermission.canUpdate(): Boolean =
-    hasFlag(SharePermissionFlag.Admin) or hasFlag(SharePermissionFlag.Update)
+fun SharePermission.canUpdate(): Boolean = hasFlag(SharePermissionFlag.Admin) or hasFlag(SharePermissionFlag.Update)
 
-fun SharePermission.canCreate(): Boolean =
-    hasFlag(SharePermissionFlag.Admin) or hasFlag(SharePermissionFlag.Create)
+fun SharePermission.canCreate(): Boolean = hasFlag(SharePermissionFlag.Admin) or hasFlag(SharePermissionFlag.Create)
 
-fun SharePermission.canDelete(): Boolean =
-    hasFlag(SharePermissionFlag.Admin) or hasFlag(SharePermissionFlag.Delete)
+fun SharePermission.canDelete(): Boolean = hasFlag(SharePermissionFlag.Admin) or hasFlag(SharePermissionFlag.Delete)
 
-fun SharePermission.canTrash(): Boolean =
-    hasFlag(SharePermissionFlag.Admin) or hasFlag(SharePermissionFlag.Trash)
+fun SharePermission.canTrash(): Boolean = hasFlag(SharePermissionFlag.Admin) or hasFlag(SharePermissionFlag.Trash)

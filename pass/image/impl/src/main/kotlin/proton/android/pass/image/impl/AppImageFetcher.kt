@@ -52,8 +52,11 @@ class AppImageFetcherFactory @Inject constructor(
     @ApplicationContext private val context: Context,
     private val clock: Clock
 ) : Fetcher.Factory<PackageName> {
-    override fun create(data: PackageName, options: Options, imageLoader: ImageLoader): Fetcher =
-        AppImageFetcher(context, clock, data)
+    override fun create(
+        data: PackageName,
+        options: Options,
+        imageLoader: ImageLoader
+    ): Fetcher = AppImageFetcher(context, clock, data)
 }
 
 class AppImageFetcher(
@@ -138,13 +141,12 @@ class AppImageFetcher(
         }
     }
 
-    private fun handleCachedFile(file: File, result: CacheResult): CacheResult =
-        if (isFileValid(file)) {
-            result
-        } else {
-            file.delete()
-            CacheResult.Miss
-        }
+    private fun handleCachedFile(file: File, result: CacheResult): CacheResult = if (isFileValid(file)) {
+        result
+    } else {
+        file.delete()
+        CacheResult.Miss
+    }
 
     @Suppress("MagicNumber")
     private fun isFileValid(file: File): Boolean {

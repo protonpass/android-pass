@@ -29,7 +29,6 @@ class PinItemsImpl @Inject constructor(
     private val itemRepository: ItemRepository
 ) : PinItems {
 
-    override suspend fun invoke(items: List<Pair<ShareId, ItemId>>): PinItemsResult =
-        itemRepository.pinItems(items)
+    override suspend fun invoke(items: List<Pair<ShareId, ItemId>>): PinItemsResult = itemRepository.pinItems(items)
 
 }

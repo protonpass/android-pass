@@ -29,9 +29,7 @@ sealed interface TrialNavigation {
 
 object TrialScreen : NavItem(baseRoute = "trial/screen")
 
-fun NavGraphBuilder.trialGraph(
-    onNavigate: (TrialNavigation) -> Unit
-) {
+fun NavGraphBuilder.trialGraph(onNavigate: (TrialNavigation) -> Unit) {
     composable(TrialScreen) {
         TrialScreen(
             onNavigate = onNavigate

@@ -132,7 +132,7 @@ fun OnBoardingPage(
                             text = stringResource(R.string.on_boarding_tutorial),
                             textAlign = TextAlign.Center,
                             style = ProtonTheme.typography.defaultSmallNorm,
-                            color = PassTheme.colors.interactionNormMajor1,
+                            color = PassTheme.colors.interactionNormMajor1
                         )
                         Icon(
                             painter = painterResource(R.drawable.ic_pass_youtube),

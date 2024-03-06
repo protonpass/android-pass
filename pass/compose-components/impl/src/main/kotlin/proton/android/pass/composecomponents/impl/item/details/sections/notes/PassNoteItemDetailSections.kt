@@ -23,12 +23,9 @@ import androidx.compose.ui.Modifier
 import proton.android.pass.domain.ItemContents
 
 @Composable
-internal fun PassNoteItemDetailSections(
-    modifier: Modifier = Modifier,
-    contents: ItemContents.Note,
-) = with(contents) {
+internal fun PassNoteItemDetailSections(modifier: Modifier = Modifier, contents: ItemContents.Note) = with(contents) {
     PassNoteItemDetailMainSection(
         modifier = modifier,
-        note = note,
+        note = note
     )
 }

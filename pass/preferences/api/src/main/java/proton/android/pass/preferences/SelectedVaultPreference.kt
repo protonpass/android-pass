@@ -38,10 +38,9 @@ sealed interface SelectedVaultPreference {
     companion object
 }
 
-fun SelectedVaultPreference.Companion.fromValue(value: String): SelectedVaultPreference =
-    when {
-        value == ALL_VAULTS_VALUE -> SelectedVaultPreference.AllVaults
-        value == TRASH_VALUE -> SelectedVaultPreference.Trash
-        value.isNotBlank() -> SelectedVaultPreference.Vault(value)
-        else -> SelectedVaultPreference.AllVaults
-    }
+fun SelectedVaultPreference.Companion.fromValue(value: String): SelectedVaultPreference = when {
+    value == ALL_VAULTS_VALUE -> SelectedVaultPreference.AllVaults
+    value == TRASH_VALUE -> SelectedVaultPreference.Trash
+    value.isNotBlank() -> SelectedVaultPreference.Vault(value)
+    else -> SelectedVaultPreference.AllVaults
+}

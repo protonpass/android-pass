@@ -35,9 +35,6 @@ object InternalSettingsSerializer : Serializer<InternalSettings> {
         }
     }
 
-    override suspend fun writeTo(
-        t: InternalSettings,
-        output: OutputStream
-    ) = t.writeTo(output)
+    override suspend fun writeTo(t: InternalSettings, output: OutputStream) = t.writeTo(output)
 }
 

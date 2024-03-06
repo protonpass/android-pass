@@ -73,6 +73,6 @@ enum class HomeSnackbarMessage(
 
     ItemsUnpinnedSuccess(R.string.home_snackbar_items_unpinned_success, SnackbarType.SUCCESS),
     ItemsUnpinnedPartialSuccess(R.string.home_snackbar_items_unpinned_partial_success, SnackbarType.ERROR),
-    ItemsUnpinnedError(R.string.home_snackbar_items_unpinned_error, SnackbarType.ERROR),
+    ItemsUnpinnedError(R.string.home_snackbar_items_unpinned_error, SnackbarType.ERROR)
 }
 

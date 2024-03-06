@@ -24,40 +24,38 @@ import proton.android.pass.domain.CustomField
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.HiddenState
 
-fun CustomField.toContent(
-    encryptionContext: EncryptionContext,
-    isConcealed: Boolean
-): CustomFieldContent? = when (this) {
-    CustomField.Unknown -> null
-    is CustomField.Hidden -> {
-        val hiddenFieldByteArray = encryptionContext.decrypt(value.toEncryptedByteArray())
-        val hiddenState = if (hiddenFieldByteArray.isEmpty()) {
-            HiddenState.Empty(value)
-        } else {
-            if (isConcealed) {
-                HiddenState.Concealed(value)
+fun CustomField.toContent(encryptionContext: EncryptionContext, isConcealed: Boolean): CustomFieldContent? =
+    when (this) {
+        CustomField.Unknown -> null
+        is CustomField.Hidden -> {
+            val hiddenFieldByteArray = encryptionContext.decrypt(value.toEncryptedByteArray())
+            val hiddenState = if (hiddenFieldByteArray.isEmpty()) {
+                HiddenState.Empty(value)
             } else {
-                HiddenState.Revealed(value, hiddenFieldByteArray.decodeToString())
+                if (isConcealed) {
+                    HiddenState.Concealed(value)
+                } else {
+                    HiddenState.Revealed(value, hiddenFieldByteArray.decodeToString())
+                }
             }
+            CustomFieldContent.Hidden(label = this.label, value = hiddenState)
         }
-        CustomFieldContent.Hidden(label = this.label, value = hiddenState)
-    }
 
-    is CustomField.Text -> {
-        CustomFieldContent.Text(label = this.label, value = this.value)
-    }
+        is CustomField.Text -> {
+            CustomFieldContent.Text(label = this.label, value = this.value)
+        }
 
-    is CustomField.Totp -> {
-        val totpFieldByteArray = encryptionContext.decrypt(value.toEncryptedByteArray())
-        val hiddenState = if (totpFieldByteArray.isEmpty()) {
-            HiddenState.Empty(value)
-        } else {
-            if (isConcealed) {
-                HiddenState.Concealed(value)
+        is CustomField.Totp -> {
+            val totpFieldByteArray = encryptionContext.decrypt(value.toEncryptedByteArray())
+            val hiddenState = if (totpFieldByteArray.isEmpty()) {
+                HiddenState.Empty(value)
             } else {
-                HiddenState.Revealed(value, totpFieldByteArray.decodeToString())
+                if (isConcealed) {
+                    HiddenState.Concealed(value)
+                } else {
+                    HiddenState.Revealed(value, totpFieldByteArray.decodeToString())
+                }
             }
+            CustomFieldContent.Totp(label = this.label, value = hiddenState)
         }
-        CustomFieldContent.Totp(label = this.label, value = hiddenState)
     }
-}

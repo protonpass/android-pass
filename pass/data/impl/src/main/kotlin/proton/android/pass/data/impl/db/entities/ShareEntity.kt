@@ -89,7 +89,7 @@ data class ShareEntity(
     @ColumnInfo(name = Columns.PENDING_INVITES, defaultValue = "0")
     val pendingInvites: Int,
     @ColumnInfo(name = Columns.NEW_USER_INVITES_READY, defaultValue = "0")
-    val newUserInvitesReady: Int,
+    val newUserInvitesReady: Int
 
 ) {
     object Columns {

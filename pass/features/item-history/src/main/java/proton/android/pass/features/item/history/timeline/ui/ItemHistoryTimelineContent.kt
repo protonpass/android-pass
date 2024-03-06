@@ -34,7 +34,7 @@ import proton.android.pass.features.item.history.timeline.presentation.ItemHisto
 internal fun ItemHistoryTimelineContent(
     modifier: Modifier = Modifier,
     state: ItemHistoryTimelineState,
-    onNavigated: (ItemHistoryNavDestination) -> Unit,
+    onNavigated: (ItemHistoryNavDestination) -> Unit
 ) = with(state) {
 
     val itemColors = passItemColors(itemCategory = itemCategory)
@@ -44,19 +44,19 @@ internal fun ItemHistoryTimelineContent(
         topBar = {
             ItemHistoryTimelineTopBar(
                 colors = itemColors,
-                onUpClick = { onNavigated(ItemHistoryNavDestination.Back) },
+                onUpClick = { onNavigated(ItemHistoryNavDestination.Back) }
             )
-        },
+        }
     ) { innerPadding ->
         Column(
-            modifier = Modifier.padding(innerPadding),
+            modifier = Modifier.padding(innerPadding)
         ) {
             ItemHistoryTimelineTitle(
                 modifier = Modifier.padding(
                     horizontal = Spacing.medium,
-                    vertical = Spacing.large,
+                    vertical = Spacing.large
                 ),
-                text = stringResource(id = R.string.item_history_timeline_title),
+                text = stringResource(id = R.string.item_history_timeline_title)
             )
 
             when (this@with) {
@@ -75,7 +75,7 @@ internal fun ItemHistoryTimelineContent(
                         itemId = itemId,
                         itemRevisions = itemRevisions,
                         colors = itemColors,
-                        onNavigated = onNavigated,
+                        onNavigated = onNavigated
                     )
                 }
             }

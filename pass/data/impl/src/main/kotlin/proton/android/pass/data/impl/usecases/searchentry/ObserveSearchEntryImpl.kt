@@ -31,9 +31,7 @@ class ObserveSearchEntryImpl @Inject constructor(
     private val searchEntryRepository: SearchEntryRepository
 ) : ObserveSearchEntry {
 
-    override fun invoke(
-        searchEntrySelection: ObserveSearchEntry.SearchEntrySelection
-    ): Flow<List<SearchEntry>> =
+    override fun invoke(searchEntrySelection: ObserveSearchEntry.SearchEntrySelection): Flow<List<SearchEntry>> =
         when (searchEntrySelection) {
             ObserveSearchEntry.SearchEntrySelection.AllVaults -> observeCurrentUser()
                 .flatMapLatest { searchEntryRepository.observeAll(it.userId) }

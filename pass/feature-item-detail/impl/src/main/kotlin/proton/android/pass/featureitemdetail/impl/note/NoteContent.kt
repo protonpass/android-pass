@@ -58,26 +58,26 @@ fun NoteContent(
     onVaultClick: () -> Unit,
     isPinned: Boolean,
     onViewItemHistoryClicked: () -> Unit,
-    isHistoryFeatureEnabled: Boolean,
+    isHistoryFeatureEnabled: Boolean
 ) {
     val contents = itemUiModel.contents as ItemContents.Note
 
     Column(
         modifier = modifier.padding(Spacing.medium),
-        verticalArrangement = Arrangement.spacedBy(Spacing.large),
+        verticalArrangement = Arrangement.spacedBy(Spacing.large)
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(Spacing.small)) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(Spacing.small),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.small)
             ) {
                 AnimatedVisibility(
                     visible = isPinned,
-                    enter = expandHorizontally(),
+                    enter = expandHorizontally()
                 ) {
                     CircledPin(
                         ratio = 1f,
-                        backgroundColor = PassTheme.colors.noteInteractionNormMajor1,
+                        backgroundColor = PassTheme.colors.noteInteractionNormMajor1
                     )
                 }
 
@@ -91,7 +91,7 @@ fun NoteContent(
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = contents.note,
-                style = ProtonTheme.typography.defaultNorm,
+                style = ProtonTheme.typography.defaultNorm
             )
         }
 
@@ -101,7 +101,7 @@ fun NoteContent(
                 modifiedInstant = itemUiModel.modificationTime,
                 onViewItemHistoryClicked = onViewItemHistoryClicked,
                 buttonBackgroundColor = PassTheme.colors.noteInteractionNormMinor2,
-                buttonTextColor = PassTheme.colors.noteInteractionNormMajor2,
+                buttonTextColor = PassTheme.colors.noteInteractionNormMajor2
             )
         }
 
@@ -111,9 +111,7 @@ fun NoteContent(
 
 @Preview
 @Composable
-fun NoteContentPreview(
-    @PreviewParameter(ThemeItemTitleProvider::class) input: Pair<Boolean, ItemTitleInput>
-) {
+fun NoteContentPreview(@PreviewParameter(ThemeItemTitleProvider::class) input: Pair<Boolean, ItemTitleInput>) {
     val (isDark, params) = input
 
     PassTheme(isDark = isDark) {
@@ -126,7 +124,7 @@ fun NoteContentPreview(
                 onVaultClick = {},
                 isPinned = params.isPinned,
                 onViewItemHistoryClicked = {},
-                isHistoryFeatureEnabled = params.isHistoryFeatureEnabled,
+                isHistoryFeatureEnabled = params.isHistoryFeatureEnabled
             )
         }
     }

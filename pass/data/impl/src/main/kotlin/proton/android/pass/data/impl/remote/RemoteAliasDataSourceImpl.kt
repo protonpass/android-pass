@@ -33,10 +33,7 @@ import javax.inject.Inject
 class RemoteAliasDataSourceImpl @Inject constructor(
     private val api: ApiProvider
 ) : RemoteAliasDataSource {
-    override fun getAliasOptions(
-        userId: UserId,
-        shareId: ShareId
-    ): Flow<AliasOptionsResponse> = flow {
+    override fun getAliasOptions(userId: UserId, shareId: ShareId): Flow<AliasOptionsResponse> = flow {
         val res = api.get<PasswordManagerApi>(userId)
             .invoke { getAliasOptions(shareId.id) }
             .valueOrThrow

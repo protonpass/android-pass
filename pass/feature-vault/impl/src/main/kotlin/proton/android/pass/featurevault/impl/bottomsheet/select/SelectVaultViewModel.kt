@@ -48,20 +48,20 @@ class SelectVaultViewModel @Inject constructor(
     private val canCreateItemInVault: CanCreateItemInVault,
     observeVaultsWithItemCount: ObserveVaultsWithItemCount,
     observeUpgradeInfo: ObserveUpgradeInfo,
-    savedStateHandle: SavedStateHandleProvider,
+    savedStateHandle: SavedStateHandleProvider
 ) : ViewModel() {
 
     private val selected: ShareId = ShareId(savedStateHandle.get().require(SelectedVaultArg.key))
 
     val state: StateFlow<SelectVaultUiState> = combine(
         observeVaultsWithItemCount().asLoadingResult(),
-        observeUpgradeInfo().asLoadingResult(),
+        observeUpgradeInfo().asLoadingResult()
     ) { vaultsResult, upgradeResult ->
         when (vaultsResult) {
             LoadingResult.Loading -> SelectVaultUiState.Loading
             is LoadingResult.Success -> successState(
                 vaults = vaultsResult.data,
-                upgradeResult = upgradeResult,
+                upgradeResult = upgradeResult
             )
 
             is LoadingResult.Error -> {
@@ -79,7 +79,7 @@ class SelectVaultViewModel @Inject constructor(
 
     private suspend fun successState(
         vaults: List<VaultWithItemCount>,
-        upgradeResult: LoadingResult<UpgradeInfo>,
+        upgradeResult: LoadingResult<UpgradeInfo>
     ): SelectVaultUiState {
         val showUpgradeMessage = upgradeResult.getOrNull()?.isUpgradeAvailable ?: false
 
@@ -106,7 +106,7 @@ class SelectVaultViewModel @Inject constructor(
             SelectVaultUiState.Success(
                 vaults = vaultsList.toImmutableList(),
                 selected = selectedVault,
-                showUpgradeMessage = showUpgradeMessage,
+                showUpgradeMessage = showUpgradeMessage
             )
         } else {
             PassLogger.w(TAG, "Error finding current vault")

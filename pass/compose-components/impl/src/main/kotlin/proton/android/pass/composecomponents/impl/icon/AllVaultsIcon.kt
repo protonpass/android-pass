@@ -47,9 +47,7 @@ fun AllVaultsIcon(
 
 @Preview
 @Composable
-fun AllVaultsIconPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun AllVaultsIconPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             AllVaultsIcon()

@@ -69,7 +69,7 @@ sealed class SelectPasskeyRequest(
         private val origin: String,
         val shareId: ShareId,
         val itemId: ItemId,
-        val passkeyId: PasskeyId,
+        val passkeyId: PasskeyId
     ) : SelectPasskeyRequest(request, origin)
 }
 

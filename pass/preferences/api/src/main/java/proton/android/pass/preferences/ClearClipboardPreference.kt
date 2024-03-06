@@ -27,20 +27,18 @@ enum class ClearClipboardPreference {
     S60,
     S180;
 
-    fun value(): Int =
-        when (this) {
-            Never -> CLIPBOARD_NEVER
-            S60 -> CLIPBOARD_60S
-            S180 -> CLIPBOARD_180S
-        }
+    fun value(): Int = when (this) {
+        Never -> CLIPBOARD_NEVER
+        S60 -> CLIPBOARD_60S
+        S180 -> CLIPBOARD_180S
+    }
 
     companion object {
-        fun from(value: Int): ClearClipboardPreference =
-            when (value) {
-                CLIPBOARD_NEVER -> Never
-                CLIPBOARD_60S -> S60
-                CLIPBOARD_180S -> S180
-                else -> S60
-            }
+        fun from(value: Int): ClearClipboardPreference = when (value) {
+            CLIPBOARD_NEVER -> Never
+            CLIPBOARD_60S -> S60
+            CLIPBOARD_180S -> S180
+            else -> S60
+        }
     }
 }

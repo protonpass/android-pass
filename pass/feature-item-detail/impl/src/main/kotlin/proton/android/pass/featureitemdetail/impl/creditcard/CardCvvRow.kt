@@ -49,16 +49,14 @@ fun CardCvvRow(
 
 @Preview
 @Composable
-fun CardCvvRowPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
+fun CardCvvRowPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
     val cvv = if (input.second) HiddenState.Revealed("", "1234") else HiddenState.Concealed("")
     PassTheme(isDark = input.first) {
         Surface {
             CardCvvRow(
                 cvv = cvv,
                 onToggle = {},
-                onClick = {},
+                onClick = {}
             )
         }
     }

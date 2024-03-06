@@ -75,9 +75,7 @@ fun TransparentTextButton(
 
 @Preview
 @Composable
-fun TransparentTextButtonPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun TransparentTextButtonPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             TransparentTextButton(

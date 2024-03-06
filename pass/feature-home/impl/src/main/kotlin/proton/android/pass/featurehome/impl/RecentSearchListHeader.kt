@@ -82,9 +82,7 @@ fun RecentSearchListHeader(
 
 @Preview
 @Composable
-fun RecentSearchListHeaderPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun RecentSearchListHeaderPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             RecentSearchListHeader(itemCount = 53, onClearRecentSearchClick = {})

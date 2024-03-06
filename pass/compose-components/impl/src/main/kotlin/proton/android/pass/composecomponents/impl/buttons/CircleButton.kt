@@ -59,9 +59,7 @@ fun CircleButton(
 
 @Preview
 @Composable
-fun CircleButtonTextPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun CircleButtonTextPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             CircleButton(

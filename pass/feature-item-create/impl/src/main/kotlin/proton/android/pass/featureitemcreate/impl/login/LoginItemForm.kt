@@ -76,7 +76,7 @@ internal fun LoginItemForm(
     onCreateAliasClick: () -> Unit,
     onAliasOptionsClick: () -> Unit,
     onNavigate: (BaseLoginNavigation) -> Unit,
-    titleSection: @Composable (ColumnScope.() -> Unit),
+    titleSection: @Composable (ColumnScope.() -> Unit)
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 

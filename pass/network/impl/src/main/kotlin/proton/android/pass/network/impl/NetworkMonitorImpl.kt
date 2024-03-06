@@ -47,10 +47,7 @@ class NetworkMonitorImpl @Inject constructor(
                 channel.trySend(connectivityManager.isCurrentlyConnected())
             }
 
-            override fun onCapabilitiesChanged(
-                network: Network,
-                networkCapabilities: NetworkCapabilities
-            ) {
+            override fun onCapabilitiesChanged(network: Network, networkCapabilities: NetworkCapabilities) {
                 channel.trySend(connectivityManager.isCurrentlyConnected())
             }
         }

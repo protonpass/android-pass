@@ -26,7 +26,6 @@ fun String.ellipsize(size: Int) = take(size) + if (length > size) ellipsis else 
 /**
  * Remove all accents from a string.
  */
-fun CharSequence.removeAccents(): String =
-    "\\p{InCombiningDiacriticalMarks}+"
-        .toRegex()
-        .replace(Normalizer.normalize(this, Normalizer.Form.NFD), "")
+fun CharSequence.removeAccents(): String = "\\p{InCombiningDiacriticalMarks}+"
+    .toRegex()
+    .replace(Normalizer.normalize(this, Normalizer.Form.NFD), "")

@@ -37,6 +37,5 @@ class TestGetAliasDetails @Inject constructor() : GetAliasDetails {
         flow.tryEmit(value)
     }
 
-    override fun invoke(shareId: ShareId, itemId: ItemId): Flow<AliasDetails> =
-        flow.map { it.getOrThrow() }
+    override fun invoke(shareId: ShareId, itemId: ItemId): Flow<AliasDetails> = flow.map { it.getOrThrow() }
 }

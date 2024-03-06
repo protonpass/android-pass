@@ -87,7 +87,7 @@ class SettingsViewModel @Inject constructor(
     data class PreferencesState(
         val theme: ThemePreference,
         val copyTotpToClipboard: CopyTotpToClipboard,
-        val useFavicons: UseFaviconsPreference,
+        val useFavicons: UseFaviconsPreference
     )
 
     private val preferencesState: Flow<PreferencesState> = combine(

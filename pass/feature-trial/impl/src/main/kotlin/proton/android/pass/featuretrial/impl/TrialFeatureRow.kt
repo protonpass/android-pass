@@ -59,9 +59,7 @@ fun TrialFeatureRow(
 
 @Preview
 @Composable
-fun TrialFeatureRowPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun TrialFeatureRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             TrialFeatureRow(

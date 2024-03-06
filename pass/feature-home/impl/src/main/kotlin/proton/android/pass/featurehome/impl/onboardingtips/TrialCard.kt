@@ -47,9 +47,7 @@ fun TrialCard(
 
 @Preview
 @Composable
-fun TrialCardPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun TrialCardPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             TrialCard(

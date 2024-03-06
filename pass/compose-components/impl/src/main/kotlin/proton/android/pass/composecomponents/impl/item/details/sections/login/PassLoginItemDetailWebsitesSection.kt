@@ -50,24 +50,24 @@ internal fun PassLoginItemDetailWebsitesSection(
     websiteUrls: ImmutableList<String>,
     itemColors: PassItemColors,
     onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
-    onLinkClick: (String) -> Unit,
+    onLinkClick: (String) -> Unit
 ) {
     RoundedCornersColumn(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth()
     ) {
         Row(
             modifier = Modifier.padding(all = Spacing.medium),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(Spacing.medium),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
         ) {
             Icon(
                 painter = painterResource(CoreR.drawable.ic_proton_earth),
                 contentDescription = null,
-                tint = itemColors.norm,
+                tint = itemColors.norm
             )
 
             Column(
-                verticalArrangement = Arrangement.spacedBy(Spacing.small),
+                verticalArrangement = Arrangement.spacedBy(Spacing.small)
             ) {
                 SectionTitle(text = stringResource(R.string.item_details_login_section_websites_title))
 
@@ -78,7 +78,7 @@ internal fun PassLoginItemDetailWebsitesSection(
                         onLongClick = {
                             onSectionClick(websiteUrl, ItemDetailsFieldType.Plain.Website)
                         },
-                        itemColors = itemColors,
+                        itemColors = itemColors
                     )
                 }
             }
@@ -93,14 +93,14 @@ private fun PassWebsiteLinkText(
     websiteUrl: String,
     onClick: () -> Unit,
     onLongClick: () -> Unit,
-    itemColors: PassItemColors,
+    itemColors: PassItemColors
 ) {
     Text(
         modifier = modifier
             .fillMaxWidth()
             .combinedClickable(
                 onClick = onClick,
-                onLongClick = onLongClick,
+                onLongClick = onLongClick
             )
             .padding(vertical = Spacing.small),
         text = websiteUrl,
@@ -108,6 +108,6 @@ private fun PassWebsiteLinkText(
         fontSize = 16.sp,
         fontWeight = FontWeight.W400,
         maxLines = 2,
-        overflow = TextOverflow.Ellipsis,
+        overflow = TextOverflow.Ellipsis
     )
 }

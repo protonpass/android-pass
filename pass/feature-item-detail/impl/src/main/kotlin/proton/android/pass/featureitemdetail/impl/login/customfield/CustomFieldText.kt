@@ -77,9 +77,7 @@ fun CustomFieldText(
 
 @Preview
 @Composable
-fun CustomFieldTextPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun CustomFieldTextPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             CustomFieldText(

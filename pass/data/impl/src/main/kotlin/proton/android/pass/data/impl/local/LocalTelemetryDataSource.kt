@@ -36,9 +36,7 @@ class LocalTelemetryDataSourceImpl @Inject constructor(
         db.telemetryEventsDao().insertOrUpdate(entity)
     }
 
-    override suspend fun getAll(userId: UserId): List<TelemetryEntity> =
-        db.telemetryEventsDao().getAll(userId.id)
+    override suspend fun getAll(userId: UserId): List<TelemetryEntity> = db.telemetryEventsDao().getAll(userId.id)
 
-    override suspend fun removeInRange(min: Long, max: Long) =
-        db.telemetryEventsDao().deleteInRange(min, max)
+    override suspend fun removeInRange(min: Long, max: Long) = db.telemetryEventsDao().deleteInRange(min, max)
 }

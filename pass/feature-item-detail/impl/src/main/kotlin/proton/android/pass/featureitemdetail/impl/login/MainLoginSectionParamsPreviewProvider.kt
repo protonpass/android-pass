@@ -92,7 +92,7 @@ class MainLoginSectionParamsPreviewProvider : PreviewParameterProvider<MainLogin
                 passwordState = HiddenState.Empty(""),
                 totpUiState = TotpUiState.Hidden,
                 showViewAlias = false
-            ),
+            )
         )
 }
 

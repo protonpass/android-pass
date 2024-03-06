@@ -96,9 +96,7 @@ object BottomBarTestTag {
 
 @Preview
 @Composable
-fun BottomBarPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun BottomBarPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             BottomBar(

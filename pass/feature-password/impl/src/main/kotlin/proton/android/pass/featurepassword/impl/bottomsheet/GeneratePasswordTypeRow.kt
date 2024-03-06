@@ -59,7 +59,7 @@ fun GeneratePasswordTypeRow(
         Text(
             text = stringResource(R.string.password_type),
             color = PassTheme.colors.textNorm,
-            style = ProtonTheme.typography.defaultSmallNorm,
+            style = ProtonTheme.typography.defaultSmallNorm
         )
 
         Row(
@@ -67,12 +67,12 @@ fun GeneratePasswordTypeRow(
                 .clip(RoundedCornerShape(8.dp))
                 .clickable(onClick = onClick)
                 .padding(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Text(
                 text = current.toResourceString(),
                 color = PassTheme.colors.textNorm,
-                style = ProtonTheme.typography.defaultSmallNorm,
+                style = ProtonTheme.typography.defaultSmallNorm
             )
 
             Icon(

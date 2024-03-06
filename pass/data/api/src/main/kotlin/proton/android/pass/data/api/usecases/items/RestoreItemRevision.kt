@@ -27,7 +27,7 @@ interface RestoreItemRevision {
     suspend operator fun invoke(
         shareId: ShareId,
         itemId: ItemId,
-        itemContents: ItemContents,
+        itemContents: ItemContents
     )
 
 }

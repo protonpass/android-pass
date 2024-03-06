@@ -47,7 +47,7 @@ fun ClipboardBottomSheetContents(
     modifier: Modifier = Modifier,
     state: ClipboardSettingsUIState,
     onClearClipboardSettingClick: () -> Unit,
-    onCopyTotpSettingClick: (Boolean) -> Unit,
+    onCopyTotpSettingClick: (Boolean) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -75,7 +75,7 @@ fun ClipboardBottomSheetContents(
             SettingToggle(
                 text = stringResource(R.string.clipboard_option_copy_totp_code),
                 isChecked = state.isCopyTotpToClipboardEnabled.value(),
-                onClick = onCopyTotpSettingClick,
+                onClick = onCopyTotpSettingClick
             )
         }
         Text(
@@ -88,9 +88,7 @@ fun ClipboardBottomSheetContents(
 
 @Preview
 @Composable
-fun ClipboardBottomSheetContentsPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun ClipboardBottomSheetContentsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             ClipboardBottomSheetContents(
@@ -99,7 +97,7 @@ fun ClipboardBottomSheetContentsPreview(
                     clearClipboardPreference = ClearClipboardPreference.Never
                 ),
                 onClearClipboardSettingClick = {},
-                onCopyTotpSettingClick = {},
+                onCopyTotpSettingClick = {}
             )
         }
     }

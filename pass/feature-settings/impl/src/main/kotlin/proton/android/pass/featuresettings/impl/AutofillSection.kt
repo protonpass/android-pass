@@ -49,9 +49,7 @@ fun AutofillSection(
 
 @Preview
 @Composable
-fun AutofillSectionPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
+fun AutofillSectionPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
     PassTheme(isDark = input.first) {
         Surface {
             AutofillSection(

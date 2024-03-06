@@ -56,17 +56,17 @@ fun AutosaveAppContent(
 
     ProtonBottomSheetBackHandler(
         bottomSheetState = bottomSheetState,
-        coroutineScope = coroutineScope,
+        coroutineScope = coroutineScope
     )
 
     val appNavigator = rememberAppNavigator(
-        bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState),
+        bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState)
     )
     PassModalBottomSheetLayout(bottomSheetNavigator = appNavigator.passBottomSheetNavigator) {
         NavHost(
             modifier = modifier.defaultMinSize(minHeight = 200.dp),
             navController = appNavigator.navController,
-            startDestination = if (needsAuth) AUTH_GRAPH else CREATE_LOGIN_GRAPH,
+            startDestination = if (needsAuth) AUTH_GRAPH else CREATE_LOGIN_GRAPH
         ) {
             autosaveActivityGraph(
                 appNavigator = appNavigator,

@@ -48,7 +48,7 @@ fun ItemCount(
     showSearchResults: Boolean,
     itemCount: Int?,
     itemType: SearchFilterType,
-    isPinnedMode: Boolean,
+    isPinnedMode: Boolean
 ) {
     Row(
         modifier = modifier,
@@ -80,10 +80,7 @@ fun ItemCount(
 }
 
 @StringRes
-fun getTitleCountRes(
-    itemType: SearchFilterType,
-    isPinnedMode: Boolean
-): Int = when (itemType) {
+fun getTitleCountRes(itemType: SearchFilterType, isPinnedMode: Boolean): Int = when (itemType) {
     SearchFilterType.All -> if (!isPinnedMode) {
         R.string.item_list_header_all_search_results
     } else {

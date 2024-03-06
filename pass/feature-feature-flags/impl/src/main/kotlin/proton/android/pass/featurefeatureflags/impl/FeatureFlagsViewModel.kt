@@ -38,16 +38,16 @@ class FeatureFlagsViewModel @Inject constructor(
     val state: StateFlow<Map<FeatureFlag, Boolean>> =
         combine(
             ffRepository.get<Boolean>(FeatureFlag.HISTORY_V1),
-            ffRepository.get<Boolean>(FeatureFlag.PINNING_V1),
+            ffRepository.get<Boolean>(FeatureFlag.PINNING_V1)
         ) { isHistoryEnabled, isPinningEnabled ->
             mapOf(
                 FeatureFlag.HISTORY_V1 to isHistoryEnabled,
-                FeatureFlag.PINNING_V1 to isPinningEnabled,
+                FeatureFlag.PINNING_V1 to isPinningEnabled
             )
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.Eagerly,
-            initialValue = emptyMap(),
+            initialValue = emptyMap()
         )
 
     fun <T> override(featureFlag: FeatureFlag, value: T) = viewModelScope.launch {

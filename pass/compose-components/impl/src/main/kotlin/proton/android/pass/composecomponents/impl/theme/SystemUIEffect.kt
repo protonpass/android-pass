@@ -24,10 +24,7 @@ import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
-fun SystemUIEffect(
-    isDark: Boolean,
-    systemUiController: SystemUiController = rememberSystemUiController()
-) {
+fun SystemUIEffect(isDark: Boolean, systemUiController: SystemUiController = rememberSystemUiController()) {
     LaunchedEffect(systemUiController, isDark) {
         systemUiController.systemBarsDarkContentEnabled = !isDark
     }

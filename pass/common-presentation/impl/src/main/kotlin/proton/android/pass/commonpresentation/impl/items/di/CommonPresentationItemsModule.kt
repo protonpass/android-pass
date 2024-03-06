@@ -37,28 +37,26 @@ import proton.android.pass.domain.items.ItemCategory
 internal abstract class CommonPresentationItemsModule {
 
     @[Binds ViewModelScoped]
-    internal abstract fun bindItemDetailsHandler(
-        impl: ItemDetailsHandlerImpl,
-    ): ItemDetailsHandler
+    internal abstract fun bindItemDetailsHandler(impl: ItemDetailsHandlerImpl): ItemDetailsHandler
 
     @[Binds ViewModelScoped IntoMap ItemDetailsHandlerObserverKey(ItemCategory.Alias)]
     internal abstract fun bindAliasItemDetailsHandlerObserver(
-        impl: AliasItemDetailsHandlerObserverImpl,
+        impl: AliasItemDetailsHandlerObserverImpl
     ): ItemDetailsHandlerObserver
 
     @[Binds ViewModelScoped IntoMap ItemDetailsHandlerObserverKey(ItemCategory.CreditCard)]
     internal abstract fun bindCreditCardItemDetailsHandlerObserver(
-        impl: CreditCardItemDetailsHandlerObserverImpl,
+        impl: CreditCardItemDetailsHandlerObserverImpl
     ): ItemDetailsHandlerObserver
 
     @[Binds ViewModelScoped IntoMap ItemDetailsHandlerObserverKey(ItemCategory.Login)]
     internal abstract fun bindLoginItemDetailsHandlerObserver(
-        impl: LoginItemDetailsHandlerObserverImpl,
+        impl: LoginItemDetailsHandlerObserverImpl
     ): ItemDetailsHandlerObserver
 
     @[Binds ViewModelScoped IntoMap ItemDetailsHandlerObserverKey(ItemCategory.Note)]
     internal abstract fun bindNoteItemDetailsHandlerObserver(
-        impl: NoteItemDetailsHandlerObserverImpl,
+        impl: NoteItemDetailsHandlerObserverImpl
     ): ItemDetailsHandlerObserver
 
 }

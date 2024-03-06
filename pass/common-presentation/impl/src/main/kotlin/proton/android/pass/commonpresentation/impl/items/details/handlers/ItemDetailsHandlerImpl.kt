@@ -38,26 +38,21 @@ class ItemDetailsHandlerImpl @Inject constructor(
     private val observers: Map<ItemCategory, @JvmSuppressWildcards ItemDetailsHandlerObserver>,
     private val clipboardManager: ClipboardManager,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val snackbarDispatcher: SnackbarDispatcher,
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ItemDetailsHandler {
 
-    override fun observeItemDetails(
-        item: Item,
-    ): Flow<ItemDetailState> = getItemDetailsObserver(item.itemType.category)
+    override fun observeItemDetails(item: Item): Flow<ItemDetailState> = getItemDetailsObserver(item.itemType.category)
         .observe(item)
         .distinctUntilChanged()
 
-    override suspend fun onItemDetailsFieldClicked(
-        text: String,
-        plainFieldType: ItemDetailsFieldType.Plain,
-    ) {
+    override suspend fun onItemDetailsFieldClicked(text: String, plainFieldType: ItemDetailsFieldType.Plain) {
         clipboardManager.copyToClipboard(text = text, isSecure = false)
         displayFieldCopiedSnackbarMessage(plainFieldType)
     }
 
     override suspend fun onItemDetailsHiddenFieldClicked(
         hiddenState: HiddenState,
-        hiddenFieldType: ItemDetailsFieldType.Hidden,
+        hiddenFieldType: ItemDetailsFieldType.Hidden
     ) {
         val text = when (hiddenState) {
             is HiddenState.Empty -> ""
@@ -71,31 +66,30 @@ class ItemDetailsHandlerImpl @Inject constructor(
         displayFieldCopiedSnackbarMessage(hiddenFieldType)
     }
 
-    private suspend fun displayFieldCopiedSnackbarMessage(fieldType: ItemDetailsFieldType) =
-        when (fieldType) {
-            is ItemDetailsFieldType.Hidden.CustomField -> ItemDetailsSnackbarMessage.CustomFieldCopied
-            ItemDetailsFieldType.Hidden.Cvv -> ItemDetailsSnackbarMessage.CvvCopied
-            ItemDetailsFieldType.Hidden.Password -> ItemDetailsSnackbarMessage.PasswordCopied
-            ItemDetailsFieldType.Hidden.Pin -> ItemDetailsSnackbarMessage.PinCopied
-            ItemDetailsFieldType.Plain.Alias -> ItemDetailsSnackbarMessage.AliasCopied
-            ItemDetailsFieldType.Plain.CardNumber -> ItemDetailsSnackbarMessage.CardNumberCopied
-            ItemDetailsFieldType.Plain.CustomField -> ItemDetailsSnackbarMessage.CustomFieldCopied
-            ItemDetailsFieldType.Plain.TotpCode -> ItemDetailsSnackbarMessage.TotpCodeCopied
-            ItemDetailsFieldType.Plain.Username -> ItemDetailsSnackbarMessage.UsernameCopied
-            ItemDetailsFieldType.Plain.Website -> ItemDetailsSnackbarMessage.WebsiteCopied
-        }.let { snackbarMessage -> snackbarDispatcher(snackbarMessage) }
+    private suspend fun displayFieldCopiedSnackbarMessage(fieldType: ItemDetailsFieldType) = when (fieldType) {
+        is ItemDetailsFieldType.Hidden.CustomField -> ItemDetailsSnackbarMessage.CustomFieldCopied
+        ItemDetailsFieldType.Hidden.Cvv -> ItemDetailsSnackbarMessage.CvvCopied
+        ItemDetailsFieldType.Hidden.Password -> ItemDetailsSnackbarMessage.PasswordCopied
+        ItemDetailsFieldType.Hidden.Pin -> ItemDetailsSnackbarMessage.PinCopied
+        ItemDetailsFieldType.Plain.Alias -> ItemDetailsSnackbarMessage.AliasCopied
+        ItemDetailsFieldType.Plain.CardNumber -> ItemDetailsSnackbarMessage.CardNumberCopied
+        ItemDetailsFieldType.Plain.CustomField -> ItemDetailsSnackbarMessage.CustomFieldCopied
+        ItemDetailsFieldType.Plain.TotpCode -> ItemDetailsSnackbarMessage.TotpCodeCopied
+        ItemDetailsFieldType.Plain.Username -> ItemDetailsSnackbarMessage.UsernameCopied
+        ItemDetailsFieldType.Plain.Website -> ItemDetailsSnackbarMessage.WebsiteCopied
+    }.let { snackbarMessage -> snackbarDispatcher(snackbarMessage) }
 
     override fun onItemDetailsHiddenFieldToggled(
         isVisible: Boolean,
         hiddenState: HiddenState,
         hiddenFieldType: ItemDetailsFieldType.Hidden,
-        itemCategory: ItemCategory,
+        itemCategory: ItemCategory
     ) {
         encryptionContextProvider.withEncryptionContext {
             when {
                 isVisible -> HiddenState.Revealed(
                     encrypted = hiddenState.encrypted,
-                    clearText = decrypt(hiddenState.encrypted),
+                    clearText = decrypt(hiddenState.encrypted)
                 )
 
                 decrypt(hiddenState.encrypted.toEncryptedByteArray()).isEmpty() -> HiddenState.Empty(

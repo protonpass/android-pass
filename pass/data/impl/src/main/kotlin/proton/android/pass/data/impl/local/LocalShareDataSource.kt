@@ -35,5 +35,9 @@ interface LocalShareDataSource {
     suspend fun deleteShares(shareIds: Set<ShareId>): Boolean
     suspend fun hasShares(userId: UserId): Boolean
     suspend fun deleteSharesForUser(userId: UserId)
-    suspend fun updateOwnershipStatus(userId: UserId, shareId: ShareId, isOwner: Boolean)
+    suspend fun updateOwnershipStatus(
+        userId: UserId,
+        shareId: ShareId,
+        isOwner: Boolean
+    )
 }

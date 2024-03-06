@@ -48,7 +48,7 @@ private const val SELECTABLE_TEXT_FIELD_ERROR_LABEL = "ProtonSelectableTextField
 enum class CursorSelection {
     All,
     End,
-    Start,
+    Start
 }
 
 @Composable
@@ -63,7 +63,7 @@ fun ProtonSelectableTextField(
     isSingleLine: Boolean = true,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    visualTransformation: VisualTransformation = VisualTransformation.None,
+    visualTransformation: VisualTransformation = VisualTransformation.None
 ) {
     val isLeftToRight = LocalLayoutDirection.current == LayoutDirection.Ltr
     val selection = when (cursorSelection) {
@@ -74,7 +74,7 @@ fun ProtonSelectableTextField(
 
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Center
     ) {
         BasicTextField(
             modifier = Modifier.fillMaxWidth(),
@@ -86,17 +86,17 @@ fun ProtonSelectableTextField(
             singleLine = isSingleLine,
             keyboardActions = keyboardActions,
             keyboardOptions = keyboardOptions,
-            cursorBrush = SolidColor(ProtonTheme.colors.textNorm),
+            cursorBrush = SolidColor(ProtonTheme.colors.textNorm)
         )
 
         AnimatedVisibility(
             visible = !errorText.isNullOrBlank(),
-            label = SELECTABLE_TEXT_FIELD_ERROR_LABEL,
+            label = SELECTABLE_TEXT_FIELD_ERROR_LABEL
         ) {
             Text(
                 text = errorText.orEmpty(),
                 style = ProtonTheme.typography.captionNorm,
-                color = PassTheme.colors.signalDanger,
+                color = PassTheme.colors.signalDanger
             )
         }
     }
@@ -107,7 +107,7 @@ fun ProtonSelectableTextField(
 @Composable
 fun ProtonSelectableTextFieldPreview(
     @PreviewParameter(ThemedProtonTextFieldPreviewProvider::class)
-    input: Pair<Boolean, ProtonSelectableTextFieldPreviewParams>,
+    input: Pair<Boolean, ProtonSelectableTextFieldPreviewParams>
 ) {
     val (isDark, params) = input
 
@@ -118,7 +118,7 @@ fun ProtonSelectableTextFieldPreview(
                 onTextChanged = {},
                 textStyle = ProtonTheme.typography.defaultNorm,
                 isEnabled = params.isEnabled,
-                errorText = params.errorText,
+                errorText = params.errorText
             )
         }
     }

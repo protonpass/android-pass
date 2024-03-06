@@ -24,10 +24,7 @@ import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
 
 object TestPendingInvite {
-    fun create(
-        token: String = "some-token",
-        name: String = "invite-name"
-    ) = PendingInvite(
+    fun create(token: String = "some-token", name: String = "invite-name") = PendingInvite(
         inviteToken = InviteToken(token),
         inviterEmail = "inviter@email",
         invitedAddressId = "invitedAddressId",

@@ -83,7 +83,7 @@ fun PassSnackbar(
             ProtonSnackbarType.NORM -> ProtonTheme.colors.notificationNorm
         },
         contentColor = ProtonTheme.colors.textInverted,
-        elevation = 6.dp,
+        elevation = 6.dp
     )
 }
 

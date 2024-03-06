@@ -29,11 +29,11 @@ class ItemDetailTopBarPreviewProvider : PreviewParameterProvider<ItemDetailTopBa
         get() = sequence {
             for (isLoading in listOf(true, false)) {
                 for (
-                    color in listOf(
-                        PassPalette.Lavender100,
-                        PassPalette.GreenSheen100,
-                        PassPalette.MacaroniAndCheese100
-                    )
+                color in listOf(
+                    PassPalette.Lavender100,
+                    PassPalette.GreenSheen100,
+                    PassPalette.MacaroniAndCheese100
+                )
                 ) {
                     yield(
                         ItemDetailTopBarPreview(

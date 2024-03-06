@@ -148,7 +148,7 @@ class DeleteVaultViewModelTest {
         shareId = ShareId("123"),
         name = VAULT_NAME,
         color = ShareColor.Color2,
-        icon = ShareIcon.Icon1,
+        icon = ShareIcon.Icon1
     )
 
     companion object {

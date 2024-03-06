@@ -98,7 +98,7 @@ class UpdateLoginViewModel @Inject constructor(
     observeCurrentUser: ObserveCurrentUser,
     observeUpgradeInfo: ObserveUpgradeInfo,
     savedStateHandleProvider: SavedStateHandleProvider,
-    draftRepository: DraftRepository,
+    draftRepository: DraftRepository
 ) : BaseLoginViewModel(
     accountManager = accountManager,
     snackbarDispatcher = snackbarDispatcher,
@@ -109,7 +109,7 @@ class UpdateLoginViewModel @Inject constructor(
     draftRepository = draftRepository,
     encryptionContextProvider = encryptionContextProvider,
     passwordStrengthCalculator = passwordStrengthCalculator,
-    savedStateHandleProvider = savedStateHandleProvider,
+    savedStateHandleProvider = savedStateHandleProvider
 ) {
     private val navShareId: ShareId =
         ShareId(savedStateHandleProvider.get().require(CommonNavArgId.ShareId.key))
@@ -288,32 +288,31 @@ class UpdateLoginViewModel @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         aliasItemFormState: AliasItemFormState
-    ): Result<Item> =
-        if (aliasItemFormState.selectedSuffix != null) {
-            runCatching {
-                createAlias(
-                    userId = userId,
-                    shareId = shareId,
-                    newAlias = NewAlias(
-                        title = aliasItemFormState.title,
-                        note = aliasItemFormState.note,
-                        prefix = aliasItemFormState.prefix,
-                        suffix = aliasItemFormState.selectedSuffix.toDomain(),
-                        mailboxes = aliasItemFormState.mailboxes
-                            .filter { it.selected }
-                            .map { it.model }
-                            .map(AliasMailboxUiModel::toDomain)
-                    )
+    ): Result<Item> = if (aliasItemFormState.selectedSuffix != null) {
+        runCatching {
+            createAlias(
+                userId = userId,
+                shareId = shareId,
+                newAlias = NewAlias(
+                    title = aliasItemFormState.title,
+                    note = aliasItemFormState.note,
+                    prefix = aliasItemFormState.prefix,
+                    suffix = aliasItemFormState.selectedSuffix.toDomain(),
+                    mailboxes = aliasItemFormState.mailboxes
+                        .filter { it.selected }
+                        .map { it.model }
+                        .map(AliasMailboxUiModel::toDomain)
                 )
-            }.onFailure {
-                PassLogger.e(TAG, it, "Error creating alias")
-            }
-        } else {
-            val message = "Empty suffix on create alias"
-            PassLogger.i(TAG, message)
-            snackbarDispatcher(AliasSnackbarMessage.ItemCreationError)
-            Result.failure(Exception(message))
+            )
+        }.onFailure {
+            PassLogger.e(TAG, it, "Error creating alias")
         }
+    } else {
+        val message = "Empty suffix on create alias"
+        PassLogger.i(TAG, message)
+        snackbarDispatcher(AliasSnackbarMessage.ItemCreationError)
+        Result.failure(Exception(message))
+    }
 
     private suspend fun performUpdateItem(
         userId: UserId,
@@ -397,10 +396,7 @@ class UpdateLoginViewModel @Inject constructor(
         }
     }
 
-    private fun handleTotp(
-        encryptionContext: EncryptionContext,
-        primaryTotp: EncryptedString
-    ): String {
+    private fun handleTotp(encryptionContext: EncryptionContext, primaryTotp: EncryptedString): String {
         val totp = encryptionContext.decrypt(primaryTotp)
         if (totp.isBlank()) return totp
 

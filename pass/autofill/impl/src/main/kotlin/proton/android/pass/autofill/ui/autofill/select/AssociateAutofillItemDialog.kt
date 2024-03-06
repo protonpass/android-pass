@@ -60,7 +60,7 @@ internal fun AssociateAutofillItemDialog(
     itemUiModel ?: return onDismiss()
 
     Dialog(
-        onDismissRequest = onDismiss,
+        onDismissRequest = onDismiss
     ) {
         Card(backgroundColor = PassTheme.colors.backgroundNorm) {
             Column(
@@ -102,7 +102,11 @@ internal fun AssociateAutofillItemDialog(
 }
 
 @Composable
-fun DialogButton(modifier: Modifier = Modifier, text: String, onClick: () -> Unit) {
+fun DialogButton(
+    modifier: Modifier = Modifier,
+    text: String,
+    onClick: () -> Unit
+) {
     Button(
         modifier = modifier,
         elevation = null,
@@ -119,9 +123,7 @@ fun DialogButton(modifier: Modifier = Modifier, text: String, onClick: () -> Uni
 
 @Preview
 @Composable
-fun AssociateAutofillItemDialogPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun AssociateAutofillItemDialogPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             AssociateAutofillItemDialog(
@@ -130,13 +132,13 @@ fun AssociateAutofillItemDialogPreview(
                     shareId = ShareId(id = "rutrum"),
                     contents = ItemContents.Note(
                         title = "Willie Lowe",
-                        note = "repudiandae",
+                        note = "repudiandae"
                     ),
                     state = 6128,
                     createTime = Clock.System.now(),
                     modificationTime = Clock.System.now(),
                     lastAutofillTime = null,
-                    isPinned = false,
+                    isPinned = false
                 ),
                 onAssociateAndAutofill = {},
                 onAutofill = {},

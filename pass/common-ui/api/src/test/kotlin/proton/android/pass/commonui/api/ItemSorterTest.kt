@@ -197,8 +197,7 @@ class ItemSorterTest {
             .toInstant(TimeZone.UTC)
     )
 
-    private fun listOfTestItemUiModels() =
-        listOf(item15Feb(), item1Feb(), item1Aug(), item1Jan())
+    private fun listOfTestItemUiModels() = listOf(item15Feb(), item1Feb(), item1Aug(), item1Jan())
 
     private fun listOfMostRecentTestItemUiModels() =
         listOf(itemYesterday(), itemToday(), itemAutofillToday(), itemThisWeek())

@@ -43,7 +43,7 @@ fun CreateVaultScreen(
     }
 
     InAppReviewTriggerLaunchedEffect(
-        triggerCondition = createState.base.isVaultCreatedEvent is IsVaultCreatedEvent.Created,
+        triggerCondition = createState.base.isVaultCreatedEvent is IsVaultCreatedEvent.Created
     )
     LaunchedEffect(createState.base.isVaultCreatedEvent) {
         when (val event = createState.base.isVaultCreatedEvent) {

@@ -32,17 +32,17 @@ import me.proton.core.presentation.R as CoreR
 internal fun PassSharedItemDetailNoteSection(
     modifier: Modifier = Modifier,
     note: String,
-    itemColors: PassItemColors,
+    itemColors: PassItemColors
 ) {
     RoundedCornersColumn(
-        modifier = modifier,
+        modifier = modifier
     ) {
         PassItemDetailFieldRow(
             icon = painterResource(CoreR.drawable.ic_proton_note),
             title = stringResource(R.string.item_details_shared_section_note_title),
             subtitle = note,
             itemColors = itemColors,
-            isSelectable = true,
+            isSelectable = true
         )
     }
 }

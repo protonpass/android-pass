@@ -31,7 +31,7 @@ interface LocalEventDataSource {
         userId: UserId,
         addressId: AddressId,
         shareId: ShareId,
-        eventId: String,
+        eventId: String
     )
 
 }

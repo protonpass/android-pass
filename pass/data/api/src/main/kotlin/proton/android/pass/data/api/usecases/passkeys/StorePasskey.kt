@@ -23,5 +23,9 @@ import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.ShareId
 
 interface StorePasskey {
-    suspend operator fun invoke(shareId: ShareId, itemId: ItemId, passkey: Passkey)
+    suspend operator fun invoke(
+        shareId: ShareId,
+        itemId: ItemId,
+        passkey: Passkey
+    )
 }

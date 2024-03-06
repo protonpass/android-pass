@@ -67,7 +67,7 @@ sealed interface ItemDetailNavigation {
 
     data class OnViewItemHistory(
         val shareId: ShareId,
-        val itemId: ItemId,
+        val itemId: ItemId
     ) : ItemDetailNavigation
 
     data class ViewPasskeyDetails(
@@ -110,13 +110,10 @@ object ViewItem : NavItem(
     baseRoute = "item/detail/view",
     navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId)
 ) {
-    fun createNavRoute(shareId: ShareId, itemId: ItemId) =
-        "$baseRoute/${shareId.id}/${itemId.id}"
+    fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
 }
 
-fun NavGraphBuilder.itemDetailGraph(
-    onNavigate: (ItemDetailNavigation) -> Unit,
-) {
+fun NavGraphBuilder.itemDetailGraph(onNavigate: (ItemDetailNavigation) -> Unit) {
     composable(
         navItem = ViewItem
     ) {

@@ -74,7 +74,7 @@ fun AutofillAppState.toSelectItemState(): SelectItemState.Autofill {
             SelectItemState.Autofill.Login(
                 title = suggestionsTitle,
                 suggestionsPackageName = packageName,
-                suggestionsUrl = url,
+                suggestionsUrl = url
             )
         }
 
@@ -82,23 +82,21 @@ fun AutofillAppState.toSelectItemState(): SelectItemState.Autofill {
     }
 }
 
-private fun AutofillAppState.getSuggestionsTitle(): String =
-    if (autofillData.assistInfo.url is Some) {
-        getSuggestionsTitleForDomain(autofillData.assistInfo.url.value)
-    } else {
-        autofillData.packageInfo.appName.value
-    }
+private fun AutofillAppState.getSuggestionsTitle(): String = if (autofillData.assistInfo.url is Some) {
+    getSuggestionsTitleForDomain(autofillData.assistInfo.url.value)
+} else {
+    autofillData.packageInfo.appName.value
+}
 
-private fun getSuggestionsTitleForDomain(domain: String): String =
-    UrlSanitizer.sanitize(domain).fold(
-        onSuccess = {
-            runCatching {
-                val parsed = URI(it)
-                parsed.host
-            }.getOrDefault("")
-        },
-        onFailure = {
-            PassLogger.i(TAG, it, "Error sanitizing URL [url=$domain]")
-            ""
-        }
-    )
+private fun getSuggestionsTitleForDomain(domain: String): String = UrlSanitizer.sanitize(domain).fold(
+    onSuccess = {
+        runCatching {
+            val parsed = URI(it)
+            parsed.host
+        }.getOrDefault("")
+    },
+    onFailure = {
+        PassLogger.i(TAG, it, "Error sanitizing URL [url=$domain]")
+        ""
+    }
+)

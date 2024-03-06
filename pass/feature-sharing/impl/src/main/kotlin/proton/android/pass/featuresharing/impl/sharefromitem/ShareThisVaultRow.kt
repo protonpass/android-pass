@@ -96,7 +96,7 @@ fun ShareThisVaultRow(
                         itemCount.toInt(),
                         itemCount.toInt()
                     ),
-                    style = PassTheme.typography.body3Weak(),
+                    style = PassTheme.typography.body3Weak()
                 )
             }
             CircleButton(
@@ -120,16 +120,14 @@ fun ShareThisVaultRow(
 
 @Preview
 @Composable
-fun ShareThisVaultRowPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun ShareThisVaultRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             ShareThisVaultRow(
                 vault = VaultWithItemCount(
                     vault = Vault(
                         shareId = ShareId("Share"),
-                        name = "Test vault with a very very long name",
+                        name = "Test vault with a very very long name"
                     ),
                     activeItemCount = 1,
                     trashedItemCount = 1

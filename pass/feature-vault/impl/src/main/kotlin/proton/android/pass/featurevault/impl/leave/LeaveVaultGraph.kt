@@ -34,9 +34,7 @@ object LeaveVaultDialog : NavItem(
     fun createNavRoute(shareId: ShareId): String = "$baseRoute/${shareId.id}"
 }
 
-fun NavGraphBuilder.leaveVaultDialogGraph(
-    onNavigate: (VaultNavigation) -> Unit
-) {
+fun NavGraphBuilder.leaveVaultDialogGraph(onNavigate: (VaultNavigation) -> Unit) {
     dialog(LeaveVaultDialog) {
         LeaveVaultDialog(
             onNavigate = onNavigate

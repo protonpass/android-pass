@@ -73,7 +73,7 @@ class ManageVaultMemberRowPreviewProvider : PreviewParameterProvider<VaultMember
                         member = VaultMember.InvitePending(
                             email = "invited@user.test",
                             inviteId = InviteId("someInviteId")
-                        ),
+                        )
                     )
                 )
             )
@@ -89,7 +89,7 @@ class ManageVaultMemberRowPreviewProvider : PreviewParameterProvider<VaultMember
                                 newUserInviteId = NewUserInviteId("someInviteId"),
                                 role = ShareRole.Write,
                                 inviteState = status
-                            ),
+                            )
                         )
                     )
                 )

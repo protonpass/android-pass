@@ -177,7 +177,7 @@ class UrlSanitizerTest {
             "blob:some.domain",
             "blob:/some.domain",
             "blob://some.domain",
-            "blob:///some.domain",
+            "blob:///some.domain"
         )
 
         cases.forEach { input ->

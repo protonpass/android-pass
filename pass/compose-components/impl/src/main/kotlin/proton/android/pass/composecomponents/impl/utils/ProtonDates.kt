@@ -35,7 +35,7 @@ private const val DEFAULT_DATE_TEXT = ""
 fun protonFormattedDateText(
     endInstant: Instant,
     startInstant: Instant = Instant.fromEpochSeconds(epochSeconds = 0),
-    locale: Locale = Locale.getDefault(),
+    locale: Locale = Locale.getDefault()
 ): String = when (
     DateFormatUtils.getFormat(
         now = startInstant,
@@ -45,7 +45,7 @@ fun protonFormattedDateText(
             DateFormatUtils.Format.Today,
             DateFormatUtils.Format.Yesterday,
             DateFormatUtils.Format.DateOfSameYear,
-            DateFormatUtils.Format.Date,
+            DateFormatUtils.Format.Date
         )
     )
 ) {
@@ -68,14 +68,14 @@ fun protonFormattedDateText(
     DateFormatUtils.Format.Today -> runCatching {
         stringResource(
             R.string.date_today,
-            DateFormatUtils.getTime(endInstant.toLocalDateTime(TimeZone.currentSystemDefault())),
+            DateFormatUtils.getTime(endInstant.toLocalDateTime(TimeZone.currentSystemDefault()))
         )
     }.getOrDefault(DEFAULT_DATE_TEXT)
 
     DateFormatUtils.Format.Yesterday -> runCatching {
         stringResource(
             R.string.date_yesterday,
-            DateFormatUtils.getTime(endInstant.toLocalDateTime(TimeZone.currentSystemDefault())),
+            DateFormatUtils.getTime(endInstant.toLocalDateTime(TimeZone.currentSystemDefault()))
         )
     }.getOrDefault(DEFAULT_DATE_TEXT)
 

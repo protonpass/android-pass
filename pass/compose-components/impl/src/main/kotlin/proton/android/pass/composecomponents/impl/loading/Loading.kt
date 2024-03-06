@@ -52,9 +52,7 @@ fun Loading(
 
 @Preview
 @Composable
-fun LoadingPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun LoadingPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             Loading()

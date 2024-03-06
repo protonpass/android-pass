@@ -41,7 +41,7 @@ fun PassModalBottomSheetLayout(
         initialValue = ModalBottomSheetValue.Hidden,
         skipHalfExpanded = true
     ),
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     ModalBottomSheetLayout(
         modifier = modifier,

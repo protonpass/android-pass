@@ -33,15 +33,13 @@ class GetShareByIdImpl @Inject constructor(
     private val shareRepository: ShareRepository
 ) : GetShareById {
 
-    override suspend fun invoke(userId: UserId?, shareId: ShareId): Share =
-        if (userId == null) {
-            val primaryAccount = requireNotNull(accountManager.getPrimaryAccount().firstOrNull())
-            getShare(primaryAccount.userId, shareId)
-        } else {
-            getShare(userId, shareId)
-        }
+    override suspend fun invoke(userId: UserId?, shareId: ShareId): Share = if (userId == null) {
+        val primaryAccount = requireNotNull(accountManager.getPrimaryAccount().firstOrNull())
+        getShare(primaryAccount.userId, shareId)
+    } else {
+        getShare(userId, shareId)
+    }
 
-    private suspend fun getShare(userId: UserId, shareId: ShareId): Share =
-        shareRepository.getById(userId, shareId)
+    private suspend fun getShare(userId: UserId, shareId: ShareId): Share = shareRepository.getById(userId, shareId)
 }
 

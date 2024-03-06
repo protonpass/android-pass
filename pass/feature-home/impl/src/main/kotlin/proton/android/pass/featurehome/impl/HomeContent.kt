@@ -85,7 +85,7 @@ internal fun HomeContent(
     shouldScrollToTop: Boolean,
     scrollableState: LazyListState,
     header: LazyListScope.() -> Unit = {},
-    onEvent: (HomeUiEvent) -> Unit,
+    onEvent: (HomeUiEvent) -> Unit
 ) {
     val isTrashMode = uiState.homeListUiState.homeVaultSelection == VaultSelectionOption.Trash
     val isPinningOrSearch =
@@ -197,7 +197,7 @@ internal fun HomeContent(
                     list = uiState.pinningUiState.unFilteredItems,
                     canLoadExternalImages = uiState.homeListUiState.canLoadExternalImages,
                     onItemClick = { item -> onEvent(HomeUiEvent.ItemClick(item)) },
-                    onSeeAllClick = { onEvent(HomeUiEvent.SeeAllPinned) },
+                    onSeeAllClick = { onEvent(HomeUiEvent.SeeAllPinned) }
                 )
 
                 if (uiState.pinningUiState.unFilteredItems.isNotEmpty()) {
@@ -317,7 +317,7 @@ internal fun HomeContent(
                     )
                 },
                 forceShowHeader = forceShowHeader,
-                header = header,
+                header = header
             )
         }
     }

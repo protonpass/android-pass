@@ -32,10 +32,7 @@ import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 interface EncryptInviteKeys {
-    suspend operator fun invoke(
-        userId: UserId,
-        invite: InviteAndKeysEntity
-    ): List<InviteKeyRotation>
+    suspend operator fun invoke(userId: UserId, invite: InviteAndKeysEntity): List<InviteKeyRotation>
 }
 
 class EncryptInviteKeysImpl @Inject constructor(
@@ -44,10 +41,7 @@ class EncryptInviteKeysImpl @Inject constructor(
     private val addressRepository: UserAddressRepository,
     private val getAllKeysByAddress: GetAllKeysByAddress
 ) : EncryptInviteKeys {
-    override suspend fun invoke(
-        userId: UserId,
-        invite: InviteAndKeysEntity
-    ): List<InviteKeyRotation> {
+    override suspend fun invoke(userId: UserId, invite: InviteAndKeysEntity): List<InviteKeyRotation> {
         val user = userRepository.getUser(userId)
 
         val address = getAddress(userId, AddressId(invite.inviteEntity.invitedAddressId))

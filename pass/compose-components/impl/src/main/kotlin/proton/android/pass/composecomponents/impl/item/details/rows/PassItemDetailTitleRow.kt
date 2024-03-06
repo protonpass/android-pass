@@ -45,7 +45,7 @@ import proton.android.pass.domain.Vault
 internal fun PassItemDetailTitleRow(
     modifier: Modifier = Modifier,
     itemDetailState: ItemDetailState,
-    itemColors: PassItemColors,
+    itemColors: PassItemColors
 ) = with(itemDetailState) {
     when (this) {
         is ItemDetailState.Alias -> {
@@ -54,11 +54,11 @@ internal fun PassItemDetailTitleRow(
                 title = contents.title,
                 isPinned = isItemPinned,
                 itemColors = itemColors,
-                vault = itemVault,
+                vault = itemVault
             ) {
                 AliasIcon(
                     size = 60,
-                    shape = PassTheme.shapes.squircleMediumLargeShape,
+                    shape = PassTheme.shapes.squircleMediumLargeShape
                 )
             }
         }
@@ -69,11 +69,11 @@ internal fun PassItemDetailTitleRow(
                 title = contents.title,
                 isPinned = isItemPinned,
                 itemColors = itemColors,
-                vault = itemVault,
+                vault = itemVault
             ) {
                 CreditCardIcon(
                     size = 60,
-                    shape = PassTheme.shapes.squircleMediumLargeShape,
+                    shape = PassTheme.shapes.squircleMediumLargeShape
                 )
             }
         }
@@ -84,7 +84,7 @@ internal fun PassItemDetailTitleRow(
                 title = contents.title,
                 isPinned = isItemPinned,
                 itemColors = itemColors,
-                vault = itemVault,
+                vault = itemVault
             ) {
                 LoginIcon(
                     size = 60,
@@ -92,7 +92,7 @@ internal fun PassItemDetailTitleRow(
                     text = contents.title,
                     website = contents.websiteUrl,
                     packageName = contents.packageName,
-                    canLoadExternalImages = canLoadExternalImages,
+                    canLoadExternalImages = canLoadExternalImages
                 )
             }
         }
@@ -100,33 +100,33 @@ internal fun PassItemDetailTitleRow(
         is ItemDetailState.Note -> {
             Column(
                 modifier = modifier,
-                verticalArrangement = Arrangement.spacedBy(Spacing.large),
+                verticalArrangement = Arrangement.spacedBy(Spacing.large)
             ) {
                 Column(verticalArrangement = Arrangement.spacedBy(Spacing.small)) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(Spacing.small),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.small)
                     ) {
                         AnimatedVisibility(
                             visible = isItemPinned,
-                            enter = expandHorizontally(),
+                            enter = expandHorizontally()
                         ) {
                             CircledPin(
                                 ratio = 1f,
-                                backgroundColor = itemColors.majorPrimary,
+                                backgroundColor = itemColors.majorPrimary
                             )
                         }
 
                         PassItemDetailTitle(
                             text = contents.title,
-                            maxLines = Int.MAX_VALUE,
+                            maxLines = Int.MAX_VALUE
                         )
                     }
 
                     itemVault?.let { vault ->
                         PassItemDetailSubtitle(
                             vault = vault,
-                            onClick = {},
+                            onClick = {}
                         )
                     }
                 }
@@ -139,7 +139,7 @@ internal fun PassItemDetailTitleRow(
                 title = contents.title,
                 isPinned = false,
                 itemColors = itemColors,
-                vault = itemVault,
+                vault = itemVault
             ) {}
         }
     }
@@ -152,35 +152,35 @@ private fun ItemDetailTitleRow(
     isPinned: Boolean,
     itemColors: PassItemColors,
     vault: Vault?,
-    iconContent: @Composable RowScope.() -> Unit,
+    iconContent: @Composable RowScope.() -> Unit
 ) {
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Spacing.medium),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
         BoxedPin(
             isShown = isPinned,
             pin = {
                 CircledPin(
-                    backgroundColor = itemColors.majorPrimary,
+                    backgroundColor = itemColors.majorPrimary
                 )
             },
-            content = { iconContent() },
+            content = { iconContent() }
         )
 
         Column(
             modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(Spacing.small),
+            verticalArrangement = Arrangement.spacedBy(Spacing.small)
         ) {
             PassItemDetailTitle(
-                text = title,
+                text = title
             )
 
             vault?.let { itemVault ->
                 PassItemDetailSubtitle(
                     vault = itemVault,
-                    onClick = {},
+                    onClick = {}
                 )
             }
         }

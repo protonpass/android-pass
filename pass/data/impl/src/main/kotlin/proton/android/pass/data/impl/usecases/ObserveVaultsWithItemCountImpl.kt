@@ -39,16 +39,12 @@ class ObserveVaultsWithItemCountImpl @Inject constructor(
     override fun invoke(): Flow<List<VaultWithItemCount>> = observeVaults()
         .flatMapLatest { result -> observeItemCounts(result) }
 
-    private fun observeItemCounts(
-        vaultList: List<Vault>
-    ): Flow<List<VaultWithItemCount>> = itemRepository.observeItemCount(
-        shareIds = vaultList.map { it.shareId }
-    ).map { count -> mapVaults(vaultList, count) }
+    private fun observeItemCounts(vaultList: List<Vault>): Flow<List<VaultWithItemCount>> =
+        itemRepository.observeItemCount(
+            shareIds = vaultList.map { it.shareId }
+        ).map { count -> mapVaults(vaultList, count) }
 
-    private fun mapVaults(
-        vaultList: List<Vault>,
-        count: Map<ShareId, ShareItemCount>
-    ): List<VaultWithItemCount> {
+    private fun mapVaults(vaultList: List<Vault>, count: Map<ShareId, ShareItemCount>): List<VaultWithItemCount> {
         val res = vaultList.map { vault ->
             val itemsForShare = count[vault.shareId]
                 ?: throw IllegalStateException("Could not find ItemCount for share")

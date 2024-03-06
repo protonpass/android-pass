@@ -35,7 +35,6 @@ object TotpProviderModule {
     fun provideTotpManager(
         totpUriParser: TotpUriParser,
         totpUriSanitiser: TotpUriSanitiser,
-        totpTokenGenerator: TotpTokenGenerator,
-    ): TotpManager =
-        TotpManagerImpl(Clock.System, totpUriParser, totpUriSanitiser, totpTokenGenerator)
+        totpTokenGenerator: TotpTokenGenerator
+    ): TotpManager = TotpManagerImpl(Clock.System, totpUriParser, totpUriSanitiser, totpTokenGenerator)
 }

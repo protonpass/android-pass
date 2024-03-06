@@ -31,7 +31,11 @@ class AuthenticateWithPasskeyImpl @Inject constructor(
     private val passkeyManager: PasskeyManager
 ) : AuthenticateWithPasskey {
 
-    override fun invoke(origin: String, passkey: Passkey, request: String): PasskeyAuthenticationResponse {
+    override fun invoke(
+        origin: String,
+        passkey: Passkey,
+        request: String
+    ): PasskeyAuthenticationResponse {
         PassLogger.d(TAG, "Resolving challenge for origin=$origin")
         val response = passkeyManager.resolveChallenge(origin, passkey.contents, request)
         return PasskeyAuthenticationResponse(response)

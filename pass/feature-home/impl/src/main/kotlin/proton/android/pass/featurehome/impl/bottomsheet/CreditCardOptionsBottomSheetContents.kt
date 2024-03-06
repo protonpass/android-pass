@@ -47,7 +47,7 @@ fun CreditCardOptionsBottomSheetContents(
     onEdit: (ShareId, ItemId) -> Unit,
     onMoveToTrash: (ItemUiModel) -> Unit,
     onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit,
-    isPinningFeatureEnabled: Boolean,
+    isPinningFeatureEnabled: Boolean
 ) {
     val contents = itemUiModel.contents as ItemContents.CreditCard
 
@@ -64,7 +64,7 @@ fun CreditCardOptionsBottomSheetContents(
 
         val bottomSheetItems = mutableListOf(
             copyNumber { onCopyNumber(contents.number) },
-            copyCvv { onCopyCvv(contents.cvv.encrypted) },
+            copyCvv { onCopyCvv(contents.cvv.encrypted) }
         ).apply {
             if (isPinningFeatureEnabled) {
                 if (itemUiModel.isPinned) {
@@ -85,7 +85,7 @@ fun CreditCardOptionsBottomSheetContents(
         }
 
         BottomSheetItemList(
-            items = bottomSheetItems.withDividers().toPersistentList(),
+            items = bottomSheetItems.withDividers().toPersistentList()
         )
     }
 }
@@ -102,19 +102,18 @@ private fun copyCvv(onClick: () -> Unit) = copyItem(
     onClick
 )
 
-private fun copyItem(text: String, onClick: () -> Unit): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = { BottomSheetItemTitle(text = text) }
-        override val subtitle: (@Composable () -> Unit)?
-            get() = null
-        override val leftIcon: (@Composable () -> Unit)
-            get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick = onClick
-        override val isDivider = false
-    }
+private fun copyItem(text: String, onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = { BottomSheetItemTitle(text = text) }
+    override val subtitle: (@Composable () -> Unit)?
+        get() = null
+    override val leftIcon: (@Composable () -> Unit)
+        get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
+    override val onClick = onClick
+    override val isDivider = false
+}
 
 
 @Suppress("FunctionMaxLength")
@@ -145,7 +144,7 @@ fun CreditCardOptionsBottomSheetContentsPreview(
                     createTime = Clock.System.now(),
                     modificationTime = Clock.System.now(),
                     lastAutofillTime = Clock.System.now(),
-                    isPinned = false,
+                    isPinned = false
                 ),
                 isRecentSearch = input.second,
                 onCopyNumber = {},
@@ -156,7 +155,7 @@ fun CreditCardOptionsBottomSheetContentsPreview(
                 onEdit = { _, _ -> },
                 onMoveToTrash = {},
                 onRemoveFromRecentSearch = { _, _ -> },
-                isPinningFeatureEnabled = true,
+                isPinningFeatureEnabled = true
             )
         }
     }

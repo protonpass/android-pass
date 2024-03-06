@@ -25,9 +25,7 @@ import proton.android.pass.features.item.history.timeline.navigation.ItemHistory
 import proton.android.pass.features.item.history.timeline.ui.ItemHistoryTimelineScreen
 import proton.android.pass.navigation.api.composable
 
-fun NavGraphBuilder.itemHistoryNavGraph(
-    onNavigated: (ItemHistoryNavDestination) -> Unit,
-) {
+fun NavGraphBuilder.itemHistoryNavGraph(onNavigated: (ItemHistoryNavDestination) -> Unit) {
 
     composable(navItem = ItemHistoryTimelineNavItem) {
         ItemHistoryTimelineScreen(onNavigated = onNavigated)

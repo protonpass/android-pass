@@ -61,7 +61,7 @@ class GeneratePasswordViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val userPreferencesRepository: UserPreferencesRepository,
     private val passwordGenerator: proton.android.pass.commonrust.api.PasswordGenerator,
-    private val passwordStrengthCalculator: PasswordStrengthCalculator,
+    private val passwordStrengthCalculator: PasswordStrengthCalculator
 ) : ViewModel() {
 
     private val mode = getMode()
@@ -84,7 +84,7 @@ class GeneratePasswordViewModel @Inject constructor(
             password = password,
             passwordStrength = passwordStrengthCalculator.calculateStrength(password),
             mode = mode,
-            content = pref.toContent(),
+            content = pref.toContent()
         )
     }
         .stateIn(
@@ -96,7 +96,7 @@ class GeneratePasswordViewModel @Inject constructor(
                     password = "",
                     passwordStrength = PasswordStrength.None,
                     mode = mode,
-                    content = pref.toContent(),
+                    content = pref.toContent()
                 )
             }
         )
@@ -192,10 +192,9 @@ class GeneratePasswordViewModel @Inject constructor(
         }
     }
 
-    private fun generatePassword(preference: PasswordGenerationPreference) =
-        when (preference.mode) {
-            PasswordGenerationMode.Random -> passwordGenerator.generatePassword(preference.toRandomSpec())
+    private fun generatePassword(preference: PasswordGenerationPreference) = when (preference.mode) {
+        PasswordGenerationMode.Random -> passwordGenerator.generatePassword(preference.toRandomSpec())
 
-            PasswordGenerationMode.Words -> passwordGenerator.generatePassphrase(preference.toWordSpec())
-        }
+        PasswordGenerationMode.Words -> passwordGenerator.generatePassphrase(preference.toWordSpec())
+    }
 }

@@ -54,8 +54,7 @@ class LocalSearchEntryDataSourceImpl @Inject constructor(
         db.searchEntryDao().deleteEntry(shareId.id, itemId.id)
     }
 
-    override fun observeAll(userId: UserId): Flow<List<SearchEntryEntity>> =
-        db.searchEntryDao().observeAll(userId.id)
+    override fun observeAll(userId: UserId): Flow<List<SearchEntryEntity>> = db.searchEntryDao().observeAll(userId.id)
 
     override fun observeAllByShare(shareId: ShareId): Flow<List<SearchEntryEntity>> =
         db.searchEntryDao().observeAllByShare(shareId.id)

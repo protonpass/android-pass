@@ -50,7 +50,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val passwordStrengthCalculator: PasswordStrengthCalculator,
-    private val totpManager: TotpManager,
+    private val totpManager: TotpManager
 ) : ItemDetailsHandlerObserver {
 
     private val loginItemContentsFlow = MutableStateFlow<ItemContents.Login?>(null)
@@ -60,7 +60,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
         observePrimaryTotp(item),
         observeCustomFields(item),
         getVaultById(shareId = item.shareId),
-        userPreferencesRepository.getUseFaviconsPreference(),
+        userPreferencesRepository.getUseFaviconsPreference()
     ) { loginItemContents, primaryTotp, customFields, vault, useFaviconsPreference ->
         ItemDetailState.Login(
             contents = loginItemContents,
@@ -72,7 +72,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
                     .let(passwordStrengthCalculator::calculateStrength)
             },
             primaryTotp = primaryTotp,
-            customFields = customFields,
+            customFields = customFields
         )
     }
 
@@ -103,33 +103,32 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
             }
         }
 
-    private fun getCustomFieldsFlows(
-        customFieldsContents: List<CustomFieldContent>,
-    ): List<Flow<ItemCustomField>> = customFieldsContents.map { customFieldContent ->
-        when (customFieldContent) {
-            is CustomFieldContent.Hidden -> flowOf(
-                ItemCustomField.Hidden(
-                    title = customFieldContent.label,
-                    hiddenState = customFieldContent.value,
-                )
-            )
-
-            is CustomFieldContent.Text -> flowOf(
-                ItemCustomField.Plain(
-                    title = customFieldContent.label,
-                    content = customFieldContent.value,
-                )
-            )
-
-            is CustomFieldContent.Totp -> observeTotp(customFieldContent.value)
-                .map { customFieldTotp ->
-                    ItemCustomField.Totp(
+    private fun getCustomFieldsFlows(customFieldsContents: List<CustomFieldContent>): List<Flow<ItemCustomField>> =
+        customFieldsContents.map { customFieldContent ->
+            when (customFieldContent) {
+                is CustomFieldContent.Hidden -> flowOf(
+                    ItemCustomField.Hidden(
                         title = customFieldContent.label,
-                        totp = customFieldTotp,
+                        hiddenState = customFieldContent.value
                     )
-                }
+                )
+
+                is CustomFieldContent.Text -> flowOf(
+                    ItemCustomField.Plain(
+                        title = customFieldContent.label,
+                        content = customFieldContent.value
+                    )
+                )
+
+                is CustomFieldContent.Totp -> observeTotp(customFieldContent.value)
+                    .map { customFieldTotp ->
+                        ItemCustomField.Totp(
+                            title = customFieldContent.label,
+                            totp = customFieldTotp
+                        )
+                    }
+            }
         }
-    }
 
     private fun observeTotp(hiddenTotpState: HiddenState): Flow<Totp?> = when (hiddenTotpState) {
         is HiddenState.Empty -> ""
@@ -145,16 +144,13 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
                 Totp(
                     code = totpWrapper.code,
                     remainingSeconds = totpWrapper.remainingSeconds,
-                    totalSeconds = totpWrapper.totalSeconds,
+                    totalSeconds = totpWrapper.totalSeconds
                 )
             }
         }
     }
 
-    override fun updateHiddenState(
-        hiddenFieldType: ItemDetailsFieldType.Hidden,
-        hiddenState: HiddenState,
-    ) {
+    override fun updateHiddenState(hiddenFieldType: ItemDetailsFieldType.Hidden, hiddenState: HiddenState) {
         loginItemContentsFlow.update { loginItemContents ->
             when (hiddenFieldType) {
                 is ItemDetailsFieldType.Hidden.CustomField -> loginItemContents?.copy(
@@ -169,7 +165,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
                 )
 
                 ItemDetailsFieldType.Hidden.Password -> loginItemContents?.copy(
-                    password = hiddenState,
+                    password = hiddenState
                 )
 
                 ItemDetailsFieldType.Hidden.Cvv,

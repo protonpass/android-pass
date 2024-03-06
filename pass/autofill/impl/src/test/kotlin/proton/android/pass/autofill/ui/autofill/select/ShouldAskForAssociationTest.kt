@@ -80,24 +80,22 @@ class ShouldAskForAssociationTest {
         assertThat(res).isTrue()
     }
 
-    private fun itemContent(
-        url: String? = null,
-        packageName: PackageName? = null
-    ): ItemContents.Login = ItemContents.Login(
-        title = "title",
-        note = "note",
-        username = "username",
-        password = HiddenState.Empty(TestEncryptionContext.encrypt("")),
-        urls = mutableListOf<String>().apply { url?.let { add(it) } },
-        customFields = emptyList(),
-        packageInfoSet = mutableSetOf<PackageInfo>().apply {
-            packageName?.let {
-                add(PackageInfo(it, AppName("app name")))
-            }
-        },
-        primaryTotp = HiddenState.Empty(TestEncryptionContext.encrypt("")),
-        passkeys = emptyList()
-    )
+    private fun itemContent(url: String? = null, packageName: PackageName? = null): ItemContents.Login =
+        ItemContents.Login(
+            title = "title",
+            note = "note",
+            username = "username",
+            password = HiddenState.Empty(TestEncryptionContext.encrypt("")),
+            urls = mutableListOf<String>().apply { url?.let { add(it) } },
+            customFields = emptyList(),
+            packageInfoSet = mutableSetOf<PackageInfo>().apply {
+                packageName?.let {
+                    add(PackageInfo(it, AppName("app name")))
+                }
+            },
+            primaryTotp = HiddenState.Empty(TestEncryptionContext.encrypt("")),
+            passkeys = emptyList()
+        )
 
     companion object {
         private val browserPackageName = PackageName("com.android.chrome")

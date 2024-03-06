@@ -56,5 +56,5 @@ enum class SharingSnackbarMessage(
 
 
     TransferOwnershipSuccess(R.string.sharing_snackbar_transfer_ownership_success, SnackbarType.NORM),
-    TransferOwnershipError(R.string.sharing_snackbar_transfer_ownership_error, SnackbarType.ERROR),
+    TransferOwnershipError(R.string.sharing_snackbar_transfer_ownership_error, SnackbarType.ERROR)
 }

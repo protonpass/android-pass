@@ -176,7 +176,7 @@ fun NavGraphBuilder.autofillActivityGraph(
             // Only pass PackageInfoUi if the packageName is not a browser
             packageInfoUi = autofillAppState.autofillData.packageInfo
                 .takeIf { !it.packageName.isBrowser() }
-                ?.let { PackageInfoUi(it) },
+                ?.let { PackageInfoUi(it) }
         ),
         onNavigate = {
             when (it) {

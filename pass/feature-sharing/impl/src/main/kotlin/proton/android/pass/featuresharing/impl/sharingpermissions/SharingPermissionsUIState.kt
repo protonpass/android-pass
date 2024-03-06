@@ -45,5 +45,5 @@ data class SharingPermissionsUIState(
     val addresses: ImmutableList<AddressPermissionUiState> = persistentListOf(),
     val headerState: SharingPermissionsHeaderState = SharingPermissionsHeaderState.Initial,
     val vaultName: String? = null,
-    val event: SharingPermissionsEvents = SharingPermissionsEvents.Unknown,
+    val event: SharingPermissionsEvents = SharingPermissionsEvents.Unknown
 )

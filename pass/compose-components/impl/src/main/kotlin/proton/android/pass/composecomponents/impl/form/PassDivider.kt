@@ -25,8 +25,6 @@ import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.PassTheme
 
 @Composable
-fun PassDivider(
-    modifier: Modifier = Modifier
-) {
+fun PassDivider(modifier: Modifier = Modifier) {
     Divider(modifier = modifier.fillMaxWidth(), color = PassTheme.colors.inputBorderNorm)
 }

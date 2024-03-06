@@ -27,10 +27,7 @@ import me.proton.core.presentation.R
 
 @ExperimentalComposeUiApi
 @Composable
-fun HamburgerIconButton(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit
-) {
+fun HamburgerIconButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
     NavigationIconButton(
         modifier = modifier,
         onUpClick = onClick

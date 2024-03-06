@@ -32,10 +32,7 @@ class UpdateVaultImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : UpdateVault {
 
-    override fun createUpdateVaultRequest(
-        shareKey: ShareKey,
-        body: VaultV1.Vault
-    ): EncryptedUpdateVaultRequest {
+    override fun createUpdateVaultRequest(shareKey: ShareKey, body: VaultV1.Vault): EncryptedUpdateVaultRequest {
 
         val decryptedKey = encryptionContextProvider.withEncryptionContext {
             EncryptionKey(decrypt(shareKey.key))

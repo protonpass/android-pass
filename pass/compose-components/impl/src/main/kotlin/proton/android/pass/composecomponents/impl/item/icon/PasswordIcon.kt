@@ -30,14 +30,11 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.BoxedIcon
 
 @Composable
-fun PasswordIcon(
-    modifier: Modifier = Modifier,
-    size: Int = 40,
-) {
+fun PasswordIcon(modifier: Modifier = Modifier, size: Int = 40) {
     BoxedIcon(
         modifier = modifier,
         backgroundColor = PassTheme.colors.passwordInteractionNormMinor1,
-        size = size,
+        size = size
     ) {
         Icon(
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_key),
@@ -49,9 +46,7 @@ fun PasswordIcon(
 
 @Preview
 @Composable
-fun PasswordIconPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun PasswordIconPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             PasswordIcon()

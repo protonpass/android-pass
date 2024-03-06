@@ -62,52 +62,49 @@ fun SortingBottomSheetContents(
 private fun sortingItemList(
     selectedSortingType: SearchSortingType,
     onSortingTypeSelected: (SearchSortingType) -> Unit
-): ImmutableList<BottomSheetItem> =
-    listOf(MostRecent, TitleAsc, TitleDesc, CreationAsc, CreationDesc)
-        .map {
-            object : BottomSheetItem {
-                override val title: @Composable () -> Unit
-                    get() = {
-                        val color = if (it == selectedSortingType) {
-                            PassTheme.colors.interactionNorm
-                        } else {
-                            PassTheme.colors.textNorm
-                        }
-                        val title = when (it) {
-                            MostRecent -> stringResource(id = CompR.string.sort_by_modification_date)
-                            TitleAsc -> stringResource(id = CompR.string.sort_by_title_asc)
-                            TitleDesc -> stringResource(id = CompR.string.sort_by_title_desc)
-                            CreationAsc -> stringResource(id = CompR.string.sort_by_creation_asc)
-                            CreationDesc -> stringResource(id = CompR.string.sort_by_creation_desc)
-                        }
-                        BottomSheetItemTitle(text = title, color = color)
+): ImmutableList<BottomSheetItem> = listOf(MostRecent, TitleAsc, TitleDesc, CreationAsc, CreationDesc)
+    .map {
+        object : BottomSheetItem {
+            override val title: @Composable () -> Unit
+                get() = {
+                    val color = if (it == selectedSortingType) {
+                        PassTheme.colors.interactionNorm
+                    } else {
+                        PassTheme.colors.textNorm
                     }
-                override val subtitle: @Composable (() -> Unit)?
-                    get() = null
-                override val leftIcon: @Composable (() -> Unit)?
-                    get() = null
-                override val endIcon: @Composable (() -> Unit)?
-                    get() = if (it == selectedSortingType) {
-                        {
-                            BottomSheetItemIcon(
-                                iconId = me.proton.core.presentation.R.drawable.ic_proton_checkmark,
-                                tint = PassTheme.colors.interactionNormMajor1
-                            )
-                        }
-                    } else null
-                override val onClick: () -> Unit
-                    get() = { onSortingTypeSelected(it) }
-                override val isDivider = false
-            }
+                    val title = when (it) {
+                        MostRecent -> stringResource(id = CompR.string.sort_by_modification_date)
+                        TitleAsc -> stringResource(id = CompR.string.sort_by_title_asc)
+                        TitleDesc -> stringResource(id = CompR.string.sort_by_title_desc)
+                        CreationAsc -> stringResource(id = CompR.string.sort_by_creation_asc)
+                        CreationDesc -> stringResource(id = CompR.string.sort_by_creation_desc)
+                    }
+                    BottomSheetItemTitle(text = title, color = color)
+                }
+            override val subtitle: @Composable (() -> Unit)?
+                get() = null
+            override val leftIcon: @Composable (() -> Unit)?
+                get() = null
+            override val endIcon: @Composable (() -> Unit)?
+                get() = if (it == selectedSortingType) {
+                    {
+                        BottomSheetItemIcon(
+                            iconId = me.proton.core.presentation.R.drawable.ic_proton_checkmark,
+                            tint = PassTheme.colors.interactionNormMajor1
+                        )
+                    }
+                } else null
+            override val onClick: () -> Unit
+                get() = { onSortingTypeSelected(it) }
+            override val isDivider = false
         }
-        .toImmutableList()
+    }
+    .toImmutableList()
 
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
-fun SortingBottomSheetContentsPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun SortingBottomSheetContentsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             SortingBottomSheetContents(onSortingTypeSelected = {})

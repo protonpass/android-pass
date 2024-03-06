@@ -29,10 +29,7 @@ import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.commonui.api.PassTheme
 
 @Composable
-fun BottomSheetItemList(
-    modifier: Modifier = Modifier,
-    items: ImmutableList<BottomSheetItem>
-) {
+fun BottomSheetItemList(modifier: Modifier = Modifier, items: ImmutableList<BottomSheetItem>) {
     Column(
         modifier = modifier.verticalScroll(rememberScrollState())
     ) {

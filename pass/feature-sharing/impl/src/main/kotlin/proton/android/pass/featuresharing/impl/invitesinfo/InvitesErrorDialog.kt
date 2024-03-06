@@ -26,10 +26,7 @@ import proton.android.pass.featuresharing.impl.R
 import proton.android.pass.featuresharing.impl.SharingNavigation
 
 @Composable
-fun InvitesErrorDialog(
-    onNavigateEvent: (SharingNavigation) -> Unit,
-    modifier: Modifier = Modifier,
-) {
+fun InvitesErrorDialog(onNavigateEvent: (SharingNavigation) -> Unit, modifier: Modifier = Modifier) {
     ConfirmDialog(
         modifier = modifier,
         title = stringResource(id = R.string.sharing_error_dialog_title),
@@ -37,6 +34,6 @@ fun InvitesErrorDialog(
         cancelText = "",
         state = true,
         onConfirm = { },
-        onDismiss = { onNavigateEvent(SharingNavigation.Back) },
+        onDismiss = { onNavigateEvent(SharingNavigation.Back) }
     )
 }

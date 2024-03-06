@@ -34,7 +34,7 @@ internal sealed class ItemHistoryTimelineState(internal val itemCategory: ItemCa
         internal val shareId: ShareId,
         internal val itemId: ItemId,
         internal val itemRevisions: ImmutableList<ItemRevision>,
-        private val itemRevisionCategory: ItemCategory,
+        private val itemRevisionCategory: ItemCategory
     ) : ItemHistoryTimelineState(itemRevisionCategory)
 
 }

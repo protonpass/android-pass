@@ -94,150 +94,143 @@ fun VaultOptionsBottomSheetContents(
     }
 }
 
-private fun editVault(onEdit: () -> Unit): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_edit)) }
-        override val subtitle: (@Composable () -> Unit)?
-            get() = null
-        override val leftIcon: (@Composable () -> Unit)
-            get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_pencil) }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: () -> Unit
-            get() = { onEdit() }
-        override val isDivider = false
-    }
+private fun editVault(onEdit: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_edit)) }
+    override val subtitle: (@Composable () -> Unit)?
+        get() = null
+    override val leftIcon: (@Composable () -> Unit)
+        get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_pencil) }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
+    override val onClick: () -> Unit
+        get() = { onEdit() }
+    override val isDivider = false
+}
 
-private fun migrateVault(onMigrate: () -> Unit): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_migrate)) }
-        override val subtitle: (@Composable () -> Unit)?
-            get() = null
-        override val leftIcon: (@Composable () -> Unit)
-            get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_folder_arrow_in) }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: () -> Unit
-            get() = { onMigrate() }
-        override val isDivider = false
-    }
+private fun migrateVault(onMigrate: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_migrate)) }
+    override val subtitle: (@Composable () -> Unit)?
+        get() = null
+    override val leftIcon: (@Composable () -> Unit)
+        get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_folder_arrow_in) }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
+    override val onClick: () -> Unit
+        get() = { onMigrate() }
+    override val isDivider = false
+}
 
-private fun removeVault(onRemove: () -> Unit): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = {
-                BottomSheetItemTitle(
-                    text = stringResource(id = R.string.bottomsheet_delete_vault),
-                    color = ProtonTheme.colors.notificationError
-                )
-            }
-        override val subtitle: (@Composable () -> Unit)?
-            get() = null
-        override val leftIcon: (@Composable () -> Unit)
-            get() = {
-                BottomSheetItemIcon(
-                    iconId = CoreR.drawable.ic_proton_cross_circle,
-                    tint = ProtonTheme.colors.notificationError
-                )
-            }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: () -> Unit
-            get() = { onRemove() }
-        override val isDivider = false
-    }
+private fun removeVault(onRemove: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = {
+            BottomSheetItemTitle(
+                text = stringResource(id = R.string.bottomsheet_delete_vault),
+                color = ProtonTheme.colors.notificationError
+            )
+        }
+    override val subtitle: (@Composable () -> Unit)?
+        get() = null
+    override val leftIcon: (@Composable () -> Unit)
+        get() = {
+            BottomSheetItemIcon(
+                iconId = CoreR.drawable.ic_proton_cross_circle,
+                tint = ProtonTheme.colors.notificationError
+            )
+        }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
+    override val onClick: () -> Unit
+        get() = { onRemove() }
+    override val isDivider = false
+}
 
-private fun shareVault(onClick: () -> Unit): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = {
-                BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_share_vault))
-            }
-        override val subtitle: (@Composable () -> Unit)?
-            get() = null
-        override val leftIcon: (@Composable () -> Unit)
-            get() = {
-                BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_user_plus)
-            }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: () -> Unit
-            get() = { onClick() }
-        override val isDivider = false
-    }
+private fun shareVault(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = {
+            BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_share_vault))
+        }
+    override val subtitle: (@Composable () -> Unit)?
+        get() = null
+    override val leftIcon: (@Composable () -> Unit)
+        get() = {
+            BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_user_plus)
+        }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
+    override val onClick: () -> Unit
+        get() = { onClick() }
+    override val isDivider = false
+}
 
-private fun leaveVault(onClick: () -> Unit): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = {
-                BottomSheetItemTitle(
-                    text = stringResource(id = R.string.bottomsheet_leave_vault),
-                    color = ProtonTheme.colors.notificationError
-                )
-            }
-        override val subtitle: (@Composable () -> Unit)?
-            get() = null
-        override val leftIcon: (@Composable () -> Unit)
-            get() = {
-                BottomSheetItemIcon(
-                    iconId = CoreR.drawable.ic_proton_circle_slash,
-                    tint = ProtonTheme.colors.notificationError
-                )
-            }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: () -> Unit
-            get() = { onClick() }
-        override val isDivider = false
-    }
+private fun leaveVault(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = {
+            BottomSheetItemTitle(
+                text = stringResource(id = R.string.bottomsheet_leave_vault),
+                color = ProtonTheme.colors.notificationError
+            )
+        }
+    override val subtitle: (@Composable () -> Unit)?
+        get() = null
+    override val leftIcon: (@Composable () -> Unit)
+        get() = {
+            BottomSheetItemIcon(
+                iconId = CoreR.drawable.ic_proton_circle_slash,
+                tint = ProtonTheme.colors.notificationError
+            )
+        }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
+    override val onClick: () -> Unit
+        get() = { onClick() }
+    override val isDivider = false
+}
 
-private fun viewMembers(onClick: () -> Unit): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = {
-                BottomSheetItemTitle(
-                    text = stringResource(id = R.string.bottomsheet_view_members)
-                )
-            }
-        override val subtitle: (@Composable () -> Unit)?
-            get() = null
-        override val leftIcon: (@Composable () -> Unit)
-            get() = {
-                BottomSheetItemIcon(
-                    iconId = CoreR.drawable.ic_proton_users
-                )
-            }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: () -> Unit
-            get() = { onClick() }
-        override val isDivider = false
-    }
+private fun viewMembers(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = {
+            BottomSheetItemTitle(
+                text = stringResource(id = R.string.bottomsheet_view_members)
+            )
+        }
+    override val subtitle: (@Composable () -> Unit)?
+        get() = null
+    override val leftIcon: (@Composable () -> Unit)
+        get() = {
+            BottomSheetItemIcon(
+                iconId = CoreR.drawable.ic_proton_users
+            )
+        }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
+    override val onClick: () -> Unit
+        get() = { onClick() }
+    override val isDivider = false
+}
 
-private fun manageAccess(onClick: () -> Unit): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = {
-                BottomSheetItemTitle(
-                    text = stringResource(id = R.string.bottomsheet_manage_access)
-                )
-            }
-        override val subtitle: (@Composable () -> Unit)?
-            get() = null
-        override val leftIcon: (@Composable () -> Unit)
-            get() = {
-                BottomSheetItemIcon(
-                    iconId = CoreR.drawable.ic_proton_users
-                )
-            }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: () -> Unit
-            get() = { onClick() }
-        override val isDivider = false
-    }
+private fun manageAccess(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = {
+            BottomSheetItemTitle(
+                text = stringResource(id = R.string.bottomsheet_manage_access)
+            )
+        }
+    override val subtitle: (@Composable () -> Unit)?
+        get() = null
+    override val leftIcon: (@Composable () -> Unit)
+        get() = {
+            BottomSheetItemIcon(
+                iconId = CoreR.drawable.ic_proton_users
+            )
+        }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
+    override val onClick: () -> Unit
+        get() = { onClick() }
+    override val isDivider = false
+}
 
 
 class ThemeVaultOptionsInput :

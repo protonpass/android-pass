@@ -31,6 +31,5 @@ class TestRemotePlanDataSource : RemotePlanDataSource {
         result = value
     }
 
-    override suspend fun sendUserAccessAndGetPlan(userId: UserId): UserAccessResponse =
-        result.getOrThrow()
+    override suspend fun sendUserAccessAndGetPlan(userId: UserId): UserAccessResponse = result.getOrThrow()
 }

@@ -351,9 +351,7 @@ abstract class DataUseCaseModule {
     abstract fun bindRequestImage(impl: RequestImageImpl): RequestImage
 
     @Binds
-    abstract fun bindObserveVaultsWithItemCount(
-        impl: ObserveVaultsWithItemCountImpl
-    ): ObserveVaultsWithItemCount
+    abstract fun bindObserveVaultsWithItemCount(impl: ObserveVaultsWithItemCountImpl): ObserveVaultsWithItemCount
 
     @Binds
     abstract fun bindObserveItemCount(impl: ObserveItemCountImpl): ObserveItemCount
@@ -389,9 +387,7 @@ abstract class DataUseCaseModule {
     abstract fun bindMigrateItem(impl: MigrateItemsImpl): MigrateItems
 
     @Binds
-    abstract fun bindGetVaultWithItemCountById(
-        impl: GetVaultWithItemCountByIdImpl
-    ): GetVaultWithItemCountById
+    abstract fun bindGetVaultWithItemCountById(impl: GetVaultWithItemCountByIdImpl): GetVaultWithItemCountById
 
     @Binds
     abstract fun bindCreateItemAndAlias(impl: CreateItemAndAliasImpl): CreateItemAndAlias
@@ -560,7 +556,7 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindObserveVaultWithItemCountById(
-        impl: ObserveVaultWithItemCountByIdImpl,
+        impl: ObserveVaultWithItemCountByIdImpl
     ): ObserveVaultWithItemCountById
 
     @Binds

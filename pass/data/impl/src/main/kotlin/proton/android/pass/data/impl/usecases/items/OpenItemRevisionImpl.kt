@@ -34,7 +34,7 @@ class OpenItemRevisionImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val shareRepository: ShareRepository,
     private val shareKeyRepository: ShareKeyRepository,
-    private val openItem: OpenItem,
+    private val openItem: OpenItem
 ) : OpenItemRevision {
 
     override suspend fun invoke(shareId: ShareId, itemRevision: ItemRevision): Item {
@@ -44,7 +44,7 @@ class OpenItemRevisionImpl @Inject constructor(
         return openItem.open(
             response = itemRevision.toCrypto(),
             share = shareRepository.getById(userId, shareId),
-            shareKeys = shareKeyRepository.getShareKeys(userId, addressId, shareId).first(),
+            shareKeys = shareKeyRepository.getShareKeys(userId, addressId, shareId).first()
         ).item
     }
 

@@ -77,7 +77,7 @@ fun MailboxSection(
     ) {
         ForwardIcon(tint = PassTheme.colors.textWeak)
         Column(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.weight(1f)
         ) {
             ProtonTextFieldLabel(text = labelText)
             if (isLoading) {
@@ -97,9 +97,7 @@ fun MailboxSection(
 
 @Preview
 @Composable
-fun MailboxSectionPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
+fun MailboxSectionPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
     PassTheme(isDark = input.first) {
         Surface {
             MailboxSection(

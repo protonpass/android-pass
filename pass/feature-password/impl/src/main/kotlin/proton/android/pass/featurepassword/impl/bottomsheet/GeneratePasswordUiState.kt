@@ -24,7 +24,7 @@ import proton.android.pass.common.api.PasswordStrength
 @Immutable
 enum class GeneratePasswordMode {
     CopyAndClose,
-    CancelConfirm;
+    CancelConfirm
 }
 
 @Immutable

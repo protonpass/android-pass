@@ -239,7 +239,7 @@ private fun SharingWithChip(
                 backgroundColor = PassTheme.colors.interactionNormMinor1,
                 borderColor = if (emailState.isError) {
                     PassTheme.colors.signalDanger
-                } else Color.Transparent,
+                } else Color.Transparent
             )
             .clickable { onClick() }
             .padding(Spacing.small),
@@ -247,7 +247,7 @@ private fun SharingWithChip(
     ) {
         Text(
             text = emailState.email,
-            style = ProtonTheme.typography.defaultNorm,
+            style = ProtonTheme.typography.defaultNorm
         )
 
         if (isSelected) {
@@ -263,9 +263,7 @@ private fun SharingWithChip(
 
 @Preview
 @Composable
-fun SharingWithChipPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
+fun SharingWithChipPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
     PassTheme(isDark = input.first) {
         Surface {
             SharingWithChip(

@@ -103,7 +103,7 @@ private fun getHighlightedFields(
     title: String,
     note: String,
     highlight: String,
-    highlightColor: Color,
+    highlightColor: Color
 ): NoteHighlightFields {
     var annotatedTitle = AnnotatedString(title.take(MAX_NOTE_CHARS_PREVIEW))
     val annotatedNote = if (highlight.isNotBlank()) {
@@ -132,14 +132,12 @@ class ThemedNoteItemPreviewProvider :
 
 @Preview
 @Composable
-fun NoteRowPreview(
-    @PreviewParameter(ThemedNoteItemPreviewProvider::class) input: Pair<Boolean, NoteRowParameter>
-) {
+fun NoteRowPreview(@PreviewParameter(ThemedNoteItemPreviewProvider::class) input: Pair<Boolean, NoteRowParameter>) {
     PassTheme(isDark = input.first) {
         Surface {
             NoteRow(
                 item = input.second.model,
-                highlight = input.second.highlight,
+                highlight = input.second.highlight
             )
         }
     }

@@ -49,9 +49,7 @@ fun LoadingDialog(modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-fun LoadingDialogPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun LoadingDialogPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             LoadingDialog()

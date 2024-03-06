@@ -46,9 +46,7 @@ object CreateNote : NavItem(
     }
 }
 
-fun NavGraphBuilder.createNoteGraph(
-    onNavigate: (CreateNoteNavigation) -> Unit
-) {
+fun NavGraphBuilder.createNoteGraph(onNavigate: (CreateNoteNavigation) -> Unit) {
     composable(CreateNote) { navBackStack ->
         val selectVault by navBackStack.savedStateHandle
             .getStateFlow<String?>(KEY_VAULT_SELECTED, null)

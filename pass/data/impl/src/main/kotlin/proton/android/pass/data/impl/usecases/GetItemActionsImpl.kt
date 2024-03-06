@@ -45,7 +45,7 @@ class GetItemActionsImpl @Inject constructor(
     private val getItemById: ObserveItemById,
     private val observeUserPlan: GetUserPlan,
     private val canShareVault: CanShareVault,
-    private val observeVaults: ObserveVaults,
+    private val observeVaults: ObserveVaults
 ) : GetItemActions {
 
     override suspend fun invoke(shareId: ShareId, itemId: ItemId): ItemActions {

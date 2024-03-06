@@ -78,7 +78,7 @@ fun ProtonTextField(
     verticalArrangement: Arrangement.Vertical = Arrangement.Center,
     onChange: (String) -> Unit,
     onFocusChange: ((Boolean) -> Unit)? = null,
-    onDoneClick: (() -> Unit)? = null,
+    onDoneClick: (() -> Unit)? = null
 ) {
     val maxLines = if (singleLine) {
         1

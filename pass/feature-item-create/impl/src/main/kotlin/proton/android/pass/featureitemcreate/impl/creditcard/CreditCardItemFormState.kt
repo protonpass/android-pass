@@ -38,7 +38,7 @@ data class CreditCardItemFormState(
     val number: String,
     val cvv: UIHiddenState,
     val pin: UIHiddenState,
-    val expirationDate: String,
+    val expirationDate: String
 ) : Parcelable {
 
     constructor(itemContents: ItemContents.CreditCard) : this(
@@ -71,20 +71,18 @@ data class CreditCardItemFormState(
         type = type
     )
 
-    fun compare(other: CreditCardItemFormState, encryptionContext: EncryptionContext): Boolean =
-        title == other.title &&
-            note == other.note &&
-            cardHolder == other.cardHolder &&
-            number == other.number &&
-            encryptionContext.decrypt(cvv.encrypted.toEncryptedByteArray())
-                .contentEquals(encryptionContext.decrypt(other.cvv.encrypted.toEncryptedByteArray())) &&
-            expirationDate == other.expirationDate &&
-            encryptionContext.decrypt(pin.encrypted.toEncryptedByteArray())
-                .contentEquals(encryptionContext.decrypt(other.pin.encrypted.toEncryptedByteArray())) &&
-            type == other.type
+    fun compare(other: CreditCardItemFormState, encryptionContext: EncryptionContext): Boolean = title == other.title &&
+        note == other.note &&
+        cardHolder == other.cardHolder &&
+        number == other.number &&
+        encryptionContext.decrypt(cvv.encrypted.toEncryptedByteArray())
+            .contentEquals(encryptionContext.decrypt(other.cvv.encrypted.toEncryptedByteArray())) &&
+        expirationDate == other.expirationDate &&
+        encryptionContext.decrypt(pin.encrypted.toEncryptedByteArray())
+            .contentEquals(encryptionContext.decrypt(other.pin.encrypted.toEncryptedByteArray())) &&
+        type == other.type
 
-    fun sanitise(): CreditCardItemFormState =
-        copy(expirationDate = ExpirationDateProtoMapper.toProto(expirationDate))
+    fun sanitise(): CreditCardItemFormState = copy(expirationDate = ExpirationDateProtoMapper.toProto(expirationDate))
 
     companion object {
         private val expirationDateRegex = Regex("^(0[1-9]|1[0-2])\\d{2}\$")

@@ -27,8 +27,7 @@ sealed interface UseFaviconsPreference {
     }
 }
 
-fun UseFaviconsPreference.value(): Boolean =
-    when (this) {
-        UseFaviconsPreference.Enabled -> true
-        UseFaviconsPreference.Disabled -> false
-    }
+fun UseFaviconsPreference.value(): Boolean = when (this) {
+    UseFaviconsPreference.Enabled -> true
+    UseFaviconsPreference.Disabled -> false
+}

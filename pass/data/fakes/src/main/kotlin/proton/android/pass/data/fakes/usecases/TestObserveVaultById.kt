@@ -46,11 +46,10 @@ class TestObserveVaultById @Inject constructor() : ObserveVaultById {
         exceptionOption = exception.toOption()
     }
 
-    override fun invoke(userId: UserId?, shareId: ShareId): Flow<Option<Vault>> =
-        flow.onSubscription {
-            when (val exception = exceptionOption) {
-                None -> {}
-                is Some -> throw exception.value
-            }
+    override fun invoke(userId: UserId?, shareId: ShareId): Flow<Option<Vault>> = flow.onSubscription {
+        when (val exception = exceptionOption) {
+            None -> {}
+            is Some -> throw exception.value
         }
+    }
 }

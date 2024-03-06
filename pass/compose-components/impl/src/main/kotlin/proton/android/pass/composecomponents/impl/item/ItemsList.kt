@@ -118,7 +118,7 @@ fun ItemsList(
     val pullRefreshState = rememberPullRefreshState(
         refreshing = isRefreshing.value(),
         onRefresh = onRefresh,
-        refreshThreshold = 40.dp,
+        refreshThreshold = 40.dp
     )
 
     Box(

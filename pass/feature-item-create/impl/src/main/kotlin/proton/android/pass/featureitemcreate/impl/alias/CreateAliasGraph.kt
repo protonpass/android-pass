@@ -49,10 +49,7 @@ object CreateAlias : NavItem(
     baseRoute = "alias/create/screen",
     optionalArgIds = listOf(CommonOptionalNavArgId.ShareId, AliasOptionalNavArgId.Title)
 ) {
-    fun createNavRoute(
-        shareId: Option<ShareId> = None,
-        title: Option<String> = None,
-    ) = buildString {
+    fun createNavRoute(shareId: Option<ShareId> = None, title: Option<String> = None) = buildString {
         append(baseRoute)
         val map = mutableMapOf<String, Any>()
         if (shareId is Some) {
@@ -107,9 +104,7 @@ sealed interface CreateAliasNavigation {
     data class SelectVault(val shareId: ShareId) : CreateAliasNavigation
 }
 
-fun NavGraphBuilder.createAliasGraph(
-    onNavigate: (CreateAliasNavigation) -> Unit,
-) {
+fun NavGraphBuilder.createAliasGraph(onNavigate: (CreateAliasNavigation) -> Unit) {
     composable(CreateAlias) { navBackStack ->
         val selectVault by navBackStack.savedStateHandle
             .getStateFlow<String?>(KEY_VAULT_SELECTED, null)

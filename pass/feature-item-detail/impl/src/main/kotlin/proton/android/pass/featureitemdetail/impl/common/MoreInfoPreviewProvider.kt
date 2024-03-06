@@ -27,7 +27,7 @@ class MoreInfoPreviewProvider : PreviewParameterProvider<MoreInfoPreview> {
         get() = sequenceOf(
             MoreInfoPreview(showMoreInfo = false, uiState = uiState()),
             MoreInfoPreview(showMoreInfo = true, uiState = uiState()),
-            MoreInfoPreview(showMoreInfo = true, uiState = uiState(lastAutofilled = ONE_HOUR_AGO)),
+            MoreInfoPreview(showMoreInfo = true, uiState = uiState(lastAutofilled = ONE_HOUR_AGO))
         )
 
     private fun uiState(lastAutofilled: Long? = null): MoreInfoUiState {

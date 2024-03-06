@@ -90,25 +90,24 @@ class MigrateSelectVaultViewModelTest {
         }
     }
 
-    private fun initialVaults(): Pair<VaultWithItemCount, VaultWithItemCount> =
-        Pair(
-            VaultWithItemCount(
-                vault = Vault(
-                    shareId = SHARE_ID,
-                    name = "vault1",
-                ),
-                activeItemCount = 1,
-                trashedItemCount = 0
+    private fun initialVaults(): Pair<VaultWithItemCount, VaultWithItemCount> = Pair(
+        VaultWithItemCount(
+            vault = Vault(
+                shareId = SHARE_ID,
+                name = "vault1"
             ),
-            VaultWithItemCount(
-                vault = Vault(
-                    shareId = ShareId("OTHER_SHARE_ID"),
-                    name = "vault2",
-                ),
-                activeItemCount = 1,
-                trashedItemCount = 0
-            )
+            activeItemCount = 1,
+            trashedItemCount = 0
+        ),
+        VaultWithItemCount(
+            vault = Vault(
+                shareId = ShareId("OTHER_SHARE_ID"),
+                name = "vault2"
+            ),
+            activeItemCount = 1,
+            trashedItemCount = 0
         )
+    )
 
     companion object {
         private val SHARE_ID = ShareId("123")

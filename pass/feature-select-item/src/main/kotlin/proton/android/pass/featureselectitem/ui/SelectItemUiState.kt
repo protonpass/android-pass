@@ -46,10 +46,9 @@ data class SelectItemUiState(
     val pinningUiState: PinningUiState
 ) {
 
-    fun shouldShowItemListHeader() =
-        listUiState.items.items.isNotEmpty() &&
-            listUiState.isLoading == IsLoadingState.NotLoading &&
-            !searchUiState.isProcessingSearch.value()
+    fun shouldShowItemListHeader() = listUiState.items.items.isNotEmpty() &&
+        listUiState.isLoading == IsLoadingState.NotLoading &&
+        !searchUiState.isProcessingSearch.value()
 
     companion object {
         val Loading = SelectItemUiState(

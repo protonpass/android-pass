@@ -67,7 +67,7 @@ fun PinItem(
         modifier = modifier
             .roundedContainer(
                 backgroundColor = pinBackgroundColor,
-                borderColor = Color.Transparent,
+                borderColor = Color.Transparent
             )
             .clickable { onItemClick(item) }
             .padding(Spacing.small),
@@ -119,9 +119,7 @@ class ThemedPinItemPreviewProvider :
 
 @Preview
 @Composable
-fun PinItemPreview(
-    @PreviewParameter(ThemedPinItemPreviewProvider::class) input: Pair<Boolean, ItemUiModel>
-) {
+fun PinItemPreview(@PreviewParameter(ThemedPinItemPreviewProvider::class) input: Pair<Boolean, ItemUiModel>) {
     PassTheme(isDark = input.first) {
         Surface {
             PinItem(item = input.second, canLoadExternalImages = true, onItemClick = { _ -> })

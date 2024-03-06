@@ -34,12 +34,12 @@ class NoteInputPreviewProvider : PreviewParameterProvider<NoteInputPreviewParame
             ),
             NoteInputPreviewParameter(
                 value = """
-                Some multiline
-                Content
-                That should
-                Respect
+                    Some multiline
+                    Content
+                    That should
+                    Respect
 
-                Newlines
+                    Newlines
                 """.trimIndent(),
                 enabled = true
             )

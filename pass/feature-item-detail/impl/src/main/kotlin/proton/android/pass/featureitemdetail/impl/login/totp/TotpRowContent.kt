@@ -52,7 +52,7 @@ fun TotpRowContent(
     modifier: Modifier = Modifier,
     label: String = stringResource(R.string.totp_section_title),
     state: TotpUiState.Visible,
-    onCopyTotpClick: (String) -> Unit,
+    onCopyTotpClick: (String) -> Unit
 ) {
     Row(
         modifier = modifier
@@ -87,9 +87,7 @@ fun TotpRowContent(
 
 @Preview
 @Composable
-fun TotpRowContentPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun TotpRowContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             TotpRowContent(

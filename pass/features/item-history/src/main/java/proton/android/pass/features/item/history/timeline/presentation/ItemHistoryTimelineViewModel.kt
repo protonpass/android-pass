@@ -43,7 +43,7 @@ class ItemHistoryTimelineViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     observeItemRevisions: ObserveItemRevisions,
     getItemCategory: GetItemCategory,
-    snackbarDispatcher: SnackbarDispatcher,
+    snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -56,13 +56,13 @@ class ItemHistoryTimelineViewModel @Inject constructor(
 
     internal val state: StateFlow<ItemHistoryTimelineState> = combine(
         observeItemRevisions(shareId, itemId),
-        oneShot { getItemCategory(shareId, itemId) },
+        oneShot { getItemCategory(shareId, itemId) }
     ) { itemRevisions, itemCategory ->
         ItemHistoryTimelineState.Success(
             shareId = shareId,
             itemId = itemId,
             itemRevisions = itemRevisions.toPersistentList(),
-            itemRevisionCategory = itemCategory,
+            itemRevisionCategory = itemCategory
         )
     }
         .catch<ItemHistoryTimelineState> {
@@ -72,7 +72,7 @@ class ItemHistoryTimelineViewModel @Inject constructor(
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.Lazily,
-            initialValue = ItemHistoryTimelineState.Loading,
+            initialValue = ItemHistoryTimelineState.Loading
         )
 
 }

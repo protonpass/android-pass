@@ -127,12 +127,11 @@ class RemoteInviteDataSourceImpl @Inject constructor(
         shareId: ShareId,
         lastToken: String?,
         startsWith: String?
-    ): InviteRecommendationResponse =
-        apiProvider.get<PasswordManagerApi>(userId)
-            .invoke {
-                inviteRecommendations(shareId.id, lastToken, startsWith).recommendation
-            }
-            .valueOrThrow
+    ): InviteRecommendationResponse = apiProvider.get<PasswordManagerApi>(userId)
+        .invoke {
+            inviteRecommendations(shareId.id, lastToken, startsWith).recommendation
+        }
+        .valueOrThrow
 
     @Suppress("UnderscoresInNumericLiterals")
     companion object {

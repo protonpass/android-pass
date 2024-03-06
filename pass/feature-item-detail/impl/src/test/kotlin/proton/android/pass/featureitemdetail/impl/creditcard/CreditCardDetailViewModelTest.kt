@@ -97,7 +97,7 @@ class CreditCardDetailViewModelTest {
             pinItem = FakePinItem(),
             unpinItem = FakeUnpinItem(),
             featureFlagsRepository = TestFeatureFlagsPreferenceRepository(),
-            getUserPlan = TestGetUserPlan(),
+            getUserPlan = TestGetUserPlan()
         )
     }
 
@@ -178,7 +178,7 @@ class CreditCardDetailViewModelTest {
             item = TestObserveItems.createCreditCard(
                 itemId = ItemId(ITEM_ID),
                 shareId = ShareId(SHARE_ID),
-                number = number,
+                number = number
             ),
             vault = TEST_VAULT,
             hasMoreThanOneVault = false
@@ -205,7 +205,7 @@ class CreditCardDetailViewModelTest {
             item = TestObserveItems.createCreditCard(
                 itemId = ItemId(ITEM_ID),
                 shareId = ShareId(SHARE_ID),
-                pin = pin,
+                pin = pin
             ),
             vault = TEST_VAULT,
             hasMoreThanOneVault = false
@@ -232,7 +232,7 @@ class CreditCardDetailViewModelTest {
             item = TestObserveItems.createCreditCard(
                 itemId = ItemId(ITEM_ID),
                 shareId = ShareId(SHARE_ID),
-                verificationNumber = cvv,
+                verificationNumber = cvv
             ),
             vault = TEST_VAULT,
             hasMoreThanOneVault = false
@@ -259,7 +259,7 @@ class CreditCardDetailViewModelTest {
             item = TestObserveItems.createCreditCard(
                 itemId = ItemId(ITEM_ID),
                 shareId = ShareId(SHARE_ID),
-                number = number,
+                number = number
             ),
             vault = TEST_VAULT,
             hasMoreThanOneVault = false
@@ -280,7 +280,7 @@ class CreditCardDetailViewModelTest {
             item = TestObserveItems.createCreditCard(
                 itemId = ItemId(ITEM_ID),
                 shareId = ShareId(SHARE_ID),
-                number = number,
+                number = number
             ),
             vault = TEST_VAULT,
             hasMoreThanOneVault = false
@@ -302,7 +302,7 @@ class CreditCardDetailViewModelTest {
             item = TestObserveItems.createCreditCard(
                 itemId = ItemId(ITEM_ID),
                 shareId = ShareId(SHARE_ID),
-                verificationNumber = cvv,
+                verificationNumber = cvv
             ),
             vault = TEST_VAULT,
             hasMoreThanOneVault = false
@@ -323,7 +323,7 @@ class CreditCardDetailViewModelTest {
             item = TestObserveItems.createCreditCard(
                 itemId = ItemId(ITEM_ID),
                 shareId = ShareId(SHARE_ID),
-                verificationNumber = cvv,
+                verificationNumber = cvv
             ),
             vault = TEST_VAULT,
             hasMoreThanOneVault = false
@@ -343,7 +343,7 @@ class CreditCardDetailViewModelTest {
         val itemWithVaultInfo = ItemWithVaultInfo(
             item = TestObserveItems.createCreditCard(
                 itemId = ItemId(ITEM_ID),
-                shareId = ShareId(SHARE_ID),
+                shareId = ShareId(SHARE_ID)
             ),
             vault = TEST_VAULT,
             hasMoreThanOneVault = false
@@ -368,7 +368,7 @@ class CreditCardDetailViewModelTest {
         val itemWithVaultInfo = ItemWithVaultInfo(
             item = TestObserveItems.createCreditCard(
                 itemId = ItemId(ITEM_ID),
-                shareId = ShareId(SHARE_ID),
+                shareId = ShareId(SHARE_ID)
             ),
             vault = TEST_VAULT,
             hasMoreThanOneVault = false
@@ -394,7 +394,7 @@ class CreditCardDetailViewModelTest {
         val itemWithVaultInfo = ItemWithVaultInfo(
             item = TestObserveItems.createCreditCard(
                 itemId = ItemId(ITEM_ID),
-                shareId = ShareId(SHARE_ID),
+                shareId = ShareId(SHARE_ID)
             ),
             vault = TEST_VAULT,
             hasMoreThanOneVault = false
@@ -417,7 +417,7 @@ class CreditCardDetailViewModelTest {
 
         private val TEST_VAULT = Vault(
             shareId = ShareId(SHARE_ID),
-            name = "Vault",
+            name = "Vault"
         )
     }
 

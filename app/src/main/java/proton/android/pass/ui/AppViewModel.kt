@@ -55,7 +55,7 @@ class AppViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val needsBiometricAuth: NeedsBiometricAuth,
     private val inAppUpdatesManager: InAppUpdatesManager,
-    networkMonitor: NetworkMonitor,
+    networkMonitor: NetworkMonitor
 ) : ViewModel() {
 
     private val themePreference: Flow<ThemePreference> = preferenceRepository
@@ -115,16 +115,15 @@ class AppViewModel @Inject constructor(
         }
     }
 
-    private fun getThemePreference(state: LoadingResult<ThemePreference>): ThemePreference =
-        when (state) {
-            LoadingResult.Loading -> ThemePreference.System
-            is LoadingResult.Success -> state.data
-            is LoadingResult.Error -> {
-                PassLogger.w(TAG, "Error getting ThemePreference")
-                PassLogger.w(TAG, state.exception)
-                ThemePreference.System
-            }
+    private fun getThemePreference(state: LoadingResult<ThemePreference>): ThemePreference = when (state) {
+        LoadingResult.Loading -> ThemePreference.System
+        is LoadingResult.Success -> state.data
+        is LoadingResult.Error -> {
+            PassLogger.w(TAG, "Error getting ThemePreference")
+            PassLogger.w(TAG, state.exception)
+            ThemePreference.System
         }
+    }
 
     fun onCompleteUpdate() {
         inAppUpdatesManager.completeUpdate()

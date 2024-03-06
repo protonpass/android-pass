@@ -26,12 +26,10 @@ import proton.android.pass.domain.items.ItemCategory
 import javax.inject.Inject
 
 class GetItemCategoryImpl @Inject constructor(
-    private val itemRepository: ItemRepository,
+    private val itemRepository: ItemRepository
 ) : GetItemCategory {
 
-    override suspend fun invoke(
-        shareId: ShareId,
-        itemId: ItemId,
-    ): ItemCategory = itemRepository.getById(shareId, itemId).itemType.category
+    override suspend fun invoke(shareId: ShareId, itemId: ItemId): ItemCategory =
+        itemRepository.getById(shareId, itemId).itemType.category
 
 }

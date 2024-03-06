@@ -27,8 +27,7 @@ sealed interface HasDismissedAutofillBanner {
     }
 }
 
-fun HasDismissedAutofillBanner.value(): Boolean =
-    when (this) {
-        HasDismissedAutofillBanner.Dismissed -> true
-        HasDismissedAutofillBanner.NotDismissed -> false
-    }
+fun HasDismissedAutofillBanner.value(): Boolean = when (this) {
+    HasDismissedAutofillBanner.Dismissed -> true
+    HasDismissedAutofillBanner.NotDismissed -> false
+}

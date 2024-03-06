@@ -35,21 +35,16 @@ object PreferencesProviderModule {
 
     @Provides
     @Singleton
-    fun provideDataStore(
-        @ApplicationContext context: Context
-    ): DataStore<UserPreferences> =
-        DataStoreFactory.create(
-            serializer = UserPreferencesSerializer,
-            migrations = listOf(UserPreferenceMigration.MIGRATION_1)
-        ) {
-            context.dataStoreFile("user_preferences.pb")
-        }
+    fun provideDataStore(@ApplicationContext context: Context): DataStore<UserPreferences> = DataStoreFactory.create(
+        serializer = UserPreferencesSerializer,
+        migrations = listOf(UserPreferenceMigration.MIGRATION_1)
+    ) {
+        context.dataStoreFile("user_preferences.pb")
+    }
 
     @Provides
     @Singleton
-    fun provideFFDataStore(
-        @ApplicationContext context: Context
-    ): DataStore<FeatureFlagsPreferences> =
+    fun provideFFDataStore(@ApplicationContext context: Context): DataStore<FeatureFlagsPreferences> =
         DataStoreFactory.create(
             serializer = FeatureFlagsPreferencesSerializer
         ) {
@@ -59,9 +54,7 @@ object PreferencesProviderModule {
 
     @Provides
     @Singleton
-    fun provideInternalSettingsDataStore(
-        @ApplicationContext context: Context
-    ): DataStore<InternalSettings> =
+    fun provideInternalSettingsDataStore(@ApplicationContext context: Context): DataStore<InternalSettings> =
         DataStoreFactory.create(
             serializer = InternalSettingsSerializer
         ) {

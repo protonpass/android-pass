@@ -25,5 +25,9 @@ data class PasskeyAuthenticationResponse(
 )
 
 interface AuthenticateWithPasskey {
-    operator fun invoke(origin: String, passkey: Passkey, request: String): PasskeyAuthenticationResponse
+    operator fun invoke(
+        origin: String,
+        passkey: Passkey,
+        request: String
+    ): PasskeyAuthenticationResponse
 }

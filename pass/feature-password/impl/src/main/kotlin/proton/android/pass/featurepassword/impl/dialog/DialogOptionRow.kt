@@ -68,9 +68,7 @@ fun DialogOptionRow(
 
 @Preview
 @Composable
-fun DialogOptionRowPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
+fun DialogOptionRowPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
     PassTheme(isDark = input.first) {
         Surface {
             DialogOptionRow(

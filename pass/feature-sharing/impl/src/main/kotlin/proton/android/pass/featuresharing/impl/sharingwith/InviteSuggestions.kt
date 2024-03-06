@@ -63,7 +63,7 @@ import proton.android.pass.featuresharing.impl.R
 fun InviteSuggestions(
     modifier: Modifier = Modifier,
     state: SuggestionsUIState,
-    onItemClicked: (String, Boolean) -> Unit,
+    onItemClicked: (String, Boolean) -> Unit
 ) {
     Column(
         modifier = modifier,
@@ -92,7 +92,7 @@ fun InviteSuggestions(
                                     .clip(CircleShape)
                                     .applyIf(
                                         condition = selected,
-                                        ifTrue = { background(PassTheme.colors.interactionNorm) },
+                                        ifTrue = { background(PassTheme.colors.interactionNorm) }
                                     ),
                                 content = {
                                     val title = when (tab) {
@@ -155,7 +155,7 @@ fun InviteSuggestionList(
                 Row(
                     modifier = Modifier.clickable { onItemClicked(email, isChecked) },
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(Spacing.medium),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
                 ) {
                     CircleTextIcon(
                         text = email,
@@ -187,9 +187,7 @@ enum class InviteSuggestionTabs {
 
 @Preview
 @Composable
-fun InviteSuggestionsPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun InviteSuggestionsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             InviteSuggestions(
@@ -200,10 +198,10 @@ fun InviteSuggestionsPreview(
                         "test2@proton.me" to false
                     ),
                     planEmails = persistentListOf(
-                        "test1@proton.me" to true,
+                        "test1@proton.me" to true
                     )
                 ),
-                onItemClicked = { _, _ -> },
+                onItemClicked = { _, _ -> }
             )
         }
     }

@@ -76,49 +76,47 @@ internal class ItemHistoryTimelineViewModelTest {
     }
 
     @Test
-    internal fun `WHEN item revisions successfully fetched THEN update state to Success`() =
-        runTest {
-            val itemRevisions = persistentListOf<ItemRevision>()
-            val itemCategory = ItemCategoryMother.random()
-            val expectedUpdatedState = ItemHistoryTimelineStateMother.Success.create(
-                shareId = shareId,
-                itemId = itemId,
-                itemRevisions = itemRevisions,
-                itemRevisionCategory = itemCategory,
-            )
-            observeItemRevisions.setItemRevisions(itemRevisions)
-            getItemCategory.setItemCategory(itemCategory)
+    internal fun `WHEN item revisions successfully fetched THEN update state to Success`() = runTest {
+        val itemRevisions = persistentListOf<ItemRevision>()
+        val itemCategory = ItemCategoryMother.random()
+        val expectedUpdatedState = ItemHistoryTimelineStateMother.Success.create(
+            shareId = shareId,
+            itemId = itemId,
+            itemRevisions = itemRevisions,
+            itemRevisionCategory = itemCategory
+        )
+        observeItemRevisions.setItemRevisions(itemRevisions)
+        getItemCategory.setItemCategory(itemCategory)
 
-            val viewModel = createViewModel()
+        val viewModel = createViewModel()
 
-            viewModel.state.test {
-                val updatedState = awaitItem()
+        viewModel.state.test {
+            val updatedState = awaitItem()
 
-                assertThat(updatedState).isEqualTo(expectedUpdatedState)
-            }
+            assertThat(updatedState).isEqualTo(expectedUpdatedState)
         }
+    }
 
     @Test
-    internal fun `WHEN an error occurred fetching item revisions THEN update state to Error`() =
-        runTest {
-            val error = Throwable()
-            val expectedUpdatedState = ItemHistoryTimelineStateMother.Error.create()
-            observeItemRevisions.setItemRevisionsError(error)
+    internal fun `WHEN an error occurred fetching item revisions THEN update state to Error`() = runTest {
+        val error = Throwable()
+        val expectedUpdatedState = ItemHistoryTimelineStateMother.Error.create()
+        observeItemRevisions.setItemRevisionsError(error)
 
-            val viewModel = createViewModel()
+        val viewModel = createViewModel()
 
-            viewModel.state.test {
-                val updatedState = awaitItem()
+        viewModel.state.test {
+            val updatedState = awaitItem()
 
-                assertThat(updatedState).isEqualTo(expectedUpdatedState)
-            }
+            assertThat(updatedState).isEqualTo(expectedUpdatedState)
         }
+    }
 
     private fun createViewModel() = ItemHistoryTimelineViewModel(
         savedStateHandleProvider = savedStateHandleProvider,
         observeItemRevisions = observeItemRevisions,
         getItemCategory = getItemCategory,
-        snackbarDispatcher = snackbarDispatcher,
+        snackbarDispatcher = snackbarDispatcher
     )
 
 }

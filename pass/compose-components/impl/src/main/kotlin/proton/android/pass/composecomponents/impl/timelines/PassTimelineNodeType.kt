@@ -22,5 +22,5 @@ enum class PassTimelineNodeType {
     Child,
     Leaf,
     Root,
-    Unique,
+    Unique
 }

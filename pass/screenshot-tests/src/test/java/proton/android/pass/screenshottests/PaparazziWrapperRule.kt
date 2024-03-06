@@ -30,15 +30,14 @@ import kotlin.reflect.full.memberProperties
 import kotlin.reflect.jvm.isAccessible
 
 class PaparazziWrapperRule internal constructor(
-    val paparazzi: Paparazzi,
+    val paparazzi: Paparazzi
 ) : TestRule {
 
-    override fun apply(base: Statement, description: Description): Statement =
-        RunRules(
-            base,
-            listOf(PaparazziCleanupRule(paparazzi), paparazzi),
-            description,
-        )
+    override fun apply(base: Statement, description: Description): Statement = RunRules(
+        base,
+        listOf(PaparazziCleanupRule(paparazzi), paparazzi),
+        description
+    )
 }
 
 /**
@@ -48,7 +47,7 @@ class PaparazziWrapperRule internal constructor(
  * It should be once Paparazzi references the layoutlib from Iguana
  */
 private class PaparazziCleanupRule(
-    private val paparazzi: Paparazzi,
+    private val paparazzi: Paparazzi
 ) : TestWatcher() {
 
     override fun finished(description: Description?) {

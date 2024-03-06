@@ -63,10 +63,7 @@ open class SyncWorker @AssistedInject constructor(
 
         const val WORKER_UNIQUE_NAME = "sync_worker"
 
-        fun getRequestFor(
-            manager: EventWorkerManager,
-            initialDelay: Duration
-        ): PeriodicWorkRequest {
+        fun getRequestFor(manager: EventWorkerManager, initialDelay: Duration): PeriodicWorkRequest {
             val initialDelaySeconds = initialDelay.inWholeSeconds
             val backoffDelaySeconds = manager.getBackoffDelay().inWholeSeconds
             val repeatIntervalSeconds = manager.getRepeatIntervalBackground().inWholeSeconds

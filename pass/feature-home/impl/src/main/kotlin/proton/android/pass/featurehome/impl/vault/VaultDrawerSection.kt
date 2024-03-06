@@ -52,7 +52,7 @@ fun VaultDrawerSection(
     onTrashClick: () -> Unit = {}
 ) {
     LazyColumn(
-        modifier = modifier.fillMaxHeight(),
+        modifier = modifier.fillMaxHeight()
     ) {
         item {
             Text(

@@ -144,7 +144,7 @@ class CreateCreditCardViewModelTest {
             val firstExpected = initialState.copy(
                 baseState = initialState.baseState.copy(
                     isLoading = IsLoadingState.NotLoading.value(),
-                    hasUserEditedContent = true,
+                    hasUserEditedContent = true
                 )
             )
             assertThat(firstItem).isEqualTo(firstExpected)
@@ -152,7 +152,7 @@ class CreateCreditCardViewModelTest {
             val secondItem = awaitItem()
             val secondExpected = firstExpected.copy(
                 baseState = firstExpected.baseState.copy(
-                    isLoading = IsLoadingState.Loading.value(),
+                    isLoading = IsLoadingState.Loading.value()
                 )
             )
             assertThat(secondItem).isEqualTo(secondExpected)
@@ -172,7 +172,7 @@ class CreateCreditCardViewModelTest {
                             modificationTime = item.modificationTime,
                             lastAutofillTime = item.lastAutofillTime.value(),
                             isPinned = false,
-                            category = ItemCategory.CreditCard,
+                            category = ItemCategory.CreditCard
                         )
                     )
                 )

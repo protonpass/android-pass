@@ -31,7 +31,7 @@ data class PendingEventItemRevision(
     val modifyTime: Long,
     val lastUseTime: Long?,
     val revisionTime: Long,
-    val isPinned: Boolean,
+    val isPinned: Boolean
 )
 
 data class PendingEventList(

@@ -29,9 +29,7 @@ object WordSeparatorDialog : NavItem(
     navItemType = NavItemType.Dialog
 )
 
-fun NavGraphBuilder.wordSeparatorDialog(
-    onNavigate: (GeneratePasswordNavigation) -> Unit
-) {
+fun NavGraphBuilder.wordSeparatorDialog(onNavigate: (GeneratePasswordNavigation) -> Unit) {
     dialog(WordSeparatorDialog) {
         WordSeparatorDialog(
             onNavigate = onNavigate

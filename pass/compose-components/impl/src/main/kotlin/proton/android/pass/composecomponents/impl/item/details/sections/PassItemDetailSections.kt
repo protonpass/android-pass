@@ -39,7 +39,7 @@ internal fun PassItemDetailSections(
     onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
     onHiddenSectionClick: (HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
     onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
-    onLinkClick: (String) -> Unit,
+    onLinkClick: (String) -> Unit
 ) = with(itemDetailState) {
     when (this) {
         is ItemDetailState.Alias -> PassAliasItemDetailSections(
@@ -47,7 +47,7 @@ internal fun PassItemDetailSections(
             contents = contents,
             itemColors = itemColors,
             mailboxes = mailboxes.toImmutableList(),
-            onSectionClick = onSectionClick,
+            onSectionClick = onSectionClick
         )
 
         is ItemDetailState.CreditCard -> PassCreditCardItemDetailsSections(
@@ -56,7 +56,7 @@ internal fun PassItemDetailSections(
             itemColors = itemColors,
             onSectionClick = onSectionClick,
             onHiddenSectionClick = onHiddenSectionClick,
-            onHiddenSectionToggle = onHiddenSectionToggle,
+            onHiddenSectionToggle = onHiddenSectionToggle
         )
 
         is ItemDetailState.Login -> PassLoginItemDetailSections(
@@ -69,19 +69,19 @@ internal fun PassItemDetailSections(
             onSectionClick = onSectionClick,
             onHiddenSectionClick = onHiddenSectionClick,
             onHiddenSectionToggle = onHiddenSectionToggle,
-            onLinkClick = onLinkClick,
+            onLinkClick = onLinkClick
         )
 
         is ItemDetailState.Note -> PassNoteItemDetailSections(
             modifier = modifier,
-            contents = contents,
+            contents = contents
         )
 
         is ItemDetailState.Unknown -> contents.note.let { note ->
             if (note.isNotBlank()) {
                 PassSharedItemDetailNoteSection(
                     note = note,
-                    itemColors = itemColors,
+                    itemColors = itemColors
                 )
             }
         }

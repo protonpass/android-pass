@@ -48,11 +48,11 @@ fun PassItemDetailsContent(
     onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
     onHiddenSectionClick: (HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
     onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
-    onLinkClick: (String) -> Unit,
+    onLinkClick: (String) -> Unit
 ) {
     Scaffold(
         modifier = modifier,
-        topBar = { topBar() },
+        topBar = { topBar() }
     ) { innerPaddingValues ->
         Column(
             modifier = Modifier
@@ -60,17 +60,17 @@ fun PassItemDetailsContent(
                 .background(color = PassTheme.colors.itemDetailBackground)
                 .padding(paddingValues = innerPaddingValues)
                 .verticalScroll(state = rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             PassItemDetailTitleRow(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(
                         horizontal = Spacing.medium,
-                        vertical = Spacing.small,
+                        vertical = Spacing.small
                     ),
                 itemDetailState = itemDetailState,
-                itemColors = itemColors,
+                itemColors = itemColors
             )
 
             PassItemDetailSections(
@@ -82,7 +82,7 @@ fun PassItemDetailsContent(
                 onSectionClick = onSectionClick,
                 onHiddenSectionClick = onHiddenSectionClick,
                 onHiddenSectionToggle = onHiddenSectionToggle,
-                onLinkClick = onLinkClick,
+                onLinkClick = onLinkClick
             )
         }
     }

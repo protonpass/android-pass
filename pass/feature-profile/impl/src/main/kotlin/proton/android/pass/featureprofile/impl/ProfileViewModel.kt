@@ -167,7 +167,7 @@ class ProfileViewModel @Inject constructor(
         initialValue = runBlocking {
             ProfileUiState.getInitialState(
                 appVersion = appConfig.versionName,
-                appLockSectionState = appLockSectionState.first(),
+                appLockSectionState = appLockSectionState.first()
             )
         }
     )

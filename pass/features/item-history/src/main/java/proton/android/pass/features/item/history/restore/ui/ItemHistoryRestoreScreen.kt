@@ -28,7 +28,7 @@ import proton.android.pass.features.item.history.restore.presentation.ItemHistor
 @Composable
 fun ItemHistoryRestoreScreen(
     onNavigated: (ItemHistoryNavDestination) -> Unit,
-    viewModel: ItemHistoryRestoreViewModel = hiltViewModel(),
+    viewModel: ItemHistoryRestoreViewModel = hiltViewModel()
 ) = with(viewModel) {
     val state by state.collectAsStateWithLifecycle()
 
@@ -41,6 +41,6 @@ fun ItemHistoryRestoreScreen(
         onRestoreCancelClick = ::onRestoreItemCanceled,
         onSectionClick = ::onItemFieldClicked,
         onHiddenSectionClick = ::onItemHiddenFieldClicked,
-        onHiddenSectionToggle = ::onItemHiddenFieldToggled,
+        onHiddenSectionToggle = ::onItemHiddenFieldToggled
     )
 }

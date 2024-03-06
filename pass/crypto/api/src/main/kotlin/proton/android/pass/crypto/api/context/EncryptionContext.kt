@@ -30,7 +30,7 @@ private const val ITEM_CONTENT_TAG = "itemcontent"
 enum class EncryptionTag(val value: ByteArray) {
     VaultContent(VAULT_CONTENT_TAG.encodeToByteArray()),
     ItemKey(ITEM_KEY_TAG.encodeToByteArray()),
-    ItemContent(ITEM_CONTENT_TAG.encodeToByteArray());
+    ItemContent(ITEM_CONTENT_TAG.encodeToByteArray())
 }
 
 interface EncryptionContext {

@@ -27,7 +27,7 @@ import proton.android.pass.navigation.api.bottomSheet
 
 enum class SortingLocation {
     Home,
-    Autofill;
+    Autofill
 }
 
 object SortingLocationNavArgId : NavArgId {
@@ -45,8 +45,7 @@ object SortingBottomsheet : NavItem(
     navArgIds = listOf(SortingLocationNavArgId),
     navItemType = NavItemType.Bottomsheet
 ) {
-    fun createNavRoute(location: SortingLocation): String =
-        "$baseRoute/${location.name}"
+    fun createNavRoute(location: SortingLocation): String = "$baseRoute/${location.name}"
 }
 
 object SearchOptionsBottomsheet : NavItem(
@@ -54,8 +53,7 @@ object SearchOptionsBottomsheet : NavItem(
     navArgIds = listOf(EnableBulkActionsNavArgId),
     navItemType = NavItemType.Bottomsheet
 ) {
-    fun createRoute(bulkActionsEnabled: Boolean) =
-        "$baseRoute/$bulkActionsEnabled"
+    fun createRoute(bulkActionsEnabled: Boolean) = "$baseRoute/$bulkActionsEnabled"
 }
 
 object FilterBottomsheet : NavItem(
@@ -63,9 +61,7 @@ object FilterBottomsheet : NavItem(
     navItemType = NavItemType.Bottomsheet
 )
 
-fun NavGraphBuilder.searchOptionsGraph(
-    onNavigateEvent: (SearchOptionsNavigation) -> Unit
-) {
+fun NavGraphBuilder.searchOptionsGraph(onNavigateEvent: (SearchOptionsNavigation) -> Unit) {
     bottomSheet(SearchOptionsBottomsheet) {
         SearchOptionsBottomSheet(
             onNavigateEvent = onNavigateEvent

@@ -61,9 +61,7 @@ fun EmptySearchResults(modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-fun EmptyListPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun EmptyListPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             EmptySearchResults()

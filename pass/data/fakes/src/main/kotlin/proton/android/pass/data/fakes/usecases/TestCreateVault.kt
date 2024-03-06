@@ -39,10 +39,7 @@ class TestCreateVault @Inject constructor() : CreateVault {
         this.result = result
     }
 
-    override suspend fun invoke(
-        userId: SessionUserId?,
-        vault: NewVault
-    ): Share {
+    override suspend fun invoke(userId: SessionUserId?, vault: NewVault): Share {
         memory.add(Payload(vault))
         return result.getOrThrow()
     }

@@ -34,7 +34,7 @@ import me.proton.core.presentation.R as CoreR
 fun CardPinRow(
     modifier: Modifier = Modifier,
     pin: HiddenState,
-    onToggle: () -> Unit,
+    onToggle: () -> Unit
 ) {
     CardHiddenRow(
         modifier = modifier,
@@ -48,15 +48,13 @@ fun CardPinRow(
 
 @Preview
 @Composable
-fun CardPinRowPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
+fun CardPinRowPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
     val pin = if (input.second) HiddenState.Revealed("", "1234") else HiddenState.Concealed("")
     PassTheme(isDark = input.first) {
         Surface {
             CardPinRow(
                 pin = pin,
-                onToggle = {},
+                onToggle = {}
             )
         }
     }

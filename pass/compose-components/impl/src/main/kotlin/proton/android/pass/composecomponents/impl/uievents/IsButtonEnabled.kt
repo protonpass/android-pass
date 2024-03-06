@@ -30,9 +30,8 @@ sealed interface IsButtonEnabled {
     }
 }
 
-fun IsButtonEnabled.value(): Boolean =
-    when (this) {
-        IsButtonEnabled.Enabled -> true
-        IsButtonEnabled.Disabled -> false
-    }
+fun IsButtonEnabled.value(): Boolean = when (this) {
+    IsButtonEnabled.Enabled -> true
+    IsButtonEnabled.Disabled -> false
+}
 

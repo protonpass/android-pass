@@ -61,10 +61,7 @@ class TestUserAddressRepository : UserAddressRepository {
         refresh: Boolean
     ): UserAddress? = address
 
-    override suspend fun getAddresses(
-        sessionUserId: SessionUserId,
-        refresh: Boolean
-    ): List<UserAddress> = addresses
+    override suspend fun getAddresses(sessionUserId: SessionUserId, refresh: Boolean): List<UserAddress> = addresses
 
     override fun observeAddress(
         sessionUserId: SessionUserId,
@@ -72,10 +69,8 @@ class TestUserAddressRepository : UserAddressRepository {
         refresh: Boolean
     ): Flow<UserAddress?> = flowOf(address)
 
-    override fun observeAddresses(
-        sessionUserId: SessionUserId,
-        refresh: Boolean
-    ): Flow<List<UserAddress>> = flowOf(addresses)
+    override fun observeAddresses(sessionUserId: SessionUserId, refresh: Boolean): Flow<List<UserAddress>> =
+        flowOf(addresses)
 
     override suspend fun updateAddress(
         sessionUserId: SessionUserId,
@@ -92,29 +87,23 @@ class TestUserAddressRepository : UserAddressRepository {
 
     override suspend fun updateAddresses(addresses: List<UserAddress>) {}
 
-    override suspend fun updateOrder(
-        sessionUserId: SessionUserId,
-        addressIds: List<AddressId>
-    ): List<UserAddress> = addresses
+    override suspend fun updateOrder(sessionUserId: SessionUserId, addressIds: List<AddressId>): List<UserAddress> =
+        addresses
 
-    fun generateAddress(
-        displayName: String,
-        userId: UserId = UserId("userid-123")
-    ): UserAddress =
-        UserAddress(
-            userId = userId,
-            addressId = AddressId("addressid-123"),
-            email = "test@email.local",
-            displayName = displayName,
-            signature = null,
-            domainId = null,
-            canSend = true,
-            canReceive = true,
-            enabled = true,
-            type = null,
-            order = 1,
-            keys = emptyList(),
-            signedKeyList = null
-        )
+    fun generateAddress(displayName: String, userId: UserId = UserId("userid-123")): UserAddress = UserAddress(
+        userId = userId,
+        addressId = AddressId("addressid-123"),
+        email = "test@email.local",
+        displayName = displayName,
+        signature = null,
+        domainId = null,
+        canSend = true,
+        canReceive = true,
+        enabled = true,
+        type = null,
+        order = 1,
+        keys = emptyList(),
+        signedKeyList = null
+    )
 
 }

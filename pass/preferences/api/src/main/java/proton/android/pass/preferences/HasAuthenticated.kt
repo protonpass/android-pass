@@ -27,8 +27,7 @@ sealed interface HasAuthenticated {
     }
 }
 
-fun HasAuthenticated.value(): Boolean =
-    when (this) {
-        HasAuthenticated.Authenticated -> true
-        HasAuthenticated.NotAuthenticated -> false
-    }
+fun HasAuthenticated.value(): Boolean = when (this) {
+    HasAuthenticated.Authenticated -> true
+    HasAuthenticated.NotAuthenticated -> false
+}

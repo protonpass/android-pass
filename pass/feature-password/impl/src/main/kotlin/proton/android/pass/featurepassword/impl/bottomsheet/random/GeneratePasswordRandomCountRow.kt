@@ -83,9 +83,7 @@ fun GeneratePasswordRandomCountRow(
 
 @Preview
 @Composable
-fun GeneratePasswordRandomCountRowPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun GeneratePasswordRandomCountRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             GeneratePasswordRandomCountRow(

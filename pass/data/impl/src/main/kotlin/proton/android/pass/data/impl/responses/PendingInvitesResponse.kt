@@ -66,7 +66,7 @@ data class InviteVaultData(
     @SerialName("MemberCount")
     val memberCount: Int,
     @SerialName("ItemCount")
-    val itemCount: Int,
+    val itemCount: Int
 )
 
 @Serializable

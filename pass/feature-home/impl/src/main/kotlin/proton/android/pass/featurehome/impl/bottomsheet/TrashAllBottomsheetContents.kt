@@ -67,22 +67,19 @@ fun TrashAllBottomSheetContents(
     }
 }
 
-private fun selectItems(onSelectItems: () -> Unit): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = { BottomSheetItemTitle(text = stringResource(R.string.bottomsheet_select_items)) }
-        override val subtitle: (@Composable () -> Unit) = {}
-        override val leftIcon: (@Composable () -> Unit)
-            get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_checkmark_circle) }
-        override val endIcon: (@Composable () -> Unit)? = null
-        override val onClick: () -> Unit
-            get() = onSelectItems
-        override val isDivider = false
-    }
+private fun selectItems(onSelectItems: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = { BottomSheetItemTitle(text = stringResource(R.string.bottomsheet_select_items)) }
+    override val subtitle: (@Composable () -> Unit) = {}
+    override val leftIcon: (@Composable () -> Unit)
+        get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_checkmark_circle) }
+    override val endIcon: (@Composable () -> Unit)? = null
+    override val onClick: () -> Unit
+        get() = onSelectItems
+    override val isDivider = false
+}
 
-private fun restoreAll(
-    onRestoreAll: () -> Unit
-): BottomSheetItem = object : BottomSheetItem {
+private fun restoreAll(onRestoreAll: () -> Unit): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
         get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_restore_all_items)) }
     override val subtitle: (@Composable () -> Unit)?
@@ -96,9 +93,7 @@ private fun restoreAll(
     override val isDivider = false
 }
 
-private fun emptyTrash(
-    onEmptyTrash: () -> Unit
-): BottomSheetItem = object : BottomSheetItem {
+private fun emptyTrash(onEmptyTrash: () -> Unit): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
         get() = {
             BottomSheetItemTitle(
@@ -125,9 +120,7 @@ private fun emptyTrash(
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
-fun TrashAllBottomSheetContentsPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun TrashAllBottomSheetContentsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             TrashAllBottomSheetContents(

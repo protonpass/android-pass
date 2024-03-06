@@ -102,19 +102,17 @@ class OnBoardingViewModel @Inject constructor(
         return userAccessData.waitingNewUserInvites > 0
     }
 
-    private fun shouldShowAutofill(autofillStatus: AutofillSupportedStatus?): Boolean =
-        when (autofillStatus) {
-            is AutofillSupportedStatus.Supported -> autofillStatus.status != AutofillStatus.EnabledByOurService
-            AutofillSupportedStatus.Unsupported -> false
-            else -> false
-        }
+    private fun shouldShowAutofill(autofillStatus: AutofillSupportedStatus?): Boolean = when (autofillStatus) {
+        is AutofillSupportedStatus.Supported -> autofillStatus.status != AutofillStatus.EnabledByOurService
+        AutofillSupportedStatus.Unsupported -> false
+        else -> false
+    }
 
-    private fun shouldShowFingerprint(biometryStatus: BiometryStatus): Boolean =
-        when (biometryStatus) {
-            BiometryStatus.CanAuthenticate -> true
-            BiometryStatus.NotAvailable,
-            BiometryStatus.NotEnrolled -> false
-        }
+    private fun shouldShowFingerprint(biometryStatus: BiometryStatus): Boolean = when (biometryStatus) {
+        BiometryStatus.CanAuthenticate -> true
+        BiometryStatus.NotAvailable,
+        BiometryStatus.NotEnrolled -> false
+    }
 
     fun onMainButtonClick(page: OnBoardingPageName, contextHolder: ClassHolder<Context>) {
         when (page) {

@@ -44,20 +44,23 @@ class NoteRowPreviewProvider : PreviewParameterProvider<NoteRowParameter> {
         )
 
     companion object {
-        private fun with(title: String, text: String, highlight: String = ""): NoteRowParameter =
-            NoteRowParameter(
-                model = ItemUiModel(
-                    id = ItemId("123"),
-                    shareId = ShareId("345"),
-                    contents = ItemContents.Note(title = title, note = text),
-                    state = 0,
-                    createTime = Clock.System.now(),
-                    modificationTime = Clock.System.now(),
-                    lastAutofillTime = Clock.System.now(),
-                    isPinned = false,
-                ),
-                highlight = highlight
-            )
+        private fun with(
+            title: String,
+            text: String,
+            highlight: String = ""
+        ): NoteRowParameter = NoteRowParameter(
+            model = ItemUiModel(
+                id = ItemId("123"),
+                shareId = ShareId("345"),
+                contents = ItemContents.Note(title = title, note = text),
+                state = 0,
+                createTime = Clock.System.now(),
+                modificationTime = Clock.System.now(),
+                lastAutofillTime = Clock.System.now(),
+                isPinned = false
+            ),
+            highlight = highlight
+        )
     }
 }
 

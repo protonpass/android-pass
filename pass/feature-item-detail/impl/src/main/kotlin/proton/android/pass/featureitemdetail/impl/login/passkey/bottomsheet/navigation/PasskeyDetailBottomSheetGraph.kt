@@ -40,13 +40,14 @@ object ViewPasskeyDetailsBottomSheet : NavItem(
     baseRoute = "item/detail/login/passkey/bottomsheet",
     navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId, PasskeyIdNavArgId)
 ) {
-    fun buildRoute(shareId: ShareId, itemId: ItemId, passkeyId: PasskeyId) =
-        "$baseRoute/${shareId.id}/${itemId.id}/${passkeyId.value}"
+    fun buildRoute(
+        shareId: ShareId,
+        itemId: ItemId,
+        passkeyId: PasskeyId
+    ) = "$baseRoute/${shareId.id}/${itemId.id}/${passkeyId.value}"
 }
 
-fun NavGraphBuilder.passkeyDetailBottomSheetGraph(
-    onDismiss: () -> Unit
-) {
+fun NavGraphBuilder.passkeyDetailBottomSheetGraph(onDismiss: () -> Unit) {
     bottomSheet(ViewPasskeyDetailsBottomSheet) {
         BackHandler(onBack = onDismiss)
         PasskeyDetailBottomSheet(onDismiss = onDismiss)

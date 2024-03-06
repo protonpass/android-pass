@@ -51,7 +51,7 @@ fun ApplicationSection(
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Text(
             text = stringResource(R.string.settings_application_section_title),
-            style = ProtonTheme.typography.defaultSmallWeak,
+            style = ProtonTheme.typography.defaultSmallWeak
         )
         Column(
             modifier = Modifier.roundedContainerNorm()
@@ -92,9 +92,7 @@ fun ApplicationSection(
 
 @Preview
 @Composable
-fun ApplicationSectionPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
+fun ApplicationSectionPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
     PassTheme(isDark = input.first) {
         Surface {
             ApplicationSection(

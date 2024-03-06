@@ -60,7 +60,7 @@ fun SessionsScreenContent(
     onRefresh: () -> Unit,
     onClearSessions: () -> Unit,
     onSessionClick: (AutofillSession) -> Unit,
-    onShareSessionClick: (AutofillSession) -> Unit,
+    onShareSessionClick: (AutofillSession) -> Unit
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -82,14 +82,14 @@ fun SessionsScreenContent(
         val pullRefreshState = rememberPullRefreshState(
             refreshing = isRefreshing,
             onRefresh = onRefresh,
-            refreshThreshold = 40.dp,
+            refreshThreshold = 40.dp
         )
 
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .pullRefresh(state = pullRefreshState)
-                .padding(padding),
+                .padding(padding)
         ) {
             when (state) {
                 is SessionsScreenUiState.Error -> {
@@ -132,7 +132,7 @@ private fun SessionsScreenContent(
     modifier: Modifier = Modifier,
     sessions: ImmutableList<AutofillSession>,
     onSessionClick: (AutofillSession) -> Unit,
-    onShareSessionClick: (AutofillSession) -> Unit,
+    onShareSessionClick: (AutofillSession) -> Unit
 ) {
     if (sessions.isEmpty()) {
         Box(

@@ -52,41 +52,37 @@ fun WebsiteOptionsBottomSheetContents(
     )
 }
 
-private fun openWebsite(onClick: () -> Unit): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = { BottomSheetItemTitle(text = stringResource(id = R.string.action_open)) }
-        override val subtitle: @Composable (() -> Unit)?
-            get() = null
-        override val leftIcon: @Composable (() -> Unit)
-            get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_arrow_out_square) }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: () -> Unit
-            get() = { onClick() }
-        override val isDivider = false
-    }
+private fun openWebsite(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.action_open)) }
+    override val subtitle: @Composable (() -> Unit)?
+        get() = null
+    override val leftIcon: @Composable (() -> Unit)
+        get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_arrow_out_square) }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
+    override val onClick: () -> Unit
+        get() = { onClick() }
+    override val isDivider = false
+}
 
-private fun copyWebsite(onClick: () -> Unit): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = { BottomSheetItemTitle(text = stringResource(id = R.string.action_copy)) }
-        override val subtitle: @Composable (() -> Unit)?
-            get() = null
-        override val leftIcon: @Composable (() -> Unit)
-            get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_squares) }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: () -> Unit
-            get() = { onClick() }
-        override val isDivider = false
-    }
+private fun copyWebsite(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.action_copy)) }
+    override val subtitle: @Composable (() -> Unit)?
+        get() = null
+    override val leftIcon: @Composable (() -> Unit)
+        get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_squares) }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
+    override val onClick: () -> Unit
+        get() = { onClick() }
+    override val isDivider = false
+}
 
 @Preview
 @Composable
-fun LoginDetailBottomSheetContentsPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun LoginDetailBottomSheetContentsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             WebsiteOptionsBottomSheetContents(

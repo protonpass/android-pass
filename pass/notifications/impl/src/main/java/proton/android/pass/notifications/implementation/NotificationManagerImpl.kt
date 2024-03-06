@@ -39,16 +39,15 @@ class NotificationManagerImpl @Inject constructor(
     @MainActivityAnnotation private val mainActivityClass: Class<*>
 ) : NotificationManager {
 
-    override fun hasNotificationPermission(): Boolean =
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.TIRAMISU) {
-            true
-        } else {
-            val result = ContextCompat.checkSelfPermission(
-                context,
-                android.Manifest.permission.POST_NOTIFICATIONS
-            )
-            result == PackageManager.PERMISSION_GRANTED
-        }
+    override fun hasNotificationPermission(): Boolean = if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.TIRAMISU) {
+        true
+    } else {
+        val result = ContextCompat.checkSelfPermission(
+            context,
+            android.Manifest.permission.POST_NOTIFICATIONS
+        )
+        result == PackageManager.PERMISSION_GRANTED
+    }
 
     override fun sendNotification() {
         createAutofillNotificationChannel()

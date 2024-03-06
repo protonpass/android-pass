@@ -52,7 +52,7 @@ fun VaultRow(
         ) {
             Text(
                 text = name,
-                style = ProtonTheme.typography.defaultSmallNorm,
+                style = ProtonTheme.typography.defaultSmallNorm
             )
             Text(
                 text = pluralStringResource(
@@ -60,7 +60,7 @@ fun VaultRow(
                     itemCount.toInt(),
                     itemCount.toInt()
                 ),
-                style = PassTheme.typography.body3Weak(),
+                style = PassTheme.typography.body3Weak()
             )
         }
     }

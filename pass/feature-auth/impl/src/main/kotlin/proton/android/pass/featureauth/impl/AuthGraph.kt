@@ -45,13 +45,10 @@ sealed interface AuthNavigation {
     object Back : AuthNavigation
 }
 
-fun NavGraphBuilder.authGraph(
-    canLogout: Boolean,
-    navigation: (AuthNavigation) -> Unit,
-) {
+fun NavGraphBuilder.authGraph(canLogout: Boolean, navigation: (AuthNavigation) -> Unit) {
     navigation(
         route = AUTH_GRAPH,
-        startDestination = Auth.route,
+        startDestination = Auth.route
     ) {
         composable(Auth) {
             BackHandler { navigation(AuthNavigation.Back) }

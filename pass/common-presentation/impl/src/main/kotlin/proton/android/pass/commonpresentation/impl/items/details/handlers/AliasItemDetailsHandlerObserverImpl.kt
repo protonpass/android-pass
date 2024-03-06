@@ -42,7 +42,7 @@ import javax.inject.Inject
 class AliasItemDetailsHandlerObserverImpl @Inject constructor(
     private val getVaultById: GetVaultById,
     private val getAliasDetails: GetAliasDetails,
-    private val encryptionContextProvider: EncryptionContextProvider,
+    private val encryptionContextProvider: EncryptionContextProvider
 ) : ItemDetailsHandlerObserver {
 
     private val aliasItemContentsFlow = MutableStateFlow<ItemContents.Alias?>(null)
@@ -50,13 +50,13 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
     override fun observe(item: Item): Flow<ItemDetailState> = combine(
         observeAliasItemContents(item),
         observeAliasDetails(item),
-        getVaultById(shareId = item.shareId),
+        getVaultById(shareId = item.shareId)
     ) { aliasItemContents, aliasDetails, vault ->
         ItemDetailState.Alias(
             contents = aliasItemContents,
             isPinned = item.isPinned,
             vault = vault,
-            mailboxes = aliasDetails.mailboxes,
+            mailboxes = aliasDetails.mailboxes
         )
     }
 
@@ -71,14 +71,10 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
                 aliasItemContentsFlow.update { aliasItemContents }
             }
 
-    private fun observeAliasDetails(item: Item): Flow<AliasDetails> =
-        getAliasDetails(item.shareId, item.id)
-            .onStart { emit(AliasDetails("", emptyList(), emptyList())) }
+    private fun observeAliasDetails(item: Item): Flow<AliasDetails> = getAliasDetails(item.shareId, item.id)
+        .onStart { emit(AliasDetails("", emptyList(), emptyList())) }
 
-    override fun updateHiddenState(
-        hiddenFieldType: ItemDetailsFieldType.Hidden,
-        hiddenState: HiddenState,
-    ) {
+    override fun updateHiddenState(hiddenFieldType: ItemDetailsFieldType.Hidden, hiddenState: HiddenState) {
         aliasItemContentsFlow.update { aliasItemContents ->
             when (hiddenFieldType) {
                 is ItemDetailsFieldType.Hidden.CustomField,

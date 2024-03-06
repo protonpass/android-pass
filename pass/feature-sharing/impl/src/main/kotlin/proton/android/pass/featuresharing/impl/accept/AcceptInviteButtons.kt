@@ -89,9 +89,7 @@ fun AcceptInviteButtons(
 
 @Preview
 @Composable
-fun AcceptInviteButtonsPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
+fun AcceptInviteButtonsPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
     val (confirm, reject) = input.second to !input.second
     PassTheme(isDark = input.first) {
         Surface {

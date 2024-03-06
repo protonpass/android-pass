@@ -35,8 +35,5 @@ object FeatureFlagsPreferencesSerializer : Serializer<FeatureFlagsPreferences> {
         }
     }
 
-    override suspend fun writeTo(
-        t: FeatureFlagsPreferences,
-        output: OutputStream
-    ) = t.writeTo(output)
+    override suspend fun writeTo(t: FeatureFlagsPreferences, output: OutputStream) = t.writeTo(output)
 }

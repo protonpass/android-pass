@@ -31,12 +31,12 @@ fun PassVisibilityToggle(
     modifier: Modifier = Modifier,
     isVisible: Boolean,
     onToggle: (Boolean) -> Unit,
-    itemColors: PassItemColors,
+    itemColors: PassItemColors
 ) {
     Circle(
         modifier = modifier,
         backgroundColor = itemColors.minorPrimary,
-        onClick = { onToggle(!isVisible) },
+        onClick = { onToggle(!isVisible) }
     ) {
         Icon(
             painter = if (isVisible) {
@@ -45,7 +45,7 @@ fun PassVisibilityToggle(
                 painterResource(R.drawable.ic_proton_eye)
             },
             contentDescription = null,
-            tint = itemColors.majorSecondary,
+            tint = itemColors.majorSecondary
         )
     }
 

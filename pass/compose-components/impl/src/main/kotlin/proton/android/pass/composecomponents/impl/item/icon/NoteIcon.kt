@@ -67,9 +67,7 @@ fun NoteIcon(
 
 @Preview
 @Composable
-fun NoteIconPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun NoteIconPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             NoteIcon(shape = PassTheme.shapes.squircleMediumShape)

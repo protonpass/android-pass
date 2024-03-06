@@ -42,7 +42,7 @@ internal fun CreateAliasSection(
         AliasToBeCreated(
             prefix = state.prefix,
             suffix = state.selectedSuffix,
-            isError = onAliasRequiredError || onInvalidAliasError,
+            isError = onAliasRequiredError || onInvalidAliasError
         )
         AliasAdvancedOptions(
             enabled = canEdit,

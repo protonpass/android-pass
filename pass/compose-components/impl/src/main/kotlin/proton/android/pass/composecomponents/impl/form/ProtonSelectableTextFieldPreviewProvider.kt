@@ -28,26 +28,26 @@ class ProtonSelectableTextFieldPreviewProvider :
         get() = sequenceOf(
             ProtonSelectableTextFieldPreviewParams(),
             ProtonSelectableTextFieldPreviewParams(
-                text = "Example input text enabled",
+                text = "Example input text enabled"
             ),
             ProtonSelectableTextFieldPreviewParams(
                 text = "Example input text disabled",
-                isEnabled = false,
+                isEnabled = false
             ),
             ProtonSelectableTextFieldPreviewParams(
                 text = "Example input text with error",
                 errorText = "Example error message"
-            ),
+            )
         )
 }
 
 class ThemedProtonTextFieldPreviewProvider :
     ThemePairPreviewProvider<ProtonSelectableTextFieldPreviewParams>(
-        provider = ProtonSelectableTextFieldPreviewProvider(),
+        provider = ProtonSelectableTextFieldPreviewProvider()
     )
 
 data class ProtonSelectableTextFieldPreviewParams(
     val text: String = "",
     val errorText: String? = null,
-    val isEnabled: Boolean = true,
+    val isEnabled: Boolean = true
 )

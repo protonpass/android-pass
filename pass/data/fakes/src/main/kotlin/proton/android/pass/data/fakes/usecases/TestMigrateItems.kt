@@ -38,10 +38,7 @@ class TestMigrateItems @Inject constructor() : MigrateItems {
         result = value
     }
 
-    override suspend fun invoke(
-        items: Map<ShareId, List<ItemId>>,
-        destinationShare: ShareId
-    ): MigrateItemsResult {
+    override suspend fun invoke(items: Map<ShareId, List<ItemId>>, destinationShare: ShareId): MigrateItemsResult {
         memory.add(Payload(items, destinationShare))
         return result.getOrThrow()
     }

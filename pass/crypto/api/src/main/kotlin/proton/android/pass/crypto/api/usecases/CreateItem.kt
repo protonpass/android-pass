@@ -35,8 +35,5 @@ data class CreateItemPayload(
 )
 
 interface CreateItem {
-    fun create(
-        shareKey: ShareKey,
-        itemContents: ItemContents
-    ): CreateItemPayload
+    fun create(shareKey: ShareKey, itemContents: ItemContents): CreateItemPayload
 }

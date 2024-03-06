@@ -31,9 +31,7 @@ import proton.android.pass.telemetry.impl.startup.TelemetryStartupManagerImpl
 abstract class TelemetryModule {
 
     @Binds
-    abstract fun bindTelemetryStartupManager(
-        impl: TelemetryStartupManagerImpl
-    ): TelemetryStartupManager
+    abstract fun bindTelemetryStartupManager(impl: TelemetryStartupManagerImpl): TelemetryStartupManager
 
     @Binds
     abstract fun bindTelemetryManager(impl: TelemetryManagerImpl): TelemetryManager

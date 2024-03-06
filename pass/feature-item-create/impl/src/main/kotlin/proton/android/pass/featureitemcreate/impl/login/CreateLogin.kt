@@ -252,6 +252,6 @@ fun CreateLoginScreen(
         }
     )
     InAppReviewTriggerLaunchedEffect(
-        triggerCondition = uiState.baseLoginUiState.isItemSaved is ItemSavedState.Success,
+        triggerCondition = uiState.baseLoginUiState.isItemSaved is ItemSavedState.Success
     )
 }

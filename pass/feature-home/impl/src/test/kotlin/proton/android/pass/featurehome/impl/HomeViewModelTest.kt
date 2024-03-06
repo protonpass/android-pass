@@ -223,7 +223,7 @@ internal class HomeViewModelTest {
                     shareId = shareId,
                     name = "Vault ${shareId.id}",
                     color = ShareColor.Color1,
-                    icon = ShareIcon.Icon1,
+                    icon = ShareIcon.Icon1
                 )
             }
 

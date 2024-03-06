@@ -37,6 +37,9 @@ class TestCanDisplayTotp @Inject constructor() : CanDisplayTotp {
         flow.tryEmit(value)
     }
 
-    override fun invoke(userId: UserId?, shareId: ShareId, itemId: ItemId): Flow<Boolean> =
-        flow.map { it.getOrThrow() }
+    override fun invoke(
+        userId: UserId?,
+        shareId: ShareId,
+        itemId: ItemId
+    ): Flow<Boolean> = flow.map { it.getOrThrow() }
 }

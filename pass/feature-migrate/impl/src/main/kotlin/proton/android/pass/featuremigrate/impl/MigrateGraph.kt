@@ -35,7 +35,7 @@ import proton.android.pass.navigation.api.toPath
 
 sealed interface MigrateNavigation {
     data class VaultSelectedForMigrateItem(
-        val destShareId: ShareId,
+        val destShareId: ShareId
     ) : MigrateNavigation
 
     data class VaultSelectedForMigrateAll(
@@ -59,12 +59,12 @@ object MigrateModeArg : NavArgId {
 
 enum class MigrateModeValue {
     SelectedItems,
-    AllVaultItems;
+    AllVaultItems
 }
 
 enum class MigrateVaultFilter {
     All,
-    Shared;
+    Shared
 }
 
 object MigrateVaultFilterArg : OptionalNavArgId {
@@ -82,7 +82,7 @@ object MigrateSelectVault : NavItem(
         append("$baseRoute/${MigrateModeValue.AllVaultItems.name}")
 
         val map = mapOf(
-            CommonOptionalNavArgId.ShareId.key to shareId.id,
+            CommonOptionalNavArgId.ShareId.key to shareId.id
         )
         append(map.toPath())
     }
@@ -116,12 +116,10 @@ object MigrateConfirmVault : NavItem(
         "$baseRoute/${MigrateModeValue.SelectedItems.name}/${destShareId.id}"
 }
 
-fun NavGraphBuilder.migrateGraph(
-    navigation: (MigrateNavigation) -> Unit,
-) {
+fun NavGraphBuilder.migrateGraph(navigation: (MigrateNavigation) -> Unit) {
     bottomSheet(MigrateSelectVault) {
         MigrateSelectVaultBottomSheet(
-            onNavigate = navigation,
+            onNavigate = navigation
         )
     }
 

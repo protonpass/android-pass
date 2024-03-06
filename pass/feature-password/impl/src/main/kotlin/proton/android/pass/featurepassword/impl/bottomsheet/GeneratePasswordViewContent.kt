@@ -57,16 +57,16 @@ fun GeneratePasswordViewContent(
                 .height(110.dp)
                 .wrapContentHeight(align = Alignment.CenterVertically),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(Spacing.small),
+            verticalArrangement = Arrangement.spacedBy(Spacing.small)
         ) {
             val annotatedString = state.password.toPasswordAnnotatedString(
                 digitColor = PassTheme.colors.loginInteractionNormMajor2,
                 symbolColor = PassTheme.colors.aliasInteractionNormMajor2,
-                letterColor = PassTheme.colors.textNorm,
+                letterColor = PassTheme.colors.textNorm
             )
             Text(
                 text = annotatedString,
-                style = ProtonTheme.typography.subheadlineNorm.copy(fontFamily = FontFamily.Monospace),
+                style = ProtonTheme.typography.subheadlineNorm.copy(fontFamily = FontFamily.Monospace)
             )
 
             PassPasswordStrengthItem(passwordStrength = state.passwordStrength)
@@ -92,9 +92,7 @@ fun GeneratePasswordViewContent(
 
 @Preview
 @Composable
-fun GeneratePasswordViewContentThemePreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDarkMode: Boolean
-) {
+fun GeneratePasswordViewContentThemePreview(@PreviewParameter(ThemePreviewProvider::class) isDarkMode: Boolean) {
     PassTheme(isDark = isDarkMode) {
         Surface {
             GeneratePasswordViewContent(
@@ -106,7 +104,7 @@ fun GeneratePasswordViewContentThemePreview(
                         length = 12,
                         hasSpecialCharacters = true,
                         hasCapitalLetters = false,
-                        includeNumbers = true,
+                        includeNumbers = true
                     )
                 ),
                 onEvent = {}

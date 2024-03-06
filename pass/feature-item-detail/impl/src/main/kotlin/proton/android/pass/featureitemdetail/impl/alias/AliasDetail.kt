@@ -95,7 +95,7 @@ fun AliasDetail(
 
             ProtonBottomSheetBackHandler(
                 bottomSheetState = bottomSheetState,
-                coroutineScope = scope,
+                coroutineScope = scope
             )
 
             PassModalBottomSheetLayout(
@@ -122,17 +122,17 @@ fun AliasDetail(
                                 scope.launch { bottomSheetState.hide() }
                                 viewModel.pinItem(
                                     shareId = state.itemUiModel.shareId,
-                                    itemId = state.itemUiModel.id,
+                                    itemId = state.itemUiModel.id
                                 )
                             },
                             onUnpinned = {
                                 scope.launch { bottomSheetState.hide() }
                                 viewModel.unpinItem(
                                     shareId = state.itemUiModel.shareId,
-                                    itemId = state.itemUiModel.id,
+                                    itemId = state.itemUiModel.id
                                 )
                             },
-                            isPinningFeatureEnabled = state.isPinningFeatureEnabled,
+                            isPinningFeatureEnabled = state.isPinningFeatureEnabled
                         )
 
                         ItemState.Trashed.value -> TrashItemBottomSheetContents(
@@ -171,7 +171,7 @@ fun AliasDetail(
                             onShareClick = {
                                 onShareClick(state.itemActions, onNavigate, state.itemUiModel)
                             },
-                            shouldShowMenu = state.itemActions.canMoveToTrash || state.isPinningFeatureEnabled,
+                            shouldShowMenu = state.itemActions.canMoveToTrash || state.isPinningFeatureEnabled
                         )
                     }
                 ) { padding ->
@@ -203,11 +203,11 @@ fun AliasDetail(
                             onNavigate(
                                 ItemDetailNavigation.OnViewItemHistory(
                                     shareId = state.itemUiModel.shareId,
-                                    itemId = state.itemUiModel.id,
+                                    itemId = state.itemUiModel.id
                                 )
                             )
                         },
-                        isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,
+                        isHistoryFeatureEnabled = state.isHistoryFeatureEnabled
                     )
                 }
 

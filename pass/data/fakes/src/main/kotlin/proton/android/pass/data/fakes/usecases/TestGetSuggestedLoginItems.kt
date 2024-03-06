@@ -34,8 +34,6 @@ class TestGetSuggestedLoginItems @Inject constructor() : GetSuggestedLoginItems 
 
     fun sendValue(value: Result<List<Item>>) = resultFlow.tryEmit(value)
 
-    override fun invoke(
-        packageName: Option<String>,
-        url: Option<String>
-    ): Flow<List<Item>> = resultFlow.map { it.getOrThrow() }
+    override fun invoke(packageName: Option<String>, url: Option<String>): Flow<List<Item>> =
+        resultFlow.map { it.getOrThrow() }
 }

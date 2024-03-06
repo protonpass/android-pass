@@ -27,8 +27,8 @@ object ItemHistoryTimelineNavItem : NavItem(
     baseRoute = "item/history/timeline",
     navArgIds = listOf(
         CommonNavArgId.ShareId,
-        CommonNavArgId.ItemId,
-    ),
+        CommonNavArgId.ItemId
+    )
 ) {
 
     fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"

@@ -29,8 +29,6 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 abstract class FakesCommonUiModule {
 
     @Binds
-    abstract fun bindSavedStateHandleProvider(
-        impl: TestSavedStateHandleProvider
-    ): SavedStateHandleProvider
+    abstract fun bindSavedStateHandleProvider(impl: TestSavedStateHandleProvider): SavedStateHandleProvider
 
 }

@@ -78,7 +78,7 @@ fun CustomizeVault(
             modifier = Modifier
                 .clip(CircleShape)
                 .clickable { onClick() },
-            backgroundColor = PassTheme.colors.interactionNormMinor1,
+            backgroundColor = PassTheme.colors.interactionNormMinor1
         ) {
             Icon(
                 painter = painterResource(CoreR.drawable.ic_proton_pencil),
@@ -91,15 +91,13 @@ fun CustomizeVault(
 
 @Preview
 @Composable
-fun CustomizeVaultPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun CustomizeVaultPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             CustomizeVault(
                 vault = Vault(
                     shareId = ShareId("1234"),
-                    name = "Vault name",
+                    name = "Vault name"
                 ),
                 onClick = {}
             )

@@ -117,7 +117,11 @@ abstract class SharesDao : BaseDao<ShareEntity>() {
           AND ${ShareEntity.Columns.ID} = :shareId
         """
     )
-    abstract suspend fun updateOwnership(userId: String, shareId: String, isOwner: Boolean)
+    abstract suspend fun updateOwnership(
+        userId: String,
+        shareId: String,
+        isOwner: Boolean
+    )
 
     @Transaction
     open suspend fun evictAndUpsertShares(userId: UserId, vararg entities: ShareEntity) {

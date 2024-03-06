@@ -46,5 +46,5 @@ internal val allPreferences: List<AppLockTimePreference> = listOf(
     AppLockTimePreference.InFiveMinutes,
     AppLockTimePreference.InTenMinutes,
     AppLockTimePreference.InOneHour,
-    AppLockTimePreference.InFourHours,
+    AppLockTimePreference.InFourHours
 )

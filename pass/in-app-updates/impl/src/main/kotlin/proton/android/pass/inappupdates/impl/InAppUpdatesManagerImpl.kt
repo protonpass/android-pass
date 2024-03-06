@@ -143,10 +143,8 @@ class InAppUpdatesManagerImpl @Inject constructor(
                 declinedVersionCode = declinedVersionCode
             )
 
-    private fun hasUpdateBeenDeclined(
-        availableVersionCode: String,
-        declinedVersionCode: String
-    ): Boolean = declinedVersionCode.isNotBlank() && availableVersionCode == declinedVersionCode
+    private fun hasUpdateBeenDeclined(availableVersionCode: String, declinedVersionCode: String): Boolean =
+        declinedVersionCode.isNotBlank() && availableVersionCode == declinedVersionCode
 
     companion object {
         private const val DAYS_FOR_FLEXIBLE_UPDATE = 7

@@ -67,9 +67,7 @@ fun AliasIcon(
 
 @Preview
 @Composable
-fun AliasIconPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun AliasIconPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             AliasIcon()

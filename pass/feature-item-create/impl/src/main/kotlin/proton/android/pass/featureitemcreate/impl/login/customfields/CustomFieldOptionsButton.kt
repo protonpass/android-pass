@@ -33,10 +33,7 @@ import proton.android.pass.featureitemcreate.impl.R
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun CustomFieldOptionsButton(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit
-) {
+fun CustomFieldOptionsButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
     CircleIconButton(
         modifier = modifier,
         backgroundColor = PassTheme.colors.loginInteractionNormMinor1,
@@ -52,9 +49,7 @@ fun CustomFieldOptionsButton(
 
 @Preview
 @Composable
-fun CustomFieldOptionsButtonPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun CustomFieldOptionsButtonPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             CustomFieldOptionsButton(onClick = {})

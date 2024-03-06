@@ -50,10 +50,7 @@ import proton.android.pass.composecomponents.impl.item.icon.MFAIcon
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 
 @Composable
-fun ItemSummary(
-    modifier: Modifier = Modifier,
-    itemSummaryUiState: ItemSummaryUiState
-) {
+fun ItemSummary(modifier: Modifier = Modifier, itemSummaryUiState: ItemSummaryUiState) {
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -124,13 +121,11 @@ enum class SummaryItemType {
 
 @Preview
 @Composable
-fun ItemSummaryPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun ItemSummaryPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             ItemSummary(
-                itemSummaryUiState = ItemSummaryUiState(aliasLimit = 1),
+                itemSummaryUiState = ItemSummaryUiState(aliasLimit = 1)
             )
         }
     }

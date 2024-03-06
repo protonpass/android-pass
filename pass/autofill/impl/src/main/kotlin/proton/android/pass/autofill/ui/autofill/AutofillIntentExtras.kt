@@ -54,11 +54,11 @@ fun AutofillData.toExtras() = AutofillExtras(
 fun AutofillExtras.toData() = AutofillData(
     assistInfo = AssistInfo(
         cluster = cluster,
-        url = url.toOption(),
+        url = url.toOption()
     ),
     packageInfo = PackageInfo(
         packageName = PackageName(packageName),
-        appName = AppName(appName),
+        appName = AppName(appName)
     ),
     isDangerousAutofill = isDangerousAutofill
 )

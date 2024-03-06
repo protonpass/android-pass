@@ -44,7 +44,7 @@ fun ItemHistoryRestoreTopBar(
     modifier: Modifier = Modifier,
     colors: PassItemColors,
     onUpClick: () -> Unit,
-    onRestoreClick: () -> Unit,
+    onRestoreClick: () -> Unit
 ) {
     ProtonTopAppBar(
         modifier = modifier,
@@ -55,7 +55,7 @@ fun ItemHistoryRestoreTopBar(
                 modifier = Modifier.padding(12.dp, Spacing.small),
                 color = colors.majorSecondary,
                 backgroundColor = colors.minorPrimary,
-                onUpClick = onUpClick,
+                onUpClick = onUpClick
             )
         },
         actions = {
@@ -67,7 +67,7 @@ fun ItemHistoryRestoreTopBar(
                     Icon(
                         painter = painterResource(CoreR.drawable.ic_proton_clock_rotate_left),
                         contentDescription = null,
-                        tint = PassTheme.colors.textInvert,
+                        tint = PassTheme.colors.textInvert
                     )
                 },
                 text = {
@@ -77,11 +77,11 @@ fun ItemHistoryRestoreTopBar(
                         fontSize = 14.sp,
                         color = PassTheme.colors.textInvert,
                         style = ProtonTheme.typography.defaultSmallNorm,
-                        maxLines = 1,
+                        maxLines = 1
                     )
                 },
-                onClick = onRestoreClick,
+                onClick = onRestoreClick
             )
-        },
+        }
     )
 }

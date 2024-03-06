@@ -53,32 +53,31 @@ private fun appLockTypeBottomSheetItem(
     preference: AppLockTypePreference,
     isSelected: Boolean,
     onClick: () -> Unit
-): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = {
-                val title = when (preference) {
-                    AppLockTypePreference.Biometrics -> R.string.app_lock_config_biometric
-                    AppLockTypePreference.Pin -> R.string.app_lock_config_pin_code
-                    AppLockTypePreference.None -> R.string.app_lock_config_none
-                }
-                BottomSheetItemTitle(text = stringResource(title))
+): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = {
+            val title = when (preference) {
+                AppLockTypePreference.Biometrics -> R.string.app_lock_config_biometric
+                AppLockTypePreference.Pin -> R.string.app_lock_config_pin_code
+                AppLockTypePreference.None -> R.string.app_lock_config_none
             }
-        override val subtitle: (@Composable () -> Unit)?
-            get() = null
-        override val leftIcon: (@Composable () -> Unit)?
-            get() = null
-        override val endIcon: (@Composable () -> Unit)?
-            get() = if (isSelected) {
-                {
-                    BottomSheetItemIcon(
-                        iconId = me.proton.core.presentation.R.drawable.ic_proton_checkmark,
-                        tint = PassTheme.colors.loginInteractionNormMajor1
-                    )
-                }
+            BottomSheetItemTitle(text = stringResource(title))
+        }
+    override val subtitle: (@Composable () -> Unit)?
+        get() = null
+    override val leftIcon: (@Composable () -> Unit)?
+        get() = null
+    override val endIcon: (@Composable () -> Unit)?
+        get() = if (isSelected) {
+            {
+                BottomSheetItemIcon(
+                    iconId = me.proton.core.presentation.R.drawable.ic_proton_checkmark,
+                    tint = PassTheme.colors.loginInteractionNormMajor1
+                )
+            }
 
-            } else null
-        override val onClick: () -> Unit
-            get() = onClick
-        override val isDivider = false
-    }
+        } else null
+    override val onClick: () -> Unit
+        get() = onClick
+    override val isDivider = false
+}

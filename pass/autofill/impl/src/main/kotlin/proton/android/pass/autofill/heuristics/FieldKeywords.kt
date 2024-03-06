@@ -61,7 +61,7 @@ internal val fieldKeywordsList = listOf(
         fieldType = FieldType.Email,
         allowedKeywords = listOf(
             View.AUTOFILL_HINT_EMAIL_ADDRESS,
-            "email",
+            "email"
         ),
         deniedKeywords = listOf("composer", "message", MOZILLA_BROWSER_PREFIX)
     ),
@@ -148,5 +148,8 @@ internal val fieldKeywordsList = listOf(
     )
 )
 
-private fun kw(fieldType: FieldType, allowedKeywords: List<String>, deniedKeywords: List<String>) =
-    FieldKeywords(fieldType, allowedKeywords, deniedKeywords)
+private fun kw(
+    fieldType: FieldType,
+    allowedKeywords: List<String>,
+    deniedKeywords: List<String>
+) = FieldKeywords(fieldType, allowedKeywords, deniedKeywords)

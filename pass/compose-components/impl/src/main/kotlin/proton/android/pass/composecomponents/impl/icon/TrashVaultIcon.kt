@@ -46,9 +46,7 @@ fun TrashVaultIcon(
 
 @Preview
 @Composable
-fun TrashVaultIconPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun TrashVaultIconPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             TrashVaultIcon()

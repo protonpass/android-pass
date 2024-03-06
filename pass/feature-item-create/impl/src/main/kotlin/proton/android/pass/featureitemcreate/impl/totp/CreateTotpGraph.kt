@@ -62,7 +62,7 @@ enum class TotpOptionalNavArgId : OptionalNavArgId {
     TotpIndexField {
         override val key: String = "index"
         override val navType: NavType<*> = NavType.IntType
-    },
+    }
 }
 
 fun NavGraphBuilder.createTotpGraph(

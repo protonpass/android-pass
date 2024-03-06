@@ -114,9 +114,7 @@ fun IconItem(
 
 @Preview
 @Composable
-fun IconSelectionSectionPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun IconSelectionSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             IconSelectionSection(

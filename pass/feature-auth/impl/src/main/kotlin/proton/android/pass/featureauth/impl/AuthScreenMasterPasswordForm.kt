@@ -147,7 +147,7 @@ fun AuthScreenMasterPasswordForm(
                     Icon(
                         painter = painterResource(actionIcon),
                         contentDescription = actionContent,
-                        tint = PassTheme.colors.interactionNormMajor2,
+                        tint = PassTheme.colors.interactionNormMajor2
                     )
                 }
             },

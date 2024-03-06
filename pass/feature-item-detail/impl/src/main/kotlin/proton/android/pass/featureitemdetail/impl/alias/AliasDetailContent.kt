@@ -48,18 +48,18 @@ fun AliasDetailContent(
     onCreateLoginFromAlias: (String) -> Unit,
     onVaultClick: () -> Unit,
     onViewItemHistoryClicked: () -> Unit,
-    isHistoryFeatureEnabled: Boolean,
+    isHistoryFeatureEnabled: Boolean
 ) {
     Column(
         modifier = modifier.padding(horizontal = Spacing.medium),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         AliasTitle(
             modifier = Modifier.padding(Spacing.none, 12.dp),
             title = itemUiModel.contents.title,
             vault = vault,
             onVaultClick = onVaultClick,
-            isPinned = itemUiModel.isPinned,
+            isPinned = itemUiModel.isPinned
         )
 
         AliasSection(
@@ -67,12 +67,12 @@ fun AliasDetailContent(
             mailboxes = mailboxes,
             isLoading = isLoading,
             onCopyAlias = onCopyAlias,
-            onCreateLoginFromAlias = onCreateLoginFromAlias,
+            onCreateLoginFromAlias = onCreateLoginFromAlias
         )
 
         NoteSection(
             text = itemUiModel.contents.note,
-            accentColor = PassTheme.colors.aliasInteractionNorm,
+            accentColor = PassTheme.colors.aliasInteractionNorm
         )
 
         if (isHistoryFeatureEnabled) {
@@ -81,7 +81,7 @@ fun AliasDetailContent(
                 modifiedInstant = itemUiModel.modificationTime,
                 onViewItemHistoryClicked = onViewItemHistoryClicked,
                 buttonBackgroundColor = PassTheme.colors.aliasInteractionNormMinor2,
-                buttonTextColor = PassTheme.colors.aliasInteractionNormMajor2,
+                buttonTextColor = PassTheme.colors.aliasInteractionNormMajor2
             )
         }
 

@@ -55,7 +55,7 @@ internal fun PasswordInput(
     placeholder: String = stringResource(id = R.string.field_password_hint),
     isEditAllowed: Boolean,
     onChange: (String) -> Unit,
-    onFocus: (Boolean) -> Unit,
+    onFocus: (Boolean) -> Unit
 ) {
     val (text, visualTransformation) = when (value) {
         is UIHiddenState.Concealed -> "x".repeat(PASSWORD_CONCEALED_LENGTH) to PasswordVisualTransformation()
@@ -89,16 +89,13 @@ internal fun PasswordInput(
 }
 
 @Composable
-private fun PasswordInputLabel(
-    passwordStrength: PasswordStrength,
-    modifier: Modifier = Modifier,
-) {
+private fun PasswordInputLabel(passwordStrength: PasswordStrength, modifier: Modifier = Modifier) {
     val text = stringResource(id = R.string.field_password_title)
 
     when (passwordStrength) {
         PasswordStrength.None -> ProtonTextFieldLabel(
             text = text,
-            modifier = modifier,
+            modifier = modifier
         )
 
         PasswordStrength.Strong,
@@ -106,29 +103,26 @@ private fun PasswordInputLabel(
         PasswordStrength.Weak -> PassPasswordStrengthLabel(
             passwordStrength = passwordStrength,
             modifier = modifier,
-            labelPrefix = text,
+            labelPrefix = text
         )
     }
 }
 
 @Composable
-private fun PasswordInputLeadingIcon(
-    passwordStrength: PasswordStrength,
-    modifier: Modifier = Modifier,
-) {
+private fun PasswordInputLeadingIcon(passwordStrength: PasswordStrength, modifier: Modifier = Modifier) {
     when (passwordStrength) {
         PasswordStrength.None -> Icon(
             modifier = modifier,
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_key),
             tint = ProtonTheme.colors.iconWeak,
-            contentDescription = null,
+            contentDescription = null
         )
 
         PasswordStrength.Strong,
         PasswordStrength.Vulnerable,
         PasswordStrength.Weak -> PassPasswordStrengthIcon(
             passwordStrength = passwordStrength,
-            modifier = modifier,
+            modifier = modifier
         )
     }
 }
@@ -148,7 +142,7 @@ fun PasswordInputPreview(
                 passwordStrength = input.second.passwordStrength,
                 isEditAllowed = input.second.isEditAllowed,
                 onChange = {},
-                onFocus = {},
+                onFocus = {}
             )
         }
     }

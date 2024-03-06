@@ -53,7 +53,7 @@ fun InfoBanner(
             .background(backgroundColor)
             .padding(16.dp),
         text = text,
-        color = PassTheme.colors.textNorm,
+        color = PassTheme.colors.textNorm
     )
 }
 
@@ -69,9 +69,7 @@ fun InfoBanner(
 
 @Preview
 @Composable
-fun InfoBannerPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun InfoBannerPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             InfoBanner(

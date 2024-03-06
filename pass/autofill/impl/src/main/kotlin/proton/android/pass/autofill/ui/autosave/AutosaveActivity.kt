@@ -92,15 +92,14 @@ class AutoSaveActivity : FragmentActivity() {
         }
     }
 
-    private fun getArguments(): AutoSaveArguments? =
-        intent?.extras?.let {
-            AutoSaveArguments(
-                saveInformation = it.getByteArray(ARG_SAVE_INFORMATION)?.deserializeParcelable() ?: return null,
-                linkedAppInfo = it.getByteArray(ARG_LINKED_APP)?.deserializeParcelable(),
-                title = it.getString(ARG_TITLE) ?: return null,
-                website = it.getString(ARG_WEBSITE)
-            )
-        }
+    private fun getArguments(): AutoSaveArguments? = intent?.extras?.let {
+        AutoSaveArguments(
+            saveInformation = it.getByteArray(ARG_SAVE_INFORMATION)?.deserializeParcelable() ?: return null,
+            linkedAppInfo = it.getByteArray(ARG_LINKED_APP)?.deserializeParcelable(),
+            title = it.getString(ARG_TITLE) ?: return null,
+            website = it.getString(ARG_WEBSITE)
+        )
+    }
 
     private fun finishApp() {
         finish()

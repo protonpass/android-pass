@@ -45,7 +45,7 @@ fun AliasTitle(
     title: String,
     vault: Vault?,
     onVaultClick: () -> Unit,
-    isPinned: Boolean,
+    isPinned: Boolean
 ) {
     Row(
         modifier = modifier,
@@ -76,9 +76,7 @@ fun AliasTitle(
 
 @Preview
 @Composable
-fun AliasTitlePreview(
-    @PreviewParameter(ThemeItemTitleProvider::class) input: Pair<Boolean, ItemTitleInput>
-) {
+fun AliasTitlePreview(@PreviewParameter(ThemeItemTitleProvider::class) input: Pair<Boolean, ItemTitleInput>) {
     val (isDark, params) = input
 
     PassTheme(isDark = isDark) {
@@ -87,7 +85,7 @@ fun AliasTitlePreview(
                 title = params.itemUiModel.contents.title,
                 vault = params.vault,
                 onVaultClick = {},
-                isPinned = params.itemUiModel.isPinned,
+                isPinned = params.itemUiModel.isPinned
             )
         }
     }

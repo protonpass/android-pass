@@ -69,7 +69,7 @@ fun SettingOption(
             label?.let {
                 Text(
                     text = it,
-                    style = PassTheme.typography.body3Weak(),
+                    style = PassTheme.typography.body3Weak()
                 )
             }
             Text(
@@ -101,9 +101,7 @@ fun SettingOption(
 
 @Preview
 @Composable
-fun SettingOptionPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun SettingOptionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             SettingOption(text = "Match system", label = "Theme", onClick = {})

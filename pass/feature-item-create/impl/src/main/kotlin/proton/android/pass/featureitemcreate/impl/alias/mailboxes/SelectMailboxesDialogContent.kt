@@ -83,7 +83,7 @@ fun SelectMailboxesDialogContent(
                     .fillMaxWidth()
                     .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Text(
                     text = stringResource(R.string.select_mailbox_upgrade_for_more_inboxes),
@@ -127,7 +127,7 @@ fun SelectMailboxesDialogContentPreview(
                 onUpgrade = {},
                 onConfirm = {},
                 onDismiss = {},
-                onMailboxToggled = {},
+                onMailboxToggled = {}
             )
         }
     }

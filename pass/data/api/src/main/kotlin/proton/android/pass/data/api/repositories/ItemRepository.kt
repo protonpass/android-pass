@@ -51,7 +51,11 @@ interface ItemRepository {
         contents: ItemContents
     ): Item
 
-    suspend fun createAlias(userId: UserId, share: Share, newAlias: NewAlias): Item
+    suspend fun createAlias(
+        userId: UserId,
+        share: Share,
+        newAlias: NewAlias
+    ): Item
     suspend fun createItemAndAlias(
         userId: UserId,
         shareId: ShareId,
@@ -79,10 +83,7 @@ interface ItemRepository {
         itemTypeFilter: ItemTypeFilter
     ): Flow<List<Item>>
 
-    fun observeById(
-        shareId: ShareId,
-        itemId: ItemId,
-    ): Flow<Item>
+    fun observeById(shareId: ShareId, itemId: ItemId): Flow<Item>
 
     suspend fun getById(shareId: ShareId, itemId: ItemId): Item
     suspend fun trashItems(userId: UserId, items: Map<ShareId, List<ItemId>>)
@@ -97,15 +98,9 @@ interface ItemRepository {
         url: Option<String>
     ): Item
 
-    suspend fun refreshItems(
-        userId: UserId,
-        share: Share
-    ): List<Item>
+    suspend fun refreshItems(userId: UserId, share: Share): List<Item>
 
-    suspend fun refreshItems(
-        userId: UserId,
-        shareId: ShareId
-    ): List<Item>
+    suspend fun refreshItems(userId: UserId, shareId: ShareId): List<Item>
 
     suspend fun refreshItemsAndObserveProgress(
         userId: UserId,
@@ -120,10 +115,7 @@ interface ItemRepository {
         events: PendingEventList
     )
 
-    suspend fun setShareItems(
-        userId: UserId,
-        items: Map<ShareId, List<ItemRevision>>
-    )
+    suspend fun setShareItems(userId: UserId, items: Map<ShareId, List<ItemRevision>>)
 
     suspend fun applyPendingEvent(event: ItemPendingEvent)
 
@@ -135,14 +127,9 @@ interface ItemRepository {
         itemState: ItemState?
     ): Flow<ItemCountSummary>
 
-    fun observeItemCount(
-        shareIds: List<ShareId>
-    ): Flow<Map<ShareId, ShareItemCount>>
+    fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>>
 
-    suspend fun updateItemLastUsed(
-        shareId: ShareId,
-        itemId: ItemId
-    )
+    suspend fun updateItemLastUsed(shareId: ShareId, itemId: ItemId)
 
     suspend fun migrateItems(
         userId: UserId,
@@ -153,13 +140,10 @@ interface ItemRepository {
     suspend fun migrateAllVaultItems(
         userId: UserId,
         source: ShareId,
-        destination: ShareId,
+        destination: ShareId
     )
 
-    suspend fun getItemByAliasEmail(
-        userId: UserId,
-        aliasEmail: String
-    ): Item?
+    suspend fun getItemByAliasEmail(userId: UserId, aliasEmail: String): Item?
 
     suspend fun pinItems(items: List<Pair<ShareId, ItemId>>): PinItemsResult
     suspend fun unpinItems(items: List<Pair<ShareId, ItemId>>): PinItemsResult
@@ -167,10 +151,15 @@ interface ItemRepository {
     suspend fun getItemRevisions(
         userId: UserId,
         shareId: ShareId,
-        itemId: ItemId,
+        itemId: ItemId
     ): List<ItemRevision>
 
-    suspend fun addPasskeyToItem(userId: UserId, shareId: ShareId, itemId: ItemId, passkey: Passkey)
+    suspend fun addPasskeyToItem(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        passkey: Passkey
+    )
 }
 
 data class VaultProgress(
@@ -214,5 +203,5 @@ data class ItemRevision(
     val modifyTime: Long,
     val lastUseTime: Long?,
     val revisionTime: Long,
-    val isPinned: Boolean,
+    val isPinned: Boolean
 )

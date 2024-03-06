@@ -46,7 +46,7 @@ internal class GetItemCategoryImplTest {
         val itemId = ItemIdMother.create()
         val item = TestItem.create(
             shareId = shareId,
-            itemId = itemId,
+            itemId = itemId
         )
         val expectedItemCategory = item.itemType.category
         itemRepository.setItem(item)

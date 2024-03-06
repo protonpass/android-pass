@@ -29,10 +29,7 @@ import androidx.compose.ui.unit.sp
 import me.proton.core.compose.theme.ProtonTheme
 
 @Composable
-fun TopBarTitleView(
-    modifier: Modifier = Modifier,
-    @StringRes title: Int
-) {
+fun TopBarTitleView(modifier: Modifier = Modifier, @StringRes title: Int) {
     TopBarTitleView(
         modifier = modifier,
         title = stringResource(title)
@@ -40,10 +37,7 @@ fun TopBarTitleView(
 }
 
 @Composable
-fun TopBarTitleView(
-    modifier: Modifier = Modifier,
-    title: String
-) {
+fun TopBarTitleView(modifier: Modifier = Modifier, title: String) {
     Text(
         modifier = modifier,
         text = title,

@@ -28,6 +28,6 @@ enum class SelectItemSnackbarMessage(
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
 ) : SnackbarMessage {
-    LoadItemsError(R.string.error_loading_items, SnackbarType.ERROR),
+    LoadItemsError(R.string.error_loading_items, SnackbarType.ERROR)
 }
 

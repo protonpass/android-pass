@@ -52,7 +52,7 @@ fun GeneratePasswordSelectorRow(
         Text(
             text = title,
             color = PassTheme.colors.textNorm,
-            style = ProtonTheme.typography.defaultSmallNorm,
+            style = ProtonTheme.typography.defaultSmallNorm
         )
 
         Row(
@@ -60,7 +60,7 @@ fun GeneratePasswordSelectorRow(
                 .clip(RoundedCornerShape(8.dp))
                 .clickable(onClick = onClick)
                 .padding(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Text(
                 text = value,

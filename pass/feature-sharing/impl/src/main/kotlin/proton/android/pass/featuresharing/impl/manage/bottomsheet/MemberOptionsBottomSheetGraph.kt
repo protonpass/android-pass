@@ -100,8 +100,12 @@ object MemberOptionsBottomSheet : NavItem(
     navArgIds = listOf(CommonNavArgId.ShareId, MemberShareIdArg, ShareRoleArg, MemberEmailArg),
     navItemType = NavItemType.Bottomsheet
 ) {
-    fun buildRoute(shareId: ShareId, memberShareId: ShareId, shareRole: ShareRole, memberEmail: String) =
-        "$baseRoute/${shareId.id}/${memberShareId.id}/${shareRole.value}/${NavParamEncoder.encode(memberEmail)}"
+    fun buildRoute(
+        shareId: ShareId,
+        memberShareId: ShareId,
+        shareRole: ShareRole,
+        memberEmail: String
+    ) = "$baseRoute/${shareId.id}/${memberShareId.id}/${shareRole.value}/${NavParamEncoder.encode(memberEmail)}"
 }
 
 
@@ -110,13 +114,14 @@ object ConfirmTransferOwnership : NavItem(
     navArgIds = listOf(CommonNavArgId.ShareId, MemberShareIdArg, MemberEmailArg),
     navItemType = NavItemType.Dialog
 ) {
-    fun buildRoute(shareId: ShareId, memberShareId: ShareId, memberEmail: String) =
-        "$baseRoute/${shareId.id}/${memberShareId.id}/${NavParamEncoder.encode(memberEmail)}"
+    fun buildRoute(
+        shareId: ShareId,
+        memberShareId: ShareId,
+        memberEmail: String
+    ) = "$baseRoute/${shareId.id}/${memberShareId.id}/${NavParamEncoder.encode(memberEmail)}"
 }
 
-fun NavGraphBuilder.memberOptionsBottomSheetGraph(
-    onNavigateEvent: (SharingNavigation) -> Unit
-) {
+fun NavGraphBuilder.memberOptionsBottomSheetGraph(onNavigateEvent: (SharingNavigation) -> Unit) {
     bottomSheet(InviteOptionsBottomSheet) {
         InviteOptionsBottomSheet(onNavigate = onNavigateEvent)
     }

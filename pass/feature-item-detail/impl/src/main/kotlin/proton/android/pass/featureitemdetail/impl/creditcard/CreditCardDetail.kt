@@ -93,7 +93,7 @@ fun CreditCardDetail(
 
             ProtonBottomSheetBackHandler(
                 bottomSheetState = bottomSheetState,
-                coroutineScope = scope,
+                coroutineScope = scope
             )
 
             val itemUiModel = state.itemContent.model
@@ -123,7 +123,7 @@ fun CreditCardDetail(
                                 scope.launch { bottomSheetState.hide() }
                                 viewModel.pinItem(
                                     shareId = itemUiModel.shareId,
-                                    itemId = itemUiModel.id,
+                                    itemId = itemUiModel.id
                                 )
 
                             },
@@ -131,10 +131,10 @@ fun CreditCardDetail(
                                 scope.launch { bottomSheetState.hide() }
                                 viewModel.unpinItem(
                                     shareId = itemUiModel.shareId,
-                                    itemId = itemUiModel.id,
+                                    itemId = itemUiModel.id
                                 )
                             },
-                            isPinningFeatureEnabled = state.isPinningFeatureEnabled,
+                            isPinningFeatureEnabled = state.isPinningFeatureEnabled
                         )
 
                         ItemState.Trashed.value -> TrashItemBottomSheetContents(
@@ -171,7 +171,7 @@ fun CreditCardDetail(
                             onShareClick = {
                                 onShareClick(state.itemActions, onNavigate, state.itemContent.model)
                             },
-                            shouldShowMenu = state.itemActions.canMoveToTrash || state.isPinningFeatureEnabled,
+                            shouldShowMenu = state.itemActions.canMoveToTrash || state.isPinningFeatureEnabled
                         )
                     }
                 ) { padding ->
@@ -225,12 +225,12 @@ fun CreditCardDetail(
                                 CreditCardDetailEvent.OnViewItemHistoryClicked -> onNavigate(
                                     ItemDetailNavigation.OnViewItemHistory(
                                         shareId = state.itemContent.model.shareId,
-                                        itemId = state.itemContent.model.id,
+                                        itemId = state.itemContent.model.id
                                     )
                                 )
                             }
                         },
-                        isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,
+                        isHistoryFeatureEnabled = state.isHistoryFeatureEnabled
                     )
                 }
                 ConfirmDeleteItemDialog(

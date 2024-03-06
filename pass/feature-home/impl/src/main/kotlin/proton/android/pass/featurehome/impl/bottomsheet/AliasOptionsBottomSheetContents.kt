@@ -61,7 +61,7 @@ fun AliasOptionsBottomSheetContents(
     onEdit: (ShareId, ItemId) -> Unit,
     onMoveToTrash: (ItemUiModel) -> Unit,
     onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit,
-    isPinningFeatureEnabled: Boolean,
+    isPinningFeatureEnabled: Boolean
 ) {
     val contents = itemUiModel.contents as ItemContents.Alias
 
@@ -96,25 +96,24 @@ fun AliasOptionsBottomSheetContents(
         }
 
         BottomSheetItemList(
-            items = bottomSheetItems.withDividers().toPersistentList(),
+            items = bottomSheetItems.withDividers().toPersistentList()
         )
     }
 }
 
-private fun copyAlias(aliasEmail: String, onCopyAlias: (String) -> Unit): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_alias)) }
-        override val subtitle: (@Composable () -> Unit)?
-            get() = null
-        override val leftIcon: (@Composable () -> Unit)
-            get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: () -> Unit
-            get() = { onCopyAlias(aliasEmail) }
-        override val isDivider = false
-    }
+private fun copyAlias(aliasEmail: String, onCopyAlias: (String) -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_alias)) }
+    override val subtitle: (@Composable () -> Unit)?
+        get() = null
+    override val leftIcon: (@Composable () -> Unit)
+        get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
+    override val onClick: () -> Unit
+        get() = { onCopyAlias(aliasEmail) }
+    override val isDivider = false
+}
 
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
@@ -137,7 +136,7 @@ fun AliasOptionsBottomSheetContentsPreview(
                     createTime = Clock.System.now(),
                     modificationTime = Clock.System.now(),
                     lastAutofillTime = Clock.System.now(),
-                    isPinned = false,
+                    isPinned = false
                 ),
                 isRecentSearch = input.second,
                 onCopyAlias = {},
@@ -147,7 +146,7 @@ fun AliasOptionsBottomSheetContentsPreview(
                 onEdit = { _, _ -> },
                 onMoveToTrash = {},
                 onRemoveFromRecentSearch = { _, _ -> },
-                isPinningFeatureEnabled = true,
+                isPinningFeatureEnabled = true
             )
         }
     }

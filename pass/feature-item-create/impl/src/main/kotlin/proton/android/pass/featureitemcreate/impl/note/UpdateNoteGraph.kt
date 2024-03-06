@@ -29,13 +29,10 @@ object EditNote : NavItem(
     baseRoute = "note/edit",
     navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId)
 ) {
-    fun createNavRoute(shareId: ShareId, itemId: ItemId) =
-        "$baseRoute/${shareId.id}/${itemId.id}"
+    fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
 }
 
-fun NavGraphBuilder.updateNoteGraph(
-    onNavigate: (UpdateNoteNavigation) -> Unit,
-) {
+fun NavGraphBuilder.updateNoteGraph(onNavigate: (UpdateNoteNavigation) -> Unit) {
     composable(EditNote) {
         UpdateNote(onNavigate = onNavigate)
     }

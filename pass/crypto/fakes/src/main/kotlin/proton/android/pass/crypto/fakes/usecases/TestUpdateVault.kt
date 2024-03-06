@@ -32,10 +32,8 @@ class TestUpdateVault : UpdateVault {
         result = value
     }
 
-    override fun createUpdateVaultRequest(
-        shareKey: ShareKey,
-        body: VaultV1.Vault
-    ): EncryptedUpdateVaultRequest = result.getOrThrow()
+    override fun createUpdateVaultRequest(shareKey: ShareKey, body: VaultV1.Vault): EncryptedUpdateVaultRequest =
+        result.getOrThrow()
 
     companion object {
         fun generateOutput(): EncryptedUpdateVaultRequest = EncryptedUpdateVaultRequest(

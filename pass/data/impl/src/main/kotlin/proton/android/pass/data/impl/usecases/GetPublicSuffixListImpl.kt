@@ -39,17 +39,16 @@ class GetPublicSuffixListImpl @Inject constructor(
         return suffixes
     }
 
-    private fun loadSuffixes(): Set<String> =
-        try {
-            val contents = context.resources
-                .openRawResource(R.raw.public_suffix_list)
-                .bufferedReader()
-                .use { it.readText() }
-            contents.lineSequence().toHashSet()
-        } catch (e: IOException) {
-            PassLogger.e(TAG, e, "Error reading public_suffix_list")
-            emptySet()
-        }
+    private fun loadSuffixes(): Set<String> = try {
+        val contents = context.resources
+            .openRawResource(R.raw.public_suffix_list)
+            .bufferedReader()
+            .use { it.readText() }
+        contents.lineSequence().toHashSet()
+    } catch (e: IOException) {
+        PassLogger.e(TAG, e, "Error reading public_suffix_list")
+        emptySet()
+    }
 
     companion object {
         private const val TAG = "GetPublicSuffixListImpl"

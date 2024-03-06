@@ -36,7 +36,7 @@ fun ProfileScreen(
     enterPinSuccess: Boolean,
     onNavigateEvent: (ProfileNavigation) -> Unit,
     onClearPinSuccess: () -> Unit,
-    viewModel: ProfileViewModel = hiltViewModel(),
+    viewModel: ProfileViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current

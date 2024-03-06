@@ -52,9 +52,7 @@ fun SignOut(modifier: Modifier = Modifier, onSignOutClick: () -> Unit) {
 
 @Preview
 @Composable
-fun SignOutPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun SignOutPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             SignOut {}

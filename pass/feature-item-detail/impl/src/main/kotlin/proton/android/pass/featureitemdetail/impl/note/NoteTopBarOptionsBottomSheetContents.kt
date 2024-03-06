@@ -52,7 +52,7 @@ fun NoteTopBarOptionsBottomSheetContents(
     onCopyNote: () -> Unit = {},
     onPinned: () -> Unit,
     onUnpinned: () -> Unit,
-    isPinningFeatureEnabled: Boolean,
+    isPinningFeatureEnabled: Boolean
 ) {
     val items = mutableListOf(copyNote(onClick = onCopyNote)).apply {
         if (canMigrate) {
@@ -78,20 +78,19 @@ fun NoteTopBarOptionsBottomSheetContents(
     )
 }
 
-private fun copyNote(onClick: () -> Unit): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = { BottomSheetItemTitle(text = stringResource(R.string.note_detail_copy_note_to_clipboard)) }
-        override val subtitle: @Composable (() -> Unit)?
-            get() = null
-        override val leftIcon: @Composable (() -> Unit)
-            get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_squares) }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: () -> Unit
-            get() = { onClick() }
-        override val isDivider = false
-    }
+private fun copyNote(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = { BottomSheetItemTitle(text = stringResource(R.string.note_detail_copy_note_to_clipboard)) }
+    override val subtitle: @Composable (() -> Unit)?
+        get() = null
+    override val leftIcon: @Composable (() -> Unit)
+        get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_squares) }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
+    override val onClick: () -> Unit
+        get() = { onClick() }
+    override val isDivider = false
+}
 
 @Preview
 @Composable
@@ -110,7 +109,7 @@ fun NoteTopBarOptionsBSContentsPreview(
                 onMoveToTrash = {},
                 onPinned = {},
                 onUnpinned = {},
-                isPinningFeatureEnabled = true,
+                isPinningFeatureEnabled = true
             )
         }
     }

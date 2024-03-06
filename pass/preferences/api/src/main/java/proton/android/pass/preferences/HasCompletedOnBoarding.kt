@@ -27,8 +27,7 @@ sealed interface HasCompletedOnBoarding {
     }
 }
 
-fun HasCompletedOnBoarding.value(): Boolean =
-    when (this) {
-        HasCompletedOnBoarding.Completed -> true
-        HasCompletedOnBoarding.NotCompleted -> false
-    }
+fun HasCompletedOnBoarding.value(): Boolean = when (this) {
+    HasCompletedOnBoarding.Completed -> true
+    HasCompletedOnBoarding.NotCompleted -> false
+}

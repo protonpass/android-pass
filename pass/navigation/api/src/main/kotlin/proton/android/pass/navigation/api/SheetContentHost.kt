@@ -81,7 +81,7 @@ internal fun SheetContentHost(
     sheetState: ModalBottomSheetState,
     saveableStateHolder: SaveableStateHolder,
     onSheetShown: (entry: NavBackStackEntry) -> Unit,
-    onSheetDismissed: (entry: NavBackStackEntry) -> Unit,
+    onSheetDismissed: (entry: NavBackStackEntry) -> Unit
 ) {
     val scope = rememberCoroutineScope()
     if (backStackEntry != null) {
@@ -197,9 +197,8 @@ private suspend fun ModalBottomSheetState.internalHide() {
 private val ModalBottomSheetState.willBeVisible: Boolean
     get() = targetValue == ModalBottomSheetValue.HalfExpanded || targetValue == ModalBottomSheetValue.Expanded
 
-suspend inline fun <reified T> T.callPrivateSuspendFunc(name: String, vararg args: Any?): Any? =
-    T::class
-        .declaredMemberFunctions
-        .firstOrNull { it.name == name }
-        ?.apply { isAccessible = true }
-        ?.callSuspend(this, *args)
+suspend inline fun <reified T> T.callPrivateSuspendFunc(name: String, vararg args: Any?): Any? = T::class
+    .declaredMemberFunctions
+    .firstOrNull { it.name == name }
+    ?.apply { isAccessible = true }
+    ?.callSuspend(this, *args)

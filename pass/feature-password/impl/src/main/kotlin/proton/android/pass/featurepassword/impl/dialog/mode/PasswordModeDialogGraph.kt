@@ -29,9 +29,7 @@ object PasswordModeDialog : NavItem(
     navItemType = NavItemType.Dialog
 )
 
-fun NavGraphBuilder.passwordModeDialog(
-    onNavigate: (GeneratePasswordNavigation) -> Unit
-) {
+fun NavGraphBuilder.passwordModeDialog(onNavigate: (GeneratePasswordNavigation) -> Unit) {
     dialog(PasswordModeDialog) {
         PasswordModeDialog(
             onNavigate = onNavigate

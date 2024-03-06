@@ -67,7 +67,7 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     displayCreateButton = true
                 ),
                 SearchUiState.Initial,
-                PinningUiState.Initial,
+                PinningUiState.Initial
             ),
             SelectItemUiState(
                 SelectItemListUiState(
@@ -96,7 +96,7 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     displayCreateButton = true
                 ),
                 SearchUiState.Initial,
-                PinningUiState.Initial,
+                PinningUiState.Initial
             ),
             SelectItemUiState(
                 SelectItemListUiState(
@@ -118,7 +118,7 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     isProcessingSearch = IsProcessingSearchState.NotLoading,
                     searchInMode = SearchInMode.AllVaults
                 ),
-                PinningUiState.Initial,
+                PinningUiState.Initial
             )
         )
 
@@ -133,6 +133,6 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
         createTime = Clock.System.now(),
         modificationTime = Clock.System.now(),
         lastAutofillTime = Clock.System.now(),
-        isPinned = false,
+        isPinned = false
     )
 }

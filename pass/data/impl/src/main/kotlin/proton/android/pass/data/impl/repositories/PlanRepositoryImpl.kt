@@ -66,10 +66,9 @@ class PlanRepositoryImpl @Inject constructor(
                 }
             }
 
-    override fun observePlan(userId: UserId): Flow<Plan> =
-        localPlanDataSource.observePlan(userId)
-            .filterNotNull()
-            .map { it.toPlan() }
+    override fun observePlan(userId: UserId): Flow<Plan> = localPlanDataSource.observePlan(userId)
+        .filterNotNull()
+        .map { it.toPlan() }
 
 
     private suspend fun refreshPlan(userId: UserId) {
@@ -131,20 +130,17 @@ class PlanRepositoryImpl @Inject constructor(
         )
     }
 
-    private fun PlanEntity.toPlanType(
-        isTrial: Boolean,
-        remainingTrialDays: Int = 0,
-    ): PlanType = when (type) {
+    private fun PlanEntity.toPlanType(isTrial: Boolean, remainingTrialDays: Int = 0): PlanType = when (type) {
         PlanType.PLAN_NAME_FREE -> if (isTrial) {
             PlanType.Trial(
                 name = internalName,
                 displayName = displayName,
-                remainingDays = remainingTrialDays,
+                remainingDays = remainingTrialDays
             )
         } else {
             PlanType.Free(
                 name = internalName,
-                displayName = displayName,
+                displayName = displayName
             )
         }
 
@@ -152,23 +148,23 @@ class PlanRepositoryImpl @Inject constructor(
             PlanType.Trial(
                 name = internalName,
                 displayName = displayName,
-                remainingDays = remainingTrialDays,
+                remainingDays = remainingTrialDays
             )
         } else {
             PlanType.Paid.Plus(
                 name = internalName,
-                displayName = displayName,
+                displayName = displayName
             )
         }
 
         PlanType.PLAN_NAME_BUSINESS -> PlanType.Paid.Business(
             name = internalName,
-            displayName = displayName,
+            displayName = displayName
         )
 
         else -> PlanType.Unknown(
             name = internalName,
-            displayName = displayName,
+            displayName = displayName
         )
     }
 

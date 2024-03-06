@@ -30,7 +30,7 @@ class CreateVaultProvider : PreviewParameterProvider<BaseVaultUiState> {
             stateWith(name = "", isError = true),
             stateWith(name = ""),
             stateWith(name = "some vault"),
-            stateWith(name = "some vault", isLoading = IsLoadingState.Loading),
+            stateWith(name = "some vault", isLoading = IsLoadingState.Loading)
         )
 
     private fun stateWith(

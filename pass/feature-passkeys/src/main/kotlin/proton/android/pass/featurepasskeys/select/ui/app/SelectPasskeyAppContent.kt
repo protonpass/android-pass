@@ -70,11 +70,11 @@ fun SelectPasskeyAppContent(
 
     ProtonBottomSheetBackHandler(
         bottomSheetState = bottomSheetState,
-        coroutineScope = coroutineScope,
+        coroutineScope = coroutineScope
     )
 
     val appNavigator = rememberAppNavigator(
-        bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState),
+        bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState)
     )
 
     LaunchedEffect(selectPasskey) {

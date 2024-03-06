@@ -36,10 +36,7 @@ sealed interface BottomSheetItemAction {
 
 }
 
-fun pin(
-    action: BottomSheetItemAction,
-    onClick: () -> Unit,
-): BottomSheetItem = object : BottomSheetItem {
+fun pin(action: BottomSheetItemAction, onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
 
     override val title: @Composable () -> Unit
         get() = { BottomSheetItemTitle(text = stringResource(R.string.bottomsheet_pin_item)) }
@@ -65,10 +62,7 @@ fun pin(
 
 }
 
-fun unpin(
-    action: BottomSheetItemAction,
-    onClick: () -> Unit,
-): BottomSheetItem = object : BottomSheetItem {
+fun unpin(action: BottomSheetItemAction, onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
 
     override val title: @Composable () -> Unit
         get() = { BottomSheetItemTitle(text = stringResource(R.string.bottomsheet_unpin_item)) }

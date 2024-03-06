@@ -62,7 +62,7 @@ fun NoteDetail(
     modifier: Modifier = Modifier,
     moreInfoUiState: MoreInfoUiState,
     viewModel: NoteDetailViewModel = hiltViewModel(),
-    onNavigate: (ItemDetailNavigation) -> Unit,
+    onNavigate: (ItemDetailNavigation) -> Unit
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
     when (val state = uiState) {
@@ -91,7 +91,7 @@ fun NoteDetail(
 
             ProtonBottomSheetBackHandler(
                 bottomSheetState = bottomSheetState,
-                coroutineScope = scope,
+                coroutineScope = scope
             )
 
             PassModalBottomSheetLayout(
@@ -125,7 +125,7 @@ fun NoteDetail(
                                 scope.launch { bottomSheetState.hide() }
                                 viewModel.pinItem(
                                     shareId = state.itemUiModel.shareId,
-                                    itemId = state.itemUiModel.id,
+                                    itemId = state.itemUiModel.id
                                 )
 
                             },
@@ -133,10 +133,10 @@ fun NoteDetail(
                                 scope.launch { bottomSheetState.hide() }
                                 viewModel.unpinItem(
                                     shareId = state.itemUiModel.shareId,
-                                    itemId = state.itemUiModel.id,
+                                    itemId = state.itemUiModel.id
                                 )
                             },
-                            isPinningFeatureEnabled = state.isPinningFeatureEnabled,
+                            isPinningFeatureEnabled = state.isPinningFeatureEnabled
                         )
 
                         ItemState.Trashed.value -> TrashItemBottomSheetContents(
@@ -173,7 +173,7 @@ fun NoteDetail(
                             onShareClick = {
                                 onShareClick(state.itemActions, onNavigate, state.itemUiModel)
                             },
-                            shouldShowMenu = true,
+                            shouldShowMenu = true
                         )
                     }
                 ) { padding ->
@@ -196,11 +196,11 @@ fun NoteDetail(
                             onNavigate(
                                 ItemDetailNavigation.OnViewItemHistory(
                                     shareId = state.itemUiModel.shareId,
-                                    itemId = state.itemUiModel.id,
+                                    itemId = state.itemUiModel.id
                                 )
                             )
                         },
-                        isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,
+                        isHistoryFeatureEnabled = state.isHistoryFeatureEnabled
                     )
                 }
                 ConfirmDeleteItemDialog(

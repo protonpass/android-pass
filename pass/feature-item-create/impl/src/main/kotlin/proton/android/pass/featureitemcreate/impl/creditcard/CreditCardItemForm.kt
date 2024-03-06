@@ -66,7 +66,7 @@ fun CreditCardItemForm(
             onPinChanged = { onEvent(OnPinChange(it)) },
             onExpirationDateChanged = { onEvent(OnExpirationDateChange(it)) },
             onCVVFocusChange = { onEvent(OnCVVFocusChange(it)) },
-            onPinFocusChange = { onEvent(OnPinFocusChange(it)) },
+            onPinFocusChange = { onEvent(OnPinFocusChange(it)) }
         )
         SimpleNoteSection(
             value = creditCardItemFormState.note,

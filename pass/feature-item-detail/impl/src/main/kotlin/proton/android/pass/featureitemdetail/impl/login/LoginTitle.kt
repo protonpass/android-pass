@@ -48,7 +48,7 @@ fun LoginTitle(
     vault: Vault?,
     canLoadExternalImages: Boolean,
     onVaultClick: () -> Unit,
-    isPinned: Boolean,
+    isPinned: Boolean
 ) {
     Row(
         modifier = modifier,
@@ -72,7 +72,7 @@ fun LoginTitle(
                     packageName = packageName,
                     canLoadExternalImages = canLoadExternalImages
                 )
-            },
+            }
         )
 
         Column(
@@ -87,9 +87,7 @@ fun LoginTitle(
 
 @Preview
 @Composable
-fun LoginTitlePreview(
-    @PreviewParameter(ThemeItemTitleProvider::class) input: Pair<Boolean, ItemTitleInput>
-) {
+fun LoginTitlePreview(@PreviewParameter(ThemeItemTitleProvider::class) input: Pair<Boolean, ItemTitleInput>) {
     val (isDark, params) = input
 
     PassTheme(isDark = isDark) {
@@ -101,7 +99,7 @@ fun LoginTitlePreview(
                 vault = params.vault,
                 canLoadExternalImages = false,
                 onVaultClick = {},
-                isPinned = params.itemUiModel.isPinned,
+                isPinned = params.itemUiModel.isPinned
             )
         }
     }

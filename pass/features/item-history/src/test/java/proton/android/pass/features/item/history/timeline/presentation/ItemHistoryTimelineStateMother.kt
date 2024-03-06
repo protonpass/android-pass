@@ -47,12 +47,12 @@ internal object ItemHistoryTimelineStateMother {
             shareId: ShareId = ShareIdMother.create(),
             itemId: ItemId = ItemIdMother.create(),
             itemRevisions: ImmutableList<ItemRevision> = persistentListOf(),
-            itemRevisionCategory: ItemCategory = ItemCategory.Unknown,
+            itemRevisionCategory: ItemCategory = ItemCategory.Unknown
         ): ItemHistoryTimelineState.Success = ItemHistoryTimelineState.Success(
             shareId = shareId,
             itemId = itemId,
             itemRevisions = itemRevisions,
-            itemRevisionCategory = itemRevisionCategory,
+            itemRevisionCategory = itemRevisionCategory
         )
     }
 

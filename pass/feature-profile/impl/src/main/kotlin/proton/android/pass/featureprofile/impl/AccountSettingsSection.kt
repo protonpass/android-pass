@@ -61,9 +61,7 @@ object AccountProfileSectionTestTag {
 
 @Preview
 @Composable
-fun AccountSettingsSectionPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun AccountSettingsSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             AccountProfileSection(

@@ -96,9 +96,7 @@ internal fun TotpInput(
 
 @Preview
 @Composable
-fun TotpInputPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
+fun TotpInputPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
     PassTheme(isDark = input.first) {
         Surface {
             TotpInput(

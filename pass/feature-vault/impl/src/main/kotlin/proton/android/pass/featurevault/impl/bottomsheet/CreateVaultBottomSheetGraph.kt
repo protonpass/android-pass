@@ -81,9 +81,7 @@ object EditVaultScreen : NavItem(
     }
 }
 
-internal fun NavGraphBuilder.createVaultGraph(
-    onNavigate: (VaultNavigation) -> Unit
-) {
+internal fun NavGraphBuilder.createVaultGraph(onNavigate: (VaultNavigation) -> Unit) {
     composable(CreateVaultScreen) {
         CreateVaultScreen(
             onNavigate = onNavigate
@@ -91,9 +89,7 @@ internal fun NavGraphBuilder.createVaultGraph(
     }
 }
 
-internal fun NavGraphBuilder.editVaultGraph(
-    onNavigate: (VaultNavigation) -> Unit
-) {
+internal fun NavGraphBuilder.editVaultGraph(onNavigate: (VaultNavigation) -> Unit) {
     composable(EditVaultScreen) {
         EditVaultScreen(
             onNavigate = onNavigate

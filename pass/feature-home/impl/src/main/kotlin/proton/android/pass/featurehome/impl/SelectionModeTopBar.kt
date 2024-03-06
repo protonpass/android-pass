@@ -76,10 +76,7 @@ fun SelectionModeTopBar(
 }
 
 @Composable
-private fun RowScope.NonTrashSelectionModeTopBar(
-    selectionState: SelectionTopBarState,
-    onEvent: (HomeUiEvent) -> Unit
-) {
+private fun RowScope.NonTrashSelectionModeTopBar(selectionState: SelectionTopBarState, onEvent: (HomeUiEvent) -> Unit) {
     if (selectionState.isPinningEnabled) {
         when (selectionState.pinningLoadingState) {
             IsLoadingState.NotLoading -> {
@@ -155,10 +152,7 @@ private fun RowScope.NonTrashSelectionModeTopBar(
 }
 
 @Composable
-private fun RowScope.TrashSelectionModeTopBar(
-    selectionState: SelectionTopBarState,
-    onEvent: (HomeUiEvent) -> Unit
-) {
+private fun RowScope.TrashSelectionModeTopBar(selectionState: SelectionTopBarState, onEvent: (HomeUiEvent) -> Unit) {
     IconButton(
         enabled = selectionState.actionsEnabled,
         onClick = { onEvent(HomeUiEvent.RestoreItemsActionClick) }
@@ -191,9 +185,7 @@ private fun RowScope.TrashSelectionModeTopBar(
 
 @Preview
 @Composable
-fun SelectionModeTopBarPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
+fun SelectionModeTopBarPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
     PassTheme(isDark = input.first) {
         Surface {
             SelectionModeTopBar(

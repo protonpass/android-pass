@@ -62,10 +62,7 @@ interface RemoteItemDataSource {
 
     suspend fun getItems(userId: UserId, shareId: ShareId): List<ItemRevision>
 
-    fun observeItems(
-        userId: UserId,
-        shareId: ShareId
-    ): Flow<ItemTotal>
+    fun observeItems(userId: UserId, shareId: ShareId): Flow<ItemTotal>
 
     suspend fun sendToTrash(
         userId: UserId,
@@ -79,7 +76,11 @@ interface RemoteItemDataSource {
         body: TrashItemsRequest
     ): TrashItemsResponse
 
-    suspend fun delete(userId: UserId, shareId: ShareId, body: TrashItemsRequest)
+    suspend fun delete(
+        userId: UserId,
+        shareId: ShareId,
+        body: TrashItemsRequest
+    )
 
     suspend fun updateLastUsedTime(
         userId: UserId,
@@ -104,19 +105,19 @@ interface RemoteItemDataSource {
     suspend fun pinItem(
         userId: UserId,
         shareId: ShareId,
-        itemId: ItemId,
+        itemId: ItemId
     ): ItemRevision
 
     suspend fun unpinItem(
         userId: UserId,
         shareId: ShareId,
-        itemId: ItemId,
+        itemId: ItemId
     ): ItemRevision
 
     suspend fun fetchItemRevisions(
         userId: UserId,
         shareId: ShareId,
-        itemId: ItemId,
+        itemId: ItemId
     ): List<ItemRevision>
 
 }

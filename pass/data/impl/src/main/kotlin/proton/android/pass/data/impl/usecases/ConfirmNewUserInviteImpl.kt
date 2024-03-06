@@ -51,17 +51,12 @@ class ConfirmNewUserInviteImpl @Inject constructor(
     private val localShareDataSource: LocalShareDataSource,
     private val dispatchers: AppDispatchers
 ) : ConfirmNewUserInvite {
-    override suspend fun invoke(
-        shareId: ShareId,
-        invite: VaultMember.NewUserInvitePending
-    ): Result<Unit> = withContext(dispatchers.io) {
-        performConfirmation(shareId, invite)
-    }
+    override suspend fun invoke(shareId: ShareId, invite: VaultMember.NewUserInvitePending): Result<Unit> =
+        withContext(dispatchers.io) {
+            performConfirmation(shareId, invite)
+        }
 
-    private suspend fun performConfirmation(
-        shareId: ShareId,
-        invite: VaultMember.NewUserInvitePending
-    ): Result<Unit> {
+    private suspend fun performConfirmation(shareId: ShareId, invite: VaultMember.NewUserInvitePending): Result<Unit> {
         val userId = accountManager.getPrimaryUserId().firstOrNull()
         if (userId == null) {
             PassLogger.w(TAG, "No primary user")

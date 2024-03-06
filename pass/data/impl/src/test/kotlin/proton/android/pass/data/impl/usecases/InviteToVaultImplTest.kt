@@ -63,7 +63,7 @@ class InviteToVaultImplTest {
         shareRepository = TestShareRepository().apply {
             val share = TestShare.create(
                 shareId = ShareId(SHARE_ID),
-                shareRole = ShareRole.Admin,
+                shareRole = ShareRole.Admin
             )
             setGetByIdResult(Result.success(share))
         }

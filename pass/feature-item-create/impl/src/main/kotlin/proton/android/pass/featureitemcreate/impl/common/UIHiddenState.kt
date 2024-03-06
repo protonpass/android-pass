@@ -51,27 +51,26 @@ sealed interface UIHiddenState : Parcelable {
         is Revealed -> proton.android.pass.domain.HiddenState.Revealed(encrypted, clearText)
     }
 
-    fun compare(other: UIHiddenState, encryptionContext: EncryptionContext): Boolean =
-        when (this) {
-            is Empty -> when (other) {
-                is Empty -> true
-                else -> false
-            }
-
-            is Concealed -> when (other) {
-                is Concealed -> encryptionContext.decrypt(encrypted.toEncryptedByteArray())
-                    .contentEquals(encryptionContext.decrypt(other.encrypted.toEncryptedByteArray()))
-
-                else -> false
-            }
-
-            is Revealed -> when (other) {
-                is Revealed -> encryptionContext.decrypt(encrypted.toEncryptedByteArray())
-                    .contentEquals(encryptionContext.decrypt(other.encrypted.toEncryptedByteArray()))
-
-                else -> false
-            }
+    fun compare(other: UIHiddenState, encryptionContext: EncryptionContext): Boolean = when (this) {
+        is Empty -> when (other) {
+            is Empty -> true
+            else -> false
         }
+
+        is Concealed -> when (other) {
+            is Concealed -> encryptionContext.decrypt(encrypted.toEncryptedByteArray())
+                .contentEquals(encryptionContext.decrypt(other.encrypted.toEncryptedByteArray()))
+
+            else -> false
+        }
+
+        is Revealed -> when (other) {
+            is Revealed -> encryptionContext.decrypt(encrypted.toEncryptedByteArray())
+                .contentEquals(encryptionContext.decrypt(other.encrypted.toEncryptedByteArray()))
+
+            else -> false
+        }
+    }
 
     companion object {
         fun from(state: HiddenState) = when (state) {

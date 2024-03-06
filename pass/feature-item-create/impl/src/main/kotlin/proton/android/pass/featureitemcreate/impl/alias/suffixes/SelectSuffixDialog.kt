@@ -42,7 +42,7 @@ fun SelectSuffixDialog(
 
     NoPaddingDialog(
         modifier = modifier,
-        onDismissRequest = onDismiss,
+        onDismissRequest = onDismiss
     ) {
         SelectSuffixContent(
             modifier = Modifier,

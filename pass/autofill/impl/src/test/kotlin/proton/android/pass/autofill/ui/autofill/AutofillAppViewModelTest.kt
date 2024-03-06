@@ -91,9 +91,7 @@ class AutofillAppViewModelTest {
         assertThat(packageInfo!!.packageName.value).isEqualTo(packageName)
     }
 
-    private fun getInitialData(
-        packageName: String
-    ): Pair<AutofillItem, AutofillAppState> = AutofillItem.Login(
+    private fun getInitialData(packageName: String): Pair<AutofillItem, AutofillAppState> = AutofillItem.Login(
         itemId = "test-item-id",
         shareId = "share-id",
         username = "username",

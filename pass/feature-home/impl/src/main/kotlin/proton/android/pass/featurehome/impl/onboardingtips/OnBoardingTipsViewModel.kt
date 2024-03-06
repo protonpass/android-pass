@@ -154,10 +154,9 @@ class OnBoardingTipsViewModel @Inject constructor(
     private fun shouldShowAutofillBanner(
         autofillSupportedStatus: AutofillSupportedStatus,
         hasDismissedAutofillBanner: HasDismissedAutofillBanner
-    ): Boolean =
-        autofillSupportedStatus is AutofillSupportedStatus.Supported &&
-            autofillSupportedStatus.status !is AutofillStatus.EnabledByOurService &&
-            hasDismissedAutofillBanner is HasDismissedAutofillBanner.NotDismissed
+    ): Boolean = autofillSupportedStatus is AutofillSupportedStatus.Supported &&
+        autofillSupportedStatus.status !is AutofillStatus.EnabledByOurService &&
+        hasDismissedAutofillBanner is HasDismissedAutofillBanner.NotDismissed
 
     fun onClick(onBoardingTipPage: OnBoardingTipPage) {
         when (onBoardingTipPage) {
@@ -187,8 +186,7 @@ class OnBoardingTipsViewModel @Inject constructor(
     }
 
     @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.TIRAMISU)
-    private fun needsNotificationPermissions(): Boolean =
-        appConfig.androidVersion >= Build.VERSION_CODES.TIRAMISU
+    private fun needsNotificationPermissions(): Boolean = appConfig.androidVersion >= Build.VERSION_CODES.TIRAMISU
 
 
     fun clearEvent() {

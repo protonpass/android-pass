@@ -47,13 +47,11 @@ object FakesNetworkModule {
 
     @Provides
     @Singleton
-    fun provideExtraHeaderProvider(): ExtraHeaderProvider =
-        ExtraHeaderProviderImpl()
+    fun provideExtraHeaderProvider(): ExtraHeaderProvider = ExtraHeaderProviderImpl()
 
     @Provides
     @Singleton
-    fun provideNetworkPrefs(@ApplicationContext context: Context): NetworkPrefs =
-        NetworkPrefsImpl(context)
+    fun provideNetworkPrefs(@ApplicationContext context: Context): NetworkPrefs = NetworkPrefsImpl(context)
 
     @DohProviderUrls
     @Provides

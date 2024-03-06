@@ -65,9 +65,7 @@ fun VaultRowSection(modifier: Modifier = Modifier, vaultWithItemCount: VaultWith
 
 @Preview
 @Composable
-fun VaultRowSectionPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun VaultRowSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             VaultRowSection(
@@ -76,7 +74,7 @@ fun VaultRowSectionPreview(
                         shareId = ShareId("id"),
                         name = "Vault name",
                         color = ShareColor.Color1,
-                        icon = ShareIcon.Icon1,
+                        icon = ShareIcon.Icon1
                     ),
                     activeItemCount = 1,
                     trashedItemCount = 2

@@ -33,13 +33,11 @@ class FakePinItem @Inject constructor() : PinItem {
         item = newItem
     }
 
-    override suspend operator fun invoke(
-        shareId: ShareId,
-        itemId: ItemId,
-    ): Item = item?.copy(isPinned = true) ?: TestItem.random().copy(
-        id = itemId,
-        shareId = shareId,
-        isPinned = true,
-    )
+    override suspend operator fun invoke(shareId: ShareId, itemId: ItemId): Item =
+        item?.copy(isPinned = true) ?: TestItem.random().copy(
+            id = itemId,
+            shareId = shareId,
+            isPinned = true
+        )
 
 }

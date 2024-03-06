@@ -39,9 +39,7 @@ object ItemOptionsBottomSheet : NavItem(
     fun createRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
 }
 
-fun NavGraphBuilder.itemOptionsGraph(
-    onNavigate: (ItemOptionsNavigation) -> Unit
-) {
+fun NavGraphBuilder.itemOptionsGraph(onNavigate: (ItemOptionsNavigation) -> Unit) {
     bottomSheet(ItemOptionsBottomSheet) {
         BackHandler {
             onNavigate(ItemOptionsNavigation.Close)

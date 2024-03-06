@@ -53,7 +53,7 @@ internal fun PassLoginItemDetailMainSection(
     itemColors: PassItemColors,
     onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
     onHiddenSectionClick: (HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
-    onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
+    onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit
 ) {
     val sections = mutableListOf<@Composable (() -> Unit)?>()
 
@@ -63,7 +63,7 @@ internal fun PassLoginItemDetailMainSection(
             title = stringResource(R.string.item_details_login_section_username_title),
             subtitle = username,
             itemColors = itemColors,
-            onClick = { onSectionClick(username, ItemDetailsFieldType.Plain.Username) },
+            onClick = { onSectionClick(username, ItemDetailsFieldType.Plain.Username) }
         ).takeIf { username.isNotBlank() }
     }
 
@@ -81,7 +81,7 @@ internal fun PassLoginItemDetailMainSection(
             onToggle = { isVisible ->
                 onHiddenSectionToggle(isVisible, password, ItemDetailsFieldType.Hidden.Password)
             },
-            contentInBetween = { PassPasswordStrengthItem(passwordStrength = passwordStrength) },
+            contentInBetween = { PassPasswordStrengthItem(passwordStrength = passwordStrength) }
         ).takeIf { password !is HiddenState.Empty }
     }
 
@@ -96,9 +96,9 @@ internal fun PassLoginItemDetailMainSection(
                 contentInBetween = {
                     PassTotpProgress(
                         remainingSeconds = totp.remainingSeconds,
-                        totalSeconds = totp.totalSeconds,
+                        totalSeconds = totp.totalSeconds
                     )
-                },
+                }
             )
         }
     }

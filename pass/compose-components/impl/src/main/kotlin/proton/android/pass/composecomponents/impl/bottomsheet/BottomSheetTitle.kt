@@ -33,10 +33,7 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.body3Bold
 
 @Composable
-fun BottomSheetTitle(
-    modifier: Modifier = Modifier,
-    title: String
-) {
+fun BottomSheetTitle(modifier: Modifier = Modifier, title: String) {
     Column(
         modifier = modifier
             .fillMaxWidth(),

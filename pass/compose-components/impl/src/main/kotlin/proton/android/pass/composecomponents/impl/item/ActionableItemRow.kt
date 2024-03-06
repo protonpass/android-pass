@@ -59,7 +59,7 @@ fun ActionableItemRow(
     canLoadExternalImages: Boolean,
     onItemClick: (ItemUiModel) -> Unit = {},
     onItemLongClick: (ItemUiModel) -> Unit = {},
-    onItemMenuClick: (ItemUiModel) -> Unit = {},
+    onItemMenuClick: (ItemUiModel) -> Unit = {}
 ) {
     Row(
         modifier = modifier
@@ -74,7 +74,7 @@ fun ActionableItemRow(
                     padding(horizontal = 8.dp, vertical = 2.dp)
                         .background(
                             color = PassTheme.colors.interactionNormMinor1,
-                            shape = RoundedCornerShape(16.dp),
+                            shape = RoundedCornerShape(16.dp)
                         )
                         .padding(horizontal = 8.dp, vertical = 10.2.dp)
                 },
@@ -147,9 +147,7 @@ fun ActionableItemRowPreviewWithoutMenuIcon(
 
 @Preview
 @Composable
-fun ActionableItemRowPreviewWithVaultIcon(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun ActionableItemRowPreviewWithVaultIcon(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             ActionableItemRow(

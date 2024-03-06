@@ -29,10 +29,7 @@ import proton.android.pass.common.api.StringMatcher
 
 private const val CHARACTER_OFFSET = 10
 
-fun String.highlight(
-    query: String,
-    highlightColor: Color = Color.Unspecified
-): AnnotatedString? {
+fun String.highlight(query: String, highlightColor: Color = Color.Unspecified): AnnotatedString? {
     val matches = StringMatcher.match(this, query)
     return if (matches.isEmpty()) {
         null

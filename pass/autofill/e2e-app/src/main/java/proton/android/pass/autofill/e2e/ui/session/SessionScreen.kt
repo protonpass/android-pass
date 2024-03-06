@@ -64,10 +64,7 @@ const val SESSION_DETAIL_ROUTE = "e2eapp/session"
 const val SESSION_DETAIL_ARG_NAME = "session"
 
 @Composable
-fun SessionScreen(
-    modifier: Modifier = Modifier,
-    viewModel: SessionDetailViewModel = hiltViewModel()
-) {
+fun SessionScreen(modifier: Modifier = Modifier, viewModel: SessionDetailViewModel = hiltViewModel()) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     when (val content = state) {
@@ -86,10 +83,7 @@ fun SessionScreen(
 }
 
 @Composable
-private fun SessionDetailContent(
-    modifier: Modifier = Modifier,
-    content: AutofillDebugSaver.DebugAutofillEntry,
-) {
+private fun SessionDetailContent(modifier: Modifier = Modifier, content: AutofillDebugSaver.DebugAutofillEntry) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {

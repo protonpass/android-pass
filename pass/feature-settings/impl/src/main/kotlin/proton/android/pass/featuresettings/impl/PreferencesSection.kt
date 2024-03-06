@@ -36,7 +36,7 @@ import proton.android.pass.preferences.ThemePreference
 fun PreferencesSection(
     modifier: Modifier = Modifier,
     theme: ThemePreference,
-    onEvent: (SettingsContentEvent) -> Unit,
+    onEvent: (SettingsContentEvent) -> Unit
 ) {
     Column(
         modifier = modifier.roundedContainerNorm()
@@ -63,9 +63,7 @@ fun PreferencesSection(
 
 @Preview
 @Composable
-fun PreferencesSectionPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun PreferencesSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             PreferencesSection(

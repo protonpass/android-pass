@@ -48,7 +48,7 @@ internal fun PassItemDetailFieldRow(
     itemColors: PassItemColors,
     isSelectable: Boolean = false,
     onClick: (() -> Unit)? = null,
-    contentInBetween: (@Composable () -> Unit)? = null,
+    contentInBetween: (@Composable () -> Unit)? = null
 ) {
     Row(
         modifier = modifier
@@ -59,20 +59,20 @@ internal fun PassItemDetailFieldRow(
             )
             .padding(all = Spacing.medium),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Spacing.small),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
         Icon(
             painter = icon,
             contentDescription = null,
-            tint = itemColors.norm,
+            tint = itemColors.norm
         )
 
         Column(
-            modifier = Modifier.weight(weight = 1f),
+            modifier = Modifier.weight(weight = 1f)
         ) {
             SectionTitle(
                 modifier = Modifier.padding(start = Spacing.small),
-                text = title,
+                text = title
             )
 
             Spacer(modifier = Modifier.height(Spacing.small))
@@ -81,13 +81,13 @@ internal fun PassItemDetailFieldRow(
                 SelectionContainer {
                     SectionSubtitle(
                         modifier = Modifier.padding(start = Spacing.small),
-                        text = subtitle.asAnnotatedString(),
+                        text = subtitle.asAnnotatedString()
                     )
                 }
             } else {
                 SectionSubtitle(
                     modifier = Modifier.padding(start = Spacing.small),
-                    text = subtitle.asAnnotatedString(),
+                    text = subtitle.asAnnotatedString()
                 )
             }
         }

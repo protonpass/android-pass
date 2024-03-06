@@ -26,7 +26,7 @@ class HiddenStatePreviewProvider : PreviewParameterProvider<UIHiddenState> {
         get() = sequenceOf(
             UIHiddenState.Empty("emptyEncrypted"),
             UIHiddenState.Revealed("revealedEncrypted", "Revealed"),
-            UIHiddenState.Concealed("concealedEncrypted"),
+            UIHiddenState.Concealed("concealedEncrypted")
         )
 }
 

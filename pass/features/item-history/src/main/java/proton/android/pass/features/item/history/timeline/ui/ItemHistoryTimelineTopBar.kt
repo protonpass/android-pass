@@ -32,7 +32,7 @@ import proton.android.pass.composecomponents.impl.utils.PassItemColors
 internal fun ItemHistoryTimelineTopBar(
     modifier: Modifier = Modifier,
     colors: PassItemColors,
-    onUpClick: () -> Unit,
+    onUpClick: () -> Unit
 ) {
     ProtonTopAppBar(
         modifier = modifier,
@@ -43,9 +43,9 @@ internal fun ItemHistoryTimelineTopBar(
                 modifier = Modifier.padding(12.dp, Spacing.small),
                 color = colors.majorSecondary,
                 backgroundColor = colors.minorPrimary,
-                onUpClick = onUpClick,
+                onUpClick = onUpClick
             )
         },
-        actions = {},
+        actions = {}
     )
 }

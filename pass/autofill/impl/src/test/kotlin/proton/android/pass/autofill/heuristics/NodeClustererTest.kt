@@ -158,10 +158,7 @@ class NodeClustererTest {
         url = url
     )
 
-    private fun passwordField(
-        id: Int,
-        nodePath: List<Int>
-    ): AssistField = AssistField(
+    private fun passwordField(id: Int, nodePath: List<Int>): AssistField = AssistField(
         id = TestAutofillId(id),
         type = FieldType.Password,
         value = null,

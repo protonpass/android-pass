@@ -50,8 +50,11 @@ class RemoteImageFetcherFactory @Inject constructor(
     @ApplicationContext private val context: Context,
     private val clock: Clock
 ) : Fetcher.Factory<WebsiteUrl> {
-    override fun create(data: WebsiteUrl, options: Options, imageLoader: ImageLoader): Fetcher =
-        RemoteImageFetcher(requestImage, context, clock, data)
+    override fun create(
+        data: WebsiteUrl,
+        options: Options,
+        imageLoader: ImageLoader
+    ): Fetcher = RemoteImageFetcher(requestImage, context, clock, data)
 }
 
 class RemoteImageFetcher(
@@ -148,13 +151,12 @@ class RemoteImageFetcher(
         }
     }
 
-    private fun handleCachedFile(file: File, result: CacheResult): CacheResult =
-        if (isFileValid(file)) {
-            result
-        } else {
-            file.delete()
-            CacheResult.Miss
-        }
+    private fun handleCachedFile(file: File, result: CacheResult): CacheResult = if (isFileValid(file)) {
+        result
+    } else {
+        file.delete()
+        CacheResult.Miss
+    }
 
     @Suppress("MagicNumber")
     private fun isFileValid(file: File): Boolean {

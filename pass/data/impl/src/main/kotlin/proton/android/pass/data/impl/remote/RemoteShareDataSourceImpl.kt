@@ -32,10 +32,7 @@ import javax.inject.Inject
 class RemoteShareDataSourceImpl @Inject constructor(
     private val api: ApiProvider
 ) : RemoteShareDataSource {
-    override suspend fun createVault(
-        userId: UserId,
-        body: CreateVaultRequest
-    ): ShareResponse {
+    override suspend fun createVault(userId: UserId, body: CreateVaultRequest): ShareResponse {
         val res = api.get<PasswordManagerApi>(userId)
             .invoke { createVault(body) }
         when (res) {
@@ -55,10 +52,9 @@ class RemoteShareDataSourceImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         body: UpdateVaultRequest
-    ): ShareResponse =
-        api.get<PasswordManagerApi>(userId)
-            .invoke { updateVault(shareId.id, body).share }
-            .valueOrThrow
+    ): ShareResponse = api.get<PasswordManagerApi>(userId)
+        .invoke { updateVault(shareId.id, body).share }
+        .valueOrThrow
 
 
     override suspend fun deleteVault(userId: UserId, shareId: ShareId) {
@@ -67,12 +63,11 @@ class RemoteShareDataSourceImpl @Inject constructor(
             .valueOrThrow
     }
 
-    override suspend fun getShares(userId: UserId): List<ShareResponse> =
-        api.get<PasswordManagerApi>(userId)
-            .invoke {
-                getShares().shares
-            }
-            .valueOrThrow
+    override suspend fun getShares(userId: UserId): List<ShareResponse> = api.get<PasswordManagerApi>(userId)
+        .invoke {
+            getShares().shares
+        }
+        .valueOrThrow
 
     override suspend fun fetchShareById(userId: UserId, shareId: ShareId): ShareResponse? =
         api.get<PasswordManagerApi>(userId)
@@ -86,10 +81,9 @@ class RemoteShareDataSourceImpl @Inject constructor(
             }
             .valueOrThrow
 
-    override suspend fun markAsPrimary(userId: UserId, shareId: ShareId) =
-        api.get<PasswordManagerApi>(userId)
-            .invoke { markAsPrimary(shareId.id) }
-            .valueOrThrow
+    override suspend fun markAsPrimary(userId: UserId, shareId: ShareId) = api.get<PasswordManagerApi>(userId)
+        .invoke { markAsPrimary(shareId.id) }
+        .valueOrThrow
 
     override suspend fun leaveVault(userId: UserId, shareId: ShareId) {
         api.get<PasswordManagerApi>(userId)

@@ -58,6 +58,6 @@ fun MigrateSelectVaultContents(
             )
         }
             .withDividers()
-            .toImmutableList(),
+            .toImmutableList()
     )
 }

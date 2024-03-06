@@ -31,6 +31,5 @@ class TestReencryptShareContents : ReencryptShareContents {
         reencryptResponse = value
     }
 
-    override fun invoke(contents: String?, key: EncryptionKey): EncryptedByteArray? =
-        reencryptResponse.getOrThrow()
+    override fun invoke(contents: String?, key: EncryptionKey): EncryptedByteArray? = reencryptResponse.getOrThrow()
 }

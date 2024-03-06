@@ -40,24 +40,16 @@ import proton.android.pass.data.impl.crypto.ReencryptShareKeyImpl
 abstract class DataCryptoModule {
 
     @Binds
-    abstract fun bindReencryptShareContents(
-        impl: ReencryptShareContentsImpl
-    ): ReencryptShareContents
+    abstract fun bindReencryptShareContents(impl: ReencryptShareContentsImpl): ReencryptShareContents
 
     @Binds
-    abstract fun bindReencryptShareKey(
-        impl: ReencryptShareKeyImpl
-    ): ReencryptShareKey
+    abstract fun bindReencryptShareKey(impl: ReencryptShareKeyImpl): ReencryptShareKey
 
     @Binds
-    abstract fun bindReencryptInviteContents(
-        impl: ReencryptInviteContentsImpl
-    ): ReencryptInviteContents
+    abstract fun bindReencryptInviteContents(impl: ReencryptInviteContentsImpl): ReencryptInviteContents
 
     @Binds
-    abstract fun bindEncryptInviteKeys(
-        impl: EncryptInviteKeysImpl
-    ): EncryptInviteKeys
+    abstract fun bindEncryptInviteKeys(impl: EncryptInviteKeysImpl): EncryptInviteKeys
 
     @Binds
     abstract fun bindCreateNewUserInviteSignature(
@@ -65,7 +57,5 @@ abstract class DataCryptoModule {
     ): NewUserInviteSignatureManager
 
     @Binds
-    abstract fun bindEncryptShareKeysForUser(
-        impl: EncryptShareKeysForUserImpl
-    ): EncryptShareKeysForUser
+    abstract fun bindEncryptShareKeysForUser(impl: EncryptShareKeysForUserImpl): EncryptShareKeysForUser
 }

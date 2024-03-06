@@ -58,7 +58,7 @@ import javax.inject.Inject
 
 data class CreatePasskeyRequest(
     val callingAppInfo: CallingAppInfo,
-    val callingRequest: CreatePublicKeyCredentialRequest,
+    val callingRequest: CreatePublicKeyCredentialRequest
 )
 
 @Immutable

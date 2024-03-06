@@ -124,7 +124,7 @@ object AutofillDebugSaver {
         htmlAttributes = htmlAttributes.map { HtmlAttribute(it.first, it.second) },
         children = children.map { it.toDebugNode() },
         url = url.value(),
-        hintKeywordList = hintKeywordList.map { it.toString() },
+        hintKeywordList = hintKeywordList.map { it.toString() }
     )
 
 }

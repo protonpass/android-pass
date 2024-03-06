@@ -37,10 +37,7 @@ class TestGetItemByIdWithVault @Inject constructor() : GetItemByIdWithVault {
         result.tryEmit(value)
     }
 
-    override fun invoke(
-        shareId: ShareId,
-        itemId: ItemId
-    ): Flow<ItemWithVaultInfo> = result.map {
+    override fun invoke(shareId: ShareId, itemId: ItemId): Flow<ItemWithVaultInfo> = result.map {
         it.getOrThrow()
     }
 }

@@ -38,9 +38,7 @@ sealed interface CreateCreditCardNavigation : BaseCreditCardNavigation {
     value class SelectVault(val shareId: ShareId) : CreateCreditCardNavigation
 }
 
-fun NavGraphBuilder.createCreditCardGraph(
-    onNavigate: (BaseCreditCardNavigation) -> Unit,
-) {
+fun NavGraphBuilder.createCreditCardGraph(onNavigate: (BaseCreditCardNavigation) -> Unit) {
     composable(CreateCreditCard) { navBackStack ->
         val selectVault by navBackStack.savedStateHandle
             .getStateFlow<String?>(KEY_VAULT_SELECTED, null)

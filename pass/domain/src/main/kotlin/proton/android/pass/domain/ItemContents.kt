@@ -105,7 +105,7 @@ sealed class ItemContents {
         val packageInfoSet: Set<PackageInfo>,
         val primaryTotp: HiddenState,
         val customFields: List<CustomFieldContent>,
-        val passkeys: List<Passkey>,
+        val passkeys: List<Passkey>
     ) : ItemContents() {
 
         val websiteUrl: String? = urls.firstOrNull()
@@ -119,10 +119,7 @@ sealed class ItemContents {
 
         companion object {
 
-            fun create(
-                password: HiddenState,
-                primaryTotp: HiddenState,
-            ) = Login(
+            fun create(password: HiddenState, primaryTotp: HiddenState) = Login(
                 title = "",
                 username = "",
                 password = password,
@@ -131,7 +128,7 @@ sealed class ItemContents {
                 primaryTotp = primaryTotp,
                 note = "",
                 customFields = emptyList(),
-                passkeys = emptyList(),
+                passkeys = emptyList()
             )
         }
     }
@@ -159,13 +156,10 @@ sealed class ItemContents {
         val number: String,
         val cvv: HiddenState,
         val pin: HiddenState,
-        val expirationDate: String,
+        val expirationDate: String
     ) : ItemContents() {
         companion object {
-            fun default(
-                cvv: HiddenState,
-                pin: HiddenState
-            ) = CreditCard(
+            fun default(cvv: HiddenState, pin: HiddenState) = CreditCard(
                 title = "",
                 cardHolder = "",
                 type = CreditCardType.Other,

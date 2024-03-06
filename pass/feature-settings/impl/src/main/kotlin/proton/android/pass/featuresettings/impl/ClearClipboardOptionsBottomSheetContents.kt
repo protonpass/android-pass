@@ -58,49 +58,46 @@ fun ClearClipboardOptionsBottomSheetContents(
 private fun clearClipboardItemList(
     clearClipboardPreference: ClearClipboardPreference,
     onClearClipboardPreferenceSelected: (ClearClipboardPreference) -> Unit
-): ImmutableList<BottomSheetItem> =
-    listOf(S60, S180, Never)
-        .map {
-            object : BottomSheetItem {
-                override val title: @Composable () -> Unit
-                    get() = {
-                        val clearClipboardString = when (it) {
-                            Never -> stringResource(R.string.clipboard_option_clear_clipboard_never)
-                            S60 -> stringResource(R.string.clipboard_option_clear_clipboard_after_60_seconds)
-                            S180 -> stringResource(R.string.clipboard_option_clear_clipboard_after_180_seconds)
-                        }
-                        val color = if (it == clearClipboardPreference) {
-                            PassTheme.colors.interactionNorm
-                        } else {
-                            PassTheme.colors.textNorm
-                        }
-                        BottomSheetItemTitle(text = clearClipboardString, color = color)
+): ImmutableList<BottomSheetItem> = listOf(S60, S180, Never)
+    .map {
+        object : BottomSheetItem {
+            override val title: @Composable () -> Unit
+                get() = {
+                    val clearClipboardString = when (it) {
+                        Never -> stringResource(R.string.clipboard_option_clear_clipboard_never)
+                        S60 -> stringResource(R.string.clipboard_option_clear_clipboard_after_60_seconds)
+                        S180 -> stringResource(R.string.clipboard_option_clear_clipboard_after_180_seconds)
                     }
-                override val subtitle: @Composable (() -> Unit)?
-                    get() = null
-                override val leftIcon: @Composable (() -> Unit)?
-                    get() = null
-                override val endIcon: @Composable (() -> Unit)?
-                    get() = if (it == clearClipboardPreference) {
-                        {
-                            BottomSheetItemIcon(
-                                iconId = me.proton.core.presentation.R.drawable.ic_proton_checkmark,
-                                tint = PassTheme.colors.interactionNormMajor1
-                            )
-                        }
-                    } else null
-                override val onClick: () -> Unit
-                    get() = { onClearClipboardPreferenceSelected(it) }
-                override val isDivider = false
-            }
+                    val color = if (it == clearClipboardPreference) {
+                        PassTheme.colors.interactionNorm
+                    } else {
+                        PassTheme.colors.textNorm
+                    }
+                    BottomSheetItemTitle(text = clearClipboardString, color = color)
+                }
+            override val subtitle: @Composable (() -> Unit)?
+                get() = null
+            override val leftIcon: @Composable (() -> Unit)?
+                get() = null
+            override val endIcon: @Composable (() -> Unit)?
+                get() = if (it == clearClipboardPreference) {
+                    {
+                        BottomSheetItemIcon(
+                            iconId = me.proton.core.presentation.R.drawable.ic_proton_checkmark,
+                            tint = PassTheme.colors.interactionNormMajor1
+                        )
+                    }
+                } else null
+            override val onClick: () -> Unit
+                get() = { onClearClipboardPreferenceSelected(it) }
+            override val isDivider = false
         }
-        .toImmutableList()
+    }
+    .toImmutableList()
 
 @Preview
 @Composable
-fun ClearClipboardOptionsBSContentsPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun ClearClipboardOptionsBSContentsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             ClearClipboardOptionsBottomSheetContents(clearClipboardPreference = S180) {}

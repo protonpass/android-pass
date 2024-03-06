@@ -76,9 +76,7 @@ sealed interface CustomFieldOptionsNavigation {
     object RemoveCustomField : CustomFieldOptionsNavigation
 }
 
-fun NavGraphBuilder.customFieldBottomSheetGraph(
-    onNavigate: (BaseLoginNavigation) -> Unit
-) {
+fun NavGraphBuilder.customFieldBottomSheetGraph(onNavigate: (BaseLoginNavigation) -> Unit) {
     bottomSheet(AddCustomFieldBottomSheet) {
         AddCustomFieldBottomSheet {
             when (it) {

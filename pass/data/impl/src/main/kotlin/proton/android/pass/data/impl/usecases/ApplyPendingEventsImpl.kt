@@ -102,7 +102,7 @@ class ApplyPendingEventsImpl @Inject constructor(
     private suspend fun handleExistingShares(
         userId: UserId,
         addressId: AddressId,
-        refreshSharesResult: RefreshSharesResult,
+        refreshSharesResult: RefreshSharesResult
     ) {
         PassLogger.i(TAG, "Received a list of shares, applying pending events")
         enqueueRefreshItems(refreshSharesResult.newShareIds)
@@ -130,10 +130,7 @@ class ApplyPendingEventsImpl @Inject constructor(
             }
     }
 
-    private suspend fun onShareNotAvailable(
-        userId: UserId,
-        shareId: ShareId
-    ) {
+    private suspend fun onShareNotAvailable(userId: UserId, shareId: ShareId) {
         PassLogger.i(TAG, "Deleting share not available")
         runCatching {
             shareRepository.deleteVault(userId, shareId)
@@ -168,7 +165,7 @@ class ApplyPendingEventsImpl @Inject constructor(
     private suspend fun fetchItemPendingEvent(
         userId: UserId,
         shareId: ShareId,
-        addressId: AddressId,
+        addressId: AddressId
     ): ItemPendingEvent {
         val pendingEventLists = mutableSetOf<PendingEventList>()
         var updateShareEvent: UpdateShareEvent? = null
@@ -189,7 +186,7 @@ class ApplyPendingEventsImpl @Inject constructor(
             addressId = addressId,
             lastEventId = lastEventId,
             updateShareEvent = updateShareEvent,
-            pendingEventLists = pendingEventLists,
+            pendingEventLists = pendingEventLists
         )
     }
 
@@ -209,7 +206,7 @@ class ApplyPendingEventsImpl @Inject constructor(
                         userId = event.userId,
                         addressId = event.addressId,
                         shareId = event.shareId,
-                        eventId = event.lastEventId,
+                        eventId = event.lastEventId
                     )
                 }
             } else {
@@ -217,7 +214,7 @@ class ApplyPendingEventsImpl @Inject constructor(
                     userId = event.userId,
                     addressId = event.addressId,
                     shareId = event.shareId,
-                    eventId = event.lastEventId,
+                    eventId = event.lastEventId
                 )
             }
         }

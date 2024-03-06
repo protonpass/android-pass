@@ -48,11 +48,11 @@ internal fun PassLoginItemDetailCustomFieldsSection(
     itemColors: PassItemColors,
     onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
     onHiddenSectionClick: (HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
-    onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
+    onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         customFields.forEachIndexed { index, customField ->
             RoundedCornersColumn {
@@ -65,9 +65,9 @@ internal fun PassLoginItemDetailCustomFieldsSection(
                         onClick = {
                             onSectionClick(
                                 customField.content,
-                                ItemDetailsFieldType.Plain.CustomField,
+                                ItemDetailsFieldType.Plain.CustomField
                             )
-                        },
+                        }
                     )
 
                     is ItemCustomField.Hidden -> PassItemDetailsHiddenFieldRow(
@@ -80,16 +80,16 @@ internal fun PassLoginItemDetailCustomFieldsSection(
                         onClick = {
                             onHiddenSectionClick(
                                 customField.hiddenState,
-                                ItemDetailsFieldType.Hidden.CustomField(index),
+                                ItemDetailsFieldType.Hidden.CustomField(index)
                             )
                         },
                         onToggle = { isVisible ->
                             onHiddenSectionToggle(
                                 isVisible,
                                 customField.hiddenState,
-                                ItemDetailsFieldType.Hidden.CustomField(index),
+                                ItemDetailsFieldType.Hidden.CustomField(index)
                             )
-                        },
+                        }
                     )
 
                     is ItemCustomField.Totp -> customField.totp?.let { customFieldTotp ->
@@ -101,15 +101,15 @@ internal fun PassLoginItemDetailCustomFieldsSection(
                             onClick = {
                                 onSectionClick(
                                     customFieldTotp.code,
-                                    ItemDetailsFieldType.Plain.TotpCode,
+                                    ItemDetailsFieldType.Plain.TotpCode
                                 )
                             },
                             contentInBetween = {
                                 PassTotpProgress(
                                     remainingSeconds = customFieldTotp.remainingSeconds,
-                                    totalSeconds = customFieldTotp.totalSeconds,
+                                    totalSeconds = customFieldTotp.totalSeconds
                                 )
-                            },
+                            }
                         )
                     }
                 }

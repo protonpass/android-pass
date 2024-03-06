@@ -51,9 +51,7 @@ fun DeleteAccount(modifier: Modifier = Modifier, onDeleteAccountClick: () -> Uni
 
 @Preview
 @Composable
-fun DeleteAccountPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun DeleteAccountPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             DeleteAccount {}

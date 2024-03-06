@@ -31,7 +31,7 @@ import proton.android.pass.log.api.PassLogger
 @Composable
 fun rememberAppNavigator(
     bottomSheetNavigator: PassBottomSheetNavigator,
-    navController: NavHostController = rememberNavController(bottomSheetNavigator),
+    navController: NavHostController = rememberNavController(bottomSheetNavigator)
 ): AppNavigator = remember(navController) { AppNavigator(navController, bottomSheetNavigator) }
 
 @OptIn(ExperimentalMaterialNavigationApi::class)
@@ -43,7 +43,11 @@ class AppNavigator(
     private val previousRoute: String?
         get() = navController.previousBackStackEntry?.destination?.route
 
-    fun navigate(destination: NavItem, route: String? = null, backDestination: NavItem? = null) {
+    fun navigate(
+        destination: NavItem,
+        route: String? = null,
+        backDestination: NavItem? = null
+    ) {
         val destinationRoute = route ?: destination.route
         // Discard duplicated nav events
         if (!lifecycleIsResumed() && destination.navItemType == NavItemType.Screen) {
@@ -111,7 +115,11 @@ class AppNavigator(
         navController.popBackStack()
     }
 
-    fun navigateBackWithResult(key: String, value: Any, comesFromBottomsheet: Boolean = false) {
+    fun navigateBackWithResult(
+        key: String,
+        value: Any,
+        comesFromBottomsheet: Boolean = false
+    ) {
         if (shouldDiscard(comesFromBottomsheet)) return
         PassLogger.i(TAG, "Navigating back with result to $previousRoute")
         navController.previousBackStackEntry

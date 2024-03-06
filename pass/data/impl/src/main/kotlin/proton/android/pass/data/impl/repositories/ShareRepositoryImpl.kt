@@ -87,10 +87,7 @@ class ShareRepositoryImpl @Inject constructor(
     private val shareKeyRepository: ShareKeyRepository
 ) : ShareRepository {
 
-    override suspend fun createVault(
-        userId: SessionUserId,
-        vault: NewVault
-    ): Share {
+    override suspend fun createVault(userId: SessionUserId, vault: NewVault): Share {
         val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
         val user = requireNotNull(userRepository.getUser(userId))
         val userPrimaryKey = requireNotNull(user.keys.primary()?.keyId?.id)
@@ -333,8 +330,7 @@ class ShareRepositoryImpl @Inject constructor(
         localShareDataSource.deleteSharesForUser(userId)
     }
 
-    override fun observeVaultCount(userId: UserId): Flow<Int> =
-        localShareDataSource.observeActiveVaultCount(userId)
+    override fun observeVaultCount(userId: UserId): Flow<Int> = localShareDataSource.observeActiveVaultCount(userId)
 
     override suspend fun leaveVault(userId: UserId, shareId: ShareId) {
         remoteShareDataSource.leaveVault(userId, shareId)
@@ -376,7 +372,7 @@ class ShareRepositoryImpl @Inject constructor(
     private suspend fun onShareResponseEntity(
         userId: UserId,
         event: UpdateShareEvent,
-        block: suspend (ShareResponseEntity) -> Unit,
+        block: suspend (ShareResponseEntity) -> Unit
     ) {
         event.toResponse().let { sharedResponse ->
             userAddressRepository.getAddress(userId, AddressId(sharedResponse.addressId))
@@ -386,42 +382,40 @@ class ShareRepositoryImpl @Inject constructor(
         }
     }
 
-    private suspend fun storeShares(
-        userAddress: UserAddress,
-        shares: List<ShareResponse>,
-    ): List<ShareEntity> = coroutineScope {
-        if (shares.isEmpty()) return@coroutineScope emptyList()
+    private suspend fun storeShares(userAddress: UserAddress, shares: List<ShareResponse>): List<ShareEntity> =
+        coroutineScope {
+            if (shares.isEmpty()) return@coroutineScope emptyList()
 
-        PassLogger.i(TAG, "Fetching ShareKeys for ${shares.size} shares")
-        val entities: List<ShareResponseEntity> = shares.map { response ->
-            async { createShareResponseEntity(response, userAddress) }
-        }.awaitAll()
+            PassLogger.i(TAG, "Fetching ShareKeys for ${shares.size} shares")
+            val entities: List<ShareResponseEntity> = shares.map { response ->
+                async { createShareResponseEntity(response, userAddress) }
+            }.awaitAll()
 
-        val shareEntities = entities.map { shareResponseEntity -> shareResponseEntity.entity }
-        val shareKeyEntities = entities.map { shareResponseEntity -> shareResponseEntity.keys }
-            .flatten()
+            val shareEntities = entities.map { shareResponseEntity -> shareResponseEntity.entity }
+            val shareKeyEntities = entities.map { shareResponseEntity -> shareResponseEntity.keys }
+                .flatten()
 
-        if (shareEntities.isNotEmpty() || shareKeyEntities.isNotEmpty()) {
-            database.inTransaction("storeShares") {
-                // First, store the shares
-                if (shareEntities.isNotEmpty()) {
-                    PassLogger.i(TAG, "Storing ${shareEntities.size} shares")
-                    localShareDataSource.upsertShares(shareEntities)
-                }
-                // Now that we have inserted the shares, we can safely insert the shareKeys
-                if (shareKeyEntities.isNotEmpty()) {
-                    PassLogger.i(TAG, "Storing ${shareKeyEntities.size} ShareKeys")
-                    shareKeyRepository.saveShareKeys(shareKeyEntities)
+            if (shareEntities.isNotEmpty() || shareKeyEntities.isNotEmpty()) {
+                database.inTransaction("storeShares") {
+                    // First, store the shares
+                    if (shareEntities.isNotEmpty()) {
+                        PassLogger.i(TAG, "Storing ${shareEntities.size} shares")
+                        localShareDataSource.upsertShares(shareEntities)
+                    }
+                    // Now that we have inserted the shares, we can safely insert the shareKeys
+                    if (shareKeyEntities.isNotEmpty()) {
+                        PassLogger.i(TAG, "Storing ${shareKeyEntities.size} ShareKeys")
+                        shareKeyRepository.saveShareKeys(shareKeyEntities)
+                    }
                 }
             }
-        }
 
-        shareEntities
-    }
+            shareEntities
+        }
 
     private suspend fun createShareResponseEntity(
         shareResponse: ShareResponse,
-        userAddress: UserAddress,
+        userAddress: UserAddress
     ): ShareResponseEntity {
         val shareId = ShareId(shareResponse.shareId)
 
@@ -461,10 +455,7 @@ class ShareRepositoryImpl @Inject constructor(
         )
     }
 
-    private fun getEncryptionKey(
-        keyRotation: Long?,
-        keys: List<ShareKey>
-    ): EncryptionKeyStatus {
+    private fun getEncryptionKey(keyRotation: Long?, keys: List<ShareKey>): EncryptionKeyStatus {
         if (keyRotation == null) return EncryptionKeyStatus.NotFound
 
         val encryptionKey =
@@ -519,10 +510,7 @@ class ShareRepositoryImpl @Inject constructor(
         )
     }
 
-    private fun shareEntityToShare(
-        entity: ShareEntity,
-        encryptionContext: EncryptionContext
-    ): Share {
+    private fun shareEntityToShare(entity: ShareEntity, encryptionContext: EncryptionContext): Share {
         val shareType = ShareType.map[entity.targetType]
         if (shareType == null) {
             val e = IllegalStateException("Unknown ShareType")
@@ -586,10 +574,7 @@ class ShareRepositoryImpl @Inject constructor(
             .build()
     }
 
-    private fun localShareNeedsUpdate(
-        localShare: ShareEntity,
-        remoteShare: ShareResponse
-    ): Boolean = when {
+    private fun localShareNeedsUpdate(localShare: ShareEntity, remoteShare: ShareResponse): Boolean = when {
         localShare.owner != remoteShare.owner -> true
         localShare.shareRoleId != remoteShare.shareRoleId -> true
         localShare.permission != remoteShare.permission -> true
@@ -603,10 +588,7 @@ class ShareRepositoryImpl @Inject constructor(
         else -> false
     }
 
-    private fun updateEntityWithResponse(
-        entity: ShareEntity,
-        response: ShareResponse
-    ): ShareEntity = entity.copy(
+    private fun updateEntityWithResponse(entity: ShareEntity, response: ShareResponse): ShareEntity = entity.copy(
         owner = response.owner,
         shareRoleId = response.shareRoleId,
         targetMembers = response.targetMembers,
@@ -622,7 +604,7 @@ class ShareRepositoryImpl @Inject constructor(
     internal data class ShareResponseEntity(
         val response: ShareResponse,
         val entity: ShareEntity,
-        val keys: List<ShareKeyEntity>,
+        val keys: List<ShareKeyEntity>
     )
 
     internal sealed interface EncryptionKeyStatus {

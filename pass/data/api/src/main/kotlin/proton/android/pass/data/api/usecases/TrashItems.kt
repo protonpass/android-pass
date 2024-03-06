@@ -23,8 +23,5 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
 interface TrashItems {
-    suspend operator fun invoke(
-        userId: UserId? = null,
-        items: Map<ShareId, List<ItemId>>
-    )
+    suspend operator fun invoke(userId: UserId? = null, items: Map<ShareId, List<ItemId>>)
 }

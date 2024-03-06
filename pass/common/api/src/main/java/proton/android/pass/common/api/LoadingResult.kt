@@ -33,12 +33,11 @@ sealed interface LoadingResult<out T> {
     object Loading : LoadingResult<Nothing>
 }
 
-inline fun <R, T> LoadingResult<T>.map(transform: (value: T) -> R): LoadingResult<R> =
-    when (this) {
-        is LoadingResult.Success -> LoadingResult.Success(transform(data))
-        is LoadingResult.Error -> LoadingResult.Error(exception)
-        LoadingResult.Loading -> LoadingResult.Loading
-    }
+inline fun <R, T> LoadingResult<T>.map(transform: (value: T) -> R): LoadingResult<R> = when (this) {
+    is LoadingResult.Success -> LoadingResult.Success(transform(data))
+    is LoadingResult.Error -> LoadingResult.Error(exception)
+    LoadingResult.Loading -> LoadingResult.Loading
+}
 
 inline fun <T> LoadingResult<T>.onError(action: (exception: Throwable) -> Unit): LoadingResult<T> {
     if (this is LoadingResult.Error) {
@@ -65,33 +64,29 @@ fun <T> LoadingResult<T>.logError(
     return this
 }
 
-inline fun <R, T> LoadingResult<T>.flatMap(transform: (value: T) -> LoadingResult<R>): LoadingResult<R> =
-    when (this) {
-        is LoadingResult.Success -> transform(data)
-        is LoadingResult.Error -> LoadingResult.Error(exception)
-        LoadingResult.Loading -> LoadingResult.Loading
+inline fun <R, T> LoadingResult<T>.flatMap(transform: (value: T) -> LoadingResult<R>): LoadingResult<R> = when (this) {
+    is LoadingResult.Success -> transform(data)
+    is LoadingResult.Error -> LoadingResult.Error(exception)
+    LoadingResult.Loading -> LoadingResult.Loading
+}
+
+
+fun <T> LoadingResult<T>.getOrNull(): T? = when (this) {
+    is LoadingResult.Error -> null
+    is LoadingResult.Loading -> null
+    is LoadingResult.Success -> this.data
+}
+
+fun <T> Flow<T>.asLoadingResult(): Flow<LoadingResult<T>> = this
+    .asResultWithoutLoading()
+    .onStart { emit(LoadingResult.Loading) }
+
+
+fun <T> Flow<T>.asResultWithoutLoading(): Flow<LoadingResult<T>> = this
+    .map<T, LoadingResult<T>> {
+        LoadingResult.Success(it)
     }
-
-
-fun <T> LoadingResult<T>.getOrNull(): T? =
-    when (this) {
-        is LoadingResult.Error -> null
-        is LoadingResult.Loading -> null
-        is LoadingResult.Success -> this.data
-    }
-
-fun <T> Flow<T>.asLoadingResult(): Flow<LoadingResult<T>> =
-    this
-        .asResultWithoutLoading()
-        .onStart { emit(LoadingResult.Loading) }
-
-
-fun <T> Flow<T>.asResultWithoutLoading(): Flow<LoadingResult<T>> =
-    this
-        .map<T, LoadingResult<T>> {
-            LoadingResult.Success(it)
-        }
-        .catch { emit(LoadingResult.Error(it)) }
+    .catch { emit(LoadingResult.Error(it)) }
 
 fun <T> List<LoadingResult<T>>.transpose(): LoadingResult<List<T>> {
     val anyError = this.firstOrNull { it is LoadingResult.Error }
@@ -109,12 +104,11 @@ fun <T> List<LoadingResult<T>>.transpose(): LoadingResult<List<T>> {
 }
 
 @Suppress("TooGenericExceptionCaught")
-fun <T> ApiResult<T>.toLoadingResult(): LoadingResult<T> =
-    try {
-        LoadingResult.Success(valueOrThrow)
-    } catch (e: Throwable) {
-        LoadingResult.Error(e)
-    }
+fun <T> ApiResult<T>.toLoadingResult(): LoadingResult<T> = try {
+    LoadingResult.Success(valueOrThrow)
+} catch (e: Throwable) {
+    LoadingResult.Error(e)
+}
 
 fun <T> T?.toLoadingResult(): LoadingResult<T> =
     this?.let { LoadingResult.Success(it) } ?: LoadingResult.Error(KotlinNullPointerException())

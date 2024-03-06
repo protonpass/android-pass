@@ -36,9 +36,7 @@ object VaultOptionsBottomSheet : NavItem(
     }
 }
 
-internal fun NavGraphBuilder.bottomSheetVaultOptionsGraph(
-    onNavigate: (VaultNavigation) -> Unit
-) {
+internal fun NavGraphBuilder.bottomSheetVaultOptionsGraph(onNavigate: (VaultNavigation) -> Unit) {
     bottomSheet(VaultOptionsBottomSheet) {
         VaultOptionsBottomSheet(onNavigate = onNavigate)
     }

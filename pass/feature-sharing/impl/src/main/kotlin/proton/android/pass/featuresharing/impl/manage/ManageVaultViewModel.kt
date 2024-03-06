@@ -118,7 +118,7 @@ class ManageVaultViewModel @Inject constructor(
         canEditFlow,
         eventFlow,
         invitesBeingConfirmedFlow.distinctUntilChanged(),
-        getUserPlan(),
+        getUserPlan()
     ) { vaultMembers,
         vault,
         showShareButton,
@@ -152,7 +152,7 @@ class ManageVaultViewModel @Inject constructor(
                 }
                 ShareOptions.Show(
                     enableButton = true,
-                    subtitle = subtitle,
+                    subtitle = subtitle
                 )
             }
 
@@ -167,7 +167,7 @@ class ManageVaultViewModel @Inject constructor(
 
                         ShareOptions.Show(
                             enableButton = false,
-                            subtitle = subtitle,
+                            subtitle = subtitle
                         )
                     }
 

@@ -46,7 +46,7 @@ fun UpgradeDialog(
     PassTheme(isDark = isSystemInDarkTheme()) {
         NoPaddingDialog(
             modifier = modifier,
-            onDismissRequest = onClose,
+            onDismissRequest = onClose
         ) {
             Column(
                 modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp),

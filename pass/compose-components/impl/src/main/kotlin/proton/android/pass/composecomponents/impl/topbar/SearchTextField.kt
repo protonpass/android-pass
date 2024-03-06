@@ -55,7 +55,7 @@ fun SearchTextField(
     trailingIcon: @Composable (() -> Unit)? = null,
     onSearchQueryChange: (String) -> Unit,
     onEnterSearch: () -> Unit,
-    onStopSearch: () -> Unit,
+    onStopSearch: () -> Unit
 ) {
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current

@@ -75,36 +75,32 @@ private fun selectItems(onNavigateEvent: (SearchOptionsNavigation) -> Unit): Bot
 private fun filtering(
     state: SearchOptionsUIState,
     onNavigateEvent: (SearchOptionsNavigation) -> Unit
-): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = { BottomSheetItemTitle(text = stringResource(R.string.show)) }
-        override val subtitle: (@Composable () -> Unit)
-            get() = {
-                (state as? SuccessSearchOptionsUIState)?.let {
-                    val title = when (it.filterType) {
-                        SearchFilterType.All -> stringResource(id = R.string.item_type_filter_all)
-                        SearchFilterType.Login -> stringResource(id = R.string.item_type_filter_login)
-                        SearchFilterType.Alias -> stringResource(id = R.string.item_type_filter_alias)
-                        SearchFilterType.Note -> stringResource(id = R.string.item_type_filter_note)
-                        SearchFilterType.CreditCard -> stringResource(id = R.string.item_type_filter_credit_card)
-                    }
-                    BottomSheetItemSubtitle(text = "$title (${it.count})")
+): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = { BottomSheetItemTitle(text = stringResource(R.string.show)) }
+    override val subtitle: (@Composable () -> Unit)
+        get() = {
+            (state as? SuccessSearchOptionsUIState)?.let {
+                val title = when (it.filterType) {
+                    SearchFilterType.All -> stringResource(id = R.string.item_type_filter_all)
+                    SearchFilterType.Login -> stringResource(id = R.string.item_type_filter_login)
+                    SearchFilterType.Alias -> stringResource(id = R.string.item_type_filter_alias)
+                    SearchFilterType.Note -> stringResource(id = R.string.item_type_filter_note)
+                    SearchFilterType.CreditCard -> stringResource(id = R.string.item_type_filter_credit_card)
                 }
+                BottomSheetItemSubtitle(text = "$title (${it.count})")
             }
-        override val leftIcon: (@Composable () -> Unit)
-            get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_filter) }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: () -> Unit
-            get() = { onNavigateEvent(SearchOptionsNavigation.Filter) }
-        override val isDivider = false
-    }
+        }
+    override val leftIcon: (@Composable () -> Unit)
+        get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_filter) }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
+    override val onClick: () -> Unit
+        get() = { onNavigateEvent(SearchOptionsNavigation.Filter) }
+    override val isDivider = false
+}
 
-private fun sorting(
-    state: SearchOptionsUIState,
-    onNavigateEvent: (SearchOptionsNavigation) -> Unit
-): BottomSheetItem =
+private fun sorting(state: SearchOptionsUIState, onNavigateEvent: (SearchOptionsNavigation) -> Unit): BottomSheetItem =
     object : BottomSheetItem {
         override val title: @Composable () -> Unit
             get() = { BottomSheetItemTitle(text = stringResource(R.string.sort_by)) }
@@ -143,9 +139,7 @@ private fun sorting(
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
-fun SearchOptionsBottomSheetContentsPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun SearchOptionsBottomSheetContentsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             SearchOptionsBottomSheetContents(

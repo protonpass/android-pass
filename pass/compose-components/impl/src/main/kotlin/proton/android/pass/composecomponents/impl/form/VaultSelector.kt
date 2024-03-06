@@ -66,7 +66,7 @@ fun VaultSelector(
         VaultIcon(
             iconColor = color.toColor(),
             backgroundColor = color.toColor(true),
-            icon = icon.toResource(),
+            icon = icon.toResource()
         )
         Column(
             modifier = Modifier.weight(1f)
@@ -78,7 +78,7 @@ fun VaultSelector(
             )
             Text(
                 text = vaultName,
-                color = PassTheme.colors.textNorm,
+                color = PassTheme.colors.textNorm
             )
         }
         IconButton(onClick = onVaultClicked) {
@@ -89,9 +89,7 @@ fun VaultSelector(
 
 @Preview
 @Composable
-fun VaultSelectorPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun VaultSelectorPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             VaultSelector(

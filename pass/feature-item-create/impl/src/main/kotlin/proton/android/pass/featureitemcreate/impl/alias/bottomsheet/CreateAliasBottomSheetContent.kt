@@ -190,9 +190,7 @@ fun CreateAliasBottomSheetContent(
 
 @Preview
 @Composable
-fun CreateAliasBottomSheetContentPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun CreateAliasBottomSheetContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             CreateAliasBottomSheetContent(
@@ -248,7 +246,7 @@ fun CreateAliasBottomSheetContentPreview(
                                 email = "other.mailbox@test.local"
                             ),
                             selected = false
-                        ),
+                        )
                     )
                 ),
                 showAdvancedOptionsInitially = true,

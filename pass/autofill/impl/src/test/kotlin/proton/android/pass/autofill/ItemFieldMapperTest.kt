@@ -130,10 +130,7 @@ class ItemFieldMapperTest {
         assertThat(res.mappings).isEqualTo(listOf(expectedUsername, expectedPassword))
     }
 
-    private fun field(
-        id: AutofillFieldId,
-        type: FieldType,
-    ) = AssistField(
+    private fun field(id: AutofillFieldId, type: FieldType) = AssistField(
         id = id,
         type = type,
         value = null,
@@ -147,12 +144,12 @@ class ItemFieldMapperTest {
         itemId: String = "ItemID-123",
         shareId: String = "ShareId-123",
         username: String = "username",
-        password: String = TestEncryptionContext.encrypt("password"),
+        password: String = TestEncryptionContext.encrypt("password")
     ) = AutofillItem.Login(
         itemId = itemId,
         shareId = shareId,
         username = username,
         password = password,
-        totp = "",
+        totp = ""
     )
 }

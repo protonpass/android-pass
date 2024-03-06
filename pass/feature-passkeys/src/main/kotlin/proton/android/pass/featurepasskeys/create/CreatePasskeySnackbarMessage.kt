@@ -28,5 +28,5 @@ enum class CreatePasskeySnackbarMessage(
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
 ) : SnackbarMessage {
-    ErrorGeneratingPasskey(R.string.passkey_error_generating_passkey, SnackbarType.ERROR),
+    ErrorGeneratingPasskey(R.string.passkey_error_generating_passkey, SnackbarType.ERROR)
 }

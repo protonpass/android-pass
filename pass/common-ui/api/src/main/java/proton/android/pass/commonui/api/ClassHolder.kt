@@ -25,9 +25,8 @@ import proton.android.pass.common.api.toOption
 import java.lang.ref.WeakReference
 
 class ClassHolder<T>(private val context: Option<WeakReference<T>>) {
-    fun get(): Option<T> =
-        when (val ctx = context) {
-            None -> None
-            is Some -> ctx.value.get().toOption()
-        }
+    fun get(): Option<T> = when (val ctx = context) {
+        None -> None
+        is Some -> ctx.value.get().toOption()
+    }
 }

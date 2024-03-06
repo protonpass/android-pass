@@ -244,7 +244,7 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         share: Share,
         item: Item,
-        contents: ItemContents,
+        contents: ItemContents
     ): Item {
         val localEntity = localItemDataSource.getById(share.id, item.id)
             ?: throw IllegalStateException("Item not found in local database")
@@ -258,7 +258,7 @@ class ItemRepositoryImpl @Inject constructor(
             contents.serializeToProto(
                 itemUuid = item.itemUuid,
                 builder = decodedProto.toBuilder(),
-                encryptionContext = this,
+                encryptionContext = this
             )
         }
 
@@ -266,7 +266,7 @@ class ItemRepositoryImpl @Inject constructor(
             userId,
             share,
             item,
-            itemContents,
+            itemContents
         )
     }
 
@@ -275,37 +275,36 @@ class ItemRepositoryImpl @Inject constructor(
         shareSelection: ShareSelection,
         itemState: ItemState?,
         itemTypeFilter: ItemTypeFilter
-    ): Flow<List<Item>> =
-        when (shareSelection) {
-            is ShareSelection.Share -> localItemDataSource.observeItemsForShares(
-                userId = userId,
-                shareIds = listOf(shareSelection.shareId),
-                itemState = itemState,
-                filter = itemTypeFilter
-            )
+    ): Flow<List<Item>> = when (shareSelection) {
+        is ShareSelection.Share -> localItemDataSource.observeItemsForShares(
+            userId = userId,
+            shareIds = listOf(shareSelection.shareId),
+            itemState = itemState,
+            filter = itemTypeFilter
+        )
 
-            is ShareSelection.Shares -> localItemDataSource.observeItemsForShares(
-                userId = userId,
-                shareIds = shareSelection.shareIds,
-                itemState = itemState,
-                filter = itemTypeFilter
-            )
+        is ShareSelection.Shares -> localItemDataSource.observeItemsForShares(
+            userId = userId,
+            shareIds = shareSelection.shareIds,
+            itemState = itemState,
+            filter = itemTypeFilter
+        )
 
-            is ShareSelection.AllShares -> localItemDataSource.observeItems(
-                userId = userId,
-                itemState = itemState,
-                filter = itemTypeFilter
-            )
-        }
-            .map { items ->
-                // Detect if we have received the update from a logout
-                val isAccountStillAvailable = accountManager.getAccount(userId).first() != null
-                if (!isAccountStillAvailable) return@map emptyList()
-                encryptionContextProvider.withEncryptionContext {
-                    items.map { it.toDomain(this@withEncryptionContext) }
-                }
+        is ShareSelection.AllShares -> localItemDataSource.observeItems(
+            userId = userId,
+            itemState = itemState,
+            filter = itemTypeFilter
+        )
+    }
+        .map { items ->
+            // Detect if we have received the update from a logout
+            val isAccountStillAvailable = accountManager.getAccount(userId).first() != null
+            if (!isAccountStillAvailable) return@map emptyList()
+            encryptionContextProvider.withEncryptionContext {
+                items.map { it.toDomain(this@withEncryptionContext) }
             }
-            .flowOn(Dispatchers.IO)
+        }
+        .flowOn(Dispatchers.IO)
 
     override fun observePinnedItems(
         userId: UserId,
@@ -336,27 +335,21 @@ class ItemRepositoryImpl @Inject constructor(
         }
         .flowOn(Dispatchers.IO)
 
-    override fun observeById(
-        shareId: ShareId,
-        itemId: ItemId,
-    ): Flow<Item> = localItemDataSource.observeItem(shareId, itemId)
-        .map { itemEntity ->
-            encryptionContextProvider.withEncryptionContext {
-                itemEntity.toDomain(this@withEncryptionContext)
+    override fun observeById(shareId: ShareId, itemId: ItemId): Flow<Item> =
+        localItemDataSource.observeItem(shareId, itemId)
+            .map { itemEntity ->
+                encryptionContextProvider.withEncryptionContext {
+                    itemEntity.toDomain(this@withEncryptionContext)
+                }
             }
-        }
 
-    override suspend fun getById(
-        shareId: ShareId,
-        itemId: ItemId
-    ): Item =
-        withContext(Dispatchers.IO) {
-            val item = localItemDataSource.getById(shareId, itemId)
-            requireNotNull(item) { "Item not found [shareId=${shareId.id}] [itemId=${itemId.id}]" }
-            encryptionContextProvider.withEncryptionContext {
-                item.toDomain(this@withEncryptionContext)
-            }
+    override suspend fun getById(shareId: ShareId, itemId: ItemId): Item = withContext(Dispatchers.IO) {
+        val item = localItemDataSource.getById(shareId, itemId)
+        requireNotNull(item) { "Item not found [shareId=${shareId.id}] [itemId=${itemId.id}]" }
+        encryptionContextProvider.withEncryptionContext {
+            item.toDomain(this@withEncryptionContext)
         }
+    }
 
     override suspend fun trashItems(userId: UserId, items: Map<ShareId, List<ItemId>>) {
         withContext(Dispatchers.IO) {
@@ -486,10 +479,7 @@ class ItemRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun deleteItems(
-        userId: UserId,
-        items: Map<ShareId, List<ItemId>>
-    ) {
+    override suspend fun deleteItems(userId: UserId, items: Map<ShareId, List<ItemId>>) {
         withContext(Dispatchers.IO) {
             val results = items.map { entry ->
                 async { deleteItemsForShare(userId, entry.key, entry.value) }
@@ -698,7 +688,7 @@ class ItemRepositoryImpl @Inject constructor(
                 userAddress,
                 pendingItemRevision.toItemRevision().toDomain(),
                 share,
-                shareKeys,
+                shareKeys
             )
         }.let { items -> localItemDataSource.upsertItems(items) }
     }
@@ -712,10 +702,9 @@ class ItemRepositoryImpl @Inject constructor(
     override fun observeItemCountSummary(
         userId: UserId,
         shareIds: List<ShareId>,
-        itemState: ItemState?,
-    ): Flow<ItemCountSummary> =
-        localItemDataSource.observeItemCountSummary(userId, shareIds, itemState)
-            .flowOn(Dispatchers.IO)
+        itemState: ItemState?
+    ): Flow<ItemCountSummary> = localItemDataSource.observeItemCountSummary(userId, shareIds, itemState)
+        .flowOn(Dispatchers.IO)
 
     override suspend fun updateItemLastUsed(shareId: ShareId, itemId: ItemId) {
         withContext(Dispatchers.IO) {
@@ -827,13 +816,11 @@ class ItemRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun pinItems(
-        items: List<Pair<ShareId, ItemId>>
-    ): PinItemsResult = handleItemPinning(items, remoteItemDataSource::pinItem)
+    override suspend fun pinItems(items: List<Pair<ShareId, ItemId>>): PinItemsResult =
+        handleItemPinning(items, remoteItemDataSource::pinItem)
 
-    override suspend fun unpinItems(
-        items: List<Pair<ShareId, ItemId>>
-    ): PinItemsResult = handleItemPinning(items, remoteItemDataSource::unpinItem)
+    override suspend fun unpinItems(items: List<Pair<ShareId, ItemId>>): PinItemsResult =
+        handleItemPinning(items, remoteItemDataSource::unpinItem)
 
     override suspend fun addPasskeyToItem(
         userId: UserId,
@@ -862,7 +849,7 @@ class ItemRepositoryImpl @Inject constructor(
 
     private suspend fun handleItemPinning(
         items: List<Pair<ShareId, ItemId>>,
-        block: suspend (userId: UserId, shareId: ShareId, itemId: ItemId) -> ItemRevision,
+        block: suspend (userId: UserId, shareId: ShareId, itemId: ItemId) -> ItemRevision
     ): PinItemsResult = withContext(Dispatchers.IO) {
         val userId = requireNotNull(accountManager.getPrimaryUserId().first())
 
@@ -955,19 +942,19 @@ class ItemRepositoryImpl @Inject constructor(
     override suspend fun getItemRevisions(
         userId: UserId,
         shareId: ShareId,
-        itemId: ItemId,
+        itemId: ItemId
     ) = remoteItemDataSource.fetchItemRevisions(userId, shareId, itemId)
 
     private suspend fun createItemEntity(
         userId: UserId,
         itemRevision: ItemRevision,
-        share: Share,
+        share: Share
     ) = withUserAddress(userId) { userAddress ->
         itemResponseToEntity(
             userAddress,
             itemRevision,
             share,
-            listOf(shareKeyRepository.getLatestKeyForShare(share.id).first()),
+            listOf(shareKeyRepository.getLatestKeyForShare(share.id).first())
         )
     }
 

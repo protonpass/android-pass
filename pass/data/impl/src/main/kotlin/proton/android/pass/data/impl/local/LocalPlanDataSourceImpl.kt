@@ -31,8 +31,7 @@ class LocalPlanDataSourceImpl @Inject constructor(
     private val clock: Clock
 ) : LocalPlanDataSource {
 
-    override fun observePlan(userId: UserId): Flow<PlanEntity> =
-        database.planDao().observeUserPlan(userId.id)
+    override fun observePlan(userId: UserId): Flow<PlanEntity> = database.planDao().observeUserPlan(userId.id)
 
     override suspend fun storePlan(userId: UserId, planResponse: PlanResponse) {
         val entity = PlanEntity(

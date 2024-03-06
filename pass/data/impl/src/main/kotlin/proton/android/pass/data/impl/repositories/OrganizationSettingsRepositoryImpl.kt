@@ -34,8 +34,7 @@ class OrganizationSettingsRepositoryImpl @Inject constructor(
     private val local: LocalOrganizationSettingsDataSource,
     private val remote: RemoteOrganizationSettingsDataSource
 ) : OrganizationSettingsRepository {
-    override fun observe(userId: UserId): Flow<OrganizationSettings?> =
-        local.observe(userId).map { it?.toDomain() }
+    override fun observe(userId: UserId): Flow<OrganizationSettings?> = local.observe(userId).map { it?.toDomain() }
 
     override suspend fun refresh(userId: UserId) {
         val response = remote.request(userId)

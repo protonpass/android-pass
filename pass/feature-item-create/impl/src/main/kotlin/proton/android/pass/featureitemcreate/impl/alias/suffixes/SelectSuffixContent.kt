@@ -93,7 +93,7 @@ fun SelectSuffixContent(
                     .fillMaxWidth()
                     .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Text(
                     text = stringResource(R.string.select_suffix_upgrade_for_custom_domains),
@@ -120,9 +120,7 @@ fun SelectSuffixContent(
 
 @Preview
 @Composable
-fun SelectSuffixContentPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
+fun SelectSuffixContentPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
     val selected = AliasSuffixUiModel(
         suffix = ".some@suffix.test",
         signedSuffix = "",

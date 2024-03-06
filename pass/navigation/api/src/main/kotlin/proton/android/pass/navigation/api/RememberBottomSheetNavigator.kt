@@ -26,11 +26,9 @@ import com.google.accompanist.navigation.material.ExperimentalMaterialNavigation
 
 @OptIn(
     ExperimentalMaterialApi::class,
-    ExperimentalMaterialNavigationApi::class,
+    ExperimentalMaterialNavigationApi::class
 )
 @Composable
-fun rememberBottomSheetNavigator(
-    sheetState: ModalBottomSheetState,
-): PassBottomSheetNavigator = remember(sheetState) {
+fun rememberBottomSheetNavigator(sheetState: ModalBottomSheetState): PassBottomSheetNavigator = remember(sheetState) {
     PassBottomSheetNavigator(sheetState = sheetState)
 }

@@ -43,7 +43,7 @@ fun CreateCreditCardScreen(
     modifier: Modifier = Modifier,
     selectVault: ShareId?,
     viewModel: CreateCreditCardViewModel = hiltViewModel(),
-    onNavigate: (BaseCreditCardNavigation) -> Unit,
+    onNavigate: (BaseCreditCardNavigation) -> Unit
 ) {
     LaunchedEffect(selectVault) {
         if (selectVault != null) {
@@ -170,7 +170,7 @@ fun CreateCreditCardScreen(
                 }
             )
             InAppReviewTriggerLaunchedEffect(
-                triggerCondition = uiState.baseState.isItemSaved is ItemSavedState.Success,
+                triggerCondition = uiState.baseState.isItemSaved is ItemSavedState.Success
             )
         }
     }

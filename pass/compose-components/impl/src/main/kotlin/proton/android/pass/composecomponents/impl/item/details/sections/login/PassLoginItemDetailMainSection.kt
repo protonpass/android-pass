@@ -32,6 +32,7 @@ import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.item.PassPasswordStrengthItem
+import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailFieldRow
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailMaskedFieldRow
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailsHiddenFieldRow
@@ -51,9 +52,7 @@ internal fun PassLoginItemDetailMainSection(
     passwordStrength: PasswordStrength,
     primaryTotp: Totp?,
     itemColors: PassItemColors,
-    onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
-    onHiddenSectionClick: (HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
-    onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit
+    onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
     val sections = mutableListOf<@Composable (() -> Unit)?>()
 
@@ -63,7 +62,14 @@ internal fun PassLoginItemDetailMainSection(
             title = stringResource(R.string.item_details_login_section_username_title),
             subtitle = username,
             itemColors = itemColors,
-            onClick = { onSectionClick(username, ItemDetailsFieldType.Plain.Username) }
+            onClick = {
+                onEvent(
+                    PassItemDetailsUiEvent.OnSectionClick(
+                        section = username,
+                        field = ItemDetailsFieldType.Plain.Username
+                    )
+                )
+            }
         ).takeIf { username.isNotBlank() }
     }
 
@@ -77,9 +83,22 @@ internal fun PassLoginItemDetailMainSection(
             itemColors = itemColors,
             hiddenTextStyle = ProtonTheme.typography.defaultNorm
                 .copy(fontFamily = FontFamily.Monospace),
-            onClick = { onHiddenSectionClick(password, ItemDetailsFieldType.Hidden.Password) },
+            onClick = {
+                onEvent(
+                    PassItemDetailsUiEvent.OnHiddenSectionClick(
+                        state = password,
+                        field = ItemDetailsFieldType.Hidden.Password
+                    )
+                )
+            },
             onToggle = { isVisible ->
-                onHiddenSectionToggle(isVisible, password, ItemDetailsFieldType.Hidden.Password)
+                onEvent(
+                    PassItemDetailsUiEvent.OnHiddenSectionToggle(
+                        state = isVisible,
+                        hiddenState = password,
+                        field = ItemDetailsFieldType.Hidden.Password
+                    )
+                )
             },
             contentInBetween = { PassPasswordStrengthItem(passwordStrength = passwordStrength) }
         ).takeIf { password !is HiddenState.Empty }
@@ -92,7 +111,14 @@ internal fun PassLoginItemDetailMainSection(
                 title = stringResource(R.string.item_details_login_section_primary_totp_title),
                 maskedSubtitle = TextMask.TotpCode(totp.code),
                 itemColors = itemColors,
-                onClick = { onSectionClick(totp.code, ItemDetailsFieldType.Plain.TotpCode) },
+                onClick = {
+                    onEvent(
+                        PassItemDetailsUiEvent.OnSectionClick(
+                            section = totp.code,
+                            field = ItemDetailsFieldType.Plain.TotpCode
+                        )
+                    )
+                },
                 contentInBetween = {
                     PassTotpProgress(
                         remainingSeconds = totp.remainingSeconds,

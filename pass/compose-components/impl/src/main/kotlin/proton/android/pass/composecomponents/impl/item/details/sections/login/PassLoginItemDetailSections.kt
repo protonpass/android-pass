@@ -26,10 +26,11 @@ import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.common.api.PasswordStrength
-import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
+import proton.android.pass.commonuimodels.api.UIPasskeyContent
+import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
+import proton.android.pass.composecomponents.impl.item.details.sections.login.passkeys.PasskeysSection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassSharedItemDetailNoteSection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
-import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Totp
 import proton.android.pass.domain.items.ItemCustomField
@@ -41,33 +42,38 @@ internal fun PassLoginItemDetailSections(
     passwordStrength: PasswordStrength,
     primaryTotp: Totp?,
     customFields: ImmutableList<ItemCustomField>,
+    passkeys: ImmutableList<UIPasskeyContent>,
     itemColors: PassItemColors,
-    onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
-    onHiddenSectionClick: (HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
-    onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
-    onLinkClick: (String) -> Unit
+    onEvent: (PassItemDetailsUiEvent) -> Unit
 ) = with(contents) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
+
+        if (passkeys.isNotEmpty()) {
+            PasskeysSection(
+                passkeys = passkeys,
+                onSelected = {
+                    onEvent(PassItemDetailsUiEvent.OnPasskeyClick(it))
+                }
+            )
+        }
+
         PassLoginItemDetailMainSection(
             username = username,
             password = password,
             passwordStrength = passwordStrength,
             primaryTotp = primaryTotp,
             itemColors = itemColors,
-            onSectionClick = onSectionClick,
-            onHiddenSectionClick = onHiddenSectionClick,
-            onHiddenSectionToggle = onHiddenSectionToggle
+            onEvent = onEvent
         )
 
         if (urls.isNotEmpty()) {
             PassLoginItemDetailWebsitesSection(
                 websiteUrls = urls.toPersistentList(),
                 itemColors = itemColors,
-                onSectionClick = onSectionClick,
-                onLinkClick = onLinkClick
+                onEvent = onEvent
             )
         }
 
@@ -82,9 +88,7 @@ internal fun PassLoginItemDetailSections(
             PassLoginItemDetailCustomFieldsSection(
                 customFields = customFields,
                 itemColors = itemColors,
-                onSectionClick = onSectionClick,
-                onHiddenSectionClick = onHiddenSectionClick,
-                onHiddenSectionToggle = onHiddenSectionToggle
+                onEvent = onEvent
             )
         }
     }

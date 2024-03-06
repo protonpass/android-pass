@@ -41,6 +41,7 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.item.SectionTitle
+import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import me.proton.core.presentation.R as CoreR
 
@@ -49,8 +50,7 @@ internal fun PassLoginItemDetailWebsitesSection(
     modifier: Modifier = Modifier,
     websiteUrls: ImmutableList<String>,
     itemColors: PassItemColors,
-    onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
-    onLinkClick: (String) -> Unit
+    onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
     RoundedCornersColumn(
         modifier = modifier.fillMaxWidth()
@@ -74,9 +74,14 @@ internal fun PassLoginItemDetailWebsitesSection(
                 websiteUrls.forEach { websiteUrl ->
                     PassWebsiteLinkText(
                         websiteUrl = websiteUrl,
-                        onClick = { onLinkClick(websiteUrl) },
+                        onClick = { onEvent(PassItemDetailsUiEvent.OnLinkClick(websiteUrl)) },
                         onLongClick = {
-                            onSectionClick(websiteUrl, ItemDetailsFieldType.Plain.Website)
+                            onEvent(
+                                PassItemDetailsUiEvent.OnSectionClick(
+                                    section = websiteUrl,
+                                    field = ItemDetailsFieldType.Plain.Website
+                                )
+                            )
                         },
                         itemColors = itemColors
                     )

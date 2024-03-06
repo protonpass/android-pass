@@ -30,28 +30,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsContent
+import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.utils.passItemColors
-import proton.android.pass.domain.HiddenState
-import proton.android.pass.domain.ItemContents
 import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestination
+import proton.android.pass.features.item.history.restore.ItemHistoryRestoreUiEvent
 import proton.android.pass.features.item.history.restore.presentation.ItemHistoryRestoreEvent
 import proton.android.pass.features.item.history.restore.presentation.ItemHistoryRestoreState
 
 @Composable
 internal fun ItemHistoryRestoreContent(
     modifier: Modifier = Modifier,
+    state: ItemHistoryRestoreState,
     onNavigated: (ItemHistoryNavDestination) -> Unit,
-    onEventConsumed: (ItemHistoryRestoreEvent) -> Unit,
-    onRestoreClick: () -> Unit,
-    onRestoreConfirmClick: (ItemContents) -> Unit,
-    onRestoreCancelClick: () -> Unit,
-    onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
-    onHiddenSectionClick: (HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
-    onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
-    state: ItemHistoryRestoreState
+    onEvent: (ItemHistoryRestoreUiEvent) -> Unit
 ) {
     when (state) {
         ItemHistoryRestoreState.Initial -> {
@@ -62,13 +55,7 @@ internal fun ItemHistoryRestoreContent(
             ItemHistoryRestoreDetails(
                 modifier = modifier,
                 onNavigated = onNavigated,
-                onEventConsumed = onEventConsumed,
-                onRestoreClick = onRestoreClick,
-                onRestoreConfirmClick = onRestoreConfirmClick,
-                onRestoreCancelClick = onRestoreCancelClick,
-                onSectionClick = onSectionClick,
-                onHiddenSectionClick = onHiddenSectionClick,
-                onHiddenSectionToggle = onHiddenSectionToggle,
+                onEvent = onEvent,
                 state = state
             )
         }
@@ -89,13 +76,7 @@ private fun ItemHistoryRestoreLoading(modifier: Modifier = Modifier) {
 private fun ItemHistoryRestoreDetails(
     modifier: Modifier = Modifier,
     onNavigated: (ItemHistoryNavDestination) -> Unit,
-    onEventConsumed: (ItemHistoryRestoreEvent) -> Unit,
-    onRestoreClick: () -> Unit,
-    onRestoreConfirmClick: (ItemContents) -> Unit,
-    onRestoreCancelClick: () -> Unit,
-    onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
-    onHiddenSectionClick: (HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
-    onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
+    onEvent: (ItemHistoryRestoreUiEvent) -> Unit,
     state: ItemHistoryRestoreState.ItemDetails
 ) = with(state) {
     var isDialogVisible by remember { mutableStateOf(false) }
@@ -126,7 +107,7 @@ private fun ItemHistoryRestoreDetails(
                 isDialogLoading = true
             }
         }
-        onEventConsumed(event)
+        onEvent(ItemHistoryRestoreUiEvent.OnEventConsumed(event))
     }
 
     val itemColors = passItemColors(itemCategory = itemDetailState.itemCategory)
@@ -140,20 +121,54 @@ private fun ItemHistoryRestoreDetails(
             ItemHistoryRestoreTopBar(
                 colors = itemColors,
                 onUpClick = { onNavigated(ItemHistoryNavDestination.Back) },
-                onRestoreClick = onRestoreClick
+                onRestoreClick = { onEvent(ItemHistoryRestoreUiEvent.OnRestoreClick) }
             )
         },
-        onSectionClick = onSectionClick,
-        onHiddenSectionClick = onHiddenSectionClick,
-        onHiddenSectionToggle = onHiddenSectionToggle,
-        onLinkClick = { link -> BrowserUtils.openWebsite(context, link) }
+        onEvent = {
+            when (it) {
+                is PassItemDetailsUiEvent.OnSectionClick -> onEvent(
+                    ItemHistoryRestoreUiEvent.OnSectionClick(
+                        section = it.section,
+                        field = it.field
+
+                    )
+                )
+                is PassItemDetailsUiEvent.OnHiddenSectionClick -> onEvent(
+                    ItemHistoryRestoreUiEvent.OnHiddenSectionClick(
+                        state = it.state,
+                        field = it.field
+                    )
+                )
+                is PassItemDetailsUiEvent.OnHiddenSectionToggle -> onEvent(
+                    ItemHistoryRestoreUiEvent.OnHiddenSectionToggle(
+                        state = it.state,
+                        hiddenState = it.hiddenState,
+                        field = it.field
+                    )
+                )
+                is PassItemDetailsUiEvent.OnLinkClick -> {
+                    BrowserUtils.openWebsite(context, it.link)
+                }
+                is PassItemDetailsUiEvent.OnPasskeyClick -> onEvent(
+                    ItemHistoryRestoreUiEvent.OnPasskeyClick(
+                        shareId = shareId,
+                        itemId = itemId,
+                        passkey = it.passkey
+                    )
+                )
+            }
+        }
     )
 
     ItemHistoryRestoreConfirmationDialog(
         isVisible = isDialogVisible,
         isLoading = isDialogLoading,
-        onConfirm = { onRestoreConfirmClick(itemDetailState.itemContents) },
-        onDismiss = onRestoreCancelClick,
+        onConfirm = {
+            onEvent(ItemHistoryRestoreUiEvent.OnRestoreConfirmClick(itemDetailState.itemContents))
+        },
+        onDismiss = {
+            onEvent(ItemHistoryRestoreUiEvent.OnRestoreCancelClick)
+        },
         revisionTime = itemRevision.revisionTime
     )
 }

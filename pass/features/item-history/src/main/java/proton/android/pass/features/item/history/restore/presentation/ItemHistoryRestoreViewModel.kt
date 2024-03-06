@@ -85,6 +85,8 @@ class ItemHistoryRestoreViewModel @Inject constructor(
         eventFlow
     ) { itemDetailState, event ->
         ItemHistoryRestoreState.ItemDetails(
+            shareId = shareId,
+            itemId = itemId,
             itemRevision = itemRevision,
             itemDetailState = itemDetailState,
             event = event

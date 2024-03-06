@@ -154,9 +154,9 @@ fun SharingWithContent(
                     modifier = Modifier.fillMaxWidth(),
                     verticalArrangement = Arrangement.Center
                 ) {
-                    state.enteredEmails.forEachIndexed { idx, email ->
+                    state.enteredEmails.forEachIndexed { idx, emailState ->
                         SharingWithChip(
-                            email = email,
+                            emailState = emailState,
                             isSelected = state.selectedEmailIndex.value() == idx,
                             onClick = {
                                 onEvent(SharingWithUiEvent.EmailClick(idx))
@@ -201,10 +201,10 @@ fun SharingWithContent(
                     keyboardType = KeyboardType.Email
                 ),
                 onChange = { onEvent(SharingWithUiEvent.EmailChange(it)) },
-                onDoneClick = if (state.canOnlyPickFromSelection) {
-                    null
-                } else {
-                    { onEvent(SharingWithUiEvent.EmailSubmit) }
+                onDoneClick = {
+                    if (!state.canOnlyPickFromSelection) {
+                        onEvent(SharingWithUiEvent.EmailSubmit)
+                    }
                 }
             )
 
@@ -224,7 +224,7 @@ fun SharingWithContent(
 @Composable
 private fun SharingWithChip(
     modifier: Modifier = Modifier,
-    email: EnteredEmailState,
+    emailState: EnteredEmailState,
     isSelected: Boolean,
     onClick: () -> Unit
 ) {
@@ -237,7 +237,7 @@ private fun SharingWithChip(
             )
             .roundedContainer(
                 backgroundColor = PassTheme.colors.interactionNormMinor1,
-                borderColor = if (email.isError) {
+                borderColor = if (emailState.isError) {
                     PassTheme.colors.signalDanger
                 } else Color.Transparent,
             )
@@ -246,7 +246,7 @@ private fun SharingWithChip(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = email.email,
+            text = emailState.email,
             style = ProtonTheme.typography.defaultNorm,
         )
 
@@ -269,7 +269,7 @@ fun SharingWithChipPreview(
     PassTheme(isDark = input.first) {
         Surface {
             SharingWithChip(
-                email = EnteredEmailState("some@email.test", isError = input.second),
+                emailState = EnteredEmailState("some@email.test", isError = input.second),
                 isSelected = input.second,
                 onClick = {}
             )

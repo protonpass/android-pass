@@ -31,26 +31,24 @@ import proton.android.pass.commonrust.WordSeparator as RustWordSeparator
 
 class PasswordGeneratorImpl @Inject constructor() : PasswordGenerator {
 
-    override fun generatePassword(config: PasswordGeneratorConfig): String =
-        RandomPasswordGenerator()
-            .generate(
-                RandomPasswordConfig(
-                    length = config.length,
-                    numbers = config.numbers,
-                    uppercaseLetters = config.uppercaseLetters,
-                    symbols = config.symbols
-                )
-            )
-
-    override fun generatePassphrase(config: PassphraseConfig): String =
-        PassphraseGenerator().generateRandomPassphrase(
-            RustPassphraseConfig(
-                separator = config.separator.toBind(),
-                capitalise = config.capitalise,
-                includeNumbers = config.numbers,
-                count = config.count
+    override fun generatePassword(config: PasswordGeneratorConfig): String = RandomPasswordGenerator()
+        .generate(
+            RandomPasswordConfig(
+                length = config.length,
+                numbers = config.numbers,
+                uppercaseLetters = config.uppercaseLetters,
+                symbols = config.symbols
             )
         )
+
+    override fun generatePassphrase(config: PassphraseConfig): String = PassphraseGenerator().generateRandomPassphrase(
+        RustPassphraseConfig(
+            separator = config.separator.toBind(),
+            capitalise = config.capitalise,
+            includeNumbers = config.numbers,
+            count = config.count
+        )
+    )
 
     private fun WordSeparator.toBind(): RustWordSeparator = when (this) {
         WordSeparator.Hyphen -> RustWordSeparator.HYPHENS

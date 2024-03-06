@@ -36,7 +36,7 @@ fun WordSeparatorDialogContent(
     state: WordSeparatorUiState,
     onOptionSelected: (WordSeparator) -> Unit,
     onConfirm: () -> Unit,
-    onCancel: () -> Unit,
+    onCancel: () -> Unit
 ) {
     Column(modifier = modifier) {
         ProtonDialogTitle(

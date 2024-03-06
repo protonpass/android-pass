@@ -30,10 +30,7 @@ import kotlin.coroutines.cancellation.CancellationException
 private const val TAG = "ProtonBottomSheetBackHandler"
 
 @[Composable OptIn(ExperimentalMaterialApi::class)]
-fun ProtonBottomSheetBackHandler(
-    bottomSheetState: ModalBottomSheetState,
-    coroutineScope: CoroutineScope,
-) {
+fun ProtonBottomSheetBackHandler(bottomSheetState: ModalBottomSheetState, coroutineScope: CoroutineScope) {
     if (bottomSheetState.isVisible) {
         BackHandler {
             coroutineScope.launch {

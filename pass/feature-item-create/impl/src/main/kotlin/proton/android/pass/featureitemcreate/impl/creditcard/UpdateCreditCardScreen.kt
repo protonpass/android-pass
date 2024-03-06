@@ -31,7 +31,7 @@ import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTri
 fun UpdateCreditCardScreen(
     modifier: Modifier = Modifier,
     viewModel: UpdateCreditCardViewModel = hiltViewModel(),
-    onNavigate: (BaseCreditCardNavigation) -> Unit,
+    onNavigate: (BaseCreditCardNavigation) -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -122,7 +122,7 @@ fun UpdateCreditCardScreen(
                 }
             )
             InAppReviewTriggerLaunchedEffect(
-                triggerCondition = uiState.baseState.isItemSaved is ItemSavedState.Success,
+                triggerCondition = uiState.baseState.isItemSaved is ItemSavedState.Success
             )
         }
     }

@@ -71,19 +71,13 @@ abstract class DataRemoteDataSourceModule {
     abstract fun bindRemoteImageFetcher(impl: RemoteImageFetcherImpl): RemoteImageFetcher
 
     @Binds
-    abstract fun bindRemoteTelemetryDataSource(
-        impl: RemoteTelemetryDataSourceImpl
-    ): RemoteTelemetryDataSource
+    abstract fun bindRemoteTelemetryDataSource(impl: RemoteTelemetryDataSourceImpl): RemoteTelemetryDataSource
 
     @Binds
-    abstract fun bindRemotePlanDataSource(
-        impl: RemotePlanDataSourceImpl
-    ): RemotePlanDataSource
+    abstract fun bindRemotePlanDataSource(impl: RemotePlanDataSourceImpl): RemotePlanDataSource
 
     @Binds
-    abstract fun bindRemoteInviteDataSource(
-        impl: RemoteInviteDataSourceImpl
-    ): RemoteInviteDataSource
+    abstract fun bindRemoteInviteDataSource(impl: RemoteInviteDataSourceImpl): RemoteInviteDataSource
 
     @Binds
     abstract fun bindRemoteOrganizationSettingsDataSource(

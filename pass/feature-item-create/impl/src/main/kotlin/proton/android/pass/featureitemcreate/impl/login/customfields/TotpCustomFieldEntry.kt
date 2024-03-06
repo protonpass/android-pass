@@ -128,7 +128,7 @@ fun TotpCustomFieldEntryPreview(
                 index = 0,
                 onChange = {},
                 onFocusChange = { _, _ -> },
-                onOptionsClick = {},
+                onOptionsClick = {}
             )
         }
     }

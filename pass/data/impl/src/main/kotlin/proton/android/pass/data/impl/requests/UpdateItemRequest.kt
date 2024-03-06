@@ -30,5 +30,5 @@ data class UpdateItemRequest(
     @SerialName("ContentFormatVersion")
     val contentFormatVersion: Int,
     @SerialName("Content")
-    val content: String,
+    val content: String
 )

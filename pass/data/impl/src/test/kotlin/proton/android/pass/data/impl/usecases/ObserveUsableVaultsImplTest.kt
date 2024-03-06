@@ -48,7 +48,7 @@ class ObserveUsableVaultsImplTest {
 
         instance = ObserveUsableVaultsImpl(
             getUserPlan = getUserPlan,
-            observeVaults = observeVaults,
+            observeVaults = observeVaults
         )
     }
 
@@ -63,7 +63,7 @@ class ObserveUsableVaultsImplTest {
             mapOf(
                 vault1 to ShareRole.Write,
                 vault2 to ShareRole.Write,
-                vault3 to ShareRole.Read,
+                vault3 to ShareRole.Read
             )
         )
 
@@ -82,7 +82,7 @@ class ObserveUsableVaultsImplTest {
             mapOf(
                 vault1 to ShareRole.Write,
                 vault2 to ShareRole.Write,
-                vault3 to ShareRole.Read,
+                vault3 to ShareRole.Read
             )
         )
 
@@ -101,7 +101,7 @@ class ObserveUsableVaultsImplTest {
             mapOf(
                 vault1 to ShareRole.Write,
                 vault2 to ShareRole.Write,
-                vault3 to ShareRole.Read,
+                vault3 to ShareRole.Read
             )
         )
 
@@ -120,7 +120,7 @@ class ObserveUsableVaultsImplTest {
             mapOf(
                 vault1 to ShareRole.Write,
                 vault2 to ShareRole.Write,
-                vault3 to ShareRole.Read,
+                vault3 to ShareRole.Read
             )
         )
 
@@ -139,7 +139,7 @@ class ObserveUsableVaultsImplTest {
             mapOf(
                 vault1 to ShareRole.Write,
                 vault2 to ShareRole.Write,
-                vault3 to ShareRole.Read,
+                vault3 to ShareRole.Read
             )
         )
 

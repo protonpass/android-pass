@@ -102,7 +102,7 @@ object GetPasskeysHandler {
             PassLogger.d(TAG, "Could not find domain for request")
             return BeginGetCredentialResponse(
                 credentialEntries = emptyList(),
-                actions = emptyList(),
+                actions = emptyList()
             )
         }
 
@@ -150,7 +150,7 @@ object GetPasskeysHandler {
                     origin = domain,
                     requestCodes = requestCodes
                 )
-            ),
+            )
         )
     }
 
@@ -177,7 +177,7 @@ object GetPasskeysHandler {
         return Action(
             title = context.getString(R.string.select_passkey_action_title),
             pendingIntent = pendingIntent,
-            subtitle = context.getString(R.string.select_passkey_action_subtitle),
+            subtitle = context.getString(R.string.select_passkey_action_subtitle)
         )
     }
 
@@ -197,7 +197,7 @@ object GetPasskeysHandler {
                 requestCodes = requestCodes,
                 needsToAuthenticate = needsToAuthenticate
             ),
-            beginGetPublicKeyCredentialOption = option,
+            beginGetPublicKeyCredentialOption = option
         ).setDisplayName(it.itemTitle).setAutoSelectAllowed(false).build()
     }
 

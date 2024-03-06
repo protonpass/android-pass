@@ -23,8 +23,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun LimitedCustomFieldsContent(
-    modifier: Modifier = Modifier
-) {
+fun LimitedCustomFieldsContent(modifier: Modifier = Modifier) {
     Text(modifier = modifier, text = "TBD")
 }

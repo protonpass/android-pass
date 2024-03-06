@@ -59,7 +59,7 @@ internal class GetItemActionsImplTest {
             getItemById = getItemById,
             observeUserPlan = observeUserPlan,
             canShareVault = canShareVault,
-            observeVaults = observeVaults,
+            observeVaults = observeVaults
         )
     }
 

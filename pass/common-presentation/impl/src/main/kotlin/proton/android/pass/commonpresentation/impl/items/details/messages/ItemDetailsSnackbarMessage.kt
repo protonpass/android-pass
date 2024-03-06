@@ -26,61 +26,61 @@ import proton.android.pass.notifications.api.SnackbarType
 internal enum class ItemDetailsSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
-    override val isClipboard: Boolean = false,
+    override val isClipboard: Boolean = false
 ) : SnackbarMessage {
 
     AliasCopied(
         id = R.string.item_details_snackbar_message_alias_copied,
         type = SnackbarType.NORM,
-        isClipboard = true,
+        isClipboard = true
     ),
 
     CardNumberCopied(
         id = R.string.item_details_snackbar_message_card_number_copied,
         type = SnackbarType.NORM,
-        isClipboard = true,
+        isClipboard = true
     ),
 
     CustomFieldCopied(
         id = R.string.item_details_snackbar_message_custom_field_copied,
         type = SnackbarType.NORM,
-        isClipboard = true,
+        isClipboard = true
     ),
 
     CvvCopied(
         id = R.string.item_details_snackbar_message_cvv_copied,
         type = SnackbarType.NORM,
-        isClipboard = true,
+        isClipboard = true
     ),
 
     PasswordCopied(
         id = R.string.item_details_snackbar_message_password_copied,
         type = SnackbarType.NORM,
-        isClipboard = true,
+        isClipboard = true
     ),
 
     PinCopied(
         id = R.string.item_details_snackbar_message_pin_copied,
         type = SnackbarType.NORM,
-        isClipboard = true,
+        isClipboard = true
     ),
 
     TotpCodeCopied(
         id = R.string.item_details_snackbar_message_totp_copied,
         type = SnackbarType.NORM,
-        isClipboard = true,
+        isClipboard = true
     ),
 
     UsernameCopied(
         id = R.string.item_details_snackbar_message_username_copied,
         type = SnackbarType.NORM,
-        isClipboard = true,
+        isClipboard = true
     ),
 
     WebsiteCopied(
         id = R.string.item_details_snackbar_message_website_copied,
         type = SnackbarType.NORM,
-        isClipboard = true,
-    ),
+        isClipboard = true
+    )
 
 }

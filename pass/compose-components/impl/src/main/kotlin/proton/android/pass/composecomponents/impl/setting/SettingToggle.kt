@@ -59,7 +59,7 @@ fun SettingToggle(
             Switch(
                 checked = isChecked,
                 colors = SwitchDefaults.colors(
-                    checkedThumbColor = PassTheme.colors.interactionNormMajor1,
+                    checkedThumbColor = PassTheme.colors.interactionNormMajor1
                 ),
                 onCheckedChange = null
             )

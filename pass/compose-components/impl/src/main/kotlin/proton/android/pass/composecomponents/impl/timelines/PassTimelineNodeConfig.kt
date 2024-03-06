@@ -31,5 +31,5 @@ data class PassTimelineNodeConfig(
     internal val lineWidth: Dp = 1.dp,
     internal val lineBrush: Brush = SolidColor(Color.White),
     internal val startOffset: Dp = Spacing.medium,
-    internal val spaceBetweenNodes: Dp = Spacing.medium,
+    internal val spaceBetweenNodes: Dp = Spacing.medium
 )

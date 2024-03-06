@@ -55,7 +55,7 @@ fun CustomFieldsContent(
     validationErrors: ImmutableList<LoginItemValidationErrors.CustomFieldValidationError>,
     focusedField: LoginCustomField?,
     canEdit: Boolean,
-    onEvent: (CustomFieldEvent) -> Unit,
+    onEvent: (CustomFieldEvent) -> Unit
 ) {
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }

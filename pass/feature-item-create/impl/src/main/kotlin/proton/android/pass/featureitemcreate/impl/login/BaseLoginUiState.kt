@@ -44,7 +44,7 @@ data class BaseLoginUiState(
     val hasUserEditedContent: Boolean,
     val hasReachedAliasLimit: Boolean,
     val totpUiState: TotpUiState,
-    val focusedField: LoginField?,
+    val focusedField: LoginField?
 ) {
     companion object {
         val Initial = BaseLoginUiState(
@@ -74,7 +74,7 @@ data class CreateLoginUiState(
     companion object {
         val Initial = CreateLoginUiState(
             shareUiState = ShareUiState.NotInitialised,
-            baseLoginUiState = BaseLoginUiState.Initial,
+            baseLoginUiState = BaseLoginUiState.Initial
         )
     }
 }

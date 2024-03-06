@@ -54,7 +54,7 @@ fun UpgradeRow(
 ) {
     Row(
         modifier = modifier.padding(start = 16.dp, top = 12.dp, end = 12.dp, bottom = 12.dp),
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
             painter = painterResource(icon),
@@ -64,7 +64,7 @@ fun UpgradeRow(
         Column(modifier = Modifier.padding(start = 8.dp)) {
             SectionTitle(
                 modifier = Modifier.padding(start = 8.dp),
-                text = label,
+                text = label
             )
             Row(
                 modifier = Modifier
@@ -92,9 +92,7 @@ fun UpgradeRow(
 
 @Preview
 @Composable
-fun UpgradeRowPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun UpgradeRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             UpgradeRow(

@@ -34,7 +34,7 @@ data class PassTimelineNode(
     internal val id: String,
     internal val type: PassTimelineNodeType,
     internal val config: PassTimelineNodeConfig,
-    internal val content: @Composable BoxScope.(modifier: Modifier) -> Unit,
+    internal val content: @Composable BoxScope.(modifier: Modifier) -> Unit
 ) {
 
     @Composable
@@ -59,7 +59,7 @@ data class PassTimelineNode(
 
                                 PassTimelineNodeType.Root,
                                 PassTimelineNodeType.Unique -> Stroke(width = lineWidth)
-                            },
+                            }
                         )
 
                         when (type) {
@@ -70,12 +70,12 @@ data class PassTimelineNode(
                                     strokeWidth = config.lineWidth.toPx(),
                                     start = Offset(
                                         x = circleRadius,
-                                        y = circleDiameter + lineWidth / 2,
+                                        y = circleDiameter + lineWidth / 2
                                     ),
                                     end = Offset(
                                         x = circleRadius,
-                                        y = size.height + verticalInset * 2,
-                                    ),
+                                        y = size.height + verticalInset * 2
+                                    )
                                 )
                             }
 
@@ -86,13 +86,13 @@ data class PassTimelineNode(
 
                         }
                     }
-                },
+                }
         ) {
             content(
                 Modifier.padding(
                     start = config.startOffset,
-                    bottom = config.spaceBetweenNodes,
-                ),
+                    bottom = config.spaceBetweenNodes
+                )
             )
         }
     }

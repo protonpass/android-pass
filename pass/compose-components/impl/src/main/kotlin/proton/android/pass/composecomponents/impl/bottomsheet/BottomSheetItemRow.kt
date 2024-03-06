@@ -40,7 +40,7 @@ fun BottomSheetItemRow(
     subtitle: @Composable (() -> Unit)? = null,
     leftIcon: @Composable (() -> Unit)? = null,
     endIcon: @Composable (() -> Unit)? = null,
-    onClick: (() -> Unit)? = null,
+    onClick: (() -> Unit)? = null
 ) {
     Row(
         modifier = modifier
@@ -51,10 +51,10 @@ fun BottomSheetItemRow(
             )
             .padding(
                 horizontal = PassTheme.dimens.bottomsheetHorizontalPadding,
-                vertical = Spacing.medium,
+                vertical = Spacing.medium
             ),
         horizontalArrangement = Arrangement.Start,
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         leftIcon?.let {
             it()

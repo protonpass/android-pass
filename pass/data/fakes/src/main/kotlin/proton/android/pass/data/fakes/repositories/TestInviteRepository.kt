@@ -66,8 +66,7 @@ class TestInviteRepository @Inject constructor() : InviteRepository {
 
     override suspend fun refreshInvites(userId: UserId) = refreshResult.getOrThrow()
 
-    override suspend fun acceptInvite(userId: UserId, inviteToken: InviteToken): ShareId =
-        acceptResult.getOrThrow()
+    override suspend fun acceptInvite(userId: UserId, inviteToken: InviteToken): ShareId = acceptResult.getOrThrow()
 
     override suspend fun rejectInvite(userId: UserId, inviteToken: InviteToken) {
         rejectResult.getOrThrow()

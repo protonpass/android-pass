@@ -42,9 +42,7 @@ object MultiStepUtils {
         putByteArray(PASSWORD_FIELD_KEY, marshalParcelable(SaveFieldInfo(sessionId, fieldId)))
     }
 
-    fun Bundle?.getUsernameFromState(): SaveFieldInfo? =
-        this?.getByteArray(USERNAME_FIELD_KEY)?.deserializeParcelable()
+    fun Bundle?.getUsernameFromState(): SaveFieldInfo? = this?.getByteArray(USERNAME_FIELD_KEY)?.deserializeParcelable()
 
-    fun Bundle?.getPasswordFromState(): SaveFieldInfo? =
-        this?.getByteArray(PASSWORD_FIELD_KEY)?.deserializeParcelable()
+    fun Bundle?.getPasswordFromState(): SaveFieldInfo? = this?.getByteArray(PASSWORD_FIELD_KEY)?.deserializeParcelable()
 }

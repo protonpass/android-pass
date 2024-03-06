@@ -50,7 +50,7 @@ fun PrivacySection(
     ) {
         Text(
             text = stringResource(R.string.settings_privacy_section_title),
-            style = ProtonTheme.typography.defaultSmallWeak,
+            style = ProtonTheme.typography.defaultSmallWeak
         )
 
         Box(modifier = Modifier.roundedContainerNorm()) {
@@ -83,9 +83,7 @@ fun PrivacySection(
 
 @Preview
 @Composable
-fun UseFaviconsSectionPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
+fun UseFaviconsSectionPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
     PassTheme(isDark = input.first) {
         Surface {
             PrivacySection(

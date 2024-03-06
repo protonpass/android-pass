@@ -104,18 +104,16 @@ class AutofillServiceManager @Inject constructor(
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
-    private fun upgradeSuggestion(
-        request: InlineSuggestionsRequest,
-        autofillData: AutofillData
-    ): List<Dataset> = when (request.inlinePresentationSpecs.size) {
-        0 -> emptyList()
-        else -> listOf(
-            createCcUpgradeDataset(
-                autofillData = autofillData,
-                inlinePresentationSpec = request.inlinePresentationSpecs.first()
+    private fun upgradeSuggestion(request: InlineSuggestionsRequest, autofillData: AutofillData): List<Dataset> =
+        when (request.inlinePresentationSpecs.size) {
+            0 -> emptyList()
+            else -> listOf(
+                createCcUpgradeDataset(
+                    autofillData = autofillData,
+                    inlinePresentationSpec = request.inlinePresentationSpecs.first()
+                )
             )
-        )
-    }
+        }
 
 
     @RequiresApi(Build.VERSION_CODES.R)
@@ -413,10 +411,7 @@ class AutofillServiceManager @Inject constructor(
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
-    private fun createPinnedIcon(
-        autofillData: AutofillData,
-        inlinePresentationSpec: InlinePresentationSpec
-    ): Dataset {
+    private fun createPinnedIcon(autofillData: AutofillData, inlinePresentationSpec: InlinePresentationSpec): Dataset {
         val inlinePresentation = InlinePresentationUtils.createPinned(
             contentDescription = context.getString(R.string.inline_suggestions_open_app),
             icon = getIcon(),

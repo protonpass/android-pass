@@ -31,13 +31,12 @@ object AliasUtils {
     private val ALLOWED_SPECIAL_CHARACTERS: List<Char> = listOf('_', '-', '.')
     private val CONSECUTIVE_DOTS = Regex("\\.{2,}")
 
-    fun formatAlias(value: String): String =
-        value.replace(" ", SPACE_REPLACEMENT_CHAR.toString())
-            .filter { it.isLetterOrDigit() || ALLOWED_SPECIAL_CHARACTERS.contains(it) }
-            .lowercase()
-            .removeAccents()
-            .replace(CONSECUTIVE_DOTS, ".")
-            .let(::removeLeadingDots)
+    fun formatAlias(value: String): String = value.replace(" ", SPACE_REPLACEMENT_CHAR.toString())
+        .filter { it.isLetterOrDigit() || ALLOWED_SPECIAL_CHARACTERS.contains(it) }
+        .lowercase()
+        .removeAccents()
+        .replace(CONSECUTIVE_DOTS, ".")
+        .let(::removeLeadingDots)
 
     private tailrec fun removeLeadingDots(str: String): String =
         if (str.startsWith(".")) removeLeadingDots(str.removePrefix(".")) else str

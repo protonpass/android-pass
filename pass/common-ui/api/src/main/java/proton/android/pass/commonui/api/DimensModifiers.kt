@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.Dp
 fun Modifier.bottomSheet(horizontalPadding: Dp? = null): Modifier = composed {
     background(PassTheme.colors.bottomSheetBackground)
         .padding(
-            vertical = PassTheme.dimens.bottomsheetVerticalPadding,
+            vertical = PassTheme.dimens.bottomsheetVerticalPadding
         )
         .applyIf(
             condition = horizontalPadding != null,

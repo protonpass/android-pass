@@ -125,20 +125,19 @@ class AutofillActivity : FragmentActivity() {
         finish()
     }
 
-    private fun prepareAutofillSuccessIntent(autofillMappings: AutofillMappings): Intent =
-        Intent().apply {
-            // We must send a remote view presentation, otherwise it will crash
-            val notUsed = RemoteViews(packageName, android.R.layout.simple_list_item_1)
-            val options = DatasetBuilderOptions(
-                id = "AutofillActivity".some(),
-                remoteViewPresentation = notUsed.some()
-            )
-            val dataset = DatasetUtils.buildDataset(
-                options = options,
-                autofillMappings = autofillMappings.toOption()
-            )
-            putExtra(AutofillManager.EXTRA_AUTHENTICATION_RESULT, dataset)
-        }
+    private fun prepareAutofillSuccessIntent(autofillMappings: AutofillMappings): Intent = Intent().apply {
+        // We must send a remote view presentation, otherwise it will crash
+        val notUsed = RemoteViews(packageName, android.R.layout.simple_list_item_1)
+        val options = DatasetBuilderOptions(
+            id = "AutofillActivity".some(),
+            remoteViewPresentation = notUsed.some()
+        )
+        val dataset = DatasetUtils.buildDataset(
+            options = options,
+            autofillMappings = autofillMappings.toOption()
+        )
+        putExtra(AutofillManager.EXTRA_AUTHENTICATION_RESULT, dataset)
+    }
 
     private fun setSecureMode() {
         val factory =

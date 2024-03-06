@@ -50,15 +50,13 @@ fun AliasPrefixSuffixText(
     Text(
         modifier = modifier,
         text = value,
-        fontSize = fontSize,
+        fontSize = fontSize
     )
 }
 
 @Preview
 @Composable
-fun AliasPrefixSuffixTextPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
+fun AliasPrefixSuffixTextPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
     PassTheme(isDark = input.first) {
         Surface {
             AliasPrefixSuffixText(

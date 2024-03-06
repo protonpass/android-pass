@@ -56,7 +56,7 @@ internal fun CreateAliasForm(
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         AnimatedVisibility(visible = showUpgrade) {
             InfoBanner(

@@ -51,7 +51,7 @@ fun SelectItemList(
     onScrolledToTop: () -> Unit,
     onItemClicked: (ItemUiModel) -> Unit,
     onItemOptionsClicked: (ItemUiModel) -> Unit,
-    onNavigate: (SelectItemNavigation) -> Unit,
+    onNavigate: (SelectItemNavigation) -> Unit
 ) {
     val searchUiState = uiState.searchUiState
     val listUiState = uiState.listUiState
@@ -143,7 +143,7 @@ fun SelectItemList(
                                     onNavigate(SelectItemNavigation.SortingBottomsheet)
                                 }
                             )
-                        },
+                        }
                     )
                 }
             }

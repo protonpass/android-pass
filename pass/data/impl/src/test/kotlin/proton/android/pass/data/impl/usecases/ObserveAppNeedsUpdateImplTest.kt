@@ -41,7 +41,7 @@ class ObserveAppNeedsUpdateImplTest {
         userAccessDataRepository = TestUserAccessDataRepository()
         instance = ObserveAppNeedsUpdateImpl(
             accountManager = accountManager,
-            userAccessDataRepository = userAccessDataRepository,
+            userAccessDataRepository = userAccessDataRepository
         )
     }
 

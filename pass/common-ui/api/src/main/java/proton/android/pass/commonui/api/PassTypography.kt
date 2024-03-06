@@ -34,7 +34,7 @@ import me.proton.core.compose.theme.textWeak
 @Immutable
 data class PassTypography(
     internal val heroRegular: TextStyle,
-    internal val body3Regular: TextStyle,
+    internal val body3Regular: TextStyle
 ) {
     companion object {
         val Default: PassTypography = PassTypography(
@@ -85,15 +85,13 @@ fun PassTypography.body3Inverted(enabled: Boolean = true): TextStyle =
     body3Unspecified.copy(color = ProtonTheme.colors.textInverted(enabled))
 
 @Composable
-fun PassTypography.body3Medium(enabled: Boolean = true): TextStyle =
-    body3Unspecified.copy(
-        fontWeight = FontWeight.W500,
-        color = ProtonTheme.colors.textNorm(enabled)
-    )
+fun PassTypography.body3Medium(enabled: Boolean = true): TextStyle = body3Unspecified.copy(
+    fontWeight = FontWeight.W500,
+    color = ProtonTheme.colors.textNorm(enabled)
+)
 
 @Composable
-fun PassTypography.body3Bold(enabled: Boolean = true): TextStyle =
-    body3Unspecified.copy(
-        fontWeight = FontWeight.W500,
-        color = ProtonTheme.colors.textNorm(enabled)
-    )
+fun PassTypography.body3Bold(enabled: Boolean = true): TextStyle = body3Unspecified.copy(
+    fontWeight = FontWeight.W500,
+    color = ProtonTheme.colors.textNorm(enabled)
+)

@@ -71,15 +71,13 @@ fun VaultIcon(
 @Suppress("MagicNumber")
 @Preview
 @Composable
-fun VaultIconPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun VaultIconPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             VaultIcon(
                 iconColor = Color(0xFFF7D775),
                 backgroundColor = Color(0x10F7D775),
-                icon = me.proton.core.presentation.R.drawable.ic_proton_house,
+                icon = me.proton.core.presentation.R.drawable.ic_proton_house
             )
         }
     }

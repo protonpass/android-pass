@@ -34,19 +34,17 @@ class CreateVaultImpl @Inject constructor(
     private val shareRepository: ShareRepository
 ) : CreateVault {
 
-    override suspend fun invoke(userId: SessionUserId?, vault: NewVault): Share =
-        if (userId == null) {
-            val primaryUserId = accountManager.getPrimaryUserId().firstOrNull()
-            if (primaryUserId != null) {
-                createVault(primaryUserId, vault)
-            } else {
-                throw UserIdNotAvailableError()
-            }
+    override suspend fun invoke(userId: SessionUserId?, vault: NewVault): Share = if (userId == null) {
+        val primaryUserId = accountManager.getPrimaryUserId().firstOrNull()
+        if (primaryUserId != null) {
+            createVault(primaryUserId, vault)
         } else {
-            createVault(userId, vault)
+            throw UserIdNotAvailableError()
         }
+    } else {
+        createVault(userId, vault)
+    }
 
 
-    private suspend fun createVault(userId: UserId, vault: NewVault): Share =
-        shareRepository.createVault(userId, vault)
+    private suspend fun createVault(userId: UserId, vault: NewVault): Share = shareRepository.createVault(userId, vault)
 }

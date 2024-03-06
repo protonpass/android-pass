@@ -44,10 +44,7 @@ import proton.android.pass.featuresharing.impl.extensions.toStringResource
 import proton.android.pass.featuresharing.impl.sharingpermissions.SharingType
 
 @Composable
-fun AddressRowSection(
-    modifier: Modifier = Modifier,
-    address: AddressPermissionUiState
-) {
+fun AddressRowSection(modifier: Modifier = Modifier, address: AddressPermissionUiState) {
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
@@ -83,9 +80,7 @@ fun AddressRowSection(
 
 @Preview
 @Composable
-fun AddressRowSectionPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun AddressRowSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             AddressRowSection(

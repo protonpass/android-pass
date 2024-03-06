@@ -101,7 +101,7 @@ class FeatureHomeApp : Application() {
                 itemId = ItemId("item_cc_$i"),
                 title = "Card $i",
                 holder = "Holder $i",
-                number = "${i}23423423",
+                number = "${i}23423423"
             )
             items.add(creditCard)
 

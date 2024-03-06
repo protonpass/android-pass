@@ -28,7 +28,7 @@ import proton.android.pass.commonrust.PasswordScore
 @RunWith(Parameterized::class)
 internal class RustPasswordStrengthMapperTest(
     private val passwordScore: PasswordScore,
-    private val expectedPasswordStrength: PasswordStrength,
+    private val expectedPasswordStrength: PasswordStrength
 ) {
 
     @Test
@@ -45,7 +45,7 @@ internal class RustPasswordStrengthMapperTest(
         fun scoreToStrengthMapping() = listOf(
             arrayOf(PasswordScore.VULNERABLE, PasswordStrength.Vulnerable),
             arrayOf(PasswordScore.STRONG, PasswordStrength.Strong),
-            arrayOf(PasswordScore.WEAK, PasswordStrength.Weak),
+            arrayOf(PasswordScore.WEAK, PasswordStrength.Weak)
         )
 
     }

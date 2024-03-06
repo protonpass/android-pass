@@ -38,9 +38,7 @@ import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.featurehome.impl.R
 
 @Composable
-fun HomeEmptyHeader(
-    modifier: Modifier = Modifier
-) {
+fun HomeEmptyHeader(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -63,9 +61,7 @@ fun HomeEmptyHeader(
 
 @Preview
 @Composable
-fun HomeEmptyHeaderPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun HomeEmptyHeaderPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             HomeEmptyHeader()

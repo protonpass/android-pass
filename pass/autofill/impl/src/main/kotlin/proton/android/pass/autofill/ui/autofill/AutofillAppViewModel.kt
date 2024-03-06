@@ -116,10 +116,7 @@ class AutofillAppViewModel @Inject constructor(
         telemetryManager.sendEvent(event)
     }
 
-    fun onItemSelected(
-        state: AutofillAppState,
-        autofillItem: AutofillItem,
-    ) = viewModelScope.launch {
+    fun onItemSelected(state: AutofillAppState, autofillItem: AutofillItem) = viewModelScope.launch {
         val item = getItemById(autofillItem.shareId(), autofillItem.itemId())
         val itemUiModel = encryptionContextProvider.withEncryptionContext {
             item.toUiModel(this@withEncryptionContext)
@@ -146,10 +143,7 @@ class AutofillAppViewModel @Inject constructor(
         associate: Boolean
     ) = viewModelScope.launch { sendMappings(item.toAutoFillItem(), state, associate) }
 
-    fun onWarningConfirmed(
-        state: AutofillAppState,
-        item: ItemUiModel,
-    ) = viewModelScope.launch {
+    fun onWarningConfirmed(state: AutofillAppState, item: ItemUiModel) = viewModelScope.launch {
         if (shouldAskForAssociation(state = state, item = item.contents)) {
             _eventFlow.update { AutofillAppEvent.ShowAssociateDialog(item) }
         } else {
@@ -161,10 +155,7 @@ class AutofillAppViewModel @Inject constructor(
         _eventFlow.update { AutofillAppEvent.Unknown }
     }
 
-    private fun getMappings(
-        autofillItem: AutofillItem,
-        autofillAppState: AutofillAppState
-    ): AutofillMappings {
+    private fun getMappings(autofillItem: AutofillItem, autofillAppState: AutofillAppState): AutofillMappings {
 
         if (autofillItem is AutofillItem.Login) {
             handleTotpUri(autofillItem.totp)
@@ -241,10 +232,7 @@ class AutofillAppViewModel @Inject constructor(
     companion object {
         private const val TAG = "AutofillAppViewModel"
 
-        private fun shouldAskForAssociation(
-            item: ItemContents,
-            state: AutofillAppState
-        ): Boolean = when (item) {
+        private fun shouldAskForAssociation(item: ItemContents, state: AutofillAppState): Boolean = when (item) {
             is ItemContents.Login -> shouldAskForAssociation(
                 item = item,
                 packageName = state.autofillData.packageInfo.packageName,

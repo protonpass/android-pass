@@ -42,7 +42,7 @@ fun HelpCenterProfileSection(
     onFeedbackClick: () -> Unit,
     onImportExportClick: () -> Unit,
     onRateAppClick: () -> Unit,
-    onTutorialClick: () -> Unit,
+    onTutorialClick: () -> Unit
 ) {
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Text(
@@ -81,16 +81,14 @@ fun HelpCenterProfileSection(
 
 @Preview
 @Composable
-fun HelpCenterSectionPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun HelpCenterSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             HelpCenterProfileSection(
                 onFeedbackClick = {},
                 onImportExportClick = {},
                 onRateAppClick = {},
-                onTutorialClick = {},
+                onTutorialClick = {}
             )
         }
     }

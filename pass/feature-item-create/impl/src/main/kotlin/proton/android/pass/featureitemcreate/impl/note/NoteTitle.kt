@@ -79,9 +79,7 @@ class ThemeNoteTitlePreviewProvider :
 
 @Preview
 @Composable
-fun NoteTitlePreview(
-    @PreviewParameter(ThemeNoteTitlePreviewProvider::class) input: Pair<Boolean, NoteTitleInput>
-) {
+fun NoteTitlePreview(@PreviewParameter(ThemeNoteTitlePreviewProvider::class) input: Pair<Boolean, NoteTitleInput>) {
     PassTheme(isDark = input.first) {
         Surface {
             NoteTitle(

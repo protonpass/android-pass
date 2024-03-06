@@ -118,30 +118,29 @@ internal class CreateLoginViewModelTest {
     }
 
     @Test
-    fun `when a create item event without title should return a BlankTitle validation error`() =
-        runTest {
-            val vault =
-                VaultWithItemCount(Vault(ShareId("shareId"), "Share"), 1, 0)
-            observeVaults.sendResult(Result.success(listOf(vault)))
+    fun `when a create item event without title should return a BlankTitle validation error`() = runTest {
+        val vault =
+            VaultWithItemCount(Vault(ShareId("shareId"), "Share"), 1, 0)
+        observeVaults.sendResult(Result.success(listOf(vault)))
 
-            instance.createItem()
+        instance.createItem()
 
-            instance.createLoginUiState.test {
-                assertThat(awaitItem())
-                    .isEqualTo(
-                        CreateLoginUiState.Initial.copy(
-                            ShareUiState.Success(
-                                vaultList = listOf(vault),
-                                currentVault = vault
-                            ),
-                            BaseLoginUiState.Initial.copy(
-                                validationErrors = persistentSetOf(LoginItemValidationErrors.BlankTitle),
-                                totpUiState = TotpUiState.Success
-                            )
+        instance.createLoginUiState.test {
+            assertThat(awaitItem())
+                .isEqualTo(
+                    CreateLoginUiState.Initial.copy(
+                        ShareUiState.Success(
+                            vaultList = listOf(vault),
+                            currentVault = vault
+                        ),
+                        BaseLoginUiState.Initial.copy(
+                            validationErrors = persistentSetOf(LoginItemValidationErrors.BlankTitle),
+                            totpUiState = TotpUiState.Success
                         )
                     )
-            }
+                )
         }
+    }
 
     @Test
     fun `given valid data when a create item event should return a success event`() = runTest {
@@ -181,7 +180,7 @@ internal class CreateLoginViewModelTest {
             val thirdItem = awaitItem()
             val thirdExpected = secondItem.copy(
                 baseLoginUiState = secondItem.baseLoginUiState.copy(
-                    isLoadingState = IsLoadingState.NotLoading,
+                    isLoadingState = IsLoadingState.NotLoading
                 )
             )
             assertThat(thirdItem).isEqualTo(thirdExpected)
@@ -200,7 +199,7 @@ internal class CreateLoginViewModelTest {
                             modificationTime = item.modificationTime,
                             lastAutofillTime = item.lastAutofillTime.value(),
                             isPinned = false,
-                            category = ItemCategory.Login,
+                            category = ItemCategory.Login
                         )
                     )
                 )
@@ -339,7 +338,7 @@ internal class CreateLoginViewModelTest {
             title = TestUtils.randomString(),
             username = TestUtils.randomString(),
             password = TestUtils.randomString(),
-            url = TestUtils.randomString(),
+            url = TestUtils.randomString()
         )
         instance.setInitialContents(initialContents)
         accountManager.sendPrimaryUserId(UserId("UserId"))

@@ -48,16 +48,15 @@ class AliasRepositoryImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): Flow<AliasDetails> =
-        remoteDataSource.getAliasDetails(userId, shareId, itemId)
-            .map { details ->
-                proton.android.pass.domain.AliasDetails(
-                    email = details.email,
-                    mailboxes = mapMailboxes(details.mailboxes),
-                    availableMailboxes = mapMailboxes(details.availableMailboxes)
-                )
-            }
-            .flowOn(Dispatchers.IO)
+    ): Flow<AliasDetails> = remoteDataSource.getAliasDetails(userId, shareId, itemId)
+        .map { details ->
+            proton.android.pass.domain.AliasDetails(
+                email = details.email,
+                mailboxes = mapMailboxes(details.mailboxes),
+                availableMailboxes = mapMailboxes(details.availableMailboxes)
+            )
+        }
+        .flowOn(Dispatchers.IO)
 
     override fun updateAliasMailboxes(
         userId: UserId,

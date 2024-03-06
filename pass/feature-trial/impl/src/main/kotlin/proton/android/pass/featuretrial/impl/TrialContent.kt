@@ -117,9 +117,7 @@ fun TrialContent(
 
 @Preview
 @Composable
-fun TrialContentPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun TrialContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             TrialContent(

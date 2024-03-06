@@ -96,7 +96,7 @@ data class ItemEntity(
     @ColumnInfo(name = Columns.ENCRYPTED_CONTENT)
     val encryptedContent: EncryptedByteArray,
     @ColumnInfo(name = Columns.ENCRYPTED_KEY)
-    val encryptedKey: EncryptedByteArray?,
+    val encryptedKey: EncryptedByteArray?
 ) {
     object Columns {
         const val ID = "id"

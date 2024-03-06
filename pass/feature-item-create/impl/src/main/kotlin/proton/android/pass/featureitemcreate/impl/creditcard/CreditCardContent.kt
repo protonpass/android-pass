@@ -22,7 +22,7 @@ fun CreditCardContent(
     topBarActionName: String,
     titleSection: @Composable (ColumnScope.() -> Unit),
     onEvent: (CreditCardContentEvent) -> Unit,
-    selectedShareId: ShareId?,
+    selectedShareId: ShareId?
 ) {
     Scaffold(
         modifier = modifier,

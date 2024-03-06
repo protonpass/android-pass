@@ -59,26 +59,24 @@ data class HomeUiState(
     val accountType: AccountType,
     val navEvent: HomeNavEvent,
     val action: BottomSheetItemAction,
-    val isPinningFeatureEnabled: Boolean,
+    val isPinningFeatureEnabled: Boolean
 ) {
     fun shouldShowRecentSearchHeader() =
         homeListUiState.items.isNotEmpty() && searchUiState.inSearchMode && searchUiState.isInSuggestionsMode
 
-    fun shouldShowItemListHeader() =
-        homeListUiState.items.isNotEmpty() &&
-            homeListUiState.isLoading == IsLoadingState.NotLoading &&
-            !searchUiState.isInSuggestionsMode &&
-            !searchUiState.isProcessingSearch.value() &&
-            (searchUiState.inSearchMode || pinningUiState.inPinningMode)
+    fun shouldShowItemListHeader() = homeListUiState.items.isNotEmpty() &&
+        homeListUiState.isLoading == IsLoadingState.NotLoading &&
+        !searchUiState.isInSuggestionsMode &&
+        !searchUiState.isProcessingSearch.value() &&
+        (searchUiState.inSearchMode || pinningUiState.inPinningMode)
 
-    fun isSelectedVaultReadOnly() =
-        when (val selection = homeListUiState.homeVaultSelection) {
-            is VaultSelectionOption.AllVaults -> false
-            is VaultSelectionOption.Vault ->
-                homeListUiState.shares[selection.shareId]?.role == ShareRole.Read
+    fun isSelectedVaultReadOnly() = when (val selection = homeListUiState.homeVaultSelection) {
+        is VaultSelectionOption.AllVaults -> false
+        is VaultSelectionOption.Vault ->
+            homeListUiState.shares[selection.shareId]?.role == ShareRole.Read
 
-            is VaultSelectionOption.Trash -> false
-        }
+        is VaultSelectionOption.Trash -> false
+    }
 
     companion object {
         val Loading = HomeUiState(
@@ -143,7 +141,7 @@ data class HomeListUiState(
     val searchFilterType: SearchFilterType = SearchFilterType.All,
     val sortingType: SearchSortingType = SearchSortingType.MostRecent,
     val selectionState: HomeSelectionState,
-    val showNeedsUpdate: Boolean,
+    val showNeedsUpdate: Boolean
 ) {
     companion object {
         val Loading = HomeListUiState(
@@ -192,7 +190,7 @@ data class PinningUiState(
             isPinningEnabled = false,
             filteredItems = persistentListOf(),
             unFilteredItems = persistentListOf(),
-            itemTypeCount = ItemTypeCount(0, 0, 0, 0),
+            itemTypeCount = ItemTypeCount(0, 0, 0, 0)
         )
     }
 }

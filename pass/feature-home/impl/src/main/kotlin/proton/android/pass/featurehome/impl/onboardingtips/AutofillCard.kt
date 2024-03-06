@@ -60,9 +60,7 @@ fun AutofillCard(
 
 @Preview
 @Composable
-fun AutofillCardContentPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun AutofillCardContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             AutofillCard(onClick = {}, onDismiss = {})

@@ -81,7 +81,7 @@ fun SharingPermissionsBottomSheetContent(
         }
 
         BottomSheetItemList(
-            items = items.toPersistentList(),
+            items = items.toPersistentList()
         )
     }
 }
@@ -92,7 +92,7 @@ private fun titleText(text: String): BottomSheetItem = object : BottomSheetItem 
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = text,
-                style = ProtonTheme.typography.headlineNorm.copy(textAlign = TextAlign.Center),
+                style = ProtonTheme.typography.headlineNorm.copy(textAlign = TextAlign.Center)
             )
         }
     override val subtitle: (@Composable () -> Unit)?
@@ -106,30 +106,21 @@ private fun titleText(text: String): BottomSheetItem = object : BottomSheetItem 
     override val isDivider = false
 }
 
-private fun setAdminPermission(
-    checked: Boolean,
-    onClick: () -> Unit
-): BottomSheetItem = permissionRow(
+private fun setAdminPermission(checked: Boolean, onClick: () -> Unit): BottomSheetItem = permissionRow(
     title = R.string.sharing_can_manage,
     subtitle = R.string.sharing_can_manage_description,
     checked = checked,
     onClick = onClick
 )
 
-private fun setWritePermission(
-    checked: Boolean,
-    onClick: () -> Unit
-): BottomSheetItem = permissionRow(
+private fun setWritePermission(checked: Boolean, onClick: () -> Unit): BottomSheetItem = permissionRow(
     title = R.string.sharing_can_edit,
     subtitle = R.string.sharing_can_edit_description,
     checked = checked,
     onClick = onClick
 )
 
-private fun setReadPermission(
-    checked: Boolean,
-    onClick: () -> Unit
-): BottomSheetItem = permissionRow(
+private fun setReadPermission(checked: Boolean, onClick: () -> Unit): BottomSheetItem = permissionRow(
     title = R.string.sharing_can_view,
     subtitle = R.string.sharing_can_view_description,
     checked = checked,
@@ -174,7 +165,7 @@ private fun removeUserRow(onClick: () -> Unit): BottomSheetItem = object : Botto
         get() = {
             BottomSheetItemTitle(
                 text = stringResource(id = R.string.sharing_edit_permissions_remove_user),
-                color = PassTheme.colors.signalDanger,
+                color = PassTheme.colors.signalDanger
             )
         }
     override val subtitle: (@Composable () -> Unit)?

@@ -77,9 +77,7 @@ fun RemainingInvitesText(
 @Preview
 @Composable
 @Suppress("MagicNumber")
-fun RemainingInvitesTextPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
+fun RemainingInvitesTextPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
     PassTheme(isDark = input.first) {
         Surface {
             RemainingInvitesText(

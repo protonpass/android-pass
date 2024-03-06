@@ -80,9 +80,7 @@ class ThemedDetailNoteSectionPreviewProvider :
 
 @Preview
 @Composable
-fun NoteSectionPreview(
-    @PreviewParameter(ThemedDetailNoteSectionPreviewProvider::class) input: Pair<Boolean, String>
-) {
+fun NoteSectionPreview(@PreviewParameter(ThemedDetailNoteSectionPreviewProvider::class) input: Pair<Boolean, String>) {
     PassTheme(isDark = input.first) {
         Surface {
             NoteSection(text = input.second, accentColor = PassTheme.colors.loginInteractionNormMajor1)

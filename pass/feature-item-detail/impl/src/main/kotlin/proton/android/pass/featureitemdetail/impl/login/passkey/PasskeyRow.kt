@@ -81,7 +81,7 @@ fun PasskeyRow(
 
             Text(
                 text = username,
-                style = ProtonTheme.typography.defaultWeak(),
+                style = ProtonTheme.typography.defaultWeak()
             )
         }
 
@@ -95,9 +95,7 @@ fun PasskeyRow(
 
 @Preview
 @Composable
-fun PasskeyRowPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun PasskeyRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             PasskeyRow(

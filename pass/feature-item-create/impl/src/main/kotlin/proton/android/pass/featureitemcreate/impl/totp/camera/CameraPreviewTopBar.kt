@@ -42,10 +42,7 @@ import proton.android.pass.composecomponents.impl.container.Circle
 import proton.android.pass.featureitemcreate.impl.R
 
 @Composable
-fun CameraPreviewTopBar(
-    onOpenImagePicker: () -> Unit,
-    onDismiss: () -> Unit
-) {
+fun CameraPreviewTopBar(onOpenImagePicker: () -> Unit, onDismiss: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -80,9 +77,7 @@ fun CameraPreviewTopBar(
 
 @Preview
 @Composable
-fun CameraPreviewTopBarPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun CameraPreviewTopBarPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             CameraPreviewTopBar(onOpenImagePicker = {}, onDismiss = {})

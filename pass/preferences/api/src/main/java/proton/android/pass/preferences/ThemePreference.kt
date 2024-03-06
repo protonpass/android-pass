@@ -27,20 +27,18 @@ enum class ThemePreference {
     Dark,
     System;
 
-    fun value(): Int =
-        when (this) {
-            System -> THEME_SYSTEM
-            Light -> THEME_LIGHT
-            Dark -> THEME_DARK
-        }
+    fun value(): Int = when (this) {
+        System -> THEME_SYSTEM
+        Light -> THEME_LIGHT
+        Dark -> THEME_DARK
+    }
 
     companion object {
-        fun from(value: Int): ThemePreference =
-            when (value) {
-                THEME_SYSTEM -> System
-                THEME_LIGHT -> Light
-                THEME_DARK -> Dark
-                else -> Dark
-            }
+        fun from(value: Int): ThemePreference = when (value) {
+            THEME_SYSTEM -> System
+            THEME_LIGHT -> Light
+            THEME_DARK -> Dark
+            else -> Dark
+        }
     }
 }

@@ -28,12 +28,12 @@ import proton.android.pass.features.item.history.timeline.presentation.ItemHisto
 @Composable
 fun ItemHistoryTimelineScreen(
     onNavigated: (ItemHistoryNavDestination) -> Unit,
-    viewModel: ItemHistoryTimelineViewModel = hiltViewModel(),
+    viewModel: ItemHistoryTimelineViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     ItemHistoryTimelineContent(
         state = state,
-        onNavigated = onNavigated,
+        onNavigated = onNavigated
     )
 }

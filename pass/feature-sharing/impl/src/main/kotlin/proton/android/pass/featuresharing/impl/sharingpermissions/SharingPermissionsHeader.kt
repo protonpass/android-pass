@@ -86,7 +86,7 @@ fun SharingPermissionsHeader(
             Icon(
                 painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_chevron_down),
                 tint = PassTheme.colors.interactionNorm,
-                contentDescription = null,
+                contentDescription = null
             )
         }
     }
@@ -94,9 +94,7 @@ fun SharingPermissionsHeader(
 
 @Preview
 @Composable
-fun SharingPermissionsHeaderPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun SharingPermissionsHeaderPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             SharingPermissionsHeader(

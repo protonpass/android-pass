@@ -52,9 +52,7 @@ fun MFAIcon(
 
 @Preview
 @Composable
-fun MFAIconPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun MFAIconPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             MFAIcon()

@@ -47,7 +47,7 @@ fun PassHistoryItemRow(
         start = Spacing.medium,
         top = Spacing.medium,
         end = Spacing.medium,
-        bottom = Spacing.medium,
+        bottom = Spacing.medium
     )
 ) {
     Row(
@@ -59,17 +59,17 @@ fun PassHistoryItemRow(
             )
             .padding(paddingValues),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Spacing.medium),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
         Icon(
             painter = leadingIcon,
             contentDescription = null,
-            tint = ProtonTheme.colors.textWeak,
+            tint = ProtonTheme.colors.textWeak
         )
 
         Column(
             modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.spacedBy(Spacing.small),
+            verticalArrangement = Arrangement.spacedBy(Spacing.small)
         ) {
             SectionSubtitle(text = title.asAnnotatedString())
 
@@ -80,7 +80,7 @@ fun PassHistoryItemRow(
             Icon(
                 painter = painter,
                 contentDescription = null,
-                tint = ProtonTheme.colors.textWeak,
+                tint = ProtonTheme.colors.textWeak
             )
         }
     }

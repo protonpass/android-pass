@@ -71,43 +71,37 @@ fun SelectPasskeyBottomsheetContent(
     }
 }
 
-internal fun passkeyItem(
-    item: Passkey,
-    onClick: () -> Unit
-): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = {
-                BottomSheetItemTitle(
-                    text = item.userName,
-                    color = PassTheme.colors.textNorm
-                )
-            }
-        override val subtitle: (@Composable () -> Unit)
-            get() = {
-                val text = "${item.domain} • ${item.id.value.take(6).uppercase()}"
-                BottomSheetItemSubtitle(
-                    text = text,
-                    color = PassTheme.colors.textWeak
-                )
-            }
-        override val leftIcon: (@Composable () -> Unit)
-            get() = {
-                BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_key_skeleton)
-            }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: (() -> Unit)
-            get() = onClick
-        override val isDivider = false
-    }
+internal fun passkeyItem(item: Passkey, onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = {
+            BottomSheetItemTitle(
+                text = item.userName,
+                color = PassTheme.colors.textNorm
+            )
+        }
+    override val subtitle: (@Composable () -> Unit)
+        get() = {
+            val text = "${item.domain} • ${item.id.value.take(6).uppercase()}"
+            BottomSheetItemSubtitle(
+                text = text,
+                color = PassTheme.colors.textWeak
+            )
+        }
+    override val leftIcon: (@Composable () -> Unit)
+        get() = {
+            BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_key_skeleton)
+        }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
+    override val onClick: (() -> Unit)
+        get() = onClick
+    override val isDivider = false
+}
 
 @Preview
 @Composable
 @Suppress("MagicNumber")
-fun SelectPasskeyBottomsheetContentPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun SelectPasskeyBottomsheetContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     val createPasskey = { id: String, domain: String, username: String ->
         Passkey(
             id = PasskeyId(id),
@@ -133,9 +127,9 @@ fun SelectPasskeyBottomsheetContentPreview(
                 passkeys = listOf(
                     createPasskey("A1B2C3D4E5F6G7H8I9J0", "example.com", "user1"),
                     createPasskey("789ABC123DEF987DBC3A", "other.test", "user2"),
-                    createPasskey("C1D2E5A9B4C5D6E4F80A", "some.local", "user3"),
+                    createPasskey("C1D2E5A9B4C5D6E4F80A", "some.local", "user3")
                 ).toPersistentList(),
-                onPasskeySelected = {},
+                onPasskeySelected = {}
             )
         }
     }

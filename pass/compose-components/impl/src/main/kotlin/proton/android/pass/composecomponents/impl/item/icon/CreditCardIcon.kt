@@ -49,9 +49,7 @@ fun CreditCardIcon(
 
 @Preview
 @Composable
-fun CreditCardIconPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun CreditCardIconPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             CreditCardIcon(shape = PassTheme.shapes.squircleMediumShape)

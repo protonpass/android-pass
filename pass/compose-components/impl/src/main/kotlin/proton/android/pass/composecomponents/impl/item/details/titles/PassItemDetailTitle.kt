@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.sp
 internal fun PassItemDetailTitle(
     modifier: Modifier = Modifier,
     text: String,
-    maxLines: Int = 2,
+    maxLines: Int = 2
 ) {
     Text(
         modifier = modifier,
@@ -39,6 +39,6 @@ internal fun PassItemDetailTitle(
         letterSpacing = 0.03.sp,
         lineHeight = 34.sp,
         maxLines = maxLines,
-        overflow = TextOverflow.Ellipsis,
+        overflow = TextOverflow.Ellipsis
     )
 }

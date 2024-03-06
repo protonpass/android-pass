@@ -35,7 +35,7 @@ fun ItemRevisionImpl.toDomain(): ItemRevisionApi = ItemRevisionApi(
     lastUseTime = lastUseTime,
     revisionTime = revisionTime,
     itemKey = itemKey,
-    isPinned = isPinned,
+    isPinned = isPinned
 )
 
 fun List<ItemRevisionImpl>.toDomain(): List<ItemRevisionApi> = map { itemRevision ->
@@ -55,7 +55,7 @@ fun ItemRevisionImpl.toPendingEvent(): PendingEventItemRevision = PendingEventIt
     lastUseTime = lastUseTime,
     revisionTime = revisionTime,
     key = itemKey,
-    isPinned = isPinned,
+    isPinned = isPinned
 )
 
 fun PendingEventItemRevision.toItemRevision(): ItemRevisionImpl = ItemRevisionImpl(
@@ -71,5 +71,5 @@ fun PendingEventItemRevision.toItemRevision(): ItemRevisionImpl = ItemRevisionIm
     lastUseTime = lastUseTime,
     revisionTime = revisionTime,
     itemKey = key,
-    isPinned = isPinned,
+    isPinned = isPinned
 )

@@ -27,10 +27,7 @@ import androidx.compose.ui.Modifier
 
 @ExperimentalComposeUiApi
 @Composable
-fun ArrowBackIconButton(
-    modifier: Modifier = Modifier,
-    onUpClick: () -> Unit
-) {
+fun ArrowBackIconButton(modifier: Modifier = Modifier, onUpClick: () -> Unit) {
     NavigationIconButton(
         modifier = modifier,
         onUpClick = onUpClick

@@ -38,6 +38,6 @@ class TestEncryptInviteKeys @Inject constructor() : EncryptInviteKeys {
     override fun invoke(
         inviterAddressKey: PrivateKey,
         shareKeys: List<ShareKey>,
-        targetAddressKey: PublicKey,
+        targetAddressKey: PublicKey
     ): EncryptedInviteShareKeyList = response
 }

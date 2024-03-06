@@ -150,10 +150,7 @@ class LoginAutofillTest : BaseAutofillTest() {
         runLoginAutofillTest("login/firefox_basic_login_site.json")
     }
 
-    private fun runLoginAutofillTest(
-        file: String,
-        flags: List<RequestFlags> = emptyList()
-    ) {
+    private fun runLoginAutofillTest(file: String, flags: List<RequestFlags> = emptyList()) {
         runAutofillTest(
             file = file,
             item = AutofillItem.Login(

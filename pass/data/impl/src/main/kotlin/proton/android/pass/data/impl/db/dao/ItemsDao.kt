@@ -118,7 +118,7 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
     abstract fun observeAllPinnedItemsForShares(
         userId: String,
         itemType: Int,
-        shareIds: List<String>,
+        shareIds: List<String>
     ): Flow<List<ItemEntity>>
 
     @Query(
@@ -129,10 +129,7 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
           AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
         """
     )
-    abstract fun observeAllPinnedItemsForShares(
-        userId: String,
-        shareIds: List<String>,
-    ): Flow<List<ItemEntity>>
+    abstract fun observeAllPinnedItemsForShares(userId: String, shareIds: List<String>): Flow<List<ItemEntity>>
 
     @Query(
         """
@@ -188,7 +185,11 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
           AND ${ItemEntity.Columns.ID} = :itemId
         """
     )
-    abstract suspend fun setItemState(shareId: String, itemId: String, state: Int)
+    abstract suspend fun setItemState(
+        shareId: String,
+        itemId: String,
+        state: Int
+    )
 
     @Query(
         """
@@ -198,7 +199,11 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
           AND ${ItemEntity.Columns.ID} IN (:itemIds)
         """
     )
-    abstract suspend fun setItemStates(shareId: String, itemIds: List<String>, state: Int)
+    abstract suspend fun setItemStates(
+        shareId: String,
+        itemIds: List<String>,
+        state: Int
+    )
 
     @Query(
         """
@@ -266,7 +271,11 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
           AND ${ItemEntity.Columns.SHARE_ID} = :shareId
         """
     )
-    abstract fun updateLastUsedTime(shareId: String, itemId: String, now: Long)
+    abstract fun updateLastUsedTime(
+        shareId: String,
+        itemId: String,
+        now: Long
+    )
 
     @Query(
         """
@@ -335,8 +344,5 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         ORDER BY ${ItemEntity.Columns.CREATE_TIME} ASC
         """
     )
-    abstract fun observeItemsWithTotpForShare(
-        userId: String,
-        shareId: String
-    ): Flow<List<ItemEntity>>
+    abstract fun observeItemsWithTotpForShare(userId: String, shareId: String): Flow<List<ItemEntity>>
 }

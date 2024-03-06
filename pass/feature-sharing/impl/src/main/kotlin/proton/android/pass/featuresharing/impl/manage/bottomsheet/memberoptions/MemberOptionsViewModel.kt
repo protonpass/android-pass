@@ -192,7 +192,7 @@ class MemberOptionsViewModel @Inject constructor(
     private fun canShowTransferOwnership(
         vaults: List<Vault>,
         selectedVault: Vault,
-        memberPermissions: SharePermission,
+        memberPermissions: SharePermission
     ): TransferOwnershipState {
         // Mandatory: for transfering ownership, user must be owner and the target must be admin
         val minimumRequirementsMatch = selectedVault.isOwned && memberPermissions.hasFlag(SharePermissionFlag.Admin)

@@ -43,7 +43,7 @@ class TestGeneratePasskey @Inject constructor() : GeneratePasskey {
                 note = "note",
                 createTime = Clock.System.now(),
                 credentialId = byteArrayOf(4, 5, 6),
-                userHandle = byteArrayOf(10, 11, 12),
+                userHandle = byteArrayOf(10, 11, 12)
             ),
             response = ""
         )

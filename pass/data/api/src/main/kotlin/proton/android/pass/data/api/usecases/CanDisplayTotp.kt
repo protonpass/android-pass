@@ -24,5 +24,9 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
 interface CanDisplayTotp {
-    operator fun invoke(userId: UserId? = null, shareId: ShareId, itemId: ItemId): Flow<Boolean>
+    operator fun invoke(
+        userId: UserId? = null,
+        shareId: ShareId,
+        itemId: ItemId
+    ): Flow<Boolean>
 }

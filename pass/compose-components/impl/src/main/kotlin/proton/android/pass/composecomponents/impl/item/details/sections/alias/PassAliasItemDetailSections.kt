@@ -36,23 +36,23 @@ internal fun PassAliasItemDetailSections(
     contents: ItemContents.Alias,
     itemColors: PassItemColors,
     mailboxes: ImmutableList<AliasMailbox>,
-    onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
+    onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit
 ) = with(contents) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         PassAliasItemDetailMainSection(
             alias = aliasEmail,
             itemColors = itemColors,
             mailboxes = mailboxes,
-            onSectionClick = onSectionClick,
+            onSectionClick = onSectionClick
         )
 
         if (note.isNotBlank()) {
             PassSharedItemDetailNoteSection(
                 note = note,
-                itemColors = itemColors,
+                itemColors = itemColors
             )
         }
     }

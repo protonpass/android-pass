@@ -25,7 +25,7 @@ class CreateVaultBottomSheetTopBarPreviewProvider : PreviewParameterProvider<Top
         get() = sequenceOf(
             TopBarInput(isLoading = true, showUpgrade = false),
             TopBarInput(isLoading = false, showUpgrade = false),
-            TopBarInput(isLoading = false, showUpgrade = true),
+            TopBarInput(isLoading = false, showUpgrade = true)
         )
 }
 

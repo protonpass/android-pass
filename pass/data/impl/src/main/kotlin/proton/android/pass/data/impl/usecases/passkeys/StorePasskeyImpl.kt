@@ -34,7 +34,11 @@ class StorePasskeyImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val itemRepository: ItemRepository
 ) : StorePasskey {
-    override suspend fun invoke(shareId: ShareId, itemId: ItemId, passkey: Passkey) {
+    override suspend fun invoke(
+        shareId: ShareId,
+        itemId: ItemId,
+        passkey: Passkey
+    ) {
         val userId = requireNotNull(accountManager.getPrimaryUserId().first())
 
         val item = itemRepository.getById(shareId, itemId)

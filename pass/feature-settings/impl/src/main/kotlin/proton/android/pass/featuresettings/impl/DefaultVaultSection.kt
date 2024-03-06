@@ -49,7 +49,7 @@ fun DefaultVaultSection(
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Text(
             text = stringResource(R.string.settings_default_vault_section_title),
-            style = ProtonTheme.typography.defaultSmallWeak,
+            style = ProtonTheme.typography.defaultSmallWeak
         )
         Box(modifier = Modifier.roundedContainerNorm()) {
             VaultSelector(

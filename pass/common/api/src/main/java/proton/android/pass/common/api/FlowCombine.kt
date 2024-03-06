@@ -46,7 +46,7 @@ inline fun <T1, T2, T3, T4, T5, T6, R> combineN(
             args[2] as T3,
             args[3] as T4,
             args[4] as T5,
-            args[5] as T6,
+            args[5] as T6
         )
     }
 }
@@ -79,7 +79,7 @@ inline fun <T1, T2, T3, T4, T5, T6, T7, R> combineN(
             args[3] as T4,
             args[4] as T5,
             args[5] as T6,
-            args[6] as T7,
+            args[6] as T7
         )
     }
 }
@@ -115,7 +115,7 @@ inline fun <T1, T2, T3, T4, T5, T6, T7, T8, R> combineN(
             args[4] as T5,
             args[5] as T6,
             args[6] as T7,
-            args[7] as T8,
+            args[7] as T8
         )
     }
 }
@@ -154,7 +154,7 @@ inline fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, R> combineN(
             args[5] as T6,
             args[6] as T7,
             args[7] as T8,
-            args[8] as T9,
+            args[8] as T9
         )
     }
 }
@@ -196,7 +196,7 @@ inline fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, R> combineN(
             args[6] as T7,
             args[7] as T8,
             args[8] as T9,
-            args[9] as T10,
+            args[9] as T10
         )
     }
 }
@@ -227,7 +227,7 @@ inline fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, R> combineN(
         flow8,
         flow9,
         flow10,
-        flow11,
+        flow11
     ) { args: Array<*> ->
         @Suppress("UNCHECKED_CAST")
         transform(

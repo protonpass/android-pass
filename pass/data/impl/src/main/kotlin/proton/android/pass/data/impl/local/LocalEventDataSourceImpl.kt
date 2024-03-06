@@ -41,14 +41,14 @@ class LocalEventDataSourceImpl @Inject constructor(
         userId: UserId,
         addressId: AddressId,
         shareId: ShareId,
-        eventId: String,
+        eventId: String
     ) {
         PassEventEntity(
             eventId = eventId,
             userId = userId.id,
             addressId = addressId.id,
             shareId = shareId.id,
-            retrievedAt = TimeUtil.getNowUtc(),
+            retrievedAt = TimeUtil.getNowUtc()
         ).let { passEventEntity -> database.passEventsDao().insertOrUpdate(passEventEntity) }
     }
 

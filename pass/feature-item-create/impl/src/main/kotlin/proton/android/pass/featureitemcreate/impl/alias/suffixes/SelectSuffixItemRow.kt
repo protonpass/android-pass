@@ -64,9 +64,7 @@ fun SelectSuffixItemRow(
 
 @Preview
 @Composable
-fun SelectSuffixItemRowPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
+fun SelectSuffixItemRowPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
     PassTheme(isDark = input.first) {
         Surface {
             SelectSuffixItemRow(

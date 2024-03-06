@@ -41,10 +41,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
 import proton.android.pass.featureitemcreate.impl.R
 
 @Composable
-fun AliasOptionsBottomSheet(
-    modifier: Modifier = Modifier,
-    onNavigate: (AliasOptionsNavigation) -> Unit
-) {
+fun AliasOptionsBottomSheet(modifier: Modifier = Modifier, onNavigate: (AliasOptionsNavigation) -> Unit) {
     Column(
         modifier = modifier.bottomSheet(),
         verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -64,61 +61,57 @@ fun AliasOptionsBottomSheet(
     }
 }
 
-private fun editAlias(onEditAlias: () -> Unit): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = {
-                BottomSheetItemTitle(
-                    text = stringResource(id = R.string.bottomsheet_modify_alias_title),
-                    color = ProtonTheme.colors.textNorm
-                )
-            }
-        override val subtitle: (@Composable () -> Unit)?
-            get() = null
-        override val leftIcon: (@Composable () -> Unit)
-            get() = {
-                BottomSheetItemIcon(
-                    iconId = me.proton.core.presentation.R.drawable.ic_proton_pencil,
-                    tint = ProtonTheme.colors.textNorm
-                )
-            }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: () -> Unit
-            get() = onEditAlias
-        override val isDivider = false
-    }
+private fun editAlias(onEditAlias: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = {
+            BottomSheetItemTitle(
+                text = stringResource(id = R.string.bottomsheet_modify_alias_title),
+                color = ProtonTheme.colors.textNorm
+            )
+        }
+    override val subtitle: (@Composable () -> Unit)?
+        get() = null
+    override val leftIcon: (@Composable () -> Unit)
+        get() = {
+            BottomSheetItemIcon(
+                iconId = me.proton.core.presentation.R.drawable.ic_proton_pencil,
+                tint = ProtonTheme.colors.textNorm
+            )
+        }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
+    override val onClick: () -> Unit
+        get() = onEditAlias
+    override val isDivider = false
+}
 
-private fun createRemoveAlias(onRemoveAlias: () -> Unit): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = {
-                BottomSheetItemTitle(
-                    text = stringResource(id = R.string.action_remove),
-                    color = ProtonTheme.colors.notificationError
-                )
-            }
-        override val subtitle: (@Composable () -> Unit)?
-            get() = null
-        override val leftIcon: (@Composable () -> Unit)
-            get() = {
-                BottomSheetItemIcon(
-                    iconId = me.proton.core.presentation.R.drawable.ic_proton_cross_circle,
-                    tint = ProtonTheme.colors.notificationError
-                )
-            }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: () -> Unit
-            get() = onRemoveAlias
-        override val isDivider = false
-    }
+private fun createRemoveAlias(onRemoveAlias: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = {
+            BottomSheetItemTitle(
+                text = stringResource(id = R.string.action_remove),
+                color = ProtonTheme.colors.notificationError
+            )
+        }
+    override val subtitle: (@Composable () -> Unit)?
+        get() = null
+    override val leftIcon: (@Composable () -> Unit)
+        get() = {
+            BottomSheetItemIcon(
+                iconId = me.proton.core.presentation.R.drawable.ic_proton_cross_circle,
+                tint = ProtonTheme.colors.notificationError
+            )
+        }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
+    override val onClick: () -> Unit
+        get() = onRemoveAlias
+    override val isDivider = false
+}
 
 @Preview
 @Composable
-fun AliasOptionsBottomSheetPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun AliasOptionsBottomSheetPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             AliasOptionsBottomSheet(

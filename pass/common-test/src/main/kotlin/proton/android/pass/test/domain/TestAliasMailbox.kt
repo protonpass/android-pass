@@ -22,6 +22,5 @@ import proton.android.pass.domain.AliasMailbox
 
 object TestAliasMailbox {
 
-    fun create(): AliasMailbox =
-        proton.android.pass.domain.AliasMailbox(id = 0, email = "test-email")
+    fun create(): AliasMailbox = proton.android.pass.domain.AliasMailbox(id = 0, email = "test-email")
 }

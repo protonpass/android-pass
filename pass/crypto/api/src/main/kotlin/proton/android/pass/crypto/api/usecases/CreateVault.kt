@@ -27,7 +27,7 @@ data class EncryptedCreateVault(
     val addressId: String,
     val content: String,
     val contentFormatVersion: Int,
-    val encryptedVaultKey: String,
+    val encryptedVaultKey: String
 )
 
 data class CreateVaultOutput(

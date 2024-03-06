@@ -78,10 +78,7 @@ class GetVaultMembersImpl @Inject constructor(
         return members.members.map { it.toDomain(userEmail) }
     }
 
-    private suspend fun fetchPendingInvites(
-        shareId: ShareId,
-        userId: UserId
-    ): List<VaultMember> {
+    private suspend fun fetchPendingInvites(shareId: ShareId, userId: UserId): List<VaultMember> {
         val invites = apiProvider.get<PasswordManagerApi>(userId)
             .invoke { getPendingInvitesForShare(shareId.id) }
             .valueOrThrow

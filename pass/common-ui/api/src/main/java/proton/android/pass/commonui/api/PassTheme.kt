@@ -39,7 +39,7 @@ fun PassTheme(
         LocalPassColors provides passColors,
         LocalPassDimens provides passDimens,
         LocalPassShapes provides passShapes,
-        LocalPassTypography provides passTypography,
+        LocalPassTypography provides passTypography
     ) {
         ProtonTheme(
             isDark = isDark,

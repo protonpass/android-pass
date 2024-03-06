@@ -25,9 +25,6 @@ import proton.android.pass.domain.ShareId
 
 interface ObserveItemRevisions {
 
-    operator fun invoke(
-        shareId: ShareId,
-        itemId: ItemId,
-    ): Flow<List<ItemRevision>>
+    operator fun invoke(shareId: ShareId, itemId: ItemId): Flow<List<ItemRevision>>
 
 }

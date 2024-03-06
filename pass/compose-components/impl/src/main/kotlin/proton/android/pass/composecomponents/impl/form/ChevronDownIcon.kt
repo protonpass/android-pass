@@ -36,6 +36,6 @@ fun ChevronDownIcon(
         modifier = modifier,
         painter = painterResource(CoreR.drawable.ic_proton_chevron_down),
         contentDescription = contentDescription,
-        tint = tint,
+        tint = tint
     )
 }

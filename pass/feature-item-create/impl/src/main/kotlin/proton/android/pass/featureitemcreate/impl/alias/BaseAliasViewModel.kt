@@ -156,8 +156,7 @@ abstract class BaseAliasViewModel(
         hasUserEditedContentFlow.update { true }
     }
 
-    fun onEmitSnackbarMessage(snackbarMessage: AliasSnackbarMessage) =
-        viewModelScope.launch {
-            snackbarDispatcher(snackbarMessage)
-        }
+    fun onEmitSnackbarMessage(snackbarMessage: AliasSnackbarMessage) = viewModelScope.launch {
+        snackbarDispatcher(snackbarMessage)
+    }
 }

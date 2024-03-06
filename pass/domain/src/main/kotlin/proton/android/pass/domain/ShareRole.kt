@@ -61,7 +61,7 @@ fun ShareRole.toPermissions(): SharePermission = when (this) {
             SharePermissionFlag.Create,
             SharePermissionFlag.Update,
             SharePermissionFlag.Trash,
-            SharePermissionFlag.Delete,
+            SharePermissionFlag.Delete
         )
     )
     ShareRole.Write -> SharePermission.fromFlags(
@@ -70,7 +70,7 @@ fun ShareRole.toPermissions(): SharePermission = when (this) {
             SharePermissionFlag.Create,
             SharePermissionFlag.Update,
             SharePermissionFlag.Trash,
-            SharePermissionFlag.Delete,
+            SharePermissionFlag.Delete
         )
     )
     ShareRole.Read -> SharePermission.fromFlags(listOf(SharePermissionFlag.Read))

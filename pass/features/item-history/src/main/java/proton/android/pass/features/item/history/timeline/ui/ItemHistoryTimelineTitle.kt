@@ -25,10 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 @Composable
-internal fun ItemHistoryTimelineTitle(
-    modifier: Modifier = Modifier,
-    text: String,
-) {
+internal fun ItemHistoryTimelineTitle(modifier: Modifier = Modifier, text: String) {
     Text(
         modifier = modifier,
         text = text,
@@ -36,6 +33,6 @@ internal fun ItemHistoryTimelineTitle(
         fontWeight = FontWeight.W700,
         letterSpacing = 0.03.sp,
         lineHeight = 34.sp,
-        maxLines = 1,
+        maxLines = 1
     )
 }

@@ -33,8 +33,5 @@ sealed interface CanAddressesBeInvitedResult {
 }
 
 interface CheckCanAddressesBeInvited {
-    suspend operator fun invoke(
-        shareId: ShareId,
-        addresses: List<String>
-    ): CanAddressesBeInvitedResult
+    suspend operator fun invoke(shareId: ShareId, addresses: List<String>): CanAddressesBeInvitedResult
 }

@@ -77,7 +77,7 @@ internal fun WebsitesSection(
     websitesWithErrors: ImmutableList<Int>,
     focusLastWebsite: Boolean,
     isEditAllowed: Boolean,
-    onWebsiteSectionEvent: (WebsiteSectionEvent) -> Unit,
+    onWebsiteSectionEvent: (WebsiteSectionEvent) -> Unit
 ) {
     var isFocused: Boolean by rememberSaveable { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
@@ -215,7 +215,7 @@ fun WebsitesSectionPreview(
                 focusLastWebsite = false,
                 isEditAllowed = input.second.isEditAllowed,
                 websitesWithErrors = persistentListOf(),
-                onWebsiteSectionEvent = {},
+                onWebsiteSectionEvent = {}
             )
         }
     }
@@ -236,7 +236,7 @@ fun WebsitesSectionWithErrorsPreview(
                 focusLastWebsite = false,
                 isEditAllowed = input.second.isEditAllowed,
                 websitesWithErrors = input.second.websitesWithErrors,
-                onWebsiteSectionEvent = {},
+                onWebsiteSectionEvent = {}
             )
         }
     }

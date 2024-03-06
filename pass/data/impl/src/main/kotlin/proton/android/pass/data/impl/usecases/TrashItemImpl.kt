@@ -33,13 +33,12 @@ class TrashItemImpl @Inject constructor(
     private val itemsRepository: ItemRepository
 ) : TrashItems {
 
-    override suspend fun invoke(userId: UserId?, items: Map<ShareId, List<ItemId>>) =
-        if (userId == null) {
-            observeCurrentUser()
-                .map { itemsRepository.trashItems(it.userId, items) }
-                .first()
-        } else {
-            itemsRepository.trashItems(userId, items)
-        }
+    override suspend fun invoke(userId: UserId?, items: Map<ShareId, List<ItemId>>) = if (userId == null) {
+        observeCurrentUser()
+            .map { itemsRepository.trashItems(it.userId, items) }
+            .first()
+    } else {
+        itemsRepository.trashItems(userId, items)
+    }
 }
 

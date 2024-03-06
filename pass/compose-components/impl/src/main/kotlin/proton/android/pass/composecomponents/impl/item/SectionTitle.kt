@@ -26,10 +26,7 @@ import androidx.compose.ui.unit.sp
 import me.proton.core.compose.theme.ProtonTheme
 
 @Composable
-fun SectionTitle(
-    modifier: Modifier = Modifier,
-    text: String
-) {
+fun SectionTitle(modifier: Modifier = Modifier, text: String) {
     Text(
         modifier = modifier,
         text = text,

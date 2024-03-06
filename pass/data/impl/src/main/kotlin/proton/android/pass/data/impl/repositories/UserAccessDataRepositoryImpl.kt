@@ -30,9 +30,8 @@ import javax.inject.Inject
 class UserAccessDataRepositoryImpl @Inject constructor(
     private val localUserAccessDataDataSource: LocalUserAccessDataDataSource
 ) : UserAccessDataRepository {
-    override fun observe(userId: UserId): Flow<UserAccessData?> =
-        localUserAccessDataDataSource.observe(userId)
-            .map { it?.toDomain() }
+    override fun observe(userId: UserId): Flow<UserAccessData?> = localUserAccessDataDataSource.observe(userId)
+        .map { it?.toDomain() }
 
 
     private fun UserAccessDataEntity.toDomain() = UserAccessData(

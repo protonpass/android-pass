@@ -51,7 +51,7 @@ internal fun ItemHistoryRestoreContent(
     onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
     onHiddenSectionClick: (HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
     onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
-    state: ItemHistoryRestoreState,
+    state: ItemHistoryRestoreState
 ) {
     when (state) {
         ItemHistoryRestoreState.Initial -> {
@@ -69,19 +69,17 @@ internal fun ItemHistoryRestoreContent(
                 onSectionClick = onSectionClick,
                 onHiddenSectionClick = onHiddenSectionClick,
                 onHiddenSectionToggle = onHiddenSectionToggle,
-                state = state,
+                state = state
             )
         }
     }
 }
 
 @Composable
-private fun ItemHistoryRestoreLoading(
-    modifier: Modifier = Modifier,
-) {
+private fun ItemHistoryRestoreLoading(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center,
+        contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator()
     }
@@ -98,7 +96,7 @@ private fun ItemHistoryRestoreDetails(
     onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
     onHiddenSectionClick: (HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
     onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
-    state: ItemHistoryRestoreState.ItemDetails,
+    state: ItemHistoryRestoreState.ItemDetails
 ) = with(state) {
     var isDialogVisible by remember { mutableStateOf(false) }
     var isDialogLoading by remember { mutableStateOf(false) }
@@ -142,13 +140,13 @@ private fun ItemHistoryRestoreDetails(
             ItemHistoryRestoreTopBar(
                 colors = itemColors,
                 onUpClick = { onNavigated(ItemHistoryNavDestination.Back) },
-                onRestoreClick = onRestoreClick,
+                onRestoreClick = onRestoreClick
             )
         },
         onSectionClick = onSectionClick,
         onHiddenSectionClick = onHiddenSectionClick,
         onHiddenSectionToggle = onHiddenSectionToggle,
-        onLinkClick = { link -> BrowserUtils.openWebsite(context, link) },
+        onLinkClick = { link -> BrowserUtils.openWebsite(context, link) }
     )
 
     ItemHistoryRestoreConfirmationDialog(
@@ -156,6 +154,6 @@ private fun ItemHistoryRestoreDetails(
         isLoading = isDialogLoading,
         onConfirm = { onRestoreConfirmClick(itemDetailState.itemContents) },
         onDismiss = onRestoreCancelClick,
-        revisionTime = itemRevision.revisionTime,
+        revisionTime = itemRevision.revisionTime
     )
 }

@@ -62,9 +62,7 @@ sealed interface SettingsNavigation {
     object SyncDialog : SettingsNavigation
 }
 
-fun NavGraphBuilder.settingsGraph(
-    onNavigate: (SettingsNavigation) -> Unit
-) {
+fun NavGraphBuilder.settingsGraph(onNavigate: (SettingsNavigation) -> Unit) {
     navigation(
         route = SETTINGS_GRAPH,
         startDestination = Settings.route
@@ -82,7 +80,7 @@ fun NavGraphBuilder.settingsGraph(
         }
         bottomSheet(ClipboardSettings) {
             ClipboardBottomSheet(
-                onClearClipboardSettingClick = { onNavigate(SettingsNavigation.ClearClipboardSettings) },
+                onClearClipboardSettingClick = { onNavigate(SettingsNavigation.ClearClipboardSettings) }
             )
         }
         bottomSheet(ClearClipboardOptions) {

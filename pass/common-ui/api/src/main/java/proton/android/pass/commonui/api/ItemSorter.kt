@@ -55,10 +55,7 @@ sealed interface GroupingKeys {
 }
 
 object AlphabeticalKeyComparator : Comparator<GroupingKeys.AlphabeticalKey> {
-    override fun compare(
-        o1: GroupingKeys.AlphabeticalKey?,
-        o2: GroupingKeys.AlphabeticalKey?
-    ): Int {
+    override fun compare(o1: GroupingKeys.AlphabeticalKey?, o2: GroupingKeys.AlphabeticalKey?): Int {
         if (o1 == null || o2 == null) {
             return 0
         }
@@ -87,86 +84,75 @@ object MostRecentKeyComparator : Comparator<GroupingKeys.MostRecentKey> {
 object ItemSorter {
     private val monthlyFormatter = DateTimeFormatter.ofPattern("LLLL yyyy")
 
-    private fun List<ItemUiModel>.groupByFirstChar(): Map<GroupingKeys.AlphabeticalKey, List<ItemUiModel>> =
-        groupBy {
-            it.contents.title.firstOrNull()?.takeIf { char -> char.isLetter() }?.uppercaseChar()
-                ?: '#'
+    private fun List<ItemUiModel>.groupByFirstChar(): Map<GroupingKeys.AlphabeticalKey, List<ItemUiModel>> = groupBy {
+        it.contents.title.firstOrNull()?.takeIf { char -> char.isLetter() }?.uppercaseChar()
+            ?: '#'
+    }
+        .mapKeys { GroupingKeys.AlphabeticalKey(it.key) }
+
+    fun List<ItemUiModel>.groupAndSortByTitleAsc(): List<GroupedItemList> = groupByFirstChar()
+        .toSortedMap(AlphabeticalKeyComparator)
+        .map { entry ->
+            GroupedItemList(entry.key, entry.value.sortByTitleAsc())
         }
-            .mapKeys { GroupingKeys.AlphabeticalKey(it.key) }
 
-    fun List<ItemUiModel>.groupAndSortByTitleAsc(): List<GroupedItemList> =
-        groupByFirstChar()
-            .toSortedMap(AlphabeticalKeyComparator)
-            .map { entry ->
-                GroupedItemList(entry.key, entry.value.sortByTitleAsc())
-            }
+    fun List<ItemUiModel>.sortByTitleAsc(): List<ItemUiModel> = sortedBy { it.contents.title.lowercase() }
 
-    fun List<ItemUiModel>.sortByTitleAsc(): List<ItemUiModel> =
-        sortedBy { it.contents.title.lowercase() }
+    fun List<ItemUiModel>.groupAndSortByTitleDesc(): List<GroupedItemList> = groupByFirstChar()
+        .toSortedMap(AlphabeticalKeyComparator.reversed())
+        .map { entry ->
+            GroupedItemList(entry.key, entry.value.sortByTitleDesc())
+        }
 
-    fun List<ItemUiModel>.groupAndSortByTitleDesc(): List<GroupedItemList> =
-        groupByFirstChar()
-            .toSortedMap(AlphabeticalKeyComparator.reversed())
-            .map { entry ->
-                GroupedItemList(entry.key, entry.value.sortByTitleDesc())
-            }
+    fun List<ItemUiModel>.sortByTitleDesc(): List<ItemUiModel> = sortedByDescending { it.contents.title.lowercase() }
 
-    fun List<ItemUiModel>.sortByTitleDesc(): List<ItemUiModel> =
-        sortedByDescending { it.contents.title.lowercase() }
+    private fun List<ItemUiModel>.groupByMonthAndYear() = groupBy {
+        monthlyFormatter.format(
+            it.createTime.toLocalDateTime(TimeZone.UTC).toJavaLocalDateTime()
+        )
+    }.mapKeys { GroupingKeys.MonthlyKey(it.key, it.value.first().createTime) }
 
-    private fun List<ItemUiModel>.groupByMonthAndYear() =
-        groupBy {
-            monthlyFormatter.format(
-                it.createTime.toLocalDateTime(TimeZone.UTC).toJavaLocalDateTime()
+    fun List<ItemUiModel>.groupAndSortByCreationAsc(): List<GroupedItemList> = groupByMonthAndYear()
+        .toSortedMap(MonthlyKeyComparator)
+        .map { entry -> GroupedItemList(entry.key, entry.value.sortByCreationAsc()) }
+
+    fun List<ItemUiModel>.sortByCreationAsc(): List<ItemUiModel> = sortedBy { it.createTime }
+
+    fun List<ItemUiModel>.groupAndSortByCreationDesc(): List<GroupedItemList> = groupByMonthAndYear()
+        .toSortedMap(MonthlyKeyComparator.reversed())
+        .map { entry ->
+            GroupedItemList(entry.key, entry.value.sortByCreationDesc())
+        }
+
+    fun List<ItemUiModel>.sortByCreationDesc(): List<ItemUiModel> = sortedByDescending { it.createTime }
+
+    fun List<ItemUiModel>.groupAndSortByMostRecent(now: Instant): List<GroupedItemList> = groupBy { item ->
+        DateFormatUtils.getFormat(
+            now = now,
+            toFormat = recentDate(item.modificationTime, item.lastAutofillTime),
+            acceptedFormats = listOf(
+                Today,
+                Yesterday,
+                ThisWeek,
+                LastTwoWeeks,
+                Last30Days,
+                Last60Days,
+                Last90Days,
+                LastYear,
+                MoreThan1Year
             )
-        }.mapKeys { GroupingKeys.MonthlyKey(it.key, it.value.first().createTime) }
-
-    fun List<ItemUiModel>.groupAndSortByCreationAsc(): List<GroupedItemList> =
-        groupByMonthAndYear()
-            .toSortedMap(MonthlyKeyComparator)
-            .map { entry -> GroupedItemList(entry.key, entry.value.sortByCreationAsc()) }
-
-    fun List<ItemUiModel>.sortByCreationAsc(): List<ItemUiModel> =
-        sortedBy { it.createTime }
-
-    fun List<ItemUiModel>.groupAndSortByCreationDesc(): List<GroupedItemList> =
-        groupByMonthAndYear()
-            .toSortedMap(MonthlyKeyComparator.reversed())
-            .map { entry ->
-                GroupedItemList(entry.key, entry.value.sortByCreationDesc())
-            }
-
-    fun List<ItemUiModel>.sortByCreationDesc(): List<ItemUiModel> =
-        sortedByDescending { it.createTime }
-
-    fun List<ItemUiModel>.groupAndSortByMostRecent(now: Instant): List<GroupedItemList> =
-        groupBy { item ->
-            DateFormatUtils.getFormat(
-                now = now,
-                toFormat = recentDate(item.modificationTime, item.lastAutofillTime),
-                acceptedFormats = listOf(
-                    Today,
-                    Yesterday,
-                    ThisWeek,
-                    LastTwoWeeks,
-                    Last30Days,
-                    Last60Days,
-                    Last90Days,
-                    LastYear,
-                    MoreThan1Year
-                )
+        )
+    }
+        .mapKeys { entry ->
+            GroupingKeys.MostRecentKey(
+                entry.key,
+                entry.value.first().let { recentDate(it.modificationTime, it.lastAutofillTime) }
             )
         }
-            .mapKeys { entry ->
-                GroupingKeys.MostRecentKey(
-                    entry.key,
-                    entry.value.first().let { recentDate(it.modificationTime, it.lastAutofillTime) }
-                )
-            }
-            .toSortedMap(MostRecentKeyComparator.reversed())
-            .map { entry ->
-                GroupedItemList(entry.key, entry.value.sortMostRecent())
-            }
+        .toSortedMap(MostRecentKeyComparator.reversed())
+        .map { entry ->
+            GroupedItemList(entry.key, entry.value.sortMostRecent())
+        }
 
     fun List<ItemUiModel>.sortMostRecent(): List<ItemUiModel> =
         sortedByDescending { recentDate(it.modificationTime, it.lastAutofillTime) }

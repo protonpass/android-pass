@@ -77,15 +77,14 @@ class MemberOptionsViewModelTest {
     }
 
     @Test
-    fun `does not show transfer ownership if vault is owned but member role is not admin`() =
-        runTest {
-            setupTest(memberRole = ShareRole.Write)
-            emitVault(owned = true)
-            instance.state.test {
-                val item = awaitItem()
-                assertThat(item.transferOwnership).isEqualTo(TransferOwnershipState.Hide)
-            }
+    fun `does not show transfer ownership if vault is owned but member role is not admin`() = runTest {
+        setupTest(memberRole = ShareRole.Write)
+        emitVault(owned = true)
+        instance.state.test {
+            val item = awaitItem()
+            assertThat(item.transferOwnership).isEqualTo(TransferOwnershipState.Hide)
         }
+    }
 
     @Test
     fun `does not show transfer ownership if vault is not owned`() = runTest {

@@ -68,9 +68,7 @@ fun PassOutlinedButton(
 
 @Preview
 @Composable
-fun PassOutlinedButtonPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun PassOutlinedButtonPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             PassOutlinedButton(

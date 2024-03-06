@@ -43,7 +43,11 @@ class TestUpdateVault @Inject constructor() : UpdateVault {
 
     fun getSentValue(): Payload? = value
 
-    override suspend fun invoke(userId: SessionUserId?, shareId: ShareId, vault: NewVault): Share {
+    override suspend fun invoke(
+        userId: SessionUserId?,
+        shareId: ShareId,
+        vault: NewVault
+    ): Share {
         value = Payload(userId, shareId, vault)
         return result.fold(
             onSuccess = { it },

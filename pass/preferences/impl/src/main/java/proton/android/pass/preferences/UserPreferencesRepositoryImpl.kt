@@ -58,10 +58,9 @@ class UserPreferencesRepositoryImpl @Inject constructor(
             ?: HasAuthenticated.from(fromBooleanPrefProto(it.hasAuthenticatedWithBiometry))
     }
 
-    override fun setHasCompletedOnBoarding(state: HasCompletedOnBoarding): Result<Unit> =
-        setPreference {
-            it.setCompletedOnboarding(state.value().toBooleanPrefProto())
-        }
+    override fun setHasCompletedOnBoarding(state: HasCompletedOnBoarding): Result<Unit> = setPreference {
+        it.setCompletedOnboarding(state.value().toBooleanPrefProto())
+    }
 
     override fun getHasCompletedOnBoarding(): Flow<HasCompletedOnBoarding> = getPreference {
         HasCompletedOnBoarding.from(fromBooleanPrefProto(it.completedOnboarding))
@@ -75,10 +74,9 @@ class UserPreferencesRepositoryImpl @Inject constructor(
         ThemePreference.from(it.themeValue)
     }
 
-    override fun setHasDismissedAutofillBanner(state: HasDismissedAutofillBanner): Result<Unit> =
-        setPreference {
-            it.setHasDismissedAutofillBanner(state.value().toBooleanPrefProto())
-        }
+    override fun setHasDismissedAutofillBanner(state: HasDismissedAutofillBanner): Result<Unit> = setPreference {
+        it.setHasDismissedAutofillBanner(state.value().toBooleanPrefProto())
+    }
 
     override fun getHasDismissedAutofillBanner(): Flow<HasDismissedAutofillBanner> = getPreference {
         HasDismissedAutofillBanner.from(fromBooleanPrefProto(it.hasDismissedAutofillBanner))
@@ -93,10 +91,9 @@ class UserPreferencesRepositoryImpl @Inject constructor(
         HasDismissedNotificationBanner.from(fromBooleanPrefProto(it.hasDismissedNotificationBanner))
     }
 
-    override fun setCopyTotpToClipboardEnabled(state: CopyTotpToClipboard): Result<Unit> =
-        setPreference {
-            it.setCopyTotpToClipboardEnabled(state.value().toBooleanPrefProto())
-        }
+    override fun setCopyTotpToClipboardEnabled(state: CopyTotpToClipboard): Result<Unit> = setPreference {
+        it.setCopyTotpToClipboardEnabled(state.value().toBooleanPrefProto())
+    }
 
     override fun getCopyTotpToClipboardEnabled(): Flow<CopyTotpToClipboard> = getPreference {
         CopyTotpToClipboard.from(
@@ -107,9 +104,7 @@ class UserPreferencesRepositoryImpl @Inject constructor(
         )
     }
 
-    override fun setClearClipboardPreference(
-        clearClipboard: ClearClipboardPreference
-    ): Result<Unit> = setPreference {
+    override fun setClearClipboardPreference(clearClipboard: ClearClipboardPreference): Result<Unit> = setPreference {
         it.setClearClipboardAfterValue(clearClipboard.value())
     }
 
@@ -117,9 +112,8 @@ class UserPreferencesRepositoryImpl @Inject constructor(
         ClearClipboardPreference.from(it.clearClipboardAfterValue)
     }
 
-    override fun setUseFaviconsPreference(
-        useFavicons: UseFaviconsPreference
-    ): Result<Unit> = setPreference { it.setUseFavicons(useFavicons.value().toBooleanPrefProto()) }
+    override fun setUseFaviconsPreference(useFavicons: UseFaviconsPreference): Result<Unit> =
+        setPreference { it.setUseFavicons(useFavicons.value().toBooleanPrefProto()) }
 
     override fun getUseFaviconsPreference(): Flow<UseFaviconsPreference> = getPreference {
         UseFaviconsPreference.from(
@@ -130,9 +124,8 @@ class UserPreferencesRepositoryImpl @Inject constructor(
         )
     }
 
-    override fun setAppLockTimePreference(
-        preference: AppLockTimePreference
-    ): Result<Unit> = setPreference { it.setLockApp(preference.toProto()) }
+    override fun setAppLockTimePreference(preference: AppLockTimePreference): Result<Unit> =
+        setPreference { it.setLockApp(preference.toProto()) }
 
     override fun getAppLockTimePreference(): Flow<AppLockTimePreference> = getPreference {
         it.lockApp.toValue(default = AppLockTimePreference.InTwoMinutes)
@@ -145,43 +138,36 @@ class UserPreferencesRepositoryImpl @Inject constructor(
         it.appLockType.toValue(default = AppLockTypePreference.None)
     }
 
-    override fun setBiometricSystemLockPreference(
-        preference: BiometricSystemLockPreference
-    ): Result<Unit> = setPreference {
-        it.setBiometricSystemLock(preference.value().toBooleanPrefProto())
+    override fun setBiometricSystemLockPreference(preference: BiometricSystemLockPreference): Result<Unit> =
+        setPreference {
+            it.setBiometricSystemLock(preference.value().toBooleanPrefProto())
+        }
+
+    override fun getBiometricSystemLockPreference(): Flow<BiometricSystemLockPreference> = getPreference {
+        BiometricSystemLockPreference.from(
+            fromBooleanPrefProto(
+                pref = it.biometricSystemLock,
+                default = true
+            )
+        )
     }
 
-    override fun getBiometricSystemLockPreference(): Flow<BiometricSystemLockPreference> =
-        getPreference {
-            BiometricSystemLockPreference.from(
-                fromBooleanPrefProto(
-                    pref = it.biometricSystemLock,
-                    default = true
-                )
-            )
-        }
+    override fun setPasswordGenerationPreference(preference: PasswordGenerationPreference): Result<Unit> =
+        setPreference { it.setPasswordGeneration(preference.toProto()) }
 
-    override fun setPasswordGenerationPreference(
-        preference: PasswordGenerationPreference
-    ): Result<Unit> = setPreference { it.setPasswordGeneration(preference.toProto()) }
+    override fun getPasswordGenerationPreference(): Flow<PasswordGenerationPreference> = getPreference {
+        it.passwordGeneration.toValue()
+    }
 
-    override fun getPasswordGenerationPreference(): Flow<PasswordGenerationPreference> =
-        getPreference {
-            it.passwordGeneration.toValue()
-        }
-
-    override fun setHasDismissedTrialBanner(state: HasDismissedTrialBanner): Result<Unit> =
-        setPreference {
-            it.setHasDismissedTrialBanner(state.value().toBooleanPrefProto())
-        }
+    override fun setHasDismissedTrialBanner(state: HasDismissedTrialBanner): Result<Unit> = setPreference {
+        it.setHasDismissedTrialBanner(state.value().toBooleanPrefProto())
+    }
 
     override fun getHasDismissedTrialBanner(): Flow<HasDismissedTrialBanner> = getPreference {
         HasDismissedTrialBanner.from(fromBooleanPrefProto(it.hasDismissedTrialBanner))
     }
 
-    override fun setAllowScreenshotsPreference(
-        preference: AllowScreenshotsPreference
-    ): Result<Unit> = setPreference {
+    override fun setAllowScreenshotsPreference(preference: AllowScreenshotsPreference): Result<Unit> = setPreference {
         it.setAllowScreenshots(preference.value().toBooleanPrefProto())
     }
 
@@ -203,11 +189,10 @@ class UserPreferencesRepositoryImpl @Inject constructor(
 
     override suspend fun clearPreferences(): Result<Unit> = setPreferenceSuspend { it.clear() }
 
-    private fun setPreference(
-        mapper: suspend (UserPreferences.Builder) -> UserPreferences.Builder
-    ): Result<Unit> = runBlocking {
-        setPreferenceSuspend(mapper)
-    }
+    private fun setPreference(mapper: suspend (UserPreferences.Builder) -> UserPreferences.Builder): Result<Unit> =
+        runBlocking {
+            setPreferenceSuspend(mapper)
+        }
 
     private suspend fun setPreferenceSuspend(
         mapper: suspend (UserPreferences.Builder) -> UserPreferences.Builder
@@ -221,9 +206,7 @@ class UserPreferencesRepositoryImpl @Inject constructor(
         .catch { exception -> handleExceptions(exception) }
         .map { settings -> mapper(settings) }
 
-    private fun FlowCollector<UserPreferences>.handleExceptions(
-        exception: Throwable
-    ) {
+    private fun FlowCollector<UserPreferences>.handleExceptions(exception: Throwable) {
         if (exception is IOException) {
             PassLogger.e("Cannot read preferences.", exception)
             runBlocking { emit(UserPreferences.getDefaultInstance()) }

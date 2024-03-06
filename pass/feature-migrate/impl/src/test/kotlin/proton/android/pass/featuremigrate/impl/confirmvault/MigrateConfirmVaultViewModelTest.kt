@@ -119,7 +119,7 @@ class MigrateConfirmVaultViewModelTest {
     private fun sourceVault(): VaultWithItemCount = VaultWithItemCount(
         vault = Vault(
             shareId = SHARE_ID,
-            name = "source",
+            name = "source"
         ),
         activeItemCount = 1,
         trashedItemCount = 0

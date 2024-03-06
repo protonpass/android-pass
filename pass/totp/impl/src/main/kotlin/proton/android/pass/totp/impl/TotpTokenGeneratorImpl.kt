@@ -27,10 +27,7 @@ class TotpTokenGeneratorImpl @Inject constructor() : TotpTokenGenerator {
 
     private val totpTokenGenerator by lazy { RustTotpTokenGenerator() }
 
-    override fun generate(
-        uri: String,
-        currentTime: ULong
-    ): Result<TotpGenerationResult> = runCatching {
+    override fun generate(uri: String, currentTime: ULong): Result<TotpGenerationResult> = runCatching {
         totpTokenGenerator.generateToken(uri, currentTime)
     }.fold(
         onSuccess = { Result.success(it.toDomain()) },

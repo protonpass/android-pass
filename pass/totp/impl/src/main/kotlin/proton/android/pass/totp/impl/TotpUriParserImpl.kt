@@ -27,10 +27,9 @@ class TotpUriParserImpl @Inject constructor() : TotpUriParser {
 
     private val totpUriParser by lazy { RustTotpUriParser() }
 
-    override fun parse(input: String): Result<TotpSpec> =
-        runCatching { totpUriParser.parse(input) }
-            .fold(
-                onSuccess = { Result.success(it.toTotpSpec()) },
-                onFailure = { Result.failure((it as TotpException).toTotpUriException()) }
-            )
+    override fun parse(input: String): Result<TotpSpec> = runCatching { totpUriParser.parse(input) }
+        .fold(
+            onSuccess = { Result.success(it.toTotpSpec()) },
+            onFailure = { Result.failure((it as TotpException).toTotpUriException()) }
+        )
 }

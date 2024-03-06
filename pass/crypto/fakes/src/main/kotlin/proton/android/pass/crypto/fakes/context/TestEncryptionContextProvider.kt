@@ -33,14 +33,10 @@ class TestEncryptionContextProvider @Inject constructor() : EncryptionContextPro
         context
     )
 
-    override fun <R> withEncryptionContext(
-        key: EncryptionKey,
-        block: EncryptionContext.() -> R
-    ): R = block(context)
+    override fun <R> withEncryptionContext(key: EncryptionKey, block: EncryptionContext.() -> R): R = block(context)
 
-    override suspend fun <R> withEncryptionContextSuspendable(
-        block: suspend EncryptionContext.() -> R
-    ): R = block(context)
+    override suspend fun <R> withEncryptionContextSuspendable(block: suspend EncryptionContext.() -> R): R =
+        block(context)
 
     override suspend fun <R> withEncryptionContextSuspendable(
         key: EncryptionKey,

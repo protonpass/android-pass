@@ -32,13 +32,10 @@ import proton.android.pass.domain.key.ShareKey
 import javax.inject.Inject
 
 class CreateItemImpl @Inject constructor(
-    private val encryptionContextProvider: EncryptionContextProvider,
+    private val encryptionContextProvider: EncryptionContextProvider
 ) : CreateItem {
 
-    override fun create(
-        shareKey: ShareKey,
-        itemContents: ItemContents
-    ): CreateItemPayload {
+    override fun create(shareKey: ShareKey, itemContents: ItemContents): CreateItemPayload {
         val serializedItem = encryptionContextProvider.withEncryptionContext {
             itemContents.serializeToProto(encryptionContext = this).toByteArray()
         }

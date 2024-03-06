@@ -34,7 +34,5 @@ class TestObserveSearchEntry @Inject constructor() : ObserveSearchEntry {
         flow.tryEmit(value)
     }
 
-    override fun invoke(
-        searchEntrySelection: ObserveSearchEntry.SearchEntrySelection
-    ): Flow<List<SearchEntry>> = flow
+    override fun invoke(searchEntrySelection: ObserveSearchEntry.SearchEntrySelection): Flow<List<SearchEntry>> = flow
 }

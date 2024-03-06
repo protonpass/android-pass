@@ -24,5 +24,5 @@ import androidx.compose.runtime.Stable
 data class Totp(
     val code: String,
     val remainingSeconds: Int,
-    val totalSeconds: Int,
+    val totalSeconds: Int
 )

@@ -34,8 +34,7 @@ object AliasOptionsBottomSheet : NavItem(
     navArgIds = listOf(CommonNavArgId.ShareId, ShowUpgradeNavArgId),
     navItemType = NavItemType.Bottomsheet
 ) {
-    fun createNavRoute(shareId: ShareId, showUpgrade: Boolean) =
-        "$baseRoute/${shareId.id}/$showUpgrade"
+    fun createNavRoute(shareId: ShareId, showUpgrade: Boolean) = "$baseRoute/${shareId.id}/$showUpgrade"
 }
 
 sealed interface AliasOptionsNavigation {
@@ -43,9 +42,7 @@ sealed interface AliasOptionsNavigation {
     object OnDeleteAlias : AliasOptionsNavigation
 }
 
-fun NavGraphBuilder.aliasOptionsBottomSheetGraph(
-    onNavigate: (BaseLoginNavigation) -> Unit
-) {
+fun NavGraphBuilder.aliasOptionsBottomSheetGraph(onNavigate: (BaseLoginNavigation) -> Unit) {
     bottomSheet(AliasOptionsBottomSheet) { navStack ->
         val shareId = navStack.arguments?.getString(CommonNavArgId.ShareId.key)
             ?: throw IllegalStateException("ShareId is required")

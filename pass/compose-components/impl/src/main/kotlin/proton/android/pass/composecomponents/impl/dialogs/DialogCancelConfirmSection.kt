@@ -44,7 +44,7 @@ fun DialogCancelConfirmSection(
     disabledColor: Color = color,
     confirmEnabled: Boolean = true,
     onDismiss: () -> Unit,
-    onConfirm: () -> Unit,
+    onConfirm: () -> Unit
 ) {
     val confirmColor = if (confirmEnabled) color else disabledColor
     Row(

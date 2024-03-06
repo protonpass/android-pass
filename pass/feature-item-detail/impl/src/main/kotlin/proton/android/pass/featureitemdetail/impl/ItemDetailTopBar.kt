@@ -61,7 +61,7 @@ internal fun ItemDetailTopBar(
     onEditClick: () -> Unit,
     onOptionsClick: () -> Unit,
     onShareClick: () -> Unit,
-    shouldShowMenu: Boolean,
+    shouldShowMenu: Boolean
 ) {
     ProtonTopAppBar(
         modifier = modifier,
@@ -85,7 +85,7 @@ internal fun ItemDetailTopBar(
                 onEditClick = onEditClick,
                 onOptionsClick = onOptionsClick,
                 onShareClick = onShareClick,
-                shouldShowMenu = shouldShowMenu,
+                shouldShowMenu = shouldShowMenu
             )
         }
     )
@@ -102,7 +102,7 @@ private fun ItemTopBarActions(
     onEditClick: () -> Unit,
     onOptionsClick: () -> Unit,
     onShareClick: () -> Unit,
-    shouldShowMenu: Boolean,
+    shouldShowMenu: Boolean
 ) {
     Row(
         modifier = modifier
@@ -129,7 +129,7 @@ private fun ItemTopBarActions(
             isVisible = !isLoading && shouldShowMenu,
             iconBackgroundColor = iconBackgroundColor,
             iconColor = iconColor,
-            onOptionsClick = onOptionsClick,
+            onOptionsClick = onOptionsClick
         )
     }
 }
@@ -185,7 +185,7 @@ private fun ItemDetailShareButton(
     isEnabled: Boolean,
     iconBackgroundColor: Color,
     iconColor: Color,
-    onShareClick: () -> Unit,
+    onShareClick: () -> Unit
 ) {
     CircleIconButton(
         modifier = modifier,
@@ -196,7 +196,7 @@ private fun ItemDetailShareButton(
         iconContentDescription = stringResource(id = R.string.share_button_content_description),
         enabled = isEnabled,
         onClick = onShareClick,
-        onDisabledClick = onShareClick,
+        onDisabledClick = onShareClick
     )
 }
 
@@ -206,7 +206,7 @@ private fun ItemDetailOptionsButton(
     isVisible: Boolean,
     iconBackgroundColor: Color,
     iconColor: Color,
-    onOptionsClick: () -> Unit,
+    onOptionsClick: () -> Unit
 ) {
     AnimatedVisibility(visible = isVisible) {
         CircleIconButton(
@@ -216,7 +216,7 @@ private fun ItemDetailOptionsButton(
             backgroundColor = iconBackgroundColor,
             tintColor = iconColor,
             iconContentDescription = stringResource(id = R.string.open_menu_icon_content_description),
-            onClick = onOptionsClick,
+            onClick = onOptionsClick
         )
     }
 }
@@ -242,7 +242,7 @@ fun ItemDetailTopBarPreview(
                 onOptionsClick = {},
                 onShareClick = {},
                 actions = input.second.actions,
-                shouldShowMenu = true,
+                shouldShowMenu = true
             )
         }
     }

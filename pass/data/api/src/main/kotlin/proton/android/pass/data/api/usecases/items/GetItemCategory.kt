@@ -24,9 +24,6 @@ import proton.android.pass.domain.items.ItemCategory
 
 interface GetItemCategory {
 
-    suspend operator fun invoke(
-        shareId: ShareId,
-        itemId: ItemId,
-    ): ItemCategory
+    suspend operator fun invoke(shareId: ShareId, itemId: ItemId): ItemCategory
 
 }

@@ -27,26 +27,23 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.R
 
 @Composable
-fun PassPasswordStrengthIcon(
-    passwordStrength: PasswordStrength,
-    modifier: Modifier = Modifier,
-) {
+fun PassPasswordStrengthIcon(passwordStrength: PasswordStrength, modifier: Modifier = Modifier) {
     val (iconResId, iconTint) = when (passwordStrength) {
         PasswordStrength.None -> return
 
         PasswordStrength.Strong -> Pair(
             R.drawable.ic_shield_success,
-            PassTheme.colors.signalSuccess,
+            PassTheme.colors.signalSuccess
         )
 
         PasswordStrength.Vulnerable -> Pair(
             R.drawable.ic_shield_danger,
-            PassTheme.colors.signalDanger,
+            PassTheme.colors.signalDanger
         )
 
         PasswordStrength.Weak -> Pair(
             R.drawable.ic_shield_warning,
-            PassTheme.colors.signalWarning,
+            PassTheme.colors.signalWarning
         )
     }
 
@@ -54,6 +51,6 @@ fun PassPasswordStrengthIcon(
         modifier = modifier,
         painter = painterResource(iconResId),
         tint = iconTint,
-        contentDescription = null,
+        contentDescription = null
     )
 }

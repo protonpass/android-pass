@@ -51,23 +51,23 @@ fun HistorySection(
     modifiedInstant: Instant,
     onViewItemHistoryClicked: () -> Unit,
     buttonBackgroundColor: Color,
-    buttonTextColor: Color,
+    buttonTextColor: Color
 ) {
     RoundedCornersColumn(
-        modifier = modifier,
+        modifier = modifier
     ) {
         PassHistoryItemRow(
             leadingIcon = painterResource(CoreR.drawable.ic_proton_pencil),
             title = stringResource(id = R.string.item_detail_history_modified_last),
             subtitle = formatMoreInfoInstantText(
                 now = Instant.fromEpochSeconds(0),
-                toFormat = modifiedInstant,
+                toFormat = modifiedInstant
             ),
             paddingValues = PaddingValues(
                 top = Spacing.medium,
                 start = Spacing.medium,
-                bottom = Spacing.small,
-            ),
+                bottom = Spacing.small
+            )
         )
 
         PassHistoryItemRow(
@@ -75,13 +75,13 @@ fun HistorySection(
             title = stringResource(id = R.string.item_detail_history_created),
             subtitle = formatMoreInfoInstantText(
                 now = Instant.fromEpochSeconds(0),
-                toFormat = createdInstant,
+                toFormat = createdInstant
             ),
             paddingValues = PaddingValues(
                 top = Spacing.small,
                 start = Spacing.medium,
-                bottom = Spacing.medium,
-            ),
+                bottom = Spacing.medium
+            )
         )
 
         ProtonButton(
@@ -90,31 +90,29 @@ fun HistorySection(
                 .padding(
                     start = Spacing.medium,
                     end = Spacing.medium,
-                    bottom = Spacing.medium,
+                    bottom = Spacing.medium
                 ),
             onClick = onViewItemHistoryClicked,
             shape = RoundedCornerShape(32.dp),
             colors = ButtonDefaults.buttonColors(buttonBackgroundColor),
             contentPadding = PaddingValues(
                 horizontal = 12.dp,
-                vertical = 12.dp,
+                vertical = 12.dp
             ),
             elevation = null,
-            border = null,
+            border = null
         ) {
             Text(
                 text = stringResource(id = R.string.item_detail_history_button_view),
                 fontSize = 16.sp,
-                color = buttonTextColor,
+                color = buttonTextColor
             )
         }
     }
 }
 
 @[Preview Composable Suppress("MagicNumber")]
-fun HistorySectionPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun HistorySectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             HistorySection(
@@ -122,7 +120,7 @@ fun HistorySectionPreview(
                 modifiedInstant = Instant.fromEpochMilliseconds(1_707_213_366_026),
                 onViewItemHistoryClicked = {},
                 buttonBackgroundColor = PassTheme.colors.loginInteractionNormMinor2,
-                buttonTextColor = PassTheme.colors.loginInteractionNormMajor2,
+                buttonTextColor = PassTheme.colors.loginInteractionNormMajor2
             )
         }
     }

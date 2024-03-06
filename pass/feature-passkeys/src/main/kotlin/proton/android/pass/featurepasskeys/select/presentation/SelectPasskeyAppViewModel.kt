@@ -59,7 +59,7 @@ sealed interface SelectPasskeyAppEvent {
 @HiltViewModel
 class SelectPasskeyAppViewModel @Inject constructor(
     private val authenticateWithPasskey: AuthenticateWithPasskey,
-    private val getPasskeyById: GetPasskeyById,
+    private val getPasskeyById: GetPasskeyById
 ) : ViewModel() {
 
     private val eventFlow: MutableStateFlow<SelectPasskeyAppEvent> =
@@ -91,7 +91,11 @@ class SelectPasskeyAppViewModel @Inject constructor(
         }
     }
 
-    fun onItemSelected(item: ItemUiModel, origin: String, request: String) = viewModelScope.launch {
+    fun onItemSelected(
+        item: ItemUiModel,
+        origin: String,
+        request: String
+    ) = viewModelScope.launch {
         val itemContents = item.contents as? ItemContents.Login ?: run {
             PassLogger.w(TAG, "Received ItemContents that are not ItemContents.Login")
             eventFlow.update { SelectPasskeyAppEvent.Cancel }

@@ -22,5 +22,5 @@ enum class PasswordStrength {
     None,
     Strong,
     Vulnerable,
-    Weak,
+    Weak
 }

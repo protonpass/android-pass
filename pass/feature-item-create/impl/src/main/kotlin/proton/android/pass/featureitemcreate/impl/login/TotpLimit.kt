@@ -46,13 +46,10 @@ import proton.android.pass.featureitemcreate.impl.R
 import me.proton.core.presentation.compose.R as CoreR
 
 @Composable
-fun TotpLimit(
-    modifier: Modifier = Modifier,
-    onUpgrade: () -> Unit
-) {
+fun TotpLimit(modifier: Modifier = Modifier, onUpgrade: () -> Unit) {
     Row(
         modifier = modifier.padding(12.dp),
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
             painter = painterResource(CoreR.drawable.ic_proton_lock),
@@ -62,7 +59,7 @@ fun TotpLimit(
         Column {
             ProtonTextFieldLabel(
                 modifier = Modifier.padding(start = 8.dp),
-                text = stringResource(id = proton.android.pass.featureitemcreate.impl.R.string.mfa_limit_reached),
+                text = stringResource(id = proton.android.pass.featureitemcreate.impl.R.string.mfa_limit_reached)
             )
             Row(
                 modifier = Modifier
@@ -91,9 +88,7 @@ fun TotpLimit(
 
 @Preview
 @Composable
-fun TotpLimitPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun TotpLimitPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             TotpLimit {}

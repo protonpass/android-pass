@@ -26,11 +26,10 @@ fun Modifier.applyIf(
     condition: Boolean,
     ifTrue: @Composable Modifier.() -> Modifier,
     ifFalse: @Composable (Modifier.() -> Modifier)? = null
-): Modifier =
-    composed {
-        when {
-            condition -> then(ifTrue(Modifier))
-            ifFalse != null -> then(ifFalse(Modifier))
-            else -> this
-        }
+): Modifier = composed {
+    when {
+        condition -> then(ifTrue(Modifier))
+        ifFalse != null -> then(ifFalse(Modifier))
+        else -> this
     }
+}

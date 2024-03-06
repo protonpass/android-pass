@@ -110,7 +110,7 @@ class NoteDetailViewModelTest {
             pinItem = FakePinItem(),
             unpinItem = FakeUnpinItem(),
             featureFlagsRepository = TestFeatureFlagsPreferenceRepository(),
-            getUserPlan = TestGetUserPlan(),
+            getUserPlan = TestGetUserPlan()
         )
     }
 
@@ -295,22 +295,19 @@ class NoteDetailViewModelTest {
     private fun initialSetup(
         note: String = "note",
         hasMoreThanOneVault: Boolean = true,
-        shareRole: ShareRole = ShareRole.Admin,
+        shareRole: ShareRole = ShareRole.Admin
     ): Item {
         val item = createEncryptedItem(note = note)
         val value = ItemWithVaultInfo(
             item = item,
             vault = TEST_VAULT.copy(role = shareRole),
-            hasMoreThanOneVault = hasMoreThanOneVault,
+            hasMoreThanOneVault = hasMoreThanOneVault
         )
         getItemByIdWithVault.emitValue(Result.success(value))
         return item
     }
 
-    private fun createEncryptedItem(
-        title: String = "item-title",
-        note: String = "item-note",
-    ): Item {
+    private fun createEncryptedItem(title: String = "item-title", note: String = "item-note"): Item {
         val now = Clock.System.now()
         return encryptionContextProvider.withEncryptionContext {
             Item(
@@ -327,7 +324,7 @@ class NoteDetailViewModelTest {
                 modificationTime = now,
                 createTime = now,
                 lastAutofillTime = None,
-                isPinned = false,
+                isPinned = false
             )
         }
     }
@@ -341,7 +338,7 @@ class NoteDetailViewModelTest {
             shareId = ShareId(SHARE_ID),
             name = VAULT_NAME,
             color = ShareColor.Color1,
-            icon = ShareIcon.Icon1,
+            icon = ShareIcon.Icon1
         )
     }
 

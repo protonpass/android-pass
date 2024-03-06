@@ -32,7 +32,7 @@ data class UpgradeInfo(
     val plan: Plan,
     val totalVaults: Int,
     val totalAlias: Int,
-    val totalTotp: Int,
+    val totalTotp: Int
 ) {
     fun hasReachedVaultLimit() = hasReachedLimit(plan.vaultLimit, totalVaults)
     fun hasReachedAliasLimit() = hasReachedLimit(plan.aliasLimit, totalAlias)

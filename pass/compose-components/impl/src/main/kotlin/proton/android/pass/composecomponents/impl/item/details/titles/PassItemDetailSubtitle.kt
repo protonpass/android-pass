@@ -52,7 +52,7 @@ import proton.android.pass.domain.Vault
 internal fun PassItemDetailSubtitle(
     modifier: Modifier = Modifier,
     vault: Vault,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     val vaultText = remember(vault.shared, vault.members) {
         if (vault.shared) {
@@ -72,7 +72,7 @@ internal fun PassItemDetailSubtitle(
             .border(
                 width = 1.dp,
                 color = vault.color.toColor(isBackground = true),
-                shape = RoundedCornerShape(24.dp),
+                shape = RoundedCornerShape(24.dp)
             )
             .applyIf(
                 condition = vault.shared,
@@ -87,22 +87,22 @@ internal fun PassItemDetailSubtitle(
             )
             .padding(
                 horizontal = Spacing.small,
-                vertical = Spacing.extraSmall,
+                vertical = Spacing.extraSmall
             ),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
     ) {
         Icon(
             modifier = Modifier.height(12.dp),
             painter = painterResource(vault.icon.toSmallResource()),
             contentDescription = null,
-            tint = vault.color.toColor(),
+            tint = vault.color.toColor()
         )
 
         Text(
             text = vaultText,
             style = PassTheme.typography.body3Norm(),
-            color = vault.color.toColor(),
+            color = vault.color.toColor()
         )
     }
 }

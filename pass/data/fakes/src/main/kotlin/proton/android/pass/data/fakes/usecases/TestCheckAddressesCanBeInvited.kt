@@ -37,8 +37,6 @@ class TestCheckAddressesCanBeInvited @Inject constructor() : CheckCanAddressesBe
         setResult(Result.success(CanAddressesBeInvitedResult.All(listOf(address))))
     }
 
-    override suspend fun invoke(
-        shareId: ShareId,
-        addresses: List<String>
-    ): CanAddressesBeInvitedResult = result.getOrThrow()
+    override suspend fun invoke(shareId: ShareId, addresses: List<String>): CanAddressesBeInvitedResult =
+        result.getOrThrow()
 }

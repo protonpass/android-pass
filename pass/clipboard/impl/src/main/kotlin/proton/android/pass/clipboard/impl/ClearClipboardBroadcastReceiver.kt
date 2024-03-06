@@ -53,10 +53,7 @@ class ClearClipboardBroadcastReceiver : BroadcastReceiver() {
         }
     }
 
-    private fun shouldClearClipboard(
-        clipboardManager: ClipboardManager,
-        expected: EncryptedString
-    ): Boolean {
+    private fun shouldClearClipboard(clipboardManager: ClipboardManager, expected: EncryptedString): Boolean {
         val result = clipboardManager.getClipboardContent()
         val contentsMatch = result.getOrNull() == encryptionContextProvider.withEncryptionContext {
             decrypt(expected)

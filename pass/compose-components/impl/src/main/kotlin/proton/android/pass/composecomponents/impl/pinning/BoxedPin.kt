@@ -60,9 +60,7 @@ fun BoxedPin(
 
 @Preview
 @Composable
-fun BoxedPinPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun BoxedPinPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             BoxedPin(

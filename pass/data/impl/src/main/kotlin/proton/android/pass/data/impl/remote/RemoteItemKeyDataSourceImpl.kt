@@ -33,8 +33,7 @@ class RemoteItemKeyDataSourceImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): ItemLatestKeyResponse =
-        api.get<PasswordManagerApi>(userId).invoke {
-            getItemLatestKey(shareId.id, itemId.id)
-        }.valueOrThrow.key
+    ): ItemLatestKeyResponse = api.get<PasswordManagerApi>(userId).invoke {
+        getItemLatestKey(shareId.id, itemId.id)
+    }.valueOrThrow.key
 }

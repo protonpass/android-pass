@@ -67,9 +67,7 @@ fun UpgradeButton(
 
 @Preview
 @Composable
-fun UpgradeButtonPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun UpgradeButtonPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             UpgradeButton {}

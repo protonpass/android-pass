@@ -231,31 +231,30 @@ class CreateAliasViewModelTest {
         assertThat(viewModel.aliasItemFormState.prefix).isEqualTo(firstPrefix)
     }
 
-    private fun createAliasViewModel(title: String? = null, isDraft: Boolean = false) =
-        CreateAliasViewModel(
-            accountManager = TestAccountManager().apply {
-                sendPrimaryUserId(UserId("123"))
-            },
-            observeAliasOptions = observeAliasOptions,
-            observeVaults = observeVaults,
-            createAlias = createAlias,
-            snackbarDispatcher = snackbarRepository,
-            savedStateHandleProvider = TestSavedStateHandleProvider().apply {
-                get()[CommonNavArgId.ShareId.key] = "123"
-                title?.let {
-                    get()[AliasOptionalNavArgId.Title.key] = title
-                }
-            },
-            telemetryManager = telemetryManager,
-            observeUpgradeInfo = observeUpgradeInfo,
-            draftRepository = draftRepository,
-            inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics(),
-            encryptionContextProvider = TestEncryptionContextProvider(),
-            aliasPrefixValidator = TestAliasPrefixValidator(),
-            observeDefaultVault = TestObserveDefaultVault()
-        ).apply {
-            setDraftStatus(isDraft)
-        }
+    private fun createAliasViewModel(title: String? = null, isDraft: Boolean = false) = CreateAliasViewModel(
+        accountManager = TestAccountManager().apply {
+            sendPrimaryUserId(UserId("123"))
+        },
+        observeAliasOptions = observeAliasOptions,
+        observeVaults = observeVaults,
+        createAlias = createAlias,
+        snackbarDispatcher = snackbarRepository,
+        savedStateHandleProvider = TestSavedStateHandleProvider().apply {
+            get()[CommonNavArgId.ShareId.key] = "123"
+            title?.let {
+                get()[AliasOptionalNavArgId.Title.key] = title
+            }
+        },
+        telemetryManager = telemetryManager,
+        observeUpgradeInfo = observeUpgradeInfo,
+        draftRepository = draftRepository,
+        inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics(),
+        encryptionContextProvider = TestEncryptionContextProvider(),
+        aliasPrefixValidator = TestAliasPrefixValidator(),
+        observeDefaultVault = TestObserveDefaultVault()
+    ).apply {
+        setDraftStatus(isDraft)
+    }
 
     private fun setupContentsForCreation() {
         viewModel.onTitleChange(TEST_ALIAS_TITLE)

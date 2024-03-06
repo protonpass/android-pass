@@ -23,8 +23,5 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
 interface MigrateItems {
-    suspend operator fun invoke(
-        items: Map<ShareId, List<ItemId>>,
-        destinationShare: ShareId
-    ): MigrateItemsResult
+    suspend operator fun invoke(items: Map<ShareId, List<ItemId>>, destinationShare: ShareId): MigrateItemsResult
 }

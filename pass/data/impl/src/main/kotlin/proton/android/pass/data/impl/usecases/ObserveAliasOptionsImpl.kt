@@ -34,10 +34,9 @@ class ObserveAliasOptionsImpl @Inject constructor(
     private val aliasRepository: AliasRepository
 ) : ObserveAliasOptions {
 
-    override operator fun invoke(shareId: ShareId): Flow<AliasOptions> =
-        accountManager.getPrimaryUserId()
-            .filterNotNull()
-            .flatMapLatest { getAliasOptions(it, shareId) }
+    override operator fun invoke(shareId: ShareId): Flow<AliasOptions> = accountManager.getPrimaryUserId()
+        .filterNotNull()
+        .flatMapLatest { getAliasOptions(it, shareId) }
 
     private fun getAliasOptions(userId: UserId, shareId: ShareId): Flow<AliasOptions> =
         aliasRepository.getAliasOptions(userId, shareId)

@@ -54,7 +54,7 @@ fun PassFloatingActionButton(
         ) {
             Icon(
                 painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_plus),
-                contentDescription = stringResource(R.string.add_item_icon_content_description),
+                contentDescription = stringResource(R.string.add_item_icon_content_description)
             )
         }
     }
@@ -62,9 +62,7 @@ fun PassFloatingActionButton(
 
 @Preview
 @Composable
-fun PassFloatingActionButtonPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun PassFloatingActionButtonPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             PassFloatingActionButton(

@@ -881,6 +881,13 @@ fun NavGraphBuilder.appGraph(
                         itemId = itemHistoryNavDestination.itemId
                     )
                 )
+
+                is ItemHistoryNavDestination.PasskeyDetail -> appNavigator.navigate(
+                    destination = ViewPasskeyDetailsBottomSheet,
+                    route = ViewPasskeyDetailsBottomSheet.buildRoute(
+                        passkey = itemHistoryNavDestination.passkey
+                    )
+                )
             }
         }
     )

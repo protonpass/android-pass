@@ -21,30 +21,85 @@ package proton.android.pass.featureitemdetail.impl.login.passkey.bottomsheet.nav
 import androidx.activity.compose.BackHandler
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemdetail.impl.login.passkey.bottomsheet.ui.PasskeyDetailBottomSheet
-import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavParamEncoder
+import proton.android.pass.navigation.api.OptionalNavArgId
 import proton.android.pass.navigation.api.bottomSheet
+import proton.android.pass.navigation.api.toPath
 
-object PasskeyIdNavArgId : NavArgId {
+object PasskeyIdNavArgId : OptionalNavArgId {
     override val key: String = "passkeyId"
     override val navType: NavType<*> = NavType.StringType
 }
 
+internal object ViewPasskeyDetailsModeNavArgId : NavArgId {
+    override val key: String = "mode"
+    override val navType: NavType<*> = NavType.StringType
+}
+
+internal object DirectPasskeyNavArgId : OptionalNavArgId {
+    override val key: String = "passkey"
+    override val navType: NavType<*> = NavType.StringType
+
+    fun create(passkey: UIPasskeyContent) = NavParamEncoder.encode(
+        value = Json.encodeToString(value = passkey)
+    )
+
+    fun decode(encoded: String): UIPasskeyContent = Json.decodeFromString(
+        string = NavParamEncoder.decode(encoded)
+    )
+
+}
+
+enum class ViewPasskeyDetailsMode {
+    References,
+    Direct
+}
 
 object ViewPasskeyDetailsBottomSheet : NavItem(
     baseRoute = "item/detail/login/passkey/bottomsheet",
-    navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId, PasskeyIdNavArgId)
+    navArgIds = listOf(ViewPasskeyDetailsModeNavArgId),
+    optionalArgIds = listOf(
+        CommonOptionalNavArgId.ShareId,
+        CommonOptionalNavArgId.ItemId,
+        PasskeyIdNavArgId,
+        DirectPasskeyNavArgId
+    )
 ) {
     fun buildRoute(
         shareId: ShareId,
         itemId: ItemId,
         passkeyId: PasskeyId
-    ) = "$baseRoute/${shareId.id}/${itemId.id}/${passkeyId.value}"
+    ) = buildString {
+        append("$baseRoute/${ViewPasskeyDetailsMode.References.name}")
+
+        val params = mapOf(
+            CommonOptionalNavArgId.ShareId.key to shareId.id,
+            CommonOptionalNavArgId.ItemId.key to itemId.id,
+            PasskeyIdNavArgId.key to passkeyId.value
+        )
+
+        append(params.toPath())
+    }
+
+    fun buildRoute(passkey: UIPasskeyContent) = buildString {
+        append("$baseRoute/${ViewPasskeyDetailsMode.Direct.name}")
+
+        val params = mapOf(
+            DirectPasskeyNavArgId.key to DirectPasskeyNavArgId.create(passkey)
+        )
+
+        append(params.toPath())
+    }
 }
 
 fun NavGraphBuilder.passkeyDetailBottomSheetGraph(onDismiss: () -> Unit) {

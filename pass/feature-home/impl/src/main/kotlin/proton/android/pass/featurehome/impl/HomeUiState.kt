@@ -34,6 +34,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAct
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.featuresearchoptions.api.SearchFilterType
@@ -41,14 +42,23 @@ import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 
 sealed interface ActionState {
-    object Unknown : ActionState
-    object Loading : ActionState
-    object Done : ActionState
+
+    data object Done : ActionState
+
+    data object Loading : ActionState
+
+    data object Unknown : ActionState
+
 }
 
 sealed interface HomeNavEvent {
-    object Unknown : HomeNavEvent
-    object ShowBulkMoveToVault : HomeNavEvent
+
+    data class ShowItemHistory(val shareId: ShareId, val itemId: ItemId) : HomeNavEvent
+
+    data object ShowBulkMoveToVault : HomeNavEvent
+
+    data object Unknown : HomeNavEvent
+
 }
 
 @Immutable
@@ -59,7 +69,8 @@ data class HomeUiState(
     val accountType: AccountType,
     val navEvent: HomeNavEvent,
     val action: BottomSheetItemAction,
-    val isPinningFeatureEnabled: Boolean
+    val isPinningFeatureEnabled: Boolean,
+    val isHistoryFeatureEnabled: Boolean,
 ) {
     fun shouldShowRecentSearchHeader() =
         homeListUiState.items.isNotEmpty() && searchUiState.inSearchMode && searchUiState.isInSuggestionsMode
@@ -86,7 +97,8 @@ data class HomeUiState(
             accountType = AccountType.Free,
             navEvent = HomeNavEvent.Unknown,
             action = BottomSheetItemAction.None,
-            isPinningFeatureEnabled = true
+            isPinningFeatureEnabled = true,
+            isHistoryFeatureEnabled = false,
         )
     }
 }

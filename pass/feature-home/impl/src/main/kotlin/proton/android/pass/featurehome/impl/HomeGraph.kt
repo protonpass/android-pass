@@ -79,30 +79,48 @@ fun NavGraphBuilder.homeGraph(onNavigateEvent: (HomeNavigation) -> Unit) {
 }
 
 sealed interface HomeNavigation {
+
     data class AddItem(
         val shareId: Option<ShareId>,
         val itemTypeUiState: ItemTypeUiState
     ) : HomeNavigation
 
     data class EditLogin(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
+
     data class EditNote(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
+
     data class EditAlias(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
+
     data class EditCreditCard(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
+
     data class ItemDetail(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
-    object Profile : HomeNavigation
-    object CreateVault : HomeNavigation
+
+    data class ItemHistory(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
+
+    data object Profile : HomeNavigation
+
+    data object CreateVault : HomeNavigation
 
     @JvmInline
     value class VaultOptions(val shareId: ShareId) : HomeNavigation
-    object SortingBottomsheet : HomeNavigation
-    object TrialInfo : HomeNavigation
-    object OpenInvite : HomeNavigation
-    object Finish : HomeNavigation
-    object OnBoarding : HomeNavigation
-    object SyncDialog : HomeNavigation
-    object ConfirmedInvite : HomeNavigation
+
+    data object SortingBottomsheet : HomeNavigation
+
+    data object TrialInfo : HomeNavigation
+
+    data object OpenInvite : HomeNavigation
+
+    data object Finish : HomeNavigation
+
+    data object OnBoarding : HomeNavigation
+
+    data object SyncDialog : HomeNavigation
+
+    data object ConfirmedInvite : HomeNavigation
 
     @JvmInline
     value class SearchOptions(val bulkActionsEnabled: Boolean) : HomeNavigation
-    object MoveToVault : HomeNavigation
+
+    data object MoveToVault : HomeNavigation
+
 }

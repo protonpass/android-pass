@@ -275,6 +275,14 @@ fun NavGraphBuilder.appGraph(
                         filter = MigrateVaultFilter.All
                     )
                 )
+
+                is HomeNavigation.ItemHistory -> appNavigator.navigate(
+                    destination = ItemHistoryTimelineNavItem,
+                    route = ItemHistoryTimelineNavItem.createNavRoute(
+                        shareId = it.shareId,
+                        itemId = it.itemId,
+                    )
+                )
             }
         }
     )
@@ -544,6 +552,7 @@ fun NavGraphBuilder.appGraph(
                     is CreateLoginNavigation.LoginCreatedWithPasskey -> {
                         throw IllegalStateException("Cannot create login with passkey from main app")
                     }
+
                     is CreateLoginNavigation.SelectVault -> {
                         appNavigator.navigate(
                             destination = SelectVaultBottomsheet,

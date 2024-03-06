@@ -28,11 +28,13 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import kotlinx.serialization.json.Json
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
@@ -42,21 +44,26 @@ import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeyById
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.featureitemdetail.impl.login.passkey.bottomsheet.navigation.DirectPasskeyNavArgId
 import proton.android.pass.featureitemdetail.impl.login.passkey.bottomsheet.navigation.PasskeyIdNavArgId
+import proton.android.pass.featureitemdetail.impl.login.passkey.bottomsheet.navigation.ViewPasskeyDetailsMode
+import proton.android.pass.featureitemdetail.impl.login.passkey.bottomsheet.navigation.ViewPasskeyDetailsModeNavArgId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.NavParamEncoder
 import javax.inject.Inject
 
 @Stable
 sealed interface PasskeyDetailBottomSheetContent {
 
     @Stable
-    object Loading : PasskeyDetailBottomSheetContent
+    data object Loading : PasskeyDetailBottomSheetContent
 
     @Stable
     data class Success(
@@ -68,10 +75,10 @@ sealed interface PasskeyDetailBottomSheetContent {
 @Stable
 sealed interface PasskeyDetailBottomSheetEvent {
     @Stable
-    object Idle : PasskeyDetailBottomSheetEvent
+    data object Idle : PasskeyDetailBottomSheetEvent
 
     @Stable
-    object Close : PasskeyDetailBottomSheetEvent
+    data object Close : PasskeyDetailBottomSheetEvent
 }
 
 @Stable
@@ -91,27 +98,19 @@ data class PasskeyDetailBottomSheetState(
 class PasskeyDetailBottomSheetViewModel @Inject constructor(
     private val getPasskeyById: GetPasskeyById,
     private val clock: Clock,
-    savedStateHandleProvider: SavedStateHandleProvider
+    private val savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
-    private val shareId: ShareId = savedStateHandleProvider.get()
-        .require<String>(CommonNavArgId.ShareId.key)
-        .let(::ShareId)
-    private val itemId: ItemId = savedStateHandleProvider.get()
-        .require<String>(CommonNavArgId.ItemId.key)
-        .let(::ItemId)
-    private val passkeyId: PasskeyId = savedStateHandleProvider.get()
-        .require<String>(PasskeyIdNavArgId.key)
-        .let(::PasskeyId)
+    private val mode = getMode()
 
     private val eventFlow: MutableStateFlow<PasskeyDetailBottomSheetEvent> =
         MutableStateFlow(PasskeyDetailBottomSheetEvent.Idle)
 
-    private val getPasskeyFlow: Flow<LoadingResult<Passkey>> = oneShot {
-        getPasskeyById(shareId, itemId, passkeyId)
-    }
-        .asLoadingResult()
-        .mapLatest {
+    private val getPasskeyFlow: Flow<LoadingResult<Passkey>> = when (mode) {
+        is BottomsheetMode.Direct -> flowOf(mode.passkey.toDomain()).asLoadingResult()
+        is BottomsheetMode.References -> oneShot {
+            getPasskeyById(mode.shareId, mode.itemId, mode.passkeyId)
+        }.asLoadingResult().mapLatest {
             when (it) {
                 is LoadingResult.Success -> when (val passkey = it.data) {
                     None -> {
@@ -134,7 +133,8 @@ class PasskeyDetailBottomSheetViewModel @Inject constructor(
                 is LoadingResult.Loading -> LoadingResult.Loading
             }
         }
-        .distinctUntilChanged()
+            .distinctUntilChanged()
+    }
 
     val state: StateFlow<PasskeyDetailBottomSheetState> = combine(
         getPasskeyFlow,
@@ -158,6 +158,53 @@ class PasskeyDetailBottomSheetViewModel @Inject constructor(
 
     fun clearEvent() {
         eventFlow.update { PasskeyDetailBottomSheetEvent.Idle }
+    }
+
+    private fun getMode(): BottomsheetMode {
+        val mode = savedStateHandleProvider.get().require<String>(
+            name = ViewPasskeyDetailsModeNavArgId.key
+        )
+
+        return when (mode) {
+            ViewPasskeyDetailsMode.Direct.name -> {
+                val encoded = savedStateHandleProvider.get().require<String>(
+                    name = DirectPasskeyNavArgId.key
+                )
+                val decoded = Json.decodeFromString<UIPasskeyContent>(
+                    string = NavParamEncoder.decode(encoded)
+                )
+                BottomsheetMode.Direct(decoded)
+            }
+
+            ViewPasskeyDetailsMode.References.name -> {
+                val shareId: ShareId = savedStateHandleProvider.get()
+                    .require<String>(CommonNavArgId.ShareId.key)
+                    .let(::ShareId)
+                val itemId: ItemId = savedStateHandleProvider.get()
+                    .require<String>(CommonNavArgId.ItemId.key)
+                    .let(::ItemId)
+                val passkeyId: PasskeyId = savedStateHandleProvider.get()
+                    .require<String>(PasskeyIdNavArgId.key)
+                    .let(::PasskeyId)
+
+                BottomsheetMode.References(shareId, itemId, passkeyId)
+            }
+
+            else -> throw IllegalStateException("Invalid mode for ViewPasskeyDetailsMode: $mode")
+        }
+    }
+
+    private sealed interface BottomsheetMode {
+        data class References(
+            val shareId: ShareId,
+            val itemId: ItemId,
+            val passkeyId: PasskeyId
+        ) : BottomsheetMode
+
+        @JvmInline
+        value class Direct(
+            val passkey: UIPasskeyContent
+        ) : BottomsheetMode
     }
 
     companion object {

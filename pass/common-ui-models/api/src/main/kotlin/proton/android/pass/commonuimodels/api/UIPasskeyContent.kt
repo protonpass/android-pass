@@ -21,10 +21,12 @@ package proton.android.pass.commonuimodels.api
 import android.os.Parcelable
 import kotlinx.datetime.Instant
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.PasskeyId
 
 @Parcelize
+@Serializable
 data class UIPasskeyContent(
     val id: String,
     val domain: String,

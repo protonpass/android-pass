@@ -19,6 +19,7 @@
 package proton.android.pass.autofill
 
 import android.app.assist.AssistStructure
+import android.app.assist.AssistStructure.WindowNode
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
@@ -109,6 +110,7 @@ object AutoFillHandler {
         accountManager: AccountManager
     ): Option<FillResponse> {
         val shouldAutofill = shouldAutofill(
+            context = context,
             accountManager = accountManager,
             request = request,
             windowNode = windowNode
@@ -197,10 +199,16 @@ object AutoFillHandler {
 
     @Suppress("ReturnCount")
     private suspend fun shouldAutofill(
+        context: Context,
         accountManager: AccountManager,
         request: FillRequest,
-        windowNode: AssistStructure.WindowNode
+        windowNode: WindowNode
     ): ShouldAutofillResult {
+        if (isSelfAutofill(context, windowNode)) {
+            PassLogger.d(TAG, "Do not self autofill")
+            return ShouldAutofillResult.No
+        }
+
         val currentUser = accountManager.getPrimaryUserId().first()
         if (currentUser == null) {
             PassLogger.d(TAG, "No user found")
@@ -244,8 +252,14 @@ object AutoFillHandler {
             false
         }
 
+    private fun isSelfAutofill(context: Context, windowNode: WindowNode): Boolean {
+        val autofillService = context.packageName
+        val clientPackageName = Utils.getApplicationPackageName(windowNode)
+        return autofillService == clientPackageName
+    }
+
     sealed interface ShouldAutofillResult {
-        object No : ShouldAutofillResult
+        data object No : ShouldAutofillResult
         data class Yes(val assistInfo: AssistInfo) : ShouldAutofillResult
     }
 }

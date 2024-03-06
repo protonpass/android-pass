@@ -372,6 +372,11 @@ fun HomeScreen(
                             homeViewModel.unpinItem(shareId, itemId)
                         }
                     },
+                    onViewHistory = remember {
+                        { shareId, itemId ->
+                            homeViewModel.viewItemHistory(shareId, itemId)
+                        }
+                    },
                     onEdit = remember {
                         { shareId, itemId ->
                             scope.launch { bottomSheetState.hide() }
@@ -394,7 +399,8 @@ fun HomeScreen(
                             }
                         }
                     },
-                    isPinningFeatureEnabled = homeUiState.isPinningFeatureEnabled
+                    isPinningFeatureEnabled = homeUiState.isPinningFeatureEnabled,
+                    isHistoryFeatureEnabled = homeUiState.isHistoryFeatureEnabled,
                 )
 
                 CreditCardOptions -> CreditCardOptionsBottomSheetContents(

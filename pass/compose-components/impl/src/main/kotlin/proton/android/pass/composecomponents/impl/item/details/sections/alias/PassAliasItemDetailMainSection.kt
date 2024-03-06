@@ -43,6 +43,7 @@ import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.icon.ForwardIcon
 import proton.android.pass.composecomponents.impl.item.SectionSubtitle
 import proton.android.pass.composecomponents.impl.item.SectionTitle
+import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.placeholder
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.AliasMailbox
@@ -54,7 +55,7 @@ internal fun PassAliasItemDetailMainSection(
     alias: String,
     itemColors: PassItemColors,
     mailboxes: ImmutableList<AliasMailbox>,
-    onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit
+    onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
     val sections = mutableListOf<@Composable () -> Unit>()
 
@@ -62,7 +63,7 @@ internal fun PassAliasItemDetailMainSection(
         PassAliasItemDetailAddressRow(
             alias = alias,
             itemColors = itemColors,
-            onSectionClick = onSectionClick
+            onEvent = onEvent
         )
     }
 
@@ -89,12 +90,19 @@ private fun PassAliasItemDetailAddressRow(
     modifier: Modifier = Modifier,
     alias: String,
     itemColors: PassItemColors,
-    onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit
+    onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clickable { onSectionClick(alias, ItemDetailsFieldType.Plain.Alias) }
+            .clickable {
+                onEvent(
+                    PassItemDetailsUiEvent.OnSectionClick(
+                        section = alias,
+                        field = ItemDetailsFieldType.Plain.Alias
+                    )
+                )
+            }
             .padding(Spacing.medium),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.small)

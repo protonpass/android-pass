@@ -23,10 +23,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
+import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassSharedItemDetailNoteSection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
-import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 
 @Composable
@@ -34,9 +33,7 @@ internal fun PassCreditCardItemDetailsSections(
     modifier: Modifier = Modifier,
     contents: ItemContents.CreditCard,
     itemColors: PassItemColors,
-    onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
-    onHiddenSectionClick: (HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
-    onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit
+    onEvent: (PassItemDetailsUiEvent) -> Unit
 ) = with(contents) {
     Column(
         modifier = modifier,
@@ -49,9 +46,7 @@ internal fun PassCreditCardItemDetailsSections(
             cvv = cvv,
             pin = pin,
             itemColors = itemColors,
-            onSectionClick = onSectionClick,
-            onHiddenSectionClick = onHiddenSectionClick,
-            onHiddenSectionToggle = onHiddenSectionToggle
+            onEvent = onEvent
         )
 
         if (note.isNotBlank()) {

@@ -114,7 +114,7 @@ fun MoreInfo(
                     .size(16.dp)
                     .rotate(displayRotation),
                 contentDescription = null,
-                tint = ProtonTheme.colors.iconWeak,
+                tint = ProtonTheme.colors.iconWeak
             )
         }
         AnimatedVisibility(visible = showMoreInfo) {
@@ -152,20 +152,14 @@ fun MoreInfo(
 }
 
 @Composable
-private fun MoreInfoLastAutofilledTitle(
-    modifier: Modifier = Modifier,
-    lastAutofilled: Option<Instant>
-) {
+private fun MoreInfoLastAutofilledTitle(modifier: Modifier = Modifier, lastAutofilled: Option<Instant>) {
     if (lastAutofilled.isNotEmpty()) {
         MoreInfoText(modifier = modifier, text = stringResource(R.string.more_info_autofilled))
     }
 }
 
 @Composable
-private fun MoreInfoModifiedTitle(
-    modifier: Modifier = Modifier,
-    numRevisions: Long
-) {
+private fun MoreInfoModifiedTitle(modifier: Modifier = Modifier, numRevisions: Long) {
     if (numRevisions > 1) {
         MoreInfoText(modifier = modifier, text = stringResource(R.string.more_info_modified))
         Spacer(modifier = Modifier.height(14.dp))
@@ -173,10 +167,7 @@ private fun MoreInfoModifiedTitle(
 }
 
 @Composable
-private fun MoreInfoLastAutofilledContent(
-    modifier: Modifier = Modifier,
-    moreInfoUiState: MoreInfoUiState
-) {
+private fun MoreInfoLastAutofilledContent(modifier: Modifier = Modifier, moreInfoUiState: MoreInfoUiState) {
     if (moreInfoUiState.lastAutofilled is Some) {
         MoreInfoText(
             modifier = modifier,
@@ -189,10 +180,7 @@ private fun MoreInfoLastAutofilledContent(
 }
 
 @Composable
-private fun MoreInfoModifiedContent(
-    modifier: Modifier = Modifier,
-    moreInfoUiState: MoreInfoUiState
-) {
+private fun MoreInfoModifiedContent(modifier: Modifier = Modifier, moreInfoUiState: MoreInfoUiState) {
     val modifiedTimes = moreInfoUiState.numRevisions - 1
     if (modifiedTimes > 0) {
         val lastUpdateString = formatMoreInfoInstantText(
@@ -220,53 +208,52 @@ fun formatMoreInfoInstantText(
     now: Instant,
     toFormat: Instant,
     locale: Locale = Locale.getDefault()
-): String =
-    when (
-        DateFormatUtils.getFormat(
-            now = now,
-            toFormat = toFormat,
-            timeZone = TimeZone.currentSystemDefault(),
-            acceptedFormats = listOf(Today, Yesterday, DateOfSameYear, Date)
+): String = when (
+    DateFormatUtils.getFormat(
+        now = now,
+        toFormat = toFormat,
+        timeZone = TimeZone.currentSystemDefault(),
+        acceptedFormats = listOf(Today, Yesterday, DateOfSameYear, Date)
+    )
+) {
+    Date -> runCatching {
+        val pattern =
+            stringResource(R.string.date_full_date_format_with_year)
+        DateTimeFormatter.ofPattern(pattern)
+            .withLocale(locale)
+            .format(
+                toFormat.toLocalDateTime(TimeZone.currentSystemDefault())
+                    .toJavaLocalDateTime()
+            )
+    }.getOrDefault("")
+
+    DateOfSameYear -> runCatching {
+        val pattern =
+            stringResource(R.string.date_full_date_format)
+        DateTimeFormatter.ofPattern(pattern)
+            .withLocale(locale)
+            .format(
+                toFormat.toLocalDateTime(TimeZone.currentSystemDefault())
+                    .toJavaLocalDateTime()
+            )
+    }.getOrDefault("")
+
+    Today -> runCatching {
+        stringResource(
+            R.string.date_today,
+            extractHour(toFormat.toLocalDateTime(TimeZone.currentSystemDefault()))
         )
-    ) {
-        Date -> runCatching {
-            val pattern =
-                stringResource(R.string.date_full_date_format_with_year)
-            DateTimeFormatter.ofPattern(pattern)
-                .withLocale(locale)
-                .format(
-                    toFormat.toLocalDateTime(TimeZone.currentSystemDefault())
-                        .toJavaLocalDateTime()
-                )
-        }.getOrDefault("")
+    }.getOrDefault("")
 
-        DateOfSameYear -> runCatching {
-            val pattern =
-                stringResource(R.string.date_full_date_format)
-            DateTimeFormatter.ofPattern(pattern)
-                .withLocale(locale)
-                .format(
-                    toFormat.toLocalDateTime(TimeZone.currentSystemDefault())
-                        .toJavaLocalDateTime()
-                )
-        }.getOrDefault("")
+    Yesterday -> runCatching {
+        stringResource(
+            R.string.date_yesterday,
+            extractHour(toFormat.toLocalDateTime(TimeZone.currentSystemDefault()))
+        )
+    }.getOrDefault("")
 
-        Today -> runCatching {
-            stringResource(
-                R.string.date_today,
-                extractHour(toFormat.toLocalDateTime(TimeZone.currentSystemDefault()))
-            )
-        }.getOrDefault("")
-
-        Yesterday -> runCatching {
-            stringResource(
-                R.string.date_yesterday,
-                extractHour(toFormat.toLocalDateTime(TimeZone.currentSystemDefault()))
-            )
-        }.getOrDefault("")
-
-        else -> throw IllegalStateException("Unexpected date format")
-    }
+    else -> throw IllegalStateException("Unexpected date format")
+}
 
 private fun extractHour(instant: LocalDateTime): String {
     val hour = instant.hour.toString().padStart(2, '0')
@@ -279,9 +266,7 @@ class ThemedMoreInfoPreviewProvider :
 
 @Preview
 @Composable
-fun MoreInfoPreview(
-    @PreviewParameter(ThemedMoreInfoPreviewProvider::class) input: Pair<Boolean, MoreInfoPreview>
-) {
+fun MoreInfoPreview(@PreviewParameter(ThemedMoreInfoPreviewProvider::class) input: Pair<Boolean, MoreInfoPreview>) {
     PassTheme(isDark = input.first) {
         Surface {
             MoreInfo(

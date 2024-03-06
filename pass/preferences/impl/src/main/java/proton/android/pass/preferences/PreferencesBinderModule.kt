@@ -35,12 +35,8 @@ abstract class PreferencesBinderModule {
     ): FeatureFlagsPreferencesRepository
 
     @Binds
-    abstract fun bindInternalSettingsRepository(
-        impl: InternalSettingsRepositoryImpl
-    ): InternalSettingsRepository
+    abstract fun bindInternalSettingsRepository(impl: InternalSettingsRepositoryImpl): InternalSettingsRepository
 
     @Binds
-    abstract fun bindInMemoryPreferences(
-        impl: InMemoryPreferencesImpl
-    ): InMemoryPreferences
+    abstract fun bindInMemoryPreferences(impl: InMemoryPreferencesImpl): InMemoryPreferences
 }

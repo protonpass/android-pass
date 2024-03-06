@@ -75,7 +75,7 @@ class StringMatcherTest {
                 MatchSpan(11, 12), // [
                 MatchSpan(12, 18), // string
                 MatchSpan(18, 19), // ]
-                MatchSpan(37, 42), // chars
+                MatchSpan(37, 42) // chars
             )
         )
     }

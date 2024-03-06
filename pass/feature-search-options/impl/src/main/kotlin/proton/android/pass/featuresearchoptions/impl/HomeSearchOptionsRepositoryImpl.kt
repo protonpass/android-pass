@@ -53,14 +53,12 @@ class HomeSearchOptionsRepositoryImpl @Inject constructor(
         .getHomeSortingOption()
         .map { SortingOption(it.toDomain()) }
 
-    override fun observeFilterOption(): Flow<FilterOption> =
-        internalSettingsRepository.getHomeFilterOption()
-            .map { FilterOption(it.toDomain()) }
+    override fun observeFilterOption(): Flow<FilterOption> = internalSettingsRepository.getHomeFilterOption()
+        .map { FilterOption(it.toDomain()) }
 
-    override fun observeVaultSelectionOption(): Flow<VaultSelectionOption> =
-        internalSettingsRepository
-            .getSelectedVault()
-            .map { it.toSelectionOption() }
+    override fun observeVaultSelectionOption(): Flow<VaultSelectionOption> = internalSettingsRepository
+        .getSelectedVault()
+        .map { it.toSelectionOption() }
 
     override fun setSortingOption(sortingOption: SortingOption) {
         internalSettingsRepository.setHomeSortingOption(sortingOption.toPreference())

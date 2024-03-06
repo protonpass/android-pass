@@ -26,7 +26,7 @@ fun OnBoardingTips(
     modifier: Modifier = Modifier,
     onClick: (OnBoardingTipPage) -> Unit,
     onDismiss: (OnBoardingTipPage) -> Unit,
-    state: OnBoardingTipsUiState,
+    state: OnBoardingTipsUiState
 ) {
     OnBoardingTipContent(
         modifier = modifier,

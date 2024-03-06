@@ -50,9 +50,7 @@ fun AuthScreenHeader(modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-fun AuthScreenHeaderPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun AuthScreenHeaderPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             AuthScreenHeader()

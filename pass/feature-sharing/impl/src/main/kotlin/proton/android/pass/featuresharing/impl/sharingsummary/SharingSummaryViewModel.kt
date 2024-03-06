@@ -58,7 +58,7 @@ class SharingSummaryViewModel @Inject constructor(
     private val bulkInviteRepository: BulkInviteRepository,
     private val getUserPlan: GetUserPlan,
     getVaultWithItemCountById: GetVaultWithItemCountById,
-    savedStateHandleProvider: SavedStateHandleProvider,
+    savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
     private val shareId: ShareId = ShareId(
@@ -120,7 +120,7 @@ class SharingSummaryViewModel @Inject constructor(
         isLoadingStateFlow.update { IsLoadingState.Loading }
         inviteToVault(
             inviteAddresses = addressesFlow.value,
-            shareId = shareId,
+            shareId = shareId
         ).onSuccess {
             bulkInviteRepository.clear()
             isLoadingStateFlow.update { IsLoadingState.NotLoading }

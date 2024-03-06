@@ -33,9 +33,7 @@ sealed interface SyncNavigation {
     object FinishedFetching : SyncNavigation
 }
 
-fun NavGraphBuilder.syncGraph(
-    onNavigate: (SyncNavigation) -> Unit
-) {
+fun NavGraphBuilder.syncGraph(onNavigate: (SyncNavigation) -> Unit) {
     dialog(
         navItem = SyncDialog,
         dialogProperties = DialogProperties(

@@ -49,7 +49,7 @@ class TestEncryptShareKeysForUser : EncryptShareKeysForUser {
     override suspend fun invoke(
         userAddress: UserAddress,
         shareId: ShareId,
-        targetEmail: String,
+        targetEmail: String
     ) = invoke(userAddress, shareId, targetEmail, emptyList())
 
     data class Payload(

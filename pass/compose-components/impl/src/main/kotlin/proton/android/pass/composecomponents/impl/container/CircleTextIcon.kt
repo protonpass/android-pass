@@ -65,9 +65,7 @@ fun CircleTextIcon(
 
 @Preview
 @Composable
-fun CircleTextIconPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun CircleTextIconPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             CircleTextIcon(

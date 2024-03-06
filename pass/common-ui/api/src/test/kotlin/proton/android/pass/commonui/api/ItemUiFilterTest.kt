@@ -179,7 +179,7 @@ class ItemUiFilterTest {
                     customFields = emptyList(),
                     passkeys = emptyList()
                 )
-            ),
+            )
         )
 
         val filteredList = items.filterByQuery("tablet    example ")
@@ -205,7 +205,7 @@ class ItemUiFilterTest {
                     customFields = listOf(
                         CustomFieldContent.Text(label = "label", value = "value"),
                         CustomFieldContent.Hidden(label = "hidden", value = HiddenState.Empty("")),
-                        CustomFieldContent.Totp(label = "totp", value = HiddenState.Empty("")),
+                        CustomFieldContent.Totp(label = "totp", value = HiddenState.Empty(""))
 
                     ),
                     passkeys = emptyList()

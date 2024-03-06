@@ -68,7 +68,7 @@ fun CustomFieldLimited(
     RoundedCornersColumn(modifier = modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier.padding(start = 16.dp, top = 12.dp, end = 12.dp, bottom = 12.dp),
-            verticalAlignment = Alignment.CenterVertically,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
                 painter = painterResource(icon),
@@ -78,7 +78,7 @@ fun CustomFieldLimited(
             Column(modifier = Modifier.padding(start = 8.dp)) {
                 SectionTitle(
                     modifier = Modifier.padding(start = 8.dp),
-                    text = entry.label,
+                    text = entry.label
                 )
                 Row(
                     modifier = Modifier

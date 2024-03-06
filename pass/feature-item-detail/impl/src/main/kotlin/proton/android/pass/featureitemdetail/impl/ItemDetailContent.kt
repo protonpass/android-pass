@@ -34,7 +34,7 @@ import proton.android.pass.featureitemdetail.impl.note.NoteDetail
 fun ItemDetailContent(
     modifier: Modifier = Modifier,
     uiState: ItemDetailScreenUiState,
-    onNavigate: (ItemDetailNavigation) -> Unit,
+    onNavigate: (ItemDetailNavigation) -> Unit
 ) {
     Box(
         modifier = modifier

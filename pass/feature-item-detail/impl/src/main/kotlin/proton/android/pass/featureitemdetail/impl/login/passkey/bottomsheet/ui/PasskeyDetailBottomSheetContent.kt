@@ -64,7 +64,7 @@ internal fun PasskeyDetailBottomSheetContent(
         modifier = modifier
             .bottomSheet()
             .padding(horizontal = Spacing.medium),
-        verticalArrangement = Arrangement.spacedBy(Spacing.medium),
+        verticalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
         BottomSheetTitle(title = stringResource(R.string.passkey_detail_bottomsheet_title))
 
@@ -77,28 +77,28 @@ internal fun PasskeyDetailBottomSheetContent(
             PasskeyDetailRow(
                 title = stringResource(R.string.passkey_detail_bottomsheet_username),
                 subtitle = passkey.userName,
-                icon = CompR.drawable.ic_passkey,
+                icon = CompR.drawable.ic_passkey
             )
             PassDivider()
             PasskeyDetailRow(
                 title = stringResource(R.string.passkey_detail_bottomsheet_domain),
                 subtitle = passkey.domain,
-                icon = CoreR.drawable.ic_proton_earth,
+                icon = CoreR.drawable.ic_proton_earth
             )
             PassDivider()
             PasskeyDetailRow(
                 title = stringResource(R.string.passkey_detail_bottomsheet_key),
                 subtitle = passkey.id.display(),
-                icon = CoreR.drawable.ic_proton_key,
+                icon = CoreR.drawable.ic_proton_key
             )
             PassDivider()
             PasskeyDetailRow(
                 title = stringResource(R.string.passkey_detail_bottomsheet_created),
                 subtitle = formatMoreInfoInstantText(
                     now = now,
-                    toFormat = passkey.createTime,
+                    toFormat = passkey.createTime
                 ),
-                icon = CoreR.drawable.ic_proton_calendar_today,
+                icon = CoreR.drawable.ic_proton_calendar_today
             )
         }
     }
@@ -141,9 +141,7 @@ private fun PasskeyDetailRow(
 @Preview
 @Composable
 @Suppress("MagicNumber")
-fun PasskeyDetailBottomSheetContentPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun PasskeyDetailBottomSheetContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     val now = Instant.fromEpochSeconds(1_708_677_937)
     PassTheme(isDark = isDark) {
         Surface {

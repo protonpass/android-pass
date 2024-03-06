@@ -31,13 +31,10 @@ import javax.inject.Inject
 
 class ObserveItemRevisionsImpl @Inject constructor(
     private val accountManager: AccountManager,
-    private val itemRepository: ItemRepository,
+    private val itemRepository: ItemRepository
 ) : ObserveItemRevisions {
 
-    override fun invoke(
-        shareId: ShareId,
-        itemId: ItemId,
-    ): Flow<List<ItemRevision>> = accountManager.getPrimaryUserId()
+    override fun invoke(shareId: ShareId, itemId: ItemId): Flow<List<ItemRevision>> = accountManager.getPrimaryUserId()
         .filterNotNull()
         .map { userId -> itemRepository.getItemRevisions(userId, shareId, itemId) }
 

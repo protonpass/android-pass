@@ -114,9 +114,7 @@ fun VaultNameSubtitle(
 
 @Preview
 @Composable
-fun VaultNameSubtitlePreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
+fun VaultNameSubtitlePreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
     val members = if (input.second) 2 else 1
     PassTheme(isDark = input.first) {
         Surface {

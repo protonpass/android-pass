@@ -25,5 +25,9 @@ import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.ShareId
 
 interface GetPasskeyById {
-    suspend operator fun invoke(shareId: ShareId, itemId: ItemId, passkeyId: PasskeyId): Option<Passkey>
+    suspend operator fun invoke(
+        shareId: ShareId,
+        itemId: ItemId,
+        passkeyId: PasskeyId
+    ): Option<Passkey>
 }

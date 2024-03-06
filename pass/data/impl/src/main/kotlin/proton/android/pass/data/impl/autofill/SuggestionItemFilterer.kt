@@ -55,12 +55,11 @@ class SuggestionItemFiltererImpl @Inject constructor(
         url: Option<String>,
         item: Item,
         login: ItemType.Login
-    ): Boolean =
-        if (packageName is Some) {
-            isPackageNameMatch(packageName.value, item)
-        } else if (url is Some) {
-            isUrlMatch(url.value, login)
-        } else false
+    ): Boolean = if (packageName is Some) {
+        isPackageNameMatch(packageName.value, item)
+    } else if (url is Some) {
+        isUrlMatch(url.value, login)
+    } else false
 
     private fun isPackageNameMatch(packageName: String, item: Item): Boolean =
         item.packageInfoSet.map { it.packageName.value }.contains(packageName)
@@ -79,23 +78,22 @@ class SuggestionItemFiltererImpl @Inject constructor(
         return isMatch(parsedUrl, parsedWebsites)
     }
 
-    private fun isMatch(requestUrl: HostInfo, items: List<HostInfo>): Boolean =
-        items.any {
-            when (it) {
-                is HostInfo.Ip -> when (requestUrl) {
-                    is HostInfo.Ip -> it.ip == requestUrl.ip
-                    else -> false
+    private fun isMatch(requestUrl: HostInfo, items: List<HostInfo>): Boolean = items.any {
+        when (it) {
+            is HostInfo.Ip -> when (requestUrl) {
+                is HostInfo.Ip -> it.ip == requestUrl.ip
+                else -> false
+            }
+
+            is HostInfo.Host -> when (requestUrl) {
+                is HostInfo.Host -> {
+                    requestUrl.protocol == it.protocol &&
+                        requestUrl.tld == it.tld &&
+                        requestUrl.domain == it.domain
                 }
 
-                is HostInfo.Host -> when (requestUrl) {
-                    is HostInfo.Host -> {
-                        requestUrl.protocol == it.protocol &&
-                            requestUrl.tld == it.tld &&
-                            requestUrl.domain == it.domain
-                    }
-
-                    else -> false
-                }
+                else -> false
             }
         }
+    }
 }

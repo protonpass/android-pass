@@ -53,6 +53,5 @@ object HumanVerificationModule {
 
     @Provides
     @HumanVerificationApiHost
-    fun provideHumanVerificationApiHost(appConfig: AppConfig): String =
-        "https://${appConfig.humanVerificationHost}/"
+    fun provideHumanVerificationApiHost(appConfig: AppConfig): String = "https://${appConfig.humanVerificationHost}/"
 }

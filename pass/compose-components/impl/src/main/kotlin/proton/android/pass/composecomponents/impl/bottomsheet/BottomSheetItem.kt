@@ -43,6 +43,5 @@ fun bottomSheetDivider(): BottomSheetItem = object : BottomSheetItem {
     override val isDivider = true
 }
 
-fun List<BottomSheetItem>.withDividers(): List<BottomSheetItem> =
-    this.flatMap { listOf(it, bottomSheetDivider()) }
-        .dropLast(1)
+fun List<BottomSheetItem>.withDividers(): List<BottomSheetItem> = this.flatMap { listOf(it, bottomSheetDivider()) }
+    .dropLast(1)

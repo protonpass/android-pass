@@ -35,9 +35,7 @@ object SignOutDialog : NavItem(
     navItemType = NavItemType.Dialog
 )
 
-fun NavGraphBuilder.accountGraph(
-    onNavigate: (AccountNavigation) -> Unit
-) {
+fun NavGraphBuilder.accountGraph(onNavigate: (AccountNavigation) -> Unit) {
     navigation(
         route = ACCOUNT_GRAPH,
         startDestination = Account.route

@@ -126,9 +126,7 @@ fun GeneratePasswordRandomContent(
 
 @Preview
 @Composable
-fun GeneratePasswordRandomContentPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun GeneratePasswordRandomContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             GeneratePasswordRandomContent(

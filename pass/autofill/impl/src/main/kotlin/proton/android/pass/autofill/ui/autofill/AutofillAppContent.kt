@@ -107,11 +107,11 @@ fun AutofillAppContent(
 
     ProtonBottomSheetBackHandler(
         bottomSheetState = bottomSheetState,
-        coroutineScope = coroutineScope,
+        coroutineScope = coroutineScope
     )
 
     val appNavigator = rememberAppNavigator(
-        bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState),
+        bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState)
     )
 
     PassModalBottomSheetLayout(bottomSheetNavigator = appNavigator.passBottomSheetNavigator) {
@@ -145,7 +145,7 @@ fun AutofillAppContent(
                         bottomSheetState.hide()
                         callback()
                     }
-                },
+                }
             )
         }
 
@@ -180,7 +180,7 @@ fun AutofillAppContent(
                 onConfirm = {
                     viewModel.onWarningConfirmed(
                         state = autofillAppState,
-                        item = itemUiModel,
+                        item = itemUiModel
                     )
                     showWarningDialog = null
                 },

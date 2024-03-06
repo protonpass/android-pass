@@ -68,7 +68,7 @@ fun SettingRadio(
             subtitle?.let {
                 Text(
                     text = it,
-                    style = PassTheme.typography.body3Weak(),
+                    style = PassTheme.typography.body3Weak()
                 )
             }
         }
@@ -82,9 +82,7 @@ fun SettingRadio(
 
 @Preview
 @Composable
-fun SettingRadioPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun SettingRadioPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             SettingRadio(

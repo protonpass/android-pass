@@ -90,9 +90,7 @@ internal fun CardNumberInput(
 
 @Preview
 @Composable
-fun CardNumberInputPreview(
-    @PreviewParameter(ThemePreviewProvider::class) input: Boolean
-) {
+fun CardNumberInputPreview(@PreviewParameter(ThemePreviewProvider::class) input: Boolean) {
     PassTheme(isDark = input) {
         Surface {
             CardNumberInput(

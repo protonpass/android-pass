@@ -263,9 +263,7 @@ private fun TwoLetterLoginIcon(
 
 @Preview
 @Composable
-fun LoginIconPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
+fun LoginIconPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
     PassTheme(isDark = input.first) {
         Surface {
             LoginIcon(

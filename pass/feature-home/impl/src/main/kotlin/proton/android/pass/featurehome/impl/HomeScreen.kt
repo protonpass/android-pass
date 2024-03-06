@@ -209,7 +209,7 @@ fun HomeScreen(
 
     ProtonBottomSheetBackHandler(
         bottomSheetState = bottomSheetState,
-        coroutineScope = scope,
+        coroutineScope = scope
     )
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -283,7 +283,7 @@ fun HomeScreen(
                             }
                         }
                     },
-                    isPinningFeatureEnabled = homeUiState.isPinningFeatureEnabled,
+                    isPinningFeatureEnabled = homeUiState.isPinningFeatureEnabled
                 )
 
                 AliasOptions -> AliasOptionsBottomSheetContents(
@@ -328,7 +328,7 @@ fun HomeScreen(
                             }
                         }
                     },
-                    isPinningFeatureEnabled = homeUiState.isPinningFeatureEnabled,
+                    isPinningFeatureEnabled = homeUiState.isPinningFeatureEnabled
                 )
 
                 NoteOptions -> NoteOptionsBottomSheetContents(
@@ -373,7 +373,7 @@ fun HomeScreen(
                             }
                         }
                     },
-                    isPinningFeatureEnabled = homeUiState.isPinningFeatureEnabled,
+                    isPinningFeatureEnabled = homeUiState.isPinningFeatureEnabled
                 )
 
                 CreditCardOptions -> CreditCardOptionsBottomSheetContents(
@@ -424,7 +424,7 @@ fun HomeScreen(
                             }
                         }
                     },
-                    isPinningFeatureEnabled = homeUiState.isPinningFeatureEnabled,
+                    isPinningFeatureEnabled = homeUiState.isPinningFeatureEnabled
                 )
 
                 TrashItemOptions -> TrashItemBottomSheetContents(
@@ -456,7 +456,7 @@ fun HomeScreen(
                                     text = selectedItem!!.contents.title,
                                     canLoadExternalImages = homeUiState.homeListUiState.canLoadExternalImages,
                                     website = website,
-                                    packageName = packageName,
+                                    packageName = packageName
                                 )
                             }
 
@@ -559,7 +559,7 @@ fun HomeScreen(
                         OnBoardingTips(
                             onClick = onBoardingTipsViewModel::onClick,
                             onDismiss = onBoardingTipsViewModel::onDismiss,
-                            state = onBoardingTipsUiState,
+                            state = onBoardingTipsUiState
                         )
                     }
                 },

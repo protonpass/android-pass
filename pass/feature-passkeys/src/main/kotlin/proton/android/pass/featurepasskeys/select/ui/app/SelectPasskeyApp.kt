@@ -93,7 +93,7 @@ fun SelectPasskeyApp(
                             viewModel.onItemSelected(
                                 item = it.item,
                                 origin = appState.data.domain,
-                                request = appState.data.request,
+                                request = appState.data.request
                             )
                         }
 

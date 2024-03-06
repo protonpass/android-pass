@@ -37,10 +37,7 @@ class TestObserveActiveItems @Inject constructor() : ObserveActiveItems {
 
     fun getMemory(): List<Payload> = memory
 
-    override fun invoke(
-        filter: ItemTypeFilter,
-        shareSelection: ShareSelection
-    ): Flow<List<Item>> {
+    override fun invoke(filter: ItemTypeFilter, shareSelection: ShareSelection): Flow<List<Item>> {
         memory.add(Payload(filter, shareSelection))
         return itemsFlow.map { it.getOrThrow() }
     }

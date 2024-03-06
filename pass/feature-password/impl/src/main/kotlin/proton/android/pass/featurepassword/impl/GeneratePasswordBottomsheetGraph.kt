@@ -43,8 +43,7 @@ object GeneratePasswordBottomsheet : NavItem(
     navArgIds = listOf(GeneratePasswordBottomsheetMode),
     navItemType = NavItemType.Bottomsheet
 ) {
-    fun buildRoute(mode: GeneratePasswordBottomsheetModeValue) =
-        "$baseRoute/${mode.name}"
+    fun buildRoute(mode: GeneratePasswordBottomsheetModeValue) = "$baseRoute/${mode.name}"
 }
 
 sealed interface GeneratePasswordNavigation {
@@ -54,9 +53,7 @@ sealed interface GeneratePasswordNavigation {
     object OnSelectPasswordMode : GeneratePasswordNavigation
 }
 
-fun NavGraphBuilder.generatePasswordBottomsheetGraph(
-    onNavigate: (GeneratePasswordNavigation) -> Unit
-) {
+fun NavGraphBuilder.generatePasswordBottomsheetGraph(onNavigate: (GeneratePasswordNavigation) -> Unit) {
     bottomSheet(GeneratePasswordBottomsheet) {
         GeneratePasswordBottomSheet(onNavigate = onNavigate)
     }

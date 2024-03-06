@@ -50,7 +50,7 @@ class GeneratePasskeyImpl @Inject constructor(
                     credentialId = it.credentialId,
                     userHandle = it.userHandle
                 ),
-                response = it.response,
+                response = it.response
             )
         }
     }

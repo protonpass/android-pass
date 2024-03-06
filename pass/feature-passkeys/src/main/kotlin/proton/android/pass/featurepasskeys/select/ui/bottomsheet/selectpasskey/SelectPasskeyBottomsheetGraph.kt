@@ -29,16 +29,12 @@ import proton.android.pass.navigation.api.bottomSheet
 
 object SelectPasskeyBottomsheet : NavItem(
     baseRoute = "passkey/select/bottomsheet",
-    navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId),
+    navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId)
 ) {
-    fun buildRoute(shareId: ShareId, itemId: ItemId): String =
-        "$baseRoute/${shareId.id}/${itemId.id}"
+    fun buildRoute(shareId: ShareId, itemId: ItemId): String = "$baseRoute/${shareId.id}/${itemId.id}"
 }
 
-fun NavGraphBuilder.selectPasskeyBottomsheetGraph(
-    onPasskeySelected: (Passkey) -> Unit,
-    onDismiss: () -> Unit
-) {
+fun NavGraphBuilder.selectPasskeyBottomsheetGraph(onPasskeySelected: (Passkey) -> Unit, onDismiss: () -> Unit) {
     bottomSheet(SelectPasskeyBottomsheet) {
         BackHandler(onBack = onDismiss)
         SelectPasskeyBottomsheet(

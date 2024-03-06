@@ -37,14 +37,11 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.setting.SettingOption
 
 @Composable
-fun AboutSection(
-    modifier: Modifier = Modifier,
-    onEvent: (SettingsContentEvent) -> Unit
-) {
+fun AboutSection(modifier: Modifier = Modifier, onEvent: (SettingsContentEvent) -> Unit) {
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Text(
             text = stringResource(R.string.settings_about_section_title),
-            style = ProtonTheme.typography.defaultSmallWeak,
+            style = ProtonTheme.typography.defaultSmallWeak
         )
         Column(
             modifier = Modifier.roundedContainerNorm()
@@ -64,9 +61,7 @@ fun AboutSection(
 
 @Preview
 @Composable
-fun AboutSectionPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun AboutSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             AboutSection(onEvent = {})

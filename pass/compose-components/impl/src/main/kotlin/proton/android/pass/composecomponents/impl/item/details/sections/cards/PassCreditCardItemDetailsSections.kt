@@ -36,11 +36,11 @@ internal fun PassCreditCardItemDetailsSections(
     itemColors: PassItemColors,
     onSectionClick: (String, ItemDetailsFieldType.Plain) -> Unit,
     onHiddenSectionClick: (HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
-    onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit,
+    onHiddenSectionToggle: (Boolean, HiddenState, ItemDetailsFieldType.Hidden) -> Unit
 ) = with(contents) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         PassCreditCardItemDetailMainSection(
             cardholder = cardHolder,
@@ -51,13 +51,13 @@ internal fun PassCreditCardItemDetailsSections(
             itemColors = itemColors,
             onSectionClick = onSectionClick,
             onHiddenSectionClick = onHiddenSectionClick,
-            onHiddenSectionToggle = onHiddenSectionToggle,
+            onHiddenSectionToggle = onHiddenSectionToggle
         )
 
         if (note.isNotBlank()) {
             PassSharedItemDetailNoteSection(
                 note = note,
-                itemColors = itemColors,
+                itemColors = itemColors
             )
         }
     }

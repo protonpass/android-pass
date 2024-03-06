@@ -109,12 +109,12 @@ fun AliasAdvancedOptionsSection(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(1f)
             ) {
                 ProtonTextFieldLabel(text = stringResource(R.string.field_alias_suffix))
                 Text(
                     text = suffix?.suffix ?: "",
-                    style = ProtonTheme.typography.defaultNorm(enabled),
+                    style = ProtonTheme.typography.defaultNorm(enabled)
                 )
             }
             if (canSelectSuffix) {

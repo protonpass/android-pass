@@ -59,7 +59,7 @@ object NeedsAuthChecker {
         lastUnlockTime: Option<Long>,
         now: Long,
         lastBootCount: Option<Long>,
-        bootCount: Long,
+        bootCount: Long
     ): NeedsAuthResult {
         // Check for biometric lock. If it's disabled, no auth is needed.
         if (appLockState is AppLockState.Disabled) {

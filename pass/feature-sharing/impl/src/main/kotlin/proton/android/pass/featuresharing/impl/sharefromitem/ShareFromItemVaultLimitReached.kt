@@ -39,9 +39,7 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.featuresharing.impl.R
 
 @Composable
-fun ShareFromItemVaultLimitReached(
-    modifier: Modifier = Modifier
-) {
+fun ShareFromItemVaultLimitReached(modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .roundedContainerNorm()
@@ -59,9 +57,7 @@ fun ShareFromItemVaultLimitReached(
 
 @Preview
 @Composable
-fun ShareFromItemVaultLimitReachedPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun ShareFromItemVaultLimitReachedPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             ShareFromItemVaultLimitReached()

@@ -38,10 +38,7 @@ import proton.android.pass.featuresharing.impl.R
 
 @Composable
 @Suppress("MagicNumber")
-fun ShareFromItemUpgradeRow(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit
-) {
+fun ShareFromItemUpgradeRow(modifier: Modifier = Modifier, onClick: () -> Unit) {
     Row(
         modifier = modifier
             .roundedContainerNorm()
@@ -63,9 +60,7 @@ fun ShareFromItemUpgradeRow(
 
 @Preview
 @Composable
-fun ShareFromItemUpgradeRowPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun ShareFromItemUpgradeRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             ShareFromItemUpgradeRow(

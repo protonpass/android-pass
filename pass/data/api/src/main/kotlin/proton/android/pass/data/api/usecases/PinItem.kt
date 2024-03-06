@@ -24,9 +24,6 @@ import proton.android.pass.domain.ShareId
 
 interface PinItem {
 
-    suspend operator fun invoke(
-        shareId: ShareId,
-        itemId: ItemId,
-    ): Item
+    suspend operator fun invoke(shareId: ShareId, itemId: ItemId): Item
 
 }

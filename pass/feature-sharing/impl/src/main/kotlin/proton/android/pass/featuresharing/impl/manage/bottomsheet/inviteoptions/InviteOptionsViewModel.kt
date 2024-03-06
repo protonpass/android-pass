@@ -53,7 +53,7 @@ class InviteOptionsViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val resendInvite: ResendInvite,
     private val cancelInvite: CancelInvite,
-    savedState: SavedStateHandleProvider,
+    savedState: SavedStateHandleProvider
 ) : ViewModel() {
 
     private val shareId = ShareId(savedState.get().require(CommonNavArgId.ShareId.key))

@@ -58,9 +58,7 @@ class PreviewScreenshotTests {
     )
 
     @Test
-    fun preview_tests(
-        @TestParameter(valuesProvider = PreviewProvider::class) componentPreview: ComponentPreview
-    ) {
+    fun preview_tests(@TestParameter(valuesProvider = PreviewProvider::class) componentPreview: ComponentPreview) {
         rule.paparazzi.snapshot {
             Box {
                 componentPreview.content()

@@ -31,9 +31,7 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 abstract class CommonUiModule {
 
     @Binds
-    abstract fun bindSavedStateHandleProvider(
-        impl: SavedStateHandleProviderImpl
-    ): SavedStateHandleProvider
+    abstract fun bindSavedStateHandleProvider(impl: SavedStateHandleProviderImpl): SavedStateHandleProvider
 
 }
 
@@ -43,7 +41,5 @@ abstract class CommonUiModule {
 abstract class SingletonCommonUiModule {
 
     @Binds
-    abstract fun bindAppLifecycleProvider(
-        impl: PassAppLifecycleObserverImpl
-    ): PassAppLifecycleProvider
+    abstract fun bindAppLifecycleProvider(impl: PassAppLifecycleObserverImpl): PassAppLifecycleProvider
 }

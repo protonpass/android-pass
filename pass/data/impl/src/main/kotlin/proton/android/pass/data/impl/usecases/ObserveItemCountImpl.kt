@@ -35,29 +35,27 @@ class ObserveItemCountImpl @Inject constructor(
     private val itemRepository: ItemRepository
 ) : ObserveItemCount {
 
-    override fun invoke(
-        itemState: ItemState?,
-        selectedShareId: ShareId?
-    ): Flow<ItemCountSummary> = if (selectedShareId != null) {
-        observeCurrentUser()
-            .flatMapLatest { user ->
-                itemRepository.observeItemCountSummary(
-                    userId = user.userId,
-                    shareIds = listOf(selectedShareId),
-                    itemState = itemState
-                )
-            }
-    } else {
-        observeAllShares()
-            .flatMapLatest { shares ->
-                observeCurrentUser()
-                    .flatMapLatest { user ->
-                        itemRepository.observeItemCountSummary(
-                            userId = user.userId,
-                            shareIds = shares.map { it.id },
-                            itemState = itemState
-                        )
-                    }
-            }
-    }
+    override fun invoke(itemState: ItemState?, selectedShareId: ShareId?): Flow<ItemCountSummary> =
+        if (selectedShareId != null) {
+            observeCurrentUser()
+                .flatMapLatest { user ->
+                    itemRepository.observeItemCountSummary(
+                        userId = user.userId,
+                        shareIds = listOf(selectedShareId),
+                        itemState = itemState
+                    )
+                }
+        } else {
+            observeAllShares()
+                .flatMapLatest { shares ->
+                    observeCurrentUser()
+                        .flatMapLatest { user ->
+                            itemRepository.observeItemCountSummary(
+                                userId = user.userId,
+                                shareIds = shares.map { it.id },
+                                itemState = itemState
+                            )
+                        }
+                }
+        }
 }

@@ -81,7 +81,7 @@ fun PasskeyEditRow(
 
             Text(
                 text = username,
-                style = ProtonTheme.typography.defaultWeak(),
+                style = ProtonTheme.typography.defaultWeak()
             )
         }
 
@@ -93,9 +93,7 @@ fun PasskeyEditRow(
 
 @Preview
 @Composable
-fun PasskeyEditRowPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
+fun PasskeyEditRowPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
     PassTheme(isDark = input.first) {
         Surface {
             PasskeyEditRow(

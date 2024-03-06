@@ -138,7 +138,7 @@ class LoginDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandleProvider,
     getItemActions: GetItemActions,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
-    getUserPlan: GetUserPlan,
+    getUserPlan: GetUserPlan
 ) : ViewModel() {
 
     private val shareId: ShareId =
@@ -317,11 +317,11 @@ class LoginDetailViewModel @Inject constructor(
     private val itemFeaturesFlow = combine(
         featureFlagsRepository.get<Boolean>(FeatureFlag.PINNING_V1),
         featureFlagsRepository.get<Boolean>(FeatureFlag.HISTORY_V1),
-        getUserPlan(),
+        getUserPlan()
     ) { isPinningFeatureEnabled, isHistoryFeatureFlagEnabled, userPlan ->
         ItemFeatures(
             isHistoryEnabled = isHistoryFeatureFlagEnabled && userPlan.isPaidPlan,
-            isPinningEnabled = isPinningFeatureEnabled,
+            isPinningEnabled = isPinningFeatureEnabled
         )
     }
 
@@ -336,7 +336,7 @@ class LoginDetailViewModel @Inject constructor(
         customFieldsState,
         oneShot { getItemActions(shareId = shareId, itemId = itemId) }.asLoadingResult(),
         eventState,
-        itemFeaturesFlow,
+        itemFeaturesFlow
     ) { itemDetails,
         totpUiState,
         isLoading,
@@ -393,7 +393,7 @@ class LoginDetailViewModel @Inject constructor(
                     itemActions = actions,
                     event = event,
                     isPinningFeatureEnabled = itemFeatures.isPinningEnabled,
-                    isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled,
+                    isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled
                 )
             }
         }
@@ -486,22 +486,21 @@ class LoginDetailViewModel @Inject constructor(
         isLoadingState.update { IsLoadingState.NotLoading }
     }
 
-    fun onPermanentlyDelete(itemUiModel: ItemUiModel) =
-        viewModelScope.launch {
-            isLoadingState.update { IsLoadingState.Loading }
-            runCatching {
-                deleteItem(items = mapOf(itemUiModel.shareId to listOf(itemUiModel.id)))
-            }.onSuccess {
-                telemetryManager.sendEvent(ItemDelete(EventItemType.from(itemUiModel.contents)))
-                isPermanentlyDeletedState.update { IsPermanentlyDeletedState.Deleted }
-                snackbarDispatcher(ItemPermanentlyDeleted)
-                PassLogger.i(TAG, "Item deleted successfully")
-            }.onFailure {
-                snackbarDispatcher(ItemNotPermanentlyDeleted)
-                PassLogger.i(TAG, it, "Could not delete item")
-            }
-            isLoadingState.update { IsLoadingState.NotLoading }
+    fun onPermanentlyDelete(itemUiModel: ItemUiModel) = viewModelScope.launch {
+        isLoadingState.update { IsLoadingState.Loading }
+        runCatching {
+            deleteItem(items = mapOf(itemUiModel.shareId to listOf(itemUiModel.id)))
+        }.onSuccess {
+            telemetryManager.sendEvent(ItemDelete(EventItemType.from(itemUiModel.contents)))
+            isPermanentlyDeletedState.update { IsPermanentlyDeletedState.Deleted }
+            snackbarDispatcher(ItemPermanentlyDeleted)
+            PassLogger.i(TAG, "Item deleted successfully")
+        }.onFailure {
+            snackbarDispatcher(ItemNotPermanentlyDeleted)
+            PassLogger.i(TAG, it, "Could not delete item")
         }
+        isLoadingState.update { IsLoadingState.NotLoading }
+    }
 
     fun onItemRestore(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
         isLoadingState.update { IsLoadingState.Loading }
@@ -616,9 +615,7 @@ class LoginDetailViewModel @Inject constructor(
                 }
             }
 
-    private fun observeTotpValue(
-        decryptedTotpUri: String
-    ): Flow<TotpUiState> = observeTotpFromUri(decryptedTotpUri)
+    private fun observeTotpValue(decryptedTotpUri: String): Flow<TotpUiState> = observeTotpFromUri(decryptedTotpUri)
         .map(TotpManager.TotpWrapper::toOption)
         .map { totpValue ->
             when (totpValue) {
@@ -658,10 +655,7 @@ class LoginDetailViewModel @Inject constructor(
             )
     }
 
-    private fun startObservingTotpCustomFields(
-        canSeeCustomFields: Boolean,
-        itemUiModel: ItemUiModel
-    ) {
+    private fun startObservingTotpCustomFields(canSeeCustomFields: Boolean, itemUiModel: ItemUiModel) {
         viewModelScope.launch {
             val asLogin = itemUiModel.contents as? ItemContents.Login
             if (asLogin != null) {

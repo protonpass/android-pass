@@ -65,9 +65,7 @@ fun AcceptInviteItemSyncStatus(
 
 @Preview
 @Composable
-fun AcceptInviteItemSyncStatusPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun AcceptInviteItemSyncStatusPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             AcceptInviteItemSyncStatus(downloaded = 3, total = 10)

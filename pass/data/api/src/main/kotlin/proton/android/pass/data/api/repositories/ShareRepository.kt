@@ -28,15 +28,9 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.entity.NewVault
 
 interface ShareRepository {
-    suspend fun createVault(
-        userId: SessionUserId,
-        vault: NewVault
-    ): Share
+    suspend fun createVault(userId: SessionUserId, vault: NewVault): Share
 
-    suspend fun deleteVault(
-        userId: UserId,
-        shareId: ShareId
-    )
+    suspend fun deleteVault(userId: UserId, shareId: ShareId)
 
     suspend fun refreshShares(userId: UserId): RefreshSharesResult
     suspend fun refreshShare(userId: UserId, shareId: ShareId)
@@ -55,7 +49,11 @@ interface ShareRepository {
 
     suspend fun deleteSharesForUser(userId: UserId)
     suspend fun leaveVault(userId: UserId, shareId: ShareId)
-    suspend fun applyUpdateShareEvent(userId: UserId, shareId: ShareId, event: UpdateShareEvent)
+    suspend fun applyUpdateShareEvent(
+        userId: UserId,
+        shareId: ShareId,
+        event: UpdateShareEvent
+    )
 
     suspend fun applyPendingShareEvent(userId: UserId, event: UpdateShareEvent)
 

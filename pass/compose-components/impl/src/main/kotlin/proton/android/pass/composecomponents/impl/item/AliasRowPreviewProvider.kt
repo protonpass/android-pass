@@ -52,20 +52,24 @@ class AliasRowPreviewProvider : PreviewParameterProvider<AliasRowParameter> {
         )
 
     companion object {
-        private fun with(title: String, alias: String, note: String = "", highlight: String = "") =
-            AliasRowParameter(
-                model = ItemUiModel(
-                    id = ItemId("123"),
-                    shareId = ShareId("456"),
-                    contents = ItemContents.Alias(title, note, alias),
-                    state = 0,
-                    createTime = Clock.System.now(),
-                    modificationTime = Clock.System.now(),
-                    lastAutofillTime = Clock.System.now(),
-                    isPinned = false,
-                ),
-                highlight = highlight
-            )
+        private fun with(
+            title: String,
+            alias: String,
+            note: String = "",
+            highlight: String = ""
+        ) = AliasRowParameter(
+            model = ItemUiModel(
+                id = ItemId("123"),
+                shareId = ShareId("456"),
+                contents = ItemContents.Alias(title, note, alias),
+                state = 0,
+                createTime = Clock.System.now(),
+                modificationTime = Clock.System.now(),
+                lastAutofillTime = Clock.System.now(),
+                isPinned = false
+            ),
+            highlight = highlight
+        )
     }
 }
 

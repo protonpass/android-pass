@@ -25,11 +25,11 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 class MemberOptionsContentPreviewProvider : PreviewParameterProvider<MemberOptionInput> {
     override val values = sequence {
         for (
-            showTransfer in listOf(
-                TransferOwnershipState.Disabled,
-                TransferOwnershipState.Enabled,
-                TransferOwnershipState.Hide
-            )
+        showTransfer in listOf(
+            TransferOwnershipState.Disabled,
+            TransferOwnershipState.Enabled,
+            TransferOwnershipState.Hide
+        )
         ) {
             yield(MemberOptionInput(showTransferOwnership = showTransfer))
         }
@@ -51,5 +51,5 @@ class ThemeMemberOptionsPreviewProvider : ThemePairPreviewProvider<MemberOptionI
 data class MemberOptionInput(
     val showTransferOwnership: TransferOwnershipState = TransferOwnershipState.Enabled,
     val loadingOption: LoadingOption? = null,
-    val isLoading: IsLoadingState = IsLoadingState.NotLoading,
+    val isLoading: IsLoadingState = IsLoadingState.NotLoading
 )

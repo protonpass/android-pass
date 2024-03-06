@@ -53,36 +53,35 @@ private fun appLockBottomSheetItem(
     preference: AppLockTimePreference,
     isSelected: Boolean,
     onClick: () -> Unit
-): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = {
-                val title = when (preference) {
-                    AppLockTimePreference.Immediately -> R.string.app_lock_immediately
-                    AppLockTimePreference.InOneMinute -> R.string.app_lock_one_minute
-                    AppLockTimePreference.InTwoMinutes -> R.string.app_lock_two_minutes
-                    AppLockTimePreference.InFiveMinutes -> R.string.app_lock_five_minutes
-                    AppLockTimePreference.InTenMinutes -> R.string.app_lock_ten_minutes
-                    AppLockTimePreference.InOneHour -> R.string.app_lock_one_hour
-                    AppLockTimePreference.InFourHours -> R.string.app_lock_four_hours
-                }
-                BottomSheetItemTitle(text = stringResource(title))
+): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = {
+            val title = when (preference) {
+                AppLockTimePreference.Immediately -> R.string.app_lock_immediately
+                AppLockTimePreference.InOneMinute -> R.string.app_lock_one_minute
+                AppLockTimePreference.InTwoMinutes -> R.string.app_lock_two_minutes
+                AppLockTimePreference.InFiveMinutes -> R.string.app_lock_five_minutes
+                AppLockTimePreference.InTenMinutes -> R.string.app_lock_ten_minutes
+                AppLockTimePreference.InOneHour -> R.string.app_lock_one_hour
+                AppLockTimePreference.InFourHours -> R.string.app_lock_four_hours
             }
-        override val subtitle: (@Composable () -> Unit)?
-            get() = null
-        override val leftIcon: (@Composable () -> Unit)?
-            get() = null
-        override val endIcon: (@Composable () -> Unit)?
-            get() = if (isSelected) {
-                {
-                    BottomSheetItemIcon(
-                        iconId = me.proton.core.presentation.R.drawable.ic_proton_checkmark,
-                        tint = PassTheme.colors.loginInteractionNormMajor1
-                    )
-                }
+            BottomSheetItemTitle(text = stringResource(title))
+        }
+    override val subtitle: (@Composable () -> Unit)?
+        get() = null
+    override val leftIcon: (@Composable () -> Unit)?
+        get() = null
+    override val endIcon: (@Composable () -> Unit)?
+        get() = if (isSelected) {
+            {
+                BottomSheetItemIcon(
+                    iconId = me.proton.core.presentation.R.drawable.ic_proton_checkmark,
+                    tint = PassTheme.colors.loginInteractionNormMajor1
+                )
+            }
 
-            } else null
-        override val onClick: () -> Unit
-            get() = onClick
-        override val isDivider = false
-    }
+        } else null
+    override val onClick: () -> Unit
+        get() = onClick
+    override val isDivider = false
+}

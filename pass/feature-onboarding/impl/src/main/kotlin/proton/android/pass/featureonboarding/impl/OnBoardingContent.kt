@@ -136,25 +136,24 @@ fun pendingAccessPageUiState(): OnBoardingPageUiState = OnBoardingPageUiState(
 )
 
 @Composable
-fun autofillPageUiState(): OnBoardingPageUiState =
-    OnBoardingPageUiState(
-        page = Autofill,
-        title = stringResource(R.string.on_boarding_autofill_title),
-        subtitle = stringResource(R.string.on_boarding_autofill_content),
-        image = @Composable {
-            Image(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-                    .background(onBoardingBrush())
-                    .padding(38.dp, 0.dp),
-                painter = painterResource(id = R.drawable.onboarding_autofill),
-                contentDescription = ""
-            )
-        },
-        mainButton = stringResource(R.string.on_boarding_autofill_button),
-        showSkipButton = true
-    )
+fun autofillPageUiState(): OnBoardingPageUiState = OnBoardingPageUiState(
+    page = Autofill,
+    title = stringResource(R.string.on_boarding_autofill_title),
+    subtitle = stringResource(R.string.on_boarding_autofill_content),
+    image = @Composable {
+        Image(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .background(onBoardingBrush())
+                .padding(38.dp, 0.dp),
+            painter = painterResource(id = R.drawable.onboarding_autofill),
+            contentDescription = ""
+        )
+    },
+    mainButton = stringResource(R.string.on_boarding_autofill_button),
+    showSkipButton = true
+)
 
 @Composable
 private fun onBoardingBrush() = Brush.linearGradient(
@@ -167,45 +166,43 @@ private fun onBoardingBrush() = Brush.linearGradient(
 )
 
 @Composable
-fun fingerPrintPageUiState(): OnBoardingPageUiState =
-    OnBoardingPageUiState(
-        page = Fingerprint,
-        title = stringResource(R.string.on_boarding_fingerprint_title),
-        subtitle = stringResource(R.string.on_boarding_fingerprint_content),
-        image = @Composable {
-            Image(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-                    .background(onBoardingBrush()),
-                painter = painterResource(id = R.drawable.onboarding_fingerprint),
-                contentDescription = ""
-            )
-        },
-        mainButton = stringResource(R.string.on_boarding_fingerprint_button),
-        showSkipButton = true
-    )
+fun fingerPrintPageUiState(): OnBoardingPageUiState = OnBoardingPageUiState(
+    page = Fingerprint,
+    title = stringResource(R.string.on_boarding_fingerprint_title),
+    subtitle = stringResource(R.string.on_boarding_fingerprint_content),
+    image = @Composable {
+        Image(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .background(onBoardingBrush()),
+            painter = painterResource(id = R.drawable.onboarding_fingerprint),
+            contentDescription = ""
+        )
+    },
+    mainButton = stringResource(R.string.on_boarding_fingerprint_button),
+    showSkipButton = true
+)
 
 @Composable
-fun lastPageUiState(): OnBoardingPageUiState =
-    OnBoardingPageUiState(
-        page = Last,
-        title = stringResource(R.string.on_boarding_last_page_title),
-        subtitle = stringResource(R.string.on_boarding_last_page_content),
-        image = @Composable {
-            Image(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-                    .background(onBoardingBrush()),
-                painter = painterResource(id = R.drawable.onboarding_last),
-                contentDescription = ""
-            )
-        },
-        mainButton = stringResource(R.string.on_boarding_last_page_button),
-        showSkipButton = false,
-        showVideoTutorialButton = true
-    )
+fun lastPageUiState(): OnBoardingPageUiState = OnBoardingPageUiState(
+    page = Last,
+    title = stringResource(R.string.on_boarding_last_page_title),
+    subtitle = stringResource(R.string.on_boarding_last_page_content),
+    image = @Composable {
+        Image(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .background(onBoardingBrush()),
+            painter = painterResource(id = R.drawable.onboarding_last),
+            contentDescription = ""
+        )
+    },
+    mainButton = stringResource(R.string.on_boarding_last_page_button),
+    showSkipButton = false,
+    showVideoTutorialButton = true
+)
 
 class ThemeAndOnBoardingUiStatePreviewProvider :
     ThemePairPreviewProvider<OnBoardingUiState>(OnBoardingUiStatePreviewProvider())

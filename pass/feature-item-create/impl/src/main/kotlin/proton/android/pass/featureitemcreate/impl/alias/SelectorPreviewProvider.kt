@@ -41,8 +41,8 @@ class SelectorPreviewProvider : PreviewParameterProvider<SelectorPreviewParamete
         "some.text",
         "some.very.long.text.that.should.be.ellipsized.in.the.end.as.it.will.not.fit.in.a.line",
         """
-        some.text that contains spaces
-        and also multiline content
+            some.text that contains spaces
+            and also multiline content
         """.trimIndent()
     )
 }

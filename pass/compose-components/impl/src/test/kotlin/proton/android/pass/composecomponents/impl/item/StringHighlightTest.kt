@@ -186,8 +186,9 @@ class StringHighlightTest {
 
     @Test
     fun `can highlight text with newlines`() {
-        val input = """- sign-in address: https://somewebsites.randomsites.com
-- secret key: A1-345-SDV
+        val input = """
+            - sign-in address: https://somewebsites.randomsites.com
+            - secret key: A1-345-SDV
         """.trimIndent()
         val res = process(input, "com")
         val expected = buildAnnotatedString {

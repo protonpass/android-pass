@@ -101,7 +101,7 @@ internal class CanDisplayTotpImplTest {
             ItemWithTotp(
                 shareId = ShareId("share-$it"),
                 itemId = ItemId("item-$it"),
-                createTime = Clock.System.now().minus(it.days),
+                createTime = Clock.System.now().minus(it.days)
             )
         }.reversed() // Reverse so older items are first
         dataSource.emitItemsWithTotp(Result.success(items))

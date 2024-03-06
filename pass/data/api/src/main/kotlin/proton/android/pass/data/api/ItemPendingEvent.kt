@@ -30,7 +30,7 @@ data class ItemPendingEvent(
     val addressId: AddressId,
     val lastEventId: String,
     val updateShareEvent: UpdateShareEvent?,
-    private val pendingEventLists: Set<PendingEventList>,
+    private val pendingEventLists: Set<PendingEventList>
 ) {
 
     val pendingItemRevisions: List<PendingEventItemRevision> by lazy {

@@ -26,17 +26,17 @@ import proton.android.pass.notifications.api.SnackbarType
 internal enum class ItemHistoryRestoreSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
-    override val isClipboard: Boolean = false,
+    override val isClipboard: Boolean = false
 ) : SnackbarMessage {
 
     RestoreItemRevisionError(
         id = R.string.item_history_restore_snackbar_message_error,
-        type = SnackbarType.ERROR,
+        type = SnackbarType.ERROR
     ),
 
     RestoreItemRevisionSuccess(
         id = R.string.item_history_restore_snackbar_message_success,
-        type = SnackbarType.SUCCESS,
-    ),
+        type = SnackbarType.SUCCESS
+    )
 
 }

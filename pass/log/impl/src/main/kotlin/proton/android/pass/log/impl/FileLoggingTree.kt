@@ -99,7 +99,12 @@ class FileLoggingTree(private val context: Context) : Timber.Tree() {
     }
 
     @SuppressLint("LogNotTimber")
-    override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+    override fun log(
+        priority: Int,
+        tag: String?,
+        message: String,
+        t: Throwable?
+    ) {
         if (priority < Log.INFO) return
         scope.launch(Dispatchers.IO) {
             try {
@@ -120,7 +125,11 @@ class FileLoggingTree(private val context: Context) : Timber.Tree() {
         }
     }
 
-    private fun buildLog(priority: Int, tag: String?, message: String): String = buildString {
+    private fun buildLog(
+        priority: Int,
+        tag: String?,
+        message: String
+    ): String = buildString {
         append(dateTimeFormatter.format(Clock.System.now().toJavaInstant()))
         append(' ')
         append(priority.toPriorityChar())

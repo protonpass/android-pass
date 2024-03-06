@@ -27,7 +27,7 @@ object TestItemType {
         username: String? = null,
         password: String? = null,
         websites: List<String> = emptyList(),
-        packageInfoSet: Set<PackageInfo> = emptySet(),
+        packageInfoSet: Set<PackageInfo> = emptySet()
     ): ItemType.Login = ItemType.Login(
         username = username ?: TestUtils.randomString(),
         password = password ?: TestUtils.randomString(),

@@ -120,7 +120,7 @@ object AppDatabaseMigrations {
                 table = ItemEntity.TABLE,
                 column = ItemEntity.Columns.HAS_TOTP,
                 type = "INTEGER",
-                defaultValue = null,
+                defaultValue = null
             )
             // Set all items that are not login to HAS_TOTP = false
             database.execSQL(
@@ -216,7 +216,7 @@ object AppDatabaseMigrations {
                 table = ItemEntity.TABLE,
                 column = ItemEntity.Columns.HAS_PASSKEYS,
                 type = "INTEGER",
-                defaultValue = null,
+                defaultValue = null
             )
             // Set all items that are not login to HAS_PASSKEYS = false
             database.execSQL(

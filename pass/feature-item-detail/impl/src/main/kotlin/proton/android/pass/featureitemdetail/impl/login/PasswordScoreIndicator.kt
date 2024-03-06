@@ -58,21 +58,21 @@ fun ShieldIcon(modifier: Modifier = Modifier, passwordScore: PasswordScore) {
             modifier = modifier,
             painter = painterResource(R.drawable.ic_shield_bad),
             tint = PassTheme.colors.signalDanger,
-            contentDescription = null,
+            contentDescription = null
         )
 
         PasswordScore.WEAK -> Icon(
             modifier = modifier,
             painter = painterResource(R.drawable.ic_shield_warning),
             tint = PassTheme.colors.signalWarning,
-            contentDescription = null,
+            contentDescription = null
         )
 
         PasswordScore.STRONG -> Icon(
             modifier = modifier,
             painter = painterResource(R.drawable.ic_shield_check),
             tint = PassTheme.colors.signalSuccess,
-            contentDescription = null,
+            contentDescription = null
         )
     }
 }

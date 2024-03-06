@@ -61,9 +61,7 @@ fun NotificationPermissionCard(
 
 @Preview
 @Composable
-fun NotificationPermissionCardPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun NotificationPermissionCardPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             NotificationPermissionCard(

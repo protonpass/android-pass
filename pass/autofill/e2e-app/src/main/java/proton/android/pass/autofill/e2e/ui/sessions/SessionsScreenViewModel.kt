@@ -113,59 +113,56 @@ class SessionsScreenViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getSessions(context: Context): ImmutableList<AutofillSession> =
-        withContext(Dispatchers.IO) {
-            val dir = DebugUtils.autofillDumpDir(context)
-            dir.mkdirs()
+    private suspend fun getSessions(context: Context): ImmutableList<AutofillSession> = withContext(Dispatchers.IO) {
+        val dir = DebugUtils.autofillDumpDir(context)
+        dir.mkdirs()
 
-            val filenames = dir.listFiles()?.map { it.name } ?: emptyList()
-            val asSessions = filenames.mapNotNull { filename ->
-                val withoutExtension = filename.removeSuffix(".json")
-                val parts = withoutExtension.split("-")
-                if (parts.size != 2) {
-                    return@mapNotNull null
-                }
+        val filenames = dir.listFiles()?.map { it.name } ?: emptyList()
+        val asSessions = filenames.mapNotNull { filename ->
+            val withoutExtension = filename.removeSuffix(".json")
+            val parts = withoutExtension.split("-")
+            if (parts.size != 2) {
+                return@mapNotNull null
+            }
 
-                val packageName = parts[0]
-                val timestampPart = parts[1]
+            val packageName = parts[0]
+            val timestampPart = parts[1]
 
-                val parsedTimestamp = timestampPart.toLong()
-                val timestamp = Instant.fromEpochMilliseconds(parsedTimestamp)
-                    .toLocalDateTime(TimeZone.currentSystemDefault())
-                val timestampAsString =
-                    "${timestamp.year}-${zeroPad(timestamp.monthNumber)}-${zeroPad(timestamp.dayOfMonth)} ${
+            val parsedTimestamp = timestampPart.toLong()
+            val timestamp = Instant.fromEpochMilliseconds(parsedTimestamp)
+                .toLocalDateTime(TimeZone.currentSystemDefault())
+            val timestampAsString =
+                "${timestamp.year}-${zeroPad(timestamp.monthNumber)}-${zeroPad(timestamp.dayOfMonth)} ${
                     zeroPad(timestamp.hour)
-                    }:${zeroPad(timestamp.minute)}:${zeroPad(timestamp.second)}"
+                }:${zeroPad(timestamp.minute)}:${zeroPad(timestamp.second)}"
 
-                AutofillSession(
-                    packageName = packageName,
-                    timestamp = timestampAsString,
-                    filename = filename
-                )
-            }.sortedByDescending { it.timestamp }
-            asSessions.toImmutableList()
-        }
-
-
-    fun startShareIntent(
-        session: AutofillSession,
-        context: ClassHolder<Context>
-    ) = viewModelScope.launch(Dispatchers.IO) {
-        context.get().map { ctx ->
-            val intent = Intent(Intent.ACTION_SEND)
-            intent.type = "*/*"
-            val dumpDir = DebugUtils.autofillDumpDir(ctx)
-            val sessionFile = File(dumpDir, session.filename)
-            val contentUri: Uri = FileProvider.getUriForFile(
-                ctx,
-                "${BuildConfig.APPLICATION_ID}.fileprovider",
-                sessionFile
+            AutofillSession(
+                packageName = packageName,
+                timestamp = timestampAsString,
+                filename = filename
             )
-            intent.putExtra(Intent.EXTRA_STREAM, contentUri)
-            intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-            ctx.startActivity(Intent.createChooser(intent, "Share session"))
-        }
+        }.sortedByDescending { it.timestamp }
+        asSessions.toImmutableList()
     }
+
+
+    fun startShareIntent(session: AutofillSession, context: ClassHolder<Context>) =
+        viewModelScope.launch(Dispatchers.IO) {
+            context.get().map { ctx ->
+                val intent = Intent(Intent.ACTION_SEND)
+                intent.type = "*/*"
+                val dumpDir = DebugUtils.autofillDumpDir(ctx)
+                val sessionFile = File(dumpDir, session.filename)
+                val contentUri: Uri = FileProvider.getUriForFile(
+                    ctx,
+                    "${BuildConfig.APPLICATION_ID}.fileprovider",
+                    sessionFile
+                )
+                intent.putExtra(Intent.EXTRA_STREAM, contentUri)
+                intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                ctx.startActivity(Intent.createChooser(intent, "Share session"))
+            }
+        }
 }
 
 @Stable

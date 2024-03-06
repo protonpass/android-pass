@@ -36,16 +36,14 @@ class MigrateItemsImpl @Inject constructor(
     private val itemRepository: ItemRepository
 ) : MigrateItems {
 
-    override suspend fun invoke(
-        items: Map<ShareId, List<ItemId>>,
-        destinationShare: ShareId
-    ): MigrateItemsResult = withContext(Dispatchers.IO) {
-        val userId = requireNotNull(accountManager.getPrimaryUserId().first())
-        val dest = shareRepository.getById(userId, destinationShare)
-        itemRepository.migrateItems(
-            userId = userId,
-            items = items,
-            destination = dest
-        )
-    }
+    override suspend fun invoke(items: Map<ShareId, List<ItemId>>, destinationShare: ShareId): MigrateItemsResult =
+        withContext(Dispatchers.IO) {
+            val userId = requireNotNull(accountManager.getPrimaryUserId().first())
+            val dest = shareRepository.getById(userId, destinationShare)
+            itemRepository.migrateItems(
+                userId = userId,
+                items = items,
+                destination = dest
+            )
+        }
 }

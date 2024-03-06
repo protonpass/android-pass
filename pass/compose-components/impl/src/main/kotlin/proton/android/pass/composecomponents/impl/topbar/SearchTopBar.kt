@@ -54,7 +54,7 @@ fun SearchTopBar(
     val endPadding = if (actions != null) 4.dp else 16.dp
     Row(
         modifier = modifier.padding(start = 16.dp, top = 16.dp, end = endPadding, bottom = 16.dp),
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         drawerIcon()
         Spacer(modifier = Modifier.width(8.dp))
@@ -84,9 +84,7 @@ fun SearchTopBar(
 
 @Preview
 @Composable
-fun SearchTopBarPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
+fun SearchTopBarPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
     PassTheme(isDark = input.first) {
         Surface {
             SearchTopBar(

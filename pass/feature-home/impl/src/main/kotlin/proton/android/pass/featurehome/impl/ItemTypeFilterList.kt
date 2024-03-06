@@ -134,9 +134,7 @@ private fun ItemTypeButton(
 
 @Preview
 @Composable
-fun ItemTypeFilterListPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun ItemTypeFilterListPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             ItemTypeFilterList(

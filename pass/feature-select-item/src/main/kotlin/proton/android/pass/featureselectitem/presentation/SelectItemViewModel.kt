@@ -329,7 +329,7 @@ class SelectItemViewModel @Inject constructor(
             inPinningMode = isInSeeAllPinsMode,
             isPinningEnabled = isPinningEnabled,
             filteredItems = filteredItems,
-            unFilteredItems = unfilteredItems,
+            unFilteredItems = unfilteredItems
         )
     }
 
@@ -459,7 +459,7 @@ class SelectItemViewModel @Inject constructor(
         searchWrapper,
         pinningUiStateFlow,
         planFlow,
-        shareIdToSharesFlow,
+        shareIdToSharesFlow
     ) { selectItemListUiState,
         search,
         pinningUiState,
@@ -540,10 +540,7 @@ class SelectItemViewModel @Inject constructor(
         itemClickedFlow.update { AutofillItemClickedEvent.None }
     }
 
-    private fun getShareSelection(
-        planType: PlanType,
-        vaults: List<Vault>,
-    ): ShareSelection = when (planType) {
+    private fun getShareSelection(planType: PlanType, vaults: List<Vault>): ShareSelection = when (planType) {
         is PlanType.Paid,
         is PlanType.Trial -> ShareSelection.AllShares
 
@@ -553,59 +550,52 @@ class SelectItemViewModel @Inject constructor(
             .let { writeableVaults -> ShareSelection.Shares(writeableVaults) }
     }
 
-    private fun List<ItemUiModel>.sortItemLists(sortingOption: SortingOption) =
-        when (sortingOption.searchSortingType) {
-            SearchSortingType.MostRecent -> sortMostRecent()
-            SearchSortingType.TitleAsc -> sortByTitleAsc()
-            SearchSortingType.TitleDesc -> sortByTitleDesc()
-            SearchSortingType.CreationAsc -> sortByCreationAsc()
-            SearchSortingType.CreationDesc -> sortByCreationDesc()
-        }
-
-    private fun List<ItemUiModel>.groupedItemLists(
-        sortingOption: SortingOption,
-        instant: Instant
-    ) = when (sortingOption.searchSortingType) {
-        SearchSortingType.MostRecent -> groupAndSortByMostRecent(instant)
-        SearchSortingType.TitleAsc -> groupAndSortByTitleAsc()
-        SearchSortingType.TitleDesc -> groupAndSortByTitleDesc()
-        SearchSortingType.CreationAsc -> groupAndSortByCreationAsc()
-        SearchSortingType.CreationDesc -> groupAndSortByCreationDesc()
+    private fun List<ItemUiModel>.sortItemLists(sortingOption: SortingOption) = when (sortingOption.searchSortingType) {
+        SearchSortingType.MostRecent -> sortMostRecent()
+        SearchSortingType.TitleAsc -> sortByTitleAsc()
+        SearchSortingType.TitleDesc -> sortByTitleDesc()
+        SearchSortingType.CreationAsc -> sortByCreationAsc()
+        SearchSortingType.CreationDesc -> sortByCreationDesc()
     }
 
-    private fun getSuggestionsForState(
-        state: SelectItemState
-    ): Flow<LoadingResult<List<Item>>> = when (state) {
+    private fun List<ItemUiModel>.groupedItemLists(sortingOption: SortingOption, instant: Instant) =
+        when (sortingOption.searchSortingType) {
+            SearchSortingType.MostRecent -> groupAndSortByMostRecent(instant)
+            SearchSortingType.TitleAsc -> groupAndSortByTitleAsc()
+            SearchSortingType.TitleDesc -> groupAndSortByTitleDesc()
+            SearchSortingType.CreationAsc -> groupAndSortByCreationAsc()
+            SearchSortingType.CreationDesc -> groupAndSortByCreationDesc()
+        }
+
+    private fun getSuggestionsForState(state: SelectItemState): Flow<LoadingResult<List<Item>>> = when (state) {
         is SelectItemState.Autofill -> getSuggestionsForAutofill(state)
         is SelectItemState.Passkey -> getSuggestionsForPasskey(state)
     }
 
-    private fun getSuggestionsForAutofill(
-        state: SelectItemState.Autofill
-    ): Flow<LoadingResult<List<Item>>> = when (state) {
-        is SelectItemState.Autofill.Login -> {
-            getSuggestedLoginItems(
-                packageName = state.suggestionsPackageName,
-                url = state.suggestionsUrl
-            ).asResultWithoutLoading()
+    private fun getSuggestionsForAutofill(state: SelectItemState.Autofill): Flow<LoadingResult<List<Item>>> =
+        when (state) {
+            is SelectItemState.Autofill.Login -> {
+                getSuggestedLoginItems(
+                    packageName = state.suggestionsPackageName,
+                    url = state.suggestionsUrl
+                ).asResultWithoutLoading()
+            }
+
+            is SelectItemState.Autofill.CreditCard -> flowOf(LoadingResult.Success(emptyList()))
         }
 
-        is SelectItemState.Autofill.CreditCard -> flowOf(LoadingResult.Success(emptyList()))
-    }
+    private fun getSuggestionsForPasskey(state: SelectItemState.Passkey): Flow<LoadingResult<List<Item>>> =
+        when (state) {
+            is SelectItemState.Passkey.Register -> {
+                getSuggestedLoginItems(
+                    packageName = None,
+                    url = state.suggestionsUrl
+                ).asResultWithoutLoading()
+            }
 
-    private fun getSuggestionsForPasskey(
-        state: SelectItemState.Passkey
-    ): Flow<LoadingResult<List<Item>>> = when (state) {
-        is SelectItemState.Passkey.Register -> {
-            getSuggestedLoginItems(
-                packageName = None,
-                url = state.suggestionsUrl
-            ).asResultWithoutLoading()
+            // TBD: Implement getSuggestionsForPasskey
+            is SelectItemState.Passkey.Select -> flowOf(LoadingResult.Success(emptyList()))
         }
-
-        // TBD: Implement getSuggestionsForPasskey
-        is SelectItemState.Passkey.Select -> flowOf(LoadingResult.Success(emptyList()))
-    }
 
 
     companion object {

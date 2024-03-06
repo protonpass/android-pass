@@ -55,8 +55,7 @@ class LocalShareDataSourceImpl @Inject constructor(
         return database.sharesDao().delete(shareIds.map { it.id }.toTypedArray()) > 0
     }
 
-    override suspend fun hasShares(userId: UserId): Boolean =
-        database.sharesDao().countShares(userId.id) > 0
+    override suspend fun hasShares(userId: UserId): Boolean = database.sharesDao().countShares(userId.id) > 0
 
     override suspend fun deleteSharesForUser(userId: UserId) {
         PassLogger.i(TAG, "Deleting all shares for user")
@@ -66,13 +65,16 @@ class LocalShareDataSourceImpl @Inject constructor(
     override fun observeActiveVaultCount(userId: UserId): Flow<Int> =
         database.sharesDao().observeActiveVaultCount(userId.id)
 
-    override suspend fun updateOwnershipStatus(userId: UserId, shareId: ShareId, isOwner: Boolean) =
-        database.sharesDao().updateOwnership(
-            userId = userId.id,
-            shareId = shareId.id,
-            isOwner =
-            isOwner
-        )
+    override suspend fun updateOwnershipStatus(
+        userId: UserId,
+        shareId: ShareId,
+        isOwner: Boolean
+    ) = database.sharesDao().updateOwnership(
+        userId = userId.id,
+        shareId = shareId.id,
+        isOwner =
+        isOwner
+    )
 
     companion object {
         private const val TAG = "LocalShareDataSourceImpl"

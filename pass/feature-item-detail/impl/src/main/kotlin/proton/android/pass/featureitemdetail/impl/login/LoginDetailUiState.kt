@@ -61,7 +61,7 @@ sealed interface LoginDetailUiState {
         val itemActions: ItemActions,
         val event: ItemDetailEvent,
         val isPinningFeatureEnabled: Boolean,
-        val isHistoryFeatureEnabled: Boolean,
+        val isHistoryFeatureEnabled: Boolean
     ) : LoginDetailUiState
 }
 

@@ -41,9 +41,7 @@ object EditAlias : NavItem(
     ExperimentalMaterialApi::class,
     ExperimentalComposeUiApi::class
 )
-fun NavGraphBuilder.updateAliasGraph(
-    onNavigate: (UpdateAliasNavigation) -> Unit
-) {
+fun NavGraphBuilder.updateAliasGraph(onNavigate: (UpdateAliasNavigation) -> Unit) {
     composable(EditAlias) {
         UpdateAlias(
             onNavigate = onNavigate

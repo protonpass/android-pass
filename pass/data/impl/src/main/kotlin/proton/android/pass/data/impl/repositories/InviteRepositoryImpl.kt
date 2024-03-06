@@ -125,10 +125,7 @@ class InviteRepositoryImpl @Inject constructor(
         hasNewInvites
     }
 
-    private suspend fun inviteAndKeysEntity(
-        invite: PendingInviteResponse,
-        userId: UserId
-    ): InviteAndKeysEntity {
+    private suspend fun inviteAndKeysEntity(invite: PendingInviteResponse, userId: UserId): InviteAndKeysEntity {
         val vaultData = invite.vaultData
         val reencryptedInviteContent = reencryptInviteContents(userId, invite)
         val inviteEntity = InviteEntity(

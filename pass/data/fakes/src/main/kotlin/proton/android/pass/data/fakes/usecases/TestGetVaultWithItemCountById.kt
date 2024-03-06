@@ -45,11 +45,10 @@ class TestGetVaultWithItemCountById @Inject constructor() : GetVaultWithItemCoun
         exceptionOption = exception.toOption()
     }
 
-    override fun invoke(userId: UserId?, shareId: ShareId): Flow<VaultWithItemCount> =
-        flow.onSubscription {
-            when (val exception = exceptionOption) {
-                None -> {}
-                is Some -> throw exception.value
-            }
+    override fun invoke(userId: UserId?, shareId: ShareId): Flow<VaultWithItemCount> = flow.onSubscription {
+        when (val exception = exceptionOption) {
+            None -> {}
+            is Some -> throw exception.value
         }
+    }
 }

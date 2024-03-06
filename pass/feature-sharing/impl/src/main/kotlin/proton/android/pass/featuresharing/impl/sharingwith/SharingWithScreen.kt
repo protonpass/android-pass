@@ -37,7 +37,7 @@ fun SharingWithScreen(
         when (val event = state.event) {
             is SharingWithEvents.NavigateToPermissions -> onNavigateEvent(
                 SharingNavigation.Permissions(
-                    shareId = event.shareId,
+                    shareId = event.shareId
                 )
             )
 

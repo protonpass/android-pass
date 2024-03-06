@@ -35,10 +35,8 @@ class TestObserveItemCount @Inject constructor() : ObserveItemCount {
 
     fun sendResult(result: Result<ItemCountSummary>) = observeVaultsFlow.tryEmit(result)
 
-    override fun invoke(
-        itemState: ItemState?,
-        selectedShareId: ShareId?
-    ): Flow<ItemCountSummary> = observeVaultsFlow.map {
-        it.getOrThrow()
-    }
+    override fun invoke(itemState: ItemState?, selectedShareId: ShareId?): Flow<ItemCountSummary> =
+        observeVaultsFlow.map {
+            it.getOrThrow()
+        }
 }

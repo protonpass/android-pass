@@ -38,19 +38,23 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.featurepasskeys.create.ui.CreatePasskeyActivity
+import proton.android.pass.featurepasskeys.telemetry.CreatePromptDisplay
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.telemetry.api.TelemetryManager
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 object CreatePasskeyHandler {
 
     private const val TAG = "CreatePasskeyHandler"
 
+    @Suppress("LongParameterList")
     fun handle(
         context: Context,
         request: BeginCreateCredentialRequest,
         cancellationSignal: CancellationSignal,
         callback: OutcomeReceiver<BeginCreateCredentialResponse, CreateCredentialException>,
-        accountManager: AccountManager
+        accountManager: AccountManager,
+        telemetryManager: TelemetryManager
     ) {
         val handler = CoroutineExceptionHandler { _, exception ->
             PassLogger.e(TAG, exception)
@@ -58,7 +62,12 @@ object CreatePasskeyHandler {
         }
 
         val job = CoroutineScope(Dispatchers.IO).launch(handler) {
-            val response = processCreateCredentialRequest(context, request, accountManager)
+            val response = processCreateCredentialRequest(
+                context = context,
+                request = request,
+                accountManager = accountManager,
+                telemetryManager = telemetryManager
+            )
             callback.onResult(response)
         }
 
@@ -71,7 +80,8 @@ object CreatePasskeyHandler {
     private suspend fun processCreateCredentialRequest(
         context: Context,
         request: BeginCreateCredentialRequest,
-        accountManager: AccountManager
+        accountManager: AccountManager,
+        telemetryManager: TelemetryManager
     ): BeginCreateCredentialResponse? {
         val currentUser = accountManager.getPrimaryUserId().first()
         if (currentUser == null) {
@@ -80,12 +90,18 @@ object CreatePasskeyHandler {
         }
 
         return when (request) {
-            is BeginCreatePublicKeyCredentialRequest -> handleCreatePasskeyQuery(context)
+            is BeginCreatePublicKeyCredentialRequest -> handleCreatePasskeyQuery(
+                context = context,
+                telemetryManager = telemetryManager
+            )
             else -> null
         }
     }
 
-    private fun handleCreatePasskeyQuery(context: Context): BeginCreateCredentialResponse {
+    private fun handleCreatePasskeyQuery(
+        context: Context,
+        telemetryManager: TelemetryManager
+    ): BeginCreateCredentialResponse {
         val createEntries = listOf(
             CreateEntry(
                 accountName = "createPasskey",
@@ -93,6 +109,7 @@ object CreatePasskeyHandler {
             )
         )
 
+        telemetryManager.sendEvent(CreatePromptDisplay)
         return BeginCreateCredentialResponse(createEntries)
     }
 

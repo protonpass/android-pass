@@ -34,7 +34,7 @@ data class OrganizationGetOrganization(
     @SerialName("CanUpdate")
     val canUpdate: Boolean,
     @SerialName("Settings")
-    val settings: OrganizationGetOrganizationSettings
+    val settings: OrganizationGetOrganizationSettings?
 )
 
 @Serializable

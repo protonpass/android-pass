@@ -50,6 +50,7 @@ import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 fun SelectPasskeyAppContent(
     modifier: Modifier = Modifier,
     needsAuth: Boolean,
+    domain: String,
     selectPasskey: SelectPasskeyAppEvent.SelectPasskeyFromItem?,
     onEvent: (SelectPasskeyEvent) -> Unit,
     onNavigate: (SelectPasskeyNavigation) -> Unit
@@ -97,6 +98,7 @@ fun SelectPasskeyAppContent(
         ) {
             selectPasskeyActivityGraph(
                 appNavigator = appNavigator,
+                domain = domain,
                 onNavigate = onNavigate,
                 onEvent = onEvent,
                 dismissBottomSheet = { callback ->

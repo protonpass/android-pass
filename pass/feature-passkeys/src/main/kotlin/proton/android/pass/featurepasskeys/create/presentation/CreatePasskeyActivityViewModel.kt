@@ -47,6 +47,7 @@ import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.some
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.featurepasskeys.R
+import proton.android.pass.featurepasskeys.telemetry.CreateDone
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
 import proton.android.pass.passkeys.api.ParseCreatePasskeyRequest
@@ -54,6 +55,7 @@ import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
 data class CreatePasskeyRequest(
@@ -65,10 +67,10 @@ data class CreatePasskeyRequest(
 sealed interface State {
 
     @Immutable
-    object Idle : State
+    data object Idle : State
 
     @Immutable
-    object Close : State
+    data object Close : State
 
     @Immutable
     @JvmInline
@@ -83,6 +85,7 @@ class CreatePasskeyActivityViewModel @Inject constructor(
     private val preferenceRepository: UserPreferencesRepository,
     private val internalSettingsRepository: InternalSettingsRepository,
     private val toastManager: ToastManager,
+    private val telemetryManager: TelemetryManager,
     needsBiometricAuth: NeedsBiometricAuth
 ) : ViewModel() {
 
@@ -164,6 +167,10 @@ class CreatePasskeyActivityViewModel @Inject constructor(
             }
 
         closeScreenFlow.update { true }
+    }
+
+    fun onResponseSent() = viewModelScope.launch {
+        telemetryManager.sendEvent(CreateDone)
     }
 
     companion object {

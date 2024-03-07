@@ -29,4 +29,6 @@ sealed interface SelectPasskeyEvent {
     @JvmInline
     value class OnPasskeySelected(val passkey: Passkey) : SelectPasskeyEvent
 
+    data object OnSelectScreenShown : SelectPasskeyEvent
+
 }

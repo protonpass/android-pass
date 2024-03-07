@@ -48,7 +48,7 @@ class OrganizationSettingsRepositoryImpl @Inject constructor(
             userId = userId.id,
             hasOrganization = true,
             canUpdate = canUpdate,
-            shareMode = settings.shareMode
+            shareMode = settings?.shareMode ?: OrganizationShareMode.Unrestricted.value
         )
     }
 

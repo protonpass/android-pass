@@ -141,4 +141,10 @@
     <!-- Passkeys -->
     <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Passkey</string>
 
+    <!-- Upgrade -->
+    <string name="dialog_upgrade_plan_title">Upgrade plan?</string>
+    <string name="dialog_upgrade_plan_message">This feature is not available for free tier users. If you want to enjoy this along with other cool features, upgrade your plan and give it a try!</string>
+    <string name="dialog_upgrade_plan_action_confirm">Upgrade</string>
+    <string name="dialog_upgrade_plan_action_cancel">Not now</string>
+
 </resources>

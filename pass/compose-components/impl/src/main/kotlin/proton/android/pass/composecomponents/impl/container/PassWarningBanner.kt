@@ -39,19 +39,16 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun PassInfoWarningBanner(
-    modifier: Modifier = Modifier,
-    text: String,
-) {
+fun PassInfoWarningBanner(modifier: Modifier = Modifier, text: String) {
     Row(
         modifier = modifier
             .background(
                 color = PassTheme.colors.backgroundStrong,
-                shape = PassTheme.shapes.squircleMediumShape,
+                shape = PassTheme.shapes.squircleMediumShape
             )
             .padding(
                 horizontal = Spacing.medium,
-                vertical = 12.dp,
+                vertical = 12.dp
             ),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.small)
@@ -59,13 +56,13 @@ fun PassInfoWarningBanner(
         Icon(
             painter = painterResource(id = CoreR.drawable.ic_proton_info_circle_filled),
             contentDescription = null,
-            tint = PassTheme.colors.textWeak,
+            tint = PassTheme.colors.textWeak
         )
 
         Text(
             text = text,
             fontWeight = FontWeight.W400,
-            color = PassTheme.colors.textWeak,
+            color = PassTheme.colors.textWeak
         )
     }
 }

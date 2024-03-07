@@ -188,7 +188,7 @@ class HomeViewModel @Inject constructor(
     private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     private val toastManager: ToastManager,
     private val observeCurrentUser: ObserveCurrentUser,
-    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
+    private val getUserPlan: GetUserPlan,
     private val pinItem: PinItem,
     private val unpinItem: UnpinItem,
     private val pinItems: PinItems,
@@ -198,9 +198,9 @@ class HomeViewModel @Inject constructor(
     observeItems: ObserveItems,
     observePinnedItems: ObservePinnedItems,
     preferencesRepository: UserPreferencesRepository,
-    getUserPlan: GetUserPlan,
     observeAppNeedsUpdate: ObserveAppNeedsUpdate,
     appDispatchers: AppDispatchers,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     savedState: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -751,7 +751,17 @@ class HomeViewModel @Inject constructor(
     }
 
     internal fun viewItemHistory(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
-        navEventState.update { HomeNavEvent.ShowItemHistory(shareId, itemId) }
+        getUserPlan().first()
+            .let { plan ->
+                if (plan.isPaidPlan) {
+                    HomeNavEvent.ItemHistory(shareId, itemId)
+                } else {
+                    HomeNavEvent.UpgradeDialog
+                }
+            }
+            .also { homeNavEvent ->
+                navEventState.update { homeNavEvent }
+            }
     }
 
     fun setItemTypeSelection(searchFilterType: SearchFilterType) {

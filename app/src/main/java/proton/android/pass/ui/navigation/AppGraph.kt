@@ -38,6 +38,7 @@ import proton.android.pass.featurehome.impl.HOME_ENABLE_BULK_ACTIONS_KEY
 import proton.android.pass.featurehome.impl.HOME_GO_TO_VAULT_KEY
 import proton.android.pass.featurehome.impl.Home
 import proton.android.pass.featurehome.impl.HomeNavigation
+import proton.android.pass.featurehome.impl.HomeUpgradeDialog
 import proton.android.pass.featurehome.impl.homeGraph
 import proton.android.pass.featureitemcreate.impl.alias.CreateAlias
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasBottomSheet
@@ -188,6 +189,8 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigate(destination, route)
                 }
 
+                HomeNavigation.Back -> appNavigator.navigateBack(comesFromBottomsheet = false)
+
                 HomeNavigation.CreateVault -> {
                     appNavigator.navigate(
                         destination = CreateVaultScreen,
@@ -283,6 +286,9 @@ fun NavGraphBuilder.appGraph(
                         itemId = it.itemId,
                     )
                 )
+
+                HomeNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
+                HomeNavigation.UpgradeDialog -> appNavigator.navigate(destination = HomeUpgradeDialog)
             }
         }
     )

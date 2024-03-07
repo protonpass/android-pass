@@ -27,11 +27,14 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
+import proton.android.pass.composecomponents.impl.dialogs.PassUpgradePlanDialog
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.composable
+import proton.android.pass.navigation.api.dialog
 import proton.android.pass.navigation.api.toPath
 
 const val HOME_GO_TO_VAULT_KEY = "home_go_to_vault"
@@ -52,7 +55,14 @@ object Home : NavItem(
     }
 }
 
-fun NavGraphBuilder.homeGraph(onNavigateEvent: (HomeNavigation) -> Unit) {
+object HomeUpgradeDialog : NavItem(
+    baseRoute = "home/upgrade/dialog",
+    navItemType = NavItemType.Dialog,
+)
+
+fun NavGraphBuilder.homeGraph(
+    onNavigateEvent: (HomeNavigation) -> Unit,
+) {
     composable(Home) { navBackStack ->
         val goToVault by navBackStack.savedStateHandle
             .getStateFlow<String?>(HOME_GO_TO_VAULT_KEY, null)
@@ -76,6 +86,13 @@ fun NavGraphBuilder.homeGraph(onNavigateEvent: (HomeNavigation) -> Unit) {
             onNavigateEvent = onNavigateEvent
         )
     }
+
+    dialog(HomeUpgradeDialog) {
+        PassUpgradePlanDialog(
+            onCancel = { onNavigateEvent(HomeNavigation.Back) },
+            onUpgrade = { onNavigateEvent(HomeNavigation.Upgrade) },
+        )
+    }
 }
 
 sealed interface HomeNavigation {
@@ -84,6 +101,8 @@ sealed interface HomeNavigation {
         val shareId: Option<ShareId>,
         val itemTypeUiState: ItemTypeUiState
     ) : HomeNavigation
+
+    data object Back : HomeNavigation
 
     data class EditLogin(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
 
@@ -122,5 +141,9 @@ sealed interface HomeNavigation {
     value class SearchOptions(val bulkActionsEnabled: Boolean) : HomeNavigation
 
     data object MoveToVault : HomeNavigation
+
+    data object Upgrade : HomeNavigation
+
+    data object UpgradeDialog : HomeNavigation
 
 }

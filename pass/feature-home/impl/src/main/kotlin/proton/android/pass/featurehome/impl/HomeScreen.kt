@@ -111,14 +111,18 @@ fun HomeScreen(
 
     LaunchedEffect(homeUiState.navEvent) {
         when (homeUiState.navEvent) {
-            is HomeNavEvent.ShowItemHistory -> {
-                (homeUiState.navEvent as HomeNavEvent.ShowItemHistory)
+            is HomeNavEvent.ItemHistory -> {
+                (homeUiState.navEvent as HomeNavEvent.ItemHistory)
                     .let { event -> HomeNavigation.ItemHistory(event.shareId, event.itemId) }
                     .also(onNavigateEvent)
             }
 
             HomeNavEvent.ShowBulkMoveToVault -> {
                 onNavigateEvent(HomeNavigation.MoveToVault)
+            }
+
+            HomeNavEvent.UpgradeDialog -> {
+                onNavigateEvent(HomeNavigation.UpgradeDialog)
             }
 
             HomeNavEvent.Unknown -> {}
@@ -272,6 +276,7 @@ fun HomeScreen(
                     },
                     onViewHistory = remember {
                         { shareId, itemId ->
+                            scope.launch { bottomSheetState.hide() }
                             homeViewModel.viewItemHistory(shareId, itemId)
                         }
                     },
@@ -323,6 +328,7 @@ fun HomeScreen(
                     },
                     onViewHistory = remember {
                         { shareId, itemId ->
+                            scope.launch { bottomSheetState.hide() }
                             homeViewModel.viewItemHistory(shareId, itemId)
                         }
                     },
@@ -374,6 +380,7 @@ fun HomeScreen(
                     },
                     onViewHistory = remember {
                         { shareId, itemId ->
+                            scope.launch { bottomSheetState.hide() }
                             homeViewModel.viewItemHistory(shareId, itemId)
                         }
                     },
@@ -431,6 +438,7 @@ fun HomeScreen(
                     },
                     onViewHistory = remember {
                         { shareId, itemId ->
+                            scope.launch { bottomSheetState.hide() }
                             homeViewModel.viewItemHistory(shareId, itemId)
                         }
                     },

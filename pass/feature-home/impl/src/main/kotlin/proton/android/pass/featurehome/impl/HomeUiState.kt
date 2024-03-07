@@ -53,11 +53,13 @@ sealed interface ActionState {
 
 sealed interface HomeNavEvent {
 
-    data class ShowItemHistory(val shareId: ShareId, val itemId: ItemId) : HomeNavEvent
+    data class ItemHistory(val shareId: ShareId, val itemId: ItemId) : HomeNavEvent
 
     data object ShowBulkMoveToVault : HomeNavEvent
 
     data object Unknown : HomeNavEvent
+
+    data object UpgradeDialog : HomeNavEvent
 
 }
 

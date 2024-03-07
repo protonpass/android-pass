@@ -37,6 +37,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeysForDomain
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -52,6 +53,9 @@ class PasskeyProviderService : CredentialProviderService() {
     @Inject
     lateinit var needsBiometricAuth: NeedsBiometricAuth
 
+    @Inject
+    lateinit var telemetryManager: TelemetryManager
+
     override fun onBeginCreateCredentialRequest(
         request: BeginCreateCredentialRequest,
         cancellationSignal: CancellationSignal,
@@ -63,7 +67,8 @@ class PasskeyProviderService : CredentialProviderService() {
             request = request,
             cancellationSignal = cancellationSignal,
             callback = callback,
-            accountManager = accountManager
+            accountManager = accountManager,
+            telemetryManager = telemetryManager
         )
     }
 
@@ -80,7 +85,8 @@ class PasskeyProviderService : CredentialProviderService() {
             callback = callback,
             getPasskeysForDomain = getPasskeysForDomain,
             accountManager = accountManager,
-            needsBiometricAuth = needsBiometricAuth
+            needsBiometricAuth = needsBiometricAuth,
+            telemetryManager = telemetryManager
         )
     }
 

@@ -942,9 +942,11 @@ class HomeViewModel @Inject constructor(
                     clearSelection()
                 }
             }
-        }.onFailure {
+        }.onFailure { error ->
             PassLogger.w(TAG, "Error pinning items")
-            PassLogger.w(TAG, it)
+            PassLogger.w(TAG, error)
+            selectionState.update { it.copy(pinningLoadingState = IsLoadingState.NotLoading) }
+            snackbarDispatcher(ItemsPinnedError)
         }
     }
 

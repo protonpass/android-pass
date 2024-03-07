@@ -20,6 +20,7 @@ package proton.android.pass.featurepasskeys.select.navigation
 
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.common.api.None
+import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.ItemOptionsBottomSheet
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.EnterPin
 import proton.android.pass.featureauth.impl.authGraph
@@ -38,6 +39,7 @@ import proton.android.pass.navigation.api.AppNavigator
 @Suppress("CyclomaticComplexMethod", "ComplexMethod", "LongMethod")
 fun NavGraphBuilder.selectPasskeyActivityGraph(
     appNavigator: AppNavigator,
+    domain: String,
     onEvent: (SelectPasskeyEvent) -> Unit,
     onNavigate: (SelectPasskeyNavigation) -> Unit,
     dismissBottomSheet: (() -> Unit) -> Unit
@@ -59,10 +61,12 @@ fun NavGraphBuilder.selectPasskeyActivityGraph(
 
     selectItemGraph(
         state = SelectItemState.Passkey.Select(
-            title = "TO BE DONE",
+            title = domain,
             suggestionsUrl = None
         ),
-        onScreenShown = {},
+        onScreenShown = {
+            onEvent(SelectPasskeyEvent.OnSelectScreenShown)
+        },
         onNavigate = {
             when (it) {
                 SelectItemNavigation.AddItem -> {}
@@ -83,10 +87,10 @@ fun NavGraphBuilder.selectPasskeyActivityGraph(
                     )
 
                 is SelectItemNavigation.ItemOptions -> {
-//                    appNavigator.navigate(
-//                        destination = AutofillItemOptionsBottomSheet,
-//                        route = AutofillItemOptionsBottomSheet.createRoute(it.shareId, it.itemId)
-//                    )
+                    appNavigator.navigate(
+                        destination = ItemOptionsBottomSheet,
+                        route = ItemOptionsBottomSheet.createRoute(it.shareId, it.itemId)
+                    )
                 }
 
                 SelectItemNavigation.Upgrade -> {

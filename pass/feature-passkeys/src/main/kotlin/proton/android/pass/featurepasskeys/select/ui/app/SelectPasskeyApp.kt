@@ -86,6 +86,7 @@ fun SelectPasskeyApp(
             SelectPasskeyAppContent(
                 modifier = Modifier.padding(padding),
                 needsAuth = appState.needsAuth,
+                domain = appState.data.domain,
                 selectPasskey = selectPasskey,
                 onEvent = {
                     when (it) {

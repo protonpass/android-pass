@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -36,6 +37,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetCancelC
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetVaultRow
 import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
+import proton.android.pass.composecomponents.impl.container.PassInfoWarningBanner
 import proton.android.pass.featuremigrate.R
 
 @Composable
@@ -51,6 +53,7 @@ fun MigrateConfirmVaultContents(
             state.mode.number,
             state.mode.number
         )
+
         MigrateMode.MigrateAll -> stringResource(R.string.migrate_all_items_confirm_title_bottom_sheet)
     }
 
@@ -58,6 +61,11 @@ fun MigrateConfirmVaultContents(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+        PassInfoWarningBanner(
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            text = stringResource(id = R.string.migrate_item_warning_history),
+        )
+
         Text(
             modifier = Modifier
                 .fillMaxWidth()

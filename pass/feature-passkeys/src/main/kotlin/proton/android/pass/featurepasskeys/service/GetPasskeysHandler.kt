@@ -45,7 +45,9 @@ import proton.android.pass.featurepasskeys.R
 import proton.android.pass.featurepasskeys.select.SelectPasskeyUtils
 import proton.android.pass.featurepasskeys.select.ui.SelectPasskeyActivity
 import proton.android.pass.featurepasskeys.select.ui.UsePasskeyNoUiActivity
+import proton.android.pass.featurepasskeys.telemetry.DisplaySuggestions
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.telemetry.api.TelemetryManager
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 object GetPasskeysHandler {
@@ -60,7 +62,8 @@ object GetPasskeysHandler {
         callback: OutcomeReceiver<BeginGetCredentialResponse, GetCredentialException>,
         getPasskeysForDomain: GetPasskeysForDomain,
         accountManager: AccountManager,
-        needsBiometricAuth: NeedsBiometricAuth
+        needsBiometricAuth: NeedsBiometricAuth,
+        telemetryManager: TelemetryManager
     ) {
         val handler = CoroutineExceptionHandler { _, exception ->
             PassLogger.e(TAG, exception)
@@ -73,7 +76,8 @@ object GetPasskeysHandler {
                 request = request,
                 getPasskeysForDomain = getPasskeysForDomain,
                 accountManager = accountManager,
-                needsBiometricAuth = needsBiometricAuth
+                needsBiometricAuth = needsBiometricAuth,
+                telemetryManager = telemetryManager
             )
             callback.onResult(response)
         }
@@ -84,13 +88,14 @@ object GetPasskeysHandler {
         }
     }
 
-    @Suppress("ReturnCount")
+    @Suppress("LongParameterList", "ReturnCount")
     private suspend fun getPasskeys(
         context: Context,
         request: BeginGetCredentialRequest,
         getPasskeysForDomain: GetPasskeysForDomain,
         accountManager: AccountManager,
-        needsBiometricAuth: NeedsBiometricAuth
+        needsBiometricAuth: NeedsBiometricAuth,
+        telemetryManager: TelemetryManager
     ): BeginGetCredentialResponse? {
         val currentUser = accountManager.getPrimaryUserId().first()
         if (currentUser == null) {
@@ -140,6 +145,8 @@ object GetPasskeysHandler {
                 }
             }
         }
+
+        telemetryManager.sendEvent(DisplaySuggestions)
 
         return BeginGetCredentialResponse(
             credentialEntries = entries,

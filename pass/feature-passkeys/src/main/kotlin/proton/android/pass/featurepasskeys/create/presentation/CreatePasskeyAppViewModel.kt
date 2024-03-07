@@ -50,7 +50,7 @@ import javax.inject.Inject
 @Immutable
 sealed interface CreatePasskeyAppEvent {
     @Immutable
-    object Idle : CreatePasskeyAppEvent
+    data object Idle : CreatePasskeyAppEvent
 
     @Immutable
     data class AskForConfirmation(
@@ -66,7 +66,7 @@ sealed interface CreatePasskeyAppEvent {
 @Immutable
 sealed interface CreatePasskeyNavState {
     @Immutable
-    object Loading : CreatePasskeyNavState
+    data object Loading : CreatePasskeyNavState
 
     @Immutable
     data class Ready(

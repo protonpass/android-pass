@@ -33,17 +33,19 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeyById
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Passkey
+import proton.android.pass.featurepasskeys.telemetry.DisplayAllPasskeys
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.passkeys.api.AuthenticateWithPasskey
+import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
 @Immutable
 sealed interface SelectPasskeyAppEvent {
     @Immutable
-    object Idle : SelectPasskeyAppEvent
+    data object Idle : SelectPasskeyAppEvent
 
     @Immutable
-    object Cancel : SelectPasskeyAppEvent
+    data object Cancel : SelectPasskeyAppEvent
 
     @Immutable
     data class SelectPasskeyFromItem(
@@ -59,7 +61,8 @@ sealed interface SelectPasskeyAppEvent {
 @HiltViewModel
 class SelectPasskeyAppViewModel @Inject constructor(
     private val authenticateWithPasskey: AuthenticateWithPasskey,
-    private val getPasskeyById: GetPasskeyById
+    private val getPasskeyById: GetPasskeyById,
+    private val telemetryManager: TelemetryManager
 ) : ViewModel() {
 
     private val eventFlow: MutableStateFlow<SelectPasskeyAppEvent> =
@@ -154,6 +157,10 @@ class SelectPasskeyAppViewModel @Inject constructor(
 
     fun clearEvent() = viewModelScope.launch {
         eventFlow.update { SelectPasskeyAppEvent.Idle }
+    }
+
+    fun onScreenShown() = viewModelScope.launch {
+        telemetryManager.sendEvent(DisplayAllPasskeys)
     }
 
 

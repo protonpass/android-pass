@@ -104,6 +104,10 @@ fun SelectPasskeyApp(
                                 request = appState.data.request
                             )
                         }
+
+                        SelectPasskeyEvent.OnSelectScreenShown -> {
+                            viewModel.onScreenShown()
+                        }
                     }
                 },
                 onNavigate = onNavigate

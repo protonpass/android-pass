@@ -129,6 +129,7 @@ class CreatePasskeyActivity : FragmentActivity() {
                 setResult(Activity.RESULT_CANCELED)
             }
             is CreatePasskeyResponse.Success -> {
+                viewModel.onResponseSent()
                 val responseIntent = Intent()
                 val responseData = CreatePublicKeyCredentialResponse(response.response)
                 PendingIntentHandler.setCreateCredentialResponse(responseIntent, responseData)

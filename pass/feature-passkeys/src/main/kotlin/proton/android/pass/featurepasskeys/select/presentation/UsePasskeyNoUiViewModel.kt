@@ -35,8 +35,10 @@ import proton.android.pass.data.api.usecases.passkeys.GetPasskeyById
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.featurepasskeys.telemetry.AuthDone
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.passkeys.api.AuthenticateWithPasskey
+import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
 data class UsePasskeyNoUiRequest(
@@ -48,8 +50,8 @@ data class UsePasskeyNoUiRequest(
 )
 
 sealed interface UsePasskeyState {
-    object Idle : UsePasskeyState
-    object Cancel : UsePasskeyState
+    data object Idle : UsePasskeyState
+    data object Cancel : UsePasskeyState
 
     @JvmInline
     value class SendResponse(val response: String) : UsePasskeyState
@@ -58,7 +60,8 @@ sealed interface UsePasskeyState {
 @HiltViewModel
 class UsePasskeyNoUiViewModel @Inject constructor(
     private val authenticateWithPasskey: AuthenticateWithPasskey,
-    private val getPasskeyById: GetPasskeyById
+    private val getPasskeyById: GetPasskeyById,
+    private val telemetryManager: TelemetryManager
 ) : ViewModel() {
 
     private val requestFlow: MutableStateFlow<Option<UsePasskeyNoUiRequest>> =
@@ -102,6 +105,8 @@ class UsePasskeyNoUiViewModel @Inject constructor(
                 response.response
             }
         }
+    }.onSuccess {
+        telemetryManager.sendEvent(AuthDone)
     }
 
     companion object {

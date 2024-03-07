@@ -29,10 +29,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetCancelConfirm
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetVaultRow
@@ -59,7 +59,7 @@ fun MigrateConfirmVaultContents(
 
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
     ) {
         PassInfoWarningBanner(
             modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -69,7 +69,7 @@ fun MigrateConfirmVaultContents(
         Text(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = Spacing.medium),
             text = title,
             textAlign = TextAlign.Center,
             color = PassTheme.colors.textNorm

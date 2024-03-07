@@ -117,6 +117,7 @@ dependencies {
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.passkeys.api)
     implementation(projects.pass.preferences.api)
+    implementation(projects.pass.telemetry.api)
 
     testImplementation(libs.truth)
     testImplementation(libs.kotlinTest)

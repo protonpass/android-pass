@@ -63,7 +63,7 @@ fun MigrateConfirmVaultContents(
     ) {
         PassInfoWarningBanner(
             modifier = Modifier.align(Alignment.CenterHorizontally),
-            text = stringResource(id = R.string.migrate_item_warning_history),
+            text = stringResource(id = R.string.migrate_item_warning_history)
         )
 
         Text(

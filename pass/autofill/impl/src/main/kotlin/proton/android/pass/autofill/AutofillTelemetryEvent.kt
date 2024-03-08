@@ -27,8 +27,8 @@ enum class AutofillTriggerSource(val source: String) {
     App("app")
 }
 
-object AutosaveDone : TelemetryEvent("autosave.done")
-object AutosaveDisplay : TelemetryEvent("autosave.display")
+data object AutosaveDone : TelemetryEvent("autosave.done")
+data object AutosaveDisplay : TelemetryEvent("autosave.display")
 
 data class AutofillDisplayed(
     val source: AutofillTriggerSource,
@@ -57,4 +57,4 @@ data class AutofillDone(
     }
 }
 
-object MFAAutofillCopied : TelemetryEvent("2fa.autofill")
+data object MFAAutofillCopied : TelemetryEvent("2fa.autofill")

@@ -69,7 +69,6 @@ open class FetchItemsWorker @AssistedInject constructor(
         return when (res) {
             ForceSyncResult.Error -> {
                 PassLogger.i(TAG, "$TAG finished with errors")
-                Result.failure()
                 Result.retry()
             }
             ForceSyncResult.Success -> {
@@ -102,7 +101,8 @@ open class FetchItemsWorker @AssistedInject constructor(
 
     enum class FetchSource(val showDialog: Boolean) {
         ForceSync(true),
-        NewShare(false)
+        NewShare(false),
+        FirstSync(true)
     }
 
     companion object {

@@ -105,7 +105,10 @@ class ApplyPendingEventsImpl @Inject constructor(
         refreshSharesResult: RefreshSharesResult
     ) {
         PassLogger.i(TAG, "Received a list of shares, applying pending events")
-        enqueueRefreshItems(refreshSharesResult.newShareIds)
+        enqueueRefreshItems(
+            shares = refreshSharesResult.newShareIds,
+            wasFirstSync = refreshSharesResult.wasFirstSync
+        )
 
         refreshSharesResult.allShareIds
             .subtract(refreshSharesResult.newShareIds)
@@ -220,11 +223,16 @@ class ApplyPendingEventsImpl @Inject constructor(
         }
     }
 
-    private fun enqueueRefreshItems(shares: Set<ShareId>) {
+    private fun enqueueRefreshItems(shares: Set<ShareId>, wasFirstSync: Boolean) {
         if (shares.isEmpty()) return
 
+        val source = if (wasFirstSync) {
+            FetchItemsWorker.FetchSource.FirstSync
+        } else {
+            FetchItemsWorker.FetchSource.NewShare
+        }
         val request = FetchItemsWorker.getRequestFor(
-            source = FetchItemsWorker.FetchSource.NewShare,
+            source = source,
             shareIds = shares.toList()
         )
 

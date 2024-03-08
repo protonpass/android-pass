@@ -65,6 +65,7 @@ fun NoteOptionsBottomSheetContents(
     onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit,
     isPinningFeatureEnabled: Boolean,
     isHistoryFeatureEnabled: Boolean,
+    isFreePlan: Boolean,
 ) {
     val contents = itemUiModel.contents as ItemContents.Note
 
@@ -93,7 +94,7 @@ fun NoteOptionsBottomSheetContents(
             }
 
             if (isHistoryFeatureEnabled) {
-                add(viewHistory { onViewHistory(itemUiModel.shareId, itemUiModel.id) })
+                add(viewHistory(isFreePlan) { onViewHistory(itemUiModel.shareId, itemUiModel.id) })
             }
 
             if (itemUiModel.canModify) {
@@ -160,6 +161,7 @@ fun NoteOptionsBottomSheetContentsPreview(
                 onRemoveFromRecentSearch = { _, _ -> },
                 isPinningFeatureEnabled = true,
                 isHistoryFeatureEnabled = true,
+                isFreePlan = false
             )
         }
     }

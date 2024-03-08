@@ -69,6 +69,7 @@ fun LoginOptionsBottomSheetContents(
     onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit,
     isPinningFeatureEnabled: Boolean,
     isHistoryFeatureEnabled: Boolean,
+    isFreePlan: Boolean,
 ) {
     val contents = itemUiModel.contents as ItemContents.Login
 
@@ -104,7 +105,7 @@ fun LoginOptionsBottomSheetContents(
             }
 
             if (isHistoryFeatureEnabled) {
-                add(viewHistory { onViewHistory(itemUiModel.shareId, itemUiModel.id) })
+                add(viewHistory(isFreePlan) { onViewHistory(itemUiModel.shareId, itemUiModel.id) })
             }
 
             if (itemUiModel.canModify) {
@@ -196,6 +197,7 @@ fun LoginOptionsBottomSheetContentsPreview(
                 canLoadExternalImages = false,
                 isPinningFeatureEnabled = true,
                 isHistoryFeatureEnabled = true,
+                isFreePlan = false
             )
         }
     }

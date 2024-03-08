@@ -238,6 +238,7 @@ class SharingWithViewModel @Inject constructor(
     }
 
     fun onContinueClick() = viewModelScope.launch {
+        errorMessageFlow.update { ErrorMessage.None }
         if (editingEmailState.isNotBlank()) {
             if (checkValidEmail()) {
                 enteredEmailsState.update { it + EnteredEmailState(editingEmailState, false) }
@@ -280,6 +281,7 @@ class SharingWithViewModel @Inject constructor(
         } else {
             enteredEmailsState.update {
                 if (it.contains(email)) {
+                    errorMessageFlow.update { ErrorMessage.None }
                     it - EnteredEmailState(email, false)
                 } else {
                     it

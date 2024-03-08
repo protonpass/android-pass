@@ -27,7 +27,11 @@ import javax.inject.Singleton
 @Singleton
 class TestCheckAddressesCanBeInvited @Inject constructor() : CheckCanAddressesBeInvited {
 
-    private var result: Result<CanAddressesBeInvitedResult> = Result.success(CanAddressesBeInvitedResult.None)
+    private var result: Result<CanAddressesBeInvitedResult> = Result.success(
+        CanAddressesBeInvitedResult.None(
+            reason = CanAddressesBeInvitedResult.CannotInviteAddressReason.Unknown
+        )
+    )
 
     fun setResult(value: Result<CanAddressesBeInvitedResult>) {
         result = value

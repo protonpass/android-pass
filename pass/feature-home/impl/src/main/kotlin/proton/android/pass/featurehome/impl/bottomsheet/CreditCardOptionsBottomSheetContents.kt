@@ -51,7 +51,7 @@ fun CreditCardOptionsBottomSheetContents(
     onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit,
     isPinningFeatureEnabled: Boolean,
     isHistoryFeatureEnabled: Boolean,
-    isFreePlan: Boolean,
+    isFreePlan: Boolean
 ) {
     val contents = itemUiModel.contents as ItemContents.CreditCard
 
@@ -110,19 +110,18 @@ private fun copyCvv(onClick: () -> Unit) = copyItem(
     onClick
 )
 
-private fun copyItem(text: String, onClick: () -> Unit): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = { BottomSheetItemTitle(text = text) }
-        override val subtitle: (@Composable () -> Unit)?
-            get() = null
-        override val leftIcon: (@Composable () -> Unit)
-            get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick = onClick
-        override val isDivider = false
-    }
+private fun copyItem(text: String, onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = { BottomSheetItemTitle(text = text) }
+    override val subtitle: (@Composable () -> Unit)?
+        get() = null
+    override val leftIcon: (@Composable () -> Unit)
+        get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
+    override val onClick = onClick
+    override val isDivider = false
+}
 
 
 @Suppress("FunctionMaxLength")

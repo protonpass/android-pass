@@ -57,12 +57,10 @@ object Home : NavItem(
 
 object HomeUpgradeDialog : NavItem(
     baseRoute = "home/upgrade/dialog",
-    navItemType = NavItemType.Dialog,
+    navItemType = NavItemType.Dialog
 )
 
-fun NavGraphBuilder.homeGraph(
-    onNavigateEvent: (HomeNavigation) -> Unit,
-) {
+fun NavGraphBuilder.homeGraph(onNavigateEvent: (HomeNavigation) -> Unit) {
     composable(Home) { navBackStack ->
         val goToVault by navBackStack.savedStateHandle
             .getStateFlow<String?>(HOME_GO_TO_VAULT_KEY, null)
@@ -90,7 +88,7 @@ fun NavGraphBuilder.homeGraph(
     dialog(HomeUpgradeDialog) {
         PassUpgradePlanDialog(
             onCancel = { onNavigateEvent(HomeNavigation.Back) },
-            onUpgrade = { onNavigateEvent(HomeNavigation.Upgrade) },
+            onUpgrade = { onNavigateEvent(HomeNavigation.Upgrade) }
         )
     }
 }

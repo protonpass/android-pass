@@ -65,7 +65,7 @@ fun NoteOptionsBottomSheetContents(
     onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit,
     isPinningFeatureEnabled: Boolean,
     isHistoryFeatureEnabled: Boolean,
-    isFreePlan: Boolean,
+    isFreePlan: Boolean
 ) {
     val contents = itemUiModel.contents as ItemContents.Note
 
@@ -113,20 +113,19 @@ fun NoteOptionsBottomSheetContents(
     }
 }
 
-private fun copyNote(text: String, onCopyNote: (String) -> Unit): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_note)) }
-        override val subtitle: (@Composable () -> Unit)?
-            get() = null
-        override val leftIcon: (@Composable () -> Unit)
-            get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: () -> Unit
-            get() = { onCopyNote(text) }
-        override val isDivider = false
-    }
+private fun copyNote(text: String, onCopyNote: (String) -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_note)) }
+    override val subtitle: (@Composable () -> Unit)?
+        get() = null
+    override val leftIcon: (@Composable () -> Unit)
+        get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
+    override val onClick: () -> Unit
+        get() = { onCopyNote(text) }
+    override val isDivider = false
+}
 
 @OptIn(ExperimentalMaterialApi::class)
 @Preview

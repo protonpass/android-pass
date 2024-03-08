@@ -22,14 +22,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.SyncMode
@@ -44,6 +45,8 @@ class RouterViewModel @Inject constructor(
     itemSyncStatusRepository: ItemSyncStatusRepository,
     observeHasConfirmedInvite: ObserveHasConfirmedInvite
 ) : ViewModel() {
+
+    private val routerEventFlow: MutableStateFlow<RouterEvent> = MutableStateFlow(RouterEvent.None)
 
     private val confirmedInviteFlow: Flow<Boolean> = observeHasConfirmedInvite()
         .map { hasConfirmedInvite ->
@@ -61,22 +64,31 @@ class RouterViewModel @Inject constructor(
         ::SyncState
     )
 
-    val eventStateFlow: StateFlow<RouterEvent> = combine(
-        userPreferencesRepository.getHasCompletedOnBoarding(),
-        showSyncDialogFlow,
-        confirmedInviteFlow,
-        ::routerEvent
-    ).stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
-        initialValue = runBlocking {
-            val hasCompletedOnBoarding =
-                userPreferencesRepository.getHasCompletedOnBoarding().first()
-            val syncStatus = showSyncDialogFlow.first()
-            val confirmedInvite = confirmedInviteFlow.first()
-            routerEvent(hasCompletedOnBoarding, syncStatus, confirmedInvite)
+    init {
+        viewModelScope.launch {
+            combine(
+                userPreferencesRepository.getHasCompletedOnBoarding(),
+                showSyncDialogFlow,
+                confirmedInviteFlow,
+                ::routerEvent
+            ).collect { event ->
+                routerEventFlow.update { event }
+            }
         }
-    )
+    }
+
+    val eventStateFlow: StateFlow<RouterEvent> = routerEventFlow
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = RouterEvent.None
+        )
+
+    fun clearEvent() = viewModelScope.launch {
+        routerEventFlow.update {
+            RouterEvent.None
+        }
+    }
 
     private fun routerEvent(
         hasCompletedOnBoarding: HasCompletedOnBoarding,
@@ -97,9 +109,9 @@ class RouterViewModel @Inject constructor(
     )
 }
 
-enum class RouterEvent {
-    OnBoarding,
-    SyncDialog,
-    ConfirmedInvite,
-    None
+sealed interface RouterEvent {
+    data object OnBoarding : RouterEvent
+    data object SyncDialog : RouterEvent
+    data object ConfirmedInvite : RouterEvent
+    data object None : RouterEvent
 }

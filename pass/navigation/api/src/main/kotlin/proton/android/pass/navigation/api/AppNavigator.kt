@@ -47,7 +47,7 @@ class AppNavigator(
         destination: NavItem,
         route: String? = null,
         backDestination: NavItem? = null,
-        forceNavigate: Boolean = false,
+        forceNavigate: Boolean = false
     ) {
         val destinationRoute = route ?: destination.route
         // Discard duplicated nav events

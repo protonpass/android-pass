@@ -124,8 +124,8 @@
         <item quantity="other">Move to trash %d items?</item>
     </plurals>
     <plurals name="alert_confirm_trash_items_message">
-        <item quantity="one">Are you sure you want to move to the trash the item?</item>
-        <item quantity="other">Are you sure you want to move to the trash the %d items?</item>
+        <item quantity="one">Are you sure you want to move the item to the trash?</item>
+        <item quantity="other">Are you sure you want to move %d items to the trash?</item>
     </plurals>
     <plurals name="alert_confirm_delete_items_title">
         <item quantity="one">Delete permanently %d item?</item>

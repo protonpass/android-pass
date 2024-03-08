@@ -36,6 +36,7 @@ enum class ErrorMessage {
     NoAddressesCanBeInvited,
     SomeAddressesCannotBeInvited,
     EmailNotValid,
+    CannotInviteOutsideOrg,
     None
 }
 
@@ -56,10 +57,10 @@ data class SharingWithUIState(
 
 sealed interface SuggestionsUIState {
     @Stable
-    object Initial : SuggestionsUIState
+    data object Initial : SuggestionsUIState
 
     @Stable
-    object Loading : SuggestionsUIState
+    data object Loading : SuggestionsUIState
 
     @Stable
     data class Content(

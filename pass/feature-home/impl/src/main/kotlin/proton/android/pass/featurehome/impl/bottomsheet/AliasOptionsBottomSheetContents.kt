@@ -65,6 +65,7 @@ fun AliasOptionsBottomSheetContents(
     onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit,
     isPinningFeatureEnabled: Boolean,
     isHistoryFeatureEnabled: Boolean,
+    isFreePlan: Boolean,
 ) {
     val contents = itemUiModel.contents as ItemContents.Alias
 
@@ -89,7 +90,7 @@ fun AliasOptionsBottomSheetContents(
             }
 
             if (isHistoryFeatureEnabled) {
-                add(viewHistory { onViewHistory(itemUiModel.shareId, itemUiModel.id) })
+                add(viewHistory(isFreePlan) { onViewHistory(itemUiModel.shareId, itemUiModel.id) })
             }
 
             if (itemUiModel.canModify) {
@@ -157,6 +158,7 @@ fun AliasOptionsBottomSheetContentsPreview(
                 onRemoveFromRecentSearch = { _, _ -> },
                 isPinningFeatureEnabled = true,
                 isHistoryFeatureEnabled = true,
+                isFreePlan = false,
             )
         }
     }

@@ -69,12 +69,13 @@ fun LoginOptionsBottomSheetContents(
     onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit,
     isPinningFeatureEnabled: Boolean,
     isHistoryFeatureEnabled: Boolean,
-    isFreePlan: Boolean,
+    isFreePlan: Boolean
 ) {
     val contents = itemUiModel.contents as ItemContents.Login
 
     Column(modifier.bottomSheet()) {
-        BottomSheetItemRow(title = { BottomSheetItemTitle(text = contents.title) },
+        BottomSheetItemRow(
+            title = { BottomSheetItemTitle(text = contents.title) },
             subtitle = if (contents.username.isEmpty()) {
                 null
             } else {
@@ -90,7 +91,8 @@ fun LoginOptionsBottomSheetContents(
                     website = website,
                     packageName = packageName
                 )
-            })
+            }
+        )
 
         val bottomSheetItems = mutableListOf(
             copyUsername(contents.username, onCopyUsername),
@@ -139,21 +141,20 @@ private fun copyUsername(username: String, onCopyUsername: (String) -> Unit): Bo
         override val isDivider = false
     }
 
-private fun copyPassword(
-    password: EncryptedString, onCopyPassword: (EncryptedString) -> Unit
-): BottomSheetItem = object : BottomSheetItem {
-    override val title: @Composable () -> Unit
-        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_password)) }
-    override val subtitle: (@Composable () -> Unit)?
-        get() = null
-    override val leftIcon: (@Composable () -> Unit)
-        get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
-    override val endIcon: (@Composable () -> Unit)?
-        get() = null
-    override val onClick: () -> Unit
-        get() = { onCopyPassword(password) }
-    override val isDivider = false
-}
+private fun copyPassword(password: EncryptedString, onCopyPassword: (EncryptedString) -> Unit): BottomSheetItem =
+    object : BottomSheetItem {
+        override val title: @Composable () -> Unit
+            get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_password)) }
+        override val subtitle: (@Composable () -> Unit)?
+            get() = null
+        override val leftIcon: (@Composable () -> Unit)
+            get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
+        override val endIcon: (@Composable () -> Unit)?
+            get() = null
+        override val onClick: () -> Unit
+            get() = { onCopyPassword(password) }
+        override val isDivider = false
+    }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Preview

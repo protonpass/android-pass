@@ -217,7 +217,8 @@ class SharingWithViewModelTest {
         val email2 = "test2@email.test"
         val canResult = CanAddressesBeInvitedResult.Some(
             canBe = listOf(email1),
-            cannotBe = listOf(email2)
+            cannotBe = listOf(email2),
+            reason = CanAddressesBeInvitedResult.CannotInviteAddressReason.CannotInviteOutsideOrg
         )
         checkAddressesCanBeInvited.setResult(Result.success(canResult))
 

@@ -26,10 +26,18 @@ sealed interface CanAddressesBeInvitedResult {
 
     data class Some(
         val canBe: List<String>,
-        val cannotBe: List<String>
+        val cannotBe: List<String>,
+        val reason: CannotInviteAddressReason
     ) : CanAddressesBeInvitedResult
 
-    object None : CanAddressesBeInvitedResult
+    @JvmInline
+    value class None(val reason: CannotInviteAddressReason) : CanAddressesBeInvitedResult
+
+    enum class CannotInviteAddressReason {
+        Unknown,
+        Empty,
+        CannotInviteOutsideOrg
+    }
 }
 
 interface CheckCanAddressesBeInvited {

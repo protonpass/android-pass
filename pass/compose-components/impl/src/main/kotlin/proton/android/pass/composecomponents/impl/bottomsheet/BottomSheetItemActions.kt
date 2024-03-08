@@ -26,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import proton.android.pass.composecomponents.impl.R
 import me.proton.core.presentation.R as CoreR
+import proton.android.pass.composecomponents.impl.R as CompR
 
 sealed interface BottomSheetItemAction {
 
@@ -91,7 +92,10 @@ fun unpin(action: BottomSheetItemAction, onClick: () -> Unit): BottomSheetItem =
 
 }
 
-fun viewHistory(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+fun viewHistory(
+    isFreePlan: Boolean,
+    onClick: () -> Unit
+): BottomSheetItem = object : BottomSheetItem {
 
     override val title: @Composable () -> Unit
         get() = { BottomSheetItemTitle(text = stringResource(R.string.bottomsheet_view_item_history)) }
@@ -103,7 +107,11 @@ fun viewHistory(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem
         get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_clock_rotate_left) }
 
     override val endIcon: @Composable (() -> Unit)
-        get() = {}
+        get() = {
+            if (isFreePlan) {
+                BottomSheetItemIcon(iconId = CompR.drawable.ic_pass_plus)
+            }
+        }
 
     override val onClick: (() -> Unit)
         get() = { onClick() }

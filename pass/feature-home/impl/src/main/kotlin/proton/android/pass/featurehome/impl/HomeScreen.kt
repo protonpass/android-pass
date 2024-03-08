@@ -304,6 +304,7 @@ fun HomeScreen(
                     },
                     isPinningFeatureEnabled = homeUiState.isPinningFeatureEnabled,
                     isHistoryFeatureEnabled = homeUiState.isHistoryFeatureEnabled,
+                    isFreePlan = homeUiState.isFreePlan
                 )
 
                 AliasOptions -> AliasOptionsBottomSheetContents(
@@ -356,6 +357,7 @@ fun HomeScreen(
                     },
                     isPinningFeatureEnabled = homeUiState.isPinningFeatureEnabled,
                     isHistoryFeatureEnabled = homeUiState.isHistoryFeatureEnabled,
+                    isFreePlan = homeUiState.isFreePlan
                 )
 
                 NoteOptions -> NoteOptionsBottomSheetContents(
@@ -408,6 +410,7 @@ fun HomeScreen(
                     },
                     isPinningFeatureEnabled = homeUiState.isPinningFeatureEnabled,
                     isHistoryFeatureEnabled = homeUiState.isHistoryFeatureEnabled,
+                    isFreePlan = homeUiState.isFreePlan
                 )
 
                 CreditCardOptions -> CreditCardOptionsBottomSheetContents(
@@ -466,6 +469,7 @@ fun HomeScreen(
                     },
                     isPinningFeatureEnabled = homeUiState.isPinningFeatureEnabled,
                     isHistoryFeatureEnabled = homeUiState.isHistoryFeatureEnabled,
+                    isFreePlan = homeUiState.isFreePlan
                 )
 
                 TrashItemOptions -> TrashItemBottomSheetContents(

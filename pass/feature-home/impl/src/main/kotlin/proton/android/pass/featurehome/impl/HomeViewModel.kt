@@ -540,7 +540,7 @@ class HomeViewModel @Inject constructor(
     val homeUiState: StateFlow<HomeUiState> = combineN(
         homeListUiStateFlow,
         searchUiStateFlow,
-        getUserPlan().asLoadingResult(),
+        getUserPlan(),
         navEventState,
         pinningUiStateFlow,
         bottomSheetItemActionFlow,
@@ -556,11 +556,12 @@ class HomeViewModel @Inject constructor(
             homeListUiState = homeListUiState,
             searchUiState = searchUiState,
             pinningUiState = pinningUiState,
-            accountType = AccountType.fromPlan(userPlan),
+            accountType = AccountType.fromPlan(userPlan.planType),
             navEvent = navEvent,
             action = bottomSheetItemAction,
             isPinningFeatureEnabled = pinningUiState.isPinningEnabled,
             isHistoryFeatureEnabled = isHistoryFeatureEnabled,
+            isFreePlan = userPlan.isFreePlan
         )
     }
         .stateIn(
@@ -751,12 +752,12 @@ class HomeViewModel @Inject constructor(
     }
 
     internal fun viewItemHistory(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
-        getUserPlan().first()
-            .let { plan ->
-                if (plan.isPaidPlan) {
-                    HomeNavEvent.ItemHistory(shareId, itemId)
-                } else {
+        homeUiState.first()
+            .let { state ->
+                if (state.isFreePlan) {
                     HomeNavEvent.UpgradeDialog
+                } else {
+                    HomeNavEvent.ItemHistory(shareId, itemId)
                 }
             }
             .also { homeNavEvent ->

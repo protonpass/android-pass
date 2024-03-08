@@ -26,21 +26,20 @@ data class Plan(
     val totpLimit: PlanLimit,
     val updatedAt: Long
 ) {
-    val isBusinessPlan: Boolean
-        get() = planType is PlanType.Paid.Business
+    val isBusinessPlan: Boolean = planType is PlanType.Paid.Business
 
-    val isPaidPlan: Boolean
-        get() = planType is PlanType.Paid
+    val isFreePlan: Boolean = planType is PlanType.Free
 
-    val isTrialPlan: Boolean
-        get() = planType is PlanType.Trial
+    val isPaidPlan: Boolean = planType is PlanType.Paid
+
+    val isTrialPlan: Boolean = planType is PlanType.Trial
 }
 
 sealed interface PlanLimit {
 
     fun limitOrNull(): Int?
 
-    object Unlimited : PlanLimit {
+    data object Unlimited : PlanLimit {
         override fun limitOrNull() = null
     }
 

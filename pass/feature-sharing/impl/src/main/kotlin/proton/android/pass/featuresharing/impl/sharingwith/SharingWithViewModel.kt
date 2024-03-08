@@ -332,14 +332,14 @@ class SharingWithViewModel @Inject constructor(
             // If some can be invited, show an error and highlight the ones that can't be invited
             is CanAddressesBeInvitedResult.Some -> {
                 val cannotBeInvited = canInviteResult.cannotBe
-                enteredEmailsState.update { currentEmails ->
+                enteredEmailsState.update { currentEmailStates ->
                     val newList = mutableListOf<EnteredEmailState>()
 
-                    for (email in currentEmails) {
-                        if (email.email in cannotBeInvited) {
-                            newList.add(email.copy(isError = true))
+                    for (emailState in currentEmailStates) {
+                        if (emailState.email in cannotBeInvited) {
+                            newList.add(emailState.copy(isError = true))
                         } else {
-                            newList.add(email)
+                            newList.add(emailState)
                         }
                     }
 

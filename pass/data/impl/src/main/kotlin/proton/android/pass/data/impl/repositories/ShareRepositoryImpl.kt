@@ -154,6 +154,8 @@ class ShareRepositoryImpl @Inject constructor(
             ?: throw IllegalStateException("Could not find PrimaryAddress")
         PassLogger.i(TAG, "Found primary user address")
 
+        val hadSharesOnStart = localShareDataSource.getAllSharesForUser(userId).first().isNotEmpty()
+
         // Retrieve remote shares and create a map ShareId->ShareResponse
         val remoteSharesDeferred: Deferred<List<ShareResponse>> =
             async { remoteShareDataSource.getShares(userAddress.userId) }
@@ -232,10 +234,13 @@ class ShareRepositoryImpl @Inject constructor(
 
         val allShareIds = remoteShareMap.keys.filterNot { inactiveShares.contains(it) }.toSet()
 
+        val wasFirstSync = !hadSharesOnStart && allShareIds.isNotEmpty()
+
         PassLogger.i(TAG, "Refreshed shares")
         RefreshSharesResult(
             allShareIds = allShareIds,
-            newShareIds = newShares.map { ShareId(it.id) }.toSet()
+            newShareIds = newShares.map { ShareId(it.id) }.toSet(),
+            wasFirstSync = wasFirstSync
         )
     }
 

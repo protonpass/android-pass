@@ -24,5 +24,5 @@ import proton.android.pass.telemetry.api.TelemetryEvent
 data class ItemDelete(val itemType: EventItemType) : TelemetryEvent("item.deletion") {
     override fun dimensions(): Map<String, String> = mapOf("type" to itemType.itemTypeName)
 }
-object SearchTriggered : TelemetryEvent("search.triggered")
-object SearchItemClicked : TelemetryEvent("search.click")
+data object SearchTriggered : TelemetryEvent("search.triggered")
+data object SearchItemClicked : TelemetryEvent("search.click")

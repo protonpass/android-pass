@@ -37,7 +37,7 @@ class TestShareRepository : ShareRepository {
     private var createVaultResult: Result<Share> =
         Result.failure(IllegalStateException("CreateVaultResult not set"))
     private var refreshSharesResult: RefreshSharesResult =
-        RefreshSharesResult(emptySet(), emptySet())
+        RefreshSharesResult(emptySet(), emptySet(), wasFirstSync = false)
     private var refreshShareResult: Result<Unit> = Result.success(Unit)
     private val observeSharesFlow = testFlow<Result<List<Share>>>()
     private val observeVaultCountFlow = testFlow<Result<Int>>()

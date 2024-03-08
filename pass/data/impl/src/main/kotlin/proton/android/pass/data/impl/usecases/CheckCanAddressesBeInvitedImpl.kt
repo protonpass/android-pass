@@ -49,11 +49,15 @@ class CheckCanAddressesBeInvitedImpl @Inject constructor(
     override suspend fun invoke(shareId: ShareId, addresses: List<String>): CanAddressesBeInvitedResult {
         val settings = observeOrganizationSettings().firstOrNull() ?: run {
             PassLogger.w(TAG, "Organization settings not available")
-            return CanAddressesBeInvitedResult.None
+            return CanAddressesBeInvitedResult.None(
+                reason = CanAddressesBeInvitedResult.CannotInviteAddressReason.Unknown
+            )
         }
 
         if (addresses.isEmpty()) {
-            return CanAddressesBeInvitedResult.None
+            return CanAddressesBeInvitedResult.None(
+                reason = CanAddressesBeInvitedResult.CannotInviteAddressReason.Empty
+            )
         }
 
         return when (settings) {
@@ -85,7 +89,9 @@ class CheckCanAddressesBeInvitedImpl @Inject constructor(
         val successes = results.getOrElse {
             PassLogger.w(TAG, "Error checking if addresses can be invited")
             PassLogger.w(TAG, it)
-            return CanAddressesBeInvitedResult.None
+            return CanAddressesBeInvitedResult.None(
+                reason = CanAddressesBeInvitedResult.CannotInviteAddressReason.Unknown
+            )
         }
 
         val aggregated = successes.fold(
@@ -99,10 +105,13 @@ class CheckCanAddressesBeInvitedImpl @Inject constructor(
 
         return when {
             aggregated.cannot.isEmpty() -> CanAddressesBeInvitedResult.All(addresses)
-            aggregated.can.isEmpty() -> CanAddressesBeInvitedResult.None
+            aggregated.can.isEmpty() -> CanAddressesBeInvitedResult.None(
+                reason = CanAddressesBeInvitedResult.CannotInviteAddressReason.CannotInviteOutsideOrg
+            )
             else -> CanAddressesBeInvitedResult.Some(
                 canBe = aggregated.can,
-                cannotBe = aggregated.cannot
+                cannotBe = aggregated.cannot,
+                reason = CanAddressesBeInvitedResult.CannotInviteAddressReason.CannotInviteOutsideOrg
             )
         }
     }

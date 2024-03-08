@@ -94,10 +94,7 @@ fun unpin(action: BottomSheetItemAction, onClick: () -> Unit): BottomSheetItem =
 
 }
 
-fun viewHistory(
-    isFreePlan: Boolean,
-    onClick: () -> Unit
-): BottomSheetItem = object : BottomSheetItem {
+fun viewHistory(isFreePlan: Boolean, onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
 
     override val title: @Composable () -> Unit
         get() = { BottomSheetItemTitle(text = stringResource(R.string.bottomsheet_view_item_history)) }

@@ -283,7 +283,7 @@ fun NavGraphBuilder.appGraph(
                     destination = ItemHistoryTimelineNavItem,
                     route = ItemHistoryTimelineNavItem.createNavRoute(
                         shareId = it.shareId,
-                        itemId = it.itemId,
+                        itemId = it.itemId
                     )
                 )
 

@@ -254,7 +254,11 @@ fun NavGraphBuilder.appGraph(
 
                 HomeNavigation.Finish -> onNavigate(AppNavigation.Finish)
                 HomeNavigation.SyncDialog -> appNavigator.navigate(SyncDialog)
-                HomeNavigation.OnBoarding -> appNavigator.navigate(OnBoarding)
+
+                HomeNavigation.OnBoarding -> appNavigator.navigate(
+                    destination = OnBoarding,
+                    forceNavigate = true
+                )
                 HomeNavigation.ConfirmedInvite -> appNavigator.navigate(
                     destination = InviteConfirmed
                 )
@@ -967,7 +971,7 @@ fun NavGraphBuilder.appGraph(
         }
     )
     onBoardingGraph(
-        onOnBoardingFinished = { appNavigator.navigate(Home) },
+        onOnBoardingFinished = { appNavigator.popUpTo(Home) },
         onNavigateBack = { onNavigate(AppNavigation.Finish) }
     )
     featureFlagsGraph()

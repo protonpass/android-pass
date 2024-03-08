@@ -35,8 +35,8 @@ data class ItemSyncStatusPayload(
 )
 
 sealed interface SyncMode {
-    object ShownToUser : SyncMode
-    object Background : SyncMode
+    data object ShownToUser : SyncMode
+    data object Background : SyncMode
 }
 
 interface ItemSyncStatusRepository {

@@ -544,7 +544,7 @@ class HomeViewModel @Inject constructor(
         navEventState,
         pinningUiStateFlow,
         bottomSheetItemActionFlow,
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.HISTORY_V1),
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.HISTORY_V1)
     ) { homeListUiState,
         searchUiState,
         userPlan,
@@ -633,42 +633,41 @@ class HomeViewModel @Inject constructor(
         isRefreshing.update { IsRefreshingState.NotRefreshing }
     }
 
-    fun sendItemsToTrash(items: List<ItemUiModel>) =
-        viewModelScope.launch(coroutineExceptionHandler) {
-            if (items.isEmpty()) return@launch
-            actionStateFlow.update { ActionState.Loading }
+    fun sendItemsToTrash(items: List<ItemUiModel>) = viewModelScope.launch(coroutineExceptionHandler) {
+        if (items.isEmpty()) return@launch
+        actionStateFlow.update { ActionState.Loading }
 
-            val mappedItems = items.toShareIdItemId().toPersistentSet()
-            val itemTypes = homeUiState.value.homeListUiState.items
-                .flatMap { it.items }
-                .filter { (itemId: ItemId, shareId: ShareId) -> mappedItems.contains(shareId to itemId) }
+        val mappedItems = items.toShareIdItemId().toPersistentSet()
+        val itemTypes = homeUiState.value.homeListUiState.items
+            .flatMap { it.items }
+            .filter { (itemId: ItemId, shareId: ShareId) -> mappedItems.contains(shareId to itemId) }
 
-            val groupedItems = groupItems(mappedItems)
-            runCatching { trashItems(items = groupedItems) }
-                .onSuccess {
-                    clearSelection()
-                    if (itemTypes.size == 1) {
-                        when (itemTypes.first().contents) {
-                            is ItemContents.Alias -> snackbarDispatcher(AliasMovedToTrash)
-                            is ItemContents.Login -> snackbarDispatcher(LoginMovedToTrash)
-                            is ItemContents.Note -> snackbarDispatcher(NoteMovedToTrash)
-                            is ItemContents.CreditCard -> snackbarDispatcher(CreditCardMovedToTrash)
-                            is ItemContents.Unknown -> {}
-                        }
-                    } else {
-                        snackbarDispatcher(ItemsMovedToTrashSuccess)
+        val groupedItems = groupItems(mappedItems)
+        runCatching { trashItems(items = groupedItems) }
+            .onSuccess {
+                clearSelection()
+                if (itemTypes.size == 1) {
+                    when (itemTypes.first().contents) {
+                        is ItemContents.Alias -> snackbarDispatcher(AliasMovedToTrash)
+                        is ItemContents.Login -> snackbarDispatcher(LoginMovedToTrash)
+                        is ItemContents.Note -> snackbarDispatcher(NoteMovedToTrash)
+                        is ItemContents.CreditCard -> snackbarDispatcher(CreditCardMovedToTrash)
+                        is ItemContents.Unknown -> {}
                     }
+                } else {
+                    snackbarDispatcher(ItemsMovedToTrashSuccess)
                 }
-                .onFailure {
-                    PassLogger.e(TAG, it, "Trash items failed")
-                    if (itemTypes.size == 1) {
-                        snackbarDispatcher(MoveToTrashError)
-                    } else {
-                        snackbarDispatcher(ItemsMovedToTrashError)
-                    }
+            }
+            .onFailure {
+                PassLogger.e(TAG, it, "Trash items failed")
+                if (itemTypes.size == 1) {
+                    snackbarDispatcher(MoveToTrashError)
+                } else {
+                    snackbarDispatcher(ItemsMovedToTrashError)
                 }
-            actionStateFlow.update { ActionState.Done }
-        }
+            }
+        actionStateFlow.update { ActionState.Done }
+    }
 
     fun copyToClipboard(text: String, homeClipboardType: HomeClipboardType) {
         val sanitizedText = text.take(MAX_CLIPBOARD_LENGTH)
@@ -1036,16 +1035,15 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun List<ItemUiModel>.filterByType(searchFilterType: SearchFilterType) =
-        filter { item ->
-            when (searchFilterType) {
-                SearchFilterType.All -> true
-                SearchFilterType.Alias -> item.contents is ItemContents.Alias
-                SearchFilterType.Login -> item.contents is ItemContents.Login
-                SearchFilterType.Note -> item.contents is ItemContents.Note
-                SearchFilterType.CreditCard -> item.contents is ItemContents.CreditCard
-            }
+    private fun List<ItemUiModel>.filterByType(searchFilterType: SearchFilterType) = filter { item ->
+        when (searchFilterType) {
+            SearchFilterType.All -> true
+            SearchFilterType.Alias -> item.contents is ItemContents.Alias
+            SearchFilterType.Login -> item.contents is ItemContents.Login
+            SearchFilterType.Note -> item.contents is ItemContents.Note
+            SearchFilterType.CreditCard -> item.contents is ItemContents.CreditCard
         }
+    }
 
     private fun emitDeletedItems(items: List<GroupedItemList>) {
         items.forEach { list ->
@@ -1061,17 +1059,15 @@ class HomeViewModel @Inject constructor(
     private fun groupItems(items: ImmutableSet<Pair<ShareId, ItemId>>): Map<ShareId, List<ItemId>> =
         items.groupBy({ it.first }, { it.second })
 
-    private fun List<ItemUiModel>.toShareIdItemId(): List<Pair<ShareId, ItemId>> =
-        map { it.shareId to it.id }
+    private fun List<ItemUiModel>.toShareIdItemId(): List<Pair<ShareId, ItemId>> = map { it.shareId to it.id }
 
-    private fun List<ItemUiModel>.sortItemLists(sortingOption: SortingOption) =
-        when (sortingOption.searchSortingType) {
-            SearchSortingType.MostRecent -> sortMostRecent()
-            SearchSortingType.TitleAsc -> sortByTitleAsc()
-            SearchSortingType.TitleDesc -> sortByTitleDesc()
-            SearchSortingType.CreationAsc -> sortByCreationAsc()
-            SearchSortingType.CreationDesc -> sortByCreationDesc()
-        }
+    private fun List<ItemUiModel>.sortItemLists(sortingOption: SortingOption) = when (sortingOption.searchSortingType) {
+        SearchSortingType.MostRecent -> sortMostRecent()
+        SearchSortingType.TitleAsc -> sortByTitleAsc()
+        SearchSortingType.TitleDesc -> sortByTitleDesc()
+        SearchSortingType.CreationAsc -> sortByCreationAsc()
+        SearchSortingType.CreationDesc -> sortByCreationDesc()
+    }
 
     private fun List<ItemUiModel>.groupedItemLists(sortingOption: SortingOption, instant: Instant) =
         when (sortingOption.searchSortingType) {

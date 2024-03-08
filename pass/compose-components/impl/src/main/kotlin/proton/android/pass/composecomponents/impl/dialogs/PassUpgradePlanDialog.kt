@@ -27,7 +27,7 @@ import proton.android.pass.composecomponents.impl.R
 fun PassUpgradePlanDialog(
     modifier: Modifier = Modifier,
     onCancel: () -> Unit,
-    onUpgrade: () -> Unit,
+    onUpgrade: () -> Unit
 ) {
     ConfirmDialog(
         modifier = modifier,

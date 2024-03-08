@@ -256,43 +256,7 @@ class SharingWithViewModel @Inject constructor(
             addresses = enteredEmailsState.value.map { it.email }
         )
 
-        when (canInviteResult) {
-            // If all can be invited, proceed
-            is CanAddressesBeInvitedResult.All -> {
-                bulkInviteRepository.storeAddresses(canInviteResult.addresses)
-                eventState.update {
-                    SharingWithEvents.NavigateToPermissions(shareId = shareId)
-                }
-            }
-
-            // If none can be invited, show an error
-            CanAddressesBeInvitedResult.None -> {
-                enteredEmailsState.update { currentEmails ->
-                    currentEmails.map { it.copy(isError = true) }
-                }
-                errorMessageFlow.update { ErrorMessage.NoAddressesCanBeInvited }
-            }
-
-            // If some can be invited, show an error and highlight the ones that can't be invited
-            is CanAddressesBeInvitedResult.Some -> {
-                val cannotBeInvited = canInviteResult.cannotBe
-                enteredEmailsState.update { currentEmails ->
-                    val newList = mutableListOf<EnteredEmailState>()
-
-                    for (email in currentEmails) {
-                        if (email.email in cannotBeInvited) {
-                            newList.add(email.copy(isError = true))
-                        } else {
-                            newList.add(email)
-                        }
-                    }
-
-                    newList
-                }
-
-                errorMessageFlow.update { ErrorMessage.SomeAddressesCannotBeInvited }
-            }
-        }
+        handleCanInviteResult(canInviteResult)
 
         isLoadingState.update { IsLoadingState.NotLoading }
     }
@@ -329,6 +293,62 @@ class SharingWithViewModel @Inject constructor(
 
     fun onScrolledToBottom() = viewModelScope.launch {
         scrollToBottomFlow.update { false }
+    }
+
+    private suspend fun handleCanInviteResult(canInviteResult: CanAddressesBeInvitedResult) {
+        when (canInviteResult) {
+            // If all can be invited, proceed
+            is CanAddressesBeInvitedResult.All -> {
+                bulkInviteRepository.storeAddresses(canInviteResult.addresses)
+                eventState.update {
+                    SharingWithEvents.NavigateToPermissions(shareId = shareId)
+                }
+            }
+
+            // If none can be invited, show an error
+            is CanAddressesBeInvitedResult.None -> {
+                enteredEmailsState.update { currentEmails ->
+                    currentEmails.map { it.copy(isError = true) }
+                }
+                errorMessageFlow.update {
+                    when (canInviteResult.reason) {
+                        CanAddressesBeInvitedResult.CannotInviteAddressReason.Unknown -> {
+                            PassLogger.i(TAG, "Error checking if addresses can be invited")
+                            ErrorMessage.NoAddressesCanBeInvited
+                        }
+                        CanAddressesBeInvitedResult.CannotInviteAddressReason.Empty -> {
+                            PassLogger.i(TAG, "No addresses to invite")
+                            ErrorMessage.NoAddressesCanBeInvited
+                        }
+                        CanAddressesBeInvitedResult.CannotInviteAddressReason.CannotInviteOutsideOrg -> {
+                            PassLogger.i(TAG, "Cannot invite outside org")
+                            ErrorMessage.CannotInviteOutsideOrg
+                        }
+                    }
+                    ErrorMessage.NoAddressesCanBeInvited
+                }
+            }
+
+            // If some can be invited, show an error and highlight the ones that can't be invited
+            is CanAddressesBeInvitedResult.Some -> {
+                val cannotBeInvited = canInviteResult.cannotBe
+                enteredEmailsState.update { currentEmails ->
+                    val newList = mutableListOf<EnteredEmailState>()
+
+                    for (email in currentEmails) {
+                        if (email.email in cannotBeInvited) {
+                            newList.add(email.copy(isError = true))
+                        } else {
+                            newList.add(email)
+                        }
+                    }
+
+                    newList
+                }
+
+                errorMessageFlow.update { ErrorMessage.SomeAddressesCannotBeInvited }
+            }
+        }
     }
 
     private fun onChange() {

@@ -198,7 +198,7 @@ fun LoginOptionsBottomSheetContentsPreview(
                 canLoadExternalImages = false,
                 isPinningFeatureEnabled = true,
                 isHistoryFeatureEnabled = true,
-                isFreePlan = false
+                isFreePlan = input.second
             )
         }
     }

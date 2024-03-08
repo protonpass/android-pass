@@ -5,7 +5,7 @@
     <string name="sort_by_title_desc">Title (Z-A)</string>
     <string name="sort_by_creation_asc">Oldest to newest</string>
     <string name="sort_by_creation_desc">Newest to oldest</string>
-    <string name="sort_by_modification_date">Most recent</string>
+    <string name="sort_by_modification_date">Recently used</string>
 
     <!-- List header results -->
     <string name="item_list_header_all_search_results">All</string>
@@ -68,11 +68,11 @@
     <string name="most_recent_yesterday">Yesterday</string>
     <string name="most_recent_this_week">This week</string>
     <string name="most_recent_last_two_weeks">Last two weeks</string>
-    <string name="most_recent_last_30_days">Last 30 days</string>
+    <string name="most_recent_last_30_days">Last month</string>
     <string name="most_recent_last_60_days">Last 60 days</string>
     <string name="most_recent_last_90_days">Last 90 days</string>
     <string name="most_recent_within_the_last_year">Within the last year</string>
-    <string name="most_recent_more_than_1_year">More than 1 year</string>
+    <string name="most_recent_more_than_1_year">Older than 1 year</string>
 
     <!-- Search Top Bar -->
     <string name="search_topbar_icon_content_description">Search icon</string>

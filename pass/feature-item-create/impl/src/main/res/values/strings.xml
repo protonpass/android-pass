@@ -41,7 +41,7 @@
     <string name="bottomsheet_custom_field_type_text">Text</string>
     <string name="bottomsheet_custom_field_type_text_content_description">Text custom field</string>
     <string name="bottomsheet_custom_field_type_hidden">Hidden</string>
-    <string name="bottomsheet_custom_field_type_totp">2FA secret (TOTP)</string>
+    <string name="bottomsheet_custom_field_type_totp">2FA secret key (TOTP)</string>
     <string name="bottomsheet_custom_field_option_edit">Edit name</string>
     <string name="bottomsheet_custom_field_option_remove">Remove field</string>
     <string name="bottomsheet_custom_field_option_remove_content_description">Remove custom field</string>
@@ -111,9 +111,9 @@
     <string name="changes_saved">Changes saved</string>
 
     <!--  TOTP  -->
-    <string name="totp_create_login_field_title">2FA secret (TOTP)</string>
-    <string name="totp_create_login_field_invalid">Invalid 2FA secret</string>
-    <string name="totp_create_login_field_placeholder">Add 2FA secret</string>
+    <string name="totp_create_login_field_title">2FA secret key (TOTP)</string>
+    <string name="totp_create_login_field_invalid">Invalid 2FA secret key (TOTP)</string>
+    <string name="totp_create_login_field_placeholder">Add 2FA secret key (TOTP)</string>
     <string name="close_scree_icon_content_description">Close screen button</string>
 
     <string name="totp_paste_code_action">Paste code</string>

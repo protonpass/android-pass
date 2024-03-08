@@ -130,13 +130,16 @@ class LocalItemDataSourceImpl @Inject constructor(
         return database.itemsDao().delete(shareId.id, itemId.id) > 0
     }
 
-    override suspend fun deleteList(shareId: ShareId, itemIds: List<ItemId>): Boolean {
-        PassLogger.i(
-            TAG,
-            "Deleting items [shareId=${shareId.id}] [itemIds=${itemIds.map { it.id }}]"
-        )
-        return database.itemsDao().deleteList(shareId.id, itemIds.map(ItemId::id)) > 0
-    }
+    override suspend fun deleteList(shareId: ShareId, itemIds: List<ItemId>): Boolean =
+        if (itemIds.isEmpty()) {
+            true
+        } else {
+            PassLogger.i(
+                TAG,
+                "Deleting items [shareId=${shareId.id}] [itemIds=${itemIds.map { it.id }}]"
+            )
+            database.itemsDao().deleteList(shareId.id, itemIds.map(ItemId::id)) > 0
+        }
 
     override suspend fun hasItemsForShare(userId: UserId, shareId: ShareId): Boolean =
         database.itemsDao().countItems(userId.id, shareId.id) > 0

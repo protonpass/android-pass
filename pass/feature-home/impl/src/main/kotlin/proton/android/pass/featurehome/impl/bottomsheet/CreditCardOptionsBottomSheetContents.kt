@@ -166,7 +166,7 @@ fun CreditCardOptionsBottomSheetContentsPreview(
                 onRemoveFromRecentSearch = { _, _ -> },
                 isPinningFeatureEnabled = true,
                 isHistoryFeatureEnabled = true,
-                isFreePlan = false
+                isFreePlan = input.second
             )
         }
     }

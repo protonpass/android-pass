@@ -107,7 +107,7 @@ fun viewHistory(isFreePlan: Boolean, onClick: () -> Unit): BottomSheetItem = obj
 
     override val endIcon: @Composable (() -> Unit)
         get() = {
-            if (!isFreePlan) {
+            if (isFreePlan) {
                 Image(
                     painter = painterResource(id = CompR.drawable.ic_pass_plus),
                     contentDescription = null

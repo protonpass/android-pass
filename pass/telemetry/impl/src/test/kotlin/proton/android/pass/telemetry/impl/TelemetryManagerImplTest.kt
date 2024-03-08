@@ -29,7 +29,7 @@ import proton.android.pass.data.fakes.repositories.TestTelemetryRepository
 import proton.android.pass.telemetry.api.TelemetryEvent
 import proton.android.pass.test.MainDispatcherRule
 
-object TestEvent : TelemetryEvent("test")
+data object TestEvent : TelemetryEvent("test")
 
 class TelemetryManagerImplTest {
 

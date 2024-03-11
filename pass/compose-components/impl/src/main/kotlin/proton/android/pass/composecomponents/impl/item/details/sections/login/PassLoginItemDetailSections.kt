@@ -21,12 +21,16 @@ package proton.android.pass.composecomponents.impl.item.details.sections.login
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toPersistentSet
 import proton.android.pass.common.api.PasswordStrength
+import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
+import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.sections.login.passkeys.PasskeysSection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassSharedItemDetailNoteSection
@@ -89,6 +93,17 @@ internal fun PassLoginItemDetailSections(
                 customFields = customFields,
                 itemColors = itemColors,
                 onEvent = onEvent
+            )
+        }
+
+        if (packageInfoSet.isNotEmpty()) {
+            val mapped = remember(packageInfoSet.hashCode()) {
+                packageInfoSet.map { PackageInfoUi(it) }.toPersistentSet()
+            }
+            LinkedAppsListSection(
+                packageInfoUiSet = mapped,
+                isEditable = false,
+                onLinkedAppDelete = {}
             )
         }
     }

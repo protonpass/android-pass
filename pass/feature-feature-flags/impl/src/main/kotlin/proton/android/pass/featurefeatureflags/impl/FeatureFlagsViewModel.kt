@@ -38,11 +38,13 @@ class FeatureFlagsViewModel @Inject constructor(
     val state: StateFlow<Map<FeatureFlag, Boolean>> =
         combine(
             ffRepository.get<Boolean>(FeatureFlag.HISTORY_V1),
-            ffRepository.get<Boolean>(FeatureFlag.PINNING_V1)
-        ) { isHistoryEnabled, isPinningEnabled ->
+            ffRepository.get<Boolean>(FeatureFlag.PINNING_V1),
+            ffRepository.get<Boolean>(FeatureFlag.SECURITY_CENTER_V1)
+        ) { isHistoryEnabled, isPinningEnabled, isSecurityCenterEnabled ->
             mapOf(
                 FeatureFlag.HISTORY_V1 to isHistoryEnabled,
-                FeatureFlag.PINNING_V1 to isPinningEnabled
+                FeatureFlag.PINNING_V1 to isPinningEnabled,
+                FeatureFlag.SECURITY_CENTER_V1 to isSecurityCenterEnabled
             )
         }.stateIn(
             scope = viewModelScope,

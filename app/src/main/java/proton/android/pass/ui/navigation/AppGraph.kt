@@ -258,10 +258,7 @@ fun NavGraphBuilder.appGraph(
                 HomeNavigation.Finish -> onNavigate(AppNavigation.Finish)
                 HomeNavigation.SyncDialog -> appNavigator.navigate(SyncDialog)
 
-                HomeNavigation.OnBoarding -> appNavigator.navigate(
-                    destination = OnBoarding,
-                    forceNavigate = true
-                )
+                HomeNavigation.OnBoarding -> appNavigator.navigate(destination = OnBoarding)
                 HomeNavigation.ConfirmedInvite -> appNavigator.navigate(
                     destination = InviteConfirmed
                 )

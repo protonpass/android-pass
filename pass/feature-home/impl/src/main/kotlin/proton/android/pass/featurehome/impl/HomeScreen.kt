@@ -174,6 +174,7 @@ fun HomeScreen(
             homeViewModel.restoreActionState()
         }
     }
+
     LaunchedEffect(routerEvent) {
         when (routerEvent) {
             RouterEvent.OnBoarding -> onNavigateEvent(HomeNavigation.OnBoarding)
@@ -181,13 +182,14 @@ fun HomeScreen(
             RouterEvent.ConfirmedInvite -> onNavigateEvent(HomeNavigation.ConfirmedInvite)
             RouterEvent.None -> {}
         }
-        routerViewModel.clearEvent()
     }
+
     LaunchedEffect(onBoardingTipsUiState.tipsToShow.hashCode()) {
         if (onBoardingTipsUiState.tipsToShow.isNotEmpty() && scrollableState.firstVisibleItemIndex == 0) {
             homeViewModel.scrollToTop()
         }
     }
+
     LaunchedEffect(onBoardingTipsUiState.event) {
         val homeNavigationEvent = when (onBoardingTipsUiState.event) {
             OnBoardingTipsEvent.OpenTrialScreen -> HomeNavigation.TrialInfo
@@ -199,6 +201,7 @@ fun HomeScreen(
         onNavigateEvent(homeNavigationEvent)
         onBoardingTipsViewModel.clearEvent()
     }
+
     NotificationPermissionLaunchedEffect(
         shouldRequestPermissions = onBoardingTipsUiState.event == OnBoardingTipsEvent.RequestNotificationPermission,
         onPermissionRequested = onBoardingTipsViewModel::clearEvent,

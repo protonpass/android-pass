@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.update
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.HISTORY_V1
 import proton.android.pass.preferences.FeatureFlag.PINNING_V1
+import proton.android.pass.preferences.FeatureFlag.SECURITY_CENTER_V1
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -41,6 +42,7 @@ class TestFeatureFlagsPreferenceRepository @Inject constructor() :
             AUTOFILL_DEBUG_MODE -> it.getOrDefault(AUTOFILL_DEBUG_MODE, false) as T
             PINNING_V1 -> it.getOrDefault(PINNING_V1, false) as T
             HISTORY_V1 -> it.getOrDefault(HISTORY_V1, false) as T
+            SECURITY_CENTER_V1 -> it.getOrDefault(SECURITY_CENTER_V1, false) as T
         }
     }
 

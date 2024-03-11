@@ -15,4 +15,5 @@ message FeatureFlagsPreferences {
   BoolFlagPrefProto credit_card_autofill_enabled = 7;
   BoolFlagPrefProto pinning_v1_enabled = 8;
   BoolFlagPrefProto history_v1_enabled = 9;
+  BoolFlagPrefProto security_center_v1_enabled = 10;
 }

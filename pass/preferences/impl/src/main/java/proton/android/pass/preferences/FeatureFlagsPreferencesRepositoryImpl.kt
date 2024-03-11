@@ -34,6 +34,7 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.HISTORY_V1
 import proton.android.pass.preferences.FeatureFlag.PINNING_V1
+import proton.android.pass.preferences.FeatureFlag.SECURITY_CENTER_V1
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -61,6 +62,11 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
         ) { historyV1Enabled.value }
+
+        SECURITY_CENTER_V1 -> getFeatureFlag(
+            key = featureFlag.key,
+            defaultValue = featureFlag.isEnabledDefault
+        ) { securityCenterV1Enabled.value }
     }
 
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> = when (featureFlag) {
@@ -74,6 +80,10 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
 
         HISTORY_V1 -> setFeatureFlag {
             historyV1Enabled = boolFlagPrefProto(value)
+        }
+
+        SECURITY_CENTER_V1 -> setFeatureFlag {
+            securityCenterV1Enabled = boolFlagPrefProto(value)
         }
     }
 

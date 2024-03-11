@@ -41,5 +41,12 @@ enum class FeatureFlag(
         description = "Enable item history",
         key = "PassItemHistoryV1",
         isEnabledDefault = false
+    ),
+    SECURITY_CENTER_V1(
+        title = "Security center (v1)",
+        description = "Enable security center",
+        key = "PassSentinelV1",
+        isEnabledDefault = false
     )
+
 }

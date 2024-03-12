@@ -20,13 +20,12 @@ package proton.android.pass.securitycenter.impl.fakes
 
 import proton.android.pass.domain.Item
 import proton.android.pass.securitycenter.api.InsecurePasswordsResult
+import proton.android.pass.securitycenter.fakes.mother.InsecurePasswordsResultMother
 import proton.android.pass.securitycenter.impl.checkers.InsecurePasswordChecker
 
 class TestInsecurePasswordChecker : InsecurePasswordChecker {
 
-    private var result: InsecurePasswordsResult = InsecurePasswordsResult(
-        insecurePasswordsCount = 0
-    )
+    private var result: InsecurePasswordsResult = InsecurePasswordsResultMother.random()
 
     private val memory: MutableList<List<Item>> = mutableListOf()
     fun memory(): List<List<Item>> = memory

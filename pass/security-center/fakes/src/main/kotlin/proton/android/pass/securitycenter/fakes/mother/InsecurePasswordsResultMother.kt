@@ -16,26 +16,15 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.securitycenter.impl.fakes
+package proton.android.pass.securitycenter.fakes.mother
 
-import proton.android.pass.domain.Item
-import proton.android.pass.securitycenter.api.Missing2faResult
-import proton.android.pass.securitycenter.fakes.mother.Missing2faResultMother
-import proton.android.pass.securitycenter.impl.checkers.Missing2faChecker
+import proton.android.pass.securitycenter.api.InsecurePasswordsResult
+import kotlin.random.Random
 
-class TestMissing2faChecker : Missing2faChecker {
+object InsecurePasswordsResultMother {
 
-    private var result: Missing2faResult = Missing2faResultMother.random()
+    fun random() = InsecurePasswordsResult(
+        insecurePasswordsCount = Random.nextInt()
+    )
 
-    private val memory: MutableList<List<Item>> = mutableListOf()
-    fun memory(): List<List<Item>> = memory
-
-    fun setResult(value: Missing2faResult) {
-        result = value
-    }
-
-    override suspend fun invoke(items: List<Item>): Missing2faResult {
-        memory.add(items)
-        return result
-    }
 }

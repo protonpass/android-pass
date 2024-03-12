@@ -20,13 +20,12 @@ package proton.android.pass.securitycenter.impl.fakes
 
 import proton.android.pass.domain.Item
 import proton.android.pass.securitycenter.api.Missing2faResult
+import proton.android.pass.securitycenter.fakes.mother.Missing2faResultMother
 import proton.android.pass.securitycenter.impl.checkers.Missing2faChecker
 
 class TestMissing2faChecker : Missing2faChecker {
 
-    private var result: Missing2faResult = Missing2faResult(
-        missing2faCount = 0
-    )
+    private var result: Missing2faResult = Missing2faResultMother.random()
 
     private val memory: MutableList<List<Item>> = mutableListOf()
     fun memory(): List<List<Item>> = memory

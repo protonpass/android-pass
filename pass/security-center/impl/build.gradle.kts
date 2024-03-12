@@ -54,4 +54,5 @@ dependencies {
     testImplementation(projects.pass.common.fakes)
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.data.fakes)
+    testImplementation(projects.pass.securityCenter.fakes)
 }

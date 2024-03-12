@@ -18,20 +18,79 @@
 
 package proton.android.pass.securitycenter.impl.checkers
 
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
+import me.proton.core.crypto.common.keystore.EncryptedString
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemType
 import javax.inject.Inject
 
 data class RepeatedPasswordsData(
-    val repeatedPasswordsCount: Int
+    val repeatedPasswordsCount: Int,
+    val repeatedPasswords: Map<EncryptedString, List<Item>>
 )
 
 interface RepeatedPasswordChecker {
-    operator fun invoke(items: List<Item>): RepeatedPasswordsData
+    suspend operator fun invoke(items: List<Item>): RepeatedPasswordsData
 }
 
-class RepeatedPasswordCheckerImpl @Inject constructor() : RepeatedPasswordChecker {
+class RepeatedPasswordCheckerImpl @Inject constructor(
+    private val encryptionContextProvider: EncryptionContextProvider
+) : RepeatedPasswordChecker {
 
-    override fun invoke(items: List<Item>): RepeatedPasswordsData = RepeatedPasswordsData(
-        repeatedPasswordsCount = 0
+    override suspend fun invoke(items: List<Item>): RepeatedPasswordsData {
+
+        val decrypted: List<DecryptedItem> = coroutineScope {
+            encryptionContextProvider.withEncryptionContextSuspendable {
+                items.mapNotNull { item ->
+                    when (val itemType = item.itemType) {
+                        is ItemType.Login -> {
+                            async {
+                                DecryptedItem(
+                                    item = item,
+                                    encryptedPassword = Password(itemType.password),
+                                    clearTextPassword = decrypt(itemType.password)
+                                )
+                            }
+                        }
+                        else -> null
+                    }
+                }
+            }.awaitAll()
+        }
+
+        val foundPasswords: MutableMap<Password, List<Item>> = mutableMapOf()
+        val passwordsWithMoreThanOneItem: MutableSet<Password> = mutableSetOf()
+
+        decrypted.forEach { decryptedItem ->
+            val list = foundPasswords.getOrElse(decryptedItem.encryptedPassword) { emptyList() }
+            val updatedList = list + decryptedItem.item
+
+            if (updatedList.size > 1) {
+                passwordsWithMoreThanOneItem.add(decryptedItem.encryptedPassword)
+            }
+
+            foundPasswords[decryptedItem.encryptedPassword] = updatedList
+        }
+
+        val repeatedPasswords = foundPasswords
+            .filterKeys { passwordsWithMoreThanOneItem.contains(it) }
+            .mapKeys { it.key.value }
+
+        return RepeatedPasswordsData(
+            repeatedPasswordsCount = passwordsWithMoreThanOneItem.size,
+            repeatedPasswords = repeatedPasswords
+        )
+    }
+
+    @JvmInline
+    private value class Password(val value: EncryptedString)
+
+    private data class DecryptedItem(
+        val item: Item,
+        val encryptedPassword: Password,
+        val clearTextPassword: String
     )
 }

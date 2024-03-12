@@ -29,7 +29,8 @@ class TestRepeatedPasswordChecker : RepeatedPasswordChecker {
         run {
             val instance = ReusedPasswordsResultMother.random()
             RepeatedPasswordsData(
-                repeatedPasswordsCount = instance.reusedPasswordsCount
+                repeatedPasswordsCount = instance.reusedPasswordsCount,
+                repeatedPasswords = emptyMap()
             )
         }
     )
@@ -41,7 +42,7 @@ class TestRepeatedPasswordChecker : RepeatedPasswordChecker {
         result = value
     }
 
-    override fun invoke(items: List<Item>): RepeatedPasswordsData {
+    override suspend fun invoke(items: List<Item>): RepeatedPasswordsData {
         memory.add(items)
         return result.getOrThrow()
     }

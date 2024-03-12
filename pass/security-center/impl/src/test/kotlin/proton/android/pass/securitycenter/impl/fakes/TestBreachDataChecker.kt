@@ -20,14 +20,12 @@ package proton.android.pass.securitycenter.impl.fakes
 
 import proton.android.pass.domain.Item
 import proton.android.pass.securitycenter.api.BreachDataResult
+import proton.android.pass.securitycenter.fakes.mother.BreachDataResultMother
 import proton.android.pass.securitycenter.impl.checkers.BreachedDataChecker
 
 class TestBreachDataChecker : BreachedDataChecker {
 
-    private var result: BreachDataResult = BreachDataResult(
-        exposedEmailCount = 0,
-        exposedPasswordCount = 0
-    )
+    private var result: BreachDataResult = BreachDataResultMother.random()
 
     private val memory: MutableList<List<Item>> = mutableListOf()
     fun memory(): List<List<Item>> = memory

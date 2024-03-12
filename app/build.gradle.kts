@@ -383,6 +383,8 @@ dependencies {
     implementation(projects.pass.passkeys.impl)
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.preferences.impl)
+    implementation(projects.pass.securityCenter.api)
+    implementation(projects.pass.securityCenter.impl)
     implementation(projects.pass.telemetry.impl)
     implementation(projects.pass.totp.impl)
     implementation(projects.pass.tracing.impl)

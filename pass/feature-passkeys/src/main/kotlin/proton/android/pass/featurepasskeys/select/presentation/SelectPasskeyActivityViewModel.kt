@@ -93,23 +93,30 @@ sealed class SelectPasskeyRequestData(
 }
 
 @Immutable
+enum class SelectPasskeyActionAfterAuth {
+    EmitEvent,
+    SelectItem
+}
+
+@Immutable
 sealed interface SelectPasskeyAppState {
 
     @Immutable
-    object NotReady : SelectPasskeyAppState
+    data object NotReady : SelectPasskeyAppState
 
     @Immutable
-    object Close : SelectPasskeyAppState
+    data object Close : SelectPasskeyAppState
 
     @Immutable
     data class Ready(
         val theme: ThemePreference,
         val needsAuth: Boolean,
-        val data: SelectPasskeyRequestData
+        val data: SelectPasskeyRequestData,
+        val actionAfterAuth: SelectPasskeyActionAfterAuth
     ) : SelectPasskeyAppState
 
     @Immutable
-    object ErrorAuthenticating : SelectPasskeyAppState
+    data object ErrorAuthenticating : SelectPasskeyAppState
 }
 
 @HiltViewModel
@@ -161,7 +168,15 @@ class SelectPasskeyActivityViewModel @Inject constructor(
                 else -> SelectPasskeyAppState.Ready(
                     theme = theme,
                     needsAuth = needsAuth,
-                    data = request.value
+                    data = request.value,
+                    actionAfterAuth = when (request.value) {
+                        is SelectPasskeyRequestData.SelectPasskey -> {
+                            SelectPasskeyActionAfterAuth.SelectItem
+                        }
+                        is SelectPasskeyRequestData.UsePasskey -> {
+                            SelectPasskeyActionAfterAuth.EmitEvent
+                        }
+                    }
                 )
             }
         }

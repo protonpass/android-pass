@@ -327,7 +327,6 @@ class SharingWithViewModel @Inject constructor(
                             ErrorMessage.CannotInviteOutsideOrg
                         }
                     }
-                    ErrorMessage.NoAddressesCanBeInvited
                 }
             }
 

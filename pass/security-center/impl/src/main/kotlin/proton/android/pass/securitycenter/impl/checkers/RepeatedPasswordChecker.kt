@@ -25,9 +25,10 @@ import proton.android.pass.domain.ItemType
 import javax.inject.Inject
 
 data class RepeatedPasswordsData(
-    val repeatedPasswordsCount: Int,
     val repeatedPasswords: Map<EncryptedString, List<Item>>
-)
+) {
+    val repeatedPasswordsCount: Int = repeatedPasswords.size
+}
 
 interface RepeatedPasswordChecker {
     operator fun invoke(items: List<Item>): RepeatedPasswordsData
@@ -66,10 +67,7 @@ class RepeatedPasswordCheckerImpl @Inject constructor(
             .filter { it.value.size > 1 }
             .mapKeys { it.key.value }
 
-        return RepeatedPasswordsData(
-            repeatedPasswordsCount = repeatedPasswords.size,
-            repeatedPasswords = repeatedPasswords
-        )
+        return RepeatedPasswordsData(repeatedPasswords = repeatedPasswords)
     }
 
     @JvmInline

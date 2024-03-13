@@ -21,6 +21,7 @@ plugins {
     alias(libs.plugins.gradlePlugin.dependency.analysis)
     alias(libs.plugins.gradlePlugin.doctor)
     alias(libs.plugins.gradlePlugin.fulladle)
+    alias(libs.plugins.gradlePlugin.android.benchmark) apply false
     alias(libs.plugins.gradlePlugin.application) apply false
     alias(libs.plugins.gradlePlugin.library) apply false
     alias(libs.plugins.gradlePlugin.test) apply false

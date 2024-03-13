@@ -21,7 +21,6 @@ package proton.android.pass.data.impl.sync
 import androidx.lifecycle.coroutineScope
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.WorkManager
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
@@ -56,29 +55,40 @@ class SyncManagerImpl @Inject constructor(
 
     override fun start() {
         PassLogger.i(TAG, "SyncManager start")
-        val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-            PassLogger.w(TAG, "Error in SyncManager coroutine")
-            PassLogger.e(TAG, throwable)
-        }
-        appLifecycleProvider.lifecycle.coroutineScope.launch(exceptionHandler) {
-            combine(
-                appLifecycleProvider.state,
-                accountManager.getPrimaryUserId()
-            ) { appLifecycle, userId ->
-                SyncState(userId, appLifecycle)
-            }
-                .catch { PassLogger.w(TAG, it) }
-                .collectLatest { syncState ->
-                    if (syncState.userId == null) {
-                        cancelWorker()
-                        return@collectLatest
-                    }
 
-                    onUserLoggedInPerformSync(
-                        userId = syncState.userId,
-                        state = syncState.appLifecycle
+        var hasReportedError = false
+
+        appLifecycleProvider.lifecycle.coroutineScope.launch {
+            while (currentCoroutineContext().isActive) {
+                runCatching {
+                    combine(
+                        accountManager.getPrimaryUserId(),
+                        appLifecycleProvider.state,
+                        ::SyncState
                     )
+                        .catch {
+                            PassLogger.w(TAG, "Error in SyncManager flow")
+                            PassLogger.w(TAG, it)
+                        }
+                        .collectLatest { syncState ->
+                            if (syncState.userId == null) {
+                                cancelWorker()
+                            } else {
+                                onUserLoggedInPerformSync(
+                                    userId = syncState.userId,
+                                    state = syncState.appLifecycle
+                                )
+                            }
+                        }
                 }
+                    .onFailure { throwable ->
+                        PassLogger.w(TAG, "Error in SyncManager coroutine")
+                        if (!hasReportedError) {
+                            PassLogger.e(TAG, throwable)
+                        }
+                        hasReportedError = true
+                    }
+            }
         }
     }
 

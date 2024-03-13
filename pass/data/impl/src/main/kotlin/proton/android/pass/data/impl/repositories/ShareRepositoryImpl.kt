@@ -613,9 +613,9 @@ class ShareRepositoryImpl @Inject constructor(
     )
 
     internal sealed interface EncryptionKeyStatus {
-        object NotFound : EncryptionKeyStatus
+        data object NotFound : EncryptionKeyStatus
         data class Found(val encryptionKey: EncryptionKey) : EncryptionKeyStatus
-        object Inactive : EncryptionKeyStatus
+        data object Inactive : EncryptionKeyStatus
     }
 
     companion object {

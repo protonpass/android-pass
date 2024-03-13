@@ -36,6 +36,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.ProtonBottomSheetB
 import proton.android.pass.featureauth.impl.AUTH_GRAPH
 import proton.android.pass.featurepasskeys.select.navigation.SelectPasskeyNavigation
 import proton.android.pass.featurepasskeys.select.navigation.selectPasskeyActivityGraph
+import proton.android.pass.featurepasskeys.select.presentation.SelectPasskeyActionAfterAuth
 import proton.android.pass.featurepasskeys.select.presentation.SelectPasskeyAppEvent
 import proton.android.pass.featurepasskeys.select.ui.bottomsheet.selectpasskey.SelectPasskeyBottomsheet
 import proton.android.pass.featureselectitem.navigation.SelectItem
@@ -52,6 +53,7 @@ fun SelectPasskeyAppContent(
     needsAuth: Boolean,
     domain: String,
     selectPasskey: SelectPasskeyAppEvent.SelectPasskeyFromItem?,
+    actionAfterAuth: SelectPasskeyActionAfterAuth,
     onEvent: (SelectPasskeyEvent) -> Unit,
     onNavigate: (SelectPasskeyNavigation) -> Unit
 ) {
@@ -99,6 +101,7 @@ fun SelectPasskeyAppContent(
             selectPasskeyActivityGraph(
                 appNavigator = appNavigator,
                 domain = domain,
+                actionAfterAuth = actionAfterAuth,
                 onNavigate = onNavigate,
                 onEvent = onEvent,
                 dismissBottomSheet = { callback ->

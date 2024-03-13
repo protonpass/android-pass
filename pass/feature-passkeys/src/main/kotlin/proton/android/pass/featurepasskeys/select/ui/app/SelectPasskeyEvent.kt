@@ -31,4 +31,6 @@ sealed interface SelectPasskeyEvent {
 
     data object OnSelectScreenShown : SelectPasskeyEvent
 
+    data object OnAuthPerformed : SelectPasskeyEvent
+
 }

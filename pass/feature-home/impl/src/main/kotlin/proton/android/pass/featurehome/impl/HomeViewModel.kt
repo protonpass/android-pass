@@ -34,7 +34,6 @@ import kotlinx.collections.immutable.toPersistentMap
 import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -43,7 +42,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -52,7 +50,6 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withTimeout
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import proton.android.pass.clipboard.api.ClipboardManager
@@ -165,7 +162,6 @@ import proton.android.pass.preferences.value
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
-import kotlin.time.Duration.Companion.seconds
 
 @Suppress("LongParameterList", "LargeClass", "TooManyFunctions")
 @HiltViewModel
@@ -1000,33 +996,12 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    internal fun onNavEventConsumed(event: HomeNavEvent) = viewModelScope.launch {
+    internal fun onNavEventConsumed(event: HomeNavEvent) {
         navEventState.compareAndSet(event, HomeNavEvent.Unknown)
     }
 
     fun onSeeAllPinned() {
         isInSeeAllPinsModeState.update { true }
-    }
-
-    fun onTimeout() {
-        // Temporary telemetry to monitor sync issues.
-        viewModelScope.launch {
-            val result = runCatching {
-                withTimeout(10.seconds) {
-                    observeCurrentUser().first()
-                }
-            }
-
-            if (result.isFailure) {
-                when (result.exceptionOrNull()) {
-                    is TimeoutCancellationException -> {
-                        PassLogger.e(TAG, UserTimeoutException())
-                    }
-
-                    else -> {}
-                }
-            }
-        }
     }
 
     fun openUpdateApp(contextHolder: ClassHolder<Context>) {

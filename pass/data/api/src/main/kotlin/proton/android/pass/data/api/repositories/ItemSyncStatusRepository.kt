@@ -22,11 +22,11 @@ import kotlinx.coroutines.flow.Flow
 import proton.android.pass.domain.ShareId
 
 sealed interface ItemSyncStatus {
-    object NotStarted : ItemSyncStatus
-    object Started : ItemSyncStatus
+    data object NotStarted : ItemSyncStatus
+    data object Started : ItemSyncStatus
     data class Syncing(val shareId: ShareId, val current: Int, val total: Int) : ItemSyncStatus
     data class CompletedSyncing(val hasItems: Boolean) : ItemSyncStatus
-    object ErrorSyncing : ItemSyncStatus
+    data object ErrorSyncing : ItemSyncStatus
 }
 
 data class ItemSyncStatusPayload(

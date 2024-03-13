@@ -688,8 +688,7 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         shareIds: List<ShareId>,
         itemState: ItemState?
-    ): Flow<ItemCountSummary> =
-        localItemDataSource.observeItemCountSummary(userId, shareIds, itemState)
+    ): Flow<ItemCountSummary> = localItemDataSource.observeItemCountSummary(userId, shareIds, itemState)
 
     override suspend fun updateItemLastUsed(shareId: ShareId, itemId: ItemId) {
         val userId = accountManager.getPrimaryUserId().first()

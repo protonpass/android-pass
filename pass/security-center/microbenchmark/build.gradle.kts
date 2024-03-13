@@ -44,6 +44,12 @@ android {
     }
 }
 
+// Comment when running the benchmark
+androidComponents.beforeVariants { variant ->
+    variant.enableAndroidTest = false
+}
+
+
 dependencies {
     androidTestImplementation(libs.androidx.test.runner)
     androidTestImplementation(libs.androidx.test.junit)

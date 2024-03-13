@@ -24,6 +24,7 @@ import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.ItemOptionsB
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.EnterPin
 import proton.android.pass.featureauth.impl.authGraph
+import proton.android.pass.featurepasskeys.select.presentation.SelectPasskeyActionAfterAuth
 import proton.android.pass.featurepasskeys.select.ui.app.SelectPasskeyEvent
 import proton.android.pass.featurepasskeys.select.ui.bottomsheet.selectpasskey.selectPasskeyBottomsheetGraph
 import proton.android.pass.featuresearchoptions.impl.SearchOptionsNavigation
@@ -36,10 +37,11 @@ import proton.android.pass.featureselectitem.navigation.SelectItemState
 import proton.android.pass.featureselectitem.navigation.selectItemGraph
 import proton.android.pass.navigation.api.AppNavigator
 
-@Suppress("CyclomaticComplexMethod", "ComplexMethod", "LongMethod")
+@Suppress("CyclomaticComplexMethod", "ComplexMethod", "LongMethod", "LongParameterList")
 fun NavGraphBuilder.selectPasskeyActivityGraph(
     appNavigator: AppNavigator,
     domain: String,
+    actionAfterAuth: SelectPasskeyActionAfterAuth,
     onEvent: (SelectPasskeyEvent) -> Unit,
     onNavigate: (SelectPasskeyNavigation) -> Unit,
     dismissBottomSheet: (() -> Unit) -> Unit
@@ -49,7 +51,12 @@ fun NavGraphBuilder.selectPasskeyActivityGraph(
         navigation = {
             when (it) {
                 AuthNavigation.Back -> onNavigate(SelectPasskeyNavigation.Cancel)
-                AuthNavigation.Success -> appNavigator.navigate(SelectItem)
+                AuthNavigation.Success -> when (actionAfterAuth) {
+                    SelectPasskeyActionAfterAuth.SelectItem -> appNavigator.navigate(SelectItem)
+                    SelectPasskeyActionAfterAuth.EmitEvent -> {
+                        onEvent(SelectPasskeyEvent.OnAuthPerformed)
+                    }
+                }
                 AuthNavigation.Dismissed -> onNavigate(SelectPasskeyNavigation.Cancel)
                 AuthNavigation.Failed -> onNavigate(SelectPasskeyNavigation.Cancel)
                 AuthNavigation.SignOut -> {}

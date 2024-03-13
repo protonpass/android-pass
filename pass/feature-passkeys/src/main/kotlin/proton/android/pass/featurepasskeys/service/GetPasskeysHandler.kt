@@ -115,6 +115,7 @@ object GetPasskeysHandler {
         PassLogger.d(TAG, "Found ${passkeys.size} passkeys for domain $domain")
 
         val needsToAuthenticate = needsBiometricAuth().first()
+        PassLogger.d(TAG, "Needs to authenticate: $needsToAuthenticate")
         val entries = mutableListOf<CredentialEntry>()
 
         val requestCodes = mutableSetOf<Int>()

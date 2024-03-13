@@ -27,7 +27,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.some
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeyById
@@ -68,28 +70,33 @@ class SelectPasskeyAppViewModel @Inject constructor(
     private val eventFlow: MutableStateFlow<SelectPasskeyAppEvent> =
         MutableStateFlow(SelectPasskeyAppEvent.Idle)
 
+    private var pendingRequest: Option<SelectPasskeyRequestData.UsePasskey> = None
+
     val state: StateFlow<SelectPasskeyAppEvent> = eventFlow
 
-    fun setInitialData(data: SelectPasskeyRequestData) = viewModelScope.launch {
+    fun setInitialData(data: SelectPasskeyRequestData, needsAuth: Boolean) = viewModelScope.launch {
         when (data) {
             is SelectPasskeyRequestData.SelectPasskey -> {}
             is SelectPasskeyRequestData.UsePasskey -> {
-                val passkey = getPasskeyById(data.shareId, data.itemId, data.passkeyId)
-                when (passkey) {
-                    None -> {
-                        PassLogger.w(TAG, "Passkey not found")
-                        eventFlow.update { SelectPasskeyAppEvent.Cancel }
-                        return@launch
-                    }
-
-                    is Some -> {
-                        onPasskeySelected(
-                            origin = data.domain,
-                            passkey = passkey.value,
-                            request = data.request
-                        )
-                    }
+                // If auth is needed, wait until the user has authenticated.
+                // Otherwise, perform the auth directly
+                if (needsAuth) {
+                    pendingRequest = data.some()
+                } else {
+                    performPasskeyAuth(data)
                 }
+            }
+        }
+    }
+
+    fun onAuthPerformed() = viewModelScope.launch {
+        when (val data = pendingRequest) {
+            is None -> {
+                PassLogger.w(TAG, "No pending request")
+            }
+            is Some -> {
+                performPasskeyAuth(data.value)
+                pendingRequest = None
             }
         }
     }
@@ -163,6 +170,23 @@ class SelectPasskeyAppViewModel @Inject constructor(
         telemetryManager.sendEvent(DisplayAllPasskeys)
     }
 
+    private suspend fun performPasskeyAuth(data: SelectPasskeyRequestData.UsePasskey) {
+        val passkey = getPasskeyById(data.shareId, data.itemId, data.passkeyId)
+        when (passkey) {
+            None -> {
+                PassLogger.w(TAG, "Passkey not found")
+                eventFlow.update { SelectPasskeyAppEvent.Cancel }
+            }
+
+            is Some -> {
+                onPasskeySelected(
+                    origin = data.domain,
+                    passkey = passkey.value,
+                    request = data.request
+                )
+            }
+        }
+    }
 
     companion object {
         private const val TAG = "SelectPasskeyAppViewModel"

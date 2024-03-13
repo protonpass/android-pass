@@ -50,7 +50,10 @@ fun SelectPasskeyApp(
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
-        viewModel.setInitialData(appState.data)
+        viewModel.setInitialData(
+            data = appState.data,
+            needsAuth = appState.needsAuth
+        )
     }
 
     var selectPasskey: SelectPasskeyAppEvent.SelectPasskeyFromItem? by remember {
@@ -88,6 +91,7 @@ fun SelectPasskeyApp(
                 needsAuth = appState.needsAuth,
                 domain = appState.data.domain,
                 selectPasskey = selectPasskey,
+                actionAfterAuth = appState.actionAfterAuth,
                 onEvent = {
                     when (it) {
                         is SelectPasskeyEvent.OnItemSelected -> {
@@ -108,6 +112,10 @@ fun SelectPasskeyApp(
 
                         SelectPasskeyEvent.OnSelectScreenShown -> {
                             viewModel.onScreenShown()
+                        }
+
+                        SelectPasskeyEvent.OnAuthPerformed -> {
+                            viewModel.onAuthPerformed()
                         }
                     }
                 },

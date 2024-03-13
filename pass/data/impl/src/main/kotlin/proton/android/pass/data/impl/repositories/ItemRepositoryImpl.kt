@@ -24,7 +24,6 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
@@ -115,31 +114,29 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         share: Share,
         contents: ItemContents
-    ): Item = withContext(Dispatchers.IO) {
-        withUserAddress(userId) { userAddress ->
-            val shareKey = shareKeyRepository.getLatestKeyForShare(share.id).first()
+    ): Item = withUserAddress(userId) { userAddress ->
+        val shareKey = shareKeyRepository.getLatestKeyForShare(share.id).first()
 
-            val body = try {
-                createItem.create(shareKey, contents)
-            } catch (e: RuntimeException) {
-                PassLogger.w(TAG, "Error creating item")
-                PassLogger.w(TAG, e)
-                throw e
-            }
+        val body = try {
+            createItem.create(shareKey, contents)
+        } catch (e: RuntimeException) {
+            PassLogger.w(TAG, "Error creating item")
+            PassLogger.w(TAG, e)
+            throw e
+        }
 
-            val itemResponse =
-                remoteItemDataSource.createItem(userId, share.id, body.request.toRequest())
-            val entity = itemResponseToEntity(
-                userAddress,
-                itemResponse,
-                share,
-                listOf(shareKey)
-            )
-            localItemDataSource.upsertItem(entity)
+        val itemResponse =
+            remoteItemDataSource.createItem(userId, share.id, body.request.toRequest())
+        val entity = itemResponseToEntity(
+            userAddress,
+            itemResponse,
+            share,
+            listOf(shareKey)
+        )
+        localItemDataSource.upsertItem(entity)
 
-            encryptionContextProvider.withEncryptionContext {
-                entity.toDomain(this@withEncryptionContext)
-            }
+        encryptionContextProvider.withEncryptionContext {
+            entity.toDomain(this@withEncryptionContext)
         }
     }
 
@@ -147,35 +144,33 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         share: Share,
         newAlias: NewAlias
-    ): Item = withContext(Dispatchers.IO) {
-        withUserAddress(userId) { userAddress ->
-            val shareKey = shareKeyRepository.getLatestKeyForShare(share.id).first()
-            val itemContents = ItemContents.Alias(
-                title = newAlias.title,
-                note = newAlias.note,
-                aliasEmail = "" // Not used when creating the payload
-            )
-            val body = createItem.create(shareKey, itemContents)
+    ): Item = withUserAddress(userId) { userAddress ->
+        val shareKey = shareKeyRepository.getLatestKeyForShare(share.id).first()
+        val itemContents = ItemContents.Alias(
+            title = newAlias.title,
+            note = newAlias.note,
+            aliasEmail = "" // Not used when creating the payload
+        )
+        val body = createItem.create(shareKey, itemContents)
 
-            val mailboxIds = newAlias.mailboxes.map { it.id }
-            val requestBody = CreateAliasRequest(
-                prefix = newAlias.prefix,
-                signedSuffix = newAlias.suffix.signedSuffix,
-                mailboxes = mailboxIds,
-                item = body.request.toRequest()
-            )
+        val mailboxIds = newAlias.mailboxes.map { it.id }
+        val requestBody = CreateAliasRequest(
+            prefix = newAlias.prefix,
+            signedSuffix = newAlias.suffix.signedSuffix,
+            mailboxes = mailboxIds,
+            item = body.request.toRequest()
+        )
 
-            val itemResponse = remoteItemDataSource.createAlias(userId, share.id, requestBody)
-            val entity = itemResponseToEntity(
-                userAddress,
-                itemResponse,
-                share,
-                listOf(shareKey)
-            )
-            localItemDataSource.upsertItem(entity)
-            encryptionContextProvider.withEncryptionContext {
-                entity.toDomain(this@withEncryptionContext)
-            }
+        val itemResponse = remoteItemDataSource.createAlias(userId, share.id, requestBody)
+        val entity = itemResponseToEntity(
+            userAddress,
+            itemResponse,
+            share,
+            listOf(shareKey)
+        )
+        localItemDataSource.upsertItem(entity)
+        encryptionContextProvider.withEncryptionContext {
+            entity.toDomain(this@withEncryptionContext)
         }
     }
 
@@ -184,59 +179,57 @@ class ItemRepositoryImpl @Inject constructor(
         shareId: ShareId,
         contents: ItemContents,
         newAlias: NewAlias
-    ): Item = withContext(Dispatchers.IO) {
-        withUserAddress(userId) { userAddress ->
-            val share = shareRepository.getById(userId, shareId)
-            val shareKey = shareKeyRepository.getLatestKeyForShare(shareId).first()
-            val request = runCatching {
-                val itemBody = createItem.create(shareKey, contents)
-                val aliasContents = ItemContents.Alias(
-                    title = newAlias.title,
-                    note = newAlias.note,
-                    aliasEmail = "" // Not used when creating the payload
-                )
-                val aliasBody = createItem.create(shareKey, aliasContents)
-
-                CreateItemAliasRequest(
-                    alias = CreateAliasRequest(
-                        prefix = newAlias.prefix,
-                        signedSuffix = newAlias.suffix.signedSuffix,
-                        mailboxes = newAlias.mailboxes.map { it.id },
-                        item = aliasBody.request.toRequest()
-                    ),
-                    item = itemBody.request.toRequest()
-                )
-            }.fold(
-                onSuccess = { it },
-                onFailure = {
-                    PassLogger.e(TAG, it, "Error creating item")
-                    throw it
-                }
+    ): Item = withUserAddress(userId) { userAddress ->
+        val share = shareRepository.getById(userId, shareId)
+        val shareKey = shareKeyRepository.getLatestKeyForShare(shareId).first()
+        val request = runCatching {
+            val itemBody = createItem.create(shareKey, contents)
+            val aliasContents = ItemContents.Alias(
+                title = newAlias.title,
+                note = newAlias.note,
+                aliasEmail = "" // Not used when creating the payload
             )
+            val aliasBody = createItem.create(shareKey, aliasContents)
 
-            val itemResponse = remoteItemDataSource.createItemAndAlias(userId, shareId, request)
-            val itemEntity =
-                itemResponseToEntity(
-                    userAddress,
-                    itemResponse.item.toDomain(),
-                    share,
-                    listOf(shareKey)
-                )
-            val aliasEntity =
-                itemResponseToEntity(
-                    userAddress,
-                    itemResponse.alias.toDomain(),
-                    share,
-                    listOf(shareKey)
-                )
-            database.inTransaction("createItemAndAlias") {
-                localItemDataSource.upsertItem(itemEntity)
-                localItemDataSource.upsertItem(aliasEntity)
+            CreateItemAliasRequest(
+                alias = CreateAliasRequest(
+                    prefix = newAlias.prefix,
+                    signedSuffix = newAlias.suffix.signedSuffix,
+                    mailboxes = newAlias.mailboxes.map { it.id },
+                    item = aliasBody.request.toRequest()
+                ),
+                item = itemBody.request.toRequest()
+            )
+        }.fold(
+            onSuccess = { it },
+            onFailure = {
+                PassLogger.e(TAG, it, "Error creating item")
+                throw it
             }
+        )
 
-            encryptionContextProvider.withEncryptionContext {
-                itemEntity.toDomain(this@withEncryptionContext)
-            }
+        val itemResponse = remoteItemDataSource.createItemAndAlias(userId, shareId, request)
+        val itemEntity =
+            itemResponseToEntity(
+                userAddress,
+                itemResponse.item.toDomain(),
+                share,
+                listOf(shareKey)
+            )
+        val aliasEntity =
+            itemResponseToEntity(
+                userAddress,
+                itemResponse.alias.toDomain(),
+                share,
+                listOf(shareKey)
+            )
+        database.inTransaction("createItemAndAlias") {
+            localItemDataSource.upsertItem(itemEntity)
+            localItemDataSource.upsertItem(aliasEntity)
+        }
+
+        encryptionContextProvider.withEncryptionContext {
+            itemEntity.toDomain(this@withEncryptionContext)
         }
     }
 
@@ -295,16 +288,11 @@ class ItemRepositoryImpl @Inject constructor(
             itemState = itemState,
             filter = itemTypeFilter
         )
-    }
-        .map { items ->
-            // Detect if we have received the update from a logout
-            val isAccountStillAvailable = accountManager.getAccount(userId).first() != null
-            if (!isAccountStillAvailable) return@map emptyList()
-            encryptionContextProvider.withEncryptionContext {
-                items.map { it.toDomain(this@withEncryptionContext) }
-            }
+    }.map { items ->
+        encryptionContextProvider.withEncryptionContext {
+            items.map { item -> item.toDomain(this@withEncryptionContext) }
         }
-        .flowOn(Dispatchers.IO)
+    }
 
     override fun observePinnedItems(
         userId: UserId,
@@ -327,32 +315,30 @@ class ItemRepositoryImpl @Inject constructor(
             userId = userId,
             filter = itemTypeFilter
         )
-    }
-        .map { items ->
-            encryptionContextProvider.withEncryptionContext {
-                items.map { it.toDomain(this@withEncryptionContext) }
-            }
+    }.map { items ->
+        encryptionContextProvider.withEncryptionContext {
+            items.map { item -> item.toDomain(this@withEncryptionContext) }
         }
-        .flowOn(Dispatchers.IO)
+    }
 
     override fun observeById(shareId: ShareId, itemId: ItemId): Flow<Item> =
-        localItemDataSource.observeItem(shareId, itemId)
-            .map { itemEntity ->
-                encryptionContextProvider.withEncryptionContext {
-                    itemEntity.toDomain(this@withEncryptionContext)
-                }
+        localItemDataSource.observeItem(shareId, itemId).map { itemEntity ->
+            encryptionContextProvider.withEncryptionContext {
+                itemEntity.toDomain(this@withEncryptionContext)
             }
-
-    override suspend fun getById(shareId: ShareId, itemId: ItemId): Item = withContext(Dispatchers.IO) {
-        val item = localItemDataSource.getById(shareId, itemId)
-        requireNotNull(item) { "Item not found [shareId=${shareId.id}] [itemId=${itemId.id}]" }
-        encryptionContextProvider.withEncryptionContext {
-            item.toDomain(this@withEncryptionContext)
         }
-    }
+
+    override suspend fun getById(shareId: ShareId, itemId: ItemId): Item =
+        requireNotNull(localItemDataSource.getById(shareId, itemId)) {
+            "Item not found [shareId=${shareId.id}] [itemId=${itemId.id}]"
+        }.let { itemEntity ->
+            encryptionContextProvider.withEncryptionContext {
+                itemEntity.toDomain(this@withEncryptionContext)
+            }
+        }
 
     override suspend fun trashItems(userId: UserId, items: Map<ShareId, List<ItemId>>) {
-        withContext(Dispatchers.IO) {
+        coroutineScope {
             val results = items.map { entry ->
                 async {
                     trashItemsForShare(userId, entry.key, entry.value)
@@ -392,9 +378,8 @@ class ItemRepositoryImpl @Inject constructor(
         .transpose()
         .map { }
 
-
     override suspend fun untrashItems(userId: UserId, items: Map<ShareId, List<ItemId>>) {
-        withContext(Dispatchers.IO) {
+        coroutineScope {
             val results = items.map { entry ->
                 async { untrashItemsForShare(userId, entry.key, entry.value) }
             }.awaitAll().transpose()
@@ -434,7 +419,7 @@ class ItemRepositoryImpl @Inject constructor(
 
 
     override suspend fun clearTrash(userId: UserId) {
-        withContext(Dispatchers.IO) {
+        coroutineScope {
             val trashedItems = localItemDataSource.getTrashedItems(userId)
             val trashedPerShare = trashedItems.groupBy { it.shareId }
             val results = trashedPerShare
@@ -457,7 +442,7 @@ class ItemRepositoryImpl @Inject constructor(
     }
 
     override suspend fun restoreItems(userId: UserId) {
-        withContext(Dispatchers.IO) {
+        coroutineScope {
             val trashedItems = localItemDataSource.getTrashedItems(userId)
             val trashedPerShare = trashedItems.groupBy { it.shareId }
             val results = trashedPerShare
@@ -480,7 +465,7 @@ class ItemRepositoryImpl @Inject constructor(
     }
 
     override suspend fun deleteItems(userId: UserId, items: Map<ShareId, List<ItemId>>) {
-        withContext(Dispatchers.IO) {
+        coroutineScope {
             val results = items.map { entry ->
                 async { deleteItemsForShare(userId, entry.key, entry.value) }
             }.awaitAll().transpose()
@@ -520,7 +505,7 @@ class ItemRepositoryImpl @Inject constructor(
         itemId: ItemId,
         packageInfo: Option<PackageInfo>,
         url: Option<String>
-    ): Item = withContext(Dispatchers.IO) {
+    ): Item {
         val itemEntity = requireNotNull(localItemDataSource.getById(shareId, itemId))
 
         val (item, itemProto) = encryptionContextProvider.withEncryptionContext {
@@ -538,13 +523,13 @@ class ItemRepositoryImpl @Inject constructor(
 
         if (!needsToUpdate) {
             PassLogger.i(TAG, "Did not need to perform any update")
-            return@withContext item
+            return item
         }
 
         val userId = accountManager.getPrimaryUserId().first()
             ?: throw CryptoException("UserId cannot be null")
         val share = shareRepository.getById(userId, shareId)
-        return@withContext performUpdate(
+        return performUpdate(
             userId,
             share,
             item,
@@ -703,22 +688,20 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         shareIds: List<ShareId>,
         itemState: ItemState?
-    ): Flow<ItemCountSummary> = localItemDataSource.observeItemCountSummary(userId, shareIds, itemState)
-        .flowOn(Dispatchers.IO)
+    ): Flow<ItemCountSummary> =
+        localItemDataSource.observeItemCountSummary(userId, shareIds, itemState)
 
     override suspend fun updateItemLastUsed(shareId: ShareId, itemId: ItemId) {
-        withContext(Dispatchers.IO) {
-            val userId = accountManager.getPrimaryUserId().first()
-                ?: throw CryptoException("UserId cannot be null")
+        val userId = accountManager.getPrimaryUserId().first()
+            ?: throw CryptoException("UserId cannot be null")
 
-            PassLogger.i(TAG, "Updating last used time [shareId=$shareId][itemId=$itemId]")
+        PassLogger.i(TAG, "Updating last used time [shareId=$shareId][itemId=$itemId]")
 
-            val now = TimeUtil.getNowUtc()
-            localItemDataSource.updateLastUsedTime(shareId, itemId, now)
-            remoteItemDataSource.updateLastUsedTime(userId, shareId, itemId, now)
+        val now = TimeUtil.getNowUtc()
+        localItemDataSource.updateLastUsedTime(shareId, itemId, now)
+        remoteItemDataSource.updateLastUsedTime(userId, shareId, itemId, now)
 
-            PassLogger.i(TAG, "Updated last used time [shareId=$shareId][itemId=$itemId]")
-        }
+        PassLogger.i(TAG, "Updated last used time [shareId=$shareId][itemId=$itemId]")
     }
 
     override fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>> =
@@ -728,7 +711,7 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         items: Map<ShareId, List<ItemId>>,
         destination: Share
-    ): MigrateItemsResult = withContext(Dispatchers.IO) {
+    ): MigrateItemsResult = coroutineScope {
         val destinationKey = shareKeyRepository.getLatestKeyForShare(destination.id).first()
         val migratedRevisions: List<Result<List<ItemEntity>>> = items.map { (shareId, items) ->
             async {
@@ -850,7 +833,7 @@ class ItemRepositoryImpl @Inject constructor(
     private suspend fun handleItemPinning(
         items: List<Pair<ShareId, ItemId>>,
         block: suspend (userId: UserId, shareId: ShareId, itemId: ItemId) -> ItemRevision
-    ): PinItemsResult = withContext(Dispatchers.IO) {
+    ): PinItemsResult = coroutineScope {
         val userId = requireNotNull(accountManager.getPrimaryUserId().first())
 
         val pinResults: List<Result<Pair<ShareId, ItemRevision>>> = items.map { (shareId, itemId) ->

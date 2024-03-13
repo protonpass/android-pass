@@ -18,9 +18,6 @@
 
 package proton.android.pass.securitycenter.impl.checkers
 
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
 import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.domain.Item
@@ -33,54 +30,44 @@ data class RepeatedPasswordsData(
 )
 
 interface RepeatedPasswordChecker {
-    suspend operator fun invoke(items: List<Item>): RepeatedPasswordsData
+    operator fun invoke(items: List<Item>): RepeatedPasswordsData
 }
 
 class RepeatedPasswordCheckerImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : RepeatedPasswordChecker {
 
-    override suspend fun invoke(items: List<Item>): RepeatedPasswordsData {
-
-        val decrypted: List<DecryptedItem> = coroutineScope {
-            encryptionContextProvider.withEncryptionContextSuspendable {
-                items.mapNotNull { item ->
-                    when (val itemType = item.itemType) {
-                        is ItemType.Login -> {
-                            async {
-                                DecryptedItem(
-                                    item = item,
-                                    encryptedPassword = Password(itemType.password),
-                                    clearTextPassword = decrypt(itemType.password)
-                                )
-                            }
-                        }
-                        else -> null
-                    }
-                }
-            }.awaitAll()
-        }
-
+    override fun invoke(items: List<Item>): RepeatedPasswordsData {
         val foundPasswords: MutableMap<Password, List<Item>> = mutableMapOf()
-        val passwordsWithMoreThanOneItem: MutableSet<Password> = mutableSetOf()
 
-        decrypted.forEach { decryptedItem ->
-            val list = foundPasswords.getOrElse(decryptedItem.encryptedPassword) { emptyList() }
-            val updatedList = list + decryptedItem.item
+        encryptionContextProvider.withEncryptionContext {
+            items.forEach { item ->
+                when (val itemType = item.itemType) {
+                    is ItemType.Login -> {
+                        val decryptedItem = DecryptedItem(
+                            item = item,
+                            encryptedPassword = Password(itemType.password),
+                            clearTextPassword = decrypt(itemType.password)
+                        )
 
-            if (updatedList.size > 1) {
-                passwordsWithMoreThanOneItem.add(decryptedItem.encryptedPassword)
+                        if (decryptedItem.clearTextPassword.isNotEmpty()) {
+                            val list = foundPasswords.getOrElse(decryptedItem.encryptedPassword) {
+                                emptyList()
+                            }
+                            foundPasswords[decryptedItem.encryptedPassword] = list + decryptedItem.item
+                        }
+                    }
+                    else -> {}
+                }
             }
-
-            foundPasswords[decryptedItem.encryptedPassword] = updatedList
         }
 
         val repeatedPasswords = foundPasswords
-            .filterKeys { passwordsWithMoreThanOneItem.contains(it) }
+            .filter { it.value.size > 1 }
             .mapKeys { it.key.value }
 
         return RepeatedPasswordsData(
-            repeatedPasswordsCount = passwordsWithMoreThanOneItem.size,
+            repeatedPasswordsCount = repeatedPasswords.size,
             repeatedPasswords = repeatedPasswords
         )
     }

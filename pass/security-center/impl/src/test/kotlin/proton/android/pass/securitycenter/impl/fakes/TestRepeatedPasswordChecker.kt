@@ -42,7 +42,7 @@ class TestRepeatedPasswordChecker : RepeatedPasswordChecker {
         result = value
     }
 
-    override suspend fun invoke(items: List<Item>): RepeatedPasswordsData {
+    override fun invoke(items: List<Item>): RepeatedPasswordsData {
         memory.add(items)
         return result.getOrThrow()
     }

@@ -131,10 +131,6 @@ fun HomeScreen(
         homeViewModel.onNavEventConsumed(homeUiState.navEvent)
     }
 
-    LaunchedEffect(Unit) {
-        homeViewModel.onTimeout()
-    }
-
     var currentBottomSheet by rememberSaveable(stateSaver = HomeBottomSheetTypeSaver) {
         mutableStateOf(TrashOptions)
     }

@@ -130,7 +130,15 @@ fun AutofillAppContent(
                         is AutofillEvent.AutofillItemSelected -> {
                             viewModel.onItemSelected(
                                 state = autofillAppState,
-                                autofillItem = it.item
+                                autofillItem = it.item,
+                                isSuggestion = false
+                            )
+                        }
+                        is AutofillEvent.AutofillSuggestionSelected -> {
+                            viewModel.onItemSelected(
+                                state = autofillAppState,
+                                autofillItem = it.item,
+                                isSuggestion = true
                             )
                         }
                         AutofillEvent.SelectItemScreenShown -> {

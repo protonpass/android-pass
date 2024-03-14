@@ -49,7 +49,7 @@ fun SelectItemList(
     uiState: SelectItemUiState,
     scrollState: LazyListState = rememberLazyListState(),
     onScrolledToTop: () -> Unit,
-    onItemClicked: (ItemUiModel) -> Unit,
+    onItemClicked: (ItemUiModel, Boolean) -> Unit,
     onItemOptionsClicked: (ItemUiModel) -> Unit,
     onNavigate: (SelectItemNavigation) -> Unit
 ) {
@@ -83,7 +83,9 @@ fun SelectItemList(
         enableSwipeRefresh = false,
         canLoadExternalImages = listUiState.canLoadExternalImages,
         onRefresh = {},
-        onItemClick = onItemClicked,
+        onItemClick = {
+            onItemClicked(it, false)
+        },
         onItemMenuClick = onItemOptionsClicked,
         onScrollToTop = onScrolledToTop,
         emptyContent = {
@@ -106,7 +108,9 @@ fun SelectItemList(
                     showUpgradeMessage = listUiState.displayOnlyPrimaryVaultMessage,
                     canUpgrade = listUiState.canUpgrade,
                     onItemOptionsClicked = onItemOptionsClicked,
-                    onItemClicked = onItemClicked,
+                    onItemClicked = {
+                        onItemClicked(it, true)
+                    },
                     onUpgradeClick = { onNavigate(SelectItemNavigation.Upgrade) }
                 )
             }
@@ -163,7 +167,7 @@ fun SelectItemListPreview(
         Surface {
             SelectItemList(
                 uiState = input.second,
-                onItemClicked = {},
+                onItemClicked = { _, _ -> },
                 onItemOptionsClicked = {},
                 onScrolledToTop = {},
                 onNavigate = {}

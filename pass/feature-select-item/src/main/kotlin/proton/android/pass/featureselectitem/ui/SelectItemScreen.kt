@@ -51,7 +51,13 @@ fun SelectItemScreen(
     SelectItemScreenContent(
         modifier = modifier,
         uiState = uiState,
-        onItemClicked = { item -> viewModel.onItemClicked(item) },
+        onItemClicked = { item, isSuggestion ->
+            if (isSuggestion) {
+                viewModel.onSuggestionClicked(item)
+            } else {
+                viewModel.onItemClicked(item)
+            }
+        },
         onItemOptionsClicked = { item ->
             onNavigate(SelectItemNavigation.ItemOptions(item.shareId, item.id))
         },
@@ -72,10 +78,17 @@ private fun OnItemSelectLaunchEffect(
     onNavigate: (SelectItemNavigation) -> Unit
 ) {
     LaunchedEffect(event) {
-        if (event is AutofillItemClickedEvent.Clicked) {
-            onNavigate(SelectItemNavigation.ItemSelected(event.item))
-            clearEvent()
+        when (event) {
+            is AutofillItemClickedEvent.ItemClicked -> {
+                onNavigate(SelectItemNavigation.ItemSelected(event.item))
+            }
+            is AutofillItemClickedEvent.SuggestionClicked -> {
+                onNavigate(SelectItemNavigation.SuggestionSelected(event.item))
+
+            }
+            else -> Unit
         }
+        clearEvent()
     }
 
 }

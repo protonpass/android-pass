@@ -32,19 +32,19 @@ sealed interface NeedsAuthResult {
 sealed interface NeedsAuthReason : NeedsAuthResult {
     override fun value() = true
 
-    object BootCountChanged : NeedsAuthReason
-    object LastUnlockTimeNotSet : NeedsAuthReason
-    object LastUnlockTimeInTheFuture : NeedsAuthReason
-    object LockTimeElapsed : NeedsAuthReason
-    object LockImmediatelyAndHadNotAuthenticated : NeedsAuthReason
+    data object BootCountChanged : NeedsAuthReason
+    data object LastUnlockTimeNotSet : NeedsAuthReason
+    data object LastUnlockTimeInTheFuture : NeedsAuthReason
+    data object LockTimeElapsed : NeedsAuthReason
+    data object LockImmediatelyAndHadNotAuthenticated : NeedsAuthReason
 }
 
 sealed interface NoNeedsAuthReason : NeedsAuthResult {
     override fun value() = false
 
-    object AuthDisabled : NoNeedsAuthReason
-    object LockTimeNotElapsed : NoNeedsAuthReason
-    object LockImmediatelyButHadAuthenticated : NoNeedsAuthReason
+    data object AuthDisabled : NoNeedsAuthReason
+    data object LockTimeNotElapsed : NoNeedsAuthReason
+    data object LockImmediatelyButHadAuthenticated : NoNeedsAuthReason
 }
 
 object NeedsAuthChecker {

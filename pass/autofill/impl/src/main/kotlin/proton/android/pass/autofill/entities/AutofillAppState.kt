@@ -78,7 +78,9 @@ fun AutofillAppState.toSelectItemState(): SelectItemState.Autofill {
             )
         }
 
-        else -> throw IllegalStateException("Unknown cluster type")
+        else -> throw IllegalStateException(
+            "Unknown cluster type: ${autofillData.assistInfo.cluster::javaClass}"
+        )
     }
 }
 

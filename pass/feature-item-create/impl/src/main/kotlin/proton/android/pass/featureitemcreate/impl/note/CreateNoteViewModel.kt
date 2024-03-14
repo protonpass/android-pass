@@ -82,7 +82,7 @@ class CreateNoteViewModel @Inject constructor(
 ) : BaseNoteViewModel(snackbarDispatcher, savedStateHandleProvider) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        PassLogger.e(TAG, throwable)
+        PassLogger.w(TAG, throwable)
     }
 
     private val navShareId: Option<ShareId> =
@@ -141,7 +141,8 @@ class CreateNoteViewModel @Inject constructor(
                         itemRepository.createItem(userId, share, itemContents)
                     }
                     .onFailure {
-                        PassLogger.e(TAG, it, "Create item error")
+                        PassLogger.w(TAG, "Create item error")
+                        PassLogger.w(TAG, it)
                         snackbarDispatcher(ItemCreationError)
                     }
                     .map { item ->

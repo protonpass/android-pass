@@ -133,7 +133,8 @@ class UpdateCreditCardViewModel @Inject constructor(
             snackbarDispatcher(CreditCardSnackbarMessage.ItemUpdated)
             telemetryManager.sendEvent(ItemUpdate(EventItemType.CreditCard))
         }.onFailure {
-            PassLogger.e(TAG, it, "Update credit card error")
+            PassLogger.w(TAG, "Update credit card error")
+            PassLogger.w(TAG, it)
             val message = if (it is InvalidContentFormatVersionError) {
                 UpdateAppToUpdateItemError
             } else {

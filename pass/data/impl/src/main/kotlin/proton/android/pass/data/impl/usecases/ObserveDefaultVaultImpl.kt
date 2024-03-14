@@ -82,7 +82,8 @@ class ObserveDefaultVaultImpl @Inject constructor(
                 PassLogger.i(TAG, "Set default vault to ${defaultVault.shareId.id}")
             }
             .onFailure {
-                PassLogger.e(TAG, "Error setting default vault to ${defaultVault.shareId.id}")
+                PassLogger.w(TAG, "Error setting default vault to ${defaultVault.shareId.id}")
+                PassLogger.w(TAG, it)
             }
     }
 

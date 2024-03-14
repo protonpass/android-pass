@@ -80,13 +80,12 @@ class UpdateAutofillItemWorker @AssistedInject constructor(
             updateLastUsed(inputData)
         }.fold(
             onSuccess = {
-                val successMessage =
-                    "Successfully added package or url and updated last used item"
-                PassLogger.i(TAG, successMessage)
+                PassLogger.i(TAG, "Successfully added package or url and updated last used item")
                 Result.success()
             },
             onFailure = {
-                PassLogger.e(TAG, it, "Failed to add package or url and update last used item")
+                PassLogger.w(TAG, "Failed to add package or url and update last used item")
+                PassLogger.w(TAG, it)
                 Result.failure()
             }
         )

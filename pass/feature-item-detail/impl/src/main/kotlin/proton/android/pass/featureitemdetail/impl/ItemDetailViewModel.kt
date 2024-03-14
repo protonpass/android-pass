@@ -66,7 +66,8 @@ class ItemDetailViewModel @Inject constructor(
     ) { result, favicons ->
         when (result) {
             is LoadingResult.Error -> {
-                PassLogger.e(TAG, result.exception, "Get by id error")
+                PassLogger.w(TAG, "Get by id error")
+                PassLogger.e(TAG, result.exception)
                 snackbarDispatcher(DetailSnackbarMessages.InitError)
                 ItemDetailScreenUiState.Initial
             }

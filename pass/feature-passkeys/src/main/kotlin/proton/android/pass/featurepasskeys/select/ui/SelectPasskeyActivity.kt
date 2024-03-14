@@ -67,6 +67,11 @@ class SelectPasskeyActivity : FragmentActivity() {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        viewModel.onStop()
+    }
+
     private fun onStateReceived(state: SelectPasskeyAppState) {
         when (state) {
             is SelectPasskeyAppState.NotReady -> {}

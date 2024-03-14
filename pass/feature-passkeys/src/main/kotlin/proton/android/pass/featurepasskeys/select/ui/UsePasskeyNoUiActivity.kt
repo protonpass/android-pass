@@ -64,6 +64,11 @@ class UsePasskeyNoUiActivity : FragmentActivity() {
         }
     }
 
+    override fun onStop() {
+        viewModel.onStop()
+        super.onStop()
+    }
+
     private fun onStateReceived(state: UsePasskeyState) {
         when (state) {
             UsePasskeyState.Idle -> {}

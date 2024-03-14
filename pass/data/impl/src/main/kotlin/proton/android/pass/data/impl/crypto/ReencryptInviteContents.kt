@@ -59,7 +59,8 @@ class ReencryptInviteContentsImpl @Inject constructor(
 
         val inviterKeys = getAllKeysByAddress(invite.inviterEmail)
             .getOrElse {
-                PassLogger.e(TAG, it, "Could not get inviter address keys")
+                PassLogger.w(TAG, "Could not get inviter address keys")
+                PassLogger.w(TAG, it)
                 throw it
             }
             .map { it.publicKey }

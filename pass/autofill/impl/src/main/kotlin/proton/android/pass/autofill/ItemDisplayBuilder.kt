@@ -33,7 +33,7 @@ object ItemDisplayBuilder {
         is ItemType.Login -> item.itemName(encryptionContext)
         else -> {
             PassLogger.w(TAG, "Unsupported item type: ${item.itemType::class.java}")
-            throw IllegalStateException("Unsupported item type")
+            throw IllegalStateException("Unsupported item type: ${item.itemType::javaClass}")
         }
     }
 
@@ -42,7 +42,7 @@ object ItemDisplayBuilder {
         is ItemType.Login -> itemType.username.takeIf { it.isNotBlank() } ?: "---"
         else -> {
             PassLogger.w(TAG, "Unsupported item type: ${item.itemType::class.java}")
-            throw IllegalStateException("Unsupported item type")
+            throw IllegalStateException("Unsupported item type: ${item.itemType::javaClass}")
         }
     }
 

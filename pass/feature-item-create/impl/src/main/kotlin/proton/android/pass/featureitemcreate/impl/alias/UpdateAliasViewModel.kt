@@ -85,7 +85,7 @@ class UpdateAliasViewModel @Inject constructor(
 ) : BaseAliasViewModel(snackbarDispatcher, savedStateHandleProvider) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        PassLogger.e(TAG, throwable)
+        PassLogger.w(TAG, throwable)
     }
 
     private val navShareId: ShareId =
@@ -232,9 +232,10 @@ class UpdateAliasViewModel @Inject constructor(
     private suspend fun showError(
         message: String,
         snackbarMessage: AliasSnackbarMessage,
-        it: Throwable? = null
+        cause: Throwable? = null
     ) {
-        PassLogger.e(TAG, it ?: Exception(message), message)
+        PassLogger.w(TAG, message)
+        cause?.let { PassLogger.w(TAG, it) }
         snackbarDispatcher(snackbarMessage)
         mutableCloseScreenEventFlow.update { CloseScreenEvent.Close }
     }
@@ -273,7 +274,8 @@ class UpdateAliasViewModel @Inject constructor(
                 snackbarDispatcher(AliasUpdated)
                 telemetryManager.sendEvent(ItemUpdate(EventItemType.Alias))
             }.onFailure {
-                PassLogger.e(TAG, it, "Update alias error")
+                PassLogger.w(TAG, "Update alias error")
+                PassLogger.w(TAG, it)
                 val message = if (it is InvalidContentFormatVersionError) {
                     UpdateAppToUpdateItemError
                 } else {

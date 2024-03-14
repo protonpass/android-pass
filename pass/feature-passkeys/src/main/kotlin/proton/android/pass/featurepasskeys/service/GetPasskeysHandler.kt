@@ -66,7 +66,8 @@ object GetPasskeysHandler {
         telemetryManager: TelemetryManager
     ) {
         val handler = CoroutineExceptionHandler { _, exception ->
-            PassLogger.e(TAG, exception)
+            PassLogger.w(TAG, "Error handling get passkeys")
+            PassLogger.w(TAG, exception)
             callback.onError(GetCredentialUnknownException("There was an error"))
         }
 

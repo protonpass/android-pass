@@ -123,7 +123,8 @@ class DeleteVaultViewModel @Inject constructor(
                 eventFlow.update { DeleteVaultEvent.Deleted }
             }
             .onFailure {
-                PassLogger.e(TAG, it, "Error deleting vault")
+                PassLogger.w(TAG, "Error deleting vault")
+                PassLogger.w(TAG, it)
                 snackbarDispatcher(VaultSnackbarMessage.DeleteVaultError)
             }
         isLoadingState.update { IsLoadingState.NotLoading }

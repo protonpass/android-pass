@@ -98,7 +98,6 @@ import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveAppNeedsUpdate
-import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObservePinnedItems
 import proton.android.pass.data.api.usecases.ObserveVaults
@@ -183,7 +182,6 @@ class HomeViewModel @Inject constructor(
     private val homeSearchOptionsRepository: HomeSearchOptionsRepository,
     private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     private val toastManager: ToastManager,
-    private val observeCurrentUser: ObserveCurrentUser,
     private val pinItem: PinItem,
     private val unpinItem: UnpinItem,
     private val pinItems: PinItems,
@@ -201,7 +199,7 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        PassLogger.e(TAG, throwable)
+        PassLogger.w(TAG, throwable)
     }
 
     // Variable to keep track of whether the user has entered the search in this session, so we
@@ -504,7 +502,8 @@ class HomeViewModel @Inject constructor(
             is LoadingResult.Success -> itemsResult.data to isLoadingState
 
             is LoadingResult.Error -> {
-                PassLogger.e(TAG, itemsResult.exception, "Observe items error")
+                PassLogger.w(TAG, "Observe items error")
+                PassLogger.e(TAG, itemsResult.exception)
                 snackbarDispatcher(ObserveItemsError)
                 persistentListOf<GroupedItemList>() to IsLoadingState.NotLoading
             }
@@ -655,7 +654,8 @@ class HomeViewModel @Inject constructor(
                 }
             }
             .onFailure {
-                PassLogger.e(TAG, it, "Trash items failed")
+                PassLogger.w(TAG, "Trash items failed")
+                PassLogger.w(TAG, it)
                 if (itemTypes.size == 1) {
                     snackbarDispatcher(MoveToTrashError)
                 } else {
@@ -785,7 +785,8 @@ class HomeViewModel @Inject constructor(
                 snackbarDispatcher(RestoreItemsSuccess)
             }
             .onFailure {
-                PassLogger.e(TAG, it, "Untrash items failed")
+                PassLogger.w(TAG, "Untrash items failed")
+                PassLogger.w(TAG, it)
                 snackbarDispatcher(RestoreItemsError)
             }
         actionStateFlow.update { ActionState.Done }
@@ -815,7 +816,8 @@ class HomeViewModel @Inject constructor(
                 snackbarDispatcher(DeleteItemSuccess)
             }
         }.onFailure {
-            PassLogger.e(TAG, it, "Error deleting items")
+            PassLogger.w(TAG, "Error deleting items")
+            PassLogger.w(TAG, it)
             if (items.size > 1) {
                 snackbarDispatcher(DeleteItemsError)
             } else {
@@ -835,7 +837,8 @@ class HomeViewModel @Inject constructor(
             PassLogger.i(TAG, "Trash cleared successfully")
             emitDeletedItems(deletedItems)
         }.onFailure {
-            PassLogger.e(TAG, it, "Error clearing trash")
+            PassLogger.w(TAG, "Error clearing trash")
+            PassLogger.w(TAG, it)
             snackbarDispatcher(ClearTrashError)
         }
         actionStateFlow.update { ActionState.Done }
@@ -848,7 +851,8 @@ class HomeViewModel @Inject constructor(
         }.onSuccess {
             PassLogger.i(TAG, "Items restored successfully")
         }.onFailure {
-            PassLogger.e(TAG, it, "Error restoring items")
+            PassLogger.w(TAG, "Error restoring items")
+            PassLogger.w(TAG, it)
             snackbarDispatcher(RestoreItemsError)
         }
         actionStateFlow.update { ActionState.Done }

@@ -52,7 +52,7 @@ class EditVaultViewModel @Inject constructor(
         ShareId(requireNotNull(savedStateHandle.get<String>(CommonNavArgId.ShareId.key)))
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        PassLogger.e(TAG, throwable)
+        PassLogger.w(TAG, throwable)
     }
 
     fun onStart() = viewModelScope.launch(coroutineExceptionHandler) {
@@ -106,7 +106,8 @@ class EditVaultViewModel @Inject constructor(
             isLoadingFlow.update { IsLoadingState.NotLoading }
             eventFlow.update { IsVaultCreatedEvent.Created }
         }.onFailure {
-            PassLogger.e(TAG, it, "Edit Vault Failed")
+            PassLogger.w(TAG, "Edit Vault Failed")
+            PassLogger.w(TAG, it, "Edit Vault Failed")
             snackbarDispatcher(VaultSnackbarMessage.EditVaultError)
             isLoadingFlow.update { IsLoadingState.NotLoading }
         }

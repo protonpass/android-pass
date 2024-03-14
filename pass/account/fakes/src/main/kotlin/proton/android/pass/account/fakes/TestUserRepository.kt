@@ -45,7 +45,7 @@ class TestUserRepository : UserRepository {
         throw IllegalStateException("Not implemented")
     }
 
-    override suspend fun checkUsernameAvailable(userId: UserId?, username: String) {
+    override suspend fun checkUsernameAvailable(sessionUserId: UserId?, username: String) {
         throw IllegalStateException("Not implemented")
     }
 
@@ -59,7 +59,8 @@ class TestUserRepository : UserRepository {
         referrer: String?,
         type: CreateUserType,
         auth: Auth,
-        frames: List<ChallengeFrameDetails>
+        frames: List<ChallengeFrameDetails>,
+        sessionUserId: SessionUserId?
     ): User {
         throw IllegalStateException("Not implemented")
     }
@@ -73,7 +74,8 @@ class TestUserRepository : UserRepository {
         referrer: String?,
         type: CreateUserType,
         auth: Auth,
-        frames: List<ChallengeFrameDetails>
+        frames: List<ChallengeFrameDetails>,
+        sessionUserId: SessionUserId?
     ): User {
         throw IllegalStateException("Not implemented")
     }

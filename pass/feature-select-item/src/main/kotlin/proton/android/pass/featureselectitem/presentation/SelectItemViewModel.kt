@@ -500,7 +500,11 @@ class SelectItemViewModel @Inject constructor(
         )
 
     fun onItemClicked(item: ItemUiModel) {
-        itemClickedFlow.update { AutofillItemClickedEvent.Clicked(item) }
+        itemClickedFlow.update { AutofillItemClickedEvent.ItemClicked(item) }
+    }
+
+    fun onSuggestionClicked(item: ItemUiModel) {
+        itemClickedFlow.update { AutofillItemClickedEvent.SuggestionClicked(item) }
     }
 
     fun onSearchQueryChange(query: String) {

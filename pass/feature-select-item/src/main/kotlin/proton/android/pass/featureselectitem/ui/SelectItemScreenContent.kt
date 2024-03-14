@@ -49,7 +49,7 @@ import proton.android.pass.featureselectitem.navigation.SelectItemNavigation
 internal fun SelectItemScreenContent(
     modifier: Modifier = Modifier,
     uiState: SelectItemUiState,
-    onItemClicked: (ItemUiModel) -> Unit,
+    onItemClicked: (ItemUiModel, Boolean) -> Unit,
     onItemOptionsClicked: (ItemUiModel) -> Unit,
     onSearchQueryChange: (String) -> Unit,
     onEnterSearch: () -> Unit,
@@ -133,7 +133,9 @@ internal fun SelectItemScreenContent(
                     modifier = Modifier.height(48.dp),
                     list = uiState.pinningUiState.unFilteredItems,
                     canLoadExternalImages = uiState.listUiState.canLoadExternalImages,
-                    onItemClick = onItemClicked,
+                    onItemClick = {
+                        onItemClicked(it, false)
+                    },
                     onSeeAllClick = onSeeAllPinned
                 )
 

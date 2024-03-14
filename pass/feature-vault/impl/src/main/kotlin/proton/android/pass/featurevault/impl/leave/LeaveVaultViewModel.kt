@@ -100,7 +100,8 @@ class LeaveVaultViewModel @Inject constructor(
                 eventFlow.update { LeaveVaultEvent.Left }
             }
             .onFailure {
-                PassLogger.e(TAG, it, "Error leaving vault")
+                PassLogger.w(TAG, "Error leaving vault")
+                PassLogger.w(TAG, it)
                 snackbarDispatcher(VaultSnackbarMessage.LeaveVaultError)
             }
         isLoadingState.update { IsLoadingState.NotLoading }

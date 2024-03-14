@@ -203,7 +203,8 @@ class ItemRepositoryImpl @Inject constructor(
         }.fold(
             onSuccess = { it },
             onFailure = {
-                PassLogger.e(TAG, it, "Error creating item")
+                PassLogger.w(TAG, "Error creating item")
+                PassLogger.e(TAG, it)
                 throw it
             }
         )
@@ -328,14 +329,14 @@ class ItemRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun getById(shareId: ShareId, itemId: ItemId): Item =
-        requireNotNull(localItemDataSource.getById(shareId, itemId)) {
-            "Item not found [shareId=${shareId.id}] [itemId=${itemId.id}]"
-        }.let { itemEntity ->
-            encryptionContextProvider.withEncryptionContext {
-                itemEntity.toDomain(this@withEncryptionContext)
-            }
+    override suspend fun getById(shareId: ShareId, itemId: ItemId): Item {
+        val localItem = localItemDataSource.getById(shareId, itemId)
+            ?: throw IllegalStateException("Item not found [shareId=${shareId.id}] [itemId=${itemId.id}]")
+
+        return encryptionContextProvider.withEncryptionContext {
+            localItem.toDomain(this@withEncryptionContext)
         }
+    }
 
     override suspend fun trashItems(userId: UserId, items: Map<ShareId, List<ItemId>>) {
         coroutineScope {
@@ -506,7 +507,8 @@ class ItemRepositoryImpl @Inject constructor(
         packageInfo: Option<PackageInfo>,
         url: Option<String>
     ): Item {
-        val itemEntity = requireNotNull(localItemDataSource.getById(shareId, itemId))
+        val itemEntity = localItemDataSource.getById(shareId, itemId)
+            ?: throw ItemNotFoundError(itemId, shareId)
 
         val (item, itemProto) = encryptionContextProvider.withEncryptionContext {
             val item = itemEntity.toDomain(this@withEncryptionContext)

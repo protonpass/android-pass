@@ -54,7 +54,7 @@ object ItemFieldMapper {
             }
         }
 
-        PassLogger.e(
+        PassLogger.w(
             TAG,
             "Could not find any combination of mappings for item: ${autofillItem.type()} and cluster ${cluster.type()}"
         )

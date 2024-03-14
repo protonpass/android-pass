@@ -120,7 +120,7 @@ class UpdateLoginViewModel @Inject constructor(
         MutableStateFlow(UpdateUiEvent.Idle)
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        PassLogger.e(TAG, throwable)
+        PassLogger.w(TAG, throwable)
     }
 
     private var itemOption: Option<Item> = None
@@ -305,7 +305,8 @@ class UpdateLoginViewModel @Inject constructor(
                 )
             )
         }.onFailure {
-            PassLogger.e(TAG, it, "Error creating alias")
+            PassLogger.w(TAG, "Error creating alias")
+            PassLogger.w(TAG, it)
         }
     } else {
         val message = "Empty suffix on create alias"
@@ -341,7 +342,8 @@ class UpdateLoginViewModel @Inject constructor(
             } else {
                 ItemUpdateError
             }
-            PassLogger.e(TAG, it, "Update item error")
+            PassLogger.w(TAG, "Update item error")
+            PassLogger.w(TAG, it)
             snackbarDispatcher(message)
         }
     }

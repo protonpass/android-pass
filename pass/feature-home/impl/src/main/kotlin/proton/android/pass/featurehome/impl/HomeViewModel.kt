@@ -749,7 +749,7 @@ class HomeViewModel @Inject constructor(
     internal fun viewItemHistory(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
         homeUiState.value
             .let { state ->
-                if (state.isFreePlan) {
+                if (!state.isFreePlan) {
                     HomeNavEvent.UpgradeDialog
                 } else {
                     HomeNavEvent.ItemHistory(shareId, itemId)

@@ -69,7 +69,13 @@ class GetPasskeysForDomainImpl @Inject constructor(
         }
 
         return loginItems.mapNotNull { item ->
-            val domainPasskeys = item.login.passkeys.filter { it.domain == parsed }
+            val domainPasskeys = item.login.passkeys.filter {
+                val passkeyDomain = UrlSanitizer.getDomain(it.domain).getOrElse {
+                    return@filter false
+                }
+
+                parsed.contains(passkeyDomain)
+            }
             if (domainPasskeys.isEmpty()) {
                 null
             } else {

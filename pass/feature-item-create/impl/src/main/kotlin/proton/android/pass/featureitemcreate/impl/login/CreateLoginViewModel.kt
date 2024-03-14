@@ -142,7 +142,7 @@ class CreateLoginViewModel @Inject constructor(
     private val generatePasskeyData: Option<GeneratePasskeyData> get() = _generatePasskeyData
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        PassLogger.e(TAG, throwable)
+        PassLogger.w(TAG, throwable)
     }
 
     @OptIn(SavedStateHandleSaveableApi::class)
@@ -417,7 +417,8 @@ class CreateLoginViewModel @Inject constructor(
             send2FACreatedTelemetryEvent(item.itemType as ItemType.Login)
             snackbarDispatcher(LoginCreated)
         }.onFailure {
-            PassLogger.e(TAG, it, "Could not create item")
+            PassLogger.w(TAG, "Could not create item")
+            PassLogger.w(TAG, it)
             snackbarDispatcher(ItemCreationError)
         }
     }

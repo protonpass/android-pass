@@ -99,7 +99,7 @@ open class CreateAliasViewModel @Inject constructor(
 ) : BaseAliasViewModel(snackbarDispatcher, savedStateHandleProvider) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        PassLogger.e(TAG, throwable)
+        PassLogger.w(TAG, throwable)
     }
 
     private val navShareId: Option<ShareId> =
@@ -368,8 +368,10 @@ open class CreateAliasViewModel @Inject constructor(
             is EmailNotValidatedError -> AliasSnackbarMessage.EmailNotValidatedError
             is AliasRateLimitError -> AliasSnackbarMessage.AliasRateLimited
             else -> {
-                val defaultMessage = "Create alias error"
-                PassLogger.e(TAG, cause ?: Exception(defaultMessage), defaultMessage)
+                PassLogger.w(TAG, "Create alias error")
+                cause?.let {
+                    PassLogger.w(TAG, it)
+                }
                 ItemCreationError
             }
         }

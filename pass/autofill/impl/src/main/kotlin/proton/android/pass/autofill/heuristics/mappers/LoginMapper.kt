@@ -65,8 +65,7 @@ object LoginMapper {
         }
 
         if (mappings.isEmpty()) {
-            val message = "No mappings found for autofill"
-            PassLogger.e(TAG, IllegalStateException(message), message)
+            PassLogger.w(TAG, "No mappings found for autofill")
         }
 
         return AutofillMappings(mappings)

@@ -57,7 +57,8 @@ object CreatePasskeyHandler {
         telemetryManager: TelemetryManager
     ) {
         val handler = CoroutineExceptionHandler { _, exception ->
-            PassLogger.e(TAG, exception)
+            PassLogger.w(TAG, "Error handling create passkey")
+            PassLogger.w(TAG, exception)
             callback.onError(CreateCredentialUnknownException("There was an error"))
         }
 

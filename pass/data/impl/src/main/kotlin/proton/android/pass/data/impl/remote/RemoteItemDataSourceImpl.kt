@@ -27,6 +27,7 @@ import proton.android.pass.data.api.errors.AliasRateLimitError
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.api.errors.EmailNotValidatedError
 import proton.android.pass.data.api.errors.InvalidContentFormatVersionError
+import proton.android.pass.data.api.errors.ItemNewerRevisionAvailable
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.extensions.toDomain
@@ -49,6 +50,7 @@ const val CODE_INVALID_CONTENT = 2001
 const val CODE_CANNOT_CREATE_MORE_ALIASES = 300_007
 const val CODE_USER_EMAIL_NOT_VALIDATED = 300_009
 const val ALIAS_RATE_LIMIT = 2028
+const val CODE_NOT_LATEST_REVISION = 300_002
 
 class RemoteItemDataSourceImpl @Inject constructor(
     private val api: ApiProvider
@@ -123,6 +125,7 @@ class RemoteItemDataSourceImpl @Inject constructor(
                 if (res is ApiResult.Error.Http) {
                     when (res.proton?.code) {
                         CODE_INVALID_CONTENT -> throw InvalidContentFormatVersionError()
+                        CODE_NOT_LATEST_REVISION -> throw ItemNewerRevisionAvailable()
                         else -> {}
                     }
                 }

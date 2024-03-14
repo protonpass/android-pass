@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,48 +16,30 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featuretrial.impl
+package proton.android.pass.features.upsell.shared.ui
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.CrossBackIconButton
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun TrialScreenContent(
+internal fun UpsellTopBar(
     modifier: Modifier = Modifier,
-    state: TrialUiState,
-    onNavigate: (TrialNavigation) -> Unit,
-    onLearnMore: () -> Unit
+    onUpClick: () -> Unit
 ) {
-    Scaffold(
+    ProtonTopAppBar(
         modifier = modifier
-            .fillMaxSize()
-            .background(PassTheme.colors.backgroundStrong),
-        topBar = {
-            ProtonTopAppBar(
-                backgroundColor = PassTheme.colors.itemDetailBackground,
-                title = { },
-                navigationIcon = {
-                    CrossBackIconButton(
-                        onUpClick = { onNavigate(TrialNavigation.Close) }
-                    )
-                }
-            )
+            .padding(start = 12.dp),
+        backgroundColor = PassTheme.colors.backgroundStrong,
+        title = { },
+        navigationIcon = {
+            CrossBackIconButton(onUpClick = onUpClick)
         }
-    ) { padding ->
-        TrialContent(
-            modifier = Modifier.padding(padding),
-            state = state,
-            onNavigate = onNavigate,
-            onLearnMore = onLearnMore
-        )
-    }
+    )
 }

@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -38,6 +39,8 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.featurepasskeys.telemetry.AuthDone
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.passkeys.api.AuthenticateWithPasskey
+import proton.android.pass.preferences.HasAuthenticated
+import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
@@ -61,7 +64,8 @@ sealed interface UsePasskeyState {
 class UsePasskeyNoUiViewModel @Inject constructor(
     private val authenticateWithPasskey: AuthenticateWithPasskey,
     private val getPasskeyById: GetPasskeyById,
-    private val telemetryManager: TelemetryManager
+    private val telemetryManager: TelemetryManager,
+    private val preferenceRepository: UserPreferencesRepository
 ) : ViewModel() {
 
     private val requestFlow: MutableStateFlow<Option<UsePasskeyNoUiRequest>> =
@@ -85,6 +89,10 @@ class UsePasskeyNoUiViewModel @Inject constructor(
 
     fun setRequest(request: UsePasskeyNoUiRequest) {
         requestFlow.update { request.some() }
+    }
+
+    fun onStop() = viewModelScope.launch {
+        preferenceRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
     }
 
     private suspend fun resolveChallenge(request: UsePasskeyNoUiRequest): Result<String> = runCatching {

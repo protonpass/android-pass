@@ -21,16 +21,35 @@ package proton.android.pass.composecomponents.impl.topbar.iconbutton
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import me.proton.core.presentation.R
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.composecomponents.impl.container.Circle
 
 @ExperimentalComposeUiApi
 @Composable
-fun CrossBackIconButton(onUpClick: () -> Unit) {
-    NavigationIconButton(onUpClick = onUpClick) {
-        Icon(
-            painter = painterResource(R.drawable.ic_proton_close),
-            contentDescription = null
-        )
+fun CrossBackIconButton(
+    modifier: Modifier = Modifier,
+    onUpClick: () -> Unit,
+    backgroundColor: Color = PassTheme.colors.interactionNormMinor1,
+    iconColor: Color = PassTheme.colors.interactionNormMajor2
+) {
+    Circle(
+        modifier = modifier,
+        backgroundColor = backgroundColor,
+        onClick = onUpClick
+    ) {
+
+        NavigationIconButton(
+            onUpClick = onUpClick
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.ic_proton_close),
+                contentDescription = null,
+                tint = iconColor
+            )
+        }
     }
 }

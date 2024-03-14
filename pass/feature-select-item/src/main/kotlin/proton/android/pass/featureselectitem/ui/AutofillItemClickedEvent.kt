@@ -21,6 +21,7 @@ package proton.android.pass.featureselectitem.ui
 import proton.android.pass.commonuimodels.api.ItemUiModel
 
 sealed interface AutofillItemClickedEvent {
-    object None : AutofillItemClickedEvent
-    data class Clicked(val item: ItemUiModel) : AutofillItemClickedEvent
+    data object None : AutofillItemClickedEvent
+    data class ItemClicked(val item: ItemUiModel) : AutofillItemClickedEvent
+    data class SuggestionClicked(val item: ItemUiModel) : AutofillItemClickedEvent
 }

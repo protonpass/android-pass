@@ -91,10 +91,11 @@ fun NavGraphBuilder.selectItemGraph(
 }
 
 sealed interface SelectItemNavigation {
-    object AddItem : SelectItemNavigation
+    data object AddItem : SelectItemNavigation
     data class ItemSelected(val item: ItemUiModel) : SelectItemNavigation
-    object SortingBottomsheet : SelectItemNavigation
+    data class SuggestionSelected(val item: ItemUiModel) : SelectItemNavigation
+    data object SortingBottomsheet : SelectItemNavigation
     data class ItemOptions(val shareId: ShareId, val itemId: ItemId) : SelectItemNavigation
-    object Cancel : SelectItemNavigation
-    object Upgrade : SelectItemNavigation
+    data object Cancel : SelectItemNavigation
+    data object Upgrade : SelectItemNavigation
 }

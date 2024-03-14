@@ -19,20 +19,13 @@
 package proton.android.pass.securitycenter.impl.fakes
 
 import proton.android.pass.domain.Item
-import proton.android.pass.securitycenter.fakes.mother.ReusedPasswordsResultMother
 import proton.android.pass.securitycenter.impl.checkers.RepeatedPasswordChecker
 import proton.android.pass.securitycenter.impl.checkers.RepeatedPasswordsData
 
 class TestRepeatedPasswordChecker : RepeatedPasswordChecker {
 
     private var result: Result<RepeatedPasswordsData> = Result.success(
-        run {
-            val instance = ReusedPasswordsResultMother.random()
-            RepeatedPasswordsData(
-                repeatedPasswordsCount = instance.reusedPasswordsCount,
-                repeatedPasswords = emptyMap()
-            )
-        }
+        RepeatedPasswordsData(repeatedPasswords = emptyMap())
     )
 
     private val memory: MutableList<List<Item>> = mutableListOf()

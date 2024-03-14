@@ -85,10 +85,13 @@ import proton.android.pass.featurevault.impl.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
 
 sealed interface AutofillEvent {
-    object SelectItemScreenShown : AutofillEvent
+    data object SelectItemScreenShown : AutofillEvent
 
     @JvmInline
     value class AutofillItemSelected(val item: AutofillItem) : AutofillEvent
+
+    @JvmInline
+    value class AutofillSuggestionSelected(val item: AutofillItem) : AutofillEvent
 }
 
 @Suppress("LongParameterList", "LongMethod", "ComplexMethod")
@@ -130,6 +133,10 @@ fun NavGraphBuilder.autofillActivityGraph(
                 SelectItemNavigation.Cancel -> onNavigate(AutofillNavigation.Cancel)
                 is SelectItemNavigation.ItemSelected -> {
                     onEvent(AutofillEvent.AutofillItemSelected(it.item.toAutoFillItem()))
+                }
+
+                is SelectItemNavigation.SuggestionSelected -> {
+                    onEvent(AutofillEvent.AutofillSuggestionSelected(it.item.toAutoFillItem()))
                 }
 
                 is SelectItemNavigation.SortingBottomsheet ->

@@ -50,7 +50,8 @@ class AccountViewModel @Inject constructor(
     ) { userResult, upgradeInfoResult ->
         val plan = when (upgradeInfoResult) {
             is LoadingResult.Error -> {
-                PassLogger.e(TAG, upgradeInfoResult.exception, "Error retrieving user plan")
+                PassLogger.w(TAG, "Error retrieving user plan")
+                PassLogger.w(TAG, upgradeInfoResult.exception)
                 PlanSection.Hide
             }
 

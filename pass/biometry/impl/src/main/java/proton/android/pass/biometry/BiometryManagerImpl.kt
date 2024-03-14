@@ -94,8 +94,7 @@ class BiometryManagerImpl @Inject constructor(
 
             val ctx = when (val ctx = contextHolder.get()) {
                 None -> {
-                    val message = "Received None context"
-                    PassLogger.e(TAG, IllegalArgumentException(message), message)
+                    PassLogger.w(TAG, "Received None context")
                     trySend(BiometryResult.FailedToStart(BiometryStartupError.Unknown))
                     return@channelFlow
                 }
@@ -111,8 +110,7 @@ class BiometryManagerImpl @Inject constructor(
                 )
 
                 else -> {
-                    val message = "Context is not FragmentActivity"
-                    PassLogger.e(TAG, IllegalArgumentException(message), message)
+                    PassLogger.w(TAG, "Context is not FragmentActivity")
                     trySend(BiometryResult.FailedToStart(BiometryStartupError.Unknown))
                     close()
                     return@channelFlow

@@ -70,7 +70,7 @@ class UpdateNoteViewModel @Inject constructor(
 ) : BaseNoteViewModel(snackbarDispatcher, savedStateHandleProvider) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        PassLogger.e(TAG, throwable)
+        PassLogger.w(TAG, throwable)
     }
 
     private val navShareId: ShareId =
@@ -156,7 +156,8 @@ class UpdateNoteViewModel @Inject constructor(
                     } else {
                         ItemUpdateError
                     }
-                    PassLogger.e(TAG, it, "Update item error")
+                    PassLogger.w(TAG, "Update item error")
+                    PassLogger.w(TAG, it)
                     snackbarDispatcher(message)
                 }
         } else {

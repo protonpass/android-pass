@@ -148,7 +148,8 @@ class CreateCreditCardViewModel @Inject constructor(
                 telemetryManager.sendEvent(ItemCreate(EventItemType.CreditCard))
                 snackbarDispatcher(ItemCreated)
             }.onFailure {
-                PassLogger.e(TAG, it, "Could not create item")
+                PassLogger.w(TAG, "Could not create item")
+                PassLogger.w(TAG, it)
                 snackbarDispatcher(ItemCreationError)
             }
         } else {

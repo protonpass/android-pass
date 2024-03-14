@@ -147,7 +147,7 @@ class LoginDetailViewModel @Inject constructor(
         ItemId(savedStateHandle.get().require(CommonNavArgId.ItemId.key))
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        PassLogger.e(TAG, throwable)
+        PassLogger.w(TAG, throwable)
     }
 
     private val isLoadingState: MutableStateFlow<IsLoadingState> =

@@ -136,7 +136,8 @@ class MigrateConfirmVaultViewModel @Inject constructor(
             isLoadingFlow.update { IsLoadingState.NotLoading }
         }.onFailure {
             isLoadingFlow.update { IsLoadingState.NotLoading }
-            PassLogger.e(TAG, it, "Error migrating all items")
+            PassLogger.w(TAG, "Error migrating all items")
+            PassLogger.w(TAG, it)
             snackbarDispatcher(MigrateSnackbarMessage.VaultItemsNotMigrated)
         }
     }
@@ -201,7 +202,8 @@ class MigrateConfirmVaultViewModel @Inject constructor(
                 }
             }
         }.onFailure {
-            PassLogger.e(TAG, it, "Error migrating item")
+            PassLogger.w(TAG, "Error migrating item")
+            PassLogger.w(TAG, it)
             snackbarDispatcher(MigrateSnackbarMessage.ItemNotMigrated)
         }
 

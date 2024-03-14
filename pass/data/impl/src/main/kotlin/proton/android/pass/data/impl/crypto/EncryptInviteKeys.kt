@@ -50,7 +50,8 @@ class EncryptInviteKeysImpl @Inject constructor(
         val privateAddressKeys = address.keys.map { it.privateKey }
         val inviterAddressKeys = getAllKeysByAddress(invite.inviteEntity.inviterEmail)
             .getOrElse {
-                PassLogger.e(TAG, it, "Could not get inviter address keys")
+                PassLogger.w(TAG, "Could not get inviter address keys")
+                PassLogger.w(TAG, it)
                 throw it
             }
             .map { it.publicKey }

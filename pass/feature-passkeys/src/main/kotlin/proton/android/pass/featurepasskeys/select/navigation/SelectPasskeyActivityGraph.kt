@@ -85,6 +85,10 @@ fun NavGraphBuilder.selectPasskeyActivityGraph(
                     onEvent(SelectPasskeyEvent.OnItemSelected(it.item))
                 }
 
+                is SelectItemNavigation.SuggestionSelected -> {
+                    onEvent(SelectPasskeyEvent.OnItemSelected(it.item))
+                }
+
                 is SelectItemNavigation.SortingBottomsheet ->
                     appNavigator.navigate(
                         SortingBottomsheet,

@@ -46,9 +46,9 @@ fun TrialScreenContent(
                 backgroundColor = PassTheme.colors.itemDetailBackground,
                 title = { },
                 navigationIcon = {
-                    CrossBackIconButton {
-                        onNavigate(TrialNavigation.Close)
-                    }
+                    CrossBackIconButton(
+                        onUpClick = { onNavigate(TrialNavigation.Close) }
+                    )
                 }
             )
         }

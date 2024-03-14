@@ -104,6 +104,10 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
                     onEvent(CreatePasskeyEvent.OnItemSelected(it.item))
                 }
 
+                is SelectItemNavigation.SuggestionSelected -> {
+                    onEvent(CreatePasskeyEvent.OnItemSelected(it.item))
+                }
+
                 is SelectItemNavigation.SortingBottomsheet -> appNavigator.navigate(
                     SortingBottomsheet,
                     SortingBottomsheet.createNavRoute(

@@ -64,10 +64,10 @@ import javax.inject.Inject
 @Immutable
 sealed interface AutofillAppEvent {
     @Immutable
-    object Unknown : AutofillAppEvent
+    data object Unknown : AutofillAppEvent
 
     @Immutable
-    object Cancel : AutofillAppEvent
+    data object Cancel : AutofillAppEvent
 
     @Immutable
     data class ShowAssociateDialog(
@@ -116,7 +116,11 @@ class AutofillAppViewModel @Inject constructor(
         telemetryManager.sendEvent(event)
     }
 
-    fun onItemSelected(state: AutofillAppState, autofillItem: AutofillItem) = viewModelScope.launch {
+    fun onItemSelected(
+        state: AutofillAppState,
+        autofillItem: AutofillItem,
+        isSuggestion: Boolean
+    ) = viewModelScope.launch {
         val item = getItemById(autofillItem.shareId(), autofillItem.itemId())
         val itemUiModel = encryptionContextProvider.withEncryptionContext {
             item.toUiModel(this@withEncryptionContext)
@@ -126,8 +130,10 @@ class AutofillAppViewModel @Inject constructor(
             state.autofillData.isDangerousAutofill -> _eventFlow.update {
                 AutofillAppEvent.ShowWarningDialog(itemUiModel)
             }
-            shouldAskForAssociation(itemUiModel.contents, state) -> _eventFlow.update {
-                AutofillAppEvent.ShowAssociateDialog(itemUiModel)
+            !isSuggestion && shouldAskForAssociation(itemUiModel.contents, state) -> {
+                _eventFlow.update {
+                    AutofillAppEvent.ShowAssociateDialog(itemUiModel)
+                }
             }
             else -> sendMappings(
                 item = itemUiModel.toAutoFillItem(),

@@ -43,7 +43,7 @@ class RepeatedPasswordCheckerTest {
     @Test
     fun `can handle empty list`() = runTest {
         val res = instance(emptyList())
-        assertThat(res).isEqualTo(RepeatedPasswordsData(0, emptyMap()))
+        assertThat(res).isEqualTo(RepeatedPasswordsData(emptyMap()))
     }
 
     @Test
@@ -71,7 +71,6 @@ class RepeatedPasswordCheckerTest {
 
         assertThat(res).isEqualTo(
             RepeatedPasswordsData(
-                repeatedPasswordsCount = 2,
                 repeatedPasswords = mapOf(
                     encryptedPassword1 to listOf(item11, item12),
                     encryptedPassword2 to listOf(item21, item22, item23)

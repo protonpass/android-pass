@@ -39,6 +39,7 @@
   <string name="share_with_title">Поділитися з</string>
   <string name="share_with_email_hint">Адреса електронної пошти</string>
   <string name="share_with_email_error">Недійсна адреса електронної пошти</string>
+  <string name="share_with_email_cannot_invite_outside_org">You can\'t invite people outside of your organization, contact admin for more info</string>
   <string name="share_permissions_title">Задати рівень доступу</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s запрошує вас отримати доступ до елементів у</string>
   <string name="sharing_join_shared_vault">Приєднатися та синхронізувати</string>
@@ -104,7 +105,12 @@
   <string name="sharing_snackbar_transfer_ownership_success">Право власності передано</string>
   <string name="sharing_snackbar_transfer_ownership_error">Помилка передачі права власності</string>
   <string name="sharing_invites_info_dialog_title">Member limit</string>
-  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">This vault can have up to %1$d members. You still have %2$d invites left.</string>
+  <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
+    <item quantity="one">This vault can have up to %1$d members. You still have %2$d invite left.</item>
+    <item quantity="few">This vault can have up to %1$d members. You still have %2$d invites left.</item>
+    <item quantity="many">This vault can have up to %1$d members. You still have %2$d invites left.</item>
+    <item quantity="other">This vault can have up to %1$d members. You still have %2$d invites left.</item>
+  </plurals>
   <string name="sharing_limit_reached">This vault has reached the member and invites limit.</string>
   <string name="sharing_invites_info_upgrade_text">Upgrade now to invite more.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Поділитися</string>
@@ -123,4 +129,6 @@
   <string name="sharing_edit_permissions_remove_user">Remove user</string>
   <string name="sharing_error_dialog_title">Unknown error</string>
   <string name="sharing_error_dialog_message">There was an error sending an invite for this vault. If the issue persists, please contact customer support service.</string>
+  <string name="sharing_with_no_addresses_can_be_invited">No addresses can be invited</string>
+  <string name="sharing_with_some_addresses_cannot_be_invited">Some addresses cannot be invited</string>
 </resources>

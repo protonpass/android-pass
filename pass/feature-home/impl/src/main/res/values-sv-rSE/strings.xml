@@ -104,7 +104,7 @@
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
     <item quantity="one">Är du säker på att du vill flytta objektet till papperskorgen?</item>
-    <item quantity="other">Är du säker på att du vill flytta %d objekt till papperskorg?</item>
+    <item quantity="other">Är du säker på att du vill flytta %d objekt till papperskorgen?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
     <item quantity="one">Ta bort %d objekt permanent?</item>

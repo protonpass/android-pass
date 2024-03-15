@@ -10,6 +10,7 @@
   <string name="migrate_item_success_snackbar">Articole au fost mutate.</string>
   <string name="migrate_item_error_snackbar">Eroare la mutarea articolelor.</string>
   <string name="migrate_item_some_not_migrated_error_snackbar">Eroare la mutarea unor articole.</string>
+  <string name="migrate_item_warning_history">Mutarea articolelor le va reseta istoricul</string>
   <string name="migrate_all_items_success_snackbar">S-au mutat toate articolele.</string>
   <string name="migrate_all_items_error_snackbar">Eroare la mutarea tuturor articolelor din seif.</string>
   <string name="migrate_init_error_snackbar">Nu s-a putut pregăti ecranul de migrare.</string>

@@ -39,11 +39,12 @@
   <string name="share_with_title">Поделиться с</string>
   <string name="share_with_email_hint">Адрес эл. почты</string>
   <string name="share_with_email_error">Недействительный адрес эл. почты</string>
+  <string name="share_with_email_cannot_invite_outside_org">You can\'t invite people outside of your organization, contact admin for more info</string>
   <string name="share_permissions_title">Установить уровень доступа</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s приглашает вас получить доступ к элементам в</string>
   <string name="sharing_join_shared_vault">Присоединиться и синхронизировать</string>
   <string name="sharing_reject_invitation">Отклонить приглашение</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Поздравляем, ваш доступ подтвержден</string>
+  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Поздравляем, ваш доступ подтверждён</string>
   <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Просмотр общего хранилища</string>
   <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Закрыть</string>
   <string name="sharing_snackbar_get_invite_error">Не могу получить приглашение</string>
@@ -104,7 +105,12 @@
   <string name="sharing_snackbar_transfer_ownership_success">Владение передано</string>
   <string name="sharing_snackbar_transfer_ownership_error">Ошибка при передаче владения</string>
   <string name="sharing_invites_info_dialog_title">Ограничение количества участников</string>
-  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">This vault can have up to %1$d members. У вас осталось еще %2$d приглашений.</string>
+  <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
+    <item quantity="one">This vault can have up to %1$d members. You still have %2$d invite left.</item>
+    <item quantity="few">This vault can have up to %1$d members. У вас осталось еще %2$d приглашений.</item>
+    <item quantity="many">This vault can have up to %1$d members. У вас осталось еще %2$d приглашений.</item>
+    <item quantity="other">This vault can have up to %1$d members. У вас осталось еще %2$d приглашений.</item>
+  </plurals>
   <string name="sharing_limit_reached">Это хранилище достигло предела количества участников и приглашений.</string>
   <string name="sharing_invites_info_upgrade_text">Улучшите сейчас, чтобы пригласить больше.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Поделиться</string>
@@ -123,4 +129,6 @@
   <string name="sharing_edit_permissions_remove_user">Удалить пользователя</string>
   <string name="sharing_error_dialog_title">Неизвестная ошибка</string>
   <string name="sharing_error_dialog_message">There was an error sending an invite for this vault. If the issue persists, please contact customer support service.</string>
+  <string name="sharing_with_no_addresses_can_be_invited">No addresses can be invited</string>
+  <string name="sharing_with_some_addresses_cannot_be_invited">Some addresses cannot be invited</string>
 </resources>

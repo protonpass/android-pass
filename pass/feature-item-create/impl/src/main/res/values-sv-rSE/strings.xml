@@ -36,7 +36,7 @@
   <string name="bottomsheet_custom_field_type_text">Text</string>
   <string name="bottomsheet_custom_field_type_text_content_description">Anpassat textfält</string>
   <string name="bottomsheet_custom_field_type_hidden">Dolt</string>
-  <string name="bottomsheet_custom_field_type_totp">2FA-hemlighet (TOTP)</string>
+  <string name="bottomsheet_custom_field_type_totp">Hemlig nyckel för 2FA (TOTP)</string>
   <string name="bottomsheet_custom_field_option_edit">Redigera namn</string>
   <string name="bottomsheet_custom_field_option_remove">Ta bort fält</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Ta bort anpassat fält</string>
@@ -57,7 +57,6 @@
   <!-- Create Alias -->
   <string name="title_create_alias">Skapa alias</string>
   <string name="field_alias_title">Alias-adress</string>
-  <string name="field_alias_hint">Alias-användarnamn</string>
   <string name="field_mailboxes_creation_title">Vidarebefordra till</string>
   <string name="field_mailboxes_edit_title">Vidarebefordrad till</string>
   <string name="field_alias_you_are_about_to_create">Du är på väg att skapa</string>
@@ -96,9 +95,9 @@
   <!--  Common create items  -->
   <string name="changes_saved">Ändringar sparade</string>
   <!--  TOTP  -->
-  <string name="totp_create_login_field_title">2FA-hemlighet (TOTP)</string>
-  <string name="totp_create_login_field_invalid">Ogiltig 2FA-hemlighet</string>
-  <string name="totp_create_login_field_placeholder">Lägg till 2FA-hemlighet</string>
+  <string name="totp_create_login_field_title">Hemlig nyckel för 2FA (TOTP)</string>
+  <string name="totp_create_login_field_invalid">Ogiltig hemlig nyckel för 2FA (TOTP)</string>
+  <string name="totp_create_login_field_placeholder">Lägg till hemlig nyckel för 2FA (TOTP)</string>
   <string name="close_scree_icon_content_description">Knapp för “Stäng skärm“</string>
   <string name="totp_paste_code_action">Klistra in kod</string>
   <string name="totp_scan_code_action">Skanna kod</string>
@@ -113,4 +112,6 @@
   <string name="select_mailbox_upgrade_for_more_inboxes">Uppgradera för fler inkorgar</string>
   <string name="create_alias_content_limit_banner">Du har nått gränsen för alias du kan skapa. Skapa ett obegränsat antal alias när du uppgraderar din prenumeration.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Appen måste uppdateras för att redigera detta objekt</string>
+  <string name="remove_passkey_dialog_title">Ta bort denna passkey?</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Du håller på att ta bort passkey för användare \'%1$s\' för \'%2$s\'. Är du säker?</string>
 </resources>

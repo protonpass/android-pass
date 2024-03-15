@@ -13,8 +13,8 @@
   <string name="profile_option_autofill_subtitle">Udfyld automatisk dine brugernavne og adgangskoder.</string>
   <string name="profile_error_biometry_failed_to_start">Kunne ikke starte den biometriske godkendelse</string>
   <string name="profile_error_biometry_failed_to_authenticate">Kunne ikke godkende</string>
-  <string name="profile_fingerprint_lock_enabled">Oplåsning med fingeraftryk aktiveret</string>
-  <string name="profile_fingerprint_lock_disabled">Oplåsning med fingeraftryk deaktiveret</string>
+  <string name="profile_fingerprint_lock_enabled">Fingeraftrykslås aktiveret</string>
+  <string name="profile_fingerprint_lock_disabled">Fingeraftrykslås deaktiveret</string>
   <string name="profile_error_performing_operation">Fejl ved udførelse af handling</string>
   <string name="profile_app_version_copied_to_clipboard">App-version kopieret</string>
   <string name="feedback_option_reddit">Tjek Proton på Reddit</string>

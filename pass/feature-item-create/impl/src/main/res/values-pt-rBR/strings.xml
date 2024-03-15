@@ -57,7 +57,6 @@
   <!-- Create Alias -->
   <string name="title_create_alias">Criar alias</string>
   <string name="field_alias_title">Endereço do alias</string>
-  <string name="field_alias_hint">Nome de usuário do alias</string>
   <string name="field_mailboxes_creation_title">Encaminhar para</string>
   <string name="field_mailboxes_edit_title">Encaminhando para</string>
   <string name="field_alias_you_are_about_to_create">Você está prestes a criar</string>
@@ -97,8 +96,8 @@
   <string name="changes_saved">Alterações salvas</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">Chave secreta A2F (TOTP)</string>
-  <string name="totp_create_login_field_invalid">A chave secreta A2F não é valida</string>
-  <string name="totp_create_login_field_placeholder">Adicionar chave secreta A2F</string>
+  <string name="totp_create_login_field_invalid">Chave secreta inválida A2F (TOTP)</string>
+  <string name="totp_create_login_field_placeholder">Adicionar chave secreta A2F (TOTP)</string>
   <string name="close_scree_icon_content_description">Botão de fechar tela</string>
   <string name="totp_paste_code_action">Colar o código</string>
   <string name="totp_scan_code_action">Escanear código</string>
@@ -113,4 +112,6 @@
   <string name="select_mailbox_upgrade_for_more_inboxes">Faça upgrade para mais caixas de entrada</string>
   <string name="create_alias_content_limit_banner">Você atingiu o limite de aliases que pode criar. Crie um número ilimitado de aliases quando fizer o upgrade de sua assinatura.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">O aplicativo precisa ser atualizado para editar esse item</string>
+  <string name="remove_passkey_dialog_title">Remover essa chave de acesso?</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Você está prestes a remover a passkey para o usuário \'%1$s\' em \'%2$s\'. Tem Certeza?</string>
 </resources>

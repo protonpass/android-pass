@@ -10,14 +10,7 @@
   <string name="autofill_dialog_cancel">Anulare</string>
   <string name="autofill_notification_copy_to_clipboard">Codul TOTP a fost copiat în memorie.</string>
   <string name="autofill_dialog_associate_title">Utilizare conectare?</string>
-  <string name="snackbar_item_move_to_trash_success">Articolul s-a mutat în gunoi.</string>
-  <string name="snackbar_item_move_to_trash_error">Articolul nu s-a putut muta în gunoi.</string>
-  <string name="snackbar_item_copy_username_success">Numele de utilizator s-a copiat în memorie.</string>
-  <string name="snackbar_item_copy_password_success">Parola a fost copiată în memorie.</string>
-  <string name="snackbar_item_copy_clipboard_error">Nu s-a putut copia în memorie.</string>
   <string name="autofill_user_logged_out">V-ați deconectat. Reconectați-vă deschizând aplicația.</string>
-  <string name="bottomsheet_copy_password">Copiere parolă</string>
-  <string name="bottomsheet_copy_username">Copiere nume utilizator</string>
   <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Completare automată detalii card</string>
   <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Completarea automată a detaliilor cardului de plată este o funcție cu plată. Dacă doriți ca Proton Pass să vă introducă automat detaliile cardului în aplicații și site-uri web, trebuie să treceți la un plan cu plată.</string>
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Confirmare acțiune</string>

@@ -36,7 +36,7 @@
   <string name="bottomsheet_custom_field_type_text">Teks</string>
   <string name="bottomsheet_custom_field_type_text_content_description">Kolom kustom teks</string>
   <string name="bottomsheet_custom_field_type_hidden">Tersembunyi</string>
-  <string name="bottomsheet_custom_field_type_totp">Rahasia 2FA (TOTP)</string>
+  <string name="bottomsheet_custom_field_type_totp">Kunci rahasia 2FA (TOTP)</string>
   <string name="bottomsheet_custom_field_option_edit">Sunting nama</string>
   <string name="bottomsheet_custom_field_option_remove">Hapus kolom</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Hapus kolom khusus</string>
@@ -57,7 +57,6 @@
   <!-- Create Alias -->
   <string name="title_create_alias">Buat alias</string>
   <string name="field_alias_title">Alamat alias</string>
-  <string name="field_alias_hint">Nama pengguna alias</string>
   <string name="field_mailboxes_creation_title">Teruskan ke</string>
   <string name="field_mailboxes_edit_title">Meneruskan ke</string>
   <string name="field_alias_you_are_about_to_create">Anda akan membuat</string>
@@ -96,9 +95,9 @@
   <!--  Common create items  -->
   <string name="changes_saved">Perubahan disimpan</string>
   <!--  TOTP  -->
-  <string name="totp_create_login_field_title">Secret 2FA (TOTP)</string>
-  <string name="totp_create_login_field_invalid">Secret 2FA tidak valid</string>
-  <string name="totp_create_login_field_placeholder">Tambahkan secret 2FA</string>
+  <string name="totp_create_login_field_title">Kunci rahasia 2FA (TOTP)</string>
+  <string name="totp_create_login_field_invalid">Kunci rahasia 2FA (TOTP) tidak valid</string>
+  <string name="totp_create_login_field_placeholder">Tambah kunci rahasia 2FA (TOTP)</string>
   <string name="close_scree_icon_content_description">Tombol tutup layar</string>
   <string name="totp_paste_code_action">Tempelkan kode</string>
   <string name="totp_scan_code_action">Pindai kode</string>
@@ -113,4 +112,6 @@
   <string name="select_mailbox_upgrade_for_more_inboxes">Tingkatkan untuk mendapatkan lebih banyak kotak masuk</string>
   <string name="create_alias_content_limit_banner">Anda telah mencapai batas jumlah alias yang dapat Anda buat. Dapatkan kemampuan untuk membuat alias tanpa batasan jumlah dengan meningkatkan paket langganan Anda.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Aplikasi perlu diperbarui untuk menyunting item ini</string>
+  <string name="remove_passkey_dialog_title">Hapus kunci sandi ini?</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Anda akan menghapus kunci sandi untuk pengguna \'%1$s\' untuk \'%2$s\'. Apakah Anda yakin?</string>
 </resources>

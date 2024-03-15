@@ -36,7 +36,7 @@
   <string name="bottomsheet_custom_field_type_text">텍스트</string>
   <string name="bottomsheet_custom_field_type_text_content_description">사용자 정의 입력란 입력</string>
   <string name="bottomsheet_custom_field_type_hidden">숨김</string>
-  <string name="bottomsheet_custom_field_type_totp">2FA 시크릿 (TOTP)</string>
+  <string name="bottomsheet_custom_field_type_totp">2FA 시크릿 키 (TOTP)</string>
   <string name="bottomsheet_custom_field_option_edit">이름 편집</string>
   <string name="bottomsheet_custom_field_option_remove">입력란 제거</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">사용자 정의 입력란 제거</string>
@@ -57,7 +57,6 @@
   <!-- Create Alias -->
   <string name="title_create_alias">별명 생성</string>
   <string name="field_alias_title">별명 주소</string>
-  <string name="field_alias_hint">별명 사용자 이름</string>
   <string name="field_mailboxes_creation_title">다음으로 전달:</string>
   <string name="field_mailboxes_edit_title">다음으로 전달:</string>
   <string name="field_alias_you_are_about_to_create">생성하려고 하는 주소:</string>
@@ -96,9 +95,9 @@
   <!--  Common create items  -->
   <string name="changes_saved">변경 사항 저장됨</string>
   <!--  TOTP  -->
-  <string name="totp_create_login_field_title">2FA 시크릿 (TOTP)</string>
-  <string name="totp_create_login_field_invalid">잘못된 2FA 시크릿</string>
-  <string name="totp_create_login_field_placeholder">2FA 시크릿 생성</string>
+  <string name="totp_create_login_field_title">2FA 시크릿 키 (TOTP)</string>
+  <string name="totp_create_login_field_invalid">유효하지 않은 2FA 시크릿 키 (TOTP)</string>
+  <string name="totp_create_login_field_placeholder">2FA 시크릿 키 (TOTP) 추가하기</string>
   <string name="close_scree_icon_content_description">스크린 버튼 닫기</string>
   <string name="totp_paste_code_action">붙여넣기</string>
   <string name="totp_scan_code_action">코드 스캔</string>
@@ -113,4 +112,6 @@
   <string name="select_mailbox_upgrade_for_more_inboxes">더 많은 받은 편지함을 위해 업그레이드</string>
   <string name="create_alias_content_limit_banner">사용자가 생성할 수 있는 최대 별명 수에 도달했습니다. 구독을 업그레이드하여 무제한 별명을 생성하세요.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">이 항목을 편집하려면 앱 업데이트가 필요합니다.</string>
+  <string name="remove_passkey_dialog_title">이 패스키를 삭제하시겠습니까?</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">\'%2$s\'에 대한 사용자 \'%1$s\'의 패스키를 삭제하려합니다. 확실한가요?</string>
 </resources>

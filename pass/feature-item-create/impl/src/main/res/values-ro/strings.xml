@@ -36,7 +36,7 @@
   <string name="bottomsheet_custom_field_type_text">Text</string>
   <string name="bottomsheet_custom_field_type_text_content_description">Text câmp personal</string>
   <string name="bottomsheet_custom_field_type_hidden">Ascuns</string>
-  <string name="bottomsheet_custom_field_type_totp">Secret A2F (TOTP)</string>
+  <string name="bottomsheet_custom_field_type_totp">Cheie secretă A2F (TOTP)</string>
   <string name="bottomsheet_custom_field_option_edit">Editare nume</string>
   <string name="bottomsheet_custom_field_option_remove">Eliminare câmp</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Eliminare câmp personal</string>
@@ -57,7 +57,6 @@
   <!-- Create Alias -->
   <string name="title_create_alias">Creare alias</string>
   <string name="field_alias_title">Adresă alias</string>
-  <string name="field_alias_hint">Nume utilizator alias</string>
   <string name="field_mailboxes_creation_title">Redirecționare către</string>
   <string name="field_mailboxes_edit_title">Se redirecționează către</string>
   <string name="field_alias_you_are_about_to_create">Sunteți pe cale să creați</string>
@@ -96,9 +95,9 @@
   <!--  Common create items  -->
   <string name="changes_saved">Modificările s-au salvat.</string>
   <!--  TOTP  -->
-  <string name="totp_create_login_field_title">Secret A2F (TOTP)</string>
-  <string name="totp_create_login_field_invalid">Secret A2F nevalid.</string>
-  <string name="totp_create_login_field_placeholder">Adăugare secret A2F</string>
+  <string name="totp_create_login_field_title">Cheie secretă A2F (TOTP)</string>
+  <string name="totp_create_login_field_invalid">Cheie secretă A2F nevalidă (TOTP)</string>
+  <string name="totp_create_login_field_placeholder">Adăugare cheie secretă A2F (TOTP)</string>
   <string name="close_scree_icon_content_description">Buton închidere fereastră</string>
   <string name="totp_paste_code_action">Lipire cod</string>
   <string name="totp_scan_code_action">Scanare cod</string>
@@ -113,4 +112,6 @@
   <string name="select_mailbox_upgrade_for_more_inboxes">Pentru mai multe adrese modificați planul.</string>
   <string name="create_alias_content_limit_banner">Ați atins limita aliasurilor pe care le puteți crea. Puteți creați un număr nelimitat de aliasuri dacă vă modificați abonamentul.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Aplicația trebuie actualizată pentru a edita acest articol.</string>
+  <string name="remove_passkey_dialog_title">Eliminați această cheie de acces?</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Sunteți pe cale să eliminați cheia de acces pentru utilizatorul „%1$s” pentru „%2$s”. Confirmați?</string>
 </resources>

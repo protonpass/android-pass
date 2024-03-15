@@ -33,6 +33,7 @@
   <string name="share_with_title">Chia sẻ với</string>
   <string name="share_with_email_hint">Địa chỉ email</string>
   <string name="share_with_email_error">Địa chỉ email không hợp lệ</string>
+  <string name="share_with_email_cannot_invite_outside_org">You can\'t invite people outside of your organization, contact admin for more info</string>
   <string name="share_permissions_title">Thiết lập cấp độ truy cập</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s mời bạn truy cập nội dung trong</string>
   <string name="sharing_join_shared_vault">Tham gia và đồng bộ</string>
@@ -92,7 +93,9 @@
   <string name="sharing_snackbar_transfer_ownership_success">Đã chuyển quyền sở hữu</string>
   <string name="sharing_snackbar_transfer_ownership_error">Lỗi khi chuyển quyền sở hữu</string>
   <string name="sharing_invites_info_dialog_title">Giới hạn thành viên</string>
-  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">Kho lưu trữ này có thể có %1$d thành viên. Bạn vẫn còn %2$d lời mời.</string>
+  <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
+    <item quantity="other">Kho lưu trữ này có thể có %1$d thành viên. Bạn vẫn còn %2$d lời mời.</item>
+  </plurals>
   <string name="sharing_limit_reached">Kho lưu trữ này đã đạt đến giới hạn thành viên và lời mời.</string>
   <string name="sharing_invites_info_upgrade_text">Nâng cấp ngay để mời thêm.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Chia sẻ</string>
@@ -111,4 +114,6 @@
   <string name="sharing_edit_permissions_remove_user">Remove user</string>
   <string name="sharing_error_dialog_title">Unknown error</string>
   <string name="sharing_error_dialog_message">There was an error sending an invite for this vault. If the issue persists, please contact customer support service.</string>
+  <string name="sharing_with_no_addresses_can_be_invited">No addresses can be invited</string>
+  <string name="sharing_with_some_addresses_cannot_be_invited">Some addresses cannot be invited</string>
 </resources>

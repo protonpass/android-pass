@@ -87,32 +87,32 @@
   <string name="trash_deleting_items_success">Elementos eliminados</string>
   <!-- Alerts -->
   <string name="alert_confirm_clear_trash_title">¿Vaciar la papelera?</string>
-  <string name="alert_confirm_clear_trash_message">¿En verdad desea vaciar la papelera? Todos sus elementos se eliminarán permanentemente.</string>
+  <string name="alert_confirm_clear_trash_message">¿Está seguro de que quiere vaciar la papelera? Todos sus elementos se eliminarán permanentemente.</string>
   <string name="alert_confirm_restore_all_title">¿Restaurar todos los elementos?</string>
-  <string name="alert_confirm_restore_all_message">¿En verdad desea restaurar todos los elementos eliminados?</string>
+  <string name="alert_confirm_restore_all_message">¿Está seguro de que quiere restaurar todos los elementos eliminados?</string>
   <plurals name="alert_confirm_restore_items_title">
     <item quantity="one">¿Restaurar %d elemento?</item>
     <item quantity="other">¿Restaurar %d elementos?</item>
   </plurals>
   <plurals name="alert_confirm_restore_items_message">
-    <item quantity="one">¿En verdad desea restaurar el elemento eliminado?</item>
-    <item quantity="other">¿En verdad desea restaurar %d elementos eliminados?</item>
+    <item quantity="one">¿Está seguro de que quiere restaurar el elemento eliminado?</item>
+    <item quantity="other">¿Está seguro de que quiere restaurar %d elementos eliminados?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_title">
     <item quantity="one">¿Mover %d elemento a la papelera?</item>
     <item quantity="other">¿Mover %d elementos a la papelera?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
-    <item quantity="one">¿En verdad desea mover el elemento a la papelera?</item>
-    <item quantity="other">¿En verdad desea mover %d elementos a la papelera?</item>
+    <item quantity="one">¿Está seguro de que quiere mover el elemento a la papelera?</item>
+    <item quantity="other">¿Está seguro de que quiere mover %d elementos a la papelera?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
     <item quantity="one">¿Eliminar %d elemento permanentemente?</item>
     <item quantity="other">¿Eliminar %d elementos permanentemente?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_message">
-    <item quantity="one">¿En verdad desea eliminar el elemento? Esta acción es irreversible.</item>
-    <item quantity="other">¿En verdad desea eliminar %d elementos? Esta acción es irreversible.</item>
+    <item quantity="one">¿Está seguro de que quiere eliminar el elemento? Esta acción es irreversible.</item>
+    <item quantity="other">¿Está seguro de que quiere eliminar %d elementos? Esta acción es irreversible.</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Búsquedas recientes</string>

@@ -1,4 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
 <resources>
-
+  <string name="bottomsheet_copy_password">Copier le mot de passe</string>
+  <string name="bottomsheet_copy_username">Copier le nom d\'utilisateur</string>
+  <string name="snackbar_item_move_to_trash_success">L\'élément a été déplacé dans la corbeille.</string>
+  <string name="snackbar_item_move_to_trash_error">Impossible de déplacer l\'élément dans la corbeille.</string>
+  <string name="snackbar_item_copy_username_success">Le nom d\'utilisateur a été copié dans le presse-papiers.</string>
+  <string name="snackbar_item_copy_password_success">Le mot de passe a été copié dans le presse-papiers.</string>
+  <string name="snackbar_item_copy_clipboard_error">La copie dans le presse-papiers n\'a pas abouti.</string>
 </resources>

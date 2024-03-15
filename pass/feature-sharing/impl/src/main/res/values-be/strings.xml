@@ -39,6 +39,7 @@
   <string name="share_with_title">Абагуліць з</string>
   <string name="share_with_email_hint">Адрас электроннай пошты</string>
   <string name="share_with_email_error">Памылковы адрас электроннай пошты</string>
+  <string name="share_with_email_cannot_invite_outside_org">У вас няма магчымасці запрашаць людзей па-за межамі вашай арганізацыі. Звяжыцеся з адміністратарам, каб атрымаць дадатковыя звесткі</string>
   <string name="share_permissions_title">Задаць узровень доступу</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s запрасіў(-ла) вас атрымаць доступ да элементаў у</string>
   <string name="sharing_join_shared_vault">Далучыцца і сінхранізаваць</string>
@@ -104,7 +105,12 @@
   <string name="sharing_snackbar_transfer_ownership_success">Правы ўласнасці перададзены</string>
   <string name="sharing_snackbar_transfer_ownership_error">Памылка перадачы правоў уласнасці</string>
   <string name="sharing_invites_info_dialog_title">Абмежаванне ўдзельнікаў</string>
-  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">Гэта сховішча можа мець да %1$d удзельнікаў. У вас яшчэ засталося %2$d запрашэнняў.</string>
+  <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
+    <item quantity="one">Гэта сховішча можа мець да %1$d удзельніка. У вас яшчэ засталося яшчэ %2$d запрашэнне.</item>
+    <item quantity="few">Гэта сховішча можа мець да %1$d удзельнікаў. У вас яшчэ засталося %2$d запрашэнні.</item>
+    <item quantity="many">Гэта сховішча можа мець да %1$d удзельнікаў. У вас яшчэ засталося %2$d запрашэнняў.</item>
+    <item quantity="other">Гэта сховішча можа мець да %1$d удзельнікаў. У вас яшчэ засталося %2$d запрашэнняў.</item>
+  </plurals>
   <string name="sharing_limit_reached">Для гэтага сховішча дасягнута абмежаванне па колькасці ўдзельнікаў і запрашэнняў.</string>
   <string name="sharing_invites_info_upgrade_text">Палепшыце, каб запрасіць больш удзельнікаў.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Абагуліць</string>
@@ -123,4 +129,6 @@
   <string name="sharing_edit_permissions_remove_user">Выдаліць карыстальніка</string>
   <string name="sharing_error_dialog_title">Невядомая памылка</string>
   <string name="sharing_error_dialog_message">Адбылася памылка адпраўкі запрашэння для гэтага сховішча. Калі праблема застанецца, звярніцеся ў службу падтрымкі кліентаў.</string>
+  <string name="sharing_with_no_addresses_can_be_invited">Немагчыма запрасіць адрасы</string>
+  <string name="sharing_with_some_addresses_cannot_be_invited">Некаторыя адрасы запрасіць немагчыма</string>
 </resources>

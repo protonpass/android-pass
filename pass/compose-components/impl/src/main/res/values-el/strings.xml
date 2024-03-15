@@ -5,7 +5,7 @@
   <string name="sort_by_title_desc">Τίτλος (Ω-Α)</string>
   <string name="sort_by_creation_asc">Από το παλαιότερο στο νεότερο</string>
   <string name="sort_by_creation_desc">Από το νεότερο στο παλαιότερο</string>
-  <string name="sort_by_modification_date">Πιο πρόσφατα</string>
+  <string name="sort_by_modification_date">Πρόσφατα χρησιμοποιημένο</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Όλα</string>
   <string name="item_list_header_pinned_search_results">Καρφιτσωμένα</string>
@@ -23,6 +23,7 @@
   <string name="bottomsheet_move_to_trash">Μετακίνηση στα Διαγραμμένα</string>
   <string name="bottomsheet_pin_item">Καρφίτσωμα</string>
   <string name="bottomsheet_unpin_item">Ξεκαρφίτσωμα</string>
+  <string name="bottomsheet_view_item_history">Προβολή ιστορικού</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Άνοιγμα μενού ενεργειών στοιχείου</string>
   <string name="action_upgrade_now">Αναβάθμιση τώρα</string>
@@ -56,11 +57,11 @@
   <string name="most_recent_yesterday">Χθες</string>
   <string name="most_recent_this_week">Τρέχουσα εβδομάδα</string>
   <string name="most_recent_last_two_weeks">Τελευταίες δύο εβδομάδες</string>
-  <string name="most_recent_last_30_days">Τελευταίες 30 ημέρες</string>
+  <string name="most_recent_last_30_days">Προηγούμενος μήνας</string>
   <string name="most_recent_last_60_days">Τελευταίες 60 ημέρες</string>
   <string name="most_recent_last_90_days">Τελευταίες 90 ημέρες</string>
   <string name="most_recent_within_the_last_year">Εντός του τελευταίου έτους</string>
-  <string name="most_recent_more_than_1_year">Περισσότερο από 1 χρόνο</string>
+  <string name="most_recent_more_than_1_year">Παλαιότερα από 1 έτος</string>
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">Εικονίδιο Αναζήτησης</string>
   <!-- Select Vault BottomSheet -->
@@ -83,5 +84,40 @@
   <string name="label_password_strength_weak">Αδύναμο</string>
   <!-- Pinning -->
   <string name="pinning_carousel_see_all">Προβολή όλων</string>
+  <!-- Dates -->
+  <string name="date_today" comment="Pattern to display today's date and time. (e.g. Today 10:25)">Σήμερα %s</string>
+  <string name="date_yesterday" comment="Pattern to display yesterday's date and time. (e.g. Yesterday 10:25)">Χθες %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">dd LLLL HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+  <!-- Items -->
+  <string name="item_details_alias_section_alias_title">Ψευδώνυμη διεύθυνση</string>
+  <string name="item_details_alias_section_mailboxes_title">Προώθηση σε</string>
+  <string name="item_details_credit_card_section_cardholder_title">Όνομα στην κάρτα</string>
+  <string name="item_details_credit_card_section_card_number_title">Αριθμός κάρτας</string>
+  <string name="item_details_credit_card_section_expiration_date_title">Λήγει στις</string>
+  <string name="item_details_credit_card_section_cvv_title">Αριθμός επαλήθευσης</string>
+  <string name="item_details_credit_card_section_pin_title">Κωδικός PIN</string>
+  <string name="item_details_login_section_username_title">Όνομα χρήστη ή διεύθυνση email</string>
+  <string name="item_details_login_section_password_title">Κωδικός</string>
+  <string name="item_details_login_section_primary_totp_title">Διακριτικό 2FA (TOTP)</string>
+  <string name="item_details_login_section_websites_title">Ιστοσελίδες</string>
+  <string name="item_details_shared_section_note_title">Σημείωση</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Αυτή η έκδοση της εφαρμογής δεν υποστηρίζεται πλέον, παρακαλούμε ενημερώστε την εφαρμογή σας.</string>
+  <!-- Passkeys -->
+  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Κλειδί πρόσβασης</string>
+  <!-- Upgrade -->
+  <string name="dialog_upgrade_plan_title">Αναβάθμιση προγράμματος;</string>
+  <string name="dialog_upgrade_plan_message">Αυτή η λειτουργία δεν είναι διαθέσιμη για χρήστες δωρεάν επιπέδου. Αν θέλετε να το απολαύσετε μαζί με άλλα δροσερά χαρακτηριστικά, αναβαθμίστε το πλάνο σας και δοκιμάστε το!</string>
+  <string name="dialog_upgrade_plan_action_confirm">Αναβάθμιση</string>
+  <string name="dialog_upgrade_plan_action_cancel">Όχι τώρα</string>
 </resources>

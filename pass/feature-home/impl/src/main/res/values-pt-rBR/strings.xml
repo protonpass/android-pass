@@ -104,7 +104,7 @@
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
     <item quantity="one">Tem certeza de que deseja mover o item para a lixeira?</item>
-    <item quantity="other">Tem certeza de que deseja mover os %d itens para a lixeira?</item>
+    <item quantity="other">Tem certeza de que deseja mover %d itens para a lixeira?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
     <item quantity="one">Excluir permanentemente %d item?</item>

@@ -36,7 +36,7 @@
   <string name="bottomsheet_custom_field_type_text">Text</string>
   <string name="bottomsheet_custom_field_type_text_content_description">Camp de text personalitzat</string>
   <string name="bottomsheet_custom_field_type_hidden">Ocult</string>
-  <string name="bottomsheet_custom_field_type_totp">Clau secreta 2FA (TOTP)</string>
+  <string name="bottomsheet_custom_field_type_totp">Clau secreta A2F (TOTP)</string>
   <string name="bottomsheet_custom_field_option_edit">Edita el nom</string>
   <string name="bottomsheet_custom_field_option_remove">Esborra el camp</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Esborra el camp personalitzat</string>
@@ -57,7 +57,6 @@
   <!-- Create Alias -->
   <string name="title_create_alias">Crea un àlies</string>
   <string name="field_alias_title">Adreça d\'àlies</string>
-  <string name="field_alias_hint">Nom d\'usuari de l\'àlies</string>
   <string name="field_mailboxes_creation_title">Envia a</string>
   <string name="field_mailboxes_edit_title">Reenviant a</string>
   <string name="field_alias_you_are_about_to_create">Esteu a punt de crear</string>
@@ -96,9 +95,9 @@
   <!--  Common create items  -->
   <string name="changes_saved">S\'han desat els canvis.</string>
   <!--  TOTP  -->
-  <string name="totp_create_login_field_title">Clau secreta 2FA (TOTP)</string>
-  <string name="totp_create_login_field_invalid">La clau secreta 2FA no és vàlida.</string>
-  <string name="totp_create_login_field_placeholder">Afegiu una clau secreta 2FA</string>
+  <string name="totp_create_login_field_title">Clau secreta A2F (TOTP)</string>
+  <string name="totp_create_login_field_invalid">Invalid 2FA secret key (TOTP)</string>
+  <string name="totp_create_login_field_placeholder">Add 2FA secret key (TOTP)</string>
   <string name="close_scree_icon_content_description">Botó de tancament de pantalla</string>
   <string name="totp_paste_code_action">Enganxa el codi</string>
   <string name="totp_scan_code_action">Escaneja el codi</string>
@@ -113,4 +112,6 @@
   <string name="select_mailbox_upgrade_for_more_inboxes">Milloreu per obtenir més carpetes d\'entrada</string>
   <string name="create_alias_content_limit_banner">Heu assolit el límit d\'àlies que podeu crear. Creeu un nombre il·limitat d\'àlies en millorar la vostra subscripció.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">The app needs to be updated to edit this item</string>
+  <string name="remove_passkey_dialog_title">Remove this passkey?</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">You are about to remove the passkey for user \'%1$s\' for \'%2$s\'. Are you sure?</string>
 </resources>

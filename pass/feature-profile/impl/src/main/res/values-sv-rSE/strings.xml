@@ -13,8 +13,8 @@
   <string name="profile_option_autofill_subtitle">Fyll i dina användarnamn och lösenord automatiskt.</string>
   <string name="profile_error_biometry_failed_to_start">Kunde inte starta den biometriska autentiseringen</string>
   <string name="profile_error_biometry_failed_to_authenticate">Misslyckades att autentisera</string>
-  <string name="profile_fingerprint_lock_enabled">Fingeravtrycksupplåsning aktiverat</string>
-  <string name="profile_fingerprint_lock_disabled">Fingeravtrycksupplåsning inaktiverat</string>
+  <string name="profile_fingerprint_lock_enabled">Fingeravtryckslås aktiverat</string>
+  <string name="profile_fingerprint_lock_disabled">Fingeravtryckslås inaktiverat</string>
   <string name="profile_error_performing_operation">Gick inte utföra åtgärd</string>
   <string name="profile_app_version_copied_to_clipboard">Appversion kopierad</string>
   <string name="feedback_option_reddit">Kolla in Proton på Reddit</string>

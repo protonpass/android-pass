@@ -10,14 +10,7 @@
   <string name="autofill_dialog_cancel">გაუქმება</string>
   <string name="autofill_notification_copy_to_clipboard">TOTP-ი დაკოპირდა გაცვლის ბუფერში</string>
   <string name="autofill_dialog_associate_title">გამოვიყენო შესვლის დეტალები?</string>
-  <string name="snackbar_item_move_to_trash_success">ელემენტი გადატანილია ნაგვის ყუთში</string>
-  <string name="snackbar_item_move_to_trash_error">სანაგვე ყუთში გადატანის შეცდომა</string>
-  <string name="snackbar_item_copy_username_success">მომხმარებელი დაკოპირებულია მიმოცვლის ბუფერში</string>
-  <string name="snackbar_item_copy_password_success">პაროლი დაკოპირდა გაცვლის ბუფერში</string>
-  <string name="snackbar_item_copy_clipboard_error">ბუფერში დაკოპირება შეუძლებელია</string>
   <string name="autofill_user_logged_out">თქვენ გახვედით. თავიდან შესასვლელად გახსენით აპი.</string>
-  <string name="bottomsheet_copy_password">პაროლის კოპირება</string>
-  <string name="bottomsheet_copy_username">მომხმარებლის სახელის კოპირება</string>
   <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">ბარათის დეტალების ავტოშევსება</string>
   <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">საკრედიტო ბარათის ავტოშევსება ფასიანი ფუნქციაა. თუ გნებავთ, Proton Pass-მა თქვენი საკრედიტო ბარათის დეტალები თქვენს აპებში და ვებგვერდებში ავტომატურად შეავსოს, ასწიეთ ტარიფი ფასიან ვერსიამდე.</string>
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">მოქმედების დადასტურება</string>

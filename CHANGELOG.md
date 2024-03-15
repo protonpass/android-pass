@@ -6,6 +6,24 @@
 
 ### Other
 
+## 1.19.0 (2024-03-15)
+
+### Features :tada:
+
+- Performance improvements in the app's responsiveness.
+- Improved error handling when trying to share a vault.
+
+### Fixes :bug:
+
+- Autofill will not try to autofill the "password" field of Proton Pass.
+- Autofill will not ask for association if the website was already linked to the item.
+- Fixed a bug where sometimes the main list was not displaying the items.
+
+### Other
+
+- Updated translations.
+- Updated dependencies.
+
 ## 1.18.3 (2024-03-01)
 
 ### Fixes :bug:

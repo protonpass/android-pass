@@ -104,7 +104,8 @@ object GetPasskeysHandler {
             return null
         }
 
-        val domain = SelectPasskeyUtils.getDomainFromRequest(request) ?: run {
+        val filters = SelectPasskeyUtils.getPasskeyFilterParameters(request)
+        if (filters.domain == null) {
             PassLogger.d(TAG, "Could not find domain for request")
             return BeginGetCredentialResponse(
                 credentialEntries = emptyList(),
@@ -112,8 +113,8 @@ object GetPasskeysHandler {
             )
         }
 
-        val passkeys = getPasskeysForDomain(domain)
-        PassLogger.d(TAG, "Found ${passkeys.size} passkeys for domain $domain")
+        val passkeys = getPasskeysForDomain(filters.domain, filters.passkeySelection)
+        PassLogger.d(TAG, "Found ${passkeys.size} passkeys for filters $filters")
 
         val needsToAuthenticate = needsBiometricAuth().first()
         PassLogger.d(TAG, "Needs to authenticate: $needsToAuthenticate")
@@ -156,7 +157,7 @@ object GetPasskeysHandler {
                 createSelectPasskeyAction(
                     context = context,
                     option = firstOption,
-                    origin = domain,
+                    origin = filters.domain,
                     requestCodes = requestCodes
                 )
             )

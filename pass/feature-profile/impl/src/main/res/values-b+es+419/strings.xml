@@ -13,8 +13,8 @@
   <string name="profile_option_autofill_subtitle">Complete automáticamente sus nombres de usuario y contraseñas.</string>
   <string name="profile_error_biometry_failed_to_start">No se pudo iniciar la autenticación biométrica</string>
   <string name="profile_error_biometry_failed_to_authenticate">Error al autenticar</string>
-  <string name="profile_fingerprint_lock_enabled">Desbloqueo de huella dactilar activado</string>
-  <string name="profile_fingerprint_lock_disabled">Desbloqueo de huella dactilar desactivado</string>
+  <string name="profile_fingerprint_lock_enabled">Bloqueo de huella dactilar activado</string>
+  <string name="profile_fingerprint_lock_disabled">Bloqueo de huella dactilar desactivado</string>
   <string name="profile_error_performing_operation">Error al ejecutar la operación</string>
   <string name="profile_app_version_copied_to_clipboard">Versión de la app copiada</string>
   <string name="feedback_option_reddit">Eche un vistazo a Proton en Reddit</string>

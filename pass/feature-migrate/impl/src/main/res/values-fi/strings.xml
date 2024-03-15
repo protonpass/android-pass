@@ -9,6 +9,7 @@
   <string name="migrate_item_success_snackbar">Kohteet siirrettiin</string>
   <string name="migrate_item_error_snackbar">Virhe kohteiden siirrossa</string>
   <string name="migrate_item_some_not_migrated_error_snackbar">Virhe joidenkin kohteiden siirrossa</string>
+  <string name="migrate_item_warning_history">Kohteiden siirto tyhjentää niiden historian</string>
   <string name="migrate_all_items_success_snackbar">Kaikki kohteet siirrettiin</string>
   <string name="migrate_all_items_error_snackbar">Virhe siirrettäessä holvin kaikkia kohteita</string>
   <string name="migrate_init_error_snackbar">Siirtoruutua ei voitu valmistella</string>

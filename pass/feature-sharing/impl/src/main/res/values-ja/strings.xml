@@ -33,6 +33,7 @@
   <string name="share_with_title">と共有する</string>
   <string name="share_with_email_hint">メールアドレス</string>
   <string name="share_with_email_error">無効なメールアドレス</string>
+  <string name="share_with_email_cannot_invite_outside_org">You can\'t invite people outside of your organization, contact admin for more info</string>
   <string name="share_permissions_title">アクセスレベルの設定</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%sがあなたにアイテムへのアクセスを招待しています。</string>
   <string name="sharing_join_shared_vault">参加と同期</string>
@@ -92,7 +93,9 @@
   <string name="sharing_snackbar_transfer_ownership_success">所有権移転</string>
   <string name="sharing_snackbar_transfer_ownership_error">所有権移転エラー</string>
   <string name="sharing_invites_info_dialog_title">メンバー数制限</string>
-  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">この保管庫には %1$d 人までのメンバーを招待できます。まだ %2$d 招待が残っています。</string>
+  <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
+    <item quantity="other">この保管庫には %1$d 人までのメンバーを招待できます。まだ %2$d 招待が残っています。</item>
+  </plurals>
   <string name="sharing_limit_reached">この保管庫は、メンバーおよび招待の制限に達しました。</string>
   <string name="sharing_invites_info_upgrade_text">今すぐアップグレードして、さらに招待しよう。</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">共有</string>
@@ -111,4 +114,6 @@
   <string name="sharing_edit_permissions_remove_user">ユーザーを削除する</string>
   <string name="sharing_error_dialog_title">不明なエラー</string>
   <string name="sharing_error_dialog_message">この保管庫への招待の送信中にエラーが発生しました。 問題が解決しない場合は、カスタマー サポート サービスにお問い合わせください。</string>
+  <string name="sharing_with_no_addresses_can_be_invited">No addresses can be invited</string>
+  <string name="sharing_with_some_addresses_cannot_be_invited">Some addresses cannot be invited</string>
 </resources>

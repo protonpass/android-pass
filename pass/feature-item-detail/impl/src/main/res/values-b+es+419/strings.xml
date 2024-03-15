@@ -46,7 +46,7 @@
   <string name="more_info_title">Más información</string>
   <string name="more_info_icon">Ícono de más información</string>
   <plurals name="more_info_modified_times">
-    <item quantity="one">Una vez</item>
+    <item quantity="one">%d vez</item>
     <item quantity="other">%d veces</item>
   </plurals>
   <string name="more_info_last_time_modified">Última vez, %s</string>
@@ -91,7 +91,15 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">No puede compartir</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">No tiene los permisos suficientes para compartir esta bóveda.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Ha alcanzado el límite de bóvedas compartidas. Mejore su plan actual para compartir más bóvedas.</string>
+  <string name="item_detail_history_created">Creado</string>
+  <string name="item_detail_history_modified_last">Última modificación</string>
+  <string name="item_detail_history_button_view">Mostrar el historial del elemento</string>
   <string name="password_score_vulnerable">Vulnerable</string>
   <string name="password_score_weak">Débil</string>
   <string name="password_score_strong">Segura</string>
+  <string name="passkey_detail_bottomsheet_title">Clave de acceso</string>
+  <string name="passkey_detail_bottomsheet_username">Nombre de usuario</string>
+  <string name="passkey_detail_bottomsheet_domain">Dominio</string>
+  <string name="passkey_detail_bottomsheet_key">Clave</string>
+  <string name="passkey_detail_bottomsheet_created">Creada</string>
 </resources>

@@ -36,7 +36,7 @@
   <string name="bottomsheet_custom_field_type_text">Metin</string>
   <string name="bottomsheet_custom_field_type_text_content_description">Metin özel alanı</string>
   <string name="bottomsheet_custom_field_type_hidden">Gizli</string>
-  <string name="bottomsheet_custom_field_type_totp">İki adımlı doğrulama parolası (tek kullanımlık)</string>
+  <string name="bottomsheet_custom_field_type_totp">İki adımlı doğrulama gizli anahtarı (TOTP)</string>
   <string name="bottomsheet_custom_field_option_edit">Adı düzenle</string>
   <string name="bottomsheet_custom_field_option_remove">Alanı kaldır</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Özel alanı kaldır</string>
@@ -57,7 +57,6 @@
   <!-- Create Alias -->
   <string name="title_create_alias">Takma ad oluştur</string>
   <string name="field_alias_title">Takma ad adresi</string>
-  <string name="field_alias_hint">Takma ad kullanıcı adı</string>
   <string name="field_mailboxes_creation_title">Şuraya ilet</string>
   <string name="field_mailboxes_edit_title">Şuraya iletiliyor</string>
   <string name="field_alias_you_are_about_to_create">Oluşturmak üzeresiniz</string>
@@ -96,9 +95,9 @@
   <!--  Common create items  -->
   <string name="changes_saved">Değişiklikler kaydedildi</string>
   <!--  TOTP  -->
-  <string name="totp_create_login_field_title">İki adımlı doğrulama parolası (tek kullanımlık)</string>
-  <string name="totp_create_login_field_invalid">İki adımlı doğrulama parolası geçersiz</string>
-  <string name="totp_create_login_field_placeholder">İki adımlı doğrulama parolası ekle</string>
+  <string name="totp_create_login_field_title">İki adımlı doğrulama gizli anahtarı (TOTP)</string>
+  <string name="totp_create_login_field_invalid">İki adımlı doğrulama gizli anahtarı (TOTP) geçersiz</string>
+  <string name="totp_create_login_field_placeholder">İki adımlı doğrulama gizli anahtarı (TOTP) ekle</string>
   <string name="close_scree_icon_content_description">Ekranı kapat düğmesi</string>
   <string name="totp_paste_code_action">Kodu yapıştır</string>
   <string name="totp_scan_code_action">Kodu tara</string>
@@ -113,4 +112,6 @@
   <string name="select_mailbox_upgrade_for_more_inboxes">Daha fazla gelen kutusu kullanmak için tarifenizi yükseltin</string>
   <string name="create_alias_content_limit_banner">Oluşturabileceğiniz takma ad sayısı sınırına ulaştınız. Abonelik tarifenizi yükselterek sınırsız sayıda takma ad oluşturabilirsiniz.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Bu ögeyi düzenlemek için uygulamanın güncellenmesi gerekli</string>
+  <string name="remove_passkey_dialog_title">Bu geçiş anahtarı silinsin mi?</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">%1$s kullanıcısı için %2$s geçiş anahtarını silmek üzeresiniz. Emin misiniz?</string>
 </resources>

@@ -13,8 +13,8 @@
   <string name="profile_option_autofill_subtitle">Automatické vyplňování uživatelských jmen a hesel.</string>
   <string name="profile_error_biometry_failed_to_start">Nelze spustit biometrické ověřování</string>
   <string name="profile_error_biometry_failed_to_authenticate">Ověření selhalo</string>
-  <string name="profile_fingerprint_lock_enabled">Odemykání otiskem prstu povoleno</string>
-  <string name="profile_fingerprint_lock_disabled">Odemykání otiskem prstu deaktivováno</string>
+  <string name="profile_fingerprint_lock_enabled">Fingerprint lock enabled</string>
+  <string name="profile_fingerprint_lock_disabled">Fingerprint lock disabled</string>
   <string name="profile_error_performing_operation">Chyba při provádění operace</string>
   <string name="profile_app_version_copied_to_clipboard">Verze aplikace zkopírována</string>
   <string name="feedback_option_reddit">Podívejte se na Proton na Redditu</string>

@@ -99,7 +99,7 @@
     <item quantity="other">將 %d 項目丟進垃圾桶嗎？</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
-    <item quantity="other">您確定要將 %d 項目丟進垃圾桶嗎？</item>
+    <item quantity="other">Are you sure you want to move %d items to the trash?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
     <item quantity="other">您確定要將 %d 項目永久刪除嗎？</item>

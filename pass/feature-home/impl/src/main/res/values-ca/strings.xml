@@ -103,8 +103,8 @@
     <item quantity="other">Voleu moure %d elements a la paperera?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
-    <item quantity="one">Segur que voleu moure l\'element a la paperera?</item>
-    <item quantity="other">Segur que voleu moure els %d elements a la paperera?</item>
+    <item quantity="one">Are you sure you want to move the item to the trash?</item>
+    <item quantity="other">Are you sure you want to move %d items to the trash?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
     <item quantity="one">Delete permanently %d item?</item>

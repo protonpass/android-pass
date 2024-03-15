@@ -46,7 +46,7 @@
   <string name="more_info_title">Więcej informacji</string>
   <string name="more_info_icon">Ikona więcej informacji</string>
   <plurals name="more_info_modified_times">
-    <item quantity="one">1 raz</item>
+    <item quantity="one">%d raz</item>
     <item quantity="few">%d razy</item>
     <item quantity="many">%d razy</item>
     <item quantity="other">%d razy</item>
@@ -93,7 +93,15 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Nie można udostępnić</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Nie masz wystarczających uprawnień do udostępnienia sejfu.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Osiągnięto maksymalną liczbę udostępnionych sejfów. Ulepsz plan, aby udostępnić więcej sejfów.</string>
+  <string name="item_detail_history_created">Utworzono</string>
+  <string name="item_detail_history_modified_last">Zmodyfikowano</string>
+  <string name="item_detail_history_button_view">Pokaż historię elementu</string>
   <string name="password_score_vulnerable">Bardzo słabe</string>
   <string name="password_score_weak">Słabe</string>
   <string name="password_score_strong">Silne</string>
+  <string name="passkey_detail_bottomsheet_title">Klucz dostępu</string>
+  <string name="passkey_detail_bottomsheet_username">Nazwa użytkownika</string>
+  <string name="passkey_detail_bottomsheet_domain">Domena</string>
+  <string name="passkey_detail_bottomsheet_key">Klucz</string>
+  <string name="passkey_detail_bottomsheet_created">Utworzono</string>
 </resources>

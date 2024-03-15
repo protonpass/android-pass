@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="profile_screen_title">Profil</string>
+  <string name="profile_option_settings">Nastavitve</string>
+  <string name="profile_option_account">Račun</string>
+  <string name="profile_help_center">Center za pomoč</string>
+  <string name="profile_security">Varnost</string>
+  <string name="profile_option_feedback">Povratne informacije</string>
+  <string name="profile_option_import_export">Uvoz/izvoz</string>
+  <string name="profile_option_tutorial">Kako uporabljati Proton Pass</string>
+  <string name="profile_option_rating">Oceni aplikacijo</string>
+  <string name="profile_option_autofill">Samodejno izpolnjevanje</string>
+  <string name="profile_option_autofill_subtitle">Samodejno izpolnite svoja uporabniška imena in gesla.</string>
+  <string name="profile_error_biometry_failed_to_start">Biometrične avtentikacije ni bilo mogoče začeti</string>
+  <string name="profile_error_biometry_failed_to_authenticate">Preverjanje pristnosti ni uspelo</string>
+  <string name="profile_fingerprint_lock_enabled">Omogočeno zaklepanje s prstnim odtisom</string>
+  <string name="profile_fingerprint_lock_disabled">Zaklepanje s prstnim odtisom onemogočeno</string>
+  <string name="profile_error_performing_operation">Napaka pri izvajanju operacije</string>
+  <string name="profile_app_version_copied_to_clipboard">Različica aplikacije je kopirana</string>
+  <string name="feedback_option_reddit">Oglejte si Proton na Redditu</string>
+  <string name="feedback_option_mail">Pošlji sporočilo</string>
+  <string name="feedback_option_vote_new_features">Glasujte za nove funkcije</string>
+  <string name="app_lock_immediately">Takoj</string>
+  <string name="app_lock_one_minute">Po 1 minuti</string>
+  <string name="app_lock_two_minutes">Po 2 minutah</string>
+  <string name="app_lock_five_minutes">Po 5 minut</string>
+  <string name="app_lock_ten_minutes">Po 10 minut</string>
+  <string name="app_lock_one_hour">Po 1 uri</string>
+  <string name="app_lock_four_hours">Po 4 urah</string>
+  <string name="profile_account_plan_name_trial">Pass Plus preizkus</string>
+  <string name="app_lock_config_none">Brez</string>
+  <string name="app_lock_config_biometric">Biometrični</string>
+  <string name="app_lock_config_pin_code">PIN koda</string>
+  <string name="app_lock_config_app_lock_time">Samodejno zaklepanje</string>
+  <string name="app_lock_config_use_system_lock_when_biometric_fails">Uporabite zaklepanje sistema, ko biometrija ne deluje</string>
+  <string name="configure_pin_set_pin_code">Nastavi kodo PIN</string>
+  <string name="configure_pin_unlock_the_app_with_this_code">Odklenite aplikacijo s to kodo</string>
+  <string name="configure_pin_enter_pin_code">Vnesite kodo PIN</string>
+  <string name="configure_pin_repeat_pin_code">Ponovite kodo PIN</string>
+  <string name="configure_pin_continue">Nadaljuj</string>
+  <string name="configure_pin_pin_does_not_match">PIN se ne ujema</string>
+  <string name="configure_pin_pin_too_short">PIN je prekratek.</string>
+  <string name="configure_pin_pin_cannot_be_blank">PIN ne sme biti prazen</string>
+  <string name="configure_pin_pin_lock_enabled">Omogočeno zaklepanje PIN</string>
+  <string name="configure_pin_pin_lock_disabled">Zaklepanje kode PIN onemogočeno</string>
+  <string name="profile_option_lock_with">Zakleni z</string>
+  <string name="profile_option_unlock_with">Odkleni z</string>
+  <string name="profile_option_change_pin_code">Spremeni kodo PIN</string>
+  <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Brskalnik Samsung je nastavljen kot privzeti brskalnik. Ne podpira samodejnega izpolnjevanja od zunanjih upraviteljev gesel.</string>
+</resources>

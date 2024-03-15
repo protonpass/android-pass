@@ -10,14 +10,7 @@
   <string name="autofill_dialog_cancel">Ακύρωση</string>
   <string name="autofill_notification_copy_to_clipboard">Ο TOTP έχει αντιγραφεί στο πρόχειρο</string>
   <string name="autofill_dialog_associate_title">Χρησιμοποίηση διαπιστευτηρίων;</string>
-  <string name="snackbar_item_move_to_trash_success">Το στοιχείο μετακινήθηκε στον κάδο απορριμμάτων</string>
-  <string name="snackbar_item_move_to_trash_error">Δεν ήταν δυνατή η μετακίνηση στον κάδο απορριμμάτων</string>
-  <string name="snackbar_item_copy_username_success">Το όνομα χρήστη αντιγράφηκε στο πρόχειρο</string>
-  <string name="snackbar_item_copy_password_success">Ο κωδικός πρόσβασης αντιγράφηκε στο πρόχειρο</string>
-  <string name="snackbar_item_copy_clipboard_error">Αδυναμία αντιγραφής στο πρόχειρο</string>
   <string name="autofill_user_logged_out">Έχετε αποσυνδεθεί. Παρακαλούμε συνδεθείτε ξανά ανοίγοντας την εφαρμογή.</string>
-  <string name="bottomsheet_copy_password">Αντιγραφή συνθηματικού</string>
-  <string name="bottomsheet_copy_username">Αντιγραφή ονόματος χρήστη</string>
   <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Αυτόματη συμπλήρωση στοιχείων κάρτας</string>
   <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Η αυτόματη συμπλήρωση στοιχείων πιστωτικής κάρτας είναι μια δυνατότητα επί πληρωμή. Εάν θέλετε το Proton Pass να εισάγει αυτόματα τα στοιχεία της κάρτας σας για εσάς σε εφαρμογές και ιστότοπους, αναβαθμίστε σε πλάνο επί πληρωμή.</string>
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Επιβεβαίωση ενέργειας</string>

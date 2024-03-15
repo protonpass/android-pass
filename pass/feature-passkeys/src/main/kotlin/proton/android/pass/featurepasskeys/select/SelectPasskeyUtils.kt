@@ -22,23 +22,39 @@ import androidx.credentials.GetPublicKeyCredentialOption
 import androidx.credentials.provider.BeginGetCredentialRequest
 import androidx.credentials.provider.BeginGetPublicKeyCredentialOption
 import androidx.credentials.provider.ProviderGetCredentialRequest
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.jsonObject
-import kotlinx.serialization.json.jsonPrimitive
+import proton.android.pass.data.api.usecases.passkeys.PasskeySelection
+import proton.android.pass.domain.PasskeyId
+import proton.android.pass.log.api.PassLogger
 
 object SelectPasskeyUtils {
 
-    fun getDomainFromRequest(request: BeginGetCredentialRequest): String? {
-        val origin = request.callingAppInfo?.origin
-        if (origin != null) return origin
+    private const val TAG = "SelectPasskeyUtils"
 
-        val json = request.beginGetCredentialOptions
-            .firstOrNull { it is BeginGetPublicKeyCredentialOption }
-            ?.let { it as BeginGetPublicKeyCredentialOption }
-            ?.requestJson
-            ?: return null
+    private val jsonParser = Json { ignoreUnknownKeys = true }
 
-        return getDomainFromRequest(json)
+    @Serializable
+    private data class CredentialRequest(
+        val rpId: String,
+        val allowCredentials: List<AllowedCredential>
+    )
+
+    @Serializable
+    private data class AllowedCredential(
+        val type: String,
+        val id: String
+    )
+
+    data class PasskeyFilterParameters(
+        val domain: String?,
+        val passkeySelection: PasskeySelection
+    )
+
+    fun getPasskeyFilterParameters(request: BeginGetCredentialRequest): PasskeyFilterParameters {
+        val domain = getDomainFromRequest(request)
+        val allowedPasskeys = getAllowedPasskeysFromRequest(request)
+        return PasskeyFilterParameters(domain, allowedPasskeys)
     }
 
     fun getDomainFromRequest(request: ProviderGetCredentialRequest): String? {
@@ -51,11 +67,48 @@ object SelectPasskeyUtils {
             ?.requestJson
             ?: return null
 
-        return getDomainFromRequest(json)
+        return parseRequest(json)?.rpId
     }
 
-    private fun getDomainFromRequest(requestJson: String): String? = runCatching {
-        val data = Json.parseToJsonElement(requestJson)
-        data.jsonObject["rpId"]?.jsonPrimitive?.content
-    }.getOrNull()
+    private fun getDomainFromRequest(request: BeginGetCredentialRequest): String? {
+        val origin = request.callingAppInfo?.origin
+        if (origin != null) return origin
+
+        val json = request.beginGetCredentialOptions
+            .firstOrNull { it is BeginGetPublicKeyCredentialOption }
+            ?.let { it as BeginGetPublicKeyCredentialOption }
+            ?.requestJson
+            ?: return null
+
+        return parseRequest(json)?.rpId
+    }
+
+
+    private fun getAllowedPasskeysFromRequest(request: BeginGetCredentialRequest): PasskeySelection {
+        val json = request.beginGetCredentialOptions
+            .firstOrNull { it is BeginGetPublicKeyCredentialOption }
+            ?.let { it as BeginGetPublicKeyCredentialOption }
+            ?.requestJson
+            ?: return PasskeySelection.All
+
+        val parsed = parseRequest(json) ?: return PasskeySelection.All
+        val allowed = parsed.allowCredentials
+            .filter { it.type == "public-key" }
+            .map { PasskeyId(it.id) }
+
+        return if (allowed.isEmpty()) {
+            PasskeySelection.All
+        } else {
+            PasskeySelection.Allowed(allowed)
+        }
+    }
+
+    private fun parseRequest(requestJson: String): CredentialRequest? = runCatching {
+        jsonParser.decodeFromString<CredentialRequest>(requestJson)
+    }.getOrElse {
+        PassLogger.w(TAG, "Error parsing JSON request")
+        PassLogger.w(TAG, it)
+        null
+    }
+
 }

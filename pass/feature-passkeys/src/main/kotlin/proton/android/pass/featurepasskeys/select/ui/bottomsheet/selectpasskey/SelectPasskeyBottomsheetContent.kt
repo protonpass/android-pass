@@ -81,7 +81,7 @@ internal fun passkeyItem(item: Passkey, onClick: () -> Unit): BottomSheetItem = 
         }
     override val subtitle: (@Composable () -> Unit)
         get() = {
-            val text = "${item.domain} • ${item.id.value.take(6).uppercase()}"
+            val text = "${item.domain} • ${item.id.value}"
             BottomSheetItemSubtitle(
                 text = text,
                 color = PassTheme.colors.textWeak

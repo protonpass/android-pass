@@ -46,7 +46,7 @@
   <string name="more_info_title">Diğer bilgiler</string>
   <string name="more_info_icon">Diğer bilgiler simgesi</string>
   <plurals name="more_info_modified_times">
-    <item quantity="one">Bir kez</item>
+    <item quantity="one">%d kez</item>
     <item quantity="other">%d kez</item>
   </plurals>
   <string name="more_info_last_time_modified">Son kez, %s</string>
@@ -91,7 +91,15 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Paylaşılamaz</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Bu kasayı paylaşmak için yeterli izniniz yok.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Paylaşılabilecek kasa sayısı sınırına ulaştınız. Daha fazla kasa paylaşmak için tarifenizi yükseltin.</string>
+  <string name="item_detail_history_created">Oluşturulma</string>
+  <string name="item_detail_history_modified_last">Son değiştirilme</string>
+  <string name="item_detail_history_button_view">Öge geçmişini görüntüle</string>
   <string name="password_score_vulnerable">Çok zayıf</string>
   <string name="password_score_weak">Zayıf</string>
   <string name="password_score_strong">Güçlü</string>
+  <string name="passkey_detail_bottomsheet_title">Geçiş anahtarı</string>
+  <string name="passkey_detail_bottomsheet_username">Kullanıcı adı</string>
+  <string name="passkey_detail_bottomsheet_domain">Etki alanı</string>
+  <string name="passkey_detail_bottomsheet_key">Anahtar</string>
+  <string name="passkey_detail_bottomsheet_created">Oluşturulma</string>
 </resources>

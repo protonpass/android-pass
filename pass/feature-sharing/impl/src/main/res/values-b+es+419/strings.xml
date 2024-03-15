@@ -35,6 +35,7 @@
   <string name="share_with_title">Compartir con</string>
   <string name="share_with_email_hint">Dirección de correo</string>
   <string name="share_with_email_error">Dirección de correo inválida</string>
+  <string name="share_with_email_cannot_invite_outside_org">No puede invitar personas fuera de su organización, contacte con el administrador para más información</string>
   <string name="share_permissions_title">Configurar el nivel de acceso</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s le invita a acceder a elementos en</string>
   <string name="sharing_join_shared_vault">Unirse y sincronizar</string>
@@ -96,7 +97,10 @@
   <string name="sharing_snackbar_transfer_ownership_success">Propiedad transferida</string>
   <string name="sharing_snackbar_transfer_ownership_error">Error al transferir la propiedad</string>
   <string name="sharing_invites_info_dialog_title">Límite de miembros</string>
-  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">Esta bóveda puede tener hasta %1$d miembros. Aún tiene %2$d invitaciones restantes.</string>
+  <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
+    <item quantity="one">Esta bóveda puede tener hasta %1$d miembros. Aún tiene %2$d invitación restante.</item>
+    <item quantity="other">Esta bóveda puede tener hasta %1$d miembros. Aún tiene %2$d invitaciones restantes.</item>
+  </plurals>
   <string name="sharing_limit_reached">Esta bóveda ha alcanzado el límite de miembros e invitaciones.</string>
   <string name="sharing_invites_info_upgrade_text">Mejore ahora para invitar a más personas.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Compartir</string>
@@ -115,4 +119,6 @@
   <string name="sharing_edit_permissions_remove_user">Quitar usuario</string>
   <string name="sharing_error_dialog_title">Error desconocido</string>
   <string name="sharing_error_dialog_message">No se pudo enviar la invitación de esta bóveda. Si el problema persiste, contáctese con el servicio de atención al cliente.</string>
+  <string name="sharing_with_no_addresses_can_be_invited">No se puede invitar ninguna dirección.</string>
+  <string name="sharing_with_some_addresses_cannot_be_invited">No se pueden invitar algunas direcciones.</string>
 </resources>

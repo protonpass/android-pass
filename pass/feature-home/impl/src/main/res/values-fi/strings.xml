@@ -103,7 +103,7 @@
     <item quantity="other">Siirretäänkö %d kohdetta roskakoriin?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
-    <item quantity="one">Haluatko varmasti siirtää kohteen roskakoriin?</item>
+    <item quantity="one">Haluatko varmasti siirtää tämän kohteen roskakoriin?</item>
     <item quantity="other">Haluatko varmasti siirtää %d kohdetta roskakoriin?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">

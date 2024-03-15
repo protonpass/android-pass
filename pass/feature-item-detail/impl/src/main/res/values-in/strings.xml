@@ -90,7 +90,15 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Tidak dapat membagikan</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Anda tidak memiliki izin yang memadai untuk membagikan brankas ini.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Anda telah mencapai batas pembagian brankas Anda. Untuk dapat membagikan lebih banyak brankas, silakan tingkatkan paket Anda saat ini.</string>
+  <string name="item_detail_history_created">Dibuat</string>
+  <string name="item_detail_history_modified_last">Terakhir diubah</string>
+  <string name="item_detail_history_button_view">Lihat riwayat item</string>
   <string name="password_score_vulnerable">Rentan</string>
   <string name="password_score_weak">Lemah</string>
   <string name="password_score_strong">Kuat</string>
+  <string name="passkey_detail_bottomsheet_title">Kunci sandi</string>
+  <string name="passkey_detail_bottomsheet_username">Nama pengguna</string>
+  <string name="passkey_detail_bottomsheet_domain">Domain</string>
+  <string name="passkey_detail_bottomsheet_key">Kunci</string>
+  <string name="passkey_detail_bottomsheet_created">Dibuat</string>
 </resources>

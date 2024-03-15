@@ -93,7 +93,15 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Немагчыма абагуліць</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">У вас недастаткова правоў, каб абагуліць гэта сховішча.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Вы дасягнулі максімальнай колькасці абагуленняў сховішчаў. Для таго, каб абагуліць больш сховішчаў, палепшыце свой бягучы тарыфны план.</string>
+  <string name="item_detail_history_created">Створана</string>
+  <string name="item_detail_history_modified_last">Апошняе змяненне</string>
+  <string name="item_detail_history_button_view">Паглядзець гісторыю элемента</string>
   <string name="password_score_vulnerable">Уразлівы</string>
   <string name="password_score_weak">Ненадзейны</string>
   <string name="password_score_strong">Надзейны</string>
+  <string name="passkey_detail_bottomsheet_title">Ключ доступу</string>
+  <string name="passkey_detail_bottomsheet_username">Імя карыстальніка</string>
+  <string name="passkey_detail_bottomsheet_domain">Дамен</string>
+  <string name="passkey_detail_bottomsheet_key">Ключ</string>
+  <string name="passkey_detail_bottomsheet_created">Створана</string>
 </resources>

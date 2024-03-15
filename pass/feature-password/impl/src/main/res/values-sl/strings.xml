@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="generate_password_copy">Kopiraj in zapri</string>
+  <string name="password_copied_to_clipboard">Geslo je bilo kopirano</string>
+  <string name="bottomsheet_generate_password_title">Ustvari geslo</string>
+  <string name="password_type">Vrsta</string>
+  <string name="special_characters">Posebni znaki (!&amp;*)</string>
+  <plurals name="character_count">
+    <item quantity="one">%s znakov</item>
+    <item quantity="two">%s znakov</item>
+    <item quantity="few">%s znakov</item>
+    <item quantity="other">%s znakov</item>
+  </plurals>
+  <plurals name="word_count">
+    <item quantity="one">%s beseda</item>
+    <item quantity="two">%s besedi</item>
+    <item quantity="few">%s besede</item>
+    <item quantity="other">%s besed</item>
+  </plurals>
+  <string name="word_separator">Ločilo besed</string>
+  <string name="bottomsheet_option_capital_letters">Velike črke (A–Z)</string>
+  <string name="bottomsheet_option_capitalise">Napiši veliko začetnico</string>
+  <string name="bottomsheet_option_include_numbers">Vključi številke (0–9)</string>
+  <string name="bottomsheet_option_word_separator_hyphens">Vezaji ( - )</string>
+  <string name="bottomsheet_option_word_separator_spaces">Presledki</string>
+  <string name="bottomsheet_option_word_separator_periods">Pike ( . )</string>
+  <string name="bottomsheet_option_word_separator_commas">Vejice ( , )</string>
+  <string name="bottomsheet_option_word_separator_underscores">Podčrtaji ( _ )</string>
+  <string name="bottomsheet_option_word_separator_numbers">Številke</string>
+  <string name="bottomsheet_option_word_separator_numbers_and_symbols">Številke in simboli</string>
+  <string name="regenerate_password_icon_content_description">Gumb za ponovno ustvarjanje gesla</string>
+  <string name="password_mode_memorable">Geslo, ki si ga je mogoče zapomniti</string>
+  <string name="password_mode_random">Naključno geslo</string>
+  <string name="password_mode_icon">Ikona za gesla</string>
+  <string name="password_words_separator_icon">Ločilo besed v geslu</string>
+</resources>

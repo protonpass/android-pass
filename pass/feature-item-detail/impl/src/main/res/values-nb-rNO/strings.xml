@@ -46,7 +46,7 @@
   <string name="more_info_title">Mer informasjon</string>
   <string name="more_info_icon">Mer info ikon</string>
   <plurals name="more_info_modified_times">
-    <item quantity="one">Én gang</item>
+    <item quantity="one">%d gang</item>
     <item quantity="other">%d ganger</item>
   </plurals>
   <string name="more_info_last_time_modified">Siste gang, %s</string>
@@ -91,7 +91,15 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Kan ikke dele</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Du har ikke nok tillatelser til å dele dette hvelvet.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Du har nådd delingsgrensen for hvelv. For å dele flere hvelv, vennligst oppgrader din nåværende plan.</string>
+  <string name="item_detail_history_created">Opprettet</string>
+  <string name="item_detail_history_modified_last">Sist endret</string>
+  <string name="item_detail_history_button_view">Vis elementhistorikk</string>
   <string name="password_score_vulnerable">Sårbar</string>
   <string name="password_score_weak">Svak</string>
   <string name="password_score_strong">Sterk</string>
+  <string name="passkey_detail_bottomsheet_title">Tilgangsnøkkel</string>
+  <string name="passkey_detail_bottomsheet_username">Brukernavn</string>
+  <string name="passkey_detail_bottomsheet_domain">Domene</string>
+  <string name="passkey_detail_bottomsheet_key">Nøkkel</string>
+  <string name="passkey_detail_bottomsheet_created">Opprettet</string>
 </resources>

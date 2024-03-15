@@ -39,6 +39,7 @@
   <string name="share_with_title">Udostępnij</string>
   <string name="share_with_email_hint">Adres e-mail</string>
   <string name="share_with_email_error">Adres e-mail jest nieprawidłowy</string>
+  <string name="share_with_email_cannot_invite_outside_org">Nie możesz zapraszać osoby spoza swojej organizacji, skontaktuj się z administratorem po więcej informacji.</string>
   <string name="share_permissions_title">Ustaw uprawnienia</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s udostępnia Ci sejf</string>
   <string name="sharing_join_shared_vault">Dołącz i synchronizuj</string>
@@ -104,7 +105,12 @@
   <string name="sharing_snackbar_transfer_ownership_success">Właściciel został zmieniony</string>
   <string name="sharing_snackbar_transfer_ownership_error">Wystąpił błąd podczas zmiany właściciela</string>
   <string name="sharing_invites_info_dialog_title">Limit użytkowników</string>
-  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">Sejf nie może zawierać więcej niż %1$d użytkowników. Możesz zaprosić jeszcze %2$d użytkowników.</string>
+  <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
+    <item quantity="one">This vault can have up to %1$d members. You still have %2$d invite left.</item>
+    <item quantity="few">Sejf nie może zawierać więcej niż %1$d użytkowników. Możesz zaprosić jeszcze %2$d użytkowników.</item>
+    <item quantity="many">Sejf nie może zawierać więcej niż %1$d użytkowników. Możesz zaprosić jeszcze %2$d użytkowników.</item>
+    <item quantity="other">Sejf nie może zawierać więcej niż %1$d użytkowników. Możesz zaprosić jeszcze %2$d użytkowników.</item>
+  </plurals>
   <string name="sharing_limit_reached">Osiągnięto limit użytkowników i zaproszeń sejfu.</string>
   <string name="sharing_invites_info_upgrade_text">Ulepsz konto, aby zaprosić więcej użytkowników.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Udostępnij</string>
@@ -123,4 +129,6 @@
   <string name="sharing_edit_permissions_remove_user">Usuń użytkownika</string>
   <string name="sharing_error_dialog_title">Wystąpił nieznany błąd</string>
   <string name="sharing_error_dialog_message">Wystąpił problem podczas wysyłania zaproszenia do sejfu. Jeśli problem będzie się powtarzał, skontaktuj się ze wsparciem klienta.</string>
+  <string name="sharing_with_no_addresses_can_be_invited">Adresy nie mogą zostać zaproszone</string>
+  <string name="sharing_with_some_addresses_cannot_be_invited">Niektóre adresy nie mogą zostać zaproszone</string>
 </resources>

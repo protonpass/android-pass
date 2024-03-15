@@ -11,6 +11,7 @@
   <string name="migrate_item_success_snackbar">Items moved</string>
   <string name="migrate_item_error_snackbar">Error moving the items</string>
   <string name="migrate_item_some_not_migrated_error_snackbar">Error moving some of the items</string>
+  <string name="migrate_item_warning_history">Moving items will reset their history</string>
   <string name="migrate_all_items_success_snackbar">Всі елементи переміщено</string>
   <string name="migrate_all_items_error_snackbar">Помилка переміщення всіх елементів сховища</string>
   <string name="migrate_init_error_snackbar">Не вдалося підготувати екран перенесення</string>

@@ -5,7 +5,7 @@
   <string name="sort_by_title_desc">Název (Z-A)</string>
   <string name="sort_by_creation_asc">Od nejstarších k nejnovějším</string>
   <string name="sort_by_creation_desc">Od nejnovějších k nejstarším</string>
-  <string name="sort_by_modification_date">Nejnovější</string>
+  <string name="sort_by_modification_date">Recently used</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Vše</string>
   <string name="item_list_header_pinned_search_results">Připnuto</string>
@@ -25,6 +25,7 @@
   <string name="bottomsheet_move_to_trash">Přesunout do koše</string>
   <string name="bottomsheet_pin_item">Připnout</string>
   <string name="bottomsheet_unpin_item">Odepnout</string>
+  <string name="bottomsheet_view_item_history">View history</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Otevřít nabídku akcí položky</string>
   <string name="action_upgrade_now">Navýšit nyní</string>
@@ -58,11 +59,11 @@
   <string name="most_recent_yesterday">Včera</string>
   <string name="most_recent_this_week">Tento týden</string>
   <string name="most_recent_last_two_weeks">Poslední dva týdny</string>
-  <string name="most_recent_last_30_days">Posledních 30 dní</string>
+  <string name="most_recent_last_30_days">Last month</string>
   <string name="most_recent_last_60_days">Posledních 60 dní</string>
   <string name="most_recent_last_90_days">Posledních 90 dní</string>
   <string name="most_recent_within_the_last_year">Minulý rok</string>
-  <string name="most_recent_more_than_1_year">Více než 1 rok</string>
+  <string name="most_recent_more_than_1_year">Older than 1 year</string>
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">Ikona vyhledávání</string>
   <!-- Select Vault BottomSheet -->
@@ -87,5 +88,40 @@
   <string name="label_password_strength_weak">Slabé</string>
   <!-- Pinning -->
   <string name="pinning_carousel_see_all">Zobrazit vše</string>
+  <!-- Dates -->
+  <string name="date_today" comment="Pattern to display today's date and time. (e.g. Today 10:25)">Dnes %s</string>
+  <string name="date_yesterday" comment="Pattern to display yesterday's date and time. (e.g. Yesterday 10:25)">Včera %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">dd LLLL HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">dd LLLL rrrr HH:mm</string>
+  <!-- Items -->
+  <string name="item_details_alias_section_alias_title">Alias address</string>
+  <string name="item_details_alias_section_mailboxes_title">Forwarding to</string>
+  <string name="item_details_credit_card_section_cardholder_title">Name on card</string>
+  <string name="item_details_credit_card_section_card_number_title">Card number</string>
+  <string name="item_details_credit_card_section_expiration_date_title">Datum vypršení</string>
+  <string name="item_details_credit_card_section_cvv_title">Security code</string>
+  <string name="item_details_credit_card_section_pin_title">PIN code</string>
+  <string name="item_details_login_section_username_title">Uživatelské jméno nebo e-mailová adresa</string>
+  <string name="item_details_login_section_password_title">Password</string>
+  <string name="item_details_login_section_primary_totp_title">2FA token (TOTP)</string>
+  <string name="item_details_login_section_websites_title">Websites</string>
+  <string name="item_details_shared_section_note_title">Note</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Verze aplikace již není podporována, aktualizujte prosím svou aplikaci.</string>
+  <!-- Passkeys -->
+  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Passkey</string>
+  <!-- Upgrade -->
+  <string name="dialog_upgrade_plan_title">Upgrade plan?</string>
+  <string name="dialog_upgrade_plan_message">This feature is not available for free tier users. If you want to enjoy this along with other cool features, upgrade your plan and give it a try!</string>
+  <string name="dialog_upgrade_plan_action_confirm">Upgrade</string>
+  <string name="dialog_upgrade_plan_action_cancel">Not now</string>
 </resources>

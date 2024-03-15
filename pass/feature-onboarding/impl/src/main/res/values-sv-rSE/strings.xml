@@ -5,7 +5,7 @@
   <string name="on_boarding_autofill_button">Fyll automatiskt med Proton Pass</string>
   <string name="on_boarding_fingerprint_content">Ställ in Proton Pass för att låsa upp med ditt fingeravtryck så att bara du har åtkomst.</string>
   <string name="on_boarding_fingerprint_title">Skydda dina mest känsliga data</string>
-  <string name="on_boarding_fingerprint_button">Aktivera fingeravtrycksupplåsning</string>
+  <string name="on_boarding_fingerprint_button">Aktivera fingeravtryckslås</string>
   <string name="on_boarding_last_page_content">Sluta dela din riktiga e-postadress. Dölj den istället med e-postalias – ett exklusivt Proton Pass.</string>
   <string name="on_boarding_last_page_title">Kontrollera vad som hamnar i din inkorg</string>
   <string name="on_boarding_last_page_button">Börja använda Proton Pass</string>
@@ -16,6 +16,6 @@
   <string name="on_boarding_pending_invite_button">Lär dig mer om Proton Pass</string>
   <string name="error_biometry_failed_to_start">Kunde inte starta den biometriska autentiseringen</string>
   <string name="error_biometry_failed_to_authenticate">Misslyckades att autentisera</string>
-  <string name="settings_fingerprint_lock_enabled">Fingeravtrycksupplåsning aktiverat</string>
+  <string name="settings_fingerprint_lock_enabled">Fingeravtryckslås aktiverat</string>
   <string name="error_performing_operation">Gick inte utföra åtgärd</string>
 </resources>

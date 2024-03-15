@@ -103,8 +103,8 @@
     <item quantity="other">Flytte %d elementer til papirkurven?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
-    <item quantity="one">Er du sikker på at du vil flytte elementet til papirkurven?</item>
-    <item quantity="other">Er du sikker på at du vil flytte de %d elementene til papirkurven?</item>
+    <item quantity="one">Er du sikker på at du ønsker å flytte elementet til papirkurven?</item>
+    <item quantity="other">Er du sikker på at du ønsker å flytte %d elementer til papirkurven?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
     <item quantity="one">Slette permanent %d element?</item>

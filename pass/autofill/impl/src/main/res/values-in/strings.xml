@@ -10,14 +10,7 @@
   <string name="autofill_dialog_cancel">Batalkan</string>
   <string name="autofill_notification_copy_to_clipboard">Kode TOTP disalin ke papan klip</string>
   <string name="autofill_dialog_associate_title">Gunakan entri masuk?</string>
-  <string name="snackbar_item_move_to_trash_success">Item dipindahkan ke sampah</string>
-  <string name="snackbar_item_move_to_trash_error">Tidak dapat memindahkan ke tempat sampah</string>
-  <string name="snackbar_item_copy_username_success">Nama pengguna disalin ke papan klip</string>
-  <string name="snackbar_item_copy_password_success">Kata sandi disalin ke papan klip</string>
-  <string name="snackbar_item_copy_clipboard_error">Tidak dapat menyalin ke papan klip</string>
   <string name="autofill_user_logged_out">Anda telah keluar dari akun. Silakan masuk kembali dengan membuka aplikasi.</string>
-  <string name="bottomsheet_copy_password">Salin kata sandi</string>
-  <string name="bottomsheet_copy_username">Salin nama pengguna</string>
   <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Isi rincian kartu secara otomatis</string>
   <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Isi otomatis rincian kartu adalah fitur berbayar. Jika Anda mau Proton Pass mengisi rincian kartu Anda secara otomatis untuk aplikasi dan situs web, silakan tingkatkan ke langganan berbayar.</string>
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Konfirmasi tindakan Anda</string>

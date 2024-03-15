@@ -57,7 +57,6 @@
   <!-- Create Alias -->
   <string name="title_create_alias">Utwórz alias</string>
   <string name="field_alias_title">Alias</string>
-  <string name="field_alias_hint">Nazwa użytkownika</string>
   <string name="field_mailboxes_creation_title">Przekaż do</string>
   <string name="field_mailboxes_edit_title">Przekaż do</string>
   <string name="field_alias_you_are_about_to_create">Utworzysz</string>
@@ -113,4 +112,6 @@
   <string name="select_mailbox_upgrade_for_more_inboxes">Ulepsz konto, aby uzyskać większą liczbę skrzynek odbiorczych</string>
   <string name="create_alias_content_limit_banner">Osiągnięto maksymalną liczbę aliasów, które możesz utworzyć. Ulepsz subskrypcję, aby utworzyć nieograniczoną liczbę aliasów.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Zaktualizuj aplikację, aby edytować element</string>
+  <string name="remove_passkey_dialog_title">Usunąć klucz dostępu?</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Zamierzasz usunąć klucz dostępu dla użytkownika \'%1$s\' dla \'%2$s\'. Jesteś pewny?</string>
 </resources>

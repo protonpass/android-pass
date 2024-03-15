@@ -99,7 +99,7 @@
     <item quantity="other">%d개 항목을 휴지통에 이동할까요?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
-    <item quantity="other">정말 %d개 항목(들)을 휴지통으로 이동할까요?</item>
+    <item quantity="other">정말 항목 %d개를 쓰레기통으로 이동하시겠습니까?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
     <item quantity="other">%d개 항목을 완전 삭제할까요?</item>

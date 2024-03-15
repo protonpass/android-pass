@@ -5,7 +5,7 @@
   <string name="sort_by_title_desc">Título (Z-A)</string>
   <string name="sort_by_creation_asc">De más antiguo a más reciente</string>
   <string name="sort_by_creation_desc">De más reciente a más antiguo</string>
-  <string name="sort_by_modification_date">Más reciente</string>
+  <string name="sort_by_modification_date">Usado recientemente</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Todos</string>
   <string name="item_list_header_pinned_search_results">Anclado</string>
@@ -23,6 +23,7 @@
   <string name="bottomsheet_move_to_trash">Mover a la papelera</string>
   <string name="bottomsheet_pin_item">Anclar</string>
   <string name="bottomsheet_unpin_item">Desanclar</string>
+  <string name="bottomsheet_view_item_history">Ver historial</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Abrir menú de acciones del elemento</string>
   <string name="action_upgrade_now">Mejorar ahora</string>
@@ -56,7 +57,7 @@
   <string name="most_recent_yesterday">Ayer</string>
   <string name="most_recent_this_week">Esta semana</string>
   <string name="most_recent_last_two_weeks">Últimas dos semanas</string>
-  <string name="most_recent_last_30_days">Últimos 30 días</string>
+  <string name="most_recent_last_30_days">Último mes</string>
   <string name="most_recent_last_60_days">Últimos 60 días</string>
   <string name="most_recent_last_90_days">Últimos 90 días</string>
   <string name="most_recent_within_the_last_year">Dentro del año anterior</string>
@@ -83,5 +84,40 @@
   <string name="label_password_strength_weak">Débil</string>
   <!-- Pinning -->
   <string name="pinning_carousel_see_all">Ver todo</string>
+  <!-- Dates -->
+  <string name="date_today" comment="Pattern to display today's date and time. (e.g. Today 10:25)">Hoy %s</string>
+  <string name="date_yesterday" comment="Pattern to display yesterday's date and time. (e.g. Yesterday 10:25)">Ayer %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">dd \'de\' LLLL HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">dd \'de\' LLLL \'de\' yyyy HH:mm</string>
+  <!-- Items -->
+  <string name="item_details_alias_section_alias_title">Dirección del alias</string>
+  <string name="item_details_alias_section_mailboxes_title">Reenviando a</string>
+  <string name="item_details_credit_card_section_cardholder_title">Titular de la tarjeta</string>
+  <string name="item_details_credit_card_section_card_number_title">Número de tarjeta</string>
+  <string name="item_details_credit_card_section_expiration_date_title">Fecha de vencimiento</string>
+  <string name="item_details_credit_card_section_cvv_title">Código de seguridad</string>
+  <string name="item_details_credit_card_section_pin_title">Código PIN</string>
+  <string name="item_details_login_section_username_title">Nombre de usuario o dirección de correo electrónico</string>
+  <string name="item_details_login_section_password_title">Contraseña</string>
+  <string name="item_details_login_section_primary_totp_title">Token 2FA (TOTP)</string>
+  <string name="item_details_login_section_websites_title">Sitios web</string>
+  <string name="item_details_shared_section_note_title">Nota</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">La versión de la app ya no es compatible, actualice su app.</string>
+  <!-- Passkeys -->
+  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Clave de acceso</string>
+  <!-- Upgrade -->
+  <string name="dialog_upgrade_plan_title">¿Mejorar plan?</string>
+  <string name="dialog_upgrade_plan_message">Esta función no está disponible para usuarios del plan gratuito. Si desea disfrutar de esto junto con otras funciones interesantes, mejore su plan y pruébelo.</string>
+  <string name="dialog_upgrade_plan_action_confirm">Mejorar</string>
+  <string name="dialog_upgrade_plan_action_cancel">Ahora no</string>
 </resources>

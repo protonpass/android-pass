@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Sorting -->
+  <string name="sort_by_title_asc">Naslov (A–Z)</string>
+  <string name="sort_by_title_desc">Naslov (Z–A)</string>
+  <string name="sort_by_creation_asc">Od starejšega do najnovejšega</string>
+  <string name="sort_by_creation_desc">Od najnovejšega do najstarejšega</string>
+  <string name="sort_by_modification_date">Nedavno uporabljeno</string>
+  <!-- List header results -->
+  <string name="item_list_header_all_search_results">Vse</string>
+  <string name="item_list_header_pinned_search_results">Pripeto</string>
+  <string name="item_list_header_logins_type">Prijave</string>
+  <string name="item_list_header_aliases_type">Vzdevki</string>
+  <string name="item_list_header_notes_type">Opombe</string>
+  <string name="item_list_header_credit_cards_type">Kreditne kartice</string>
+  <plurals name="item_list_header_results">
+    <item quantity="one">rezultat</item>
+    <item quantity="two">rezultati</item>
+    <item quantity="few">rezultati</item>
+    <item quantity="other">rezultatov</item>
+  </plurals>
+  <!-- Bottomsheets -->
+  <string name="bottomsheet_confirm_button">Potrdi</string>
+  <string name="bottomsheet_cancel_button">Prekliči</string>
+  <string name="bottomsheet_move_to_trash">Premakni v smetnjak</string>
+  <string name="bottomsheet_pin_item">Pripni</string>
+  <string name="bottomsheet_unpin_item">Odpni</string>
+  <string name="bottomsheet_view_item_history">Prikaži zgodovino</string>
+  <!-- Actions -->
+  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Odpri meni z dejanji predmeta</string>
+  <string name="action_upgrade_now">Nadgradi zdaj</string>
+  <!-- Empty list -->
+  <string name="empty_list_title">Dodajte svoj prvi predmet</string>
+  <string name="empty_search_results_title">Ne najdem rezultatov</string>
+  <string name="empty_list_open_extension">Obiščite spletno razširitev</string>
+  <string name="empty_list_create_item_button">Ustvari nov element</string>
+  <!-- Field -->
+  <string name="field_title_title">Naslov</string>
+  <string name="field_title_hint">Brez naslova</string>
+  <string name="field_title_required">Vnesite naslov</string>
+  <string name="small_cross_icon_content_description">Ikona majhnega križa</string>
+  <string name="field_note_title">Opomba</string>
+  <string name="field_note_hint">Dodaj opombo</string>
+  <string name="linked_apps_title">Povezane aplikacije</string>
+  <!-- Indicator that indicates lack of internet connectivity -->
+  <string name="indicator_no_network">Brez povezave</string>
+  <!-- Icon content description -->
+  <string name="missing_app_icon_content_description">Manjka ikona aplikacije</string>
+  <string name="add_item_icon_content_description">Ikona za dodajanje predmeta</string>
+  <string name="navigate_back_icon_content_description">Ikona za navigacijo nazaj</string>
+  <!-- Vault selector -->
+  <string name="vault_selector_title">Trezor</string>
+  <!-- Bottom bar -->
+  <string name="bottom_bar_list_items_icon_content_description">Seznam predmetov</string>
+  <string name="bottom_bar_add_item_icon_content_description">Dodaj predmet</string>
+  <string name="bottom_bar_profile_icon_content_description">Profil</string>
+  <!-- List group by most recents -->
+  <string name="most_recent_today">Danes</string>
+  <string name="most_recent_yesterday">Včeraj</string>
+  <string name="most_recent_this_week">Ta teden</string>
+  <string name="most_recent_last_two_weeks">Zadnja dva tedna</string>
+  <string name="most_recent_last_30_days">Prejšnji mesec</string>
+  <string name="most_recent_last_60_days">Zadnjih 60 dni</string>
+  <string name="most_recent_last_90_days">Zadnjih 90 dni</string>
+  <string name="most_recent_within_the_last_year">V zadnjem letu</string>
+  <string name="most_recent_more_than_1_year">Starejše od 1 leta</string>
+  <!-- Search Top Bar -->
+  <string name="search_topbar_icon_content_description">Ikona za iskanje</string>
+  <!-- Select Vault BottomSheet -->
+  <plurals name="bottomsheet_select_vault_item_count">
+    <item quantity="one">1 predmet</item>
+    <item quantity="two">%d predmeta</item>
+    <item quantity="few">%d predmeti</item>
+    <item quantity="other">%d predmetov</item>
+  </plurals>
+  <!-- Confirm close dialog -->
+  <string name="confirm_close_dialog_title">Zavrzi spremembe?</string>
+  <string name="confirm_close_dialog_message">Imate neshranjene spremembe. Ste prepričani, da jih želite zavreči?</string>
+  <string name="confirm_close_dialog_close_button">Zavrzi</string>
+  <!-- Upgrade -->
+  <string name="upgrade">Nadgradi</string>
+  <!-- Advanced options -->
+  <string name="show_advanced_options">Napredne nastavitve</string>
+  <string name="hide_advanced_options">Skrij napredne možnosti</string>
+  <!-- Labels -->
+  <string name="label_password_strength_strong">Močno</string>
+  <string name="label_password_strength_vulnerable">Slab</string>
+  <string name="label_password_strength_weak">Šibko</string>
+  <!-- Pinning -->
+  <string name="pinning_carousel_see_all">Poglejte vse</string>
+  <!-- Dates -->
+  <string name="date_today" comment="Pattern to display today's date and time. (e.g. Today 10:25)">Danes %s</string>
+  <string name="date_yesterday" comment="Pattern to display yesterday's date and time. (e.g. Yesterday 10:25)">Včeraj %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">dd LLLL HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+  <!-- Items -->
+  <string name="item_details_alias_section_alias_title">Naslov vzdevka</string>
+  <string name="item_details_alias_section_mailboxes_title">Posredovanje na</string>
+  <string name="item_details_credit_card_section_cardholder_title">Ime na kartici</string>
+  <string name="item_details_credit_card_section_card_number_title">Številka kartice</string>
+  <string name="item_details_credit_card_section_expiration_date_title">Datum poteka</string>
+  <string name="item_details_credit_card_section_cvv_title">Varnostna koda</string>
+  <string name="item_details_credit_card_section_pin_title">PIN koda</string>
+  <string name="item_details_login_section_username_title">Uporabniško ime ali elektronski naslov</string>
+  <string name="item_details_login_section_password_title">Geslo</string>
+  <string name="item_details_login_section_primary_totp_title">Žeton 2FA (TOTP)</string>
+  <string name="item_details_login_section_websites_title">Spletne strani</string>
+  <string name="item_details_shared_section_note_title">Opomba</string>
+  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Ta različica ni več podprta, prosimo posodobite aplikacijo.</string>
+  <!-- Passkeys -->
+  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Identifikacijski ključ</string>
+  <!-- Upgrade -->
+  <string name="dialog_upgrade_plan_title">Nadgradi paket?</string>
+  <string name="dialog_upgrade_plan_message">Ta funkcija ni na voljo za uporabnike brezplačnega paketa. Če želite uporabljati to in še mnogo drugih funkcij, nadgradite paket in jo preizkusite!</string>
+  <string name="dialog_upgrade_plan_action_confirm">Nadgradi</string>
+  <string name="dialog_upgrade_plan_action_cancel">Ne zdaj</string>
+</resources>

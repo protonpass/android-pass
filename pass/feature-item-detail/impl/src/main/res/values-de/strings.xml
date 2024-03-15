@@ -46,7 +46,7 @@
   <string name="more_info_title">Weitere Informationen</string>
   <string name="more_info_icon">Weitere Informationen-Symbol</string>
   <plurals name="more_info_modified_times">
-    <item quantity="one">Einmal</item>
+    <item quantity="one">%d Mal</item>
     <item quantity="other">%d Mal</item>
   </plurals>
   <string name="more_info_last_time_modified">Letztes Mal, %s</string>
@@ -90,8 +90,16 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Du kannst diesen Eintrag nicht bearbeiten, da er sich im Papierkorb befindet. Bitte entferne ihn aus dem Papierkorb, um ihn zu bearbeiten.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Teilen nicht möglich</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Deine Berechtigungen reichen nicht aus, um diesen Tresor freizugeben.</string>
-  <string name="item_detail_cannot_perform_action_share_limit_reached">Du hast das Limit für die Tresorfreigabe erreicht. Um mehr Tresore gemeinsam nutzen zu können, aktualisiere bitte deinen aktuellen Tarif.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">Du hast das Limit für das Teilen von Tresoren erreicht. Um mehr Tresore gemeinsam nutzen zu können, upgrade bitte dein aktueles Abonnement.</string>
+  <string name="item_detail_history_created">Erstellt</string>
+  <string name="item_detail_history_modified_last">Zuletzt geändert</string>
+  <string name="item_detail_history_button_view">Eintragsverlauf anzeigen</string>
   <string name="password_score_vulnerable">Verwundbar</string>
   <string name="password_score_weak">Schwach</string>
   <string name="password_score_strong">Stark</string>
+  <string name="passkey_detail_bottomsheet_title">Passkey</string>
+  <string name="passkey_detail_bottomsheet_username">Benutzername</string>
+  <string name="passkey_detail_bottomsheet_domain">Domain</string>
+  <string name="passkey_detail_bottomsheet_key">Key</string>
+  <string name="passkey_detail_bottomsheet_created">Erstellt</string>
 </resources>

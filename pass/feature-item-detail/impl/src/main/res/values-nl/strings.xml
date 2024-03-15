@@ -27,9 +27,9 @@
   <string name="item_restored_message">Item hersteld</string>
   <string name="item_restored_message_error">Fout bij herstellen van item</string>
   <string name="item_pinned_message">Item succesvol vastgezet</string>
-  <string name="item_pinned_message_error">There was an error pinning this item</string>
+  <string name="item_pinned_message_error">Fout bij het vastmaken van dit item</string>
   <string name="item_unpinned_message">Item succesvol losgemaakt</string>
-  <string name="item_unpinned_message_error">There was an error unpinning this item</string>
+  <string name="item_unpinned_message_error">Er is een fout opgetreden bij het losmaken van dit item</string>
   <string name="login_item_generate_totp_error">Fout bij genereren van 2FA-code</string>
   <string name="login_item_view_alias_button">Alias bekijken</string>
   <string name="field_username">Gebruikersnaam of e-mailadres</string>
@@ -46,7 +46,7 @@
   <string name="more_info_title">Meer informatie</string>
   <string name="more_info_icon">Meer info icoon</string>
   <plurals name="more_info_modified_times">
-    <item quantity="one">Één keer</item>
+    <item quantity="one">%d keer</item>
     <item quantity="other">%d keren</item>
   </plurals>
   <string name="more_info_last_time_modified">Laatste keer, %s</string>
@@ -65,7 +65,7 @@
   <string name="credit_card_expiration_date_field_name">Verloopdatum</string>
   <string name="credit_card_cardholder_copied_to_clipboard">Kaarthouder gekopieerd naar klembord</string>
   <string name="credit_card_number_copied_to_clipboard">Kaartnummer gekopieerd naar klembord</string>
-  <string name="credit_card_verifcation_number_copied_to_clipboard">Security code copied to clipboard</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">Beveiligingscode gekopieerd naar klembord</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Verplaats naar prullenbak</string>
   <string name="migrate_item_detail_bottom_sheet">Verplaatsen naar andere kluis</string>
@@ -90,8 +90,16 @@
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">U kan dit item niet wijzigen omdat het in de prullenbak zit. Verplaats het uit de prullenbak voordat u het wijzigt.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Kan niet delen</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">U heeft onvoldoende machtigingen om deze kluis te delen.</string>
-  <string name="item_detail_cannot_perform_action_share_limit_reached">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">U heeft de limiet van het delen van kluis bereikt. Upgrade uw huidige abonnement om meer kluizen te delen.</string>
+  <string name="item_detail_history_created">Aangemaakt</string>
+  <string name="item_detail_history_modified_last">Voor het laatst gewijzigd</string>
+  <string name="item_detail_history_button_view">Bekijk item geschiedenis</string>
   <string name="password_score_vulnerable">Kwetsbaar</string>
   <string name="password_score_weak">Zwak</string>
   <string name="password_score_strong">Sterk</string>
+  <string name="passkey_detail_bottomsheet_title">Toegangssleutel</string>
+  <string name="passkey_detail_bottomsheet_username">Gebruikersnaam</string>
+  <string name="passkey_detail_bottomsheet_domain">Domein</string>
+  <string name="passkey_detail_bottomsheet_key">Sleutel</string>
+  <string name="passkey_detail_bottomsheet_created">Aangemaakt</string>
 </resources>

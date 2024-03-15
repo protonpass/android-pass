@@ -57,7 +57,6 @@
   <!-- Create Alias -->
   <string name="title_create_alias">Créer un alias</string>
   <string name="field_alias_title">Adresse de l\'alias</string>
-  <string name="field_alias_hint">Nom d\'utilisateur de l\'alias</string>
   <string name="field_mailboxes_creation_title">Transférer vers</string>
   <string name="field_mailboxes_edit_title">Transfert vers</string>
   <string name="field_alias_you_are_about_to_create">Vous êtes sur le point de créer</string>
@@ -97,8 +96,8 @@
   <string name="changes_saved">Les modifications ont été enregistrées.</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">Clé secrète A2F (TOTP)</string>
-  <string name="totp_create_login_field_invalid">La clé secrète A2F n\'est pas valide.</string>
-  <string name="totp_create_login_field_placeholder">Ajoutez une clé secrète A2F.</string>
+  <string name="totp_create_login_field_invalid">La clé secrète A2F (TOTP) n\'est pas valide.</string>
+  <string name="totp_create_login_field_placeholder">Ajouter une clé secrète A2F (TOTP)</string>
   <string name="close_scree_icon_content_description">Bouton de fermeture de l\'écran</string>
   <string name="totp_paste_code_action">Coller le code</string>
   <string name="totp_scan_code_action">Scanner le code</string>
@@ -113,4 +112,6 @@
   <string name="select_mailbox_upgrade_for_more_inboxes">Changez d\'abonnement pour plus de boites de réception</string>
   <string name="create_alias_content_limit_banner">Vous avez atteint le nombre maximum d\'alias que vous pouvez créer. Changez d\'abonnement pour créer un nombre illimité d\'alias.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">L\'application doit être mise à jour pour modifier cet élément.</string>
+  <string name="remove_passkey_dialog_title">Supprimer cette clé d\'identification ?</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Vous êtes sur le point de retirer la clé d\'identification pour l\'utilisateur %1$s pour %2$s. Êtes-vous sûr(e) ?</string>
 </resources>

@@ -5,7 +5,7 @@
   <string name="sort_by_title_desc">Rubrik (Ö-A)</string>
   <string name="sort_by_creation_asc">Äldsta till nyaste</string>
   <string name="sort_by_creation_desc">Nyaste till äldsta</string>
-  <string name="sort_by_modification_date">Senaste</string>
+  <string name="sort_by_modification_date">Nyligen använd</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Alla</string>
   <string name="item_list_header_pinned_search_results">Fäst</string>
@@ -23,6 +23,7 @@
   <string name="bottomsheet_move_to_trash">Flytta till papperskorg</string>
   <string name="bottomsheet_pin_item">Fäst</string>
   <string name="bottomsheet_unpin_item">Lossa</string>
+  <string name="bottomsheet_view_item_history">Visa historik</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Öppna åtgärdsmeny för objekt</string>
   <string name="action_upgrade_now">Uppgradera nu</string>
@@ -56,11 +57,11 @@
   <string name="most_recent_yesterday">Igår</string>
   <string name="most_recent_this_week">Denna vecka</string>
   <string name="most_recent_last_two_weeks">Senaste två veckorna</string>
-  <string name="most_recent_last_30_days">Senaste 30 dagarna</string>
+  <string name="most_recent_last_30_days">Förra månaden</string>
   <string name="most_recent_last_60_days">Senaste 60 dagarna</string>
   <string name="most_recent_last_90_days">Senaste 90 dagarna</string>
   <string name="most_recent_within_the_last_year">Under det senaste året</string>
-  <string name="most_recent_more_than_1_year">Mer än 1 år</string>
+  <string name="most_recent_more_than_1_year">Äldre än 1 år</string>
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">Ikon för “Sök“</string>
   <!-- Select Vault BottomSheet -->
@@ -83,5 +84,40 @@
   <string name="label_password_strength_weak">Svagt</string>
   <!-- Pinning -->
   <string name="pinning_carousel_see_all">Se alla</string>
+  <!-- Dates -->
+  <string name="date_today" comment="Pattern to display today's date and time. (e.g. Today 10:25)">Idag %s</string>
+  <string name="date_yesterday" comment="Pattern to display yesterday's date and time. (e.g. Yesterday 10:25)">Igår %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">dd LLLL HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+  <!-- Items -->
+  <string name="item_details_alias_section_alias_title">Alias-adress</string>
+  <string name="item_details_alias_section_mailboxes_title">Vidarebefordrad till</string>
+  <string name="item_details_credit_card_section_cardholder_title">Namn på kort</string>
+  <string name="item_details_credit_card_section_card_number_title">Kortnummer</string>
+  <string name="item_details_credit_card_section_expiration_date_title">Utgångsdatum</string>
+  <string name="item_details_credit_card_section_cvv_title">Säkerhetskod</string>
+  <string name="item_details_credit_card_section_pin_title">PIN-kod</string>
+  <string name="item_details_login_section_username_title">Användarnamn eller e-postadress</string>
+  <string name="item_details_login_section_password_title">Lösenord</string>
+  <string name="item_details_login_section_primary_totp_title">2FA-token (TOTP)</string>
+  <string name="item_details_login_section_websites_title">Webbplatser</string>
+  <string name="item_details_shared_section_note_title">Anteckning</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Appversionen stöds inte längre, uppdatera din app.</string>
+  <!-- Passkeys -->
+  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Passkey</string>
+  <!-- Upgrade -->
+  <string name="dialog_upgrade_plan_title">Uppgradera paket?</string>
+  <string name="dialog_upgrade_plan_message">Denna funktion är inte tillgänglig för gratisnivåanvändare. Om du vill njuta av detta tillsammans med andra coola funktioner, uppgradera ditt paket och prova!</string>
+  <string name="dialog_upgrade_plan_action_confirm">Uppgradera</string>
+  <string name="dialog_upgrade_plan_action_cancel">Inte nu</string>
 </resources>

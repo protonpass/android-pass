@@ -13,8 +13,8 @@
   <string name="profile_option_autofill_subtitle">Συμπληρώστε αυτόματα τα ονόματα χρήστη και τους κωδικούς πρόσβασής σας.</string>
   <string name="profile_error_biometry_failed_to_start">Αδυναμία εκκίνησης της βιομετρικής ταυτοποίησης</string>
   <string name="profile_error_biometry_failed_to_authenticate">Αποτυχία επαλήθευσης</string>
-  <string name="profile_fingerprint_lock_enabled">Ενεργοποιημένο ξεκλείδωμα δακτυλικών αποτυπωμάτων</string>
-  <string name="profile_fingerprint_lock_disabled">Απενεργοποιημένο ξεκλείδωμα δακτυλικών αποτυπωμάτων</string>
+  <string name="profile_fingerprint_lock_enabled">Ενεργοποιημένο κλείδωμα δακτυλικών αποτυπωμάτων</string>
+  <string name="profile_fingerprint_lock_disabled">Απενεργοποιημένο κλείδωμα δακτυλικών αποτυπωμάτων</string>
   <string name="profile_error_performing_operation">Σφάλμα κατά την εκτέλεση της λειτουργίας</string>
   <string name="profile_app_version_copied_to_clipboard">Η έκδοση της εφαρμογής αντιγράφηκε</string>
   <string name="feedback_option_reddit">Ρίξτε μια ματιά στο Proton στο Reddit</string>

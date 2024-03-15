@@ -5,7 +5,7 @@
   <string name="sort_by_title_desc">제목 (Z-A)</string>
   <string name="sort_by_creation_asc">오래된 항목 순</string>
   <string name="sort_by_creation_desc">최신 항목 순</string>
-  <string name="sort_by_modification_date">가장 최근순</string>
+  <string name="sort_by_modification_date">최근에 사용됨</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">전체</string>
   <string name="item_list_header_pinned_search_results">고정됨</string>
@@ -22,6 +22,7 @@
   <string name="bottomsheet_move_to_trash">휴지통으로 이동</string>
   <string name="bottomsheet_pin_item">고정</string>
   <string name="bottomsheet_unpin_item">고정 해제</string>
+  <string name="bottomsheet_view_item_history">기록 보기</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">항목을 액션 매뉴서 열기</string>
   <string name="action_upgrade_now">지금 업그레이드</string>
@@ -55,7 +56,7 @@
   <string name="most_recent_yesterday">어제</string>
   <string name="most_recent_this_week">이번 주</string>
   <string name="most_recent_last_two_weeks">지난 2주</string>
-  <string name="most_recent_last_30_days">최근 30일</string>
+  <string name="most_recent_last_30_days">지난 한 달</string>
   <string name="most_recent_last_60_days">최근 60일</string>
   <string name="most_recent_last_90_days">최근 90일</string>
   <string name="most_recent_within_the_last_year">작년 이내</string>
@@ -81,5 +82,40 @@
   <string name="label_password_strength_weak">약함</string>
   <!-- Pinning -->
   <string name="pinning_carousel_see_all">모두 보기</string>
+  <!-- Dates -->
+  <string name="date_today" comment="Pattern to display today's date and time. (e.g. Today 10:25)">오늘 %s</string>
+  <string name="date_yesterday" comment="Pattern to display yesterday's date and time. (e.g. Yesterday 10:25)">어제 %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">LLLL dd HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">yyyy LLLL dd HH:mm</string>
+  <!-- Items -->
+  <string name="item_details_alias_section_alias_title">별칭 주소</string>
+  <string name="item_details_alias_section_mailboxes_title">전달받는 주소</string>
+  <string name="item_details_credit_card_section_cardholder_title">카드 소유자명</string>
+  <string name="item_details_credit_card_section_card_number_title">카드 번호</string>
+  <string name="item_details_credit_card_section_expiration_date_title">유효기간 일자</string>
+  <string name="item_details_credit_card_section_cvv_title">보안 코드</string>
+  <string name="item_details_credit_card_section_pin_title">PIN 코드</string>
+  <string name="item_details_login_section_username_title">사용자 이름 또는 이메일 주소</string>
+  <string name="item_details_login_section_password_title">비밀번호</string>
+  <string name="item_details_login_section_primary_totp_title">2FA 토큰 (TOTP)</string>
+  <string name="item_details_login_section_websites_title">웹사이트</string>
+  <string name="item_details_shared_section_note_title">메모</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">더 이상 지원하지 않는 앱 버전입니다. 앱을 업데이트하십시오.</string>
+  <!-- Passkeys -->
+  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">패스키</string>
+  <!-- Upgrade -->
+  <string name="dialog_upgrade_plan_title">요금제를 업그레이드하시겠습니까?</string>
+  <string name="dialog_upgrade_plan_message">무료 플랜 사용자는 이용할 수 없는 기능입니다. 이 외에도 다른 멋진 기능들까지 즐겨보고 싶다면 요금제를 업그레이드하고 이용해보세요!</string>
+  <string name="dialog_upgrade_plan_action_confirm">업그레이드</string>
+  <string name="dialog_upgrade_plan_action_cancel">다음에</string>
 </resources>

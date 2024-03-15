@@ -35,6 +35,7 @@
   <string name="share_with_title">გაზიარება</string>
   <string name="share_with_email_hint">ელფოსტის მისამართი</string>
   <string name="share_with_email_error">არასწორი ელფოსტის მისამართი</string>
+  <string name="share_with_email_cannot_invite_outside_org">თქვენი ორგანიზაციის გარედან ხალხს ვერ მოიწვევთ. მეტი დეტალებისთვის დაუკავშირდით ადმინისტრატორს</string>
   <string name="share_permissions_title">წვდომის დონის დაყენება</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s გიწვევთ ელემენტებზე წვდომსთვის</string>
   <string name="sharing_join_shared_vault">შემოგვიერთდით და დასინქრონდით</string>
@@ -96,7 +97,10 @@
   <string name="sharing_snackbar_transfer_ownership_success">მფლობელობა გადაცემულია</string>
   <string name="sharing_snackbar_transfer_ownership_error">მფლობელობის გადაცემის შეცდომა</string>
   <string name="sharing_invites_info_dialog_title">წევრების ზღვარი</string>
-  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">თქვენს საცავს, %1$d-მდე წევრი, შეიძლება, ჰყავდეს. კიდევ დაგრჩათ %2$d მოსაწვევი.</string>
+  <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
+    <item quantity="one">თქვენს საცავს, %1$d-მდე წევრი, შეიძლება, ჰყავდეს. კიდევ დაგრჩათ %2$d მოსაწვევი.</item>
+    <item quantity="other">თქვენს საცავს, %1$d-მდე წევრი, შეიძლება, ჰყავდეს. კიდევ დაგრჩათ %2$d მოსაწვევი.</item>
+  </plurals>
   <string name="sharing_limit_reached">ამ საცავმა წევრებისა და მოსაწვევებს ზღვარს მიაღწია.</string>
   <string name="sharing_invites_info_upgrade_text">ასწიეთ ტრაფიკი ახლა, მეტის მოსაწვევად.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">გაზიარება</string>
@@ -115,4 +119,6 @@
   <string name="sharing_edit_permissions_remove_user">მომხმარებლის წაშლა</string>
   <string name="sharing_error_dialog_title">უცნობი შეცდომა</string>
   <string name="sharing_error_dialog_message">შეცდომა ამ საცავისთვის მოსაწვვის გაგზავნისას. თუ პრობლემა არ მოგვარდება, დაუკავშირდით მომხმარებლის მხარდაჭერის სერვისს.</string>
+  <string name="sharing_with_no_addresses_can_be_invited">მოსაწვევი მისამართების გარეშე</string>
+  <string name="sharing_with_some_addresses_cannot_be_invited">ზოგიერთი მისამართის მოწვევა შეძლებელია</string>
 </resources>

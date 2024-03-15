@@ -103,8 +103,8 @@
     <item quantity="other">%d Einträge in den Papierkorb verschieben?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
-    <item quantity="one">Soll dieses Element in den Papierkorb verschoben werden?</item>
-    <item quantity="other">Sollen diese %d Elemente in den Papierkorb verschoben werden?</item>
+    <item quantity="one">Bist du sicher, dass du den Eintrag in den Papierkorb verschieben willst?</item>
+    <item quantity="other">Bist du sicher, dass du %d Einträge in den Papierkorb verschieben willst?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
     <item quantity="one">%d Eintrag dauerhaft löschen?</item>

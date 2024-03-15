@@ -46,7 +46,7 @@
   <string name="more_info_title">Подробнее</string>
   <string name="more_info_icon">Иконка \"больше информации\"</string>
   <plurals name="more_info_modified_times">
-    <item quantity="one">Один раз</item>
+    <item quantity="one">%d раз</item>
     <item quantity="few">%d раза</item>
     <item quantity="many">%d раз</item>
     <item quantity="other">%d раз</item>
@@ -93,7 +93,15 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Невозможно поделиться</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">У вас недостаточно прав для совместного использования этого хранилища.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
+  <string name="item_detail_history_created">Created</string>
+  <string name="item_detail_history_modified_last">Дата последнего изменения</string>
+  <string name="item_detail_history_button_view">View item history</string>
   <string name="password_score_vulnerable">Уязвимый</string>
   <string name="password_score_weak">Слабый</string>
   <string name="password_score_strong">Надежный</string>
+  <string name="passkey_detail_bottomsheet_title">Passkey</string>
+  <string name="passkey_detail_bottomsheet_username">Имя пользователя</string>
+  <string name="passkey_detail_bottomsheet_domain">Домен</string>
+  <string name="passkey_detail_bottomsheet_key">Key</string>
+  <string name="passkey_detail_bottomsheet_created">Created</string>
 </resources>

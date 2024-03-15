@@ -5,10 +5,10 @@
   <string name="sort_by_title_desc">Titel (Z-A)</string>
   <string name="sort_by_creation_asc">Van oud naar nieuw</string>
   <string name="sort_by_creation_desc">Van nieuw naar oud</string>
-  <string name="sort_by_modification_date">Meest recent</string>
+  <string name="sort_by_modification_date">Onlangs gebruikt</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Alle</string>
-  <string name="item_list_header_pinned_search_results">Pinned</string>
+  <string name="item_list_header_pinned_search_results">Vastgemaakt</string>
   <string name="item_list_header_logins_type">Logins</string>
   <string name="item_list_header_aliases_type">Aliassen</string>
   <string name="item_list_header_notes_type">Notities</string>
@@ -21,8 +21,9 @@
   <string name="bottomsheet_confirm_button">Bevestigen</string>
   <string name="bottomsheet_cancel_button">Annuleer</string>
   <string name="bottomsheet_move_to_trash">Verplaats naar prullenbak</string>
-  <string name="bottomsheet_pin_item">Pin</string>
+  <string name="bottomsheet_pin_item">Vastpinnen</string>
   <string name="bottomsheet_unpin_item">Losmaken</string>
+  <string name="bottomsheet_view_item_history">Geschiedenis bekijken</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Actiemenu item openen</string>
   <string name="action_upgrade_now">Nu upgraden</string>
@@ -56,11 +57,11 @@
   <string name="most_recent_yesterday">Gisteren</string>
   <string name="most_recent_this_week">Deze week</string>
   <string name="most_recent_last_two_weeks">Afgelopen twee weken</string>
-  <string name="most_recent_last_30_days">Afgelopen 30 dagen</string>
+  <string name="most_recent_last_30_days">Afgelopen maand</string>
   <string name="most_recent_last_60_days">Afgelopen 60 dagen</string>
   <string name="most_recent_last_90_days">Afgelopen 90 dagen</string>
   <string name="most_recent_within_the_last_year">In het afgelopen jaar</string>
-  <string name="most_recent_more_than_1_year">Meer dan 1 jaar</string>
+  <string name="most_recent_more_than_1_year">Ouder dan 1 jaar</string>
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">Zoekpictogram</string>
   <!-- Select Vault BottomSheet -->
@@ -78,10 +79,45 @@
   <string name="show_advanced_options">Geavanceerde instellingen</string>
   <string name="hide_advanced_options">Verberg geavanceerde opties</string>
   <!-- Labels -->
-  <string name="label_password_strength_strong">Strong</string>
-  <string name="label_password_strength_vulnerable">Vulnerable</string>
-  <string name="label_password_strength_weak">Weak</string>
+  <string name="label_password_strength_strong">Sterk</string>
+  <string name="label_password_strength_vulnerable">Kwetsbaar</string>
+  <string name="label_password_strength_weak">Zwak</string>
   <!-- Pinning -->
   <string name="pinning_carousel_see_all">Alles weergeven</string>
-  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">The app version is not supported anymore, please update your app.</string>
+  <!-- Dates -->
+  <string name="date_today" comment="Pattern to display today's date and time. (e.g. Today 10:25)">Vandaag %s</string>
+  <string name="date_yesterday" comment="Pattern to display yesterday's date and time. (e.g. Yesterday 10:25)">Gisteren %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">dd LLLL HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+  <!-- Items -->
+  <string name="item_details_alias_section_alias_title">Alias adres</string>
+  <string name="item_details_alias_section_mailboxes_title">Doorsturen naar</string>
+  <string name="item_details_credit_card_section_cardholder_title">Naam op de kaart</string>
+  <string name="item_details_credit_card_section_card_number_title">Kaartnummer</string>
+  <string name="item_details_credit_card_section_expiration_date_title">Verloopdatum</string>
+  <string name="item_details_credit_card_section_cvv_title">Beveiligingscode</string>
+  <string name="item_details_credit_card_section_pin_title">Pincode</string>
+  <string name="item_details_login_section_username_title">Gebruikersnaam of e-mailadres</string>
+  <string name="item_details_login_section_password_title">Wachtwoord</string>
+  <string name="item_details_login_section_primary_totp_title">2FA-token (TOTP)</string>
+  <string name="item_details_login_section_websites_title">Websites</string>
+  <string name="item_details_shared_section_note_title">Notitie</string>
+  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">De app versie wordt niet meer ondersteund. Update uw app alstublieft.</string>
+  <!-- Passkeys -->
+  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Toegangssleutel</string>
+  <!-- Upgrade -->
+  <string name="dialog_upgrade_plan_title">Abonnement upgraden?</string>
+  <string name="dialog_upgrade_plan_message">Deze functie is niet beschikbaar voor gebruikers van de gratis versie. Upgrade uw abonnement wanneer u hiervan gebruik van wilt maken, samen met andere handige functies.</string>
+  <string name="dialog_upgrade_plan_action_confirm">Upgrade</string>
+  <string name="dialog_upgrade_plan_action_cancel">Niet nu</string>
 </resources>

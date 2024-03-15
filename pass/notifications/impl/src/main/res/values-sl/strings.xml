@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="updates_notification_channel_name">Posodobitve</string>
+  <string name="autofill_notification_channel_name">Samodejno izpolnjevanje</string>
+  <string name="autofill_notification_copy_to_clipboard_title">TOTP koda</string>
+  <string name="autofill_notification_copy_to_clipboard_body">TOTP je bil kopiran v odložišče</string>
+  <string name="updates_new_invite_received_title">Prejeli ste povabilo</string>
+  <string name="updates_new_invite_received_message">You have been invited to a vault. Open the app to see the invite and accept it.</string>
+</resources>

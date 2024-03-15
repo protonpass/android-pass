@@ -99,7 +99,7 @@
     <item quantity="other">Chuyển %d nội dung tới thùng rác?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
-    <item quantity="other">Bạn có muốn chuyển %d nội dung này tới thùng rác không?</item>
+    <item quantity="other">Are you sure you want to move %d items to the trash?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
     <item quantity="other">Xóa vĩnh viễn %d nội dung?</item>

@@ -35,6 +35,7 @@
   <string name="share_with_title">Deel met</string>
   <string name="share_with_email_hint">E-mailadres</string>
   <string name="share_with_email_error">Ongeldig e-mailadres</string>
+  <string name="share_with_email_cannot_invite_outside_org">U kunt geen mensen buiten uw organisatie uitnodigen, neem contact op met de beheerder voor meer informatie</string>
   <string name="share_permissions_title">Stel toegangsniveau in</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s nodigt u uit met toegang tot items in</string>
   <string name="sharing_join_shared_vault">Samenvoegen en synchroniseren.</string>
@@ -96,7 +97,10 @@
   <string name="sharing_snackbar_transfer_ownership_success">Eigendom overgedragen</string>
   <string name="sharing_snackbar_transfer_ownership_error">Error bij het overdragen van eigendom</string>
   <string name="sharing_invites_info_dialog_title">Limiet aantal leden</string>
-  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">Deze kluis kan tot %1$d leden hebben. U hebt nog %2$d uitnodigingen over.</string>
+  <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
+    <item quantity="one">Deze kluis kan tot %1$d leden hebben. U hebt nog %2$d uitnodigingen over.</item>
+    <item quantity="other">Deze kluis kan tot %1$d leden hebben. U hebt nog %2$d uitnodigingen over.</item>
+  </plurals>
   <string name="sharing_limit_reached">Deze kluis heeft de limiet van aantal leden en uitnodigingen bereikt.</string>
   <string name="sharing_invites_info_upgrade_text">Nu upgraden om meer uit te nodigen.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Delen</string>
@@ -110,9 +114,11 @@
   <string name="share_with_suggestions_title">Suggesties</string>
   <string name="share_with_recents_title">Recente</string>
   <string name="share_with_remove_email_content_description">E-mailadres verwijderen</string>
-  <string name="sharing_edit_permissions_set_access_level_all_members">Set access level for all members</string>
-  <string name="sharing_edit_permissions_set_access_level_single_member">Set access level for %s</string>
+  <string name="sharing_edit_permissions_set_access_level_all_members">Stel toegangsniveau in voor alle leden</string>
+  <string name="sharing_edit_permissions_set_access_level_single_member">Stel toegangsniveau in voor %s</string>
   <string name="sharing_edit_permissions_remove_user">Gebruiker verwijderen</string>
   <string name="sharing_error_dialog_title">Onbekende fout</string>
-  <string name="sharing_error_dialog_message">There was an error sending an invite for this vault. If the issue persists, please contact customer support service.</string>
+  <string name="sharing_error_dialog_message">Er is een fout opgetreden bij het verzenden van een uitnodiging voor deze kluis. Als het probleem zich blijft voordoen, neem dan contact op met de klantenservice.</string>
+  <string name="sharing_with_no_addresses_can_be_invited">Adressen kunnen niet worden uitgenodigd</string>
+  <string name="sharing_with_some_addresses_cannot_be_invited">Sommige adressen kunnen niet worden uitgenodigd</string>
 </resources>

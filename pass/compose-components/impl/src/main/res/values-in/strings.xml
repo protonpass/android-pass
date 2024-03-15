@@ -5,7 +5,7 @@
   <string name="sort_by_title_desc">Judul (Z-A)</string>
   <string name="sort_by_creation_asc">Terlama ke terbaru</string>
   <string name="sort_by_creation_desc">Terbaru ke terlama</string>
-  <string name="sort_by_modification_date">Terkini</string>
+  <string name="sort_by_modification_date">Baru saja digunakan</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Semua</string>
   <string name="item_list_header_pinned_search_results">Disematkan</string>
@@ -22,6 +22,7 @@
   <string name="bottomsheet_move_to_trash">Pindahkan ke sampah</string>
   <string name="bottomsheet_pin_item">Sematkan</string>
   <string name="bottomsheet_unpin_item">Lepas sematan</string>
+  <string name="bottomsheet_view_item_history">Lihat riwayat</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Buka menu tindakan item</string>
   <string name="action_upgrade_now">Tingkatkan sekarang</string>
@@ -55,11 +56,11 @@
   <string name="most_recent_yesterday">Kemarin</string>
   <string name="most_recent_this_week">Minggu ini</string>
   <string name="most_recent_last_two_weeks">Dua minggu terakhir</string>
-  <string name="most_recent_last_30_days">30 hari terakhir</string>
+  <string name="most_recent_last_30_days">Bulan lalu</string>
   <string name="most_recent_last_60_days">60 hari terakhir</string>
   <string name="most_recent_last_90_days">90 hari terakhir</string>
   <string name="most_recent_within_the_last_year">Dalam setahun ke belakang</string>
-  <string name="most_recent_more_than_1_year">Lebih dari 1 tahun</string>
+  <string name="most_recent_more_than_1_year">Lebih lama dari 1 tahun</string>
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">Ikon pencarian</string>
   <!-- Select Vault BottomSheet -->
@@ -81,5 +82,40 @@
   <string name="label_password_strength_weak">Lemah</string>
   <!-- Pinning -->
   <string name="pinning_carousel_see_all">Lihat semua</string>
+  <!-- Dates -->
+  <string name="date_today" comment="Pattern to display today's date and time. (e.g. Today 10:25)">Hari ini %s</string>
+  <string name="date_yesterday" comment="Pattern to display yesterday's date and time. (e.g. Yesterday 10:25)">Kemarin %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">dd LLLL HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+  <!-- Items -->
+  <string name="item_details_alias_section_alias_title">Alamat alias</string>
+  <string name="item_details_alias_section_mailboxes_title">Meneruskan ke</string>
+  <string name="item_details_credit_card_section_cardholder_title">Nama di kartu</string>
+  <string name="item_details_credit_card_section_card_number_title">Nomor kartu</string>
+  <string name="item_details_credit_card_section_expiration_date_title">Waktu kedaluwarsa</string>
+  <string name="item_details_credit_card_section_cvv_title">Kode keamanan</string>
+  <string name="item_details_credit_card_section_pin_title">Kode PIN</string>
+  <string name="item_details_login_section_username_title">Nama pengguna atau alamat surel</string>
+  <string name="item_details_login_section_password_title">Kata sandi</string>
+  <string name="item_details_login_section_primary_totp_title">Token 2FA (TOTP)</string>
+  <string name="item_details_login_section_websites_title">Situs web</string>
+  <string name="item_details_shared_section_note_title">Catatan</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Versi aplikasi ini sudah tidak lagi didukung. Silakan perbarui aplikasi Anda.</string>
+  <!-- Passkeys -->
+  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Passkey</string>
+  <!-- Upgrade -->
+  <string name="dialog_upgrade_plan_title">Tingkatkan paket?</string>
+  <string name="dialog_upgrade_plan_message">Fitur ini tidak tersedia bagi pengguna dengan paket gratis. Apabila Anda ingin menikmati fitur ini dan berbagai fitur keren lainnya, tingkatkan paket Anda dan mulai gunakan fitur ini!</string>
+  <string name="dialog_upgrade_plan_action_confirm">Tingkatkan</string>
+  <string name="dialog_upgrade_plan_action_cancel">Tidak sekarang</string>
 </resources>

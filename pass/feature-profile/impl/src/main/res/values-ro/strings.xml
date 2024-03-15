@@ -13,8 +13,8 @@
   <string name="profile_option_autofill_subtitle">Completați automat numele de utilizator și parolele.</string>
   <string name="profile_error_biometry_failed_to_start">Nu s-a putut porni autentificarea biometrică.</string>
   <string name="profile_error_biometry_failed_to_authenticate">Autentificare nereușită.</string>
-  <string name="profile_fingerprint_lock_enabled">Deblocare cu amprentă activată</string>
-  <string name="profile_fingerprint_lock_disabled">Deblocare cu amprentă dezactivată</string>
+  <string name="profile_fingerprint_lock_enabled">Blocarea cu amprentă este activată</string>
+  <string name="profile_fingerprint_lock_disabled">Blocarea cu amprentă este dezactivată</string>
   <string name="profile_error_performing_operation">Eroare executare operație.</string>
   <string name="profile_app_version_copied_to_clipboard">Versiune aplicație copiată.</string>
   <string name="feedback_option_reddit">Accesați Proton pe Reddit</string>

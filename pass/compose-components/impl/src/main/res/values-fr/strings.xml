@@ -5,7 +5,7 @@
   <string name="sort_by_title_desc">Titre (Z-A)</string>
   <string name="sort_by_creation_asc">Du plus ancien au plus récent</string>
   <string name="sort_by_creation_desc">Du plus récent au plus ancien</string>
-  <string name="sort_by_modification_date">Le plus récent</string>
+  <string name="sort_by_modification_date">Utilisation récente</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Tous</string>
   <string name="item_list_header_pinned_search_results">Épinglé</string>
@@ -23,6 +23,7 @@
   <string name="bottomsheet_move_to_trash">Déplacer dans la corbeille</string>
   <string name="bottomsheet_pin_item">Épingler</string>
   <string name="bottomsheet_unpin_item">Désépingler</string>
+  <string name="bottomsheet_view_item_history">Voir l\'historique</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Ouvrir le menu d\'action de l\'élément</string>
   <string name="action_upgrade_now">Changer d\'abonnement</string>
@@ -56,11 +57,11 @@
   <string name="most_recent_yesterday">Hier</string>
   <string name="most_recent_this_week">Cette semaine</string>
   <string name="most_recent_last_two_weeks">Les deux dernières semaines</string>
-  <string name="most_recent_last_30_days">Les 30 derniers jours</string>
+  <string name="most_recent_last_30_days">Le mois dernier</string>
   <string name="most_recent_last_60_days">Les 60 derniers jours</string>
   <string name="most_recent_last_90_days">Les 90 derniers jours</string>
   <string name="most_recent_within_the_last_year">L\'année dernière</string>
-  <string name="most_recent_more_than_1_year">Il y a plus d\'un an</string>
+  <string name="most_recent_more_than_1_year">Plus de 1 an</string>
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">Icône recherche</string>
   <!-- Select Vault BottomSheet -->
@@ -83,5 +84,40 @@
   <string name="label_password_strength_weak">Faible</string>
   <!-- Pinning -->
   <string name="pinning_carousel_see_all">Tout afficher</string>
+  <!-- Dates -->
+  <string name="date_today" comment="Pattern to display today's date and time. (e.g. Today 10:25)">Aujourd\'hui %s</string>
+  <string name="date_yesterday" comment="Pattern to display yesterday's date and time. (e.g. Yesterday 10:25)">Hier %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">dd LLLL HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+  <!-- Items -->
+  <string name="item_details_alias_section_alias_title">Adresse de l\'alias</string>
+  <string name="item_details_alias_section_mailboxes_title">Transfert vers</string>
+  <string name="item_details_credit_card_section_cardholder_title">Nom sur la carte</string>
+  <string name="item_details_credit_card_section_card_number_title">Numéro de la carte</string>
+  <string name="item_details_credit_card_section_expiration_date_title">Date d\'expiration</string>
+  <string name="item_details_credit_card_section_cvv_title">Code de sécurité</string>
+  <string name="item_details_credit_card_section_pin_title">Code PIN</string>
+  <string name="item_details_login_section_username_title">Nom d\'utilisateur ou adresse e-mail</string>
+  <string name="item_details_login_section_password_title">Mot de passe</string>
+  <string name="item_details_login_section_primary_totp_title">Jeton A2F (TOTP)</string>
+  <string name="item_details_login_section_websites_title">Sites internet</string>
+  <string name="item_details_shared_section_note_title">Note</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Cette version de l\'application n\'est plus prise en charge. Veuillez la mettre à jour.</string>
+  <!-- Passkeys -->
+  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Clé d\'identification</string>
+  <!-- Upgrade -->
+  <string name="dialog_upgrade_plan_title">Changer d\'abonnement ?</string>
+  <string name="dialog_upgrade_plan_message">Cette fonctionnalité n\'est pas disponible pour les utilisateurs utilisant un abonnement gratuit. Si vous souhaitez profiter de cette fonctionnalité ainsi que d\'autres fonctions intéressantes, changez d\'abonnement et essayez-la !</string>
+  <string name="dialog_upgrade_plan_action_confirm">Changer d\'abonnement</string>
+  <string name="dialog_upgrade_plan_action_cancel">Pas maintenant</string>
 </resources>

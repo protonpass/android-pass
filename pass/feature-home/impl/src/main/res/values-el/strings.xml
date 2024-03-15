@@ -103,8 +103,8 @@
     <item quantity="other">Μετακίνηση στον κάδο απορριμμάτων %d στοιχεία;</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
-    <item quantity="one">Είστε βέβαιοι ότι θέλετε να μετακινήσετε το στοιχείο στα απορριφθέντα;</item>
-    <item quantity="other">Είστε βέβαιοι ότι θέλετε να μετακινήσετε τα %d στοιχεία στα απορριφθέντα;</item>
+    <item quantity="one">Είστε βέβαιοι ότι θέλετε να μετακινήσετε το στοιχείο στον κάδο απορριμμάτων;</item>
+    <item quantity="other">Είστε βέβαιοι ότι θέλετε να μετακινήσετε %d στοιχεία στον κάδο απορριμμάτων;</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
     <item quantity="one">Οριστική διαγραφή %d στοιχείου;</item>

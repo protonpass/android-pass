@@ -35,6 +35,7 @@
   <string name="share_with_title">Dela med</string>
   <string name="share_with_email_hint">E-postadress</string>
   <string name="share_with_email_error">Ogiltig e-postadress</string>
+  <string name="share_with_email_cannot_invite_outside_org">Du kan inte bjuda in personer utanför din organisation, kontakta administratören för mer information</string>
   <string name="share_permissions_title">Ställ in åtkomstnivå</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s bjöd in dig för att komma åt objekt i</string>
   <string name="sharing_join_shared_vault">Gå med och synkronisera</string>
@@ -96,7 +97,10 @@
   <string name="sharing_snackbar_transfer_ownership_success">Ägandeskap överfört</string>
   <string name="sharing_snackbar_transfer_ownership_error">Det gick inte överföra äganderätt</string>
   <string name="sharing_invites_info_dialog_title">Medlemsgräns</string>
-  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">Detta valv kan ha upp till %1$d medlemmar. Du har fortfarande %2$d inbjudningar kvar.</string>
+  <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
+    <item quantity="one">Detta valv kan ha upp till %1$d medlem. Du har fortfarande %2$d inbjudning kvar.</item>
+    <item quantity="other">Detta valv kan ha upp till %1$d medlemmar. Du har fortfarande %2$d inbjudningar kvar.</item>
+  </plurals>
   <string name="sharing_limit_reached">Detta valv har nått gränsen för medlemmar och inbjudningar.</string>
   <string name="sharing_invites_info_upgrade_text">Uppgradera nu för att bjuda in fler.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Dela</string>
@@ -115,4 +119,6 @@
   <string name="sharing_edit_permissions_remove_user">Ta bort användare</string>
   <string name="sharing_error_dialog_title">Okänt fel</string>
   <string name="sharing_error_dialog_message">Det uppstod ett fel när en inbjudan skulle skickas till detta valv.. Kontakta kundsupport om problemet kvarstår.</string>
+  <string name="sharing_with_no_addresses_can_be_invited">Inga adresser kan bjudas in</string>
+  <string name="sharing_with_some_addresses_cannot_be_invited">Några adresser kan bjudas in</string>
 </resources>

@@ -35,6 +35,7 @@
   <string name="share_with_title">Compartilhar com</string>
   <string name="share_with_email_hint">Endereço de e-mail</string>
   <string name="share_with_email_error">O endereço de e-mail não é válido.</string>
+  <string name="share_with_email_cannot_invite_outside_org">Você não pode convidar pessoas fora da sua organização, entre em contato com o administrador para mais informações</string>
   <string name="share_permissions_title">Definir nível de acesso</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s convida você a acessar itens em</string>
   <string name="sharing_join_shared_vault">Juntar e sincronizar</string>
@@ -96,7 +97,10 @@
   <string name="sharing_snackbar_transfer_ownership_success">Propriedade transferida</string>
   <string name="sharing_snackbar_transfer_ownership_error">Erro ao transferir a propriedade</string>
   <string name="sharing_invites_info_dialog_title">Limite de membros</string>
-  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">Este cofre pode ter até %1$d membros. Ainda restam %2$d convites.</string>
+  <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
+    <item quantity="one">Este cofre pode ter até %1$d membros. Ainda restam %2$d convite.</item>
+    <item quantity="other">Este cofre pode ter até %1$d membros. Ainda restam %2$d convites.</item>
+  </plurals>
   <string name="sharing_limit_reached">Este cofre atingiu o limite de membros e convites.</string>
   <string name="sharing_invites_info_upgrade_text">Faça upgrade agora para convidar mais pessoas.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Compartilhar</string>
@@ -115,4 +119,6 @@
   <string name="sharing_edit_permissions_remove_user">Remover usuário</string>
   <string name="sharing_error_dialog_title">Erro desconhecido</string>
   <string name="sharing_error_dialog_message">Ocorreu um erro ao enviar um convite para este cofre. Se o problema persistir, entre em contato com o serviço de suporte ao cliente.</string>
+  <string name="sharing_with_no_addresses_can_be_invited">Nenhum endereço pode ser convidado</string>
+  <string name="sharing_with_some_addresses_cannot_be_invited">Alguns endereços não podem ser convidados</string>
 </resources>

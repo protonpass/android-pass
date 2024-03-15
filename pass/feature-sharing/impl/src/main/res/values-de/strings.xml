@@ -35,6 +35,7 @@
   <string name="share_with_title">Teilen mit</string>
   <string name="share_with_email_hint">E‐Mail‐Adresse</string>
   <string name="share_with_email_error">Ungültige E-Mail-Adresse</string>
+  <string name="share_with_email_cannot_invite_outside_org">Du kannst keine Personen außerhalb deiner Organisation einladen, kontaktiere den Administrator für weitere Informationen</string>
   <string name="share_permissions_title">Zugriffsstufe festlegen</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s lädt dich zum Zugriff auf Elemente ein im Tresor</string>
   <string name="sharing_join_shared_vault">Beitreten und synchronisieren</string>
@@ -96,7 +97,10 @@
   <string name="sharing_snackbar_transfer_ownership_success">Besitzer geändert</string>
   <string name="sharing_snackbar_transfer_ownership_error">Fehler beim Ändern des Besitzers.</string>
   <string name="sharing_invites_info_dialog_title">Mitgliederlimit</string>
-  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">Dieser Tresor kann bis zu %1$d Mitglieder haben. Du hast noch %2$d Einladungen übrig.</string>
+  <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
+    <item quantity="one">Dieser Tresor kann bis zu %1$d Mitglied haben. Du hast noch %2$d Einladung übrig.</item>
+    <item quantity="other">Dieser Tresor kann bis zu %1$d Mitglieder haben. Du hast noch %2$d Einladungen übrig.</item>
+  </plurals>
   <string name="sharing_limit_reached">Dieser Tresor hat das Mitglieder- und Einladungslimit erreicht.</string>
   <string name="sharing_invites_info_upgrade_text">Upgrade jetzt, um weitere einzuladen.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Teilen</string>
@@ -115,4 +119,6 @@
   <string name="sharing_edit_permissions_remove_user">Benutzer entfernen</string>
   <string name="sharing_error_dialog_title">Unbekannter Fehler</string>
   <string name="sharing_error_dialog_message">Es ist ein Fehler beim Senden einer Einladung für diesen Tresor aufgetreten. Wenn das Problem weiterhin besteht, wende dich bitte an den Kundensupport.</string>
+  <string name="sharing_with_no_addresses_can_be_invited">Es können keine Adressen eingeladen werden</string>
+  <string name="sharing_with_some_addresses_cannot_be_invited">Manche Adressen können nicht eingeladen werden</string>
 </resources>

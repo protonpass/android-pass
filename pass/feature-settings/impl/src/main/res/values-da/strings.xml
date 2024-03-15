@@ -5,14 +5,14 @@
   <string name="settings_autofill_preference_title">Autofyld</string>
   <string name="settings_autofill_preference_description">For at logge ind hurtigt og nemt kan du lade Proton Pass udfylde dine brugernavne og adgangskoder.</string>
   <string name="settings_authentication_section_title">Godkendelse</string>
-  <string name="settings_authentication_preference_title">Oplås med fingeraftryk</string>
+  <string name="settings_authentication_preference_title">Fingeraftrykslås</string>
   <string name="settings_authentication_preference_description_enabled">Åbn appen hurtigt og sikkert med dit fingeraftryk.</string>
   <string name="settings_authentication_preference_description_no_fingerprint">Du kan ikke bruge dit fingeraftryk til at interagere med appen, da der ikke er registreret fingeraftryk på denne enhed.</string>
   <string name="settings_appearance_preference_title">Tema</string>
   <string name="settings_appearance_preference_subtitle_match_system" comment="Subtitle for the appearance preference when the theme is set to match the system theme">Følg system</string>
   <string name="settings_appearance_preference_subtitle_light">Lys tilstand</string>
   <string name="settings_appearance_preference_subtitle_dark">Mørk tilstand</string>
-  <string name="settings_fingerprint_lock_enabled">Oplåsning med fingeraftryk aktiveret</string>
+  <string name="settings_fingerprint_lock_enabled">Fingeraftrykslås aktiveret</string>
   <string name="settings_error_performing_operation">Fejl ved udførelse af handling</string>
   <string name="settings_option_clipboard">Udklipsholder</string>
   <string name="settings_application_section_title">Applikation</string>

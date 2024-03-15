@@ -46,7 +46,7 @@
   <string name="more_info_title">Plus d\'informations</string>
   <string name="more_info_icon">Icône plus d\'informations</string>
   <plurals name="more_info_modified_times">
-    <item quantity="one">Une fois</item>
+    <item quantity="one">%d fois</item>
     <item quantity="other">%d fois</item>
   </plurals>
   <string name="more_info_last_time_modified">La dernière fois, %s</string>
@@ -91,7 +91,15 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Partage impossible</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Vous n\'avez pas les autorisations nécessaires pour partager ce coffre-fort.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Vous avez atteint la limite du nombre de partages de coffres-forts autorisés. Pour en partager davantage, vous devez passer à un abonnement supérieur.</string>
+  <string name="item_detail_history_created">Création</string>
+  <string name="item_detail_history_modified_last">Dernière modification</string>
+  <string name="item_detail_history_button_view">Afficher l\'historique de l\'élément</string>
   <string name="password_score_vulnerable">Vulnérable</string>
   <string name="password_score_weak">Faible</string>
   <string name="password_score_strong">Fort</string>
+  <string name="passkey_detail_bottomsheet_title">Clé d\'identification</string>
+  <string name="passkey_detail_bottomsheet_username">Nom d\'utilisateur</string>
+  <string name="passkey_detail_bottomsheet_domain">Domaine</string>
+  <string name="passkey_detail_bottomsheet_key">Clé</string>
+  <string name="passkey_detail_bottomsheet_created">Créé le</string>
 </resources>

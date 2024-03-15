@@ -33,6 +33,7 @@
   <string name="share_with_title">공유 대상:</string>
   <string name="share_with_email_hint">이메일 주소</string>
   <string name="share_with_email_error">유효하지 않은 이메일 주소입니다.</string>
+  <string name="share_with_email_cannot_invite_outside_org">조직으로 사용자를 초대할 수 없습니다. 더 자세한 내용은 관리자에게 문의하십시오.</string>
   <string name="share_permissions_title">접근 수준 설정</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s님이 항목 공유를 초대합니다:</string>
   <string name="sharing_join_shared_vault">참가 및 동기화</string>
@@ -92,7 +93,9 @@
   <string name="sharing_snackbar_transfer_ownership_success">소유권이 이전되었습니다.</string>
   <string name="sharing_snackbar_transfer_ownership_error">소유권 이전 실패</string>
   <string name="sharing_invites_info_dialog_title">구성원 제한</string>
-  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">이 금고는 최대 %1$d명 회원을 지원합니다. %2$d명 초대가 남았습니다.</string>
+  <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
+    <item quantity="other">이 금고에는 %1$d명까지 들일 수 있습니다. %2$d명을 더 초대할 수 있습니다.</item>
+  </plurals>
   <string name="sharing_limit_reached">이 금고는 회원 및 초대 제한에 도달했습니다.</string>
   <string name="sharing_invites_info_upgrade_text">더 많은 사람을 초대하려면 지금 바로 업그레이드 하세요.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">공유</string>
@@ -111,4 +114,6 @@
   <string name="sharing_edit_permissions_remove_user">사용자 제거</string>
   <string name="sharing_error_dialog_title">알 수 없는 오류</string>
   <string name="sharing_error_dialog_message">이 금고의 초대 전송 중 오류 발생. 만일 재발한다면, 고객 센터에 연락해 주십시오.</string>
+  <string name="sharing_with_no_addresses_can_be_invited">초대할 수 있는 주소가 없습니다.</string>
+  <string name="sharing_with_some_addresses_cannot_be_invited">일부 주소는 초대가 불가할 수 있습니다.</string>
 </resources>

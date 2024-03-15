@@ -105,7 +105,7 @@ class SelectItemScreenTest {
             otherItems = 0,
             planType = PlanType.Paid.Plus("", "")
         )
-        clickOnItemTest("${SUGGESTION_TITLE_PREFIX}0")
+        clickOnItemTest("${SUGGESTION_TITLE_PREFIX}0", ExpectedItemClicked.Suggestion)
     }
 
     @Test
@@ -116,7 +116,7 @@ class SelectItemScreenTest {
             otherItems = 2,
             planType = PlanType.Paid.Plus("", "")
         )
-        clickOnItemTest("${SUGGESTION_TITLE_PREFIX}0")
+        clickOnItemTest("${SUGGESTION_TITLE_PREFIX}0", ExpectedItemClicked.Suggestion)
     }
 
     @Test
@@ -128,7 +128,7 @@ class SelectItemScreenTest {
             planType = PlanType.Paid.Plus("", "")
         )
 
-        clickOnItemTest("${OTHER_ITEM_TITLE_PREFIX}0")
+        clickOnItemTest("${OTHER_ITEM_TITLE_PREFIX}0", ExpectedItemClicked.Item)
     }
 
     @Test
@@ -140,10 +140,15 @@ class SelectItemScreenTest {
             planType = PlanType.Paid.Plus("", "")
         )
 
-        clickOnItemTest("${OTHER_ITEM_TITLE_PREFIX}0")
+        clickOnItemTest("${OTHER_ITEM_TITLE_PREFIX}0", ExpectedItemClicked.Item)
     }
 
-    private fun clickOnItemTest(text: String) {
+    private enum class ExpectedItemClicked {
+        Item,
+        Suggestion
+    }
+
+    private fun clickOnItemTest(text: String, expected: ExpectedItemClicked) {
         val checker = CallChecker<Unit>()
         composeTestRule.apply {
             setContent {
@@ -154,9 +159,16 @@ class SelectItemScreenTest {
                         onNavigate = {
                             when (it) {
                                 is SelectItemNavigation.ItemSelected -> {
-                                    checker.call()
+                                    if (expected == ExpectedItemClicked.Item) {
+                                        checker.call()
+                                    }
                                 }
 
+                                is SelectItemNavigation.SuggestionSelected -> {
+                                    if (expected == ExpectedItemClicked.Suggestion) {
+                                        checker.call()
+                                    }
+                                }
                                 else -> {}
                             }
                         }

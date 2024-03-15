@@ -103,8 +103,8 @@
     <item quantity="other">გადავიტანო სანაგვე ყუთში %d ელემენტი?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
-    <item quantity="one">დარწმუნებული ბრძანდებით, რომ გნებავთ, ელემენტი სანაგვე ყუთში გადაიტანოთ?</item>
-    <item quantity="other">დარწმუნებული ბრძანდებით, რომ გნებავთ, %d ელემენტი სანაგვე ყუთში გადაიტანოთ?</item>
+    <item quantity="one">მართლა გნებავთ, ელემენტი ნაგვის ყუთში გადაიტანოთ?</item>
+    <item quantity="other">მართლა გნებავთ, %d ელემენტი ნაგვის ყუთში გადაიტანოთ?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
     <item quantity="one">წავშალო სამუდამოდ %d ელემენტი?</item>

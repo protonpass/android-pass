@@ -3,8 +3,8 @@
   <!-- Home -->
   <string name="home_empty_vault_title">Uw kluis is leeg.</string>
   <string name="home_empty_vault_subtitle">Ga aan de slag door uw eerste item te maken.</string>
-  <string name="home_empty_read_only_vault_title">This vault is empty</string>
-  <string name="home_empty_read_only_vault_subtitle">You can\'t add items to a read-only vault.</string>
+  <string name="home_empty_read_only_vault_title">Deze kluis is leeg</string>
+  <string name="home_empty_read_only_vault_subtitle">U kunt geen items toevoegen aan een alleen-lezen kluis.</string>
   <string name="home_empty_vault_create_login">Login aanmaken</string>
   <string name="home_empty_vault_create_alias">Maak een hide-my-email-alias</string>
   <string name="home_empty_vault_create_note">Notitie aanmaken</string>
@@ -16,8 +16,8 @@
   <string name="home_snackbar_credit_card_moved_to_trash">Kredietkaart verplaatst naar prullenbak</string>
   <string name="home_snackbar_move_to_trash_error">Item kon niet verplaatst worden naar prullenbak.</string>
   <string name="home_snackbar_items_move_to_trash_success">Items verplaatst naar de prullenbak</string>
-  <string name="home_snackbar_items_move_to_trash_error">Items could not be moved to trash</string>
-  <string name="home_toast_items_selected_read_only">Read-only items cannot be selected</string>
+  <string name="home_snackbar_items_move_to_trash_error">Items konden niet verplaatst worden naar de prullenbak</string>
+  <string name="home_toast_items_selected_read_only">Alleen-lezen items kunnen niet worden geselecteerd</string>
   <string name="home_autofill_banner_title">Geniet van de magie van Automatisch aanvullen</string>
   <string name="home_autofill_banner_text">Eén keer tikken en uw gebruikersnaam en wachtwoord zijn direct ingevuld.</string>
   <string name="home_autofill_banner_settings">Automatisch aanvullen inschakelen ›</string>
@@ -77,42 +77,42 @@
   <string name="bottomsheet_trash_all_items_title">Prullenbak</string>
   <string name="bottomsheet_restore_all_items">Alle items herstellen</string>
   <string name="bottomsheet_empty_trash">Prullenbak leegmaken</string>
-  <string name="bottomsheet_select_items">Select items</string>
+  <string name="bottomsheet_select_items">Selecteer items</string>
   <string name="trash_error_clearing_trash">Fout bij wissen van de cache</string>
-  <string name="trash_success_restoring_items">Items restored</string>
+  <string name="trash_success_restoring_items">Items hersteld</string>
   <string name="trash_error_restoring_items">Fout bij herstellen van items</string>
   <string name="trash_error_deleting_item">Fout bij verwijderen van item</string>
-  <string name="trash_success_deleting_item">Item deleted</string>
-  <string name="trash_deleting_items_error">Error deleting items</string>
-  <string name="trash_deleting_items_success">Items deleted</string>
+  <string name="trash_success_deleting_item">Item verwijderd</string>
+  <string name="trash_deleting_items_error">Fout bij verwijderen items</string>
+  <string name="trash_deleting_items_success">Items verwijderd</string>
   <!-- Alerts -->
   <string name="alert_confirm_clear_trash_title">Prullenbak leegmaken?</string>
   <string name="alert_confirm_clear_trash_message">Weet u zeker dat je de prullenbak wilt opruimen? Al uw weggegooide items worden permanent verwijderd</string>
   <string name="alert_confirm_restore_all_title">Alle items herstellen?</string>
   <string name="alert_confirm_restore_all_message">Weet u zeker dat u alle weggegooide items wilt herstellen?</string>
   <plurals name="alert_confirm_restore_items_title">
-    <item quantity="one">Restore %d item?</item>
-    <item quantity="other">Restore %d items?</item>
+    <item quantity="one">%d item herstellen?</item>
+    <item quantity="other">%d items herstellen?</item>
   </plurals>
   <plurals name="alert_confirm_restore_items_message">
-    <item quantity="one">Are you sure you want to restore the trashed item?</item>
-    <item quantity="other">Are you sure you want to restore the %d trashed items?</item>
+    <item quantity="one">Weet u zeker dat u het weggegooide item wilt herstellen?</item>
+    <item quantity="other">Weet u zeker dat u de %d items die naar de prullenbak zijn verwijderd wilt herstellen?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_title">
-    <item quantity="one">Move to trash %d item?</item>
-    <item quantity="other">Move to trash %d items?</item>
+    <item quantity="one">%d item naar prullenbak verplaatsen?</item>
+    <item quantity="other">%d items naar prullenbak verplaatsen?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
-    <item quantity="one">Are you sure you want to move to the trash the item?</item>
-    <item quantity="other">Are you sure you want to move to the trash the %d items?</item>
+    <item quantity="one">Weet u zeker dat u dit item naar de prullenbak wilt verplaatsen?</item>
+    <item quantity="other">Weet u zeker dat u %d items naar de prullenbak wilt verplaatsen?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
-    <item quantity="one">Delete permanently %d item?</item>
-    <item quantity="other">Delete permanently %d items?</item>
+    <item quantity="one">Permanent %d item verwijderen?</item>
+    <item quantity="other">%d items permanent verwijderen?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_message">
-    <item quantity="one">Are you sure you want to delete the item? This action is irreversible</item>
-    <item quantity="other">Are you sure you want to delete the %d items? This action is irreversible</item>
+    <item quantity="one">Weet u zeker dat u dit item wilt verwijderen? Deze actie is onomkeerbaar</item>
+    <item quantity="other">Weet u zeker dat u %d items wilt verwijderen? Deze actie is onomkeerbaar</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Recente zoekopdrachten</string>
@@ -120,13 +120,13 @@
   <string name="recent_search_remove_item">Verwijderen uit recente zoekopdrachten</string>
   <!-- Pinning -->
   <string name="home_snackbar_item_pinned_success">Item succesvol vastgezet</string>
-  <string name="home_snackbar_item_pinned_error">There was an error pinning this item</string>
+  <string name="home_snackbar_item_pinned_error">Fout bij het vastmaken van dit item</string>
   <string name="home_snackbar_item_unpinned_success">Item succesvol losgemaakt</string>
-  <string name="home_snackbar_item_unpinned_error">There was an error unpinning this item</string>
-  <string name="home_snackbar_items_pinned_success">Items pinned successfully</string>
-  <string name="home_snackbar_items_pinned_partial_success">Error pinning some of the items</string>
-  <string name="home_snackbar_items_pinned_error">Error pinning the items</string>
-  <string name="home_snackbar_items_unpinned_success">Items unpinned successfully</string>
-  <string name="home_snackbar_items_unpinned_partial_success">Error unpinning some of the items</string>
-  <string name="home_snackbar_items_unpinned_error">Error unpinning the items</string>
+  <string name="home_snackbar_item_unpinned_error">Er is een fout opgetreden bij het losmaken van dit item</string>
+  <string name="home_snackbar_items_pinned_success">Items vastgemaakt met succes</string>
+  <string name="home_snackbar_items_pinned_partial_success">Fout bij het vastmaken van sommige items</string>
+  <string name="home_snackbar_items_pinned_error">Fout bij vastmaken items</string>
+  <string name="home_snackbar_items_unpinned_success">Items losgemaakt</string>
+  <string name="home_snackbar_items_unpinned_partial_success">Fout bij het losmaken van sommige items</string>
+  <string name="home_snackbar_items_unpinned_error">Fout bij het losmaken van de items</string>
 </resources>

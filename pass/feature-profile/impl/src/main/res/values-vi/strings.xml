@@ -13,8 +13,8 @@
   <string name="profile_option_autofill_subtitle">Tự động điền các tên đăng nhập và mật khẩu của bạn.</string>
   <string name="profile_error_biometry_failed_to_start">Không thể bắt đầu xác thực sinh trắc học</string>
   <string name="profile_error_biometry_failed_to_authenticate">Xác thực thất bại</string>
-  <string name="profile_fingerprint_lock_enabled">Đã bật mở khóa bằng vân tay</string>
-  <string name="profile_fingerprint_lock_disabled">Đã tắt mở khóa bằng vân tay</string>
+  <string name="profile_fingerprint_lock_enabled">Fingerprint lock enabled</string>
+  <string name="profile_fingerprint_lock_disabled">Fingerprint lock disabled</string>
   <string name="profile_error_performing_operation">Lỗi thực hiện thao tác</string>
   <string name="profile_app_version_copied_to_clipboard">Đã sao chép phiên bản ứng dụng</string>
   <string name="feedback_option_reddit">Xem Proton trên Reddit</string>

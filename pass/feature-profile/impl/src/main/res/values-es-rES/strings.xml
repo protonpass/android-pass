@@ -9,12 +9,12 @@
   <string name="profile_option_import_export">Importar/exportar</string>
   <string name="profile_option_tutorial">Cómo usar Proton Pass</string>
   <string name="profile_option_rating">Calificar la aplicación</string>
-  <string name="profile_option_autofill">Autorrellenar</string>
+  <string name="profile_option_autofill">Rellenar automáticamente</string>
   <string name="profile_option_autofill_subtitle">Rellena automáticamente tus nombres de usuario y contraseñas.</string>
   <string name="profile_error_biometry_failed_to_start">No se ha podido iniciar la autenticación biométrica.</string>
   <string name="profile_error_biometry_failed_to_authenticate">Error al autenticar</string>
-  <string name="profile_fingerprint_lock_enabled">Desbloqueo de huella dactilar activado</string>
-  <string name="profile_fingerprint_lock_disabled">Desbloqueo de huella dactilar desactivado</string>
+  <string name="profile_fingerprint_lock_enabled">El bloqueo biométrico está activado.</string>
+  <string name="profile_fingerprint_lock_disabled">El bloqueo biométrico está desactivado.</string>
   <string name="profile_error_performing_operation">Error al ejecutar la operación</string>
   <string name="profile_app_version_copied_to_clipboard">Versión de la aplicación copiada</string>
   <string name="feedback_option_reddit">Echa un vistazo a Proton en Reddit</string>

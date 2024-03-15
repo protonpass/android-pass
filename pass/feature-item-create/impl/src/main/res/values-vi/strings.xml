@@ -57,7 +57,6 @@
   <!-- Create Alias -->
   <string name="title_create_alias">Tạo bí danh</string>
   <string name="field_alias_title">Địa chỉ bí danh</string>
-  <string name="field_alias_hint">Tên bí danh</string>
   <string name="field_mailboxes_creation_title">Chuyển tiếp đến</string>
   <string name="field_mailboxes_edit_title">Chuyển tiếp đến</string>
   <string name="field_alias_you_are_about_to_create">Bạn đang chuẩn bị tạo</string>
@@ -97,8 +96,8 @@
   <string name="changes_saved">Đã lưu thay đổi</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">Mã bảo mật 2FA (TOTP)</string>
-  <string name="totp_create_login_field_invalid">Mã bảo mật 2FA không hợp lệ</string>
-  <string name="totp_create_login_field_placeholder">Thêm mã bảo mật 2FA</string>
+  <string name="totp_create_login_field_invalid">Invalid 2FA secret key (TOTP)</string>
+  <string name="totp_create_login_field_placeholder">Add 2FA secret key (TOTP)</string>
   <string name="close_scree_icon_content_description">Nút đóng màn hình</string>
   <string name="totp_paste_code_action">Dán mã</string>
   <string name="totp_scan_code_action">Quét mã</string>
@@ -113,4 +112,6 @@
   <string name="select_mailbox_upgrade_for_more_inboxes">Nâng cấp để thêm nhiều hộp thư hơn</string>
   <string name="create_alias_content_limit_banner">Bạn đã đạt giới hạn bí danh bạn có thể tạo. Tạo không giới hạn bí danh khi bạn nâng cấp gói đăng ký của mình.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">The app needs to be updated to edit this item</string>
+  <string name="remove_passkey_dialog_title">Remove this passkey?</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">You are about to remove the passkey for user \'%1$s\' for \'%2$s\'. Are you sure?</string>
 </resources>

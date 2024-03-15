@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="trash_action_restore">Obnovi</string>
+  <string name="bottomsheet_delete_permanently">Trajno izbriši</string>
+  <string name="alert_confirm_delete_item_dialog_title">Trajno izbriši?</string>
+  <string name="alert_confirm_delete_item_dialog_message">To dejanje je nepreklicno</string>
+  <string name="alias_dialog_move_to_trash_title">Premakni v smetnjak?</string>
+  <string name="alias_dialog_move_to_trash_content">Če vzdevek premaknete v smetnjak, bo prenehal posredovati e-pošto v vaš nabiralnik.</string>
+  <string name="alias_dialog_move_to_trash_confirm">Potrdi</string>
+</resources>

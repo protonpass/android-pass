@@ -35,6 +35,7 @@
   <string name="share_with_title">Jaa käyttäjälle</string>
   <string name="share_with_email_hint">Sähköpostiosoite</string>
   <string name="share_with_email_error">Virheellinen sähköpostiosoite</string>
+  <string name="share_with_email_cannot_invite_outside_org">Et voi kutsua organisaatiosi ulkopuolisia henkilöitä, ota yhteyttä ylläpitäjään saadaksesi lisätietoja</string>
   <string name="share_permissions_title">Aseta käyttöoikeustaso</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s kutsui sinut käyttämään sisältöä holvista</string>
   <string name="sharing_join_shared_vault">Liity ja synkronoi</string>
@@ -96,7 +97,10 @@
   <string name="sharing_snackbar_transfer_ownership_success">Omistajuus siirrettiin</string>
   <string name="sharing_snackbar_transfer_ownership_error">Virhe siirrettäessä omistajuutta</string>
   <string name="sharing_invites_info_dialog_title">Jäsenrajoitus</string>
-  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">Tässä holvissa voi olla enintään %1$d jäsentä. Käytettävissäsi on vielä %2$d kutsua.</string>
+  <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
+    <item quantity="one">Tässä holvissa voi olla enintään %1$d jäsen. Käytettävissäsi on vielä %2$d kutsu.</item>
+    <item quantity="other">Tässä holvissa voi olla enintään %1$d jäsentä. Käytettävissäsi on vielä %2$d kutsua.</item>
+  </plurals>
   <string name="sharing_limit_reached">Holvin jäsenien ja kutsujen enimmäismäärä on saavutettu.</string>
   <string name="sharing_invites_info_upgrade_text">Kutsu lisää päivittämällä tilauksesi</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Jaa</string>
@@ -115,4 +119,6 @@
   <string name="sharing_edit_permissions_remove_user">Poista käyttäjä</string>
   <string name="sharing_error_dialog_title">Tuntematon virhe</string>
   <string name="sharing_error_dialog_message">Tämän holvin kutsun lähettämisessä tapahtui virhe. Jos ongelma jatkuu, ota yhteyttä asiakaspalveluun.</string>
+  <string name="sharing_with_no_addresses_can_be_invited">Osoitteita ei voida kutsua</string>
+  <string name="sharing_with_some_addresses_cannot_be_invited">Joitain osoitteita ei voida kutsua</string>
 </resources>

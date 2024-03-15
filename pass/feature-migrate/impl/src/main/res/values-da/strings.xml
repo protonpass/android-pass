@@ -9,6 +9,7 @@
   <string name="migrate_item_success_snackbar">Elementer flyttet</string>
   <string name="migrate_item_error_snackbar">Fejl ved flytning af elementerne</string>
   <string name="migrate_item_some_not_migrated_error_snackbar">Fejl ved flytning af nogle elementerne</string>
+  <string name="migrate_item_warning_history">Flytning af elementer nulstiller deres historik</string>
   <string name="migrate_all_items_success_snackbar">Alle elementer flyttet</string>
   <string name="migrate_all_items_error_snackbar">Fejl ved flytning af alle boks-elementer</string>
   <string name="migrate_init_error_snackbar">Kunne ikke forberede migreringsskærm</string>

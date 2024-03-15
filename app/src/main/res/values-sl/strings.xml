@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="twenty_vaults">20 trezorji</string>
+  <string name="unlimited_email_alias">Neomejeno število e-poštnih vzdevkov</string>
+  <string name="custom_fields">Polja po meri</string>
+  <string name="restart_to_complete_the_update">Znova zaženite, da dokončate posodobitev</string>
+  <string name="action_restart">Ponovni zagon</string>
+  <string name="shortcut_share_logs_title">Delite dnevnike</string>
+</resources>

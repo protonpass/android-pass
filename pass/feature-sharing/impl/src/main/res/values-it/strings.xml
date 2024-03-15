@@ -35,6 +35,7 @@
   <string name="share_with_title">Membri della condivisione</string>
   <string name="share_with_email_hint">Indirizzo email</string>
   <string name="share_with_email_error">Indirizzo email non valido</string>
+  <string name="share_with_email_cannot_invite_outside_org">Non puoi invitare persone esterne alla tua organizzazione. Contatta l\'amministratore per maggiori informazioni</string>
   <string name="share_permissions_title">Imposta il livello di accesso</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s ti ha invitato ad accedere agli elementi della cassaforte:</string>
   <string name="sharing_join_shared_vault">Accetta e sincronizza</string>
@@ -96,7 +97,10 @@
   <string name="sharing_snackbar_transfer_ownership_success">Proprietà trasferita</string>
   <string name="sharing_snackbar_transfer_ownership_error">Errore nel trasferimento della proprietà</string>
   <string name="sharing_invites_info_dialog_title">Limite di membri</string>
-  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">Questa cassaforte può avere fino a %1$d membri. Hai ancora %2$d inviti rimasti.</string>
+  <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
+    <item quantity="one">Questa cassaforte può avere fino a %1$d membri. Hai ancora %2$d invito rimasto.</item>
+    <item quantity="other">Questa cassaforte può avere fino a %1$d membri. Hai ancora %2$d inviti rimasti.</item>
+  </plurals>
   <string name="sharing_limit_reached">Questa cassaforte ha raggiunto il limite di membri e inviti.</string>
   <string name="sharing_invites_info_upgrade_text">Effettua l\'upgrade per invitare più persone.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Condividi</string>
@@ -115,4 +119,6 @@
   <string name="sharing_edit_permissions_remove_user">Rimuovi l\'utente</string>
   <string name="sharing_error_dialog_title">Errore sconosciuto</string>
   <string name="sharing_error_dialog_message">Si è verificato un errore nella spedizione di un invito per questa cassaforte. Se il problema persiste, contatta il servizio di assistenza clienti.</string>
+  <string name="sharing_with_no_addresses_can_be_invited">Impossibile invitare gli indirizzi</string>
+  <string name="sharing_with_some_addresses_cannot_be_invited">Impossibile invitare alcuni indirizzi</string>
 </resources>

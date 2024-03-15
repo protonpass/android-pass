@@ -7,10 +7,10 @@
   <string name="trial_feature_4">Карыстальніцкія палі</string>
   <string name="trial_button_text">Палепшыць</string>
   <plurals name="trial_days_left">
-    <item quantity="one">У вас застаўся яшчэ 1 дзень паспрабаваць прэміяльныя функцыі</item>
-    <item quantity="few">У вас засталося яшчэ %d дні паспрабаваць прэміяльныя функцыі</item>
-    <item quantity="many">У вас засталося яшчэ %d дзён паспрабаваць прэміяльныя функцыі</item>
-    <item quantity="other">У вас засталося яшчэ %d дзён паспрабаваць прэміяльныя функцыі</item>
+    <item quantity="one">У вас застаўся %d дзень, каб паспрабаваць прэміяльныя функцыі</item>
+    <item quantity="few">У вас засталося %d дні, каб паспрабаваць прэміяльныя функцыі</item>
+    <item quantity="many">У вас засталося %d дзён, каб паспрабаваць прэміяльныя функцыі</item>
+    <item quantity="other">У вас засталося %d дзён, каб паспрабаваць прэміяльныя функцыі</item>
   </plurals>
   <string name="trial_learn_more">Даведацца больш</string>
 </resources>

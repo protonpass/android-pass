@@ -35,6 +35,7 @@
   <string name="share_with_title">Comparteix amb</string>
   <string name="share_with_email_hint">Adreça de correu electrònic</string>
   <string name="share_with_email_error">L\'adreça de correu electrònic no és vàlida.</string>
+  <string name="share_with_email_cannot_invite_outside_org">You can\'t invite people outside of your organization, contact admin for more info</string>
   <string name="share_permissions_title">Estableix el nivell d`accés</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s us convida a accedir a elements a</string>
   <string name="sharing_join_shared_vault">Uniu-vos i sincronitzeu</string>
@@ -96,7 +97,10 @@
   <string name="sharing_snackbar_transfer_ownership_success">S\'ha transferit la propietat.</string>
   <string name="sharing_snackbar_transfer_ownership_error">Error transferint la propietat</string>
   <string name="sharing_invites_info_dialog_title">Límit de nombre de membres</string>
-  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">This vault can have up to %1$d members. You still have %2$d invites left.</string>
+  <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
+    <item quantity="one">This vault can have up to %1$d members. You still have %2$d invite left.</item>
+    <item quantity="other">This vault can have up to %1$d members. You still have %2$d invites left.</item>
+  </plurals>
   <string name="sharing_limit_reached">This vault has reached the member and invites limit.</string>
   <string name="sharing_invites_info_upgrade_text">Upgrade now to invite more.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Comparteix</string>
@@ -115,4 +119,6 @@
   <string name="sharing_edit_permissions_remove_user">Esborra l\'usuari</string>
   <string name="sharing_error_dialog_title">Error desconegut</string>
   <string name="sharing_error_dialog_message">There was an error sending an invite for this vault. If the issue persists, please contact customer support service.</string>
+  <string name="sharing_with_no_addresses_can_be_invited">No addresses can be invited</string>
+  <string name="sharing_with_some_addresses_cannot_be_invited">Some addresses cannot be invited</string>
 </resources>

@@ -111,10 +111,10 @@
     <item quantity="other">Move to trash %d items?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
-    <item quantity="one">Ви впевнені, що хочете перемістити елемент у смітник?</item>
-    <item quantity="few">Ви впевнені, що хочете перемістити %d елементи у смітник?</item>
-    <item quantity="many">Ви впевнені, що хочете перемістити %d елементів у смітник?</item>
-    <item quantity="other">Are you sure you want to move to the trash the %d items?</item>
+    <item quantity="one">Are you sure you want to move the item to the trash?</item>
+    <item quantity="few">Are you sure you want to move %d items to the trash?</item>
+    <item quantity="many">Are you sure you want to move %d items to the trash?</item>
+    <item quantity="other">Are you sure you want to move %d items to the trash?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
     <item quantity="one">Видалити назавжди %d елемент?</item>

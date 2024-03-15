@@ -99,7 +99,7 @@
     <item quantity="other">Pindahkan %d item ke sampah?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
-    <item quantity="other">Apakah Anda yakin untuk memindahkan %d item ke sampah?</item>
+    <item quantity="other">Apakah Anda yakin ingin memindahkan %d item ke sampah?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
     <item quantity="other">Hapus %d item secara permanen?</item>

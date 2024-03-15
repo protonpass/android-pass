@@ -36,7 +36,7 @@
   <string name="bottomsheet_custom_field_type_text">Κείμενο</string>
   <string name="bottomsheet_custom_field_type_text_content_description">Προσαρμοσμένο πεδίο κειμένου</string>
   <string name="bottomsheet_custom_field_type_hidden">Κρυφό πεδίο</string>
-  <string name="bottomsheet_custom_field_type_totp">Μυστικό 2FA (TOTP)</string>
+  <string name="bottomsheet_custom_field_type_totp">Μυστικό κλειδί 2FA (TOTP)</string>
   <string name="bottomsheet_custom_field_option_edit">Επεξεργασία ονόματος</string>
   <string name="bottomsheet_custom_field_option_remove">Αφαίρεση πεδίου</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Κατάργηση προσαρμοσμένου πεδίου</string>
@@ -57,7 +57,6 @@
   <!-- Create Alias -->
   <string name="title_create_alias">Δημιουργία ψευδώνυμου</string>
   <string name="field_alias_title">Ψευδώνυμη διεύθυνση</string>
-  <string name="field_alias_hint">Ψευδώνυμο όνομα χρήστη</string>
   <string name="field_mailboxes_creation_title">Προώθηση σε</string>
   <string name="field_mailboxes_edit_title">Προώθηση σε</string>
   <string name="field_alias_you_are_about_to_create">Είστε έτοιμοι να δημιουργήσετε</string>
@@ -96,9 +95,9 @@
   <!--  Common create items  -->
   <string name="changes_saved">Έχει αποθηκευτεί η αλλαγή</string>
   <!--  TOTP  -->
-  <string name="totp_create_login_field_title">Μυστικό 2FA (TOTP)</string>
-  <string name="totp_create_login_field_invalid">Μην έγκυρο μυστικό 2FA</string>
-  <string name="totp_create_login_field_placeholder">Προσθέστε μυστικό 2FA</string>
+  <string name="totp_create_login_field_title">Μυστικό κλειδί 2FA (TOTP)</string>
+  <string name="totp_create_login_field_invalid">Μη έγκυρο μυστικό κλειδί 2FA (TOTP)</string>
+  <string name="totp_create_login_field_placeholder">Προσθήκη μυστικού κλειδιού 2FA (TOTP)</string>
   <string name="close_scree_icon_content_description">Κουμπί κλεισίματος οθόνης</string>
   <string name="totp_paste_code_action">Επικόλληση κώδικα</string>
   <string name="totp_scan_code_action">Κωδικός σάρωσης</string>
@@ -113,4 +112,6 @@
   <string name="select_mailbox_upgrade_for_more_inboxes">Αναβάθμιση για περισσότερα εισερχόμενα</string>
   <string name="create_alias_content_limit_banner">Έχετε φτάσει στο όριο των ψευδωνύμων που μπορείτε να δημιουργήσετε. Δημιουργήστε απεριόριστο αριθμό ψευδωνύμων κατά την αναβάθμιση της συνδρομής σας.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Η εφαρμογή πρέπει να ενημερωθεί για να επεξεργαστείτε αυτό το στοιχείο</string>
+  <string name="remove_passkey_dialog_title">Αφαίρεση αυτού του κλειδιού πρόσβασης;</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Πρόκειται να καταργήσετε το κλειδί πρόσβασης για το χρήστη \'%1$s\' για \'%2$s\'. Είστε σίγουροι;</string>
 </resources>

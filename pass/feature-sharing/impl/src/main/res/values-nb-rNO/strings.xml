@@ -35,6 +35,7 @@
   <string name="share_with_title">Del med</string>
   <string name="share_with_email_hint">E-postadresse</string>
   <string name="share_with_email_error">Ugyldig e-postadresse</string>
+  <string name="share_with_email_cannot_invite_outside_org">Du kan ikke invitere personer utenfor organisasjonen, kontakt administrator for mer informasjon.</string>
   <string name="share_permissions_title">Sett tilgangsnivå</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s inviterer deg til å få tilgang til elementer i</string>
   <string name="sharing_join_shared_vault">Bli med og synkroniser</string>
@@ -96,7 +97,10 @@
   <string name="sharing_snackbar_transfer_ownership_success">Eierskap overført</string>
   <string name="sharing_snackbar_transfer_ownership_error">Feil under overføring av eierskap</string>
   <string name="sharing_invites_info_dialog_title">Medlemsgrense</string>
-  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">Dette hvelvet kan ha opptil %1$d medlemmer. Du har fremdeles %2$d invitasjoner igjen.</string>
+  <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
+    <item quantity="one">Dette hvelvet kan ha opptil %1$d medlemmer. Du har fremdeles %2$d invitasjon igjen.</item>
+    <item quantity="other">Dette hvelvet kan ha opptil %1$d medlemmer. Du har fremdeles %2$d invitasjoner igjen.</item>
+  </plurals>
   <string name="sharing_limit_reached">Dette hvelvet har nådd grensen for antall medlemmer og invitasjoner.</string>
   <string name="sharing_invites_info_upgrade_text">Oppgrader nå for å invitere flere.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Del</string>
@@ -115,4 +119,6 @@
   <string name="sharing_edit_permissions_remove_user">Fjern bruker</string>
   <string name="sharing_error_dialog_title">Ukjent feil</string>
   <string name="sharing_error_dialog_message">Det oppstod en feil under sending av en invitasjon til dette hvelvet. Hvis problemet vedvarer, kan du kontakte kundestøtte.</string>
+  <string name="sharing_with_no_addresses_can_be_invited">Ingen adresser kan inviteres</string>
+  <string name="sharing_with_some_addresses_cannot_be_invited">Noen adresser kan ikke inviteres</string>
 </resources>

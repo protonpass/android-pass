@@ -13,8 +13,8 @@
   <string name="profile_option_autofill_subtitle">Автоматично заповнюйте ім\'я користувача і паролі.</string>
   <string name="profile_error_biometry_failed_to_start">Не вдалося запустити біометричну автентифікацію</string>
   <string name="profile_error_biometry_failed_to_authenticate">Не вдалося здійснити автентифікацію</string>
-  <string name="profile_fingerprint_lock_enabled">Розблокування відбитком пальця ввімкнено</string>
-  <string name="profile_fingerprint_lock_disabled">Розблокування відбитком пальця вимкнено</string>
+  <string name="profile_fingerprint_lock_enabled">Fingerprint lock enabled</string>
+  <string name="profile_fingerprint_lock_disabled">Fingerprint lock disabled</string>
   <string name="profile_error_performing_operation">Помилка під час виконання операції</string>
   <string name="profile_app_version_copied_to_clipboard">Версію програми скопійовано</string>
   <string name="feedback_option_reddit">Приєднуйтеся до спільноти Proton на Reddit</string>

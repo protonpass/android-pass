@@ -90,7 +90,15 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Không thể chia sẽ</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Bạn không có đủ quyền để chia sẻ kho lưu trữ này.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
+  <string name="item_detail_history_created">Created</string>
+  <string name="item_detail_history_modified_last">Last modified</string>
+  <string name="item_detail_history_button_view">View item history</string>
   <string name="password_score_vulnerable">Dễ bị bẻ khóa</string>
   <string name="password_score_weak">Yếu</string>
   <string name="password_score_strong">Mạnh</string>
+  <string name="passkey_detail_bottomsheet_title">Passkey</string>
+  <string name="passkey_detail_bottomsheet_username">Username</string>
+  <string name="passkey_detail_bottomsheet_domain">Domain</string>
+  <string name="passkey_detail_bottomsheet_key">Key</string>
+  <string name="passkey_detail_bottomsheet_created">Created</string>
 </resources>

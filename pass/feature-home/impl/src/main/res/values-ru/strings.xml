@@ -111,10 +111,10 @@
     <item quantity="other">Переместить в корзину %d элемента?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
-    <item quantity="one">Вы уверены, что хотите переместить в корзину этот элемент?</item>
-    <item quantity="few">Вы уверены, что хотите переместить в корзину %d элемента?</item>
-    <item quantity="many">Переместить в корзину %d элементов?</item>
-    <item quantity="other">Вы уверены, что хотите переместить в корзину %d элемента?</item>
+    <item quantity="one">Are you sure you want to move the item to the trash?</item>
+    <item quantity="few">Are you sure you want to move %d items to the trash?</item>
+    <item quantity="many">Are you sure you want to move %d items to the trash?</item>
+    <item quantity="other">Are you sure you want to move %d items to the trash?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
     <item quantity="one">Удалить навсегда %d элемент?</item>

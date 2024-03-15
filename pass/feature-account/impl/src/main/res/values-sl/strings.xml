@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="account_title">Račun</string>
+  <string name="account_username_label">Uporabniško ime</string>
+  <string name="account_subscription_label">Naročnina</string>
+  <string name="account_permanently_delete_warning">S tem boste trajno izbrisali svoj račun in vse njegove podatke. Tega računa ne boste mogli ponovno aktivirati.</string>
+  <string name="account_delete_account">Izbriši račun</string>
+  <string name="account_delete_account_icon_content_description">Gumb za brisanje računa</string>
+  <string name="account_sign_out">Odjavi se</string>
+  <string name="account_sign_out_icon_content_description">Gumb za odjavo</string>
+  <string name="account_manage_account">Upravljajte račun</string>
+  <string name="account_manage_account_icon_content_description">Gumb za upravljanje z računom</string>
+  <string name="account_manage_subscription">Upravljanje z naročnino</string>
+  <string name="account_get_user_info_error">Podatkov o uporabniku ni bilo mogoče pridobiti</string>
+  <string name="manage_subscription_icon_content_description">Gumb za upravljanje naročnine</string>
+  <!-- Sign out dialog -->
+  <string name="alert_confirm_sign_out_title">Odjava?</string>
+  <string name="alert_confirm_sign_out_message">Ali ste prepričani, da se želite izpisati?</string>
+</resources>

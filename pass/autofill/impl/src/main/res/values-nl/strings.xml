@@ -3,24 +3,17 @@
   <string name="autofill_authenticate_prompt">Verkrijg van Proton Pass</string>
   <string name="error_loading_items">Kan de items niet laden</string>
   <string name="inline_suggestions_open_app">Open Proton Pass</string>
-  <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">Upgrade to autofill</string>
+  <string name="suggestions_cc_autofill_paid_plans_title" comment="This string is shown in the autofill suggestions when the user is not on a paid plan but has credit cards that can be autofilled">Upgrade naar automatisch aanvullen</string>
   <string name="autofill_associate_web_app_name_dialog_title">Gebruik inloggegevens van \"%s\" voor deze app of website.</string>
   <string name="autofill_dialog_associate_and_autofill">Altijd gebruiken</string>
   <string name="autofill_dialog_just_autofill">Eén keer gebruiken</string>
   <string name="autofill_dialog_cancel">Annuleer</string>
   <string name="autofill_notification_copy_to_clipboard">De TOTP-code is naar het klembord gekopieerd.</string>
   <string name="autofill_dialog_associate_title">Gebruik login?</string>
-  <string name="snackbar_item_move_to_trash_success">Item verplaatst naar prullenbak</string>
-  <string name="snackbar_item_move_to_trash_error">Kon niet verplaatsen naar prullenbak</string>
-  <string name="snackbar_item_copy_username_success">De Gebruikersnaam is naar het klembord gekopieerd</string>
-  <string name="snackbar_item_copy_password_success">Wachtwoord gekopieerd naar klembord</string>
-  <string name="snackbar_item_copy_clipboard_error">Kon niet kopiëren naar klembord</string>
   <string name="autofill_user_logged_out">U bent uitgelogd. Gelieve opnieuw in loggen door de app te openen.</string>
-  <string name="bottomsheet_copy_password">Wachtwoord kopiëren</string>
-  <string name="bottomsheet_copy_username">Gebruikersnaam kopiëren</string>
-  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Autofill card details</string>
-  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Autofilling credit card details is a paid feature. If you want Proton Pass to automatically enter your card details for you in apps and websites, please upgrade to a paid plan.</string>
-  <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Confirm your action</string>
-  <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">You are about to autofill your credentials into a website that\'s opened by your current app. The app can have access to the credential after autofill - only do it if you trust the app.</string>
+  <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Autofill kaart details</string>
+  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Automatisch invullen van kredietkaartgegevens is een betaalde functie. Als u wilt dat Proton Pass automatisch uw kaartgegevens voor u invoert in apps en websites, upgrade dan naar een betaald abonnement.</string>
+  <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Bevestig uw actie</string>
+  <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">U staat op het punt uw inloggegevens automatisch in te vullen in een website die door uw huidige app wordt geopend. De app kan toegang hebben tot de inloggegevens na automatisch invullen - alleen uitvoeren als u de app vertrouwt.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Automatisch aanvullen</string>
 </resources>

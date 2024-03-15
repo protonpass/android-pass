@@ -33,6 +33,7 @@
   <string name="share_with_title">Bagikan dengan</string>
   <string name="share_with_email_hint">Alamat surel</string>
   <string name="share_with_email_error">Alamat surel tidak valid</string>
+  <string name="share_with_email_cannot_invite_outside_org">Anda tidak dapat mengundang pengguna yang berada di luar organisasi Anda. Hubungi admin untuk informasi lebih lanjut</string>
   <string name="share_permissions_title">Tentukan tingkat akses</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s mengundang Anda untuk mengakses item pada</string>
   <string name="sharing_join_shared_vault">Gabung dan sinkronkan</string>
@@ -92,7 +93,9 @@
   <string name="sharing_snackbar_transfer_ownership_success">Kepemilikan ditransfer</string>
   <string name="sharing_snackbar_transfer_ownership_error">Terjadi kesalahan mentransfer kepemilikan</string>
   <string name="sharing_invites_info_dialog_title">Batas anggota</string>
-  <string name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault. Param 2: Number of invites left">Brankas ini dapat menampung hingga %1$d anggota. Anda masih memiliki %2$d undangan tersisa.</string>
+  <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
+    <item quantity="other">Brankas ini dapat menampung hingga %1$d anggota. Anda masih memiliki %2$d undangan tersisa.</item>
+  </plurals>
   <string name="sharing_limit_reached">Brankas ini telah mencapai batas jumlah anggota dan undangannya.</string>
   <string name="sharing_invites_info_upgrade_text">Tingkatkan akun Anda sekarang juga untuk mengundang lebih banyak anggota.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Bagikan</string>
@@ -111,4 +114,6 @@
   <string name="sharing_edit_permissions_remove_user">Hapus pengguna</string>
   <string name="sharing_error_dialog_title">Kesalahan yang tidak diketahui</string>
   <string name="sharing_error_dialog_message">Terdapat kesalahan pada saat mengirim undangan untuk brankas ini. Apabila masalah terus berlanjut, silakan hubungi layanan dukungan kami.</string>
+  <string name="sharing_with_no_addresses_can_be_invited">Tidak ada alamat yang bisa diundang</string>
+  <string name="sharing_with_some_addresses_cannot_be_invited">Beberapa alamat tidak bisa diundang</string>
 </resources>

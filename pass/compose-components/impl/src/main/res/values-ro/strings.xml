@@ -5,7 +5,7 @@
   <string name="sort_by_title_desc">Titlu (Z-A)</string>
   <string name="sort_by_creation_asc">De la vechi la noi</string>
   <string name="sort_by_creation_desc">De la noi la vechi</string>
-  <string name="sort_by_modification_date">Cele mai noi</string>
+  <string name="sort_by_modification_date">Utilizate recent</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Toate</string>
   <string name="item_list_header_pinned_search_results">Fixate</string>
@@ -24,6 +24,7 @@
   <string name="bottomsheet_move_to_trash">Mutare în gunoi</string>
   <string name="bottomsheet_pin_item">Fixare</string>
   <string name="bottomsheet_unpin_item">Anulare fixare</string>
+  <string name="bottomsheet_view_item_history">Afișare istoric</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Meniu acțiune deschidere articol</string>
   <string name="action_upgrade_now">Modificare</string>
@@ -57,11 +58,11 @@
   <string name="most_recent_yesterday">Ieri</string>
   <string name="most_recent_this_week">Săptămâna asta</string>
   <string name="most_recent_last_two_weeks">Ultimele două săptămâni</string>
-  <string name="most_recent_last_30_days">Ultimele 30 de zile</string>
+  <string name="most_recent_last_30_days">Luna trecută</string>
   <string name="most_recent_last_60_days">Ultimele 60 de zile</string>
   <string name="most_recent_last_90_days">Ultimele 90 de zile</string>
   <string name="most_recent_within_the_last_year">În ultimul an</string>
-  <string name="most_recent_more_than_1_year">Mai mult de un an</string>
+  <string name="most_recent_more_than_1_year">Mai vechi de un an</string>
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">Pictogramă căutare</string>
   <!-- Select Vault BottomSheet -->
@@ -85,5 +86,40 @@
   <string name="label_password_strength_weak">Slabă</string>
   <!-- Pinning -->
   <string name="pinning_carousel_see_all">Afișare toate</string>
+  <!-- Dates -->
+  <string name="date_today" comment="Pattern to display today's date and time. (e.g. Today 10:25)">Astăzi %s</string>
+  <string name="date_yesterday" comment="Pattern to display yesterday's date and time. (e.g. Yesterday 10:25)">Ieri %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">zz LLLL HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">zz LLLL aaaa HH:mm</string>
+  <!-- Items -->
+  <string name="item_details_alias_section_alias_title">Adresă alias</string>
+  <string name="item_details_alias_section_mailboxes_title">Transferare către</string>
+  <string name="item_details_credit_card_section_cardholder_title">Titular card</string>
+  <string name="item_details_credit_card_section_card_number_title">Număr card</string>
+  <string name="item_details_credit_card_section_expiration_date_title">Expiră la</string>
+  <string name="item_details_credit_card_section_cvv_title">Cod de securitate</string>
+  <string name="item_details_credit_card_section_pin_title">Cod PIN</string>
+  <string name="item_details_login_section_username_title">Nume utilizator sau adresă de e-mail</string>
+  <string name="item_details_login_section_password_title">Parola</string>
+  <string name="item_details_login_section_primary_totp_title">Cod A2F (TOTP)</string>
+  <string name="item_details_login_section_websites_title">Pagini web</string>
+  <string name="item_details_shared_section_note_title">Notă</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Versiunea actuală a aplicației nu mai e suportată. Actualizați aplicația.</string>
+  <!-- Passkeys -->
+  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Cheie de acces</string>
+  <!-- Upgrade -->
+  <string name="dialog_upgrade_plan_title">Modificați planul?</string>
+  <string name="dialog_upgrade_plan_message">Această funcție nu este disponibilă pentru utilizatorii de nivel gratuit. Dacă doriți să vă bucurați de acest lucru împreună cu alte funcții interesante, modificați-vă planul și încercați-l!</string>
+  <string name="dialog_upgrade_plan_action_confirm">Modificare</string>
+  <string name="dialog_upgrade_plan_action_cancel">Nu acum</string>
 </resources>

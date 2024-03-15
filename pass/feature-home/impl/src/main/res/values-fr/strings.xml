@@ -103,8 +103,8 @@
     <item quantity="other">Voulez-vous mettre %d éléments à la corbeille ?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
-    <item quantity="one">Voulez-vous vraiment déplacer l\'élément vers la corbeille ?</item>
-    <item quantity="other">Voulez-vous vraiment déplacer %d éléments vers la corbeille ?</item>
+    <item quantity="one">Voulez-vous vraiment envoyer cet objet à la corbeille ?</item>
+    <item quantity="other">Voulez-vous vraiment envoyer %d objets à la corbeille ?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
     <item quantity="one">Voulez-vous supprimer définitivement %d élément ?</item>

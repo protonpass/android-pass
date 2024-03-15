@@ -7,7 +7,7 @@
   <string name="trial_feature_4">Brugerdefinerede felter</string>
   <string name="trial_button_text">Opgradér nu</string>
   <plurals name="trial_days_left">
-    <item quantity="one">1 dag tilbage til at prøve premium-funktioner</item>
+    <item quantity="one">%d dag tilbage til at prøve premium-funktioner</item>
     <item quantity="other">%d dage tilbage til at prøve premium-funktioner</item>
   </plurals>
   <string name="trial_learn_more">Få mere at vide</string>

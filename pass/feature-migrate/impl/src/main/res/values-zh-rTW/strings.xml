@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <plurals name="migrate_item_confirm_title_bottom_sheet">
-    <item quantity="other">Move %d items to the following vault?</item>
+    <item quantity="other">移動%d項目到以下保險庫？</item>
   </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">移動所有項目到以下保險庫？</string>
   <string name="migrate_item_confirm_confirm_button">移動</string>
   <string name="migrate_item_success_snackbar">項目已移動</string>
   <string name="migrate_item_error_snackbar">移動項目時發生錯誤</string>
-  <string name="migrate_item_some_not_migrated_error_snackbar">Error moving some of the items</string>
+  <string name="migrate_item_some_not_migrated_error_snackbar">移動部分項目錯誤</string>
+  <string name="migrate_item_warning_history">Moving items will reset their history</string>
   <string name="migrate_all_items_success_snackbar">已移動所有項目</string>
   <string name="migrate_all_items_error_snackbar">移動所有保險庫項目時發生錯誤</string>
   <string name="migrate_init_error_snackbar">無法準備遷移畫面</string>
-  <string name="migrate_disabled_vault_reason_no_permission">You cannot create items in this vault</string>
+  <string name="migrate_disabled_vault_reason_no_permission">您無法於保管庫創建項目</string>
   <string name="migrate_disabled_vault_reason_same_vault">You cannot move an item to the same vault</string>
 </resources>

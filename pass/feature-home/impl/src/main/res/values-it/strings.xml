@@ -103,7 +103,7 @@
     <item quantity="other">Vuoi spostare %d elementi nel cestino?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
-    <item quantity="one">Sei sicuro di voler spostare 1 elemento nel cestino?</item>
+    <item quantity="one">Sei sicuro di voler spostare l\'elemento nel cestino?</item>
     <item quantity="other">Sei sicuro di voler spostare %d elementi nel cestino?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">

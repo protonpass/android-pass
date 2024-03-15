@@ -90,7 +90,15 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">공유할 수 없음.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">이 금고를 공유할 권한이 없습니다.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">금고 공유 수 제한에 도달했습니다. 금고를 더 공유하려면 현재 플랜에서 업그레이드 하세요.</string>
+  <string name="item_detail_history_created">생성함</string>
+  <string name="item_detail_history_modified_last">마지막으로 수정함</string>
+  <string name="item_detail_history_button_view">항목 기록 보기</string>
   <string name="password_score_vulnerable">취약</string>
   <string name="password_score_weak">약함</string>
   <string name="password_score_strong">강함</string>
+  <string name="passkey_detail_bottomsheet_title">패스키</string>
+  <string name="passkey_detail_bottomsheet_username">사용자 이름</string>
+  <string name="passkey_detail_bottomsheet_domain">도메인</string>
+  <string name="passkey_detail_bottomsheet_key">키</string>
+  <string name="passkey_detail_bottomsheet_created">생성함</string>
 </resources>

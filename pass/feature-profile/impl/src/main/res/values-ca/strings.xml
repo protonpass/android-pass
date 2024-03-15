@@ -13,8 +13,8 @@
   <string name="profile_option_autofill_subtitle">Ompliu automàticament els vostres noms d\'usuari i contrasenyes.</string>
   <string name="profile_error_biometry_failed_to_start">No s\'ha pogut iniciar l\'autenticació biomètrica</string>
   <string name="profile_error_biometry_failed_to_authenticate">No s’ha pogut autenticar</string>
-  <string name="profile_fingerprint_lock_enabled">S\'ha habilitat el desbloqueig per empremta digital</string>
-  <string name="profile_fingerprint_lock_disabled">S\'ha desactivat el desbloqueig per empremta digital</string>
+  <string name="profile_fingerprint_lock_enabled">Fingerprint lock enabled</string>
+  <string name="profile_fingerprint_lock_disabled">Fingerprint lock disabled</string>
   <string name="profile_error_performing_operation">S\'ha produït un error en realitzar l\'operació</string>
   <string name="profile_app_version_copied_to_clipboard">S\'ha copiat la versió de l\'aplicació</string>
   <string name="feedback_option_reddit">Descobriu Proton en Reddit</string>

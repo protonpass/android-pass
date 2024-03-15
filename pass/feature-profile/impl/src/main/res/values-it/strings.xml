@@ -13,8 +13,8 @@
   <string name="profile_option_autofill_subtitle">Compila automaticamente i nomi utente e le password.</string>
   <string name="profile_error_biometry_failed_to_start">Impossibile usare l\'autenticazione biometrica</string>
   <string name="profile_error_biometry_failed_to_authenticate">Autenticazione non riuscita</string>
-  <string name="profile_fingerprint_lock_enabled">Sblocco con l\'impronta abilitato</string>
-  <string name="profile_fingerprint_lock_disabled">Sblocco con l\'impronta disabilitato</string>
+  <string name="profile_fingerprint_lock_enabled">Blocco con impronta abilitato</string>
+  <string name="profile_fingerprint_lock_disabled">Blocco con impronta disabilitato</string>
   <string name="profile_error_performing_operation">Errore nell\'esecuzione dell\'operazione</string>
   <string name="profile_app_version_copied_to_clipboard">Versione dell\'applicazione copiata</string>
   <string name="feedback_option_reddit">Dai un\'occhiata a Proton su Reddit</string>

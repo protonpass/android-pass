@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="on_boarding_autofill_content">Naj Proton Pass izpolni podatke za prijavo namesto vas. Ni potrebno tipkanje ali kopiranje in lepljenje.</string>
+  <string name="on_boarding_autofill_title">Takoj se prijavite v aplikacije</string>
+  <string name="on_boarding_autofill_button">Samodejno izpolnjevanje s Proton Pass</string>
+  <string name="on_boarding_fingerprint_content">Nastavite Proton Pass za odklepanje s prstnim odtisom, tako da imate samo vi dostop.</string>
+  <string name="on_boarding_fingerprint_title">Zaščitite svoje najbolj občutljive podatke</string>
+  <string name="on_boarding_fingerprint_button">Omogoči zaklepanje s prstnim odtisom</string>
+  <string name="on_boarding_last_page_content">Nehaj deliti svoj pravi e-poštni naslov. Namesto tega ga skrijte z e-poštnimi vzdevki – ekskluzivno za Proton Pass.</string>
+  <string name="on_boarding_last_page_title">Nadzorujte, kaj pristane v vaši mapi »Prejeto«.</string>
+  <string name="on_boarding_last_page_button">Začnite uporabljati Proton Pass</string>
+  <string name="on_boarding_skip">Ne zdaj</string>
+  <string name="on_boarding_tutorial">Oglejte si kratek video o uporabi Proton Pass</string>
+  <string name="on_boarding_pending_invite_content">Iz varnostnih razlogov mora biti vaš dostop potrjen.</string>
+  <string name="on_boarding_pending_invite_title">Čakanje na dostop do podatkov v skupni rabi</string>
+  <string name="on_boarding_pending_invite_button">Izvedite več o Proton Pass</string>
+  <string name="error_biometry_failed_to_start">Biometrične avtentikacije ni bilo mogoče začeti</string>
+  <string name="error_biometry_failed_to_authenticate">Preverjanje pristnosti ni uspelo</string>
+  <string name="settings_fingerprint_lock_enabled">Omogočeno odklepanje s prstnim odtisom</string>
+  <string name="error_performing_operation">Napaka pri izvajanju operacije</string>
+</resources>

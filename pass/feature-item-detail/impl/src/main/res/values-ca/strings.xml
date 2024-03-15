@@ -35,7 +35,7 @@
   <string name="field_username">Nom d\'usuari o adreça de correu electrònic</string>
   <string name="field_password">Contrasenya</string>
   <string name="websites_section_title">Llocs web</string>
-  <string name="totp_section_title">Token 2FA (TOTP)</string>
+  <string name="totp_section_title">Testimoni 2FA (TOTP)</string>
   <string name="action_reveal_password">Mostra la contrasenya</string>
   <string name="action_conceal_password">Oculta la contrasenya</string>
   <string name="action_reveal_number">Mostra el número</string>
@@ -46,7 +46,7 @@
   <string name="more_info_title">Més informació</string>
   <string name="more_info_icon">Icona de més informació</string>
   <plurals name="more_info_modified_times">
-    <item quantity="one">Una vegada</item>
+    <item quantity="one">%d vegada</item>
     <item quantity="other">%d vegades</item>
   </plurals>
   <string name="more_info_last_time_modified">Última vegada, %s</string>
@@ -91,7 +91,15 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">No es pot compartir.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">You don\'t have enough permissions to share this vault.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
+  <string name="item_detail_history_created">Created</string>
+  <string name="item_detail_history_modified_last">Last modified</string>
+  <string name="item_detail_history_button_view">View item history</string>
   <string name="password_score_vulnerable">Vulnerable</string>
   <string name="password_score_weak">Feble</string>
   <string name="password_score_strong">Segura</string>
+  <string name="passkey_detail_bottomsheet_title">Passkey</string>
+  <string name="passkey_detail_bottomsheet_username">Username</string>
+  <string name="passkey_detail_bottomsheet_domain">Domain</string>
+  <string name="passkey_detail_bottomsheet_key">Key</string>
+  <string name="passkey_detail_bottomsheet_created">Created</string>
 </resources>

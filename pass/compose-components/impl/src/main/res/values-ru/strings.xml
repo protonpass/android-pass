@@ -5,7 +5,7 @@
   <string name="sort_by_title_desc">Заголовок (Я-А)</string>
   <string name="sort_by_creation_asc">От старых к новым</string>
   <string name="sort_by_creation_desc">От новых к старым</string>
-  <string name="sort_by_modification_date">Самые новые</string>
+  <string name="sort_by_modification_date">Recently used</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Все</string>
   <string name="item_list_header_pinned_search_results">Закреплённые</string>
@@ -25,6 +25,7 @@
   <string name="bottomsheet_move_to_trash">Переместить в Корзину</string>
   <string name="bottomsheet_pin_item">Закрепить</string>
   <string name="bottomsheet_unpin_item">Открепить</string>
+  <string name="bottomsheet_view_item_history">View history</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Открыть меню действий с элементом</string>
   <string name="action_upgrade_now">Улучшить сейчас</string>
@@ -58,11 +59,11 @@
   <string name="most_recent_yesterday">Вчера</string>
   <string name="most_recent_this_week">Эта неделя</string>
   <string name="most_recent_last_two_weeks">Последние две недели</string>
-  <string name="most_recent_last_30_days">Последние 30 дней</string>
+  <string name="most_recent_last_30_days">Последний месяц</string>
   <string name="most_recent_last_60_days">Последние 60 дней</string>
   <string name="most_recent_last_90_days">Последние 90 дней</string>
   <string name="most_recent_within_the_last_year">За последний год</string>
-  <string name="most_recent_more_than_1_year">Более 1 года</string>
+  <string name="most_recent_more_than_1_year">Older than 1 year</string>
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">Иконка поиска</string>
   <!-- Select Vault BottomSheet -->
@@ -87,5 +88,40 @@
   <string name="label_password_strength_weak">Слабый</string>
   <!-- Pinning -->
   <string name="pinning_carousel_see_all">Увидеть все</string>
-  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">The app version is not supported anymore, please update your app.</string>
+  <!-- Dates -->
+  <string name="date_today" comment="Pattern to display today's date and time. (e.g. Today 10:25)">Сегодня %s</string>
+  <string name="date_yesterday" comment="Pattern to display yesterday's date and time. (e.g. Yesterday 10:25)">Вчера %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">dd LLLL HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+  <!-- Items -->
+  <string name="item_details_alias_section_alias_title">Адрес псевдонима</string>
+  <string name="item_details_alias_section_mailboxes_title">Forwarding to</string>
+  <string name="item_details_credit_card_section_cardholder_title">Имя на карте</string>
+  <string name="item_details_credit_card_section_card_number_title">Card number</string>
+  <string name="item_details_credit_card_section_expiration_date_title">Срок действия</string>
+  <string name="item_details_credit_card_section_cvv_title">Код безопасности</string>
+  <string name="item_details_credit_card_section_pin_title">PIN code</string>
+  <string name="item_details_login_section_username_title">Имя пользователя или адрес электронной почты</string>
+  <string name="item_details_login_section_password_title">Пароль</string>
+  <string name="item_details_login_section_primary_totp_title">Токен 2ФА (TOTP)</string>
+  <string name="item_details_login_section_websites_title">Веб-сайты</string>
+  <string name="item_details_shared_section_note_title">Note</string>
+  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Версия приложения больше не поддерживается, пожалуйста, обновите приложение.</string>
+  <!-- Passkeys -->
+  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Passkey</string>
+  <!-- Upgrade -->
+  <string name="dialog_upgrade_plan_title">Улучшить план?</string>
+  <string name="dialog_upgrade_plan_message">This feature is not available for free tier users. If you want to enjoy this along with other cool features, upgrade your plan and give it a try!</string>
+  <string name="dialog_upgrade_plan_action_confirm">Upgrade</string>
+  <string name="dialog_upgrade_plan_action_cancel">Не сейчас</string>
 </resources>

@@ -36,7 +36,7 @@
   <string name="bottomsheet_custom_field_type_text">Tekst</string>
   <string name="bottomsheet_custom_field_type_text_content_description">Tilpasset tekstfelt</string>
   <string name="bottomsheet_custom_field_type_hidden">Skjult</string>
-  <string name="bottomsheet_custom_field_type_totp">2FA-hemmelighet (TOTP)</string>
+  <string name="bottomsheet_custom_field_type_totp">2FA-hemmelig nøkkel (TOTP)</string>
   <string name="bottomsheet_custom_field_option_edit">Rediger navn</string>
   <string name="bottomsheet_custom_field_option_remove">Fjern felt</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Fjern tilpasset felt</string>
@@ -57,7 +57,6 @@
   <!-- Create Alias -->
   <string name="title_create_alias">Opprett alias</string>
   <string name="field_alias_title">Aliasadresse</string>
-  <string name="field_alias_hint">Aliasbrukernavn</string>
   <string name="field_mailboxes_creation_title">Videresend til</string>
   <string name="field_mailboxes_edit_title">Videresender til</string>
   <string name="field_alias_you_are_about_to_create">Du er i ferd med å opprette</string>
@@ -96,9 +95,9 @@
   <!--  Common create items  -->
   <string name="changes_saved">Endringer lagret</string>
   <!--  TOTP  -->
-  <string name="totp_create_login_field_title">2FA-hemmelighet (TOTP)</string>
-  <string name="totp_create_login_field_invalid">Ugyldig 2FA-hemmelighet</string>
-  <string name="totp_create_login_field_placeholder">Legg til 2FA-hemmelighet</string>
+  <string name="totp_create_login_field_title">2FA-hemmelig nøkkel (TOTP)</string>
+  <string name="totp_create_login_field_invalid">Ugyldig 2FA-hemmelig nøkkel (TOTP)</string>
+  <string name="totp_create_login_field_placeholder">Legg til 2FA-hemmelig nøkkel (TOTP)</string>
   <string name="close_scree_icon_content_description">Knapp for å lukke skjermbildet</string>
   <string name="totp_paste_code_action">Lim inn kode</string>
   <string name="totp_scan_code_action">Skann kode</string>
@@ -113,4 +112,6 @@
   <string name="select_mailbox_upgrade_for_more_inboxes">Oppgrader for flere innbokser</string>
   <string name="create_alias_content_limit_banner">Du har nådd grensen for aliaser du kan opprette. Opprett et ubegrenset antall aliaser når du oppgraderer abonnementet.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Appen må oppdateres for å redigere dette elementet</string>
+  <string name="remove_passkey_dialog_title">Fjerne denne tilgangsnøkkelen?</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Du er i ferd med å fjerne tilgangsnøkkelen for brukeren \'%1$s\' for \'%2$s\'. Er du sikker?</string>
 </resources>

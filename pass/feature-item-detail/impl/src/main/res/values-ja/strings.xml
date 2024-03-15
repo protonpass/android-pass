@@ -57,9 +57,9 @@
   <string name="custom_field_hidden_icon_description">カスタムフィールドを非表示</string>
   <string name="custom_field_totp_icon_description">2 要素認証のカスタムフィールド</string>
   <!-- Credit card details -->
-  <string name="credit_card_cardholder_field_name">Name on card</string>
+  <string name="credit_card_cardholder_field_name">カード名義人</string>
   <string name="credit_card_number_field_name">カード番号</string>
-  <string name="credit_card_cvv_field_name">Security code</string>
+  <string name="credit_card_cvv_field_name">セキュリティコード</string>
   <string name="credit_card_pin_field_name">PIN コード</string>
   <string name="credit_card_expiration_date_field_name">有効期限</string>
   <string name="credit_card_cardholder_copied_to_clipboard">カードの名義がクリップボードにコピーされました</string>
@@ -90,7 +90,15 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">共有できません</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">この保管庫を共有するための十分な権限がありません。</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
+  <string name="item_detail_history_created">Created</string>
+  <string name="item_detail_history_modified_last">Last modified</string>
+  <string name="item_detail_history_button_view">View item history</string>
   <string name="password_score_vulnerable">脆弱</string>
   <string name="password_score_weak">弱い</string>
   <string name="password_score_strong">強い</string>
+  <string name="passkey_detail_bottomsheet_title">パスキー</string>
+  <string name="passkey_detail_bottomsheet_username">ユーザー名</string>
+  <string name="passkey_detail_bottomsheet_domain">ドメイン</string>
+  <string name="passkey_detail_bottomsheet_key">鍵</string>
+  <string name="passkey_detail_bottomsheet_created">Created</string>
 </resources>

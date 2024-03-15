@@ -36,7 +36,7 @@
   <string name="bottomsheet_custom_field_type_text">Texto</string>
   <string name="bottomsheet_custom_field_type_text_content_description">Campo personalizado de texto</string>
   <string name="bottomsheet_custom_field_type_hidden">Oculto</string>
-  <string name="bottomsheet_custom_field_type_totp">Secreto de 2FA (TOTP)</string>
+  <string name="bottomsheet_custom_field_type_totp">Clave secreta 2FA (TOTP)</string>
   <string name="bottomsheet_custom_field_option_edit">Editar el nombre</string>
   <string name="bottomsheet_custom_field_option_remove">Borrar el campo</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Borrar el campo personalizado</string>
@@ -57,7 +57,6 @@
   <!-- Create Alias -->
   <string name="title_create_alias">Crear un alias</string>
   <string name="field_alias_title">Dirección del alias</string>
-  <string name="field_alias_hint">Alias de nombre de usuario</string>
   <string name="field_mailboxes_creation_title">Reenviar a</string>
   <string name="field_mailboxes_edit_title">Reenviando a</string>
   <string name="field_alias_you_are_about_to_create">Vas a crear</string>
@@ -96,9 +95,9 @@
   <!--  Common create items  -->
   <string name="changes_saved">Cambios guardados</string>
   <!--  TOTP  -->
-  <string name="totp_create_login_field_title">Secreto de 2FA (TOTP)</string>
-  <string name="totp_create_login_field_invalid">Secreto de 2FA no válido</string>
-  <string name="totp_create_login_field_placeholder">Añadir secreto de 2FA</string>
+  <string name="totp_create_login_field_title">Clave secreta 2FA (TOTP)</string>
+  <string name="totp_create_login_field_invalid">La clave secreta 2FA (TOTP) no es válida.</string>
+  <string name="totp_create_login_field_placeholder">Añadir una clave secreta 2FA (TOTP)</string>
   <string name="close_scree_icon_content_description">Cerrar el botón de pantalla</string>
   <string name="totp_paste_code_action">Pegar código</string>
   <string name="totp_scan_code_action">Escanea el código</string>
@@ -113,4 +112,6 @@
   <string name="select_mailbox_upgrade_for_more_inboxes">Mejora tu plan para obtener más buzones</string>
   <string name="create_alias_content_limit_banner">Has alcanzado el límite de alias que puedes crear. Crea alias ilimitados al actualizar tu suscripción.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">La aplicación necesita actualizarse para editar este elemento.</string>
+  <string name="remove_passkey_dialog_title">¿Borrar esta clave de acceso?</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Estás a punto de borrar la clave de acceso de «%1$s» para «%2$s». ¿Estás seguro?</string>
 </resources>

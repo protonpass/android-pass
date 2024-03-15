@@ -36,7 +36,7 @@
   <string name="bottomsheet_custom_field_type_text">ტექსტი</string>
   <string name="bottomsheet_custom_field_type_text_content_description">ტექსტური ხელით მითითებული ველი</string>
   <string name="bottomsheet_custom_field_type_hidden">დამალული</string>
-  <string name="bottomsheet_custom_field_type_totp">2FA საიდუმლო (TOTP)</string>
+  <string name="bottomsheet_custom_field_type_totp">2FA საიდუმლო გასაღები (TOTP)</string>
   <string name="bottomsheet_custom_field_option_edit">სახელის ჩასწორება</string>
   <string name="bottomsheet_custom_field_option_remove">ველის წაშლა</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">ხელით მითითებული ველის წაშლა</string>
@@ -57,7 +57,6 @@
   <!-- Create Alias -->
   <string name="title_create_alias">ფსევდონიმის შექმნა</string>
   <string name="field_alias_title">ფსევდონიმის მისამართი</string>
-  <string name="field_alias_hint">ფსევდონიმის მომხმარებლის სახელი</string>
   <string name="field_mailboxes_creation_title">გადაგზავნა</string>
   <string name="field_mailboxes_edit_title">გადამისამართება</string>
   <string name="field_alias_you_are_about_to_create">აპირებთ, შექმნათ</string>
@@ -96,9 +95,9 @@
   <!--  Common create items  -->
   <string name="changes_saved">ცვლილებები შენახულია</string>
   <!--  TOTP  -->
-  <string name="totp_create_login_field_title">2FA საიდუმლო (TOTP)</string>
-  <string name="totp_create_login_field_invalid">არასწორი 2FA საიდუმლო</string>
-  <string name="totp_create_login_field_placeholder">2FA საიდუმლო გასაღების დამატება</string>
+  <string name="totp_create_login_field_title">2FA საიდუმლო გასაღები (TOTP)</string>
+  <string name="totp_create_login_field_invalid">არასწორი 2FA საიდუმლო გასაღები (TOTP)</string>
+  <string name="totp_create_login_field_placeholder">2FA საიდუმლო გასაღების (TOTP) დამატება</string>
   <string name="close_scree_icon_content_description">ეკრანის დახურვის ღილაკი</string>
   <string name="totp_paste_code_action">კოდის ჩასმა</string>
   <string name="totp_scan_code_action">კოდის სკანირება</string>
@@ -113,4 +112,6 @@
   <string name="select_mailbox_upgrade_for_more_inboxes">აწიეთ ტარიფი მეტი საფოსტო ყუთისთვის</string>
   <string name="create_alias_content_limit_banner">მიაღწიეთ შესაძლო ფსევდონიმების რაოდენობს ზღვარს. სატარიფო გეგმის აწევის შემთხვევაში ფსევდონიმების რაოდენობა უსაზღვროა.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">ამ ელემენტის ჩასასწორებლად აუცილებელია აპი განაახლოთ</string>
+  <string name="remove_passkey_dialog_title">წავშალო ეს წვდომის გასაღები?</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">მართლა გნებავთ წაშალოთ მომხმარებლის \'%1$s\' წვდომის გასაღები ელემენტისთვის \'%2$s\'?</string>
 </resources>

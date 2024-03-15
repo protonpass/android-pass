@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <plurals name="migrate_item_confirm_title_bottom_sheet">
+    <item quantity="one">Ali želite %d predmet premakniti v naslednji trezor?</item>
+    <item quantity="two">Ali želite %d predmeta premakniti v naslednji trezor?</item>
+    <item quantity="few">Ali želite %d predmete premakniti v naslednji trezor?</item>
+    <item quantity="other">Ali želite %d predmete premakniti v naslednji trezor?</item>
+  </plurals>
+  <string name="migrate_all_items_confirm_title_bottom_sheet">Želite premakniti vse elemente v naslednji trezor?</string>
+  <string name="migrate_item_confirm_confirm_button">Premakni</string>
+  <string name="migrate_item_success_snackbar">Predmeti premaknjeni</string>
+  <string name="migrate_item_error_snackbar">Napaka pri premikanju elementov</string>
+  <string name="migrate_item_some_not_migrated_error_snackbar">Napaka pri premikanju nekaterih predmetov</string>
+  <string name="migrate_item_warning_history">Če premaknete elemente, boste ponastavili njihovo zgodovino</string>
+  <string name="migrate_all_items_success_snackbar">Vsi predmeti so premaknjeni</string>
+  <string name="migrate_all_items_error_snackbar">Napaka pri premikanju vseh predmetov v trezorju</string>
+  <string name="migrate_init_error_snackbar">Ni bilo mogoče pripraviti zaslona za selitev</string>
+  <string name="migrate_disabled_vault_reason_no_permission">V tem trezorju ne morete ustvarjati predmetov</string>
+  <string name="migrate_disabled_vault_reason_same_vault">Predmeta ne morete premakniti v isti trezor</string>
+</resources>

@@ -36,7 +36,7 @@
   <string name="bottomsheet_custom_field_type_text">テキスト</string>
   <string name="bottomsheet_custom_field_type_text_content_description">テキストのカスタムフィールド</string>
   <string name="bottomsheet_custom_field_type_hidden">非表示</string>
-  <string name="bottomsheet_custom_field_type_totp">2 要素認証の秘密鍵 (TOTP)</string>
+  <string name="bottomsheet_custom_field_type_totp">2FA 秘密鍵 (TOTP)</string>
   <string name="bottomsheet_custom_field_option_edit">Edit name</string>
   <string name="bottomsheet_custom_field_option_remove">フィールドを削除</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">カスタム フィールドを削除</string>
@@ -57,7 +57,6 @@
   <!-- Create Alias -->
   <string name="title_create_alias">エイリアスを作成</string>
   <string name="field_alias_title">エイリアスのアドレス</string>
-  <string name="field_alias_hint">エイリアスのユーザー名</string>
   <string name="field_mailboxes_creation_title">転送先</string>
   <string name="field_mailboxes_edit_title">転送先</string>
   <string name="field_alias_you_are_about_to_create">作成しようとしています</string>
@@ -96,9 +95,9 @@
   <!--  Common create items  -->
   <string name="changes_saved">変更の保存</string>
   <!--  TOTP  -->
-  <string name="totp_create_login_field_title">2要素認証シークレット(TOTP)</string>
-  <string name="totp_create_login_field_invalid">無効な2要素認証シークレット</string>
-  <string name="totp_create_login_field_placeholder">2要素認証シークレットを追加する</string>
+  <string name="totp_create_login_field_title">2FA 秘密鍵 (TOTP)</string>
+  <string name="totp_create_login_field_invalid">Invalid 2FA secret key (TOTP)</string>
+  <string name="totp_create_login_field_placeholder">Add 2FA secret key (TOTP)</string>
   <string name="close_scree_icon_content_description">画面を閉じるボタン</string>
   <string name="totp_paste_code_action">コードを貼り付け</string>
   <string name="totp_scan_code_action">コードをスキャン</string>
@@ -113,4 +112,6 @@
   <string name="select_mailbox_upgrade_for_more_inboxes">アップグレードで受信トレイを増やす</string>
   <string name="create_alias_content_limit_banner">作成できるエイリアスの数に達しました。サブスクリプションをアップグレードすると、エイリアスの作成数が無制限になります。</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">この項目を編集するには、アプリをアップデートする必要があります。</string>
+  <string name="remove_passkey_dialog_title">Remove this passkey?</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">You are about to remove the passkey for user \'%1$s\' for \'%2$s\'. Are you sure?</string>
 </resources>

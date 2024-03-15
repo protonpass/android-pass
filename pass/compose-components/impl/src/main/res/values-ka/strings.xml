@@ -5,7 +5,7 @@
   <string name="sort_by_title_desc">სათაური (Z-A)</string>
   <string name="sort_by_creation_asc">უძველესიდან ახლისკენ</string>
   <string name="sort_by_creation_desc">უახლესიდან ძველისკენ</string>
-  <string name="sort_by_modification_date">უახლესი</string>
+  <string name="sort_by_modification_date">ახლახანს გამოყენებული</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">ყველა</string>
   <string name="item_list_header_pinned_search_results">მიმაგრებული</string>
@@ -23,6 +23,7 @@
   <string name="bottomsheet_move_to_trash">ნაგვის ყუთში გადატანა</string>
   <string name="bottomsheet_pin_item">მიმაგრება</string>
   <string name="bottomsheet_unpin_item">მოხსნა</string>
+  <string name="bottomsheet_view_item_history">ისტორიის ნახვა</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">ელემენტის ქმედების მენიუს გახსნა</string>
   <string name="action_upgrade_now">ტარიფის განახლება</string>
@@ -56,11 +57,11 @@
   <string name="most_recent_yesterday">გუშინ</string>
   <string name="most_recent_this_week">ამ კვირას</string>
   <string name="most_recent_last_two_weeks">ბოლო ორი კვირის განმავლობაში</string>
-  <string name="most_recent_last_30_days">ბოლო 30 დღე</string>
+  <string name="most_recent_last_30_days">ბოლო თვის</string>
   <string name="most_recent_last_60_days">ბოლო 60 დღე</string>
   <string name="most_recent_last_90_days">ბოლო 90 დღე</string>
   <string name="most_recent_within_the_last_year">ბოლო წელიწადში</string>
-  <string name="most_recent_more_than_1_year">1 წელიწადზე მეტი</string>
+  <string name="most_recent_more_than_1_year">1 წელიწადზე უფრო ძველი</string>
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">ძებნის ხატულა</string>
   <!-- Select Vault BottomSheet -->
@@ -83,5 +84,40 @@
   <string name="label_password_strength_weak">სუსტი</string>
   <!-- Pinning -->
   <string name="pinning_carousel_see_all">ყველას ნახვა</string>
+  <!-- Dates -->
+  <string name="date_today" comment="Pattern to display today's date and time. (e.g. Today 10:25)">დღეს %s</string>
+  <string name="date_yesterday" comment="Pattern to display yesterday's date and time. (e.g. Yesterday 10:25)">გუშინ %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">dd LLLL HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+  <!-- Items -->
+  <string name="item_details_alias_section_alias_title">ფსევდონიმის მისამართი</string>
+  <string name="item_details_alias_section_mailboxes_title">გადამისამართება</string>
+  <string name="item_details_credit_card_section_cardholder_title">სრული სახელი</string>
+  <string name="item_details_credit_card_section_card_number_title">ბარათის ნომერი</string>
+  <string name="item_details_credit_card_section_expiration_date_title">ვადა იწურება</string>
+  <string name="item_details_credit_card_section_cvv_title">უსაფრთხოების კოდი</string>
+  <string name="item_details_credit_card_section_pin_title">PIN კოდი</string>
+  <string name="item_details_login_section_username_title">მომხმარებლის სახელი ან ელფოსტის მისამართი</string>
+  <string name="item_details_login_section_password_title">პაროლი</string>
+  <string name="item_details_login_section_primary_totp_title">2FA კოდი (TOTP)</string>
+  <string name="item_details_login_section_websites_title">ვებსაიტები</string>
+  <string name="item_details_shared_section_note_title">შენიშვნა</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">აპის ვერსია მხარდაჭერილი აღარაა. განაახლეთ თქვენი აპი.</string>
+  <!-- Passkeys -->
+  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">წვდომის გასაღები</string>
+  <!-- Upgrade -->
+  <string name="dialog_upgrade_plan_title">ტარიფის გაუმჯობესება?</string>
+  <string name="dialog_upgrade_plan_message">ეს ფუნქცია ხელმიუწვდომელია უფასო სატარიფო გეგმისი მომხმარებლებისთვის. თუ გნებავთ, ისიამოვნოთ სხვა მრავალ მაგარ ფუნქციასთან ერთად, ასწიეთ სატარიფო გეგმა და სცადეთ ისინი!</string>
+  <string name="dialog_upgrade_plan_action_confirm">ტარიფის აწევა</string>
+  <string name="dialog_upgrade_plan_action_cancel">არა ახლა</string>
 </resources>

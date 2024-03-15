@@ -103,7 +103,7 @@
     <item quantity="other">%d öge çöpe atılsın mı?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
-    <item quantity="one">Ögeyi çöpe atmak istediğinize emin misiniz?</item>
+    <item quantity="one">Öğeyi çöp kutusuna taşımak istediğinizden emin misiniz?</item>
     <item quantity="other">%d ögeyi çöpe atmak istediğinize emin misiniz?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">

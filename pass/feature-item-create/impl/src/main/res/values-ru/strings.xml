@@ -36,7 +36,7 @@
   <string name="bottomsheet_custom_field_type_text">Текст</string>
   <string name="bottomsheet_custom_field_type_text_content_description">Текстовое настраиваемое поле</string>
   <string name="bottomsheet_custom_field_type_hidden">Скрыто</string>
-  <string name="bottomsheet_custom_field_type_totp">Секрет 2ФА (TOTP)</string>
+  <string name="bottomsheet_custom_field_type_totp">Секретный ключ двухфакторной аутентификации (TOTP)</string>
   <string name="bottomsheet_custom_field_option_edit">Изменить имя</string>
   <string name="bottomsheet_custom_field_option_remove">Удалить поле</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Удалить пользовательское поле</string>
@@ -57,7 +57,6 @@
   <!-- Create Alias -->
   <string name="title_create_alias">Создать псевдоним</string>
   <string name="field_alias_title">Адрес псевдонима</string>
-  <string name="field_alias_hint">Имя пользователя псевдонима</string>
   <string name="field_mailboxes_creation_title">Переслать на</string>
   <string name="field_mailboxes_edit_title">Пересылка на</string>
   <string name="field_alias_you_are_about_to_create">Вы собираетесь создать</string>
@@ -96,9 +95,9 @@
   <!--  Common create items  -->
   <string name="changes_saved">Изменения сохранены</string>
   <!--  TOTP  -->
-  <string name="totp_create_login_field_title">Секрет 2ФА (TOTP)</string>
-  <string name="totp_create_login_field_invalid">Недействительный секрет 2ФА</string>
-  <string name="totp_create_login_field_placeholder">Добавить секрет 2ФА</string>
+  <string name="totp_create_login_field_title">Секретный ключ двухфакторной аутентификации (TOTP)</string>
+  <string name="totp_create_login_field_invalid">Invalid 2FA secret key (TOTP)</string>
+  <string name="totp_create_login_field_placeholder">Add 2FA secret key (TOTP)</string>
   <string name="close_scree_icon_content_description">Кнопка закрытия экрана</string>
   <string name="totp_paste_code_action">Вставить код</string>
   <string name="totp_scan_code_action">Сканировать код</string>
@@ -113,4 +112,6 @@
   <string name="select_mailbox_upgrade_for_more_inboxes">Улучшите для большего количества почтовых ящиков</string>
   <string name="create_alias_content_limit_banner">Вы достигли лимита на количество псевдонимов, которые можно создать. Создавайте неограниченное количество псевдонимов, улучшив свою подписку.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Для редактирования этого элемента приложение должно быть обновлено</string>
+  <string name="remove_passkey_dialog_title">Remove this passkey?</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">You are about to remove the passkey for user \'%1$s\' for \'%2$s\'. Are you sure?</string>
 </resources>

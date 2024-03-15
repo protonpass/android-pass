@@ -27,9 +27,9 @@
   <string name="item_restored_message">項目已還原</string>
   <string name="item_restored_message_error">還原項目錯誤</string>
   <string name="item_pinned_message">項目成功標記</string>
-  <string name="item_pinned_message_error">There was an error pinning this item</string>
+  <string name="item_pinned_message_error">釘選此項目發生錯誤</string>
   <string name="item_unpinned_message">項目成功取消標記</string>
-  <string name="item_unpinned_message_error">There was an error unpinning this item</string>
+  <string name="item_unpinned_message_error">取消釘選此項目發生錯誤</string>
   <string name="login_item_generate_totp_error">雙重驗證生成條碼錯誤</string>
   <string name="login_item_view_alias_button">檢視別名</string>
   <string name="field_username">使用者名稱或電子郵件位址</string>
@@ -90,7 +90,15 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">無法分享</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">You don\'t have enough permissions to share this vault.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
+  <string name="item_detail_history_created">Created</string>
+  <string name="item_detail_history_modified_last">Last modified</string>
+  <string name="item_detail_history_button_view">View item history</string>
   <string name="password_score_vulnerable">具有風險</string>
   <string name="password_score_weak">弱</string>
   <string name="password_score_strong">強</string>
+  <string name="passkey_detail_bottomsheet_title">Passkey</string>
+  <string name="passkey_detail_bottomsheet_username">Username</string>
+  <string name="passkey_detail_bottomsheet_domain">Domain</string>
+  <string name="passkey_detail_bottomsheet_key">Key</string>
+  <string name="passkey_detail_bottomsheet_created">Created</string>
 </resources>

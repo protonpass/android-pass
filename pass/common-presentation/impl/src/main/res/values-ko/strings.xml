@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="item_details_snackbar_message_alias_copied">별명을 복사했습니다</string>
+  <string name="item_details_snackbar_message_card_number_copied">카드 번호를 복사했습니다</string>
+  <string name="item_details_snackbar_message_custom_field_copied">사용자 지정 필드를 복사했습니다</string>
+  <string name="item_details_snackbar_message_cvv_copied">보안 코드를 복사했습니다</string>
+  <string name="item_details_snackbar_message_password_copied">비밀번호를 복사했습니다</string>
+  <string name="item_details_snackbar_message_pin_copied">PIN 코드를 복사했습니다</string>
+  <string name="item_details_snackbar_message_totp_copied">TOTP를 복사했습니다</string>
+  <string name="item_details_snackbar_message_username_copied">사용자 이름을 복사했습니다</string>
+  <string name="item_details_snackbar_message_website_copied">웹사이트 URL을 복사했습니다</string>
+</resources>

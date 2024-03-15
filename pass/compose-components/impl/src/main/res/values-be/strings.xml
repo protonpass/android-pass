@@ -5,7 +5,7 @@
   <string name="sort_by_title_desc">Па назве (Я-А)</string>
   <string name="sort_by_creation_asc">Ад самых старых да самых новых</string>
   <string name="sort_by_creation_desc">Ад самых новых да самых старых</string>
-  <string name="sort_by_modification_date">Самыя апошнія</string>
+  <string name="sort_by_modification_date">Нядаўна выкарыстаныя</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Усе</string>
   <string name="item_list_header_pinned_search_results">Замацавана</string>
@@ -25,6 +25,7 @@
   <string name="bottomsheet_move_to_trash">Перамясціць у сметніцу</string>
   <string name="bottomsheet_pin_item">Замацаваць</string>
   <string name="bottomsheet_unpin_item">Адмацаваць</string>
+  <string name="bottomsheet_view_item_history">Паглядзець гісторыю</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Адкрыць меню дзеянняў элемента</string>
   <string name="action_upgrade_now">Палепшыць</string>
@@ -58,11 +59,11 @@
   <string name="most_recent_yesterday">Учора</string>
   <string name="most_recent_this_week">На гэтым тыдні</string>
   <string name="most_recent_last_two_weeks">За апошнія два тыдні</string>
-  <string name="most_recent_last_30_days">За апошнія 30 дзён</string>
+  <string name="most_recent_last_30_days">Мінулы месяц</string>
   <string name="most_recent_last_60_days">За апошнія 60 дзён</string>
   <string name="most_recent_last_90_days">За апошнія 90 дзён</string>
   <string name="most_recent_within_the_last_year">За апошні год</string>
-  <string name="most_recent_more_than_1_year">Больш чым за 1 год</string>
+  <string name="most_recent_more_than_1_year">Старэйшыя за 1 год</string>
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">Значок пошуку</string>
   <!-- Select Vault BottomSheet -->
@@ -87,5 +88,40 @@
   <string name="label_password_strength_weak">Ненадзейны</string>
   <!-- Pinning -->
   <string name="pinning_carousel_see_all">Прагледзець усе</string>
+  <!-- Dates -->
+  <string name="date_today" comment="Pattern to display today's date and time. (e.g. Today 10:25)">Сёння %s</string>
+  <string name="date_yesterday" comment="Pattern to display yesterday's date and time. (e.g. Yesterday 10:25)">Учора %s</string>
+  <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
+  <string name="date_full_date_format">dd LLLL у HH:mm</string>
+  <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
+  <string name="date_full_date_format_with_year">dd LLLL yyyy у HH:mm</string>
+  <!-- Items -->
+  <string name="item_details_alias_section_alias_title">Адрас псеўданіма</string>
+  <string name="item_details_alias_section_mailboxes_title">Перасылаецца на</string>
+  <string name="item_details_credit_card_section_cardholder_title">Імя на картцы</string>
+  <string name="item_details_credit_card_section_card_number_title">Нумар карткі</string>
+  <string name="item_details_credit_card_section_expiration_date_title">Тэрмін дзеяння</string>
+  <string name="item_details_credit_card_section_cvv_title">Код бяспекі</string>
+  <string name="item_details_credit_card_section_pin_title">PIN-код</string>
+  <string name="item_details_login_section_username_title">Імя карыстальніка або адрас электроннай пошты</string>
+  <string name="item_details_login_section_password_title">Пароль</string>
+  <string name="item_details_login_section_primary_totp_title">Токен 2ФА (TOTP)</string>
+  <string name="item_details_login_section_websites_title">Вэб-сайты</string>
+  <string name="item_details_shared_section_note_title">Нататка</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Дадзеная версія праграмы больш не падтрымліваецца. Абнавіце праграму да апошняй версіі.</string>
+  <!-- Passkeys -->
+  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Ключ доступу</string>
+  <!-- Upgrade -->
+  <string name="dialog_upgrade_plan_title">Палепшыць тарыфны план?</string>
+  <string name="dialog_upgrade_plan_message">Гэта функцыя недаступна для бясплатнага ўзроўню падпіскі. Калі вы хочаце карыстацца ёй з іншымі цудоўнымі функцыямі, вам неабходна палепшыць свой тарыфны план і нарэшце паспрабаваць іх!</string>
+  <string name="dialog_upgrade_plan_action_confirm">Палепшыць</string>
+  <string name="dialog_upgrade_plan_action_cancel">Не зараз</string>
 </resources>

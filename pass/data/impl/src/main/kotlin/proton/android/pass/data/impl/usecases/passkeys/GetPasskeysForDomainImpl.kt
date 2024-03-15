@@ -82,7 +82,7 @@ class GetPasskeysForDomainImpl @Inject constructor(
                 is PasskeySelection.Allowed -> domainPasskeys.filter { passkey ->
                     selection.allowedPasskeys.any { it == passkey.id }
                 }
-                else -> domainPasskeys
+                PasskeySelection.All -> domainPasskeys
             }
 
             if (allowedPasskeys.isEmpty()) {

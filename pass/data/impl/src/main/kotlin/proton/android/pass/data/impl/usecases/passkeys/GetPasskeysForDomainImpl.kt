@@ -26,6 +26,7 @@ import proton.android.pass.data.api.usecases.ObserveUsableVaults
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeysForDomain
 import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
 import proton.android.pass.data.api.usecases.passkeys.PasskeyItem
+import proton.android.pass.data.api.usecases.passkeys.PasskeySelection
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
@@ -40,7 +41,7 @@ class GetPasskeysForDomainImpl @Inject constructor(
     private val observeUsableVaults: ObserveUsableVaults,
     private val encryptionContextProvider: EncryptionContextProvider
 ) : GetPasskeysForDomain {
-    override suspend fun invoke(domain: String): List<PasskeyItem> {
+    override suspend fun invoke(domain: String, selection: PasskeySelection): List<PasskeyItem> {
         val parsed = UrlSanitizer.getDomain(domain).getOrElse {
             PassLogger.w(TAG, "Could not get domain from $domain")
             return emptyList()
@@ -76,10 +77,18 @@ class GetPasskeysForDomainImpl @Inject constructor(
 
                 parsed.contains(passkeyDomain)
             }
-            if (domainPasskeys.isEmpty()) {
+
+            val allowedPasskeys = when (selection) {
+                is PasskeySelection.Allowed -> domainPasskeys.filter { passkey ->
+                    selection.allowedPasskeys.any { it == passkey.id }
+                }
+                else -> domainPasskeys
+            }
+
+            if (allowedPasskeys.isEmpty()) {
                 null
             } else {
-                domainPasskeys.map {
+                allowedPasskeys.map {
                     PasskeyItem(
                         shareId = item.shareId,
                         itemId = item.itemId,

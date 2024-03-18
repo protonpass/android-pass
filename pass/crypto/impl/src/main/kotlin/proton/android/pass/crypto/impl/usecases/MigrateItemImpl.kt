@@ -23,7 +23,12 @@ import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
+import proton.android.pass.crypto.api.usecases.EncryptedMigrateContent
 import proton.android.pass.crypto.api.usecases.EncryptedMigrateItemBody
+import proton.android.pass.crypto.api.usecases.EncryptedMigrateItemHistory
+import proton.android.pass.crypto.api.usecases.ItemMigrationContent
+import proton.android.pass.crypto.api.usecases.ItemMigrationHistoryContent
+import proton.android.pass.crypto.api.usecases.ItemMigrationPayload
 import proton.android.pass.crypto.api.usecases.MigrateItem
 import proton.android.pass.domain.key.ShareKey
 import javax.inject.Inject
@@ -31,33 +36,84 @@ import javax.inject.Inject
 class MigrateItemImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : MigrateItem {
-    override fun migrate(
-        destinationKey: ShareKey,
-        encryptedItemContents: EncryptedByteArray,
-        contentFormatVersion: Int
-    ): EncryptedMigrateItemBody {
-        val (decryptedDestinationKey, decryptedContents) =
-            encryptionContextProvider.withEncryptionContext {
-                EncryptionKey(decrypt(destinationKey.key)) to decrypt(encryptedItemContents)
+
+    override fun migrate(destinationKey: ShareKey, payload: ItemMigrationPayload): EncryptedMigrateItemBody =
+        with(payload) {
+            val decryptedDestinationKey = encryptionContextProvider.withEncryptionContext {
+                EncryptionKey(decrypt(destinationKey.key))
             }
 
-        val newItemKey = EncryptionKey.generate()
-        val encryptedItemKey =
-            encryptionContextProvider.withEncryptionContext(decryptedDestinationKey) {
-                encrypt(newItemKey.value(), EncryptionTag.ItemKey)
-            }
+            val itemKey = EncryptionKey.generate()
 
-        val reencryptedContents = encryptionContextProvider.withEncryptionContext(newItemKey) {
-            encrypt(decryptedContents, EncryptionTag.ItemContent)
+            val encryptedItemKey =
+                encryptionContextProvider.withEncryptionContext(decryptedDestinationKey) {
+                    encrypt(itemKey.value(), EncryptionTag.ItemKey)
+                }
+
+            val item = createEncryptedMigratedItemContent(
+                itemKey = itemKey.clone(),
+                itemContent = itemContent,
+                encryptedItemKey = encryptedItemKey,
+                destinationKeyRotation = destinationKey.rotation
+            )
+
+            val history = createEncryptedMigratedHistoryContent(
+                itemKey = itemKey.clone(),
+                itemHistoryContents = historyContents,
+                encryptedItemKey = encryptedItemKey,
+                destinationKeyRotation = destinationKey.rotation
+            )
+
+            itemKey.clear()
+
+            EncryptedMigrateItemBody(
+                item = item,
+                history = history
+            )
         }
 
+    private fun createEncryptedMigratedItemContent(
+        itemKey: EncryptionKey,
+        itemContent: ItemMigrationContent,
+        encryptedItemKey: EncryptedByteArray,
+        destinationKeyRotation: Long
+    ): EncryptedMigrateContent = with(itemContent) {
+        val decryptedContents = encryptionContextProvider.withEncryptionContext {
+            decrypt(encryptedItemContents)
+        }
 
-        return EncryptedMigrateItemBody(
-            keyRotation = destinationKey.rotation,
+        val reEncryptedContents =
+            encryptionContextProvider.withEncryptionContext(itemKey) {
+                encrypt(decryptedContents, EncryptionTag.ItemContent)
+            }
+
+        EncryptedMigrateContent(
+            keyRotation = destinationKeyRotation,
             contentFormatVersion = contentFormatVersion,
-            content = Base64.encodeBase64String(reencryptedContents.array),
+            content = Base64.encodeBase64String(reEncryptedContents.array),
             itemKey = Base64.encodeBase64String(encryptedItemKey.array)
         )
-
     }
+
+    private fun createEncryptedMigratedHistoryContent(
+        itemKey: EncryptionKey,
+        itemHistoryContents: List<ItemMigrationHistoryContent>,
+        encryptedItemKey: EncryptedByteArray,
+        destinationKeyRotation: Long
+    ): List<EncryptedMigrateItemHistory> {
+        if (itemHistoryContents.size <= 1) return emptyList()
+
+        return itemHistoryContents.map { itemHistoryContent ->
+            EncryptedMigrateItemHistory(
+                revision = itemHistoryContent.revision,
+                content = createEncryptedMigratedItemContent(
+                    itemKey = itemKey.clone(),
+                    itemContent = itemHistoryContent.itemContent,
+                    encryptedItemKey = encryptedItemKey,
+                    destinationKeyRotation = destinationKeyRotation
+                )
+            )
+        }
+    }
+
 }

@@ -97,6 +97,20 @@ class Missing2faCheckerTest {
     }
 
     @Test
+    fun `is able to detect missing 2fa by only taking into account the domain`() = runTest {
+        val domain = "some.domain"
+        supports2fa.setSupportsList(listOf(domain))
+        val item = TestItem.random(TestItemType.login(
+            websites = listOf("https://$domain"),
+            primaryTotp = null
+        ))
+
+        val res = instance.invoke(listOf(item))
+        assertThat(res.items.size).isEqualTo(1)
+        assertThat(res.items[0].id).isEqualTo(item.id)
+    }
+
+    @Test
     fun `given a list of items without totp and domains that support 2fa, they should be reported`() = runTest {
         val domain = "some.domain"
         supports2fa.setSupportsList(listOf(domain))

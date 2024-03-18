@@ -26,10 +26,11 @@ import org.junit.Test
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.fakes.TestAppDispatchers
 import proton.android.pass.data.fakes.usecases.TestObserveItems
+import proton.android.pass.securitycenter.api.Missing2faResult
 import proton.android.pass.securitycenter.api.SecurityAnalysis
 import proton.android.pass.securitycenter.fakes.mother.BreachDataResultMother
 import proton.android.pass.securitycenter.fakes.mother.InsecurePasswordsResultMother
-import proton.android.pass.securitycenter.fakes.mother.Missing2faResultMother
+import proton.android.pass.securitycenter.impl.checkers.Missing2faReport
 import proton.android.pass.securitycenter.impl.fakes.TestBreachDataChecker
 import proton.android.pass.securitycenter.impl.fakes.TestInsecurePasswordChecker
 import proton.android.pass.securitycenter.impl.fakes.TestMissing2faChecker
@@ -80,7 +81,7 @@ class ObserveSecurityAnalysisImplTest {
 
     @Test
     fun `can emit partial errors`() = runTest {
-        val missing2fa = Missing2faResultMother.random()
+        val missing2fa = Missing2faReport(emptyList())
         val breachData = BreachDataResultMother.random()
         val insecure = InsecurePasswordsResultMother.random()
         val error = IllegalStateException("test")
@@ -99,7 +100,7 @@ class ObserveSecurityAnalysisImplTest {
                     breachedData = LoadingResult.Success(breachData),
                     reusedPasswords = LoadingResult.Error(error),
                     insecurePasswords = LoadingResult.Success(insecure),
-                    missing2fa = LoadingResult.Success(missing2fa)
+                    missing2fa = LoadingResult.Success(Missing2faResult(0))
                 )
             )
         }

@@ -23,19 +23,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
+import kotlinx.collections.immutable.toPersistentList
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonuimodels.api.masks.TextMask
 import proton.android.pass.composecomponents.impl.R
-import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
-import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.item.PassPasswordStrengthItem
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailFieldRow
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailMaskedFieldRow
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailsHiddenFieldRow
+import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailMainSectionContainer
 import proton.android.pass.composecomponents.impl.progress.PassTotpProgress
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.HiddenState
@@ -54,54 +54,58 @@ internal fun PassLoginItemDetailMainSection(
     itemColors: PassItemColors,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
-    val sections = mutableListOf<@Composable (() -> Unit)?>()
+    val sections = mutableListOf<@Composable () -> Unit>()
 
-    sections.add {
-        PassItemDetailFieldRow(
-            icon = painterResource(CoreR.drawable.ic_proton_user),
-            title = stringResource(R.string.item_details_login_section_username_title),
-            subtitle = username,
-            itemColors = itemColors,
-            onClick = {
-                onEvent(
-                    PassItemDetailsUiEvent.OnSectionClick(
-                        section = username,
-                        field = ItemDetailsFieldType.Plain.Username
+    if (username.isNotBlank()) {
+        sections.add {
+            PassItemDetailFieldRow(
+                icon = painterResource(CoreR.drawable.ic_proton_user),
+                title = stringResource(R.string.item_details_login_section_username_title),
+                subtitle = username,
+                itemColors = itemColors,
+                onClick = {
+                    onEvent(
+                        PassItemDetailsUiEvent.OnSectionClick(
+                            section = username,
+                            field = ItemDetailsFieldType.Plain.Username
+                        )
                     )
-                )
-            }
-        ).takeIf { username.isNotBlank() }
+                }
+            )
+        }
     }
 
-    sections.add {
-        PassItemDetailsHiddenFieldRow(
-            icon = painterResource(CoreR.drawable.ic_proton_key),
-            title = stringResource(R.string.item_details_login_section_password_title),
-            hiddenState = password,
-            hiddenTextLength = HIDDEN_PASSWORD_TEXT_LENGTH,
-            needsRevealedColors = true,
-            itemColors = itemColors,
-            hiddenTextStyle = ProtonTheme.typography.defaultNorm
-                .copy(fontFamily = FontFamily.Monospace),
-            onClick = {
-                onEvent(
-                    PassItemDetailsUiEvent.OnHiddenSectionClick(
-                        state = password,
-                        field = ItemDetailsFieldType.Hidden.Password
+    if (password !is HiddenState.Empty) {
+        sections.add {
+            PassItemDetailsHiddenFieldRow(
+                icon = painterResource(CoreR.drawable.ic_proton_key),
+                title = stringResource(R.string.item_details_login_section_password_title),
+                hiddenState = password,
+                hiddenTextLength = HIDDEN_PASSWORD_TEXT_LENGTH,
+                needsRevealedColors = true,
+                itemColors = itemColors,
+                hiddenTextStyle = ProtonTheme.typography.defaultNorm
+                    .copy(fontFamily = FontFamily.Monospace),
+                onClick = {
+                    onEvent(
+                        PassItemDetailsUiEvent.OnHiddenSectionClick(
+                            state = password,
+                            field = ItemDetailsFieldType.Hidden.Password
+                        )
                     )
-                )
-            },
-            onToggle = { isVisible ->
-                onEvent(
-                    PassItemDetailsUiEvent.OnHiddenSectionToggle(
-                        state = isVisible,
-                        hiddenState = password,
-                        field = ItemDetailsFieldType.Hidden.Password
+                },
+                onToggle = { isVisible ->
+                    onEvent(
+                        PassItemDetailsUiEvent.OnHiddenSectionToggle(
+                            state = isVisible,
+                            hiddenState = password,
+                            field = ItemDetailsFieldType.Hidden.Password
+                        )
                     )
-                )
-            },
-            contentInBetween = { PassPasswordStrengthItem(passwordStrength = passwordStrength) }
-        ).takeIf { password !is HiddenState.Empty }
+                },
+                contentInBetween = { PassPasswordStrengthItem(passwordStrength = passwordStrength) }
+            )
+        }
     }
 
     primaryTotp?.let { totp ->
@@ -129,15 +133,9 @@ internal fun PassLoginItemDetailMainSection(
         }
     }
 
-    RoundedCornersColumn(modifier = modifier) {
-        sections
-            .filterNotNull()
-            .forEachIndexed { index, block ->
-                block()
+    PassItemDetailMainSectionContainer(
+        modifier = modifier,
+        sections = sections.toPersistentList()
+    )
 
-                if (index < sections.lastIndex) {
-                    PassDivider()
-                }
-            }
-    }
 }

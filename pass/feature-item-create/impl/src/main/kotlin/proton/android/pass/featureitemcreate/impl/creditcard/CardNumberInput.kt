@@ -58,19 +58,7 @@ internal fun CardNumberInput(
         editable = enabled,
         textStyle = ProtonTheme.typography.defaultNorm(enabled),
         keyboardOptions = KeyboardOptions(autoCorrect = false, keyboardType = KeyboardType.Number),
-        visualTransformation = { text ->
-            if (text.isEmpty())
-                return@ProtonTextField TransformedText(text, OffsetMapping.Identity)
-            val split = text.chunked(4)
-            TransformedText(
-                AnnotatedString(split.joinToString(" ")),
-                object : OffsetMapping {
-                    override fun originalToTransformed(offset: Int): Int = offset + split.size - 1
-
-                    override fun transformedToOriginal(offset: Int): Int = offset - split.size + 1
-                }
-            )
-        },
+        visualTransformation = { text -> cardNumberTransformedText(text) },
         label = { ProtonTextFieldLabel(text = stringResource(id = R.string.field_card_number_title)) },
         placeholder = { ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.field_card_number_hint)) },
         leadingIcon = {
@@ -86,6 +74,57 @@ internal fun CardNumberInput(
             }
         }
     )
+}
+
+fun cardNumberTransformedText(text: AnnotatedString): TransformedText = if (text.isEmpty()) {
+    TransformedText(text, OffsetMapping.Identity)
+} else {
+    val cardNumberSplits = text.chunked(4)
+    val cardNumberWithSpaces = cardNumberSplits.joinToString(" ")
+
+    TransformedText(
+        text = AnnotatedString(cardNumberWithSpaces),
+        offsetMapping = CardNumberOffsetMapping(cardNumberSplits)
+    )
+}
+
+
+class CardNumberOffsetMapping(private val cardNumberGroups: List<String>) : OffsetMapping {
+    private val maxTextSize = cardNumberGroups
+        // Sum of all the card number groups
+        .sumOf { it.length }
+
+        // Number of spaces between the groups
+        .plus(cardNumberGroups.size - 1)
+
+    private val safeIntRange = IntRange(start = 0, endInclusive = maxTextSize)
+
+    override fun originalToTransformed(offset: Int): Int {
+        val splitIndex = splitIndex(offset)
+        return (offset + splitIndex).coerceIn(safeIntRange)
+    }
+
+    override fun transformedToOriginal(offset: Int): Int {
+        val splitIndex = splitIndex(offset)
+        return if (splitIndex == 0) {
+            offset
+        } else {
+            offset - splitIndex + 1
+        }.coerceIn(safeIntRange)
+    }
+
+    private fun splitIndex(offset: Int): Int {
+        var splitIndex = 0
+        var splitOffset = 0
+        for (group in cardNumberGroups) {
+            if (offset < group.length + splitOffset) {
+                break
+            }
+            splitOffset += group.length
+            splitIndex++
+        }
+        return splitIndex
+    }
 }
 
 @Preview

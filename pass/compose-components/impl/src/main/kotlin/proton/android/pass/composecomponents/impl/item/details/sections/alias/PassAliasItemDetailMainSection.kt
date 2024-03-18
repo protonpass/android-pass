@@ -34,16 +34,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.composecomponents.impl.R
-import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
-import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.icon.ForwardIcon
 import proton.android.pass.composecomponents.impl.item.SectionSubtitle
 import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
+import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailMainSectionContainer
 import proton.android.pass.composecomponents.impl.item.placeholder
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.AliasMailbox
@@ -74,15 +74,10 @@ internal fun PassAliasItemDetailMainSection(
         )
     }
 
-    RoundedCornersColumn(modifier = modifier) {
-        sections.forEachIndexed { index, block ->
-            block()
-
-            if (index < sections.lastIndex) {
-                PassDivider()
-            }
-        }
-    }
+    PassItemDetailMainSectionContainer(
+        modifier = modifier,
+        sections = sections.toPersistentList()
+    )
 }
 
 @Composable

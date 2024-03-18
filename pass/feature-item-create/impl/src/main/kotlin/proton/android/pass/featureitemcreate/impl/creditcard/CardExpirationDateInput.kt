@@ -61,11 +61,13 @@ internal fun CardExpirationDateInput(
         isError = hasError,
         errorMessage = stringResource(id = R.string.field_card_expiration_date_error),
         visualTransformation = { text ->
-            if (text.length <= 2)
-                return@ProtonTextField TransformedText(text, OffsetMapping.Identity)
-            val part1 = text.substring(0, 2)
-            val part2 = text.substring(2, text.length)
-            TransformedText(AnnotatedString("$part1 / $part2"), DateOffsetMapping)
+            if (text.length <= 2) {
+                TransformedText(text, OffsetMapping.Identity)
+            } else {
+                val part1 = text.substring(0, 2)
+                val part2 = text.substring(2, text.length)
+                TransformedText(AnnotatedString("$part1 / $part2"), DateOffsetMapping)
+            }
         },
         editable = enabled,
         label = {

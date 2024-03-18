@@ -987,9 +987,7 @@ class ItemRepositoryImpl @Inject constructor(
                     itemId = item.id,
                     item = encryptedMigrateItemBody.item.toRequest(),
                     history = encryptedMigrateItemBody.history.toRequest()
-                ).also {
-                    println("JIBIRI: $it")
-                }
+                )
             }
         }
 
@@ -1021,6 +1019,7 @@ class ItemRepositoryImpl @Inject constructor(
         shareId: ShareId,
         itemId: ItemId
     ): List<ItemMigrationHistoryContent> = getItemRevisions(userId, shareId, itemId)
+        .takeLast(ITEM_HISTORY_MAX_PREVIOUS_REVISIONS)
         .map { itemRevision ->
             openItemRevision(shareId, itemRevision).let { item ->
                 ItemMigrationHistoryContent(
@@ -1264,5 +1263,8 @@ class ItemRepositoryImpl @Inject constructor(
     companion object {
         const val MAX_BATCH_ITEMS_PER_REQUEST = 50
         const val TAG = "ItemRepositoryImpl"
+
+        // Max history item revisions supported in BE is 50, so, 49 previous revisions + current revision = 50
+        const val ITEM_HISTORY_MAX_PREVIOUS_REVISIONS = 49
     }
 }

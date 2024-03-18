@@ -37,6 +37,8 @@ fun ItemV1.Item.withPasskey(passkey: Passkey): ItemV1.Item {
             .setContent(ByteString.copyFrom(contents))
             .setCreateTime(createTime.epochSeconds.toInt())
             .setNote(note)
+            .setUserHandle(ByteString.copyFrom(userHandle))
+            .setCredentialId(ByteString.copyFrom(credentialId))
             .build()
     }
 

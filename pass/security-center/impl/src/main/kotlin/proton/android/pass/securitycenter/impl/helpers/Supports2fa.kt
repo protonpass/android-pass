@@ -16,27 +16,29 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.securitycenter.impl.fakes
+package proton.android.pass.securitycenter.impl.helpers
 
-import proton.android.pass.domain.Item
-import proton.android.pass.securitycenter.impl.checkers.Missing2faChecker
-import proton.android.pass.securitycenter.impl.checkers.Missing2faReport
+import proton.android.pass.commonrust.TwofaDomainChecker
+import proton.android.pass.log.api.PassLogger
+import javax.inject.Inject
 
-class TestMissing2faChecker : Missing2faChecker {
+interface Supports2fa {
+    operator fun invoke(domain: String): Boolean
+}
 
-    private var result: Missing2faReport = Missing2faReport(
-        items = emptyList()
-    )
-
-    private val memory: MutableList<List<Item>> = mutableListOf()
-    fun memory(): List<List<Item>> = memory
-
-    fun setResult(value: Missing2faReport) {
-        result = value
+class Supports2faImpl @Inject constructor(
+    private val twofaDomainChecker: TwofaDomainChecker
+) : Supports2fa {
+    override fun invoke(domain: String): Boolean = runCatching {
+        twofaDomainChecker.twofaDomainEligible(domain)
+    }.getOrElse {
+        PassLogger.w(TAG, "Error checking twofaDomainChecker")
+        PassLogger.w(TAG, it)
+        false
     }
 
-    override suspend fun invoke(items: List<Item>): Missing2faReport {
-        memory.add(items)
-        return result
+    companion object {
+        private const val TAG = "Supports2faImpl"
     }
 }
+

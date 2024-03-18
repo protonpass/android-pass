@@ -32,6 +32,7 @@ dependencies {
     api(projects.pass.securityCenter.api)
 
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.pass.common)
 
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonUi.api)

@@ -18,25 +18,15 @@
 
 package proton.android.pass.securitycenter.impl.fakes
 
-import proton.android.pass.domain.Item
-import proton.android.pass.securitycenter.impl.checkers.Missing2faChecker
-import proton.android.pass.securitycenter.impl.checkers.Missing2faReport
+import proton.android.pass.securitycenter.impl.helpers.Supports2fa
 
-class TestMissing2faChecker : Missing2faChecker {
+class TestSupports2fa : Supports2fa {
 
-    private var result: Missing2faReport = Missing2faReport(
-        items = emptyList()
-    )
+    private var supportsList: List<String> = emptyList()
 
-    private val memory: MutableList<List<Item>> = mutableListOf()
-    fun memory(): List<List<Item>> = memory
-
-    fun setResult(value: Missing2faReport) {
-        result = value
+    fun setSupportsList(value: List<String>) {
+        supportsList = value
     }
 
-    override suspend fun invoke(items: List<Item>): Missing2faReport {
-        memory.add(items)
-        return result
-    }
+    override fun invoke(domain: String): Boolean = supportsList.contains(domain)
 }

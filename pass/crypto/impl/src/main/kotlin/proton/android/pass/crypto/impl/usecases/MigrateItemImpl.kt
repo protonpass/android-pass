@@ -37,10 +37,7 @@ class MigrateItemImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : MigrateItem {
 
-    override fun migrate(
-        destinationKey: ShareKey,
-        payload: ItemMigrationPayload
-    ): EncryptedMigrateItemBody =
+    override fun migrate(destinationKey: ShareKey, payload: ItemMigrationPayload): EncryptedMigrateItemBody =
         with(payload) {
             val decryptedDestinationKey = encryptionContextProvider.withEncryptionContext {
                 EncryptionKey(decrypt(destinationKey.key))

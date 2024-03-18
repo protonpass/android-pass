@@ -18,8 +18,8 @@
 
 package proton.android.pass.crypto.fakes.usecases
 
-import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import proton.android.pass.crypto.api.usecases.EncryptedMigrateItemBody
+import proton.android.pass.crypto.api.usecases.ItemMigrationPayload
 import proton.android.pass.crypto.api.usecases.MigrateItem
 import proton.android.pass.domain.key.ShareKey
 
@@ -31,9 +31,7 @@ class TestMigrateItem : MigrateItem {
         output = value
     }
 
-    override fun migrate(
-        destinationKey: ShareKey,
-        encryptedItemContents: EncryptedByteArray,
-        contentFormatVersion: Int
-    ): EncryptedMigrateItemBody = output ?: throw IllegalStateException("output not set")
+    override fun migrate(destinationKey: ShareKey, payload: ItemMigrationPayload): EncryptedMigrateItemBody =
+        output ?: throw IllegalStateException("output not set")
+
 }

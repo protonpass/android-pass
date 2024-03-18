@@ -696,7 +696,8 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         shareIds: List<ShareId>,
         itemState: ItemState?
-    ): Flow<ItemCountSummary> = localItemDataSource.observeItemCountSummary(userId, shareIds, itemState)
+    ): Flow<ItemCountSummary> =
+        localItemDataSource.observeItemCountSummary(userId, shareIds, itemState)
 
     override suspend fun updateItemLastUsed(shareId: ShareId, itemId: ItemId) {
         val userId = accountManager.getPrimaryUserId().first()
@@ -1019,6 +1020,7 @@ class ItemRepositoryImpl @Inject constructor(
         shareId: ShareId,
         itemId: ItemId
     ): List<ItemMigrationHistoryContent> = getItemRevisions(userId, shareId, itemId)
+        .drop(n = 1)
         .takeLast(ITEM_HISTORY_MAX_PREVIOUS_REVISIONS)
         .map { itemRevision ->
             openItemRevision(shareId, itemRevision).let { item ->

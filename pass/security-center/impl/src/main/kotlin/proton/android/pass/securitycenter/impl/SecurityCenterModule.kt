@@ -20,19 +20,36 @@ package proton.android.pass.securitycenter.impl
 
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import proton.android.pass.commonrust.TwofaDomainChecker
 import proton.android.pass.securitycenter.api.ObserveSecurityAnalysis
 import proton.android.pass.securitycenter.impl.checkers.RepeatedPasswordChecker
 import proton.android.pass.securitycenter.impl.checkers.RepeatedPasswordCheckerImpl
+import proton.android.pass.securitycenter.impl.helpers.Supports2fa
+import proton.android.pass.securitycenter.impl.helpers.Supports2faImpl
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class SecurityCenterModule {
+abstract class SecurityCenterBindModule {
 
     @Binds
     abstract fun bindObserveSecurityAnalysis(impl: ObserveSecurityAnalysisImpl): ObserveSecurityAnalysis
 
     @Binds
     abstract fun bindRepeatedPasswordChecker(impl: RepeatedPasswordCheckerImpl): RepeatedPasswordChecker
+
+    @Binds
+    abstract fun bindSupports2fa(impl: Supports2faImpl): Supports2fa
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+object SecurityCenterProvideModule {
+
+    @Provides
+    @Singleton
+    fun provideMissing2Fa(): TwofaDomainChecker = TwofaDomainChecker()
 }

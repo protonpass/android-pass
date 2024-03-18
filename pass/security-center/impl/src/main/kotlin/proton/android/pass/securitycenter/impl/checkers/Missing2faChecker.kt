@@ -20,6 +20,7 @@ package proton.android.pass.securitycenter.impl.checkers
 
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemType
 import proton.android.pass.log.api.PassLogger
@@ -61,7 +62,16 @@ class Missing2faCheckerImpl @Inject constructor(
     }
 
     private fun isAnyWebsiteEligible(websites: List<String>): Boolean = runCatching {
-        websites.any { supports2fa(it) }
+        websites.any { website ->
+            UrlSanitizer.getDomain(website).fold(
+                onSuccess = { domain ->
+                    supports2fa(domain)
+                },
+                onFailure = {
+                    supports2fa(website)
+                }
+            )
+        }
     }.getOrElse {
         PassLogger.w(TAG, "Error checking twofaDomainChecker")
         PassLogger.w(TAG, it)

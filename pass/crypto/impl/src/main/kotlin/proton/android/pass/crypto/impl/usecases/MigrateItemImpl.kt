@@ -37,7 +37,10 @@ class MigrateItemImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : MigrateItem {
 
-    override fun migrate(destinationKey: ShareKey, payload: ItemMigrationPayload): EncryptedMigrateItemBody =
+    override fun migrate(
+        destinationKey: ShareKey,
+        payload: ItemMigrationPayload
+    ): EncryptedMigrateItemBody =
         with(payload) {
             val decryptedDestinationKey = encryptionContextProvider.withEncryptionContext {
                 EncryptionKey(decrypt(destinationKey.key))
@@ -77,7 +80,7 @@ class MigrateItemImpl @Inject constructor(
         itemContent: ItemMigrationContent,
         encryptedItemKey: EncryptedByteArray,
         destinationKeyRotation: Long
-    ): EncryptedMigrateContent = with(itemContent) {
+    ) = with(itemContent) {
         val decryptedContents = encryptionContextProvider.withEncryptionContext {
             decrypt(encryptedItemContents)
         }
@@ -100,20 +103,16 @@ class MigrateItemImpl @Inject constructor(
         itemHistoryContents: List<ItemMigrationHistoryContent>,
         encryptedItemKey: EncryptedByteArray,
         destinationKeyRotation: Long
-    ): List<EncryptedMigrateItemHistory> {
-        if (itemHistoryContents.size <= 1) return emptyList()
-
-        return itemHistoryContents.map { itemHistoryContent ->
-            EncryptedMigrateItemHistory(
-                revision = itemHistoryContent.revision,
-                content = createEncryptedMigratedItemContent(
-                    itemKey = itemKey.clone(),
-                    itemContent = itemHistoryContent.itemContent,
-                    encryptedItemKey = encryptedItemKey,
-                    destinationKeyRotation = destinationKeyRotation
-                )
+    ) = itemHistoryContents.map { itemHistoryContent ->
+        EncryptedMigrateItemHistory(
+            revision = itemHistoryContent.revision,
+            content = createEncryptedMigratedItemContent(
+                itemKey = itemKey.clone(),
+                itemContent = itemHistoryContent.itemContent,
+                encryptedItemKey = encryptedItemKey,
+                destinationKeyRotation = destinationKeyRotation
             )
-        }
+        )
     }
 
 }

@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
@@ -39,6 +40,9 @@ import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.error.CryptoException
 import proton.android.pass.crypto.api.usecases.CreateItem
+import proton.android.pass.crypto.api.usecases.ItemMigrationContent
+import proton.android.pass.crypto.api.usecases.ItemMigrationHistoryContent
+import proton.android.pass.crypto.api.usecases.ItemMigrationPayload
 import proton.android.pass.crypto.api.usecases.MigrateItem
 import proton.android.pass.crypto.api.usecases.OpenItem
 import proton.android.pass.crypto.api.usecases.UpdateItem
@@ -54,6 +58,7 @@ import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.VaultProgress
 import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.data.api.usecases.items.OpenItemRevision
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.extensions.hasPackageName
@@ -106,7 +111,8 @@ class ItemRepositoryImpl @Inject constructor(
     private val openItem: OpenItem,
     private val migrateItem: MigrateItem,
     private val itemKeyRepository: ItemKeyRepository,
-    private val encryptionContextProvider: EncryptionContextProvider
+    private val encryptionContextProvider: EncryptionContextProvider,
+    private val openItemRevision: OpenItemRevision
 ) : BaseRepository(userAddressRepository), ItemRepository {
 
     @Suppress("TooGenericExceptionCaught")
@@ -964,15 +970,27 @@ class ItemRepositoryImpl @Inject constructor(
         chunk: List<ItemEntity>
     ): List<ItemEntity> {
         val migrations = chunk.map { item ->
-            val req = migrateItem.migrate(
-                destinationKey = destinationKey,
-                encryptedItemContents = item.encryptedContent,
-                contentFormatVersion = item.contentFormatVersion
-            )
-            MigrateItemsBody(
-                itemId = item.id,
-                item = req.toRequest()
-            )
+            ItemMigrationPayload(
+                itemContent = createItemMigrationContent(
+                    encryptedItemContents = item.encryptedContent,
+                    contentFormatVersion = item.contentFormatVersion
+                ),
+                historyContents = createItemMigrationHistoryContent(
+                    userId = userId,
+                    shareId = source,
+                    itemId = ItemId(item.id)
+                )
+            ).let { migrationPayload ->
+                migrateItem.migrate(destinationKey, migrationPayload)
+            }.let { encryptedMigrateItemBody ->
+                MigrateItemsBody(
+                    itemId = item.id,
+                    item = encryptedMigrateItemBody.item.toRequest(),
+                    history = encryptedMigrateItemBody.history.toRequest()
+                ).also {
+                    println("JIBIRI: $it")
+                }
+            }
         }
 
         val body = MigrateItemsRequest(
@@ -997,6 +1015,28 @@ class ItemRepositoryImpl @Inject constructor(
 
         return resAsEntities
     }
+
+    private suspend fun createItemMigrationHistoryContent(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): List<ItemMigrationHistoryContent> = getItemRevisions(userId, shareId, itemId)
+        .map { itemRevision ->
+            openItemRevision(shareId, itemRevision).let { item ->
+                ItemMigrationHistoryContent(
+                    revision = item.revision,
+                    itemContent = createItemMigrationContent(
+                        encryptedItemContents = item.content,
+                        contentFormatVersion = itemRevision.contentFormatVersion
+                    )
+                )
+            }
+        }
+
+    private fun createItemMigrationContent(
+        encryptedItemContents: EncryptedByteArray,
+        contentFormatVersion: Int
+    ): ItemMigrationContent = ItemMigrationContent(encryptedItemContents, contentFormatVersion)
 
     private suspend fun restoreItemsForShare(
         userId: UserId,

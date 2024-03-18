@@ -42,7 +42,9 @@ data class MigrateItemsBody(
     @SerialName("ItemID")
     val itemId: String,
     @SerialName("Item")
-    val item: MigrateItemBody
+    val item: MigrateItemBody,
+    @SerialName("History")
+    val history: List<MigrateItemHistory>
 )
 
 @Serializable
@@ -55,4 +57,12 @@ data class MigrateItemBody(
     val content: String,
     @SerialName("ItemKey")
     val itemKey: String
+)
+
+@Serializable
+data class MigrateItemHistory(
+    @SerialName("Revision")
+    val revision: Long,
+    @SerialName("Item")
+    val item: MigrateItemBody
 )

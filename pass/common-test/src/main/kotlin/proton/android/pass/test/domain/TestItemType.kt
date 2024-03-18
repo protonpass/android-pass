@@ -18,6 +18,7 @@
 
 package proton.android.pass.test.domain
 
+import proton.android.pass.account.fakes.TestKeyStoreCrypto
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.entity.PackageInfo
@@ -27,6 +28,7 @@ object TestItemType {
     fun login(
         username: String? = null,
         password: String? = null,
+        primaryTotp: String? = null,
         websites: List<String> = emptyList(),
         packageInfoSet: Set<PackageInfo> = emptySet(),
         passkeys: List<Passkey> = emptyList()
@@ -35,7 +37,7 @@ object TestItemType {
         password = password ?: TestUtils.randomString(),
         websites = websites,
         packageInfoSet = packageInfoSet,
-        primaryTotp = TestUtils.randomString(),
+        primaryTotp = TestKeyStoreCrypto.encrypt(primaryTotp ?: ""),
         customFields = emptyList(),
         passkeys = passkeys
     )

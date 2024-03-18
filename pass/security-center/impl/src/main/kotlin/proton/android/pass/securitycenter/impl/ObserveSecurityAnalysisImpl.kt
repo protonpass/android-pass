@@ -37,6 +37,7 @@ import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareSelection
+import proton.android.pass.securitycenter.api.Missing2faResult
 import proton.android.pass.securitycenter.api.ObserveSecurityAnalysis
 import proton.android.pass.securitycenter.api.ReusedPasswordsResult
 import proton.android.pass.securitycenter.api.SecurityAnalysis
@@ -72,7 +73,9 @@ class ObserveSecurityAnalysisImpl @Inject constructor(
                 ReusedPasswordsResult(it.repeatedPasswordsCount)
             }.asLoadingResult(),
             oneShot { insecurePasswordChecker(items) }.asLoadingResult(),
-            oneShot { missing2faChecker(items) }.asLoadingResult(),
+            oneShot { missing2faChecker(items) }.map {
+                Missing2faResult(it.missing2faCount)
+            }.asLoadingResult(),
             ::SecurityAnalysis
         )
     }.onStart {

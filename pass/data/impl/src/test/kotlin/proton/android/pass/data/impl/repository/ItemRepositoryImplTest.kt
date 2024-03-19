@@ -23,12 +23,15 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.account.fakes.TestAccountManager
+import proton.android.pass.account.fakes.TestUserAddressRepository
 import proton.android.pass.crypto.api.usecases.OpenItemOutput
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.crypto.fakes.usecases.TestCreateItem
 import proton.android.pass.crypto.fakes.usecases.TestMigrateItem
 import proton.android.pass.crypto.fakes.usecases.TestOpenItem
 import proton.android.pass.crypto.fakes.usecases.TestUpdateItem
+import proton.android.pass.data.fakes.usecases.items.FakeOpenItemRevision
 import proton.android.pass.data.impl.fakes.TestItemKeyRepository
 import proton.android.pass.data.impl.fakes.TestLocalItemDataSource
 import proton.android.pass.data.impl.fakes.TestPassDatabase
@@ -37,14 +40,12 @@ import proton.android.pass.data.impl.fakes.TestShareKeyRepository
 import proton.android.pass.data.impl.fakes.TestShareRepository
 import proton.android.pass.data.impl.generator.TestProtoItemGenerator
 import proton.android.pass.data.impl.repositories.ItemRepositoryImpl
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.Share
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.account.fakes.TestAccountManager
-import proton.android.pass.account.fakes.TestUserAddressRepository
 import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestShare
 import proton.android.pass.test.domain.TestShareKey
-import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.Share
 import kotlin.test.assertEquals
 
 class ItemRepositoryImplTest {
@@ -89,7 +90,8 @@ class ItemRepositoryImplTest {
             encryptionContextProvider = TestEncryptionContextProvider(),
             shareKeyRepository = shareKeyRepository,
             itemKeyRepository = itemKeyRepository,
-            migrateItem = TestMigrateItem()
+            migrateItem = TestMigrateItem(),
+            openItemRevision = FakeOpenItemRevision()
         )
     }
 

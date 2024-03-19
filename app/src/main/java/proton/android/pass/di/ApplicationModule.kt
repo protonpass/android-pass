@@ -32,6 +32,7 @@ import me.proton.core.domain.entity.Product
 import proton.android.pass.PassAppConfig
 import proton.android.pass.R
 import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.appconfig.api.BuildFlavor
 import proton.android.pass.autofill.AppIcon
 import proton.android.pass.notifications.api.MainActivityAnnotation
 import proton.android.pass.ui.MainActivity
@@ -47,7 +48,12 @@ object ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideAppStore() = AppStore.GooglePlay
+    fun provideAppStore(appConfig: AppConfig) = when (appConfig.flavor) {
+        is BuildFlavor.Fdroid -> AppStore.FDroid
+        is BuildFlavor.Alpha -> AppStore.GooglePlay
+        is BuildFlavor.Dev -> AppStore.GooglePlay
+        is BuildFlavor.Play -> AppStore.GooglePlay
+    }
 
     @Provides
     @Singleton

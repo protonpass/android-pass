@@ -157,6 +157,12 @@ class AutofillAppViewModel @Inject constructor(
         }
     }
 
+    fun onAssociationCancelled(isInlineSuggestionSession: Boolean) = viewModelScope.launch {
+        if (isInlineSuggestionSession) {
+            _eventFlow.update { AutofillAppEvent.Cancel }
+        }
+    }
+
     fun clearEvent() {
         _eventFlow.update { AutofillAppEvent.Unknown }
     }

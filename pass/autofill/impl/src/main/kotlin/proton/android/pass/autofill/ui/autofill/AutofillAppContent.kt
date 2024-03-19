@@ -178,6 +178,11 @@ fun AutofillAppContent(
                 },
                 onDismiss = {
                     showAssociateDialog = null
+                },
+                onCancel = {
+                    viewModel.onAssociationCancelled(
+                        isInlineSuggestionSession = selectedAutofillItem != null
+                    )
                 }
             )
         }

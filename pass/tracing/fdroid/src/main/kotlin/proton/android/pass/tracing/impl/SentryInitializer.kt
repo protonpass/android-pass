@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,18 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.inappupdates.api
+package proton.android.pass.tracing.impl
 
-sealed interface InAppUpdateState {
-    data object Idle : InAppUpdateState
+import android.content.Context
+import androidx.startup.Initializer
 
-    @JvmInline
-    value class Downloading(val progress: Float) : InAppUpdateState
-    data object Downloaded : InAppUpdateState
-    data object Installing : InAppUpdateState
-    data object Installed : InAppUpdateState
-    data object Failed : InAppUpdateState
-    data object Pending : InAppUpdateState
-    data object Cancelled : InAppUpdateState
-    data object Unknown : InAppUpdateState
+class SentryInitializer : Initializer<Unit> {
+
+    override fun create(context: Context) {
+
+    }
+
+    override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
 }

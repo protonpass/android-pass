@@ -111,7 +111,7 @@ fun NavGraphBuilder.autofillActivityGraph(
             when (it) {
                 AuthNavigation.Back -> onNavigate(AutofillNavigation.Cancel)
                 AuthNavigation.Success -> if (selectedAutofillItem != null) {
-                    onEvent(AutofillEvent.AutofillItemSelected(selectedAutofillItem))
+                    onEvent(AutofillEvent.AutofillSuggestionSelected(selectedAutofillItem))
                 } else {
                     appNavigator.navigate(SelectItem)
                 }

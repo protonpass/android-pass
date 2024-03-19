@@ -24,7 +24,7 @@ import proton.android.pass.featureprofile.impl.ProfileScreenTestTag
 
 object ProfileRobot : Robot {
 
-    private val profileScreen get() = node.withTag(ProfileScreenTestTag.screen)
+    private val profileScreen get() = node.withTag(ProfileScreenTestTag.SCREEN)
 
     private val accountSetting get() = node.withTag(AccountProfileSectionTestTag.accountSetting)
 

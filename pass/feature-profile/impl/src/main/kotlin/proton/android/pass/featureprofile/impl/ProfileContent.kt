@@ -78,7 +78,8 @@ fun ProfileContent(
                 accountType = state.accountType.accountType,
                 onListClick = { onEvent(ProfileUiEvent.OnListClick) },
                 onCreateClick = { onEvent(ProfileUiEvent.OnCreateItemClick) },
-                onProfileClick = {}
+                onProfileClick = {},
+                onSecurityCenterClick = { onEvent(ProfileUiEvent.OnSecurityCenterClick) }
             )
         }
     ) { padding ->

@@ -86,13 +86,14 @@ fun ProfileScreen(
 
                 ProfileUiEvent.OnChangePinClick -> onNavigateEvent(ProfileNavigation.EnterPin)
                 ProfileUiEvent.OnTutorialClick -> openWebsite(context, PASS_TUTORIAL)
+                ProfileUiEvent.OnSecurityCenterClick -> onNavigateEvent(ProfileNavigation.SecurityCenter)
             }
         }
     )
 }
 
 object ProfileScreenTestTag {
-    const val screen = "ProfileScreenTestTag"
+    const val SCREEN = "ProfileScreenTestTag"
 }
 
 @VisibleForTesting

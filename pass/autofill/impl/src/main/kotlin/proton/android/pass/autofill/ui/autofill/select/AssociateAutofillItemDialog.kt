@@ -55,7 +55,8 @@ internal fun AssociateAutofillItemDialog(
     itemUiModel: ItemUiModel?,
     onAssociateAndAutofill: (ItemUiModel) -> Unit,
     onAutofill: (ItemUiModel) -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    onCancel: () -> Unit
 ) {
     itemUiModel ?: return onDismiss()
 
@@ -94,7 +95,10 @@ internal fun AssociateAutofillItemDialog(
                 DialogButton(
                     modifier = Modifier.align(Alignment.End),
                     text = stringResource(R.string.autofill_dialog_cancel),
-                    onClick = onDismiss
+                    onClick = {
+                        onCancel()
+                        onDismiss()
+                    }
                 )
             }
         }
@@ -142,7 +146,8 @@ fun AssociateAutofillItemDialogPreview(@PreviewParameter(ThemePreviewProvider::c
                 ),
                 onAssociateAndAutofill = {},
                 onAutofill = {},
-                onDismiss = {}
+                onDismiss = {},
+                onCancel = {}
             )
         }
     }

@@ -186,6 +186,11 @@ android {
             dimension = "version"
             buildConfigField("Boolean", "ALLOW_SCREENSHOTS", "true")
         }
+        create("fdroid") {
+            dimension = "version"
+            applicationIdSuffix = ".fdroid"
+            buildConfigField("Boolean", "ALLOW_SCREENSHOTS", "true")
+        }
     }
     flavorDimensions += "env"
     productFlavors {
@@ -262,6 +267,24 @@ configurations {
     implementation.get().exclude(mapOf("group" to "org.intellij", "module" to "annotations"))
 }
 
+fun DependencyHandlerScope.addFdroidSpecialLib(
+    default: Any,
+    fdroid: Any?
+) {
+    val devImplementation = configurations.getByName("devImplementation")
+    val alphaImplementation = configurations.getByName("alphaImplementation")
+    val playImplementation = configurations.getByName("playImplementation")
+    val fdroidImplementation = configurations.getByName("fdroidImplementation")
+
+    devImplementation(default)
+    alphaImplementation(default)
+    playImplementation(default)
+
+    fdroid?.let { dep ->
+        fdroidImplementation(dep)
+    }
+}
+
 dependencies {
     coreLibraryDesugaring(libs.android.desugar)
     implementation(files("../../proton-libs/gopenpgp/gopenpgp.aar"))
@@ -304,8 +327,17 @@ dependencies {
     implementation(libs.core.network)
     implementation(libs.core.notification)
     implementation(libs.core.observability)
-    implementation(libs.core.payment)
-    implementation(libs.core.paymentIap)
+
+    addFdroidSpecialLib(
+        default = libs.core.payment,
+        fdroid = null
+    )
+
+    addFdroidSpecialLib(
+        default = libs.core.paymentIap,
+        fdroid = null
+    )
+
     implementation(libs.core.plan)
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
@@ -348,10 +380,19 @@ dependencies {
     implementation(projects.pass.domain)
     implementation(projects.pass.image.api)
     implementation(projects.pass.image.impl)
+
     implementation(projects.pass.inAppUpdates.api)
-    implementation(projects.pass.inAppUpdates.impl)
+    addFdroidSpecialLib(
+        default = projects.pass.inAppUpdates.impl,
+        fdroid = projects.pass.inAppUpdates.fdroid
+    )
+
     implementation(projects.pass.inAppReview.api)
-    implementation(projects.pass.inAppReview.impl)
+    addFdroidSpecialLib(
+        default = projects.pass.inAppReview.impl,
+        fdroid = projects.pass.inAppReview.fdroid
+    )
+
     implementation(projects.pass.featureAccount.impl)
     implementation(projects.pass.featureAuth.impl)
     implementation(projects.pass.featureFeatureFlags.impl)
@@ -388,7 +429,11 @@ dependencies {
     implementation(projects.pass.securityCenter.impl)
     implementation(projects.pass.telemetry.impl)
     implementation(projects.pass.totp.impl)
-    implementation(projects.pass.tracing.impl)
+
+    addFdroidSpecialLib(
+        default = projects.pass.tracing.impl,
+        fdroid = projects.pass.tracing.fdroid
+    )
 
     debugImplementation(libs.leakCanary)
     debugImplementation(libs.androidx.compose.uiTooling)
@@ -410,5 +455,23 @@ dependencies {
 fun String?.toBuildConfigValue() = if (this != null) "\"$this\"" else "null"
 
 sentry {
+
+    fun generateIgnoredFlavours(prefix: String): List<String> {
+        val buildMode = listOf("Debug", "Release")
+        val environment = listOf("Black", "Prod")
+
+        val ignoredFlavors = mutableListOf<String>()
+        for (mode in buildMode) {
+            for (env in environment) {
+                ignoredFlavors.add("$prefix$env$mode")
+            }
+        }
+
+        return ignoredFlavors
+    }
+
     autoInstallation.enabled.set(false)
+    
+    // Disable sentry for fdroid builds
+    ignoredFlavors = generateIgnoredFlavours("fdroid")
 }

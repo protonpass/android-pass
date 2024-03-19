@@ -19,15 +19,15 @@
 package proton.android.pass.inappupdates.api
 
 sealed interface InAppUpdateState {
-    object Idle : InAppUpdateState
+    data object Idle : InAppUpdateState
 
     @JvmInline
     value class Downloading(val progress: Float) : InAppUpdateState
-    object Downloaded : InAppUpdateState
-    object Installing : InAppUpdateState
-    object Installed : InAppUpdateState
-    object Failed : InAppUpdateState
-    object Pending : InAppUpdateState
-    object Cancelled : InAppUpdateState
-    object Unknown : InAppUpdateState
+    data object Downloaded : InAppUpdateState
+    data object Installing : InAppUpdateState
+    data object Installed : InAppUpdateState
+    data object Failed : InAppUpdateState
+    data object Pending : InAppUpdateState
+    data object Cancelled : InAppUpdateState
+    data object Unknown : InAppUpdateState
 }

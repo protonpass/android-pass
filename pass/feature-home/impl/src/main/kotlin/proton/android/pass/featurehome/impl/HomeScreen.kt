@@ -750,6 +750,10 @@ fun HomeScreen(
                         HomeUiEvent.StopSeeAllPinned -> {
                             homeViewModel.onStopSeeAllPinned()
                         }
+
+                        HomeUiEvent.SecurityCenterClick -> {
+                            onNavigateEvent(HomeNavigation.SecurityCenter)
+                        }
                     }
                 }
             )

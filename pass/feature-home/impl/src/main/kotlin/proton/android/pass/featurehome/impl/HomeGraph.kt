@@ -138,6 +138,8 @@ sealed interface HomeNavigation {
     @JvmInline
     value class SearchOptions(val bulkActionsEnabled: Boolean) : HomeNavigation
 
+    data object SecurityCenter : HomeNavigation
+
     data object MoveToVault : HomeNavigation
 
     data object Upgrade : HomeNavigation

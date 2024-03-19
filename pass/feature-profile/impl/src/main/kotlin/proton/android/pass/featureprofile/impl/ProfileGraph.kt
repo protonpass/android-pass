@@ -55,21 +55,39 @@ object AppLockTypeBottomsheet : NavItem(
 object PinConfig : NavItem(baseRoute = "pin/config")
 
 sealed interface ProfileNavigation {
-    object Back : ProfileNavigation
-    object Account : ProfileNavigation
-    object List : ProfileNavigation
-    object CreateItem : ProfileNavigation
-    object Settings : ProfileNavigation
-    object Feedback : ProfileNavigation
-    object Report : ProfileNavigation
-    object FeatureFlags : ProfileNavigation
-    object Upgrade : ProfileNavigation
-    object Finish : ProfileNavigation
-    object CloseBottomSheet : ProfileNavigation
-    object AppLockType : ProfileNavigation
-    object AppLockTime : ProfileNavigation
-    object ConfigurePin : ProfileNavigation
-    object EnterPin : ProfileNavigation
+
+    data object Account : ProfileNavigation
+
+    data object AppLockTime : ProfileNavigation
+
+    data object AppLockType : ProfileNavigation
+
+    data object Back : ProfileNavigation
+
+    data object CloseBottomSheet : ProfileNavigation
+
+    data object ConfigurePin : ProfileNavigation
+
+    data object CreateItem : ProfileNavigation
+
+    data object EnterPin : ProfileNavigation
+
+    data object FeatureFlags : ProfileNavigation
+
+    data object Feedback : ProfileNavigation
+
+    data object Finish : ProfileNavigation
+
+    data object List : ProfileNavigation
+
+    data object Report : ProfileNavigation
+
+    data object SecurityCenter : ProfileNavigation
+
+    data object Settings : ProfileNavigation
+
+    data object Upgrade : ProfileNavigation
+
 }
 
 fun NavGraphBuilder.profileGraph(onNavigateEvent: (ProfileNavigation) -> Unit) {
@@ -81,7 +99,7 @@ fun NavGraphBuilder.profileGraph(onNavigateEvent: (ProfileNavigation) -> Unit) {
             val enterPinSuccess by it.savedStateHandle.getStateFlow(ENTER_PIN_PARAMETER_KEY, false)
                 .collectAsStateWithLifecycle()
             ProfileScreen(
-                modifier = Modifier.testTag(ProfileScreenTestTag.screen),
+                modifier = Modifier.testTag(ProfileScreenTestTag.SCREEN),
                 enterPinSuccess = enterPinSuccess,
                 onNavigateEvent = onNavigateEvent,
                 onClearPinSuccess = { it.savedStateHandle.remove<Boolean>(ENTER_PIN_PARAMETER_KEY) }

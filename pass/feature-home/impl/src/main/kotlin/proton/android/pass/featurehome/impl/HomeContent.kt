@@ -70,7 +70,7 @@ import proton.android.pass.composecomponents.impl.topbar.SearchTopBar
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.ArrowBackIconButton
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.featurehome.impl.HomeContentTestTag.DrawerIconTestTag
+import proton.android.pass.featurehome.impl.HomeContentTestTag.DRAWER_ICON_TEST_TAG
 import proton.android.pass.featurehome.impl.HomeUiEvent.AddItemClick
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import me.proton.core.presentation.R as CoreR
@@ -136,7 +136,7 @@ internal fun HomeContent(
                     onSearchQueryChange = { onEvent(HomeUiEvent.SearchQueryChange(it)) },
                     drawerIcon = {
                         HomeDrawerIcon(
-                            modifier = Modifier.testTag(DrawerIconTestTag),
+                            modifier = Modifier.testTag(DRAWER_ICON_TEST_TAG),
                             selectedShare = uiState.homeListUiState.selectedShare,
                             homeVaultSelection = uiState.homeListUiState.homeVaultSelection,
                             isSeeAllPinsMode = uiState.pinningUiState.inPinningMode,
@@ -171,7 +171,8 @@ internal fun HomeContent(
                         val shareId = uiState.homeListUiState.selectedShare.map { it.id }
                         onEvent(AddItemClick(shareId, ItemTypeUiState.Unknown))
                     },
-                    onProfileClick = { onEvent(HomeUiEvent.ProfileClick) }
+                    onProfileClick = { onEvent(HomeUiEvent.ProfileClick) },
+                    onSecurityCenterClick = { onEvent(HomeUiEvent.SecurityCenterClick) }
                 )
             }
         }
@@ -379,6 +380,5 @@ private fun HomeDrawerIcon(
 }
 
 object HomeContentTestTag {
-    const val DrawerIconTestTag = "drawerIcon"
+    const val DRAWER_ICON_TEST_TAG = "drawerIcon"
 }
-

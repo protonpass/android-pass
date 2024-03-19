@@ -16,18 +16,19 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.inappupdates.api
+package proton.android.pass.ui
 
-sealed interface InAppUpdateState {
-    data object Idle : InAppUpdateState
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import proton.android.pass.ui.internal.InternalDrawerState
 
-    @JvmInline
-    value class Downloading(val progress: Float) : InAppUpdateState
-    data object Downloaded : InAppUpdateState
-    data object Installing : InAppUpdateState
-    data object Installed : InAppUpdateState
-    data object Failed : InAppUpdateState
-    data object Pending : InAppUpdateState
-    data object Cancelled : InAppUpdateState
-    data object Unknown : InAppUpdateState
+@Suppress("UnusedPrivateMember")
+@Composable
+fun InternalDrawer(
+    modifier: Modifier = Modifier,
+    drawerState: InternalDrawerState,
+    onOpenFeatureFlag: () -> Unit,
+    content: @Composable () -> Unit
+) {
+    content()
 }

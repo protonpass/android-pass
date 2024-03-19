@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,18 +16,18 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.inappupdates.api
+package proton.android.pass.inappupdates.fdroid
 
-sealed interface InAppUpdateState {
-    data object Idle : InAppUpdateState
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import proton.android.pass.inappupdates.api.InAppUpdatesManager
 
-    @JvmInline
-    value class Downloading(val progress: Float) : InAppUpdateState
-    data object Downloaded : InAppUpdateState
-    data object Installing : InAppUpdateState
-    data object Installed : InAppUpdateState
-    data object Failed : InAppUpdateState
-    data object Pending : InAppUpdateState
-    data object Cancelled : InAppUpdateState
-    data object Unknown : InAppUpdateState
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class InAppUpdatesFdroidModule {
+
+    @Binds
+    abstract fun bindInAppUpdatesManager(impl: InAppUpdatesManagerFdroidImpl): InAppUpdatesManager
 }

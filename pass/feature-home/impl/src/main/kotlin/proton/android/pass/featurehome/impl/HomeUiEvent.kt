@@ -25,24 +25,16 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.featuresearchoptions.api.SearchFilterType
 
 sealed interface HomeUiEvent {
-    object EnterSearch : HomeUiEvent
-    object StopSearch : HomeUiEvent
-    object DrawerIconClick : HomeUiEvent
-    object SortingOptionsClick : HomeUiEvent
-    object ClearRecentSearchClick : HomeUiEvent
-    object Refresh : HomeUiEvent
-    object ScrollToTop : HomeUiEvent
-    object ProfileClick : HomeUiEvent
-    object ActionsClick : HomeUiEvent
-    object MoveItemsActionClick : HomeUiEvent
-    object MoveToTrashItemsActionClick : HomeUiEvent
-    object RestoreItemsActionClick : HomeUiEvent
-    object PermanentlyDeleteItemsActionClick : HomeUiEvent
-    object StopBulk : HomeUiEvent
-    object SeeAllPinned : HomeUiEvent
-    object StopSeeAllPinned : HomeUiEvent
-    object PinItemsActionClick : HomeUiEvent
-    object UnpinItemsActionClick : HomeUiEvent
+
+    data object ActionsClick : HomeUiEvent
+
+    data class AddItemClick(val shareId: Option<ShareId>, val state: ItemTypeUiState) : HomeUiEvent
+
+    data object ClearRecentSearchClick : HomeUiEvent
+
+    data object DrawerIconClick : HomeUiEvent
+
+    data object EnterSearch : HomeUiEvent
 
     @JvmInline
     value class ItemClick(val item: ItemUiModel) : HomeUiEvent
@@ -51,13 +43,42 @@ sealed interface HomeUiEvent {
     value class ItemMenuClick(val item: ItemUiModel) : HomeUiEvent
 
     @JvmInline
-    value class SearchQueryChange(val query: String) : HomeUiEvent
+    value class ItemTypeSelected(val searchFilterType: SearchFilterType) : HomeUiEvent
+
+    data object MoveItemsActionClick : HomeUiEvent
+
+    data object MoveToTrashItemsActionClick : HomeUiEvent
+
+    data object PermanentlyDeleteItemsActionClick : HomeUiEvent
+
+    data object PinItemsActionClick : HomeUiEvent
+
+    data object ProfileClick : HomeUiEvent
+
+    data object Refresh : HomeUiEvent
+
+    data object RestoreItemsActionClick : HomeUiEvent
 
     @JvmInline
-    value class ItemTypeSelected(val searchFilterType: SearchFilterType) : HomeUiEvent
+    value class SearchQueryChange(val query: String) : HomeUiEvent
+
+    data object ScrollToTop : HomeUiEvent
+
+    data object SecurityCenterClick : HomeUiEvent
+
+    data object SeeAllPinned : HomeUiEvent
 
     @JvmInline
     value class SelectItem(val item: ItemUiModel) : HomeUiEvent
 
-    data class AddItemClick(val shareId: Option<ShareId>, val state: ItemTypeUiState) : HomeUiEvent
+    data object SortingOptionsClick : HomeUiEvent
+
+    data object StopBulk : HomeUiEvent
+
+    data object StopSearch : HomeUiEvent
+
+    data object StopSeeAllPinned : HomeUiEvent
+
+    data object UnpinItemsActionClick : HomeUiEvent
+
 }

@@ -26,7 +26,7 @@ object HomeRobot : Robot {
 
     private val homeScreen get() = node.withTag(HomeScreenTestTag.screen)
 
-    private val profile get() = node.withTag(BottomBarTestTag.profile)
+    private val profile get() = node.withTag(BottomBarTestTag.PROFILE)
 
     fun homeScreenDisplayed(): HomeRobot = apply {
         homeScreen.await { assertIsDisplayed() }

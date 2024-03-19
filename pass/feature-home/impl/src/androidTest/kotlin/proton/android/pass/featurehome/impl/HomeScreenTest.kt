@@ -59,7 +59,7 @@ import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultWithItemCount
-import proton.android.pass.featurehome.impl.HomeContentTestTag.DrawerIconTestTag
+import proton.android.pass.featurehome.impl.HomeContentTestTag.DRAWER_ICON_TEST_TAG
 import proton.android.pass.preferences.HasCompletedOnBoarding
 import proton.android.pass.preferences.HasDismissedAutofillBanner
 import proton.android.pass.preferences.TestPreferenceRepository
@@ -171,7 +171,7 @@ class HomeScreenTest {
             }
         }
 
-        composeTestRule.onNodeWithTag(DrawerIconTestTag).performClick()
+        composeTestRule.onNodeWithTag(DRAWER_ICON_TEST_TAG).performClick()
         composeTestRule
             .onNodeWithText(composeTestRule.activity.getString(R.string.vault_drawer_create_vault))
             .performClick()

@@ -60,6 +60,7 @@ dependencies {
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlinTest)
+    testImplementation(libs.truth)
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.crypto.fakes)
     testImplementation(projects.pass.data.fakes)

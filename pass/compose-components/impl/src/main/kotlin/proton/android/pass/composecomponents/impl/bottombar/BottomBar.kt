@@ -37,7 +37,8 @@ import proton.android.pass.composecomponents.impl.R
 @Stable
 enum class BottomBarSelected {
     Home,
-    Profile
+    Profile,
+    SecurityCenter
 }
 
 @Composable
@@ -47,7 +48,8 @@ fun BottomBar(
     accountType: AccountType,
     onListClick: () -> Unit,
     onCreateClick: () -> Unit,
-    onProfileClick: () -> Unit
+    onProfileClick: () -> Unit,
+    onSecurityCenterClick: () -> Unit
 ) {
     BottomNavigation(
         modifier = modifier,
@@ -65,6 +67,7 @@ fun BottomBar(
                 )
             }
         )
+
         BottomNavigationItem(
             selected = false,
             selectedContentColor = PassTheme.colors.interactionNormMajor2,
@@ -77,8 +80,22 @@ fun BottomBar(
                 )
             }
         )
+
         BottomNavigationItem(
-            modifier = Modifier.testTag(BottomBarTestTag.profile),
+            selected = bottomBarSelected == BottomBarSelected.SecurityCenter,
+            selectedContentColor = PassTheme.colors.interactionNormMajor2,
+            unselectedContentColor = PassTheme.colors.textNorm,
+            onClick = onSecurityCenterClick,
+            icon = {
+                Icon(
+                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_shield_half_filled),
+                    contentDescription = stringResource(R.string.bottom_bar_security_center_icon_content_description)
+                )
+            }
+        )
+
+        BottomNavigationItem(
+            modifier = Modifier.testTag(BottomBarTestTag.PROFILE),
             selected = bottomBarSelected == BottomBarSelected.Profile,
             selectedContentColor = PassTheme.colors.interactionNormMajor2,
             unselectedContentColor = PassTheme.colors.textNorm,
@@ -91,7 +108,7 @@ fun BottomBar(
 }
 
 object BottomBarTestTag {
-    const val profile = "profile"
+    const val PROFILE = "profile"
 }
 
 @Preview
@@ -104,7 +121,8 @@ fun BottomBarPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bool
                 accountType = AccountType.Free,
                 onListClick = {},
                 onCreateClick = {},
-                onProfileClick = {}
+                onProfileClick = {},
+                onSecurityCenterClick = {}
             )
         }
     }

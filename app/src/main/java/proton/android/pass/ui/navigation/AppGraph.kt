@@ -109,6 +109,9 @@ import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestin
 import proton.android.pass.features.item.history.navigation.itemHistoryNavGraph
 import proton.android.pass.features.item.history.restore.navigation.ItemHistoryRestoreNavItem
 import proton.android.pass.features.item.history.timeline.navigation.ItemHistoryTimelineNavItem
+import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavItem
+import proton.android.pass.features.security.center.shared.navigation.SecurityCenterNavDestination
+import proton.android.pass.features.security.center.shared.navigation.securityCenterNavGraph
 import proton.android.pass.featuresearchoptions.impl.FilterBottomsheet
 import proton.android.pass.featuresearchoptions.impl.SearchOptionsBottomsheet
 import proton.android.pass.featuresearchoptions.impl.SearchOptionsNavigation
@@ -285,7 +288,13 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 HomeNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
-                HomeNavigation.UpgradeDialog -> appNavigator.navigate(destination = HomeUpgradeDialog)
+                HomeNavigation.UpgradeDialog -> appNavigator.navigate(
+                    destination = HomeUpgradeDialog
+                )
+
+                HomeNavigation.SecurityCenter -> appNavigator.navigate(
+                    destination = SecurityCenterHomeNavItem
+                )
             }
         }
     )
@@ -493,6 +502,10 @@ fun NavGraphBuilder.appGraph(
                 ProfileNavigation.EnterPin -> dismissBottomSheet {
                     appNavigator.navigate(EnterPin)
                 }
+
+                ProfileNavigation.SecurityCenter -> appNavigator.navigate(
+                    destination = SecurityCenterHomeNavItem
+                )
             }
         }
     )
@@ -993,6 +1006,17 @@ fun NavGraphBuilder.appGraph(
             TrialNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
         }
     }
+
+    securityCenterNavGraph(
+        onNavigated = { securityCenterNavDestination ->
+            when (securityCenterNavDestination) {
+                SecurityCenterNavDestination.Home -> appNavigator.navigate(
+                    destination = SecurityCenterHomeNavItem
+                )
+            }
+        }
+    )
+
     sharingGraph {
         when (it) {
             SharingNavigation.Back -> appNavigator.navigateBack()

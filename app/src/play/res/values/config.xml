@@ -18,5 +18,5 @@
   -->
 
 <resources>
-    <bool name="pass_passkeys_enabled">false</bool>
+    <bool name="pass_passkeys_enabled">true</bool>
 </resources>

@@ -76,7 +76,12 @@ fun AccountContent(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            AccountInfo(state = state)
+            SubscriptionInfo(state = state)
+            AccountAndRecoveryInfo(
+                state = state,
+                onPasswordManagementClick = { onNavigate(AccountNavigation.PasswordManagement) },
+                onRecoveryEmailClick = { onNavigate(AccountNavigation.RecoveryEmail) }
+            )
             if (state.showSubscriptionButton) {
                 ManageSubscription(
                     modifier = Modifier.testTag(AccountContentTestTag.subscription),

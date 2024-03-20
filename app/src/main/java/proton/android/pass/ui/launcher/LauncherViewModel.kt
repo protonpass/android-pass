@@ -269,6 +269,12 @@ class LauncherViewModel @Inject constructor(
         }
     }
 
+    fun recoveryEmail() = viewModelScope.launch {
+        getPrimaryUserIdOrNull()?.let {
+            userSettingsOrchestrator.startUpdateRecoveryEmailWorkflow(it)
+        }
+    }
+
     private suspend fun clearPassUserData(accounts: List<Account>) {
         val disabledAccounts = accounts.filter { it.isDisabled() }
         disabledAccounts.forEach { account ->

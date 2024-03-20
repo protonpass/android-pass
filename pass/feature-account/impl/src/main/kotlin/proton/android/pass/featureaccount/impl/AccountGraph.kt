@@ -61,4 +61,6 @@ sealed interface AccountNavigation {
     data object ConfirmSignOut : AccountNavigation
     data object DismissDialog : AccountNavigation
     data object Back : AccountNavigation
+    data object PasswordManagement: AccountNavigation
+    data object RecoveryEmail: AccountNavigation
 }

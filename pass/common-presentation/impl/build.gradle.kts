@@ -31,11 +31,11 @@ androidComponents.beforeVariants { variant ->
 dependencies {
     api(projects.pass.commonPresentation.api)
 
-    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.core.account.domain)
-    implementation(libs.core.accountManager)
     implementation(libs.core.domain)
     implementation(libs.core.user.domain)
+    implementation(libs.kotlinx.coroutines.core)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

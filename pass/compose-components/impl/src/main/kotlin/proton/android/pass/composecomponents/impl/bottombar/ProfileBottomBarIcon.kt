@@ -38,12 +38,9 @@ import proton.android.pass.domain.PlanType
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun ProfileBottomBarIcon(
-    modifier: Modifier = Modifier,
-    planType: PlanType
-) {
+fun ProfileBottomBarIcon(modifier: Modifier = Modifier, planType: PlanType) {
     Box(modifier = modifier.size(40.dp)) {
-        when(planType) {
+        when (planType) {
             is PlanType.Paid.Business,
             is PlanType.Paid.Plus -> {
                 Icon(

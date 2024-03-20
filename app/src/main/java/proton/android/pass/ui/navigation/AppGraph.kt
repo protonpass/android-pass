@@ -473,6 +473,8 @@ fun NavGraphBuilder.appGraph(
                 AccountNavigation.SignOut -> appNavigator.navigate(SignOutDialog)
                 AccountNavigation.Subscription -> onNavigate(AppNavigation.Subscription)
                 AccountNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
+                AccountNavigation.PasswordManagement -> onNavigate(AppNavigation.PasswordManagement)
+                AccountNavigation.RecoveryEmail -> onNavigate(AppNavigation.RecoveryEmail)
             }
         }
     )

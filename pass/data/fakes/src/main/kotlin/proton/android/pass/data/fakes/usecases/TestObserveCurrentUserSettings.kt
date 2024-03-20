@@ -16,17 +16,19 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.ui
+package proton.android.pass.data.fakes.usecases
 
-import me.proton.core.domain.entity.UserId
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import me.proton.core.usersettings.domain.entity.UserSettings
+import proton.android.pass.common.api.FlowUtils.testFlow
+import proton.android.pass.data.api.usecases.ObserveCurrentUserSettings
+import javax.inject.Inject
+import javax.inject.Singleton
 
-sealed interface AppNavigation {
-    data class SignOut(val userId: UserId? = null) : AppNavigation
-    data object Report : AppNavigation
-    data object Subscription : AppNavigation
-    data object Upgrade : AppNavigation
-    data object Finish : AppNavigation
-    data object Restart : AppNavigation
-    data object PasswordManagement : AppNavigation
-    data object RecoveryEmail : AppNavigation
+@Singleton
+class TestObserveCurrentUserSettings @Inject constructor() : ObserveCurrentUserSettings {
+
+    private val observeVaultsFlow: MutableSharedFlow<UserSettings?> = testFlow()
+    override fun invoke(): Flow<UserSettings?> = observeVaultsFlow
 }

@@ -41,10 +41,6 @@ class TestAccountManager @Inject constructor() : AccountManager(Product.Pass) {
         // no-op
     }
 
-    override suspend fun disableAccount(userId: UserId) {
-        // no-op
-    }
-
     override fun getAccount(userId: UserId): Flow<Account?> = emptyFlow()
 
     override fun getAccounts(): Flow<List<Account>> = emptyFlow()
@@ -64,6 +60,10 @@ class TestAccountManager @Inject constructor() : AccountManager(Product.Pass) {
     override fun onSessionStateChanged(initialState: Boolean): Flow<Account> = emptyFlow()
 
     override suspend fun removeAccount(userId: UserId) {
+        // no-op
+    }
+
+    override suspend fun disableAccount(userId: UserId, keepSession: Boolean) {
         // no-op
     }
 

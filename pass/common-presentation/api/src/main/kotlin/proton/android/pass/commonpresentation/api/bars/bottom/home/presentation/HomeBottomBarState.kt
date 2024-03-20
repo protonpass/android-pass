@@ -30,10 +30,7 @@ data class HomeBottomBarState(
     companion object {
 
         val Initial = HomeBottomBarState(
-            planType = PlanType.Unknown(
-                name = "Unknown",
-                displayName = "Unknown"
-            ),
+            planType = PlanType.Unknown(),
             isSecurityCenterEnabled = false
         )
 

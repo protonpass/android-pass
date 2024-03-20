@@ -35,16 +35,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionWeak
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
+import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarEvent
+import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarSelection
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.heroNorm
-import proton.android.pass.composecomponents.impl.bottombar.BottomBar
-import proton.android.pass.composecomponents.impl.bottombar.BottomBarSelected
+import proton.android.pass.composecomponents.impl.bottombar.PassHomeBottomBar
 import proton.android.pass.composecomponents.impl.buttons.UpgradeButton
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -73,13 +74,16 @@ fun ProfileContent(
             )
         },
         bottomBar = {
-            BottomBar(
-                bottomBarSelected = BottomBarSelected.Profile,
-                accountType = state.accountType.accountType,
-                onListClick = { onEvent(ProfileUiEvent.OnListClick) },
-                onCreateClick = { onEvent(ProfileUiEvent.OnCreateItemClick) },
-                onProfileClick = {},
-                onSecurityCenterClick = { onEvent(ProfileUiEvent.OnSecurityCenterClick) }
+            PassHomeBottomBar(
+                selection = HomeBottomBarSelection.Profile,
+                onEvent = { homeBottomBarEvent ->
+                    when (homeBottomBarEvent) {
+                        HomeBottomBarEvent.OnHomeSelected -> ProfileUiEvent.OnListClick
+                        HomeBottomBarEvent.OnNewItemSelected -> ProfileUiEvent.OnCreateItemClick
+                        HomeBottomBarEvent.OnProfileSelected -> null
+                        HomeBottomBarEvent.OnSecurityCenterSelected -> ProfileUiEvent.OnSecurityCenterClick
+                    }.also { profileUiEvent -> profileUiEvent?.let(onEvent) }
+                }
             )
         }
     ) { padding ->
@@ -90,12 +94,15 @@ fun ProfileContent(
                 .padding(padding)
         ) {
             ItemSummary(
-                modifier = Modifier.padding(0.dp, 16.dp),
+                modifier = Modifier.padding(
+                    horizontal = Spacing.none,
+                    vertical = Spacing.medium
+                ),
                 itemSummaryUiState = state.itemSummaryUiState
             )
             Column(
-                modifier = Modifier.padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                modifier = Modifier.padding(all = Spacing.medium),
+                verticalArrangement = Arrangement.spacedBy(Spacing.medium)
             ) {
                 AppLockSection(
                     appLockSectionState = state.appLockSectionState,
@@ -126,7 +133,7 @@ fun ProfileContent(
                             onLongClick = { onEvent(ProfileUiEvent.OnAppVersionLongClick) }
                         )
                         .fillMaxWidth()
-                        .padding(32.dp),
+                        .padding(all = Spacing.large),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(

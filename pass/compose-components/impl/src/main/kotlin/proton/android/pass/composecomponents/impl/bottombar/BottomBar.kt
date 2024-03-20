@@ -33,6 +33,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.R
+import me.proton.core.presentation.R as CoreR
 
 @Stable
 enum class BottomBarSelected {
@@ -62,7 +63,7 @@ fun BottomBar(
             onClick = onListClick,
             icon = {
                 Icon(
-                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_list_bullets),
+                    painter = painterResource(CoreR.drawable.ic_proton_list_bullets),
                     contentDescription = stringResource(R.string.bottom_bar_list_items_icon_content_description)
                 )
             }
@@ -75,7 +76,7 @@ fun BottomBar(
             onClick = onCreateClick,
             icon = {
                 Icon(
-                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_plus),
+                    painter = painterResource(CoreR.drawable.ic_proton_plus),
                     contentDescription = stringResource(R.string.bottom_bar_add_item_icon_content_description)
                 )
             }
@@ -88,7 +89,7 @@ fun BottomBar(
             onClick = onSecurityCenterClick,
             icon = {
                 Icon(
-                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_shield_half_filled),
+                    painter = painterResource(CoreR.drawable.ic_proton_shield_half_filled),
                     contentDescription = stringResource(R.string.bottom_bar_security_center_icon_content_description)
                 )
             }
@@ -101,7 +102,7 @@ fun BottomBar(
             unselectedContentColor = PassTheme.colors.textNorm,
             onClick = onProfileClick,
             icon = {
-                ProfileBottomBarIcon(accountType = accountType)
+//                ProfileBottomBarIcon(accountType = accountType)
             }
         )
     }

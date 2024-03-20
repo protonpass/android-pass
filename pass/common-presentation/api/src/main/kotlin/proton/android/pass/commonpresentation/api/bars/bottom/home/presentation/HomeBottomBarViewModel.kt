@@ -16,16 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.shared.navigation
+package proton.android.pass.commonpresentation.api.bars.bottom.home.presentation
 
-sealed interface SecurityCenterNavDestination {
+import kotlinx.coroutines.flow.StateFlow
 
-    data object Home : SecurityCenterNavDestination
+interface HomeBottomBarViewModel {
 
-    data object MainHome : SecurityCenterNavDestination
-
-    data object MainNewItem : SecurityCenterNavDestination
-
-    data object MainProfile : SecurityCenterNavDestination
+    val state: StateFlow<HomeBottomBarState>
 
 }

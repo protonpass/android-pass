@@ -26,5 +26,13 @@ import javax.inject.Singleton
 @Singleton
 class TestPasswordScorer @Inject constructor() : PasswordScorer {
 
-    override fun check(input: String): PasswordScore = PasswordScore.STRONG
+    private val definedScores = mutableMapOf<String, PasswordScore>()
+
+    fun defineScore(input: String, score: PasswordScore) {
+        definedScores[input] = score
+    }
+
+    override fun check(input: String): PasswordScore = definedScores.getOrElse(input) {
+        PasswordScore.STRONG
+    }
 }

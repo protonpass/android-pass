@@ -9,6 +9,7 @@ dependencies {
     implementation(libs.core.cryptoCommon)
     implementation(libs.core.domain)
     implementation(libs.core.user.domain)
+    implementation(libs.core.userSettings.domain)
 
     implementation(projects.pass.common.api)
     implementation(projects.pass.domain)

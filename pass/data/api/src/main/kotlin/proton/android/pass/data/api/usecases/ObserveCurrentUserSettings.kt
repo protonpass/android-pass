@@ -16,17 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.ui
+package proton.android.pass.data.api.usecases
 
-import me.proton.core.domain.entity.UserId
+import kotlinx.coroutines.flow.Flow
+import me.proton.core.usersettings.domain.entity.UserSettings
+import proton.android.pass.domain.Plan
+import proton.android.pass.domain.PlanLimit
 
-sealed interface AppNavigation {
-    data class SignOut(val userId: UserId? = null) : AppNavigation
-    data object Report : AppNavigation
-    data object Subscription : AppNavigation
-    data object Upgrade : AppNavigation
-    data object Finish : AppNavigation
-    data object Restart : AppNavigation
-    data object PasswordManagement : AppNavigation
-    data object RecoveryEmail : AppNavigation
+interface ObserveCurrentUserSettings {
+    operator fun invoke(): Flow<UserSettings?>
 }

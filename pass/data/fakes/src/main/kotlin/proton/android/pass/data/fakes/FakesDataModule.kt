@@ -72,6 +72,7 @@ import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveAppNeedsUpdate
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.api.usecases.ObserveCurrentUserSettings
 import proton.android.pass.data.api.usecases.ObserveHasConfirmedInvite
 import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
 import proton.android.pass.data.api.usecases.ObserveInvites
@@ -188,6 +189,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveActiveItems
 import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
 import proton.android.pass.data.fakes.usecases.TestObserveAppNeedsUpdate
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
+import proton.android.pass.data.fakes.usecases.TestObserveCurrentUserSettings
 import proton.android.pass.data.fakes.usecases.TestObserveDefaultVault
 import proton.android.pass.data.fakes.usecases.TestObserveHasConfirmedInvite
 import proton.android.pass.data.fakes.usecases.TestObserveInvites
@@ -265,6 +267,9 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObserveCurrentUser(impl: TestObserveCurrentUser): ObserveCurrentUser
+
+    @Binds
+    abstract fun bindObserveCurrentUserSettings(impl: TestObserveCurrentUserSettings): ObserveCurrentUserSettings
 
     @Binds
     abstract fun bindObserveAliasOptions(impl: TestObserveAliasOptions): ObserveAliasOptions

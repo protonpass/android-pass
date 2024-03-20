@@ -18,6 +18,7 @@
 
 package proton.android.pass.uitest.robot
 
+import me.proton.core.accountmanager.test.robot.AccountSettingsRobot
 import me.proton.test.fusion.Fusion.node
 import proton.android.pass.featureprofile.impl.AccountProfileSectionTestTag
 import proton.android.pass.featureprofile.impl.ProfileScreenTestTag
@@ -32,9 +33,9 @@ object ProfileRobot : Robot {
         profileScreen.await { assertIsDisplayed() }
     }
 
-    fun clickAccount(): AccountRobot {
+    fun clickAccount(): AccountSettingsRobot {
         accountSetting.await { assertIsDisplayed() }
         accountSetting.click()
-        return AccountRobot
+        return AccountSettingsRobot
     }
 }

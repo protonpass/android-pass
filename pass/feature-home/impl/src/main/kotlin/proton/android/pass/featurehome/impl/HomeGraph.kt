@@ -78,7 +78,7 @@ fun NavGraphBuilder.homeGraph(onNavigateEvent: (HomeNavigation) -> Unit) {
         }
 
         HomeScreen(
-            modifier = Modifier.testTag(HomeScreenTestTag.screen),
+            modifier = Modifier.testTag(HomeScreenTestTag.SCREEN),
             goToVault = goToVault.toOption().map { ShareId(it) }.value(),
             enableBulkActions = enableBulkActions,
             onNavigateEvent = onNavigateEvent

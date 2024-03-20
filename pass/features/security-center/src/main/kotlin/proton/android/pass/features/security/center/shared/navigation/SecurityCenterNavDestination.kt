@@ -22,4 +22,10 @@ sealed interface SecurityCenterNavDestination {
 
     data object Home : SecurityCenterNavDestination
 
+    data object MainHome : SecurityCenterNavDestination
+
+    data object MainNewItem : SecurityCenterNavDestination
+
+    data object MainProfile : SecurityCenterNavDestination
+
 }

@@ -22,9 +22,7 @@ import androidx.compose.runtime.Composable
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavDestination
 
 @Composable
-fun SecurityCenterHomeScreen(
-    onNavigated: (SecurityCenterHomeNavDestination) -> Unit
-) {
+fun SecurityCenterHomeScreen(onNavigated: (SecurityCenterHomeNavDestination) -> Unit) {
     SecurityCenterHomeContent(
         onNavigated = onNavigated
     )

@@ -70,6 +70,7 @@ import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveAppNeedsUpdate
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.api.usecases.ObserveCurrentUserSettings
 import proton.android.pass.data.api.usecases.ObserveHasConfirmedInvite
 import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
 import proton.android.pass.data.api.usecases.ObserveInvites
@@ -184,6 +185,7 @@ import proton.android.pass.data.impl.usecases.ObserveAliasOptionsImpl
 import proton.android.pass.data.impl.usecases.ObserveAllSharesImpl
 import proton.android.pass.data.impl.usecases.ObserveAppNeedsUpdateImpl
 import proton.android.pass.data.impl.usecases.ObserveCurrentUserImpl
+import proton.android.pass.data.impl.usecases.ObserveCurrentUserSettingsImpl
 import proton.android.pass.data.impl.usecases.ObserveDefaultVaultImpl
 import proton.android.pass.data.impl.usecases.ObserveHasConfirmedInviteImpl
 import proton.android.pass.data.impl.usecases.ObserveInviteRecommendationsImpl
@@ -412,6 +414,9 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindGetUpgradeInfo(impl: ObserveUpgradeInfoImpl): ObserveUpgradeInfo
+
+    @Binds
+    abstract fun bindObserveCurrentUserSettings(impl: ObserveCurrentUserSettingsImpl): ObserveCurrentUserSettings
 
     @Binds
     abstract fun bindGetItemByAliasEmail(impl: GetItemByAliasEmailImpl): GetItemByAliasEmail

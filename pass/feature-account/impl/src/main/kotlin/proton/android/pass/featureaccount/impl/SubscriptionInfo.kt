@@ -33,18 +33,13 @@ import proton.android.pass.composecomponents.impl.setting.SettingOption
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
 @Composable
-fun AccountInfo(modifier: Modifier = Modifier, state: AccountUiState) {
+fun SubscriptionInfo(
+    modifier: Modifier = Modifier,
+    state: AccountUiState
+) {
     Column(
         modifier = modifier.roundedContainerNorm()
     ) {
-        SettingOption(
-            text = state.email ?: "",
-            label = stringResource(R.string.account_username_label),
-            isLoading = state.isLoadingState.value()
-        )
-
-        Divider(color = PassTheme.colors.inputBorderNorm)
-
         if (state.plan != PlanSection.Hide) {
             SettingOption(
                 text = state.plan.name(),
@@ -57,16 +52,18 @@ fun AccountInfo(modifier: Modifier = Modifier, state: AccountUiState) {
 
 @Preview
 @Composable
-fun AccountInfoPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+fun SubscriptionInfoPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            AccountInfo(
+            SubscriptionInfo(
                 state = AccountUiState(
                     email = "myemail@proton.me",
                     plan = PlanSection.Data("Free"),
+                    recoveryEmail = "myrecoveryemail@proton.me",
+                    recoveryState = null,
                     isLoadingState = IsLoadingState.NotLoading,
                     showUpgradeButton = true,
-                    showSubscriptionButton = true
+                    showSubscriptionButton = true,
                 )
             )
         }

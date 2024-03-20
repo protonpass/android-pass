@@ -125,6 +125,10 @@ fun HomeBottomBarContent(
     }
 }
 
+object BottomBarTestTag {
+    const val profile = "profile"
+}
+
 @[Preview Composable]
 fun HomeBottomBarContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {

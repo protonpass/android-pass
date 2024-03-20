@@ -19,6 +19,7 @@
 package proton.android.pass.features.security.center.shared.navigation
 
 import androidx.navigation.NavGraphBuilder
+import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavDestination
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavItem
 import proton.android.pass.features.security.center.home.ui.SecurityCenterHomeScreen
 import proton.android.pass.navigation.api.composable
@@ -26,7 +27,15 @@ import proton.android.pass.navigation.api.composable
 fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestination) -> Unit) {
 
     composable(navItem = SecurityCenterHomeNavItem) {
-        SecurityCenterHomeScreen()
+        SecurityCenterHomeScreen(
+            onNavigated = { destination ->
+                when (destination) {
+                    SecurityCenterHomeNavDestination.Home -> SecurityCenterNavDestination.MainHome
+                    SecurityCenterHomeNavDestination.NewItem -> SecurityCenterNavDestination.MainNewItem
+                    SecurityCenterHomeNavDestination.Profile -> SecurityCenterNavDestination.MainProfile
+                }.also(onNavigated)
+            }
+        )
     }
 
 }

@@ -50,12 +50,13 @@ import kotlinx.collections.immutable.toPersistentSet
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarEvent
+import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarSelection
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.commonuimodels.api.ShareUiModel
-import proton.android.pass.composecomponents.impl.bottombar.BottomBar
-import proton.android.pass.composecomponents.impl.bottombar.BottomBarSelected
+import proton.android.pass.composecomponents.impl.bottombar.PassHomeBottomBar
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.AllVaultsIcon
@@ -71,7 +72,6 @@ import proton.android.pass.composecomponents.impl.topbar.iconbutton.ArrowBackIco
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featurehome.impl.HomeContentTestTag.DRAWER_ICON_TEST_TAG
-import proton.android.pass.featurehome.impl.HomeUiEvent.AddItemClick
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import me.proton.core.presentation.R as CoreR
 
@@ -163,16 +163,23 @@ internal fun HomeContent(
                 exit = fadeOut() + shrinkVertically(),
                 label = "HomeContent-BottomBar"
             ) {
-                BottomBar(
-                    bottomBarSelected = BottomBarSelected.Home,
-                    accountType = uiState.accountType,
-                    onListClick = {},
-                    onCreateClick = {
-                        val shareId = uiState.homeListUiState.selectedShare.map { it.id }
-                        onEvent(AddItemClick(shareId, ItemTypeUiState.Unknown))
-                    },
-                    onProfileClick = { onEvent(HomeUiEvent.ProfileClick) },
-                    onSecurityCenterClick = { onEvent(HomeUiEvent.SecurityCenterClick) }
+                PassHomeBottomBar(
+                    selection = HomeBottomBarSelection.Home,
+                    onEvent = { homeBottomBarEvent ->
+                        when (homeBottomBarEvent) {
+                            HomeBottomBarEvent.OnHomeSelected -> null
+                            HomeBottomBarEvent.OnNewItemSelected -> {
+                                uiState.homeListUiState.selectedShare
+                                    .map { shareUiModel -> shareUiModel.id }
+                                    .let { shareId ->
+                                        HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.Unknown)
+                                    }
+                            }
+
+                            HomeBottomBarEvent.OnProfileSelected -> HomeUiEvent.ProfileClick
+                            HomeBottomBarEvent.OnSecurityCenterSelected -> HomeUiEvent.SecurityCenterClick
+                        }.also { homeUiEvent -> homeUiEvent?.let(onEvent) }
+                    }
                 )
             }
         }

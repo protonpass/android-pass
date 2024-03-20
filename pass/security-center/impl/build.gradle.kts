@@ -35,6 +35,7 @@ dependencies {
     implementation(libs.pass.common)
 
     implementation(projects.pass.common.api)
+    implementation(projects.pass.commonRust.api)
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.commonUiModels.api)
     implementation(projects.pass.crypto.api)
@@ -53,6 +54,7 @@ dependencies {
     testImplementation(libs.turbine)
 
     testImplementation(projects.pass.common.fakes)
+    testImplementation(projects.pass.commonRust.fakes)
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.crypto.fakes)
     testImplementation(projects.pass.data.fakes)

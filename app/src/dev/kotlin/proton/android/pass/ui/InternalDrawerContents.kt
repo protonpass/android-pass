@@ -77,6 +77,12 @@ fun InternalDrawerContents(
         ) {
             Text(text = "Feature flags preferences")
         }
+        Button(
+            modifier = Modifier.fillMaxWidth(),
+            onClick = { viewModel.runSecurityChecks() },
+        ) {
+            Text(text = "Run security check")
+        }
     }
 }
 

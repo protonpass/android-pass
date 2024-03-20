@@ -28,6 +28,7 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.securitycenter.api.ObserveSecurityAnalysis
 import proton.android.pass.ui.InternalDrawerSnackbarMessage.PreferencesClearError
 import proton.android.pass.ui.InternalDrawerSnackbarMessage.PreferencesCleared
 import javax.inject.Inject
@@ -37,7 +38,8 @@ class InternalDrawerViewModel @Inject constructor(
     private val preferenceRepository: UserPreferencesRepository,
     private val internalSettingsRepository: InternalSettingsRepository,
     private val snackbarDispatcher: SnackbarDispatcher,
-    private val clearCache: ClearIconCache
+    private val clearCache: ClearIconCache,
+    private val observeSecurityAnalysis: ObserveSecurityAnalysis
 ) : ViewModel() {
 
     fun clearPreferences() = viewModelScope.launch {
@@ -54,6 +56,17 @@ class InternalDrawerViewModel @Inject constructor(
 
     fun clearIconCache() = viewModelScope.launch {
         clearCache()
+    }
+
+    fun runSecurityChecks() = viewModelScope.launch {
+        observeSecurityAnalysis().collect { analysis ->
+            PassLogger.i(TAG, "-----")
+            PassLogger.i(TAG, "Security analysis: Breached Data: ${analysis.breachedData}")
+            PassLogger.i(TAG, "Security analysis: Insecure Passwords: ${analysis.insecurePasswords}")
+            PassLogger.i(TAG, "Security analysis: Missing 2FA: ${analysis.missing2fa}")
+            PassLogger.i(TAG, "Security analysis: Reused passwords: ${analysis.reusedPasswords}")
+            PassLogger.i(TAG, "-----")
+        }
     }
 
     companion object {

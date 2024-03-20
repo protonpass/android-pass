@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.20.0 (2024-03-21)
+
+### Features :tada:
+
+- Enable passkey support.
+
 ## 1.19.0 (2024-03-15)
 
 ### Features :tada:

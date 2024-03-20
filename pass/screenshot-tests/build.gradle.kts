@@ -67,6 +67,8 @@ dependencies {
     implementation(projects.pass.featureTrash.impl)
     implementation(projects.pass.featureTrial.impl)
     implementation(projects.pass.featureVault.impl)
+    implementation(projects.pass.features.itemHistory)
+    implementation(projects.pass.features.securityCenter)
 
     testImplementation(libs.androidx.compose.ui)
     testImplementation(libs.androidx.compose.uiTooling)

@@ -21,11 +21,14 @@ package proton.android.pass.composecomponents.impl.bottombar
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.core.presentation.R
@@ -35,6 +38,8 @@ import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarViewModel
 import proton.android.pass.commonpresentation.impl.bars.bottom.home.presentation.HomeBottomBarViewModelImpl
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.domain.PlanType
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
@@ -55,7 +60,7 @@ fun PassHomeBottomBar(
 }
 
 @Composable
-private fun HomeBottomBarContent(
+fun HomeBottomBarContent(
     modifier: Modifier = Modifier,
     selection: HomeBottomBarSelection,
     onEvent: (HomeBottomBarEvent) -> Unit,
@@ -117,5 +122,21 @@ private fun HomeBottomBarContent(
                 ProfileBottomBarIcon(planType = planType)
             }
         )
+    }
+}
+
+@[Preview Composable]
+fun HomeBottomBarContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            HomeBottomBarContent(
+                selection = HomeBottomBarSelection.Home,
+                onEvent = {},
+                state = HomeBottomBarState(
+                    planType = PlanType.Unknown(),
+                    isSecurityCenterEnabled = true
+                )
+            )
+        }
     }
 }

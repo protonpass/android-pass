@@ -628,42 +628,43 @@ class HomeViewModel @Inject constructor(
         isRefreshing.update { IsRefreshingState.NotRefreshing }
     }
 
-    fun sendItemsToTrash(items: List<ItemUiModel>) = viewModelScope.launch(coroutineExceptionHandler) {
-        if (items.isEmpty()) return@launch
-        actionStateFlow.update { ActionState.Loading }
+    fun sendItemsToTrash(items: List<ItemUiModel>) =
+        viewModelScope.launch(coroutineExceptionHandler) {
+            if (items.isEmpty()) return@launch
+            actionStateFlow.update { ActionState.Loading }
 
-        val mappedItems = items.toShareIdItemId().toPersistentSet()
-        val itemTypes = homeUiState.value.homeListUiState.items
-            .flatMap { it.items }
-            .filter { (itemId: ItemId, shareId: ShareId) -> mappedItems.contains(shareId to itemId) }
+            val mappedItems = items.toShareIdItemId().toPersistentSet()
+            val itemTypes = homeUiState.value.homeListUiState.items
+                .flatMap { it.items }
+                .filter { (itemId: ItemId, shareId: ShareId) -> mappedItems.contains(shareId to itemId) }
 
-        val groupedItems = groupItems(mappedItems)
-        runCatching { trashItems(items = groupedItems) }
-            .onSuccess {
-                clearSelection()
-                if (itemTypes.size == 1) {
-                    when (itemTypes.first().contents) {
-                        is ItemContents.Alias -> snackbarDispatcher(AliasMovedToTrash)
-                        is ItemContents.Login -> snackbarDispatcher(LoginMovedToTrash)
-                        is ItemContents.Note -> snackbarDispatcher(NoteMovedToTrash)
-                        is ItemContents.CreditCard -> snackbarDispatcher(CreditCardMovedToTrash)
-                        is ItemContents.Unknown -> {}
+            val groupedItems = groupItems(mappedItems)
+            runCatching { trashItems(items = groupedItems) }
+                .onSuccess {
+                    clearSelection()
+                    if (itemTypes.size == 1) {
+                        when (itemTypes.first().contents) {
+                            is ItemContents.Alias -> snackbarDispatcher(AliasMovedToTrash)
+                            is ItemContents.Login -> snackbarDispatcher(LoginMovedToTrash)
+                            is ItemContents.Note -> snackbarDispatcher(NoteMovedToTrash)
+                            is ItemContents.CreditCard -> snackbarDispatcher(CreditCardMovedToTrash)
+                            is ItemContents.Unknown -> {}
+                        }
+                    } else {
+                        snackbarDispatcher(ItemsMovedToTrashSuccess)
                     }
-                } else {
-                    snackbarDispatcher(ItemsMovedToTrashSuccess)
                 }
-            }
-            .onFailure {
-                PassLogger.w(TAG, "Trash items failed")
-                PassLogger.w(TAG, it)
-                if (itemTypes.size == 1) {
-                    snackbarDispatcher(MoveToTrashError)
-                } else {
-                    snackbarDispatcher(ItemsMovedToTrashError)
+                .onFailure {
+                    PassLogger.w(TAG, "Trash items failed")
+                    PassLogger.w(TAG, it)
+                    if (itemTypes.size == 1) {
+                        snackbarDispatcher(MoveToTrashError)
+                    } else {
+                        snackbarDispatcher(ItemsMovedToTrashError)
+                    }
                 }
-            }
-        actionStateFlow.update { ActionState.Done }
-    }
+            actionStateFlow.update { ActionState.Done }
+        }
 
     fun copyToClipboard(text: String, homeClipboardType: HomeClipboardType) {
         val sanitizedText = text.take(MAX_CLIPBOARD_LENGTH)
@@ -888,13 +889,11 @@ class HomeViewModel @Inject constructor(
         shouldScrollToTopFlow.update { true }
     }
 
-    fun onBulkEnabled() = viewModelScope.launch {
-        selectionState.update { state ->
-            state.copy(isInSelectMode = true)
-        }
+    fun onBulkEnabled() {
+        selectionState.update { state -> state.copy(isInSelectMode = true) }
     }
 
-    fun onItemSelected(item: ItemUiModel) = viewModelScope.launch {
+    fun onItemSelected(item: ItemUiModel) {
         selectionState.update { state ->
             val alreadyInList = state.selectedItems.any {
                 it.shareId == item.shareId && it.id == item.id
@@ -920,7 +919,7 @@ class HomeViewModel @Inject constructor(
         toastManager.showToast(R.string.home_toast_items_selected_read_only)
     }
 
-    fun clearSelection() = viewModelScope.launch {
+    fun clearSelection() {
         selectionState.update { SelectionState.Initial }
     }
 
@@ -1014,15 +1013,16 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun List<ItemUiModel>.filterByType(searchFilterType: SearchFilterType) = filter { item ->
-        when (searchFilterType) {
-            SearchFilterType.All -> true
-            SearchFilterType.Alias -> item.contents is ItemContents.Alias
-            SearchFilterType.Login -> item.contents is ItemContents.Login
-            SearchFilterType.Note -> item.contents is ItemContents.Note
-            SearchFilterType.CreditCard -> item.contents is ItemContents.CreditCard
+    private fun List<ItemUiModel>.filterByType(searchFilterType: SearchFilterType) =
+        filter { item ->
+            when (searchFilterType) {
+                SearchFilterType.All -> true
+                SearchFilterType.Alias -> item.contents is ItemContents.Alias
+                SearchFilterType.Login -> item.contents is ItemContents.Login
+                SearchFilterType.Note -> item.contents is ItemContents.Note
+                SearchFilterType.CreditCard -> item.contents is ItemContents.CreditCard
+            }
         }
-    }
 
     private fun emitDeletedItems(items: List<GroupedItemList>) {
         items.forEach { list ->
@@ -1038,15 +1038,17 @@ class HomeViewModel @Inject constructor(
     private fun groupItems(items: ImmutableSet<Pair<ShareId, ItemId>>): Map<ShareId, List<ItemId>> =
         items.groupBy({ it.first }, { it.second })
 
-    private fun List<ItemUiModel>.toShareIdItemId(): List<Pair<ShareId, ItemId>> = map { it.shareId to it.id }
+    private fun List<ItemUiModel>.toShareIdItemId(): List<Pair<ShareId, ItemId>> =
+        map { it.shareId to it.id }
 
-    private fun List<ItemUiModel>.sortItemLists(sortingOption: SortingOption) = when (sortingOption.searchSortingType) {
-        SearchSortingType.MostRecent -> sortMostRecent()
-        SearchSortingType.TitleAsc -> sortByTitleAsc()
-        SearchSortingType.TitleDesc -> sortByTitleDesc()
-        SearchSortingType.CreationAsc -> sortByCreationAsc()
-        SearchSortingType.CreationDesc -> sortByCreationDesc()
-    }
+    private fun List<ItemUiModel>.sortItemLists(sortingOption: SortingOption) =
+        when (sortingOption.searchSortingType) {
+            SearchSortingType.MostRecent -> sortMostRecent()
+            SearchSortingType.TitleAsc -> sortByTitleAsc()
+            SearchSortingType.TitleDesc -> sortByTitleDesc()
+            SearchSortingType.CreationAsc -> sortByCreationAsc()
+            SearchSortingType.CreationDesc -> sortByCreationDesc()
+        }
 
     private fun List<ItemUiModel>.groupedItemLists(sortingOption: SortingOption, instant: Instant) =
         when (sortingOption.searchSortingType) {

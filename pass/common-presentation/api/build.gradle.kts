@@ -27,10 +27,11 @@ androidComponents.beforeVariants { variant ->
 }
 
 dependencies {
-    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.androidx.compose.runtime)
     implementation(libs.core.account.domain)
     implementation(libs.core.domain)
     implementation(libs.core.user.domain)
+    implementation(libs.kotlinx.coroutines.core)
 
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonUiModels.api)

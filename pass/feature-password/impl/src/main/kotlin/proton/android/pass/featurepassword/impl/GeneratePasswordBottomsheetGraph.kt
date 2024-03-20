@@ -47,10 +47,14 @@ object GeneratePasswordBottomsheet : NavItem(
 }
 
 sealed interface GeneratePasswordNavigation {
-    object DismissBottomsheet : GeneratePasswordNavigation
-    object CloseDialog : GeneratePasswordNavigation
-    object OnSelectWordSeparator : GeneratePasswordNavigation
-    object OnSelectPasswordMode : GeneratePasswordNavigation
+
+    data object DismissBottomsheet : GeneratePasswordNavigation
+
+    data object CloseDialog : GeneratePasswordNavigation
+
+    data object OnSelectWordSeparator : GeneratePasswordNavigation
+
+    data object OnSelectPasswordMode : GeneratePasswordNavigation
 }
 
 fun NavGraphBuilder.generatePasswordBottomsheetGraph(onNavigate: (GeneratePasswordNavigation) -> Unit) {

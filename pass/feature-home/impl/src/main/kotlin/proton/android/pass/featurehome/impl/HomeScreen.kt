@@ -841,5 +841,5 @@ fun HomeScreen(
 }
 
 object HomeScreenTestTag {
-    const val screen = "homeScreen"
+    const val SCREEN = "homeScreen"
 }

@@ -34,14 +34,18 @@ import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.R
+import proton.android.pass.domain.PlanType
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun ProfileBottomBarIcon(modifier: Modifier = Modifier, accountType: AccountType) {
+fun ProfileBottomBarIcon(
+    modifier: Modifier = Modifier,
+    planType: PlanType
+) {
     Box(modifier = modifier.size(40.dp)) {
-        when (accountType) {
-            AccountType.Free -> {}
-            AccountType.Unlimited -> {
+        when(planType) {
+            is PlanType.Paid.Business,
+            is PlanType.Paid.Plus -> {
                 Icon(
                     modifier = Modifier.align(Alignment.TopEnd),
                     painter = painterResource(R.drawable.account_unlimited_indicator),
@@ -49,8 +53,7 @@ fun ProfileBottomBarIcon(modifier: Modifier = Modifier, accountType: AccountType
                     tint = Color.Unspecified
                 )
             }
-
-            AccountType.Trial -> {
+            is PlanType.Trial -> {
                 Icon(
                     modifier = Modifier.align(Alignment.TopEnd),
                     painter = painterResource(R.drawable.account_trial_indicator),
@@ -58,6 +61,8 @@ fun ProfileBottomBarIcon(modifier: Modifier = Modifier, accountType: AccountType
                     tint = Color.Unspecified
                 )
             }
+            is PlanType.Free,
+            is PlanType.Unknown -> {}
         }
 
         Icon(
@@ -73,7 +78,7 @@ fun ProfileBottomBarIcon(modifier: Modifier = Modifier, accountType: AccountType
 fun ProfileBottomBarIconFreePreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            ProfileBottomBarIcon(accountType = AccountType.Free)
+//            ProfileBottomBarIcon(planType = PlanType.Free)
         }
     }
 }
@@ -83,7 +88,7 @@ fun ProfileBottomBarIconFreePreview(@PreviewParameter(ThemePreviewProvider::clas
 fun ProfileBottomBarIconTrialPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            ProfileBottomBarIcon(accountType = AccountType.Trial)
+//            ProfileBottomBarIcon(planType = PlanType.Trial)
         }
     }
 }
@@ -93,7 +98,7 @@ fun ProfileBottomBarIconTrialPreview(@PreviewParameter(ThemePreviewProvider::cla
 fun ProfileBottomBarIconUnlimitedPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            ProfileBottomBarIcon(accountType = AccountType.Unlimited)
+//            ProfileBottomBarIcon(planType = PlanType.Unlimited)
         }
     }
 }

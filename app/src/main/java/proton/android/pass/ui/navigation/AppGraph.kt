@@ -1013,6 +1013,18 @@ fun NavGraphBuilder.appGraph(
                 SecurityCenterNavDestination.Home -> appNavigator.navigate(
                     destination = SecurityCenterHomeNavItem
                 )
+
+                SecurityCenterNavDestination.MainHome -> appNavigator.navigate(
+                    destination = Home
+                )
+
+                SecurityCenterNavDestination.MainNewItem -> appNavigator.navigate(
+                    destination = CreateItemBottomsheet
+                )
+
+                SecurityCenterNavDestination.MainProfile -> appNavigator.navigate(
+                    destination = Profile
+                )
             }
         }
     )

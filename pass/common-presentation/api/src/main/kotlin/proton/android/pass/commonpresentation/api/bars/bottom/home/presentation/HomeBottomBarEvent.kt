@@ -16,16 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.shared.navigation
+package proton.android.pass.commonpresentation.api.bars.bottom.home.presentation
 
-sealed interface SecurityCenterNavDestination {
+sealed interface HomeBottomBarEvent {
 
-    data object Home : SecurityCenterNavDestination
+    data object OnHomeSelected : HomeBottomBarEvent
 
-    data object MainHome : SecurityCenterNavDestination
+    data object OnNewItemSelected : HomeBottomBarEvent
 
-    data object MainNewItem : SecurityCenterNavDestination
+    data object OnProfileSelected : HomeBottomBarEvent
 
-    data object MainProfile : SecurityCenterNavDestination
+    data object OnSecurityCenterSelected : HomeBottomBarEvent
 
 }

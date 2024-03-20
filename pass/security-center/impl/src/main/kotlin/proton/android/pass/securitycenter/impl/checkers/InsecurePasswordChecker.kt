@@ -18,17 +18,66 @@
 
 package proton.android.pass.securitycenter.impl.checkers
 
+import me.proton.core.crypto.common.keystore.EncryptedString
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.some
+import proton.android.pass.commonrust.api.PasswordScore
+import proton.android.pass.commonrust.api.PasswordScorer
+import proton.android.pass.crypto.api.context.EncryptionContext
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.domain.Item
-import proton.android.pass.securitycenter.api.InsecurePasswordsResult
+import proton.android.pass.domain.ItemType
 import javax.inject.Inject
 
-interface InsecurePasswordChecker {
-    suspend operator fun invoke(items: List<Item>): InsecurePasswordsResult
+data class InsecurePasswordsReport(
+    val weakPasswordItems: List<Item>,
+    val vulnerablePasswordItems: List<Item>
+) {
+    val insecurePasswordsCount: Int = weakPasswordItems.size + vulnerablePasswordItems.size
 }
 
-class InsecurePasswordCheckerImpl @Inject constructor() : InsecurePasswordChecker {
-    override suspend fun invoke(items: List<Item>): InsecurePasswordsResult = InsecurePasswordsResult(
-        insecurePasswordsCount = 0
-    )
+interface InsecurePasswordChecker {
+    suspend operator fun invoke(items: List<Item>): InsecurePasswordsReport
+}
+
+class InsecurePasswordCheckerImpl @Inject constructor(
+    private val passwordScorer: PasswordScorer,
+    private val encryptionContextProvider: EncryptionContextProvider
+) : InsecurePasswordChecker {
+    override suspend fun invoke(items: List<Item>): InsecurePasswordsReport {
+        val weakItems = mutableListOf<Item>()
+        val vulnerableItems = mutableListOf<Item>()
+        encryptionContextProvider.withEncryptionContext {
+            items.forEach {
+                when (val itemType = it.itemType) {
+                    is ItemType.Login -> when (val score = scorePassword(itemType.password)) {
+                        is Some -> when (score.value) {
+                            PasswordScore.VULNERABLE -> vulnerableItems.add(it)
+                            PasswordScore.WEAK -> weakItems.add(it)
+                            PasswordScore.STRONG -> {}
+                        }
+
+                        None -> {}
+                    }
+
+                    else -> {}
+                }
+            }
+        }
+
+        return InsecurePasswordsReport(
+            weakPasswordItems = weakItems,
+            vulnerablePasswordItems = vulnerableItems
+        )
+    }
+
+    private fun EncryptionContext.scorePassword(password: EncryptedString): Option<PasswordScore> {
+        val decryptedPassword = decrypt(password)
+        if (decryptedPassword.isBlank()) return None
+
+        return passwordScorer.check(decryptedPassword).some()
+    }
 
 }

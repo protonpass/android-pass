@@ -27,4 +27,6 @@ sealed interface AppNavigation {
     data object Upgrade : AppNavigation
     data object Finish : AppNavigation
     data object Restart : AppNavigation
+    data object PasswordManagement : AppNavigation
+    data object RecoveryEmail : AppNavigation
 }

@@ -19,6 +19,7 @@
 package proton.android.pass.featureaccount.impl
 
 import androidx.compose.runtime.Stable
+import me.proton.core.user.domain.entity.UserRecovery
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
 sealed interface PlanSection {
@@ -43,6 +44,8 @@ sealed interface PlanSection {
 @Stable
 data class AccountUiState(
     val email: String?,
+    val recoveryEmail: String?,
+    val recoveryState: UserRecovery.State?,
     val plan: PlanSection,
     val isLoadingState: IsLoadingState,
     val showUpgradeButton: Boolean,
@@ -51,6 +54,8 @@ data class AccountUiState(
     companion object {
         val Initial = AccountUiState(
             email = null,
+            recoveryEmail = null,
+            recoveryState = null,
             plan = PlanSection.Hide,
             isLoadingState = IsLoadingState.Loading,
             showUpgradeButton = false,

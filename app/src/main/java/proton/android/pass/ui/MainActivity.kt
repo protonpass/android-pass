@@ -115,6 +115,8 @@ class MainActivity : FragmentActivity() {
                                 AppNavigation.Subscription -> launcherViewModel.subscription()
                                 AppNavigation.Upgrade -> launcherViewModel.upgrade()
                                 AppNavigation.Restart -> restartApp()
+                                AppNavigation.PasswordManagement -> launcherViewModel.passwordManagement()
+                                AppNavigation.RecoveryEmail -> launcherViewModel.recoveryEmail()
                             }
                         }
                     )

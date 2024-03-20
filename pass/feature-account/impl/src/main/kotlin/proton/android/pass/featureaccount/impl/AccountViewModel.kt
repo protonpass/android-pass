@@ -31,6 +31,7 @@ import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.api.usecases.ObserveCurrentUserSettings
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
@@ -38,7 +39,8 @@ import javax.inject.Inject
 @HiltViewModel
 class AccountViewModel @Inject constructor(
     observeCurrentUser: ObserveCurrentUser,
-    observeUpgradeInfo: ObserveUpgradeInfo
+    observeUpgradeInfo: ObserveUpgradeInfo,
+    observeCurrentUserSettings: ObserveCurrentUserSettings
 ) : ViewModel() {
 
     private val currentUser = observeCurrentUser()
@@ -46,8 +48,9 @@ class AccountViewModel @Inject constructor(
 
     val state: StateFlow<AccountUiState> = combine(
         currentUser.asLoadingResult(),
-        observeUpgradeInfo(forceRefresh = true).asLoadingResult()
-    ) { userResult, upgradeInfoResult ->
+        observeUpgradeInfo(forceRefresh = true).asLoadingResult(),
+        observeCurrentUserSettings().asLoadingResult()
+    ) { userResult, upgradeInfoResult, currentUserSettingsResult ->
         val plan = when (upgradeInfoResult) {
             is LoadingResult.Error -> {
                 PassLogger.w(TAG, "Error retrieving user plan")
@@ -63,12 +66,15 @@ class AccountViewModel @Inject constructor(
         }
 
         val upgradeInfoSuccess = upgradeInfoResult.getOrNull()
+        val currentUserSettingsSuccess = currentUserSettingsResult.getOrNull()
         val isUpgradeAvailable = upgradeInfoSuccess?.isUpgradeAvailable ?: false
         val isSubscriptionAvailable = upgradeInfoSuccess?.isSubscriptionAvailable ?: false
         when (userResult) {
             LoadingResult.Loading -> AccountUiState.Initial
             is LoadingResult.Error -> AccountUiState(
                 email = null,
+                recoveryEmail = currentUserSettingsSuccess?.email?.value,
+                recoveryState = null,
                 plan = PlanSection.Hide,
                 isLoadingState = IsLoadingState.NotLoading,
                 showUpgradeButton = isUpgradeAvailable,
@@ -77,6 +83,8 @@ class AccountViewModel @Inject constructor(
 
             is LoadingResult.Success -> AccountUiState(
                 email = userResult.data.email,
+                recoveryEmail = currentUserSettingsSuccess?.email?.value,
+                recoveryState = userResult.data.recovery?.state?.enum,
                 plan = plan,
                 isLoadingState = IsLoadingState.NotLoading,
                 showUpgradeButton = isUpgradeAvailable,

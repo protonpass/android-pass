@@ -47,6 +47,7 @@ dependencies {
     implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.coil.compose)
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
@@ -57,7 +58,7 @@ dependencies {
     implementation(libs.androidx.compose.uiToolingPreview)
 
     implementation(projects.pass.common.api)
-    implementation(projects.pass.commonPresentation.api)
+    implementation(projects.pass.commonPresentation.impl)
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.commonUiModels.api)
     implementation(projects.pass.domain)

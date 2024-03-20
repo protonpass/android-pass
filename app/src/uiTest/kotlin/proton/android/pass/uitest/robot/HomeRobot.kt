@@ -24,7 +24,7 @@ import proton.android.pass.featurehome.impl.HomeScreenTestTag
 
 object HomeRobot : Robot {
 
-    private val homeScreen get() = node.withTag(HomeScreenTestTag.screen)
+    private val homeScreen get() = node.withTag(HomeScreenTestTag.SCREEN)
 
     private val profile get() = node.withTag(BottomBarTestTag.PROFILE)
 

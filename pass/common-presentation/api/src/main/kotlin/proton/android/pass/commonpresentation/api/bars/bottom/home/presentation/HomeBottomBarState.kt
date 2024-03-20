@@ -16,16 +16,27 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.shared.navigation
+package proton.android.pass.commonpresentation.api.bars.bottom.home.presentation
 
-sealed interface SecurityCenterNavDestination {
+import androidx.compose.runtime.Stable
+import proton.android.pass.domain.PlanType
 
-    data object Home : SecurityCenterNavDestination
+@Stable
+data class HomeBottomBarState(
+    val planType: PlanType,
+    val isSecurityCenterEnabled: Boolean
+) {
 
-    data object MainHome : SecurityCenterNavDestination
+    companion object {
 
-    data object MainNewItem : SecurityCenterNavDestination
+        val Initial = HomeBottomBarState(
+            planType = PlanType.Unknown(
+                name = "Unknown",
+                displayName = "Unknown"
+            ),
+            isSecurityCenterEnabled = false
+        )
 
-    data object MainProfile : SecurityCenterNavDestination
+    }
 
 }

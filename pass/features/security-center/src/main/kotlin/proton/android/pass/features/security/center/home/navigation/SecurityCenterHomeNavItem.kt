@@ -20,4 +20,7 @@ package proton.android.pass.features.security.center.home.navigation
 
 import proton.android.pass.navigation.api.NavItem
 
-object SecurityCenterHomeNavItem : NavItem(baseRoute = "security/center/home")
+object SecurityCenterHomeNavItem : NavItem(
+    baseRoute = "security/center/home",
+    isTopLevel = true
+)

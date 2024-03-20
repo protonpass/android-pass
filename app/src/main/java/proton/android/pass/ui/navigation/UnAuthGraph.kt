@@ -73,6 +73,8 @@ fun NavGraphBuilder.unAuthGraph(appNavigator: AppNavigator, onNavigate: (AppNavi
                         AccountNavigation.SignOut -> {}
                         AccountNavigation.Subscription -> {}
                         AccountNavigation.Upgrade -> {}
+                        AccountNavigation.PasswordManagement -> {}
+                        AccountNavigation.RecoveryEmail -> {}
                     }
                 }
             )

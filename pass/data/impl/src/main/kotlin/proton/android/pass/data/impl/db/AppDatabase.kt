@@ -58,6 +58,7 @@ import me.proton.core.observability.data.db.ObservabilityDatabase
 import me.proton.core.observability.data.entity.ObservabilityEventEntity
 import me.proton.core.payment.data.local.db.PaymentDatabase
 import me.proton.core.payment.data.local.entity.GooglePurchaseEntity
+import me.proton.core.payment.data.local.entity.PurchaseEntity
 import me.proton.core.push.data.local.db.PushConverters
 import me.proton.core.push.data.local.db.PushDatabase
 import me.proton.core.push.data.local.db.PushEntity
@@ -101,6 +102,7 @@ import proton.android.pass.data.impl.db.entities.UserAccessDataEntity
         EventMetadataEntity::class,
         FeatureFlagEntity::class,
         GooglePurchaseEntity::class,
+        PurchaseEntity::class,
         HumanVerificationEntity::class,
         KeySaltEntity::class,
         OrganizationEntity::class,
@@ -197,7 +199,7 @@ abstract class AppDatabase :
     TelemetryDatabase {
 
     companion object {
-        const val VERSION = 43
+        const val VERSION = 44
 
         const val DB_NAME = "db-passkey"
 
@@ -217,7 +219,8 @@ abstract class AppDatabase :
             AppDatabaseMigrations.MIGRATION_35_36,
             AppDatabaseMigrations.MIGRATION_36_37,
             AppDatabaseMigrations.MIGRATION_40_41,
-            AppDatabaseMigrations.MIGRATION_42_43
+            AppDatabaseMigrations.MIGRATION_42_43,
+            AppDatabaseMigrations.MIGRATION_43_44,
         )
 
         fun buildDatabase(context: Context): AppDatabase = databaseBuilder<AppDatabase>(context, DB_NAME)

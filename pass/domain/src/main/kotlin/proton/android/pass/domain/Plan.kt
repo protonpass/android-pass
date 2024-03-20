@@ -63,8 +63,8 @@ sealed class PlanType(
     )
 
     data class Unknown(
-        private val name: String,
-        private val displayName: String
+        private val name: String = "Unknown",
+        private val displayName: String = "Unknown"
     ) : PlanType(
         internalName = name,
         humanReadableName = displayName

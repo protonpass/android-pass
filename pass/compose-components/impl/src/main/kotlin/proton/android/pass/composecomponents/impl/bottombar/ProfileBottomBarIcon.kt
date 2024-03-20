@@ -50,6 +50,7 @@ fun ProfileBottomBarIcon(modifier: Modifier = Modifier, planType: PlanType) {
                     tint = Color.Unspecified
                 )
             }
+
             is PlanType.Trial -> {
                 Icon(
                     modifier = Modifier.align(Alignment.TopEnd),
@@ -58,8 +59,10 @@ fun ProfileBottomBarIcon(modifier: Modifier = Modifier, planType: PlanType) {
                     tint = Color.Unspecified
                 )
             }
+
             is PlanType.Free,
-            is PlanType.Unknown -> {}
+            is PlanType.Unknown -> {
+            }
         }
 
         Icon(
@@ -75,7 +78,7 @@ fun ProfileBottomBarIcon(modifier: Modifier = Modifier, planType: PlanType) {
 fun ProfileBottomBarIconFreePreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-//            ProfileBottomBarIcon(planType = PlanType.Free)
+            ProfileBottomBarIcon(planType = PlanType.Free(name = "", displayName = ""))
         }
     }
 }
@@ -85,7 +88,13 @@ fun ProfileBottomBarIconFreePreview(@PreviewParameter(ThemePreviewProvider::clas
 fun ProfileBottomBarIconTrialPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-//            ProfileBottomBarIcon(planType = PlanType.Trial)
+            ProfileBottomBarIcon(
+                planType = PlanType.Trial(
+                    name = "",
+                    displayName = "",
+                    remainingDays = 1
+                )
+            )
         }
     }
 }
@@ -95,7 +104,7 @@ fun ProfileBottomBarIconTrialPreview(@PreviewParameter(ThemePreviewProvider::cla
 fun ProfileBottomBarIconUnlimitedPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-//            ProfileBottomBarIcon(planType = PlanType.Unlimited)
+            ProfileBottomBarIcon(planType = PlanType.Paid.Plus(name = "", displayName = ""))
         }
     }
 }

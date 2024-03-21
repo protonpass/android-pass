@@ -38,36 +38,38 @@ class RepeatedPasswordCheckerImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : RepeatedPasswordChecker {
 
-    override fun invoke(items: List<Item>): RepeatedPasswordsData {
-        val foundPasswords: MutableMap<Password, List<Item>> = mutableMapOf()
+    override fun invoke(
+        items: List<Item>
+    ): RepeatedPasswordsData = encryptionContextProvider.withEncryptionContext {
+        val nonEmptyPasswords: MutableMap<String, List<Item>> = mutableMapOf()
 
-        encryptionContextProvider.withEncryptionContext {
-            items.forEach { item ->
-                when (val itemType = item.itemType) {
-                    is ItemType.Login -> {
-                        val decryptedItem = DecryptedItem(
-                            item = item,
-                            encryptedPassword = Password(itemType.password),
-                            clearTextPassword = decrypt(itemType.password)
-                        )
-
-                        if (decryptedItem.clearTextPassword.isNotEmpty()) {
-                            val list = foundPasswords.getOrElse(decryptedItem.encryptedPassword) {
-                                emptyList()
+        items.forEach { item ->
+            when (val itemType = item.itemType) {
+                is ItemType.Login -> {
+                    DecryptedItem(
+                        item = item,
+                        encryptedPassword = Password(itemType.password),
+                        clearTextPassword = decrypt(itemType.password)
+                    ).let { decryptedItem ->
+                        val key = decryptedItem.clearTextPassword
+                        if (key.isNotEmpty()) {
+                            if (nonEmptyPasswords.containsKey(key)) {
+                                nonEmptyPasswords[key] = nonEmptyPasswords[key]!!.plus(item)
+                            } else {
+                                nonEmptyPasswords[key] = listOf(item)
                             }
-                            foundPasswords[decryptedItem.encryptedPassword] = list + decryptedItem.item
                         }
                     }
-                    else -> {}
                 }
+
+                else -> {}
             }
         }
 
-        val repeatedPasswords = foundPasswords
-            .filter { it.value.size > 1 }
-            .mapKeys { it.key.value }
-
-        return RepeatedPasswordsData(repeatedPasswords = repeatedPasswords)
+        nonEmptyPasswords
+            .filter { (_, items) -> items.size > 1 }
+            .mapKeys { (password, _) -> encrypt(password) }
+            .let(::RepeatedPasswordsData)
     }
 
     @JvmInline

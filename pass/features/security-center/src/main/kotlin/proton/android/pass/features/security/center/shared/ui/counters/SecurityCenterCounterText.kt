@@ -35,7 +35,7 @@ internal fun SecurityCenterCounterText(
 ) {
     Circle(
         modifier = modifier,
-        backgroundColor = backgroundColor,
+        backgroundColor = backgroundColor
     ) {
         Text(
             text = counterText,

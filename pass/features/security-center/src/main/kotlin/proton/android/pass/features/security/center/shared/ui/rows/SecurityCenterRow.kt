@@ -57,7 +57,7 @@ internal fun SecurityCenterRow(
             .roundedContainerNorm()
             .applyIf(
                 condition = accentBackgroundColor != null,
-                ifTrue = { background(color = accentBackgroundColor!!.copy(alpha = 0.3F)) }
+                ifTrue = { background(color = accentBackgroundColor!!.copy(alpha = 0.4F)) }
             )
     ) {
         Row(

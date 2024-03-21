@@ -26,4 +26,8 @@ sealed interface SecurityCenterHomeNavDestination {
 
     data object Profile : SecurityCenterHomeNavDestination
 
+    data object ReusedPasswords : SecurityCenterHomeNavDestination
+
+    data object WeakPasswords : SecurityCenterHomeNavDestination
+
 }

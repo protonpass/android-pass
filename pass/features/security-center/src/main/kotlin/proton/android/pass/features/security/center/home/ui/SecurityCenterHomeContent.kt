@@ -25,21 +25,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import me.proton.core.compose.component.appbar.ProtonTopAppBar
+import androidx.compose.ui.unit.dp
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarEvent
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarSelection
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.composecomponents.impl.bottombar.PassHomeBottomBar
 import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavDestination
 import proton.android.pass.features.security.center.home.presentation.SecurityCenterHomeState
+import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBar
 import proton.android.pass.features.security.center.shared.ui.rows.SecurityCenterCounterRow
 import proton.android.pass.features.security.center.shared.ui.rows.SecurityCenterCounterRowModel
 
@@ -52,14 +51,14 @@ internal fun SecurityCenterHomeContent(
     Scaffold(
         modifier = modifier,
         topBar = {
-            ProtonTopAppBar(
-                backgroundColor = PassTheme.colors.backgroundStrong,
-                title = {
-                    Text(
-                        text = stringResource(R.string.security_center_home_top_bar_title),
-                        style = PassTheme.typography.heroNorm()
-                    )
-                }
+            SecurityCenterTopBar(
+                modifier = Modifier
+                    .padding(
+                        start = Spacing.medium,
+                        top = 12.dp,
+                        end = Spacing.medium
+                    ),
+                title = stringResource(R.string.security_center_home_top_bar_title),
             )
         },
         bottomBar = {

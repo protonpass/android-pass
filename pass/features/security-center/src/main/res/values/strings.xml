@@ -18,4 +18,11 @@
 
 <resources>
     <string name="security_center_home_top_bar_title">Pass Monitor</string>
+
+    <string name="security_center_home_row_insecure_passwords_title">Weak passwords</string>
+    <string name="security_center_home_row_insecure_passwords_subtitle">Create strong passwords</string>
+    <string name="security_center_home_row_reused_passwords_title">Reused passwords</string>
+    <string name="security_center_home_row_reused_passwords_subtitle">Create unique passwords</string>
+
+    <string name="security_center_home_section_password_health">Password Health</string>
 </resources>

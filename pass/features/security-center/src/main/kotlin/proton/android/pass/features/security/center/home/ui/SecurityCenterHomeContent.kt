@@ -19,6 +19,7 @@
 package proton.android.pass.features.security.center.home.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -32,16 +33,22 @@ import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarEvent
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarSelection
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.composecomponents.impl.bottombar.PassHomeBottomBar
+import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavDestination
+import proton.android.pass.features.security.center.home.presentation.SecurityCenterHomeState
+import proton.android.pass.features.security.center.shared.ui.rows.SecurityCenterCounterRow
+import proton.android.pass.features.security.center.shared.ui.rows.SecurityCenterCounterRowModel
 
 @Composable
 internal fun SecurityCenterHomeContent(
     modifier: Modifier = Modifier,
-    onNavigated: (SecurityCenterHomeNavDestination) -> Unit
-) {
+    onNavigated: (SecurityCenterHomeNavDestination) -> Unit,
+    state: SecurityCenterHomeState
+) = with(state) {
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -73,9 +80,27 @@ internal fun SecurityCenterHomeContent(
             modifier = Modifier
                 .background(PassTheme.colors.backgroundStrong)
                 .padding(paddingValues = innerPaddingValues)
-                .verticalScroll(rememberScrollState())
+                .padding(horizontal = Spacing.medium)
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
         ) {
+            SectionTitle(text = stringResource(id = R.string.security_center_home_section_password_health))
+            
+            SecurityCenterCounterRow(
+                model = SecurityCenterCounterRowModel.Indicator(
+                    title = stringResource(id = R.string.security_center_home_row_insecure_passwords_title),
+                    subtitle = stringResource(id = R.string.security_center_home_row_insecure_passwords_subtitle),
+                    count = insecurePasswordsCount
+                )
+            )
 
+            SecurityCenterCounterRow(
+                model = SecurityCenterCounterRowModel.Indicator(
+                    title = stringResource(id = R.string.security_center_home_row_reused_passwords_title),
+                    subtitle = stringResource(id = R.string.security_center_home_row_reused_passwords_subtitle),
+                    count = reusedPasswordsCount
+                )
+            )
         }
     }
 }

@@ -85,13 +85,14 @@ internal fun SecurityCenterHomeContent(
             verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
         ) {
             SectionTitle(text = stringResource(id = R.string.security_center_home_section_password_health))
-            
+
             SecurityCenterCounterRow(
                 model = SecurityCenterCounterRowModel.Indicator(
                     title = stringResource(id = R.string.security_center_home_row_insecure_passwords_title),
                     subtitle = stringResource(id = R.string.security_center_home_row_insecure_passwords_subtitle),
                     count = insecurePasswordsCount
-                )
+                ),
+                onClick = { onNavigated(SecurityCenterHomeNavDestination.WeakPasswords) }
             )
 
             SecurityCenterCounterRow(
@@ -99,7 +100,8 @@ internal fun SecurityCenterHomeContent(
                     title = stringResource(id = R.string.security_center_home_row_reused_passwords_title),
                     subtitle = stringResource(id = R.string.security_center_home_row_reused_passwords_subtitle),
                     count = reusedPasswordsCount
-                )
+                ),
+                onClick = { onNavigated(SecurityCenterHomeNavDestination.ReusedPasswords) }
             )
         }
     }

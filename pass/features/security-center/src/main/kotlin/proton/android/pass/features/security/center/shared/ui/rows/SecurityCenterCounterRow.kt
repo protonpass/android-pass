@@ -37,13 +37,14 @@ import proton.android.pass.composecomponents.impl.R as CompR
 internal fun SecurityCenterCounterRow(
     modifier: Modifier = Modifier,
     model: SecurityCenterCounterRowModel,
-    onClick: (() -> Unit)? = null,
+    onClick: (() -> Unit)? = null
 ) = when (model) {
     is SecurityCenterCounterRowModel.Indicator -> {
         SecurityCenterRow(
             modifier = modifier,
             title = model.title,
             subtitle = model.subtitle,
+            isClickable = model.isClickable,
             onClick = onClick,
             accentBackgroundColor = model.getAccentBackgroundColor(),
             leadingContent = {
@@ -63,11 +64,12 @@ internal fun SecurityCenterCounterRow(
         )
     }
 
-    is SecurityCenterCounterRowModel.Normal -> {
+    is SecurityCenterCounterRowModel.Standard -> {
         SecurityCenterRow(
             modifier = modifier,
             title = model.title,
             subtitle = model.subtitle,
+            isClickable = model.isClickable,
             onClick = onClick,
             trailingContent = {
                 SecurityCenterCounterText(
@@ -85,6 +87,8 @@ internal sealed interface SecurityCenterCounterRowModel {
 
     val counterText: String
 
+    val isClickable: Boolean
+
     @Composable
     fun getCounterTextBackgroundColor(): Color
 
@@ -99,6 +103,8 @@ internal sealed interface SecurityCenterCounterRowModel {
     ) : SecurityCenterCounterRowModel {
 
         override val counterText: String = count?.toString() ?: "-"
+
+        override val isClickable: Boolean = if (count == null) false else count > 0
 
         @Composable
         override fun getCounterTextBackgroundColor(): Color = when (count) {
@@ -142,7 +148,7 @@ internal sealed interface SecurityCenterCounterRowModel {
     }
 
     @Stable
-    data class Normal(
+    data class Standard(
         internal val title: String,
         internal val subtitle: String,
         private val count: Int?
@@ -150,9 +156,10 @@ internal sealed interface SecurityCenterCounterRowModel {
 
         override val counterText: String = count?.toString() ?: "-"
 
+        override val isClickable: Boolean = if (count == null) false else count > 0
+
         @Composable
-        override fun getCounterTextBackgroundColor(): Color =
-            PassTheme.colors.loginInteractionNormMinor1
+        override fun getCounterTextBackgroundColor(): Color = PassTheme.colors.loginInteractionNormMinor1
 
         @Composable
         override fun getCounterTextColor(): Color = PassTheme.colors.loginInteractionNormMajor2
@@ -169,7 +176,7 @@ fun SecurityCenterCounterRowPreview(@PreviewParameter(ThemePreviewProvider::clas
                 model = SecurityCenterCounterRowModel.Indicator(
                     title = "Security center row counter title",
                     subtitle = "Security center row counter subtitle",
-                    count = 0,
+                    count = 0
                 )
             )
         }

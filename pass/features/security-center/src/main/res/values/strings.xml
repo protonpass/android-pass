@@ -17,6 +17,7 @@
   -->
 
 <resources>
+    <!-- Home screen -->
     <string name="security_center_home_top_bar_title">Pass Monitor</string>
 
     <string name="security_center_home_row_insecure_passwords_title">Weak passwords</string>
@@ -25,4 +26,8 @@
     <string name="security_center_home_row_reused_passwords_subtitle">Create unique passwords</string>
 
     <string name="security_center_home_section_password_health">Password Health</string>
+
+    <!-- Weak passwords screen -->
+    <string name="security_center_weak_pass_top_bar_title">Weak passwords</string>
+    <string name="security_center_weak_pass_top_bar_subtitle">Weak passwords are easier to guess. Generate strong passwords to keep your account safe.</string>
 </resources>

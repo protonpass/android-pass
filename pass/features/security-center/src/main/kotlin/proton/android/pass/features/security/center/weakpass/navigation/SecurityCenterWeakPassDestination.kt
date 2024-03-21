@@ -16,22 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.shared.navigation
+package proton.android.pass.features.security.center.weakpass.navigation
 
-sealed interface SecurityCenterNavDestination {
+sealed interface SecurityCenterWeakPassDestination {
 
-    data object Back : SecurityCenterNavDestination
-
-    data object Home : SecurityCenterNavDestination
-
-    data object MainHome : SecurityCenterNavDestination
-
-    data object MainNewItem : SecurityCenterNavDestination
-
-    data object MainProfile : SecurityCenterNavDestination
-
-    data object ReusedPasswords : SecurityCenterNavDestination
-
-    data object WeakPasswords : SecurityCenterNavDestination
+    data object Back : SecurityCenterWeakPassDestination
 
 }

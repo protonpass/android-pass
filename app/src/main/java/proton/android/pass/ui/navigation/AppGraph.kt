@@ -112,6 +112,7 @@ import proton.android.pass.features.item.history.timeline.navigation.ItemHistory
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavItem
 import proton.android.pass.features.security.center.shared.navigation.SecurityCenterNavDestination
 import proton.android.pass.features.security.center.shared.navigation.securityCenterNavGraph
+import proton.android.pass.features.security.center.weakpass.navigation.SecurityCenterWeakPassNavItem
 import proton.android.pass.featuresearchoptions.impl.FilterBottomsheet
 import proton.android.pass.featuresearchoptions.impl.SearchOptionsBottomsheet
 import proton.android.pass.featuresearchoptions.impl.SearchOptionsNavigation
@@ -1010,6 +1011,10 @@ fun NavGraphBuilder.appGraph(
     securityCenterNavGraph(
         onNavigated = { securityCenterNavDestination ->
             when (securityCenterNavDestination) {
+                SecurityCenterNavDestination.Back -> appNavigator.navigateBack(
+                    comesFromBottomsheet = false
+                )
+
                 SecurityCenterNavDestination.Home -> appNavigator.navigate(
                     destination = SecurityCenterHomeNavItem
                 )
@@ -1029,9 +1034,10 @@ fun NavGraphBuilder.appGraph(
                 SecurityCenterNavDestination.ReusedPasswords -> {
                     // This will be implemented in IDTEAM-2881
                 }
-                SecurityCenterNavDestination.WeakPasswords -> {
-                    // This will be implemented in IDTEAM-2880
-                }
+
+                SecurityCenterNavDestination.WeakPasswords -> appNavigator.navigate(
+                    destination = SecurityCenterWeakPassNavItem
+                )
             }
         }
     )

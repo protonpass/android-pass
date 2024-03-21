@@ -1025,6 +1025,13 @@ fun NavGraphBuilder.appGraph(
                 SecurityCenterNavDestination.MainProfile -> appNavigator.navigate(
                     destination = Profile
                 )
+
+                SecurityCenterNavDestination.ReusedPasswords -> {
+                    // This will be implemented in IDTEAM-2881
+                }
+                SecurityCenterNavDestination.WeakPasswords -> {
+                    // This will be implemented in IDTEAM-2880
+                }
             }
         }
     )

@@ -30,7 +30,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SecurityCenterHomeViewModel @Inject constructor(
-    observeSecurityAnalysis: ObserveSecurityAnalysis,
+    observeSecurityAnalysis: ObserveSecurityAnalysis
 ) : ViewModel() {
 
     internal val state: StateFlow<SecurityCenterHomeState> = observeSecurityAnalysis()

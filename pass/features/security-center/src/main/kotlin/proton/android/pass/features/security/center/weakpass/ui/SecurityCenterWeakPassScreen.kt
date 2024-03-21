@@ -16,22 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.shared.navigation
+package proton.android.pass.features.security.center.weakpass.ui
 
-sealed interface SecurityCenterNavDestination {
+import androidx.compose.runtime.Composable
+import proton.android.pass.features.security.center.weakpass.navigation.SecurityCenterWeakPassDestination
 
-    data object Back : SecurityCenterNavDestination
-
-    data object Home : SecurityCenterNavDestination
-
-    data object MainHome : SecurityCenterNavDestination
-
-    data object MainNewItem : SecurityCenterNavDestination
-
-    data object MainProfile : SecurityCenterNavDestination
-
-    data object ReusedPasswords : SecurityCenterNavDestination
-
-    data object WeakPasswords : SecurityCenterNavDestination
-
+@Composable
+fun SecurityCenterWeakPassScreen(
+    onNavigated: (SecurityCenterWeakPassDestination) -> Unit
+) {
+    SecurityCenterWeakPassContent(
+        onNavigated = onNavigated
+    )
 }

@@ -19,11 +19,21 @@
 package proton.android.pass.features.security.center.home.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavDestination
+import proton.android.pass.features.security.center.home.presentation.SecurityCenterHomeViewModel
 
 @Composable
-fun SecurityCenterHomeScreen(onNavigated: (SecurityCenterHomeNavDestination) -> Unit) {
+fun SecurityCenterHomeScreen(
+    onNavigated: (SecurityCenterHomeNavDestination) -> Unit,
+    viewModel: SecurityCenterHomeViewModel = hiltViewModel()
+) = with(viewModel) {
+    val state by state.collectAsStateWithLifecycle()
+
     SecurityCenterHomeContent(
-        onNavigated = onNavigated
+        onNavigated = onNavigated,
+        state = state
     )
 }

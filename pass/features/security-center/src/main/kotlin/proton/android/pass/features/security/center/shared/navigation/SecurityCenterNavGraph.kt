@@ -22,6 +22,9 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavDestination
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavItem
 import proton.android.pass.features.security.center.home.ui.SecurityCenterHomeScreen
+import proton.android.pass.features.security.center.weakpass.navigation.SecurityCenterWeakPassDestination
+import proton.android.pass.features.security.center.weakpass.navigation.SecurityCenterWeakPassNavItem
+import proton.android.pass.features.security.center.weakpass.ui.SecurityCenterWeakPassScreen
 import proton.android.pass.navigation.api.composable
 
 fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestination) -> Unit) {
@@ -35,6 +38,16 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                     SecurityCenterHomeNavDestination.Profile -> SecurityCenterNavDestination.MainProfile
                     SecurityCenterHomeNavDestination.ReusedPasswords -> SecurityCenterNavDestination.ReusedPasswords
                     SecurityCenterHomeNavDestination.WeakPasswords -> SecurityCenterNavDestination.WeakPasswords
+                }.also(onNavigated)
+            }
+        )
+    }
+
+    composable(navItem = SecurityCenterWeakPassNavItem) {
+        SecurityCenterWeakPassScreen(
+            onNavigated = { destination ->
+                when (destination) {
+                    SecurityCenterWeakPassDestination.Back -> SecurityCenterNavDestination.Back
                 }.also(onNavigated)
             }
         )

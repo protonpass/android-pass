@@ -20,6 +20,8 @@ package proton.android.pass.features.security.center.shared.navigation
 
 sealed interface SecurityCenterNavDestination {
 
+    data object Back : SecurityCenterNavDestination
+
     data object Home : SecurityCenterNavDestination
 
     data object MainHome : SecurityCenterNavDestination

@@ -38,9 +38,7 @@ class RepeatedPasswordCheckerImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : RepeatedPasswordChecker {
 
-    override fun invoke(
-        items: List<Item>
-    ): RepeatedPasswordsData = encryptionContextProvider.withEncryptionContext {
+    override fun invoke(items: List<Item>): RepeatedPasswordsData = encryptionContextProvider.withEncryptionContext {
         val nonEmptyPasswords: MutableMap<String, List<Item>> = mutableMapOf()
 
         items.forEach { item ->

@@ -46,10 +46,11 @@ internal fun SecurityCenterRow(
     modifier: Modifier = Modifier,
     title: String,
     subtitle: String,
+    isClickable: Boolean,
     leadingContent: @Composable (() -> Unit)? = null,
     trailingContent: @Composable (() -> Unit)? = null,
     onClick: (() -> Unit)? = null,
-    accentBackgroundColor: Color? = null,
+    accentBackgroundColor: Color? = null
 ) {
     Column(
         modifier = modifier
@@ -63,7 +64,7 @@ internal fun SecurityCenterRow(
             modifier = modifier
                 .fillMaxWidth()
                 .applyIf(
-                    condition = onClick != null,
+                    condition = isClickable && onClick != null,
                     ifTrue = { clickable(onClick = onClick!!) }
                 )
                 .padding(all = Spacing.medium),
@@ -96,6 +97,7 @@ fun SecurityCenterRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDa
             SecurityCenterRow(
                 title = "Security center row counter title",
                 subtitle = "Security center row counter subtitle",
+                isClickable = false
             )
         }
     }

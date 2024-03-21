@@ -33,6 +33,8 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                     SecurityCenterHomeNavDestination.Home -> SecurityCenterNavDestination.MainHome
                     SecurityCenterHomeNavDestination.NewItem -> SecurityCenterNavDestination.MainNewItem
                     SecurityCenterHomeNavDestination.Profile -> SecurityCenterNavDestination.MainProfile
+                    SecurityCenterHomeNavDestination.ReusedPasswords -> SecurityCenterNavDestination.ReusedPasswords
+                    SecurityCenterHomeNavDestination.WeakPasswords -> SecurityCenterNavDestination.WeakPasswords
                 }.also(onNavigated)
             }
         )

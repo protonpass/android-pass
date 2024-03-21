@@ -16,24 +16,31 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.home.ui
+package proton.android.pass.features.security.center.shared.ui.counters
 
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavDestination
-import proton.android.pass.features.security.center.home.presentation.SecurityCenterHomeViewModel
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultNorm
+import proton.android.pass.composecomponents.impl.container.Circle
 
 @Composable
-fun SecurityCenterHomeScreen(
-    onNavigated: (SecurityCenterHomeNavDestination) -> Unit,
-    viewModel: SecurityCenterHomeViewModel = hiltViewModel()
-) = with(viewModel) {
-    val state by state.collectAsStateWithLifecycle()
-
-    SecurityCenterHomeContent(
-        onNavigated = onNavigated,
-        state = state
-    )
+internal fun SecurityCenterCounterText(
+    modifier: Modifier = Modifier,
+    counterText: String,
+    backgroundColor: Color,
+    textColor: Color
+) {
+    Circle(
+        modifier = modifier,
+        backgroundColor = backgroundColor,
+    ) {
+        Text(
+            text = counterText,
+            color = textColor,
+            style = ProtonTheme.typography.defaultNorm
+        )
+    }
 }

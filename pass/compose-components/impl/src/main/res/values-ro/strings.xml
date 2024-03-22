@@ -53,6 +53,7 @@
   <string name="bottom_bar_list_items_icon_content_description">Articole listă</string>
   <string name="bottom_bar_add_item_icon_content_description">Adăugare articol</string>
   <string name="bottom_bar_profile_icon_content_description">Profil</string>
+  <string name="bottom_bar_security_center_icon_content_description">Centru de securitate</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">Astăzi</string>
   <string name="most_recent_yesterday">Ieri</string>

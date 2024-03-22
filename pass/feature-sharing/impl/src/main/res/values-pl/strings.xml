@@ -39,7 +39,7 @@
   <string name="share_with_title">Udostępnij</string>
   <string name="share_with_email_hint">Adres e-mail</string>
   <string name="share_with_email_error">Adres e-mail jest nieprawidłowy</string>
-  <string name="share_with_email_cannot_invite_outside_org">Nie możesz zapraszać osoby spoza swojej organizacji, skontaktuj się z administratorem po więcej informacji.</string>
+  <string name="share_with_email_cannot_invite_outside_org">Nie możesz zapraszać użytkowników spoza swojej organizacji. Skontaktuj się z administratorem, aby uzyskać więcej informacji</string>
   <string name="share_permissions_title">Ustaw uprawnienia</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s udostępnia Ci sejf</string>
   <string name="sharing_join_shared_vault">Dołącz i synchronizuj</string>
@@ -106,7 +106,7 @@
   <string name="sharing_snackbar_transfer_ownership_error">Wystąpił błąd podczas zmiany właściciela</string>
   <string name="sharing_invites_info_dialog_title">Limit użytkowników</string>
   <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
-    <item quantity="one">This vault can have up to %1$d members. You still have %2$d invite left.</item>
+    <item quantity="one">Sejf nie może zawierać więcej niż %1$d użytkowników. Możesz zaprosić jeszcze %2$d użytkownika.</item>
     <item quantity="few">Sejf nie może zawierać więcej niż %1$d użytkowników. Możesz zaprosić jeszcze %2$d użytkowników.</item>
     <item quantity="many">Sejf nie może zawierać więcej niż %1$d użytkowników. Możesz zaprosić jeszcze %2$d użytkowników.</item>
     <item quantity="other">Sejf nie może zawierać więcej niż %1$d użytkowników. Możesz zaprosić jeszcze %2$d użytkowników.</item>

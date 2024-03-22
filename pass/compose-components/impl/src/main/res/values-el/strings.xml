@@ -52,6 +52,7 @@
   <string name="bottom_bar_list_items_icon_content_description">Λίστα στοιχείων</string>
   <string name="bottom_bar_add_item_icon_content_description">Προσθήκη στοιχείου</string>
   <string name="bottom_bar_profile_icon_content_description">Προφίλ</string>
+  <string name="bottom_bar_security_center_icon_content_description">Κέντρο ασφαλείας</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">Σήμερα</string>
   <string name="most_recent_yesterday">Χθες</string>

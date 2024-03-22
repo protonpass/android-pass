@@ -96,6 +96,8 @@ dependencies {
     implementation(projects.pass.biometry.api)
     implementation(projects.pass.clipboard.api)
     implementation(projects.pass.common.api)
+    implementation(projects.pass.commonPresentation.api)
+    implementation(projects.pass.commonPresentation.impl)
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.commonUi.impl)
     implementation(projects.pass.commonUiModels.api)

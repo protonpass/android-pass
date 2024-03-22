@@ -19,13 +19,52 @@
 package proton.android.pass.features.security.center.reusepass.presentation
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
+import proton.android.pass.commonui.api.toUiModel
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.data.api.usecases.ObserveItems
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.ShareSelection
+import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.value
+import proton.android.pass.securitycenter.api.passwords.RepeatedPasswordChecker
 import javax.inject.Inject
 
 @HiltViewModel
-class SecurityCenterReusedPassViewModel @Inject constructor() : ViewModel() {
+class SecurityCenterReusedPassViewModel @Inject constructor(
+    observeItems: ObserveItems,
+    repeatedPasswordChecker: RepeatedPasswordChecker,
+    userPreferencesRepository: UserPreferencesRepository,
+    private val encryptionContextProvider: EncryptionContextProvider
+) : ViewModel() {
 
-internal lateinit var state: StateFlow<SecurityCenterReusedPassState>
+    internal val state: StateFlow<SecurityCenterReusedPassState> =
+        combine(
+            observeItems(ShareSelection.AllShares, ItemState.Active, ItemTypeFilter.Logins),
+            userPreferencesRepository.getUseFaviconsPreference()
+        ) { loginItems, useFavIconsPreference ->
+            SecurityCenterReusedPassState(
+                reusedPasswords = repeatedPasswordChecker(loginItems).repeatedPasswordsGroups
+                    .mapValues { (_, reusedPassLoginItem) -> reusedPassLoginItem.toUiModels() },
+                canLoadExternalImages = useFavIconsPreference.value()
+            )
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000L),
+            initialValue = SecurityCenterReusedPassState.Initial
+        )
+
+    private fun List<Item>.toUiModels() = encryptionContextProvider.withEncryptionContext {
+        map { item ->
+            item.toUiModel(this@withEncryptionContext).copy(isPinned = false)
+        }
+    }
 
 }

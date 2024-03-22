@@ -35,5 +35,5 @@
     <string name="security_center_reused_pass_top_bar_title">Reused passwords</string>
     <string name="security_center_reused_pass_top_bar_subtitle">Generate unique passwords to increase your security.</string>
 
-    <string name="security_center_reused_pass_list_sticky_header_label">Reused %1$d times</string>
+    <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Reused %1$d times</string>
 </resources>

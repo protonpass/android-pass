@@ -82,7 +82,12 @@ internal fun SecurityCenterWeakPassContent(
                     SecurityCenterWeakPassRow(
                         itemUiModel = itemUiModel,
                         canLoadExternalImages = canLoadExternalImages,
-                        onClick = {}
+                        onClick = {
+                            SecurityCenterWeakPassDestination.ItemDetails(
+                                shareId = itemUiModel.shareId,
+                                itemId = itemUiModel.id
+                            ).also(onNavigated)
+                        }
                     )
                 }
             }

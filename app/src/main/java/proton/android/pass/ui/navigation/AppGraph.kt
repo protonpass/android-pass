@@ -1023,6 +1023,14 @@ fun NavGraphBuilder.appGraph(
                     destination = Home
                 )
 
+                is SecurityCenterNavDestination.ItemDetails -> appNavigator.navigate(
+                    destination = ViewItem,
+                    route = ViewItem.createNavRoute(
+                        shareId = securityCenterNavDestination.shareId,
+                        itemId = securityCenterNavDestination.itemId
+                    )
+                )
+
                 SecurityCenterNavDestination.MainNewItem -> appNavigator.navigate(
                     destination = CreateItemBottomsheet
                 )

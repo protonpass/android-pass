@@ -65,5 +65,5 @@ internal data class SecurityCenterWeakPassState(
 
 internal data class SecurityCenterWeakPassGroup(
     internal val passwordStrength: PasswordStrength,
-    internal val itemUiModels: List<ItemUiModel>,
+    internal val itemUiModels: List<ItemUiModel>
 )

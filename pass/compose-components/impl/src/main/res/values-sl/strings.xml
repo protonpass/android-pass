@@ -54,6 +54,7 @@
   <string name="bottom_bar_list_items_icon_content_description">Seznam predmetov</string>
   <string name="bottom_bar_add_item_icon_content_description">Dodaj predmet</string>
   <string name="bottom_bar_profile_icon_content_description">Profil</string>
+  <string name="bottom_bar_security_center_icon_content_description">Varnostno središče</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">Danes</string>
   <string name="most_recent_yesterday">Včeraj</string>

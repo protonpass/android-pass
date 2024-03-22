@@ -37,16 +37,16 @@
   <string name="bottomsheet_custom_field_type_text_content_description">テキストのカスタムフィールド</string>
   <string name="bottomsheet_custom_field_type_hidden">非表示</string>
   <string name="bottomsheet_custom_field_type_totp">2FA 秘密鍵 (TOTP)</string>
-  <string name="bottomsheet_custom_field_option_edit">Edit name</string>
+  <string name="bottomsheet_custom_field_option_edit">名前を編集</string>
   <string name="bottomsheet_custom_field_option_remove">フィールドを削除</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">カスタム フィールドを削除</string>
   <string name="create_login_add_custom_field_button">別のフィールドを追加</string>
   <string name="custom_field_hidden_placeholder">非表示テキストを追加</string>
   <string name="custom_field_hidden_icon_content_description">非表示のカスタムフィールドアイコン</string>
-  <string name="custom_field_text_placeholder">Add text</string>
+  <string name="custom_field_text_placeholder">テキストを追加</string>
   <string name="custom_field_dialog_title">カスタムフィールドの名前</string>
   <string name="custom_field_dialog_body">Give your custom field a name</string>
-  <string name="custom_field_dialog_placeholder">E.g., User ID, PIN</string>
+  <string name="custom_field_dialog_placeholder">例: ユーザーID、PIN</string>
   <string name="custom_field_options_content_description">カスタムフィールドのオプション</string>
   <!-- Create Note -->
   <string name="title_create_note">メモの作成</string>
@@ -77,7 +77,7 @@
   <string name="note_hint">メモ</string>
   <!-- Create Credit Card -->
   <string name="title_create_credit_card">クレジットカードの作成</string>
-  <string name="field_cardholder_name_title">Name on card</string>
+  <string name="field_cardholder_name_title">カード名義人</string>
   <string name="field_cardholder_name_hint">フルネーム</string>
   <string name="field_card_number_title">カード番号</string>
   <string name="field_card_number_hint">1234 1234 1234 1234</string>

@@ -5,7 +5,7 @@
   <string name="on_boarding_autofill_button">Automatické vypĺňanie s Proton Pass</string>
   <string name="on_boarding_fingerprint_content">Nastavte Proton Pass na odomknutie odtlačkom prsta, aby ste len vy mali k nemu prístup.</string>
   <string name="on_boarding_fingerprint_title">Chráňte svoje najcitlivejšie údaje</string>
-  <string name="on_boarding_fingerprint_button">Enable fingerprint lock</string>
+  <string name="on_boarding_fingerprint_button">Zapnúť uzamknutie odtlačkom</string>
   <string name="on_boarding_last_page_content">Prestaňte zdieľať svoju skutočnú emailovú adresu. Namiesto toho ju skryte pomocou emailových aliasov - exkluzívne v Proton Pass.</string>
   <string name="on_boarding_last_page_title">Získajte kontrolu nad tým, čo sa dostane do vašej doručenej pošty</string>
   <string name="on_boarding_last_page_button">Začať používať Proton Pass</string>
@@ -16,6 +16,6 @@
   <string name="on_boarding_pending_invite_button">Ďalšie informácie o službe Proton Pass</string>
   <string name="error_biometry_failed_to_start">Nepodarilo sa spustiť biometrickú autentifikáciu</string>
   <string name="error_biometry_failed_to_authenticate">Autentifikácia zlyhala</string>
-  <string name="settings_fingerprint_lock_enabled">Fingerprint lock enabled</string>
+  <string name="settings_fingerprint_lock_enabled">Uzamknutie odtlačkom povolené</string>
   <string name="error_performing_operation">Chyba pri vykonávaní operácie</string>
 </resources>

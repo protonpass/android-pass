@@ -216,7 +216,7 @@ class CreatePasskeyAppViewModel @Inject constructor(
         if (!candidateUrl.isNullOrBlank()) return candidateUrl
 
         val parsed = runCatching { parseCreatePasskeyRequest(request.callingRequest.requestJson) }
-            .getOrElse {  error ->
+            .getOrElse { error ->
                 PassLogger.w(TAG, "Error parsing create passkey request")
                 PassLogger.w(TAG, error)
                 return ""

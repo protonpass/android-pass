@@ -20,10 +20,10 @@
   <string name="item_details_snackbar_message_alias_copied">Псеўданім скапіяваны</string>
   <string name="item_details_snackbar_message_card_number_copied">Нумар карткі скапіяваны</string>
   <string name="item_details_snackbar_message_custom_field_copied">Карыстальніцкае поле скапіявана</string>
-  <string name="item_details_snackbar_message_cvv_copied">Праверачны нумар скапіяваны</string>
+  <string name="item_details_snackbar_message_cvv_copied">Код бяспекі скапіяваны</string>
   <string name="item_details_snackbar_message_password_copied">Пароль скапіяваны</string>
   <string name="item_details_snackbar_message_pin_copied">PIN-код скапіяваны</string>
   <string name="item_details_snackbar_message_totp_copied">TOTP скапіяваны</string>
   <string name="item_details_snackbar_message_username_copied">Імя карыстальніка скапіявана</string>
-  <string name="item_details_snackbar_message_website_copied">URL-адрас вэбсайта скапіяваны</string>
+  <string name="item_details_snackbar_message_website_copied">URL-адрас вэб-сайта скапіяваны</string>
 </resources>

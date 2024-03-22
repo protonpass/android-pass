@@ -106,7 +106,7 @@
   <string name="sharing_snackbar_transfer_ownership_error">Памылка перадачы правоў уласнасці</string>
   <string name="sharing_invites_info_dialog_title">Абмежаванне ўдзельнікаў</string>
   <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
-    <item quantity="one">Гэта сховішча можа мець да %1$d удзельніка. У вас яшчэ засталося яшчэ %2$d запрашэнне.</item>
+    <item quantity="one">Гэта сховішча можа мець да %1$d удзельніка. У вас яшчэ засталося %2$d запрашэнне.</item>
     <item quantity="few">Гэта сховішча можа мець да %1$d удзельнікаў. У вас яшчэ засталося %2$d запрашэнні.</item>
     <item quantity="many">Гэта сховішча можа мець да %1$d удзельнікаў. У вас яшчэ засталося %2$d запрашэнняў.</item>
     <item quantity="other">Гэта сховішча можа мець да %1$d удзельнікаў. У вас яшчэ засталося %2$d запрашэнняў.</item>

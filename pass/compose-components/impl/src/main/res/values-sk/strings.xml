@@ -5,7 +5,7 @@
   <string name="sort_by_title_desc">Názov (Z-A)</string>
   <string name="sort_by_creation_asc">Od najstaršieho po najnovšie</string>
   <string name="sort_by_creation_desc">Od najnovšieho po najstaršie</string>
-  <string name="sort_by_modification_date">Recently used</string>
+  <string name="sort_by_modification_date">Nedávno použité</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Všetko</string>
   <string name="item_list_header_pinned_search_results">Pripnuté</string>
@@ -25,7 +25,7 @@
   <string name="bottomsheet_move_to_trash">Presunúť do koša</string>
   <string name="bottomsheet_pin_item">Pripnúť</string>
   <string name="bottomsheet_unpin_item">Odopnúť</string>
-  <string name="bottomsheet_view_item_history">View history</string>
+  <string name="bottomsheet_view_item_history">Zobraziť históriu</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Otvoriť ponuku akcií položky</string>
   <string name="action_upgrade_now">Navýšiť teraz</string>
@@ -54,16 +54,17 @@
   <string name="bottom_bar_list_items_icon_content_description">Zoznam položiek</string>
   <string name="bottom_bar_add_item_icon_content_description">Pridať položku</string>
   <string name="bottom_bar_profile_icon_content_description">Profil</string>
+  <string name="bottom_bar_security_center_icon_content_description">Centrum zabezpečenia</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">Dnes</string>
   <string name="most_recent_yesterday">Včera</string>
   <string name="most_recent_this_week">Tento týždeň</string>
   <string name="most_recent_last_two_weeks">Posledné dva týždne</string>
-  <string name="most_recent_last_30_days">Last month</string>
+  <string name="most_recent_last_30_days">Posledný mesiac</string>
   <string name="most_recent_last_60_days">Posledných 60 dní</string>
   <string name="most_recent_last_90_days">Posledných 90 dní</string>
   <string name="most_recent_within_the_last_year">Za posledný rok</string>
-  <string name="most_recent_more_than_1_year">Older than 1 year</string>
+  <string name="most_recent_more_than_1_year">Staršie ako 1 rok</string>
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">Ikona vyhľadávania</string>
   <!-- Select Vault BottomSheet -->
@@ -118,10 +119,10 @@
   <string name="item_details_shared_section_note_title">Poznámka</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Verzia aplikácie už nie je podporovaná, aktualizujte ju.</string>
   <!-- Passkeys -->
-  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Prihlasovací kľúč</string>
+  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Prístupový kľúč</string>
   <!-- Upgrade -->
-  <string name="dialog_upgrade_plan_title">Upgrade plan?</string>
-  <string name="dialog_upgrade_plan_message">This feature is not available for free tier users. If you want to enjoy this along with other cool features, upgrade your plan and give it a try!</string>
-  <string name="dialog_upgrade_plan_action_confirm">Upgrade</string>
-  <string name="dialog_upgrade_plan_action_cancel">Not now</string>
+  <string name="dialog_upgrade_plan_title">Upgradovať plán?</string>
+  <string name="dialog_upgrade_plan_message">Táto funkcia nie je dostupná pre používateľov bezplatného plánu. Ak si chcete túto a ďalšie skvelé funkcie vychutnať, upgradujte svoj plán a vyskúšajte ich!</string>
+  <string name="dialog_upgrade_plan_action_confirm">Upgradovať</string>
+  <string name="dialog_upgrade_plan_action_cancel">Teraz nie</string>
 </resources>

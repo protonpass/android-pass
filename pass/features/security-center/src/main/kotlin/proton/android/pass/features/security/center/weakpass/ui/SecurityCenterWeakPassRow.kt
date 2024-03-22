@@ -32,7 +32,7 @@ internal fun SecurityCenterWeakPassRow(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
     canLoadExternalImages: Boolean,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     Box(
         modifier = modifier

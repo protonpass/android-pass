@@ -29,8 +29,8 @@ import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.securitycenter.api.InsecurePasswordsResult
 import proton.android.pass.securitycenter.api.Missing2faResult
 import proton.android.pass.securitycenter.api.SecurityAnalysis
+import proton.android.pass.securitycenter.api.passwords.InsecurePasswordsReport
 import proton.android.pass.securitycenter.fakes.mother.BreachDataResultMother
-import proton.android.pass.securitycenter.impl.checkers.InsecurePasswordsReport
 import proton.android.pass.securitycenter.impl.checkers.Missing2faReport
 import proton.android.pass.securitycenter.impl.fakes.TestBreachDataChecker
 import proton.android.pass.securitycenter.impl.fakes.TestInsecurePasswordChecker

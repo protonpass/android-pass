@@ -22,22 +22,25 @@
 
     <application>
         <activity android:name=".create.ui.CreatePasskeyActivity"
-            android:launchMode="singleTop"
-            android:clearTaskOnLaunch="true"
+            android:theme="@style/PassThemeTransparentNoActionBar"
+            android:windowSoftInputMode="adjustResize"
             android:excludeFromRecents="true"
-            android:windowSoftInputMode="adjustResize" />
+            android:exported="false"
+            android:launchMode="singleInstance" />
 
         <activity android:name=".select.ui.SelectPasskeyActivity"
-            android:launchMode="singleTop"
-            android:clearTaskOnLaunch="true"
+            android:theme="@style/PassThemeTransparentNoActionBar"
+            android:windowSoftInputMode="adjustResize"
             android:excludeFromRecents="true"
-            android:windowSoftInputMode="adjustResize" />
+            android:exported="false"
+            android:launchMode="singleInstance" />
 
         <activity android:name=".select.ui.UsePasskeyNoUiActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:launchMode="singleTop"
-            android:clearTaskOnLaunch="true"
-            android:excludeFromRecents="true"/>
+            android:windowSoftInputMode="adjustResize"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:launchMode="singleInstance" />
 
         <service android:name=".service.PasskeyProviderService"
             android:enabled="@bool/pass_passkeys_enabled"

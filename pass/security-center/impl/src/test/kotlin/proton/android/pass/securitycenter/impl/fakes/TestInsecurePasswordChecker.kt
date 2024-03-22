@@ -19,8 +19,8 @@
 package proton.android.pass.securitycenter.impl.fakes
 
 import proton.android.pass.domain.Item
-import proton.android.pass.securitycenter.impl.checkers.InsecurePasswordChecker
-import proton.android.pass.securitycenter.impl.checkers.InsecurePasswordsReport
+import proton.android.pass.securitycenter.api.passwords.InsecurePasswordChecker
+import proton.android.pass.securitycenter.api.passwords.InsecurePasswordsReport
 
 class TestInsecurePasswordChecker : InsecurePasswordChecker {
 

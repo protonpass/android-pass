@@ -42,8 +42,8 @@ import proton.android.pass.securitycenter.api.Missing2faResult
 import proton.android.pass.securitycenter.api.ObserveSecurityAnalysis
 import proton.android.pass.securitycenter.api.ReusedPasswordsResult
 import proton.android.pass.securitycenter.api.SecurityAnalysis
+import proton.android.pass.securitycenter.api.passwords.InsecurePasswordChecker
 import proton.android.pass.securitycenter.impl.checkers.BreachedDataChecker
-import proton.android.pass.securitycenter.impl.checkers.InsecurePasswordChecker
 import proton.android.pass.securitycenter.impl.checkers.Missing2faChecker
 import proton.android.pass.securitycenter.impl.checkers.RepeatedPasswordChecker
 import javax.inject.Inject
@@ -67,35 +67,36 @@ class ObserveSecurityAnalysisImpl @Inject constructor(
         filter = ItemTypeFilter.Logins
     )
 
-    private val securityAnalysisFlow: SharedFlow<SecurityAnalysis> = allItemsFlow.flatMapLatest { items ->
-        combine(
-            oneShot { breachedDataChecker(items) }.asLoadingResult(),
-            oneShot { repeatedPasswordChecker(items) }.map {
-                ReusedPasswordsResult(it.repeatedPasswordsCount)
-            }.asLoadingResult(),
-            oneShot { insecurePasswordChecker(items) }.map {
-                InsecurePasswordsResult(it.insecurePasswordsCount)
-            }.asLoadingResult(),
-            oneShot { missing2faChecker(items) }.map {
-                Missing2faResult(it.missing2faCount)
-            }.asLoadingResult(),
-            ::SecurityAnalysis
-        )
-    }.onStart {
-        emit(
-            SecurityAnalysis(
-                breachedData = LoadingResult.Loading,
-                reusedPasswords = LoadingResult.Loading,
-                insecurePasswords = LoadingResult.Loading,
-                missing2fa = LoadingResult.Loading
+    private val securityAnalysisFlow: SharedFlow<SecurityAnalysis> =
+        allItemsFlow.flatMapLatest { items ->
+            combine(
+                oneShot { breachedDataChecker(items) }.asLoadingResult(),
+                oneShot { repeatedPasswordChecker(items) }.map {
+                    ReusedPasswordsResult(it.repeatedPasswordsCount)
+                }.asLoadingResult(),
+                oneShot { insecurePasswordChecker(items) }.map {
+                    InsecurePasswordsResult(it.insecurePasswordsCount)
+                }.asLoadingResult(),
+                oneShot { missing2faChecker(items) }.map {
+                    Missing2faResult(it.missing2faCount)
+                }.asLoadingResult(),
+                ::SecurityAnalysis
             )
+        }.onStart {
+            emit(
+                SecurityAnalysis(
+                    breachedData = LoadingResult.Loading,
+                    reusedPasswords = LoadingResult.Loading,
+                    insecurePasswords = LoadingResult.Loading,
+                    missing2fa = LoadingResult.Loading
+                )
+            )
+        }.shareIn(
+            scope = coroutineScope,
+            started = SharingStarted.Lazily,
+            replay = 1
         )
-    }.shareIn(
-        scope = coroutineScope,
-        started = SharingStarted.Lazily,
-        replay = 1
-    )
 
-    override fun invoke(): Flow<SecurityAnalysis> = securityAnalysisFlow
-        .distinctUntilChanged()
+    override fun invoke(): Flow<SecurityAnalysis> = securityAnalysisFlow.distinctUntilChanged()
+
 }

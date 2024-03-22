@@ -91,10 +91,12 @@ dependencies {
     kaptAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(libs.coroutines.test)
     androidTestImplementation(libs.core.presentation.compose)
+
+    androidTestImplementation(projects.pass.biometry.fakes)
     androidTestImplementation(projects.pass.commonTest)
     androidTestImplementation(projects.pass.common.fakes)
     androidTestImplementation(projects.pass.commonUi.api)
     androidTestImplementation(projects.pass.data.fakes)
+    androidTestImplementation(projects.pass.notifications.fakes)
     androidTestImplementation(projects.pass.preferences.fakes)
-    androidTestImplementation(projects.pass.biometry.fakes)
 }

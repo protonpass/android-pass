@@ -48,6 +48,10 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
             onNavigated = { destination ->
                 when (destination) {
                     SecurityCenterWeakPassDestination.Back -> SecurityCenterNavDestination.Back
+                    is SecurityCenterWeakPassDestination.ItemDetails -> SecurityCenterNavDestination.ItemDetails(
+                        shareId = destination.shareId,
+                        itemId = destination.itemId,
+                    )
                 }.also(onNavigated)
             }
         )

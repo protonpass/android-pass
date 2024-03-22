@@ -36,7 +36,8 @@ import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.reusepass.navigation.SecurityCenterReusedPassDestination
 import proton.android.pass.features.security.center.reusepass.presentation.SecurityCenterReusedPassState
 import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBar
-import proton.android.pass.features.security.center.weakpass.ui.SecurityCenterWeakPassRow
+import proton.android.pass.features.security.center.shared.ui.headers.SecurityCenterListStickyHeader
+import proton.android.pass.features.security.center.shared.ui.rows.SecurityCenterLoginItemRow
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -70,11 +71,15 @@ internal fun SecurityCenterReusedPassContent(
         ) {
             reusedPassGroups.forEach { reusedPassGroup ->
                 stickyHeader {
-                    SectionTitle(
-                        text = stringResource(
-                            id = R.string.security_center_reused_pass_list_sticky_header_label,
-                            reusedPassGroup.reusedPasswordsCount
-                        )
+                    SecurityCenterListStickyHeader(
+                        label = {
+                            SectionTitle(
+                                text = stringResource(
+                                    id = R.string.security_center_reused_pass_list_sticky_header_label,
+                                    reusedPassGroup.reusedPasswordsCount
+                                )
+                            )
+                        }
                     )
                 }
 
@@ -82,7 +87,7 @@ internal fun SecurityCenterReusedPassContent(
                     items = reusedPassGroup.itemUiModels,
                     key = { itemUiModel -> itemUiModel.id.id }
                 ) { itemUiModel ->
-                    SecurityCenterWeakPassRow(
+                    SecurityCenterLoginItemRow(
                         itemUiModel = itemUiModel,
                         canLoadExternalImages = canLoadExternalImages,
                         onClick = {

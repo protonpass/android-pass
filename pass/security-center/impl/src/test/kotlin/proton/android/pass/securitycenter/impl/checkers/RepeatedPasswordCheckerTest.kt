@@ -23,6 +23,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.securitycenter.api.passwords.RepeatedPasswordsReport
 import proton.android.pass.test.TestUtils
 import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestItemType
@@ -43,7 +44,7 @@ class RepeatedPasswordCheckerTest {
     @Test
     fun `can handle empty list`() = runTest {
         val res = instance(emptyList())
-        assertThat(res).isEqualTo(RepeatedPasswordsData(emptyMap()))
+        assertThat(res).isEqualTo(RepeatedPasswordsReport(emptyMap()))
     }
 
     @Test
@@ -70,7 +71,7 @@ class RepeatedPasswordCheckerTest {
         val res = instance(items)
 
         assertThat(res).isEqualTo(
-            RepeatedPasswordsData(
+            RepeatedPasswordsReport(
                 repeatedPasswords = mapOf(
                     encryptedPassword1 to listOf(item11, item12),
                     encryptedPassword2 to listOf(item21, item22, item23)

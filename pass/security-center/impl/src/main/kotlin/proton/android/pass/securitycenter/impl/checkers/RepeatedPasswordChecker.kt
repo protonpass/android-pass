@@ -51,11 +51,8 @@ class RepeatedPasswordCheckerImpl @Inject constructor(
                     ).let { decryptedItem ->
                         val key = decryptedItem.clearTextPassword
                         if (key.isNotEmpty()) {
-                            if (nonEmptyPasswords.containsKey(key)) {
-                                nonEmptyPasswords[key] = nonEmptyPasswords[key]!!.plus(item)
-                            } else {
-                                nonEmptyPasswords[key] = listOf(item)
-                            }
+                            val itemsWithSamePassword = nonEmptyPasswords.getOrElse(key) { emptyList() }
+                            nonEmptyPasswords[key] = itemsWithSamePassword.plus(item)
                         }
                     }
                 }

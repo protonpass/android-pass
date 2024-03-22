@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,21 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases
+package proton.android.pass.securitycenter.api.passwords
 
-import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.Item
-import proton.android.pass.domain.ItemState
-import proton.android.pass.domain.ShareSelection
 
-interface ObserveItems {
+interface InsecurePasswordChecker {
 
-    operator fun invoke(
-        selection: ShareSelection,
-        itemState: ItemState?,
-        filter: ItemTypeFilter,
-        userId: UserId? = null
-    ): Flow<List<Item>>
+    suspend operator fun invoke(items: List<Item>): InsecurePasswordsReport
 
 }

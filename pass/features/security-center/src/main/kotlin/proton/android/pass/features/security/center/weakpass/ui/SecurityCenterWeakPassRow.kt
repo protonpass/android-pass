@@ -18,22 +18,31 @@
 
 package proton.android.pass.features.security.center.weakpass.ui
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.features.security.center.weakpass.navigation.SecurityCenterWeakPassDestination
-import proton.android.pass.features.security.center.weakpass.presentation.SecurityCenterWeakPassViewModel
+import androidx.compose.ui.Modifier
+import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.composecomponents.impl.item.LoginRow
 
 @Composable
-fun SecurityCenterWeakPassScreen(
-    onNavigated: (SecurityCenterWeakPassDestination) -> Unit,
-    viewModel: SecurityCenterWeakPassViewModel = hiltViewModel()
-) = with(viewModel) {
-    val state by state.collectAsStateWithLifecycle()
+internal fun SecurityCenterWeakPassRow(
+    modifier: Modifier = Modifier,
+    itemUiModel: ItemUiModel,
+    canLoadExternalImages: Boolean,
+    onClick: () -> Unit,
+) {
+    Box(
+        modifier = modifier
+            .clickable(onClick = onClick)
+            .padding(horizontal = Spacing.medium)
+    ) {
+        LoginRow(
+            item = itemUiModel,
+            canLoadExternalImages = canLoadExternalImages
+        )
+    }
 
-    SecurityCenterWeakPassContent(
-        onNavigated = onNavigated,
-        state = state
-    )
 }

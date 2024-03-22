@@ -45,6 +45,7 @@ import proton.android.pass.featureselectitem.navigation.SelectItemState
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.passkeys.api.GeneratePasskey
+import proton.android.pass.passkeys.api.ParseCreatePasskeyRequest
 import javax.inject.Inject
 
 @Immutable
@@ -85,6 +86,7 @@ data class CreatePasskeyAppUiState(
 class CreatePasskeyAppViewModel @Inject constructor(
     private val generatePasskey: GeneratePasskey,
     private val storePasskey: StorePasskey,
+    private val parseCreatePasskeyRequest: ParseCreatePasskeyRequest,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
@@ -172,8 +174,11 @@ class CreatePasskeyAppViewModel @Inject constructor(
         }
 
         runCatching {
+            val url = getPasskeyUrl(request)
+
+            PassLogger.i(TAG, "Generating passkey for [url=$url]")
             val passkey = generatePasskey(
-                url = request.callingAppInfo.origin ?: "",
+                url = url,
                 request = request.callingRequest.requestJson
             )
             storePasskey(
@@ -195,6 +200,35 @@ class CreatePasskeyAppViewModel @Inject constructor(
 
     fun clearEvent() = viewModelScope.launch {
         eventFlow.emit(CreatePasskeyAppEvent.Idle)
+    }
+
+    @Suppress("ReturnCount")
+    private fun getPasskeyUrl(request: CreatePasskeyRequest): String {
+        request.callingAppInfo.origin?.let { url -> return url }
+
+        PassLogger.i(TAG, "request.callingAppInfo.origin is null")
+
+        val candidateUrl = when (val state = state.value.navState) {
+            is CreatePasskeyNavState.Ready -> state.createLoginUiState.url
+            else -> null
+        }
+
+        if (!candidateUrl.isNullOrBlank()) return candidateUrl
+
+        val parsed = runCatching { parseCreatePasskeyRequest(request.callingRequest.requestJson) }
+            .getOrElse {  error ->
+                PassLogger.w(TAG, "Error parsing create passkey request")
+                PassLogger.w(TAG, error)
+                return ""
+            }
+
+        return when (val rpId = parsed.rpId) {
+            null -> {
+                PassLogger.w(TAG, "parsed.rpId is null")
+                ""
+            }
+            else -> rpId
+        }
     }
 
     private data class AppStateRequest(

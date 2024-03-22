@@ -34,4 +34,6 @@
     <!-- Reused passwords screen -->
     <string name="security_center_reused_pass_top_bar_title">Reused passwords</string>
     <string name="security_center_reused_pass_top_bar_subtitle">Generate unique passwords to increase your security.</string>
+
+    <string name="security_center_reused_pass_list_sticky_header_label">Reused %1$d times</string>
 </resources>

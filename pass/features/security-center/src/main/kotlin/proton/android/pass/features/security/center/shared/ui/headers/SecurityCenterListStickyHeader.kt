@@ -16,33 +16,25 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.weakpass.ui
+package proton.android.pass.features.security.center.shared.ui.headers
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.composecomponents.impl.item.LoginRow
 
 @Composable
-internal fun SecurityCenterWeakPassRow(
-    modifier: Modifier = Modifier,
-    itemUiModel: ItemUiModel,
-    canLoadExternalImages: Boolean,
-    onClick: () -> Unit
-) {
+internal fun SecurityCenterListStickyHeader(modifier: Modifier = Modifier, label: @Composable () -> Unit) {
     Box(
         modifier = modifier
-            .clickable(onClick = onClick)
+            .fillMaxWidth()
             .padding(horizontal = Spacing.medium)
+            .background(color = PassTheme.colors.backgroundStrong)
     ) {
-        LoginRow(
-            item = itemUiModel,
-            canLoadExternalImages = canLoadExternalImages
-        )
+        label()
     }
-
 }

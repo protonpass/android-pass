@@ -19,23 +19,23 @@
 package proton.android.pass.securitycenter.impl.fakes
 
 import proton.android.pass.domain.Item
-import proton.android.pass.securitycenter.impl.checkers.RepeatedPasswordChecker
-import proton.android.pass.securitycenter.impl.checkers.RepeatedPasswordsData
+import proton.android.pass.securitycenter.api.passwords.RepeatedPasswordChecker
+import proton.android.pass.securitycenter.api.passwords.RepeatedPasswordsReport
 
 class TestRepeatedPasswordChecker : RepeatedPasswordChecker {
 
-    private var result: Result<RepeatedPasswordsData> = Result.success(
-        RepeatedPasswordsData(repeatedPasswords = emptyMap())
+    private var result: Result<RepeatedPasswordsReport> = Result.success(
+        RepeatedPasswordsReport(repeatedPasswords = emptyMap())
     )
 
     private val memory: MutableList<List<Item>> = mutableListOf()
     fun memory(): List<List<Item>> = memory
 
-    fun setResult(value: Result<RepeatedPasswordsData>) {
+    fun setResult(value: Result<RepeatedPasswordsReport>) {
         result = value
     }
 
-    override fun invoke(items: List<Item>): RepeatedPasswordsData {
+    override fun invoke(items: List<Item>): RepeatedPasswordsReport {
         memory.add(items)
         return result.getOrThrow()
     }

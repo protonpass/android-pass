@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.autofill.ui
+package proton.android.pass.commonpresentation.impl.snackbar
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -27,23 +27,27 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.commonpresentation.api.snackbar.SnackbarViewModel
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.notifications.api.SnackbarMessage
 import javax.inject.Inject
 
 @HiltViewModel
-class SnackBarViewModel @Inject constructor(
+class SnackBarViewModelImpl @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher
-) : ViewModel() {
+) : ViewModel(), SnackbarViewModel {
 
-    val state: StateFlow<Option<SnackbarMessage>> = snackbarDispatcher.snackbarMessage
+    override val state: StateFlow<Option<SnackbarMessage>> = snackbarDispatcher.snackbarMessage
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000L),
             initialValue = None
         )
 
-    fun onSnackbarMessageDelivered() = viewModelScope.launch {
-        snackbarDispatcher.snackbarMessageDelivered()
+    override fun onSnackbarMessageDelivered() {
+        viewModelScope.launch {
+            snackbarDispatcher.snackbarMessageDelivered()
+        }
     }
 }
+

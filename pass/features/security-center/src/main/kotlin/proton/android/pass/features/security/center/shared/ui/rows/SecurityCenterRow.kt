@@ -61,7 +61,7 @@ internal fun SecurityCenterRow(
             )
     ) {
         Row(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .applyIf(
                     condition = isClickable && onClick != null,

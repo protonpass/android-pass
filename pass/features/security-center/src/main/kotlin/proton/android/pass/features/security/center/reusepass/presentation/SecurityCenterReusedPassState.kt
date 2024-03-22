@@ -23,5 +23,30 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 
 @Stable
 internal data class SecurityCenterReusedPassState(
-    private val reusedPasswordUiModels: List<ItemUiModel>
+    private val reusedPasswords: Map<Int, List<ItemUiModel>>,
+    internal val canLoadExternalImages: Boolean
+) {
+
+    internal val reusedPassGroups: List<SecurityCenterReusedPassGroup> =
+        reusedPasswords.map { (reusedPasswordsCount, itemUiModels) ->
+            SecurityCenterReusedPassGroup(
+                reusedPasswordsCount = reusedPasswordsCount,
+                itemUiModels = itemUiModels
+            )
+        }
+
+    internal companion object {
+
+        internal val Initial: SecurityCenterReusedPassState = SecurityCenterReusedPassState(
+            reusedPasswords = emptyMap(),
+            canLoadExternalImages = false
+        )
+
+    }
+
+}
+
+internal data class SecurityCenterReusedPassGroup(
+    internal val reusedPasswordsCount: Int,
+    internal val itemUiModels: List<ItemUiModel>
 )

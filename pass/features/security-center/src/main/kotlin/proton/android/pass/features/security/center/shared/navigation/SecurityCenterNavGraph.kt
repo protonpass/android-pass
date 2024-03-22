@@ -22,6 +22,9 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavDestination
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavItem
 import proton.android.pass.features.security.center.home.ui.SecurityCenterHomeScreen
+import proton.android.pass.features.security.center.reusepass.navigation.SecurityCenterReusedPassDestination
+import proton.android.pass.features.security.center.reusepass.navigation.SecurityCenterReusedPassNavItem
+import proton.android.pass.features.security.center.reusepass.ui.SecurityCenterReusedPassScreen
 import proton.android.pass.features.security.center.weakpass.navigation.SecurityCenterWeakPassDestination
 import proton.android.pass.features.security.center.weakpass.navigation.SecurityCenterWeakPassNavItem
 import proton.android.pass.features.security.center.weakpass.ui.SecurityCenterWeakPassScreen
@@ -49,6 +52,20 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                 when (destination) {
                     SecurityCenterWeakPassDestination.Back -> SecurityCenterNavDestination.Back
                     is SecurityCenterWeakPassDestination.ItemDetails -> SecurityCenterNavDestination.ItemDetails(
+                        shareId = destination.shareId,
+                        itemId = destination.itemId
+                    )
+                }.also(onNavigated)
+            }
+        )
+    }
+
+    composable(navItem = SecurityCenterReusedPassNavItem) {
+        SecurityCenterReusedPassScreen(
+            onNavigated = { destination ->
+                when (destination) {
+                    SecurityCenterReusedPassDestination.Back -> SecurityCenterNavDestination.Back
+                    is SecurityCenterReusedPassDestination.ItemDetails -> SecurityCenterNavDestination.ItemDetails(
                         shareId = destination.shareId,
                         itemId = destination.itemId
                     )

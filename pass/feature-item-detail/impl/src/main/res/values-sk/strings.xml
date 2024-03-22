@@ -99,7 +99,7 @@
   <string name="password_score_vulnerable">Zraniteľné</string>
   <string name="password_score_weak">Slabé</string>
   <string name="password_score_strong">Silné</string>
-  <string name="passkey_detail_bottomsheet_title">Prihlasovací kľúč</string>
+  <string name="passkey_detail_bottomsheet_title">Prístupový kľúč</string>
   <string name="passkey_detail_bottomsheet_username">Používateľské meno</string>
   <string name="passkey_detail_bottomsheet_domain">Doména</string>
   <string name="passkey_detail_bottomsheet_key">Kľúč</string>

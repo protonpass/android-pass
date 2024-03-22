@@ -93,15 +93,15 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Nelze sdílet</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Nemáte dostatečná oprávnění pro sdílení tohoto trezoru.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
-  <string name="item_detail_history_created">Created</string>
-  <string name="item_detail_history_modified_last">Last modified</string>
-  <string name="item_detail_history_button_view">View item history</string>
+  <string name="item_detail_history_created">Vytvořeno</string>
+  <string name="item_detail_history_modified_last">Naposledy změněno</string>
+  <string name="item_detail_history_button_view">Zobrazit historii položky</string>
   <string name="password_score_vulnerable">Zranitelný</string>
   <string name="password_score_weak">Slabý</string>
   <string name="password_score_strong">Silný</string>
-  <string name="passkey_detail_bottomsheet_title">Passkey</string>
-  <string name="passkey_detail_bottomsheet_username">Username</string>
-  <string name="passkey_detail_bottomsheet_domain">Domain</string>
-  <string name="passkey_detail_bottomsheet_key">Key</string>
-  <string name="passkey_detail_bottomsheet_created">Created</string>
+  <string name="passkey_detail_bottomsheet_title">Přístupový klíč</string>
+  <string name="passkey_detail_bottomsheet_username">Uživatelské jméno</string>
+  <string name="passkey_detail_bottomsheet_domain">Doména</string>
+  <string name="passkey_detail_bottomsheet_key">Klíč</string>
+  <string name="passkey_detail_bottomsheet_created">Vytvořeno</string>
 </resources>

@@ -20,7 +20,7 @@
   <string name="item_details_snackbar_message_alias_copied">Alias skopírovaný</string>
   <string name="item_details_snackbar_message_card_number_copied">Číslo platobnej karty skopírované</string>
   <string name="item_details_snackbar_message_custom_field_copied">Vlastné pole skopírované</string>
-  <string name="item_details_snackbar_message_cvv_copied">Overovacie číslo skopírované</string>
+  <string name="item_details_snackbar_message_cvv_copied">Bezpečnostný kód (CVV) skopírovaný</string>
   <string name="item_details_snackbar_message_password_copied">Heslo skopírované</string>
   <string name="item_details_snackbar_message_pin_copied">PIN kód skopírovaný</string>
   <string name="item_details_snackbar_message_totp_copied">TOTP skopírované</string>

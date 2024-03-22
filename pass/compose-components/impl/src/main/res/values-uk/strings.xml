@@ -54,6 +54,7 @@
   <string name="bottom_bar_list_items_icon_content_description">Елементи списку</string>
   <string name="bottom_bar_add_item_icon_content_description">Додати елемент</string>
   <string name="bottom_bar_profile_icon_content_description">Профіль</string>
+  <string name="bottom_bar_security_center_icon_content_description">Центр безпеки</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">Сьогодні</string>
   <string name="most_recent_yesterday">Вчора</string>

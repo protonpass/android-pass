@@ -9,7 +9,7 @@
   <string name="migrate_item_success_snackbar">Elementi spostati</string>
   <string name="migrate_item_error_snackbar">Errore nello spostamento degli elementi</string>
   <string name="migrate_item_some_not_migrated_error_snackbar">Errore nello spostamento di alcuni elementi</string>
-  <string name="migrate_item_warning_history">Spostare un elemento ripristinerà la sua cronologia</string>
+  <string name="migrate_item_warning_history">Spostando gli elementi tra le casseforti, conserveremo fino alle ultime 50 modifiche apportate a ciascun elemento</string>
   <string name="migrate_all_items_success_snackbar">Elementi spostati</string>
   <string name="migrate_all_items_error_snackbar">Errore nello spostamento di tutti gli elementi della cassaforte</string>
   <string name="migrate_init_error_snackbar">Impossibile inizializzare la schermata di trasferimento</string>

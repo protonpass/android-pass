@@ -54,6 +54,7 @@
   <string name="bottom_bar_list_items_icon_content_description">Lista elementów</string>
   <string name="bottom_bar_add_item_icon_content_description">Dodaj element</string>
   <string name="bottom_bar_profile_icon_content_description">Profil</string>
+  <string name="bottom_bar_security_center_icon_content_description">Centrum zabezpieczeń</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">Dzisiaj</string>
   <string name="most_recent_yesterday">Wczoraj</string>

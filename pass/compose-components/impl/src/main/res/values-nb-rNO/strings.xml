@@ -52,6 +52,7 @@
   <string name="bottom_bar_list_items_icon_content_description">List elementer</string>
   <string name="bottom_bar_add_item_icon_content_description">Legg til element</string>
   <string name="bottom_bar_profile_icon_content_description">Profil</string>
+  <string name="bottom_bar_security_center_icon_content_description">Sikkerhetssenter</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">I dag</string>
   <string name="most_recent_yesterday">I går</string>

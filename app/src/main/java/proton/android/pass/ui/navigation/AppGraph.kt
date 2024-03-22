@@ -110,6 +110,7 @@ import proton.android.pass.features.item.history.navigation.itemHistoryNavGraph
 import proton.android.pass.features.item.history.restore.navigation.ItemHistoryRestoreNavItem
 import proton.android.pass.features.item.history.timeline.navigation.ItemHistoryTimelineNavItem
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavItem
+import proton.android.pass.features.security.center.reusepass.navigation.SecurityCenterReusedPassNavItem
 import proton.android.pass.features.security.center.shared.navigation.SecurityCenterNavDestination
 import proton.android.pass.features.security.center.shared.navigation.securityCenterNavGraph
 import proton.android.pass.features.security.center.weakpass.navigation.SecurityCenterWeakPassNavItem
@@ -1039,9 +1040,9 @@ fun NavGraphBuilder.appGraph(
                     destination = Profile
                 )
 
-                SecurityCenterNavDestination.ReusedPasswords -> {
-                    // This will be implemented in IDTEAM-2881
-                }
+                SecurityCenterNavDestination.ReusedPasswords -> appNavigator.navigate(
+                    destination = SecurityCenterReusedPassNavItem
+                )
 
                 SecurityCenterNavDestination.WeakPasswords -> appNavigator.navigate(
                     destination = SecurityCenterWeakPassNavItem

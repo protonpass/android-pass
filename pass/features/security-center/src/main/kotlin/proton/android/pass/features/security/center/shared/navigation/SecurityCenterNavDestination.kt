@@ -18,11 +18,16 @@
 
 package proton.android.pass.features.security.center.shared.navigation
 
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+
 sealed interface SecurityCenterNavDestination {
 
     data object Back : SecurityCenterNavDestination
 
     data object Home : SecurityCenterNavDestination
+
+    data class ItemDetails(val shareId: ShareId, val itemId: ItemId) : SecurityCenterNavDestination
 
     data object MainHome : SecurityCenterNavDestination
 

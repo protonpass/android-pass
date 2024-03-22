@@ -6,4 +6,5 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
 
     implementation(projects.pass.common.api)
+    implementation(projects.pass.domain)
 }

@@ -22,8 +22,10 @@ import androidx.credentials.GetPublicKeyCredentialOption
 import androidx.credentials.provider.BeginGetCredentialRequest
 import androidx.credentials.provider.BeginGetPublicKeyCredentialOption
 import androidx.credentials.provider.ProviderGetCredentialRequest
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonNames
 import proton.android.pass.data.api.usecases.passkeys.PasskeySelection
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.log.api.PassLogger
@@ -35,9 +37,11 @@ object SelectPasskeyUtils {
     private val jsonParser = Json { ignoreUnknownKeys = true }
 
     @Serializable
+    @OptIn(ExperimentalSerializationApi::class)
     private data class CredentialRequest(
         val rpId: String,
-        val allowCredentials: List<AllowedCredential>
+        @JsonNames("allowCredentials", "allowList")
+        val allowCredentials: List<AllowedCredential>? = null
     )
 
     @Serializable
@@ -93,8 +97,9 @@ object SelectPasskeyUtils {
 
         val parsed = parseRequest(json) ?: return PasskeySelection.All
         val allowed = parsed.allowCredentials
-            .filter { it.type == "public-key" }
-            .map { PasskeyId(it.id) }
+            ?.filter { it.type == "public-key" }
+            ?.map { PasskeyId(it.id) }
+            ?: emptyList()
 
         return if (allowed.isEmpty()) {
             PasskeySelection.All

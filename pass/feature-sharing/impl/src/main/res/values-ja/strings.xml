@@ -108,7 +108,7 @@
   <string name="sharing_from_item_vault_limit_reached">保管庫の制限に達しました</string>
   <string name="share_with_suggestions_title">Suggestions</string>
   <string name="share_with_recents_title">Recents</string>
-  <string name="share_with_remove_email_content_description">Remove email</string>
+  <string name="share_with_remove_email_content_description">メールを削除</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">すべてのメンバーのアクセス レベルを設定する</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">%s のアクセス レベルを設定します</string>
   <string name="sharing_edit_permissions_remove_user">ユーザーを削除する</string>

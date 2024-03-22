@@ -39,7 +39,7 @@
   <string name="share_with_title">Zdieľať s</string>
   <string name="share_with_email_hint">Emailová adresa</string>
   <string name="share_with_email_error">Neplatná emailová adresa</string>
-  <string name="share_with_email_cannot_invite_outside_org">You can\'t invite people outside of your organization, contact admin for more info</string>
+  <string name="share_with_email_cannot_invite_outside_org">Nemôžete pozvať ľudí mimo vašej organizácie, ďalšie informácie získate od správcu</string>
   <string name="share_permissions_title">Nastavte úroveň prístupu</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s vás pozýva na prístup k položkám v</string>
   <string name="sharing_join_shared_vault">Pripojiť a synchronizovať</string>
@@ -106,7 +106,7 @@
   <string name="sharing_snackbar_transfer_ownership_error">Chyba pri prevode vlastníctva</string>
   <string name="sharing_invites_info_dialog_title">Limit počtu členov</string>
   <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
-    <item quantity="one">This vault can have up to %1$d members. You still have %2$d invite left.</item>
+    <item quantity="one">Tento trezor môže mať až %1$d členov. Počet zostávajúcich pozvánok: %2$d.</item>
     <item quantity="few">Tento trezor môže mať až %1$d členov. Počet zostávajúcich pozvánok: %2$d.</item>
     <item quantity="many">Tento trezor môže mať až %1$d členov. Počet zostávajúcich pozvánok: %2$d.</item>
     <item quantity="other">Tento trezor môže mať až %1$d členov. Počet zostávajúcich pozvánok: %2$d.</item>

@@ -5,7 +5,7 @@
   <string name="sort_by_title_desc">Judul (Z-A)</string>
   <string name="sort_by_creation_asc">Terlama ke terbaru</string>
   <string name="sort_by_creation_desc">Terbaru ke terlama</string>
-  <string name="sort_by_modification_date">Baru saja digunakan</string>
+  <string name="sort_by_modification_date">Baru digunakan</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Semua</string>
   <string name="item_list_header_pinned_search_results">Disematkan</string>
@@ -37,13 +37,13 @@
   <string name="field_title_required">Judul diperlukan</string>
   <string name="small_cross_icon_content_description">Ikon silang kecil</string>
   <string name="field_note_title">Catatan</string>
-  <string name="field_note_hint">Tambahkan catatan</string>
-  <string name="linked_apps_title">Aplikasi yang tertaut</string>
+  <string name="field_note_hint">Tambah catatan</string>
+  <string name="linked_apps_title">Aplikasi yang ditautkan</string>
   <!-- Indicator that indicates lack of internet connectivity -->
-  <string name="indicator_no_network">Luring</string>
+  <string name="indicator_no_network">Offline</string>
   <!-- Icon content description -->
   <string name="missing_app_icon_content_description">Ikon aplikasi tidak ada</string>
-  <string name="add_item_icon_content_description">Tambahkan ikon item</string>
+  <string name="add_item_icon_content_description">Tambah ikon item</string>
   <string name="navigate_back_icon_content_description">Ikon navigasi kembali</string>
   <!-- Vault selector -->
   <string name="vault_selector_title">Brankas</string>
@@ -51,6 +51,7 @@
   <string name="bottom_bar_list_items_icon_content_description">Daftar item</string>
   <string name="bottom_bar_add_item_icon_content_description">Tambahkan item</string>
   <string name="bottom_bar_profile_icon_content_description">Profil</string>
+  <string name="bottom_bar_security_center_icon_content_description">Pusat keamanan</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">Hari ini</string>
   <string name="most_recent_yesterday">Kemarin</string>
@@ -100,7 +101,7 @@
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">Alamat alias</string>
   <string name="item_details_alias_section_mailboxes_title">Meneruskan ke</string>
-  <string name="item_details_credit_card_section_cardholder_title">Nama di kartu</string>
+  <string name="item_details_credit_card_section_cardholder_title">Nama pada kartu</string>
   <string name="item_details_credit_card_section_card_number_title">Nomor kartu</string>
   <string name="item_details_credit_card_section_expiration_date_title">Waktu kedaluwarsa</string>
   <string name="item_details_credit_card_section_cvv_title">Kode keamanan</string>

@@ -51,6 +51,7 @@
   <string name="bottom_bar_list_items_icon_content_description">Liệt kê nội dung</string>
   <string name="bottom_bar_add_item_icon_content_description">Thêm nội dung</string>
   <string name="bottom_bar_profile_icon_content_description">Hồ sơ</string>
+  <string name="bottom_bar_security_center_icon_content_description">Security center</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">Hôm nay</string>
   <string name="most_recent_yesterday">Hôm qua</string>

@@ -8,7 +8,7 @@
   <string name="migrate_item_success_snackbar">Item dipindahkan</string>
   <string name="migrate_item_error_snackbar">Terdapat kesalahan dalam memindahkan item</string>
   <string name="migrate_item_some_not_migrated_error_snackbar">Terdapat kesalahan dalam memindahkan sebagian item</string>
-  <string name="migrate_item_warning_history">Memindahkan item akan mengatur ulang riwayatnya</string>
+  <string name="migrate_item_warning_history">Pada saat memindahkan item antar brankas, kami akan menyimpan hingga 50 perubahan terakhir yang diberlakukan kepada masing-masing item</string>
   <string name="migrate_all_items_success_snackbar">Seluruh item dipindahkan</string>
   <string name="migrate_all_items_error_snackbar">Terdapat kesalahan dalam memindahkan seluruh item brankas</string>
   <string name="migrate_init_error_snackbar">Layar migrasi tidak dapat dipersiapkan</string>

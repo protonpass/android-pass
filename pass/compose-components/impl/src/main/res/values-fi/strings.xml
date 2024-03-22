@@ -52,6 +52,7 @@
   <string name="bottom_bar_list_items_icon_content_description">Listaa kohteet</string>
   <string name="bottom_bar_add_item_icon_content_description">Lisää kohde</string>
   <string name="bottom_bar_profile_icon_content_description">Profiili</string>
+  <string name="bottom_bar_security_center_icon_content_description">Turvakeskus</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">Tänään</string>
   <string name="most_recent_yesterday">Eilen</string>

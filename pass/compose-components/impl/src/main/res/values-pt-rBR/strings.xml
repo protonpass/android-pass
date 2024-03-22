@@ -52,6 +52,7 @@
   <string name="bottom_bar_list_items_icon_content_description">Itens da lista</string>
   <string name="bottom_bar_add_item_icon_content_description">Adicionar item</string>
   <string name="bottom_bar_profile_icon_content_description">Perfil</string>
+  <string name="bottom_bar_security_center_icon_content_description">Centro de segurança</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">Hoje</string>
   <string name="most_recent_yesterday">Ontem</string>

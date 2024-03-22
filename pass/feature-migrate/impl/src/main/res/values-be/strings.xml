@@ -11,7 +11,7 @@
   <string name="migrate_item_success_snackbar">Элементы перамешчаны</string>
   <string name="migrate_item_error_snackbar">Памылка перамяшчэння элементаў</string>
   <string name="migrate_item_some_not_migrated_error_snackbar">Памылка перамяшчэння некаторых элементаў</string>
-  <string name="migrate_item_warning_history">Перамяшчэнне элементаў скіне іх гісторыю</string>
+  <string name="migrate_item_warning_history">Калі элементы перамяшчаюцца паміж сховішчамі, то сістэма захавае да 50 змяненняў, якія выкананы для кожнага элемента</string>
   <string name="migrate_all_items_success_snackbar">Усе элементы перамешчаны</string>
   <string name="migrate_all_items_error_snackbar">Памылка падчас перамяшчэння ўсіх элементаў сховішча</string>
   <string name="migrate_init_error_snackbar">Немагчыма падрыхтаваць экран пераносу</string>

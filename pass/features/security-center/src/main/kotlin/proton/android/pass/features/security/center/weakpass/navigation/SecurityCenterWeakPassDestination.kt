@@ -18,8 +18,16 @@
 
 package proton.android.pass.features.security.center.weakpass.navigation
 
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+
 sealed interface SecurityCenterWeakPassDestination {
 
     data object Back : SecurityCenterWeakPassDestination
+
+    data class ItemDetails(
+        val shareId: ShareId,
+        val itemId: ItemId
+    ) : SecurityCenterWeakPassDestination
 
 }

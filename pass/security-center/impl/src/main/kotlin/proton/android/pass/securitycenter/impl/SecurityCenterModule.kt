@@ -25,9 +25,9 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.commonrust.TwofaDomainChecker
 import proton.android.pass.securitycenter.api.ObserveSecurityAnalysis
+import proton.android.pass.securitycenter.api.passwords.InsecurePasswordChecker
 import proton.android.pass.securitycenter.impl.checkers.BreachedDataChecker
 import proton.android.pass.securitycenter.impl.checkers.BreachedDataCheckerImpl
-import proton.android.pass.securitycenter.impl.checkers.InsecurePasswordChecker
 import proton.android.pass.securitycenter.impl.checkers.InsecurePasswordCheckerImpl
 import proton.android.pass.securitycenter.impl.checkers.Missing2faChecker
 import proton.android.pass.securitycenter.impl.checkers.Missing2faCheckerImpl
@@ -39,7 +39,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class SecurityCenterBindModule {
+internal abstract class SecurityCenterBindModule {
 
     @Binds
     abstract fun bindObserveSecurityAnalysis(impl: ObserveSecurityAnalysisImpl): ObserveSecurityAnalysis
@@ -58,13 +58,15 @@ abstract class SecurityCenterBindModule {
 
     @Binds
     abstract fun bindSupports2fa(impl: Supports2faImpl): Supports2fa
+
 }
 
 @Module
 @InstallIn(SingletonComponent::class)
-object SecurityCenterProvideModule {
+internal object SecurityCenterProvideModule {
 
     @Provides
     @Singleton
     fun provideMissing2Fa(): TwofaDomainChecker = TwofaDomainChecker()
+
 }

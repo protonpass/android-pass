@@ -17,13 +17,13 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="item_details_snackbar_message_alias_copied">Alias copied</string>
+  <string name="item_details_snackbar_message_alias_copied">エイリアスがコピーされました</string>
   <string name="item_details_snackbar_message_card_number_copied">カード番号をコピーしました</string>
   <string name="item_details_snackbar_message_custom_field_copied">Custom field copied</string>
   <string name="item_details_snackbar_message_cvv_copied">認証番号をコピーしました</string>
   <string name="item_details_snackbar_message_password_copied">パスワードをコピーしました</string>
-  <string name="item_details_snackbar_message_pin_copied">PIN code copied</string>
-  <string name="item_details_snackbar_message_totp_copied">TOTP copied</string>
+  <string name="item_details_snackbar_message_pin_copied">PIN コードがコピーされました</string>
+  <string name="item_details_snackbar_message_totp_copied">TOTP がコピーされました</string>
   <string name="item_details_snackbar_message_username_copied">ユーザー名をコピーしました</string>
-  <string name="item_details_snackbar_message_website_copied">Website URL copied</string>
+  <string name="item_details_snackbar_message_website_copied">ウェブサイト URL がコピーされました</string>
 </resources>

@@ -113,5 +113,5 @@
   <string name="create_alias_content_limit_banner">Você atingiu o limite de aliases que pode criar. Crie um número ilimitado de aliases quando fizer o upgrade de sua assinatura.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">O aplicativo precisa ser atualizado para editar esse item</string>
   <string name="remove_passkey_dialog_title">Remover essa chave de acesso?</string>
-  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Você está prestes a remover a passkey para o usuário \'%1$s\' em \'%2$s\'. Tem Certeza?</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Você está prestes a remover a chave de acesso para o usuário \'%1$s\' em \'%2$s\'. Tem certeza?</string>
 </resources>

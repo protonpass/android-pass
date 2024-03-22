@@ -9,7 +9,7 @@
   <string name="migrate_item_success_snackbar">Objekt flyttades</string>
   <string name="migrate_item_error_snackbar">Gick inte flytta objektet</string>
   <string name="migrate_item_some_not_migrated_error_snackbar">Gick inte flytta några av objekten</string>
-  <string name="migrate_item_warning_history">Att flytta objekt kommer återställa dess historik</string>
+  <string name="migrate_item_warning_history">Vid flyttning av objekt mellan valv kommer vi att bevara upp till de senaste 50 ändringarna som gjorts av varje objekt</string>
   <string name="migrate_all_items_success_snackbar">Alla alias flyttade</string>
   <string name="migrate_all_items_error_snackbar">Gick inte flytta alla valvobjekt</string>
   <string name="migrate_init_error_snackbar">Kunde inte förbereda migreringsskärmen</string>

@@ -5,7 +5,7 @@
   <string name="sort_by_title_desc">標題 (Z 到 A)</string>
   <string name="sort_by_creation_asc">從最舊到最新</string>
   <string name="sort_by_creation_desc">從最新到最舊</string>
-  <string name="sort_by_modification_date">Recently used</string>
+  <string name="sort_by_modification_date">最近使用</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">全部</string>
   <string name="item_list_header_pinned_search_results">已釘選</string>
@@ -22,7 +22,7 @@
   <string name="bottomsheet_move_to_trash">移至垃圾桶</string>
   <string name="bottomsheet_pin_item">釘選</string>
   <string name="bottomsheet_unpin_item">取消釘選</string>
-  <string name="bottomsheet_view_item_history">View history</string>
+  <string name="bottomsheet_view_item_history">查看歷史</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">開啟項目行為清單</string>
   <string name="action_upgrade_now">立即升級</string>
@@ -51,16 +51,17 @@
   <string name="bottom_bar_list_items_icon_content_description">列出項目</string>
   <string name="bottom_bar_add_item_icon_content_description">新增項目</string>
   <string name="bottom_bar_profile_icon_content_description">個人資料</string>
+  <string name="bottom_bar_security_center_icon_content_description">安全中心</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">今日</string>
   <string name="most_recent_yesterday">昨天</string>
   <string name="most_recent_this_week">本週</string>
   <string name="most_recent_last_two_weeks">前兩週</string>
-  <string name="most_recent_last_30_days">Last month</string>
+  <string name="most_recent_last_30_days">上個月</string>
   <string name="most_recent_last_60_days">過去 60 天</string>
   <string name="most_recent_last_90_days">過去 90 天</string>
   <string name="most_recent_within_the_last_year">上一年</string>
-  <string name="most_recent_more_than_1_year">Older than 1 year</string>
+  <string name="most_recent_more_than_1_year">超過1年</string>
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">搜尋圖示</string>
   <!-- Select Vault BottomSheet -->
@@ -98,24 +99,24 @@
     -->
   <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
   <!-- Items -->
-  <string name="item_details_alias_section_alias_title">Alias address</string>
-  <string name="item_details_alias_section_mailboxes_title">Forwarding to</string>
-  <string name="item_details_credit_card_section_cardholder_title">Name on card</string>
-  <string name="item_details_credit_card_section_card_number_title">Card number</string>
+  <string name="item_details_alias_section_alias_title">別名地址</string>
+  <string name="item_details_alias_section_mailboxes_title">轉寄至</string>
+  <string name="item_details_credit_card_section_cardholder_title">持卡人姓名</string>
+  <string name="item_details_credit_card_section_card_number_title">信用卡號</string>
   <string name="item_details_credit_card_section_expiration_date_title">到期日</string>
-  <string name="item_details_credit_card_section_cvv_title">Security code</string>
-  <string name="item_details_credit_card_section_pin_title">PIN code</string>
+  <string name="item_details_credit_card_section_cvv_title">安全碼</string>
+  <string name="item_details_credit_card_section_pin_title">PIN 碼</string>
   <string name="item_details_login_section_username_title">使用者名稱或電子郵件位址</string>
-  <string name="item_details_login_section_password_title">Password</string>
+  <string name="item_details_login_section_password_title">密碼</string>
   <string name="item_details_login_section_primary_totp_title">雙重驗證憑證(TOTP)</string>
-  <string name="item_details_login_section_websites_title">Websites</string>
-  <string name="item_details_shared_section_note_title">Note</string>
+  <string name="item_details_login_section_websites_title">網站</string>
+  <string name="item_details_shared_section_note_title">備注</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">The app version is not supported anymore, please update your app.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Passkey</string>
   <!-- Upgrade -->
-  <string name="dialog_upgrade_plan_title">Upgrade plan?</string>
+  <string name="dialog_upgrade_plan_title">升級方案?</string>
   <string name="dialog_upgrade_plan_message">This feature is not available for free tier users. If you want to enjoy this along with other cool features, upgrade your plan and give it a try!</string>
-  <string name="dialog_upgrade_plan_action_confirm">Upgrade</string>
-  <string name="dialog_upgrade_plan_action_cancel">Not now</string>
+  <string name="dialog_upgrade_plan_action_confirm">升級</string>
+  <string name="dialog_upgrade_plan_action_cancel">現在不要</string>
 </resources>

@@ -52,6 +52,7 @@
   <string name="bottom_bar_list_items_icon_content_description">Llista d\'elements</string>
   <string name="bottom_bar_add_item_icon_content_description">Afegeix un element</string>
   <string name="bottom_bar_profile_icon_content_description">Perfil</string>
+  <string name="bottom_bar_security_center_icon_content_description">Centre de seguretat</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">Avui</string>
   <string name="most_recent_yesterday">Ahir</string>

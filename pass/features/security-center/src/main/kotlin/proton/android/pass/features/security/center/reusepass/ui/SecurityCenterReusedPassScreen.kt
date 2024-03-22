@@ -19,7 +19,9 @@
 package proton.android.pass.features.security.center.reusepass.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.security.center.reusepass.navigation.SecurityCenterReusedPassDestination
 import proton.android.pass.features.security.center.reusepass.presentation.SecurityCenterReusedPassViewModel
 
@@ -28,10 +30,10 @@ fun SecurityCenterReusedPassScreen(
     onNavigated: (SecurityCenterReusedPassDestination) -> Unit,
     viewModel: SecurityCenterReusedPassViewModel = hiltViewModel()
 ) = with(viewModel) {
-//    val state by state.collectAsStateWithLifecycle()
+    val state by state.collectAsStateWithLifecycle()
 
     SecurityCenterReusedPassContent(
         onNavigated = onNavigated,
-//        state = state
+        state = state
     )
 }

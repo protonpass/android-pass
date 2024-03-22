@@ -30,4 +30,8 @@
     <!-- Weak passwords screen -->
     <string name="security_center_weak_pass_top_bar_title">Weak passwords</string>
     <string name="security_center_weak_pass_top_bar_subtitle">Weak passwords are easier to guess. Generate strong passwords to keep your account safe.</string>
+
+    <!-- Reused passwords screen -->
+    <string name="security_center_reused_pass_top_bar_title">Reused passwords</string>
+    <string name="security_center_reused_pass_top_bar_subtitle">Generate unique passwords to increase your security.</string>
 </resources>

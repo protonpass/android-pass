@@ -25,10 +25,12 @@ import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareSelection
 
 interface ObserveItems {
+
     operator fun invoke(
-        userId: UserId? = null,
         selection: ShareSelection,
         itemState: ItemState?,
-        filter: ItemTypeFilter
+        filter: ItemTypeFilter,
+        userId: UserId? = null
     ): Flow<List<Item>>
+
 }

@@ -29,23 +29,15 @@ import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemType
+import proton.android.pass.securitycenter.api.passwords.InsecurePasswordChecker
+import proton.android.pass.securitycenter.api.passwords.InsecurePasswordsReport
 import javax.inject.Inject
-
-data class InsecurePasswordsReport(
-    val weakPasswordItems: List<Item>,
-    val vulnerablePasswordItems: List<Item>
-) {
-    val insecurePasswordsCount: Int = weakPasswordItems.size + vulnerablePasswordItems.size
-}
-
-interface InsecurePasswordChecker {
-    suspend operator fun invoke(items: List<Item>): InsecurePasswordsReport
-}
 
 class InsecurePasswordCheckerImpl @Inject constructor(
     private val passwordScorer: PasswordScorer,
     private val encryptionContextProvider: EncryptionContextProvider
 ) : InsecurePasswordChecker {
+
     override suspend fun invoke(items: List<Item>): InsecurePasswordsReport {
         val weakItems = mutableListOf<Item>()
         val vulnerableItems = mutableListOf<Item>()

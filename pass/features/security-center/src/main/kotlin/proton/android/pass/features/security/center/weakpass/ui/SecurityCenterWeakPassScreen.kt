@@ -19,13 +19,21 @@
 package proton.android.pass.features.security.center.weakpass.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.security.center.weakpass.navigation.SecurityCenterWeakPassDestination
+import proton.android.pass.features.security.center.weakpass.presentation.SecurityCenterWeakPassViewModel
 
 @Composable
 fun SecurityCenterWeakPassScreen(
-    onNavigated: (SecurityCenterWeakPassDestination) -> Unit
-) {
+    onNavigated: (SecurityCenterWeakPassDestination) -> Unit,
+    viewModel: SecurityCenterWeakPassViewModel = hiltViewModel()
+) = with(viewModel) {
+    val state by state.collectAsStateWithLifecycle()
+
     SecurityCenterWeakPassContent(
-        onNavigated = onNavigated
+        onNavigated = onNavigated,
+        state = state
     )
 }

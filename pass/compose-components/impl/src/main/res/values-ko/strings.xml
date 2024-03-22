@@ -51,6 +51,7 @@
   <string name="bottom_bar_list_items_icon_content_description">항목 목록</string>
   <string name="bottom_bar_add_item_icon_content_description">항목 추가</string>
   <string name="bottom_bar_profile_icon_content_description">프로필</string>
+  <string name="bottom_bar_security_center_icon_content_description">보안 센터</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">오늘</string>
   <string name="most_recent_yesterday">어제</string>

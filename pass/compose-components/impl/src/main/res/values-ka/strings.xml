@@ -52,6 +52,7 @@
   <string name="bottom_bar_list_items_icon_content_description">ელემენტების სია</string>
   <string name="bottom_bar_add_item_icon_content_description">ელემენტის დამატება</string>
   <string name="bottom_bar_profile_icon_content_description">პროფილი</string>
+  <string name="bottom_bar_security_center_icon_content_description">უსაფრთხოების ცენტრი</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">დღეს</string>
   <string name="most_recent_yesterday">გუშინ</string>

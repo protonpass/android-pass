@@ -8,7 +8,7 @@
   <string name="migrate_item_success_snackbar">項目已移動</string>
   <string name="migrate_item_error_snackbar">移動項目時發生錯誤</string>
   <string name="migrate_item_some_not_migrated_error_snackbar">移動部分項目錯誤</string>
-  <string name="migrate_item_warning_history">Moving items will reset their history</string>
+  <string name="migrate_item_warning_history">When moving items between vaults we will preserve up to the last 50 modifications performed to each item</string>
   <string name="migrate_all_items_success_snackbar">已移動所有項目</string>
   <string name="migrate_all_items_error_snackbar">移動所有保險庫項目時發生錯誤</string>
   <string name="migrate_init_error_snackbar">無法準備遷移畫面</string>

@@ -8,7 +8,7 @@
   <string name="migrate_item_success_snackbar">Đã di chuyển nội dung</string>
   <string name="migrate_item_error_snackbar">Lỗi khi di chuyển nội dung</string>
   <string name="migrate_item_some_not_migrated_error_snackbar">Lỗi khi di chuyển một số nội dung</string>
-  <string name="migrate_item_warning_history">Moving items will reset their history</string>
+  <string name="migrate_item_warning_history">When moving items between vaults we will preserve up to the last 50 modifications performed to each item</string>
   <string name="migrate_all_items_success_snackbar">Đã chuyển tất cả nội dung</string>
   <string name="migrate_all_items_error_snackbar">Lỗi khi chuyển tất cả nội dung trong kho lưu trữ</string>
   <string name="migrate_init_error_snackbar">Không thể chuẩn bị màn hình chuyển</string>

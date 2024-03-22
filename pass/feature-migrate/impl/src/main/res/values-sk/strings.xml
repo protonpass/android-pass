@@ -11,7 +11,7 @@
   <string name="migrate_item_success_snackbar">Položky boli presunuté</string>
   <string name="migrate_item_error_snackbar">Chyba pri presúvaní položiek</string>
   <string name="migrate_item_some_not_migrated_error_snackbar">Chyba pri presúvaní niektorých položiek</string>
-  <string name="migrate_item_warning_history">Presunutím položiek sa vynuluje ich história</string>
+  <string name="migrate_item_warning_history">Pri presúvaní položiek medzi trezormi zachováme až 50 posledných úprav vykonaných na každej položke</string>
   <string name="migrate_all_items_success_snackbar">Všetky položky presunuté</string>
   <string name="migrate_all_items_error_snackbar">Chyba pri presúvaní všetkých položiek</string>
   <string name="migrate_init_error_snackbar">Nepodarilo sa pripraviť obrazovku migrácie</string>

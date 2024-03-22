@@ -58,7 +58,7 @@ internal fun SecurityCenterHomeContent(
                         top = 12.dp,
                         end = Spacing.medium
                     ),
-                title = stringResource(R.string.security_center_home_top_bar_title),
+                title = stringResource(R.string.security_center_home_top_bar_title)
             )
         },
         bottomBar = {

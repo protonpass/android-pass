@@ -18,10 +18,12 @@
 
 package proton.android.pass.features.security.center.reusepass.ui
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -29,15 +31,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.reusepass.navigation.SecurityCenterReusedPassDestination
+import proton.android.pass.features.security.center.reusepass.presentation.SecurityCenterReusedPassState
 import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBar
+import proton.android.pass.features.security.center.weakpass.ui.SecurityCenterWeakPassRow
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun SecurityCenterReusedPassContent(
     modifier: Modifier = Modifier,
     onNavigated: (SecurityCenterReusedPassDestination) -> Unit,
-) {
+    state: SecurityCenterReusedPassState
+) = with(state) {
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -61,7 +68,32 @@ internal fun SecurityCenterReusedPassContent(
                 .padding(top = Spacing.large),
             verticalArrangement = Arrangement.spacedBy(Spacing.small)
         ) {
+            reusedPassGroups.forEach { reusedPassGroup ->
+                stickyHeader {
+                    SectionTitle(
+                        text = stringResource(
+                            id = R.string.security_center_reused_pass_list_sticky_header_label,
+                            reusedPassGroup.reusedPasswordsCount
+                        )
+                    )
+                }
 
+                items(
+                    items = reusedPassGroup.itemUiModels,
+                    key = { itemUiModel -> itemUiModel.id.id }
+                ) { itemUiModel ->
+                    SecurityCenterWeakPassRow(
+                        itemUiModel = itemUiModel,
+                        canLoadExternalImages = canLoadExternalImages,
+                        onClick = {
+                            SecurityCenterReusedPassDestination.ItemDetails(
+                                shareId = itemUiModel.shareId,
+                                itemId = itemUiModel.id
+                            ).also(onNavigated)
+                        }
+                    )
+                }
+            }
         }
     }
 }

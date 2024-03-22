@@ -22,23 +22,15 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemType
+import proton.android.pass.securitycenter.api.passwords.RepeatedPasswordChecker
+import proton.android.pass.securitycenter.api.passwords.RepeatedPasswordsReport
 import javax.inject.Inject
-
-data class RepeatedPasswordsData(
-    val repeatedPasswords: Map<EncryptedString, List<Item>>
-) {
-    val repeatedPasswordsCount: Int = repeatedPasswords.size
-}
-
-interface RepeatedPasswordChecker {
-    operator fun invoke(items: List<Item>): RepeatedPasswordsData
-}
 
 class RepeatedPasswordCheckerImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : RepeatedPasswordChecker {
 
-    override fun invoke(items: List<Item>): RepeatedPasswordsData = encryptionContextProvider.withEncryptionContext {
+    override fun invoke(items: List<Item>): RepeatedPasswordsReport = encryptionContextProvider.withEncryptionContext {
         val nonEmptyPasswords: MutableMap<String, List<Item>> = mutableMapOf()
 
         items.forEach { item ->
@@ -64,7 +56,7 @@ class RepeatedPasswordCheckerImpl @Inject constructor(
         nonEmptyPasswords
             .filter { (_, items) -> items.size > 1 }
             .mapKeys { (password, _) -> encrypt(password) }
-            .let(::RepeatedPasswordsData)
+            .let(::RepeatedPasswordsReport)
     }
 
     @JvmInline

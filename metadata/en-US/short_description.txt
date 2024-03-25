@@ -1,0 +1,1 @@
+Get the password manager created by the scientists who met at CERN behind Proton Mail, the world’s largest encrypted email provider. Proton Pass is open source, end-to-end encrypted, and protected by Swiss privacy laws.

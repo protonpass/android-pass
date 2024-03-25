@@ -42,7 +42,7 @@ fun ItemUiModel.toAutoFillItem(): AutofillItem = when (val content = contents) {
         cvv = content.cvv.encrypted
     )
 
-    else -> throw IllegalStateException("Unsupported item type: ${this::class.java}")
+    else -> throw IllegalStateException("Unsupported item type: ${this::javaClass.name}")
 }
 
 data class CreatedAlias(

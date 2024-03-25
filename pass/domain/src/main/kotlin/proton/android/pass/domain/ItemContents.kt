@@ -65,13 +65,7 @@ enum class CreditCardType {
 
 @Serializable
 @JvmInline
-value class PasskeyId(val value: String) {
-    fun display(): String = value.take(DISPLAY_LENGTH)
-
-    companion object {
-        private const val DISPLAY_LENGTH = 6
-    }
-}
+value class PasskeyId(val value: String)
 
 @Serializable
 data class Passkey(

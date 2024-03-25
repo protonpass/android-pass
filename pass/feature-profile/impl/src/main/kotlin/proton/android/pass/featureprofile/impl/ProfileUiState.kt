@@ -23,13 +23,22 @@ import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.composecomponents.impl.bottombar.AccountType
 import proton.android.pass.data.api.usecases.DefaultBrowser
+import proton.android.pass.passkeys.api.PasskeySupport
 import proton.android.pass.preferences.AppLockTimePreference
 import proton.android.pass.preferences.BiometricSystemLockPreference
 
+@Stable
+sealed interface ProfilePasskeySupportSection {
+    data object Hide : ProfilePasskeySupportSection
+
+    @JvmInline
+    value class Show(val support: PasskeySupport) : ProfilePasskeySupportSection
+}
+
 sealed interface ProfileEvent {
-    object Unknown : ProfileEvent
-    object OpenFeatureFlags : ProfileEvent
-    object ConfigurePin : ProfileEvent
+    data object Unknown : ProfileEvent
+    data object OpenFeatureFlags : ProfileEvent
+    data object ConfigurePin : ProfileEvent
 }
 
 @Stable
@@ -41,7 +50,8 @@ data class ProfileUiState(
     val accountType: PlanInfo,
     val event: ProfileEvent,
     val showUpgradeButton: Boolean,
-    val userBrowser: DefaultBrowser
+    val userBrowser: DefaultBrowser,
+    val passkeySupport: ProfilePasskeySupportSection
 ) {
     companion object {
         fun getInitialState(appVersion: String, appLockSectionState: AppLockSectionState) = ProfileUiState(
@@ -52,7 +62,8 @@ data class ProfileUiState(
             accountType = PlanInfo.Hide,
             event = ProfileEvent.Unknown,
             showUpgradeButton = false,
-            userBrowser = DefaultBrowser.Other
+            userBrowser = DefaultBrowser.Other,
+            passkeySupport = ProfilePasskeySupportSection.Hide
         )
     }
 }
@@ -63,12 +74,12 @@ sealed interface PlanInfo {
     val accountType: AccountType
 
     @Stable
-    object Hide : PlanInfo {
+    data object Hide : PlanInfo {
         override val accountType = AccountType.Free
     }
 
     @Stable
-    object Trial : PlanInfo {
+    data object Trial : PlanInfo {
         override val accountType = AccountType.Trial
     }
 
@@ -91,7 +102,7 @@ sealed interface AppLockSectionState {
         val appLockTimePreference: AppLockTimePreference
     ) : AppLockSectionState
 
-    object None : AppLockSectionState
+    data object None : AppLockSectionState
 }
 
 data class ItemSummaryUiState(

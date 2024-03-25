@@ -28,12 +28,14 @@ object ItemDisplayBuilder {
 
     private const val TAG = "ItemDisplayBuilder"
 
+    private const val SUBTITLE_ON_ERROR = "---"
+
     fun createTitle(item: Item, encryptionContext: EncryptionContext): String = when (item.itemType) {
         is ItemType.CreditCard -> item.itemName(encryptionContext)
         is ItemType.Login -> item.itemName(encryptionContext)
         else -> {
-            PassLogger.w(TAG, "Unsupported item type: ${item.itemType::class.java}")
-            throw IllegalStateException("Unsupported item type: ${item.itemType::javaClass}")
+            PassLogger.e(TAG, "Unsupported item type for title: ${item.itemType.javaClass.name}")
+            encryptionContext.decrypt(item.title)
         }
     }
 
@@ -41,8 +43,8 @@ object ItemDisplayBuilder {
         is ItemType.CreditCard -> createCreditCardSubtitle(encryptionContext, itemType)
         is ItemType.Login -> itemType.username.takeIf { it.isNotBlank() } ?: "---"
         else -> {
-            PassLogger.w(TAG, "Unsupported item type: ${item.itemType::class.java}")
-            throw IllegalStateException("Unsupported item type: ${item.itemType::javaClass}")
+            PassLogger.e(TAG, "Unsupported item type for subtitle: ${item.itemType.javaClass.name}")
+            SUBTITLE_ON_ERROR
         }
     }
 

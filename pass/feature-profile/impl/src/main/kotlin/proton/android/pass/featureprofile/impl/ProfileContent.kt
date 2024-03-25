@@ -115,6 +115,13 @@ fun ProfileContent(
                         onClick = { onEvent(ProfileUiEvent.OnAutofillClicked(it)) }
                     )
                 }
+
+                if (state.passkeySupport is ProfilePasskeySupportSection.Show) {
+                    PasskeyProfileSection(
+                        support = state.passkeySupport
+                    )
+                }
+
                 AccountProfileSection(
                     planInfo = state.accountType,
                     onAccountClick = { onEvent(ProfileUiEvent.OnAccountClick) },

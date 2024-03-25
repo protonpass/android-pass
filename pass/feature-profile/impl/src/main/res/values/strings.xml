@@ -56,4 +56,10 @@
         comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser"
     >Samsung Browser is set as the default browser. It does not support autofill by external password managers.</string>
 
+    <string name="profile_passkey_support_section_title">Passkeys</string>
+    <string name="profile_passkey_support_subtitle_supported">Passkeys are supported</string>
+    <string name="profile_passkey_support_subtitle_not_supported_android_version">Your android version does not support passkeys</string>
+    <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Your device does not support passkeys</string>
+    <string name="profile_passkey_support_subtitle_not_supported_unknown">Could not check support for passkeys</string>
+
 </resources>

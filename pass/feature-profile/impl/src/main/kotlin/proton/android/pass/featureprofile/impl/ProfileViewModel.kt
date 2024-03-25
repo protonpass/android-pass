@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -35,6 +36,7 @@ import kotlinx.coroutines.runBlocking
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor
 import proton.android.pass.autofill.api.AutofillManager
+import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
@@ -51,6 +53,7 @@ import proton.android.pass.domain.PlanType
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.AppVersionCopied
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.passkeys.api.CheckPasskeySupport
 import proton.android.pass.preferences.AppLockTypePreference
 import proton.android.pass.preferences.BiometricSystemLockPreference
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -63,6 +66,7 @@ class ProfileViewModel @Inject constructor(
     private val clipboardManager: ClipboardManager,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val appConfig: AppConfig,
+    private val checkPasskeySupport: CheckPasskeySupport,
     observeItemCount: ObserveItemCount,
     observeMFACount: ObserveMFACount,
     observeUpgradeInfo: ObserveUpgradeInfo,
@@ -83,7 +87,7 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    private val autofillStatusFlow = autofillManager
+    private val autofillStatusFlow: Flow<AutofillSupportedStatus> = autofillManager
         .getAutofillStatus()
         .distinctUntilChanged()
 
@@ -119,14 +123,24 @@ class ProfileViewModel @Inject constructor(
         )
     }
 
+    private val passkeySupportFlow: Flow<ProfilePasskeySupportSection> =
+        oneShot<ProfilePasskeySupportSection> {
+            val support = checkPasskeySupport()
+            ProfilePasskeySupportSection.Show(support)
+        }.onStart {
+            emit(ProfilePasskeySupportSection.Hide)
+        }.distinctUntilChanged()
+
     val state: StateFlow<ProfileUiState> = combineN(
         appLockSectionState,
         autofillStatusFlow,
         itemSummaryUiStateFlow,
         upgradeInfoFlow,
         eventFlow,
-        oneShot { getDefaultBrowser() }.asLoadingResult()
-    ) { appLockSectionState, autofillStatus, itemSummaryUiState, upgradeInfo, event, browser ->
+        oneShot { getDefaultBrowser() }.asLoadingResult(),
+        passkeySupportFlow
+    ) { appLockSectionState, autofillStatus, itemSummaryUiState, upgradeInfo, event, browser,
+        passkey ->
         val (accountType, showUpgradeButton) = when (upgradeInfo) {
             LoadingResult.Loading -> PlanInfo.Hide to false
             is LoadingResult.Error -> {
@@ -159,7 +173,8 @@ class ProfileViewModel @Inject constructor(
             accountType = accountType,
             event = event,
             showUpgradeButton = showUpgradeButton,
-            userBrowser = defaultBrowser
+            userBrowser = defaultBrowser,
+            passkeySupport = passkey
         )
     }.stateIn(
         scope = viewModelScope,

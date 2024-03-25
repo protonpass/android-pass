@@ -24,6 +24,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.passkeys.api.AuthenticateWithPasskey
+import proton.android.pass.passkeys.api.CheckPasskeySupport
 import proton.android.pass.passkeys.api.GeneratePasskey
 import proton.android.pass.passkeys.api.ParseCreatePasskeyRequest
 import javax.inject.Singleton
@@ -40,6 +41,9 @@ abstract class PasskeyBindsModule {
 
     @Binds
     abstract fun bindParseCreatePasskeyRequest(impl: ParseCreatePasskeyRequestImpl): ParseCreatePasskeyRequest
+
+    @Binds
+    abstract fun bindCheckPasskeySupport(impl: CheckPasskeySupportImpl): CheckPasskeySupport
 }
 
 @[Module InstallIn(SingletonComponent::class)]

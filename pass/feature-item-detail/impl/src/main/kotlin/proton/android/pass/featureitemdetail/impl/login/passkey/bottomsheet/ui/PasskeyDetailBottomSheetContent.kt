@@ -88,7 +88,7 @@ internal fun PasskeyDetailBottomSheetContent(
             PassDivider()
             PasskeyDetailRow(
                 title = stringResource(R.string.passkey_detail_bottomsheet_key),
-                subtitle = passkey.id.display(),
+                subtitle = passkey.id.value,
                 icon = CoreR.drawable.ic_proton_key
             )
             PassDivider()

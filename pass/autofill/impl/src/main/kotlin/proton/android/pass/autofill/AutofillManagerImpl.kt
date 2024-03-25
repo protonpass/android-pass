@@ -56,8 +56,16 @@ class AutofillManagerImpl @Inject constructor(
 
     override fun getAutofillStatus(): Flow<AutofillSupportedStatus> = flow {
         when {
-            autofillManager == null -> emit(Unsupported)
-            !autofillManager.isAutofillSupported -> emit(Unsupported)
+            autofillManager == null -> {
+                PassLogger.d(TAG, "AutofillManager is null")
+                emit(Unsupported)
+            }
+
+            !autofillManager.isAutofillSupported -> {
+                PassLogger.d(TAG, "Autofill is not supported")
+                emit(Unsupported)
+            }
+
             else -> while (currentCoroutineContext().isActive) {
                 runCatching {
                     withTimeout(UPDATE_TIME.inWholeMilliseconds) {

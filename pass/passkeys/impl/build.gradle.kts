@@ -42,6 +42,7 @@ dependencies {
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
 
+    implementation(projects.pass.appConfig.api)
     implementation(projects.pass.domain)
     implementation(projects.pass.log.api)
 }

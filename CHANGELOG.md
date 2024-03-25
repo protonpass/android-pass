@@ -6,6 +6,22 @@
 
 ### Other
 
+## 1.20.1 (2024-03-25)
+
+### Features :tada:
+
+- Improve passkey compatibility.
+- Add passkey support indicator.
+
+### Fixes :bug:
+
+- Show full passkey key id in the details screen.
+
+### Other
+
+- Updated translations.
+- Updated dependencies.
+
 ## 1.20.0 (2024-03-21)
 
 ### Features :tada:

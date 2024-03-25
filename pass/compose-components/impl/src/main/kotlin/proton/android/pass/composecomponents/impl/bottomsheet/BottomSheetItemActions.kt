@@ -22,6 +22,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -30,14 +31,19 @@ import proton.android.pass.composecomponents.impl.R
 import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
 
+@Stable
 sealed interface BottomSheetItemAction {
 
+    @Stable
     data object None : BottomSheetItemAction
 
+    @Stable
     data object Pin : BottomSheetItemAction
 
+    @Stable
     data object Unpin : BottomSheetItemAction
 
+    @Stable
     data object History : BottomSheetItemAction
 
 }

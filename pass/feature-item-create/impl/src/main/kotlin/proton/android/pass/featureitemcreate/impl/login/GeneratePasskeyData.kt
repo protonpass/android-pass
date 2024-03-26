@@ -30,21 +30,27 @@ data class GeneratePasskeyData(
     val request: String
 )
 
+@Suppress("SENSELESS_COMPARISON") // for null check
 val GeneratePasskeyDataStateSaver: Saver<Option<GeneratePasskeyData>, Any> = run {
     val origin = "origin"
     val request = "request"
     mapSaver(
-        save = {
-            when (it) {
-                is Some -> mapOf(
-                    origin to it.value.origin,
-                    request to it.value.request
-                )
-                else -> emptyMap()
+        save = { value ->
+            if (value == null) {
+                emptyMap()
+            } else {
+                when (value) {
+                    is Some -> mapOf(
+                        origin to value.value.origin,
+                        request to value.value.request
+                    )
+                    else -> emptyMap()
+                }
             }
         },
         restore = { values ->
             when {
+                values == null -> None
                 values.isEmpty() -> None
                 values[origin] == null -> None
                 values[request] == null -> None

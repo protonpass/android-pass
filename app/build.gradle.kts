@@ -455,23 +455,7 @@ dependencies {
 fun String?.toBuildConfigValue() = if (this != null) "\"$this\"" else "null"
 
 sentry {
-
-    fun generateIgnoredFlavours(prefix: String): List<String> {
-        val buildMode = listOf("Debug", "Release")
-        val environment = listOf("Black", "Prod")
-
-        val ignoredFlavors = mutableListOf<String>()
-        for (mode in buildMode) {
-            for (env in environment) {
-                ignoredFlavors.add("$prefix$env$mode")
-            }
-        }
-
-        return ignoredFlavors
-    }
-
     autoInstallation.enabled.set(false)
-    
-    // Disable sentry for fdroid builds
-    ignoredFlavors = generateIgnoredFlavours("fdroid")
+    ignoredBuildTypes = listOf("debug")
+    ignoredFlavors = listOf("fdroid")
 }

@@ -47,6 +47,7 @@ import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.some
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.featurepasskeys.R
+import proton.android.pass.featurepasskeys.select.SelectPasskeyUtils
 import proton.android.pass.featurepasskeys.telemetry.CreateDone
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
@@ -99,6 +100,8 @@ class CreatePasskeyActivityViewModel @Inject constructor(
 
     private val requestDataFlow: Flow<Option<CreatePasskeyRequestData>> = requestFlow.map {
         it.map { request ->
+            logRequest(request)
+
             val parsed = parseCreatePasskeyRequest(request.callingRequest.requestJson)
             val requestOrigin = request.callingRequest.origin ?: parsed.rpId ?: ""
             val domain = UrlSanitizer.getDomain(requestOrigin).getOrElse { parsed.rpId } ?: ""
@@ -171,6 +174,19 @@ class CreatePasskeyActivityViewModel @Inject constructor(
 
     fun onResponseSent() = viewModelScope.launch {
         telemetryManager.sendEvent(CreateDone)
+    }
+
+    private fun logRequest(request: CreatePasskeyRequest) {
+        val appInfoOrigin = request.callingAppInfo.origin
+        val appPackageName = request.callingAppInfo.packageName
+        val requestOrigin = request.callingRequest.origin
+        val rpInfo = SelectPasskeyUtils.getRpInfoFromCreateRequest(request.callingRequest)
+
+        PassLogger.i(
+            TAG,
+            "Create passkey request [appInfoOrigin=$appInfoOrigin] " +
+                "[appPackageName=$appPackageName] [requestOrigin=$requestOrigin] [rpInfo=$rpInfo]"
+        )
     }
 
     companion object {

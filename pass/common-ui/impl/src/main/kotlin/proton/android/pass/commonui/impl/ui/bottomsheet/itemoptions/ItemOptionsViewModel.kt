@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
@@ -71,6 +72,12 @@ class ItemOptionsViewModel @Inject constructor(
 
     private val canModifyFlow: Flow<Boolean> = getVaultById(shareId = shareId)
         .map { vault -> vault.role.toPermissions().canUpdate() }
+        .catch {
+            PassLogger.w(TAG, "Error getting vault by id")
+            PassLogger.w(TAG, it)
+            eventFlow.update { ItemOptionsEvent.Close }
+            emit(false)
+        }
         .distinctUntilChanged()
 
     val state: StateFlow<ItemOptionsUiState> = combine(

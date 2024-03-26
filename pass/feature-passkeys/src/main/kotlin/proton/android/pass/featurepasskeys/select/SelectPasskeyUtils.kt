@@ -18,6 +18,7 @@
 
 package proton.android.pass.featurepasskeys.select
 
+import androidx.credentials.CreatePublicKeyCredentialRequest
 import androidx.credentials.GetPublicKeyCredentialOption
 import androidx.credentials.provider.BeginGetCredentialRequest
 import androidx.credentials.provider.BeginGetPublicKeyCredentialOption
@@ -50,6 +51,17 @@ object SelectPasskeyUtils {
         val id: String
     )
 
+    @Serializable
+    private data class CreateCredentialRequest(
+        val rp: CreateCredentialRp
+    )
+
+    @Serializable
+    data class CreateCredentialRp(
+        val id: String? = null,
+        val name: String
+    )
+
     data class PasskeyFilterParameters(
         val domain: String?,
         val passkeySelection: PasskeySelection
@@ -73,6 +85,16 @@ object SelectPasskeyUtils {
 
         return parseRequest(json)?.rpId
     }
+
+    fun getRpInfoFromCreateRequest(request: CreatePublicKeyCredentialRequest): CreateCredentialRp? = runCatching {
+        val parsed = jsonParser.decodeFromString<CreateCredentialRequest>(request.requestJson)
+        parsed.rp
+    }.getOrElse { error ->
+        PassLogger.w(TAG, "Error getting RpInfo from CreatePublicKeyCredentialRequest")
+        PassLogger.w(TAG, error)
+        null
+    }
+
 
     private fun getDomainFromRequest(request: BeginGetCredentialRequest): String? {
         val origin = request.callingAppInfo?.origin

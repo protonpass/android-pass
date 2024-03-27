@@ -39,4 +39,6 @@ sealed interface SecurityCenterNavDestination {
 
     data object WeakPasswords : SecurityCenterNavDestination
 
+    data object MissingTFA : SecurityCenterNavDestination
+
 }

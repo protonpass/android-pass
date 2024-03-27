@@ -20,7 +20,6 @@ package proton.android.pass.features.security.center.reusepass.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -66,8 +65,7 @@ internal fun SecurityCenterReusedPassContent(
             modifier = Modifier
                 .background(PassTheme.colors.backgroundStrong)
                 .padding(paddingValues = innerPaddingValues)
-                .padding(top = Spacing.large),
-            verticalArrangement = Arrangement.spacedBy(Spacing.small)
+                .padding(top = Spacing.large)
         ) {
             reusedPassGroups.forEach { reusedPassGroup ->
                 stickyHeader {

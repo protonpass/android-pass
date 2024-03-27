@@ -37,7 +37,10 @@ internal fun SecurityCenterLoginItemRow(
     Box(
         modifier = modifier
             .clickable(onClick = onClick)
-            .padding(horizontal = Spacing.medium)
+            .padding(
+                horizontal = Spacing.medium,
+                vertical = Spacing.small
+            )
     ) {
         LoginRow(
             item = itemUiModel,

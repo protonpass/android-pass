@@ -17,5 +17,18 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="security_center_home_top_bar_title">Pass Monitor</string>
+  <!-- Home screen -->
+  <string name="security_center_home_top_bar_title">Pass izleyicisi</string>
+  <string name="security_center_home_row_insecure_passwords_title">Zayıf parolalar</string>
+  <string name="security_center_home_row_insecure_passwords_subtitle">Güçlü parolalar oluşturun</string>
+  <string name="security_center_home_row_reused_passwords_title">Yeniden kullanılmış parolalar</string>
+  <string name="security_center_home_row_reused_passwords_subtitle">Benzersiz parolalar oluşturun</string>
+  <string name="security_center_home_section_password_health">Parola sağlığı</string>
+  <!-- Weak passwords screen -->
+  <string name="security_center_weak_pass_top_bar_title">Zayıf parolalar</string>
+  <string name="security_center_weak_pass_top_bar_subtitle">Zayıf parolaların öngörülmesi daha kolaydır. Hesabınızı güvende tutmak için güçlü parolalar oluşturun.</string>
+  <!-- Reused passwords screen -->
+  <string name="security_center_reused_pass_top_bar_title">Yeniden kullanılmış parolalar</string>
+  <string name="security_center_reused_pass_top_bar_subtitle">Güvenliğinizi artırmak için benzersiz parolalar oluşturun.</string>
+  <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">%1$d kez yeniden kullanılmış</string>
 </resources>

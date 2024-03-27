@@ -17,5 +17,18 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
+  <!-- Home screen -->
   <string name="security_center_home_top_bar_title">Pass-ის მონიტორი</string>
+  <string name="security_center_home_row_insecure_passwords_title">სუსტი პაროლები</string>
+  <string name="security_center_home_row_insecure_passwords_subtitle">რთული პაროლები შექმნა</string>
+  <string name="security_center_home_row_reused_passwords_title">განმეორებით გამოყენებული პაროლები</string>
+  <string name="security_center_home_row_reused_passwords_subtitle">უნიკალური პაროლების შექმნა</string>
+  <string name="security_center_home_section_password_health">პაროლის სიძლიერე</string>
+  <!-- Weak passwords screen -->
+  <string name="security_center_weak_pass_top_bar_title">სუსტი პაროლები</string>
+  <string name="security_center_weak_pass_top_bar_subtitle">Weak passwords are easier to guess. Generate strong passwords to keep your account safe.</string>
+  <!-- Reused passwords screen -->
+  <string name="security_center_reused_pass_top_bar_title">განმეორებით გამოყენებული პაროლები</string>
+  <string name="security_center_reused_pass_top_bar_subtitle">შექმენით უნიკალური პაროლები თქვენი უსაფრთხოების გასაზრდელად.</string>
+  <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">გამოყენებულია %1$d-ჯერ</string>
 </resources>

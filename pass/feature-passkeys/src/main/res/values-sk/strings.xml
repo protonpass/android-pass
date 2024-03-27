@@ -17,10 +17,10 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="select_passkey_action_title" comment="Title of the action to select a passkey. Will appear in the system passkey selector">Vyberte iný prihlasovací kľúč</string>
-  <string name="select_passkey_action_subtitle" comment="Subtitle of the action to select a passkey. Will appear in the system passkey selector">Vyberte prihlasovací kľúč z Proton Pass</string>
-  <string name="passkeys_user_logged_out">Váš účet bol odhlásený. Prihláste sa znova otvorením aplikácie, prosím.</string>
-  <string name="passkey_confirm_item_title" comment="Title of the dialog for confirming the generation of a passkey for an item">Vygenerovať prihlasovací kľúč</string>
+  <string name="select_passkey_action_title" comment="Title of the action to select a passkey. Will appear in the system passkey selector">Vyberte iný prístupový kľúč</string>
+  <string name="select_passkey_action_subtitle" comment="Subtitle of the action to select a passkey. Will appear in the system passkey selector">Vyberte prístupový kľúč z Proton Pass</string>
+  <string name="passkeys_user_logged_out">Boli ste odhlásení. Prihláste sa znova otvorením aplikácie, prosím.</string>
+  <string name="passkey_confirm_item_title" comment="Title of the dialog for confirming the generation of a passkey for an item">Vygenerovať prístupový kľúč</string>
   <string name="passkey_confirm_item_body" comment="Body of the dialog for confirming the generation of a passkey for an item. The placeholder contains the item title">Skutočne chcete vygenerovať prístupový kľúč pre položku \'%s\'?</string>
-  <string name="passkey_error_generating_passkey">Nie je možné vygenerovať prihlasovací kľúč</string>
+  <string name="passkey_error_generating_passkey">Nepodarilo sa vygenerovať prístupový kľúč</string>
 </resources>

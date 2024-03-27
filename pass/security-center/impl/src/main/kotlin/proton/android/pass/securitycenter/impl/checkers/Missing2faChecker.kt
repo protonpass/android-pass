@@ -24,23 +24,15 @@ import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemType
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.securitycenter.api.passwords.Missing2faReport
+import proton.android.pass.securitycenter.api.passwords.MissingTfaChecker
 import proton.android.pass.securitycenter.impl.helpers.Supports2fa
 import javax.inject.Inject
 
-data class Missing2faReport(
-    val items: List<Item>
-) {
-    val missing2faCount: Int = items.size
-}
-
-interface Missing2faChecker {
-    suspend operator fun invoke(items: List<Item>): Missing2faReport
-}
-
-class Missing2faCheckerImpl @Inject constructor(
+class MissingTfaCheckerImpl @Inject constructor(
     private val supports2fa: Supports2fa,
     private val encryptionContextProvider: EncryptionContextProvider
-) : Missing2faChecker {
+) : MissingTfaChecker {
     override suspend fun invoke(items: List<Item>): Missing2faReport {
         val itemsToReport = encryptionContextProvider.withEncryptionContext {
             items.filter { shouldReportItem(it) }

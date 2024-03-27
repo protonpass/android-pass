@@ -29,7 +29,7 @@ import proton.android.pass.test.domain.TestItemType
 
 class Missing2faCheckerTest {
 
-    private lateinit var instance: Missing2faCheckerImpl
+    private lateinit var instance: MissingTfaCheckerImpl
 
     private lateinit var supports2fa: TestSupports2fa
     private lateinit var encryptionContextProvider: TestEncryptionContextProvider
@@ -38,7 +38,7 @@ class Missing2faCheckerTest {
     fun setup() {
         supports2fa = TestSupports2fa()
         encryptionContextProvider = TestEncryptionContextProvider()
-        instance = Missing2faCheckerImpl(
+        instance = MissingTfaCheckerImpl(
             supports2fa = supports2fa,
             encryptionContextProvider = encryptionContextProvider
         )

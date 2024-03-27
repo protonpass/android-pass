@@ -21,12 +21,14 @@ package proton.android.pass.features.security.center.home.presentation
 import androidx.compose.runtime.Stable
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.securitycenter.api.InsecurePasswordsResult
+import proton.android.pass.securitycenter.api.Missing2faResult
 import proton.android.pass.securitycenter.api.ReusedPasswordsResult
 
 @Stable
 internal data class SecurityCenterHomeState(
     private val insecurePasswordsLoadingResult: LoadingResult<InsecurePasswordsResult>,
-    private val reusedPasswordsLoadingResult: LoadingResult<ReusedPasswordsResult>
+    private val reusedPasswordsLoadingResult: LoadingResult<ReusedPasswordsResult>,
+    private val missing2faResult: LoadingResult<Missing2faResult>
 ) {
 
     internal val insecurePasswordsCount: Int? = when (insecurePasswordsLoadingResult) {
@@ -43,11 +45,19 @@ internal data class SecurityCenterHomeState(
         is LoadingResult.Success -> reusedPasswordsLoadingResult.data.reusedPasswordsCount
     }
 
+    internal val missing2faCount: Int? = when (missing2faResult) {
+        is LoadingResult.Error,
+        LoadingResult.Loading -> null
+
+        is LoadingResult.Success -> missing2faResult.data.missing2faCount
+    }
+
     internal companion object {
 
         val Initial: SecurityCenterHomeState = SecurityCenterHomeState(
             insecurePasswordsLoadingResult = LoadingResult.Loading,
-            reusedPasswordsLoadingResult = LoadingResult.Loading
+            reusedPasswordsLoadingResult = LoadingResult.Loading,
+            missing2faResult = LoadingResult.Loading
         )
 
     }

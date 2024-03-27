@@ -17,5 +17,18 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="security_center_home_top_bar_title">Pass Monitor</string>
+  <!-- Home screen -->
+  <string name="security_center_home_top_bar_title">Monitorizare Proton Pass</string>
+  <string name="security_center_home_row_insecure_passwords_title">Parole slabe</string>
+  <string name="security_center_home_row_insecure_passwords_subtitle">Creați parole puternice</string>
+  <string name="security_center_home_row_reused_passwords_title">Parole refolosite</string>
+  <string name="security_center_home_row_reused_passwords_subtitle">Creați parole unice</string>
+  <string name="security_center_home_section_password_health">Stare parolă</string>
+  <!-- Weak passwords screen -->
+  <string name="security_center_weak_pass_top_bar_title">Parole slabe</string>
+  <string name="security_center_weak_pass_top_bar_subtitle">Parolele slabe sunt ușor de ghicit. Generați parole puternice pentru a vă păstra contul în siguranță.</string>
+  <!-- Reused passwords screen -->
+  <string name="security_center_reused_pass_top_bar_title">Parole refolosite</string>
+  <string name="security_center_reused_pass_top_bar_subtitle">Generați parole unice pentru a vă spori securitatea.</string>
+  <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Refolosită de %1$d de ori</string>
 </resources>

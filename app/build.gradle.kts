@@ -16,7 +16,9 @@
  * along with Proton Mail. If not, see <https://www.gnu.org/licenses/>.
  */
 
+import configuration.EnvironmentConfigSettings
 import java.util.Properties
+import configuration.extensions.protonEnvironment
 
 plugins {
     id("com.android.application")
@@ -26,6 +28,7 @@ plugins {
     id("kotlin-parcelize")
     id("io.sentry.android.gradle")
     id("org.jetbrains.kotlin.kapt")
+    alias(libs.plugins.gradlePlugin.proton.environmentConfig)
 }
 
 val privateProperties = Properties().apply {
@@ -39,20 +42,13 @@ val privateProperties = Properties().apply {
 
 val sentryDSN: String? = privateProperties.getProperty("SENTRY_DSN")
 val accountSentryDSN: String? = System.getenv("ACCOUNT_SENTRY_DSN")
-val proxyToken: String? = privateProperties.getProperty("PROXY_TOKEN")
-val testEnvUrl: String = System.getenv("TEST_ENV_URL") ?: "api.proton.black"
-val prodEnvUrl: String = System.getenv("PROD_ENV_URL") ?: "pass-api.proton.me"
-val prodHvUrl: String =
-    if (System.getenv("PROD_ENV_URL").isNullOrBlank()) "verify.proton.me" else "verify.proton.black"
+val atlasProxyToken: String? = privateProperties.getProperty("PROXY_TOKEN")
 val isCustomBuild: Boolean = !System.getenv("PROD_ENV_URL").isNullOrBlank()
 val isApkBuild: Boolean = project.findProperty("apkBuild") == "true"
 
 println(
     """
     ------- BUILD INFO -------
-    testEnvUrl: $testEnvUrl
-    prodEnvUrl: $prodEnvUrl
-    prodHvUrl: $prodHvUrl
     isCustomBuild: $isCustomBuild
     isApkBuild: $isApkBuild
     --------------------------
@@ -93,7 +89,11 @@ android {
 
         buildConfigField("String", "SENTRY_DSN", sentryDSN.toBuildConfigValue())
         buildConfigField("String", "ACCOUNT_SENTRY_DSN", accountSentryDSN.toBuildConfigValue())
-        buildConfigField("String", "PROXY_TOKEN", proxyToken.toBuildConfigValue())
+
+        protonEnvironment {
+            proxyToken = atlasProxyToken
+            apiPrefix = "pass-api"
+        }
 
         ndk {
             abiFilters += "armeabi-v7a"
@@ -197,17 +197,23 @@ android {
         create("black") {
             dimension = "env"
             applicationIdSuffix = ".black"
-            buildConfigField("Boolean", "USE_DEFAULT_PINS", "false")
-            buildConfigField("String", "HOST", testEnvUrl.toBuildConfigValue())
-            buildConfigField("String", "HV_HOST", "verify.proton.black".toBuildConfigValue())
+
+            protonEnvironment {
+                host = "proton.black"
+
+                printInfo(name)
+            }
         }
         create("prod") {
             dimension = "env"
-            // If we are creating a custom build (prod build that points to scientist env)
-            // do not use the default pins
-            buildConfigField("Boolean", "USE_DEFAULT_PINS", (!isCustomBuild).toString())
-            buildConfigField("String", "HOST", prodEnvUrl.toBuildConfigValue())
-            buildConfigField("String", "HV_HOST", prodHvUrl.toBuildConfigValue())
+            protonEnvironment {
+                // If we are creating a custom build (prod build that points to scientist env)
+                // do not use the default pins
+                useDefaultPins = !isCustomBuild
+                apiPrefix = "pass-api"
+
+                printInfo(name)
+            }
         }
     }
 
@@ -346,6 +352,9 @@ dependencies {
     implementation(libs.core.user)
     implementation(libs.core.userSettings)
     implementation(libs.core.utilAndroidDagger)
+    implementation(libs.core.config.data)
+    releaseImplementation(libs.core.config.dagger.staticDefaults)
+    debugImplementation(libs.core.config.dagger.contentProvider)
     implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.material)
@@ -453,6 +462,17 @@ dependencies {
 }
 
 fun String?.toBuildConfigValue() = if (this != null) "\"$this\"" else "null"
+
+fun EnvironmentConfigSettings.printInfo(name: String) {
+    println(
+        """
+            - ENV INFO ($name) -
+            apiHost: $apiHost
+            hv3Host: $hv3Host
+            --------------------------
+        """.trimIndent()
+    )
+}
 
 sentry {
     autoInstallation.enabled.set(false)

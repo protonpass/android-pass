@@ -5,7 +5,7 @@
   <string name="sort_by_title_desc">Títol (Z-A)</string>
   <string name="sort_by_creation_asc">De més antic a més recent</string>
   <string name="sort_by_creation_desc">De més recent a més antic</string>
-  <string name="sort_by_modification_date">Recently used</string>
+  <string name="sort_by_modification_date">Utilitzats recentment</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Tots</string>
   <string name="item_list_header_pinned_search_results">Ancorat</string>
@@ -23,7 +23,7 @@
   <string name="bottomsheet_move_to_trash">Mou a la paperera</string>
   <string name="bottomsheet_pin_item">Ancora</string>
   <string name="bottomsheet_unpin_item">Desancora</string>
-  <string name="bottomsheet_view_item_history">View history</string>
+  <string name="bottomsheet_view_item_history">Visualitza l\'historial</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Obre el menú d\'acció de l\'element</string>
   <string name="action_upgrade_now">Millora ara</string>
@@ -58,7 +58,7 @@
   <string name="most_recent_yesterday">Ahir</string>
   <string name="most_recent_this_week">Aquesta setmana</string>
   <string name="most_recent_last_two_weeks">Les últimes dues setmanes</string>
-  <string name="most_recent_last_30_days">Last month</string>
+  <string name="most_recent_last_30_days">L\'últim mes</string>
   <string name="most_recent_last_60_days">Els últims 60 dies</string>
   <string name="most_recent_last_90_days">Els últims 90 dies</string>
   <string name="most_recent_within_the_last_year">En l\'últim any</string>
@@ -101,24 +101,24 @@
     -->
   <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
   <!-- Items -->
-  <string name="item_details_alias_section_alias_title">Alias address</string>
-  <string name="item_details_alias_section_mailboxes_title">Forwarding to</string>
-  <string name="item_details_credit_card_section_cardholder_title">Name on card</string>
-  <string name="item_details_credit_card_section_card_number_title">Card number</string>
+  <string name="item_details_alias_section_alias_title">Adreça d\'àlies</string>
+  <string name="item_details_alias_section_mailboxes_title">Reenviant a</string>
+  <string name="item_details_credit_card_section_cardholder_title">Nom a la targeta</string>
+  <string name="item_details_credit_card_section_card_number_title">Número de targeta</string>
   <string name="item_details_credit_card_section_expiration_date_title">Data de caducitat</string>
-  <string name="item_details_credit_card_section_cvv_title">Security code</string>
-  <string name="item_details_credit_card_section_pin_title">PIN code</string>
+  <string name="item_details_credit_card_section_cvv_title">Codi de seguretat</string>
+  <string name="item_details_credit_card_section_pin_title">Codi PIN</string>
   <string name="item_details_login_section_username_title">Nom d\'usuari o adreça de correu electrònic</string>
-  <string name="item_details_login_section_password_title">Password</string>
+  <string name="item_details_login_section_password_title">Contrasenya</string>
   <string name="item_details_login_section_primary_totp_title">Testimoni 2FA (TOTP)</string>
-  <string name="item_details_login_section_websites_title">Websites</string>
-  <string name="item_details_shared_section_note_title">Note</string>
+  <string name="item_details_login_section_websites_title">Llocs web</string>
+  <string name="item_details_shared_section_note_title">Nota</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">The app version is not supported anymore, please update your app.</string>
   <!-- Passkeys -->
-  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Passkey</string>
+  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Clau d\'accés</string>
   <!-- Upgrade -->
-  <string name="dialog_upgrade_plan_title">Upgrade plan?</string>
+  <string name="dialog_upgrade_plan_title">Voleu actualitzar el pla?</string>
   <string name="dialog_upgrade_plan_message">This feature is not available for free tier users. If you want to enjoy this along with other cool features, upgrade your plan and give it a try!</string>
-  <string name="dialog_upgrade_plan_action_confirm">Upgrade</string>
-  <string name="dialog_upgrade_plan_action_cancel">Not now</string>
+  <string name="dialog_upgrade_plan_action_confirm">Actualitza</string>
+  <string name="dialog_upgrade_plan_action_cancel">Ara no</string>
 </resources>

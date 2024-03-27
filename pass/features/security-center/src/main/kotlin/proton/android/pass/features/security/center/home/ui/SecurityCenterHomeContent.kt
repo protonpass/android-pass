@@ -77,7 +77,7 @@ internal fun SecurityCenterHomeContent(
     ) { innerPaddingValues ->
         Column(
             modifier = Modifier
-                .background(PassTheme.colors.backgroundStrong)
+                .background(PassTheme.colors.backgroundNorm)
                 .padding(paddingValues = innerPaddingValues)
                 .padding(horizontal = Spacing.medium)
                 .verticalScroll(rememberScrollState()),
@@ -101,6 +101,15 @@ internal fun SecurityCenterHomeContent(
                     count = reusedPasswordsCount
                 ),
                 onClick = { onNavigated(SecurityCenterHomeNavDestination.ReusedPasswords) }
+            )
+
+            SecurityCenterCounterRow(
+                model = SecurityCenterCounterRowModel.Standard(
+                    title = stringResource(id = R.string.security_center_home_row_missing_tfa_title),
+                    subtitle = stringResource(id = R.string.security_center_home_row_missing_tfa_subtitle),
+                    count = missing2faCount
+                ),
+                onClick = { onNavigated(SecurityCenterHomeNavDestination.MissingTFA) }
             )
         }
     }

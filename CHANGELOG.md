@@ -6,6 +6,20 @@
 
 ### Other
 
+## 1.20.2 (2024-03-27)
+
+### Features :tada:
+
+- Improve passkey compatibility.
+
+### Fixes :bug:
+
+- Crash on some sync issue failures.
+
+### Other
+
+- Updated translations.
+
 ## 1.20.1 (2024-03-25)
 
 ### Features :tada:

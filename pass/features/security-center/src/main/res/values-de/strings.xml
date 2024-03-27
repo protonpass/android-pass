@@ -17,5 +17,18 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="security_center_home_top_bar_title">Pass Monitor</string>
+  <!-- Home screen -->
+  <string name="security_center_home_top_bar_title">Pass-Monitor</string>
+  <string name="security_center_home_row_insecure_passwords_title">Schwache Passwörter</string>
+  <string name="security_center_home_row_insecure_passwords_subtitle">Erstelle starke Passwörter</string>
+  <string name="security_center_home_row_reused_passwords_title">Wiederverwendete Passwörter</string>
+  <string name="security_center_home_row_reused_passwords_subtitle">Erstelle einzigartige Passwörter</string>
+  <string name="security_center_home_section_password_health">Password Health</string>
+  <!-- Weak passwords screen -->
+  <string name="security_center_weak_pass_top_bar_title">Schwache Passwörter</string>
+  <string name="security_center_weak_pass_top_bar_subtitle">Schwache Passwörter sind leichter zu erraten. Erstelle sichere Passwörter, um deine Konten zu schützen.</string>
+  <!-- Reused passwords screen -->
+  <string name="security_center_reused_pass_top_bar_title">Wiederverwendete Passwörter</string>
+  <string name="security_center_reused_pass_top_bar_subtitle">Generiere eindeutige Passwörter, um deine Sicherheit zu erhöhen.</string>
+  <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">%1$d Mal wiederverwendet</string>
 </resources>

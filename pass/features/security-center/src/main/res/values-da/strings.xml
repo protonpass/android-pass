@@ -17,5 +17,18 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
+  <!-- Home screen -->
   <string name="security_center_home_top_bar_title">Pass Monitor</string>
+  <string name="security_center_home_row_insecure_passwords_title">Svage adgangskoder</string>
+  <string name="security_center_home_row_insecure_passwords_subtitle">Opret stærke adgangskoder</string>
+  <string name="security_center_home_row_reused_passwords_title">Genbrugte adgangskoder</string>
+  <string name="security_center_home_row_reused_passwords_subtitle">Opret unikke adgangskoder</string>
+  <string name="security_center_home_section_password_health">Adgangskode-sundhed</string>
+  <!-- Weak passwords screen -->
+  <string name="security_center_weak_pass_top_bar_title">Svage adgangskoder</string>
+  <string name="security_center_weak_pass_top_bar_subtitle">Svage adgangskoder er lettere at gætte. Opret stærke adgangskoder for at holde din konto sikker.</string>
+  <!-- Reused passwords screen -->
+  <string name="security_center_reused_pass_top_bar_title">Genbrugte adgangskoder</string>
+  <string name="security_center_reused_pass_top_bar_subtitle">Generer unikke adgangskoder for at øge din sikkerhed.</string>
+  <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Genbrugt %1$d gange</string>
 </resources>

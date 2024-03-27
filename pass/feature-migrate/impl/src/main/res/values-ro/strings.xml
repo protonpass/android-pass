@@ -10,7 +10,7 @@
   <string name="migrate_item_success_snackbar">Articole au fost mutate.</string>
   <string name="migrate_item_error_snackbar">Eroare la mutarea articolelor.</string>
   <string name="migrate_item_some_not_migrated_error_snackbar">Eroare la mutarea unor articole.</string>
-  <string name="migrate_item_warning_history">When moving items between vaults we will preserve up to the last 50 modifications performed to each item</string>
+  <string name="migrate_item_warning_history">La mutarea articolelor între seifuri, vom păstra până la ultimele 50 de modificări efectuate fiecărui articol.</string>
   <string name="migrate_all_items_success_snackbar">S-au mutat toate articolele.</string>
   <string name="migrate_all_items_error_snackbar">Eroare la mutarea tuturor articolelor din seif.</string>
   <string name="migrate_init_error_snackbar">Nu s-a putut pregăti ecranul de migrare.</string>

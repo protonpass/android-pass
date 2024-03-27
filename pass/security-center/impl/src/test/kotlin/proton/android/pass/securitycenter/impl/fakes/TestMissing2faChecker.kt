@@ -19,10 +19,10 @@
 package proton.android.pass.securitycenter.impl.fakes
 
 import proton.android.pass.domain.Item
-import proton.android.pass.securitycenter.impl.checkers.Missing2faChecker
-import proton.android.pass.securitycenter.impl.checkers.Missing2faReport
+import proton.android.pass.securitycenter.api.passwords.Missing2faReport
+import proton.android.pass.securitycenter.api.passwords.MissingTfaChecker
 
-class TestMissing2faChecker : Missing2faChecker {
+class TestMissing2faChecker : MissingTfaChecker {
 
     private var result: Missing2faReport = Missing2faReport(
         items = emptyList()

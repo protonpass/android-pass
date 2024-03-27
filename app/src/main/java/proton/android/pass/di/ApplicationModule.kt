@@ -27,6 +27,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.datetime.Clock
 import me.proton.core.account.domain.entity.AccountType
+import me.proton.core.configuration.EnvironmentConfiguration
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.Product
 import proton.android.pass.PassAppConfig
@@ -65,7 +66,7 @@ object ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideAppConfig(): AppConfig = PassAppConfig()
+    fun provideAppConfig(environmentConfig: EnvironmentConfiguration): AppConfig = PassAppConfig(environmentConfig)
 
     @Provides
     @Singleton

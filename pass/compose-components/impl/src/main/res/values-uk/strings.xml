@@ -5,7 +5,7 @@
   <string name="sort_by_title_desc">За назвою (Я-А)</string>
   <string name="sort_by_creation_asc">Спочатку найстаріші</string>
   <string name="sort_by_creation_desc">Спочатку нові</string>
-  <string name="sort_by_modification_date">Recently used</string>
+  <string name="sort_by_modification_date">Нещодавно використано</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Всі</string>
   <string name="item_list_header_pinned_search_results">Прикріплено</string>
@@ -25,7 +25,7 @@
   <string name="bottomsheet_move_to_trash">Перемістити до смітника</string>
   <string name="bottomsheet_pin_item">Прикріпити</string>
   <string name="bottomsheet_unpin_item">Відкріпити</string>
-  <string name="bottomsheet_view_item_history">View history</string>
+  <string name="bottomsheet_view_item_history">Переглянути історію</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Відкрити меню дій елемента</string>
   <string name="action_upgrade_now">Покращити</string>
@@ -60,11 +60,11 @@
   <string name="most_recent_yesterday">Вчора</string>
   <string name="most_recent_this_week">Цього тижня</string>
   <string name="most_recent_last_two_weeks">Останні два тижні</string>
-  <string name="most_recent_last_30_days">Last month</string>
+  <string name="most_recent_last_30_days">Минулого місяця</string>
   <string name="most_recent_last_60_days">Останні 60 днів</string>
   <string name="most_recent_last_90_days">Останні 90 днів</string>
   <string name="most_recent_within_the_last_year">За останній рік</string>
-  <string name="most_recent_more_than_1_year">Older than 1 year</string>
+  <string name="most_recent_more_than_1_year">Старіше 1 року</string>
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">Піктограма пошук</string>
   <!-- Select Vault BottomSheet -->
@@ -105,24 +105,24 @@
     -->
   <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
   <!-- Items -->
-  <string name="item_details_alias_section_alias_title">Alias address</string>
-  <string name="item_details_alias_section_mailboxes_title">Forwarding to</string>
-  <string name="item_details_credit_card_section_cardholder_title">Name on card</string>
-  <string name="item_details_credit_card_section_card_number_title">Card number</string>
+  <string name="item_details_alias_section_alias_title">Адреса псевдоніма</string>
+  <string name="item_details_alias_section_mailboxes_title">Переслати до</string>
+  <string name="item_details_credit_card_section_cardholder_title">Ім\'я на картці</string>
+  <string name="item_details_credit_card_section_card_number_title">Номер картки</string>
   <string name="item_details_credit_card_section_expiration_date_title">Термін дії</string>
-  <string name="item_details_credit_card_section_cvv_title">Security code</string>
-  <string name="item_details_credit_card_section_pin_title">PIN code</string>
+  <string name="item_details_credit_card_section_cvv_title">Код безпеки</string>
+  <string name="item_details_credit_card_section_pin_title">PIN-код</string>
   <string name="item_details_login_section_username_title">Ім\'я користувача або адреса е-пошти</string>
-  <string name="item_details_login_section_password_title">Password</string>
+  <string name="item_details_login_section_password_title">Пароль</string>
   <string name="item_details_login_section_primary_totp_title">Токен 2FA (TOTP)</string>
-  <string name="item_details_login_section_websites_title">Websites</string>
-  <string name="item_details_shared_section_note_title">Note</string>
-  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">The app version is not supported anymore, please update your app.</string>
+  <string name="item_details_login_section_websites_title">Вебсайти</string>
+  <string name="item_details_shared_section_note_title">Примітка</string>
+  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Поточна версія застосунку більше не підтримується, будь ласка, оновіть застосунок.</string>
   <!-- Passkeys -->
-  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Passkey</string>
+  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Ключ доступу</string>
   <!-- Upgrade -->
-  <string name="dialog_upgrade_plan_title">Upgrade plan?</string>
-  <string name="dialog_upgrade_plan_message">This feature is not available for free tier users. If you want to enjoy this along with other cool features, upgrade your plan and give it a try!</string>
-  <string name="dialog_upgrade_plan_action_confirm">Upgrade</string>
-  <string name="dialog_upgrade_plan_action_cancel">Not now</string>
+  <string name="dialog_upgrade_plan_title">Оновити тариф?</string>
+  <string name="dialog_upgrade_plan_message">Ця функція недоступна для користувачів безплатного тарифу. Якщо ви хочете насолоджуватися нею разом з іншими цікавими функціями, перейдіть на новий тариф і спробуйте!</string>
+  <string name="dialog_upgrade_plan_action_confirm">Покращити</string>
+  <string name="dialog_upgrade_plan_action_cancel">Не зараз</string>
 </resources>

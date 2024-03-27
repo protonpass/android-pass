@@ -116,7 +116,7 @@
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Cerques recents</string>
-  <string name="recent_search_clear">Esborra</string>
+  <string name="recent_search_clear">Neteja</string>
   <string name="recent_search_remove_item">Esborra de les cerques recents</string>
   <!-- Pinning -->
   <string name="home_snackbar_item_pinned_success">S\'ha ancorat l\'element.</string>

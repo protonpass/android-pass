@@ -9,7 +9,7 @@
   <string name="migrate_item_success_snackbar">Einträge verschoben</string>
   <string name="migrate_item_error_snackbar">Fehler beim Verschieben des Eintrags.</string>
   <string name="migrate_item_some_not_migrated_error_snackbar">Fehler beim Verschieben einiger Einträge.</string>
-  <string name="migrate_item_warning_history">When moving items between vaults we will preserve up to the last 50 modifications performed to each item</string>
+  <string name="migrate_item_warning_history">Beim Verschieben von Einträgen zwischen Tresoren bewahren wir bis zu 50 der letzten Änderungen an jedes Eintrags auf.</string>
   <string name="migrate_all_items_success_snackbar">Alle Einträge verschoben.</string>
   <string name="migrate_all_items_error_snackbar">Fehler beim Verschieben aller Tresoreinträge.</string>
   <string name="migrate_init_error_snackbar">Migrationsseite konnte nicht geladen werden.</string>

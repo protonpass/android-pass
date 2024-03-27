@@ -23,6 +23,7 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.platform.app.InstrumentationRegistry
 import dagger.hilt.android.testing.HiltAndroidRule
 import me.proton.core.auth.domain.testing.LoginTestHelper
+import me.proton.core.configuration.EnvironmentConfigurationDefaults
 import me.proton.core.test.quark.Quark
 import me.proton.core.test.quark.data.User
 import me.proton.test.fusion.FusionConfig
@@ -82,8 +83,8 @@ open class BaseTest {
         )
         val quark = Quark.fromJson(
             json = context.assets.open("internal_api.json").bufferedReader().use { it.readText() },
-            host = BuildConfig.HOST,
-            proxyToken = BuildConfig.PROXY_TOKEN
+            host = EnvironmentConfigurationDefaults.host,
+            proxyToken = EnvironmentConfigurationDefaults.proxyToken
         )
     }
 }

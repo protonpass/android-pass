@@ -37,7 +37,8 @@ class SecurityCenterHomeViewModel @Inject constructor(
         .map { securityAnalysis ->
             SecurityCenterHomeState(
                 insecurePasswordsLoadingResult = securityAnalysis.insecurePasswords,
-                reusedPasswordsLoadingResult = securityAnalysis.reusedPasswords
+                reusedPasswordsLoadingResult = securityAnalysis.reusedPasswords,
+                missing2faResult = securityAnalysis.missing2fa
             )
         }
         .stateIn(

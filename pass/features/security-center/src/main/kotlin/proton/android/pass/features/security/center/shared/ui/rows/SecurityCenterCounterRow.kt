@@ -159,10 +159,10 @@ internal sealed interface SecurityCenterCounterRowModel {
         override val isClickable: Boolean = if (count == null) false else count > 0
 
         @Composable
-        override fun getCounterTextBackgroundColor(): Color = PassTheme.colors.loginInteractionNormMinor1
+        override fun getCounterTextBackgroundColor(): Color = PassTheme.colors.backgroundMedium
 
         @Composable
-        override fun getCounterTextColor(): Color = PassTheme.colors.loginInteractionNormMajor2
+        override fun getCounterTextColor(): Color = PassTheme.colors.textNorm
 
     }
 

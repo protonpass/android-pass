@@ -22,6 +22,9 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavDestination
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavItem
 import proton.android.pass.features.security.center.home.ui.SecurityCenterHomeScreen
+import proton.android.pass.features.security.center.missingtfa.navigation.SecurityCenterMissingTFADestination
+import proton.android.pass.features.security.center.missingtfa.navigation.SecurityCenterMissingTFANavItem
+import proton.android.pass.features.security.center.missingtfa.ui.SecurityCenterMissingTfaScreen
 import proton.android.pass.features.security.center.reusepass.navigation.SecurityCenterReusedPassDestination
 import proton.android.pass.features.security.center.reusepass.navigation.SecurityCenterReusedPassNavItem
 import proton.android.pass.features.security.center.reusepass.ui.SecurityCenterReusedPassScreen
@@ -41,6 +44,7 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                     SecurityCenterHomeNavDestination.Profile -> SecurityCenterNavDestination.MainProfile
                     SecurityCenterHomeNavDestination.ReusedPasswords -> SecurityCenterNavDestination.ReusedPasswords
                     SecurityCenterHomeNavDestination.WeakPasswords -> SecurityCenterNavDestination.WeakPasswords
+                    SecurityCenterHomeNavDestination.MissingTFA -> SecurityCenterNavDestination.MissingTFA
                 }.also(onNavigated)
             }
         )
@@ -70,6 +74,21 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                         itemId = destination.itemId
                     )
                 }.also(onNavigated)
+            }
+        )
+    }
+
+    composable(SecurityCenterMissingTFANavItem) {
+        SecurityCenterMissingTfaScreen(
+            onNavigated = { destination ->
+                val event = when (destination) {
+                    SecurityCenterMissingTFADestination.Back -> SecurityCenterNavDestination.Back
+                    is SecurityCenterMissingTFADestination.ItemDetails -> SecurityCenterNavDestination.ItemDetails(
+                        shareId = destination.shareId,
+                        itemId = destination.itemId
+                    )
+                }
+                onNavigated(event)
             }
         )
     }

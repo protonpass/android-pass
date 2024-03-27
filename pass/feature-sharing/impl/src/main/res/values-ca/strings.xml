@@ -20,7 +20,7 @@
   <string name="share_continue">Continua</string>
   <string name="sharing_can_view">Visualitzador</string>
   <string name="sharing_can_edit">Editor</string>
-  <string name="sharing_can_manage">Administardor</string>
+  <string name="sharing_can_manage">Administrador</string>
   <string name="sharing_can_view_description">Permet veure els elements d\'aquesta caixa forte.</string>
   <string name="sharing_can_edit_description">Permet crear, editar, suprimir i exportar elements en aquesta caixa forta.</string>
   <string name="sharing_can_manage_description">Permet concedir i revocar accés a aquesta caixa forta.</string>
@@ -75,10 +75,10 @@
   <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">Confirma l\'accés</string>
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">Invitacions</string>
   <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">Membres</string>
-  <string name="share_manage_vault_current_user_indicator">Vosaltres</string>
+  <string name="share_manage_vault_current_user_indicator">Vós</string>
   <string name="share_role_can_view">Pot veure</string>
   <string name="share_role_can_edit">Pot editar</string>
-  <string name="share_role_admin">Administrador/a</string>
+  <string name="share_role_admin">Administrador</string>
   <string name="share_role_owner">Propietari</string>
   <string name="sharing_bottomsheet_transfer_ownership">Transfereix la propietat</string>
   <string name="sharing_bottomsheet_transfer_ownership_disabled_subtitle" comment="Appears as the subtitle of the sharing_bottomsheet_transfer_ownership when the user cannot transfer the ownership because they only own one vault">No podeu transferir la vostra última caixa forta que heu tingut en propietat.</string>

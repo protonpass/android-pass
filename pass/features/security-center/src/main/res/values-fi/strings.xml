@@ -17,5 +17,18 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
+  <!-- Home screen -->
   <string name="security_center_home_top_bar_title">Pass Monitor</string>
+  <string name="security_center_home_row_insecure_passwords_title">Heikot salasanat</string>
+  <string name="security_center_home_row_insecure_passwords_subtitle">Luo vahvoja salasanoja</string>
+  <string name="security_center_home_row_reused_passwords_title">Uudelleenkäytetyt salasanat</string>
+  <string name="security_center_home_row_reused_passwords_subtitle">Luo yksilöllisiä salasanoja</string>
+  <string name="security_center_home_section_password_health">Salasanan terveys</string>
+  <!-- Weak passwords screen -->
+  <string name="security_center_weak_pass_top_bar_title">Heikot salasanat</string>
+  <string name="security_center_weak_pass_top_bar_subtitle">Heikot salasanat ovat helpommin arvattavissa. Luo vahvoja salasanoja, jotta tilisi pysyy turvassa.</string>
+  <!-- Reused passwords screen -->
+  <string name="security_center_reused_pass_top_bar_title">Uudelleenkäytetyt salasanat</string>
+  <string name="security_center_reused_pass_top_bar_subtitle">Luo ainutlaatuisia salasanoja turvallisuuden lisäämiseksi.</string>
+  <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Uudelleenkäytetty %1$d kertaa</string>
 </resources>

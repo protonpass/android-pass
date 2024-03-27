@@ -5,7 +5,7 @@
   <string name="settings_autofill_preference_title">Emplenament automàtic</string>
   <string name="settings_autofill_preference_description">Per a inicis de sessió ràpids i fàcils, deixeu que Proton Pass ompli els vostres noms d\'usuari i contrasenyes.</string>
   <string name="settings_authentication_section_title">Autentificació</string>
-  <string name="settings_authentication_preference_title">Fingerprint lock</string>
+  <string name="settings_authentication_preference_title">Blocatge d\'empremta digital</string>
   <string name="settings_authentication_preference_description_enabled">Obriu ràpidament i de forma segura l\'aplicació amb l\'empremta digital.</string>
   <string name="settings_authentication_preference_description_no_fingerprint">No podeu requerir l\'empremta digital per interactuar amb l\'aplicació, ja que no hi ha empremtes digitals registrades en aquest dispositiu.</string>
   <string name="settings_appearance_preference_title">Tema</string>

@@ -26,12 +26,12 @@ import dagger.hilt.components.SingletonComponent
 import proton.android.pass.commonrust.TwofaDomainChecker
 import proton.android.pass.securitycenter.api.ObserveSecurityAnalysis
 import proton.android.pass.securitycenter.api.passwords.InsecurePasswordChecker
+import proton.android.pass.securitycenter.api.passwords.MissingTfaChecker
 import proton.android.pass.securitycenter.api.passwords.RepeatedPasswordChecker
 import proton.android.pass.securitycenter.impl.checkers.BreachedDataChecker
 import proton.android.pass.securitycenter.impl.checkers.BreachedDataCheckerImpl
 import proton.android.pass.securitycenter.impl.checkers.InsecurePasswordCheckerImpl
-import proton.android.pass.securitycenter.impl.checkers.Missing2faChecker
-import proton.android.pass.securitycenter.impl.checkers.Missing2faCheckerImpl
+import proton.android.pass.securitycenter.impl.checkers.MissingTfaCheckerImpl
 import proton.android.pass.securitycenter.impl.checkers.RepeatedPasswordCheckerImpl
 import proton.android.pass.securitycenter.impl.helpers.Supports2fa
 import proton.android.pass.securitycenter.impl.helpers.Supports2faImpl
@@ -54,7 +54,7 @@ internal abstract class SecurityCenterBindModule {
     abstract fun bindInsecurePasswordChecker(impl: InsecurePasswordCheckerImpl): InsecurePasswordChecker
 
     @Binds
-    abstract fun bindMissing2faChecker(impl: Missing2faCheckerImpl): Missing2faChecker
+    abstract fun bindMissingTfaChecker(impl: MissingTfaCheckerImpl): MissingTfaChecker
 
     @Binds
     abstract fun bindSupports2fa(impl: Supports2faImpl): Supports2fa

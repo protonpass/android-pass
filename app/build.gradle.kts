@@ -17,8 +17,8 @@
  */
 
 import configuration.EnvironmentConfigSettings
-import java.util.Properties
 import configuration.extensions.protonEnvironment
+import java.util.Properties
 
 plugins {
     id("com.android.application")

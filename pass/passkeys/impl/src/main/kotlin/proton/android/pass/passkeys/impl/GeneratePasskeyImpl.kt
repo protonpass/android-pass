@@ -34,7 +34,8 @@ class GeneratePasskeyImpl @Inject constructor(
 ) : GeneratePasskey {
 
     override fun invoke(url: String, request: String): GeneratedPasskey {
-        passkeyManager.generatePasskey(url, request).let {
+        val sanitized = PasskeyJsonSanitizer.sanitize(request)
+        passkeyManager.generatePasskey(url, sanitized).let {
             return GeneratedPasskey(
                 passkey = Passkey(
                     rpName = it.rpName,

@@ -21,6 +21,7 @@ package proton.android.pass.data.impl.usecases.passkeys
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.account.fakes.TestKeyStoreCrypto
@@ -33,6 +34,7 @@ import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestItemType
+import kotlin.time.Duration.Companion.hours
 
 class GetPasskeysForDomainImplTest {
 
@@ -97,12 +99,17 @@ class GetPasskeysForDomainImplTest {
         val res = instance.invoke(domain)
         assertThat(res.size).isEqualTo(3)
 
-        assertThat(res[0].itemId).isEqualTo(itemId1)
-        assertThat(res[0].passkey.id).isEqualTo(passkeyId1)
-        assertThat(res[1].itemId).isEqualTo(itemId1)
-        assertThat(res[1].passkey.id).isEqualTo(passkeyId2)
-        assertThat(res[2].itemId).isEqualTo(itemId2)
-        assertThat(res[2].passkey.id).isEqualTo(passkeyId3)
+        val withId1 = res.first { it.passkey.id == passkeyId1 }
+        assertThat(withId1.itemId).isEqualTo(itemId1)
+        assertThat(withId1.passkey.id).isEqualTo(passkeyId1)
+
+        val withId2 = res.first { it.passkey.id == passkeyId2 }
+        assertThat(withId2.itemId).isEqualTo(itemId1)
+        assertThat(withId2.passkey.id).isEqualTo(passkeyId2)
+
+        val withId3 = res.first { it.passkey.id == passkeyId3 }
+        assertThat(withId3.itemId).isEqualTo(itemId2)
+        assertThat(withId3.passkey.id).isEqualTo(passkeyId3)
     }
 
     @Test
@@ -142,16 +149,19 @@ class GetPasskeysForDomainImplTest {
         val res = instance.invoke(domain, selection)
         assertThat(res.size).isEqualTo(2)
 
-        assertThat(res[0].itemId).isEqualTo(itemId1)
-        assertThat(res[0].passkey.id).isEqualTo(passkeyId1)
-        assertThat(res[1].itemId).isEqualTo(itemId2)
-        assertThat(res[1].passkey.id).isEqualTo(passkeyId3)
+        val withId1 = res.first { it.passkey.id == passkeyId1 }
+        assertThat(withId1.itemId).isEqualTo(itemId1)
+        assertThat(withId1.passkey.id).isEqualTo(passkeyId1)
+
+        val withId3 = res.first { it.passkey.id == passkeyId3 }
+        assertThat(withId3.itemId).isEqualTo(itemId2)
+        assertThat(withId3.passkey.id).isEqualTo(passkeyId3)
     }
 
     @Test
     fun `returns empty list if allowed passkeys are not for the domain`() = runTest {
         val itemId1 = ItemId("item1")
-        val itemId2 = ItemId("item1")
+        val itemId2 = ItemId("item2")
         val passkeyId1 = PasskeyId("id1")
         val passkeyId2 = PasskeyId("id2")
         val passkeyId3 = PasskeyId("id3")
@@ -186,7 +196,59 @@ class GetPasskeysForDomainImplTest {
         assertThat(res).isEmpty()
     }
 
-    private fun testPasskey(id: PasskeyId, domain: String) = Passkey(
+    @Test
+    fun `returns passkeys sorted by creation date desc`() = runTest {
+        val itemId1 = ItemId("item1")
+        val itemId2 = ItemId("item2")
+        val passkeyId1 = PasskeyId("id1")
+        val passkeyId2 = PasskeyId("id2")
+        val passkeyId3 = PasskeyId("id3")
+        val domain = "domain.test"
+
+        val createTime1 = Clock.System.now().minus(1.hours)
+        val createTime2 = Clock.System.now().minus(2.hours)
+        val createTime3 = Clock.System.now().minus(3.hours)
+
+        val items = listOf(
+            TestItem.create(
+                keyStoreCrypto = TestKeyStoreCrypto,
+                itemId = itemId1,
+                itemType = TestItemType.login(
+                    passkeys = listOf(
+                        testPasskey(passkeyId1, domain, createTime2),
+                        testPasskey(passkeyId2, domain, createTime3)
+                    )
+                )
+            ),
+            TestItem.create(
+                keyStoreCrypto = TestKeyStoreCrypto,
+                itemId = itemId2,
+                itemType = TestItemType.login(
+                    passkeys = listOf(
+                        testPasskey(passkeyId3, domain, createTime1)
+                    )
+                )
+            )
+        )
+        observeItemsWithPasskeys.emit(items)
+
+
+        val res = instance.invoke(domain, PasskeySelection.All)
+        assertThat(res.size).isEqualTo(3)
+
+        assertThat(res[0].itemId).isEqualTo(itemId2)
+        assertThat(res[0].passkey.id).isEqualTo(passkeyId3)
+        assertThat(res[1].itemId).isEqualTo(itemId1)
+        assertThat(res[1].passkey.id).isEqualTo(passkeyId1)
+        assertThat(res[2].itemId).isEqualTo(itemId1)
+        assertThat(res[2].passkey.id).isEqualTo(passkeyId2)
+    }
+
+    private fun testPasskey(
+        id: PasskeyId,
+        domain: String,
+        createTime: Instant = Clock.System.now()
+    ) = Passkey(
         id = id,
         domain = domain,
         rpId = "",
@@ -195,7 +257,7 @@ class GetPasskeysForDomainImplTest {
         userDisplayName = "",
         userId = byteArrayOf(),
         note = "",
-        createTime = Clock.System.now(),
+        createTime = createTime,
         contents = byteArrayOf(),
         userHandle = null,
         credentialId = id.value.toByteArray()

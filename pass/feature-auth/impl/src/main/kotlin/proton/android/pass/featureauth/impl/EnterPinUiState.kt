@@ -23,7 +23,8 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
 sealed interface EnterPinUiState {
-    object NotInitialised : EnterPinUiState
+
+    data object NotInitialised : EnterPinUiState
 
     @Stable
     data class Data(
@@ -35,6 +36,9 @@ sealed interface EnterPinUiState {
 }
 
 sealed interface PinError {
-    object PinEmpty : PinError
+
+    data object PinEmpty : PinError
+
     data class PinIncorrect(val remainingAttempts: Int) : PinError
+
 }

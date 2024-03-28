@@ -21,18 +21,19 @@ package proton.android.pass.featureauth.impl
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 sealed interface EnterPinNavigation {
-    object ForceSignOut : EnterPinNavigation
-    object Success : EnterPinNavigation
+
+    data object ForceSignOut : EnterPinNavigation
+
+    data object Success : EnterPinNavigation
+
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun EnterPinBottomsheet(
     modifier: Modifier = Modifier,
@@ -41,7 +42,9 @@ fun EnterPinBottomsheet(
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val state by viewModel.state.collectAsStateWithLifecycle()
+
     EventLaunchedEffect(state as? EnterPinUiState.Data, onNavigate)
+
     EnterPinContent(
         modifier = modifier,
         state = state,
@@ -54,14 +57,16 @@ fun EnterPinBottomsheet(
 }
 
 @Composable
-fun EventLaunchedEffect(data: EnterPinUiState.Data?, onNavigate: (EnterPinNavigation) -> Unit) {
-    LaunchedEffect(data) {
-        when (data?.event) {
+private fun EventLaunchedEffect(data: EnterPinUiState.Data?, onNavigate: (EnterPinNavigation) -> Unit) {
+    if (data == null) {
+        return
+    }
+
+    LaunchedEffect(data.event) {
+        when (data.event) {
             EnterPinEvent.ForceSignOut -> onNavigate(EnterPinNavigation.ForceSignOut)
             EnterPinEvent.Success -> onNavigate(EnterPinNavigation.Success)
-            EnterPinEvent.Unknown,
-            null -> {
-            }
+            EnterPinEvent.Unknown -> {}
         }
     }
 }

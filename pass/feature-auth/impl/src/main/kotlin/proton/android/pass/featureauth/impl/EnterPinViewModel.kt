@@ -56,7 +56,8 @@ class EnterPinViewModel @Inject constructor(
     private val eventState: MutableStateFlow<EnterPinEvent> =
         MutableStateFlow(EnterPinEvent.Unknown)
     private val pinState: MutableStateFlow<String> = MutableStateFlow("")
-    val state: StateFlow<EnterPinUiState> = combine(
+
+    internal val state: StateFlow<EnterPinUiState> = combine(
         eventState,
         pinState,
         pinErrorState,
@@ -112,7 +113,11 @@ class EnterPinViewModel @Inject constructor(
 }
 
 sealed interface EnterPinEvent {
-    object Success : EnterPinEvent
-    object ForceSignOut : EnterPinEvent
-    object Unknown : EnterPinEvent
+
+    data object ForceSignOut : EnterPinEvent
+
+    data object Success : EnterPinEvent
+
+    data object Unknown : EnterPinEvent
+
 }

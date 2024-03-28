@@ -37,7 +37,8 @@ class AuthenticateWithPasskeyImpl @Inject constructor(
         request: String
     ): PasskeyAuthenticationResponse {
         PassLogger.d(TAG, "Resolving challenge for origin=$origin")
-        val response = passkeyManager.resolveChallenge(origin, passkey.contents, request)
+        val sanitized = PasskeyJsonSanitizer.sanitize(request)
+        val response = passkeyManager.resolveChallenge(origin, passkey.contents, sanitized)
         return PasskeyAuthenticationResponse(response)
     }
 

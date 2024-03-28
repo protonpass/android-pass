@@ -18,11 +18,12 @@
 
 package proton.android.pass.featurehome.impl
 
-enum class HomeBottomSheetType {
-    LoginOptions,
+internal enum class HomeBottomSheetType {
     AliasOptions,
-    NoteOptions,
     CreditCardOptions,
+    LoginOptions,
+    NoteOptions,
     TrashItemOptions,
-    TrashOptions
+    TrashOptions,
+    Unknown
 }

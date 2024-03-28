@@ -69,7 +69,7 @@ class GetPasskeysForDomainImpl @Inject constructor(
                 }
         }
 
-        return loginItems.mapNotNull { item ->
+        val passkeysForDomain = loginItems.mapNotNull { item ->
             val domainPasskeys = item.login.passkeys.filter {
                 val passkeyDomain = UrlSanitizer.getDomain(it.domain).getOrElse {
                     return@filter false
@@ -98,6 +98,9 @@ class GetPasskeysForDomainImpl @Inject constructor(
                 }
             }
         }.flatten()
+
+        // Sort them by creation date
+        return passkeysForDomain.sortedByDescending { it.passkey.createTime }
     }
 
     private data class LoginItem(

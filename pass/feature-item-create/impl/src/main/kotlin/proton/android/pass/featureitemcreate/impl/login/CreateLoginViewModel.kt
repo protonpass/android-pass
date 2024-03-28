@@ -245,6 +245,7 @@ class CreateLoginViewModel @Inject constructor(
                 origin = passkeyData.origin,
                 request = passkeyData.request
             ).some()
+            websites.add(passkeyData.origin)
             createPasskeyStateFlow.update {
                 CreatePasskeyState(
                     domain = passkeyData.domain,
@@ -281,14 +282,27 @@ class CreateLoginViewModel @Inject constructor(
         val userId = accountManager.getPrimaryUserId()
             .firstOrNull { userId -> userId != null }
 
-        val generatedPasskey = generatePasskeyData.map {
-            PassLogger.i(TAG, "Generating passkey")
-            val generatedPasskey = generatePasskey(it.origin, it.request)
-            loginItemFormMutableState = loginItemFormMutableState.copy(
-                passkeyToBeGenerated = UIPasskeyContent.from(generatedPasskey.passkey)
-            )
-
-            generatedPasskey
+        val generatedPasskey = when (val data = generatePasskeyData) {
+            None -> None
+            is Some -> {
+                PassLogger.i(TAG, "Generating passkey for [origin=${data.value.origin}]")
+                runCatching {
+                    val generatedPasskey = generatePasskey(
+                        url = data.value.origin,
+                        request = data.value.request
+                    )
+                    loginItemFormMutableState = loginItemFormMutableState.copy(
+                        passkeyToBeGenerated = UIPasskeyContent.from(generatedPasskey.passkey)
+                    )
+                    generatedPasskey.some()
+                }.getOrElse {
+                    PassLogger.w(TAG, "Error generating passkey")
+                    PassLogger.w(TAG, it)
+                    snackbarDispatcher(ItemCreationError)
+                    isLoadingState.update { IsLoadingState.NotLoading }
+                    return@launch
+                }
+            }
         }
 
         if (userId != null && vault != null) {

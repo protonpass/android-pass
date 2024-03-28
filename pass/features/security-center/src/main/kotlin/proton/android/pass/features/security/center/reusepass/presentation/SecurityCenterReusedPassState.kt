@@ -28,12 +28,14 @@ internal data class SecurityCenterReusedPassState(
 ) {
 
     internal val reusedPassGroups: List<SecurityCenterReusedPassGroup> =
-        reusedPasswords.map { (reusedPasswordsCount, itemUiModels) ->
-            SecurityCenterReusedPassGroup(
-                reusedPasswordsCount = reusedPasswordsCount,
-                itemUiModels = itemUiModels
-            )
-        }
+        reusedPasswords
+            .toSortedMap(compareByDescending { reusedPasswordsCount -> reusedPasswordsCount })
+            .map { (reusedPasswordsCount, itemUiModels) ->
+                SecurityCenterReusedPassGroup(
+                    reusedPasswordsCount = reusedPasswordsCount,
+                    itemUiModels = itemUiModels
+                )
+            }
 
     internal companion object {
 

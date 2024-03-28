@@ -22,18 +22,17 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.mapSaver
 import proton.android.pass.featurehome.impl.HomeBottomSheetType
 
-val HomeBottomSheetTypeSaver: Saver<HomeBottomSheetType, Any> = run {
-    val variant = "variant"
-    mapSaver(
-        save = {
-            mapOf(variant to it.name)
-        },
-        restore = { values ->
-            if (values.isNotEmpty()) {
-                HomeBottomSheetType.valueOf(values[variant] as String)
-            } else {
-                HomeBottomSheetType.TrashOptions
-            }
+private const val HOME_BOTTOM_SHEET_TYPE_KEY = "variant"
+
+internal val HomeBottomSheetTypeSaver: Saver<HomeBottomSheetType, Any> = mapSaver(
+    save = { homeBottomSheetType ->
+        mapOf(HOME_BOTTOM_SHEET_TYPE_KEY to homeBottomSheetType.name)
+    },
+    restore = { values ->
+        if (values.isNotEmpty()) {
+            HomeBottomSheetType.valueOf(values[HOME_BOTTOM_SHEET_TYPE_KEY] as String)
+        } else {
+            HomeBottomSheetType.Unknown
         }
-    )
-}
+    }
+)

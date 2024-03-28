@@ -61,6 +61,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.AliasOptions
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.CreditCardOptions
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.LoginOptions
+import proton.android.pass.featurehome.impl.HomeBottomSheetType.Unknown
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.NoteOptions
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.TrashItemOptions
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.TrashOptions
@@ -132,7 +133,7 @@ fun HomeScreen(
     }
 
     var currentBottomSheet by rememberSaveable(stateSaver = HomeBottomSheetTypeSaver) {
-        mutableStateOf(TrashOptions)
+        mutableStateOf(Unknown)
     }
     var selectedItem by rememberSaveable(stateSaver = ItemUiModelSaver) {
         mutableStateOf(null)
@@ -532,6 +533,8 @@ fun HomeScreen(
                         homeViewModel.onBulkEnabled()
                     }
                 )
+
+                HomeBottomSheetType.Unknown -> {}
             }
         }
     ) {

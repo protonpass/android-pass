@@ -128,7 +128,12 @@ platform :android do
        json_key: './tmp/play-service-account.json',
        track: 'internal',
        release_status: 'draft',
-       aab: './app/build/outputs/bundle/playProdRelease/app-play-prod-release.aab'
+       aab: './app/build/outputs/bundle/playProdRelease/app-play-prod-release.aab',
+       skip_upload_metadata: true,
+       skip_upload_changelogs: true,
+       skip_upload_images: true,
+       skip_upload_screenshots: true,
+       sync_image_upload: true
      )
      sh("../tools/private/publish/slack-publish.sh")
   end

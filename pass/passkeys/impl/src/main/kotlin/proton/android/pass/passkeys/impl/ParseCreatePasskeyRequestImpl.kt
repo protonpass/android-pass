@@ -29,7 +29,8 @@ class ParseCreatePasskeyRequestImpl @Inject constructor(
     private val passkeyManager: PasskeyManager
 ) : ParseCreatePasskeyRequest {
     override fun invoke(request: String): CreatePasskeyRequestData {
-        val parsed = passkeyManager.parseCreateRequest(request)
+        val sanitized = PasskeyJsonSanitizer.sanitize(request)
+        val parsed = passkeyManager.parseCreateRequest(sanitized)
         return CreatePasskeyRequestData(
             rpId = parsed.rpId,
             rpName = parsed.rpName,

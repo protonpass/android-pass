@@ -29,6 +29,7 @@ import proton.android.pass.navigation.api.composable
 const val AUTH_GRAPH = "auth_graph"
 
 object Auth : NavItem(baseRoute = "auth", noHistory = true)
+
 object EnterPin : NavItem(
     baseRoute = "pin/enter/bottomsheet",
     noHistory = true,
@@ -36,13 +37,21 @@ object EnterPin : NavItem(
 )
 
 sealed interface AuthNavigation {
-    object Success : AuthNavigation
-    object Failed : AuthNavigation
-    object Dismissed : AuthNavigation
-    object SignOut : AuthNavigation
-    object ForceSignOut : AuthNavigation
-    object EnterPin : AuthNavigation
-    object Back : AuthNavigation
+
+    data object Success : AuthNavigation
+
+    data object Failed : AuthNavigation
+
+    data object Dismissed : AuthNavigation
+
+    data object SignOut : AuthNavigation
+
+    data object ForceSignOut : AuthNavigation
+
+    data object EnterPin : AuthNavigation
+
+    data object Back : AuthNavigation
+
 }
 
 fun NavGraphBuilder.authGraph(canLogout: Boolean, navigation: (AuthNavigation) -> Unit) {
@@ -60,8 +69,8 @@ fun NavGraphBuilder.authGraph(canLogout: Boolean, navigation: (AuthNavigation) -
 
         bottomSheet(EnterPin) {
             EnterPinBottomsheet(
-                onNavigate = {
-                    when (it) {
+                onNavigate = { destination ->
+                    when (destination) {
                         EnterPinNavigation.Success -> navigation(AuthNavigation.Success)
                         EnterPinNavigation.ForceSignOut -> navigation(AuthNavigation.ForceSignOut)
                     }

@@ -102,7 +102,8 @@ class CreatePasskeyActivityViewModel @Inject constructor(
         it.map { request ->
             logRequest(request)
 
-            val parsed = parseCreatePasskeyRequest(request.callingRequest.requestJson)
+            val requestJson = request.callingRequest.requestJson
+            val parsed = parseCreatePasskeyRequest(requestJson)
             val requestOrigin = request.callingRequest.origin ?: parsed.rpId ?: ""
             val domain = UrlSanitizer.getDomain(requestOrigin).getOrElse { parsed.rpId } ?: ""
 
@@ -110,7 +111,7 @@ class CreatePasskeyActivityViewModel @Inject constructor(
                 domain = domain,
                 origin = requestOrigin,
                 username = parsed.userName,
-                request = request.callingRequest.requestJson,
+                request = requestJson,
                 rpName = parsed.rpName
             )
         }

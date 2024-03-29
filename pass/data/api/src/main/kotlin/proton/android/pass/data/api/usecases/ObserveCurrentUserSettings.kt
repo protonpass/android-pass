@@ -20,8 +20,6 @@ package proton.android.pass.data.api.usecases
 
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.usersettings.domain.entity.UserSettings
-import proton.android.pass.domain.Plan
-import proton.android.pass.domain.PlanLimit
 
 interface ObserveCurrentUserSettings {
     operator fun invoke(): Flow<UserSettings?>

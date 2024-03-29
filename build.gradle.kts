@@ -19,7 +19,7 @@
 plugins {
     alias(libs.plugins.gradlePlugin.proton.detekt)
     alias(libs.plugins.gradlePlugin.dependency.analysis)
-//    alias(libs.plugins.gradlePlugin.doctor)
+    alias(libs.plugins.gradlePlugin.doctor)
     alias(libs.plugins.gradlePlugin.fulladle)
     alias(libs.plugins.gradlePlugin.android.benchmark) apply false
     alias(libs.plugins.gradlePlugin.application) apply false
@@ -71,12 +71,12 @@ subprojects {
     }
 }
 
-//doctor {
-//    javaHome {
-//        ensureJavaHomeIsSet.set(!isCI)
-//        ensureJavaHomeMatches.set(!isCI)
-//    }
-//}
+doctor {
+    javaHome {
+        ensureJavaHomeIsSet.set(!isCI)
+        ensureJavaHomeMatches.set(!isCI)
+    }
+}
 
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)

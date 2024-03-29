@@ -19,20 +19,12 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
-import me.proton.core.payment.domain.PaymentManager
 import me.proton.core.usersettings.domain.entity.UserSettings
 import me.proton.core.usersettings.domain.usecase.ObserveUserSettings
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveCurrentUserSettings
-import proton.android.pass.data.api.usecases.ObserveItemCount
-import proton.android.pass.data.api.usecases.ObserveMFACount
-import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
-import proton.android.pass.data.api.usecases.ObserveVaultCount
-import proton.android.pass.data.api.usecases.UpgradeInfo
-import proton.android.pass.data.impl.repositories.PlanRepository
 import javax.inject.Inject
 
 class ObserveCurrentUserSettingsImpl @Inject constructor(

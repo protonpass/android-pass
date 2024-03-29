@@ -19,7 +19,6 @@
 package proton.android.pass.featureaccount.impl
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Divider
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -33,10 +32,7 @@ import proton.android.pass.composecomponents.impl.setting.SettingOption
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
 @Composable
-fun SubscriptionInfo(
-    modifier: Modifier = Modifier,
-    state: AccountUiState
-) {
+fun SubscriptionInfo(modifier: Modifier = Modifier, state: AccountUiState) {
     Column(
         modifier = modifier.roundedContainerNorm()
     ) {
@@ -63,7 +59,7 @@ fun SubscriptionInfoPreview(@PreviewParameter(ThemePreviewProvider::class) isDar
                     recoveryState = null,
                     isLoadingState = IsLoadingState.NotLoading,
                     showUpgradeButton = true,
-                    showSubscriptionButton = true,
+                    showSubscriptionButton = true
                 )
             )
         }

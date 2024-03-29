@@ -23,6 +23,8 @@
   <string name="security_center_home_row_insecure_passwords_subtitle">Crea password sicure</string>
   <string name="security_center_home_row_reused_passwords_title">Password utilizzate più volte</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Crea password univoche</string>
+  <string name="security_center_home_row_missing_tfa_title">Autenticazione a due fattori mancante</string>
+  <string name="security_center_home_row_missing_tfa_subtitle">Migliora la tua sicurezza</string>
   <string name="security_center_home_section_password_health">Stato della password</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Password deboli</string>
@@ -31,4 +33,7 @@
   <string name="security_center_reused_pass_top_bar_title">Password utilizzate più volte</string>
   <string name="security_center_reused_pass_top_bar_subtitle">Genera password univoche per aumentare la tua sicurezza.</string>
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Utilizzata %1$d volte</string>
+  <!-- Missing 2FA -->
+  <string name="security_center_missing_tfa_top_bar_title">Autenticazione a due fattori mancante</string>
+  <string name="security_center_missing_tfa_top_bar_subtitle">Login con siti che permettono l\'autenticazione a due fattori, ma in cui non è stata ancora configurata.</string>
 </resources>

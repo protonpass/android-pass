@@ -23,6 +23,8 @@
   <string name="security_center_home_row_insecure_passwords_subtitle">Crie senhas fortes</string>
   <string name="security_center_home_row_reused_passwords_title">Senhas reutilizadas</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Crie senhas exclusivas</string>
+  <string name="security_center_home_row_missing_tfa_title">Autenticação de dois fatores em falta</string>
+  <string name="security_center_home_row_missing_tfa_subtitle">Aumente sua segurança</string>
   <string name="security_center_home_section_password_health">Estado da senha</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Senhas fracas</string>
@@ -31,4 +33,7 @@
   <string name="security_center_reused_pass_top_bar_title">Senhas reutilizadas</string>
   <string name="security_center_reused_pass_top_bar_subtitle">Gere senhas únicas para aumentar sua segurança.</string>
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Reutilizada %1$d vezes</string>
+  <!-- Missing 2FA -->
+  <string name="security_center_missing_tfa_top_bar_title">Autenticação de dois fatores em falta</string>
+  <string name="security_center_missing_tfa_top_bar_subtitle">Entrada em sites que possuem autenticação em duas etapas disponível, mas você ainda não configurou.</string>
 </resources>

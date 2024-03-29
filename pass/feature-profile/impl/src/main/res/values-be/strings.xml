@@ -51,5 +51,5 @@
   <string name="profile_passkey_support_subtitle_supported">Падтрымліваюцца ключы доступу</string>
   <string name="profile_passkey_support_subtitle_not_supported_android_version">Ваша версія Android не падтрымлівае ключы доступу</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Ваша прылада не падтрымлівае ключы доступу</string>
-  <string name="profile_passkey_support_subtitle_not_supported_unknown">Немагчыма праверыць, ці ёсць падтрымка для ключоў доступу</string>
+  <string name="profile_passkey_support_subtitle_not_supported_unknown">Немагчыма праверыць, ці падтрымліваюцца ключы доступу</string>
 </resources>

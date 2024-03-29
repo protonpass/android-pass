@@ -100,7 +100,7 @@
   <string name="password_score_weak">Простий</string>
   <string name="password_score_strong">Надійний</string>
   <string name="passkey_detail_bottomsheet_title">Passkey</string>
-  <string name="passkey_detail_bottomsheet_username">Username</string>
+  <string name="passkey_detail_bottomsheet_username">Ім\'я користувача</string>
   <string name="passkey_detail_bottomsheet_domain">Домен</string>
   <string name="passkey_detail_bottomsheet_key">Key</string>
   <string name="passkey_detail_bottomsheet_created">Created</string>

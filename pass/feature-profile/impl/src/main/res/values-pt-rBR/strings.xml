@@ -49,7 +49,7 @@
   <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">O navegador Samsung está definido como navegador padrão. Não oferece suporte ao preenchimento automático por gerenciadores de senhas externos.</string>
   <string name="profile_passkey_support_section_title">Chaves de acesso</string>
   <string name="profile_passkey_support_subtitle_supported">As chaves de acesso são suportadas</string>
-  <string name="profile_passkey_support_subtitle_not_supported_android_version">Your android version does not support passkeys</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">Sua versão Android não suporta chaves de acesso</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Seu dispositivo não suporta a chave de acesso</string>
-  <string name="profile_passkey_support_subtitle_not_supported_unknown">Could not check support for passkeys</string>
+  <string name="profile_passkey_support_subtitle_not_supported_unknown">Não foi possível verificar o suporte para chaves de acesso</string>
 </resources>

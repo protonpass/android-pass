@@ -50,6 +50,7 @@ internal class AccountViewModelTest {
     @Before
     fun setup() {
         observeCurrentUser = TestObserveCurrentUser()
+        observeCurrentUserSettings = TestObserveCurrentUserSettings()
         getUpgradeInfo = TestObserveUpgradeInfo()
         snackbarDispatcher = TestSnackbarDispatcher()
 

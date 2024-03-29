@@ -78,10 +78,10 @@ fun AccountAndRecoveryInfoContent(
         PassDivider()
 
         AccountPasswordAndRecoveryInfo(
-                state = state,
-                onPasswordManagementClick = onPasswordManagementClick,
-                onRecoveryEmailClick = onRecoveryEmailClick
-            )
+            state = state,
+            onPasswordManagementClick = onPasswordManagementClick,
+            onRecoveryEmailClick = onRecoveryEmailClick
+        )
     }
 }
 
@@ -131,7 +131,7 @@ fun AccountInfoPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
                     plan = PlanSection.Data("Free"),
                     isLoadingState = IsLoadingState.NotLoading,
                     showUpgradeButton = true,
-                    showSubscriptionButton = true,
+                    showSubscriptionButton = true
                 ),
                 onPasswordManagementClick = {},
                 onRecoveryEmailClick = {}

@@ -20,10 +20,10 @@ package proton.android.pass.featureitemcreate.impl.login
 
 
 sealed interface LoginField {
-    object Title : LoginField
-    object Username : LoginField
-    object Password : LoginField
-    object PrimaryTotp : LoginField
+    data object Title : LoginField
+    data object Username : LoginField
+    data object Password : LoginField
+    data object PrimaryTotp : LoginField
 }
 
 sealed class LoginCustomField : LoginField {

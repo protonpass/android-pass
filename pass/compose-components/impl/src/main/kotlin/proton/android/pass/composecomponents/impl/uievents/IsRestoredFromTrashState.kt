@@ -22,8 +22,8 @@ import androidx.compose.runtime.Stable
 
 @Stable
 sealed interface IsRestoredFromTrashState {
-    object Restored : IsRestoredFromTrashState
-    object NotRestored : IsRestoredFromTrashState
+    data object Restored : IsRestoredFromTrashState
+    data object NotRestored : IsRestoredFromTrashState
 
     fun value(): Boolean = when (this) {
         Restored -> true

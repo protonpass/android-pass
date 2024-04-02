@@ -22,8 +22,8 @@ import androidx.compose.runtime.Stable
 
 @Stable
 sealed interface IsRefreshingState {
-    object Refreshing : IsRefreshingState
-    object NotRefreshing : IsRefreshingState
+    data object Refreshing : IsRefreshingState
+    data object NotRefreshing : IsRefreshingState
 
     fun value(): Boolean = when (this) {
         Refreshing -> true

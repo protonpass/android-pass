@@ -19,8 +19,8 @@
 package proton.android.pass.preferences
 
 sealed interface BiometricSystemLockPreference {
-    object Enabled : BiometricSystemLockPreference
-    object NotEnabled : BiometricSystemLockPreference
+    data object Enabled : BiometricSystemLockPreference
+    data object NotEnabled : BiometricSystemLockPreference
 
     companion object {
         fun from(value: Boolean): BiometricSystemLockPreference = if (value) {

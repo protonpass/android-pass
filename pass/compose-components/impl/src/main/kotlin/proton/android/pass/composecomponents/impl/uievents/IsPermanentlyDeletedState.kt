@@ -22,8 +22,8 @@ import androidx.compose.runtime.Stable
 
 @Stable
 sealed interface IsPermanentlyDeletedState {
-    object Deleted : IsPermanentlyDeletedState
-    object NotDeleted : IsPermanentlyDeletedState
+    data object Deleted : IsPermanentlyDeletedState
+    data object NotDeleted : IsPermanentlyDeletedState
 
     fun value(): Boolean = when (this) {
         Deleted -> true

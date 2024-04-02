@@ -19,8 +19,8 @@
 package proton.android.pass.preferences
 
 sealed interface HasDismissedTrialBanner {
-    object Dismissed : HasDismissedTrialBanner
-    object NotDismissed : HasDismissedTrialBanner
+    data object Dismissed : HasDismissedTrialBanner
+    data object NotDismissed : HasDismissedTrialBanner
 
     companion object {
         fun from(value: Boolean): HasDismissedTrialBanner = if (value) { Dismissed } else { NotDismissed }

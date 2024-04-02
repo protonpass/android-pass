@@ -19,8 +19,8 @@
 package proton.android.pass.preferences
 
 sealed interface UseFaviconsPreference {
-    object Enabled : UseFaviconsPreference
-    object Disabled : UseFaviconsPreference
+    data object Enabled : UseFaviconsPreference
+    data object Disabled : UseFaviconsPreference
 
     companion object {
         fun from(value: Boolean): UseFaviconsPreference = if (value) { Enabled } else { Disabled }

@@ -19,8 +19,8 @@
 package proton.android.pass.preferences
 
 sealed interface HasCompletedOnBoarding {
-    object Completed : HasCompletedOnBoarding
-    object NotCompleted : HasCompletedOnBoarding
+    data object Completed : HasCompletedOnBoarding
+    data object NotCompleted : HasCompletedOnBoarding
 
     companion object {
         fun from(value: Boolean): HasCompletedOnBoarding = if (value) { Completed } else { NotCompleted }

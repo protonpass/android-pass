@@ -27,25 +27,25 @@ import proton.android.pass.domain.VaultWithItemCount
 @Stable
 sealed interface ShareFromItemNavEvent {
     @Stable
-    object Unknown : ShareFromItemNavEvent
+    data object Unknown : ShareFromItemNavEvent
 
     @Stable
-    object MoveToSharedVault : ShareFromItemNavEvent
+    data object MoveToSharedVault : ShareFromItemNavEvent
 }
 
 @Stable
 sealed interface CreateNewVaultState {
     @Stable
-    object Allow : CreateNewVaultState
+    data object Allow : CreateNewVaultState
 
     @Stable
-    object Upgrade : CreateNewVaultState
+    data object Upgrade : CreateNewVaultState
 
     @Stable
-    object VaultLimitReached : CreateNewVaultState
+    data object VaultLimitReached : CreateNewVaultState
 
     @Stable
-    object Hide : CreateNewVaultState
+    data object Hide : CreateNewVaultState
 }
 
 @Stable

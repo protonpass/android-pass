@@ -51,6 +51,6 @@ fun NavGraphBuilder.updateAliasGraph(onNavigate: (UpdateAliasNavigation) -> Unit
 
 sealed interface UpdateAliasNavigation {
     data class Updated(val shareId: ShareId, val itemId: ItemId) : UpdateAliasNavigation
-    object Upgrade : UpdateAliasNavigation
-    object Close : UpdateAliasNavigation
+    data object Upgrade : UpdateAliasNavigation
+    data object Close : UpdateAliasNavigation
 }

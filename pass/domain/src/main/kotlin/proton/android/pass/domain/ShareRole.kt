@@ -26,13 +26,13 @@ sealed interface ShareRole {
 
     val value: String
 
-    object Admin : ShareRole {
+    data object Admin : ShareRole {
         override val value: String = SHARE_ROLE_ADMIN
     }
-    object Write : ShareRole {
+    data object Write : ShareRole {
         override val value: String = SHARE_ROLE_WRITE
     }
-    object Read : ShareRole {
+    data object Read : ShareRole {
         override val value: String = SHARE_ROLE_READ
     }
     data class Custom(val roleId: ShareRoleId) : ShareRole {

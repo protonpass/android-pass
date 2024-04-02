@@ -30,7 +30,7 @@ object SyncDialog : NavItem(
 )
 
 sealed interface SyncNavigation {
-    object FinishedFetching : SyncNavigation
+    data object FinishedFetching : SyncNavigation
 }
 
 fun NavGraphBuilder.syncGraph(onNavigate: (SyncNavigation) -> Unit) {

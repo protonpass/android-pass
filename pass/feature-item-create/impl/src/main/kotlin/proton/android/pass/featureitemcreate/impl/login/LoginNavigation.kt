@@ -49,35 +49,35 @@ sealed interface BaseLoginNavigation {
         val title: Option<String>
     ) : BaseLoginNavigation
 
-    object GeneratePassword : BaseLoginNavigation
-    object Upgrade : BaseLoginNavigation
+    data object GeneratePassword : BaseLoginNavigation
+    data object Upgrade : BaseLoginNavigation
     data class ScanTotp(
         val index: Option<Int>
     ) : BaseLoginNavigation
-    object Close : BaseLoginNavigation
+    data object Close : BaseLoginNavigation
 
     data class AliasOptions(
         val shareId: ShareId,
         val showUpgrade: Boolean
     ) : BaseLoginNavigation
-    object DeleteAlias : BaseLoginNavigation
+    data object DeleteAlias : BaseLoginNavigation
     data class EditAlias(
         val shareId: ShareId,
         val showUpgrade: Boolean
     ) : BaseLoginNavigation
 
-    object AddCustomField : BaseLoginNavigation
+    data object AddCustomField : BaseLoginNavigation
     data class CustomFieldTypeSelected(
         val type: CustomFieldType
     ) : BaseLoginNavigation
 
     data class CustomFieldOptions(val currentValue: String, val index: Int) : BaseLoginNavigation
     data class EditCustomField(val currentValue: String, val index: Int) : BaseLoginNavigation
-    object RemovedCustomField : BaseLoginNavigation
+    data object RemovedCustomField : BaseLoginNavigation
 
     @JvmInline
     value class TotpSuccess(val results: Map<String, Any>) : BaseLoginNavigation
-    object TotpCancel : BaseLoginNavigation
+    data object TotpCancel : BaseLoginNavigation
 
     @JvmInline
     value class OpenImagePicker(val index: Option<Int>) : BaseLoginNavigation

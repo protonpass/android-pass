@@ -107,8 +107,8 @@ class PinConfigViewModel @Inject constructor(
 }
 
 sealed interface PinConfigEvent {
-    object PinSet : PinConfigEvent
-    object Unknown : PinConfigEvent
+    data object PinSet : PinConfigEvent
+    data object Unknown : PinConfigEvent
 }
 
 @Stable

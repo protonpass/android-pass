@@ -19,8 +19,8 @@
 package proton.android.pass.preferences
 
 sealed interface AppLockState {
-    object Enabled : AppLockState
-    object Disabled : AppLockState
+    data object Enabled : AppLockState
+    data object Disabled : AppLockState
 
     companion object {
         fun from(value: Boolean): AppLockState = if (value) { Enabled } else { Disabled }

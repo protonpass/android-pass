@@ -28,7 +28,7 @@ import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.bottomSheet
 
 sealed interface ItemOptionsNavigation {
-    object Close : ItemOptionsNavigation
+    data object Close : ItemOptionsNavigation
 }
 
 object ItemOptionsBottomSheet : NavItem(

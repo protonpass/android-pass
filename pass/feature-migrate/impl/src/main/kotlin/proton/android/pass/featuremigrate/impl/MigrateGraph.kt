@@ -48,8 +48,8 @@ sealed interface MigrateNavigation {
         val itemId: ItemId
     ) : MigrateNavigation
 
-    object VaultMigrated : MigrateNavigation
-    object Close : MigrateNavigation
+    data object VaultMigrated : MigrateNavigation
+    data object Close : MigrateNavigation
 }
 
 object MigrateModeArg : NavArgId {

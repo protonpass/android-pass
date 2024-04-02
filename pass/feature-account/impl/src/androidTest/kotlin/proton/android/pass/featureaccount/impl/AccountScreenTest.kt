@@ -23,6 +23,7 @@ import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollTo
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasData
@@ -123,7 +124,9 @@ class AccountScreenTest {
             val contentDescription = activity.getString(
                 R.string.account_delete_account_icon_content_description
             )
-            onNodeWithContentDescription(contentDescription).performClick()
+            onNodeWithContentDescription(contentDescription)
+                .performScrollTo()
+                .performClick()
 
         }
 

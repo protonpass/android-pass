@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.upsell.shared.ui
+package proton.android.pass.features.upsell.ui
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -31,9 +31,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.heroNorm
@@ -54,7 +54,7 @@ internal fun UpsellHeader(
             contentDescription = null
         )
 
-        Spacer(modifier = Modifier.height(Spacing.large))
+        Spacer(modifier = Modifier.height(height = Spacing.large))
 
         Text(
             text = stringResource(id = titleResId),
@@ -67,7 +67,8 @@ internal fun UpsellHeader(
         Text(
             text = stringResource(id = subtitleResId),
             textAlign = TextAlign.Center,
-            style = ProtonTheme.typography.defaultNorm
+            fontWeight = FontWeight.W300,
+            color = ProtonTheme.colors.textWeak
         )
     }
 

@@ -746,10 +746,10 @@ class HomeViewModel @Inject constructor(
         bottomSheetItemActionFlow.update { BottomSheetItemAction.None }
     }
 
-    internal fun viewItemHistory(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
+    internal fun viewItemHistory(shareId: ShareId, itemId: ItemId) {
         homeUiState.value
             .let { state ->
-                if (!state.isFreePlan) {
+                if (state.isFreePlan) {
                     HomeNavEvent.UpgradeDialog
                 } else {
                     HomeNavEvent.ItemHistory(shareId, itemId)

@@ -22,8 +22,8 @@ import androidx.compose.runtime.Stable
 
 @Stable
 sealed interface IsProcessingSearchState {
-    object Loading : IsProcessingSearchState
-    object NotLoading : IsProcessingSearchState
+    data object Loading : IsProcessingSearchState
+    data object NotLoading : IsProcessingSearchState
 
 
     fun value(): Boolean = when (this) {

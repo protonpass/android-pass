@@ -77,10 +77,10 @@ data class AliasItemFormState(
 }
 
 sealed interface AliasItemValidationErrors {
-    object BlankTitle : AliasItemValidationErrors
-    object BlankPrefix : AliasItemValidationErrors
-    object InvalidAliasContent : AliasItemValidationErrors
-    object NoMailboxes : AliasItemValidationErrors
+    data object BlankTitle : AliasItemValidationErrors
+    data object BlankPrefix : AliasItemValidationErrors
+    data object InvalidAliasContent : AliasItemValidationErrors
+    data object NoMailboxes : AliasItemValidationErrors
 }
 
 fun AliasPrefixError.toError(): AliasItemValidationErrors = when (this) {

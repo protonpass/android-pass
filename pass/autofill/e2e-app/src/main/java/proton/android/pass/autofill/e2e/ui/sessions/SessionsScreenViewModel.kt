@@ -171,7 +171,7 @@ sealed interface SessionsScreenUiState {
     fun isLoading(): Boolean
 
     @Stable
-    object Loading : SessionsScreenUiState {
+    data object Loading : SessionsScreenUiState {
         override fun isLoading() = true
     }
 

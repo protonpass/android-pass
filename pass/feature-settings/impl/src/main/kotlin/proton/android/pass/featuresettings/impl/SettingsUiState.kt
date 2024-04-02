@@ -28,8 +28,8 @@ import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UseFaviconsPreference
 
 sealed interface SettingsEvent {
-    object Unknown : SettingsEvent
-    object RestartApp : SettingsEvent
+    data object Unknown : SettingsEvent
+    data object RestartApp : SettingsEvent
 }
 
 @Stable

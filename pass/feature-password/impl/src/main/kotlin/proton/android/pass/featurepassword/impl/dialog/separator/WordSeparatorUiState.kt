@@ -26,8 +26,8 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.commonrust.api.WordSeparator
 
 sealed interface WordSeparatorUiEvent {
-    object Unknown : WordSeparatorUiEvent
-    object Close : WordSeparatorUiEvent
+    data object Unknown : WordSeparatorUiEvent
+    data object Close : WordSeparatorUiEvent
 }
 
 @Immutable

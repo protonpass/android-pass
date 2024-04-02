@@ -30,7 +30,7 @@ enum class OrganizationShareMode(val value: Int) {
 }
 
 sealed interface OrganizationSettings {
-    object NotAnOrganization : OrganizationSettings
+    data object NotAnOrganization : OrganizationSettings
     data class Organization(
         val canUpdate: Boolean,
         val shareMode: OrganizationShareMode

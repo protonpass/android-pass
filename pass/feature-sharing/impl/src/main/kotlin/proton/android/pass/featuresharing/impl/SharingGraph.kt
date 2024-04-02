@@ -109,9 +109,9 @@ object ShareFromItem : NavItem(
 }
 
 sealed interface SharingNavigation {
-    object Back : SharingNavigation
-    object BackToHome : SharingNavigation
-    object Upgrade : SharingNavigation
+    data object Back : SharingNavigation
+    data object BackToHome : SharingNavigation
+    data object Upgrade : SharingNavigation
 
     @JvmInline
     value class ShowInvitesInfo(val shareId: ShareId) : SharingNavigation
@@ -154,7 +154,7 @@ sealed interface SharingNavigation {
         val destEmail: String
     ) : SharingNavigation
 
-    object MoveItemToSharedVault : SharingNavigation
+    data object MoveItemToSharedVault : SharingNavigation
 
     data class CreateVaultAndMoveItem(
         val shareId: ShareId,
@@ -172,9 +172,9 @@ sealed interface SharingNavigation {
         val permission: ShareRole
     ) : SharingNavigation
 
-    object InviteToVaultEditAllPermissions : SharingNavigation
+    data object InviteToVaultEditAllPermissions : SharingNavigation
 
-    object InviteError : SharingNavigation
+    data object InviteError : SharingNavigation
 }
 
 fun NavGraphBuilder.sharingGraph(onNavigateEvent: (SharingNavigation) -> Unit) {

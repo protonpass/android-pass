@@ -19,12 +19,12 @@
 package proton.android.pass.commonrust.api
 
 sealed class AliasPrefixError(override val message: String) : RuntimeException(message) {
-    object DotAtTheBeginning : AliasPrefixError("DotAtTheBeginning")
-    object DotAtTheEnd : AliasPrefixError("DotAtTheEnd")
-    object InvalidCharacter : AliasPrefixError("InvalidCharacter")
-    object PrefixEmpty : AliasPrefixError("PrefixEmpty")
-    object PrefixTooLong : AliasPrefixError("PrefixTooLong")
-    object TwoConsecutiveDots : AliasPrefixError("TwoConsecutiveDots")
+    data object DotAtTheBeginning : AliasPrefixError("DotAtTheBeginning")
+    data object DotAtTheEnd : AliasPrefixError("DotAtTheEnd")
+    data object InvalidCharacter : AliasPrefixError("InvalidCharacter")
+    data object PrefixEmpty : AliasPrefixError("PrefixEmpty")
+    data object PrefixTooLong : AliasPrefixError("PrefixTooLong")
+    data object TwoConsecutiveDots : AliasPrefixError("TwoConsecutiveDots")
 }
 
 interface AliasPrefixValidator {

@@ -19,6 +19,6 @@
 package proton.android.pass.featureitemcreate.impl.creditcard
 
 sealed interface BaseCreditCardNavigation {
-    object Upgrade : BaseCreditCardNavigation
-    object Close : BaseCreditCardNavigation
+    data object Upgrade : BaseCreditCardNavigation
+    data object Close : BaseCreditCardNavigation
 }

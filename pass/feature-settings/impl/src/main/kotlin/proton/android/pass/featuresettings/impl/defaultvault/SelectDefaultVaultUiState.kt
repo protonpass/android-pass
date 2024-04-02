@@ -25,8 +25,8 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.VaultWithItemCount
 
 sealed interface SelectDefaultVaultEvent {
-    object Unknown : SelectDefaultVaultEvent
-    object Selected : SelectDefaultVaultEvent
+    data object Unknown : SelectDefaultVaultEvent
+    data object Selected : SelectDefaultVaultEvent
 }
 
 @Stable

@@ -89,5 +89,5 @@ class AutosaveActivityViewModel @Inject constructor(
 }
 
 sealed interface AutosaveEvent {
-    object Close : AutosaveEvent
+    data object Close : AutosaveEvent
 }

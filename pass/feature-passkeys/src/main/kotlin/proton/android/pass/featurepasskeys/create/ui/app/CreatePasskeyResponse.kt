@@ -20,7 +20,7 @@ package proton.android.pass.featurepasskeys.create.ui.app
 
 sealed interface CreatePasskeyResponse {
 
-    object Cancel : CreatePasskeyResponse
+    data object Cancel : CreatePasskeyResponse
 
     @JvmInline
     value class Success(val response: String) : CreatePasskeyResponse

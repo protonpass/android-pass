@@ -53,7 +53,7 @@ data class FilterOption(val searchFilterType: SearchFilterType)
 
 @Stable
 sealed class VaultSelectionOption {
-    object AllVaults : VaultSelectionOption()
-    object Trash : VaultSelectionOption()
+    data object AllVaults : VaultSelectionOption()
+    data object Trash : VaultSelectionOption()
     data class Vault(val shareId: ShareId) : VaultSelectionOption()
 }

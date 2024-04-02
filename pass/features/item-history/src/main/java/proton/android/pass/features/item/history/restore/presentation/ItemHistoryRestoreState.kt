@@ -28,7 +28,7 @@ import proton.android.pass.domain.ShareId
 internal sealed interface ItemHistoryRestoreState {
 
     @Stable
-    object Initial : ItemHistoryRestoreState
+    data object Initial : ItemHistoryRestoreState
 
     @Stable
     data class ItemDetails(

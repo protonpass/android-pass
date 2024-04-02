@@ -24,6 +24,6 @@ sealed interface WebsiteSectionEvent {
         val index: Int
     ) : WebsiteSectionEvent
 
-    object AddWebsite : WebsiteSectionEvent
+    data object AddWebsite : WebsiteSectionEvent
     data class RemoveWebsite(val index: Int) : WebsiteSectionEvent
 }

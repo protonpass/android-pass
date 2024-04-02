@@ -26,11 +26,11 @@ sealed interface PlanSection {
     fun name(): String = ""
     fun isLoading(): Boolean
 
-    object Hide : PlanSection {
+    data object Hide : PlanSection {
         override fun isLoading(): Boolean = false
     }
 
-    object Loading : PlanSection {
+    data object Loading : PlanSection {
         override fun isLoading(): Boolean = true
     }
 

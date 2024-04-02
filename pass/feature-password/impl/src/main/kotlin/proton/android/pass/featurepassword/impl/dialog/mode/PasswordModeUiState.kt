@@ -26,8 +26,8 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.preferences.PasswordGenerationMode
 
 sealed interface PasswordModeUiEvent {
-    object Unknown : PasswordModeUiEvent
-    object Close : PasswordModeUiEvent
+    data object Unknown : PasswordModeUiEvent
+    data object Close : PasswordModeUiEvent
 }
 
 @Immutable

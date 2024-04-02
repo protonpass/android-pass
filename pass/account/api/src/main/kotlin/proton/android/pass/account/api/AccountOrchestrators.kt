@@ -26,5 +26,5 @@ interface AccountOrchestrators {
 }
 
 sealed class Orchestrator {
-    object PlansOrchestrator : Orchestrator()
+    data object PlansOrchestrator : Orchestrator()
 }

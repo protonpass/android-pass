@@ -96,8 +96,8 @@ class RemoteImageFetcherImpl @Inject constructor(
     }
 
     private sealed interface ExceptionHandleResult {
-        object Continue : ExceptionHandleResult
-        object EmitNull : ExceptionHandleResult
+        data object Continue : ExceptionHandleResult
+        data object EmitNull : ExceptionHandleResult
     }
 
     private enum class FetchImageError(val code: Int) {

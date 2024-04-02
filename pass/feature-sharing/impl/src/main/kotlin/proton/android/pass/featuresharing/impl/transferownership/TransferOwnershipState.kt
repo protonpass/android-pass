@@ -24,10 +24,10 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 @Stable
 sealed interface TransferOwnershipEvent {
     @Stable
-    object Unknown : TransferOwnershipEvent
+    data object Unknown : TransferOwnershipEvent
 
     @Stable
-    object OwnershipTransferred : TransferOwnershipEvent
+    data object OwnershipTransferred : TransferOwnershipEvent
 }
 
 @Stable

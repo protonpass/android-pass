@@ -20,9 +20,7 @@ package proton.android.pass.features.upsell.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -41,9 +39,7 @@ import proton.android.pass.composecomponents.impl.R as CompR
 @Composable
 internal fun UpsellFeatures(modifier: Modifier = Modifier, features: ImmutableList<Pair<Int, Int>>) {
     RoundedCornersColumn(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = Spacing.medium),
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(space = 12.dp)
     ) {
         Spacer(modifier = Modifier.height(height = Spacing.small))

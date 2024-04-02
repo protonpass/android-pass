@@ -21,9 +21,9 @@ package proton.android.pass.autofill.ui.autofill
 import proton.android.pass.autofill.entities.AutofillMappings
 
 sealed interface AutofillNavigation {
-    object Upgrade : AutofillNavigation
-    object Cancel : AutofillNavigation
-    object ForceSignOut : AutofillNavigation
+    data object Upgrade : AutofillNavigation
+    data object Cancel : AutofillNavigation
+    data object ForceSignOut : AutofillNavigation
 
     @JvmInline
     value class SendResponse(val mappings: AutofillMappings) : AutofillNavigation

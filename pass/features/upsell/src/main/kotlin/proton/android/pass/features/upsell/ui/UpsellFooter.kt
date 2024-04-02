@@ -16,54 +16,68 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.upsell.shared.ui
+package proton.android.pass.features.upsell.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.features.upsell.R
 import proton.android.pass.composecomponents.impl.R as CompR
 
-@[Composable Suppress("MagicNumber")]
-internal fun UpsellButton(
+@Composable
+internal fun UpsellFooter(
     modifier: Modifier = Modifier,
-    onClick: () -> Unit
+    onUpgradeClick: () -> Unit,
+    onNotNowClick: () -> Unit
 ) {
-    Box(
-        modifier = modifier
-            .clip(CircleShape)
-            .fillMaxWidth()
-            .background(
-                brush = Brush.linearGradient(
-                    colors = listOf(
-                        Color(0xFFC183CE),
-                        Color(0xFF714DFF)
-                    )
-                )
-            )
-            .clickable { onClick() }
-            .padding(vertical = Spacing.medium)
+    Column(
+        modifier = modifier.padding(
+            horizontal = Spacing.large,
+            vertical = Spacing.medium
+        ),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
     ) {
+        Box(
+            modifier = modifier
+                .clip(CircleShape)
+                .fillMaxWidth()
+                .background(color = PassTheme.colors.interactionNormMajor2)
+                .clickable { onUpgradeClick() }
+                .padding(vertical = Spacing.medium)
+        ) {
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(id = R.string.upsell_button_upgrade),
+                color = PassTheme.colors.textInvert,
+                style = ProtonTheme.typography.defaultNorm,
+                textAlign = TextAlign.Center
+            )
+        }
+
         Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = stringResource(id = CompR.string.action_upgrade_now),
-            color = PassTheme.colors.signalNorm,
-            style = ProtonTheme.typography.defaultNorm,
-            textAlign = TextAlign.Center
+            modifier = Modifier
+                .clickable { onNotNowClick() }
+                .padding(all = Spacing.small),
+            text = stringResource(id = CompR.string.action_not_now),
+            color = PassTheme.colors.interactionNormMajor2,
+            style = ProtonTheme.typography.defaultNorm
         )
     }
 }

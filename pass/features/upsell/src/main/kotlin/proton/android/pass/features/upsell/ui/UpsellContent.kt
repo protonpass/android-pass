@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.upsell.plus.ui
+package proton.android.pass.features.upsell.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -26,55 +26,66 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import kotlinx.collections.immutable.ImmutableList
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.features.upsell.R
-import proton.android.pass.features.upsell.shared.navigation.UpsellNavDestination
-import proton.android.pass.features.upsell.shared.ui.UpsellButton
-import proton.android.pass.features.upsell.shared.ui.UpsellFeatureModel
-import proton.android.pass.features.upsell.shared.ui.UpsellFeatures
-import proton.android.pass.features.upsell.shared.ui.UpsellHeader
-import proton.android.pass.features.upsell.shared.ui.UpsellTopBar
+import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.domain.features.PaidFeature
+import proton.android.pass.features.upsell.navigation.UpsellNavDestination
+import proton.android.pass.features.upsell.presentation.UpsellState
 
 @Composable
-internal fun UpsellPlusContent(
+internal fun UpsellContent(
     modifier: Modifier = Modifier,
-    features: ImmutableList<UpsellFeatureModel>,
-    onNavigate: (UpsellNavDestination) -> Unit
-) {
+    onNavigated: (UpsellNavDestination) -> Unit,
+    state: UpsellState
+) = with(state) {
     Scaffold(
-        modifier = modifier
-            .fillMaxSize()
-            .background(PassTheme.colors.backgroundStrong),
-        topBar = {
-            UpsellTopBar(
-                onUpClick = { onNavigate(UpsellNavDestination.Close) }
+        modifier = modifier,
+        bottomBar = {
+            UpsellFooter(
+                onUpgradeClick = { onNavigated(UpsellNavDestination.Upgrade) },
+                onNotNowClick = { onNavigated(UpsellNavDestination.Back) }
             )
         }
     ) { innerPaddingValues ->
         Column(
             modifier = modifier
                 .fillMaxSize()
+                .background(color = PassTheme.colors.backgroundNorm)
                 .padding(paddingValues = innerPaddingValues)
-                .padding(horizontal = Spacing.medium)
+                .padding(
+                    start = Spacing.medium,
+                    top = Spacing.extraLarge,
+                    end = Spacing.medium
+                )
                 .verticalScroll(state = rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(Spacing.large)
         ) {
             UpsellHeader(
-                imageResId = R.drawable.logo_upsell,
-                titleResId = R.string.upsell_plus_title,
-                subtitleResId = R.string.upsell_plus_subtitle
+                imageResId = logo,
+                titleResId = title,
+                subtitleResId = subtitle
             )
 
             UpsellFeatures(features = features)
+        }
+    }
+}
 
-            UpsellButton(
-                onClick = { onNavigate(UpsellNavDestination.Upgrade) }
+@[Preview Composable]
+fun UpsellContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            UpsellContent(
+                onNavigated = {},
+                state = UpsellState(PaidFeature.DarkWebMonitoring)
             )
         }
     }

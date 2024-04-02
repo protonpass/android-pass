@@ -38,6 +38,7 @@ import proton.android.pass.featurehome.impl.HOME_ENABLE_BULK_ACTIONS_KEY
 import proton.android.pass.featurehome.impl.HOME_GO_TO_VAULT_KEY
 import proton.android.pass.featurehome.impl.Home
 import proton.android.pass.featurehome.impl.HomeNavigation
+import proton.android.pass.featurehome.impl.HomeUpgradeDialog
 import proton.android.pass.featurehome.impl.homeGraph
 import proton.android.pass.featureitemcreate.impl.alias.CreateAlias
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasBottomSheet
@@ -114,9 +115,8 @@ import proton.android.pass.features.security.center.reusepass.navigation.Securit
 import proton.android.pass.features.security.center.shared.navigation.SecurityCenterNavDestination
 import proton.android.pass.features.security.center.shared.navigation.securityCenterNavGraph
 import proton.android.pass.features.security.center.weakpass.navigation.SecurityCenterWeakPassNavItem
-import proton.android.pass.features.upsell.plus.navigation.UpsellPlusNavItem
-import proton.android.pass.features.upsell.shared.navigation.UpsellNavDestination
-import proton.android.pass.features.upsell.shared.navigation.upsellNavGraph
+import proton.android.pass.features.upsell.navigation.UpsellNavDestination
+import proton.android.pass.features.upsell.navigation.upsellNavGraph
 import proton.android.pass.featuresearchoptions.impl.FilterBottomsheet
 import proton.android.pass.featuresearchoptions.impl.SearchOptionsBottomsheet
 import proton.android.pass.featuresearchoptions.impl.SearchOptionsNavigation
@@ -298,8 +298,7 @@ fun NavGraphBuilder.appGraph(
 
                 HomeNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
 
-//                HomeNavigation.UpgradeDialog -> appNavigator.navigate(destination = HomeUpgradeDialog)
-                HomeNavigation.UpgradeDialog -> appNavigator.navigate(destination = UpsellPlusNavItem)
+                HomeNavigation.UpgradeDialog -> appNavigator.navigate(destination = HomeUpgradeDialog)
             }
         }
     )
@@ -1227,7 +1226,7 @@ fun NavGraphBuilder.appGraph(
     upsellNavGraph(
         onNavigated = { upsellNavDestination ->
             when (upsellNavDestination) {
-                UpsellNavDestination.Close -> appNavigator.navigateBack(comesFromBottomsheet = false)
+                UpsellNavDestination.Back -> appNavigator.navigateBack(comesFromBottomsheet = false)
                 UpsellNavDestination.Upgrade -> onNavigate(AppNavigation.Upgrade)
             }
         }

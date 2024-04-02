@@ -22,6 +22,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -44,6 +45,10 @@ internal fun UpsellContent(
         modifier = modifier,
         bottomBar = {
             UpsellFooter(
+                modifier = Modifier.padding(
+                    horizontal = Spacing.large,
+                    vertical = Spacing.medium
+                ),
                 onUpgradeClick = { onNavigated(UpsellNavDestination.Upgrade) },
                 onNotNowClick = { onNavigated(UpsellNavDestination.Back) }
             )
@@ -64,12 +69,18 @@ internal fun UpsellContent(
             verticalArrangement = Arrangement.spacedBy(Spacing.large)
         ) {
             UpsellHeader(
+                modifier = Modifier.padding(horizontal = Spacing.medium),
                 imageResId = logo,
                 titleResId = title,
                 subtitleResId = subtitle
             )
 
-            UpsellFeatures(features = features)
+            UpsellFeatures(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = Spacing.medium),
+                features = features
+            )
         }
     }
 }

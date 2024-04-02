@@ -45,4 +45,9 @@ dependencies {
     implementation(projects.pass.appConfig.api)
     implementation(projects.pass.domain)
     implementation(projects.pass.log.api)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinTest)
+    testImplementation(libs.truth)
+    testImplementation(libs.turbine)
 }

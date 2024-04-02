@@ -19,7 +19,7 @@
 package proton.android.pass.biometry
 
 sealed interface BiometryStatus {
-    object CanAuthenticate : BiometryStatus
-    object NotEnrolled : BiometryStatus
-    object NotAvailable : BiometryStatus
+    data object CanAuthenticate : BiometryStatus
+    data object NotEnrolled : BiometryStatus
+    data object NotAvailable : BiometryStatus
 }

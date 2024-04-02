@@ -28,8 +28,8 @@ import proton.android.pass.featureonboarding.impl.OnBoardingPageName.InvitePendi
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Last
 
 sealed interface OnboardingEvent {
-    object Unknown : OnboardingEvent
-    object OnboardingCompleted : OnboardingEvent
+    data object Unknown : OnboardingEvent
+    data object OnboardingCompleted : OnboardingEvent
 }
 
 @Stable

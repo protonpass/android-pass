@@ -51,15 +51,15 @@ object DefaultVault : NavItem(
 )
 
 sealed interface SettingsNavigation {
-    object SelectTheme : SettingsNavigation
-    object ClipboardSettings : SettingsNavigation
-    object ClearClipboardSettings : SettingsNavigation
-    object Close : SettingsNavigation
-    object DefaultVault : SettingsNavigation
-    object DismissBottomSheet : SettingsNavigation
-    object ViewLogs : SettingsNavigation
-    object Restart : SettingsNavigation
-    object SyncDialog : SettingsNavigation
+    data object SelectTheme : SettingsNavigation
+    data object ClipboardSettings : SettingsNavigation
+    data object ClearClipboardSettings : SettingsNavigation
+    data object Close : SettingsNavigation
+    data object DefaultVault : SettingsNavigation
+    data object DismissBottomSheet : SettingsNavigation
+    data object ViewLogs : SettingsNavigation
+    data object Restart : SettingsNavigation
+    data object SyncDialog : SettingsNavigation
 }
 
 fun NavGraphBuilder.settingsGraph(onNavigate: (SettingsNavigation) -> Unit) {

@@ -28,8 +28,8 @@ sealed interface SharingPermissionsEvents {
     value class NavigateToSummary(val shareId: ShareId) : SharingPermissionsEvents
 
     @Immutable
-    object BackToHome : SharingPermissionsEvents
+    data object BackToHome : SharingPermissionsEvents
 
     @Immutable
-    object Unknown : SharingPermissionsEvents
+    data object Unknown : SharingPermissionsEvents
 }

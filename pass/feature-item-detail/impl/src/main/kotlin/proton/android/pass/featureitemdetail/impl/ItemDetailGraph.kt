@@ -40,7 +40,7 @@ sealed interface ItemDetailNavigation {
 
     data class OnEdit(val itemUiModel: ItemUiModel) : ItemDetailNavigation
 
-    object OnMigrate : ItemDetailNavigation
+    data object OnMigrate : ItemDetailNavigation
 
     data class OnCreateLoginFromAlias(
         val alias: String,
@@ -49,8 +49,8 @@ sealed interface ItemDetailNavigation {
 
     data class OnViewItem(val shareId: ShareId, val itemId: ItemId) : ItemDetailNavigation
 
-    object Back : ItemDetailNavigation
-    object CloseBottomSheet : ItemDetailNavigation
+    data object Back : ItemDetailNavigation
+    data object CloseBottomSheet : ItemDetailNavigation
 
     @JvmInline
     value class Upgrade(val popBefore: Boolean = false) : ItemDetailNavigation

@@ -21,8 +21,8 @@ package proton.android.pass.featuresharing.impl.manage.bottomsheet.inviteoptions
 import androidx.compose.runtime.Stable
 
 sealed interface InviteOptionsUiEvent {
-    object ResendInvite : InviteOptionsUiEvent
-    object CancelInvite : InviteOptionsUiEvent
+    data object ResendInvite : InviteOptionsUiEvent
+    data object CancelInvite : InviteOptionsUiEvent
 }
 
 enum class LoadingOption {
@@ -33,7 +33,7 @@ enum class LoadingOption {
 @Stable
 sealed interface InviteOptionsEvent {
     @Stable
-    object Unknown : InviteOptionsEvent
+    data object Unknown : InviteOptionsEvent
 
     @Stable
     @JvmInline

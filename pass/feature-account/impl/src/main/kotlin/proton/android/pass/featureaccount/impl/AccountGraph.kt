@@ -55,10 +55,10 @@ fun NavGraphBuilder.accountGraph(onNavigate: (AccountNavigation) -> Unit) {
 }
 
 sealed interface AccountNavigation {
-    object Subscription : AccountNavigation
-    object Upgrade : AccountNavigation
-    object SignOut : AccountNavigation
-    object ConfirmSignOut : AccountNavigation
-    object DismissDialog : AccountNavigation
-    object Back : AccountNavigation
+    data object Subscription : AccountNavigation
+    data object Upgrade : AccountNavigation
+    data object SignOut : AccountNavigation
+    data object ConfirmSignOut : AccountNavigation
+    data object DismissDialog : AccountNavigation
+    data object Back : AccountNavigation
 }

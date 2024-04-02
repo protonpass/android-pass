@@ -22,8 +22,8 @@ import androidx.compose.runtime.Stable
 
 @Stable
 sealed interface IsSentToTrashState {
-    object Sent : IsSentToTrashState
-    object NotSent : IsSentToTrashState
+    data object Sent : IsSentToTrashState
+    data object NotSent : IsSentToTrashState
 
     fun value(): Boolean = when (this) {
         Sent -> true

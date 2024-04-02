@@ -24,14 +24,14 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
 sealed interface AuthEvent {
-    object Success : AuthEvent
-    object Failed : AuthEvent
-    object Canceled : AuthEvent
-    object SignOut : AuthEvent
-    object ForceSignOut : AuthEvent
-    object EnterPin : AuthEvent
-    object EnterBiometrics : AuthEvent
-    object Unknown : AuthEvent
+    data object Success : AuthEvent
+    data object Failed : AuthEvent
+    data object Canceled : AuthEvent
+    data object SignOut : AuthEvent
+    data object ForceSignOut : AuthEvent
+    data object EnterPin : AuthEvent
+    data object EnterBiometrics : AuthEvent
+    data object Unknown : AuthEvent
 }
 
 enum class AuthMethod {
@@ -42,11 +42,11 @@ enum class AuthMethod {
 sealed interface AuthError {
     @JvmInline
     value class WrongPassword(val remainingAttempts: Int) : AuthError
-    object UnknownError : AuthError
+    data object UnknownError : AuthError
 }
 
 sealed interface PasswordError {
-    object EmptyPassword : PasswordError
+    data object EmptyPassword : PasswordError
 }
 
 data class AuthContent(

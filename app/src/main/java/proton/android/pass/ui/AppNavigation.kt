@@ -22,9 +22,9 @@ import me.proton.core.domain.entity.UserId
 
 sealed interface AppNavigation {
     data class SignOut(val userId: UserId? = null) : AppNavigation
-    object Report : AppNavigation
-    object Subscription : AppNavigation
-    object Upgrade : AppNavigation
-    object Finish : AppNavigation
-    object Restart : AppNavigation
+    data object Report : AppNavigation
+    data object Subscription : AppNavigation
+    data object Upgrade : AppNavigation
+    data object Finish : AppNavigation
+    data object Restart : AppNavigation
 }

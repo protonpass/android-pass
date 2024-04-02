@@ -123,7 +123,7 @@ class SharingPermissionsBottomSheetViewModel @Inject constructor(
     }
 
     sealed interface SharingPermissionMode {
-        object SetAll : SharingPermissionMode
+        data object SetAll : SharingPermissionMode
         data class SetOne(
             val email: String,
             val currentPermission: SharingType

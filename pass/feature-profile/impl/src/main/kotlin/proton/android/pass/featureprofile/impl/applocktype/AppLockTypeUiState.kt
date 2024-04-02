@@ -21,10 +21,10 @@ package proton.android.pass.featureprofile.impl.applocktype
 import proton.android.pass.preferences.AppLockTypePreference
 
 sealed interface AppLockTypeEvent {
-    object EnterPin : AppLockTypeEvent
-    object ConfigurePin : AppLockTypeEvent
-    object Dismiss : AppLockTypeEvent
-    object Unknown : AppLockTypeEvent
+    data object EnterPin : AppLockTypeEvent
+    data object ConfigurePin : AppLockTypeEvent
+    data object Dismiss : AppLockTypeEvent
+    data object Unknown : AppLockTypeEvent
 }
 
 data class AppLockTypeUiState(

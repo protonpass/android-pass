@@ -29,10 +29,10 @@ import proton.android.pass.domain.VaultWithItemCount
 @Stable
 sealed interface ManageVaultEvent {
     @Stable
-    object Unknown : ManageVaultEvent
+    data object Unknown : ManageVaultEvent
 
     @Stable
-    object Close : ManageVaultEvent
+    data object Close : ManageVaultEvent
 
     @Stable
     @JvmInline
@@ -42,7 +42,7 @@ sealed interface ManageVaultEvent {
 @Stable
 sealed interface ShareOptions {
     @Stable
-    object Hide : ShareOptions
+    data object Hide : ShareOptions
 
     @Stable
     data class Show(
@@ -52,9 +52,9 @@ sealed interface ShareOptions {
 
     sealed interface ShareOptionsSubtitle {
 
-        object None : ShareOptionsSubtitle
+        data object None : ShareOptionsSubtitle
 
-        object LimitReached : ShareOptionsSubtitle
+        data object LimitReached : ShareOptionsSubtitle
 
         @JvmInline
         value class RemainingInvites(val remainingInvites: Int) : ShareOptionsSubtitle
@@ -82,7 +82,7 @@ data class ManageVaultUiState(
 @Stable
 sealed interface ManageVaultUiContent {
     @Stable
-    object Loading : ManageVaultUiContent
+    data object Loading : ManageVaultUiContent
 
     @Stable
     data class Content(

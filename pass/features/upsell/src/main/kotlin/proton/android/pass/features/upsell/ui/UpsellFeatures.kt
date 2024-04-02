@@ -16,44 +16,37 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.upsell.shared.ui
+package proton.android.pass.features.upsell.ui
 
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
-import proton.android.pass.composecomponents.impl.form.PassDivider
 
 @Composable
-internal fun UpsellFeatures(
-    modifier: Modifier = Modifier,
-    features: ImmutableList<UpsellFeatureModel>
-) {
+internal fun UpsellFeatures(modifier: Modifier = Modifier, features: ImmutableList<Pair<Int, Int>>) {
     RoundedCornersColumn(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = Spacing.medium),
+        verticalArrangement = Arrangement.spacedBy(space = 12.dp)
     ) {
-        features.forEachIndexed { index, feature ->
-            if (index > 0) {
-                PassDivider()
-            }
+        Spacer(modifier = Modifier.height(height = Spacing.small))
 
-            UpsellFeatureRow(feature = feature)
+        features.forEach { (iconResId, textResId) ->
+            UpsellFeatureRow(
+                iconResId = iconResId,
+                textResId = textResId
+            )
         }
+
+        Spacer(modifier = Modifier.height(height = Spacing.small))
     }
 }
-
-@Immutable
-internal data class UpsellFeatureModel(
-    @DrawableRes internal val iconResId: Int,
-    internal val iconColor: Color,
-    @StringRes internal val textResId: Int
-)

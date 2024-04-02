@@ -16,17 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.upsell.shared.navigation
+package proton.android.pass.features.upsell.navigation
 
-import androidx.navigation.NavGraphBuilder
-import proton.android.pass.features.upsell.plus.navigation.UpsellPlusNavItem
-import proton.android.pass.features.upsell.plus.ui.UpsellPlusScreen
-import proton.android.pass.navigation.api.composable
+import proton.android.pass.domain.features.PaidFeature
+import proton.android.pass.navigation.api.NavItem
 
-fun NavGraphBuilder.upsellNavGraph(onNavigated: (UpsellNavDestination) -> Unit) {
+object UpsellNavItem : NavItem(
+    baseRoute = "upsell",
+    navArgIds = listOf(UpsellNavArgId)
+) {
 
-    composable(navItem = UpsellPlusNavItem) {
-        UpsellPlusScreen(onNavigated = onNavigated)
-    }
+    fun createNavRoute(paidFeature: PaidFeature) = "$baseRoute/$paidFeature"
 
 }

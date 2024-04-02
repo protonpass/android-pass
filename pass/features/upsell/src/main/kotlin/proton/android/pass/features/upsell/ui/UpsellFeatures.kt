@@ -23,12 +23,20 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import me.proton.core.presentation.R
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 internal fun UpsellFeatures(modifier: Modifier = Modifier, features: ImmutableList<Pair<Int, Int>>) {
@@ -48,5 +56,27 @@ internal fun UpsellFeatures(modifier: Modifier = Modifier, features: ImmutableLi
         }
 
         Spacer(modifier = Modifier.height(height = Spacing.small))
+    }
+}
+
+@[Preview Composable]
+fun UpsellFeaturesPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            UpsellFeatures(
+                features = persistentListOf(
+                    CompR.drawable.ic_shield_union to
+                        proton.android.pass.features.upsell.R.string.upsell_paid_feature_dark_web_monitoring,
+                    R.drawable.ic_proton_user to
+                        proton.android.pass.features.upsell.R.string.upsell_paid_feature_sentine,
+                    R.drawable.ic_proton_lock to
+                        proton.android.pass.features.upsell.R.string.upsell_paid_feature_authenticator,
+                    R.drawable.ic_proton_alias to
+                        proton.android.pass.features.upsell.R.string.upsell_paid_feature_unlimited_aliases,
+                    R.drawable.ic_proton_users_plus to
+                        proton.android.pass.features.upsell.R.string.upsell_paid_feature_vault_sharing
+                )
+            )
+        }
     }
 }

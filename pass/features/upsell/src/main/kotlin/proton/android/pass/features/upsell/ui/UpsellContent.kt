@@ -26,16 +26,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.features.upsell.navigation.UpsellNavDestination
 import proton.android.pass.features.upsell.presentation.UpsellState
 
@@ -75,18 +70,6 @@ internal fun UpsellContent(
             )
 
             UpsellFeatures(features = features)
-        }
-    }
-}
-
-@[Preview Composable]
-fun UpsellContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
-    PassTheme(isDark = isDark) {
-        Surface {
-            UpsellContent(
-                onNavigated = {},
-                state = UpsellState(PaidFeature.DarkWebMonitoring)
-            )
         }
     }
 }

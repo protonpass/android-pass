@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,10 +34,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.heroNorm
+import proton.android.pass.features.upsell.R
 
 @Composable
 internal fun UpsellHeader(
@@ -71,5 +76,17 @@ internal fun UpsellHeader(
             color = ProtonTheme.colors.textWeak
         )
     }
+}
 
+@[Preview Composable]
+fun UpsellHeaderPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            UpsellHeader(
+                imageResId = R.drawable.logo_feature_pass_plus,
+                titleResId = R.string.upsell_dark_web_monitoring_title,
+                subtitleResId = R.string.upsell_dark_web_monitoring_subtitle
+            )
+        }
+    }
 }

@@ -68,7 +68,7 @@ fun UpsellFeaturesPreview(@PreviewParameter(ThemePreviewProvider::class) isDark:
                     CompR.drawable.ic_shield_union to
                         proton.android.pass.features.upsell.R.string.upsell_paid_feature_dark_web_monitoring,
                     R.drawable.ic_proton_user to
-                        proton.android.pass.features.upsell.R.string.upsell_paid_feature_sentine,
+                        proton.android.pass.features.upsell.R.string.upsell_paid_feature_sentinel,
                     R.drawable.ic_proton_lock to
                         proton.android.pass.features.upsell.R.string.upsell_paid_feature_authenticator,
                     R.drawable.ic_proton_alias to

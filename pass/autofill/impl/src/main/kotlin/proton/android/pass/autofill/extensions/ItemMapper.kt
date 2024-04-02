@@ -42,6 +42,14 @@ fun ItemUiModel.toAutoFillItem(): AutofillItem = when (val content = contents) {
         cvv = content.cvv.encrypted
     )
 
+    is ItemContents.Alias -> AutofillItem.Login(
+        shareId = shareId.id,
+        itemId = id.id,
+        username = content.aliasEmail,
+        password = null,
+        totp = null
+    )
+
     else -> throw IllegalStateException("Unsupported item type: ${this::javaClass.name}")
 }
 

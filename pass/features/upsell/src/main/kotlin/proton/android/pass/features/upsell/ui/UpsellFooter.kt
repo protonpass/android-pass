@@ -55,7 +55,7 @@ internal fun UpsellFooter(
         verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
     ) {
         Box(
-            modifier = modifier
+            modifier = Modifier
                 .clip(CircleShape)
                 .fillMaxWidth()
                 .background(color = PassTheme.colors.interactionNormMajor2)

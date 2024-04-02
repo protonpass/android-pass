@@ -16,12 +16,18 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.upsell.shared.navigation
+package proton.android.pass.features.upsell.navigation
 
-sealed interface UpsellNavDestination {
+import androidx.navigation.NavType
+import proton.android.pass.domain.features.PaidFeature
+import proton.android.pass.navigation.api.NavArgId
 
-    data object Close : UpsellNavDestination
+private const val UPSELL_NAV_ARG_KEY = "upsellKey"
 
-    data object Upgrade : UpsellNavDestination
+internal object UpsellNavArgId : NavArgId {
+
+    override val key: String = UPSELL_NAV_ARG_KEY
+
+    override val navType: NavType<*> = NavType.EnumType(PaidFeature::class.java)
 
 }

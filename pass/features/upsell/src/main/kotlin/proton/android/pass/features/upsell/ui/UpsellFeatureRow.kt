@@ -16,8 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.upsell.shared.ui
+package proton.android.pass.features.upsell.ui
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,24 +33,26 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallNorm
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 
 @Composable
 internal fun UpsellFeatureRow(
     modifier: Modifier = Modifier,
-    feature: UpsellFeatureModel
-) = with(feature) {
+    @DrawableRes iconResId: Int,
+    @StringRes textResId: Int
+) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(all = Spacing.medium),
-        horizontalArrangement = Arrangement.spacedBy(Spacing.medium),
+            .padding(horizontal = Spacing.medium),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.small),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
             painter = painterResource(id = iconResId),
             contentDescription = null,
-            tint = iconColor
+            tint = PassTheme.colors.interactionNormMajor2
         )
 
         Text(

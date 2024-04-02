@@ -19,7 +19,6 @@
 package proton.android.pass.featurepasskeys.create.presentation
 
 import androidx.activity.ComponentActivity
-import androidx.compose.runtime.Immutable
 import androidx.credentials.CreatePublicKeyCredentialRequest
 import androidx.credentials.provider.CallingAppInfo
 import androidx.lifecycle.ViewModel
@@ -64,20 +63,6 @@ data class CreatePasskeyRequest(
     val callingRequest: CreatePublicKeyCredentialRequest
 )
 
-@Immutable
-sealed interface State {
-
-    @Immutable
-    data object Idle : State
-
-    @Immutable
-    data object Close : State
-
-    @Immutable
-    @JvmInline
-    value class SendResponse(val response: String) : State
-}
-
 @HiltViewModel
 class CreatePasskeyActivityViewModel @Inject constructor(
     private val accountOrchestrators: AccountOrchestrators,
@@ -98,24 +83,39 @@ class CreatePasskeyActivityViewModel @Inject constructor(
 
     private val requestFlow: MutableStateFlow<Option<CreatePasskeyRequest>> = MutableStateFlow(None)
 
-    private val requestDataFlow: Flow<Option<CreatePasskeyRequestData>> = requestFlow.map {
-        it.map { request ->
-            logRequest(request)
+    private val requestDataFlow: Flow<Option<CreatePasskeyRequestData>> = requestFlow
+        .map { requestOption ->
+            requestOption.flatMap { request ->
+                logRequest(request)
 
-            val requestJson = request.callingRequest.requestJson
-            val parsed = parseCreatePasskeyRequest(requestJson)
-            val requestOrigin = request.callingRequest.origin ?: parsed.rpId ?: ""
-            val domain = UrlSanitizer.getDomain(requestOrigin).getOrElse { parsed.rpId } ?: ""
+                runCatching {
+                    val requestJson = request.callingRequest.requestJson
+                    val parsed = parseCreatePasskeyRequest(requestJson)
+                    val requestOrigin = request.callingRequest.origin ?: parsed.rpId ?: ""
+                    val domain =
+                        UrlSanitizer.getDomain(requestOrigin).getOrElse { parsed.rpId } ?: ""
 
-            CreatePasskeyRequestData(
-                domain = domain,
-                origin = requestOrigin,
-                username = parsed.userName,
-                request = requestJson,
-                rpName = parsed.rpName
-            )
+                    CreatePasskeyRequestData(
+                        domain = domain,
+                        origin = requestOrigin,
+                        username = parsed.userName,
+                        request = requestJson,
+                        rpName = parsed.rpName
+                    )
+                }.fold(
+                    onSuccess = { it.some() },
+                    onFailure = {
+                        PassLogger.w(TAG, "Error parsing create request")
+                        PassLogger.w(TAG, it)
+
+                        closeScreenFlow.update { true }
+
+                        None
+                    }
+                )
+            }
         }
-    }
+
 
     val state: StateFlow<CreatePasskeyAppState> = combine(
         closeScreenFlow,

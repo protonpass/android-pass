@@ -26,6 +26,7 @@ import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.features.upsell.R
 import me.proton.core.presentation.R as CoreR
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Stable
 internal data class UpsellState(private val paidFeature: PaidFeature) {
@@ -46,7 +47,7 @@ internal data class UpsellState(private val paidFeature: PaidFeature) {
     }
 
     internal val features: ImmutableList<Pair<Int, Int>> = persistentListOf(
-        CoreR.drawable.ic_proton_shield to R.string.upsell_paid_feature_dark_web_monitoring,
+        CompR.drawable.ic_shield_union to R.string.upsell_paid_feature_dark_web_monitoring,
         CoreR.drawable.ic_proton_user to R.string.upsell_paid_feature_sentine,
         CoreR.drawable.ic_proton_lock to R.string.upsell_paid_feature_authenticator,
         CoreR.drawable.ic_proton_alias to R.string.upsell_paid_feature_unlimited_aliases,

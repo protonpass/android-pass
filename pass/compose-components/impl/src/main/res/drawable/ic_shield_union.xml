@@ -1,0 +1,25 @@
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:autoMirrored="true" android:height="24dp" android:viewportHeight="20" android:viewportWidth="20" android:width="24dp">
+      
+    <path android:fillColor="@color/icon_norm" android:fillType="evenOdd" android:pathData="M8.932,1.598c0.69,-0.25 1.446,-0.25 2.136,0l6.02,2.19c0.248,0.09 0.412,0.324 0.412,0.587v7.032a5.625,5.625 0,0 1,-2.931 4.938l-4.27,2.329a0.625,0.625 0,0 1,-0.598 0l-4.27,-2.329A5.625,5.625 0,0 1,2.5 11.407L2.5,4.375c0,-0.263 0.164,-0.498 0.411,-0.587l6.021,-2.19ZM10.641,2.773a1.875,1.875 0,0 0,-1.282 0L3.75,4.813v6.594c0,1.6 0.875,3.074 2.28,3.84L10,17.414l3.97,-2.165a4.375,4.375 0,0 0,2.28 -3.841L16.25,4.813l-5.61,-2.04Z"/>
+      
+    <path android:fillColor="@color/icon_norm" android:fillType="evenOdd" android:pathData="M10.25,9.375h2.875l-4.375,6.25 1,-5H6.875l4.375,-6.25 -1,5Z"/>
+    
+</vector>

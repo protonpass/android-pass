@@ -32,6 +32,6 @@ sealed interface InlineSuggestionAutofillNoUiState {
         val theme: ThemePreference
     ) : InlineSuggestionAutofillNoUiState
 
-    object Close : InlineSuggestionAutofillNoUiState
-    object NotInitialised : InlineSuggestionAutofillNoUiState
+    data object Close : InlineSuggestionAutofillNoUiState
+    data object NotInitialised : InlineSuggestionAutofillNoUiState
 }

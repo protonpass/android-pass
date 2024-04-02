@@ -23,12 +23,12 @@ sealed interface SettingsContentEvent {
     data class AllowScreenshotsChange(val value: Boolean) : SettingsContentEvent
     data class TelemetryChange(val value: Boolean) : SettingsContentEvent
     data class CrashReportChange(val value: Boolean) : SettingsContentEvent
-    object SelectTheme : SettingsContentEvent
-    object Clipboard : SettingsContentEvent
-    object ViewLogs : SettingsContentEvent
-    object ForceSync : SettingsContentEvent
-    object Privacy : SettingsContentEvent
-    object Terms : SettingsContentEvent
-    object Up : SettingsContentEvent
-    object DefaultVault : SettingsContentEvent
+    data object SelectTheme : SettingsContentEvent
+    data object Clipboard : SettingsContentEvent
+    data object ViewLogs : SettingsContentEvent
+    data object ForceSync : SettingsContentEvent
+    data object Privacy : SettingsContentEvent
+    data object Terms : SettingsContentEvent
+    data object Up : SettingsContentEvent
+    data object DefaultVault : SettingsContentEvent
 }

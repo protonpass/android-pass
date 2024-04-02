@@ -101,6 +101,6 @@ data class CreditCardItemFormState(
 }
 
 sealed interface CreditCardValidationErrors {
-    object BlankTitle : CreditCardValidationErrors
-    object InvalidExpirationDate : CreditCardValidationErrors
+    data object BlankTitle : CreditCardValidationErrors
+    data object InvalidExpirationDate : CreditCardValidationErrors
 }

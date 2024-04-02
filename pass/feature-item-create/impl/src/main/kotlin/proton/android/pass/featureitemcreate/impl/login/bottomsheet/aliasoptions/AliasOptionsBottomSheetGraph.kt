@@ -38,8 +38,8 @@ object AliasOptionsBottomSheet : NavItem(
 }
 
 sealed interface AliasOptionsNavigation {
-    object OnEditAlias : AliasOptionsNavigation
-    object OnDeleteAlias : AliasOptionsNavigation
+    data object OnEditAlias : AliasOptionsNavigation
+    data object OnDeleteAlias : AliasOptionsNavigation
 }
 
 fun NavGraphBuilder.aliasOptionsBottomSheetGraph(onNavigate: (BaseLoginNavigation) -> Unit) {

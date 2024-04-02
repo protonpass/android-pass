@@ -21,8 +21,8 @@ package proton.android.pass.featureprofile.impl.applocktime
 import proton.android.pass.preferences.AppLockTimePreference
 
 sealed interface AppLockTimeEvent {
-    object OnChanged : AppLockTimeEvent
-    object Unknown : AppLockTimeEvent
+    data object OnChanged : AppLockTimeEvent
+    data object Unknown : AppLockTimeEvent
 }
 
 data class AppLockTimeUiState(

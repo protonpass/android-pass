@@ -34,7 +34,7 @@ sealed interface CreateVaultNextAction {
 
     fun value(): String
 
-    object Done : CreateVaultNextAction {
+    data object Done : CreateVaultNextAction {
         override fun value() = NEXT_ACTION_DONE
     }
     data class ShareVault(

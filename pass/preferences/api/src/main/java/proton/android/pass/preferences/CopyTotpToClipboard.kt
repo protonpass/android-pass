@@ -19,8 +19,8 @@
 package proton.android.pass.preferences
 
 sealed interface CopyTotpToClipboard {
-    object Enabled : CopyTotpToClipboard
-    object NotEnabled : CopyTotpToClipboard
+    data object Enabled : CopyTotpToClipboard
+    data object NotEnabled : CopyTotpToClipboard
 
     companion object {
         fun from(value: Boolean): CopyTotpToClipboard = if (value) {

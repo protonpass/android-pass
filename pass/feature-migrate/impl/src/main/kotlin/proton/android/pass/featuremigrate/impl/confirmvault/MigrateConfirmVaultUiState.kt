@@ -27,9 +27,9 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
 
 sealed interface ConfirmMigrateEvent {
-    object Close : ConfirmMigrateEvent
+    data object Close : ConfirmMigrateEvent
     data class ItemMigrated(val shareId: ShareId, val itemId: ItemId) : ConfirmMigrateEvent
-    object AllItemsMigrated : ConfirmMigrateEvent
+    data object AllItemsMigrated : ConfirmMigrateEvent
 }
 
 @Stable
@@ -39,7 +39,7 @@ sealed interface MigrateMode {
     value class MigrateSelectedItems(val number: Int) : MigrateMode
 
     @Stable
-    object MigrateAll : MigrateMode
+    data object MigrateAll : MigrateMode
 }
 
 @Stable

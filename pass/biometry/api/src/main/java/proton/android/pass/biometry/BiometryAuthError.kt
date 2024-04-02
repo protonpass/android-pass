@@ -19,20 +19,20 @@
 package proton.android.pass.biometry
 
 sealed interface BiometryAuthError {
-    object HardwareUnavailable : BiometryAuthError
-    object UnableToProcess : BiometryAuthError
-    object Timeout : BiometryAuthError
-    object NoSpace : BiometryAuthError
-    object Canceled : BiometryAuthError
-    object Lockout : BiometryAuthError
-    object Vendor : BiometryAuthError
-    object LockoutPermanent : BiometryAuthError
-    object UserCanceled : BiometryAuthError
-    object NoBiometrics : BiometryAuthError
-    object HardwareNotPresent : BiometryAuthError
-    object NegativeButton : BiometryAuthError
-    object NoDeviceCredential : BiometryAuthError
-    object Unknown : BiometryAuthError
+    data object HardwareUnavailable : BiometryAuthError
+    data object UnableToProcess : BiometryAuthError
+    data object Timeout : BiometryAuthError
+    data object NoSpace : BiometryAuthError
+    data object Canceled : BiometryAuthError
+    data object Lockout : BiometryAuthError
+    data object Vendor : BiometryAuthError
+    data object LockoutPermanent : BiometryAuthError
+    data object UserCanceled : BiometryAuthError
+    data object NoBiometrics : BiometryAuthError
+    data object HardwareNotPresent : BiometryAuthError
+    data object NegativeButton : BiometryAuthError
+    data object NoDeviceCredential : BiometryAuthError
+    data object Unknown : BiometryAuthError
 
     companion object
 }

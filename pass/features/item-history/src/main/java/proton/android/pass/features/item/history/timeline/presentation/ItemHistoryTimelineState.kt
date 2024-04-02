@@ -26,9 +26,9 @@ import proton.android.pass.domain.items.ItemCategory
 
 internal sealed class ItemHistoryTimelineState(internal val itemCategory: ItemCategory) {
 
-    object Error : ItemHistoryTimelineState(ItemCategory.Unknown)
+    data object Error : ItemHistoryTimelineState(ItemCategory.Unknown)
 
-    object Loading : ItemHistoryTimelineState(ItemCategory.Unknown)
+    data object Loading : ItemHistoryTimelineState(ItemCategory.Unknown)
 
     data class Success(
         internal val shareId: ShareId,

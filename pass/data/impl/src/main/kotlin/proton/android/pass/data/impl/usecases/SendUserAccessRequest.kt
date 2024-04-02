@@ -29,9 +29,9 @@ import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 sealed interface SendUserAccessResult {
-    object Success : SendUserAccessResult
-    object Failure : SendUserAccessResult
-    object Retry : SendUserAccessResult
+    data object Success : SendUserAccessResult
+    data object Failure : SendUserAccessResult
+    data object Retry : SendUserAccessResult
 }
 
 interface SendUserAccessRequest {

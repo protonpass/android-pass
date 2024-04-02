@@ -34,7 +34,7 @@ data class ItemActions(
 
         fun value(): Boolean
 
-        object Enabled : CanEditActionState {
+        data object Enabled : CanEditActionState {
             override fun value() = true
         }
 
@@ -44,9 +44,9 @@ data class ItemActions(
         }
 
         sealed interface CanEditDisabledReason {
-            object NotEnoughPermission : CanEditDisabledReason
-            object Downgraded : CanEditDisabledReason
-            object ItemInTrash : CanEditDisabledReason
+            data object NotEnoughPermission : CanEditDisabledReason
+            data object Downgraded : CanEditDisabledReason
+            data object ItemInTrash : CanEditDisabledReason
         }
     }
 
@@ -54,7 +54,7 @@ data class ItemActions(
 
         fun value(): Boolean
 
-        object Enabled : CanMoveToOtherVaultState {
+        data object Enabled : CanMoveToOtherVaultState {
             override fun value() = true
         }
 
@@ -66,9 +66,9 @@ data class ItemActions(
         }
 
         sealed interface CanMoveToOtherVaultDisabledReason {
-            object NotEnoughPermission : CanMoveToOtherVaultDisabledReason
-            object NoVaultToMoveToAvailable : CanMoveToOtherVaultDisabledReason
-            object ItemInTrash : CanMoveToOtherVaultDisabledReason
+            data object NotEnoughPermission : CanMoveToOtherVaultDisabledReason
+            data object NoVaultToMoveToAvailable : CanMoveToOtherVaultDisabledReason
+            data object ItemInTrash : CanMoveToOtherVaultDisabledReason
         }
     }
 

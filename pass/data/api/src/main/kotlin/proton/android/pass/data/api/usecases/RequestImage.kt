@@ -27,7 +27,7 @@ data class ImageResponse(
 
 sealed interface ImageResponseResult {
     data class Data(val content: ByteArray, val mimeType: String?) : ImageResponseResult
-    object Empty : ImageResponseResult
+    data object Empty : ImageResponseResult
     data class Error(val throwable: Throwable) : ImageResponseResult
 }
 

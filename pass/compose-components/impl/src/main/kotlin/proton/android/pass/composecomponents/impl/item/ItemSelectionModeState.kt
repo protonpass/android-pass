@@ -27,7 +27,7 @@ sealed interface ItemSelectionModeState {
     fun isSelectable(): Boolean = !(this is InSelectionMode && state == ItemSelectionState.NotSelectable)
 
     @Stable
-    object NotInSelectionMode : ItemSelectionModeState
+    data object NotInSelectionMode : ItemSelectionModeState
 
     @Stable
     @JvmInline

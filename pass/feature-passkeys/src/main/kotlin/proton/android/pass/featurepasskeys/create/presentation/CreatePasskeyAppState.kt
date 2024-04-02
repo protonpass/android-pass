@@ -34,10 +34,10 @@ data class CreatePasskeyRequestData(
 sealed interface CreatePasskeyAppState {
 
     @Immutable
-    object NotReady : CreatePasskeyAppState
+    data object NotReady : CreatePasskeyAppState
 
     @Immutable
-    object Close : CreatePasskeyAppState
+    data object Close : CreatePasskeyAppState
 
     @Immutable
     data class Ready(

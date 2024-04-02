@@ -20,9 +20,9 @@ package proton.android.pass.featurepasskeys.create.ui.app
 
 sealed interface CreatePasskeyNavigation {
 
-    object Cancel : CreatePasskeyNavigation
-    object ForceSignOut : CreatePasskeyNavigation
-    object Upgrade : CreatePasskeyNavigation
+    data object Cancel : CreatePasskeyNavigation
+    data object ForceSignOut : CreatePasskeyNavigation
+    data object Upgrade : CreatePasskeyNavigation
 
     @JvmInline
     value class SendResponse(val response: String) : CreatePasskeyNavigation

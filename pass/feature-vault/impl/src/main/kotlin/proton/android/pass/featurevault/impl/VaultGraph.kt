@@ -28,8 +28,8 @@ import proton.android.pass.featurevault.impl.leave.leaveVaultDialogGraph
 import proton.android.pass.domain.ShareId
 
 sealed interface VaultNavigation {
-    object Upgrade : VaultNavigation
-    object Close : VaultNavigation
+    data object Upgrade : VaultNavigation
+    data object Close : VaultNavigation
 
     @JvmInline
     value class VaultSelected(val shareId: ShareId) : VaultNavigation

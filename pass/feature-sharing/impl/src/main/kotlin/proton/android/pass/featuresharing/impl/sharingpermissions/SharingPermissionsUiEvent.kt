@@ -22,9 +22,9 @@ import proton.android.pass.featuresharing.impl.common.AddressPermissionUiState
 
 sealed interface SharingPermissionsUiEvent {
 
-    object OnSubmit : SharingPermissionsUiEvent
+    data object OnSubmit : SharingPermissionsUiEvent
 
-    object OnSetAllPermissionsClick : SharingPermissionsUiEvent
+    data object OnSetAllPermissionsClick : SharingPermissionsUiEvent
 
     @JvmInline
     value class OnPermissionChangeClick(

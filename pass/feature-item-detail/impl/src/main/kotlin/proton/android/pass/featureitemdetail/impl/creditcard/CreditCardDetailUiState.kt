@@ -27,13 +27,13 @@ import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 
 sealed interface CreditCardDetailUiState {
     @Stable
-    object NotInitialised : CreditCardDetailUiState
+    data object NotInitialised : CreditCardDetailUiState
 
     @Stable
-    object Error : CreditCardDetailUiState
+    data object Error : CreditCardDetailUiState
 
     @Stable
-    object Pending : CreditCardDetailUiState
+    data object Pending : CreditCardDetailUiState
 
     @Stable
     data class Success(

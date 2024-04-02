@@ -27,7 +27,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 sealed interface FetchShareItemsStatus {
-    object NotStarted : FetchShareItemsStatus
+    data object NotStarted : FetchShareItemsStatus
     data class Syncing(
         val current: Int,
         val total: Int

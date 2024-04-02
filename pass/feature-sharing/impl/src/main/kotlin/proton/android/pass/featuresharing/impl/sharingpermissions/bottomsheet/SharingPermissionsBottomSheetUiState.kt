@@ -24,16 +24,16 @@ import proton.android.pass.featuresharing.impl.sharingpermissions.SharingType
 @Immutable
 sealed interface SharingPermissionsBottomSheetEvent {
     @Immutable
-    object Unknown : SharingPermissionsBottomSheetEvent
+    data object Unknown : SharingPermissionsBottomSheetEvent
 
     @Immutable
-    object Close : SharingPermissionsBottomSheetEvent
+    data object Close : SharingPermissionsBottomSheetEvent
 }
 
 @Immutable
 sealed interface SharingPermissionsEditMode {
     @Immutable
-    object All : SharingPermissionsEditMode
+    data object All : SharingPermissionsEditMode
 
     @Immutable
     data class EditOne(val email: String, val sharingType: SharingType) : SharingPermissionsEditMode

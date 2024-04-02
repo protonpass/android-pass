@@ -32,7 +32,7 @@ sealed interface AutofillUiState {
         val selectedAutofillItem: Option<AutofillItem>
     ) : AutofillUiState
 
-    object UninitialisedAutofillUiState : AutofillUiState
-    object NotValidAutofillUiState : AutofillUiState
-    object CloseScreen : AutofillUiState
+    data object UninitialisedAutofillUiState : AutofillUiState
+    data object NotValidAutofillUiState : AutofillUiState
+    data object CloseScreen : AutofillUiState
 }

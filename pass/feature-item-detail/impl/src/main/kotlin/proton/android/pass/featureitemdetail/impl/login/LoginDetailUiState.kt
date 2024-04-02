@@ -35,13 +35,13 @@ import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 sealed interface LoginDetailUiState {
 
     @Stable
-    object NotInitialised : LoginDetailUiState
+    data object NotInitialised : LoginDetailUiState
 
     @Stable
-    object Error : LoginDetailUiState
+    data object Error : LoginDetailUiState
 
     @Stable
-    object Pending : LoginDetailUiState
+    data object Pending : LoginDetailUiState
 
     @Stable
     data class Success(
@@ -66,8 +66,8 @@ sealed interface LoginDetailUiState {
 }
 
 sealed interface TotpUiState {
-    object Hidden : TotpUiState
-    object Limited : TotpUiState
+    data object Hidden : TotpUiState
+    data object Limited : TotpUiState
 
     @Stable
     data class Visible(

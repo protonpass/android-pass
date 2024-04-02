@@ -28,13 +28,13 @@ import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 sealed interface NoteDetailUiState {
 
     @Stable
-    object NotInitialised : NoteDetailUiState
+    data object NotInitialised : NoteDetailUiState
 
     @Stable
-    object Error : NoteDetailUiState
+    data object Error : NoteDetailUiState
 
     @Stable
-    object Pending : NoteDetailUiState
+    data object Pending : NoteDetailUiState
 
     @Stable
     data class Success(

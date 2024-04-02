@@ -46,13 +46,13 @@ data class BaseCreditCardUiState(
 
 sealed interface CreateCreditCardUiState {
     @Immutable
-    object NotInitialised : CreateCreditCardUiState
+    data object NotInitialised : CreateCreditCardUiState
 
     @Immutable
-    object Loading : CreateCreditCardUiState
+    data object Loading : CreateCreditCardUiState
 
     @Immutable
-    object Error : CreateCreditCardUiState
+    data object Error : CreateCreditCardUiState
 
     @Immutable
     data class Success(
@@ -63,13 +63,13 @@ sealed interface CreateCreditCardUiState {
 
 sealed interface UpdateCreditCardUiState {
     @Immutable
-    object NotInitialised : UpdateCreditCardUiState
+    data object NotInitialised : UpdateCreditCardUiState
 
     @Immutable
-    object Loading : UpdateCreditCardUiState
+    data object Loading : UpdateCreditCardUiState
 
     @Immutable
-    object Error : UpdateCreditCardUiState
+    data object Error : UpdateCreditCardUiState
 
     @Immutable
     data class Success(

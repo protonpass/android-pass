@@ -48,7 +48,7 @@ internal data class UpsellState(private val paidFeature: PaidFeature) {
 
     internal val features: ImmutableList<Pair<Int, Int>> = persistentListOf(
         CompR.drawable.ic_shield_union to R.string.upsell_paid_feature_dark_web_monitoring,
-        CoreR.drawable.ic_proton_user to R.string.upsell_paid_feature_sentine,
+        CoreR.drawable.ic_proton_user to R.string.upsell_paid_feature_sentinel,
         CoreR.drawable.ic_proton_lock to R.string.upsell_paid_feature_authenticator,
         CoreR.drawable.ic_proton_alias to R.string.upsell_paid_feature_unlimited_aliases,
         CoreR.drawable.ic_proton_users_plus to R.string.upsell_paid_feature_vault_sharing

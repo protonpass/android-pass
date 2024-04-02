@@ -19,8 +19,8 @@
 package proton.android.pass.preferences
 
 sealed interface HasAuthenticated {
-    object Authenticated : HasAuthenticated
-    object NotAuthenticated : HasAuthenticated
+    data object Authenticated : HasAuthenticated
+    data object NotAuthenticated : HasAuthenticated
 
     companion object {
         fun from(value: Boolean): HasAuthenticated = if (value) { Authenticated } else { NotAuthenticated }

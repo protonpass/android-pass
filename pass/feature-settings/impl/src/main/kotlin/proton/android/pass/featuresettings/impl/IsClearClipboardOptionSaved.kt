@@ -22,6 +22,6 @@ import androidx.compose.runtime.Stable
 
 @Stable
 sealed interface IsClearClipboardOptionSaved {
-    object Unknown : IsClearClipboardOptionSaved
-    object Success : IsClearClipboardOptionSaved
+    data object Unknown : IsClearClipboardOptionSaved
+    data object Success : IsClearClipboardOptionSaved
 }

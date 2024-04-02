@@ -110,9 +110,9 @@ data class LoginItemFormState(
 }
 
 sealed interface LoginItemValidationErrors {
-    object BlankTitle : LoginItemValidationErrors
+    data object BlankTitle : LoginItemValidationErrors
     data class InvalidUrl(val index: Int) : LoginItemValidationErrors
-    object InvalidTotp : LoginItemValidationErrors
+    data object InvalidTotp : LoginItemValidationErrors
 
     sealed interface CustomFieldValidationError : LoginItemValidationErrors {
         data class EmptyField(val index: Int) : CustomFieldValidationError

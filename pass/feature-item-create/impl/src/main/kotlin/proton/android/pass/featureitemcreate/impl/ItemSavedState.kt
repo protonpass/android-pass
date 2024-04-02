@@ -24,7 +24,7 @@ import proton.android.pass.domain.ItemId
 
 @Stable
 sealed interface ItemSavedState {
-    object Unknown : ItemSavedState
+    data object Unknown : ItemSavedState
     data class Success(
         val itemId: ItemId,
         val item: ItemUiModel

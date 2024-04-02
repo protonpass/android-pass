@@ -22,6 +22,6 @@ import androidx.compose.runtime.Stable
 
 @Stable
 sealed interface OpenScanState {
-    object Unknown : OpenScanState
-    object Success : OpenScanState
+    data object Unknown : OpenScanState
+    data object Success : OpenScanState
 }

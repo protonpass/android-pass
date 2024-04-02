@@ -41,7 +41,7 @@ data class ComponentPreview(
 @RunWith(TestParameterInjector::class)
 class PreviewScreenshotTests {
 
-    object PreviewProvider : TestParameter.TestParameterValuesProvider {
+    data object PreviewProvider : TestParameter.TestParameterValuesProvider {
         override fun provideValues(): List<ComponentPreview> =
             Showkase.getMetadata().componentList.map(::ComponentPreview)
     }

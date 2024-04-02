@@ -463,13 +463,13 @@ class AutofillServiceManager @Inject constructor(
 }
 
 sealed interface SuggestionType {
-    object Login : SuggestionType
-    object CreditCard : SuggestionType
+    data object Login : SuggestionType
+    data object CreditCard : SuggestionType
 }
 
 sealed interface SuggestedItemsResult {
-    object Hide : SuggestedItemsResult
-    object ShowUpgrade : SuggestedItemsResult
+    data object Hide : SuggestedItemsResult
+    data object ShowUpgrade : SuggestedItemsResult
 
     @JvmInline
     value class Show(val items: List<Item>) : SuggestedItemsResult

@@ -30,7 +30,7 @@ import me.proton.core.util.kotlin.Logger
 sealed interface LoadingResult<out T> {
     data class Success<T>(val data: T) : LoadingResult<T>
     data class Error(val exception: Throwable) : LoadingResult<Nothing>
-    object Loading : LoadingResult<Nothing>
+    data object Loading : LoadingResult<Nothing>
 }
 
 inline fun <R, T> LoadingResult<T>.map(transform: (value: T) -> R): LoadingResult<R> = when (this) {

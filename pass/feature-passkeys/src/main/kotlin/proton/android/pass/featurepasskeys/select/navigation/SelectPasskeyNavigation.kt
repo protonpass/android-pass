@@ -20,11 +20,11 @@ package proton.android.pass.featurepasskeys.select.navigation
 
 sealed interface SelectPasskeyNavigation {
 
-    object Cancel : SelectPasskeyNavigation
+    data object Cancel : SelectPasskeyNavigation
 
-    object ForceSignOut : SelectPasskeyNavigation
+    data object ForceSignOut : SelectPasskeyNavigation
 
-    object Upgrade : SelectPasskeyNavigation
+    data object Upgrade : SelectPasskeyNavigation
 
     @JvmInline
     value class SendResponse(val response: String) : SelectPasskeyNavigation

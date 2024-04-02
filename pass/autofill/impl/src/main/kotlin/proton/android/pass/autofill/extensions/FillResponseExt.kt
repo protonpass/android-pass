@@ -48,7 +48,7 @@ sealed interface SaveSessionType {
         val passwordField: AssistField
     ) : SaveSessionType
 
-    object NotAutoSaveable : SaveSessionType
+    data object NotAutoSaveable : SaveSessionType
 }
 
 internal fun FillResponse.Builder.addSaveInfo(

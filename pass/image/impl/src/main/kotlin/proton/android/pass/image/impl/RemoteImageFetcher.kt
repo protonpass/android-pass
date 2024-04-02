@@ -177,8 +177,8 @@ class RemoteImageFetcher(
 
     private sealed interface CacheResult {
         data class Exists(val file: File, val mimeType: MimeType) : CacheResult
-        object NotExists : CacheResult
-        object Miss : CacheResult
+        data object NotExists : CacheResult
+        data object Miss : CacheResult
     }
 
     private enum class MimeType(val mimeType: String) {

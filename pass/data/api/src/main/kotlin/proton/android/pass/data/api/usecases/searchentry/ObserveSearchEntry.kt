@@ -26,7 +26,7 @@ interface ObserveSearchEntry {
     operator fun invoke(searchEntrySelection: SearchEntrySelection): Flow<List<SearchEntry>>
 
     sealed class SearchEntrySelection {
-        object AllVaults : SearchEntrySelection()
+        data object AllVaults : SearchEntrySelection()
         data class Vault(val shareId: ShareId) : SearchEntrySelection()
     }
 }

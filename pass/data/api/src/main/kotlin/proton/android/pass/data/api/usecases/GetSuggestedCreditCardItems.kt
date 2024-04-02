@@ -24,8 +24,8 @@ import proton.android.pass.domain.Item
 sealed interface SuggestedCreditCardItemsResult {
     @JvmInline
     value class Items(val items: List<Item>) : SuggestedCreditCardItemsResult
-    object Hide : SuggestedCreditCardItemsResult
-    object ShowUpgrade : SuggestedCreditCardItemsResult
+    data object Hide : SuggestedCreditCardItemsResult
+    data object ShowUpgrade : SuggestedCreditCardItemsResult
 }
 
 interface GetSuggestedCreditCardItems {

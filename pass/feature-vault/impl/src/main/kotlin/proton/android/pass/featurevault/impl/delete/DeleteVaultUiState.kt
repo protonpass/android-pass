@@ -23,8 +23,8 @@ import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
 sealed interface DeleteVaultEvent {
-    object Unknown : DeleteVaultEvent
-    object Deleted : DeleteVaultEvent
+    data object Unknown : DeleteVaultEvent
+    data object Deleted : DeleteVaultEvent
 }
 
 @Stable

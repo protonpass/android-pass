@@ -22,8 +22,8 @@ import androidx.compose.runtime.Stable
 import proton.android.pass.domain.PendingInvite
 
 sealed interface AcceptInviteEvent {
-    object Unknown : AcceptInviteEvent
-    object Close : AcceptInviteEvent
+    data object Unknown : AcceptInviteEvent
+    data object Close : AcceptInviteEvent
 }
 
 @Stable
@@ -59,7 +59,7 @@ data class AcceptInviteButtonsState(
 @Stable
 sealed interface AcceptInviteProgressState {
     @Stable
-    object Hide : AcceptInviteProgressState
+    data object Hide : AcceptInviteProgressState
 
     @Stable
     data class Show(
@@ -71,7 +71,7 @@ sealed interface AcceptInviteProgressState {
 @Stable
 sealed interface AcceptInviteUiContent {
     @Stable
-    object Loading : AcceptInviteUiContent
+    data object Loading : AcceptInviteUiContent
 
     @Stable
     data class Content(

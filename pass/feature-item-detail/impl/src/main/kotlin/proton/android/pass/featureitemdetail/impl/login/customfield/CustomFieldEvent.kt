@@ -22,5 +22,5 @@ sealed interface CustomFieldEvent {
     data class ToggleFieldVisibility(val index: Int) : CustomFieldEvent
     data class CopyValue(val index: Int) : CustomFieldEvent
     data class CopyValueContent(val content: String) : CustomFieldEvent
-    object Upgrade : CustomFieldEvent
+    data object Upgrade : CustomFieldEvent
 }

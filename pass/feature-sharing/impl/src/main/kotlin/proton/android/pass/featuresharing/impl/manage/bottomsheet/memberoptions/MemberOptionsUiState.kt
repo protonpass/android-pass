@@ -51,8 +51,8 @@ enum class LoadingOption {
 sealed interface MemberOptionsUiEvent {
     @JvmInline
     value class SetPermission(val permission: MemberPermissionLevel) : MemberOptionsUiEvent
-    object TransferOwnership : MemberOptionsUiEvent
-    object RemoveMember : MemberOptionsUiEvent
+    data object TransferOwnership : MemberOptionsUiEvent
+    data object RemoveMember : MemberOptionsUiEvent
 }
 
 enum class TransferOwnershipState {
@@ -65,7 +65,7 @@ enum class TransferOwnershipState {
 @Stable
 sealed interface MemberOptionsEvent {
     @Stable
-    object Unknown : MemberOptionsEvent
+    data object Unknown : MemberOptionsEvent
 
     @Stable
     @JvmInline

@@ -53,10 +53,10 @@ import javax.inject.Inject
 @Immutable
 sealed interface SelectPasskeyBottomsheetEvent {
     @Immutable
-    object Idle : SelectPasskeyBottomsheetEvent
+    data object Idle : SelectPasskeyBottomsheetEvent
 
     @Immutable
-    object Close : SelectPasskeyBottomsheetEvent
+    data object Close : SelectPasskeyBottomsheetEvent
 
     @Immutable
     @JvmInline

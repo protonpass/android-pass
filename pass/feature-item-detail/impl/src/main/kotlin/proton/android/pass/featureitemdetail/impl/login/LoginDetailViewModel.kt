@@ -167,7 +167,7 @@ class LoginDetailViewModel @Inject constructor(
         MutableStateFlow(ItemDetailEvent.Unknown)
 
     sealed interface DetailFields {
-        object Password : DetailFields
+        data object Password : DetailFields
     }
 
     private var hasItemBeenFetchedAtLeastOnce = false

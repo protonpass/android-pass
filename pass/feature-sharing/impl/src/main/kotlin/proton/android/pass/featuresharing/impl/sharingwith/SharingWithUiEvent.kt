@@ -23,10 +23,10 @@ sealed interface SharingWithUiEvent {
     value class EmailChange(val content: String) : SharingWithUiEvent
 
     data class InviteSuggestionToggle(val email: String, val value: Boolean) : SharingWithUiEvent
-    object EmailSubmit : SharingWithUiEvent
-    object ContinueClick : SharingWithUiEvent
+    data object EmailSubmit : SharingWithUiEvent
+    data object ContinueClick : SharingWithUiEvent
 
     @JvmInline
     value class EmailClick(val index: Int) : SharingWithUiEvent
-    object OnScrolledToBottom : SharingWithUiEvent
+    data object OnScrolledToBottom : SharingWithUiEvent
 }

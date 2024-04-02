@@ -24,18 +24,18 @@ import androidx.compose.runtime.Immutable
 internal sealed interface ItemHistoryRestoreEvent {
 
     @Immutable
-    object Idle : ItemHistoryRestoreEvent
+    data object Idle : ItemHistoryRestoreEvent
 
     @Immutable
-    object OnRestoreItem : ItemHistoryRestoreEvent
+    data object OnRestoreItem : ItemHistoryRestoreEvent
 
     @Immutable
-    object OnRestoreItemCanceled : ItemHistoryRestoreEvent
+    data object OnRestoreItemCanceled : ItemHistoryRestoreEvent
 
     @Immutable
-    object OnRestoreItemConfirmed : ItemHistoryRestoreEvent
+    data object OnRestoreItemConfirmed : ItemHistoryRestoreEvent
 
     @Immutable
-    object OnItemRestored : ItemHistoryRestoreEvent
+    data object OnItemRestored : ItemHistoryRestoreEvent
 
 }

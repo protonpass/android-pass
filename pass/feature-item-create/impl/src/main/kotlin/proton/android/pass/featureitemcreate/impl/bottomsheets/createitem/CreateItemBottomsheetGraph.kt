@@ -50,7 +50,7 @@ sealed interface CreateItemBottomsheetNavigation {
     data class CreateAlias(val shareId: Option<ShareId>) : CreateItemBottomsheetNavigation
     data class CreateNote(val shareId: Option<ShareId>) : CreateItemBottomsheetNavigation
     data class CreateCreditCard(val shareId: Option<ShareId>) : CreateItemBottomsheetNavigation
-    object CreatePassword : CreateItemBottomsheetNavigation
+    data object CreatePassword : CreateItemBottomsheetNavigation
 }
 
 fun NavGraphBuilder.bottomsheetCreateItemGraph(

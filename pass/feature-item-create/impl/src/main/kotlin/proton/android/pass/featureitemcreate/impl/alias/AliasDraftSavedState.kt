@@ -23,7 +23,7 @@ import proton.android.pass.domain.ShareId
 
 @Stable
 sealed interface AliasDraftSavedState {
-    object Unknown : AliasDraftSavedState
+    data object Unknown : AliasDraftSavedState
     data class Success(
         val shareId: ShareId,
         val aliasItemFormState: AliasItemFormState

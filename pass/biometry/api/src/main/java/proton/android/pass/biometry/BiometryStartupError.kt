@@ -19,12 +19,12 @@
 package proton.android.pass.biometry
 
 sealed interface BiometryStartupError {
-    object Unknown : BiometryStartupError
-    object Unsupported : BiometryStartupError
-    object HardwareUnavailable : BiometryStartupError
-    object NoneEnrolled : BiometryStartupError
-    object NoHardware : BiometryStartupError
-    object SecurityUpdateRequired : BiometryStartupError
+    data object Unknown : BiometryStartupError
+    data object Unsupported : BiometryStartupError
+    data object HardwareUnavailable : BiometryStartupError
+    data object NoneEnrolled : BiometryStartupError
+    data object NoHardware : BiometryStartupError
+    data object SecurityUpdateRequired : BiometryStartupError
 
     companion object
 }

@@ -27,8 +27,8 @@ import proton.android.pass.domain.ShareId
 
 @Stable
 sealed interface IsVaultCreatedEvent {
-    object Unknown : IsVaultCreatedEvent
-    object Created : IsVaultCreatedEvent
+    data object Unknown : IsVaultCreatedEvent
+    data object Created : IsVaultCreatedEvent
 
     @JvmInline
     value class CreatedAndMoveToShare(val shareId: ShareId) : IsVaultCreatedEvent

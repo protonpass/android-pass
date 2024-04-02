@@ -71,7 +71,7 @@ class SessionDetailViewModel @Inject constructor(
 @Stable
 sealed interface DetailContent {
     @Stable
-    object Loading : DetailContent
+    data object Loading : DetailContent
 
     @Stable
     data class Success(val content: AutofillDebugSaver.DebugAutofillEntry) : DetailContent

@@ -58,7 +58,7 @@ import proton.android.pass.composecomponents.impl.R as CompR
 
 @Stable
 sealed interface VaultMemberContent {
-    object Loading : VaultMemberContent
+    data object Loading : VaultMemberContent
 
     data class Member(
         val member: VaultMember,

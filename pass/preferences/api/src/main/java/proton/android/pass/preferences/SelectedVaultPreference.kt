@@ -25,10 +25,10 @@ sealed interface SelectedVaultPreference {
 
     fun value(): String
 
-    object AllVaults : SelectedVaultPreference {
+    data object AllVaults : SelectedVaultPreference {
         override fun value(): String = ALL_VAULTS_VALUE
     }
-    object Trash : SelectedVaultPreference {
+    data object Trash : SelectedVaultPreference {
         override fun value(): String = TRASH_VALUE
     }
     data class Vault(val shareId: String) : SelectedVaultPreference {

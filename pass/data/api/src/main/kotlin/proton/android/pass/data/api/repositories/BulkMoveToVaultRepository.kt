@@ -24,8 +24,8 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
 sealed interface BulkMoveToVaultEvent {
-    object Idle : BulkMoveToVaultEvent
-    object Completed : BulkMoveToVaultEvent
+    data object Idle : BulkMoveToVaultEvent
+    data object Completed : BulkMoveToVaultEvent
 }
 
 interface BulkMoveToVaultRepository {

@@ -19,10 +19,10 @@
 package proton.android.pass.featurevault.impl.bottomsheet.options
 
 sealed interface VaultOptionsUserEvent {
-    object OnEdit : VaultOptionsUserEvent
-    object OnMigrate : VaultOptionsUserEvent
-    object OnRemove : VaultOptionsUserEvent
-    object OnShare : VaultOptionsUserEvent
-    object OnLeave : VaultOptionsUserEvent
-    object OnVaultAccess : VaultOptionsUserEvent
+    data object OnEdit : VaultOptionsUserEvent
+    data object OnMigrate : VaultOptionsUserEvent
+    data object OnRemove : VaultOptionsUserEvent
+    data object OnShare : VaultOptionsUserEvent
+    data object OnLeave : VaultOptionsUserEvent
+    data object OnVaultAccess : VaultOptionsUserEvent
 }

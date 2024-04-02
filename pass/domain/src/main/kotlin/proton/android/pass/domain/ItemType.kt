@@ -36,7 +36,7 @@ sealed interface CustomField {
     @Serializable
     data class Totp(override val label: String, val value: EncryptedString) : CustomField
 
-    object Unknown : CustomField {
+    data object Unknown : CustomField {
         override val label: String = "UNKNOWN"
     }
 }
@@ -72,10 +72,10 @@ sealed interface ItemType {
     ) : ItemType
 
     @Serializable
-    object Password : ItemType
+    data object Password : ItemType
 
     @Serializable
-    object Unknown : ItemType
+    data object Unknown : ItemType
 
     val category: ItemCategory
         get() = when (this) {

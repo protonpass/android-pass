@@ -30,13 +30,13 @@ import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
 sealed interface AliasDetailUiState {
 
     @Stable
-    object NotInitialised : AliasDetailUiState
+    data object NotInitialised : AliasDetailUiState
 
     @Stable
-    object Error : AliasDetailUiState
+    data object Error : AliasDetailUiState
 
     @Stable
-    object Pending : AliasDetailUiState
+    data object Pending : AliasDetailUiState
 
     @Stable
     data class Success(

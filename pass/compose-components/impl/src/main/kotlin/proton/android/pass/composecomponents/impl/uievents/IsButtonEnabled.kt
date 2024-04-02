@@ -22,8 +22,8 @@ import androidx.compose.runtime.Stable
 
 @Stable
 sealed interface IsButtonEnabled {
-    object Enabled : IsButtonEnabled
-    object Disabled : IsButtonEnabled
+    data object Enabled : IsButtonEnabled
+    data object Disabled : IsButtonEnabled
 
     companion object {
         fun from(value: Boolean): IsButtonEnabled = if (value) { Enabled } else { Disabled }

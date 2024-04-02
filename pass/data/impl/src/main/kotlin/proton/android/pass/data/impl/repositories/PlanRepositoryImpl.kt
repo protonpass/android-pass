@@ -175,7 +175,7 @@ class PlanRepositoryImpl @Inject constructor(
     }
 
     internal sealed interface TrialStatus {
-        object NotTrial : TrialStatus
+        data object NotTrial : TrialStatus
         data class Trial(val remainingDays: Int) : TrialStatus
     }
 

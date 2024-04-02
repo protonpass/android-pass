@@ -23,8 +23,8 @@ import proton.android.pass.domain.PendingInvite
 import proton.android.pass.domain.ShareId
 
 sealed interface InviteConfirmedEvent {
-    object Unknown : InviteConfirmedEvent
-    object Close : InviteConfirmedEvent
+    data object Unknown : InviteConfirmedEvent
+    data object Close : InviteConfirmedEvent
 
     @JvmInline
     value class Confirmed(val shareId: ShareId) : InviteConfirmedEvent
@@ -64,7 +64,7 @@ data class InviteConfirmedButtonsState(
 @Stable
 sealed interface InviteConfirmedProgressState {
     @Stable
-    object Hide : InviteConfirmedProgressState
+    data object Hide : InviteConfirmedProgressState
 
     @Stable
     data class Show(
@@ -76,7 +76,7 @@ sealed interface InviteConfirmedProgressState {
 @Stable
 sealed interface InviteConfirmedUiContent {
     @Stable
-    object Loading : InviteConfirmedUiContent
+    data object Loading : InviteConfirmedUiContent
 
     @Stable
     data class Content(

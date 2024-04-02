@@ -581,34 +581,34 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
     }
 
     sealed interface CheckHintsResult {
-        object NoneFound : CheckHintsResult
+        data object NoneFound : CheckHintsResult
 
         @JvmInline
         value class Found(val fieldType: FieldType) : CheckHintsResult
     }
 
     sealed interface CheckInputTypeResult {
-        object NoneFound : CheckInputTypeResult
-        object DoNotAutofill : CheckInputTypeResult
+        data object NoneFound : CheckInputTypeResult
+        data object DoNotAutofill : CheckInputTypeResult
 
         @JvmInline
         value class Found(val fieldType: FieldType) : CheckInputTypeResult
     }
 
     sealed interface HasAutofillInfoResult {
-        object No : HasAutofillInfoResult
-        object Yes : HasAutofillInfoResult
+        data object No : HasAutofillInfoResult
+        data object Yes : HasAutofillInfoResult
 
         @JvmInline
         value class YesWithFieldType(val fieldType: FieldType) : HasAutofillInfoResult
     }
 
     sealed interface NodeSupportsAutofillResult {
-        object No : NodeSupportsAutofillResult
+        data object No : NodeSupportsAutofillResult
 
         @JvmInline
         value class Yes(val fieldType: Option<FieldType>) : NodeSupportsAutofillResult
-        object MaybeWithContext : NodeSupportsAutofillResult
+        data object MaybeWithContext : NodeSupportsAutofillResult
     }
 
     data class AutofillTraversalContext(

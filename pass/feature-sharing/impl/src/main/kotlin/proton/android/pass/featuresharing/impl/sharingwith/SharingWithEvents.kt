@@ -23,5 +23,5 @@ import proton.android.pass.domain.ShareId
 sealed interface SharingWithEvents {
     @JvmInline
     value class NavigateToPermissions(val shareId: ShareId) : SharingWithEvents
-    object Unknown : SharingWithEvents
+    data object Unknown : SharingWithEvents
 }

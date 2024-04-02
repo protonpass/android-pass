@@ -97,9 +97,9 @@ sealed interface CreateAliasNavigation {
         val alias: String
     ) : CreateAliasNavigation
 
-    object Upgrade : CreateAliasNavigation
-    object Close : CreateAliasNavigation
-    object CloseBottomsheet : CreateAliasNavigation
+    data object Upgrade : CreateAliasNavigation
+    data object Close : CreateAliasNavigation
+    data object CloseBottomsheet : CreateAliasNavigation
 
     data class SelectVault(val shareId: ShareId) : CreateAliasNavigation
 }

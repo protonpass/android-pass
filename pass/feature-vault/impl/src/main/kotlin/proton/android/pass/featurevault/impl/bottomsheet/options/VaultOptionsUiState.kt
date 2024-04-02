@@ -21,9 +21,9 @@ package proton.android.pass.featurevault.impl.bottomsheet.options
 import proton.android.pass.domain.ShareId
 
 sealed class VaultOptionsUiState {
-    object Uninitialised : VaultOptionsUiState()
-    object Loading : VaultOptionsUiState()
-    object Error : VaultOptionsUiState()
+    data object Uninitialised : VaultOptionsUiState()
+    data object Loading : VaultOptionsUiState()
+    data object Error : VaultOptionsUiState()
     data class Success(
         val shareId: ShareId,
         val showEdit: Boolean,

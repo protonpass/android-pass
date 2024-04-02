@@ -47,35 +47,35 @@ sealed class CannotPerformActionDialogType(
 ) {
 
     @Stable
-    object CannotEditBecauseNoPermissions : CannotPerformActionDialogType(
+    data object CannotEditBecauseNoPermissions : CannotPerformActionDialogType(
         title = R.string.item_detail_cannot_perform_action_edit_title,
         message = R.string.item_detail_cannot_perform_action_edit_no_permissions_message,
         showUpgrade = false
     )
 
     @Stable
-    object CannotEditBecauseNeedsUpgrade : CannotPerformActionDialogType(
+    data object CannotEditBecauseNeedsUpgrade : CannotPerformActionDialogType(
         title = R.string.item_detail_cannot_perform_action_edit_title,
         message = R.string.item_detail_cannot_perform_action_edit_needs_upgrade_message,
         showUpgrade = true
     )
 
     @Stable
-    object CannotEditBecauseItemInTrash : CannotPerformActionDialogType(
+    data object CannotEditBecauseItemInTrash : CannotPerformActionDialogType(
         title = R.string.item_detail_cannot_perform_action_edit_title,
         message = R.string.item_detail_cannot_perform_action_edit_item_in_trash_message,
         showUpgrade = false
     )
 
     @Stable
-    object CannotShareBecauseLimitReached : CannotPerformActionDialogType(
+    data object CannotShareBecauseLimitReached : CannotPerformActionDialogType(
         title = R.string.item_detail_cannot_perform_action_share_no_permissions_title,
         message = R.string.item_detail_cannot_perform_action_share_limit_reached,
         showUpgrade = true
     )
 
     @Stable
-    object CannotShareBecauseNoPermissions : CannotPerformActionDialogType(
+    data object CannotShareBecauseNoPermissions : CannotPerformActionDialogType(
         title = R.string.item_detail_cannot_perform_action_share_no_permissions_title,
         message = R.string.item_detail_cannot_perform_action_share_no_permissions_message,
         showUpgrade = false

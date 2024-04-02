@@ -19,8 +19,8 @@
 package proton.android.pass.preferences
 
 sealed interface AllowScreenshotsPreference {
-    object Enabled : AllowScreenshotsPreference
-    object Disabled : AllowScreenshotsPreference
+    data object Enabled : AllowScreenshotsPreference
+    data object Disabled : AllowScreenshotsPreference
 
     companion object {
         fun from(value: Boolean): AllowScreenshotsPreference = if (value) { Enabled } else { Disabled }

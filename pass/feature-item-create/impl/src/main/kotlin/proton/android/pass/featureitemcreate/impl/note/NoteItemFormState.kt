@@ -49,5 +49,5 @@ data class NoteItemFormState(
 }
 
 sealed interface NoteItemValidationErrors {
-    object BlankTitle : NoteItemValidationErrors
+    data object BlankTitle : NoteItemValidationErrors
 }

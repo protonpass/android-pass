@@ -26,7 +26,7 @@ import proton.android.pass.domain.VaultWithItemCount
 @Stable
 sealed interface VaultStatus {
     @Stable
-    object Selectable : VaultStatus
+    data object Selectable : VaultStatus
 
     @Stable
     data class Disabled(val reason: Reason) : VaultStatus
@@ -44,9 +44,9 @@ data class VaultWithStatus(
 )
 
 sealed interface SelectVaultUiState {
-    object Uninitialised : SelectVaultUiState
-    object Loading : SelectVaultUiState
-    object Error : SelectVaultUiState
+    data object Uninitialised : SelectVaultUiState
+    data object Loading : SelectVaultUiState
+    data object Error : SelectVaultUiState
 
     @Immutable
     data class Success(

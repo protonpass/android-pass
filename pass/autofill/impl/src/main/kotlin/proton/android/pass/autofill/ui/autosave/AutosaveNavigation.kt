@@ -19,8 +19,8 @@
 package proton.android.pass.autofill.ui.autosave
 
 sealed interface AutosaveNavigation {
-    object Success : AutosaveNavigation
-    object Cancel : AutosaveNavigation
-    object Upgrade : AutosaveNavigation
-    object ForceSignOut : AutosaveNavigation
+    data object Success : AutosaveNavigation
+    data object Cancel : AutosaveNavigation
+    data object Upgrade : AutosaveNavigation
+    data object ForceSignOut : AutosaveNavigation
 }

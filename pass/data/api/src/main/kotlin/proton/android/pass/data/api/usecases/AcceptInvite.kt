@@ -23,7 +23,7 @@ import proton.android.pass.domain.InviteToken
 import proton.android.pass.domain.ShareId
 
 sealed interface AcceptInviteStatus {
-    object AcceptingInvite : AcceptInviteStatus
+    data object AcceptingInvite : AcceptInviteStatus
     data class DownloadingItems(val downloaded: Int, val total: Int) : AcceptInviteStatus
 
     data class Done(

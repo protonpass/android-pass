@@ -23,6 +23,6 @@ import android.net.Uri
 sealed interface TotpUriResult {
     @JvmInline
     value class Success(val uri: Uri) : TotpUriResult
-    object Cancelled : TotpUriResult
-    object NotStarted : TotpUriResult
+    data object Cancelled : TotpUriResult
+    data object NotStarted : TotpUriResult
 }

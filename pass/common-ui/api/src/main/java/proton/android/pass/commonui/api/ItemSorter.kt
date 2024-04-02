@@ -51,7 +51,7 @@ sealed interface GroupingKeys {
         val instant: Instant
     ) : GroupingKeys
 
-    object NoGrouping : GroupingKeys
+    data object NoGrouping : GroupingKeys
 }
 
 object AlphabeticalKeyComparator : Comparator<GroupingKeys.AlphabeticalKey> {

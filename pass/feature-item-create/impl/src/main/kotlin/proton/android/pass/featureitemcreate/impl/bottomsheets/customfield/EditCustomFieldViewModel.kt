@@ -57,7 +57,7 @@ class EditCustomFieldViewModel @Inject constructor(
 }
 
 sealed interface EditCustomFieldEvent {
-    object Unknown : EditCustomFieldEvent
+    data object Unknown : EditCustomFieldEvent
     data class EditField(val index: Int, val title: String) : EditCustomFieldEvent
-    object RemovedField : EditCustomFieldEvent
+    data object RemovedField : EditCustomFieldEvent
 }

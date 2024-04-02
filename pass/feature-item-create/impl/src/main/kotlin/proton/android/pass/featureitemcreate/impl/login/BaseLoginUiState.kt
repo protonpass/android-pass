@@ -87,7 +87,7 @@ data class CreatePasskeyState(
 
 @Immutable
 sealed interface UpdateUiEvent {
-    object Idle : UpdateUiEvent
+    data object Idle : UpdateUiEvent
     data class ConfirmDeletePasskey(val index: Int, val passkey: UIPasskeyContent) : UpdateUiEvent
 }
 
@@ -108,16 +108,16 @@ data class UpdateLoginUiState(
 
 sealed interface TotpUiState {
     @Immutable
-    object NotInitialised : TotpUiState
+    data object NotInitialised : TotpUiState
 
     @Immutable
-    object Loading : TotpUiState
+    data object Loading : TotpUiState
 
     @Immutable
-    object Error : TotpUiState
+    data object Error : TotpUiState
 
     @Immutable
-    object Success : TotpUiState
+    data object Success : TotpUiState
 
     @Immutable
     data class Limited(val isEdit: Boolean) : TotpUiState

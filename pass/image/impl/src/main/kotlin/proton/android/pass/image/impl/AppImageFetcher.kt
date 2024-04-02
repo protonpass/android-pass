@@ -162,8 +162,8 @@ class AppImageFetcher(
 
     private sealed interface CacheResult {
         data class Exists(val file: File) : CacheResult
-        object NotExists : CacheResult
-        object Miss : CacheResult
+        data object NotExists : CacheResult
+        data object Miss : CacheResult
     }
 
     companion object {

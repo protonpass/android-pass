@@ -21,8 +21,8 @@ package proton.android.pass.featureitemcreate.impl.common
 import proton.android.pass.domain.VaultWithItemCount
 
 sealed class ShareUiState {
-    object NotInitialised : ShareUiState()
-    object Loading : ShareUiState()
+    data object NotInitialised : ShareUiState()
+    data object Loading : ShareUiState()
     data class Error(val shareError: ShareError) : ShareUiState()
     data class Success(
         val vaultList: List<VaultWithItemCount>,

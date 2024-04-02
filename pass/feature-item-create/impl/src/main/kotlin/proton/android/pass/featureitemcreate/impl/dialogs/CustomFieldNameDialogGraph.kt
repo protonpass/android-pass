@@ -51,7 +51,7 @@ object EditCustomFieldNameDialog : NavItem(
 }
 
 sealed interface CustomFieldNameNavigation {
-    object Close : CustomFieldNameNavigation
+    data object Close : CustomFieldNameNavigation
 }
 
 fun NavGraphBuilder.customFieldNameDialogGraph(onNavigate: (CustomFieldNameNavigation) -> Unit) {

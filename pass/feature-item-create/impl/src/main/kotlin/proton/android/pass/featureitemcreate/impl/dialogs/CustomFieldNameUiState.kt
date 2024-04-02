@@ -21,8 +21,8 @@ package proton.android.pass.featureitemcreate.impl.dialogs
 import javax.annotation.concurrent.Immutable
 
 sealed interface CustomFieldEvent {
-    object Close : CustomFieldEvent
-    object Unknown : CustomFieldEvent
+    data object Close : CustomFieldEvent
+    data object Unknown : CustomFieldEvent
 }
 
 @Immutable

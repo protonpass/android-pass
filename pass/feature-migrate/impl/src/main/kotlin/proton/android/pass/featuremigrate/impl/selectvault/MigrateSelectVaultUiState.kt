@@ -34,7 +34,7 @@ sealed interface SelectVaultEvent {
         val destinationShareId: ShareId
     ) : SelectVaultEvent
 
-    object Close : SelectVaultEvent
+    data object Close : SelectVaultEvent
 }
 
 enum class MigrateMode {
@@ -45,7 +45,7 @@ enum class MigrateMode {
 @Stable
 sealed interface VaultStatus {
     @Stable
-    object Enabled : VaultStatus
+    data object Enabled : VaultStatus
 
     @JvmInline
     @Stable
@@ -54,10 +54,10 @@ sealed interface VaultStatus {
     @Stable
     sealed interface DisabledReason {
         @Stable
-        object NoPermission : DisabledReason
+        data object NoPermission : DisabledReason
 
         @Stable
-        object SameVault : DisabledReason
+        data object SameVault : DisabledReason
     }
 }
 
@@ -68,13 +68,13 @@ data class VaultEnabledPair(
 
 sealed class MigrateSelectVaultUiState {
     @Stable
-    object Uninitialised : MigrateSelectVaultUiState()
+    data object Uninitialised : MigrateSelectVaultUiState()
 
     @Stable
-    object Loading : MigrateSelectVaultUiState()
+    data object Loading : MigrateSelectVaultUiState()
 
     @Stable
-    object Error : MigrateSelectVaultUiState()
+    data object Error : MigrateSelectVaultUiState()
 
     @Stable
     data class Success(

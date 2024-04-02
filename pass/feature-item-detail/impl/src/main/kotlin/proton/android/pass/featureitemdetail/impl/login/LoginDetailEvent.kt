@@ -23,13 +23,13 @@ import proton.android.pass.featureitemdetail.impl.login.customfield.CustomFieldE
 
 sealed interface LoginDetailEvent {
 
-    object OnTogglePasswordClick : LoginDetailEvent
+    data object OnTogglePasswordClick : LoginDetailEvent
 
-    object OnUsernameClick : LoginDetailEvent
+    data object OnUsernameClick : LoginDetailEvent
 
-    object OnGoToAliasClick : LoginDetailEvent
+    data object OnGoToAliasClick : LoginDetailEvent
 
-    object OnCopyPasswordClick : LoginDetailEvent
+    data object OnCopyPasswordClick : LoginDetailEvent
 
     @JvmInline
     value class OnWebsiteClicked(val website: String) : LoginDetailEvent
@@ -40,14 +40,14 @@ sealed interface LoginDetailEvent {
     @JvmInline
     value class OnCopyTotpClick(val totpCode: String) : LoginDetailEvent
 
-    object OnUpgradeClick : LoginDetailEvent
+    data object OnUpgradeClick : LoginDetailEvent
 
-    object OnVaultClick : LoginDetailEvent
+    data object OnVaultClick : LoginDetailEvent
 
     @JvmInline
     value class OnCustomFieldEvent(val event: CustomFieldEvent) : LoginDetailEvent
 
-    object OnViewItemHistoryClicked : LoginDetailEvent
+    data object OnViewItemHistoryClicked : LoginDetailEvent
 
     @JvmInline
     value class OnSelectPasskey(val passkey: UIPasskeyContent) : LoginDetailEvent

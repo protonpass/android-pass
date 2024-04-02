@@ -22,8 +22,8 @@ import androidx.compose.runtime.Stable
 
 @Stable
 sealed interface IsLoadingState {
-    object Loading : IsLoadingState
-    object NotLoading : IsLoadingState
+    data object Loading : IsLoadingState
+    data object NotLoading : IsLoadingState
 
     fun value(): Boolean = when (this) {
         Loading -> true

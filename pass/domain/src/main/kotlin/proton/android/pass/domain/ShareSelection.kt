@@ -19,7 +19,7 @@
 package proton.android.pass.domain
 
 sealed class ShareSelection {
-    object AllShares : ShareSelection()
+    data object AllShares : ShareSelection()
     data class Share(val shareId: ShareId) : ShareSelection()
     data class Shares(val shareIds: List<ShareId>) : ShareSelection()
 }

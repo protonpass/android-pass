@@ -23,9 +23,9 @@ import androidx.compose.runtime.Stable
 @Stable
 sealed interface ItemDetailEvent {
     @Stable
-    object Unknown : ItemDetailEvent
+    data object Unknown : ItemDetailEvent
 
     @Stable
-    object MoveToVault : ItemDetailEvent
+    data object MoveToVault : ItemDetailEvent
 
 }

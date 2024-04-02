@@ -22,8 +22,8 @@ import androidx.compose.runtime.Stable
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
 sealed interface ItemOptionsEvent {
-    object Unknown : ItemOptionsEvent
-    object Close : ItemOptionsEvent
+    data object Unknown : ItemOptionsEvent
+    data object Close : ItemOptionsEvent
 }
 
 @Stable

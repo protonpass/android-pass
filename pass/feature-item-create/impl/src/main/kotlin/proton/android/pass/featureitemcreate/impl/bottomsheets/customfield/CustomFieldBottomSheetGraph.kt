@@ -65,15 +65,15 @@ enum class CustomFieldType {
 }
 
 sealed interface AddCustomFieldNavigation {
-    object AddText : AddCustomFieldNavigation
-    object AddHidden : AddCustomFieldNavigation
-    object AddTotp : AddCustomFieldNavigation
+    data object AddText : AddCustomFieldNavigation
+    data object AddHidden : AddCustomFieldNavigation
+    data object AddTotp : AddCustomFieldNavigation
 }
 
 sealed interface CustomFieldOptionsNavigation {
-    object Close : CustomFieldOptionsNavigation
+    data object Close : CustomFieldOptionsNavigation
     data class EditCustomField(val index: Int, val title: String) : CustomFieldOptionsNavigation
-    object RemoveCustomField : CustomFieldOptionsNavigation
+    data object RemoveCustomField : CustomFieldOptionsNavigation
 }
 
 fun NavGraphBuilder.customFieldBottomSheetGraph(onNavigate: (BaseLoginNavigation) -> Unit) {

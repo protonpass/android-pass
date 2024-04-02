@@ -51,10 +51,7 @@ internal fun UpsellFooter(
     onNotNowClick: () -> Unit
 ) {
     Column(
-        modifier = modifier.padding(
-            horizontal = Spacing.large,
-            vertical = Spacing.medium
-        ),
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
     ) {

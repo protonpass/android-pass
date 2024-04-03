@@ -55,7 +55,7 @@ internal fun UpsellContent(
         }
     ) { innerPaddingValues ->
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxSize()
                 .background(color = PassTheme.colors.backgroundNorm)
                 .padding(paddingValues = innerPaddingValues)

@@ -112,6 +112,7 @@ import proton.android.pass.features.item.history.timeline.navigation.ItemHistory
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavItem
 import proton.android.pass.features.security.center.missingtfa.navigation.SecurityCenterMissingTFANavItem
 import proton.android.pass.features.security.center.reusepass.navigation.SecurityCenterReusedPassNavItem
+import proton.android.pass.features.security.center.sentinel.navigation.SecurityCenterSentinelNavItem
 import proton.android.pass.features.security.center.shared.navigation.SecurityCenterNavDestination
 import proton.android.pass.features.security.center.shared.navigation.securityCenterNavGraph
 import proton.android.pass.features.security.center.weakpass.navigation.SecurityCenterWeakPassNavItem
@@ -1054,6 +1055,10 @@ fun NavGraphBuilder.appGraph(
 
                 SecurityCenterNavDestination.MissingTFA -> appNavigator.navigate(
                     destination = SecurityCenterMissingTFANavItem
+                )
+
+                SecurityCenterNavDestination.Sentinel -> appNavigator.navigate(
+                    destination = SecurityCenterSentinelNavItem
                 )
             }
         }

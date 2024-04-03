@@ -31,6 +31,12 @@
 
     <string name="security_center_home_section_password_health">Password Health</string>
 
+    <!-- Sentinel bottom sheet -->
+    <string name="security_center_sentinel_title">Proton Sentinel</string>
+    <string name="security_center_sentinel_subtitle">Proton Sentinel is an advanced account protection program powered by sophisticated AI systems and specialists working around the clock to protect you from bad actors and security threats.</string>
+
+    <string name="security_center_sentinel_button_enable">Enable Proton Sentinel</string>
+
     <!-- Weak passwords screen -->
     <string name="security_center_weak_pass_top_bar_title">Weak passwords</string>
     <string name="security_center_weak_pass_top_bar_subtitle">Weak passwords are easier to guess. Generate strong passwords to keep your account safe.</string>

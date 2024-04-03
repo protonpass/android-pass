@@ -16,22 +16,11 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.home.navigation
+package proton.android.pass.features.security.center.sentinel.presentation
 
-sealed interface SecurityCenterHomeNavDestination {
+import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-    data object Home : SecurityCenterHomeNavDestination
-
-    data object NewItem : SecurityCenterHomeNavDestination
-
-    data object Profile : SecurityCenterHomeNavDestination
-
-    data object ReusedPasswords : SecurityCenterHomeNavDestination
-
-    data object WeakPasswords : SecurityCenterHomeNavDestination
-
-    data object MissingTFA : SecurityCenterHomeNavDestination
-
-    data object Sentinel : SecurityCenterHomeNavDestination
-
-}
+@HiltViewModel
+class SecurityCenterSentinelViewModel @Inject constructor() : ViewModel()

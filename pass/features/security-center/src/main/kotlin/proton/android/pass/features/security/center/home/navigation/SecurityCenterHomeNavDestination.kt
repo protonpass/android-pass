@@ -32,4 +32,6 @@ sealed interface SecurityCenterHomeNavDestination {
 
     data object MissingTFA : SecurityCenterHomeNavDestination
 
+    data object Sentinel : SecurityCenterHomeNavDestination
+
 }

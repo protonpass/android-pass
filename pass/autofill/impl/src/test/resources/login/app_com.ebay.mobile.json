@@ -1,0 +1,370 @@
+{
+  "rootContent": {
+    "id": 859956762,
+    "className": "android.widget.FrameLayout",
+    "isImportantForAutofill": true,
+    "children": [
+      {
+        "id": -213874435,
+        "className": "android.widget.FrameLayout",
+        "isImportantForAutofill": true,
+        "children": [
+          {
+            "id": -213844644,
+            "className": "android.widget.LinearLayout",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": -213814853,
+                "className": "android.view.ViewGroup",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": -213785062,
+                    "className": "android.widget.TextView",
+                    "isImportantForAutofill": true,
+                    "text": "",
+                    "hintKeywordList": [
+                      ""
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "primary_toolbar"
+                ]
+              }
+            ],
+            "hintKeywordList": [
+              "fixed_appbar"
+            ]
+          },
+          {
+            "id": -213755271,
+            "className": "android.view.ViewGroup",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": -213725480,
+                "className": "android.widget.LinearLayout",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "scrolling_appbar"
+                ]
+              },
+              {
+                "id": -213695689,
+                "className": "android.view.View",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "decor_appbar_fragment_container_view_viewstub"
+                ]
+              },
+              {
+                "id": -213665898,
+                "className": "android.widget.FrameLayout",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": -213636107,
+                    "className": "android.widget.FrameLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": -213606316,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          "",
+                          "tv_welcome"
+                        ]
+                      },
+                      {
+                        "id": -213576525,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          "",
+                          "tv_sign_in_alert"
+                        ]
+                      },
+                      {
+                        "id": -213546734,
+                        "className": "android.widget.FrameLayout",
+                        "isImportantForAutofill": true,
+                        "children": [
+                          {
+                            "id": -213516943,
+                            "className": "android.widget.LinearLayout",
+                            "isImportantForAutofill": true,
+                            "children": [
+                              {
+                                "id": -213993599,
+                                "expectedAutofill": "username",
+                                "className": "android.widget.EditText",
+                                "text": "",
+                                "isFocused": true,
+                                "inputType": 33,
+                                "autofillHints": [
+                                  "emailAddress"
+                                ],
+                                "hintKeywordList": [
+                                  "",
+                                  "edit_text_username",
+                                  "Email or username"
+                                ]
+                              },
+                              {
+                                "id": -213487152,
+                                "className": "android.widget.TextView",
+                                "isImportantForAutofill": true,
+                                "text": "",
+                                "hintKeywordList": [
+                                  "",
+                                  "textinput_prefix_text"
+                                ]
+                              },
+                              {
+                                "id": -213457361,
+                                "className": "android.widget.TextView",
+                                "isImportantForAutofill": true,
+                                "text": "",
+                                "hintKeywordList": [
+                                  "",
+                                  "textinput_suffix_text"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "id": -213427570,
+                            "className": "android.widget.TextView",
+                            "isImportantForAutofill": true,
+                            "text": "",
+                            "hintKeywordList": [
+                              ""
+                            ]
+                          },
+                          {
+                            "id": -213963808,
+                            "className": "android.widget.Spinner",
+                            "isImportantForAutofill": true,
+                            "children": [
+                              {
+                                "id": -213397779,
+                                "className": "android.widget.TextView",
+                                "isImportantForAutofill": true,
+                                "text": "",
+                                "hintKeywordList": [
+                                  "",
+                                  "text1"
+                                ]
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "country_list"
+                            ]
+                          },
+                          {
+                            "id": -213367988,
+                            "className": "android.widget.LinearLayout",
+                            "isImportantForAutofill": true,
+                            "children": [
+                              {
+                                "id": -213934017,
+                                "className": "android.widget.EditText",
+                                "text": "",
+                                "inputType": 3,
+                                "autofillHints": [
+                                  "phone"
+                                ],
+                                "hintKeywordList": [
+                                  "",
+                                  "edit_text_phone_number",
+                                  "Mobile"
+                                ]
+                              },
+                              {
+                                "id": -213338197,
+                                "className": "android.widget.TextView",
+                                "isImportantForAutofill": true,
+                                "text": "",
+                                "hintKeywordList": [
+                                  "",
+                                  "textinput_prefix_text"
+                                ]
+                              },
+                              {
+                                "id": -213308406,
+                                "className": "android.widget.TextView",
+                                "isImportantForAutofill": true,
+                                "text": "",
+                                "hintKeywordList": [
+                                  "",
+                                  "textinput_suffix_text"
+                                ]
+                              }
+                            ]
+                          }
+                        ],
+                        "hintKeywordList": [
+                          "frame_input_layout"
+                        ]
+                      },
+                      {
+                        "id": -213278615,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          "",
+                          "tv_sign_in_mobile_info"
+                        ]
+                      },
+                      {
+                        "id": -213248824,
+                        "className": "android.widget.Button",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          "",
+                          "button_sign_in_mobile"
+                        ]
+                      },
+                      {
+                        "id": -213219033,
+                        "className": "android.widget.LinearLayout",
+                        "isImportantForAutofill": true,
+                        "children": [
+                          {
+                            "id": -213904226,
+                            "expectedAutofill": "password",
+                            "className": "android.widget.EditText",
+                            "text": "",
+                            "inputType": 129,
+                            "autofillHints": [
+                              "password",
+                              "passwordAuto"
+                            ],
+                            "hintKeywordList": [
+                              "",
+                              "password_input_text",
+                              "Password"
+                            ]
+                          },
+                          {
+                            "id": -213189242,
+                            "className": "android.widget.LinearLayout",
+                            "isImportantForAutofill": true
+                          },
+                          {
+                            "id": -213159451,
+                            "className": "android.widget.LinearLayout",
+                            "isImportantForAutofill": true,
+                            "children": [
+                              {
+                                "id": -213129660,
+                                "className": "android.widget.TextView",
+                                "isImportantForAutofill": true,
+                                "text": "",
+                                "hintKeywordList": [
+                                  "",
+                                  "textinput_suffix_text"
+                                ]
+                              }
+                            ]
+                          }
+                        ],
+                        "hintKeywordList": [
+                          "view_password_layout"
+                        ]
+                      },
+                      {
+                        "id": -213099869,
+                        "className": "android.widget.Button",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          "",
+                          "button_sign_in"
+                        ]
+                      },
+                      {
+                        "id": -213070078,
+                        "className": "android.widget.Button",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          "",
+                          "button_otp"
+                        ]
+                      },
+                      {
+                        "id": -213040287,
+                        "className": "android.widget.Button",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          "",
+                          "button_forgot"
+                        ]
+                      },
+                      {
+                        "id": -213010496,
+                        "className": "android.widget.Button",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          "",
+                          "button_register"
+                        ]
+                      },
+                      {
+                        "id": -212980705,
+                        "className": "android.widget.LinearLayout",
+                        "isImportantForAutofill": true,
+                        "hintKeywordList": [
+                          "progressContainer"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "fragmentContainer"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "decor_layout_content_container"
+                ]
+              }
+            ],
+            "hintKeywordList": [
+              "toolbar_coordinator"
+            ]
+          },
+          {
+            "id": -212950914,
+            "className": "android.widget.LinearLayout",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "app_speed_first_interaction_shim_overlay"
+            ]
+          },
+          {
+            "id": -212921123,
+            "className": "android.view.View",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "action_mode_bar_stub"
+            ]
+          }
+        ],
+        "hintKeywordList": [
+          "action_bar_root"
+        ]
+      }
+    ]
+  },
+  "packageName": "com.ebay.mobile"
+}

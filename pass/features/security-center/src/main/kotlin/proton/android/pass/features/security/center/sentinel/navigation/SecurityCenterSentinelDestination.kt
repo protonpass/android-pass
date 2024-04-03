@@ -20,8 +20,6 @@ package proton.android.pass.features.security.center.sentinel.navigation
 
 sealed interface SecurityCenterSentinelDestination {
 
-    data object LearnMore : SecurityCenterSentinelDestination
-
     data object Upsell : SecurityCenterSentinelDestination
 
 }

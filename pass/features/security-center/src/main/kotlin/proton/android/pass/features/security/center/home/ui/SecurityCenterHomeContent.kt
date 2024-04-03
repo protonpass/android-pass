@@ -87,7 +87,14 @@ internal fun SecurityCenterHomeContent(
             SecurityCenterToggleRow(
                 title = stringResource(id = R.string.security_center_home_row_sentinel_title),
                 subtitle = stringResource(id = R.string.security_center_home_row_sentinel_subtitle),
-                isChecked = false
+                isChecked = false,
+                onCheckedChange = { isChecked ->
+                    if (isChecked) {
+                        onNavigated(SecurityCenterHomeNavDestination.Sentinel)
+                    } else {
+                        onNavigated(SecurityCenterHomeNavDestination.Sentinel)
+                    }
+                }
             )
 
             SectionTitle(text = stringResource(id = R.string.security_center_home_section_password_health))

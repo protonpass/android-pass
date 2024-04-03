@@ -534,7 +534,7 @@ fun HomeScreen(
                     }
                 )
 
-                HomeBottomSheetType.Unknown -> {}
+                Unknown -> {}
             }
         }
     ) {

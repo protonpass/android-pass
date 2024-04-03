@@ -16,22 +16,19 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.home.navigation
+package proton.android.pass.features.security.center.sentinel.ui
 
-sealed interface SecurityCenterHomeNavDestination {
+import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
+import proton.android.pass.features.security.center.sentinel.navigation.SecurityCenterSentinelDestination
+import proton.android.pass.features.security.center.sentinel.presentation.SecurityCenterSentinelViewModel
 
-    data object Home : SecurityCenterHomeNavDestination
-
-    data object NewItem : SecurityCenterHomeNavDestination
-
-    data object Profile : SecurityCenterHomeNavDestination
-
-    data object ReusedPasswords : SecurityCenterHomeNavDestination
-
-    data object WeakPasswords : SecurityCenterHomeNavDestination
-
-    data object MissingTFA : SecurityCenterHomeNavDestination
-
-    data object Sentinel : SecurityCenterHomeNavDestination
-
+@Composable
+fun SecurityCenterSentinelBottomSheet(
+    onNavigated: (SecurityCenterSentinelDestination) -> Unit,
+    viewModel: SecurityCenterSentinelViewModel = hiltViewModel()
+) {
+    SecurityCenterSentinelBottomSheetContent(
+        onNavigated = onNavigated
+    )
 }

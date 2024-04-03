@@ -29,7 +29,8 @@ internal fun SecurityCenterToggleRow(
     modifier: Modifier = Modifier,
     title: String,
     subtitle: String,
-    isChecked: Boolean
+    isChecked: Boolean,
+    onCheckedChange: (Boolean) -> Unit
 ) {
     SecurityCenterRow(
         modifier = modifier,
@@ -42,7 +43,7 @@ internal fun SecurityCenterToggleRow(
                 colors = SwitchDefaults.colors(
                     checkedThumbColor = PassTheme.colors.interactionNormMajor1
                 ),
-                onCheckedChange = null
+                onCheckedChange = onCheckedChange
             )
         }
     )

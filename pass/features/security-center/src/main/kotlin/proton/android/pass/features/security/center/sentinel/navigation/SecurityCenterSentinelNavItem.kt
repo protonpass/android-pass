@@ -16,22 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.home.navigation
+package proton.android.pass.features.security.center.sentinel.navigation
 
-sealed interface SecurityCenterHomeNavDestination {
+import proton.android.pass.navigation.api.NavItem
 
-    data object Home : SecurityCenterHomeNavDestination
-
-    data object NewItem : SecurityCenterHomeNavDestination
-
-    data object Profile : SecurityCenterHomeNavDestination
-
-    data object ReusedPasswords : SecurityCenterHomeNavDestination
-
-    data object WeakPasswords : SecurityCenterHomeNavDestination
-
-    data object MissingTFA : SecurityCenterHomeNavDestination
-
-    data object Sentinel : SecurityCenterHomeNavDestination
-
-}
+object SecurityCenterSentinelNavItem: NavItem(
+    baseRoute = "security/center/sentinel"
+)

@@ -41,6 +41,7 @@ import proton.android.pass.features.security.center.home.presentation.SecurityCe
 import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBar
 import proton.android.pass.features.security.center.shared.ui.rows.SecurityCenterCounterRow
 import proton.android.pass.features.security.center.shared.ui.rows.SecurityCenterCounterRowModel
+import proton.android.pass.features.security.center.shared.ui.rows.SecurityCenterToggleRow
 
 @Composable
 internal fun SecurityCenterHomeContent(
@@ -79,10 +80,16 @@ internal fun SecurityCenterHomeContent(
             modifier = Modifier
                 .background(PassTheme.colors.backgroundNorm)
                 .padding(paddingValues = innerPaddingValues)
-                .padding(horizontal = Spacing.medium)
+                .padding(all = Spacing.medium)
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
         ) {
+            SecurityCenterToggleRow(
+                title = stringResource(id = R.string.security_center_home_row_sentinel_title),
+                subtitle = stringResource(id = R.string.security_center_home_row_sentinel_subtitle),
+                isChecked = false
+            )
+
             SectionTitle(text = stringResource(id = R.string.security_center_home_section_password_health))
 
             SecurityCenterCounterRow(

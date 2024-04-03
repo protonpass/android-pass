@@ -33,17 +33,20 @@ internal data class UpsellState(private val paidFeature: PaidFeature) {
 
     @DrawableRes
     internal val logo: Int = when (paidFeature) {
-        PaidFeature.DarkWebMonitoring -> R.drawable.logo_feature_pass_plus
+        PaidFeature.DarkWebMonitoring,
+        PaidFeature.Sentinel -> R.drawable.logo_feature_pass_plus
     }
 
     @StringRes
     internal val title: Int = when (paidFeature) {
-        PaidFeature.DarkWebMonitoring -> R.string.upsell_dark_web_monitoring_title
+        PaidFeature.DarkWebMonitoring,
+        PaidFeature.Sentinel -> R.string.upsell_monitor_title
     }
 
     @StringRes
     internal val subtitle: Int = when (paidFeature) {
         PaidFeature.DarkWebMonitoring -> R.string.upsell_dark_web_monitoring_subtitle
+        PaidFeature.Sentinel -> R.string.upsell_sentinel_subtitle
     }
 
     internal val features: ImmutableList<Pair<Int, Int>> = persistentListOf(

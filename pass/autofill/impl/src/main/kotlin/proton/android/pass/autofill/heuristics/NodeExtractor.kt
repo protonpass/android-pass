@@ -187,13 +187,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
             return NodeSupportsAutofillResult.No
         }
 
-        if (!isImportant) {
-            if (isEditText) {
-                PassLogger.d(
-                    TAG,
-                    "[node=${node.id}] Discarding node because is not important for autofill"
-                )
-            }
+        if (!isImportant && !isEditText) {
             return NodeSupportsAutofillResult.No
         }
 

@@ -20,6 +20,6 @@ package proton.android.pass.features.security.center.sentinel.navigation
 
 import proton.android.pass.navigation.api.NavItem
 
-object SecurityCenterSentinelNavItem: NavItem(
+object SecurityCenterSentinelNavItem : NavItem(
     baseRoute = "security/center/sentinel"
 )

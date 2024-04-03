@@ -20,6 +20,7 @@ package proton.android.pass.features.security.center.shared.navigation
 
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.features.PaidFeature
 
 sealed interface SecurityCenterNavDestination {
 
@@ -42,5 +43,8 @@ sealed interface SecurityCenterNavDestination {
     data object MissingTFA : SecurityCenterNavDestination
 
     data object Sentinel : SecurityCenterNavDestination
+
+    @JvmInline
+    value class Upsell(val paidFeature: PaidFeature) : SecurityCenterNavDestination
 
 }

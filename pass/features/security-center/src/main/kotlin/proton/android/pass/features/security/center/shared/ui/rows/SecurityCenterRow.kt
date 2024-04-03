@@ -77,8 +77,7 @@ internal fun SecurityCenterRow(
             Column(
                 modifier = Modifier
                     .weight(weight = 1f)
-                    .padding(start = Spacing.extraSmall),
-                verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
+                    .padding(start = Spacing.extraSmall)
             ) {
                 SectionSubtitle(text = title.asAnnotatedString())
 

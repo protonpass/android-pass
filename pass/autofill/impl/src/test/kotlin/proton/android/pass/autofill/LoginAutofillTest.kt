@@ -150,6 +150,11 @@ class LoginAutofillTest : BaseAutofillTest() {
         runLoginAutofillTest("login/firefox_basic_login_site.json")
     }
 
+    @Test
+    fun `can autofill login ebay app`() {
+        runLoginAutofillTest("login/app_com.ebay.mobile.json")
+    }
+
     private fun runLoginAutofillTest(file: String, flags: List<RequestFlags> = emptyList()) {
         runAutofillTest(
             file = file,

@@ -28,11 +28,15 @@ import proton.android.pass.features.security.center.missingtfa.ui.SecurityCenter
 import proton.android.pass.features.security.center.reusepass.navigation.SecurityCenterReusedPassDestination
 import proton.android.pass.features.security.center.reusepass.navigation.SecurityCenterReusedPassNavItem
 import proton.android.pass.features.security.center.reusepass.ui.SecurityCenterReusedPassScreen
+import proton.android.pass.features.security.center.sentinel.navigation.SecurityCenterSentinelNavItem
+import proton.android.pass.features.security.center.sentinel.ui.SecurityCenterSentinelBottomSheet
 import proton.android.pass.features.security.center.weakpass.navigation.SecurityCenterWeakPassDestination
 import proton.android.pass.features.security.center.weakpass.navigation.SecurityCenterWeakPassNavItem
 import proton.android.pass.features.security.center.weakpass.ui.SecurityCenterWeakPassScreen
+import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 
+@Suppress("LongMethod")
 fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestination) -> Unit) {
 
     composable(navItem = SecurityCenterHomeNavItem) {
@@ -45,7 +49,23 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                     SecurityCenterHomeNavDestination.ReusedPasswords -> SecurityCenterNavDestination.ReusedPasswords
                     SecurityCenterHomeNavDestination.WeakPasswords -> SecurityCenterNavDestination.WeakPasswords
                     SecurityCenterHomeNavDestination.MissingTFA -> SecurityCenterNavDestination.MissingTFA
+                    SecurityCenterHomeNavDestination.Sentinel -> SecurityCenterNavDestination.Sentinel
                 }.also(onNavigated)
+            }
+        )
+    }
+
+    bottomSheet(navItem = SecurityCenterSentinelNavItem) {
+        SecurityCenterSentinelBottomSheet(
+            onNavigated = { destination ->
+//                when (destination) {
+//                    SecurityCenterSentinelDestination.LearnMore -> {
+//
+//                    }
+//                    SecurityCenterSentinelDestination.Upsell -> {
+//
+//                    }
+//                }.also(onNavigated)
             }
         )
     }

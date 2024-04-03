@@ -117,6 +117,7 @@ import proton.android.pass.features.security.center.shared.navigation.SecurityCe
 import proton.android.pass.features.security.center.shared.navigation.securityCenterNavGraph
 import proton.android.pass.features.security.center.weakpass.navigation.SecurityCenterWeakPassNavItem
 import proton.android.pass.features.upsell.navigation.UpsellNavDestination
+import proton.android.pass.features.upsell.navigation.UpsellNavItem
 import proton.android.pass.features.upsell.navigation.upsellNavGraph
 import proton.android.pass.featuresearchoptions.impl.FilterBottomsheet
 import proton.android.pass.featuresearchoptions.impl.SearchOptionsBottomsheet
@@ -1015,8 +1016,8 @@ fun NavGraphBuilder.appGraph(
     }
 
     securityCenterNavGraph(
-        onNavigated = { securityCenterNavDestination ->
-            when (securityCenterNavDestination) {
+        onNavigated = { destination ->
+            when (destination) {
                 SecurityCenterNavDestination.Back -> appNavigator.navigateBack(
                     comesFromBottomsheet = false
                 )
@@ -1032,8 +1033,8 @@ fun NavGraphBuilder.appGraph(
                 is SecurityCenterNavDestination.ItemDetails -> appNavigator.navigate(
                     destination = ViewItem,
                     route = ViewItem.createNavRoute(
-                        shareId = securityCenterNavDestination.shareId,
-                        itemId = securityCenterNavDestination.itemId
+                        shareId = destination.shareId,
+                        itemId = destination.itemId
                     )
                 )
 
@@ -1060,6 +1061,13 @@ fun NavGraphBuilder.appGraph(
                 SecurityCenterNavDestination.Sentinel -> appNavigator.navigate(
                     destination = SecurityCenterSentinelNavItem
                 )
+
+                is SecurityCenterNavDestination.Upsell -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = UpsellNavItem,
+                        route = UpsellNavItem.createNavRoute(paidFeature = destination.paidFeature)
+                    )
+                }
             }
         }
     )

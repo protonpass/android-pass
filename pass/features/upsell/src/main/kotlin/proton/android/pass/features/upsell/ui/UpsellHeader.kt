@@ -83,7 +83,7 @@ fun UpsellHeaderPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: B
         Surface {
             UpsellHeader(
                 imageResId = R.drawable.logo_feature_pass_plus,
-                titleResId = R.string.upsell_dark_web_monitoring_title,
+                titleResId = R.string.upsell_monitor_title,
                 subtitleResId = R.string.upsell_dark_web_monitoring_subtitle
             )
         }

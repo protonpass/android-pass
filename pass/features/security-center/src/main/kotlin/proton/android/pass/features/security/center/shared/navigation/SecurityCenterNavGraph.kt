@@ -19,6 +19,7 @@
 package proton.android.pass.features.security.center.shared.navigation
 
 import androidx.navigation.NavGraphBuilder
+import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavDestination
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavItem
 import proton.android.pass.features.security.center.home.ui.SecurityCenterHomeScreen
@@ -28,6 +29,7 @@ import proton.android.pass.features.security.center.missingtfa.ui.SecurityCenter
 import proton.android.pass.features.security.center.reusepass.navigation.SecurityCenterReusedPassDestination
 import proton.android.pass.features.security.center.reusepass.navigation.SecurityCenterReusedPassNavItem
 import proton.android.pass.features.security.center.reusepass.ui.SecurityCenterReusedPassScreen
+import proton.android.pass.features.security.center.sentinel.navigation.SecurityCenterSentinelDestination
 import proton.android.pass.features.security.center.sentinel.navigation.SecurityCenterSentinelNavItem
 import proton.android.pass.features.security.center.sentinel.ui.SecurityCenterSentinelBottomSheet
 import proton.android.pass.features.security.center.weakpass.navigation.SecurityCenterWeakPassDestination
@@ -58,14 +60,11 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
     bottomSheet(navItem = SecurityCenterSentinelNavItem) {
         SecurityCenterSentinelBottomSheet(
             onNavigated = { destination ->
-//                when (destination) {
-//                    SecurityCenterSentinelDestination.LearnMore -> {
-//
-//                    }
-//                    SecurityCenterSentinelDestination.Upsell -> {
-//
-//                    }
-//                }.also(onNavigated)
+                when (destination) {
+                    SecurityCenterSentinelDestination.Upsell -> SecurityCenterNavDestination.Upsell(
+                        paidFeature = PaidFeature.Sentinel
+                    )
+                }.also(onNavigated)
             }
         )
     }

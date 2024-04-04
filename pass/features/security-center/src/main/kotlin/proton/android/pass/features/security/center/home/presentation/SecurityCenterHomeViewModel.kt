@@ -23,28 +23,32 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.securitycenter.api.ObserveSecurityAnalysis
+import proton.android.pass.securitycenter.api.sentinel.ObserveIsSentinelEnabled
 import javax.inject.Inject
 
 @HiltViewModel
 class SecurityCenterHomeViewModel @Inject constructor(
-    observeSecurityAnalysis: ObserveSecurityAnalysis
+    observeSecurityAnalysis: ObserveSecurityAnalysis,
+    observeIsSentinelEnabled: ObserveIsSentinelEnabled
 ) : ViewModel() {
 
-    internal val state: StateFlow<SecurityCenterHomeState> = observeSecurityAnalysis()
-        .map { securityAnalysis ->
-            SecurityCenterHomeState(
-                insecurePasswordsLoadingResult = securityAnalysis.insecurePasswords,
-                reusedPasswordsLoadingResult = securityAnalysis.reusedPasswords,
-                missing2faResult = securityAnalysis.missing2fa
-            )
-        }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000L),
-            initialValue = SecurityCenterHomeState.Initial
+    internal val state: StateFlow<SecurityCenterHomeState> = combine(
+        observeSecurityAnalysis(),
+        observeIsSentinelEnabled()
+    ) { securityAnalysis, isSentinelEnabled ->
+        SecurityCenterHomeState(
+            insecurePasswordsLoadingResult = securityAnalysis.insecurePasswords,
+            reusedPasswordsLoadingResult = securityAnalysis.reusedPasswords,
+            missing2faResult = securityAnalysis.missing2fa,
+            isSentinelEnabled = isSentinelEnabled
         )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000L),
+        initialValue = SecurityCenterHomeState.Initial
+    )
 
 }

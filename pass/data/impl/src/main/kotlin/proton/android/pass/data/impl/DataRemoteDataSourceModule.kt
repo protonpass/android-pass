@@ -22,6 +22,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import proton.android.pass.data.api.core.datasources.RemoteSentinelDataSource
+import proton.android.pass.data.impl.core.datasources.RemoteSentinelDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteAliasDataSource
 import proton.android.pass.data.impl.remote.RemoteAliasDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteEventDataSource
@@ -44,6 +46,7 @@ import proton.android.pass.data.impl.remote.RemoteShareKeyDataSource
 import proton.android.pass.data.impl.remote.RemoteShareKeyDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteTelemetryDataSource
 import proton.android.pass.data.impl.remote.RemoteTelemetryDataSourceImpl
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -83,5 +86,9 @@ abstract class DataRemoteDataSourceModule {
     abstract fun bindRemoteOrganizationSettingsDataSource(
         impl: RemoteOrganizationSettingsDataSourceImpl
     ): RemoteOrganizationSettingsDataSource
+
+    @[Binds Singleton]
+    abstract fun bindRemoteSentinelDataSource(impl: RemoteSentinelDataSourceImpl): RemoteSentinelDataSource
+
 }
 

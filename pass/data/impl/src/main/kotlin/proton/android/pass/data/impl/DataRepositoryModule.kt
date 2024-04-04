@@ -22,6 +22,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import proton.android.pass.data.api.core.repositories.SentinelRepository
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.repositories.BulkInviteRepository
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
@@ -34,6 +35,7 @@ import proton.android.pass.data.api.repositories.SearchEntryRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.TelemetryRepository
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
+import proton.android.pass.data.impl.core.repositories.SentinelRepositoryImpl
 import proton.android.pass.data.impl.repositories.AliasRepositoryImpl
 import proton.android.pass.data.impl.repositories.BulkInviteRepositoryImpl
 import proton.android.pass.data.impl.repositories.BulkMoveToVaultRepositoryImpl
@@ -56,6 +58,7 @@ import proton.android.pass.data.impl.repositories.ShareKeyRepositoryImpl
 import proton.android.pass.data.impl.repositories.ShareRepositoryImpl
 import proton.android.pass.data.impl.repositories.TelemetryRepositoryImpl
 import proton.android.pass.data.impl.repositories.UserAccessDataRepositoryImpl
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -115,4 +118,8 @@ abstract class DataRepositoryModule {
     abstract fun bindOrganizationSettingsRepository(
         impl: OrganizationSettingsRepositoryImpl
     ): OrganizationSettingsRepository
+
+    @[Binds Singleton]
+    abstract fun bindSentinelRepository(impl: SentinelRepositoryImpl): SentinelRepository
+
 }

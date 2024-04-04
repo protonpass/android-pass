@@ -88,6 +88,7 @@ private fun deviceInfo(context: Context, appConfig: AppConfig) {
     val memory = getMemory(context)
     val storage = getStorage()
     PassLogger.i(TAG, "-----------------------------------------")
+    PassLogger.i(TAG, "PACKAGE:     ${context.packageName}")
     PassLogger.i(
         TAG,
         "OS:          Android ${Build.VERSION.RELEASE} (API ${Build.VERSION.SDK_INT})"

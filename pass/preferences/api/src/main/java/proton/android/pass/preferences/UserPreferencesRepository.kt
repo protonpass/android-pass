@@ -20,6 +20,7 @@ package proton.android.pass.preferences
 
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.common.api.Option
+import proton.android.pass.preferences.sentinel.SentinelStatusPreference
 
 @Suppress("TooManyFunctions", "ComplexInterface")
 interface UserPreferencesRepository {
@@ -73,4 +74,8 @@ interface UserPreferencesRepository {
 
     fun tryClearPreferences(): Result<Unit>
     suspend fun clearPreferences(): Result<Unit>
+
+    fun setSentinelStatusPreference(preference: SentinelStatusPreference): Result<Unit>
+
+    fun observeSentinelStatusPreference(): Flow<SentinelStatusPreference>
 }

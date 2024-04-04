@@ -28,7 +28,8 @@ import proton.android.pass.securitycenter.api.ReusedPasswordsResult
 internal data class SecurityCenterHomeState(
     private val insecurePasswordsLoadingResult: LoadingResult<InsecurePasswordsResult>,
     private val reusedPasswordsLoadingResult: LoadingResult<ReusedPasswordsResult>,
-    private val missing2faResult: LoadingResult<Missing2faResult>
+    private val missing2faResult: LoadingResult<Missing2faResult>,
+    internal val isSentinelEnabled: Boolean
 ) {
 
     internal val insecurePasswordsCount: Int? = when (insecurePasswordsLoadingResult) {
@@ -57,7 +58,8 @@ internal data class SecurityCenterHomeState(
         val Initial: SecurityCenterHomeState = SecurityCenterHomeState(
             insecurePasswordsLoadingResult = LoadingResult.Loading,
             reusedPasswordsLoadingResult = LoadingResult.Loading,
-            missing2faResult = LoadingResult.Loading
+            missing2faResult = LoadingResult.Loading,
+            isSentinelEnabled = false
         )
 
     }

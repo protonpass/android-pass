@@ -291,6 +291,23 @@ fun DependencyHandlerScope.addFdroidSpecialLib(
     }
 }
 
+fun DependencyHandlerScope.addDevBlackImplementation(
+    default: Any,
+    devBlack: Any,
+) {
+    val devBlackImplementation = configurations.maybeCreate("devBlackImplementation")
+    val devProdImplementation = configurations.maybeCreate("devProdImplementation")
+    val alphaImplementation = configurations.getByName("alphaImplementation")
+    val playImplementation = configurations.getByName("playImplementation")
+    val fdroidImplementation = configurations.getByName("fdroidImplementation")
+
+    devBlackImplementation(devBlack)
+    devProdImplementation(default)
+    alphaImplementation(default)
+    playImplementation(default)
+    fdroidImplementation(default)
+}
+
 dependencies {
     coreLibraryDesugaring(libs.android.desugar)
     implementation(files("../../proton-libs/gopenpgp/gopenpgp.aar"))
@@ -357,8 +374,10 @@ dependencies {
     implementation(libs.core.userSettings)
     implementation(libs.core.utilAndroidDagger)
     implementation(libs.core.config.data)
-    releaseImplementation(libs.core.config.dagger.staticDefaults)
-    debugImplementation(libs.core.config.dagger.contentProvider)
+    addDevBlackImplementation(
+        default = libs.core.config.dagger.staticDefaults,
+        devBlack = libs.core.config.dagger.contentProvider
+    )
     implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.material)

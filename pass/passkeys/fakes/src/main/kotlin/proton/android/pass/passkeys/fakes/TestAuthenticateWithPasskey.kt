@@ -38,6 +38,6 @@ class TestAuthenticateWithPasskey @Inject constructor() : AuthenticateWithPasske
         origin: String,
         passkey: Passkey,
         requestJson: String,
-        clientDataHash: ByteArray
+        clientDataHash: ByteArray?
     ): PasskeyAuthenticationResponse = response.getOrThrow()
 }

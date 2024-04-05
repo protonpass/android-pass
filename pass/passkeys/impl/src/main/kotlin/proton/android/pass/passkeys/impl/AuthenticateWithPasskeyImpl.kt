@@ -36,7 +36,7 @@ class AuthenticateWithPasskeyImpl @Inject constructor(
         origin: String,
         passkey: Passkey,
         requestJson: String,
-        clientDataHash: ByteArray
+        clientDataHash: ByteArray?
     ): PasskeyAuthenticationResponse {
         val sanitized = PasskeyJsonSanitizer.sanitize(requestJson)
         PassLogger.d(TAG, "Resolving challenge for origin=$origin")

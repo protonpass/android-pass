@@ -33,7 +33,33 @@ fun SecurityCenterHomeScreen(
     val state by state.collectAsStateWithLifecycle()
 
     SecurityCenterHomeContent(
-        onNavigated = onNavigated,
-        state = state
+        state = state,
+        onUiEvent = { uiEvent ->
+            when (uiEvent) {
+                is SecurityCenterHomeUiEvent.OnHomeBarNavigation -> {
+                    uiEvent.destination?.let(onNavigated)
+                }
+
+                SecurityCenterHomeUiEvent.OnDisableSentinel -> {
+                    onDisableSentinel()
+                }
+
+                SecurityCenterHomeUiEvent.OnShowSentinelBottomSheet -> {
+                    onNavigated(SecurityCenterHomeNavDestination.Sentinel)
+                }
+
+                SecurityCenterHomeUiEvent.OnShowMissingSecondAuthFactors -> {
+                    onNavigated(SecurityCenterHomeNavDestination.MissingTFA)
+                }
+
+                SecurityCenterHomeUiEvent.OnShowReusedPasswords -> {
+                    onNavigated(SecurityCenterHomeNavDestination.ReusedPasswords)
+                }
+
+                SecurityCenterHomeUiEvent.OnShowWeakPasswords -> {
+                    onNavigated(SecurityCenterHomeNavDestination.WeakPasswords)
+                }
+            }
+        }
     )
 }

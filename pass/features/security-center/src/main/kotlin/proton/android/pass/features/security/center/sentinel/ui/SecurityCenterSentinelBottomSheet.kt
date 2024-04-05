@@ -19,16 +19,50 @@
 package proton.android.pass.features.security.center.sentinel.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.features.security.center.sentinel.navigation.SecurityCenterSentinelDestination
+import proton.android.pass.features.security.center.sentinel.presentation.SecurityCenterSentinelEvent
 import proton.android.pass.features.security.center.sentinel.presentation.SecurityCenterSentinelViewModel
+
+private const val SENTINEL_LEARN_MORE_LINK = "https://proton.me/support/proton-sentinel"
 
 @Composable
 fun SecurityCenterSentinelBottomSheet(
     onNavigated: (SecurityCenterSentinelDestination) -> Unit,
     viewModel: SecurityCenterSentinelViewModel = hiltViewModel()
-) {
+) = with(viewModel) {
+    val state by state.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+
+    LaunchedEffect(key1 = state.event) {
+        when (state.event) {
+            SecurityCenterSentinelEvent.Idle -> {
+
+            }
+
+            SecurityCenterSentinelEvent.OnLearnMore -> {
+                BrowserUtils.openWebsite(context, SENTINEL_LEARN_MORE_LINK)
+            }
+
+            SecurityCenterSentinelEvent.OnUpsell -> {
+                onNavigated(SecurityCenterSentinelDestination.Upsell)
+            }
+        }
+
+        onEventConsumed(state.event)
+    }
+
     SecurityCenterSentinelBottomSheetContent(
-        onNavigated = onNavigated
+        onUiEvent = { uiEvent ->
+            when (uiEvent) {
+                SecurityCenterSentinelUiEvent.OnEnableSentinel -> onEnableSentinel()
+                SecurityCenterSentinelUiEvent.OnLearnMore -> onLearnMore()
+            }
+        }
     )
 }

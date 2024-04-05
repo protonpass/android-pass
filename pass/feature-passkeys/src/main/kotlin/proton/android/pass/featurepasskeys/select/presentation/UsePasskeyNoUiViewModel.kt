@@ -49,7 +49,8 @@ data class UsePasskeyNoUiRequest(
     val requestJson: String,
     val shareId: ShareId,
     val itemId: ItemId,
-    val passkeyId: PasskeyId
+    val passkeyId: PasskeyId,
+    val clientDataHash: ByteArray
 )
 
 sealed interface UsePasskeyState {
@@ -108,7 +109,8 @@ class UsePasskeyNoUiViewModel @Inject constructor(
                 val response = authenticateWithPasskey(
                     origin = request.origin,
                     passkey = passkey.value,
-                    request = request.requestJson
+                    requestJson = request.requestJson,
+                    clientDataHash = request.clientDataHash
                 )
                 response.response
             }

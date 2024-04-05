@@ -104,7 +104,8 @@ class SelectPasskeyAppViewModel @Inject constructor(
     fun onItemSelected(
         item: ItemUiModel,
         origin: String,
-        request: String
+        request: String,
+        clientDataHash: ByteArray
     ) = viewModelScope.launch {
         val itemContents = item.contents as? ItemContents.Login ?: run {
             PassLogger.w(TAG, "Received ItemContents that are not ItemContents.Login")
@@ -118,7 +119,8 @@ class SelectPasskeyAppViewModel @Inject constructor(
                 onPasskeySelected(
                     passkey = itemContents.passkeys.first(),
                     request = request,
-                    origin = origin
+                    origin = origin,
+                    clientDataHash = clientDataHash
                 )
             }
 
@@ -144,13 +146,15 @@ class SelectPasskeyAppViewModel @Inject constructor(
     fun onPasskeySelected(
         origin: String,
         passkey: Passkey,
-        request: String
+        request: String,
+        clientDataHash: ByteArray
     ) = viewModelScope.launch {
         runCatching {
             authenticateWithPasskey(
                 origin = origin,
                 passkey = passkey,
-                request = request
+                requestJson = request,
+                clientDataHash = clientDataHash
             )
         }.onSuccess { response ->
             PassLogger.i(TAG, "Successfully authenticated with passkey")
@@ -182,7 +186,8 @@ class SelectPasskeyAppViewModel @Inject constructor(
                 onPasskeySelected(
                     origin = data.domain,
                     passkey = passkey.value,
-                    request = data.request
+                    request = data.request,
+                    clientDataHash = data.clientDataHash
                 )
             }
         }

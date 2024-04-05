@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
+import proton.android.pass.preferences.sentinel.SentinelStatusPreference
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -70,6 +71,9 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
         )
     )
 
+
+    private val sentinelStatusPreference = MutableStateFlow(SentinelStatusPreference.Disabled)
+
     override fun setAppLockState(state: AppLockState): Result<Unit> {
         appLockState.tryEmit(state)
         return Result.success(Unit)
@@ -103,14 +107,16 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
         return Result.success(Unit)
     }
 
-    override fun getHasDismissedAutofillBanner(): Flow<HasDismissedAutofillBanner> = hasDismissedAutofillBanner
+    override fun getHasDismissedAutofillBanner(): Flow<HasDismissedAutofillBanner> =
+        hasDismissedAutofillBanner
 
     override fun setHasDismissedTrialBanner(state: HasDismissedTrialBanner): Result<Unit> {
         hasDismissedTrialBanner.tryEmit(state)
         return Result.success(Unit)
     }
 
-    override fun getHasDismissedTrialBanner(): Flow<HasDismissedTrialBanner> = hasDismissedTrialBanner
+    override fun getHasDismissedTrialBanner(): Flow<HasDismissedTrialBanner> =
+        hasDismissedTrialBanner
 
     override fun setHasDismissedNotificationBanner(state: HasDismissedNotificationBanner): Result<Unit> {
         hasDismissedNotificationBanner.tryEmit(state)
@@ -132,7 +138,8 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
         return Result.success(Unit)
     }
 
-    override fun getClearClipboardPreference(): Flow<ClearClipboardPreference> = clearClipboardPreference
+    override fun getClearClipboardPreference(): Flow<ClearClipboardPreference> =
+        clearClipboardPreference
 
     override fun setUseFaviconsPreference(useFavicons: UseFaviconsPreference): Result<Unit> {
         useFaviconsPreference.tryEmit(useFavicons)
@@ -159,21 +166,24 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
         return Result.success(Unit)
     }
 
-    override fun getBiometricSystemLockPreference(): Flow<BiometricSystemLockPreference> = biometricSystemLockPreference
+    override fun getBiometricSystemLockPreference(): Flow<BiometricSystemLockPreference> =
+        biometricSystemLockPreference
 
     override fun setPasswordGenerationPreference(preference: PasswordGenerationPreference): Result<Unit> {
         passwordGenerationPreference.tryEmit(preference)
         return Result.success(Unit)
     }
 
-    override fun getPasswordGenerationPreference(): Flow<PasswordGenerationPreference> = passwordGenerationPreference
+    override fun getPasswordGenerationPreference(): Flow<PasswordGenerationPreference> =
+        passwordGenerationPreference
 
     override fun setAllowScreenshotsPreference(preference: AllowScreenshotsPreference): Result<Unit> {
         allowScreenshotsPreference.tryEmit(preference)
         return Result.success(Unit)
     }
 
-    override fun getAllowScreenshotsPreference(): Flow<AllowScreenshotsPreference> = allowScreenshotsPreference
+    override fun getAllowScreenshotsPreference(): Flow<AllowScreenshotsPreference> =
+        allowScreenshotsPreference
 
     override fun setDefaultVault(shareId: String): Result<Unit> {
         defaultVaultPreference.tryEmit(shareId.toOption())
@@ -185,5 +195,12 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
     override fun tryClearPreferences(): Result<Unit> = Result.success(Unit)
 
     override suspend fun clearPreferences(): Result<Unit> = Result.success(Unit)
+
+    override fun setSentinelStatusPreference(preference: SentinelStatusPreference): Result<Unit> {
+        sentinelStatusPreference.tryEmit(preference)
+        return Result.success(Unit)
+    }
+
+    override fun observeSentinelStatusPreference(): Flow<SentinelStatusPreference> = sentinelStatusPreference
 
 }

@@ -32,7 +32,7 @@
   <string name="item_unpinned_message_error">Terdapat kesalahan dalam melepas sematan item ini</string>
   <string name="login_item_generate_totp_error">Terdapat kesalahan dalam menghasilkan kode 2FA</string>
   <string name="login_item_view_alias_button">Tampilkan alias</string>
-  <string name="field_username">Nama pengguna atau alamat surel</string>
+  <string name="field_username">Nama pengguna atau alamat email</string>
   <string name="field_password">Kata sandi</string>
   <string name="websites_section_title">Situs web</string>
   <string name="totp_section_title">Token 2FA (TOTP)</string>
@@ -62,7 +62,7 @@
   <string name="credit_card_cvv_field_name">Kode keamanan</string>
   <string name="credit_card_pin_field_name">Kode PIN</string>
   <string name="credit_card_expiration_date_field_name">Tanggal kedaluwarsa</string>
-  <string name="credit_card_cardholder_copied_to_clipboard">Nama pemilik kartu disalin ke papan klip</string>
+  <string name="credit_card_cardholder_copied_to_clipboard">Nama pemegang kartu disalin ke papan klip</string>
   <string name="credit_card_number_copied_to_clipboard">Nomor kartu disalin ke papan klip</string>
   <string name="credit_card_verifcation_number_copied_to_clipboard">Kode keamanan disalin ke papan klip</string>
   <!-- Bottomsheet -->

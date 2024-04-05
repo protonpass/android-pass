@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="account_title">Účet</string>
+  <string name="account_recovery_title">Účet a obnova</string>
   <string name="account_username_label">Používateľské meno</string>
   <string name="account_subscription_label">Predplatné</string>
   <string name="account_permanently_delete_warning">Týmto sa natrvalo vymaže váš účet a všetky jeho údaje. Tento účet už nebude možné znovu aktivovať.</string>
@@ -13,6 +14,11 @@
   <string name="account_manage_subscription">Spravovať predplatné</string>
   <string name="account_get_user_info_error">Nepodarilo sa získať informácie o používateľovi</string>
   <string name="manage_subscription_icon_content_description">Tlačidlo správy predplatného</string>
+  <string name="account_settings_list_item_password_header">Správa hesiel</string>
+  <string name="account_settings_list_item_recovery_header">Email na obnovenie</string>
+  <string name="account_settings_list_item_recovery_hint_not_set">Nenastavené</string>
+  <string name="account_settings_list_item_password_hint_grace">Čaká sa na obnovenie hesla</string>
+  <string name="account_settings_list_item_password_hint_insecure">Obnovenie hesla pripravené</string>
   <!-- Sign out dialog -->
   <string name="alert_confirm_sign_out_title">Odhlásiť sa?</string>
   <string name="alert_confirm_sign_out_message">Naozaj sa chcete odhlásiť?</string>

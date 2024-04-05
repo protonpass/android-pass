@@ -23,8 +23,8 @@
   <string name="security_center_home_row_insecure_passwords_subtitle">Erstelle starke Passwörter</string>
   <string name="security_center_home_row_reused_passwords_title">Wiederverwendete Passwörter</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Erstelle einzigartige Passwörter</string>
-  <string name="security_center_home_row_missing_tfa_title">Missing two-factor authentication</string>
-  <string name="security_center_home_row_missing_tfa_subtitle">Increase your security</string>
+  <string name="security_center_home_row_missing_tfa_title">Fehlende Zwei-Faktor-Authentifizierung</string>
+  <string name="security_center_home_row_missing_tfa_subtitle">Erhöhe deine Sicherheit</string>
   <string name="security_center_home_section_password_health">Password Health</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Schwache Passwörter</string>
@@ -34,6 +34,6 @@
   <string name="security_center_reused_pass_top_bar_subtitle">Generiere eindeutige Passwörter, um deine Sicherheit zu erhöhen.</string>
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">%1$d Mal wiederverwendet</string>
   <!-- Missing 2FA -->
-  <string name="security_center_missing_tfa_top_bar_title">Missing two-factor authentication</string>
+  <string name="security_center_missing_tfa_top_bar_title">Fehlende Zwei-Faktor-Authentifizierung</string>
   <string name="security_center_missing_tfa_top_bar_subtitle">Logins with sites that have two-factor authentication available but you haven\'t set it up yet.</string>
 </resources>

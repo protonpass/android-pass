@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="account_title">Аккаунт</string>
+  <string name="account_recovery_title">Account and Recovery</string>
   <string name="account_username_label">Имя пользователя</string>
   <string name="account_subscription_label">План подписки</string>
   <string name="account_permanently_delete_warning">Это приведет к окончательному удалению вашего аккаунта и всех его данных. Вы не сможете повторно активировать этот аккаунт.</string>
@@ -13,6 +14,11 @@
   <string name="account_manage_subscription">Управление подпиской</string>
   <string name="account_get_user_info_error">Не могу получить информацию о пользователе</string>
   <string name="manage_subscription_icon_content_description">Кнопка управления подпиской</string>
+  <string name="account_settings_list_item_password_header">Управление паролями</string>
+  <string name="account_settings_list_item_recovery_header">Резервный адрес электронной почты</string>
+  <string name="account_settings_list_item_recovery_hint_not_set">Не установлен</string>
+  <string name="account_settings_list_item_password_hint_grace">Ожидается сброс пароля</string>
+  <string name="account_settings_list_item_password_hint_insecure">Сброс пароля готов</string>
   <!-- Sign out dialog -->
   <string name="alert_confirm_sign_out_title">Выйти?</string>
   <string name="alert_confirm_sign_out_message">Вы уверены, что хотите выйти?</string>

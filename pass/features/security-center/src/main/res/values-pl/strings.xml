@@ -23,8 +23,8 @@
   <string name="security_center_home_row_insecure_passwords_subtitle">Utwórz silne hasła</string>
   <string name="security_center_home_row_reused_passwords_title">Identyczne hasła</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Utwórz unikalne hasła</string>
-  <string name="security_center_home_row_missing_tfa_title">Missing two-factor authentication</string>
-  <string name="security_center_home_row_missing_tfa_subtitle">Increase your security</string>
+  <string name="security_center_home_row_missing_tfa_title">Brak uwierzytelniania dwustopniowego</string>
+  <string name="security_center_home_row_missing_tfa_subtitle">Zwiększ swoje bezpieczeństwo</string>
   <string name="security_center_home_section_password_health">Siła hasła</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Słabe hasła</string>

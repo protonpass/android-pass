@@ -47,9 +47,9 @@
   <string name="profile_option_unlock_with">Odkleni z</string>
   <string name="profile_option_change_pin_code">Spremeni kodo PIN</string>
   <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Brskalnik Samsung je nastavljen kot privzeti brskalnik. Ne podpira samodejnega izpolnjevanja od zunanjih upraviteljev gesel.</string>
-  <string name="profile_passkey_support_section_title">Passkeys</string>
-  <string name="profile_passkey_support_subtitle_supported">Passkeys are supported</string>
-  <string name="profile_passkey_support_subtitle_not_supported_android_version">Your android version does not support passkeys</string>
-  <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Your device does not support passkeys</string>
-  <string name="profile_passkey_support_subtitle_not_supported_unknown">Could not check support for passkeys</string>
+  <string name="profile_passkey_support_section_title">Identifikacijski ključ</string>
+  <string name="profile_passkey_support_subtitle_supported">Podprt je identifikacijski ključ</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">Vaša različica Androida ne podpira identifikacijskega ključa</string>
+  <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Vaša naprava ne podpira identifikacijskega ključa</string>
+  <string name="profile_passkey_support_subtitle_not_supported_unknown">Ni bilo mogoče preveriti podpore za identifikacijski ključ</string>
 </resources>

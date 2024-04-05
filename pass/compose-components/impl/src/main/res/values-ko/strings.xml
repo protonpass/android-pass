@@ -26,6 +26,7 @@
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">항목을 액션 매뉴서 열기</string>
   <string name="action_upgrade_now">지금 업그레이드</string>
+  <string name="action_not_now">Not now</string>
   <!-- Empty list -->
   <string name="empty_list_title">첫 번째 항목 추가</string>
   <string name="empty_search_results_title">결과가 없습니다</string>

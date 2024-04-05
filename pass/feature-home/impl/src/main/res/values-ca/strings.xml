@@ -23,7 +23,7 @@
   <string name="home_autofill_banner_settings">Activa l\'emplenament automàtic</string>
   <string name="home_trial_banner_title">El nostre regal de benvinguda per a vostè.</string>
   <string name="home_trial_banner_text">7 days to try premium features for free. Only during your first week of Proton Pass.</string>
-  <string name="home_trial_banner_settings">Saber-ne més ›</string>
+  <string name="home_trial_banner_settings">Més informació ›</string>
   <string name="home_notification_permission_banner_title">Obteniu actualitzacions importants</string>
   <string name="home_notification_permission_banner_text">Habiliteu les notificacions push per rebre una notificació quan altres persones comparteixin una caixa forta amb vosaltres.</string>
   <string name="home_notification_permission_banner_settings">Habilitar permisos ›</string>

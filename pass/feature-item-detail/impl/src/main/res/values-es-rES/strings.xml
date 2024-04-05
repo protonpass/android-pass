@@ -101,5 +101,5 @@
   <string name="passkey_detail_bottomsheet_username">Nombre de usuario</string>
   <string name="passkey_detail_bottomsheet_domain">Dominio</string>
   <string name="passkey_detail_bottomsheet_key">Clave</string>
-  <string name="passkey_detail_bottomsheet_created">Creado</string>
+  <string name="passkey_detail_bottomsheet_created">Creada</string>
 </resources>

@@ -29,6 +29,7 @@
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Адкрыць меню дзеянняў элемента</string>
   <string name="action_upgrade_now">Палепшыць</string>
+  <string name="action_not_now">Не зараз</string>
   <!-- Empty list -->
   <string name="empty_list_title">Дадайце свой першы элемент</string>
   <string name="empty_search_results_title">Нічога не знойдзена</string>

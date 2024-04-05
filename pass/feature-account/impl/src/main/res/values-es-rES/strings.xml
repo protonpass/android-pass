@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="account_title">Cuenta</string>
+  <string name="account_recovery_title">Account and Recovery</string>
   <string name="account_username_label">Nombre de usuario</string>
   <string name="account_subscription_label">Plan de suscripción</string>
   <string name="account_permanently_delete_warning">Esto eliminará permanentemente tu cuenta y todos tus datos. No podrás reactivar esta cuenta.</string>
@@ -13,6 +14,11 @@
   <string name="account_manage_subscription">Gestionar la suscripción</string>
   <string name="account_get_user_info_error">No hemos podido recuperar la información del usuario.</string>
   <string name="manage_subscription_icon_content_description">Botón de gestión de la suscripción</string>
+  <string name="account_settings_list_item_password_header">Gestión de contraseñas</string>
+  <string name="account_settings_list_item_recovery_header">Correo electrónico de recuperación</string>
+  <string name="account_settings_list_item_recovery_hint_not_set">No establecido</string>
+  <string name="account_settings_list_item_password_hint_grace">Restablecimiento de contraseña pendiente</string>
+  <string name="account_settings_list_item_password_hint_insecure">Restablecimiento de contraseña listo</string>
   <!-- Sign out dialog -->
   <string name="alert_confirm_sign_out_title">¿Cerrar sesión?</string>
   <string name="alert_confirm_sign_out_message">¿Estás seguro de que quieres cerrar sesión?</string>

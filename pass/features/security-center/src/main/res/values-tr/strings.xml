@@ -23,7 +23,7 @@
   <string name="security_center_home_row_insecure_passwords_subtitle">Güçlü parolalar oluşturun</string>
   <string name="security_center_home_row_reused_passwords_title">Yeniden kullanılmış parolalar</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Benzersiz parolalar oluşturun</string>
-  <string name="security_center_home_row_missing_tfa_title">Missing two-factor authentication</string>
+  <string name="security_center_home_row_missing_tfa_title">İki adımlı kimlik doğrulama eksik</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Güvenliğinizi artırın</string>
   <string name="security_center_home_section_password_health">Parola sağlığı</string>
   <!-- Weak passwords screen -->
@@ -34,6 +34,6 @@
   <string name="security_center_reused_pass_top_bar_subtitle">Güvenliğinizi artırmak için benzersiz parolalar oluşturun.</string>
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">%1$d kez yeniden kullanılmış</string>
   <!-- Missing 2FA -->
-  <string name="security_center_missing_tfa_top_bar_title">Missing two-factor authentication</string>
-  <string name="security_center_missing_tfa_top_bar_subtitle">Logins with sites that have two-factor authentication available but you haven\'t set it up yet.</string>
+  <string name="security_center_missing_tfa_top_bar_title">İki adımlı kimlik doğrulama eksik</string>
+  <string name="security_center_missing_tfa_top_bar_subtitle">İki adımlı kimlik doğrulaması kullanılabilen ancak henüz ayarlamadığınız site oturum açma kayıtları.</string>
 </resources>

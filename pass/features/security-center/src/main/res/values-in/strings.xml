@@ -23,8 +23,8 @@
   <string name="security_center_home_row_insecure_passwords_subtitle">Buat kata sandi kuat</string>
   <string name="security_center_home_row_reused_passwords_title">Kata sandi yang digunakan ulang</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Buat kata sandi unik</string>
-  <string name="security_center_home_row_missing_tfa_title">Missing two-factor authentication</string>
-  <string name="security_center_home_row_missing_tfa_subtitle">Increase your security</string>
+  <string name="security_center_home_row_missing_tfa_title">Autentikasi dua faktor hilang</string>
+  <string name="security_center_home_row_missing_tfa_subtitle">Tingkatkan keamanan Anda</string>
   <string name="security_center_home_section_password_health">Kesehatan Kata Sandi</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Kata sandi lemah</string>
@@ -34,6 +34,6 @@
   <string name="security_center_reused_pass_top_bar_subtitle">Hasilkan rangkaian kata sandi unik untuk meningkatkan keamanan Anda.</string>
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Telah digunakan ulang %1$d kali</string>
   <!-- Missing 2FA -->
-  <string name="security_center_missing_tfa_top_bar_title">Missing two-factor authentication</string>
-  <string name="security_center_missing_tfa_top_bar_subtitle">Logins with sites that have two-factor authentication available but you haven\'t set it up yet.</string>
+  <string name="security_center_missing_tfa_top_bar_title">Autentikasi dua faktor hilang</string>
+  <string name="security_center_missing_tfa_top_bar_subtitle">Entri masuk bagi situs yang memiliki autentikasi dua faktor telah tersedia, namun Anda belum mengatur hal ini.</string>
 </resources>

@@ -1018,8 +1018,8 @@ fun NavGraphBuilder.appGraph(
     securityCenterNavGraph(
         onNavigated = { destination ->
             when (destination) {
-                SecurityCenterNavDestination.Back -> appNavigator.navigateBack(
-                    comesFromBottomsheet = false
+                is SecurityCenterNavDestination.Back -> appNavigator.navigateBack(
+                    comesFromBottomsheet = destination.comesFromBottomSheet
                 )
 
                 SecurityCenterNavDestination.Home -> appNavigator.navigate(

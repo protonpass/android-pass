@@ -24,7 +24,8 @@ import proton.android.pass.domain.features.PaidFeature
 
 sealed interface SecurityCenterNavDestination {
 
-    data object Back : SecurityCenterNavDestination
+    @JvmInline
+    value class Back(val comesFromBottomSheet: Boolean) : SecurityCenterNavDestination
 
     data object Home : SecurityCenterNavDestination
 

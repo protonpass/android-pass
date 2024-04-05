@@ -19,11 +19,9 @@
 package proton.android.pass.data.impl.core.repositories
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.onStart
-import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.data.api.core.datasources.LocalSentinelDataSource
 import proton.android.pass.data.api.core.datasources.RemoteSentinelDataSource
 import proton.android.pass.data.api.core.repositories.SentinelRepository
@@ -35,27 +33,33 @@ class SentinelRepositoryImpl @Inject constructor(
 ) : SentinelRepository {
 
     override suspend fun disableSentinel() {
-        remoteSentinelDataSource.disableSentinel()
-            .also { localSentinelDataSource.disableSentinel() }
+        localSentinelDataSource.disableSentinel()
+            .also {
+                runCatching { remoteSentinelDataSource.disableSentinel() }
+                    .onFailure { error ->
+                        localSentinelDataSource.enableSentinel()
+                        throw error
+                    }
+            }
     }
 
     override suspend fun enableSentinel() {
-        remoteSentinelDataSource.enableSentinel()
-            .also { localSentinelDataSource.enableSentinel() }
+        runCatching { remoteSentinelDataSource.enableSentinel() }
+            .onSuccess {
+                localSentinelDataSource.enableSentinel()
+            }
     }
 
-    override fun observeIsSentinelEnabled(): Flow<Boolean> = combine(
-        oneShot { remoteSentinelDataSource.isSentinelEnabled() },
-        localSentinelDataSource.observeIsSentinelEnabled()
-    ) { isSentinelEnabledRemotely, isSentinelEnabledLocally ->
-        if (isSentinelEnabledRemotely != isSentinelEnabledLocally) {
-            if (isSentinelEnabledRemotely) localSentinelDataSource.enableSentinel()
-            else localSentinelDataSource.disableSentinel()
-        }
-        isSentinelEnabledRemotely
-    }
+    override fun observeIsSentinelEnabled(): Flow<Boolean> = localSentinelDataSource
+        .observeIsSentinelEnabled()
         .onStart {
             emit(localSentinelDataSource.observeIsSentinelEnabled().first())
+
+            if (remoteSentinelDataSource.isSentinelEnabled()) {
+                localSentinelDataSource.enableSentinel()
+            } else {
+                localSentinelDataSource.disableSentinel()
+            }
         }
         .distinctUntilChanged()
 

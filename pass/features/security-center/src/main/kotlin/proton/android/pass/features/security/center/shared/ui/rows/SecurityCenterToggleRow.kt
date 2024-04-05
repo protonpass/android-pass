@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.security.center.shared.ui.rows
 
+import androidx.compose.foundation.clickable
 import androidx.compose.material.Switch
 import androidx.compose.material.SwitchDefaults
 import androidx.compose.runtime.Composable
@@ -30,7 +31,7 @@ internal fun SecurityCenterToggleRow(
     title: String,
     subtitle: String,
     isChecked: Boolean,
-    onCheckedChange: (Boolean) -> Unit
+    onClick: () -> Unit
 ) {
     SecurityCenterRow(
         modifier = modifier,
@@ -39,11 +40,12 @@ internal fun SecurityCenterToggleRow(
         isClickable = false,
         trailingContent = {
             Switch(
+                modifier = Modifier.clickable { onClick() },
                 checked = isChecked,
                 colors = SwitchDefaults.colors(
                     checkedThumbColor = PassTheme.colors.interactionNormMajor1
                 ),
-                onCheckedChange = onCheckedChange
+                onCheckedChange = null
             )
         }
     )

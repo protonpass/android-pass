@@ -28,6 +28,8 @@ import proton.android.pass.securitycenter.api.ObserveSecurityAnalysis
 import proton.android.pass.securitycenter.api.passwords.InsecurePasswordChecker
 import proton.android.pass.securitycenter.api.passwords.MissingTfaChecker
 import proton.android.pass.securitycenter.api.passwords.RepeatedPasswordChecker
+import proton.android.pass.securitycenter.api.sentinel.DisableSentinel
+import proton.android.pass.securitycenter.api.sentinel.EnableSentinel
 import proton.android.pass.securitycenter.api.sentinel.ObserveIsSentinelEnabled
 import proton.android.pass.securitycenter.impl.checkers.BreachedDataChecker
 import proton.android.pass.securitycenter.impl.checkers.BreachedDataCheckerImpl
@@ -36,6 +38,8 @@ import proton.android.pass.securitycenter.impl.checkers.MissingTfaCheckerImpl
 import proton.android.pass.securitycenter.impl.checkers.RepeatedPasswordCheckerImpl
 import proton.android.pass.securitycenter.impl.helpers.Supports2fa
 import proton.android.pass.securitycenter.impl.helpers.Supports2faImpl
+import proton.android.pass.securitycenter.impl.sentinel.DisableSentinelImpl
+import proton.android.pass.securitycenter.impl.sentinel.EnableSentinelImpl
 import proton.android.pass.securitycenter.impl.sentinel.ObserveIsSentinelEnabledImpl
 import javax.inject.Singleton
 
@@ -63,6 +67,12 @@ internal abstract class SecurityCenterBindModule {
 
     @[Binds Singleton]
     abstract fun bindObserveIsSentinelEnabled(impl: ObserveIsSentinelEnabledImpl): ObserveIsSentinelEnabled
+
+    @[Binds Singleton]
+    abstract fun bindEnableSentinel(impl: EnableSentinelImpl): EnableSentinel
+
+    @[Binds Singleton]
+    abstract fun bindDisableSentinel(impl: DisableSentinelImpl): DisableSentinel
 
 }
 

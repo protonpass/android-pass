@@ -27,6 +27,7 @@
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Ouvrir le menu d\'action de l\'élément</string>
   <string name="action_upgrade_now">Changer d\'abonnement</string>
+  <string name="action_not_now">Plus tard</string>
   <!-- Empty list -->
   <string name="empty_list_title">Ajoutez votre premier élément</string>
   <string name="empty_search_results_title">Aucun résultat n\'a été trouvé.</string>
@@ -52,7 +53,7 @@
   <string name="bottom_bar_list_items_icon_content_description">Liste des éléments</string>
   <string name="bottom_bar_add_item_icon_content_description">Ajouter un élément</string>
   <string name="bottom_bar_profile_icon_content_description">Profil</string>
-  <string name="bottom_bar_security_center_icon_content_description">Centrale de sécurité</string>
+  <string name="bottom_bar_security_center_icon_content_description">Centre de sécurité</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">Aujourd\'hui</string>
   <string name="most_recent_yesterday">Hier</string>
@@ -103,8 +104,8 @@
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">Adresse de l\'alias</string>
   <string name="item_details_alias_section_mailboxes_title">Transfert vers</string>
-  <string name="item_details_credit_card_section_cardholder_title">Nom sur la carte</string>
-  <string name="item_details_credit_card_section_card_number_title">Numéro de la carte</string>
+  <string name="item_details_credit_card_section_cardholder_title">Nom du titulaire de la carte</string>
+  <string name="item_details_credit_card_section_card_number_title">Numéro de carte</string>
   <string name="item_details_credit_card_section_expiration_date_title">Date d\'expiration</string>
   <string name="item_details_credit_card_section_cvv_title">Code de sécurité</string>
   <string name="item_details_credit_card_section_pin_title">Code PIN</string>

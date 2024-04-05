@@ -26,6 +26,7 @@
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">開啟項目行為清單</string>
   <string name="action_upgrade_now">立即升級</string>
+  <string name="action_not_now">Not now</string>
   <!-- Empty list -->
   <string name="empty_list_title">加入您的第一個項目</string>
   <string name="empty_search_results_title">查無結果</string>
@@ -113,7 +114,7 @@
   <string name="item_details_shared_section_note_title">備注</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">The app version is not supported anymore, please update your app.</string>
   <!-- Passkeys -->
-  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Passkey</string>
+  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">密碼金鑰</string>
   <!-- Upgrade -->
   <string name="dialog_upgrade_plan_title">升級方案?</string>
   <string name="dialog_upgrade_plan_message">This feature is not available for free tier users. If you want to enjoy this along with other cool features, upgrade your plan and give it a try!</string>

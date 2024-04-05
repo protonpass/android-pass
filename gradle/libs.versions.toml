@@ -76,7 +76,7 @@ coroutines = "1.8.0"
 datetime = "0.4.0"
 serializationJson = "1.6.3"
 # Pass
-passCommon = "0.7.3"
+passCommon = "0.7.4"
 # Sentry
 sentry = "6.18.1"
 # Showkase

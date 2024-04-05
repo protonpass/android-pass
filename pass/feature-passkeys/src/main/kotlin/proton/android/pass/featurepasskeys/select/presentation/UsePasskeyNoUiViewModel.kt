@@ -50,7 +50,7 @@ data class UsePasskeyNoUiRequest(
     val shareId: ShareId,
     val itemId: ItemId,
     val passkeyId: PasskeyId,
-    val clientDataHash: ByteArray
+    val clientDataHash: ByteArray?
 )
 
 sealed interface UsePasskeyState {

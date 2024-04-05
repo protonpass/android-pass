@@ -106,6 +106,11 @@ class UsePasskeyNoUiActivity : FragmentActivity() {
                 return null
             }
 
+        val clientDataHash = option.clientDataHash ?: run {
+            PassLogger.w(TAG, "Request does not contain ClientDataHash")
+            return null
+        }
+
         val origin = SelectPasskeyUtils.getDomainFromRequest(request) ?: run {
             PassLogger.w(TAG, "Request does not contain origin")
             return null
@@ -116,7 +121,8 @@ class UsePasskeyNoUiActivity : FragmentActivity() {
             requestJson = option.requestJson,
             shareId = shareId,
             itemId = itemId,
-            passkeyId = passkeyId
+            passkeyId = passkeyId,
+            clientDataHash = clientDataHash
         )
     }
 

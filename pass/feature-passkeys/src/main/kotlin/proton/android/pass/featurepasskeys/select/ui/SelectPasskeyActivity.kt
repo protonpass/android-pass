@@ -145,6 +145,14 @@ class SelectPasskeyActivity : FragmentActivity() {
                         return null
                     }
 
+                val clientDataHash = option.clientDataHash ?: run {
+                    PassLogger.w(
+                        TAG,
+                        "Request does not contain ClientDataHash"
+                    )
+                    return null
+                }
+
                 val origin = SelectPasskeyUtils.getDomainFromRequest(request) ?: run {
                     PassLogger.w(TAG, "Request does not contain origin")
                     return null
@@ -155,7 +163,8 @@ class SelectPasskeyActivity : FragmentActivity() {
                     shareId = ShareId(shareId),
                     itemId = ItemId(itemId),
                     passkeyId = PasskeyId(passKeyId),
-                    origin = origin
+                    origin = origin,
+                    dataHash = clientDataHash
                 )
             }
 
@@ -168,9 +177,14 @@ class SelectPasskeyActivity : FragmentActivity() {
                     PassLogger.w(TAG, "SelectPasskey request does not contain requestOrigin")
                     return null
                 }
+                val clientDataHash = extras.getByteArray(EXTRAS_REQUEST_CLIENT_DATA_HASH) ?: run {
+                    PassLogger.w(TAG, "SelectPasskey request does not contain ClientDataHash")
+                    return null
+                }
                 return SelectPasskeyRequest.SelectPasskey(
                     request = requestJson,
-                    origin = requestOrigin
+                    origin = requestOrigin,
+                    dataHash = clientDataHash
                 )
             }
 
@@ -211,6 +225,7 @@ class SelectPasskeyActivity : FragmentActivity() {
 
         private const val EXTRAS_REQUEST_JSON = "REQUEST_JSON"
         private const val EXTRAS_REQUEST_ORIGIN = "REQUEST_ORIGIN"
+        private const val EXTRAS_REQUEST_CLIENT_DATA_HASH = "REQUEST_CLIENT_DATA_HASH"
 
         fun createIntentForUsePasskey(
             context: Context,
@@ -235,6 +250,7 @@ class SelectPasskeyActivity : FragmentActivity() {
 
             putExtra(EXTRAS_REQUEST_JSON, option.requestJson)
             putExtra(EXTRAS_REQUEST_ORIGIN, origin)
+            putExtra(EXTRAS_REQUEST_CLIENT_DATA_HASH, option.clientDataHash)
             putExtra(EXTRAS_REQUEST_TYPE_KEY, RequestType.SelectPasskey.name)
         }
     }

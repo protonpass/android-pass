@@ -28,6 +28,7 @@ interface AuthenticateWithPasskey {
     operator fun invoke(
         origin: String,
         passkey: Passkey,
-        request: String
+        requestJson: String,
+        clientDataHash: ByteArray
     ): PasskeyAuthenticationResponse
 }

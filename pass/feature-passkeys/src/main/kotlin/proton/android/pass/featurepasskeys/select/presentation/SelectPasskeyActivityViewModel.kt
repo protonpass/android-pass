@@ -57,39 +57,45 @@ import javax.inject.Inject
 
 sealed class SelectPasskeyRequest(
     val requestJson: String,
-    val requestOrigin: String
+    val requestOrigin: String,
+    val clientDataHash: ByteArray
 ) {
     data class SelectPasskey(
         private val request: String,
-        private val origin: String
-    ) : SelectPasskeyRequest(request, origin)
+        private val origin: String,
+        private val dataHash: ByteArray
+    ) : SelectPasskeyRequest(request, origin, dataHash)
 
     data class UsePasskey(
         private val request: String,
         private val origin: String,
+        private val dataHash: ByteArray,
         val shareId: ShareId,
         val itemId: ItemId,
         val passkeyId: PasskeyId
-    ) : SelectPasskeyRequest(request, origin)
+    ) : SelectPasskeyRequest(request, origin, dataHash)
 }
 
 @Immutable
 sealed class SelectPasskeyRequestData(
     val domain: String,
-    val request: String
+    val request: String,
+    val clientDataHash: ByteArray
 ) {
     data class SelectPasskey(
         private val requestDomain: String,
-        private val requestJson: String
-    ) : SelectPasskeyRequestData(requestDomain, requestJson)
+        private val requestJson: String,
+        private val requestClientDataHash: ByteArray
+    ) : SelectPasskeyRequestData(requestDomain, requestJson, requestClientDataHash)
 
     data class UsePasskey(
         private val requestDomain: String,
         private val requestJson: String,
+        private val requestClientDataHash: ByteArray,
         val shareId: ShareId,
         val itemId: ItemId,
         val passkeyId: PasskeyId
-    ) : SelectPasskeyRequestData(requestDomain, requestJson)
+    ) : SelectPasskeyRequestData(requestDomain, requestJson, requestClientDataHash)
 }
 
 @Immutable
@@ -142,11 +148,13 @@ class SelectPasskeyActivityViewModel @Inject constructor(
             when (request) {
                 is SelectPasskeyRequest.SelectPasskey -> SelectPasskeyRequestData.SelectPasskey(
                     requestDomain = request.requestOrigin,
-                    requestJson = request.requestJson
+                    requestJson = request.requestJson,
+                    requestClientDataHash = request.clientDataHash
                 )
                 is SelectPasskeyRequest.UsePasskey -> SelectPasskeyRequestData.UsePasskey(
                     requestDomain = request.requestOrigin,
                     requestJson = request.requestJson,
+                    requestClientDataHash = request.clientDataHash,
                     shareId = request.shareId,
                     itemId = request.itemId,
                     passkeyId = request.passkeyId

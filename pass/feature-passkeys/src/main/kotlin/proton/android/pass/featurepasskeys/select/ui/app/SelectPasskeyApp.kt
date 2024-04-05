@@ -116,7 +116,8 @@ fun SelectPasskeyApp(
                             viewModel.onItemSelected(
                                 item = it.item,
                                 origin = appState.data.domain,
-                                request = appState.data.request
+                                request = appState.data.request,
+                                clientDataHash = appState.data.clientDataHash
                             )
                         }
 
@@ -124,7 +125,8 @@ fun SelectPasskeyApp(
                             viewModel.onPasskeySelected(
                                 origin = appState.data.domain,
                                 passkey = it.passkey,
-                                request = appState.data.request
+                                request = appState.data.request,
+                                clientDataHash = appState.data.clientDataHash
                             )
                         }
 

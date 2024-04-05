@@ -38,13 +38,15 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
 import proton.android.pass.features.security.center.R
+import proton.android.pass.features.security.center.sentinel.presentation.SecurityCenterSentinelState
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 internal fun SecurityCenterSentinelBottomSheetContent(
     modifier: Modifier = Modifier,
-    onUiEvent: (SecurityCenterSentinelUiEvent) -> Unit
-) {
+    onUiEvent: (SecurityCenterSentinelUiEvent) -> Unit,
+    state: SecurityCenterSentinelState
+) = with(state) {
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -76,7 +78,8 @@ internal fun SecurityCenterSentinelBottomSheetContent(
         ) {
             PassCircleButton(
                 text = stringResource(id = R.string.security_center_sentinel_button_enable),
-                onClick = { onUiEvent(SecurityCenterSentinelUiEvent.OnEnableSentinel) }
+                onClick = { onUiEvent(SecurityCenterSentinelUiEvent.OnEnableSentinel) },
+                isLoading = isLoadingState.value()
             )
 
             PassCircleButton(

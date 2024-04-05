@@ -37,6 +37,9 @@
 
     <string name="security_center_sentinel_button_enable">Enable Proton Sentinel</string>
 
+    <string name="security_center_sentinel_snackbar_message_enable_canceled">Proton Sentinel protection activation has been canceled</string>
+    <string name="security_center_sentinel_snackbar_message_enable_error">There was an error enabling Proton Sentinel protection. Please try again.</string>
+
     <!-- Weak passwords screen -->
     <string name="security_center_weak_pass_top_bar_title">Weak passwords</string>
     <string name="security_center_weak_pass_top_bar_subtitle">Weak passwords are easier to guess. Generate strong passwords to keep your account safe.</string>

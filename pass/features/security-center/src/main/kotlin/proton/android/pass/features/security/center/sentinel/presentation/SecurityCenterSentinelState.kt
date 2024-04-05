@@ -19,16 +19,19 @@
 package proton.android.pass.features.security.center.sentinel.presentation
 
 import androidx.compose.runtime.Stable
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
 @Stable
 internal data class SecurityCenterSentinelState(
-    internal val event: SecurityCenterSentinelEvent
+    internal val event: SecurityCenterSentinelEvent,
+    internal val isLoadingState: IsLoadingState
 ) {
 
     internal companion object {
 
         internal val Initial: SecurityCenterSentinelState = SecurityCenterSentinelState(
-            event = SecurityCenterSentinelEvent.Idle
+            event = SecurityCenterSentinelEvent.Idle,
+            isLoadingState = IsLoadingState.NotLoading
         )
 
     }

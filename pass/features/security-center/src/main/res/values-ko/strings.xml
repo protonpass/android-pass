@@ -23,8 +23,8 @@
   <string name="security_center_home_row_insecure_passwords_subtitle">강한 비밀번호 만들기</string>
   <string name="security_center_home_row_reused_passwords_title">재사용한 비밀번호</string>
   <string name="security_center_home_row_reused_passwords_subtitle">고유한 비밀번호 만들기</string>
-  <string name="security_center_home_row_missing_tfa_title">Missing two-factor authentication</string>
-  <string name="security_center_home_row_missing_tfa_subtitle">Increase your security</string>
+  <string name="security_center_home_row_missing_tfa_title">2단계 인증이 없습니다</string>
+  <string name="security_center_home_row_missing_tfa_subtitle">보안 향상시키기</string>
   <string name="security_center_home_section_password_health">비밀번호 건강도</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">약한 비밀번호</string>
@@ -34,6 +34,6 @@
   <string name="security_center_reused_pass_top_bar_subtitle">보안을 강화하기 위해 고유한 비밀번호를 생성하십시오.</string>
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">재사용한 횟수 %1$d회</string>
   <!-- Missing 2FA -->
-  <string name="security_center_missing_tfa_top_bar_title">Missing two-factor authentication</string>
-  <string name="security_center_missing_tfa_top_bar_subtitle">Logins with sites that have two-factor authentication available but you haven\'t set it up yet.</string>
+  <string name="security_center_missing_tfa_top_bar_title">2단계 인증이 없습니다</string>
+  <string name="security_center_missing_tfa_top_bar_subtitle">2단계 인증으로 로그인을 지원하지만 아직 설정하지 않은 사이트들입니다.</string>
 </resources>

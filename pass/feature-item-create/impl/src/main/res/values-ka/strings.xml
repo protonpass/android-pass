@@ -113,5 +113,5 @@
   <string name="create_alias_content_limit_banner">მიაღწიეთ შესაძლო ფსევდონიმების რაოდენობს ზღვარს. სატარიფო გეგმის აწევის შემთხვევაში ფსევდონიმების რაოდენობა უსაზღვროა.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">ამ ელემენტის ჩასასწორებლად აუცილებელია აპი განაახლოთ</string>
   <string name="remove_passkey_dialog_title">წავშალო ეს წვდომის გასაღები?</string>
-  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">მართლა გნებავთ წაშალოთ მომხმარებლის \'%1$s\' წვდომის გასაღები ელემენტისთვის \'%2$s\'?</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">მართლა გნებავთ, წაშალოთ მომხმარებლის \'%1$s\' წვდომის გასაღები ელემენტისთვის \'%2$s\'?</string>
 </resources>

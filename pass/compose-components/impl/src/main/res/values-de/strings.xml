@@ -27,6 +27,7 @@
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Aktionsmenü für Eintrag öffnen.</string>
   <string name="action_upgrade_now">Jetzt upgraden</string>
+  <string name="action_not_now">Not now</string>
   <!-- Empty list -->
   <string name="empty_list_title">Füge deinen ersten Eintrag hinzu</string>
   <string name="empty_search_results_title">Kein Ergebnis gefunden</string>

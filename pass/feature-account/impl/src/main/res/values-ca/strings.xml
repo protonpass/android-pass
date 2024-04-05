@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="account_title">Compte</string>
+  <string name="account_recovery_title">Account and Recovery</string>
   <string name="account_username_label">Nom d\'usuari</string>
   <string name="account_subscription_label">Pla de subscripció</string>
   <string name="account_permanently_delete_warning">Això eliminarà permanentment el vostre compte i totes les dades. No el podreu reactivar.</string>
@@ -13,6 +14,11 @@
   <string name="account_manage_subscription">Gestiona la subscripció</string>
   <string name="account_get_user_info_error">No s\'ha pogut recuperar la informació de l\'usuari</string>
   <string name="manage_subscription_icon_content_description">Botó de gestió de la subscripció</string>
+  <string name="account_settings_list_item_password_header">Gestió de contrasenyes</string>
+  <string name="account_settings_list_item_recovery_header">Recovery email</string>
+  <string name="account_settings_list_item_recovery_hint_not_set">No establert</string>
+  <string name="account_settings_list_item_password_hint_grace">Password reset pending</string>
+  <string name="account_settings_list_item_password_hint_insecure">Password reset ready</string>
   <!-- Sign out dialog -->
   <string name="alert_confirm_sign_out_title">Voleu tancar la sessió?</string>
   <string name="alert_confirm_sign_out_message">Segur que voleu tancar la sessió?</string>

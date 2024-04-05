@@ -31,7 +31,7 @@
   <string name="app_lock_config_none">なし</string>
   <string name="app_lock_config_biometric">生体認証</string>
   <string name="app_lock_config_pin_code">PIN コード</string>
-  <string name="app_lock_config_app_lock_time">オートロック</string>
+  <string name="app_lock_config_app_lock_time">自動ロック</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">生体認証に失敗した場合、システムロックを使用する</string>
   <string name="configure_pin_set_pin_code">PINコードの設定</string>
   <string name="configure_pin_unlock_the_app_with_this_code">このコードでアプリのロックを解除する</string>
@@ -47,7 +47,7 @@
   <string name="profile_option_unlock_with">ロック解除</string>
   <string name="profile_option_change_pin_code">PINコードの変更</string>
   <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Samsung ブラウザがデフォルトのブラウザとして設定されています。このブラウザは、他のパスワードマネージャーによる自動入力をサポートしていません。</string>
-  <string name="profile_passkey_support_section_title">Passkeys</string>
+  <string name="profile_passkey_support_section_title">パスキー</string>
   <string name="profile_passkey_support_subtitle_supported">Passkeys are supported</string>
   <string name="profile_passkey_support_subtitle_not_supported_android_version">Your android version does not support passkeys</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Your device does not support passkeys</string>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="account_title">Račun</string>
+  <string name="account_recovery_title">Račun in obnovitev</string>
   <string name="account_username_label">Uporabniško ime</string>
   <string name="account_subscription_label">Naročnina</string>
   <string name="account_permanently_delete_warning">S tem boste trajno izbrisali svoj račun in vse njegove podatke. Tega računa ne boste mogli ponovno aktivirati.</string>
@@ -13,6 +14,11 @@
   <string name="account_manage_subscription">Upravljanje z naročnino</string>
   <string name="account_get_user_info_error">Podatkov o uporabniku ni bilo mogoče pridobiti</string>
   <string name="manage_subscription_icon_content_description">Gumb za upravljanje naročnine</string>
+  <string name="account_settings_list_item_password_header">Upravljanje gesel</string>
+  <string name="account_settings_list_item_recovery_header">E-poštni naslov za obnovitev</string>
+  <string name="account_settings_list_item_recovery_hint_not_set">Ni nastavljeno</string>
+  <string name="account_settings_list_item_password_hint_grace">Ponastavitev gesla je v teku</string>
+  <string name="account_settings_list_item_password_hint_insecure">Ponastavitev gesla je pripravljena</string>
   <!-- Sign out dialog -->
   <string name="alert_confirm_sign_out_title">Odjava?</string>
   <string name="alert_confirm_sign_out_message">Ali ste prepričani, da se želite izpisati?</string>

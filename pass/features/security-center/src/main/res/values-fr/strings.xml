@@ -18,7 +18,7 @@
   -->
 <resources>
   <!-- Home screen -->
-  <string name="security_center_home_top_bar_title">Vérification du Pass Proton</string>
+  <string name="security_center_home_top_bar_title">Surveillance de Pass</string>
   <string name="security_center_home_row_insecure_passwords_title">Mots de passe faible</string>
   <string name="security_center_home_row_insecure_passwords_subtitle">Créer des mots de passe fort</string>
   <string name="security_center_home_row_reused_passwords_title">Mots de passe réutilisés</string>
@@ -28,7 +28,7 @@
   <string name="security_center_home_section_password_health">État du mot de passe</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Mots de passe faibles</string>
-  <string name="security_center_weak_pass_top_bar_subtitle">Les mots de passe faibles sont plus facile à deviner. Générez un mot de passe complexe afin de mieux sécuriser votre compte.</string>
+  <string name="security_center_weak_pass_top_bar_subtitle">Les mots de passe faibles sont plus facile à deviner. Créez un mot de passe complexe pour mieux sécuriser votre compte.</string>
   <!-- Reused passwords screen -->
   <string name="security_center_reused_pass_top_bar_title">Mots de passe réutilisés</string>
   <string name="security_center_reused_pass_top_bar_subtitle">Générez un mot de passe unique afin d\'améliorer votre sécurité.</string>

@@ -1,0 +1,15 @@
+## 1.20.3 (2024-04-05)
+
+### Features :tada:
+
+- Improve passkey compatibility for QR-based flows.
+
+### Fixes :bug:
+
+- In some ocasions the app could show the trash options when accessing the app.
+- Crashes when autofilling a newly created alias.
+- Crashes when trying to add a passkey created by some apps.
+
+### Other
+
+- Updated translations.

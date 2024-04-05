@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.securitycenter.api.ObserveSecurityAnalysis
 import proton.android.pass.securitycenter.api.sentinel.DisableSentinel
 import proton.android.pass.securitycenter.api.sentinel.ObserveIsSentinelEnabled
@@ -35,7 +36,8 @@ import javax.inject.Inject
 class SecurityCenterHomeViewModel @Inject constructor(
     observeSecurityAnalysis: ObserveSecurityAnalysis,
     observeIsSentinelEnabled: ObserveIsSentinelEnabled,
-    private val disableSentinel: DisableSentinel
+    private val disableSentinel: DisableSentinel,
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     internal val state: StateFlow<SecurityCenterHomeState> = combine(
@@ -56,11 +58,8 @@ class SecurityCenterHomeViewModel @Inject constructor(
 
     internal fun onDisableSentinel() = viewModelScope.launch {
         runCatching { disableSentinel() }
-            .onFailure { error ->
-                println("JIBIRI: onDisableSentinel -> $error")
-            }
-            .onSuccess {
-                println("JIBIRI: onDisableSentinel -> SUCCESS!")
+            .onFailure {
+                snackbarDispatcher(SecurityCenterHomeSnackbarMessage.DisableSentinelError)
             }
     }
 

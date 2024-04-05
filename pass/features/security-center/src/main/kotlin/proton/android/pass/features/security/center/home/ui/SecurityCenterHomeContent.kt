@@ -46,7 +46,7 @@ import proton.android.pass.features.security.center.shared.ui.rows.SecurityCente
 @Composable
 internal fun SecurityCenterHomeContent(
     modifier: Modifier = Modifier,
-    onNavigated: (SecurityCenterHomeNavDestination) -> Unit,
+    onUiEvent: (SecurityCenterHomeUiEvent) -> Unit,
     state: SecurityCenterHomeState
 ) = with(state) {
     Scaffold(
@@ -71,7 +71,9 @@ internal fun SecurityCenterHomeContent(
                         HomeBottomBarEvent.OnNewItemSelected -> SecurityCenterHomeNavDestination.NewItem
                         HomeBottomBarEvent.OnProfileSelected -> SecurityCenterHomeNavDestination.Profile
                         HomeBottomBarEvent.OnSecurityCenterSelected -> null
-                    }.also { destination -> destination?.let(onNavigated) }
+                    }.also { destination ->
+                        onUiEvent(SecurityCenterHomeUiEvent.OnHomeBarNavigation(destination))
+                    }
                 }
             )
         }
@@ -88,12 +90,12 @@ internal fun SecurityCenterHomeContent(
                 title = stringResource(id = R.string.security_center_home_row_sentinel_title),
                 subtitle = stringResource(id = R.string.security_center_home_row_sentinel_subtitle),
                 isChecked = isSentinelEnabled,
-                onCheckedChange = { isChecked ->
-                    if (isChecked) {
-                        onNavigated(SecurityCenterHomeNavDestination.Sentinel)
+                onClick = {
+                    if (isSentinelEnabled) {
+                        SecurityCenterHomeUiEvent.OnDisableSentinel
                     } else {
-                        onNavigated(SecurityCenterHomeNavDestination.Sentinel)
-                    }
+                        SecurityCenterHomeUiEvent.OnShowSentinelBottomSheet
+                    }.also(onUiEvent)
                 }
             )
 
@@ -105,7 +107,7 @@ internal fun SecurityCenterHomeContent(
                     subtitle = stringResource(id = R.string.security_center_home_row_insecure_passwords_subtitle),
                     count = insecurePasswordsCount
                 ),
-                onClick = { onNavigated(SecurityCenterHomeNavDestination.WeakPasswords) }
+                onClick = { onUiEvent(SecurityCenterHomeUiEvent.OnShowWeakPasswords) }
             )
 
             SecurityCenterCounterRow(
@@ -114,7 +116,7 @@ internal fun SecurityCenterHomeContent(
                     subtitle = stringResource(id = R.string.security_center_home_row_reused_passwords_subtitle),
                     count = reusedPasswordsCount
                 ),
-                onClick = { onNavigated(SecurityCenterHomeNavDestination.ReusedPasswords) }
+                onClick = { onUiEvent(SecurityCenterHomeUiEvent.OnShowReusedPasswords) }
             )
 
             SecurityCenterCounterRow(
@@ -123,7 +125,7 @@ internal fun SecurityCenterHomeContent(
                     subtitle = stringResource(id = R.string.security_center_home_row_missing_tfa_subtitle),
                     count = missing2faCount
                 ),
-                onClick = { onNavigated(SecurityCenterHomeNavDestination.MissingTFA) }
+                onClick = { onUiEvent(SecurityCenterHomeUiEvent.OnShowMissingSecondAuthFactors) }
             )
         }
     }

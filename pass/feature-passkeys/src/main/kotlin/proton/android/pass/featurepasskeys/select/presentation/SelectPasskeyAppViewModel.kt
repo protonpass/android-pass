@@ -105,7 +105,7 @@ class SelectPasskeyAppViewModel @Inject constructor(
         item: ItemUiModel,
         origin: String,
         request: String,
-        clientDataHash: ByteArray
+        clientDataHash: ByteArray?
     ) = viewModelScope.launch {
         val itemContents = item.contents as? ItemContents.Login ?: run {
             PassLogger.w(TAG, "Received ItemContents that are not ItemContents.Login")
@@ -147,7 +147,7 @@ class SelectPasskeyAppViewModel @Inject constructor(
         origin: String,
         passkey: Passkey,
         request: String,
-        clientDataHash: ByteArray
+        clientDataHash: ByteArray?
     ) = viewModelScope.launch {
         runCatching {
             authenticateWithPasskey(

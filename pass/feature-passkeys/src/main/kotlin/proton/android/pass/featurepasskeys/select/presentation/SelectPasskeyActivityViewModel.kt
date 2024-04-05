@@ -58,18 +58,18 @@ import javax.inject.Inject
 sealed class SelectPasskeyRequest(
     val requestJson: String,
     val requestOrigin: String,
-    val clientDataHash: ByteArray
+    val clientDataHash: ByteArray?
 ) {
     data class SelectPasskey(
         private val request: String,
         private val origin: String,
-        private val dataHash: ByteArray
+        private val dataHash: ByteArray?
     ) : SelectPasskeyRequest(request, origin, dataHash)
 
     data class UsePasskey(
         private val request: String,
         private val origin: String,
-        private val dataHash: ByteArray,
+        private val dataHash: ByteArray?,
         val shareId: ShareId,
         val itemId: ItemId,
         val passkeyId: PasskeyId
@@ -80,18 +80,18 @@ sealed class SelectPasskeyRequest(
 sealed class SelectPasskeyRequestData(
     val domain: String,
     val request: String,
-    val clientDataHash: ByteArray
+    val clientDataHash: ByteArray?
 ) {
     data class SelectPasskey(
         private val requestDomain: String,
         private val requestJson: String,
-        private val requestClientDataHash: ByteArray
+        private val requestClientDataHash: ByteArray?
     ) : SelectPasskeyRequestData(requestDomain, requestJson, requestClientDataHash)
 
     data class UsePasskey(
         private val requestDomain: String,
         private val requestJson: String,
-        private val requestClientDataHash: ByteArray,
+        private val requestClientDataHash: ByteArray?,
         val shareId: ShareId,
         val itemId: ItemId,
         val passkeyId: PasskeyId

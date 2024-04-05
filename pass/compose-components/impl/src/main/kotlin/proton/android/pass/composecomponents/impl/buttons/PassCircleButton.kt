@@ -18,22 +18,30 @@
 
 package proton.android.pass.composecomponents.impl.buttons
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.applyIf
 
 @Composable
 fun PassCircleButton(
@@ -41,22 +49,38 @@ fun PassCircleButton(
     onClick: () -> Unit,
     text: String,
     backgroundColor: Color = PassTheme.colors.interactionNormMajor2,
-    textColor: Color = PassTheme.colors.textInvert
+    textColor: Color = PassTheme.colors.textInvert,
+    isLoading: Boolean = false
 ) {
     Box(
         modifier = modifier
             .fillMaxWidth()
             .clip(CircleShape)
             .background(color = backgroundColor)
-            .clickable { onClick() }
+            .applyIf(
+                condition = !isLoading,
+                ifTrue = { clickable(onClick = onClick) }
+            )
             .padding(vertical = Spacing.medium)
     ) {
-        Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = text,
-            color = textColor,
-            style = ProtonTheme.typography.defaultNorm,
-            textAlign = TextAlign.Center
-        )
+        Row(
+            modifier = Modifier.align(Alignment.Center),
+            horizontalArrangement = Arrangement.spacedBy(space = Spacing.medium)
+        ) {
+            Text(
+                text = text,
+                color = textColor,
+                style = ProtonTheme.typography.defaultNorm,
+                textAlign = TextAlign.Center
+            )
+
+            AnimatedVisibility(visible = isLoading) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .size(size = 20.dp)
+                        .align(alignment = Alignment.CenterVertically)
+                )
+            }
+        }
     }
 }

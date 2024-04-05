@@ -18,16 +18,25 @@
 
 package proton.android.pass.features.security.center.sentinel.presentation
 
-internal sealed interface SecurityCenterSentinelEvent {
+import androidx.annotation.StringRes
+import proton.android.pass.features.security.center.R
+import proton.android.pass.notifications.api.SnackbarMessage
+import proton.android.pass.notifications.api.SnackbarType
 
-    data object Idle : SecurityCenterSentinelEvent
+internal enum class SecurityCenterSentinelSnackbarMessage(
+    @StringRes override val id: Int,
+    override val type: SnackbarType,
+    override val isClipboard: Boolean = false
+) : SnackbarMessage {
 
-    data object OnLearnMore : SecurityCenterSentinelEvent
+    EnableSentinelCanceled(
+        id = R.string.security_center_sentinel_snackbar_message_enable_canceled,
+        type = SnackbarType.WARNING
+    ),
 
-    data object OnUpsell : SecurityCenterSentinelEvent
-
-    data object OnSentinelEnableError : SecurityCenterSentinelEvent
-
-    data object OnSentinelEnableSuccess : SecurityCenterSentinelEvent
+    EnableSentinelError(
+        id = R.string.security_center_sentinel_snackbar_message_enable_error,
+        type = SnackbarType.ERROR
+    )
 
 }

@@ -25,14 +25,17 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import proton.android.pass.securitycenter.api.ObserveSecurityAnalysis
+import proton.android.pass.securitycenter.api.sentinel.DisableSentinel
 import proton.android.pass.securitycenter.api.sentinel.ObserveIsSentinelEnabled
 import javax.inject.Inject
 
 @HiltViewModel
 class SecurityCenterHomeViewModel @Inject constructor(
     observeSecurityAnalysis: ObserveSecurityAnalysis,
-    observeIsSentinelEnabled: ObserveIsSentinelEnabled
+    observeIsSentinelEnabled: ObserveIsSentinelEnabled,
+    private val disableSentinel: DisableSentinel
 ) : ViewModel() {
 
     internal val state: StateFlow<SecurityCenterHomeState> = combine(
@@ -50,5 +53,15 @@ class SecurityCenterHomeViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000L),
         initialValue = SecurityCenterHomeState.Initial
     )
+
+    internal fun onDisableSentinel() = viewModelScope.launch {
+        runCatching { disableSentinel() }
+            .onFailure { error ->
+                println("JIBIRI: onDisableSentinel -> $error")
+            }
+            .onSuccess {
+                println("JIBIRI: onDisableSentinel -> SUCCESS!")
+            }
+    }
 
 }

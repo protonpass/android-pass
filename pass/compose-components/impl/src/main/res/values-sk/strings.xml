@@ -29,6 +29,7 @@
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Otvoriť ponuku akcií položky</string>
   <string name="action_upgrade_now">Navýšiť teraz</string>
+  <string name="action_not_now">Teraz nie</string>
   <!-- Empty list -->
   <string name="empty_list_title">Pridajte prvú položku</string>
   <string name="empty_search_results_title">Žiadne nájdené výsledky</string>

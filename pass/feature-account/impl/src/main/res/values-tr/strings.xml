@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="account_title">Hesap</string>
+  <string name="account_recovery_title">Hesap ve Kurtarma</string>
   <string name="account_username_label">Kullanıcı adı</string>
   <string name="account_subscription_label">Abonelik tarifesi</string>
   <string name="account_permanently_delete_warning">Bu işlem, hesabınızı ve tüm verilerini kalıcı olarak siler. Bu hesabı yeniden kullanıma alamazsınız.</string>
@@ -13,6 +14,11 @@
   <string name="account_manage_subscription">Abonelik yönetimi</string>
   <string name="account_get_user_info_error">Kullanıcı bilgileri alınamadı</string>
   <string name="manage_subscription_icon_content_description">Abonelik düğmesi yönetimi</string>
+  <string name="account_settings_list_item_password_header">Parola yönetimi</string>
+  <string name="account_settings_list_item_recovery_header">Kurtarma e-posta adresi</string>
+  <string name="account_settings_list_item_recovery_hint_not_set">Ayarlanmamış</string>
+  <string name="account_settings_list_item_password_hint_grace">Parola sıfırlaması bekliyor</string>
+  <string name="account_settings_list_item_password_hint_insecure">Parola sıfırlanmaya hazır</string>
   <!-- Sign out dialog -->
   <string name="alert_confirm_sign_out_title">Oturum kapatılsın mı?</string>
   <string name="alert_confirm_sign_out_message">Oturumu kapatmak istediğinize emin misiniz?</string>

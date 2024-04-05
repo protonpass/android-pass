@@ -18,22 +18,22 @@
   -->
 <resources>
   <!-- Home screen -->
-  <string name="security_center_home_top_bar_title">Pass Monitor</string>
+  <string name="security_center_home_top_bar_title">Spremljanje gesel</string>
   <string name="security_center_home_row_insecure_passwords_title">Šibka gesla</string>
-  <string name="security_center_home_row_insecure_passwords_subtitle">Create strong passwords</string>
+  <string name="security_center_home_row_insecure_passwords_subtitle">Ustvarite močna gesla</string>
   <string name="security_center_home_row_reused_passwords_title">Ponovno uporabljena gesla</string>
-  <string name="security_center_home_row_reused_passwords_subtitle">Create unique passwords</string>
-  <string name="security_center_home_row_missing_tfa_title">Missing two-factor authentication</string>
-  <string name="security_center_home_row_missing_tfa_subtitle">Increase your security</string>
-  <string name="security_center_home_section_password_health">Password Health</string>
+  <string name="security_center_home_row_reused_passwords_subtitle">Ustvarite edinstvena gesla</string>
+  <string name="security_center_home_row_missing_tfa_title">Manjkajoče dvojno preverjanje pristnosti</string>
+  <string name="security_center_home_row_missing_tfa_subtitle">Povečajte svojo varnost</string>
+  <string name="security_center_home_section_password_health">Močno geslo</string>
   <!-- Weak passwords screen -->
-  <string name="security_center_weak_pass_top_bar_title">Weak passwords</string>
-  <string name="security_center_weak_pass_top_bar_subtitle">Weak passwords are easier to guess. Generate strong passwords to keep your account safe.</string>
+  <string name="security_center_weak_pass_top_bar_title">Šibka gesla</string>
+  <string name="security_center_weak_pass_top_bar_subtitle">Šibka gesla je lažje uganiti. Ustvarite močna gesla, da bodo vaši računi varni.</string>
   <!-- Reused passwords screen -->
   <string name="security_center_reused_pass_top_bar_title">Ponovno uporabljena gesla</string>
   <string name="security_center_reused_pass_top_bar_subtitle">Ustvarite edinstvena gesla in zvišajte raven varnosti.</string>
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Ponovno uporabljeno %1$d-krat</string>
   <!-- Missing 2FA -->
-  <string name="security_center_missing_tfa_top_bar_title">Missing two-factor authentication</string>
-  <string name="security_center_missing_tfa_top_bar_subtitle">Logins with sites that have two-factor authentication available but you haven\'t set it up yet.</string>
+  <string name="security_center_missing_tfa_top_bar_title">Manjkajoče dvojno preverjanje pristnosti</string>
+  <string name="security_center_missing_tfa_top_bar_subtitle">Prijave v spletna mesta, ki imajo na voljo dvojno preverjanje pristnosti, vendar ga še niste nastavili.</string>
 </resources>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="account_title">Konto</string>
+  <string name="account_recovery_title">Konto og gjenoppretting</string>
   <string name="account_username_label">Brukernavn</string>
   <string name="account_subscription_label">Abonnementsplan</string>
   <string name="account_permanently_delete_warning">Dette vil permanent slette kontoen og alle tilhørende data. Du kan ikke gjenaktivere denne kontoen senere.</string>
@@ -13,6 +14,11 @@
   <string name="account_manage_subscription">Behandle abonnementet</string>
   <string name="account_get_user_info_error">Kan ikke hente brukerinformasjonen</string>
   <string name="manage_subscription_icon_content_description">Knapp for å behandle abonnement</string>
+  <string name="account_settings_list_item_password_header">Passordhåndtering</string>
+  <string name="account_settings_list_item_recovery_header">E-post for gjenoppretting</string>
+  <string name="account_settings_list_item_recovery_hint_not_set">Ikke angitt</string>
+  <string name="account_settings_list_item_password_hint_grace">Venter på tilbakestilling av passord</string>
+  <string name="account_settings_list_item_password_hint_insecure">Klargjort for tilbakestilling av passord</string>
   <!-- Sign out dialog -->
   <string name="alert_confirm_sign_out_title">Logg av?</string>
   <string name="alert_confirm_sign_out_message">Er du sikker på at du vil logge av?</string>

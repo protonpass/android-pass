@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="account_title">Account</string>
+  <string name="account_recovery_title">Account and Recovery</string>
   <string name="account_username_label">Gebruikersnaam</string>
   <string name="account_subscription_label">Abonnement</string>
   <string name="account_permanently_delete_warning">Dit zal uw account en alle bijbehorende gegevens permanent verwijderen. U zult dit account niet kunnen heractiveren.</string>
@@ -13,6 +14,11 @@
   <string name="account_manage_subscription">Abonnement beheren</string>
   <string name="account_get_user_info_error">Kan de gebruikersgegevens niet ophalen</string>
   <string name="manage_subscription_icon_content_description">Abonnement beheren knop</string>
+  <string name="account_settings_list_item_password_header">Wachtwoordbeheer</string>
+  <string name="account_settings_list_item_recovery_header">Herstel e-mailadres</string>
+  <string name="account_settings_list_item_recovery_hint_not_set">Niet ingesteld</string>
+  <string name="account_settings_list_item_password_hint_grace">Wachtwoord opnieuw instellen aangevraagd</string>
+  <string name="account_settings_list_item_password_hint_insecure">Nieuw wachtwoord aanvragen klaar</string>
   <!-- Sign out dialog -->
   <string name="alert_confirm_sign_out_title">Uitloggen?</string>
   <string name="alert_confirm_sign_out_message">Weet u zeker dat u zich wilt uitloggen?</string>

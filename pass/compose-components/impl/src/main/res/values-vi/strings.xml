@@ -26,6 +26,7 @@
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Mở menu tùy chọn nội dung</string>
   <string name="action_upgrade_now">Nâng cấp ngay</string>
+  <string name="action_not_now">Not now</string>
   <!-- Empty list -->
   <string name="empty_list_title">Thêm nội dung đầu tiên của bạn</string>
   <string name="empty_search_results_title">Không có kết quả được tìm thấy</string>

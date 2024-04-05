@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="account_title">Konto</string>
+  <string name="account_recovery_title">Konto i odzyskiwanie</string>
   <string name="account_username_label">Nazwa użytkownika</string>
   <string name="account_subscription_label">Plan subskrypcji</string>
   <string name="account_permanently_delete_warning">Ta czynność spowoduje trwałe usunięcie konta. Nie będziesz mógł reaktywować tego konta.</string>
@@ -13,6 +14,11 @@
   <string name="account_manage_subscription">Zarządzaj subskrypcją</string>
   <string name="account_get_user_info_error">Nie można pobrać informacji o użytkowniku</string>
   <string name="manage_subscription_icon_content_description">Przycisk zarządzania subskrypcją</string>
+  <string name="account_settings_list_item_password_header">Zarządzanie hasłem</string>
+  <string name="account_settings_list_item_recovery_header">Adres pomocniczy</string>
+  <string name="account_settings_list_item_recovery_hint_not_set">Nie ustawiono</string>
+  <string name="account_settings_list_item_password_hint_grace">Żądanie zresetowania hasła zostało wysłane</string>
+  <string name="account_settings_list_item_password_hint_insecure">Resetowanie hasła jest dostępne</string>
   <!-- Sign out dialog -->
   <string name="alert_confirm_sign_out_title">Wylogować się?</string>
   <string name="alert_confirm_sign_out_message">Czy na pewno chcesz się wylogować?</string>

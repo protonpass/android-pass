@@ -169,10 +169,7 @@ class SelectPasskeyActivity : FragmentActivity() {
                     PassLogger.w(TAG, "SelectPasskey request does not contain requestOrigin")
                     return null
                 }
-                val clientDataHash = extras.getByteArray(EXTRAS_REQUEST_CLIENT_DATA_HASH) ?: run {
-                    PassLogger.w(TAG, "SelectPasskey request does not contain ClientDataHash")
-                    return null
-                }
+                val clientDataHash = extras.getByteArray(EXTRAS_REQUEST_CLIENT_DATA_HASH)
                 return SelectPasskeyRequest.SelectPasskey(
                     request = requestJson,
                     origin = requestOrigin,

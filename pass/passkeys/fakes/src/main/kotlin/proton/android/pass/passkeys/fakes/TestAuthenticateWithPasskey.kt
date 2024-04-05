@@ -37,6 +37,7 @@ class TestAuthenticateWithPasskey @Inject constructor() : AuthenticateWithPasske
     override fun invoke(
         origin: String,
         passkey: Passkey,
-        request: String
+        requestJson: String,
+        clientDataHash: ByteArray
     ): PasskeyAuthenticationResponse = response.getOrThrow()
 }

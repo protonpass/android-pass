@@ -77,24 +77,23 @@ internal class SecurityCenterSentinelViewModelTest {
     }
 
     @Test
-    internal fun `GIVEN free plan user WHEN enabling sentinel THEN OnUpsell event should be emitted`() =
-        runTest {
-            val expectedState = SecurityCenterSentinelStateMother.create(
-                event = SecurityCenterSentinelEvent.OnUpsell
-            )
-            val freePlan = PlanMother.create(
-                planType = PlanTypeMother.Free.create()
-            )
-            getUserPlan.setResult(Result.success(freePlan))
+    internal fun `GIVEN free plan user WHEN enabling sentinel THEN OnUpsell event should be emitted`() = runTest {
+        val expectedState = SecurityCenterSentinelStateMother.create(
+            event = SecurityCenterSentinelEvent.OnUpsell
+        )
+        val freePlan = PlanMother.create(
+            planType = PlanTypeMother.Free.create()
+        )
+        getUserPlan.setResult(Result.success(freePlan))
 
-            createViewModel().let { viewModel ->
-                viewModel.onEnableSentinel()
+        createViewModel().let { viewModel ->
+            viewModel.onEnableSentinel()
 
-                viewModel.state.test {
-                    assertThat(awaitItem()).isEqualTo(expectedState)
-                }
+            viewModel.state.test {
+                assertThat(awaitItem()).isEqualTo(expectedState)
             }
         }
+    }
 
     @Test
     internal fun `GIVEN paid plan user WHEN enabling sentinel THEN OnSentinelEnableSuccess event should be emitted`() =

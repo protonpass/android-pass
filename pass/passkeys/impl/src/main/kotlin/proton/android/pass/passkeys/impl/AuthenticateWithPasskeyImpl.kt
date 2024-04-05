@@ -18,6 +18,7 @@
 
 package proton.android.pass.passkeys.impl
 
+import proton.android.pass.commonrust.AuthenticateWithPasskeyAndroidRequest
 import proton.android.pass.commonrust.PasskeyManager
 import proton.android.pass.domain.Passkey
 import proton.android.pass.log.api.PassLogger
@@ -34,12 +35,20 @@ class AuthenticateWithPasskeyImpl @Inject constructor(
     override fun invoke(
         origin: String,
         passkey: Passkey,
-        request: String
+        requestJson: String,
+        clientDataHash: ByteArray
     ): PasskeyAuthenticationResponse {
+        val sanitized = PasskeyJsonSanitizer.sanitize(requestJson)
         PassLogger.d(TAG, "Resolving challenge for origin=$origin")
-        val sanitized = PasskeyJsonSanitizer.sanitize(request)
-        val response = passkeyManager.resolveChallenge(origin, passkey.contents, sanitized)
-        return PasskeyAuthenticationResponse(response)
+
+        val request = AuthenticateWithPasskeyAndroidRequest(
+            origin = origin,
+            request = sanitized,
+            passkey = passkey.contents,
+            clientDataHash = clientDataHash
+        )
+        val res = passkeyManager.resolveChallengeForAndroid(request)
+        return PasskeyAuthenticationResponse(res)
     }
 
     companion object {

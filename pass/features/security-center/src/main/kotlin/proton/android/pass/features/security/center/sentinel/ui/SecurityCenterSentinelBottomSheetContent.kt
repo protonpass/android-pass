@@ -28,30 +28,23 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import me.proton.core.compose.theme.ProtonTheme
-import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
 import proton.android.pass.features.security.center.R
-import proton.android.pass.features.security.center.sentinel.navigation.SecurityCenterSentinelDestination
 import proton.android.pass.composecomponents.impl.R as CompR
-
-private const val SENTINEL_LEARN_MORE_LINK = "https://proton.me/support/proton-sentinel"
 
 @Composable
 internal fun SecurityCenterSentinelBottomSheetContent(
     modifier: Modifier = Modifier,
-    onNavigated: (SecurityCenterSentinelDestination) -> Unit
+    onUiEvent: (SecurityCenterSentinelUiEvent) -> Unit
 ) {
-    val context = LocalContext.current
-
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -83,14 +76,14 @@ internal fun SecurityCenterSentinelBottomSheetContent(
         ) {
             PassCircleButton(
                 text = stringResource(id = R.string.security_center_sentinel_button_enable),
-                onClick = { onNavigated(SecurityCenterSentinelDestination.Upsell) }
+                onClick = { onUiEvent(SecurityCenterSentinelUiEvent.OnEnableSentinel) }
             )
 
             PassCircleButton(
                 backgroundColor = PassTheme.colors.interactionNormMinor1,
                 text = stringResource(id = CompR.string.action_learn_more),
                 textColor = PassTheme.colors.interactionNormMajor2,
-                onClick = { BrowserUtils.openWebsite(context, SENTINEL_LEARN_MORE_LINK) }
+                onClick = { onUiEvent(SecurityCenterSentinelUiEvent.OnLearnMore) }
             )
         }
     }

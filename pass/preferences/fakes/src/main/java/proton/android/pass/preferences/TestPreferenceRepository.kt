@@ -107,16 +107,14 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
         return Result.success(Unit)
     }
 
-    override fun getHasDismissedAutofillBanner(): Flow<HasDismissedAutofillBanner> =
-        hasDismissedAutofillBanner
+    override fun getHasDismissedAutofillBanner(): Flow<HasDismissedAutofillBanner> = hasDismissedAutofillBanner
 
     override fun setHasDismissedTrialBanner(state: HasDismissedTrialBanner): Result<Unit> {
         hasDismissedTrialBanner.tryEmit(state)
         return Result.success(Unit)
     }
 
-    override fun getHasDismissedTrialBanner(): Flow<HasDismissedTrialBanner> =
-        hasDismissedTrialBanner
+    override fun getHasDismissedTrialBanner(): Flow<HasDismissedTrialBanner> = hasDismissedTrialBanner
 
     override fun setHasDismissedNotificationBanner(state: HasDismissedNotificationBanner): Result<Unit> {
         hasDismissedNotificationBanner.tryEmit(state)
@@ -138,8 +136,7 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
         return Result.success(Unit)
     }
 
-    override fun getClearClipboardPreference(): Flow<ClearClipboardPreference> =
-        clearClipboardPreference
+    override fun getClearClipboardPreference(): Flow<ClearClipboardPreference> = clearClipboardPreference
 
     override fun setUseFaviconsPreference(useFavicons: UseFaviconsPreference): Result<Unit> {
         useFaviconsPreference.tryEmit(useFavicons)
@@ -166,24 +163,21 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
         return Result.success(Unit)
     }
 
-    override fun getBiometricSystemLockPreference(): Flow<BiometricSystemLockPreference> =
-        biometricSystemLockPreference
+    override fun getBiometricSystemLockPreference(): Flow<BiometricSystemLockPreference> = biometricSystemLockPreference
 
     override fun setPasswordGenerationPreference(preference: PasswordGenerationPreference): Result<Unit> {
         passwordGenerationPreference.tryEmit(preference)
         return Result.success(Unit)
     }
 
-    override fun getPasswordGenerationPreference(): Flow<PasswordGenerationPreference> =
-        passwordGenerationPreference
+    override fun getPasswordGenerationPreference(): Flow<PasswordGenerationPreference> = passwordGenerationPreference
 
     override fun setAllowScreenshotsPreference(preference: AllowScreenshotsPreference): Result<Unit> {
         allowScreenshotsPreference.tryEmit(preference)
         return Result.success(Unit)
     }
 
-    override fun getAllowScreenshotsPreference(): Flow<AllowScreenshotsPreference> =
-        allowScreenshotsPreference
+    override fun getAllowScreenshotsPreference(): Flow<AllowScreenshotsPreference> = allowScreenshotsPreference
 
     override fun setDefaultVault(shareId: String): Result<Unit> {
         defaultVaultPreference.tryEmit(shareId.toOption())

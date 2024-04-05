@@ -115,7 +115,6 @@ class CreatePasskeyAppViewModel @Inject constructor(
                 InitialCreateLoginUiState(
                     title = stateRequest.appState.data.rpName,
                     username = stateRequest.appState.data.username,
-                    url = stateRequest.request.callingRequest.origin,
                     passkeyOrigin = passkeyOrigin,
                     passkeyRequest = stateRequest.request.callingRequest.requestJson,
                     passkeyDomain = stateRequest.appState.data.domain

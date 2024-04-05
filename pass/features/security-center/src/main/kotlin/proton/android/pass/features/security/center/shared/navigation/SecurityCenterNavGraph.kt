@@ -61,6 +61,10 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
         SecurityCenterSentinelBottomSheet(
             onNavigated = { destination ->
                 when (destination) {
+                    SecurityCenterSentinelDestination.Dismiss -> SecurityCenterNavDestination.Back(
+                        comesFromBottomSheet = true
+                    )
+
                     SecurityCenterSentinelDestination.Upsell -> SecurityCenterNavDestination.Upsell(
                         paidFeature = PaidFeature.Sentinel
                     )
@@ -73,7 +77,10 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
         SecurityCenterWeakPassScreen(
             onNavigated = { destination ->
                 when (destination) {
-                    SecurityCenterWeakPassDestination.Back -> SecurityCenterNavDestination.Back
+                    SecurityCenterWeakPassDestination.Back -> SecurityCenterNavDestination.Back(
+                        comesFromBottomSheet = false
+                    )
+
                     is SecurityCenterWeakPassDestination.ItemDetails -> SecurityCenterNavDestination.ItemDetails(
                         shareId = destination.shareId,
                         itemId = destination.itemId
@@ -87,7 +94,10 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
         SecurityCenterReusedPassScreen(
             onNavigated = { destination ->
                 when (destination) {
-                    SecurityCenterReusedPassDestination.Back -> SecurityCenterNavDestination.Back
+                    SecurityCenterReusedPassDestination.Back -> SecurityCenterNavDestination.Back(
+                        comesFromBottomSheet = false
+                    )
+
                     is SecurityCenterReusedPassDestination.ItemDetails -> SecurityCenterNavDestination.ItemDetails(
                         shareId = destination.shareId,
                         itemId = destination.itemId
@@ -101,7 +111,10 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
         SecurityCenterMissingTfaScreen(
             onNavigated = { destination ->
                 val event = when (destination) {
-                    SecurityCenterMissingTFADestination.Back -> SecurityCenterNavDestination.Back
+                    SecurityCenterMissingTFADestination.Back -> SecurityCenterNavDestination.Back(
+                        comesFromBottomSheet = false
+                    )
+
                     is SecurityCenterMissingTFADestination.ItemDetails -> SecurityCenterNavDestination.ItemDetails(
                         shareId = destination.shareId,
                         itemId = destination.itemId

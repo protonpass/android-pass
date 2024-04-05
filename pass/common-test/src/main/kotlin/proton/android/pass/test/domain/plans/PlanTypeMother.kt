@@ -32,10 +32,7 @@ object PlanTypeMother {
 
     object Free {
 
-        fun create(
-            name: String = "",
-            displayName: String = ""
-        ): PlanType.Free = PlanType.Free(name, displayName)
+        fun create(name: String = "", displayName: String = ""): PlanType.Free = PlanType.Free(name, displayName)
 
     }
 
@@ -51,19 +48,15 @@ object PlanTypeMother {
 
         object Plus {
 
-            fun create(
-                name: String = "",
-                displayName: String = ""
-            ): PlanType.Paid = PlanType.Paid.Plus(name, displayName)
+            fun create(name: String = "", displayName: String = ""): PlanType.Paid =
+                PlanType.Paid.Plus(name, displayName)
 
         }
 
         object Business {
 
-            fun create(
-                name: String = "",
-                displayName: String = ""
-            ): PlanType.Paid = PlanType.Paid.Plus(name, displayName)
+            fun create(name: String = "", displayName: String = ""): PlanType.Paid =
+                PlanType.Paid.Plus(name, displayName)
 
         }
 

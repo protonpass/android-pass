@@ -31,6 +31,8 @@
 
     <string name="security_center_home_section_password_health">Password Health</string>
 
+    <string name="security_center_home_snackbar_message_disable_sentinel_error">There was an error disabling Proton Sentinel protection. Please try again.</string>
+
     <!-- Sentinel bottom sheet -->
     <string name="security_center_sentinel_title">Proton Sentinel</string>
     <string name="security_center_sentinel_subtitle">Proton Sentinel is an advanced account protection program powered by sophisticated AI systems and specialists working around the clock to protect you from bad actors and security threats.</string>

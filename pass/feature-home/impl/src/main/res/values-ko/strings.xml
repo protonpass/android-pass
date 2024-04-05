@@ -6,7 +6,7 @@
   <string name="home_empty_read_only_vault_title">이 금고는 비어 있습니다.</string>
   <string name="home_empty_read_only_vault_subtitle">읽기 전용 금고에서는 항목 생성이 불가합니다.</string>
   <string name="home_empty_vault_create_login">로그인 생성</string>
-  <string name="home_empty_vault_create_alias">hide-my-email 생성</string>
+  <string name="home_empty_vault_create_alias">Hide-my-email 별칭 생성</string>
   <string name="home_empty_vault_create_note">메모 작성</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">항목 로딩 중 오류 발생</string>
   <string name="error_refreshing">새로 고침 실패</string>

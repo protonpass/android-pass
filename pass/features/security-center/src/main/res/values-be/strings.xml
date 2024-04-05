@@ -23,8 +23,8 @@
   <string name="security_center_home_row_insecure_passwords_subtitle">Стварыць надзейныя паролі</string>
   <string name="security_center_home_row_reused_passwords_title">Паўторна выкарыстаныя паролі</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Стварыць унікальныя паролі</string>
-  <string name="security_center_home_row_missing_tfa_title">Missing two-factor authentication</string>
-  <string name="security_center_home_row_missing_tfa_subtitle">Increase your security</string>
+  <string name="security_center_home_row_missing_tfa_title">Адсутнічае двухфактарная аўтэнтыфікацыя</string>
+  <string name="security_center_home_row_missing_tfa_subtitle">Павялічце сваю бяспеку</string>
   <string name="security_center_home_section_password_health">Якасць пароля</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Ненадзейны пароль</string>
@@ -34,6 +34,6 @@
   <string name="security_center_reused_pass_top_bar_subtitle">Генерыраваць унікальныя паролі для павелічэння вашай бяспекі.</string>
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Паўторна выкарыстана раз: %1$d</string>
   <!-- Missing 2FA -->
-  <string name="security_center_missing_tfa_top_bar_title">Missing two-factor authentication</string>
-  <string name="security_center_missing_tfa_top_bar_subtitle">Logins with sites that have two-factor authentication available but you haven\'t set it up yet.</string>
+  <string name="security_center_missing_tfa_top_bar_title">Адсутнічае двухфактарная аўтэнтыфікацыя</string>
+  <string name="security_center_missing_tfa_top_bar_subtitle">Запісы ўваходу з сайтаў, якія маюць двухфактарную аўтэнтыфікацыю даступны, але вы іх пакуль не наладзілі.</string>
 </resources>

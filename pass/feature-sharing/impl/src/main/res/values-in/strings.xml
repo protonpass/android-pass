@@ -31,8 +31,8 @@
     <item quantity="other">%d anggota</item>
   </plurals>
   <string name="share_with_title">Bagikan dengan</string>
-  <string name="share_with_email_hint">Alamat surel</string>
-  <string name="share_with_email_error">Alamat surel tidak valid</string>
+  <string name="share_with_email_hint">Alamat email</string>
+  <string name="share_with_email_error">Alamat email tidak valid</string>
   <string name="share_with_email_cannot_invite_outside_org">Anda tidak dapat mengundang pengguna yang berada di luar organisasi Anda. Hubungi admin untuk informasi lebih lanjut</string>
   <string name="share_permissions_title">Tentukan tingkat akses</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s mengundang Anda untuk mengakses item pada</string>
@@ -108,7 +108,7 @@
   <string name="sharing_from_item_vault_limit_reached">Anda telah mencapai batas brankas maksimal</string>
   <string name="share_with_suggestions_title">Saran</string>
   <string name="share_with_recents_title">Terkini</string>
-  <string name="share_with_remove_email_content_description">Hapus surel</string>
+  <string name="share_with_remove_email_content_description">Hapus email</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Tentukan tingkat akses bagi seluruh anggota</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Tetapkan tingkat akses untuk %s</string>
   <string name="sharing_edit_permissions_remove_user">Hapus pengguna</string>

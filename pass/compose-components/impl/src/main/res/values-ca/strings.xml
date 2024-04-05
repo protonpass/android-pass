@@ -27,6 +27,7 @@
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Obre el menú d\'acció de l\'element</string>
   <string name="action_upgrade_now">Millora ara</string>
+  <string name="action_not_now">Not now</string>
   <!-- Empty list -->
   <string name="empty_list_title">Afegeix el primer element</string>
   <string name="empty_search_results_title">No s\'han trobat resultats</string>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="account_title">계정</string>
+  <string name="account_recovery_title">계정 및 복구</string>
   <string name="account_username_label">사용자 이름</string>
   <string name="account_subscription_label">구독 요금제</string>
   <string name="account_permanently_delete_warning">귀하의 계정 및 계정에 연결된 모든 정보가 영구적으로 삭제되며, 계정을 복구할 수 없습니다.</string>
@@ -13,6 +14,11 @@
   <string name="account_manage_subscription">구독 관리</string>
   <string name="account_get_user_info_error">사용자 정보를 가져올 수 없습니다</string>
   <string name="manage_subscription_icon_content_description">구독 관리 버튼</string>
+  <string name="account_settings_list_item_password_header">비밀번호 관리</string>
+  <string name="account_settings_list_item_recovery_header">복구 이메일</string>
+  <string name="account_settings_list_item_recovery_hint_not_set">설정하지 않음</string>
+  <string name="account_settings_list_item_password_hint_grace">비밀번호 재설정 대기중</string>
+  <string name="account_settings_list_item_password_hint_insecure">비밀번호 재설정 준비됨</string>
   <!-- Sign out dialog -->
   <string name="alert_confirm_sign_out_title">로그아웃하시겠습니까?</string>
   <string name="alert_confirm_sign_out_message">정말로 로그아웃하시겠습니까?</string>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="account_title">Обліковий запис</string>
+  <string name="account_recovery_title">Account and Recovery</string>
   <string name="account_username_label">Ім\'я користувача</string>
   <string name="account_subscription_label">Тарифний план</string>
   <string name="account_permanently_delete_warning">Ця дія остаточно видалить ваш обліковий запис та всі пов\'язані з ним дані. Ви не зможете відновити цей обліковий запис.</string>
@@ -13,6 +14,11 @@
   <string name="account_manage_subscription">Керувати передплатою</string>
   <string name="account_get_user_info_error">Не вдалося отримати інформацію про користувача</string>
   <string name="manage_subscription_icon_content_description">Кнопка керування передплатою</string>
+  <string name="account_settings_list_item_password_header">Керування паролями</string>
+  <string name="account_settings_list_item_recovery_header">Пошта для відновлення</string>
+  <string name="account_settings_list_item_recovery_hint_not_set">Не встановлено</string>
+  <string name="account_settings_list_item_password_hint_grace">Очікується скидання пароля</string>
+  <string name="account_settings_list_item_password_hint_insecure">Скидання пароля готове</string>
   <!-- Sign out dialog -->
   <string name="alert_confirm_sign_out_title">Вийти?</string>
   <string name="alert_confirm_sign_out_message">Ви дійсно хочете вийти?</string>

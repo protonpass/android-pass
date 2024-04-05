@@ -32,7 +32,7 @@
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Salin kata sandi</string>
   <string name="bottomsheet_copy_username">Salin nama pengguna</string>
-  <string name="bottomsheet_copy_alias">Salin alamat surel</string>
+  <string name="bottomsheet_copy_alias">Salin alamat email</string>
   <string name="bottomsheet_copy_number">Salin angka</string>
   <string name="bottomsheet_copy_cvv">Salin kode keamanan</string>
   <string name="bottomsheet_copy_note">Salin catatan</string>
@@ -60,7 +60,7 @@
   <string name="snackbar_delete_vault_success">Brankas dihapus</string>
   <string name="snackbar_delete_vault_error">Brankas tidak dihapus</string>
   <!-- Search top bar -->
-  <string name="search_topbar_placeholder_all_vaults">Cari di seluruh berkas…</string>
+  <string name="search_topbar_placeholder_all_vaults">Cari di seluruh brankas…</string>
   <string name="search_topbar_placeholder_vault">Cari di %s…</string>
   <string name="search_topbar_placeholder_trash">Cari di Sampah…</string>
   <string name="search_topbar_placeholder_pinning">Cari di Tersemat…</string>

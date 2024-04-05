@@ -51,5 +51,5 @@
   <string name="profile_passkey_support_subtitle_supported">Klucze dostępu są obsługiwane</string>
   <string name="profile_passkey_support_subtitle_not_supported_android_version">Ta wersja systemu Android nie obsługuje kluczy dostępu</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Urządzenie nie obsługuje kluczy dostępu</string>
-  <string name="profile_passkey_support_subtitle_not_supported_unknown">Could not check support for passkeys</string>
+  <string name="profile_passkey_support_subtitle_not_supported_unknown">Nie można sprawdzić obsługi kluczy dostępu</string>
 </resources>

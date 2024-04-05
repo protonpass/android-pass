@@ -27,6 +27,7 @@
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Åpne elementhandlingsmenyen</string>
   <string name="action_upgrade_now">Oppgrader nå</string>
+  <string name="action_not_now">Ikke nå</string>
   <!-- Empty list -->
   <string name="empty_list_title">Legg til ditt første element</string>
   <string name="empty_search_results_title">Ingen resultater funnet</string>

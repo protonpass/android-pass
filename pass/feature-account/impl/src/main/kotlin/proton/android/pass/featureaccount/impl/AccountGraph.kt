@@ -23,17 +23,11 @@ import androidx.compose.ui.platform.testTag
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
 import proton.android.pass.navigation.api.NavItem
-import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.composable
-import proton.android.pass.navigation.api.dialog
 
 private const val ACCOUNT_GRAPH = "account_graph"
 
 object Account : NavItem(baseRoute = "account/view")
-object SignOutDialog : NavItem(
-    baseRoute = "account/signout/dialog",
-    navItemType = NavItemType.Dialog
-)
 
 fun NavGraphBuilder.accountGraph(onNavigate: (AccountNavigation) -> Unit) {
     navigation(
@@ -46,11 +40,6 @@ fun NavGraphBuilder.accountGraph(onNavigate: (AccountNavigation) -> Unit) {
                 onNavigate = onNavigate
             )
         }
-        dialog(SignOutDialog) {
-            ConfirmSignOutDialog(
-                onNavigate = onNavigate
-            )
-        }
     }
 }
 
@@ -58,8 +47,6 @@ sealed interface AccountNavigation {
     data object Subscription : AccountNavigation
     data object Upgrade : AccountNavigation
     data object SignOut : AccountNavigation
-    data object ConfirmSignOut : AccountNavigation
-    data object DismissDialog : AccountNavigation
     data object Back : AccountNavigation
     data object PasswordManagement : AccountNavigation
     data object RecoveryEmail : AccountNavigation

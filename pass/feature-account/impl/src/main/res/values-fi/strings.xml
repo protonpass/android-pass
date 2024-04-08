@@ -19,7 +19,4 @@
   <string name="account_settings_list_item_recovery_hint_not_set">Ei asetettu</string>
   <string name="account_settings_list_item_password_hint_grace">Salasanan nollaus odottaa</string>
   <string name="account_settings_list_item_password_hint_insecure">Salasanan nollaus on valmis</string>
-  <!-- Sign out dialog -->
-  <string name="alert_confirm_sign_out_title">Kirjaudutaanko ulos?</string>
-  <string name="alert_confirm_sign_out_message">Haluatko varmasti kirjautua ulos?</string>
 </resources>

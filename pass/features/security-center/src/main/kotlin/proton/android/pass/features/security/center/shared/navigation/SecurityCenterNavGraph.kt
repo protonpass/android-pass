@@ -85,6 +85,8 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                         shareId = destination.shareId,
                         itemId = destination.itemId
                     )
+
+                    SecurityCenterWeakPassDestination.Empty -> SecurityCenterNavDestination.Empty
                 }.also(onNavigated)
             }
         )
@@ -102,6 +104,8 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                         shareId = destination.shareId,
                         itemId = destination.itemId
                     )
+
+                    SecurityCenterReusedPassDestination.Empty -> SecurityCenterNavDestination.Empty
                 }.also(onNavigated)
             }
         )
@@ -119,6 +123,8 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                         shareId = destination.shareId,
                         itemId = destination.itemId
                     )
+
+                    SecurityCenterMissingTFADestination.Empty -> SecurityCenterNavDestination.Empty
                 }
                 onNavigated(event)
             }

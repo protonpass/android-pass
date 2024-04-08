@@ -50,7 +50,6 @@ class AccountListenerInitializer : Initializer<Unit> {
             minActiveState = Lifecycle.State.CREATED
         ).onAccountDisabled {
             PassLogger.i(TAG, "Account disabled")
-            accountManager.removeAccount(it.userId)
         }.onAccountRemoved {
             PassLogger.i(TAG, "Account removed")
             resetAppToDefaults()

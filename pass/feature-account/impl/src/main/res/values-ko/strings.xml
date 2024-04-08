@@ -19,7 +19,4 @@
   <string name="account_settings_list_item_recovery_hint_not_set">설정하지 않음</string>
   <string name="account_settings_list_item_password_hint_grace">비밀번호 재설정 대기중</string>
   <string name="account_settings_list_item_password_hint_insecure">비밀번호 재설정 준비됨</string>
-  <!-- Sign out dialog -->
-  <string name="alert_confirm_sign_out_title">로그아웃하시겠습니까?</string>
-  <string name="alert_confirm_sign_out_message">정말로 로그아웃하시겠습니까?</string>
 </resources>

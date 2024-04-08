@@ -19,7 +19,4 @@
   <string name="account_settings_list_item_recovery_hint_not_set">Μη ορισμένο</string>
   <string name="account_settings_list_item_password_hint_grace">Εκκρεμεί επαναφορά κωδικού πρόσβασης</string>
   <string name="account_settings_list_item_password_hint_insecure">Έτοιμη επαναφορά κωδικού πρόσβασης</string>
-  <!-- Sign out dialog -->
-  <string name="alert_confirm_sign_out_title">Αποσύνδεση;</string>
-  <string name="alert_confirm_sign_out_message">Είστε βέβαιοι ότι θέλετε να αποσυνδεθείτε;</string>
 </resources>

@@ -19,7 +19,4 @@
   <string name="account_settings_list_item_recovery_hint_not_set">No establecido</string>
   <string name="account_settings_list_item_password_hint_grace">Restablecimiento de contraseña pendiente</string>
   <string name="account_settings_list_item_password_hint_insecure">Restablecimiento de contraseña listo</string>
-  <!-- Sign out dialog -->
-  <string name="alert_confirm_sign_out_title">¿Cerrar sesión?</string>
-  <string name="alert_confirm_sign_out_message">¿Está seguro de que quiere cerrar sesión?</string>
 </resources>

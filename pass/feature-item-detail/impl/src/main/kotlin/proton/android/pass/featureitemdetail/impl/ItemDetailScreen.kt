@@ -33,6 +33,14 @@ fun ItemDetailScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
+    LaunchedEffect(uiState.event) {
+        when (uiState.event) {
+            ItemDetailScreenEvent.Close -> onNavigate(ItemDetailNavigation.Back)
+            else -> {}
+        }
+        viewModel.clearEvent()
+    }
+
     LaunchedEffect(uiState.itemTypeUiState) {
         viewModel.sendItemReadEvent(uiState.itemTypeUiState)
     }

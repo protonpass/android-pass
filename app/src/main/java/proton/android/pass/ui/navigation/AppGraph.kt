@@ -27,7 +27,6 @@ import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.featureaccount.impl.Account
 import proton.android.pass.featureaccount.impl.AccountNavigation
-import proton.android.pass.featureaccount.impl.SignOutDialog
 import proton.android.pass.featureaccount.impl.accountGraph
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.EnterPin
@@ -487,9 +486,7 @@ fun NavGraphBuilder.appGraph(
         onNavigate = {
             when (it) {
                 AccountNavigation.Back -> appNavigator.navigateBack()
-                AccountNavigation.ConfirmSignOut -> onNavigate(AppNavigation.SignOut())
-                AccountNavigation.DismissDialog -> appNavigator.navigateBack()
-                AccountNavigation.SignOut -> appNavigator.navigate(SignOutDialog)
+                AccountNavigation.SignOut -> onNavigate(AppNavigation.SignOut)
                 AccountNavigation.Subscription -> onNavigate(AppNavigation.Subscription)
                 AccountNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
                 AccountNavigation.PasswordManagement -> onNavigate(AppNavigation.PasswordManagement)
@@ -1017,8 +1014,8 @@ fun NavGraphBuilder.appGraph(
 
                 AuthNavigation.Dismissed -> onNavigate(AppNavigation.Finish)
                 AuthNavigation.Failed -> appNavigator.navigateBack()
-                AuthNavigation.SignOut -> appNavigator.navigate(SignOutDialog)
-                AuthNavigation.ForceSignOut -> onNavigate(AppNavigation.SignOut())
+                AuthNavigation.SignOut -> onNavigate(AppNavigation.SignOut)
+                AuthNavigation.ForceSignOut -> onNavigate(AppNavigation.ForceSignOut)
                 AuthNavigation.EnterPin -> appNavigator.navigate(EnterPin)
             }
         }

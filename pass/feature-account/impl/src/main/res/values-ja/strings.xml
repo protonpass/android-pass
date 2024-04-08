@@ -19,7 +19,4 @@
   <string name="account_settings_list_item_recovery_hint_not_set">未設定</string>
   <string name="account_settings_list_item_password_hint_grace">パスワードのリセットを保留中</string>
   <string name="account_settings_list_item_password_hint_insecure">パスワードのリセットを準備</string>
-  <!-- Sign out dialog -->
-  <string name="alert_confirm_sign_out_title">サインアウトしますか？</string>
-  <string name="alert_confirm_sign_out_message">サインアウトしてよろしいでしょうか?</string>
 </resources>

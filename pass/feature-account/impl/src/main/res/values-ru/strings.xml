@@ -19,7 +19,4 @@
   <string name="account_settings_list_item_recovery_hint_not_set">Не установлен</string>
   <string name="account_settings_list_item_password_hint_grace">Ожидается сброс пароля</string>
   <string name="account_settings_list_item_password_hint_insecure">Сброс пароля готов</string>
-  <!-- Sign out dialog -->
-  <string name="alert_confirm_sign_out_title">Выйти?</string>
-  <string name="alert_confirm_sign_out_message">Вы уверены, что хотите выйти?</string>
 </resources>

@@ -20,9 +20,6 @@ package proton.android.pass.ui.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
-import proton.android.pass.featureaccount.impl.AccountNavigation
-import proton.android.pass.featureaccount.impl.ConfirmSignOutDialog
-import proton.android.pass.featureaccount.impl.SignOutDialog
 import proton.android.pass.featureauth.impl.Auth
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.AuthScreen
@@ -32,7 +29,6 @@ import proton.android.pass.featureauth.impl.EnterPinNavigation
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
-import proton.android.pass.navigation.api.dialog
 import proton.android.pass.ui.AppNavigation
 
 internal const val UN_AUTH_GRAPH = "un_auth_graph"
@@ -55,26 +51,9 @@ fun NavGraphBuilder.unAuthGraph(appNavigator: AppNavigator, onNavigate: (AppNavi
                         AuthNavigation.Failed -> {
                         }
 
-                        AuthNavigation.SignOut -> appNavigator.navigate(SignOutDialog)
-                        AuthNavigation.ForceSignOut -> onNavigate(AppNavigation.SignOut())
+                        AuthNavigation.SignOut -> onNavigate(AppNavigation.SignOut)
+                        AuthNavigation.ForceSignOut -> onNavigate(AppNavigation.ForceSignOut)
                         AuthNavigation.EnterPin -> appNavigator.navigate(EnterPin)
-                    }
-                }
-            )
-        }
-
-        dialog(SignOutDialog) {
-            ConfirmSignOutDialog(
-                onNavigate = {
-                    when (it) {
-                        AccountNavigation.Back -> appNavigator.navigateBack()
-                        AccountNavigation.ConfirmSignOut -> onNavigate(AppNavigation.SignOut())
-                        AccountNavigation.DismissDialog -> appNavigator.navigateBack()
-                        AccountNavigation.SignOut -> {}
-                        AccountNavigation.Subscription -> {}
-                        AccountNavigation.Upgrade -> {}
-                        AccountNavigation.PasswordManagement -> {}
-                        AccountNavigation.RecoveryEmail -> {}
                     }
                 }
             )
@@ -85,7 +64,7 @@ fun NavGraphBuilder.unAuthGraph(appNavigator: AppNavigator, onNavigate: (AppNavi
                 onNavigate = {
                     when (it) {
                         EnterPinNavigation.Success -> appNavigator.navigateBack()
-                        EnterPinNavigation.ForceSignOut -> onNavigate(AppNavigation.SignOut())
+                        EnterPinNavigation.ForceSignOut -> onNavigate(AppNavigation.ForceSignOut)
                     }
                 }
             )

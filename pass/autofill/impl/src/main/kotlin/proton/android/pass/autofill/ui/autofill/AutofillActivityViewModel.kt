@@ -119,7 +119,7 @@ class AutofillActivityViewModel @Inject constructor(
     fun signOut() = viewModelScope.launch {
         val primaryUserId = accountManager.getPrimaryUserId().firstOrNull()
         if (primaryUserId != null) {
-            accountManager.removeAccount(primaryUserId)
+            accountManager.disableAccount(primaryUserId)
             toastManager.showToast(R.string.autofill_user_logged_out)
         }
         preferenceRepository.clearPreferences()

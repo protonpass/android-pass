@@ -19,7 +19,4 @@
   <string name="account_settings_list_item_recovery_hint_not_set">Nenastavené</string>
   <string name="account_settings_list_item_password_hint_grace">Čaká sa na obnovenie hesla</string>
   <string name="account_settings_list_item_password_hint_insecure">Obnovenie hesla pripravené</string>
-  <!-- Sign out dialog -->
-  <string name="alert_confirm_sign_out_title">Odhlásiť sa?</string>
-  <string name="alert_confirm_sign_out_message">Naozaj sa chcete odhlásiť?</string>
 </resources>

@@ -25,6 +25,8 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.getOrNull
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemTypeFilter
@@ -47,14 +49,21 @@ class SecurityCenterReusedPassViewModel @Inject constructor(
 
     internal val state: StateFlow<SecurityCenterReusedPassState> =
         combine(
-            observeItems(ShareSelection.AllShares, ItemState.Active, ItemTypeFilter.Logins),
+            observeItems(
+                ShareSelection.AllShares,
+                ItemState.Active,
+                ItemTypeFilter.Logins
+            ).asLoadingResult(),
             userPreferencesRepository.getUseFaviconsPreference()
-        ) { loginItems, useFavIconsPreference ->
-            SecurityCenterReusedPassState(
-                reusedPasswords = repeatedPasswordChecker(loginItems).repeatedPasswordsGroups
-                    .mapValues { (_, reusedPassLoginItem) -> reusedPassLoginItem.toUiModels() },
-                canLoadExternalImages = useFavIconsPreference.value()
-            )
+        ) { loginItemsResult, useFavIconsPreference ->
+            loginItemsResult.getOrNull()?.let { loginItems ->
+                SecurityCenterReusedPassState(
+                    reusedPasswords = repeatedPasswordChecker(loginItems).repeatedPasswordsGroups
+                        .mapValues { (_, reusedPassLoginItem) -> reusedPassLoginItem.toUiModels() },
+                    isLoading = false,
+                    canLoadExternalImages = useFavIconsPreference.value()
+                )
+            } ?: SecurityCenterReusedPassState.Initial
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000L),

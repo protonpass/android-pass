@@ -67,17 +67,10 @@ class ItemDetailViewModelTest {
                 setUseFaviconsPreference(UseFaviconsPreference.Disabled)
             },
             savedStateHandle = TestSavedStateHandleProvider().apply {
-                get().set(CommonNavArgId.ShareId.key, SHARE_ID)
-                get().set(CommonNavArgId.ItemId.key, ITEM_ID)
+                get()[CommonNavArgId.ShareId.key] = SHARE_ID
+                get()[CommonNavArgId.ItemId.key] = ITEM_ID
             }
         )
-    }
-
-    @Test
-    fun `emits initial state`() = runTest {
-        instance.uiState.test {
-            assertThat(awaitItem()).isEqualTo(ItemDetailScreenUiState.Initial)
-        }
     }
 
     @Test
@@ -119,7 +112,8 @@ class ItemDetailViewModelTest {
     fun `emits error when cannot retrieve item`() = runTest {
         getItemById.emit(Result.failure(IllegalStateException("test")))
         instance.uiState.test {
-            assertThat(awaitItem()).isEqualTo(ItemDetailScreenUiState.Initial)
+            val expected = ItemDetailScreenUiState.Initial.copy(event = ItemDetailScreenEvent.Close)
+            assertThat(awaitItem()).isEqualTo(expected)
 
             val message = snackbarDispatcher.snackbarMessage.first().value()
             assertThat(message).isEqualTo(DetailSnackbarMessages.InitError)

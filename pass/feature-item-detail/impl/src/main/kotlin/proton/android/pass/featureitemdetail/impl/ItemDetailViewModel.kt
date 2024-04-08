@@ -21,10 +21,14 @@ package proton.android.pass.featureitemdetail.impl
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.datetime.Clock
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
@@ -60,16 +64,28 @@ class ItemDetailViewModel @Inject constructor(
     private val shareId: ShareId = ShareId(savedStateHandle.get().require(CommonNavArgId.ShareId.key))
     private val itemId: ItemId = ItemId(savedStateHandle.get().require(CommonNavArgId.ItemId.key))
 
+    private val itemFlow: Flow<LoadingResult<Item>> = oneShot { getItemById(shareId, itemId) }
+        .asLoadingResult()
+        .onEach {
+            if (it is LoadingResult.Error) {
+                eventFlow.update { ItemDetailScreenEvent.Close }
+            }
+        }
+
+    private val eventFlow: MutableStateFlow<ItemDetailScreenEvent> =
+        MutableStateFlow(ItemDetailScreenEvent.Idle)
+
     val uiState: StateFlow<ItemDetailScreenUiState> = combine(
-        oneShot { getItemById(shareId, itemId) }.asLoadingResult(),
-        userPreferenceRepository.getUseFaviconsPreference()
-    ) { result, favicons ->
+        itemFlow,
+        userPreferenceRepository.getUseFaviconsPreference(),
+        eventFlow
+    ) { result, favicons, event ->
         when (result) {
             is LoadingResult.Error -> {
                 PassLogger.w(TAG, "Get by id error")
                 PassLogger.w(TAG, result.exception)
                 snackbarDispatcher(DetailSnackbarMessages.InitError)
-                ItemDetailScreenUiState.Initial
+                ItemDetailScreenUiState.Initial.copy(event = event)
             }
 
             LoadingResult.Loading -> ItemDetailScreenUiState.Initial
@@ -83,7 +99,8 @@ class ItemDetailViewModel @Inject constructor(
                     ItemType.Unknown -> ItemTypeUiState.Unknown
                 },
                 moreInfoUiState = getMoreInfoUiState(result.data),
-                canLoadExternalImages = favicons.value()
+                canLoadExternalImages = favicons.value(),
+                event = event
             )
         }
     }
@@ -105,6 +122,10 @@ class ItemDetailViewModel @Inject constructor(
         eventItemType?.let {
             telemetryManager.sendEvent(ItemRead(eventItemType))
         }
+    }
+
+    fun clearEvent() {
+        eventFlow.update { ItemDetailScreenEvent.Idle }
     }
 
     private fun getMoreInfoUiState(item: Item): MoreInfoUiState = MoreInfoUiState(

@@ -28,6 +28,7 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 internal data class SecurityCenterWeakPassState(
     private val vulnerablePasswordUiModels: List<ItemUiModel>,
     private val weakPasswordUiModels: List<ItemUiModel>,
+    internal val isLoading: Boolean,
     internal val canLoadExternalImages: Boolean
 ) {
 
@@ -51,11 +52,14 @@ internal data class SecurityCenterWeakPassState(
             }
         }.toPersistentList()
 
+    val shouldNavigateBack = weakPassGroups.sumOf { it.itemUiModels.size } == 0 && isLoading.not()
+
     internal companion object {
 
         internal val Initial = SecurityCenterWeakPassState(
             vulnerablePasswordUiModels = emptyList(),
             weakPasswordUiModels = emptyList(),
+            isLoading = true,
             canLoadExternalImages = false
         )
 

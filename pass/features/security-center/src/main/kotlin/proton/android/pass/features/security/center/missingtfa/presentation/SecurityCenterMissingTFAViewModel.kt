@@ -26,6 +26,8 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.getOrNull
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemTypeFilter
@@ -47,14 +49,21 @@ class SecurityCenterMissingTFAViewModel @Inject constructor(
 ) : ViewModel() {
 
     internal val state: StateFlow<SecurityCenterMissingTFAState> = combine(
-        observeItems(ShareSelection.AllShares, ItemState.Active, ItemTypeFilter.Logins),
+        observeItems(
+            ShareSelection.AllShares,
+            ItemState.Active,
+            ItemTypeFilter.Logins
+        ).asLoadingResult(),
         userPreferencesRepository.getUseFaviconsPreference()
-    ) { loginItems, useFavIconsPreference ->
-        val report = missingTfaChecker(loginItems)
-        SecurityCenterMissingTFAState(
-            missingTfaItems = report.items.toUiModels().toPersistentList(),
-            canLoadExternalImages = useFavIconsPreference.value()
-        )
+    ) { loginItemsResult, useFavIconsPreference ->
+        loginItemsResult.getOrNull()?.let { loginItems ->
+            val report = missingTfaChecker(loginItems)
+            SecurityCenterMissingTFAState(
+                missingTfaItems = report.items.toUiModels().toPersistentList(),
+                isLoading = false,
+                canLoadExternalImages = useFavIconsPreference.value()
+            )
+        } ?: SecurityCenterMissingTFAState.Initial
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),

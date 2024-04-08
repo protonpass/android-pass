@@ -19,6 +19,7 @@
 package proton.android.pass.features.security.center.weakpass.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -31,6 +32,12 @@ fun SecurityCenterWeakPassScreen(
     viewModel: SecurityCenterWeakPassViewModel = hiltViewModel()
 ) = with(viewModel) {
     val state by state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(state.shouldNavigateBack) {
+        if (state.shouldNavigateBack) {
+            onNavigated(SecurityCenterWeakPassDestination.Empty)
+        }
+    }
 
     SecurityCenterWeakPassContent(
         onNavigated = onNavigated,

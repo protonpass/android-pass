@@ -25,6 +25,8 @@ sealed interface SecurityCenterMissingTFADestination {
 
     data object Back : SecurityCenterMissingTFADestination
 
+    data object Empty : SecurityCenterMissingTFADestination
+
     data class ItemDetails(
         val shareId: ShareId,
         val itemId: ItemId

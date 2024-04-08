@@ -109,8 +109,8 @@ class AppNavigator(
         navController.popBackStack(route = destination.route, inclusive = false, saveState = false)
     }
 
-    fun navigateBack(comesFromBottomsheet: Boolean = false) {
-        if (shouldDiscard(comesFromBottomsheet)) return
+    fun navigateBack(comesFromBottomsheet: Boolean = false, force: Boolean = false) {
+        if (!force && shouldDiscard(comesFromBottomsheet)) return
         PassLogger.i(TAG, "Navigating back to $previousRoute")
         navController.popBackStack()
     }

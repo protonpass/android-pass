@@ -25,6 +25,8 @@ sealed interface SecurityCenterReusedPassDestination {
 
     data object Back : SecurityCenterReusedPassDestination
 
+    data object Empty : SecurityCenterReusedPassDestination
+
     data class ItemDetails(
         val shareId: ShareId,
         val itemId: ItemId

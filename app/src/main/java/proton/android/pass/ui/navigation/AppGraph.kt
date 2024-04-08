@@ -587,11 +587,15 @@ fun NavGraphBuilder.appGraph(
 
                 is BaseLoginNavigation.OnUpdateLoginEvent -> when (val event = it.event) {
                     is UpdateLoginNavigation.LoginUpdated -> {
-                        appNavigator.navigate(
-                            destination = ViewItem,
-                            route = ViewItem.createNavRoute(event.shareId, event.itemId),
-                            backDestination = Home
-                        )
+                        if (!appNavigator.hasDestinationInStack(SecurityCenterHomeNavItem)) {
+                            appNavigator.navigate(
+                                destination = ViewItem,
+                                route = ViewItem.createNavRoute(event.shareId, event.itemId),
+                                backDestination = Home
+                            )
+                        } else {
+                            appNavigator.navigateBack()
+                        }
                     }
                 }
 
@@ -1057,6 +1061,8 @@ fun NavGraphBuilder.appGraph(
                 SecurityCenterNavDestination.MissingTFA -> appNavigator.navigate(
                     destination = SecurityCenterMissingTFANavItem
                 )
+
+                SecurityCenterNavDestination.Empty -> appNavigator.navigateBack(force = true)
 
                 SecurityCenterNavDestination.Sentinel -> appNavigator.navigate(
                     destination = SecurityCenterSentinelNavItem

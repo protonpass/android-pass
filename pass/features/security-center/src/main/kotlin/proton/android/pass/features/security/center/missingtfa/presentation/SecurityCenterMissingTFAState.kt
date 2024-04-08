@@ -26,12 +26,16 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 @Stable
 internal data class SecurityCenterMissingTFAState(
     internal val missingTfaItems: ImmutableList<ItemUiModel>,
+    internal val isLoading: Boolean,
     internal val canLoadExternalImages: Boolean
 ) {
+
+    val shouldNavigateBack = missingTfaItems.isEmpty() && isLoading.not()
 
     companion object {
         internal val Initial = SecurityCenterMissingTFAState(
             missingTfaItems = persistentListOf(),
+            isLoading = true,
             canLoadExternalImages = false
         )
     }

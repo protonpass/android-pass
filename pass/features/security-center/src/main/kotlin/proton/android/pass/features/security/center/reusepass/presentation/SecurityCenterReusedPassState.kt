@@ -24,6 +24,7 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 @Stable
 internal data class SecurityCenterReusedPassState(
     private val reusedPasswords: Map<Int, List<ItemUiModel>>,
+    internal val isLoading: Boolean,
     internal val canLoadExternalImages: Boolean
 ) {
 
@@ -37,10 +38,14 @@ internal data class SecurityCenterReusedPassState(
                 )
             }
 
+    val shouldNavigateBack =
+        reusedPassGroups.sumOf { it.itemUiModels.size } == 0 && isLoading.not()
+
     internal companion object {
 
         internal val Initial: SecurityCenterReusedPassState = SecurityCenterReusedPassState(
             reusedPasswords = emptyMap(),
+            isLoading = true,
             canLoadExternalImages = false
         )
 

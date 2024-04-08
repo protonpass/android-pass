@@ -27,6 +27,8 @@ sealed interface SecurityCenterNavDestination {
     @JvmInline
     value class Back(val comesFromBottomSheet: Boolean) : SecurityCenterNavDestination
 
+    data object Empty : SecurityCenterNavDestination
+
     data object Home : SecurityCenterNavDestination
 
     data class ItemDetails(val shareId: ShareId, val itemId: ItemId) : SecurityCenterNavDestination

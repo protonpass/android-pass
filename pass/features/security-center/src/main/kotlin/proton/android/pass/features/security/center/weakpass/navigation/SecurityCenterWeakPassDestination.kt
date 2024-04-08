@@ -24,6 +24,7 @@ import proton.android.pass.domain.ShareId
 sealed interface SecurityCenterWeakPassDestination {
 
     data object Back : SecurityCenterWeakPassDestination
+    data object Empty : SecurityCenterWeakPassDestination
 
     data class ItemDetails(
         val shareId: ShareId,

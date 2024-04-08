@@ -29,7 +29,7 @@ private object PasswordDefaults {
     val PASSWORD_DEFAULT_MODE = PasswordGenerationMode.Words
 
     object Words {
-        const val COUNT = 4
+        const val COUNT = 5
         const val CAPITALIZE = true
         const val INCLUDE_NUMBER = true
         val WORD_SEPARATOR = WordSeparator.Hyphen

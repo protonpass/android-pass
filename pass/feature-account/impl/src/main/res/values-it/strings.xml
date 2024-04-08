@@ -19,7 +19,4 @@
   <string name="account_settings_list_item_recovery_hint_not_set">Non impostato</string>
   <string name="account_settings_list_item_password_hint_grace">Reimpostazione della password in sospeso</string>
   <string name="account_settings_list_item_password_hint_insecure">Reimpostazione della password pronta</string>
-  <!-- Sign out dialog -->
-  <string name="alert_confirm_sign_out_title">Esci dall\'account</string>
-  <string name="alert_confirm_sign_out_message">Sei sicuro di voler uscire dall\'account?</string>
 </resources>

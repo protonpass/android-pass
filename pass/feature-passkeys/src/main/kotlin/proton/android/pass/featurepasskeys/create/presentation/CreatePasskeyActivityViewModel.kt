@@ -159,7 +159,7 @@ class CreatePasskeyActivityViewModel @Inject constructor(
     fun signOut() = viewModelScope.launch {
         val primaryUserId = accountManager.getPrimaryUserId().firstOrNull()
         if (primaryUserId != null) {
-            accountManager.removeAccount(primaryUserId)
+            accountManager.disableAccount(primaryUserId)
             toastManager.showToast(R.string.passkeys_user_logged_out)
         }
         preferenceRepository.clearPreferences()

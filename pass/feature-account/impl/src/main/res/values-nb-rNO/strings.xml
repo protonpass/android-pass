@@ -19,7 +19,4 @@
   <string name="account_settings_list_item_recovery_hint_not_set">Ikke angitt</string>
   <string name="account_settings_list_item_password_hint_grace">Venter på tilbakestilling av passord</string>
   <string name="account_settings_list_item_password_hint_insecure">Klargjort for tilbakestilling av passord</string>
-  <!-- Sign out dialog -->
-  <string name="alert_confirm_sign_out_title">Logg av?</string>
-  <string name="alert_confirm_sign_out_message">Er du sikker på at du vil logge av?</string>
 </resources>

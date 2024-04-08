@@ -19,9 +19,4 @@
     <string name="account_settings_list_item_recovery_hint_not_set">Not set</string>
     <string name="account_settings_list_item_password_hint_grace">Password reset pending</string>
     <string name="account_settings_list_item_password_hint_insecure">Password reset ready</string>
-
-    <!-- Sign out dialog -->
-    <string name="alert_confirm_sign_out_title">Sign out?</string>
-    <string name="alert_confirm_sign_out_message">Are you sure you want to sign out?</string>
-
 </resources>

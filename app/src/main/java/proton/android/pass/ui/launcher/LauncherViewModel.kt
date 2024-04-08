@@ -62,6 +62,8 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.presentation.observe
 import me.proton.core.accountmanager.presentation.onAccountCreateAddressFailed
 import me.proton.core.accountmanager.presentation.onAccountCreateAddressNeeded
+import me.proton.core.accountmanager.presentation.onAccountDisabled
+import me.proton.core.accountmanager.presentation.onAccountRemoved
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeFailed
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeNeeded
 import me.proton.core.accountmanager.presentation.onSessionForceLogout
@@ -178,6 +180,8 @@ class LauncherViewModel @Inject constructor(
             .onSessionSecondFactorNeeded { authOrchestrator.startSecondFactorWorkflow(it) }
             .onAccountTwoPassModeNeeded { authOrchestrator.startTwoPassModeWorkflow(it) }
             .onAccountCreateAddressNeeded { authOrchestrator.startChooseAddressWorkflow(it) }
+            .onAccountDisabled { clearPreferencesIfNeeded() }
+            .onAccountRemoved { clearPreferencesIfNeeded() }
     }
 
     fun onUserStateChanced(state: State) = viewModelScope.launch {
@@ -204,9 +208,12 @@ class LauncherViewModel @Inject constructor(
         authOrchestrator.startLoginWorkflow(requiredAccountType, username = account?.username)
     }
 
-    fun signOut(userId: UserId? = null) = viewModelScope.launch {
+    fun disable(userId: UserId? = null) = viewModelScope.launch {
         accountManager.disableAccount(requireNotNull(userId ?: getPrimaryUserIdOrNull()))
-        clearPreferencesIfNeeded()
+    }
+
+    fun remove(userId: UserId? = null) = viewModelScope.launch {
+        accountManager.removeAccount(requireNotNull(userId ?: getPrimaryUserIdOrNull()))
     }
 
     fun switch(userId: UserId) = viewModelScope.launch {
@@ -215,11 +222,6 @@ class LauncherViewModel @Inject constructor(
             account.isDisabled() -> signIn(userId)
             account.isReady() -> accountManager.setAsPrimary(userId)
         }
-    }
-
-    fun remove(userId: UserId? = null) = viewModelScope.launch {
-        accountManager.removeAccount(requireNotNull(userId ?: getPrimaryUserIdOrNull()))
-        clearPreferencesIfNeeded()
     }
 
     private suspend fun clearPreferencesIfNeeded() {

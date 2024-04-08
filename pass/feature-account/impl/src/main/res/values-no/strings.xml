@@ -11,7 +11,4 @@
   <string name="account_manage_subscription">Behandle abonnementet</string>
   <string name="account_get_user_info_error">Kan ikke hente brukerinformasjonen</string>
   <string name="manage_subscription_icon_content_description">Knapp for å behandle abonnement</string>
-  <!-- Sign out dialog -->
-  <string name="alert_confirm_sign_out_title">Logg av?</string>
-  <string name="alert_confirm_sign_out_message">Er du sikker på at du vil logge av?</string>
 </resources>

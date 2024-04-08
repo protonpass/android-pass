@@ -38,6 +38,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.EntryPointAccessors
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
+import me.proton.core.accountmanager.presentation.compose.SignOutDialogActivity
 import me.proton.core.compose.component.ProtonCenteredProgress
 import me.proton.core.notification.presentation.deeplink.DeeplinkManager
 import me.proton.core.notification.presentation.deeplink.onActivityCreate
@@ -109,14 +110,15 @@ class MainActivity : FragmentActivity() {
                     PassApp(
                         onNavigate = {
                             when (it) {
-                                AppNavigation.Finish -> finish()
-                                AppNavigation.Report -> launcherViewModel.report()
-                                is AppNavigation.SignOut -> launcherViewModel.remove(it.userId)
-                                AppNavigation.Subscription -> launcherViewModel.subscription()
-                                AppNavigation.Upgrade -> launcherViewModel.upgrade()
-                                AppNavigation.Restart -> restartApp()
-                                AppNavigation.PasswordManagement -> launcherViewModel.passwordManagement()
-                                AppNavigation.RecoveryEmail -> launcherViewModel.recoveryEmail()
+                                is AppNavigation.Finish -> finish()
+                                is AppNavigation.SignOut -> SignOutDialogActivity.start(this)
+                                is AppNavigation.ForceSignOut -> launcherViewModel.disable()
+                                is AppNavigation.Report -> launcherViewModel.report()
+                                is AppNavigation.Subscription -> launcherViewModel.subscription()
+                                is AppNavigation.Upgrade -> launcherViewModel.upgrade()
+                                is AppNavigation.Restart -> restartApp()
+                                is AppNavigation.PasswordManagement -> launcherViewModel.passwordManagement()
+                                is AppNavigation.RecoveryEmail -> launcherViewModel.recoveryEmail()
                             }
                         }
                     )

@@ -19,7 +19,4 @@
   <string name="account_settings_list_item_recovery_hint_not_set">未設定</string>
   <string name="account_settings_list_item_password_hint_grace">密碼重設擱置</string>
   <string name="account_settings_list_item_password_hint_insecure">密碼重設就緒</string>
-  <!-- Sign out dialog -->
-  <string name="alert_confirm_sign_out_title">登出？</string>
-  <string name="alert_confirm_sign_out_message">您確定要登出嗎？</string>
 </resources>

@@ -19,7 +19,4 @@
   <string name="account_settings_list_item_recovery_hint_not_set">Nenastaveno</string>
   <string name="account_settings_list_item_password_hint_grace">Čekání na reset hesla</string>
   <string name="account_settings_list_item_password_hint_insecure">Připraveno pro reset hesla</string>
-  <!-- Sign out dialog -->
-  <string name="alert_confirm_sign_out_title">Odhlásit se?</string>
-  <string name="alert_confirm_sign_out_message">Opravdu se chcete odhlásit?</string>
 </resources>

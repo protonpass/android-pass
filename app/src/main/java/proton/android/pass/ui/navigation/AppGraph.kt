@@ -1051,9 +1051,9 @@ fun NavGraphBuilder.appGraph(
                     destination = Profile
                 )
 
-                SecurityCenterNavDestination.DarkWebMonitoring -> {
-                    // This navigation will be implemented once a dependant MR is being merged
-                }
+                SecurityCenterNavDestination.DarkWebMonitoring -> appNavigator.navigate(
+                    destination = DarkWebMonitorNavItem
+                )
 
                 SecurityCenterNavDestination.ReusedPasswords -> appNavigator.navigate(
                     destination = SecurityCenterReusedPassNavItem

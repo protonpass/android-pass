@@ -24,8 +24,6 @@ import java.net.URISyntaxException
 
 object UrlSanitizer {
 
-    private val TRAILING_DOTS_REGEX = Regex("\\.+$")
-
     private val FORBIDDEN_SCHEMES = listOf(
         "javascript:",
         "data:",
@@ -56,9 +54,21 @@ object UrlSanitizer {
             val parsed = URI(urlWithScheme)
             if (parsed.host == null) return Result.failure(IllegalArgumentException("url cannot be parsed: [url=$url]"))
 
-            val sanitizedHost = parsed.host.replace(TRAILING_DOTS_REGEX, "")
-            val meaningfulSection = "${parsed.scheme}://${sanitizedHost}${parsed.path}"
-            Result.success(meaningfulSection)
+            val sanitizedUri = if (parsed.host.endsWith(".")) {
+                val hostWithoutTrailingDot = parsed.host.trimEnd('.')
+                URI(
+                    parsed.scheme,
+                    parsed.userInfo,
+                    hostWithoutTrailingDot,
+                    parsed.port,
+                    parsed.path,
+                    parsed.query,
+                    parsed.fragment
+                )
+            } else {
+                parsed
+            }
+            Result.success(sanitizedUri.toASCIIString())
         } catch (e: URISyntaxException) {
             Result.failure(e)
         }

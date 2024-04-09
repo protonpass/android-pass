@@ -57,7 +57,7 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                     SecurityCenterHomeNavDestination.MissingTFA -> SecurityCenterNavDestination.MissingTFA
                     SecurityCenterHomeNavDestination.Sentinel -> SecurityCenterNavDestination.Sentinel
                     is SecurityCenterHomeNavDestination.Upsell -> SecurityCenterNavDestination.Upsell(
-                        destination.paidFeature
+                        paidFeature = destination.paidFeature
                     )
                 }.also(onNavigated)
             }

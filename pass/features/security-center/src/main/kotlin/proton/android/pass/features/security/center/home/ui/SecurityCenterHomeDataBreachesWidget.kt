@@ -38,7 +38,6 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -86,7 +85,7 @@ internal fun SecurityCenterHomeDataBreachesWidget(
         Text(
             text = stringResource(id = R.string.security_center_home_widget_breaches_subtitle),
             color = PassTheme.colors.passwordInteractionNormMajor2,
-            fontWeight = FontWeight.W300
+            style = ProtonTheme.typography.body1Regular
         )
 
         Row(
@@ -167,8 +166,7 @@ private fun BreachRow(
             ),
             text = value,
             color = PassTheme.colors.passwordInteractionNormMajor2,
-            style = ProtonTheme.typography.defaultNorm,
-            fontWeight = FontWeight.W300
+            style = ProtonTheme.typography.defaultNorm
         )
     }
 }

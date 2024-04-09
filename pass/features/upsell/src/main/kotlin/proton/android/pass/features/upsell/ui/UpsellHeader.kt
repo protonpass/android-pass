@@ -31,7 +31,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -71,7 +70,7 @@ internal fun UpsellHeader(
         Text(
             text = stringResource(id = subtitleResId),
             textAlign = TextAlign.Center,
-            fontWeight = FontWeight.W300,
+            style = ProtonTheme.typography.body1Regular,
             color = ProtonTheme.colors.textWeak
         )
     }

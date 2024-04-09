@@ -55,7 +55,7 @@ internal data class SecurityCenterHomeState(
         is LoadingResult.Success -> missing2faResult.data.missing2faCount
     }
 
-    internal val darkWebMonitoring: SecurityCenterHomeDarkWebMonitoring = when(planType) {
+    internal val darkWebMonitoring: SecurityCenterHomeDarkWebMonitoring = when (planType) {
         is PlanType.Free,
         is PlanType.Trial -> SecurityCenterHomeDarkWebMonitoring.FreeNoDataBreaches
         is PlanType.Paid.Business,

@@ -25,7 +25,10 @@ import kotlinx.coroutines.flow.onStart
 import proton.android.pass.data.api.core.datasources.LocalSentinelDataSource
 import proton.android.pass.data.api.core.datasources.RemoteSentinelDataSource
 import proton.android.pass.data.api.core.repositories.SentinelRepository
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
+
+private const val TAG = "SentinelRepositoryImpl"
 
 class SentinelRepositoryImpl @Inject constructor(
     private val remoteSentinelDataSource: RemoteSentinelDataSource,
@@ -55,11 +58,18 @@ class SentinelRepositoryImpl @Inject constructor(
         .onStart {
             emit(localSentinelDataSource.observeIsSentinelEnabled().first())
 
-            if (remoteSentinelDataSource.isSentinelEnabled()) {
-                localSentinelDataSource.enableSentinel()
-            } else {
-                localSentinelDataSource.disableSentinel()
-            }
+            runCatching { remoteSentinelDataSource.isSentinelEnabled() }
+                .onFailure { error ->
+                    PassLogger.w(TAG, "Could not fetch sentinel status")
+                    PassLogger.w(TAG, error)
+                }
+                .onSuccess { isSentinelEnabled ->
+                    if (isSentinelEnabled) {
+                        localSentinelDataSource.enableSentinel()
+                    } else {
+                        localSentinelDataSource.disableSentinel()
+                    }
+                }
         }
         .distinctUntilChanged()
 

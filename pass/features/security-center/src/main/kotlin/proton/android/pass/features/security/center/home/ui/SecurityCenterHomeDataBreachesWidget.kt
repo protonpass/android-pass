@@ -86,7 +86,7 @@ internal fun SecurityCenterHomeDataBreachesWidget(
         Text(
             text = stringResource(id = R.string.security_center_home_widget_breaches_subtitle),
             color = PassTheme.colors.passwordInteractionNormMajor2,
-            fontWeight = FontWeight.W300,
+            fontWeight = FontWeight.W300
         )
 
         Row(
@@ -157,7 +157,7 @@ private fun BreachRow(
         Text(
             text = stringResource(id = labelResId),
             color = PassTheme.colors.passwordInteractionNormMajor2,
-            style = ProtonTheme.typography.defaultNorm,
+            style = ProtonTheme.typography.defaultNorm
         )
 
         Text(
@@ -168,15 +168,13 @@ private fun BreachRow(
             text = value,
             color = PassTheme.colors.passwordInteractionNormMajor2,
             style = ProtonTheme.typography.defaultNorm,
-            fontWeight = FontWeight.W300,
+            fontWeight = FontWeight.W300
         )
     }
 }
 
 @[Preview Composable Suppress("FunctionMaxLength")]
-fun SecurityCenterHomeDataBreachesWidgetPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+fun SecurityCenterHomeDataBreachesWidgetPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             SecurityCenterHomeDataBreachesWidget(

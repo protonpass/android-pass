@@ -38,8 +38,7 @@ internal data class SecurityCenterReusedPassState(
                 )
             }
 
-    val shouldNavigateBack =
-        reusedPassGroups.sumOf { it.itemUiModels.size } == 0 && isLoading.not()
+    val shouldNavigateBack = isLoading.not() && reusedPassGroups.sumOf { it.itemUiModels.size } == 0
 
     internal companion object {
 

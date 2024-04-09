@@ -52,7 +52,7 @@ internal data class SecurityCenterWeakPassState(
             }
         }.toPersistentList()
 
-    val shouldNavigateBack = weakPassGroups.sumOf { it.itemUiModels.size } == 0 && isLoading.not()
+    val shouldNavigateBack = isLoading.not() && weakPassGroups.sumOf { it.itemUiModels.size } == 0
 
     internal companion object {
 

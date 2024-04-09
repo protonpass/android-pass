@@ -18,6 +18,8 @@
 
 package proton.android.pass.features.security.center.home.navigation
 
+import proton.android.pass.domain.features.PaidFeature
+
 sealed interface SecurityCenterHomeNavDestination {
 
     data object Home : SecurityCenterHomeNavDestination
@@ -25,6 +27,8 @@ sealed interface SecurityCenterHomeNavDestination {
     data object NewItem : SecurityCenterHomeNavDestination
 
     data object Profile : SecurityCenterHomeNavDestination
+
+    data object DarkWebMonitoring : SecurityCenterHomeNavDestination
 
     data object ReusedPasswords : SecurityCenterHomeNavDestination
 
@@ -34,6 +38,7 @@ sealed interface SecurityCenterHomeNavDestination {
 
     data object Sentinel : SecurityCenterHomeNavDestination
 
-    data object DarkWebMonitor : SecurityCenterHomeNavDestination
+    @JvmInline
+    value class Upsell(internal val paidFeature: PaidFeature) : SecurityCenterHomeNavDestination
 
 }

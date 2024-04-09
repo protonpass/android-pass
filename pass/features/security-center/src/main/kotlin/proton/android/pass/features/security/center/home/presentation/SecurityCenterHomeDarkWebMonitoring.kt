@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,27 +16,23 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.composecomponents.impl.item
+package proton.android.pass.features.security.center.home.presentation
 
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
-import me.proton.core.compose.theme.ProtonTheme
+internal sealed interface SecurityCenterHomeDarkWebMonitoring {
 
-@Composable
-fun SectionTitle(
-    modifier: Modifier = Modifier,
-    text: String,
-    textColor: Color = ProtonTheme.colors.textWeak
-) {
-    Text(
-        modifier = modifier,
-        text = text,
-        fontWeight = FontWeight.W400,
-        fontSize = 14.sp,
-        color = textColor
-    )
+    data object FreeNoDataBreaches : SecurityCenterHomeDarkWebMonitoring
+
+    data class FreeDataBreaches(
+        internal val dataBreachedSite: String,
+        internal val dataBreachedTime: Long
+    ) : SecurityCenterHomeDarkWebMonitoring
+
+    data object PaidNoDataBreaches : SecurityCenterHomeDarkWebMonitoring
+
+    data class PaidDataBreaches(
+        internal val dataBreachesCount: Int
+    ) : SecurityCenterHomeDarkWebMonitoring
+
+    data object Unknown : SecurityCenterHomeDarkWebMonitoring
+
 }

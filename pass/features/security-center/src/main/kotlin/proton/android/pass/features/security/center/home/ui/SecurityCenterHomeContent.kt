@@ -24,7 +24,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -86,6 +88,11 @@ internal fun SecurityCenterHomeContent(
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
         ) {
+            Button(
+                onClick = { onUiEvent(SecurityCenterHomeUiEvent.OnGoToDarkWebMonitor) }
+            ) {
+                Text("Go to Dark Web Monitor")
+            }
             SecurityCenterToggleRow(
                 title = stringResource(id = R.string.security_center_home_row_sentinel_title),
                 subtitle = stringResource(id = R.string.security_center_home_row_sentinel_subtitle),

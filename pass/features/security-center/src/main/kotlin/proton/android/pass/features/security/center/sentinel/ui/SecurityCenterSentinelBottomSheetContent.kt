@@ -30,7 +30,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
@@ -69,7 +68,7 @@ internal fun SecurityCenterSentinelBottomSheetContent(
         Text(
             text = stringResource(id = R.string.security_center_sentinel_subtitle),
             textAlign = TextAlign.Center,
-            fontWeight = FontWeight.W300,
+            style = ProtonTheme.typography.body1Regular,
             color = ProtonTheme.colors.textWeak
         )
 

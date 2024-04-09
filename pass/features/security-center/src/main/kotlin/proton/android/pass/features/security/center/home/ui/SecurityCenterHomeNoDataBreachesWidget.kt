@@ -42,10 +42,7 @@ import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.features.security.center.R
 
 @[Composable Suppress("FunctionMaxLength")]
-internal fun SecurityCenterHomeNoDataBreachesWidget(
-    modifier: Modifier = Modifier,
-    onActionClick: () -> Unit
-) {
+internal fun SecurityCenterHomeNoDataBreachesWidget(modifier: Modifier = Modifier, onActionClick: () -> Unit) {
     Column(
         modifier = modifier
             .roundedContainer(
@@ -66,7 +63,7 @@ internal fun SecurityCenterHomeNoDataBreachesWidget(
         Text(
             text = stringResource(id = R.string.security_center_home_widget_no_breaches_subtitle),
             textAlign = TextAlign.Center,
-            fontWeight = FontWeight.W300,
+            fontWeight = FontWeight.W300
         )
 
         PassCircleButton(

@@ -23,8 +23,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
+import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.heroNorm
@@ -67,7 +67,7 @@ internal fun SecurityCenterTopBar(
         subtitle?.let { topBarSubtitle ->
             Text(
                 text = topBarSubtitle,
-                fontWeight = FontWeight.W300
+                style = ProtonTheme.typography.body1Regular
             )
         }
     }

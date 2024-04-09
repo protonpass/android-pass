@@ -30,7 +30,7 @@ internal data class SecurityCenterMissingTFAState(
     internal val canLoadExternalImages: Boolean
 ) {
 
-    val shouldNavigateBack = missingTfaItems.isEmpty() && isLoading.not()
+    val shouldNavigateBack = isLoading.not() && missingTfaItems.isEmpty()
 
     companion object {
         internal val Initial = SecurityCenterMissingTFAState(

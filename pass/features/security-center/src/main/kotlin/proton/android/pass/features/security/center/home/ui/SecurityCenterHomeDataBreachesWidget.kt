@@ -95,7 +95,7 @@ internal fun SecurityCenterHomeDataBreachesWidget(
             horizontalArrangement = Arrangement.spacedBy(Spacing.small)
         ) {
             Icon(
-                modifier = modifier
+                modifier = Modifier
                     .size(36.dp)
                     .clip(shape = RoundedCornerShape(Radius.small))
                     .background(color = PassTheme.colors.passwordInteractionNormMinor1)
@@ -138,7 +138,7 @@ internal fun SecurityCenterHomeDataBreachesWidget(
         }
 
         PassCircleButton(
-            text = stringResource(id = proton.android.pass.composecomponents.impl.R.string.action_view_details),
+            text = stringResource(id = CompR.string.action_view_details),
             backgroundColor = PassTheme.colors.passwordInteractionNormMajor2,
             onClick = onActionClick
         )

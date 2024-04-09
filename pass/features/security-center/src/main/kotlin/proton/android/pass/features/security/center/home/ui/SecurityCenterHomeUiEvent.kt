@@ -37,4 +37,6 @@ internal sealed interface SecurityCenterHomeUiEvent {
 
     data object OnShowMissingSecondAuthFactors : SecurityCenterHomeUiEvent
 
+    data object OnGoToDarkWebMonitor : SecurityCenterHomeUiEvent
+
 }

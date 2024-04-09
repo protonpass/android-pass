@@ -109,6 +109,7 @@ import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestin
 import proton.android.pass.features.item.history.navigation.itemHistoryNavGraph
 import proton.android.pass.features.item.history.restore.navigation.ItemHistoryRestoreNavItem
 import proton.android.pass.features.item.history.timeline.navigation.ItemHistoryTimelineNavItem
+import proton.android.pass.features.security.center.darkweb.navigation.DarkWebMonitorNavItem
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavItem
 import proton.android.pass.features.security.center.missingtfa.navigation.SecurityCenterMissingTFANavItem
 import proton.android.pass.features.security.center.reusepass.navigation.SecurityCenterReusedPassNavItem
@@ -1066,6 +1067,10 @@ fun NavGraphBuilder.appGraph(
 
                 SecurityCenterNavDestination.Sentinel -> appNavigator.navigate(
                     destination = SecurityCenterSentinelNavItem
+                )
+
+                SecurityCenterNavDestination.DarkWebMonitor -> appNavigator.navigate(
+                    destination = DarkWebMonitorNavItem
                 )
 
                 is SecurityCenterNavDestination.Upsell -> dismissBottomSheet {

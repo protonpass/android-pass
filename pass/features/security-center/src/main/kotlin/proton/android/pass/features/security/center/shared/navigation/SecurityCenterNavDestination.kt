@@ -47,6 +47,8 @@ sealed interface SecurityCenterNavDestination {
 
     data object Sentinel : SecurityCenterNavDestination
 
+    data object DarkWebMonitor : SecurityCenterNavDestination
+
     @JvmInline
     value class Upsell(val paidFeature: PaidFeature) : SecurityCenterNavDestination
 

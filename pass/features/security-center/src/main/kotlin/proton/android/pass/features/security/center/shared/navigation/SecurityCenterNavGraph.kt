@@ -20,6 +20,9 @@ package proton.android.pass.features.security.center.shared.navigation
 
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.domain.features.PaidFeature
+import proton.android.pass.features.security.center.darkweb.navigation.DarkWebMonitorNavDestination
+import proton.android.pass.features.security.center.darkweb.navigation.DarkWebMonitorNavItem
+import proton.android.pass.features.security.center.darkweb.ui.DarkWebScreen
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavDestination
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavItem
 import proton.android.pass.features.security.center.home.ui.SecurityCenterHomeScreen
@@ -38,7 +41,7 @@ import proton.android.pass.features.security.center.weakpass.ui.SecurityCenterWe
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 
-@Suppress("LongMethod")
+@Suppress("ComplexMethod", "CyclomaticComplexity", "LongMethod")
 fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestination) -> Unit) {
 
     composable(navItem = SecurityCenterHomeNavItem) {
@@ -52,6 +55,7 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                     SecurityCenterHomeNavDestination.WeakPasswords -> SecurityCenterNavDestination.WeakPasswords
                     SecurityCenterHomeNavDestination.MissingTFA -> SecurityCenterNavDestination.MissingTFA
                     SecurityCenterHomeNavDestination.Sentinel -> SecurityCenterNavDestination.Sentinel
+                    SecurityCenterHomeNavDestination.DarkWebMonitor -> SecurityCenterNavDestination.DarkWebMonitor
                 }.also(onNavigated)
             }
         )
@@ -127,6 +131,18 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                     SecurityCenterMissingTFADestination.Empty -> SecurityCenterNavDestination.Empty
                 }
                 onNavigated(event)
+            }
+        )
+    }
+
+    composable(DarkWebMonitorNavItem) {
+        DarkWebScreen(
+            onNavigate = { destination ->
+                when (destination) {
+                    DarkWebMonitorNavDestination.AddEmail -> { /* TO BE IMPLEMENTED */ }
+                    DarkWebMonitorNavDestination.Back -> { /* TO BE IMPLEMENTED */ }
+                    is DarkWebMonitorNavDestination.VerifyEmail -> { /* TO BE IMPLEMENTED */ }
+                }
             }
         )
     }

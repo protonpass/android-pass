@@ -154,26 +154,22 @@ internal sealed interface SecurityCenterCounterRowModel {
         internal val counterIconShape: Shape = CircleShape
 
         @Composable
-        internal fun getCounterTextBackgroundColor(): Color =
-            PassTheme.colors.passwordInteractionNormMinor1
+        internal fun getCounterTextBackgroundColor(): Color = PassTheme.colors.passwordInteractionNormMinor1
 
         @Composable
         internal fun getCounterTextColor(): Color = PassTheme.colors.passwordInteractionNormMajor2
 
         @Composable
-        internal fun getAccentBackgroundColor(): Color =
-            PassTheme.colors.passwordInteractionNormMinor1
+        internal fun getAccentBackgroundColor(): Color = PassTheme.colors.passwordInteractionNormMinor1
 
         @Composable
-        internal fun getCounterIconPainter(): Painter =
-            painterResource(id = CompR.drawable.ic_exclamation_mark)
+        internal fun getCounterIconPainter(): Painter = painterResource(id = CompR.drawable.ic_exclamation_mark)
 
         @Composable
         internal fun getCounterIconColor(): Color = PassTheme.colors.interactionNormMinor2
 
         @Composable
-        internal fun getCounterIconBackgroundColor(): Color =
-            PassTheme.colors.passwordInteractionNormMajor2
+        internal fun getCounterIconBackgroundColor(): Color = PassTheme.colors.passwordInteractionNormMajor2
 
     }
 
@@ -262,15 +258,13 @@ internal sealed interface SecurityCenterCounterRowModel {
         internal fun getSubtitleColor(): Color = PassTheme.colors.cardInteractionNormMajor2
 
         @Composable
-        internal fun getCounterIconPainter(): Painter =
-            painterResource(id = CompR.drawable.ic_checkmark)
+        internal fun getCounterIconPainter(): Painter = painterResource(id = CompR.drawable.ic_checkmark)
 
         @Composable
         internal fun getCounterIconColor(): Color = PassTheme.colors.interactionNormMinor2
 
         @Composable
-        internal fun getCounterIconBackgroundColor(): Color =
-            PassTheme.colors.cardInteractionNormMajor2
+        internal fun getCounterIconBackgroundColor(): Color = PassTheme.colors.cardInteractionNormMajor2
 
     }
 

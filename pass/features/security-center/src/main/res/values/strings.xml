@@ -20,6 +20,14 @@
     <!-- Home screen -->
     <string name="security_center_home_top_bar_title">Pass Monitor</string>
 
+    <string name="security_center_home_dark_web_monitoring_title">Dark Web Monitoring</string>
+    <string name="security_center_home_widget_breaches_title">Breach detected</string>
+    <string name="security_center_home_widget_breaches_subtitle">Your email addresses were leaked in at least 1 data breach.</string>
+    <string name="security_center_home_widget_no_breaches_subtitle">Get notified if your email, password or other personal data was leaked.</string>
+
+    <string name="security_center_home_row_no_data_breaches_subtitle">No breaches detected</string>
+    <string name="security_center_home_row_data_breaches_title">Dark Web Alert</string>
+    <string name="security_center_home_row_data_breaches_subtitle">Breaches detected</string>
     <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
     <string name="security_center_home_row_sentinel_subtitle">Advanced account protection program</string>
     <string name="security_center_home_row_insecure_passwords_title">Weak passwords</string>

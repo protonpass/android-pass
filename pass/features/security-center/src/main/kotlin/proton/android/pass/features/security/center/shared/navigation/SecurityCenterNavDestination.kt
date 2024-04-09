@@ -39,6 +39,8 @@ sealed interface SecurityCenterNavDestination {
 
     data object MainProfile : SecurityCenterNavDestination
 
+    data object DarkWebMonitoring : SecurityCenterNavDestination
+
     data object ReusedPasswords : SecurityCenterNavDestination
 
     data object WeakPasswords : SecurityCenterNavDestination

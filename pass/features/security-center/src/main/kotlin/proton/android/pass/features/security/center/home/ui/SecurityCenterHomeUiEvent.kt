@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.security.center.home.ui
 
+import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavDestination
 
 internal sealed interface SecurityCenterHomeUiEvent {
@@ -26,6 +27,8 @@ internal sealed interface SecurityCenterHomeUiEvent {
     value class OnHomeBarNavigation(
         internal val destination: SecurityCenterHomeNavDestination?
     ) : SecurityCenterHomeUiEvent
+
+    data object OnShowDataBreaches : SecurityCenterHomeUiEvent
 
     data object OnDisableSentinel : SecurityCenterHomeUiEvent
 
@@ -37,6 +40,7 @@ internal sealed interface SecurityCenterHomeUiEvent {
 
     data object OnShowMissingSecondAuthFactors : SecurityCenterHomeUiEvent
 
-    data object OnGoToDarkWebMonitor : SecurityCenterHomeUiEvent
+    @JvmInline
+    value class OnUpsell(internal val paidFeature: PaidFeature) : SecurityCenterHomeUiEvent
 
 }

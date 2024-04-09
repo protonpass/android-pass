@@ -88,11 +88,11 @@ internal fun SecurityCenterHomeContent(
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
         ) {
-            Button(
-                onClick = { onUiEvent(SecurityCenterHomeUiEvent.OnGoToDarkWebMonitor) }
-            ) {
-                Text("Go to Dark Web Monitor")
-            }
+            SecurityCenterHomeDarkWebMonitoringSection(
+                darkWebMonitoring = darkWebMonitoring,
+                onUiEvent = onUiEvent
+            )
+
             SecurityCenterToggleRow(
                 title = stringResource(id = R.string.security_center_home_row_sentinel_title),
                 subtitle = stringResource(id = R.string.security_center_home_row_sentinel_subtitle),

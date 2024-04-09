@@ -27,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.Radius
@@ -37,12 +38,13 @@ internal fun SecurityCenterCounterIcon(
     modifier: Modifier = Modifier,
     iconPainter: Painter,
     iconColor: Color,
-    iconBackgroundColor: Color
+    iconBackgroundColor: Color,
+    shape: Shape = RoundedCornerShape(Radius.small)
 ) {
     Icon(
         modifier = modifier
             .size(size = 24.dp)
-            .clip(shape = RoundedCornerShape(Radius.small))
+            .clip(shape = shape)
             .background(color = iconBackgroundColor)
             .padding(all = Spacing.extraSmall),
         painter = iconPainter,

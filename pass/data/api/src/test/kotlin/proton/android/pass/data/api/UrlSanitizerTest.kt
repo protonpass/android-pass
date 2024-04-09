@@ -84,6 +84,15 @@ class UrlSanitizerTest {
     }
 
     @Test
+    fun `url with port preserves the port`() {
+        val domain = "some.domain"
+        val port = 1234
+        val res = UrlSanitizer.sanitize("$domain:$port")
+        assertTrue(res.isSuccess)
+        assertEquals(res.getOrThrow(), "https://$domain:$port")
+    }
+
+    @Test
     fun `url with empty scheme should return error`() {
         val domain = "://some.domain"
         val res = UrlSanitizer.sanitize(domain)

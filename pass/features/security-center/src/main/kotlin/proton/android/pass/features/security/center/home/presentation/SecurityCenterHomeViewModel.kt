@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.securitycenter.api.ObserveSecurityAnalysis
 import proton.android.pass.securitycenter.api.sentinel.DisableSentinel
@@ -36,18 +37,21 @@ import javax.inject.Inject
 class SecurityCenterHomeViewModel @Inject constructor(
     observeSecurityAnalysis: ObserveSecurityAnalysis,
     observeIsSentinelEnabled: ObserveIsSentinelEnabled,
+    getUserPlan: GetUserPlan,
     private val disableSentinel: DisableSentinel,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     internal val state: StateFlow<SecurityCenterHomeState> = combine(
         observeSecurityAnalysis(),
+        getUserPlan(),
         observeIsSentinelEnabled()
-    ) { securityAnalysis, isSentinelEnabled ->
+    ) { securityAnalysis, userPlan, isSentinelEnabled ->
         SecurityCenterHomeState(
             insecurePasswordsLoadingResult = securityAnalysis.insecurePasswords,
             reusedPasswordsLoadingResult = securityAnalysis.reusedPasswords,
             missing2faResult = securityAnalysis.missing2fa,
+            planType = userPlan.planType,
             isSentinelEnabled = isSentinelEnabled
         )
     }.stateIn(

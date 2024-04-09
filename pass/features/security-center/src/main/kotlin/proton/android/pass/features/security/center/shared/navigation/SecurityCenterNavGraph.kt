@@ -51,11 +51,14 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                     SecurityCenterHomeNavDestination.Home -> SecurityCenterNavDestination.MainHome
                     SecurityCenterHomeNavDestination.NewItem -> SecurityCenterNavDestination.MainNewItem
                     SecurityCenterHomeNavDestination.Profile -> SecurityCenterNavDestination.MainProfile
+                    SecurityCenterHomeNavDestination.DarkWebMonitoring -> SecurityCenterNavDestination.DarkWebMonitoring
                     SecurityCenterHomeNavDestination.ReusedPasswords -> SecurityCenterNavDestination.ReusedPasswords
                     SecurityCenterHomeNavDestination.WeakPasswords -> SecurityCenterNavDestination.WeakPasswords
                     SecurityCenterHomeNavDestination.MissingTFA -> SecurityCenterNavDestination.MissingTFA
                     SecurityCenterHomeNavDestination.Sentinel -> SecurityCenterNavDestination.Sentinel
-                    SecurityCenterHomeNavDestination.DarkWebMonitor -> SecurityCenterNavDestination.DarkWebMonitor
+                    is SecurityCenterHomeNavDestination.Upsell -> SecurityCenterNavDestination.Upsell(
+                        destination.paidFeature
+                    )
                 }.also(onNavigated)
             }
         )
@@ -139,11 +142,15 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
         DarkWebScreen(
             onNavigate = { destination ->
                 when (destination) {
-                    DarkWebMonitorNavDestination.AddEmail -> { /* TO BE IMPLEMENTED */ }
+                    DarkWebMonitorNavDestination.AddEmail -> { /* TO BE IMPLEMENTED */
+                    }
+
                     DarkWebMonitorNavDestination.Back -> {
                         onNavigated(SecurityCenterNavDestination.Back(comesFromBottomSheet = false))
                     }
-                    is DarkWebMonitorNavDestination.VerifyEmail -> { /* TO BE IMPLEMENTED */ }
+
+                    is DarkWebMonitorNavDestination.VerifyEmail -> { /* TO BE IMPLEMENTED */
+                    }
                 }
             }
         )

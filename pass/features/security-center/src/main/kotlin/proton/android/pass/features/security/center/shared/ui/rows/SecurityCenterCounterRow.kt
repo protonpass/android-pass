@@ -18,11 +18,13 @@
 
 package proton.android.pass.features.security.center.shared.ui.rows
 
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -39,6 +41,36 @@ internal fun SecurityCenterCounterRow(
     model: SecurityCenterCounterRowModel,
     onClick: (() -> Unit)? = null
 ) = when (model) {
+    is SecurityCenterCounterRowModel.Alert -> {
+        SecurityCenterRow(
+            modifier = modifier,
+            title = model.title,
+            subtitle = model.subtitle,
+            isClickable = model.isClickable,
+            onClick = onClick,
+            titleColor = model.getCounterTextColor(),
+            subtitleColor = model.getCounterTextColor(),
+            accentBackgroundColor = model.getAccentBackgroundColor(),
+            leadingContent = {
+                SecurityCenterCounterIcon(
+                    iconPainter = model.getCounterIconPainter(),
+                    iconColor = model.getCounterIconColor(),
+                    iconBackgroundColor = model.getCounterIconBackgroundColor(),
+                    shape = model.counterIconShape
+                )
+            },
+            trailingContent = {
+                SecurityCenterCounterText(
+                    counterText = model.counterText,
+                    backgroundColor = model.getCounterTextBackgroundColor(),
+                    textColor = model.getCounterTextColor()
+                )
+            },
+            chevronTintColor = model.getCounterTextColor()
+        )
+
+    }
+
     is SecurityCenterCounterRowModel.Indicator -> {
         SecurityCenterRow(
             modifier = modifier,
@@ -60,7 +92,8 @@ internal fun SecurityCenterCounterRow(
                     backgroundColor = model.getCounterTextBackgroundColor(),
                     textColor = model.getCounterTextColor()
                 )
-            }
+            },
+            chevronTintColor = model.getCounterTextColor()
         )
     }
 
@@ -80,6 +113,24 @@ internal fun SecurityCenterCounterRow(
             }
         )
     }
+
+    is SecurityCenterCounterRowModel.Success -> {
+        SecurityCenterRow(
+            modifier = modifier,
+            title = model.title,
+            subtitle = model.subtitle,
+            isClickable = model.isClickable,
+            subtitleColor = model.getSubtitleColor(),
+            onClick = onClick,
+            leadingContent = {
+                SecurityCenterCounterIcon(
+                    iconPainter = model.getCounterIconPainter(),
+                    iconColor = model.getCounterIconColor(),
+                    iconBackgroundColor = model.getCounterIconBackgroundColor()
+                )
+            }
+        )
+    }
 }
 
 @Stable
@@ -89,11 +140,42 @@ internal sealed interface SecurityCenterCounterRowModel {
 
     val isClickable: Boolean
 
-    @Composable
-    fun getCounterTextBackgroundColor(): Color
+    @Stable
+    data class Alert(
+        internal val title: String,
+        internal val subtitle: String,
+        private val count: Int
+    ) : SecurityCenterCounterRowModel {
 
-    @Composable
-    fun getCounterTextColor(): Color
+        override val counterText: String = count.toString()
+
+        override val isClickable: Boolean = count > 0
+
+        internal val counterIconShape: Shape = CircleShape
+
+        @Composable
+        internal fun getCounterTextBackgroundColor(): Color =
+            PassTheme.colors.passwordInteractionNormMinor1
+
+        @Composable
+        internal fun getCounterTextColor(): Color = PassTheme.colors.passwordInteractionNormMajor2
+
+        @Composable
+        internal fun getAccentBackgroundColor(): Color =
+            PassTheme.colors.passwordInteractionNormMinor1
+
+        @Composable
+        internal fun getCounterIconPainter(): Painter =
+            painterResource(id = CompR.drawable.ic_exclamation_mark)
+
+        @Composable
+        internal fun getCounterIconColor(): Color = PassTheme.colors.interactionNormMinor2
+
+        @Composable
+        internal fun getCounterIconBackgroundColor(): Color =
+            PassTheme.colors.passwordInteractionNormMajor2
+
+    }
 
     @Stable
     data class Indicator(
@@ -107,14 +189,14 @@ internal sealed interface SecurityCenterCounterRowModel {
         override val isClickable: Boolean = if (count == null) false else count > 0
 
         @Composable
-        override fun getCounterTextBackgroundColor(): Color = when (count) {
+        internal fun getCounterTextBackgroundColor(): Color = when (count) {
             null -> PassTheme.colors.loginInteractionNormMinor1
             0 -> PassTheme.colors.cardInteractionNormMinor1
             else -> PassTheme.colors.noteInteractionNormMinor1
         }
 
         @Composable
-        override fun getCounterTextColor(): Color = when (count) {
+        internal fun getCounterTextColor(): Color = when (count) {
             null -> PassTheme.colors.loginInteractionNormMajor2
             0 -> PassTheme.colors.cardInteractionNormMajor2
             else -> PassTheme.colors.noteInteractionNormMajor2
@@ -159,10 +241,36 @@ internal sealed interface SecurityCenterCounterRowModel {
         override val isClickable: Boolean = if (count == null) false else count > 0
 
         @Composable
-        override fun getCounterTextBackgroundColor(): Color = PassTheme.colors.backgroundMedium
+        internal fun getCounterTextBackgroundColor(): Color = PassTheme.colors.backgroundMedium
 
         @Composable
-        override fun getCounterTextColor(): Color = PassTheme.colors.textNorm
+        internal fun getCounterTextColor(): Color = PassTheme.colors.textNorm
+
+    }
+
+    @Stable
+    data class Success(
+        internal val title: String,
+        internal val subtitle: String
+    ) : SecurityCenterCounterRowModel {
+
+        override val counterText: String = ""
+
+        override val isClickable: Boolean = true
+
+        @Composable
+        internal fun getSubtitleColor(): Color = PassTheme.colors.cardInteractionNormMajor2
+
+        @Composable
+        internal fun getCounterIconPainter(): Painter =
+            painterResource(id = CompR.drawable.ic_checkmark)
+
+        @Composable
+        internal fun getCounterIconColor(): Color = PassTheme.colors.interactionNormMinor2
+
+        @Composable
+        internal fun getCounterIconBackgroundColor(): Color =
+            PassTheme.colors.cardInteractionNormMajor2
 
     }
 

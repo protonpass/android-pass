@@ -59,6 +59,10 @@ fun SecurityCenterHomeScreen(
                 SecurityCenterHomeUiEvent.OnShowWeakPasswords -> {
                     onNavigated(SecurityCenterHomeNavDestination.WeakPasswords)
                 }
+
+                SecurityCenterHomeUiEvent.OnGoToDarkWebMonitor -> {
+                    onNavigated(SecurityCenterHomeNavDestination.DarkWebMonitor)
+                }
             }
         }
     )

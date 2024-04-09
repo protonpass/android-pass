@@ -34,4 +34,6 @@ sealed interface SecurityCenterHomeNavDestination {
 
     data object Sentinel : SecurityCenterHomeNavDestination
 
+    data object DarkWebMonitor : SecurityCenterHomeNavDestination
+
 }

@@ -35,7 +35,8 @@ internal fun SecurityCenterTopBar(
     modifier: Modifier = Modifier,
     title: String,
     subtitle: String? = null,
-    onUpClick: (() -> Unit)? = null
+    onUpClick: (() -> Unit)? = null,
+    endContent: (@Composable () -> Unit)? = null
 ) {
     Column(
         modifier = modifier,
@@ -51,6 +52,9 @@ internal fun SecurityCenterTopBar(
                         backgroundColor = PassTheme.colors.interactionNormMinor1,
                         onUpClick = topBarOnUpClick
                     )
+                },
+                actions = {
+                    endContent?.let { endContent -> endContent() }
                 }
             )
         }

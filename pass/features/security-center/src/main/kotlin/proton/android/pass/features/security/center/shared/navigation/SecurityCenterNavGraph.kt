@@ -140,7 +140,9 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
             onNavigate = { destination ->
                 when (destination) {
                     DarkWebMonitorNavDestination.AddEmail -> { /* TO BE IMPLEMENTED */ }
-                    DarkWebMonitorNavDestination.Back -> { /* TO BE IMPLEMENTED */ }
+                    DarkWebMonitorNavDestination.Back -> {
+                        onNavigated(SecurityCenterNavDestination.Back(comesFromBottomSheet = false))
+                    }
                     is DarkWebMonitorNavDestination.VerifyEmail -> { /* TO BE IMPLEMENTED */ }
                 }
             }

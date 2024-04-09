@@ -25,18 +25,23 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.asAnnotatedString
+import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.item.SectionSubtitle
 import proton.android.pass.composecomponents.impl.item.SectionTitle
@@ -50,7 +55,10 @@ internal fun SecurityCenterRow(
     leadingContent: @Composable (() -> Unit)? = null,
     trailingContent: @Composable (() -> Unit)? = null,
     onClick: (() -> Unit)? = null,
-    accentBackgroundColor: Color? = null
+    accentBackgroundColor: Color? = null,
+    titleColor: Color = PassTheme.colors.textNorm,
+    subtitleColor: Color = PassTheme.colors.textWeak,
+    chevronTintColor: Color = PassTheme.colors.textNorm
 ) {
     Column(
         modifier = modifier
@@ -79,12 +87,28 @@ internal fun SecurityCenterRow(
                     .weight(weight = 1f)
                     .padding(start = Spacing.extraSmall)
             ) {
-                SectionSubtitle(text = title.asAnnotatedString())
+                SectionSubtitle(
+                    text = title.asAnnotatedString(),
+                    textStyle = ProtonTheme.typography.defaultNorm.copy(
+                        color = titleColor
+                    )
+                )
 
-                SectionTitle(text = subtitle)
+                SectionTitle(
+                    text = subtitle,
+                    textColor = subtitleColor
+                )
             }
 
             trailingContent?.invoke()
+
+            if (isClickable) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_chevron_tiny_right),
+                    contentDescription = null,
+                    tint = chevronTintColor
+                )
+            }
         }
     }
 }

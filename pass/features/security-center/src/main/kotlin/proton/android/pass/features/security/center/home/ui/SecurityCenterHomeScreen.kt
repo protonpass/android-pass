@@ -40,6 +40,10 @@ fun SecurityCenterHomeScreen(
                     uiEvent.destination?.let(onNavigated)
                 }
 
+                SecurityCenterHomeUiEvent.OnShowDataBreaches -> {
+                    onNavigated(SecurityCenterHomeNavDestination.DarkWebMonitoring)
+                }
+
                 SecurityCenterHomeUiEvent.OnDisableSentinel -> {
                     onDisableSentinel()
                 }
@@ -60,8 +64,8 @@ fun SecurityCenterHomeScreen(
                     onNavigated(SecurityCenterHomeNavDestination.WeakPasswords)
                 }
 
-                SecurityCenterHomeUiEvent.OnGoToDarkWebMonitor -> {
-                    onNavigated(SecurityCenterHomeNavDestination.DarkWebMonitor)
+                is SecurityCenterHomeUiEvent.OnUpsell -> {
+                    onNavigated(SecurityCenterHomeNavDestination.Upsell(uiEvent.paidFeature))
                 }
             }
         }

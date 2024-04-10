@@ -31,7 +31,6 @@ import androidx.navigation.compose.NavHost
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import kotlinx.coroutines.launch
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
-import proton.android.pass.composecomponents.impl.bottomsheet.ProtonBottomSheetBackHandler
 import proton.android.pass.featureauth.impl.AUTH_GRAPH
 import proton.android.pass.featurepasskeys.create.presentation.CreatePasskeyNavState
 import proton.android.pass.featurepasskeys.create.ui.navigation.createPasskeyActivityGraph
@@ -63,11 +62,6 @@ fun CreatePasskeyAppContent(
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
         skipHalfExpanded = true
-    )
-
-    ProtonBottomSheetBackHandler(
-        bottomSheetState = bottomSheetState,
-        coroutineScope = coroutineScope
     )
 
     val appNavigator = rememberAppNavigator(

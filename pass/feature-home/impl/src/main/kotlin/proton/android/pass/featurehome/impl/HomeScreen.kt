@@ -51,7 +51,6 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.toClassHolder
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
-import proton.android.pass.composecomponents.impl.bottomsheet.ProtonBottomSheetBackHandler
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
@@ -219,11 +218,6 @@ fun HomeScreen(
             BottomSheetItemAction.History -> return@LaunchedEffect
         }
     }
-
-    ProtonBottomSheetBackHandler(
-        bottomSheetState = bottomSheetState,
-        coroutineScope = scope
-    )
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val isTrashMode = homeUiState.homeListUiState.homeVaultSelection == VaultSelectionOption.Trash

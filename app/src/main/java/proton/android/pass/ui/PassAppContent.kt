@@ -44,7 +44,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import proton.android.pass.R
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
-import proton.android.pass.composecomponents.impl.bottomsheet.ProtonBottomSheetBackHandler
 import proton.android.pass.composecomponents.impl.messages.OfflineIndicator
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHostState
@@ -78,11 +77,6 @@ fun PassAppContent(
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
         skipHalfExpanded = true
-    )
-
-    ProtonBottomSheetBackHandler(
-        bottomSheetState = bottomSheetState,
-        coroutineScope = coroutineScope
     )
 
     val bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState)
@@ -158,11 +152,6 @@ fun PassAppContent(
                         val unAuthBottomSheetState = rememberModalBottomSheetState(
                             initialValue = ModalBottomSheetValue.Hidden,
                             skipHalfExpanded = true
-                        )
-
-                        ProtonBottomSheetBackHandler(
-                            bottomSheetState = unAuthBottomSheetState,
-                            coroutineScope = coroutineScope
                         )
 
                         val unAuthBottomSheetNavigator =

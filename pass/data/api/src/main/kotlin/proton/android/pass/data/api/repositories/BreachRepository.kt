@@ -27,7 +27,7 @@ interface BreachRepository {
 
     fun observeCustomEmails(userId: UserId): Flow<List<BreachCustomEmail>>
 
-    suspend fun addCustomEmail(userId: UserId, email: String)
+    suspend fun addCustomEmail(userId: UserId, email: String): BreachCustomEmail
 
     suspend fun verifyCustomEmail(
         userId: UserId,

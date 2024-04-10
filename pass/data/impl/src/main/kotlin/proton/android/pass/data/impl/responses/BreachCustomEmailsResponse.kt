@@ -30,6 +30,14 @@ data class BreachCustomEmailsResponse(
 )
 
 @Serializable
+data class BreachCustomEmailResponse(
+    @SerialName("Code")
+    val code: Int,
+    @SerialName("Email")
+    val email: BreachCustomEmail
+)
+
+@Serializable
 data class BreachCustomEmailDetails(
     @SerialName("CustomEmails")
     val customEmails: List<BreachCustomEmail>

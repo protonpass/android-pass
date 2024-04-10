@@ -48,10 +48,10 @@ class BreachRepositoryImpl @Inject constructor(
 
     override fun observeCustomEmails(userId: UserId): Flow<List<BreachCustomEmail>> = customEmailsFlow(userId)
 
-    override suspend fun addCustomEmail(userId: UserId, email: String) {
-        remote.addCustomEmail(userId, email)
-        refreshFlow.update { true }
-    }
+    override suspend fun addCustomEmail(userId: UserId, email: String): BreachCustomEmail =
+        remote.addCustomEmail(userId, email).email.toDomain().also {
+            refreshFlow.update { true }
+        }
 
     override suspend fun verifyCustomEmail(
         userId: UserId,

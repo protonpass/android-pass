@@ -23,6 +23,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
@@ -53,7 +54,7 @@ internal fun SecurityCenterRow(
     subtitle: String,
     isClickable: Boolean,
     leadingContent: @Composable (() -> Unit)? = null,
-    trailingContent: @Composable (() -> Unit)? = null,
+    trailingContent: @Composable (RowScope.() -> Unit)? = null,
     onClick: (() -> Unit)? = null,
     accentBackgroundColor: Color? = null,
     titleColor: Color = PassTheme.colors.textNorm,
@@ -100,7 +101,7 @@ internal fun SecurityCenterRow(
                 )
             }
 
-            trailingContent?.invoke()
+            trailingContent?.let { it() }
 
             if (isClickable) {
                 Icon(

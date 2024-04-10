@@ -117,6 +117,7 @@ import proton.android.pass.features.security.center.reusepass.navigation.Securit
 import proton.android.pass.features.security.center.sentinel.navigation.SecurityCenterSentinelNavItem
 import proton.android.pass.features.security.center.shared.navigation.SecurityCenterNavDestination
 import proton.android.pass.features.security.center.shared.navigation.securityCenterNavGraph
+import proton.android.pass.features.security.center.verifyemail.navigation.SecurityCenterVerifyEmailNavItem
 import proton.android.pass.features.security.center.weakpass.navigation.SecurityCenterWeakPassNavItem
 import proton.android.pass.features.upsell.navigation.UpsellNavDestination
 import proton.android.pass.features.upsell.navigation.UpsellNavItem
@@ -1085,12 +1086,20 @@ fun NavGraphBuilder.appGraph(
                     )
                 }
 
-                is SecurityCenterNavDestination.VerifyEmail -> {
-                    // Navigate to be implemented
-                }
+                is SecurityCenterNavDestination.VerifyEmail -> appNavigator.navigate(
+                    destination = SecurityCenterVerifyEmailNavItem,
+                    route = SecurityCenterVerifyEmailNavItem.createNavRoute(
+                        id = destination.id,
+                        email = destination.email
+                    )
+                )
 
                 SecurityCenterNavDestination.AddCustomEmail -> appNavigator.navigate(
                     destination = SecurityCenterCustomEmailNavItem
+                )
+
+                SecurityCenterNavDestination.EmailVerified -> appNavigator.popUpTo(
+                    destination = DarkWebMonitorNavItem
                 )
             }
         }

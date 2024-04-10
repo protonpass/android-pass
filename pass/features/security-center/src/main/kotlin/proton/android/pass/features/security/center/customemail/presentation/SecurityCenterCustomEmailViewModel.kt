@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.CommonRegex
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -53,7 +54,7 @@ class SecurityCenterCustomEmailViewModel @Inject constructor(
     private val eventFlow =
         MutableStateFlow<SecurityCenterCustomEmailEvent>(SecurityCenterCustomEmailEvent.Idle)
 
-    val state: StateFlow<SecurityCenterCustomEmailState> = combine(
+    internal val state: StateFlow<SecurityCenterCustomEmailState> = combine(
         eventFlow,
         isLoadingStateFlow,
         emailNotValidStateFlow,
@@ -64,39 +65,42 @@ class SecurityCenterCustomEmailViewModel @Inject constructor(
         initialValue = SecurityCenterCustomEmailState.Initial
     )
 
-    fun onEmailChange(text: String) {
+    internal fun onEmailChange(text: String) {
         emailAddress = text
         emailNotValidStateFlow.value = false
     }
 
-    fun addCustomEmail() {
+    internal fun addCustomEmail() {
         if (!CommonRegex.EMAIL_VALIDATION_REGEX.matches(emailAddress)) {
             emailNotValidStateFlow.value = true
             return
         }
         viewModelScope.launch {
-            isLoadingStateFlow.value = true
+            isLoadingStateFlow.update { true }
             runCatching { addBreachCustomEmail(email = emailAddress) }
-                .onSuccess {
-                    if (it.verified) {
+                .onSuccess { breachCustomEmail ->
+                    if (breachCustomEmail.verified) {
                         PassLogger.i(TAG, "Email already verified")
                         snackbarDispatcher(SecurityCenterCustomEmailSnackbarMessage.EmailAlreadyVerified)
-                        return@onSuccess
                     } else {
-                        eventFlow.value =
-                            SecurityCenterCustomEmailEvent.OnEmailSent(it.id.id, it.email)
+                        eventFlow.update {
+                            SecurityCenterCustomEmailEvent.OnEmailSent(
+                                breachCustomEmail.id.id,
+                                breachCustomEmail.email
+                            )
+                        }
                     }
                 }
                 .onFailure {
                     PassLogger.i(TAG, "Failed to add custom email")
                     PassLogger.w(TAG, it)
                 }
-            isLoadingStateFlow.value = false
+            isLoadingStateFlow.update { false }
         }
     }
 
-    fun onEventConsumed() {
-        eventFlow.value = SecurityCenterCustomEmailEvent.Idle
+    internal fun onEventConsumed(event: SecurityCenterCustomEmailEvent) {
+        eventFlow.compareAndSet(event, SecurityCenterCustomEmailEvent.Idle)
     }
 
     companion object {

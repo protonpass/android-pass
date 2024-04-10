@@ -26,7 +26,6 @@ sealed interface DarkWebMonitorNavDestination {
 
     data object AddEmail : DarkWebMonitorNavDestination
 
-    @JvmInline
-    value class VerifyEmail(val id: BreachCustomEmailId) : DarkWebMonitorNavDestination
-
+    data class VerifyEmail(val id: BreachCustomEmailId, val email: String) :
+        DarkWebMonitorNavDestination
 }

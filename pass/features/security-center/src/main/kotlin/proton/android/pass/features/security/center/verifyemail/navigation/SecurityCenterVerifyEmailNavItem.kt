@@ -22,6 +22,7 @@ import androidx.navigation.NavType
 import proton.android.pass.domain.breach.BreachCustomEmailId
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavParamEncoder
 
 object BreachEmailIdArgId : NavArgId {
     override val key: String = "breach_email_id"
@@ -38,6 +39,6 @@ object SecurityCenterVerifyEmailNavItem : NavItem(
     navArgIds = listOf(BreachEmailIdArgId, EmailArgId)
 ) {
 
-    fun createNavRoute(id: BreachCustomEmailId, email: String) = "$baseRoute/${id.id}/$email"
+    fun createNavRoute(id: BreachCustomEmailId, email: String) = "$baseRoute/${id.id}/${NavParamEncoder.encode(email)}"
 }
 

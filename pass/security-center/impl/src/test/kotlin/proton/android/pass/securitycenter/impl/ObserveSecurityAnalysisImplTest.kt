@@ -32,28 +32,28 @@ import proton.android.pass.securitycenter.api.SecurityAnalysis
 import proton.android.pass.securitycenter.api.passwords.InsecurePasswordsReport
 import proton.android.pass.securitycenter.api.passwords.Missing2faReport
 import proton.android.pass.securitycenter.fakes.mother.BreachDataResultMother
-import proton.android.pass.securitycenter.impl.fakes.TestBreachDataChecker
-import proton.android.pass.securitycenter.impl.fakes.TestInsecurePasswordChecker
-import proton.android.pass.securitycenter.impl.fakes.TestMissing2faChecker
-import proton.android.pass.securitycenter.impl.fakes.TestRepeatedPasswordChecker
+import proton.android.pass.securitycenter.fakes.passwords.FakeBreachedDataChecker
+import proton.android.pass.securitycenter.fakes.passwords.FakeInsecurePasswordChecker
+import proton.android.pass.securitycenter.fakes.passwords.FakeMissing2faChecker
+import proton.android.pass.securitycenter.fakes.passwords.FakeRepeatedPasswordChecker
 
 class ObserveSecurityAnalysisImplTest {
 
     private lateinit var instance: ObserveSecurityAnalysisImpl
 
     private lateinit var observeItems: TestObserveItems
-    private lateinit var repeatedPasswordChecker: TestRepeatedPasswordChecker
-    private lateinit var missing2faChecker: TestMissing2faChecker
-    private lateinit var insecurePasswordChecker: TestInsecurePasswordChecker
-    private lateinit var breachedDataChecker: TestBreachDataChecker
+    private lateinit var repeatedPasswordChecker: FakeRepeatedPasswordChecker
+    private lateinit var missing2faChecker: FakeMissing2faChecker
+    private lateinit var insecurePasswordChecker: FakeInsecurePasswordChecker
+    private lateinit var breachedDataChecker: FakeBreachedDataChecker
 
     @Before
     fun setup() {
         observeItems = TestObserveItems()
-        repeatedPasswordChecker = TestRepeatedPasswordChecker()
-        missing2faChecker = TestMissing2faChecker()
-        insecurePasswordChecker = TestInsecurePasswordChecker()
-        breachedDataChecker = TestBreachDataChecker()
+        repeatedPasswordChecker = FakeRepeatedPasswordChecker()
+        missing2faChecker = FakeMissing2faChecker()
+        insecurePasswordChecker = FakeInsecurePasswordChecker()
+        breachedDataChecker = FakeBreachedDataChecker()
 
         instance = ObserveSecurityAnalysisImpl(
             repeatedPasswordChecker = repeatedPasswordChecker,

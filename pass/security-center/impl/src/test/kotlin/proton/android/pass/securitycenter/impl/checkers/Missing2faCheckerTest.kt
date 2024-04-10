@@ -23,7 +23,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
-import proton.android.pass.securitycenter.impl.fakes.TestSupports2fa
+import proton.android.pass.securitycenter.fakes.passwords.FakeSupports2fa
 import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestItemType
 
@@ -31,12 +31,12 @@ class Missing2faCheckerTest {
 
     private lateinit var instance: MissingTfaCheckerImpl
 
-    private lateinit var supports2fa: TestSupports2fa
+    private lateinit var supports2fa: FakeSupports2fa
     private lateinit var encryptionContextProvider: TestEncryptionContextProvider
 
     @Before
     fun setup() {
-        supports2fa = TestSupports2fa()
+        supports2fa = FakeSupports2fa()
         encryptionContextProvider = TestEncryptionContextProvider()
         instance = MissingTfaCheckerImpl(
             supports2fa = supports2fa,

@@ -16,29 +16,8 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.securitycenter.impl.helpers
-
-import proton.android.pass.commonrust.TwofaDomainChecker
-import proton.android.pass.log.api.PassLogger
-import javax.inject.Inject
+package proton.android.pass.securitycenter.api.helpers
 
 interface Supports2fa {
     operator fun invoke(domain: String): Boolean
 }
-
-class Supports2faImpl @Inject constructor(
-    private val twofaDomainChecker: TwofaDomainChecker
-) : Supports2fa {
-    override fun invoke(domain: String): Boolean = runCatching {
-        twofaDomainChecker.twofaDomainEligible(domain)
-    }.getOrElse {
-        PassLogger.w(TAG, "Error checking twofaDomainChecker")
-        PassLogger.w(TAG, it)
-        false
-    }
-
-    companion object {
-        private const val TAG = "Supports2faImpl"
-    }
-}
-

@@ -74,7 +74,7 @@ internal fun CustomEmailsList(
             }
             is DarkWebEmailsState.Success -> {
                 LazyColumn {
-                    items(items = state.emails, key = { it.id }) { email ->
+                    items(items = state.emails, key = { it.id.id }) { email ->
                         CustomEmailItem(
                             email = email,
                             onAddClick = { onEvent(DarkWebUiEvent.OnAddCustomEmailClick(email.id)) }

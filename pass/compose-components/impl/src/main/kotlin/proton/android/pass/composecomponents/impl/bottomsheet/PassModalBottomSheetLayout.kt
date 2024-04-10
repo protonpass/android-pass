@@ -18,6 +18,7 @@
 
 package proton.android.pass.composecomponents.impl.bottomsheet
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetDefaults
@@ -27,10 +28,17 @@ import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.contentColorFor
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.PassBottomSheetNavigator
+import kotlin.coroutines.cancellation.CancellationException
+
+private const val TAG = "PassBottomSheetBackHandler"
 
 @ExperimentalMaterialApi
 @Composable
@@ -43,6 +51,8 @@ fun PassModalBottomSheetLayout(
     ),
     content: @Composable () -> Unit
 ) {
+    PassBottomSheetBackHandler(bottomSheetState = sheetState)
+
     ModalBottomSheetLayout(
         modifier = modifier,
         sheetState = sheetState,
@@ -61,10 +71,12 @@ fun PassModalBottomSheetLayout(
     bottomSheetNavigator: PassBottomSheetNavigator,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
-) {
+) = with(bottomSheetNavigator) {
+    PassBottomSheetBackHandler(bottomSheetState = sheetState)
+
     ModalBottomSheetLayout(
-        sheetState = bottomSheetNavigator.sheetState,
-        sheetContent = bottomSheetNavigator.sheetContent,
+        sheetState = sheetState,
+        sheetContent = sheetContent,
         modifier = modifier,
         sheetShape = PassTheme.shapes.bottomsheetShape,
         sheetElevation = ModalBottomSheetDefaults.Elevation,
@@ -73,4 +85,23 @@ fun PassModalBottomSheetLayout(
         scrimColor = PassTheme.colors.backdrop,
         content = content
     )
+}
+
+@[Composable OptIn(ExperimentalMaterialApi::class)]
+private fun PassBottomSheetBackHandler(bottomSheetState: ModalBottomSheetState) {
+    val coroutineScope: CoroutineScope = rememberCoroutineScope()
+
+    // We're not using BackHandler enable property here so we can preserve the order of the
+    // back handlers and the app drawer doesn't close before bottom sheets are dismissed
+    if (bottomSheetState.isVisible) {
+        BackHandler {
+            coroutineScope.launch {
+                try {
+                    bottomSheetState.hide()
+                } catch (e: CancellationException) {
+                    PassLogger.d(TAG, e, "Bottom sheet hidden animation interrupted")
+                }
+            }
+        }
+    }
 }

@@ -21,15 +21,14 @@ package proton.android.pass.features.security.center.customemail.presentation
 import androidx.compose.runtime.Stable
 
 @Stable
-data class SecurityCenterCustomEmailState(
-    val event: SecurityCenterCustomEmailEvent,
-    val isLoading: Boolean,
-    val emailNotValid: Boolean
+internal data class SecurityCenterCustomEmailState(
+    internal val event: SecurityCenterCustomEmailEvent,
+    internal val isLoading: Boolean,
+    internal val emailNotValid: Boolean
 ) {
 
-    companion object {
-
-        val Initial: SecurityCenterCustomEmailState = SecurityCenterCustomEmailState(
+    internal companion object {
+        internal val Initial: SecurityCenterCustomEmailState = SecurityCenterCustomEmailState(
             event = SecurityCenterCustomEmailEvent.Idle,
             isLoading = false,
             emailNotValid = false

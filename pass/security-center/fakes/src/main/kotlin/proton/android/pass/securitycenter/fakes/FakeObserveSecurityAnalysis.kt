@@ -16,17 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.securitycenter.impl.fakes
+package proton.android.pass.securitycenter.fakes
 
-import proton.android.pass.securitycenter.impl.helpers.Supports2fa
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
+import proton.android.pass.securitycenter.api.ObserveSecurityAnalysis
+import proton.android.pass.securitycenter.api.SecurityAnalysis
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class TestSupports2fa : Supports2fa {
-
-    private var supportsList: List<String> = emptyList()
-
-    fun setSupportsList(value: List<String>) {
-        supportsList = value
-    }
-
-    override fun invoke(domain: String): Boolean = supportsList.contains(domain)
+@Singleton
+class FakeObserveSecurityAnalysis @Inject constructor() : ObserveSecurityAnalysis {
+    override fun invoke(): Flow<SecurityAnalysis> = emptyFlow()
 }

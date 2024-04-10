@@ -16,27 +16,30 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.securitycenter.impl.fakes
+package proton.android.pass.securitycenter.fakes.passwords
 
 import proton.android.pass.domain.Item
-import proton.android.pass.securitycenter.api.passwords.InsecurePasswordChecker
-import proton.android.pass.securitycenter.api.passwords.InsecurePasswordsReport
+import proton.android.pass.securitycenter.api.passwords.Missing2faReport
+import proton.android.pass.securitycenter.api.passwords.MissingTfaChecker
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class TestInsecurePasswordChecker : InsecurePasswordChecker {
+@Singleton
+class FakeMissing2faChecker @Inject constructor() : MissingTfaChecker {
 
-    private var result: InsecurePasswordsReport = InsecurePasswordsReport(emptyList(), emptyList())
+    private var result: Missing2faReport = Missing2faReport(
+        items = emptyList()
+    )
 
     private val memory: MutableList<List<Item>> = mutableListOf()
     fun memory(): List<List<Item>> = memory
 
-    fun setResult(value: InsecurePasswordsReport) {
+    fun setResult(value: Missing2faReport) {
         result = value
     }
 
-    override suspend fun invoke(items: List<Item>): InsecurePasswordsReport {
+    override suspend fun invoke(items: List<Item>): Missing2faReport {
         memory.add(items)
         return result
     }
-
 }
-

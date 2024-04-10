@@ -24,9 +24,9 @@ import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemType
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.securitycenter.api.helpers.Supports2fa
 import proton.android.pass.securitycenter.api.passwords.Missing2faReport
 import proton.android.pass.securitycenter.api.passwords.MissingTfaChecker
-import proton.android.pass.securitycenter.impl.helpers.Supports2fa
 import javax.inject.Inject
 
 class MissingTfaCheckerImpl @Inject constructor(

@@ -45,7 +45,7 @@ import proton.android.pass.securitycenter.api.SecurityAnalysis
 import proton.android.pass.securitycenter.api.passwords.InsecurePasswordChecker
 import proton.android.pass.securitycenter.api.passwords.MissingTfaChecker
 import proton.android.pass.securitycenter.api.passwords.RepeatedPasswordChecker
-import proton.android.pass.securitycenter.impl.checkers.BreachedDataChecker
+import proton.android.pass.securitycenter.api.checkers.BreachedDataChecker
 import javax.inject.Inject
 import javax.inject.Singleton
 

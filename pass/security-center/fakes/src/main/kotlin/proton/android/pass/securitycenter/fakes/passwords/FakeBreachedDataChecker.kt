@@ -16,28 +16,30 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.securitycenter.impl.fakes
+package proton.android.pass.securitycenter.fakes.passwords
 
 import proton.android.pass.domain.Item
-import proton.android.pass.securitycenter.api.passwords.RepeatedPasswordChecker
-import proton.android.pass.securitycenter.api.passwords.RepeatedPasswordsReport
+import proton.android.pass.securitycenter.api.BreachDataResult
+import proton.android.pass.securitycenter.api.checkers.BreachedDataChecker
+import proton.android.pass.securitycenter.fakes.mother.BreachDataResultMother
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class TestRepeatedPasswordChecker : RepeatedPasswordChecker {
+@Singleton
+class FakeBreachedDataChecker @Inject constructor() : BreachedDataChecker {
 
-    private var result: Result<RepeatedPasswordsReport> = Result.success(
-        RepeatedPasswordsReport(repeatedPasswords = emptyMap())
-    )
+    private var result: BreachDataResult = BreachDataResultMother.random()
 
     private val memory: MutableList<List<Item>> = mutableListOf()
     fun memory(): List<List<Item>> = memory
 
-    fun setResult(value: Result<RepeatedPasswordsReport>) {
+    fun setResult(value: BreachDataResult) {
         result = value
     }
 
-    override fun invoke(items: List<Item>): RepeatedPasswordsReport {
+    override suspend fun invoke(items: List<Item>): BreachDataResult {
         memory.add(items)
-        return result.getOrThrow()
+        return result
     }
-
 }
+

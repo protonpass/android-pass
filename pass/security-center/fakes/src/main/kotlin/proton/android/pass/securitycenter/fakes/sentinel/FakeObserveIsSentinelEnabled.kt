@@ -16,27 +16,15 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.securitycenter.impl.fakes
+package proton.android.pass.securitycenter.fakes.sentinel
 
-import proton.android.pass.domain.Item
-import proton.android.pass.securitycenter.api.passwords.Missing2faReport
-import proton.android.pass.securitycenter.api.passwords.MissingTfaChecker
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
+import proton.android.pass.securitycenter.api.sentinel.ObserveIsSentinelEnabled
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class TestMissing2faChecker : MissingTfaChecker {
-
-    private var result: Missing2faReport = Missing2faReport(
-        items = emptyList()
-    )
-
-    private val memory: MutableList<List<Item>> = mutableListOf()
-    fun memory(): List<List<Item>> = memory
-
-    fun setResult(value: Missing2faReport) {
-        result = value
-    }
-
-    override suspend fun invoke(items: List<Item>): Missing2faReport {
-        memory.add(items)
-        return result
-    }
+@Singleton
+class FakeObserveIsSentinelEnabled @Inject constructor() : ObserveIsSentinelEnabled {
+    override fun invoke(): Flow<Boolean> = emptyFlow()
 }

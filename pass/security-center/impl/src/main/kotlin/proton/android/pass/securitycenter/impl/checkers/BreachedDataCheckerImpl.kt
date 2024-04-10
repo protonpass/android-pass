@@ -20,11 +20,8 @@ package proton.android.pass.securitycenter.impl.checkers
 
 import proton.android.pass.domain.Item
 import proton.android.pass.securitycenter.api.BreachDataResult
+import proton.android.pass.securitycenter.api.checkers.BreachedDataChecker
 import javax.inject.Inject
-
-interface BreachedDataChecker {
-    suspend operator fun invoke(items: List<Item>): BreachDataResult
-}
 
 class BreachedDataCheckerImpl @Inject constructor() : BreachedDataChecker {
     override suspend fun invoke(items: List<Item>): BreachDataResult = BreachDataResult(

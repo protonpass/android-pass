@@ -44,12 +44,11 @@ fun SecurityCenterCustomEmailScreen(
                         email = event.email
                     )
                 )
-                viewModel.onEventConsumed(state.event)
             }
 
             SecurityCenterCustomEmailEvent.Idle -> {}
         }
-
+        viewModel.onEventConsumed(state.event)
     }
     SecurityCenterCustomEmailContent(
         emailAddress = viewModel.emailAddress,

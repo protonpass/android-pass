@@ -44,7 +44,7 @@ fun SecurityCenterCustomEmailScreen(
                         email = event.email
                     )
                 )
-                viewModel.onEventConsumed()
+                viewModel.onEventConsumed(state.event)
             }
 
             SecurityCenterCustomEmailEvent.Idle -> {}

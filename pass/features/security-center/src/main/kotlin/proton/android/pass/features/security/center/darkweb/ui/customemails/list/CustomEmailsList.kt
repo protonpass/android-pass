@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -51,34 +52,41 @@ internal fun CustomEmailsList(
     ) {
 
         CustomEmailsHeader(
+            modifier = Modifier.padding(horizontal = Spacing.medium),
             onAddClick = { onEvent(DarkWebUiEvent.OnNewCustomEmailClick) }
         )
 
         when (state) {
             is DarkWebEmailsState.Error -> {
                 Text(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = Spacing.medium),
                     text = when (state.reason) {
                         DarkWebEmailsError.CannotLoad -> stringResource(
                             R.string.security_center_dark_web_monitor_custom_emails_loading_error
                         )
+
                         DarkWebEmailsError.Unknown -> stringResource(
                             R.string.security_center_dark_web_monitor_custom_emails_unknown_error
                         )
                     }
                 )
             }
+
             DarkWebEmailsState.Loading -> {
                 Box(modifier = Modifier.align(Alignment.CenterHorizontally)) {
                     CircularProgressIndicator(modifier = Modifier.size(48.dp))
                 }
             }
+
             is DarkWebEmailsState.Success -> {
                 LazyColumn {
                     items(items = state.emails, key = { it.id.id }) { itemEmail ->
                         CustomEmailItem(
                             email = itemEmail,
-                            onAddClick = { onEvent(OnAddCustomEmailClick(itemEmail.id, itemEmail.email)) }
+                            onAddClick = { onEvent(OnAddCustomEmailClick(itemEmail.id, itemEmail.email)) },
+                            onDetailClick = {
+                                onEvent(DarkWebUiEvent.OnCustomEmailDetailClick(itemEmail.id))
+                            }
                         )
                     }
                 }

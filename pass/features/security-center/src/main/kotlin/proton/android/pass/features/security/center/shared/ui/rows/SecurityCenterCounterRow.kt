@@ -30,7 +30,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.composecomponents.impl.icon.PassPlusIcon
 import proton.android.pass.features.security.center.shared.ui.counters.SecurityCenterCounterIcon
 import proton.android.pass.features.security.center.shared.ui.counters.SecurityCenterCounterText
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -105,6 +106,10 @@ internal fun SecurityCenterCounterRow(
             isClickable = model.isClickable,
             onClick = onClick,
             trailingContent = {
+                if (model.isPaid) {
+                    PassPlusIcon()
+                }
+
                 SecurityCenterCounterText(
                     counterText = model.counterText,
                     backgroundColor = model.getCounterTextBackgroundColor(),
@@ -229,7 +234,8 @@ internal sealed interface SecurityCenterCounterRowModel {
     data class Standard(
         internal val title: String,
         internal val subtitle: String,
-        private val count: Int?
+        private val count: Int?,
+        internal val isPaid: Boolean
     ) : SecurityCenterCounterRowModel {
 
         override val counterText: String = count?.toString() ?: "-"
@@ -270,17 +276,20 @@ internal sealed interface SecurityCenterCounterRowModel {
 
 }
 
-@[Preview Composable]
-fun SecurityCenterCounterRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
-    PassTheme(isDark = isDark) {
+internal class ThemeSecurityCenterCounterRowPreviewProvider :
+    ThemePairPreviewProvider<SecurityCenterCounterRowModel>(
+        SecurityCenterCounterRowPreviewProvider()
+    )
+
+@Preview
+@Composable
+internal fun SecurityCenterCounterRowPreview(
+    @PreviewParameter(ThemeSecurityCenterCounterRowPreviewProvider::class)
+    input: Pair<Boolean, SecurityCenterCounterRowModel>
+) {
+    PassTheme(isDark = input.first) {
         Surface {
-            SecurityCenterCounterRow(
-                model = SecurityCenterCounterRowModel.Indicator(
-                    title = "Security center row counter title",
-                    subtitle = "Security center row counter subtitle",
-                    count = 0
-                )
-            )
+            SecurityCenterCounterRow(model = input.second)
         }
     }
 }

@@ -123,7 +123,8 @@ internal fun SecurityCenterHomeContent(
                 model = SecurityCenterCounterRowModel.Standard(
                     title = stringResource(id = R.string.security_center_home_row_missing_tfa_title),
                     subtitle = stringResource(id = R.string.security_center_home_row_missing_tfa_subtitle),
-                    count = missing2faCount
+                    count = missing2faCount,
+                    isPaid = isMissing2faPaidFeature
                 ),
                 onClick = { onUiEvent(SecurityCenterHomeUiEvent.OnShowMissingSecondAuthFactors) }
             )

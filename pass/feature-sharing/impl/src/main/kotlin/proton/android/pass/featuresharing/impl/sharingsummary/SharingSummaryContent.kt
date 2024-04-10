@@ -54,7 +54,6 @@ fun SharingSummaryContent(
                 onUpClick = { onNavigateEvent(SharingNavigation.Back) },
                 actions = {
                     LoadingCircleButton(
-                        modifier = Modifier.padding(12.dp, 0.dp),
                         color = PassTheme.colors.interactionNormMajor1,
                         onClick = onSubmit,
                         isLoading = state.isLoading,

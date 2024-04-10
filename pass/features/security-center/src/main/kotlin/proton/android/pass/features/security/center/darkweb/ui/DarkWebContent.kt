@@ -39,7 +39,7 @@ internal fun DarkWebContent(
     onEvent: (DarkWebUiEvent) -> Unit
 ) {
     Scaffold(
-        modifier = modifier.padding(horizontal = Spacing.medium),
+        modifier = modifier,
         topBar = {
             val subtitle = state.lastCheckTime.value()?.let { lastCheckTime ->
                 stringResource(
@@ -51,12 +51,13 @@ internal fun DarkWebContent(
                 title = stringResource(R.string.security_center_dark_web_monitor_top_bar_title),
                 subtitle = subtitle,
                 onUpClick = { onEvent(DarkWebUiEvent.OnUpClick) },
-                endContent = { DarkWebStatusIndicator(status = state.darkWebStatus) }
+                actions = { DarkWebStatusIndicator(status = state.darkWebStatus) }
             )
         }
     ) { padding ->
         Column(
-            modifier = Modifier.padding(padding),
+            modifier = Modifier.padding(padding)
+                .padding(horizontal = Spacing.medium),
             verticalArrangement = Arrangement.spacedBy(Spacing.medium)
         ) {
             DarkWebSummary()

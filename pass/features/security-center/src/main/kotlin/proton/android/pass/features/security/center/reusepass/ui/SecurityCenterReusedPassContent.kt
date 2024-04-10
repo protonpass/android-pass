@@ -27,7 +27,6 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.item.SectionTitle
@@ -50,11 +49,7 @@ internal fun SecurityCenterReusedPassContent(
         topBar = {
             SecurityCenterTopBar(
                 modifier = Modifier
-                    .padding(
-                        start = Spacing.medium,
-                        top = 12.dp,
-                        end = Spacing.medium
-                    ),
+                    .padding(top = Spacing.medium - Spacing.extraSmall),
                 title = stringResource(R.string.security_center_reused_pass_top_bar_title),
                 subtitle = stringResource(R.string.security_center_reused_pass_top_bar_subtitle),
                 onUpClick = { onNavigated(SecurityCenterReusedPassDestination.Back) }

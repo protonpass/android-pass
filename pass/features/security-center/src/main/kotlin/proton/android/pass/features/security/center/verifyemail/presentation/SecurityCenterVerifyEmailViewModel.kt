@@ -55,7 +55,7 @@ class SecurityCenterVerifyEmailViewModel @Inject constructor(
 
     private val email: String = savedStateHandleProvider.get()
         .require<String>(EmailArgId.key)
-        .let { NavParamEncoder.decode(it) }
+        .let(NavParamEncoder::decode)
 
     @OptIn(SavedStateHandleSaveableApi::class)
     var code: String by savedStateHandleProvider.get()
@@ -96,17 +96,17 @@ class SecurityCenterVerifyEmailViewModel @Inject constructor(
 
     internal fun verifyCode() {
         viewModelScope.launch {
-            isLoadingFlow.value = IsLoadingState.Loading
+            isLoadingFlow.update { IsLoadingState.Loading }
             runCatching {
                 verifyBreachCustomEmail(id = id, code = code)
             }.onSuccess {
-                eventFlow.value = SecurityCenterVerifyEmailEvent.EmailVerified
+                eventFlow.update { SecurityCenterVerifyEmailEvent.EmailVerified }
             }.onFailure {
                 PassLogger.w(TAG, it)
                 PassLogger.i(TAG, "Failed to verify email")
                 codeNotValidStateFlow.update { true }
             }
-            isLoadingFlow.value = IsLoadingState.NotLoading
+            isLoadingFlow.update { IsLoadingState.NotLoading }
         }
     }
 

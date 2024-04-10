@@ -39,12 +39,11 @@ fun SecurityCenterVerifyEmailScreen(
         when (state.event) {
             is SecurityCenterVerifyEmailEvent.EmailVerified -> {
                 onNavigated(SecurityCenterVerifyEmailDestination.EmailVerified)
-                viewModel.onEventConsumed(state.event)
             }
 
             SecurityCenterVerifyEmailEvent.Idle -> {}
         }
-
+        viewModel.onEventConsumed(state.event)
     }
     SecurityCenterVerifyEmailContent(
         state = state,

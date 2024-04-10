@@ -94,6 +94,7 @@ class SecurityCenterCustomEmailViewModel @Inject constructor(
                 .onFailure {
                     PassLogger.i(TAG, "Failed to add custom email")
                     PassLogger.w(TAG, it)
+                    snackbarDispatcher(SecurityCenterCustomEmailSnackbarMessage.ErrorAddingEmail)
                 }
             isLoadingStateFlow.update { false }
         }

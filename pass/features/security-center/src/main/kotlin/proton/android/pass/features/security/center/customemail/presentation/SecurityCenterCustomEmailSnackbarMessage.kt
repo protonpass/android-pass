@@ -32,6 +32,10 @@ internal enum class SecurityCenterCustomEmailSnackbarMessage(
     EmailAlreadyVerified(
         id = R.string.security_center_custom_email_already_verified,
         type = SnackbarType.WARNING
+    ),
+    ErrorAddingEmail(
+        id = R.string.security_center_custom_email_error_adding,
+        type = SnackbarType.ERROR
     )
 
 }

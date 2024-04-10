@@ -40,6 +40,7 @@ import proton.android.pass.domain.breach.BreachCustomEmailId
 import proton.android.pass.features.security.center.verifyemail.navigation.BreachEmailIdArgId
 import proton.android.pass.features.security.center.verifyemail.navigation.EmailArgId
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.navigation.api.NavParamEncoder
 import javax.inject.Inject
 
 @HiltViewModel
@@ -53,7 +54,8 @@ class SecurityCenterVerifyEmailViewModel @Inject constructor(
         .let(::BreachCustomEmailId)
 
     private val email: String = savedStateHandleProvider.get()
-        .require(EmailArgId.key)
+        .require<String>(EmailArgId.key)
+        .let { NavParamEncoder.decode(it) }
 
     @OptIn(SavedStateHandleSaveableApi::class)
     var code: String by savedStateHandleProvider.get()

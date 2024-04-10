@@ -47,6 +47,9 @@ internal fun DarkWebScreen(
                 )
 
                 DarkWebUiEvent.OnUpClick -> onNavigate(DarkWebMonitorNavDestination.Back)
+                is DarkWebUiEvent.OnCustomEmailDetailClick -> {
+                    onNavigate(DarkWebMonitorNavDestination.EmailDetail(event.id))
+                }
                 DarkWebUiEvent.OnNewCustomEmailClick -> onNavigate(DarkWebMonitorNavDestination.AddEmail)
             }
         }

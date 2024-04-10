@@ -37,6 +37,7 @@ import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.darkweb.presentation.DarkWebEmailsError
 import proton.android.pass.features.security.center.darkweb.presentation.DarkWebEmailsState
 import proton.android.pass.features.security.center.darkweb.ui.DarkWebUiEvent
+import proton.android.pass.features.security.center.darkweb.ui.DarkWebUiEvent.OnAddCustomEmailClick
 
 @Composable
 internal fun CustomEmailsList(
@@ -74,10 +75,10 @@ internal fun CustomEmailsList(
             }
             is DarkWebEmailsState.Success -> {
                 LazyColumn {
-                    items(items = state.emails, key = { it.id.id }) { item ->
+                    items(items = state.emails, key = { it.id.id }) { itemEmail ->
                         CustomEmailItem(
-                            email = item,
-                            onAddClick = { onEvent(DarkWebUiEvent.OnAddCustomEmailClick(item.id, item.email)) }
+                            email = itemEmail,
+                            onAddClick = { onEvent(OnAddCustomEmailClick(itemEmail.id, itemEmail.email)) }
                         )
                     }
                 }

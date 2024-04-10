@@ -21,6 +21,8 @@ package proton.android.pass.features.security.center.home.presentation
 import androidx.compose.runtime.Stable
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.domain.PlanType
+import proton.android.pass.domain.features.PaidFeature
+import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavDestination
 import proton.android.pass.securitycenter.api.InsecurePasswordsResult
 import proton.android.pass.securitycenter.api.Missing2faResult
 import proton.android.pass.securitycenter.api.ReusedPasswordsResult
@@ -53,6 +55,13 @@ internal data class SecurityCenterHomeState(
         LoadingResult.Loading -> null
 
         is LoadingResult.Success -> missing2faResult.data.missing2faCount
+    }
+
+    internal val missing2faDestination: SecurityCenterHomeNavDestination = when (planType) {
+        is PlanType.Free,
+        is PlanType.Unknown -> SecurityCenterHomeNavDestination.Upsell(PaidFeature.ViewMissing2fa)
+        is PlanType.Paid,
+        is PlanType.Trial -> SecurityCenterHomeNavDestination.MissingTFA
     }
 
     internal val darkWebMonitoring: SecurityCenterHomeDarkWebMonitoring = when (planType) {

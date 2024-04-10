@@ -37,7 +37,7 @@ fun BackArrowTopAppBar(
     modifier: Modifier = Modifier,
     title: String? = null,
     backgroundColor: Color = PassTheme.colors.backgroundStrong,
-    actions: (@Composable RowScope.() -> Unit) = { },
+    actions: (@Composable RowScope.() -> Unit)? = null,
     onUpClick: () -> Unit
 ) {
     ProtonTopAppBar(
@@ -63,8 +63,10 @@ fun BackArrowTopAppBar(
             )
         },
         actions = {
-            actions()
-            Spacer(modifier = Modifier.width(Spacing.medium - Spacing.extraSmall))
+            actions?.let {
+                actions()
+                Spacer(modifier = Modifier.width(Spacing.medium - Spacing.extraSmall))
+            }
         }
     )
 }

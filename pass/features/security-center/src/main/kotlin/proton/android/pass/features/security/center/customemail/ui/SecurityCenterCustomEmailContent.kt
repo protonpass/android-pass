@@ -23,16 +23,19 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.commonui.api.heroWeak
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
@@ -89,7 +92,11 @@ internal fun SecurityCenterCustomEmailContent(
                 },
                 isError = state.emailNotValid,
                 errorMessage = stringResource(R.string.security_center_custom_email_invalid_address),
-                textStyle = PassTheme.typography.heroWeak()
+                textStyle = PassTheme.typography.heroNorm(),
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Email
+                ),
+                onDoneClick = { onUiEvent(SecurityCenterCustomEmailUiEvent.AddCustomEmail) }
             )
         }
     }

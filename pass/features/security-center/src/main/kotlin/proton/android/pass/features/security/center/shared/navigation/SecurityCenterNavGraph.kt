@@ -38,6 +38,9 @@ import proton.android.pass.features.security.center.reusepass.ui.SecurityCenterR
 import proton.android.pass.features.security.center.sentinel.navigation.SecurityCenterSentinelDestination
 import proton.android.pass.features.security.center.sentinel.navigation.SecurityCenterSentinelNavItem
 import proton.android.pass.features.security.center.sentinel.ui.SecurityCenterSentinelBottomSheet
+import proton.android.pass.features.security.center.verifyemail.navigation.SecurityCenterVerifyEmailDestination
+import proton.android.pass.features.security.center.verifyemail.navigation.SecurityCenterVerifyEmailNavItem
+import proton.android.pass.features.security.center.verifyemail.ui.SecurityCenterVerifyEmailScreen
 import proton.android.pass.features.security.center.weakpass.navigation.SecurityCenterWeakPassDestination
 import proton.android.pass.features.security.center.weakpass.navigation.SecurityCenterWeakPassNavItem
 import proton.android.pass.features.security.center.weakpass.ui.SecurityCenterWeakPassScreen
@@ -145,16 +148,16 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
         DarkWebScreen(
             onNavigate = { destination ->
                 when (destination) {
-                    DarkWebMonitorNavDestination.AddEmail -> {
+                    DarkWebMonitorNavDestination.AddEmail ->
                         onNavigated(SecurityCenterNavDestination.AddCustomEmail)
-                    }
-                    DarkWebMonitorNavDestination.Back -> {
-                        onNavigated(SecurityCenterNavDestination.Back(comesFromBottomSheet = false))
-                    }
 
-                    is DarkWebMonitorNavDestination.VerifyEmail -> {
-                        /* TO BE IMPLEMENTED */
-                    }
+                    DarkWebMonitorNavDestination.Back -> onNavigated(SecurityCenterNavDestination.Back())
+                    is DarkWebMonitorNavDestination.VerifyEmail -> onNavigated(
+                        SecurityCenterNavDestination.VerifyEmail(
+                            id = destination.id,
+                            email = destination.email
+                        )
+                    )
                 }
             }
         )
@@ -165,11 +168,22 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
             onNavigated = { destination ->
                 val event = when (destination) {
                     SecurityCenterCustomEmailNavDestination.Back -> SecurityCenterNavDestination.Back()
-
                     is SecurityCenterCustomEmailNavDestination.VerifyEmail -> SecurityCenterNavDestination.VerifyEmail(
                         id = destination.id,
                         email = destination.email
                     )
+                }
+                onNavigated(event)
+            }
+        )
+    }
+
+    composable(SecurityCenterVerifyEmailNavItem) {
+        SecurityCenterVerifyEmailScreen(
+            onNavigated = { destination ->
+                val event = when (destination) {
+                    SecurityCenterVerifyEmailDestination.Back -> SecurityCenterNavDestination.Back()
+                    SecurityCenterVerifyEmailDestination.EmailVerified -> SecurityCenterNavDestination.EmailVerified
                 }
                 onNavigated(event)
             }

@@ -85,7 +85,7 @@ class SecurityCenterCustomEmailViewModel @Inject constructor(
                     } else {
                         eventFlow.update {
                             SecurityCenterCustomEmailEvent.OnEmailSent(
-                                breachCustomEmail.id.id,
+                                breachCustomEmail.id,
                                 breachCustomEmail.email
                             )
                         }

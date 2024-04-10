@@ -39,13 +39,15 @@ internal fun DarkWebScreen(
         state = state,
         onEvent = { event ->
             when (event) {
-                is DarkWebUiEvent.OnAddCustomEmailClick -> {
-                    onNavigate(DarkWebMonitorNavDestination.VerifyEmail(event.id))
-                }
+                is DarkWebUiEvent.OnAddCustomEmailClick -> onNavigate(
+                    DarkWebMonitorNavDestination.VerifyEmail(
+                        event.id,
+                        event.email
+                    )
+                )
+
                 DarkWebUiEvent.OnUpClick -> onNavigate(DarkWebMonitorNavDestination.Back)
-                DarkWebUiEvent.OnNewCustomEmailClick -> {
-                    onNavigate(DarkWebMonitorNavDestination.AddEmail)
-                }
+                DarkWebUiEvent.OnNewCustomEmailClick -> onNavigate(DarkWebMonitorNavDestination.AddEmail)
             }
         }
     )

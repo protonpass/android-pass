@@ -16,16 +16,28 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.darkweb.navigation
+package proton.android.pass.features.security.center.verifyemail.navigation
 
+import androidx.navigation.NavType
 import proton.android.pass.domain.breach.BreachCustomEmailId
+import proton.android.pass.navigation.api.NavArgId
+import proton.android.pass.navigation.api.NavItem
 
-sealed interface DarkWebMonitorNavDestination {
-
-    data object Back : DarkWebMonitorNavDestination
-
-    data object AddEmail : DarkWebMonitorNavDestination
-
-    data class VerifyEmail(val id: BreachCustomEmailId, val email: String) :
-        DarkWebMonitorNavDestination
+object BreachEmailIdArgId : NavArgId {
+    override val key: String = "breach_email_id"
+    override val navType: NavType<*> = NavType.StringType
 }
+
+object EmailArgId : NavArgId {
+    override val key: String = "email"
+    override val navType: NavType<*> = NavType.StringType
+}
+
+object SecurityCenterVerifyEmailNavItem : NavItem(
+    baseRoute = "security/center/verifycustomemail",
+    navArgIds = listOf(BreachEmailIdArgId, EmailArgId)
+) {
+
+    fun createNavRoute(id: BreachCustomEmailId, email: String) = "$baseRoute/${id.id}/$email"
+}
+

@@ -16,16 +16,11 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.darkweb.navigation
+package proton.android.pass.features.security.center.verifyemail.navigation
 
-import proton.android.pass.domain.breach.BreachCustomEmailId
+sealed interface SecurityCenterVerifyEmailDestination {
 
-sealed interface DarkWebMonitorNavDestination {
+    data object Back : SecurityCenterVerifyEmailDestination
 
-    data object Back : DarkWebMonitorNavDestination
-
-    data object AddEmail : DarkWebMonitorNavDestination
-
-    data class VerifyEmail(val id: BreachCustomEmailId, val email: String) :
-        DarkWebMonitorNavDestination
+    data object EmailVerified : SecurityCenterVerifyEmailDestination
 }

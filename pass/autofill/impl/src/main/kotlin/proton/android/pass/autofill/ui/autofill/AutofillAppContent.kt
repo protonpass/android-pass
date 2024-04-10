@@ -44,7 +44,6 @@ import proton.android.pass.autofill.ui.autofill.common.ConfirmAutofillDialog
 import proton.android.pass.autofill.ui.autofill.select.AssociateAutofillItemDialog
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
-import proton.android.pass.composecomponents.impl.bottomsheet.ProtonBottomSheetBackHandler
 import proton.android.pass.featureauth.impl.AUTH_GRAPH
 import proton.android.pass.featureselectitem.navigation.SelectItem
 import proton.android.pass.navigation.api.rememberAppNavigator
@@ -103,11 +102,6 @@ fun AutofillAppContent(
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
         skipHalfExpanded = true
-    )
-
-    ProtonBottomSheetBackHandler(
-        bottomSheetState = bottomSheetState,
-        coroutineScope = coroutineScope
     )
 
     val appNavigator = rememberAppNavigator(

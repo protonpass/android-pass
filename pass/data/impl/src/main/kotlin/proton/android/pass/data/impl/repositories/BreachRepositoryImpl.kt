@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.BreachRepository
@@ -31,22 +32,25 @@ import proton.android.pass.data.impl.remote.RemoteBreachDataSource
 import proton.android.pass.domain.breach.BreachCustomEmail
 import proton.android.pass.domain.breach.BreachCustomEmailId
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class BreachRepositoryImpl @Inject constructor(
     private val remote: RemoteBreachDataSource
 ) : BreachRepository {
 
-    private val refreshFlow: MutableStateFlow<Boolean> = MutableStateFlow(true)
+    private val refreshFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    private fun customEmailsFlow(userId: UserId) = refreshFlow
+    override fun observeCustomEmails(userId: UserId): Flow<List<BreachCustomEmail>> = refreshFlow
         .filter { it }
         .mapLatest { refreshEmails(userId) }
         .onEach {
             refreshFlow.update { false }
         }
         .distinctUntilChanged()
-
-    override fun observeCustomEmails(userId: UserId): Flow<List<BreachCustomEmail>> = customEmailsFlow(userId)
+        .onStart {
+            emit(refreshEmails(userId))
+        }
 
     override suspend fun addCustomEmail(userId: UserId, email: String): BreachCustomEmail =
         remote.addCustomEmail(userId, email).email.toDomain().also {

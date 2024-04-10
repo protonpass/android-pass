@@ -151,6 +151,10 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                     DarkWebMonitorNavDestination.AddEmail ->
                         onNavigated(SecurityCenterNavDestination.AddCustomEmail)
 
+                    is DarkWebMonitorNavDestination.EmailDetail -> {
+                        /* TO BE IMPLEMENTED */
+                    }
+
                     DarkWebMonitorNavDestination.Back -> onNavigated(SecurityCenterNavDestination.Back())
                     is DarkWebMonitorNavDestination.VerifyEmail -> onNavigated(
                         SecurityCenterNavDestination.VerifyEmail(

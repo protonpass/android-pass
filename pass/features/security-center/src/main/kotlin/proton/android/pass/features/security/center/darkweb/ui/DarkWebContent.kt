@@ -56,8 +56,7 @@ internal fun DarkWebContent(
         }
     ) { padding ->
         Column(
-            modifier = Modifier.padding(padding)
-                .padding(horizontal = Spacing.medium),
+            modifier = Modifier.padding(padding),
             verticalArrangement = Arrangement.spacedBy(Spacing.medium)
         ) {
             DarkWebSummary()

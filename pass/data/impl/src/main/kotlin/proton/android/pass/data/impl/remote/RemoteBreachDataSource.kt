@@ -23,13 +23,14 @@ import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.BreachAddEmailRequest
 import proton.android.pass.data.impl.requests.BreachVerifyEmailRequest
+import proton.android.pass.data.impl.responses.BreachCustomEmailResponse
 import proton.android.pass.data.impl.responses.BreachCustomEmailsResponse
 import proton.android.pass.domain.breach.BreachCustomEmailId
 import javax.inject.Inject
 
 interface RemoteBreachDataSource {
     suspend fun getCustomEmails(userId: UserId): BreachCustomEmailsResponse
-    suspend fun addCustomEmail(userId: UserId, email: String)
+    suspend fun addCustomEmail(userId: UserId, email: String): BreachCustomEmailResponse
     suspend fun verifyCustomEmail(
         userId: UserId,
         id: BreachCustomEmailId,
@@ -48,14 +49,12 @@ class RemoteBreachDataSourceImpl @Inject constructor(
         .valueOrThrow
 
 
-    override suspend fun addCustomEmail(userId: UserId, email: String) {
-        apiProvider
-            .get<PasswordManagerApi>(userId)
-            .invoke {
-                addBreachEmailToMonitor(BreachAddEmailRequest(email))
-            }
-            .valueOrThrow
-    }
+    override suspend fun addCustomEmail(userId: UserId, email: String): BreachCustomEmailResponse = apiProvider
+        .get<PasswordManagerApi>(userId)
+        .invoke {
+            addBreachEmailToMonitor(BreachAddEmailRequest(email))
+        }
+        .valueOrThrow
 
     override suspend fun verifyCustomEmail(
         userId: UserId,

@@ -20,15 +20,20 @@ package proton.android.pass.features.security.center.shared.ui.bars
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import me.proton.core.compose.component.appbar.ProtonTopAppBar
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.heroNorm
-import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
+import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
 
 @Composable
 internal fun SecurityCenterTopBar(
@@ -36,40 +41,41 @@ internal fun SecurityCenterTopBar(
     title: String,
     subtitle: String? = null,
     onUpClick: (() -> Unit)? = null,
-    endContent: (@Composable () -> Unit)? = null
+    actions: (@Composable RowScope.() -> Unit) = { }
 ) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
     ) {
         onUpClick?.let { topBarOnUpClick ->
-            ProtonTopAppBar(
-                backgroundColor = PassTheme.colors.backgroundStrong,
-                title = {},
-                navigationIcon = {
-                    BackArrowCircleIconButton(
-                        color = PassTheme.colors.interactionNorm,
-                        backgroundColor = PassTheme.colors.interactionNormMinor1,
-                        onUpClick = topBarOnUpClick
-                    )
-                },
-                actions = {
-                    endContent?.let { endContent -> endContent() }
-                }
+            BackArrowTopAppBar(
+                onUpClick = topBarOnUpClick,
+                actions = actions
             )
         }
 
         Text(
+            modifier = Modifier.padding(horizontal = Spacing.medium),
             text = title,
             style = PassTheme.typography.heroNorm()
         )
 
         subtitle?.let { topBarSubtitle ->
             Text(
+                modifier = Modifier.padding(horizontal = Spacing.medium),
                 text = topBarSubtitle,
                 style = ProtonTheme.typography.body1Regular
             )
         }
     }
+}
 
+@Preview
+@Composable
+fun SecurityCenterTopBarPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            SecurityCenterTopBar(title = "Title", subtitle = "Subtitle", onUpClick = {})
+        }
+    }
 }

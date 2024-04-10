@@ -22,6 +22,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallWeak
 import proton.android.pass.commonui.api.PassTheme
@@ -32,7 +33,12 @@ fun ProtonTextFieldLabel(
     modifier: Modifier = Modifier,
     text: String,
     isError: Boolean = false,
-    color: Color? = null
+    color: Color? = null,
+    textStyle: TextStyle = if (isError) {
+        ProtonTheme.typography.defaultSmallWeak
+    } else {
+        PassTheme.typography.body3Norm()
+    }
 ) {
     val textColor = color ?: if (isError) {
         PassTheme.colors.signalDanger
@@ -43,10 +49,6 @@ fun ProtonTextFieldLabel(
         modifier = modifier,
         text = text,
         color = textColor,
-        style = if (isError) {
-            ProtonTheme.typography.defaultSmallWeak
-        } else {
-            PassTheme.typography.body3Norm()
-        }
+        style = textStyle
     )
 }

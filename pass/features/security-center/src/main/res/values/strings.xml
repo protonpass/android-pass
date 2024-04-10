@@ -91,5 +91,6 @@
     <string name="security_center_custom_email_invalid_address">Invalid email address</string>
     <string name="security_center_custom_email_continue">Continue</string>
     <string name="security_center_custom_email_already_verified">Email already verified</string>
+    <string name="security_center_custom_email_error_adding">Error adding the email address</string>
 
 </resources>

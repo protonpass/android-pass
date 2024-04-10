@@ -92,7 +92,6 @@ fun SharingWithContent(
                 onUpClick = { onNavigateEvent(SharingNavigation.BackToHome) },
                 actions = {
                     LoadingCircleButton(
-                        modifier = Modifier.padding(12.dp, 0.dp),
                         buttonEnabled = state.isContinueEnabled,
                         color = if (state.isContinueEnabled) {
                             PassTheme.colors.interactionNormMajor1

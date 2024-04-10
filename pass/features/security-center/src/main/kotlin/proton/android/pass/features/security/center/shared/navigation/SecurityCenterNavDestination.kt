@@ -25,7 +25,7 @@ import proton.android.pass.domain.features.PaidFeature
 sealed interface SecurityCenterNavDestination {
 
     @JvmInline
-    value class Back(val comesFromBottomSheet: Boolean) : SecurityCenterNavDestination
+    value class Back(val comesFromBottomSheet: Boolean = false) : SecurityCenterNavDestination
 
     data object Empty : SecurityCenterNavDestination
 
@@ -54,4 +54,7 @@ sealed interface SecurityCenterNavDestination {
     @JvmInline
     value class Upsell(val paidFeature: PaidFeature) : SecurityCenterNavDestination
 
+    data object AddCustomEmail : SecurityCenterNavDestination
+
+    data class VerifyEmail(val id: String, val email: String) : SecurityCenterNavDestination
 }

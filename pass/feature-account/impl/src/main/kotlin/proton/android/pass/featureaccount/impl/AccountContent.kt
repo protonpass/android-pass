@@ -57,8 +57,7 @@ fun AccountContent(
                     if (state.showUpgradeButton) {
                         UpgradeButton(
                             modifier = Modifier
-                                .testTag(AccountContentTestTag.upgrade)
-                                .padding(12.dp, 0.dp),
+                                .testTag(AccountContentTestTag.upgrade),
                             onUpgradeClick = { onNavigate(AccountNavigation.Upgrade) }
                         )
                     }

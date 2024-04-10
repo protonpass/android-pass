@@ -43,6 +43,7 @@ import proton.android.pass.data.impl.requests.UpdateLastUsedTimeRequest
 import proton.android.pass.data.impl.requests.UpdateMemberShareRequest
 import proton.android.pass.data.impl.requests.UpdateVaultRequest
 import proton.android.pass.data.impl.responses.AliasDetailsResponse
+import proton.android.pass.data.impl.responses.BreachCustomEmailResponse
 import proton.android.pass.data.impl.responses.BreachCustomEmailsResponse
 import proton.android.pass.data.impl.responses.CheckAddressesCanBeInvitedResponse
 import proton.android.pass.data.impl.responses.CodeOnlyResponse
@@ -318,7 +319,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
     suspend fun getBreachCustomEmails(): BreachCustomEmailsResponse
 
     @POST("$PREFIX/breach/custom_email")
-    suspend fun addBreachEmailToMonitor(@Body request: BreachAddEmailRequest): CodeOnlyResponse
+    suspend fun addBreachEmailToMonitor(@Body request: BreachAddEmailRequest): BreachCustomEmailResponse
 
     @PUT("$PREFIX/breach/custom_email/{customEmailId}/verify")
     suspend fun verifyBreachEmail(

@@ -20,6 +20,9 @@ package proton.android.pass.features.security.center.shared.navigation
 
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.domain.features.PaidFeature
+import proton.android.pass.features.security.center.customemail.navigation.SecurityCenterCustomEmailNavDestination
+import proton.android.pass.features.security.center.customemail.navigation.SecurityCenterCustomEmailNavItem
+import proton.android.pass.features.security.center.customemail.ui.SecurityCenterCustomEmailScreen
 import proton.android.pass.features.security.center.darkweb.navigation.DarkWebMonitorNavDestination
 import proton.android.pass.features.security.center.darkweb.navigation.DarkWebMonitorNavItem
 import proton.android.pass.features.security.center.darkweb.ui.DarkWebScreen
@@ -143,9 +146,8 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
             onNavigate = { destination ->
                 when (destination) {
                     DarkWebMonitorNavDestination.AddEmail -> {
-                        /* TO BE IMPLEMENTED */
+                        onNavigated(SecurityCenterNavDestination.AddCustomEmail)
                     }
-
                     DarkWebMonitorNavDestination.Back -> {
                         onNavigated(SecurityCenterNavDestination.Back(comesFromBottomSheet = false))
                     }
@@ -158,4 +160,19 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
         )
     }
 
+    composable(SecurityCenterCustomEmailNavItem) {
+        SecurityCenterCustomEmailScreen(
+            onNavigated = { destination ->
+                val event = when (destination) {
+                    SecurityCenterCustomEmailNavDestination.Back -> SecurityCenterNavDestination.Back()
+
+                    is SecurityCenterCustomEmailNavDestination.VerifyEmail -> SecurityCenterNavDestination.VerifyEmail(
+                        id = destination.id,
+                        email = destination.email
+                    )
+                }
+                onNavigated(event)
+            }
+        )
+    }
 }

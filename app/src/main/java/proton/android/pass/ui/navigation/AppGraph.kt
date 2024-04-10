@@ -109,6 +109,7 @@ import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestin
 import proton.android.pass.features.item.history.navigation.itemHistoryNavGraph
 import proton.android.pass.features.item.history.restore.navigation.ItemHistoryRestoreNavItem
 import proton.android.pass.features.item.history.timeline.navigation.ItemHistoryTimelineNavItem
+import proton.android.pass.features.security.center.customemail.navigation.SecurityCenterCustomEmailNavItem
 import proton.android.pass.features.security.center.darkweb.navigation.DarkWebMonitorNavItem
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavItem
 import proton.android.pass.features.security.center.missingtfa.navigation.SecurityCenterMissingTFANavItem
@@ -1083,6 +1084,14 @@ fun NavGraphBuilder.appGraph(
                         route = UpsellNavItem.createNavRoute(paidFeature = destination.paidFeature)
                     )
                 }
+
+                is SecurityCenterNavDestination.VerifyEmail -> {
+                    // Navigate to be implemented
+                }
+
+                SecurityCenterNavDestination.AddCustomEmail -> appNavigator.navigate(
+                    destination = SecurityCenterCustomEmailNavItem
+                )
             }
         }
     )

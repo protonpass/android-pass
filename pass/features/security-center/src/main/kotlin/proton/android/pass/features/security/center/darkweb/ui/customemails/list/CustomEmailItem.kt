@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -49,15 +50,45 @@ import proton.android.pass.domain.breach.BreachCustomEmailId
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.darkweb.presentation.CustomEmailUiState
 import proton.android.pass.features.security.center.darkweb.presentation.CustomEmailUiStatus
+import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun CustomEmailItem(
     modifier: Modifier = Modifier,
     email: CustomEmailUiState,
+    onAddClick: () -> Unit,
+    onDetailClick: () -> Unit
+) {
+    when (email.status) {
+        is CustomEmailUiStatus.NotVerified -> {
+            CustomEmailItemNotVerified(
+                modifier = modifier,
+                email = email.email,
+                status = email.status,
+                onAddClick = onAddClick
+            )
+        }
+        is CustomEmailUiStatus.Verified -> {
+            CustomEmailItemVerified(
+                modifier = modifier,
+                email = email.email,
+                status = email.status,
+                onDetailClick = onDetailClick
+            )
+        }
+    }
+
+}
+
+@Composable
+private fun CustomEmailItemNotVerified(
+    modifier: Modifier = Modifier,
+    email: String,
+    status: CustomEmailUiStatus.NotVerified,
     onAddClick: () -> Unit
 ) {
     Row(
-        modifier = modifier,
+        modifier = modifier.padding(horizontal = Spacing.medium, vertical = Spacing.small),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
@@ -76,40 +107,23 @@ internal fun CustomEmailItem(
             )
         }
 
-        Column(modifier = Modifier.weight(1f)) {
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
+        ) {
             Text(
-                text = email.email,
+                text = email,
                 style = ProtonTheme.typography.body1Regular
             )
 
-            when (email.status) {
-                is CustomEmailUiStatus.NotVerified -> {
-                    Text(
-                        text = pluralStringResource(
-                            id = R.plurals.security_center_dark_web_monitor_custom_emails_used_count,
-                            count = email.status.usedInLoginsCount,
-                            email.status.usedInLoginsCount
-                        ),
-                        style = PassTheme.typography.body3Weak()
-                    )
-                }
-                is CustomEmailUiStatus.Verified -> {
-                    val color = if (email.status.breachesDetected > 0) {
-                        PassTheme.colors.noteInteractionNormMajor1
-                    } else {
-                        PassTheme.colors.cardInteractionNormMajor1
-                    }
-                    Text(
-                        text = pluralStringResource(
-                            id = R.plurals.security_center_dark_web_monitor_custom_emails_breaches_found,
-                            count = email.status.breachesDetected,
-                            email.status.breachesDetected
-                        ),
-                        style = PassTheme.typography.body3Weak(),
-                        color = color
-                    )
-                }
-            }
+            Text(
+                text = pluralStringResource(
+                    id = R.plurals.security_center_dark_web_monitor_custom_emails_used_count,
+                    count = status.usedInLoginsCount,
+                    status.usedInLoginsCount
+                ),
+                style = PassTheme.typography.body3Weak()
+            )
         }
 
         Box(
@@ -125,6 +139,55 @@ internal fun CustomEmailItem(
                 color = PassTheme.colors.interactionNormMajor2
             )
         }
+    }
+}
+
+@Composable
+private fun CustomEmailItemVerified(
+    modifier: Modifier = Modifier,
+    email: String,
+    status: CustomEmailUiStatus.Verified,
+    onDetailClick: () -> Unit
+) {
+    val color = if (status.breachesDetected > 0) {
+        PassTheme.colors.noteInteractionNormMajor1
+    } else {
+        PassTheme.colors.cardInteractionNormMajor1
+    }
+
+    Row(
+        modifier = modifier
+            .clip(RoundedCornerShape(8.dp))
+            .clickable(onClick = onDetailClick)
+            .padding(horizontal = Spacing.medium, vertical = Spacing.small),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
+    ) {
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
+        ) {
+            Text(
+                text = email,
+                style = ProtonTheme.typography.body1Regular
+            )
+
+            Text(
+                text = pluralStringResource(
+                    id = R.plurals.security_center_dark_web_monitor_custom_emails_breaches_found,
+                    count = status.breachesDetected,
+                    status.breachesDetected
+                ),
+                style = PassTheme.typography.body3Weak(),
+                color = color
+            )
+        }
+
+        Icon(
+            painter = painterResource(id = CoreR.drawable.ic_proton_chevron_right),
+            contentDescription = null,
+            tint = PassTheme.colors.textWeak
+        )
     }
 }
 
@@ -144,7 +207,8 @@ fun CustomEmailItemPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class
                     email = "some@test.email",
                     status = status
                 ),
-                onAddClick = {}
+                onAddClick = {},
+                onDetailClick = {}
             )
         }
     }

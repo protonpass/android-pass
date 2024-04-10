@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.customemail.ui
+package proton.android.pass.features.security.center.verifyemail.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -41,33 +41,37 @@ import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.features.security.center.R
-import proton.android.pass.features.security.center.customemail.presentation.SecurityCenterCustomEmailState
 import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBar
+import proton.android.pass.features.security.center.verifyemail.presentation.SecurityCenterVerifyEmailState
 
 @Composable
-internal fun SecurityCenterCustomEmailContent(
+internal fun SecurityCenterVerifyEmailContent(
     modifier: Modifier = Modifier,
-    state: SecurityCenterCustomEmailState,
-    emailAddress: String,
-    onUiEvent: (SecurityCenterCustomEmailUiEvent) -> Unit
+    state: SecurityCenterVerifyEmailState,
+    code: String,
+    onUiEvent: (SecurityCenterVerifyEmailUiEvent) -> Unit
 ) {
     Scaffold(
         modifier = modifier,
         topBar = {
             SecurityCenterTopBar(
-                title = stringResource(R.string.security_center_custom_email_top_bar_title),
-                onUpClick = { onUiEvent(SecurityCenterCustomEmailUiEvent.Back) },
+                title = stringResource(R.string.security_center_verify_email_title),
+                subtitle = stringResource(
+                    R.string.security_center_verify_email_subtitle,
+                    state.email
+                ),
+                onUpClick = { onUiEvent(SecurityCenterVerifyEmailUiEvent.Back) },
                 actions = {
                     LoadingCircleButton(
-                        isLoading = state.isLoading,
+                        isLoading = state.isLoadingState.value(),
                         color = PassTheme.colors.interactionNormMajor2,
                         text = {
                             Text(
-                                text = stringResource(R.string.security_center_custom_email_continue),
+                                text = stringResource(R.string.security_center_verify_email_continue),
                                 style = ProtonTheme.typography.defaultSmallNorm
                             )
                         },
-                        onClick = { onUiEvent(SecurityCenterCustomEmailUiEvent.AddCustomEmail) }
+                        onClick = { onUiEvent(SecurityCenterVerifyEmailUiEvent.Verify) }
                     )
                 }
             )
@@ -82,21 +86,21 @@ internal fun SecurityCenterCustomEmailContent(
             verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
         ) {
             ProtonTextField(
-                value = emailAddress,
-                onChange = { onUiEvent(SecurityCenterCustomEmailUiEvent.OnEmailChange(it)) },
+                value = code,
+                onChange = { onUiEvent(SecurityCenterVerifyEmailUiEvent.OnCodeChange(it)) },
                 placeholder = {
                     ProtonTextFieldPlaceHolder(
-                        text = stringResource(R.string.security_center_custom_email_email_address_placeholder),
+                        text = stringResource(R.string.security_center_verify_email_code_placeholder),
                         textStyle = PassTheme.typography.heroWeak()
                     )
                 },
-                isError = state.emailNotValid,
-                errorMessage = stringResource(R.string.security_center_custom_email_invalid_address),
+                isError = state.isError,
+                errorMessage = stringResource(R.string.security_center_verify_email_code_error),
                 textStyle = PassTheme.typography.heroNorm(),
                 keyboardOptions = KeyboardOptions.Default.copy(
-                    keyboardType = KeyboardType.Email
+                    keyboardType = KeyboardType.Number
                 ),
-                onDoneClick = { onUiEvent(SecurityCenterCustomEmailUiEvent.AddCustomEmail) }
+                onDoneClick = { onUiEvent(SecurityCenterVerifyEmailUiEvent.Verify) }
             )
         }
     }

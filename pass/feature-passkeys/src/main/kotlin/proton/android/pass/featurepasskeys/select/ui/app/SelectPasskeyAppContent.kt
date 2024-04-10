@@ -32,7 +32,6 @@ import androidx.navigation.compose.NavHost
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import kotlinx.coroutines.launch
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
-import proton.android.pass.composecomponents.impl.bottomsheet.ProtonBottomSheetBackHandler
 import proton.android.pass.featureauth.impl.AUTH_GRAPH
 import proton.android.pass.featurepasskeys.select.navigation.SelectPasskeyNavigation
 import proton.android.pass.featurepasskeys.select.navigation.selectPasskeyActivityGraph
@@ -69,11 +68,6 @@ fun SelectPasskeyAppContent(
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
         skipHalfExpanded = true
-    )
-
-    ProtonBottomSheetBackHandler(
-        bottomSheetState = bottomSheetState,
-        coroutineScope = coroutineScope
     )
 
     val appNavigator = rememberAppNavigator(

@@ -16,16 +16,14 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.darkweb.navigation
+package proton.android.pass.features.security.center.verifyemail.ui
 
-import proton.android.pass.domain.breach.BreachCustomEmailId
+internal sealed interface SecurityCenterVerifyEmailUiEvent {
 
-sealed interface DarkWebMonitorNavDestination {
+    @JvmInline
+    value class OnCodeChange(val code: String) : SecurityCenterVerifyEmailUiEvent
 
-    data object Back : DarkWebMonitorNavDestination
+    data object Back : SecurityCenterVerifyEmailUiEvent
 
-    data object AddEmail : DarkWebMonitorNavDestination
-
-    data class VerifyEmail(val id: BreachCustomEmailId, val email: String) :
-        DarkWebMonitorNavDestination
+    data object Verify : SecurityCenterVerifyEmailUiEvent
 }

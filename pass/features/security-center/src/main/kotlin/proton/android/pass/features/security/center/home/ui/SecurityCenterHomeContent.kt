@@ -28,7 +28,6 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarEvent
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarSelection
 import proton.android.pass.commonui.api.PassTheme
@@ -54,11 +53,7 @@ internal fun SecurityCenterHomeContent(
         topBar = {
             SecurityCenterTopBar(
                 modifier = Modifier
-                    .padding(
-                        start = Spacing.medium,
-                        top = 12.dp,
-                        end = Spacing.medium
-                    ),
+                    .padding(top = Spacing.medium),
                 title = stringResource(R.string.security_center_home_top_bar_title)
             )
         },

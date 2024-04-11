@@ -22,6 +22,7 @@ import androidx.compose.runtime.Stable
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.PlanType
+import proton.android.pass.domain.breach.Breach
 import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavDestination
 import proton.android.pass.securitycenter.api.InsecurePasswordsResult
@@ -31,12 +32,22 @@ import proton.android.pass.securitycenter.api.ReusedPasswordsResult
 @Stable
 internal data class SecurityCenterHomeState(
     internal val isSentinelEnabled: Boolean,
+    private val breachLoadingResult: LoadingResult<Breach>,
     private val insecurePasswordsLoadingResult: LoadingResult<InsecurePasswordsResult>,
     private val reusedPasswordsLoadingResult: LoadingResult<ReusedPasswordsResult>,
     private val missing2faResult: LoadingResult<Missing2faResult>,
     private val excludedLoginItemsLoadingResult: LoadingResult<List<Item>>,
     private val planType: PlanType
 ) {
+
+    private val dataBreachesCount: Int = when (breachLoadingResult) {
+        is LoadingResult.Error,
+        LoadingResult.Loading -> 0
+
+        is LoadingResult.Success -> breachLoadingResult.data.breachesCount
+    }
+
+    private val hasDataBreaches: Boolean = dataBreachesCount > 0
 
     internal val insecurePasswordsCount: Int? = when (insecurePasswordsLoadingResult) {
         is LoadingResult.Error,
@@ -94,24 +105,40 @@ internal data class SecurityCenterHomeState(
 
     internal val darkWebMonitoring: SecurityCenterHomeDarkWebMonitoring = when (planType) {
         is PlanType.Free,
-        is PlanType.Trial -> SecurityCenterHomeDarkWebMonitoring.FreeNoDataBreaches
+        is PlanType.Unknown -> if (hasDataBreaches) {
+            SecurityCenterHomeDarkWebMonitoring.FreeDataBreaches(
+                dataBreachedSite = "", // implement when BE is ready
+                dataBreachedTime = 0L, // implement when BE is ready
+                dateBreachedEmail = DATA_BREACHED_EMAIL,
+                dataBreachedPassword = DATA_BREACHED_PASSWORD
+            )
+        } else {
+            SecurityCenterHomeDarkWebMonitoring.FreeNoDataBreaches
+        }
 
-        is PlanType.Paid.Business,
-        is PlanType.Paid.Plus -> SecurityCenterHomeDarkWebMonitoring.PaidNoDataBreaches
-
-        is PlanType.Unknown -> SecurityCenterHomeDarkWebMonitoring.Unknown
+        is PlanType.Trial,
+        is PlanType.Paid -> if (hasDataBreaches) {
+            SecurityCenterHomeDarkWebMonitoring.PaidDataBreaches(dataBreachesCount)
+        } else {
+            SecurityCenterHomeDarkWebMonitoring.PaidNoDataBreaches
+        }
     }
 
     internal companion object {
 
         internal val Initial: SecurityCenterHomeState = SecurityCenterHomeState(
             isSentinelEnabled = false,
+            breachLoadingResult = LoadingResult.Loading,
             insecurePasswordsLoadingResult = LoadingResult.Loading,
             reusedPasswordsLoadingResult = LoadingResult.Loading,
             missing2faResult = LoadingResult.Loading,
             excludedLoginItemsLoadingResult = LoadingResult.Loading,
             planType = PlanType.Unknown()
         )
+
+        // This constants are arbitrary values since only will be use for blurry effect on the UI
+        private const val DATA_BREACHED_EMAIL = "email@proton.me"
+        private const val DATA_BREACHED_PASSWORD = "********"
 
     }
 

@@ -113,6 +113,7 @@ import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.UpdateVault
 import proton.android.pass.data.api.usecases.UserPlanWorkerLauncher
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
+import proton.android.pass.data.api.usecases.breach.ObserveBreach
 import proton.android.pass.data.api.usecases.breach.ObserveBreachCustomEmails
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAliasEmail
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForCustomEmail
@@ -240,6 +241,7 @@ import proton.android.pass.data.impl.usecases.UpdateVaultImpl
 import proton.android.pass.data.impl.usecases.UserPlanWorkerLauncherImpl
 import proton.android.pass.data.impl.usecases.breach.AddBreachCustomEmailImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveBreachCustomEmailsImpl
+import proton.android.pass.data.impl.usecases.breach.ObserveBreachImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveBreachesForAliasEmailImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveBreachesForCustomEmailImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveBreachesForProtonEmailImpl
@@ -266,6 +268,7 @@ import proton.android.pass.data.impl.usecases.searchentry.DeleteAllSearchEntryIm
 import proton.android.pass.data.impl.usecases.searchentry.DeleteSearchEntryImpl
 import proton.android.pass.data.impl.usecases.searchentry.ObserveSearchEntryImpl
 import proton.android.pass.data.impl.usecases.sync.ForceSyncItemsImpl
+import javax.inject.Singleton
 
 @Suppress("TooManyFunctions")
 @Module
@@ -615,6 +618,9 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindObserveUsableVaults(impl: ObserveUsableVaultsImpl): ObserveUsableVaults
+
+    @[Binds Singleton]
+    abstract fun bindObserveBreach(impl: ObserveBreachImpl): ObserveBreach
 
     @Binds
     abstract fun bindObserveBreachCustomEmails(impl: ObserveBreachCustomEmailsImpl): ObserveBreachCustomEmails

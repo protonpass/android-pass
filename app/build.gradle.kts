@@ -360,10 +360,6 @@ dependencies {
         default = libs.core.paymentIap,
         fdroid = null
     )
-    addFdroidSpecialLib(
-        default = projects.pass.googlePurchases,
-        fdroid = null
-    )
 
     implementation(libs.core.plan)
     implementation(libs.core.presentation)

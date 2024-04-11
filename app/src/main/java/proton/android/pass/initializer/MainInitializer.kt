@@ -49,6 +49,7 @@ import proton.android.pass.data.impl.sync.SyncInitializer
 import proton.android.pass.log.impl.LoggerInitializer
 import proton.android.pass.telemetry.impl.startup.TelemetryInitializer
 import proton.android.pass.tracing.impl.SentryInitializer
+import proton.android.pass.ui.initializer.initPurchases
 
 class MainInitializer : Initializer<Unit> {
 
@@ -81,6 +82,7 @@ class MainInitializer : Initializer<Unit> {
                 // WorkManager need to be initialized before any other dependant initializer.
                 initializeComponent(WorkManagerInitializer::class.java)
                 initializeComponent(MainInitializer::class.java)
+                initPurchases(appContext)
             }
         }
     }

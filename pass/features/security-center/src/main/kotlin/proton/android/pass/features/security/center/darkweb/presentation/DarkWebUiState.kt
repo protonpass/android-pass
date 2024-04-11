@@ -29,8 +29,9 @@ sealed interface CustomEmailUiStatus {
     @JvmInline
     value class NotVerified(val usedInLoginsCount: Int) : CustomEmailUiStatus
 
-    @JvmInline
-    value class Verified(val breachesDetected: Int) : CustomEmailUiStatus
+    data class Verified(val breachesDetected: Int) : CustomEmailUiStatus {
+        internal val hasBreaches: Boolean = breachesDetected > 0
+    }
 }
 
 @Stable

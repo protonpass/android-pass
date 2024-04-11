@@ -24,7 +24,9 @@ internal sealed interface SecurityCenterHomeDarkWebMonitoring {
 
     data class FreeDataBreaches(
         internal val dataBreachedSite: String,
-        internal val dataBreachedTime: Long
+        internal val dataBreachedTime: Long,
+        internal val dateBreachedEmail: String,
+        internal val dataBreachedPassword: String
     ) : SecurityCenterHomeDarkWebMonitoring
 
     data object PaidNoDataBreaches : SecurityCenterHomeDarkWebMonitoring
@@ -32,7 +34,5 @@ internal sealed interface SecurityCenterHomeDarkWebMonitoring {
     data class PaidDataBreaches(
         internal val dataBreachesCount: Int
     ) : SecurityCenterHomeDarkWebMonitoring
-
-    data object Unknown : SecurityCenterHomeDarkWebMonitoring
 
 }

@@ -21,16 +21,10 @@ package proton.android.pass.data.fakes.usecases.breach
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.domain.breach.BreachCustomEmail
-import proton.android.pass.domain.breach.BreachCustomEmailId
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class FakeAddBreachCustomEmail @Inject constructor() : AddBreachCustomEmail {
-    override suspend fun invoke(userId: UserId?, email: String): BreachCustomEmail = BreachCustomEmail(
-        id = BreachCustomEmailId(id = ""),
-        email = "example@proton.me",
-        verified = false,
-        breachCount = 1949
-    )
+    override suspend fun invoke(userId: UserId?, email: String): BreachCustomEmail = BreachCustomEmailMother.random()
 }

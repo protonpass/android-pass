@@ -29,12 +29,18 @@ import proton.android.pass.data.impl.responses.BreachCustomEmailsResponse
 import proton.android.pass.data.impl.responses.BreachEmailsResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.data.impl.responses.BreachesResponse
 import proton.android.pass.domain.breach.BreachCustomEmailId
 import javax.inject.Inject
 
 interface RemoteBreachDataSource {
+
+    suspend fun getAllBreaches(userId: UserId): BreachesResponse
+
     suspend fun getCustomEmails(userId: UserId): BreachCustomEmailsResponse
+
     suspend fun addCustomEmail(userId: UserId, email: String): BreachCustomEmailResponse
+
     suspend fun verifyCustomEmail(
         userId: UserId,
         id: BreachCustomEmailId,
@@ -55,6 +61,12 @@ interface RemoteBreachDataSource {
 class RemoteBreachDataSourceImpl @Inject constructor(
     private val apiProvider: ApiProvider
 ) : RemoteBreachDataSource {
+
+    override suspend fun getAllBreaches(userId: UserId): BreachesResponse = apiProvider
+        .get<PasswordManagerApi>(userId)
+        .invoke { getAllBreaches() }
+        .valueOrThrow
+
     override suspend fun getCustomEmails(userId: UserId): BreachCustomEmailsResponse = apiProvider
         .get<PasswordManagerApi>(userId)
         .invoke {

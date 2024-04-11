@@ -37,8 +37,10 @@ internal fun SecurityCenterHomeDarkWebMonitoringSection(
         is SecurityCenterHomeDarkWebMonitoring.FreeDataBreaches -> {
             SecurityCenterHomeDataBreachesWidget(
                 modifier = modifier,
-                dateBreachedSite = darkWebMonitoring.dataBreachedSite,
+                dataBreachedSite = darkWebMonitoring.dataBreachedSite,
                 dataBreachedTime = darkWebMonitoring.dataBreachedTime,
+                dataBreachedEmail = darkWebMonitoring.dateBreachedEmail,
+                dataBreachedPassword = darkWebMonitoring.dataBreachedPassword,
                 onActionClick = {
                     onUiEvent(SecurityCenterHomeUiEvent.OnUpsell(PaidFeature.DarkWebMonitoring))
                 }
@@ -74,7 +76,5 @@ internal fun SecurityCenterHomeDarkWebMonitoringSection(
                 onClick = { onUiEvent(SecurityCenterHomeUiEvent.OnShowDataBreaches) }
             )
         }
-
-        SecurityCenterHomeDarkWebMonitoring.Unknown -> {}
     }
 }

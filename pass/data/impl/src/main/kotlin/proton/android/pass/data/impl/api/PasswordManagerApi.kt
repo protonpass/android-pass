@@ -46,6 +46,7 @@ import proton.android.pass.data.impl.responses.AliasDetailsResponse
 import proton.android.pass.data.impl.responses.BreachCustomEmailResponse
 import proton.android.pass.data.impl.responses.BreachCustomEmailsResponse
 import proton.android.pass.data.impl.responses.BreachEmailsResponse
+import proton.android.pass.data.impl.responses.BreachesResponse
 import proton.android.pass.data.impl.responses.CheckAddressesCanBeInvitedResponse
 import proton.android.pass.data.impl.responses.CodeOnlyResponse
 import proton.android.pass.data.impl.responses.CreateItemAliasResponse
@@ -88,7 +89,10 @@ interface PasswordManagerApi : BaseRetrofitApi {
     suspend fun createVault(@Body request: CreateVaultRequest): CreateVaultResponse
 
     @PUT("$PREFIX/vault/{shareId}")
-    suspend fun updateVault(@Path("shareId") shareId: String, @Body request: UpdateVaultRequest): CreateVaultResponse
+    suspend fun updateVault(
+        @Path("shareId") shareId: String,
+        @Body request: UpdateVaultRequest
+    ): CreateVaultResponse
 
     @DELETE("$PREFIX/vault/{shareId}")
     suspend fun deleteVault(@Path("shareId") shareId: String): DeleteVaultResponse
@@ -122,10 +126,16 @@ interface PasswordManagerApi : BaseRetrofitApi {
     ): GetItemsResponse
 
     @POST("$PREFIX/share/{shareId}/item")
-    suspend fun createItem(@Path("shareId") shareId: String, @Body request: CreateItemRequest): ItemRevisionResponse
+    suspend fun createItem(
+        @Path("shareId") shareId: String,
+        @Body request: CreateItemRequest
+    ): ItemRevisionResponse
 
     @POST("$PREFIX/share/{shareId}/alias/custom")
-    suspend fun createAlias(@Path("shareId") shareId: String, @Body request: CreateAliasRequest): ItemRevisionResponse
+    suspend fun createAlias(
+        @Path("shareId") shareId: String,
+        @Body request: CreateAliasRequest
+    ): ItemRevisionResponse
 
     @POST("$PREFIX/share/{shareId}/item/with_alias")
     suspend fun createItemAndAlias(
@@ -148,19 +158,31 @@ interface PasswordManagerApi : BaseRetrofitApi {
     ): UpdateLastUsedTimeResponse
 
     @POST("$PREFIX/share/{shareId}/item/{itemId}/pin")
-    suspend fun pinItem(@Path("shareId") shareId: String, @Path("itemId") itemId: String): ItemRevisionResponse
+    suspend fun pinItem(
+        @Path("shareId") shareId: String,
+        @Path("itemId") itemId: String
+    ): ItemRevisionResponse
 
     @DELETE("$PREFIX/share/{shareId}/item/{itemId}/pin")
-    suspend fun unpinItem(@Path("shareId") shareId: String, @Path("itemId") itemId: String): ItemRevisionResponse
+    suspend fun unpinItem(
+        @Path("shareId") shareId: String,
+        @Path("itemId") itemId: String
+    ): ItemRevisionResponse
 
     @POST("$PREFIX/share/{shareId}/item/trash")
-    suspend fun trashItems(@Path("shareId") shareId: String, @Body request: TrashItemsRequest): TrashItemsResponse
+    suspend fun trashItems(
+        @Path("shareId") shareId: String,
+        @Body request: TrashItemsRequest
+    ): TrashItemsResponse
 
     @HTTP(method = "DELETE", path = "$PREFIX/share/{shareId}/item", hasBody = true)
     suspend fun deleteItems(@Path("shareId") shareId: String, @Body request: TrashItemsRequest)
 
     @POST("$PREFIX/share/{shareId}/item/untrash")
-    suspend fun untrashItems(@Path("shareId") shareId: String, @Body request: TrashItemsRequest): TrashItemsResponse
+    suspend fun untrashItems(
+        @Path("shareId") shareId: String,
+        @Body request: TrashItemsRequest
+    ): TrashItemsResponse
 
     @PUT("$PREFIX/share/{shareId}/item/{itemId}/share")
     suspend fun migrateItem(
@@ -170,7 +192,10 @@ interface PasswordManagerApi : BaseRetrofitApi {
     ): ItemRevisionResponse
 
     @PUT("$PREFIX/share/{shareId}/item/share")
-    suspend fun migrateItems(@Path("shareId") shareId: String, @Body request: MigrateItemsRequest): MigrateItemsResponse
+    suspend fun migrateItems(
+        @Path("shareId") shareId: String,
+        @Body request: MigrateItemsRequest
+    ): MigrateItemsResponse
 
     // ItemKey
     @GET("$PREFIX/share/{shareId}/item/{itemId}/key/latest")
@@ -190,7 +215,10 @@ interface PasswordManagerApi : BaseRetrofitApi {
     suspend fun getAliasOptions(@Path("shareId") shareId: String): GetAliasOptionsResponse
 
     @GET("$PREFIX/share/{shareId}/alias/{itemId}")
-    suspend fun getAliasDetails(@Path("shareId") shareId: String, @Path("itemId") itemId: String): AliasDetailsResponse
+    suspend fun getAliasDetails(
+        @Path("shareId") shareId: String,
+        @Path("itemId") itemId: String
+    ): AliasDetailsResponse
 
     @POST("$PREFIX/share/{shareId}/alias/{itemId}/mailbox")
     suspend fun updateAliasMailboxes(
@@ -204,7 +232,10 @@ interface PasswordManagerApi : BaseRetrofitApi {
     suspend fun getLastEventId(@Path("shareId") shareId: String): LastEventIdResponse
 
     @GET("$PREFIX/share/{shareId}/event/{lastEventId}")
-    suspend fun getEvents(@Path("shareId") shareId: String, @Path("lastEventId") lastEventId: String): GetEventsResponse
+    suspend fun getEvents(
+        @Path("shareId") shareId: String,
+        @Path("lastEventId") lastEventId: String
+    ): GetEventsResponse
 
     // Favicon
     @GET("core/v4/images/logo")
@@ -225,10 +256,16 @@ interface PasswordManagerApi : BaseRetrofitApi {
 
     // Sharing
     @POST("$PREFIX/share/{shareId}/invite")
-    suspend fun inviteUser(@Path("shareId") shareId: String, @Body request: CreateInviteRequest): CodeOnlyResponse
+    suspend fun inviteUser(
+        @Path("shareId") shareId: String,
+        @Body request: CreateInviteRequest
+    ): CodeOnlyResponse
 
     @POST("$PREFIX/share/{shareId}/invite/batch")
-    suspend fun inviteUsers(@Path("shareId") shareId: String, @Body request: CreateInvitesRequest): CodeOnlyResponse
+    suspend fun inviteUsers(
+        @Path("shareId") shareId: String,
+        @Body request: CreateInvitesRequest
+    ): CodeOnlyResponse
 
     @POST("$PREFIX/share/{shareId}/invite/new_user")
     suspend fun inviteNewUser(
@@ -246,7 +283,10 @@ interface PasswordManagerApi : BaseRetrofitApi {
     suspend fun fetchInvites(): PendingInvitesResponse
 
     @POST("$PREFIX/invite/{inviteId}")
-    suspend fun acceptInvite(@Path("inviteId") inviteId: String, @Body request: AcceptInviteRequest): GetShareResponse
+    suspend fun acceptInvite(
+        @Path("inviteId") inviteId: String,
+        @Body request: AcceptInviteRequest
+    ): GetShareResponse
 
     @POST("$PREFIX/share/{shareId}/invite/new_user/{inviteId}/keys")
     suspend fun confirmInvite(
@@ -285,7 +325,10 @@ interface PasswordManagerApi : BaseRetrofitApi {
     ): CodeOnlyResponse
 
     @DELETE("$PREFIX/share/{shareId}/invite/{inviteId}")
-    suspend fun deleteInvite(@Path("shareId") shareId: String, @Path("inviteId") inviteId: String): CodeOnlyResponse
+    suspend fun deleteInvite(
+        @Path("shareId") shareId: String,
+        @Path("inviteId") inviteId: String
+    ): CodeOnlyResponse
 
     @DELETE("$PREFIX/share/{shareId}/invite/new_user/{inviteId}")
     suspend fun deleteNewUserInvite(
@@ -316,6 +359,9 @@ interface PasswordManagerApi : BaseRetrofitApi {
     suspend fun getOrganization(): OrganizationGetResponse
 
     // Breach
+    @GET("$PREFIX/breach")
+    suspend fun getAllBreaches(): BreachesResponse
+
     @GET("$PREFIX/breach/custom_email")
     suspend fun getBreachCustomEmails(): BreachCustomEmailsResponse
 

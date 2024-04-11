@@ -63,8 +63,10 @@ import proton.android.pass.composecomponents.impl.R as CompR
 internal fun SecurityCenterHomeDataBreachesWidget(
     modifier: Modifier = Modifier,
     onActionClick: () -> Unit,
-    dateBreachedSite: String,
-    dataBreachedTime: Long
+    dataBreachedSite: String,
+    dataBreachedTime: Long,
+    dataBreachedEmail: String,
+    dataBreachedPassword: String
 ) {
     Column(
         modifier = modifier
@@ -107,7 +109,7 @@ internal fun SecurityCenterHomeDataBreachesWidget(
             Column(
                 modifier = Modifier.padding(start = Spacing.extraSmall)
             ) {
-                SectionSubtitle(text = dateBreachedSite.asAnnotatedString())
+                SectionSubtitle(text = dataBreachedSite.asAnnotatedString())
 
                 SectionTitle(
                     text = protonFormattedDateText(
@@ -127,12 +129,12 @@ internal fun SecurityCenterHomeDataBreachesWidget(
         ) {
             BreachRow(
                 labelResId = CompR.string.email_address,
-                value = "databreach@email.com"
+                value = dataBreachedEmail
             )
 
             BreachRow(
                 labelResId = CompR.string.password,
-                value = "***********"
+                value = dataBreachedPassword
             )
         }
 
@@ -176,8 +178,10 @@ fun SecurityCenterHomeDataBreachesWidgetPreview(@PreviewParameter(ThemePreviewPr
     PassTheme(isDark = isDark) {
         Surface {
             SecurityCenterHomeDataBreachesWidget(
-                dateBreachedSite = "breached.site.com",
+                dataBreachedSite = "breached.site.com",
                 dataBreachedTime = 1_664_195_804,
+                dataBreachedEmail = "email@proton.me",
+                dataBreachedPassword = "********",
                 onActionClick = {}
             )
         }

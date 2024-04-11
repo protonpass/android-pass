@@ -34,6 +34,8 @@ import proton.android.pass.data.impl.remote.RemoteBreachDataSource
 import proton.android.pass.data.impl.responses.BreachEmailsResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.data.impl.responses.BreachesResponse
+import proton.android.pass.domain.breach.Breach
 import proton.android.pass.domain.breach.BreachCustomEmail
 import proton.android.pass.domain.breach.BreachCustomEmailId
 import proton.android.pass.domain.breach.BreachEmail
@@ -51,6 +53,11 @@ class BreachRepositoryImpl @Inject constructor(
         mutableMapOf()
     private val aliasBreachesCache: MutableMap<Pair<UserId, Pair<ShareId, ItemId>>, List<BreachEmail>> =
         mutableMapOf()
+
+    override fun observeBreach(userId: UserId): Flow<Breach> = refreshFlow
+        .filter { shouldRefresh -> shouldRefresh }
+        .mapLatest { remote.getAllBreaches(userId).toDomain() }
+        .distinctUntilChanged()
 
     override fun observeCustomEmails(userId: UserId): Flow<List<BreachCustomEmail>> = refreshFlow
         .filter { it }
@@ -109,6 +116,13 @@ class BreachRepositoryImpl @Inject constructor(
         verified = verified,
         breachCount = breachCounter
     )
+
+    private fun BreachesResponse.toDomain() = with(this.breaches) {
+        Breach(
+            breachesCount = emailsCount,
+            breachedCustomEmails = customEmails.map { customEmail -> customEmail.toDomain() }
+        )
+    }
 
     private fun BreachEmailsResponse.toDomain() = with(this.breachEmails) {
         breaches.map { breach ->

@@ -113,6 +113,7 @@ import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.UpdateVault
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
+import proton.android.pass.data.api.usecases.breach.ObserveBreach
 import proton.android.pass.data.api.usecases.breach.ObserveBreachCustomEmails
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAliasEmail
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForCustomEmail
@@ -241,6 +242,7 @@ import proton.android.pass.data.fakes.usecases.TestUpdateAutofillItem
 import proton.android.pass.data.fakes.usecases.TestUpdateItem
 import proton.android.pass.data.fakes.usecases.TestUpdateVault
 import proton.android.pass.data.fakes.usecases.breach.FakeAddBreachCustomEmail
+import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreach
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachCustomEmails
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachesForAliasEmail
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachesForCustomEmail
@@ -250,6 +252,7 @@ import proton.android.pass.data.fakes.usecases.breach.FakeVerifyBreachCustomEmai
 import proton.android.pass.data.fakes.usecases.items.FakeGetItemCategory
 import proton.android.pass.data.fakes.usecases.items.FakeObserveItemRevisions
 import proton.android.pass.data.fakes.usecases.items.FakeOpenItemRevision
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -576,6 +579,9 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindSentinelRepository(impl: FakeSentinelRepository): SentinelRepository
+
+    @[Binds Singleton]
+    abstract fun bindObserveBreach(impl: FakeObserveBreach): ObserveBreach
 
     @Binds
     abstract fun bindObserveBreachCustomEmails(impl: FakeObserveBreachCustomEmails): ObserveBreachCustomEmails

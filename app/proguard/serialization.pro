@@ -33,6 +33,7 @@
 
 -keep class proton.android.pass.data.impl.requests.*
 -keep class proton.android.pass.data.impl.responses.*
+-keep class proton.android.pass.data.impl.core.responses.*
 
 -keepnames class <1>$$serializer { # -keepnames suffices; class is kept when serializer() is kept.
     static <1>$$serializer INSTANCE;

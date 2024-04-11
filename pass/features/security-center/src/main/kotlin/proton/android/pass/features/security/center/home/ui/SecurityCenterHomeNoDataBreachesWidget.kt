@@ -20,6 +20,7 @@ package proton.android.pass.features.security.center.home.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -30,30 +31,45 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
 import proton.android.pass.composecomponents.impl.container.roundedContainer
+import proton.android.pass.composecomponents.impl.icon.PassPlusIcon
 import proton.android.pass.features.security.center.R
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @[Composable Suppress("FunctionMaxLength")]
-internal fun SecurityCenterHomeNoDataBreachesWidget(modifier: Modifier = Modifier, onActionClick: () -> Unit) {
+internal fun SecurityCenterHomeNoDataBreachesWidget(
+    modifier: Modifier = Modifier,
+    onActionClick: () -> Unit
+) {
     Column(
         modifier = modifier
             .roundedContainer(
                 backgroundColor = PassTheme.colors.interactionNormMinor2,
                 borderColor = PassTheme.colors.interactionNormMinor1
             )
-            .padding(all = 24.dp),
+            .padding(all = Spacing.small),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
     ) {
+        PassPlusIcon(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    top = Spacing.small,
+                    end = Spacing.small
+                ),
+            alignment = Alignment.CenterEnd
+        )
+
         Text(
+            modifier = Modifier.padding(horizontal = Spacing.medium),
             text = stringResource(id = R.string.security_center_home_dark_web_monitoring_title),
             fontSize = 24.sp,
             textAlign = TextAlign.Center,
@@ -61,11 +77,19 @@ internal fun SecurityCenterHomeNoDataBreachesWidget(modifier: Modifier = Modifie
         )
 
         Text(
+            modifier = Modifier.padding(horizontal = Spacing.medium),
             text = stringResource(id = R.string.security_center_home_widget_no_breaches_subtitle),
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            style = ProtonTheme.typography.body1Regular
         )
 
         PassCircleButton(
+            modifier = Modifier.padding(
+                start = Spacing.medium,
+                top = Spacing.small,
+                end = Spacing.medium,
+                bottom = Spacing.medium,
+            ),
             text = stringResource(id = CompR.string.action_enable),
             onClick = onActionClick
         )

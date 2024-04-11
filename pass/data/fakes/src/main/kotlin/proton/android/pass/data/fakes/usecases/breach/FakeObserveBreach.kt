@@ -24,7 +24,7 @@ import proton.android.pass.data.api.usecases.breach.ObserveBreach
 import proton.android.pass.domain.breach.Breach
 import javax.inject.Inject
 
-class FakeObserveBreach @Inject constructor(): ObserveBreach {
+class FakeObserveBreach @Inject constructor() : ObserveBreach {
 
     override fun invoke(): Flow<Breach> = emptyFlow()
 

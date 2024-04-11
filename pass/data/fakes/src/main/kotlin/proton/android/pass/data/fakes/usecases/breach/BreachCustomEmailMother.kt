@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -18,13 +18,16 @@
 
 package proton.android.pass.data.fakes.usecases.breach
 
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.domain.breach.BreachCustomEmail
-import javax.inject.Inject
-import javax.inject.Singleton
+import proton.android.pass.domain.breach.BreachCustomEmailId
+import kotlin.random.Random
 
-@Singleton
-class FakeAddBreachCustomEmail @Inject constructor() : AddBreachCustomEmail {
-    override suspend fun invoke(userId: UserId?, email: String): BreachCustomEmail = BreachCustomEmailMother.random()
+object BreachCustomEmailMother {
+
+    fun random() = BreachCustomEmail(
+        email = "email${Random.nextInt()}@proton.me",
+        id = BreachCustomEmailId(id = Random.nextInt().toString()),
+        verified = Random.nextBoolean(),
+        breachCount = Random.nextInt()
+    )
 }

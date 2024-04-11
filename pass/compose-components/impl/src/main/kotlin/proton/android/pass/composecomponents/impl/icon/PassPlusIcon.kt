@@ -21,6 +21,7 @@ package proton.android.pass.composecomponents.impl.icon
 import androidx.compose.foundation.Image
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,11 +31,12 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.R
 
 @Composable
-fun PassPlusIcon(modifier: Modifier = Modifier) {
+fun PassPlusIcon(modifier: Modifier = Modifier, alignment: Alignment = Alignment.Center) {
     Image(
         modifier = modifier,
         painter = painterResource(id = R.drawable.ic_pass_plus),
-        contentDescription = null
+        contentDescription = null,
+        alignment = alignment
     )
 }
 

@@ -39,6 +39,7 @@ import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
 import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.features.security.center.R
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @[Composable Suppress("FunctionMaxLength")]
 internal fun SecurityCenterHomeNoDataBreachesWidget(modifier: Modifier = Modifier, onActionClick: () -> Unit) {
@@ -65,7 +66,7 @@ internal fun SecurityCenterHomeNoDataBreachesWidget(modifier: Modifier = Modifie
         )
 
         PassCircleButton(
-            text = stringResource(id = proton.android.pass.composecomponents.impl.R.string.action_enable),
+            text = stringResource(id = CompR.string.action_enable),
             onClick = onActionClick
         )
     }

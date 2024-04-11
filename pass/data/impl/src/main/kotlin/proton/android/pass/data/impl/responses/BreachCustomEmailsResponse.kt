@@ -22,6 +22,14 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
+data class BreachesResponse(
+    @SerialName("Code")
+    val code: Int,
+    @SerialName("Breaches")
+    val breaches: BreachesDetails
+)
+
+@Serializable
 data class BreachCustomEmailsResponse(
     @SerialName("Code")
     val code: Int,
@@ -35,6 +43,14 @@ data class BreachCustomEmailResponse(
     val code: Int,
     @SerialName("Email")
     val email: BreachCustomEmail
+)
+
+@Serializable
+data class BreachesDetails(
+    @SerialName("EmailsCount")
+    val emailsCount: Int,
+    @SerialName("CustomEmails")
+    val customEmails: List<BreachCustomEmail>
 )
 
 @Serializable

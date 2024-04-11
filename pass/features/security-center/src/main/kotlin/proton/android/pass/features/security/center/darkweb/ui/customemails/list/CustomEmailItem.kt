@@ -149,7 +149,7 @@ private fun CustomEmailItemVerified(
     status: CustomEmailUiStatus.Verified,
     onDetailClick: () -> Unit
 ) {
-    val color = if (status.breachesDetected > 0) {
+    val color = if (status.hasBreaches) {
         PassTheme.colors.noteInteractionNormMajor1
     } else {
         PassTheme.colors.cardInteractionNormMajor1

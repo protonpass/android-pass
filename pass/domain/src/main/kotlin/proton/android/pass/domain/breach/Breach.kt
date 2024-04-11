@@ -16,23 +16,9 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.home.presentation
+package proton.android.pass.domain.breach
 
-internal sealed interface SecurityCenterHomeDarkWebMonitoring {
-
-    data object FreeNoDataBreaches : SecurityCenterHomeDarkWebMonitoring
-
-    data class FreeDataBreaches(
-        internal val dataBreachedSite: String,
-        internal val dataBreachedTime: Long,
-        internal val dateBreachedEmail: String,
-        internal val dataBreachedPassword: String
-    ) : SecurityCenterHomeDarkWebMonitoring
-
-    data object PaidNoDataBreaches : SecurityCenterHomeDarkWebMonitoring
-
-    data class PaidDataBreaches(
-        internal val dataBreachesCount: Int
-    ) : SecurityCenterHomeDarkWebMonitoring
-
-}
+data class Breach(
+    val breachesCount: Int,
+    val breachedCustomEmails: List<BreachCustomEmail>
+)

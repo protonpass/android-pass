@@ -106,15 +106,16 @@ internal fun SecurityCenterCounterRow(
             isClickable = model.isClickable,
             onClick = onClick,
             trailingContent = {
-                if (model.isPaid) {
-                    PassPlusIcon()
-                }
 
                 SecurityCenterCounterText(
                     counterText = model.counterText,
                     backgroundColor = model.getCounterTextBackgroundColor(),
                     textColor = model.getCounterTextColor()
                 )
+
+                if (model.isPaid) {
+                    PassPlusIcon()
+                }
             }
         )
     }

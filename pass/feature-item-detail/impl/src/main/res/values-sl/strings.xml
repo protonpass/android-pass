@@ -87,8 +87,8 @@
     -->
   <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
   <string name="item_detail_cannot_perform_action_edit_title">Ni mogoče urejati</string>
-  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Tega elementa ne morete urejati, ker za to nimate dovolj dovoljenj.</string>
-  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Dovoljeno vam je samo urejanje predmetov v vaših najstarejših trezorjih. Če želite urediti ta element, nadgradite svoj trenutni načrt.</string>
+  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Tega predmeta ne morete urejati, ker za to nimate dovolj dovoljenj.</string>
+  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Dovoljeno vam je samo urejanje predmetov v vaših najstarejših trezorjih. Če želite urediti ta predmet, nadgradite svoj trenutni načrt.</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">Tega predmeta ne morete urejati, ker je v smetnjaku. Pred urejanjem ga premaknite iz smetnjaka.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Ni mogoče deliti</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Nimate dovolj dovoljenj za skupno rabo tega trezorja.</string>

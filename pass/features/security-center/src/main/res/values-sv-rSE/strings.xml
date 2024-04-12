@@ -19,6 +19,15 @@
 <resources>
   <!-- Home screen -->
   <string name="security_center_home_top_bar_title">Pass Monitor</string>
+  <string name="security_center_home_dark_web_monitoring_title">Dark Web Monitoring</string>
+  <string name="security_center_home_widget_breaches_title">Intrång upptäckt</string>
+  <string name="security_center_home_widget_breaches_subtitle">Dina e-postadresser läckte vid minst ett dataintrång.</string>
+  <string name="security_center_home_widget_no_breaches_subtitle">Bli aviserad om din e-post, lösenord eller annan personlig data har läckt.</string>
+  <string name="security_center_home_row_no_data_breaches_subtitle">Inga intrång upptäckta</string>
+  <string name="security_center_home_row_data_breaches_title">Dark Web Alert</string>
+  <string name="security_center_home_row_data_breaches_subtitle">Intrång upptäckta</string>
+  <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
+  <string name="security_center_home_row_sentinel_subtitle">Advanced account protection program</string>
   <string name="security_center_home_row_insecure_passwords_title">Svaga lösenord</string>
   <string name="security_center_home_row_insecure_passwords_subtitle">Skapa skarpa lösenord</string>
   <string name="security_center_home_row_reused_passwords_title">Återanvända lösenord</string>
@@ -26,6 +35,13 @@
   <string name="security_center_home_row_missing_tfa_title">Saknar tvåfaktorsautentisering</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Öka din säkerhet</string>
   <string name="security_center_home_section_password_health">Lösenordshälsa</string>
+  <string name="security_center_home_snackbar_message_disable_sentinel_error">Det uppstod ett fel vid inaktivering av Proton Sentinel-skydd. Försök igen.</string>
+  <!-- Sentinel bottom sheet -->
+  <string name="security_center_sentinel_title">Proton Sentinel</string>
+  <string name="security_center_sentinel_subtitle">Proton Sentinel är ett avancerat kontoskyddsprogram som drivs av sofistikerade AI-system och specialister som arbetar dygnet runt för att skydda dig från dåliga aktörer och säkerhetshot.</string>
+  <string name="security_center_sentinel_button_enable">Aktivera Proton Sentinel</string>
+  <string name="security_center_sentinel_snackbar_message_enable_canceled">Aktivering av Proton Sentinel-skydd har avbrutits</string>
+  <string name="security_center_sentinel_snackbar_message_enable_error">Det uppstod ett fel vid aktivering av Proton Sentinel-skydd. Försök igen.</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Svaga lösenord</string>
   <string name="security_center_weak_pass_top_bar_subtitle">Svaga lösenord är lättare att gissa. Generera starka lösenord för att hålla ditt konto säkert.</string>
@@ -36,4 +52,33 @@
   <!-- Missing 2FA -->
   <string name="security_center_missing_tfa_top_bar_title">Saknar tvåfaktorsautentisering</string>
   <string name="security_center_missing_tfa_top_bar_subtitle">Logins with sites that have two-factor authentication available but you haven\'t set it up yet.</string>
+  <!-- Dark web monitor -->
+  <string name="security_center_dark_web_monitor_top_bar_title">Dark Web Monitoring</string>
+  <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Last check: %s</string>
+  <string name="security_center_dark_web_monitor_custom_emails_title">Anpassad e-postadress</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Lägg till ny anpassad e-postadress</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_button">Lägg till</string>
+  <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
+    <item quantity="one">Used in %d login</item>
+    <item quantity="other">Used in %d logins</item>
+  </plurals>
+  <plurals name="security_center_dark_web_monitor_custom_emails_breaches_found">
+    <item quantity="one">%d intrång upptäckt</item>
+    <item quantity="other">%d intrång upptäckta</item>
+  </plurals>
+  <string name="security_center_dark_web_monitor_custom_emails_loading_error">Fel vid laddning av anpassade e-postadresser</string>
+  <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Kunde inte hämta e-postadresser</string>
+  <!-- Add custom email monitoring -->
+  <string name="security_center_custom_email_top_bar_title">Anpassad e-postövervakning</string>
+  <string name="security_center_custom_email_email_address_placeholder">E-postadress</string>
+  <string name="security_center_custom_email_invalid_address">Ogiltig e-postadress</string>
+  <string name="security_center_custom_email_continue">Fortsätt</string>
+  <string name="security_center_custom_email_already_verified">E-post redan verifierad</string>
+  <string name="security_center_custom_email_error_adding">Gick inte lägga till e-postadressen</string>
+  <!-- Verify email monitoring -->
+  <string name="security_center_verify_email_code_placeholder">Kod</string>
+  <string name="security_center_verify_email_code_error">Ogiltig kod</string>
+  <string name="security_center_verify_email_continue">Fortsätt</string>
+  <string name="security_center_verify_email_title">Bekräfta din e-post</string>
+  <string name="security_center_verify_email_subtitle">Vi har skickat en verifieringskod till %s. Ange den nedan:</string>
 </resources>

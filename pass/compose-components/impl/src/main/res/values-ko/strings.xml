@@ -26,7 +26,10 @@
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">항목을 액션 매뉴서 열기</string>
   <string name="action_upgrade_now">지금 업그레이드</string>
-  <string name="action_not_now">Not now</string>
+  <string name="action_not_now">다음에</string>
+  <string name="action_learn_more">Learn more</string>
+  <string name="action_enable">Enable</string>
+  <string name="action_view_details">View details</string>
   <!-- Empty list -->
   <string name="empty_list_title">첫 번째 항목 추가</string>
   <string name="empty_search_results_title">결과가 없습니다</string>
@@ -120,4 +123,7 @@
   <string name="dialog_upgrade_plan_message">무료 플랜 사용자는 이용할 수 없는 기능입니다. 이 외에도 다른 멋진 기능들까지 즐겨보고 싶다면 요금제를 업그레이드하고 이용해보세요!</string>
   <string name="dialog_upgrade_plan_action_confirm">업그레이드</string>
   <string name="dialog_upgrade_plan_action_cancel">다음에</string>
+  <!-- Words -->
+  <string name="email_address">이메일 주소</string>
+  <string name="password">Password</string>
 </resources>

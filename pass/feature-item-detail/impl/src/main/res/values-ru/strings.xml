@@ -102,6 +102,6 @@
   <string name="passkey_detail_bottomsheet_title">Passkey</string>
   <string name="passkey_detail_bottomsheet_username">Имя пользователя</string>
   <string name="passkey_detail_bottomsheet_domain">Домен</string>
-  <string name="passkey_detail_bottomsheet_key">Key</string>
+  <string name="passkey_detail_bottomsheet_key">Ключ</string>
   <string name="passkey_detail_bottomsheet_created">Created</string>
 </resources>

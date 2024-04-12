@@ -18,13 +18,10 @@
 
 package proton.android.pass.features.security.center.shared.ui.rows
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Switch
 import androidx.compose.material.SwitchDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import proton.android.pass.commonui.api.PassTheme
 
 @Composable
@@ -40,11 +37,9 @@ internal fun SecurityCenterToggleRow(
         title = title,
         subtitle = subtitle,
         showChevron = false,
+        onClick = onClick,
         trailingContent = {
             Switch(
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .clickable { onClick() },
                 checked = isChecked,
                 colors = SwitchDefaults.colors(
                     checkedThumbColor = PassTheme.colors.interactionNormMajor1

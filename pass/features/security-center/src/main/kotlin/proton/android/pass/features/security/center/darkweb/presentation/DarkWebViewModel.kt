@@ -93,6 +93,8 @@ internal class DarkWebViewModel @Inject constructor(
             is LoadingResult.Success -> customEmailsResult.data.map { it.toUiModel() }
         }
 
+        val (verified, unverified) = emails.partition { it.status is CustomEmailUiStatus.Verified }
+
         val suggestions = when (suggestionsResult) {
             is LoadingResult.Error -> {
                 PassLogger.w(TAG, "Failed to load custom email suggestions")
@@ -109,7 +111,7 @@ internal class DarkWebViewModel @Inject constructor(
                     .map { it.toUiModel() }
         }.take(EMAIL_SUGGESTIONS_COUNT)
 
-        val combined = (emails + suggestions).toImmutableList()
+        val combined = (verified + unverified + suggestions).toImmutableList()
         return DarkWebEmailsState.Success(combined)
     }
 

@@ -99,7 +99,6 @@ class SecurityCenterReportViewModel @Inject constructor(
         .asLoadingResult()
         .distinctUntilChanged()
 
-
     internal val state: StateFlow<SecurityCenterReportState> = combine(
         breachesForEmailFlow,
         usedInLoginItemsFlow,
@@ -107,6 +106,7 @@ class SecurityCenterReportViewModel @Inject constructor(
     ) { breachesForEmailResult, usedInLoginItemsResult, useFavIconsPreference ->
         val isBreachesLoading = breachesForEmailResult is LoadingResult.Loading
         val isUsedInLoading = usedInLoginItemsResult is LoadingResult.Loading
+        val breaches = breachesForEmailResult.getOrNull()?.breaches ?: persistentListOf()
         SecurityCenterReportState(
             breachCount = breachCount,
             usedInItems = usedInLoginItemsResult.getOrNull()
@@ -114,6 +114,7 @@ class SecurityCenterReportViewModel @Inject constructor(
                 ?: persistentListOf(),
             email = email,
             canLoadExternalImages = useFavIconsPreference.value(),
+            breaches = breaches,
             isLoading = isBreachesLoading || isUsedInLoading
         )
 

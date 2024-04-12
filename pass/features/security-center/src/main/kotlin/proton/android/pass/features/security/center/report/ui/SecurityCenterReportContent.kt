@@ -70,26 +70,51 @@ internal fun SecurityCenterReportContent(
             ReportHeader(breachCount = state.breachCount, email = state.email)
 
             if (!state.isLoading) {
-                LazyColumn {
-                    stickyHeader {
-                        Text(
-                            modifier = Modifier.padding(horizontal = Spacing.medium),
-                            text = stringResource(R.string.security_center_email_report_used_in_header),
-                            style = ProtonTheme.typography.body1Medium
-                        )
+                LazyColumn(Modifier.fillMaxWidth()) {
+
+                    if (state.breaches.isNotEmpty()) {
+                        stickyHeader {
+                            Text(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(color = PassTheme.colors.backgroundStrong)
+                                    .padding(horizontal = Spacing.medium),
+                                text = stringResource(R.string.security_center_email_report_breaches_header),
+                                style = ProtonTheme.typography.body1Medium
+                            )
+                        }
+                        items(
+                            items = state.breaches,
+                            key = { breach -> breach.id }
+                        ) { breach ->
+                            BreachRow(breach = breach)
+                        }
                     }
 
-                    items(
-                        items = state.usedInItems,
-                        key = { itemUiModel -> itemUiModel.id.id }
-                    ) { itemUiModel ->
-                        SecurityCenterLoginItemRow(
-                            itemUiModel = itemUiModel,
-                            canLoadExternalImages = state.canLoadExternalImages,
-                            onClick = {
+                    if (state.usedInItems.isNotEmpty()) {
+                        stickyHeader {
+                            Text(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(color = PassTheme.colors.backgroundStrong)
+                                    .padding(horizontal = Spacing.medium),
+                                text = stringResource(R.string.security_center_email_report_used_in_header),
+                                style = ProtonTheme.typography.body1Medium
+                            )
+                        }
 
-                            }
-                        )
+                        items(
+                            items = state.usedInItems,
+                            key = { itemUiModel -> itemUiModel.id.id }
+                        ) { itemUiModel ->
+                            SecurityCenterLoginItemRow(
+                                itemUiModel = itemUiModel,
+                                canLoadExternalImages = state.canLoadExternalImages,
+                                onClick = {
+
+                                }
+                            )
+                        }
                     }
                 }
             } else {
@@ -98,4 +123,3 @@ internal fun SecurityCenterReportContent(
         }
     }
 }
-

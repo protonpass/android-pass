@@ -30,7 +30,7 @@ interface GetPasskeyCreationData {
 
 class GetPasskeyCreationDataImpl @Inject constructor(
     private val appConfig: AppConfig
-): GetPasskeyCreationData {
+) : GetPasskeyCreationData {
     override fun invoke(): PasskeyCreationData = PasskeyCreationData(
         osName = "Android",
         osVersion = Build.VERSION.RELEASE,

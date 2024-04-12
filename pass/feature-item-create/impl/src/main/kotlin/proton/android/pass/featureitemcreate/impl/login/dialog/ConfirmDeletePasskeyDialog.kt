@@ -21,9 +21,9 @@ package proton.android.pass.featureitemcreate.impl.login.dialog
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmWithLoadingDialog
 import proton.android.pass.featureitemcreate.impl.R
-import proton.android.pass.featureitemcreate.impl.login.UIPasskeyContent
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable

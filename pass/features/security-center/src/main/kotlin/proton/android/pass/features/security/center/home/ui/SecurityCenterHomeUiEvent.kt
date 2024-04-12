@@ -40,6 +40,8 @@ internal sealed interface SecurityCenterHomeUiEvent {
 
     data object OnShowMissingSecondAuthFactors : SecurityCenterHomeUiEvent
 
+    data object OnShowExcludedItems : SecurityCenterHomeUiEvent
+
     @JvmInline
     value class OnUpsell(internal val paidFeature: PaidFeature) : SecurityCenterHomeUiEvent
 

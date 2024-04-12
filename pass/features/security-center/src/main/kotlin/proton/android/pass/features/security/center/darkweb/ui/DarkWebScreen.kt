@@ -48,7 +48,7 @@ internal fun DarkWebScreen(
                 )
 
                 is DarkWebUiEvent.OnUnverifiedEmailOptionsClick -> onNavigate(
-                    DarkWebMonitorNavDestination.VerifyEmail(
+                    DarkWebMonitorNavDestination.UnverifiedEmailOptions(
                         id = event.id,
                         email = event.email
                     )

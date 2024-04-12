@@ -85,6 +85,8 @@
     </plurals>
     <string name="security_center_dark_web_monitor_custom_emails_loading_error">Error loading custom email addresses</string>
     <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Could not get email addresses</string>
+    <string name="security_center_dark_web_monitor_custom_email_option_verify">Verify</string>
+    <string name="security_center_dark_web_monitor_custom_email_option_remove">Remove</string>
 
     <!-- Add custom email monitoring -->
     <string name="security_center_custom_email_top_bar_title">Custom email monitoring</string>

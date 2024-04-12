@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.security.center.shared.navigation
 
+import proton.android.pass.common.api.Option
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.breach.BreachCustomEmailId
@@ -56,7 +57,8 @@ sealed interface SecurityCenterNavDestination {
     @JvmInline
     value class Upsell(val paidFeature: PaidFeature) : SecurityCenterNavDestination
 
-    data object AddCustomEmail : SecurityCenterNavDestination
+    @JvmInline
+    value class AddCustomEmail(val email: Option<String>) : SecurityCenterNavDestination
 
     data class VerifyEmail(val id: BreachCustomEmailId, val email: String) : SecurityCenterNavDestination
 

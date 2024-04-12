@@ -18,8 +18,29 @@
 
 package proton.android.pass.features.security.center.customemail.navigation
 
+import androidx.navigation.NavType
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavParamEncoder
+import proton.android.pass.navigation.api.OptionalNavArgId
+import proton.android.pass.navigation.api.toPath
+
+internal object CustomEmailContentArgId : OptionalNavArgId {
+    override val key = "email"
+    override val navType = NavType.StringType
+}
 
 object SecurityCenterCustomEmailNavItem : NavItem(
-    baseRoute = "security/center/addcustomemail"
-)
+    baseRoute = "security/center/addcustomemail",
+    optionalArgIds = listOf(CustomEmailContentArgId)
+) {
+    fun buildRoute(email: Option<String>) = buildString {
+        append(baseRoute)
+
+        if (email is Some) {
+            val params = mapOf(CustomEmailContentArgId.key to NavParamEncoder.encode(email.value))
+            append(params.toPath())
+        }
+    }
+}

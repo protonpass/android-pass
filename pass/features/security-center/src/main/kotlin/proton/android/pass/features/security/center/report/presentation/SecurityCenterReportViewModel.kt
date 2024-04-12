@@ -63,8 +63,7 @@ class SecurityCenterReportViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val emailType: EmailType = savedStateHandleProvider.get()
-        .require<String>(EmailTypeArgId.key)
-        .let(EmailType::valueOf)
+        .require(EmailTypeArgId.key)
 
     private val id: BreachCustomEmailId = savedStateHandleProvider.get()
         .require<String>(BreachEmailIdArgId.key)

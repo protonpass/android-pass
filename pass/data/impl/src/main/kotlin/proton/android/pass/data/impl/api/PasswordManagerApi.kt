@@ -45,6 +45,7 @@ import proton.android.pass.data.impl.requests.UpdateVaultRequest
 import proton.android.pass.data.impl.responses.AliasDetailsResponse
 import proton.android.pass.data.impl.responses.BreachCustomEmailResponse
 import proton.android.pass.data.impl.responses.BreachCustomEmailsResponse
+import proton.android.pass.data.impl.responses.BreachesForCustomEmailResponse
 import proton.android.pass.data.impl.responses.CheckAddressesCanBeInvitedResponse
 import proton.android.pass.data.impl.responses.CodeOnlyResponse
 import proton.android.pass.data.impl.responses.CreateItemAliasResponse
@@ -326,6 +327,9 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("customEmailId") emailId: String,
         @Body request: BreachVerifyEmailRequest
     ): CodeOnlyResponse
+
+    @GET("$PREFIX/breach/custom_email/{customEmailId}/breaches")
+    suspend fun getBreachesForCustomEmail(@Path("customEmailId") emailId: String): BreachesForCustomEmailResponse
 
     // Core
     @GET("core/v4/keys/all")

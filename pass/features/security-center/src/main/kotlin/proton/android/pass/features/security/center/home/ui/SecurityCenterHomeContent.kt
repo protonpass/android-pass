@@ -142,6 +142,16 @@ internal fun SecurityCenterHomeContent(
                 ),
                 onClick = { onUiEvent(SecurityCenterHomeUiEvent.OnShowMissingSecondAuthFactors) }
             )
+
+            SecurityCenterCounterRow(
+                model = SecurityCenterCounterRowModel.Standard(
+                    title = stringResource(id = R.string.security_center_home_row_excludes_items_title),
+                    subtitle = stringResource(id = R.string.security_center_home_row_excludes_items_subtitle),
+                    count = excludedItemsCount,
+                    isPaid = false
+                ),
+                onClick = { onUiEvent(SecurityCenterHomeUiEvent.OnShowExcludedItems) }
+            )
         }
     }
 }

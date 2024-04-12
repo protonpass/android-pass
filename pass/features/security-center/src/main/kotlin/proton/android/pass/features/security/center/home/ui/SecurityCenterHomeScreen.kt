@@ -67,6 +67,10 @@ fun SecurityCenterHomeScreen(
                 is SecurityCenterHomeUiEvent.OnUpsell -> {
                     onNavigated(SecurityCenterHomeNavDestination.Upsell(uiEvent.paidFeature))
                 }
+
+                SecurityCenterHomeUiEvent.OnShowExcludedItems -> {
+                    onNavigated(SecurityCenterHomeNavDestination.ExcludedItems)
+                }
             }
         }
     )

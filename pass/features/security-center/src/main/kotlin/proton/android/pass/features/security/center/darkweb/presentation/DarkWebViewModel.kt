@@ -33,18 +33,26 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
+import proton.android.pass.data.api.usecases.breach.CustomEmailSuggestion
 import proton.android.pass.data.api.usecases.breach.ObserveBreachCustomEmails
+import proton.android.pass.data.api.usecases.breach.ObserveCustomEmailSuggestions
 import proton.android.pass.domain.breach.BreachCustomEmail
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 @HiltViewModel
 internal class DarkWebViewModel @Inject constructor(
-    observeBreachCustomEmails: ObserveBreachCustomEmails
+    observeBreachCustomEmails: ObserveBreachCustomEmails,
+    observeCustomEmailSuggestions: ObserveCustomEmailSuggestions
 ) : ViewModel() {
 
     private val customEmailsFlow: Flow<LoadingResult<List<BreachCustomEmail>>> =
         observeBreachCustomEmails()
+            .asLoadingResult()
+            .distinctUntilChanged()
+
+    private val customEmailSuggestionsFlow: Flow<LoadingResult<List<CustomEmailSuggestion>>> =
+        observeCustomEmailSuggestions()
             .asLoadingResult()
             .distinctUntilChanged()
 
@@ -54,22 +62,10 @@ internal class DarkWebViewModel @Inject constructor(
 
     val state: StateFlow<DarkWebUiState> = combine(
         customEmailsFlow,
-        darkWebStatusFlow
-    ) { customEmails, darkWebStatus ->
-        val customEmailsState = when (customEmails) {
-            is LoadingResult.Error -> {
-                PassLogger.w(TAG, "Failed to load custom emails")
-                PassLogger.w(TAG, customEmails.exception)
-                DarkWebEmailsState.Error(DarkWebEmailsError.CannotLoad)
-            }
-
-            LoadingResult.Loading -> DarkWebEmailsState.Loading
-            is LoadingResult.Success -> {
-                val mapped = customEmails.data.map { it.toUiModel() }
-                DarkWebEmailsState.Success(mapped.toImmutableList())
-            }
-        }
-
+        darkWebStatusFlow,
+        customEmailSuggestionsFlow
+    ) { customEmails, darkWebStatus, suggestions ->
+        val customEmailsState = getCustomEmailsState(customEmails, suggestions)
         DarkWebUiState(
             customEmails = customEmailsState,
             darkWebStatus = darkWebStatus.getOrNull() ?: DarkWebStatus.Loading,
@@ -81,14 +77,54 @@ internal class DarkWebViewModel @Inject constructor(
         initialValue = DarkWebUiState.Initial
     )
 
+    @Suppress("ReturnCount")
+    private fun getCustomEmailsState(
+        customEmailsResult: LoadingResult<List<BreachCustomEmail>>,
+        suggestionsResult: LoadingResult<List<CustomEmailSuggestion>>
+    ): DarkWebEmailsState {
+        val emails = when (customEmailsResult) {
+            is LoadingResult.Error -> {
+                PassLogger.w(TAG, "Failed to load custom emails")
+                PassLogger.w(TAG, customEmailsResult.exception)
+                return DarkWebEmailsState.Error(DarkWebEmailsError.CannotLoad)
+            }
+
+            LoadingResult.Loading -> return DarkWebEmailsState.Loading
+            is LoadingResult.Success -> customEmailsResult.data.map { it.toUiModel() }
+        }
+
+        val suggestions = when (suggestionsResult) {
+            is LoadingResult.Error -> {
+                PassLogger.w(TAG, "Failed to load custom email suggestions")
+                PassLogger.w(TAG, suggestionsResult.exception)
+
+                // Return the retrieved emails even if suggestions failed
+                return DarkWebEmailsState.Success(emails.toImmutableList())
+            }
+
+            LoadingResult.Loading -> return DarkWebEmailsState.Loading
+            is LoadingResult.Success ->
+                suggestionsResult.data
+                    .filter { it.usedInLoginsCount >= EMAIL_SUGGESTIONS_MIN_USED_IN_COUNT }
+                    .map { it.toUiModel() }
+        }.take(EMAIL_SUGGESTIONS_COUNT)
+
+        val combined = (emails + suggestions).toImmutableList()
+        return DarkWebEmailsState.Success(combined)
+    }
+
+    private fun CustomEmailSuggestion.toUiModel() = CustomEmailUiState(
+        email = email,
+        status = CustomEmailUiStatus.Suggestion(usedInLoginsCount)
+    )
+
     private fun BreachCustomEmail.toUiModel(): CustomEmailUiState {
         val status = if (verified) {
-            CustomEmailUiStatus.Verified(0)
+            CustomEmailUiStatus.Verified(id, breachCount)
         } else {
-            CustomEmailUiStatus.NotVerified(0)
+            CustomEmailUiStatus.Unverified(id)
         }
         return CustomEmailUiState(
-            id = id,
             email = email,
             status = status
         )
@@ -96,5 +132,8 @@ internal class DarkWebViewModel @Inject constructor(
 
     companion object {
         private const val TAG = "DarkWebViewModel"
+
+        private const val EMAIL_SUGGESTIONS_MIN_USED_IN_COUNT = 3
+        private const val EMAIL_SUGGESTIONS_COUNT = 3
     }
 }

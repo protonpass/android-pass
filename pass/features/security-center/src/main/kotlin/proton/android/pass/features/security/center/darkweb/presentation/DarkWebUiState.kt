@@ -26,17 +26,23 @@ import proton.android.pass.domain.breach.BreachCustomEmailId
 
 @Stable
 sealed interface CustomEmailUiStatus {
-    @JvmInline
-    value class NotVerified(val usedInLoginsCount: Int) : CustomEmailUiStatus
 
-    data class Verified(val breachesDetected: Int) : CustomEmailUiStatus {
+    @JvmInline
+    value class Suggestion(val usedInLoginsCount: Int) : CustomEmailUiStatus
+
+    @JvmInline
+    value class Unverified(val id: BreachCustomEmailId) : CustomEmailUiStatus
+
+    data class Verified(
+        val id: BreachCustomEmailId,
+        val breachesDetected: Int
+    ) : CustomEmailUiStatus {
         internal val hasBreaches: Boolean = breachesDetected > 0
     }
 }
 
 @Stable
 data class CustomEmailUiState(
-    val id: BreachCustomEmailId,
     val email: String,
     val status: CustomEmailUiStatus
 )

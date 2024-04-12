@@ -23,6 +23,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.some
 import proton.android.pass.features.security.center.darkweb.navigation.DarkWebMonitorNavDestination
 import proton.android.pass.features.security.center.darkweb.presentation.DarkWebViewModel
 
@@ -39,14 +41,19 @@ internal fun DarkWebScreen(
         state = state,
         onEvent = { event ->
             when (event) {
+                DarkWebUiEvent.OnUpClick -> onNavigate(DarkWebMonitorNavDestination.Back)
+
                 is DarkWebUiEvent.OnAddCustomEmailClick -> onNavigate(
+                    DarkWebMonitorNavDestination.AddEmail(event.email.some())
+                )
+
+                is DarkWebUiEvent.OnUnverifiedEmailOptionsClick -> onNavigate(
                     DarkWebMonitorNavDestination.VerifyEmail(
-                        event.id,
-                        event.email
+                        id = event.id,
+                        email = event.email
                     )
                 )
 
-                DarkWebUiEvent.OnUpClick -> onNavigate(DarkWebMonitorNavDestination.Back)
                 is DarkWebUiEvent.OnCustomEmailReportClick ->
                     onNavigate(
                         DarkWebMonitorNavDestination.CustomEmailReport(
@@ -56,7 +63,9 @@ internal fun DarkWebScreen(
                         )
                     )
 
-                DarkWebUiEvent.OnNewCustomEmailClick -> onNavigate(DarkWebMonitorNavDestination.AddEmail)
+                DarkWebUiEvent.OnNewCustomEmailClick -> onNavigate(
+                    DarkWebMonitorNavDestination.AddEmail(None)
+                )
             }
         }
     )

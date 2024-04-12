@@ -50,11 +50,11 @@ data class Breach(
     @SerialName("Source")
     val source: Source,
     @SerialName("Size")
-    val size: Long,
+    val size: Long?,
     @SerialName("ExposedData")
     val exposedData: List<DataExposed>,
     @SerialName("PasswordLastChars")
-    val passwordLastChars: String,
+    val passwordLastChars: String?,
     @SerialName("Actions")
     val actions: List<Action>
 )
@@ -64,11 +64,11 @@ data class Source(
     @SerialName("IsAggregated")
     val isAggregated: Boolean,
     @SerialName("Domain")
-    val domain: String,
+    val domain: String?,
     @SerialName("Category")
-    val category: Category,
+    val category: Category?,
     @SerialName("Country")
-    val country: Country
+    val country: Country?
 )
 
 @Serializable
@@ -106,7 +106,7 @@ data class Action(
     @SerialName("Desc")
     val desc: String,
     @SerialName("Urls")
-    val urls: List<String>
+    val urls: List<String>?
 )
 
 @Serializable

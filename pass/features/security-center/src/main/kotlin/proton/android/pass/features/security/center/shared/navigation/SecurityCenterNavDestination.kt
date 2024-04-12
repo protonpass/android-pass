@@ -62,6 +62,11 @@ sealed interface SecurityCenterNavDestination {
 
     data class VerifyEmail(val id: BreachCustomEmailId, val email: String) : SecurityCenterNavDestination
 
+    data class UnverifiedEmailOptions(
+        val id: BreachCustomEmailId,
+        val email: String
+    ) : SecurityCenterNavDestination
+
     data object EmailVerified : SecurityCenterNavDestination
 
     data class Report(

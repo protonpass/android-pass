@@ -163,7 +163,7 @@ fun PasskeyDetailBottomSheetContentPreview(@PreviewParameter(ThemePreviewProvide
                     creationData = PasskeyCreationData(
                         osName = "Android",
                         osVersion = "14",
-                        appVersion = "android-pass@1.2.3",
+                        appVersion = "1.2.3",
                         deviceName = "Pixel 6"
                     )
                 ),

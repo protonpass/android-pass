@@ -34,7 +34,9 @@ import kotlinx.coroutines.launch
 import proton.android.pass.common.api.CommonRegex
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
+import proton.android.pass.features.security.center.customemail.navigation.CustomEmailContentArgId
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.navigation.api.NavParamEncoder
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
@@ -42,12 +44,12 @@ import javax.inject.Inject
 class SecurityCenterCustomEmailViewModel @Inject constructor(
     private val addBreachCustomEmail: AddBreachCustomEmail,
     private val snackbarDispatcher: SnackbarDispatcher,
-    savedStateHandleProvider: SavedStateHandleProvider
+    private val savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
     @OptIn(SavedStateHandleSaveableApi::class)
     var emailAddress: String by savedStateHandleProvider.get()
-        .saveable { mutableStateOf("") }
+        .saveable { mutableStateOf(getInitialEmailState()) }
 
     private val isLoadingStateFlow = MutableStateFlow(false)
     private val emailNotValidStateFlow = MutableStateFlow(false)
@@ -102,6 +104,13 @@ class SecurityCenterCustomEmailViewModel @Inject constructor(
 
     internal fun onEventConsumed(event: SecurityCenterCustomEmailEvent) {
         eventFlow.compareAndSet(event, SecurityCenterCustomEmailEvent.Idle)
+    }
+
+    private fun getInitialEmailState(): String {
+        val provider = savedStateHandleProvider.get()
+        return provider.get<String>(CustomEmailContentArgId.key) ?.let { email ->
+            NavParamEncoder.decode(email)
+        } ?: ""
     }
 
     companion object {

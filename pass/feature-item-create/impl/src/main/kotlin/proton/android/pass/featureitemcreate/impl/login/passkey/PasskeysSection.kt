@@ -24,8 +24,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.featureitemcreate.impl.login.LoginContentEvent
-import proton.android.pass.featureitemcreate.impl.login.UIPasskeyContent
 
 @Composable
 fun PasskeysSection(

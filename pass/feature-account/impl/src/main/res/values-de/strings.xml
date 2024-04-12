@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="account_title">Konto</string>
-  <string name="account_recovery_title">Account and Recovery</string>
+  <string name="account_recovery_title">Kontowiederherstellung</string>
   <string name="account_username_label">Benutzername</string>
   <string name="account_subscription_label">Abonnement</string>
   <string name="account_permanently_delete_warning">Dadurch wird dein Konto und alle zugehörigen Daten dauerhaft gelöscht. Dieses Konto kann dann nicht mehr reaktiviert werden.</string>

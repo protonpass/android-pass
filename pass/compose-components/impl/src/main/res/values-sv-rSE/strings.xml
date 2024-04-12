@@ -28,6 +28,9 @@
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Öppna åtgärdsmeny för objekt</string>
   <string name="action_upgrade_now">Uppgradera nu</string>
   <string name="action_not_now">Inte nu</string>
+  <string name="action_learn_more">Lär dig mer</string>
+  <string name="action_enable">Aktivera</string>
+  <string name="action_view_details">Visa detaljer</string>
   <!-- Empty list -->
   <string name="empty_list_title">Lägg till ditt första objekt</string>
   <string name="empty_search_results_title">Inga resultat hittades</string>
@@ -122,4 +125,7 @@
   <string name="dialog_upgrade_plan_message">Denna funktion är inte tillgänglig för gratisnivåanvändare. Om du vill njuta av detta tillsammans med andra coola funktioner, uppgradera ditt paket och prova!</string>
   <string name="dialog_upgrade_plan_action_confirm">Uppgradera</string>
   <string name="dialog_upgrade_plan_action_cancel">Inte nu</string>
+  <!-- Words -->
+  <string name="email_address">E-postadress</string>
+  <string name="password">Lösenord</string>
 </resources>

@@ -49,10 +49,6 @@ fun SecurityCenterSentinelBottomSheet(
                 BrowserUtils.openWebsite(context, SENTINEL_LEARN_MORE_LINK)
             }
 
-            SecurityCenterSentinelEvent.OnUpsell -> {
-                onNavigated(SecurityCenterSentinelDestination.Upsell)
-            }
-
             SecurityCenterSentinelEvent.OnSentinelEnableError,
             SecurityCenterSentinelEvent.OnSentinelEnableSuccess -> {
                 onNavigated(SecurityCenterSentinelDestination.Dismiss)

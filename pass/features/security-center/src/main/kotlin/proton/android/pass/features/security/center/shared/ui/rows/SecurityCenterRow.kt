@@ -52,8 +52,8 @@ internal fun SecurityCenterRow(
     modifier: Modifier = Modifier,
     title: String,
     subtitle: String,
-    isClickable: Boolean,
-    leadingContent: @Composable (() -> Unit)? = null,
+    showChevron: Boolean,
+    leadingContent: @Composable (RowScope.() -> Unit)? = null,
     trailingContent: @Composable (RowScope.() -> Unit)? = null,
     onClick: (() -> Unit)? = null,
     accentBackgroundColor: Color? = null,
@@ -73,7 +73,7 @@ internal fun SecurityCenterRow(
             modifier = Modifier
                 .fillMaxWidth()
                 .applyIf(
-                    condition = isClickable && onClick != null,
+                    condition = onClick != null,
                     ifTrue = { clickable(onClick = onClick!!) }
                 )
                 .padding(all = Spacing.medium),
@@ -81,7 +81,7 @@ internal fun SecurityCenterRow(
             horizontalArrangement = Arrangement.spacedBy(Spacing.small)
         ) {
 
-            leadingContent?.invoke()
+            leadingContent?.let { it() }
 
             Column(
                 modifier = Modifier
@@ -103,7 +103,7 @@ internal fun SecurityCenterRow(
 
             trailingContent?.let { it() }
 
-            if (isClickable) {
+            if (showChevron) {
                 Icon(
                     painter = painterResource(R.drawable.ic_chevron_tiny_right),
                     contentDescription = null,
@@ -121,7 +121,7 @@ fun SecurityCenterRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDa
             SecurityCenterRow(
                 title = "Security center row counter title",
                 subtitle = "Security center row counter subtitle",
-                isClickable = false
+                showChevron = false
             )
         }
     }

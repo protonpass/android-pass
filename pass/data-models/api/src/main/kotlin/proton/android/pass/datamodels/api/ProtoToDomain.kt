@@ -24,11 +24,13 @@ import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.CustomField
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.Passkey
+import proton.android.pass.domain.PasskeyCreationData
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.domain.entity.AppName
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.entity.PackageName
 import proton_pass_item_v1.ItemV1
+import proton_pass_item_v1.creationDataOrNull
 
 fun ItemType.Companion.fromParsed(
     context: EncryptionContext,
@@ -60,7 +62,15 @@ fun ItemType.Companion.fromParsed(
                     note = it.note,
                     createTime = Instant.fromEpochSeconds(it.createTime.toLong()),
                     credentialId = it.credentialId.toByteArray(),
-                    userHandle = it.userHandle.toByteArray()
+                    userHandle = it.userHandle.toByteArray(),
+                    creationData = it.creationDataOrNull?.let { creationData ->
+                        PasskeyCreationData(
+                            osName = creationData.osName,
+                            osVersion = creationData.osVersion,
+                            deviceName = creationData.deviceName,
+                            appVersion = creationData.appVersion
+                        )
+                    }
                 )
             }
         )

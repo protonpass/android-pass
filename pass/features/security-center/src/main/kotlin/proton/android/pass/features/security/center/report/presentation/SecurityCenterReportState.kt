@@ -22,12 +22,14 @@ import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.domain.breach.Breach
 
 @Stable
 internal data class SecurityCenterReportState(
     val email: String,
     val breachCount: Int,
     val canLoadExternalImages: Boolean,
+    val breaches: List<Breach>,
     val usedInItems: ImmutableList<ItemUiModel>,
     val isLoading: Boolean
 ) {
@@ -37,6 +39,7 @@ internal data class SecurityCenterReportState(
             email = email,
             breachCount = breaches,
             canLoadExternalImages = false,
+            breaches = persistentListOf(),
             usedInItems = persistentListOf(),
             isLoading = true
         )

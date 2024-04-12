@@ -1,0 +1,149 @@
+/*
+ * Copyright (c) 2024 Proton AG
+ * This file is part of Proton AG and Proton Pass.
+ *
+ * Proton Pass is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Proton Pass is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+package proton.android.pass.features.security.center.report.ui
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import androidx.compose.ui.unit.dp
+import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultNorm
+import me.proton.core.compose.theme.defaultSmallWeak
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.domain.breach.Breach
+import proton.android.pass.domain.breach.Category
+import proton.android.pass.domain.breach.Country
+import proton.android.pass.domain.breach.Source
+import proton.android.pass.features.security.center.R
+import java.time.format.DateTimeFormatter
+import java.util.Locale
+import kotlin.random.Random
+
+private const val SEVERITY_THRESHOLD = 0.5
+
+@Composable
+fun BreachRow(modifier: Modifier = Modifier, breach: Breach) {
+    Row(
+        modifier = modifier.padding(horizontal = Spacing.medium, vertical = Spacing.small),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
+    ) {
+        when {
+            breach.severity > SEVERITY_THRESHOLD -> Image(
+                painter = painterResource(id = R.drawable.shield_bolt_neutral_big_red),
+                contentDescription = null,
+                modifier = Modifier.size(40.dp),
+                alignment = Alignment.CenterStart
+            )
+
+            else -> Image(
+                painter = painterResource(id = R.drawable.shield_bolt_neutral_big_yellow),
+                contentDescription = null,
+                modifier = Modifier.size(40.dp),
+                alignment = Alignment.CenterStart
+            )
+        }
+        Column(verticalArrangement = Arrangement.Center) {
+            Text(
+                text = breach.name,
+                style = ProtonTheme.typography.defaultNorm,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1
+            )
+            val formattedDate = runCatching {
+                val date = DateTimeFormatter.ISO_DATE_TIME.parse(breach.publishedAt)
+                val dateFormat = DateTimeFormatter.ofPattern("MMM dd, yyyy", Locale.getDefault())
+                dateFormat.format(date)
+            }.getOrNull()
+            formattedDate?.let {
+                Text(
+                    text = it,
+                    style = ProtonTheme.typography.defaultSmallWeak,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1
+                )
+            }
+        }
+    }
+}
+
+class BreachRowPreviewProvider : PreviewParameterProvider<Breach> {
+
+    override val values: Sequence<Breach>
+        get() = sequenceOf(
+            createBreach("breach 1", 0.1, "2022-11-02T00:00:00+00:00"),
+            createBreach("breach 2", 0.7, "")
+        )
+
+    private fun createBreach(
+        name: String,
+        severity: Double,
+        publishedAt: String
+    ) = Breach(
+        id = Random.nextInt().toString(),
+        email = "",
+        severity = severity,
+        name = name,
+        createdAt = "",
+        publishedAt = publishedAt,
+        source = Source(
+            isAggregated = false,
+            domain = "",
+            category = Category(code = "", name = ""),
+            country = Country(
+                code = "", name = "", flagEmoji = ""
+            )
+        ),
+        size = 0,
+        exposedData = listOf(),
+        passwordLastChars = "",
+        actions = listOf()
+    )
+}
+
+class ThemedBreachRowPreviewProvider : ThemePairPreviewProvider<Breach>(
+    provider = BreachRowPreviewProvider()
+)
+
+@Preview
+@Composable
+fun BreachRowPreview(@PreviewParameter(ThemedBreachRowPreviewProvider::class) input: Pair<Boolean, Breach>) {
+    PassTheme(isDark = input.first) {
+        Surface {
+            BreachRow(
+                breach = input.second
+            )
+        }
+    }
+}

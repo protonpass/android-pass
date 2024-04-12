@@ -106,5 +106,6 @@
 
     <!-- Email breach report -->
     <string name="security_center_email_report_used_in_header">Used in</string>
+    <string name="security_center_email_report_breaches_header">Breaches</string>
 
 </resources>

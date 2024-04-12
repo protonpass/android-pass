@@ -25,26 +25,21 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.data.fakes.repositories.FakeSentinelRepository
-import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.securitycenter.fakes.sentinel.FakeEnableSentinel
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.domain.plans.PlanMother
-import proton.android.pass.test.domain.plans.PlanTypeMother
 
 internal class SecurityCenterSentinelViewModelTest {
 
     @get:Rule
     internal val dispatcherRule = MainDispatcherRule()
 
-    private lateinit var getUserPlan: TestGetUserPlan
     private lateinit var sentinelRepository: FakeSentinelRepository
     private lateinit var enableSentinel: FakeEnableSentinel
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
 
     @Before
     internal fun setUp() {
-        getUserPlan = TestGetUserPlan()
         sentinelRepository = FakeSentinelRepository()
         enableSentinel = FakeEnableSentinel(sentinelRepository)
         snackbarDispatcher = TestSnackbarDispatcher()
@@ -77,14 +72,10 @@ internal class SecurityCenterSentinelViewModelTest {
     }
 
     @Test
-    internal fun `GIVEN free plan user WHEN enabling sentinel THEN OnUpsell event should be emitted`() = runTest {
+    internal fun `WHEN enabling sentinel THEN OnSentinelEnableSuccess event should be emitted`() = runTest {
         val expectedState = SecurityCenterSentinelStateMother.create(
-            event = SecurityCenterSentinelEvent.OnUpsell
+            event = SecurityCenterSentinelEvent.OnSentinelEnableSuccess
         )
-        val freePlan = PlanMother.create(
-            planType = PlanTypeMother.Free.create()
-        )
-        getUserPlan.setResult(Result.success(freePlan))
 
         createViewModel().let { viewModel ->
             viewModel.onEnableSentinel()
@@ -95,28 +86,7 @@ internal class SecurityCenterSentinelViewModelTest {
         }
     }
 
-    @Test
-    internal fun `GIVEN paid plan user WHEN enabling sentinel THEN OnSentinelEnableSuccess event should be emitted`() =
-        runTest {
-            val expectedState = SecurityCenterSentinelStateMother.create(
-                event = SecurityCenterSentinelEvent.OnSentinelEnableSuccess
-            )
-            val paidPlan = PlanMother.create(
-                planType = PlanTypeMother.Paid.random()
-            )
-            getUserPlan.setResult(Result.success(paidPlan))
-
-            createViewModel().let { viewModel ->
-                viewModel.onEnableSentinel()
-
-                viewModel.state.test {
-                    assertThat(awaitItem()).isEqualTo(expectedState)
-                }
-            }
-        }
-
     private fun createViewModel() = SecurityCenterSentinelViewModel(
-        getUserPlan = getUserPlan,
         enableSentinel = enableSentinel,
         snackbarDispatcher = snackbarDispatcher
     )

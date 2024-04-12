@@ -33,13 +33,16 @@ import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.bottombar.PassHomeBottomBar
+import proton.android.pass.composecomponents.impl.icon.PassPlusIcon
 import proton.android.pass.composecomponents.impl.item.SectionTitle
+import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavDestination
 import proton.android.pass.features.security.center.home.presentation.SecurityCenterHomeState
 import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBar
 import proton.android.pass.features.security.center.shared.ui.rows.SecurityCenterCounterRow
 import proton.android.pass.features.security.center.shared.ui.rows.SecurityCenterCounterRowModel
+import proton.android.pass.features.security.center.shared.ui.rows.SecurityCenterRow
 import proton.android.pass.features.security.center.shared.ui.rows.SecurityCenterToggleRow
 
 @Composable
@@ -86,18 +89,29 @@ internal fun SecurityCenterHomeContent(
                 onUiEvent = onUiEvent
             )
 
-            SecurityCenterToggleRow(
-                title = stringResource(id = R.string.security_center_home_row_sentinel_title),
-                subtitle = stringResource(id = R.string.security_center_home_row_sentinel_subtitle),
-                isChecked = isSentinelEnabled,
-                onClick = {
-                    if (isSentinelEnabled) {
-                        SecurityCenterHomeUiEvent.OnDisableSentinel
-                    } else {
-                        SecurityCenterHomeUiEvent.OnShowSentinelBottomSheet
-                    }.also(onUiEvent)
-                }
-            )
+            if (isFreeUser) {
+                SecurityCenterRow(
+                    title = stringResource(id = R.string.security_center_home_row_sentinel_title),
+                    subtitle = stringResource(id = R.string.security_center_home_row_sentinel_subtitle),
+                    accentBackgroundColor = PassTheme.colors.interactionNormMinor2,
+                    showChevron = false,
+                    trailingContent = { PassPlusIcon() },
+                    onClick = { onUiEvent(SecurityCenterHomeUiEvent.OnUpsell(PaidFeature.Sentinel)) }
+                )
+            } else {
+                SecurityCenterToggleRow(
+                    title = stringResource(id = R.string.security_center_home_row_sentinel_title),
+                    subtitle = stringResource(id = R.string.security_center_home_row_sentinel_subtitle),
+                    isChecked = isSentinelEnabled,
+                    onClick = {
+                        if (isSentinelEnabled) {
+                            SecurityCenterHomeUiEvent.OnDisableSentinel
+                        } else {
+                            SecurityCenterHomeUiEvent.OnShowSentinelBottomSheet
+                        }.also(onUiEvent)
+                    }
+                )
+            }
 
             SectionTitle(text = stringResource(id = R.string.security_center_home_section_password_health))
 
@@ -124,7 +138,7 @@ internal fun SecurityCenterHomeContent(
                     title = stringResource(id = R.string.security_center_home_row_missing_tfa_title),
                     subtitle = stringResource(id = R.string.security_center_home_row_missing_tfa_subtitle),
                     count = missing2faCount,
-                    isPaid = isMissing2faPaidFeature
+                    isFreeUser = isFreeUser
                 ),
                 onClick = { onUiEvent(SecurityCenterHomeUiEvent.OnShowMissingSecondAuthFactors) }
             )

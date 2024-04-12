@@ -75,4 +75,7 @@ sealed interface SecurityCenterNavDestination {
         val email: String,
         val breachCount: Int
     ) : SecurityCenterNavDestination
+
+    data object ExcludedItems : SecurityCenterNavDestination
+
 }

@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.mapLatest
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.CommonRegex.EMAIL_VALIDATION_REGEX
 import proton.android.pass.data.api.usecases.ItemTypeFilter
@@ -54,30 +53,26 @@ class ObserveCustomEmailSuggestionsImpl @Inject constructor(
                 filter = ItemTypeFilter.Aliases,
                 itemState = null
             )
-            combine(itemsFlow, aliasesFlow, ::Items)
-        }
-        .mapLatest { items ->
-            val aliases = items.aliases
-                .mapNotNull { it.itemType as? ItemType.Alias }
-                .map { it.aliasEmail }
-                .toSet()
-
-            val loginUsernames = items.logins
-                .mapNotNull { it.itemType as? ItemType.Login }
-                .map { it.username }
-                .filter { username ->
-                    !aliases.contains(username) && EMAIL_VALIDATION_REGEX.matches(username)
-                }
-
-            val loginUsernamesCount = loginUsernames.groupingBy { it }.eachCount()
-
-            loginUsernamesCount
-                .map { (email, count) -> CustomEmailSuggestion(email, count) }
-                .sortedByDescending { it.usedInLoginsCount }
+            combine(itemsFlow, aliasesFlow) { logins, aliases -> combineItems(logins, aliases) }
         }
 
-    private data class Items(
-        val logins: List<Item>,
-        val aliases: List<Item>
-    )
+    private fun combineItems(loginItems: List<Item>, aliasItems: List<Item>): List<CustomEmailSuggestion> {
+        val aliases = aliasItems
+            .mapNotNull { it.itemType as? ItemType.Alias }
+            .map { it.aliasEmail }
+            .toSet()
+
+        val loginUsernames = loginItems
+            .mapNotNull { it.itemType as? ItemType.Login }
+            .map { it.username }
+            .filter { username ->
+                !aliases.contains(username) && EMAIL_VALIDATION_REGEX.matches(username)
+            }
+
+        val loginUsernamesCount = loginUsernames.groupingBy { it }.eachCount()
+
+        return loginUsernamesCount
+            .map { (email, count) -> CustomEmailSuggestion(email, count) }
+            .sortedByDescending { it.usedInLoginsCount }
+    }
 }

@@ -16,33 +16,35 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.repositories
+package proton.android.pass.data.impl.usecases.breach
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.repositories.BreachRepository
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAlias
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.breach.BreachCustomEmail
-import proton.android.pass.domain.breach.BreachCustomEmailId
 import proton.android.pass.domain.breach.Breaches
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface BreachRepository {
-
-    fun observeCustomEmails(userId: UserId): Flow<List<BreachCustomEmail>>
-
-    suspend fun addCustomEmail(userId: UserId, email: String): BreachCustomEmail
-
-    suspend fun verifyCustomEmail(
-        userId: UserId,
-        emailId: BreachCustomEmailId,
-        code: String
-    )
-
-    fun observeBreachesForCustomEmail(userId: UserId, id: BreachCustomEmailId): Flow<Breaches>
-
-    fun observeBreachesForAlias(
-        userId: UserId,
+@Singleton
+class ObserveBreachesForAliasImpl @Inject constructor(
+    private val breachRepository: BreachRepository,
+    private val observeCurrentUser: ObserveCurrentUser
+) : ObserveBreachesForAlias {
+    override fun invoke(
+        userId: UserId?,
         shareId: ShareId,
         itemId: ItemId
-    ): Flow<Breaches>
+    ): Flow<Breaches> = if (userId == null) {
+        observeCurrentUser()
+            .flatMapLatest { user ->
+                breachRepository.observeBreachesForAlias(user.userId, shareId, itemId)
+            }
+    } else {
+        breachRepository.observeBreachesForAlias(userId, shareId, itemId)
+    }
 }

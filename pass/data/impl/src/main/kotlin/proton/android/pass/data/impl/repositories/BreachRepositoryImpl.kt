@@ -30,9 +30,11 @@ import kotlinx.coroutines.flow.update
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.BreachRepository
 import proton.android.pass.data.impl.remote.RemoteBreachDataSource
-import proton.android.pass.domain.breach.Breaches
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.breach.BreachCustomEmail
 import proton.android.pass.domain.breach.BreachCustomEmailId
+import proton.android.pass.domain.breach.Breaches
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -70,6 +72,15 @@ class BreachRepositoryImpl @Inject constructor(
 
     override fun observeBreachesForCustomEmail(userId: UserId, id: BreachCustomEmailId): Flow<Breaches> = flow {
         val breaches = remote.getBreachesForCustomEmail(userId, id).breaches
+        emit(breaches)
+    }
+
+    override fun observeBreachesForAlias(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): Flow<Breaches> = flow {
+        val breaches = remote.getBreachesForAlias(userId, shareId, itemId).breaches
         emit(breaches)
     }
 

@@ -27,7 +27,10 @@
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Actiemenu item openen</string>
   <string name="action_upgrade_now">Nu upgraden</string>
-  <string name="action_not_now">Not now</string>
+  <string name="action_not_now">Niet nu</string>
+  <string name="action_learn_more">Learn more</string>
+  <string name="action_enable">Enable</string>
+  <string name="action_view_details">View details</string>
   <!-- Empty list -->
   <string name="empty_list_title">Voeg uw eerste item toe</string>
   <string name="empty_search_results_title">Geen resultaten gevonden</string>
@@ -122,4 +125,7 @@
   <string name="dialog_upgrade_plan_message">Deze functie is niet beschikbaar voor gebruikers van de gratis versie. Upgrade uw abonnement wanneer u hiervan gebruik van wilt maken, samen met andere handige functies.</string>
   <string name="dialog_upgrade_plan_action_confirm">Upgrade</string>
   <string name="dialog_upgrade_plan_action_cancel">Niet nu</string>
+  <!-- Words -->
+  <string name="email_address">E-mailadres</string>
+  <string name="password">Password</string>
 </resources>

@@ -22,7 +22,7 @@
   <string name="sharing_can_edit">Urejevalnik</string>
   <string name="sharing_can_manage">Administrator</string>
   <string name="sharing_can_view_description">Lahko si ogleda predmete v tem trezorju.</string>
-  <string name="sharing_can_edit_description">Lahko ustvarja, ureja, briše in izvaža elemente v tem trezorju.</string>
+  <string name="sharing_can_edit_description">Lahko ustvarja, ureja, briše in izvaža predmete v tem trezorju.</string>
   <string name="sharing_can_manage_description">Lahko odobri in prekliče dostop do tega trezorja.</string>
   <plurals name="sharing_item_count">
     <item quantity="one">%d predmet</item>

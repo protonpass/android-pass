@@ -19,13 +19,29 @@
 <resources>
   <!-- Home screen -->
   <string name="security_center_home_top_bar_title">Monitoring Proton Pass</string>
+  <string name="security_center_home_dark_web_monitoring_title">Monitoring dark web</string>
+  <string name="security_center_home_widget_breaches_title">Wykryto wyciek</string>
+  <string name="security_center_home_widget_breaches_subtitle">Twoje adresy e-mail zostały ujawnione w co najmniej jednym wycieku danych.</string>
+  <string name="security_center_home_widget_no_breaches_subtitle">Otrzymaj powiadomienie o wycieku swojego adresu e-mail, hasła i innych danych osobowych.</string>
+  <string name="security_center_home_row_no_data_breaches_subtitle">Brak wykrytych wycieków</string>
+  <string name="security_center_home_row_data_breaches_title">Dark Web Alert</string>
+  <string name="security_center_home_row_data_breaches_subtitle">Wykryto wycieki</string>
+  <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
+  <string name="security_center_home_row_sentinel_subtitle">Zaawansowany program ochrony konta</string>
   <string name="security_center_home_row_insecure_passwords_title">Słabe hasła</string>
   <string name="security_center_home_row_insecure_passwords_subtitle">Utwórz silne hasła</string>
   <string name="security_center_home_row_reused_passwords_title">Identyczne hasła</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Utwórz unikalne hasła</string>
   <string name="security_center_home_row_missing_tfa_title">Brak uwierzytelniania dwustopniowego</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Zwiększ swoje bezpieczeństwo</string>
-  <string name="security_center_home_section_password_health">Siła hasła</string>
+  <string name="security_center_home_section_password_health">Jakość hasła</string>
+  <string name="security_center_home_snackbar_message_disable_sentinel_error">Wystąpił błąd podczas wyłączania ochrony Proton Sentinel. Spróbuj ponownie.</string>
+  <!-- Sentinel bottom sheet -->
+  <string name="security_center_sentinel_title">Proton Sentinel</string>
+  <string name="security_center_sentinel_subtitle">Proton Sentinel to zaawansowany program ochrony konta wspierany przez systemy sztucznej inteligencji i specjalistów pracujących całą dobę, w celu łagodzenia ataków i zagrożeń bezpieczeństwa.</string>
+  <string name="security_center_sentinel_button_enable">Włącz Proton Sentinel</string>
+  <string name="security_center_sentinel_snackbar_message_enable_canceled">Aktywacja ochrony Proton Sentinel została anulowana</string>
+  <string name="security_center_sentinel_snackbar_message_enable_error">Wystąpił błąd podczas włączania ochrony Proton Sentinel. Spróbuj ponownie.</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Słabe hasła</string>
   <string name="security_center_weak_pass_top_bar_subtitle">Słabe hasła są łatwiejsze do odgadnięcia. Generuj silne hasła, aby zapewnić bezpieczeństwo swoim kontom.</string>
@@ -36,4 +52,37 @@
   <!-- Missing 2FA -->
   <string name="security_center_missing_tfa_top_bar_title">Brak uwierzytelniania dwustopniowego</string>
   <string name="security_center_missing_tfa_top_bar_subtitle">Dane logowania na stronach z dostępnym uwierzytelnianiem dwustopniowym, które nie zostało jeszcze skonfigurowane.</string>
+  <!-- Dark web monitor -->
+  <string name="security_center_dark_web_monitor_top_bar_title">Monitoring dark web</string>
+  <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Sprawdzone: %s</string>
+  <string name="security_center_dark_web_monitor_custom_emails_title">Niestandardowy adres e-mail</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Dodaj nowy niestandardowy adres e-mail</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_button">Dodaj</string>
+  <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
+    <item quantity="one">Used in %d login</item>
+    <item quantity="few">Used in %d logins</item>
+    <item quantity="many">Used in %d logins</item>
+    <item quantity="other">Used in %d logins</item>
+  </plurals>
+  <plurals name="security_center_dark_web_monitor_custom_emails_breaches_found">
+    <item quantity="one">%d breach detected</item>
+    <item quantity="few">%d breaches detected</item>
+    <item quantity="many">%d breaches detected</item>
+    <item quantity="other">%d breaches detected</item>
+  </plurals>
+  <string name="security_center_dark_web_monitor_custom_emails_loading_error">Wystąpił błąd podczas ładowania niestandardowych adresów e-mail</string>
+  <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Nie można pobrać adresów e-mail</string>
+  <!-- Add custom email monitoring -->
+  <string name="security_center_custom_email_top_bar_title">Monitoring niestandardowego adresu e-mail</string>
+  <string name="security_center_custom_email_email_address_placeholder">Adres e-mail</string>
+  <string name="security_center_custom_email_invalid_address">Adres e-mail jest nieprawidłowy</string>
+  <string name="security_center_custom_email_continue">Kontynuuj</string>
+  <string name="security_center_custom_email_already_verified">Adres został już zweryfikowany</string>
+  <string name="security_center_custom_email_error_adding">Wystąpił błąd podczas dodawania niestandardowego adresu e-mail</string>
+  <!-- Verify email monitoring -->
+  <string name="security_center_verify_email_code_placeholder">Kod</string>
+  <string name="security_center_verify_email_code_error">Kod jest nieprawidłowy</string>
+  <string name="security_center_verify_email_continue">Kontynuuj</string>
+  <string name="security_center_verify_email_title">Potwierdź adres</string>
+  <string name="security_center_verify_email_subtitle">Wyślemy kod weryfikacyjny do %s. Wpisz go poniżej:</string>
 </resources>

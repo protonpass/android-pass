@@ -28,7 +28,10 @@
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Meniu acțiune deschidere articol</string>
   <string name="action_upgrade_now">Modificare</string>
-  <string name="action_not_now">Not now</string>
+  <string name="action_not_now">Nu acum</string>
+  <string name="action_learn_more">Learn more</string>
+  <string name="action_enable">Enable</string>
+  <string name="action_view_details">View details</string>
   <!-- Empty list -->
   <string name="empty_list_title">Adăugați primul articol</string>
   <string name="empty_search_results_title">Nu s-au găsit rezultate</string>
@@ -124,4 +127,7 @@
   <string name="dialog_upgrade_plan_message">Această funcție nu este disponibilă pentru utilizatorii de nivel gratuit. Dacă doriți să vă bucurați de acest lucru împreună cu alte funcții interesante, modificați-vă planul și încercați-l!</string>
   <string name="dialog_upgrade_plan_action_confirm">Modificare</string>
   <string name="dialog_upgrade_plan_action_cancel">Nu acum</string>
+  <!-- Words -->
+  <string name="email_address">Adresa de e-mail</string>
+  <string name="password">Password</string>
 </resources>

@@ -19,6 +19,15 @@
 <resources>
   <!-- Home screen -->
   <string name="security_center_home_top_bar_title">Pass Monitor</string>
+  <string name="security_center_home_dark_web_monitoring_title">Dark Web Monitoring</string>
+  <string name="security_center_home_widget_breaches_title">Выяўлена ўцечка</string>
+  <string name="security_center_home_widget_breaches_subtitle">Ваш адрас электроннай пошты выяўлены прынамсі ў 1 уцечцы даных.</string>
+  <string name="security_center_home_widget_no_breaches_subtitle">Атрымаць апавяшчэнне, калі адбылася ўцечка вашай электроннай пошты, пароля або іншых асабістых даных.</string>
+  <string name="security_center_home_row_no_data_breaches_subtitle">Уцечкі не выяўлены</string>
+  <string name="security_center_home_row_data_breaches_title">Папярэджанні цёмнай сеткі</string>
+  <string name="security_center_home_row_data_breaches_subtitle">Выяўлены парушэнні</string>
+  <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
+  <string name="security_center_home_row_sentinel_subtitle">Дадатковая праграма абароны ўліковага запісу</string>
   <string name="security_center_home_row_insecure_passwords_title">Ненадзейны пароль</string>
   <string name="security_center_home_row_insecure_passwords_subtitle">Стварыць надзейныя паролі</string>
   <string name="security_center_home_row_reused_passwords_title">Паўторна выкарыстаныя паролі</string>
@@ -26,6 +35,13 @@
   <string name="security_center_home_row_missing_tfa_title">Адсутнічае двухфактарная аўтэнтыфікацыя</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Павялічце сваю бяспеку</string>
   <string name="security_center_home_section_password_health">Якасць пароля</string>
+  <string name="security_center_home_snackbar_message_disable_sentinel_error">Адбылася памылка пры адключэння абароны Proton Sentinel. Паспрабуйце яшчэ раз.</string>
+  <!-- Sentinel bottom sheet -->
+  <string name="security_center_sentinel_title">Proton Sentinel</string>
+  <string name="security_center_sentinel_subtitle">Proton Sentinel - гэта ўдасканаленая праграма абароны ўліковых запісаў, якая падтрымліваецца складанымі сістэмамі штучнага інтэлекту і спецыялістамі, што працуюць дзень і ноч, каб абараніць вас ад зламыснікаў і пагроз бяспекі.</string>
+  <string name="security_center_sentinel_button_enable">Уключыць Proton Sentinel</string>
+  <string name="security_center_sentinel_snackbar_message_enable_canceled">Актывацыя абароны Proton Sentinel было скасавана</string>
+  <string name="security_center_sentinel_snackbar_message_enable_error">Адбылася памылка пры ўключэнні абароны Proton Sentinel. Паспрабуйце яшчэ раз.</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Ненадзейны пароль</string>
   <string name="security_center_weak_pass_top_bar_subtitle">Ненадзейныя паролі лёгка падабраць. Згенерыруйце надзейныя паролі, каб абараніць свой уліковы запіс.</string>
@@ -36,4 +52,37 @@
   <!-- Missing 2FA -->
   <string name="security_center_missing_tfa_top_bar_title">Адсутнічае двухфактарная аўтэнтыфікацыя</string>
   <string name="security_center_missing_tfa_top_bar_subtitle">Запісы ўваходу з сайтаў, якія маюць двухфактарную аўтэнтыфікацыю даступны, але вы іх пакуль не наладзілі.</string>
+  <!-- Dark web monitor -->
+  <string name="security_center_dark_web_monitor_top_bar_title">Dark Web Monitoring</string>
+  <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Апошняя праверка: %s</string>
+  <string name="security_center_dark_web_monitor_custom_emails_title">Карыстальніцкі адрас электроннай пошты</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Дадаць новы карыстальніцкі адрас электроннай пошты</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_button">Дадаць</string>
+  <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
+    <item quantity="one">Выкарыстоўваецца ў %d запісе ўваходу</item>
+    <item quantity="few">Выкарыстоўваецца ў %d запісах уваходу</item>
+    <item quantity="many">Выкарыстоўваецца ў %d запісах уваходу</item>
+    <item quantity="other">Выкарыстоўваецца ў %d запісах уваходу</item>
+  </plurals>
+  <plurals name="security_center_dark_web_monitor_custom_emails_breaches_found">
+    <item quantity="one">Выяўлена %d парушэнне</item>
+    <item quantity="few">Выяўлены %d парушэнні</item>
+    <item quantity="many">Выяўлены %d парушэнняў</item>
+    <item quantity="other">Выяўлены %d парушэнняў</item>
+  </plurals>
+  <string name="security_center_dark_web_monitor_custom_emails_loading_error">Памылка загрузкі карыстальніцкіх адрасоў электроннай пошты</string>
+  <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Немагчыма атрымаць адрасы электроннай пошты</string>
+  <!-- Add custom email monitoring -->
+  <string name="security_center_custom_email_top_bar_title">Карыстальніцкае назіранне за электроннай поштай</string>
+  <string name="security_center_custom_email_email_address_placeholder">Адрас электроннай пошты</string>
+  <string name="security_center_custom_email_invalid_address">Памылковы адрас электроннай пошты</string>
+  <string name="security_center_custom_email_continue">Працягнуць</string>
+  <string name="security_center_custom_email_already_verified">Памылка ўжо праверана</string>
+  <string name="security_center_custom_email_error_adding">Памылка дадання адраса электроннай пошты</string>
+  <!-- Verify email monitoring -->
+  <string name="security_center_verify_email_code_placeholder">Код</string>
+  <string name="security_center_verify_email_code_error">Памылковы код</string>
+  <string name="security_center_verify_email_continue">Працягнуць</string>
+  <string name="security_center_verify_email_title">Пацвердзіце сваю электронную пошту</string>
+  <string name="security_center_verify_email_subtitle">Мы адправілі вам праверачны код на %s. Увядзіце яго ніжэй:</string>
 </resources>

@@ -47,7 +47,7 @@ internal fun SecurityCenterCounterRow(
             modifier = modifier,
             title = model.title,
             subtitle = model.subtitle,
-            isClickable = model.isClickable,
+            showChevron = model.showChevron,
             onClick = onClick,
             titleColor = model.getCounterTextColor(),
             subtitleColor = model.getCounterTextColor(),
@@ -77,7 +77,7 @@ internal fun SecurityCenterCounterRow(
             modifier = modifier,
             title = model.title,
             subtitle = model.subtitle,
-            isClickable = model.isClickable,
+            showChevron = model.showChevron,
             onClick = onClick,
             accentBackgroundColor = model.getAccentBackgroundColor(),
             leadingContent = {
@@ -103,17 +103,17 @@ internal fun SecurityCenterCounterRow(
             modifier = modifier,
             title = model.title,
             subtitle = model.subtitle,
-            isClickable = model.isClickable,
+            showChevron = model.showChevron,
+            accentBackgroundColor = PassTheme.colors.interactionNormMinor2.takeIf { model.isFreeUser },
             onClick = onClick,
             trailingContent = {
-
                 SecurityCenterCounterText(
                     counterText = model.counterText,
                     backgroundColor = model.getCounterTextBackgroundColor(),
                     textColor = model.getCounterTextColor()
                 )
 
-                if (model.isPaid) {
+                if (model.isFreeUser) {
                     PassPlusIcon()
                 }
             }
@@ -125,7 +125,7 @@ internal fun SecurityCenterCounterRow(
             modifier = modifier,
             title = model.title,
             subtitle = model.subtitle,
-            isClickable = model.isClickable,
+            showChevron = model.showChevron,
             subtitleColor = model.getSubtitleColor(),
             onClick = onClick,
             leadingContent = {
@@ -144,7 +144,7 @@ internal sealed interface SecurityCenterCounterRowModel {
 
     val counterText: String
 
-    val isClickable: Boolean
+    val showChevron: Boolean
 
     @Stable
     data class Alert(
@@ -155,7 +155,7 @@ internal sealed interface SecurityCenterCounterRowModel {
 
         override val counterText: String = count.toString()
 
-        override val isClickable: Boolean = count > 0
+        override val showChevron: Boolean = count > 0
 
         internal val counterIconShape: Shape = CircleShape
 
@@ -188,7 +188,7 @@ internal sealed interface SecurityCenterCounterRowModel {
 
         override val counterText: String = count?.toString() ?: "-"
 
-        override val isClickable: Boolean = if (count == null) false else count > 0
+        override val showChevron: Boolean = if (count == null) false else count > 0
 
         @Composable
         internal fun getCounterTextBackgroundColor(): Color = when (count) {
@@ -236,12 +236,16 @@ internal sealed interface SecurityCenterCounterRowModel {
         internal val title: String,
         internal val subtitle: String,
         private val count: Int?,
-        internal val isPaid: Boolean
+        internal val isFreeUser: Boolean
     ) : SecurityCenterCounterRowModel {
 
         override val counterText: String = count?.toString() ?: "-"
 
-        override val isClickable: Boolean = if (count == null) false else count > 0
+        override val showChevron: Boolean = if (isFreeUser || count == null) {
+            false
+        } else {
+            count > 0
+        }
 
         @Composable
         internal fun getCounterTextBackgroundColor(): Color = PassTheme.colors.backgroundMedium
@@ -259,7 +263,7 @@ internal sealed interface SecurityCenterCounterRowModel {
 
         override val counterText: String = ""
 
-        override val isClickable: Boolean = true
+        override val showChevron: Boolean = true
 
         @Composable
         internal fun getSubtitleColor(): Color = PassTheme.colors.cardInteractionNormMajor2

@@ -152,8 +152,11 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
         DarkWebScreen(
             onNavigate = { destination ->
                 when (destination) {
-                    DarkWebMonitorNavDestination.AddEmail ->
-                        onNavigated(SecurityCenterNavDestination.AddCustomEmail)
+                    is DarkWebMonitorNavDestination.AddEmail -> onNavigated(
+                        SecurityCenterNavDestination.AddCustomEmail(
+                            email = destination.email
+                        )
+                    )
 
                     is DarkWebMonitorNavDestination.CustomEmailReport -> {
                         onNavigated(

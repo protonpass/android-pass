@@ -23,7 +23,35 @@ import kotlinx.datetime.Instant
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 import proton.android.pass.domain.Passkey
+import proton.android.pass.domain.PasskeyCreationData
 import proton.android.pass.domain.PasskeyId
+
+@Parcelize
+@Serializable
+data class UIPasskeyCreationData(
+    val osName: String,
+    val osVersion: String,
+    val deviceName: String,
+    val appVersion: String
+) : Parcelable {
+    fun toDomain() = PasskeyCreationData(
+        osName = osName,
+        osVersion = osVersion,
+        deviceName = deviceName,
+        appVersion = appVersion
+    )
+
+    companion object {
+        fun from(creationData: PasskeyCreationData) = with(creationData) {
+            UIPasskeyCreationData(
+                osName = osName,
+                osVersion = osVersion,
+                deviceName = deviceName,
+                appVersion = appVersion
+            )
+        }
+    }
+}
 
 @Parcelize
 @Serializable
@@ -39,7 +67,8 @@ data class UIPasskeyContent(
     val createTime: Int,
     val note: String,
     val userHandle: ByteArray?,
-    val credentialId: ByteArray
+    val credentialId: ByteArray,
+    val creationData: UIPasskeyCreationData?
 ) : Parcelable {
 
     @Suppress("ReturnCount")
@@ -58,6 +87,7 @@ data class UIPasskeyContent(
         if (!userId.contentEquals(other.userId)) return false
         if (createTime != other.createTime) return false
         if (note != other.note) return false
+        if (creationData != other.creationData) return false
         return contents.contentEquals(other.contents)
     }
 
@@ -72,6 +102,7 @@ data class UIPasskeyContent(
         result = 31 * result + contents.contentHashCode()
         result = 31 * result + createTime.hashCode()
         result = 31 * result + note.hashCode()
+        result = 31 * result + creationData.hashCode()
         return result
     }
 
@@ -87,7 +118,8 @@ data class UIPasskeyContent(
         createTime = Instant.fromEpochSeconds(createTime.toLong()),
         note = note,
         credentialId = credentialId,
-        userHandle = userHandle
+        userHandle = userHandle,
+        creationData = creationData?.toDomain()
     )
 
     companion object {
@@ -104,7 +136,8 @@ data class UIPasskeyContent(
                 note = note,
                 userId = userId,
                 credentialId = credentialId,
-                userHandle = userHandle
+                userHandle = userHandle,
+                creationData = creationData?.let { UIPasskeyCreationData.from(it) }
             )
         }
     }

@@ -89,12 +89,12 @@ internal fun SecurityCenterHomeContent(
                 onUiEvent = onUiEvent
             )
 
-            if (isFreeUser) {
+            if (isSentinelPaidFeature) {
                 SecurityCenterRow(
                     title = stringResource(id = R.string.security_center_home_row_sentinel_title),
                     subtitle = stringResource(id = R.string.security_center_home_row_sentinel_subtitle),
                     accentBackgroundColor = PassTheme.colors.interactionNormMinor2,
-                    showChevron = false,
+                    isClickable = false,
                     trailingContent = { PassPlusIcon() },
                     onClick = { onUiEvent(SecurityCenterHomeUiEvent.OnUpsell(PaidFeature.Sentinel)) }
                 )
@@ -148,7 +148,7 @@ internal fun SecurityCenterHomeContent(
                     title = stringResource(id = R.string.security_center_home_row_excludes_items_title),
                     subtitle = stringResource(id = R.string.security_center_home_row_excludes_items_subtitle),
                     count = excludedItemsCount,
-                    isPaid = false
+                    showPassPlusIcon = isExcludedItemsPaidFeature
                 ),
                 onClick = { onUiEvent(SecurityCenterHomeUiEvent.OnShowExcludedItems) }
             )

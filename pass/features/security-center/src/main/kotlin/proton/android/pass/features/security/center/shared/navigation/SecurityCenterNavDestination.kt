@@ -22,6 +22,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.breach.BreachCustomEmailId
 import proton.android.pass.domain.features.PaidFeature
+import proton.android.pass.features.security.center.report.navigation.EmailType
 
 sealed interface SecurityCenterNavDestination {
 
@@ -60,4 +61,11 @@ sealed interface SecurityCenterNavDestination {
     data class VerifyEmail(val id: BreachCustomEmailId, val email: String) : SecurityCenterNavDestination
 
     data object EmailVerified : SecurityCenterNavDestination
+
+    data class Report(
+        val emailType: EmailType,
+        val id: BreachCustomEmailId,
+        val email: String,
+        val breachCount: Int
+    ) : SecurityCenterNavDestination
 }

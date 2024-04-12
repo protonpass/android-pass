@@ -100,4 +100,11 @@
     <string name="security_center_verify_email_title">Confirm your email</string>
     <string name="security_center_verify_email_subtitle">We\'ve sent a verification code to %s. Please enter it below:</string>
 
+    <!-- Verify email monitoring -->
+    <string name="security_center_verify_report_title_detected">Breaches detected for</string>
+    <string name="security_center_verify_report_title_none">No breaches detected for</string>
+
+    <!-- Email breach report -->
+    <string name="security_center_email_report_used_in_header">Used in</string>
+
 </resources>

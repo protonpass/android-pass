@@ -32,6 +32,10 @@ import proton.android.pass.features.security.center.home.ui.SecurityCenterHomeSc
 import proton.android.pass.features.security.center.missingtfa.navigation.SecurityCenterMissingTFADestination
 import proton.android.pass.features.security.center.missingtfa.navigation.SecurityCenterMissingTFANavItem
 import proton.android.pass.features.security.center.missingtfa.ui.SecurityCenterMissingTfaScreen
+import proton.android.pass.features.security.center.report.navigation.EmailType
+import proton.android.pass.features.security.center.report.navigation.SecurityCenterReportDestination
+import proton.android.pass.features.security.center.report.navigation.SecurityCenterReportNavItem
+import proton.android.pass.features.security.center.report.ui.SecurityCenterReportScreen
 import proton.android.pass.features.security.center.reusepass.navigation.SecurityCenterReusedPassDestination
 import proton.android.pass.features.security.center.reusepass.navigation.SecurityCenterReusedPassNavItem
 import proton.android.pass.features.security.center.reusepass.ui.SecurityCenterReusedPassScreen
@@ -151,8 +155,15 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                     DarkWebMonitorNavDestination.AddEmail ->
                         onNavigated(SecurityCenterNavDestination.AddCustomEmail)
 
-                    is DarkWebMonitorNavDestination.EmailDetail -> {
-                        /* TO BE IMPLEMENTED */
+                    is DarkWebMonitorNavDestination.CustomEmailReport -> {
+                        onNavigated(
+                            SecurityCenterNavDestination.Report(
+                                emailType = EmailType.Custom,
+                                id = destination.id,
+                                email = destination.email,
+                                breachCount = destination.breachCount
+                            )
+                        )
                     }
 
                     DarkWebMonitorNavDestination.Back -> onNavigated(SecurityCenterNavDestination.Back())
@@ -188,6 +199,17 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                 val event = when (destination) {
                     SecurityCenterVerifyEmailDestination.Back -> SecurityCenterNavDestination.Back()
                     SecurityCenterVerifyEmailDestination.EmailVerified -> SecurityCenterNavDestination.EmailVerified
+                }
+                onNavigated(event)
+            }
+        )
+    }
+
+    composable(SecurityCenterReportNavItem) {
+        SecurityCenterReportScreen(
+            onNavigated = { destination ->
+                val event = when (destination) {
+                    SecurityCenterReportDestination.Back -> SecurityCenterNavDestination.Back()
                 }
                 onNavigated(event)
             }

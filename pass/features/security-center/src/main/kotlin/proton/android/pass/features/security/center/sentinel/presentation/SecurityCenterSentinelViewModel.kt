@@ -26,19 +26,16 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.securitycenter.api.sentinel.EnableSentinel
 import javax.inject.Inject
 
 @HiltViewModel
 class SecurityCenterSentinelViewModel @Inject constructor(
-    private val getUserPlan: GetUserPlan,
     private val enableSentinel: EnableSentinel,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
@@ -66,25 +63,19 @@ class SecurityCenterSentinelViewModel @Inject constructor(
     internal fun onEnableSentinel() = viewModelScope.launch {
         isLoadingFlow.update { IsLoadingState.Loading }
 
-        getUserPlan().first().let { userPlan ->
-            if (userPlan.isPaidPlan) {
-                runCatching { enableSentinel() }
-                    .onFailure { error ->
-                        if (error is CancellationException) {
-                            SecurityCenterSentinelSnackbarMessage.EnableSentinelCanceled
-                        } else {
-                            SecurityCenterSentinelSnackbarMessage.EnableSentinelError
-                        }.also { snackbarMessage -> snackbarDispatcher(snackbarMessage) }
+        runCatching { enableSentinel() }
+            .onFailure { error ->
+                if (error is CancellationException) {
+                    SecurityCenterSentinelSnackbarMessage.EnableSentinelCanceled
+                } else {
+                    SecurityCenterSentinelSnackbarMessage.EnableSentinelError
+                }.also { snackbarMessage -> snackbarDispatcher(snackbarMessage) }
 
-                        eventFlow.update { SecurityCenterSentinelEvent.OnSentinelEnableError }
-                    }
-                    .onSuccess {
-                        eventFlow.update { SecurityCenterSentinelEvent.OnSentinelEnableSuccess }
-                    }
-            } else {
-                eventFlow.update { SecurityCenterSentinelEvent.OnUpsell }
+                eventFlow.update { SecurityCenterSentinelEvent.OnSentinelEnableError }
             }
-        }
+            .onSuccess {
+                eventFlow.update { SecurityCenterSentinelEvent.OnSentinelEnableSuccess }
+            }
 
         isLoadingFlow.update { IsLoadingState.NotLoading }
     }

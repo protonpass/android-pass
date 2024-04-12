@@ -41,4 +41,6 @@ sealed interface SecurityCenterHomeNavDestination {
     @JvmInline
     value class Upsell(internal val paidFeature: PaidFeature) : SecurityCenterHomeNavDestination
 
+    data object ExcludedItems : SecurityCenterHomeNavDestination
+
 }

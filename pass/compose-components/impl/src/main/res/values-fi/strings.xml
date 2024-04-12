@@ -28,6 +28,9 @@
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Avaa kohteen toimintovalikko</string>
   <string name="action_upgrade_now">Päivitä tilaus nyt</string>
   <string name="action_not_now">Ei nyt</string>
+  <string name="action_learn_more">Learn more</string>
+  <string name="action_enable">Enable</string>
+  <string name="action_view_details">View details</string>
   <!-- Empty list -->
   <string name="empty_list_title">Lisää ensimmäinen kohteesi</string>
   <string name="empty_search_results_title">Tuloksia ei löytynyt</string>
@@ -53,7 +56,7 @@
   <string name="bottom_bar_list_items_icon_content_description">Listaa kohteet</string>
   <string name="bottom_bar_add_item_icon_content_description">Lisää kohde</string>
   <string name="bottom_bar_profile_icon_content_description">Profiili</string>
-  <string name="bottom_bar_security_center_icon_content_description">Turvakeskus</string>
+  <string name="bottom_bar_security_center_icon_content_description">Suojauskeskus</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">Tänään</string>
   <string name="most_recent_yesterday">Eilen</string>
@@ -106,7 +109,7 @@
   <string name="item_details_alias_section_mailboxes_title">Välitetään osoitteeseen</string>
   <string name="item_details_credit_card_section_cardholder_title">Kortinhaltijan nimi</string>
   <string name="item_details_credit_card_section_card_number_title">Kortin numero</string>
-  <string name="item_details_credit_card_section_expiration_date_title">Tuhoutumisaika</string>
+  <string name="item_details_credit_card_section_expiration_date_title">Voimassaolo päättyy</string>
   <string name="item_details_credit_card_section_cvv_title">Turvakoodi</string>
   <string name="item_details_credit_card_section_pin_title">PIN-koodi</string>
   <string name="item_details_login_section_username_title">Käyttäjätunnus tai sähköpostiosoite</string>
@@ -116,10 +119,13 @@
   <string name="item_details_shared_section_note_title">Muistiinpano</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Sovellusversiota ei enää tueta, päivitä sovelluksesi.</string>
   <!-- Passkeys -->
-  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Avainkoodi</string>
+  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Suojausavain</string>
   <!-- Upgrade -->
   <string name="dialog_upgrade_plan_title">Päivitä tilaus?</string>
   <string name="dialog_upgrade_plan_message">Tämä ominaisuus ei ole ilmaistason käyttäjien käytettävissä. Jos haluat nauttia tästä ja muista hienouksista, päivitä tilauksesi ja kokeile sitä!</string>
   <string name="dialog_upgrade_plan_action_confirm">Päivitä tilaus</string>
   <string name="dialog_upgrade_plan_action_cancel">Ei nyt</string>
+  <!-- Words -->
+  <string name="email_address">Sähköpostiosoite</string>
+  <string name="password">Password</string>
 </resources>

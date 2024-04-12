@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="account_title">Hesap</string>
-  <string name="account_recovery_title">Hesap ve Kurtarma</string>
+  <string name="account_recovery_title">Hesap ve kurtarma</string>
   <string name="account_username_label">Kullanıcı adı</string>
   <string name="account_subscription_label">Abonelik tarifesi</string>
   <string name="account_permanently_delete_warning">Bu işlem, hesabınızı ve tüm verilerini kalıcı olarak siler. Bu hesabı yeniden kullanıma alamazsınız.</string>

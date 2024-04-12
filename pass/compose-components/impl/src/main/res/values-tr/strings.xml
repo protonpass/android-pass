@@ -28,6 +28,9 @@
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Öge işlem menüsünü aç</string>
   <string name="action_upgrade_now">Şimdi yükselt</string>
   <string name="action_not_now">Şimdi değil</string>
+  <string name="action_learn_more">Ayrıntılı bilgi alın</string>
+  <string name="action_enable">Kullanıma al</string>
+  <string name="action_view_details">Ayrıntıları görüntüle</string>
   <!-- Empty list -->
   <string name="empty_list_title">İlk ögenizi ekleyin</string>
   <string name="empty_search_results_title">Herhangi bir sonuç bulunamadı</string>
@@ -122,4 +125,7 @@
   <string name="dialog_upgrade_plan_message">Free tarifesi kullanıcıları bu özelliği kullanamaz. Diğer harika özelliklerle birlikte bunun da tadını çıkarmak istiyorsanız, tarifenizi yükseltin ve bir deneyin!</string>
   <string name="dialog_upgrade_plan_action_confirm">Yükselt</string>
   <string name="dialog_upgrade_plan_action_cancel">Şimdi değil</string>
+  <!-- Words -->
+  <string name="email_address">E-posta adresi</string>
+  <string name="password">Parola</string>
 </resources>

@@ -12,7 +12,7 @@
   <string name="item_list_header_logins_type">Prijave</string>
   <string name="item_list_header_aliases_type">Vzdevki</string>
   <string name="item_list_header_notes_type">Opombe</string>
-  <string name="item_list_header_credit_cards_type">Kreditne kartice</string>
+  <string name="item_list_header_credit_cards_type">Plačilne kartice</string>
   <plurals name="item_list_header_results">
     <item quantity="one">rezultat</item>
     <item quantity="two">rezultati</item>
@@ -29,12 +29,15 @@
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Odpri meni z dejanji predmeta</string>
   <string name="action_upgrade_now">Nadgradi zdaj</string>
-  <string name="action_not_now">Not now</string>
+  <string name="action_not_now">Ne zdaj</string>
+  <string name="action_learn_more">Learn more</string>
+  <string name="action_enable">Enable</string>
+  <string name="action_view_details">View details</string>
   <!-- Empty list -->
   <string name="empty_list_title">Dodajte svoj prvi predmet</string>
   <string name="empty_search_results_title">Ne najdem rezultatov</string>
   <string name="empty_list_open_extension">Obiščite spletno razširitev</string>
-  <string name="empty_list_create_item_button">Ustvari nov element</string>
+  <string name="empty_list_create_item_button">Ustvari nov predmet</string>
   <!-- Field -->
   <string name="field_title_title">Naslov</string>
   <string name="field_title_hint">Brez naslova</string>
@@ -126,4 +129,7 @@
   <string name="dialog_upgrade_plan_message">Ta funkcija ni na voljo za uporabnike brezplačnega paketa. Če želite uporabljati to in še mnogo drugih funkcij, nadgradite paket in jo preizkusite!</string>
   <string name="dialog_upgrade_plan_action_confirm">Nadgradi</string>
   <string name="dialog_upgrade_plan_action_cancel">Ne zdaj</string>
+  <!-- Words -->
+  <string name="email_address">E-poštni naslov</string>
+  <string name="password">Password</string>
 </resources>

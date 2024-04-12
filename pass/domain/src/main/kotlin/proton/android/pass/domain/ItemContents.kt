@@ -68,6 +68,14 @@ enum class CreditCardType {
 value class PasskeyId(val value: String)
 
 @Serializable
+data class PasskeyCreationData(
+    val osName: String,
+    val osVersion: String,
+    val deviceName: String,
+    val appVersion: String
+)
+
+@Serializable
 data class Passkey(
     val id: PasskeyId,
     val domain: String,
@@ -80,7 +88,8 @@ data class Passkey(
     val createTime: Instant,
     val contents: ByteArray,
     val userHandle: ByteArray?,
-    val credentialId: ByteArray
+    val credentialId: ByteArray,
+    val creationData: PasskeyCreationData?
 )
 
 @Serializable

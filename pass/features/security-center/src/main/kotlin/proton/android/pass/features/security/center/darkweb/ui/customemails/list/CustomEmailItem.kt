@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -44,8 +45,8 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.body3Weak
+import proton.android.pass.composecomponents.impl.item.icon.ThreeDotsMenuButton
 import proton.android.pass.domain.breach.BreachCustomEmailId
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.darkweb.presentation.CustomEmailUiState
@@ -57,23 +58,33 @@ internal fun CustomEmailItem(
     modifier: Modifier = Modifier,
     email: CustomEmailUiState,
     onAddClick: () -> Unit,
-    onDetailClick: () -> Unit
+    onOptionsClick: (BreachCustomEmailId) -> Unit,
+    onDetailClick: (BreachCustomEmailId) -> Unit
 ) {
     when (email.status) {
-        is CustomEmailUiStatus.NotVerified -> {
-            CustomEmailItemNotVerified(
+        is CustomEmailUiStatus.Suggestion -> {
+            CustomEmailSuggestion(
                 modifier = modifier,
                 email = email.email,
                 status = email.status,
                 onAddClick = onAddClick
             )
         }
+
         is CustomEmailUiStatus.Verified -> {
             CustomEmailItemVerified(
                 modifier = modifier,
                 email = email.email,
                 status = email.status,
-                onDetailClick = onDetailClick
+                onDetailClick = { onDetailClick(email.status.id) }
+            )
+        }
+
+        is CustomEmailUiStatus.Unverified -> {
+            CustomEmailItemUnverified(
+                modifier = modifier,
+                email = email.email,
+                onOptionsClick = { onOptionsClick(email.status.id) }
             )
         }
     }
@@ -81,11 +92,74 @@ internal fun CustomEmailItem(
 }
 
 @Composable
-private fun CustomEmailItemNotVerified(
+private fun CustomEmailSuggestion(
     modifier: Modifier = Modifier,
     email: String,
-    status: CustomEmailUiStatus.NotVerified,
+    status: CustomEmailUiStatus.Suggestion,
     onAddClick: () -> Unit
+) {
+    CustomEmailRow(
+        modifier = modifier,
+        title = email,
+        subtitle = {
+            Text(
+                text = pluralStringResource(
+                    id = R.plurals.security_center_dark_web_monitor_custom_emails_used_count,
+                    count = status.usedInLoginsCount,
+                    status.usedInLoginsCount
+                ),
+                style = PassTheme.typography.body3Weak()
+            )
+        },
+        trailingContent = {
+            Box(
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .background(PassTheme.colors.interactionNormMinor1)
+                    .clickable(onClick = onAddClick)
+            ) {
+                Text(
+                    modifier = Modifier.padding(
+                        horizontal = Spacing.medium,
+                        vertical = Spacing.small
+                    ),
+                    text = stringResource(id = R.string.security_center_dark_web_monitor_custom_emails_add_button),
+                    style = ProtonTheme.typography.captionMedium,
+                    color = PassTheme.colors.interactionNormMajor2
+                )
+            }
+        }
+    )
+}
+
+
+@Composable
+private fun CustomEmailItemUnverified(
+    modifier: Modifier = Modifier,
+    email: String,
+    onOptionsClick: () -> Unit
+) {
+    CustomEmailRow(
+        modifier = modifier,
+        title = email,
+        subtitle = {
+            Text(
+                text = stringResource(R.string.security_center_dark_web_monitor_custom_emails_not_verified_subtitle),
+                style = PassTheme.typography.body3Weak()
+            )
+        },
+        trailingContent = {
+            ThreeDotsMenuButton(onClick = onOptionsClick)
+        }
+    )
+}
+
+@Composable
+private fun CustomEmailRow(
+    modifier: Modifier,
+    title: String,
+    subtitle: @Composable () -> Unit,
+    trailingContent: @Composable RowScope.() -> Unit
 ) {
     Row(
         modifier = modifier.padding(horizontal = Spacing.medium, vertical = Spacing.small),
@@ -112,33 +186,14 @@ private fun CustomEmailItemNotVerified(
             verticalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
         ) {
             Text(
-                text = email,
+                text = title,
                 style = ProtonTheme.typography.body1Regular
             )
 
-            Text(
-                text = pluralStringResource(
-                    id = R.plurals.security_center_dark_web_monitor_custom_emails_used_count,
-                    count = status.usedInLoginsCount,
-                    status.usedInLoginsCount
-                ),
-                style = PassTheme.typography.body3Weak()
-            )
+            subtitle()
         }
 
-        Box(
-            modifier = Modifier
-                .clip(CircleShape)
-                .background(PassTheme.colors.interactionNormMinor1)
-                .clickable(onClick = onAddClick)
-        ) {
-            Text(
-                modifier = Modifier.padding(horizontal = Spacing.medium, vertical = Spacing.small),
-                text = stringResource(id = R.string.security_center_dark_web_monitor_custom_emails_add_button),
-                style = ProtonTheme.typography.captionMedium,
-                color = PassTheme.colors.interactionNormMajor2
-            )
-        }
+        trailingContent()
     }
 }
 
@@ -193,22 +248,17 @@ private fun CustomEmailItemVerified(
 
 @Preview
 @Composable
-fun CustomEmailItemPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
-    val status = if (input.second) {
-        CustomEmailUiStatus.NotVerified(usedInLoginsCount = 3)
-    } else {
-        CustomEmailUiStatus.Verified(breachesDetected = 2)
-    }
+fun CustomEmailItemPreview(
+    @PreviewParameter(ThemeCustomEmailItemPreviewProvider::class)
+    input: Pair<Boolean, CustomEmailUiState>
+) {
     PassTheme(isDark = input.first) {
         Surface {
             CustomEmailItem(
-                email = CustomEmailUiState(
-                    id = BreachCustomEmailId("1"),
-                    email = "some@test.email",
-                    status = status
-                ),
+                email = input.second,
                 onAddClick = {},
-                onDetailClick = {}
+                onDetailClick = {},
+                onOptionsClick = {}
             )
         }
     }

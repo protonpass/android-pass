@@ -1097,9 +1097,13 @@ fun NavGraphBuilder.appGraph(
                     )
                 )
 
-                SecurityCenterNavDestination.AddCustomEmail -> appNavigator.navigate(
-                    destination = SecurityCenterCustomEmailNavItem
+                is SecurityCenterNavDestination.AddCustomEmail -> appNavigator.navigate(
+                    destination = SecurityCenterCustomEmailNavItem,
+                    route = SecurityCenterCustomEmailNavItem.buildRoute(
+                        email = destination.email
+                    )
                 )
+
 
                 SecurityCenterNavDestination.EmailVerified -> appNavigator.popUpTo(
                     destination = DarkWebMonitorNavItem

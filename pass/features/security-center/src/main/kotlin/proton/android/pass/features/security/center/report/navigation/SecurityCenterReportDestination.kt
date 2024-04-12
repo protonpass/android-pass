@@ -16,22 +16,11 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.darkweb.ui
+package proton.android.pass.features.security.center.report.navigation
 
-import proton.android.pass.domain.breach.BreachCustomEmailId
+sealed interface SecurityCenterReportDestination {
 
-sealed interface DarkWebUiEvent {
+    data object Back : SecurityCenterReportDestination
 
-    data object OnUpClick : DarkWebUiEvent
-
-    data object OnNewCustomEmailClick : DarkWebUiEvent
-
-    data class OnAddCustomEmailClick(val id: BreachCustomEmailId, val email: String) :
-        DarkWebUiEvent
-
-    data class OnCustomEmailReportClick(
-        val id: BreachCustomEmailId,
-        val email: String,
-        val breachCount: Int
-    ) : DarkWebUiEvent
 }
+

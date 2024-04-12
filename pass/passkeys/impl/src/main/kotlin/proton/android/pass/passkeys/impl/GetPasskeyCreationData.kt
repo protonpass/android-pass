@@ -35,7 +35,7 @@ class GetPasskeyCreationDataImpl @Inject constructor(
         osName = "Android",
         osVersion = Build.VERSION.RELEASE,
         deviceName = deviceName(),
-        appVersion = "android-pass@${appConfig.versionName}"
+        appVersion = appConfig.versionName
     )
 
     private fun deviceName(): String {

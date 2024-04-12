@@ -25,7 +25,9 @@ import proton.android.pass.data.impl.requests.BreachAddEmailRequest
 import proton.android.pass.data.impl.requests.BreachVerifyEmailRequest
 import proton.android.pass.data.impl.responses.BreachCustomEmailResponse
 import proton.android.pass.data.impl.responses.BreachCustomEmailsResponse
-import proton.android.pass.data.impl.responses.BreachesForCustomEmailResponse
+import proton.android.pass.data.impl.responses.EmailBreachesResponse
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.breach.BreachCustomEmailId
 import javax.inject.Inject
 
@@ -38,7 +40,13 @@ interface RemoteBreachDataSource {
         code: String
     )
 
-    suspend fun getBreachesForCustomEmail(userId: UserId, id: BreachCustomEmailId): BreachesForCustomEmailResponse
+    suspend fun getBreachesForCustomEmail(userId: UserId, id: BreachCustomEmailId): EmailBreachesResponse
+
+    suspend fun getBreachesForAlias(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): EmailBreachesResponse
 }
 
 class RemoteBreachDataSourceImpl @Inject constructor(
@@ -72,13 +80,22 @@ class RemoteBreachDataSourceImpl @Inject constructor(
             .valueOrThrow
     }
 
-    override suspend fun getBreachesForCustomEmail(
+    override suspend fun getBreachesForCustomEmail(userId: UserId, id: BreachCustomEmailId): EmailBreachesResponse =
+        apiProvider
+            .get<PasswordManagerApi>(userId)
+            .invoke {
+                getBreachesForCustomEmail(id.id)
+            }
+            .valueOrThrow
+
+    override suspend fun getBreachesForAlias(
         userId: UserId,
-        id: BreachCustomEmailId
-    ): BreachesForCustomEmailResponse = apiProvider
+        shareId: ShareId,
+        itemId: ItemId
+    ): EmailBreachesResponse = apiProvider
         .get<PasswordManagerApi>(userId)
         .invoke {
-            getBreachesForCustomEmail(id.id)
+            getBreachesForAlias(shareId.id, itemId.id)
         }
         .valueOrThrow
 }

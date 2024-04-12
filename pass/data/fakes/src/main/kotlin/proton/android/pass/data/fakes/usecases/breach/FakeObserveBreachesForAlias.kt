@@ -16,16 +16,23 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.responses
+package proton.android.pass.data.fakes.usecases.breach
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAlias
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.breach.Breaches
+import javax.inject.Inject
+import javax.inject.Singleton
 
-@Serializable
-data class BreachesForCustomEmailResponse(
-    @SerialName("Code")
-    val code: Int,
-    @SerialName("Breaches")
-    val breaches: Breaches
-)
+@Singleton
+class FakeObserveBreachesForAlias @Inject constructor() : ObserveBreachesForAlias {
+    override fun invoke(
+        userId: UserId?,
+        shareId: ShareId,
+        itemId: ItemId
+    ): Flow<Breaches> = emptyFlow()
+}

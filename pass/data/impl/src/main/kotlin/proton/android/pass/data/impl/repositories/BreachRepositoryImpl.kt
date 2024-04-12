@@ -22,12 +22,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.data.api.repositories.BreachRepository
 import proton.android.pass.data.impl.remote.RemoteBreachDataSource
 import proton.android.pass.domain.ItemId
@@ -70,19 +70,18 @@ class BreachRepositoryImpl @Inject constructor(
         refreshFlow.update { true }
     }
 
-    override fun observeBreachesForCustomEmail(userId: UserId, id: BreachCustomEmailId): Flow<Breaches> = flow {
-        val breaches = remote.getBreachesForCustomEmail(userId, id).breaches
-        emit(breaches)
-    }
+    override fun observeBreachesForCustomEmail(
+        userId: UserId,
+        id: BreachCustomEmailId
+    ): Flow<Breaches> =
+        oneShot { remote.getBreachesForCustomEmail(userId, id).breaches }
 
     override fun observeBreachesForAlias(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): Flow<Breaches> = flow {
-        val breaches = remote.getBreachesForAlias(userId, shareId, itemId).breaches
-        emit(breaches)
-    }
+    ): Flow<Breaches> =
+        oneShot { remote.getBreachesForAlias(userId, shareId, itemId).breaches }
 
     private suspend fun refreshEmails(userId: UserId): List<BreachCustomEmail> {
         val response = remote.getCustomEmails(userId)

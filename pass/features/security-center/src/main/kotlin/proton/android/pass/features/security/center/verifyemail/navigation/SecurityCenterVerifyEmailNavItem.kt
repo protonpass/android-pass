@@ -18,21 +18,11 @@
 
 package proton.android.pass.features.security.center.verifyemail.navigation
 
-import androidx.navigation.NavType
 import proton.android.pass.domain.breach.BreachCustomEmailId
-import proton.android.pass.navigation.api.NavArgId
+import proton.android.pass.features.security.center.shared.navigation.BreachEmailIdArgId
+import proton.android.pass.features.security.center.shared.navigation.EmailArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavParamEncoder
-
-object BreachEmailIdArgId : NavArgId {
-    override val key: String = "breach_email_id"
-    override val navType: NavType<*> = NavType.StringType
-}
-
-object EmailArgId : NavArgId {
-    override val key: String = "email"
-    override val navType: NavType<*> = NavType.StringType
-}
 
 object SecurityCenterVerifyEmailNavItem : NavItem(
     baseRoute = "security/center/verifycustomemail",
@@ -41,4 +31,3 @@ object SecurityCenterVerifyEmailNavItem : NavItem(
 
     fun createNavRoute(id: BreachCustomEmailId, email: String) = "$baseRoute/${id.id}/${NavParamEncoder.encode(email)}"
 }
-

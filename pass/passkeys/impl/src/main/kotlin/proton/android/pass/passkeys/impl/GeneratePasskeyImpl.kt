@@ -30,12 +30,15 @@ import javax.inject.Singleton
 @Singleton
 class GeneratePasskeyImpl @Inject constructor(
     private val passkeyManager: PasskeyManager,
+    private val getPasskeyCreationData: GetPasskeyCreationData,
     private val clock: Clock
 ) : GeneratePasskey {
 
     override fun invoke(url: String, request: String): GeneratedPasskey {
         val sanitized = PasskeyJsonSanitizer.sanitize(request)
         passkeyManager.generatePasskey(url, sanitized).let {
+            val creationData = getPasskeyCreationData()
+            println("CarlosLog: CreationData: $creationData")
             return GeneratedPasskey(
                 passkey = Passkey(
                     rpName = it.rpName,
@@ -49,7 +52,8 @@ class GeneratePasskeyImpl @Inject constructor(
                     note = "",
                     createTime = clock.now(),
                     credentialId = it.credentialId,
-                    userHandle = it.userHandle
+                    userHandle = it.userHandle,
+                    creationData = creationData
                 ),
                 response = it.response
             )

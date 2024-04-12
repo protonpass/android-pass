@@ -20,6 +20,7 @@ package proton.android.pass.passkeys.fakes
 
 import kotlinx.datetime.Clock
 import proton.android.pass.domain.Passkey
+import proton.android.pass.domain.PasskeyCreationData
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.passkeys.api.GeneratePasskey
 import proton.android.pass.passkeys.api.GeneratedPasskey
@@ -43,7 +44,13 @@ class TestGeneratePasskey @Inject constructor() : GeneratePasskey {
                 note = "note",
                 createTime = Clock.System.now(),
                 credentialId = byteArrayOf(4, 5, 6),
-                userHandle = byteArrayOf(10, 11, 12)
+                userHandle = byteArrayOf(10, 11, 12),
+                creationData = PasskeyCreationData(
+                    osName = "osName",
+                    osVersion = "osVersion",
+                    deviceName = "deviceName",
+                    appVersion = "appVersion"
+                )
             ),
             response = ""
         )

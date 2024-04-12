@@ -38,7 +38,7 @@ import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
 @Composable
 internal fun SecurityCenterTopBar(
     modifier: Modifier = Modifier,
-    title: String,
+    title: String? = null,
     subtitle: String? = null,
     onUpClick: (() -> Unit)? = null,
     actions: (@Composable RowScope.() -> Unit) = { }
@@ -54,11 +54,13 @@ internal fun SecurityCenterTopBar(
             )
         }
 
-        Text(
-            modifier = Modifier.padding(horizontal = Spacing.medium),
-            text = title,
-            style = PassTheme.typography.heroNorm()
-        )
+        title?.let { topBarTitle ->
+            Text(
+                modifier = Modifier.padding(horizontal = Spacing.medium),
+                text = topBarTitle,
+                style = PassTheme.typography.heroNorm()
+            )
+        }
 
         subtitle?.let { topBarSubtitle ->
             Text(

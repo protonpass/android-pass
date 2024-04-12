@@ -29,6 +29,9 @@ import proton.android.pass.features.security.center.darkweb.navigation.DarkWebMo
 import proton.android.pass.features.security.center.darkweb.navigation.DarkWebMonitorNavItem
 import proton.android.pass.features.security.center.darkweb.ui.DarkWebScreen
 import proton.android.pass.features.security.center.darkweb.ui.customemails.options.UnverifiedCustomEmailOptionsBottomSheet
+import proton.android.pass.features.security.center.excludeditems.navigation.SecurityCenterExcludeItemsDestination
+import proton.android.pass.features.security.center.excludeditems.navigation.SecurityCenterExcludedItemsNavItem
+import proton.android.pass.features.security.center.excludeditems.ui.SecurityCenterExcludedItemsScreen
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavDestination
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavItem
 import proton.android.pass.features.security.center.home.ui.SecurityCenterHomeScreen
@@ -69,6 +72,7 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                     SecurityCenterHomeNavDestination.WeakPasswords -> SecurityCenterNavDestination.WeakPasswords
                     SecurityCenterHomeNavDestination.MissingTFA -> SecurityCenterNavDestination.MissingTFA
                     SecurityCenterHomeNavDestination.Sentinel -> SecurityCenterNavDestination.Sentinel
+                    SecurityCenterHomeNavDestination.ExcludedItems -> SecurityCenterNavDestination.ExcludedItems
                     is SecurityCenterHomeNavDestination.Upsell -> SecurityCenterNavDestination.Upsell(
                         paidFeature = destination.paidFeature
                     )
@@ -245,4 +249,15 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
             }
         )
     }
+
+    composable(SecurityCenterExcludedItemsNavItem) {
+        SecurityCenterExcludedItemsScreen(
+            onNavigated = { destination ->
+                when (destination) {
+                    SecurityCenterExcludeItemsDestination.Back -> SecurityCenterNavDestination.Back()
+                }.also(onNavigated)
+            }
+        )
+    }
+
 }

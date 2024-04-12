@@ -38,7 +38,6 @@ class GeneratePasskeyImpl @Inject constructor(
         val sanitized = PasskeyJsonSanitizer.sanitize(request)
         passkeyManager.generatePasskey(url, sanitized).let {
             val creationData = getPasskeyCreationData()
-            println("CarlosLog: CreationData: $creationData")
             return GeneratedPasskey(
                 passkey = Passkey(
                     rpName = it.rpName,

@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toPersistentList
+import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
@@ -40,7 +41,7 @@ internal fun UnverifiedCustomEmailOptionsContent(
     onEvent: (UnverifiedCustomEmailOptionsUiEvent) -> Unit
 ) {
     BottomSheetItemList(
-        modifier = modifier,
+        modifier = modifier.bottomSheet(),
         items = listOf(
             verify(loading == UnverifiedCustomEmailOptionsLoadingState.Verify) {
                 onEvent(UnverifiedCustomEmailOptionsUiEvent.VerifyCustomEmail)

@@ -26,7 +26,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.darkweb.presentation.DarkWebUiState
 import proton.android.pass.features.security.center.darkweb.ui.customemails.list.CustomEmailsList
@@ -40,7 +39,7 @@ internal fun DarkWebContent(
     onEvent: (DarkWebUiEvent) -> Unit
 ) {
     Scaffold(
-        modifier = modifier.bottomSheet(),
+        modifier = modifier,
         topBar = {
             val subtitle = state.lastCheckTime.value()?.let { lastCheckTime ->
                 stringResource(

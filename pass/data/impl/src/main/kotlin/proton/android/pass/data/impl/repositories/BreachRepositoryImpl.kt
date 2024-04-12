@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
@@ -29,6 +30,7 @@ import kotlinx.coroutines.flow.update
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.BreachRepository
 import proton.android.pass.data.impl.remote.RemoteBreachDataSource
+import proton.android.pass.domain.breach.Breaches
 import proton.android.pass.domain.breach.BreachCustomEmail
 import proton.android.pass.domain.breach.BreachCustomEmailId
 import javax.inject.Inject
@@ -64,6 +66,11 @@ class BreachRepositoryImpl @Inject constructor(
     ) {
         remote.verifyCustomEmail(userId, emailId, code)
         refreshFlow.update { true }
+    }
+
+    override fun observeBreachesForCustomEmail(userId: UserId, id: BreachCustomEmailId): Flow<Breaches> = flow {
+        val breaches = remote.getBreachesForCustomEmail(userId, id).breaches
+        emit(breaches)
     }
 
     private suspend fun refreshEmails(userId: UserId): List<BreachCustomEmail> {

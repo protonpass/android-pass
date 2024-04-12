@@ -16,12 +16,26 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.sentinel.navigation
+package proton.android.pass.features.security.center.darkweb.navigation
 
+import androidx.navigation.NavType
+import proton.android.pass.domain.breach.BreachCustomEmailId
+import proton.android.pass.features.security.center.shared.navigation.BreachEmailIdArgId
+import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
+import proton.android.pass.navigation.api.NavParamEncoder
 
-object SecurityCenterSentinelNavItem : NavItem(
-    baseRoute = "security/center/sentinel",
+internal object CustomEmailNavArgId : NavArgId {
+    override val key = "customEmail"
+    override val navType = NavType.StringType
+}
+
+object CustomEmailOptionsNavItem : NavItem(
+    baseRoute = "security/center/dark-web/custom-email/options",
+    navArgIds = listOf(BreachEmailIdArgId, CustomEmailNavArgId),
     navItemType = NavItemType.Bottomsheet
-)
+) {
+    fun buildRoute(breachEmailId: BreachCustomEmailId, customEmail: String) =
+        "$baseRoute/${breachEmailId.id}/${NavParamEncoder.encode(customEmail)}"
+}

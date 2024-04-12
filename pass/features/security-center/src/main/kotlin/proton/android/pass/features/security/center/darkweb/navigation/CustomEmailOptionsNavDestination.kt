@@ -16,12 +16,15 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.sentinel.navigation
+package proton.android.pass.features.security.center.darkweb.navigation
 
-import proton.android.pass.navigation.api.NavItem
-import proton.android.pass.navigation.api.NavItemType
+import proton.android.pass.domain.breach.BreachCustomEmailId
 
-object SecurityCenterSentinelNavItem : NavItem(
-    baseRoute = "security/center/sentinel",
-    navItemType = NavItemType.Bottomsheet
-)
+sealed interface CustomEmailOptionsNavDestination {
+    data object Close : CustomEmailOptionsNavDestination
+
+    data class Verify(
+        val breachCustomEmailId: BreachCustomEmailId,
+        val customEmail: String
+    ) : CustomEmailOptionsNavDestination
+}

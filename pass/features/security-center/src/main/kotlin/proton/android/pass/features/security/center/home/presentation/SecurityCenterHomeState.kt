@@ -72,13 +72,21 @@ internal data class SecurityCenterHomeState(
         is PlanType.Trial -> SecurityCenterHomeNavDestination.MissingTFA
     }
 
-    internal val isFreeUser: Boolean = when (planType) {
+    internal val isSentinelPaidFeature: Boolean = when (planType) {
         is PlanType.Free,
         is PlanType.Unknown -> true
-
         is PlanType.Paid,
         is PlanType.Trial -> false
     }
+
+    internal val isMissing2faPaidFeature: Boolean = when (planType) {
+        is PlanType.Free,
+        is PlanType.Unknown -> true
+        is PlanType.Paid,
+        is PlanType.Trial -> false
+    }
+
+    internal val isExcludedItemsPaidFeature: Boolean = false
 
     internal val darkWebMonitoring: SecurityCenterHomeDarkWebMonitoring = when (planType) {
         is PlanType.Free,

@@ -47,7 +47,7 @@ internal fun SecurityCenterCounterRow(
             modifier = modifier,
             title = model.title,
             subtitle = model.subtitle,
-            showChevron = model.showChevron,
+            isClickable = model.isClickable,
             onClick = onClick,
             titleColor = model.getCounterTextColor(),
             subtitleColor = model.getCounterTextColor(),
@@ -77,7 +77,7 @@ internal fun SecurityCenterCounterRow(
             modifier = modifier,
             title = model.title,
             subtitle = model.subtitle,
-            showChevron = model.showChevron,
+            isClickable = model.isClickable,
             onClick = onClick,
             accentBackgroundColor = model.getAccentBackgroundColor(),
             leadingContent = {
@@ -103,7 +103,7 @@ internal fun SecurityCenterCounterRow(
             modifier = modifier,
             title = model.title,
             subtitle = model.subtitle,
-            showChevron = model.showChevron,
+            isClickable = model.isClickable,
             accentBackgroundColor = PassTheme.colors.interactionNormMinor2.takeIf { model.showPassPlusIcon },
             onClick = onClick,
             trailingContent = {
@@ -125,7 +125,7 @@ internal fun SecurityCenterCounterRow(
             modifier = modifier,
             title = model.title,
             subtitle = model.subtitle,
-            showChevron = model.showChevron,
+            isClickable = model.isClickable,
             subtitleColor = model.getSubtitleColor(),
             onClick = onClick,
             leadingContent = {
@@ -144,7 +144,7 @@ internal sealed interface SecurityCenterCounterRowModel {
 
     val counterText: String
 
-    val showChevron: Boolean
+    val isClickable: Boolean
 
     @Stable
     data class Alert(
@@ -155,7 +155,7 @@ internal sealed interface SecurityCenterCounterRowModel {
 
         override val counterText: String = count.toString()
 
-        override val showChevron: Boolean = count > 0
+        override val isClickable: Boolean = count > 0
 
         internal val counterIconShape: Shape = CircleShape
 
@@ -188,7 +188,7 @@ internal sealed interface SecurityCenterCounterRowModel {
 
         override val counterText: String = count?.toString() ?: "-"
 
-        override val showChevron: Boolean = if (count == null) false else count > 0
+        override val isClickable: Boolean = if (count == null) false else count > 0
 
         @Composable
         internal fun getCounterTextBackgroundColor(): Color = when (count) {
@@ -241,7 +241,7 @@ internal sealed interface SecurityCenterCounterRowModel {
 
         override val counterText: String = count?.toString() ?: "-"
 
-        override val showChevron: Boolean = if (showPassPlusIcon || count == null) {
+        override val isClickable: Boolean = if (showPassPlusIcon || count == null) {
             false
         } else {
             count > 0
@@ -263,7 +263,7 @@ internal sealed interface SecurityCenterCounterRowModel {
 
         override val counterText: String = ""
 
-        override val showChevron: Boolean = true
+        override val isClickable: Boolean = true
 
         @Composable
         internal fun getSubtitleColor(): Color = PassTheme.colors.cardInteractionNormMajor2

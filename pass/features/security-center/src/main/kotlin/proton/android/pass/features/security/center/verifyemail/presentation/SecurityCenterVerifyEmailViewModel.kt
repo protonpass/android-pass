@@ -37,8 +37,8 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.breach.VerifyBreachCustomEmail
 import proton.android.pass.domain.breach.BreachCustomEmailId
-import proton.android.pass.features.security.center.verifyemail.navigation.BreachEmailIdArgId
-import proton.android.pass.features.security.center.verifyemail.navigation.EmailArgId
+import proton.android.pass.features.security.center.shared.navigation.BreachEmailIdArgId
+import proton.android.pass.features.security.center.shared.navigation.EmailArgId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.NavParamEncoder
 import javax.inject.Inject

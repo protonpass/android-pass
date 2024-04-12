@@ -26,8 +26,12 @@ sealed interface DarkWebUiEvent {
 
     data object OnNewCustomEmailClick : DarkWebUiEvent
 
-    data class OnAddCustomEmailClick(val id: BreachCustomEmailId, val email: String) : DarkWebUiEvent
+    data class OnAddCustomEmailClick(val id: BreachCustomEmailId, val email: String) :
+        DarkWebUiEvent
 
-    @JvmInline
-    value class OnCustomEmailDetailClick(val id: BreachCustomEmailId) : DarkWebUiEvent
+    data class OnCustomEmailReportClick(
+        val id: BreachCustomEmailId,
+        val email: String,
+        val breachCount: Int
+    ) : DarkWebUiEvent
 }

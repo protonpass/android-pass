@@ -35,6 +35,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.features.security.center.R
+import proton.android.pass.features.security.center.darkweb.presentation.CustomEmailUiStatus
 import proton.android.pass.features.security.center.darkweb.presentation.DarkWebEmailsError
 import proton.android.pass.features.security.center.darkweb.presentation.DarkWebEmailsState
 import proton.android.pass.features.security.center.darkweb.ui.DarkWebUiEvent
@@ -59,7 +60,9 @@ internal fun CustomEmailsList(
         when (state) {
             is DarkWebEmailsState.Error -> {
                 Text(
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = Spacing.medium),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = Spacing.medium),
                     text = when (state.reason) {
                         DarkWebEmailsError.CannotLoad -> stringResource(
                             R.string.security_center_dark_web_monitor_custom_emails_loading_error
@@ -83,9 +86,24 @@ internal fun CustomEmailsList(
                     items(items = state.emails, key = { it.id.id }) { itemEmail ->
                         CustomEmailItem(
                             email = itemEmail,
-                            onAddClick = { onEvent(OnAddCustomEmailClick(itemEmail.id, itemEmail.email)) },
+                            onAddClick = {
+                                onEvent(
+                                    OnAddCustomEmailClick(
+                                        itemEmail.id,
+                                        itemEmail.email
+                                    )
+                                )
+                            },
                             onDetailClick = {
-                                onEvent(DarkWebUiEvent.OnCustomEmailDetailClick(itemEmail.id))
+                                onEvent(
+                                    DarkWebUiEvent.OnCustomEmailReportClick(
+                                        id = itemEmail.id,
+                                        email = itemEmail.email,
+                                        breachCount = (itemEmail.status as? CustomEmailUiStatus.Verified)
+                                            ?.breachesDetected
+                                            ?: 0
+                                    )
+                                )
                             }
                         )
                     }

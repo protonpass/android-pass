@@ -33,7 +33,7 @@ object BreachesArgId : NavArgId {
 
 object EmailTypeArgId : NavArgId {
     override val key: String = "email_type"
-    override val navType: NavType<*> = NavType.StringType
+    override val navType: NavType<*> = NavType.EnumType(EmailType::class.java)
 }
 
 enum class EmailType {
@@ -51,6 +51,6 @@ object SecurityCenterReportNavItem : NavItem(
         id: BreachCustomEmailId,
         email: String,
         breaches: Int
-    ): String = "$baseRoute/${emailType.name}/${id.id}/${NavParamEncoder.encode(email)}/$breaches"
+    ): String = "$baseRoute/$emailType/${id.id}/${NavParamEncoder.encode(email)}/$breaches"
 }
 

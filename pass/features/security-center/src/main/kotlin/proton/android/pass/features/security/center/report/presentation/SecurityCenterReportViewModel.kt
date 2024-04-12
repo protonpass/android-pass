@@ -89,10 +89,11 @@ class SecurityCenterReportViewModel @Inject constructor(
         filter = ItemTypeFilter.Logins
     )
         .map { items ->
-            encryptionContextProvider.withEncryptionContext {
-                items.mapNotNull { item ->
-                    item.toUiModel(this)
-                        .takeIf { (item.itemType as ItemType.Login).username == email }
+            items.mapNotNull { item ->
+                item.takeIf { (item.itemType as ItemType.Login).username == email }
+            }.let {
+                encryptionContextProvider.withEncryptionContext {
+                    it.map { item -> item.toUiModel(this) }
                 }
             }
         }

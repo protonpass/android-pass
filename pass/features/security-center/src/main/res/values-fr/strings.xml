@@ -19,6 +19,15 @@
 <resources>
   <!-- Home screen -->
   <string name="security_center_home_top_bar_title">Surveillance de Pass</string>
+  <string name="security_center_home_dark_web_monitoring_title">Surveillance du dark web</string>
+  <string name="security_center_home_widget_breaches_title">Une fuite de données a été détectée.</string>
+  <string name="security_center_home_widget_breaches_subtitle">Vos adresses e-mail ont été divulguées dans au moins 1 fuite de données.</string>
+  <string name="security_center_home_widget_no_breaches_subtitle">Soyez averti si votre adresse e-mail, mot de passe ou d\'autres données personnelles ont été divulguées.</string>
+  <string name="security_center_home_row_no_data_breaches_subtitle">Aucune fuite de données n\'a été détectée.</string>
+  <string name="security_center_home_row_data_breaches_title">Alerte provenant du dark web</string>
+  <string name="security_center_home_row_data_breaches_subtitle">Des fuites de données ont été détectées.</string>
+  <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
+  <string name="security_center_home_row_sentinel_subtitle">Programme de protection de compte avancée.</string>
   <string name="security_center_home_row_insecure_passwords_title">Mots de passe faible</string>
   <string name="security_center_home_row_insecure_passwords_subtitle">Créer des mots de passe fort</string>
   <string name="security_center_home_row_reused_passwords_title">Mots de passe réutilisés</string>
@@ -26,6 +35,13 @@
   <string name="security_center_home_row_missing_tfa_title">Authentification à deux facteurs manquante</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Améliorez votre sécurité</string>
   <string name="security_center_home_section_password_health">État du mot de passe</string>
+  <string name="security_center_home_snackbar_message_disable_sentinel_error">Une erreur s\'est produite durant la désactivation de la protection Proton Sentinel. Veuillez réessayer plus tard.</string>
+  <!-- Sentinel bottom sheet -->
+  <string name="security_center_sentinel_title">Proton Sentinel</string>
+  <string name="security_center_sentinel_subtitle">Proton Sentinel est un programme avancé de protection des comptes qui s\'appuie sur des systèmes d\'IA sophistiqués et des spécialistes qui travaillent en permanence pour vous protéger des acteurs malveillants et des menaces de sécurité.</string>
+  <string name="security_center_sentinel_button_enable">Activer Proton Sentinel</string>
+  <string name="security_center_sentinel_snackbar_message_enable_canceled">L\'activation de Proton Sentinel a été annulée</string>
+  <string name="security_center_sentinel_snackbar_message_enable_error">Une erreur s\'est produite durant l\'activation de la protection Proton Sentinel. Veuillez réessayer plus tard.</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Mots de passe faibles</string>
   <string name="security_center_weak_pass_top_bar_subtitle">Les mots de passe faibles sont plus facile à deviner. Créez un mot de passe complexe pour mieux sécuriser votre compte.</string>
@@ -36,4 +52,33 @@
   <!-- Missing 2FA -->
   <string name="security_center_missing_tfa_top_bar_title">Authentification à deux facteurs manquante</string>
   <string name="security_center_missing_tfa_top_bar_subtitle">Il s\'agit de connexions disponibles à des sites disposant de l\'authentification à deux facteurs (A2F) mais que vous n\'avez pas configuré.</string>
+  <!-- Dark web monitor -->
+  <string name="security_center_dark_web_monitor_top_bar_title">Surveillance du dark web</string>
+  <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Dernière vérification : %s</string>
+  <string name="security_center_dark_web_monitor_custom_emails_title">Adresse électronique personnalisée</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Ajouter de nouvelles adresse e-mail personnalisées</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_button">Ajouter</string>
+  <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
+    <item quantity="one">Utilisation pour %d connexion</item>
+    <item quantity="other">Utilisation pour %d connexions</item>
+  </plurals>
+  <plurals name="security_center_dark_web_monitor_custom_emails_breaches_found">
+    <item quantity="one">%d fuite de données a été détectée.</item>
+    <item quantity="other">%d fuites de données ont été détectées.</item>
+  </plurals>
+  <string name="security_center_dark_web_monitor_custom_emails_loading_error">Une erreur s\'est produite lors du chargement des adresses e-mail personnalisées.</string>
+  <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Les adresse e-mail n\'ont pu être obtenues.</string>
+  <!-- Add custom email monitoring -->
+  <string name="security_center_custom_email_top_bar_title">Surveillance de l\'adresse e-mail personnalisée</string>
+  <string name="security_center_custom_email_email_address_placeholder">Adresse e-mail</string>
+  <string name="security_center_custom_email_invalid_address">L\'adresse e-mail n\'est pas valide.</string>
+  <string name="security_center_custom_email_continue">Continuer</string>
+  <string name="security_center_custom_email_already_verified">L\'adresse e-mail a été vérifiée.</string>
+  <string name="security_center_custom_email_error_adding">Une erreur s\'est produite pendant l\'ajout de l\'adresse e-mail.</string>
+  <!-- Verify email monitoring -->
+  <string name="security_center_verify_email_code_placeholder">Code</string>
+  <string name="security_center_verify_email_code_error">Le code n’est pas valide.</string>
+  <string name="security_center_verify_email_continue">Continuer</string>
+  <string name="security_center_verify_email_title">Confirmez votre email</string>
+  <string name="security_center_verify_email_subtitle">Nous avons envoyé un code de vérification à %s. Veuillez le saisir ci-dessous :</string>
 </resources>

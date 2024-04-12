@@ -27,7 +27,10 @@
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Åbn handlingsmenu for element</string>
   <string name="action_upgrade_now">Opgradér nu</string>
-  <string name="action_not_now">Not now</string>
+  <string name="action_not_now">Ikke nu</string>
+  <string name="action_learn_more">Learn more</string>
+  <string name="action_enable">Enable</string>
+  <string name="action_view_details">View details</string>
   <!-- Empty list -->
   <string name="empty_list_title">Tilføj dit første element</string>
   <string name="empty_search_results_title">Intet resultat fundet</string>
@@ -122,4 +125,7 @@
   <string name="dialog_upgrade_plan_message">Denne funktion er ikke tilgængelig for gratisbrugere. Hvis du vil have glæde af den sammen med andre fede funktioner, så opgradér dit abonnement og prøv den!</string>
   <string name="dialog_upgrade_plan_action_confirm">Opgradér</string>
   <string name="dialog_upgrade_plan_action_cancel">Ikke nu</string>
+  <!-- Words -->
+  <string name="email_address">E-mailadresse</string>
+  <string name="password">Password</string>
 </resources>

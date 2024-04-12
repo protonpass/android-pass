@@ -7,7 +7,7 @@
   <string name="action_login">Prijava</string>
   <string name="action_alias">Vzdevek</string>
   <string name="action_note">Opomba</string>
-  <string name="action_credit_card">Kreditna kartica</string>
+  <string name="action_credit_card">Plačilna kartica</string>
   <string name="action_password">Geslo</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Dodajte podatke za prijavo v aplikacijo ali spletno mesto</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Pridobite e-poštni vzdevek za uporabo v novih aplikacijah</string>
@@ -76,7 +76,7 @@
   <!-- Create note -->
   <string name="note_hint">Opomba</string>
   <!-- Create Credit Card -->
-  <string name="title_create_credit_card">Ustvarite kreditno kartico</string>
+  <string name="title_create_credit_card">Ustvarite plačilno kartico</string>
   <string name="field_cardholder_name_title">Ime na kartici</string>
   <string name="field_cardholder_name_hint">Polno ime</string>
   <string name="field_card_number_title">Številka kartice</string>
@@ -88,10 +88,10 @@
   <string name="field_card_expiration_date_title">Datum poteka</string>
   <string name="field_card_expiration_date_hint">MM / LL</string>
   <string name="field_card_expiration_date_error">Vnesite veljaven datum v obliki MM/LL</string>
-  <string name="create_credit_card_item_creation_error">Ni bilo mogoče ustvariti kreditne kartice</string>
-  <string name="create_credit_card_item_creation_success">Kreditna kartica ustvarjena</string>
-  <string name="credit_card_init_error">Težava pri pridobivanju podatkov o kreditni kartici</string>
-  <string name="credit_card_item_update_error">Kreditne kartice ni bilo mogoče posodobiti</string>
+  <string name="create_credit_card_item_creation_error">Ni bilo mogoče ustvariti plačilne kartice</string>
+  <string name="create_credit_card_item_creation_success">Plačilna kartica ustvarjena</string>
+  <string name="credit_card_init_error">Težava pri pridobivanju podatkov o plačilni kartici</string>
+  <string name="credit_card_item_update_error">Plačilne kartice ni bilo mogoče posodobiti</string>
   <!--  Common create items  -->
   <string name="changes_saved">Spremembe shranjene.</string>
   <!--  TOTP  -->

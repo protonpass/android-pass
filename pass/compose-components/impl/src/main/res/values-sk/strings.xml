@@ -30,6 +30,9 @@
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Otvoriť ponuku akcií položky</string>
   <string name="action_upgrade_now">Navýšiť teraz</string>
   <string name="action_not_now">Teraz nie</string>
+  <string name="action_learn_more">Learn more</string>
+  <string name="action_enable">Enable</string>
+  <string name="action_view_details">View details</string>
   <!-- Empty list -->
   <string name="empty_list_title">Pridajte prvú položku</string>
   <string name="empty_search_results_title">Žiadne nájdené výsledky</string>
@@ -126,4 +129,7 @@
   <string name="dialog_upgrade_plan_message">Táto funkcia nie je dostupná pre používateľov bezplatného plánu. Ak si chcete túto a ďalšie skvelé funkcie vychutnať, upgradujte svoj plán a vyskúšajte ich!</string>
   <string name="dialog_upgrade_plan_action_confirm">Upgradovať</string>
   <string name="dialog_upgrade_plan_action_cancel">Teraz nie</string>
+  <!-- Words -->
+  <string name="email_address">Emailová adresa</string>
+  <string name="password">Password</string>
 </resources>

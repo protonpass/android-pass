@@ -27,6 +27,9 @@
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Buka menu tindakan item</string>
   <string name="action_upgrade_now">Tingkatkan sekarang</string>
   <string name="action_not_now">Tidak sekarang</string>
+  <string name="action_learn_more">Learn more</string>
+  <string name="action_enable">Enable</string>
+  <string name="action_view_details">View details</string>
   <!-- Empty list -->
   <string name="empty_list_title">Tambahkan item pertama Anda</string>
   <string name="empty_search_results_title">Hasil tidak ditemukan</string>
@@ -120,4 +123,7 @@
   <string name="dialog_upgrade_plan_message">Fitur ini tidak tersedia bagi pengguna dengan paket gratis. Apabila Anda ingin menikmati fitur ini dan berbagai fitur keren lainnya, tingkatkan paket Anda dan mulai gunakan fitur ini!</string>
   <string name="dialog_upgrade_plan_action_confirm">Tingkatkan</string>
   <string name="dialog_upgrade_plan_action_cancel">Tidak sekarang</string>
+  <!-- Words -->
+  <string name="email_address">Alamat email</string>
+  <string name="password">Password</string>
 </resources>

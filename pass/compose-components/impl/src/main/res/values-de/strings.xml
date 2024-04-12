@@ -27,7 +27,10 @@
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Aktionsmenü für Eintrag öffnen.</string>
   <string name="action_upgrade_now">Jetzt upgraden</string>
-  <string name="action_not_now">Not now</string>
+  <string name="action_not_now">Nicht jetzt</string>
+  <string name="action_learn_more">Learn more</string>
+  <string name="action_enable">Enable</string>
+  <string name="action_view_details">View details</string>
   <!-- Empty list -->
   <string name="empty_list_title">Füge deinen ersten Eintrag hinzu</string>
   <string name="empty_search_results_title">Kein Ergebnis gefunden</string>
@@ -122,4 +125,7 @@
   <string name="dialog_upgrade_plan_message">Diese Funktion ist für Nutzer des kostenlosen Abonnements nicht verfügbar. Wenn du diese und andere coole Funktionen nutzen möchtest, upgrade dein Abonnement und probiere es aus!</string>
   <string name="dialog_upgrade_plan_action_confirm">Upgraden</string>
   <string name="dialog_upgrade_plan_action_cancel">Nicht jetzt</string>
+  <!-- Words -->
+  <string name="email_address">E‐Mail‐Adresse</string>
+  <string name="password">Password</string>
 </resources>

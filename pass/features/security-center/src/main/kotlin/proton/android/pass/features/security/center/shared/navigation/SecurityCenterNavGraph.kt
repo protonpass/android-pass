@@ -23,9 +23,12 @@ import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.features.security.center.customemail.navigation.SecurityCenterCustomEmailNavDestination
 import proton.android.pass.features.security.center.customemail.navigation.SecurityCenterCustomEmailNavItem
 import proton.android.pass.features.security.center.customemail.ui.SecurityCenterCustomEmailScreen
+import proton.android.pass.features.security.center.darkweb.navigation.CustomEmailOptionsNavDestination
+import proton.android.pass.features.security.center.darkweb.navigation.CustomEmailOptionsNavItem
 import proton.android.pass.features.security.center.darkweb.navigation.DarkWebMonitorNavDestination
 import proton.android.pass.features.security.center.darkweb.navigation.DarkWebMonitorNavItem
 import proton.android.pass.features.security.center.darkweb.ui.DarkWebScreen
+import proton.android.pass.features.security.center.darkweb.ui.customemails.options.UnverifiedCustomEmailOptionsBottomSheet
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavDestination
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavItem
 import proton.android.pass.features.security.center.home.ui.SecurityCenterHomeScreen
@@ -176,6 +179,13 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                             email = destination.email
                         )
                     )
+
+                    is DarkWebMonitorNavDestination.UnverifiedEmailOptions -> onNavigated(
+                        SecurityCenterNavDestination.UnverifiedEmailOptions(
+                            id = destination.id,
+                            email = destination.email
+                        )
+                    )
                 }
             }
         )
@@ -213,6 +223,23 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
             onNavigated = { destination ->
                 val event = when (destination) {
                     SecurityCenterReportDestination.Back -> SecurityCenterNavDestination.Back()
+                }
+                onNavigated(event)
+            }
+        )
+    }
+
+    bottomSheet(CustomEmailOptionsNavItem) {
+        UnverifiedCustomEmailOptionsBottomSheet(
+            onNavigate = { destination ->
+                val event = when (destination) {
+                    CustomEmailOptionsNavDestination.Close -> SecurityCenterNavDestination.Back(
+                        comesFromBottomSheet = true
+                    )
+                    is CustomEmailOptionsNavDestination.Verify -> SecurityCenterNavDestination.VerifyEmail(
+                        id = destination.breachCustomEmailId,
+                        email = destination.customEmail
+                    )
                 }
                 onNavigated(event)
             }

@@ -19,7 +19,9 @@
 package proton.android.pass.features.security.center.sentinel.navigation
 
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
 
 object SecurityCenterSentinelNavItem : NavItem(
-    baseRoute = "security/center/sentinel"
+    baseRoute = "security/center/sentinel",
+    navItemType = NavItemType.Bottomsheet
 )

@@ -110,6 +110,7 @@ import proton.android.pass.features.item.history.navigation.itemHistoryNavGraph
 import proton.android.pass.features.item.history.restore.navigation.ItemHistoryRestoreNavItem
 import proton.android.pass.features.item.history.timeline.navigation.ItemHistoryTimelineNavItem
 import proton.android.pass.features.security.center.customemail.navigation.SecurityCenterCustomEmailNavItem
+import proton.android.pass.features.security.center.darkweb.navigation.CustomEmailOptionsNavItem
 import proton.android.pass.features.security.center.darkweb.navigation.DarkWebMonitorNavItem
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavItem
 import proton.android.pass.features.security.center.missingtfa.navigation.SecurityCenterMissingTFANavItem
@@ -1089,13 +1090,15 @@ fun NavGraphBuilder.appGraph(
                     )
                 }
 
-                is SecurityCenterNavDestination.VerifyEmail -> appNavigator.navigate(
-                    destination = SecurityCenterVerifyEmailNavItem,
-                    route = SecurityCenterVerifyEmailNavItem.createNavRoute(
-                        id = destination.id,
-                        email = destination.email
+                is SecurityCenterNavDestination.VerifyEmail -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = SecurityCenterVerifyEmailNavItem,
+                        route = SecurityCenterVerifyEmailNavItem.createNavRoute(
+                            id = destination.id,
+                            email = destination.email
+                        )
                     )
-                )
+                }
 
                 is SecurityCenterNavDestination.AddCustomEmail -> appNavigator.navigate(
                     destination = SecurityCenterCustomEmailNavItem,
@@ -1116,6 +1119,14 @@ fun NavGraphBuilder.appGraph(
                         id = destination.id,
                         email = destination.email,
                         breaches = destination.breachCount
+                    )
+                )
+
+                is SecurityCenterNavDestination.UnverifiedEmailOptions -> appNavigator.navigate(
+                    destination = CustomEmailOptionsNavItem,
+                    route = CustomEmailOptionsNavItem.buildRoute(
+                        breachEmailId = destination.id,
+                        customEmail = destination.email
                     )
                 )
             }

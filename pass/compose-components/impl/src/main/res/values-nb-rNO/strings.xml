@@ -28,6 +28,9 @@
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Åpne elementhandlingsmenyen</string>
   <string name="action_upgrade_now">Oppgrader nå</string>
   <string name="action_not_now">Ikke nå</string>
+  <string name="action_learn_more">Lær mer</string>
+  <string name="action_enable">Aktiver</string>
+  <string name="action_view_details">Vis detaljer</string>
   <!-- Empty list -->
   <string name="empty_list_title">Legg til ditt første element</string>
   <string name="empty_search_results_title">Ingen resultater funnet</string>
@@ -122,4 +125,7 @@
   <string name="dialog_upgrade_plan_message">Denne funksjonen er ikke tilgjengelig for gratisnivåbrukere. Hvis du vil nyte dette sammen med andre kule funksjoner, oppgrader planen din og prøv!</string>
   <string name="dialog_upgrade_plan_action_confirm">Oppgrader</string>
   <string name="dialog_upgrade_plan_action_cancel">Ikke nå</string>
+  <!-- Words -->
+  <string name="email_address">E-postadresse</string>
+  <string name="password">Passord</string>
 </resources>

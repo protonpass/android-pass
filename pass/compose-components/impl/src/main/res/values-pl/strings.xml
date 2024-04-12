@@ -30,6 +30,9 @@
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Otwórz menu akcji elementu</string>
   <string name="action_upgrade_now">Ulepsz teraz</string>
   <string name="action_not_now">Nie teraz</string>
+  <string name="action_learn_more">Dowiedz się więcej</string>
+  <string name="action_enable">Włącz</string>
+  <string name="action_view_details">Pokaż szczegóły</string>
   <!-- Empty list -->
   <string name="empty_list_title">Dodaj pierwszy element</string>
   <string name="empty_search_results_title">Nie znaleziono żadnych wyników</string>
@@ -126,4 +129,7 @@
   <string name="dialog_upgrade_plan_message">Ta funkcja nie jest dostępna dla użytkowników darmowego planu. Jeśli chcesz korzystać z niej oraz innych fajnych funkcji, uaktualnij swój plan i wypróbuj!</string>
   <string name="dialog_upgrade_plan_action_confirm">Ulepsz</string>
   <string name="dialog_upgrade_plan_action_cancel">Nie teraz</string>
+  <!-- Words -->
+  <string name="email_address">Adres e-mail</string>
+  <string name="password">Hasło</string>
 </resources>

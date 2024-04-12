@@ -30,6 +30,9 @@
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Адкрыць меню дзеянняў элемента</string>
   <string name="action_upgrade_now">Палепшыць</string>
   <string name="action_not_now">Не зараз</string>
+  <string name="action_learn_more">Даведацца больш</string>
+  <string name="action_enable">Уключыць</string>
+  <string name="action_view_details">Паглядзець падрабязнасці</string>
   <!-- Empty list -->
   <string name="empty_list_title">Дадайце свой першы элемент</string>
   <string name="empty_search_results_title">Нічога не знойдзена</string>
@@ -126,4 +129,7 @@
   <string name="dialog_upgrade_plan_message">Гэта функцыя недаступна для бясплатнага ўзроўню падпіскі. Калі вы хочаце карыстацца ёй з іншымі цудоўнымі функцыямі, вам неабходна палепшыць свой тарыфны план і нарэшце паспрабаваць іх!</string>
   <string name="dialog_upgrade_plan_action_confirm">Палепшыць</string>
   <string name="dialog_upgrade_plan_action_cancel">Не зараз</string>
+  <!-- Words -->
+  <string name="email_address">Адрас электроннай пошты</string>
+  <string name="password">Пароль</string>
 </resources>

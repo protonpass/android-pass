@@ -29,7 +29,10 @@
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Открыть меню действий с элементом</string>
   <string name="action_upgrade_now">Улучшить сейчас</string>
-  <string name="action_not_now">Not now</string>
+  <string name="action_not_now">Не сейчас</string>
+  <string name="action_learn_more">Learn more</string>
+  <string name="action_enable">Enable</string>
+  <string name="action_view_details">View details</string>
   <!-- Empty list -->
   <string name="empty_list_title">Добавьте свой первый элемент</string>
   <string name="empty_search_results_title">Ничего не найдено</string>
@@ -109,15 +112,15 @@
   <string name="item_details_alias_section_alias_title">Адрес псевдонима</string>
   <string name="item_details_alias_section_mailboxes_title">Forwarding to</string>
   <string name="item_details_credit_card_section_cardholder_title">Имя на карте</string>
-  <string name="item_details_credit_card_section_card_number_title">Card number</string>
+  <string name="item_details_credit_card_section_card_number_title">Номер карты</string>
   <string name="item_details_credit_card_section_expiration_date_title">Срок действия</string>
   <string name="item_details_credit_card_section_cvv_title">Код безопасности</string>
-  <string name="item_details_credit_card_section_pin_title">PIN code</string>
+  <string name="item_details_credit_card_section_pin_title">PIN-код</string>
   <string name="item_details_login_section_username_title">Имя пользователя или адрес электронной почты</string>
   <string name="item_details_login_section_password_title">Пароль</string>
   <string name="item_details_login_section_primary_totp_title">Токен 2ФА (TOTP)</string>
   <string name="item_details_login_section_websites_title">Веб-сайты</string>
-  <string name="item_details_shared_section_note_title">Note</string>
+  <string name="item_details_shared_section_note_title">Примечания</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Версия приложения больше не поддерживается, пожалуйста, обновите приложение.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Passkey</string>
@@ -126,4 +129,7 @@
   <string name="dialog_upgrade_plan_message">This feature is not available for free tier users. If you want to enjoy this along with other cool features, upgrade your plan and give it a try!</string>
   <string name="dialog_upgrade_plan_action_confirm">Upgrade</string>
   <string name="dialog_upgrade_plan_action_cancel">Не сейчас</string>
+  <!-- Words -->
+  <string name="email_address">Адрес эл. почты</string>
+  <string name="password">Пароль</string>
 </resources>

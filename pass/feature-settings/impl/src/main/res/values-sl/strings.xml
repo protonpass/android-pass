@@ -20,7 +20,7 @@
   <string name="settings_option_force_sync">Vsili sinhronizacijo</string>
   <string name="settings_about_section_title">O programu</string>
   <string name="settings_option_privacy_policy">Pravilnik o zasebnosti</string>
-  <string name="settings_option_terms_of_service">Pogoji uporabe</string>
+  <string name="settings_option_terms_of_service">Pogoji storitve</string>
   <string name="settings_privacy_section_title">Zasebnost</string>
   <string name="settings_use_favicons_preference_title">Uporabite spletne ikone</string>
   <string name="settings_use_favicons_preference_subtitle">Odločite se, ali želite videti ikone spletnega mesta na svojih predmetih.</string>

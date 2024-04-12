@@ -27,7 +27,10 @@
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">ელემენტის ქმედების მენიუს გახსნა</string>
   <string name="action_upgrade_now">ტარიფის განახლება</string>
-  <string name="action_not_now">Not now</string>
+  <string name="action_not_now">არა ახლა</string>
+  <string name="action_learn_more">Learn more</string>
+  <string name="action_enable">Enable</string>
+  <string name="action_view_details">View details</string>
   <!-- Empty list -->
   <string name="empty_list_title">დაამატეთ თქვენი პირველი ელემენტი</string>
   <string name="empty_search_results_title">შედეგების გარეშე</string>
@@ -122,4 +125,7 @@
   <string name="dialog_upgrade_plan_message">ეს ფუნქცია ხელმიუწვდომელია უფასო სატარიფო გეგმისი მომხმარებლებისთვის. თუ გნებავთ, ისიამოვნოთ სხვა მრავალ მაგარ ფუნქციასთან ერთად, ასწიეთ სატარიფო გეგმა და სცადეთ ისინი!</string>
   <string name="dialog_upgrade_plan_action_confirm">ტარიფის აწევა</string>
   <string name="dialog_upgrade_plan_action_cancel">არა ახლა</string>
+  <!-- Words -->
+  <string name="email_address">ელფოსტის მისამართი</string>
+  <string name="password">Password</string>
 </resources>

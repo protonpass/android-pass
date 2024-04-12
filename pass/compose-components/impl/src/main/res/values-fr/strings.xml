@@ -28,6 +28,9 @@
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Ouvrir le menu d\'action de l\'élément</string>
   <string name="action_upgrade_now">Changer d\'abonnement</string>
   <string name="action_not_now">Plus tard</string>
+  <string name="action_learn_more">En savoir plus</string>
+  <string name="action_enable">Activer</string>
+  <string name="action_view_details">Afficher les informations</string>
   <!-- Empty list -->
   <string name="empty_list_title">Ajoutez votre premier élément</string>
   <string name="empty_search_results_title">Aucun résultat n\'a été trouvé.</string>
@@ -122,4 +125,7 @@
   <string name="dialog_upgrade_plan_message">Cette fonctionnalité n\'est pas disponible pour les utilisateurs utilisant un abonnement gratuit. Si vous souhaitez profiter de cette fonctionnalité ainsi que d\'autres fonctions intéressantes, changez d\'abonnement et essayez-la !</string>
   <string name="dialog_upgrade_plan_action_confirm">Changer d\'abonnement</string>
   <string name="dialog_upgrade_plan_action_cancel">Pas maintenant</string>
+  <!-- Words -->
+  <string name="email_address">Adresse e-mail</string>
+  <string name="password">Mot de passe</string>
 </resources>

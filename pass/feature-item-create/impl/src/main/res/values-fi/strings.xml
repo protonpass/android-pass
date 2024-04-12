@@ -112,6 +112,6 @@
   <string name="select_mailbox_upgrade_for_more_inboxes">Hanki lisää postilaatikoita päivittämällä tilauksesi</string>
   <string name="create_alias_content_limit_banner">Luotujen aliasten enimmäismäärä on saavutettu. Luo aliaksia rajattomasti päivittämällä tilauksesi.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Sovellus on päivitettävä tämän kohteen muokkaamiseksi</string>
-  <string name="remove_passkey_dialog_title">Poistetaanko tämä avainkoodi?</string>
-  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Haluatko varmasti poistaa avainkoodin verkkotunnuksen \'%2$s\' käyttäjältä \'%1$s\'?</string>
+  <string name="remove_passkey_dialog_title">Poistetaanko tämä suojausavain?</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Haluatko varmasti poistaa suojausavaimen osoitteen \"%2$s\" käyttäjältä \"%1$s\"?</string>
 </resources>

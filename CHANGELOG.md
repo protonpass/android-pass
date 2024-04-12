@@ -6,6 +6,17 @@
 
 ### Other
 
+## 1.20.4 (2024-04-12)
+
+### Fixes :bug:
+
+- Do not strip ports and paths when storing a URL.
+- FDroid build issues.
+
+### Other
+
+- Updated translations.
+
 ## 1.20.3 (2024-04-05)
 
 ### Features :tada:

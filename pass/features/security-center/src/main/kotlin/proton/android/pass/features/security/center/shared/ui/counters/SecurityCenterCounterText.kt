@@ -22,6 +22,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.composecomponents.impl.container.Circle
@@ -31,7 +32,8 @@ internal fun SecurityCenterCounterText(
     modifier: Modifier = Modifier,
     counterText: String,
     backgroundColor: Color,
-    textColor: Color
+    textColor: Color,
+    textStyle: TextStyle = ProtonTheme.typography.defaultNorm
 ) {
     Circle(
         modifier = modifier,
@@ -40,7 +42,7 @@ internal fun SecurityCenterCounterText(
         Text(
             text = counterText,
             color = textColor,
-            style = ProtonTheme.typography.defaultNorm
+            style = textStyle
         )
     }
 }

@@ -112,21 +112,33 @@ fun ItemContents.serializeToProto(
                     // Passkeys
                     .clearPasskeys()
                     .addAllPasskeys(
-                        passkeys.map {
-                            ItemV1.Passkey.newBuilder()
-                                .setKeyId(it.id.value)
-                                .setContent(ByteString.copyFrom(it.contents))
-                                .setDomain(it.domain)
-                                .setRpId(it.rpId)
-                                .setRpName(it.rpName)
-                                .setUserName(it.userName)
-                                .setUserDisplayName(it.userDisplayName)
-                                .setUserId(ByteString.copyFrom(it.userId))
-                                .setNote(it.note)
-                                .setCreateTime(it.createTime.epochSeconds.toInt())
-                                .setUserHandle(ByteString.copyFrom(it.userHandle))
-                                .setCredentialId(ByteString.copyFrom(it.credentialId))
-                                .build()
+                        passkeys.map { passkey ->
+                            var passkeyBuilder = ItemV1.Passkey.newBuilder()
+                                .setKeyId(passkey.id.value)
+                                .setContent(ByteString.copyFrom(passkey.contents))
+                                .setDomain(passkey.domain)
+                                .setRpId(passkey.rpId)
+                                .setRpName(passkey.rpName)
+                                .setUserName(passkey.userName)
+                                .setUserDisplayName(passkey.userDisplayName)
+                                .setUserId(ByteString.copyFrom(passkey.userId))
+                                .setNote(passkey.note)
+                                .setCreateTime(passkey.createTime.epochSeconds.toInt())
+                                .setUserHandle(ByteString.copyFrom(passkey.userHandle))
+                                .setCredentialId(ByteString.copyFrom(passkey.credentialId))
+
+                            passkey.creationData?.let { creationData ->
+                                passkeyBuilder = passkeyBuilder.setCreationData(
+                                    ItemV1.PasskeyCreationData.newBuilder()
+                                        .setOsName(creationData.osName)
+                                        .setOsVersion(creationData.osVersion)
+                                        .setDeviceName(creationData.deviceName)
+                                        .setAppVersion(creationData.appVersion)
+                                        .build()
+                                )
+                            }
+
+                            passkeyBuilder.build()
                         }
                     )
                     .build()

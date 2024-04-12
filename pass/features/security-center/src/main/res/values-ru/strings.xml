@@ -19,6 +19,15 @@
 <resources>
   <!-- Home screen -->
   <string name="security_center_home_top_bar_title">Pass Monitor</string>
+  <string name="security_center_home_dark_web_monitoring_title">Dark Web Monitoring</string>
+  <string name="security_center_home_widget_breaches_title">Breach detected</string>
+  <string name="security_center_home_widget_breaches_subtitle">Your email addresses were leaked in at least 1 data breach.</string>
+  <string name="security_center_home_widget_no_breaches_subtitle">Get notified if your email, password or other personal data was leaked.</string>
+  <string name="security_center_home_row_no_data_breaches_subtitle">No breaches detected</string>
+  <string name="security_center_home_row_data_breaches_title">Dark Web Alert</string>
+  <string name="security_center_home_row_data_breaches_subtitle">Breaches detected</string>
+  <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
+  <string name="security_center_home_row_sentinel_subtitle">Advanced account protection program</string>
   <string name="security_center_home_row_insecure_passwords_title">Weak passwords</string>
   <string name="security_center_home_row_insecure_passwords_subtitle">Create strong passwords</string>
   <string name="security_center_home_row_reused_passwords_title">Reused passwords</string>
@@ -26,6 +35,13 @@
   <string name="security_center_home_row_missing_tfa_title">Missing two-factor authentication</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Increase your security</string>
   <string name="security_center_home_section_password_health">Password Health</string>
+  <string name="security_center_home_snackbar_message_disable_sentinel_error">There was an error disabling Proton Sentinel protection. Please try again.</string>
+  <!-- Sentinel bottom sheet -->
+  <string name="security_center_sentinel_title">Proton Sentinel</string>
+  <string name="security_center_sentinel_subtitle">Proton Sentinel is an advanced account protection program powered by sophisticated AI systems and specialists working around the clock to protect you from bad actors and security threats.</string>
+  <string name="security_center_sentinel_button_enable">Enable Proton Sentinel</string>
+  <string name="security_center_sentinel_snackbar_message_enable_canceled">Proton Sentinel protection activation has been canceled</string>
+  <string name="security_center_sentinel_snackbar_message_enable_error">There was an error enabling Proton Sentinel protection. Please try again.</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Weak passwords</string>
   <string name="security_center_weak_pass_top_bar_subtitle">Weak passwords are easier to guess. Generate strong passwords to keep your account safe.</string>
@@ -36,4 +52,37 @@
   <!-- Missing 2FA -->
   <string name="security_center_missing_tfa_top_bar_title">Missing two-factor authentication</string>
   <string name="security_center_missing_tfa_top_bar_subtitle">Logins with sites that have two-factor authentication available but you haven\'t set it up yet.</string>
+  <!-- Dark web monitor -->
+  <string name="security_center_dark_web_monitor_top_bar_title">Dark Web Monitoring</string>
+  <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Last check: %s</string>
+  <string name="security_center_dark_web_monitor_custom_emails_title">Custom email address</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Add new custom email address</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_button">Добавить</string>
+  <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
+    <item quantity="one">Used in %d login</item>
+    <item quantity="few">Used in %d logins</item>
+    <item quantity="many">Used in %d logins</item>
+    <item quantity="other">Used in %d logins</item>
+  </plurals>
+  <plurals name="security_center_dark_web_monitor_custom_emails_breaches_found">
+    <item quantity="one">%d breach detected</item>
+    <item quantity="few">%d breaches detected</item>
+    <item quantity="many">%d breaches detected</item>
+    <item quantity="other">%d breaches detected</item>
+  </plurals>
+  <string name="security_center_dark_web_monitor_custom_emails_loading_error">Error loading custom email addresses</string>
+  <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Could not get email addresses</string>
+  <!-- Add custom email monitoring -->
+  <string name="security_center_custom_email_top_bar_title">Custom email monitoring</string>
+  <string name="security_center_custom_email_email_address_placeholder">Email address</string>
+  <string name="security_center_custom_email_invalid_address">Invalid email address</string>
+  <string name="security_center_custom_email_continue">Continue</string>
+  <string name="security_center_custom_email_already_verified">Email already verified</string>
+  <string name="security_center_custom_email_error_adding">Error adding the email address</string>
+  <!-- Verify email monitoring -->
+  <string name="security_center_verify_email_code_placeholder">Code</string>
+  <string name="security_center_verify_email_code_error">Invalid code</string>
+  <string name="security_center_verify_email_continue">Continue</string>
+  <string name="security_center_verify_email_title">Confirm your email</string>
+  <string name="security_center_verify_email_subtitle">We\'ve sent a verification code to %s. Please enter it below:</string>
 </resources>

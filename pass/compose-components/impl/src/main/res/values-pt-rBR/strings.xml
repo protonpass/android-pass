@@ -28,6 +28,9 @@
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Abrir menu de ação do item</string>
   <string name="action_upgrade_now">Fazer upgrade agora</string>
   <string name="action_not_now">Agora não</string>
+  <string name="action_learn_more">Saiba mais</string>
+  <string name="action_enable">Ativar</string>
+  <string name="action_view_details">Ver detalhes</string>
   <!-- Empty list -->
   <string name="empty_list_title">Adicione seu primeiro item</string>
   <string name="empty_search_results_title">Nenhum resultado encontrado</string>
@@ -114,12 +117,15 @@
   <string name="item_details_login_section_primary_totp_title">Token A2F (TOTP)</string>
   <string name="item_details_login_section_websites_title">Sites</string>
   <string name="item_details_shared_section_note_title">Nota</string>
-  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">A versão do aplicativo não é mais suportada. Por favor, atualize seu aplicativo.</string>
+  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">A versão do aplicativo não é mais suportada. Atualize seu aplicativo.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Chave de acesso</string>
   <!-- Upgrade -->
-  <string name="dialog_upgrade_plan_title">Atualizar plano</string>
+  <string name="dialog_upgrade_plan_title">Fazer upgrade de plano?</string>
   <string name="dialog_upgrade_plan_message">Esse recurso não está disponível para usuários de plano gratuito. Se você quiser aproveitar isso com outros recursos interessantes, faça upgrade seu plano e experimente!</string>
-  <string name="dialog_upgrade_plan_action_confirm">Atualizar</string>
+  <string name="dialog_upgrade_plan_action_confirm">Fazer upgrade</string>
   <string name="dialog_upgrade_plan_action_cancel">Agora não</string>
+  <!-- Words -->
+  <string name="email_address">Endereço de e-mail</string>
+  <string name="password">Senha</string>
 </resources>

@@ -28,6 +28,9 @@
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Abrir menú de acciones del elemento</string>
   <string name="action_upgrade_now">Mejorar ahora</string>
   <string name="action_not_now">Ahora no</string>
+  <string name="action_learn_more">Más información</string>
+  <string name="action_enable">Activar</string>
+  <string name="action_view_details">Mostrar los detalles</string>
   <!-- Empty list -->
   <string name="empty_list_title">Añada su primer elemento</string>
   <string name="empty_search_results_title">No se encontraron resultados</string>
@@ -122,4 +125,7 @@
   <string name="dialog_upgrade_plan_message">Esta función no está disponible para usuarios del plan gratuito. Si desea disfrutar de esto junto con otras funciones interesantes, mejore su plan y pruébelo.</string>
   <string name="dialog_upgrade_plan_action_confirm">Mejorar</string>
   <string name="dialog_upgrade_plan_action_cancel">Ahora no</string>
+  <!-- Words -->
+  <string name="email_address">Dirección de correo</string>
+  <string name="password">Contraseña</string>
 </resources>

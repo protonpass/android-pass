@@ -19,6 +19,15 @@
 <resources>
   <!-- Home screen -->
   <string name="security_center_home_top_bar_title">Monitor de Pass</string>
+  <string name="security_center_home_dark_web_monitoring_title">Monitoreo de la Dark Web</string>
+  <string name="security_center_home_widget_breaches_title">Vulneración detectada</string>
+  <string name="security_center_home_widget_breaches_subtitle">Sus direcciones de correo fueron filtradas en al menos una filtración de datos.</string>
+  <string name="security_center_home_widget_no_breaches_subtitle">Reciba notificaciones si su correo electrónico, contraseña u otro dato personal ha sido filtrado.</string>
+  <string name="security_center_home_row_no_data_breaches_subtitle">No se detectaron vulneraciones</string>
+  <string name="security_center_home_row_data_breaches_title">Alerta de la Dark Web</string>
+  <string name="security_center_home_row_data_breaches_subtitle">Vulneraciones detectadas</string>
+  <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
+  <string name="security_center_home_row_sentinel_subtitle">Programa de protección avanzada de cuentas</string>
   <string name="security_center_home_row_insecure_passwords_title">Contraseñas débiles</string>
   <string name="security_center_home_row_insecure_passwords_subtitle">Cree contraseñas fuertes</string>
   <string name="security_center_home_row_reused_passwords_title">Contraseñas reusadas</string>
@@ -26,6 +35,13 @@
   <string name="security_center_home_row_missing_tfa_title">Falta la autenticación de dos factores</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Aumente su seguridad</string>
   <string name="security_center_home_section_password_health">Estado de la contraseña</string>
+  <string name="security_center_home_snackbar_message_disable_sentinel_error">Ocurrió un error al desactivar la protección Proton Sentinel. Inténtelo de nuevo.</string>
+  <!-- Sentinel bottom sheet -->
+  <string name="security_center_sentinel_title">Proton Sentinel</string>
+  <string name="security_center_sentinel_subtitle">Proton Sentinel es un programa avanzado de protección de cuentas impulsado por sofisticados sistemas de IA y especialistas que trabajan las 24 horas del día para protegerle de los malos actores y las amenazas a la seguridad.</string>
+  <string name="security_center_sentinel_button_enable">Activar Proton Sentinel</string>
+  <string name="security_center_sentinel_snackbar_message_enable_canceled">Se ha cancelado la activación de la protección de Proton Sentinel</string>
+  <string name="security_center_sentinel_snackbar_message_enable_error">Ocurrió un error al activar la protección Proton Sentinel. Inténtelo de nuevo.</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Contraseñas débiles</string>
   <string name="security_center_weak_pass_top_bar_subtitle">Las contraseñas débiles son fáciles de adivinar. Genere contraseñas seguras para mantener su cuenta segura.</string>
@@ -36,4 +52,33 @@
   <!-- Missing 2FA -->
   <string name="security_center_missing_tfa_top_bar_title">Falta la autenticación de dos factores</string>
   <string name="security_center_missing_tfa_top_bar_subtitle">Inicios de sesión en sitios que disponen de autenticación de dos factores, pero que aún no ha configurado.</string>
+  <!-- Dark web monitor -->
+  <string name="security_center_dark_web_monitor_top_bar_title">Monitoreo de la Dark Web</string>
+  <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Última revisión: %s</string>
+  <string name="security_center_dark_web_monitor_custom_emails_title">Dirección de correo personalizada</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Añadir dirección de correo personalizada</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_button">Añadir</string>
+  <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
+    <item quantity="one">Usada en %d inicio de sesión</item>
+    <item quantity="other">Usada en %d inicios de sesión</item>
+  </plurals>
+  <plurals name="security_center_dark_web_monitor_custom_emails_breaches_found">
+    <item quantity="one">%d vulneración detectada</item>
+    <item quantity="other">%d vulneraciones detectadas</item>
+  </plurals>
+  <string name="security_center_dark_web_monitor_custom_emails_loading_error">Error al cargar la dirección de correo personalizada</string>
+  <string name="security_center_dark_web_monitor_custom_emails_unknown_error">No se pueden obtener las direcciones de correo.</string>
+  <!-- Add custom email monitoring -->
+  <string name="security_center_custom_email_top_bar_title">Seguimiento personalizado del correo electrónico</string>
+  <string name="security_center_custom_email_email_address_placeholder">Dirección de correo</string>
+  <string name="security_center_custom_email_invalid_address">Dirección de correo inválida</string>
+  <string name="security_center_custom_email_continue">Continuar</string>
+  <string name="security_center_custom_email_already_verified">Correo ya verificado</string>
+  <string name="security_center_custom_email_error_adding">Error al añadir la dirección de correo electrónico</string>
+  <!-- Verify email monitoring -->
+  <string name="security_center_verify_email_code_placeholder">Código</string>
+  <string name="security_center_verify_email_code_error">Código inválido</string>
+  <string name="security_center_verify_email_continue">Continuar</string>
+  <string name="security_center_verify_email_title">Confirme su correo electrónico</string>
+  <string name="security_center_verify_email_subtitle">Hemos enviado un código de verificación a %s. Ingrese el código abajo:</string>
 </resources>

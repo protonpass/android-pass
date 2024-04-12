@@ -31,10 +31,16 @@ sealed interface DarkWebMonitorNavDestination {
     data class VerifyEmail(val id: BreachCustomEmailId, val email: String) :
         DarkWebMonitorNavDestination
 
+
     data class CustomEmailReport(
         val id: BreachCustomEmailId,
         val email: String,
         val breachCount: Int
+    ) : DarkWebMonitorNavDestination
+
+    data class UnverifiedEmailOptions(
+        val id: BreachCustomEmailId,
+        val email: String
     ) : DarkWebMonitorNavDestination
 
 }

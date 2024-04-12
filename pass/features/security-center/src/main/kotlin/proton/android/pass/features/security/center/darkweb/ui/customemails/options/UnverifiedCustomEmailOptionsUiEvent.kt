@@ -16,12 +16,9 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.sentinel.navigation
+package proton.android.pass.features.security.center.darkweb.ui.customemails.options
 
-import proton.android.pass.navigation.api.NavItem
-import proton.android.pass.navigation.api.NavItemType
-
-object SecurityCenterSentinelNavItem : NavItem(
-    baseRoute = "security/center/sentinel",
-    navItemType = NavItemType.Bottomsheet
-)
+sealed interface UnverifiedCustomEmailOptionsUiEvent {
+    data object VerifyCustomEmail : UnverifiedCustomEmailOptionsUiEvent
+    data object RemoveCustomEmail : UnverifiedCustomEmailOptionsUiEvent
+}

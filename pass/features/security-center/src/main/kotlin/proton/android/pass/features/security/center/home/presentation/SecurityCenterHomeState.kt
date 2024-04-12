@@ -57,6 +57,13 @@ internal data class SecurityCenterHomeState(
         is LoadingResult.Success -> missing2faResult.data.missing2faCount
     }
 
+    internal val excludedItemsCount: Int? = when (missing2faResult) {
+        is LoadingResult.Error,
+        LoadingResult.Loading -> null
+
+        is LoadingResult.Success -> 0
+    }
+
     internal val missing2faDestination: SecurityCenterHomeNavDestination = when (planType) {
         is PlanType.Free,
         is PlanType.Unknown -> SecurityCenterHomeNavDestination.Upsell(PaidFeature.ViewMissing2fa)

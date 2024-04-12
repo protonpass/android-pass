@@ -26,7 +26,7 @@ import proton_pass_item_v1.ItemV1.Passkey as ProtoPasskey
 fun ItemV1.Item.withPasskey(passkey: Passkey): ItemV1.Item {
     val passkeys = content.login.passkeysList.toMutableList()
     val protoPasskey = with(passkey) {
-        ProtoPasskey.newBuilder()
+        var builder = ProtoPasskey.newBuilder()
             .setKeyId(id.value)
             .setDomain(domain)
             .setRpId(rpId)
@@ -39,7 +39,19 @@ fun ItemV1.Item.withPasskey(passkey: Passkey): ItemV1.Item {
             .setNote(note)
             .setUserHandle(ByteString.copyFrom(userHandle))
             .setCredentialId(ByteString.copyFrom(credentialId))
-            .build()
+
+        creationData?.let { data ->
+            builder = builder.setCreationData(
+                ItemV1.PasskeyCreationData.newBuilder()
+                    .setOsName(data.osName)
+                    .setOsVersion(data.osVersion)
+                    .setDeviceName(data.deviceName)
+                    .setAppVersion(data.appVersion)
+                    .build()
+            )
+        }
+
+        builder.build()
     }
 
     passkeys.add(protoPasskey)

@@ -38,6 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultWeak
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
@@ -60,7 +61,8 @@ fun PasskeyProfileSection(modifier: Modifier = Modifier, support: ProfilePasskey
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = stringResource(R.string.profile_passkey_support_section_title),
-                style = ProtonTheme.typography.body1Regular
+                style = ProtonTheme.typography.defaultWeak,
+                color = PassTheme.colors.textNorm
             )
             Text(
                 text = status.subtitle,

@@ -115,7 +115,8 @@ fun SelectPasskeyBottomsheetContentPreview(@PreviewParameter(ThemePreviewProvide
             note = "",
             createTime = Instant.fromEpochSeconds(1_708_327_525),
             credentialId = byteArrayOf(),
-            userHandle = null
+            userHandle = null,
+            creationData = null
         )
 
     }

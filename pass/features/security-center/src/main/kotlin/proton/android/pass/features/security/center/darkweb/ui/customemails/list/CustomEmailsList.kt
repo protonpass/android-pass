@@ -39,7 +39,6 @@ import proton.android.pass.features.security.center.darkweb.presentation.CustomE
 import proton.android.pass.features.security.center.darkweb.presentation.DarkWebEmailsError
 import proton.android.pass.features.security.center.darkweb.presentation.DarkWebEmailsState
 import proton.android.pass.features.security.center.darkweb.ui.DarkWebUiEvent
-import proton.android.pass.features.security.center.darkweb.ui.DarkWebUiEvent.OnAddCustomEmailClick
 
 @Composable
 internal fun CustomEmailsList(
@@ -83,27 +82,31 @@ internal fun CustomEmailsList(
 
             is DarkWebEmailsState.Success -> {
                 LazyColumn {
-                    items(items = state.emails, key = { it.id.id }) { itemEmail ->
+                    items(items = state.emails, key = { it.email }) { itemEmail ->
                         CustomEmailItem(
                             email = itemEmail,
                             onAddClick = {
                                 onEvent(
-                                    OnAddCustomEmailClick(
-                                        itemEmail.id,
-                                        itemEmail.email
-                                    )
+                                    DarkWebUiEvent.OnAddCustomEmailClick(itemEmail.email)
                                 )
                             },
-                            onDetailClick = {
+                            onDetailClick = { id ->
                                 onEvent(
                                     DarkWebUiEvent.OnCustomEmailReportClick(
-                                        id = itemEmail.id,
+                                        id = id,
                                         email = itemEmail.email,
                                         breachCount = (itemEmail.status as? CustomEmailUiStatus.Verified)
                                             ?.breachesDetected
                                             ?: 0
                                     )
                                 )
+                            },
+                            onOptionsClick = {
+                                val event = DarkWebUiEvent.OnUnverifiedEmailOptionsClick(
+                                    id = it,
+                                    email = itemEmail.email
+                                )
+                                onEvent(event)
                             }
                         )
                     }

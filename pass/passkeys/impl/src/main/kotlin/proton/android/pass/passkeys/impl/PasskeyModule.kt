@@ -44,6 +44,9 @@ abstract class PasskeyBindsModule {
 
     @Binds
     abstract fun bindCheckPasskeySupport(impl: CheckPasskeySupportImpl): CheckPasskeySupport
+
+    @Binds
+    abstract fun bindGetPasskeyCreationData(impl: GetPasskeyCreationDataImpl): GetPasskeyCreationData
 }
 
 @[Module InstallIn(SingletonComponent::class)]

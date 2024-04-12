@@ -48,6 +48,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
 import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.domain.Passkey
+import proton.android.pass.domain.PasskeyCreationData
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.common.formatMoreInfoInstantText
@@ -158,7 +159,13 @@ fun PasskeyDetailBottomSheetContentPreview(@PreviewParameter(ThemePreviewProvide
                     createTime = now,
                     contents = byteArrayOf(),
                     userHandle = null,
-                    credentialId = byteArrayOf()
+                    credentialId = byteArrayOf(),
+                    creationData = PasskeyCreationData(
+                        osName = "Android",
+                        osVersion = "14",
+                        appVersion = "android-pass@1.2.3",
+                        deviceName = "Pixel 6"
+                    )
                 ),
                 now = now
             )

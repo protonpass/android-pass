@@ -19,6 +19,7 @@
 package proton.android.pass.featureitemcreate.impl.login
 
 import proton.android.pass.commonuimodels.api.PackageInfoUi
+import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.login.customfields.CustomFieldEvent
 

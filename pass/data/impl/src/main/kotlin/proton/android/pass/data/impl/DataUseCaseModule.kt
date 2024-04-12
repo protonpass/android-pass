@@ -113,6 +113,7 @@ import proton.android.pass.data.api.usecases.UpdateVault
 import proton.android.pass.data.api.usecases.UserPlanWorkerLauncher
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.ObserveBreachCustomEmails
+import proton.android.pass.data.api.usecases.breach.ObserveBreachesForCustomEmail
 import proton.android.pass.data.api.usecases.breach.ObserveCustomEmailSuggestions
 import proton.android.pass.data.api.usecases.breach.VerifyBreachCustomEmail
 import proton.android.pass.data.api.usecases.capabilities.CanCreateItemInVault
@@ -235,6 +236,7 @@ import proton.android.pass.data.impl.usecases.UpdateVaultImpl
 import proton.android.pass.data.impl.usecases.UserPlanWorkerLauncherImpl
 import proton.android.pass.data.impl.usecases.breach.AddBreachCustomEmailImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveBreachCustomEmailsImpl
+import proton.android.pass.data.impl.usecases.breach.ObserveBreachesForCustomEmailImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveCustomEmailSuggestionsImpl
 import proton.android.pass.data.impl.usecases.breach.VerifyBreachCustomEmailImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanCreateItemInVaultImpl
@@ -621,5 +623,10 @@ abstract class DataUseCaseModule {
     abstract fun bindObserveCustomEmailSuggestions(
         impl: ObserveCustomEmailSuggestionsImpl
     ): ObserveCustomEmailSuggestions
+
+    @Binds
+    abstract fun bindObserveBreachesForCustomEmail(
+        impl: ObserveBreachesForCustomEmailImpl
+    ): ObserveBreachesForCustomEmail
 
 }

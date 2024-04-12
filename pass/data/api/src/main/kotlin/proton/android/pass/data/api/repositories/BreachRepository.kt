@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.breach.BreachCustomEmail
 import proton.android.pass.domain.breach.BreachCustomEmailId
+import proton.android.pass.domain.breach.Breaches
 
 interface BreachRepository {
 
@@ -35,4 +36,5 @@ interface BreachRepository {
         code: String
     )
 
+    fun observeBreachesForCustomEmail(userId: UserId, id: BreachCustomEmailId): Flow<Breaches>
 }

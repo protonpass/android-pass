@@ -71,12 +71,10 @@ class BreachRepositoryImpl @Inject constructor(
         refreshFlow.update { true }
     }
 
-    override fun observeBreachesForCustomEmail(
-        userId: UserId,
-        id: BreachCustomEmailId
-    ): Flow<List<BreachEmail>> = oneShot {
-        remote.getBreachesForCustomEmail(userId, id).toDomain()
-    }
+    override fun observeBreachesForCustomEmail(userId: UserId, id: BreachCustomEmailId): Flow<List<BreachEmail>> =
+        oneShot {
+            remote.getBreachesForCustomEmail(userId, id).toDomain()
+        }
 
     override fun observeBreachesForAlias(
         userId: UserId,

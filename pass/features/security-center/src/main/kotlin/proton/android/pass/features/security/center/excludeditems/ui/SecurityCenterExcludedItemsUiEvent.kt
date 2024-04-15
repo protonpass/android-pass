@@ -18,8 +18,16 @@
 
 package proton.android.pass.features.security.center.excludeditems.ui
 
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+
 internal sealed interface SecurityCenterExcludedItemsUiEvent {
 
     data object Back : SecurityCenterExcludedItemsUiEvent
+
+    data class OnShowItemDetails(
+        internal val shareId: ShareId,
+        internal val itemId: ItemId
+    ) : SecurityCenterExcludedItemsUiEvent
 
 }

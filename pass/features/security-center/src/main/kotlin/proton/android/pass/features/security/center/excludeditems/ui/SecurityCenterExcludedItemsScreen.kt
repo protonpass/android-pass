@@ -19,15 +19,32 @@
 package proton.android.pass.features.security.center.excludeditems.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.security.center.excludeditems.navigation.SecurityCenterExcludeItemsDestination
+import proton.android.pass.features.security.center.excludeditems.presentation.SecurityCenterExcludedItemsViewModel
 
 @Composable
-fun SecurityCenterExcludedItemsScreen(onNavigated: (SecurityCenterExcludeItemsDestination) -> Unit) {
+fun SecurityCenterExcludedItemsScreen(
+    onNavigated: (SecurityCenterExcludeItemsDestination) -> Unit,
+    viewModel: SecurityCenterExcludedItemsViewModel = hiltViewModel()
+) = with(viewModel) {
+    val state by state.collectAsStateWithLifecycle()
+
     SecurityCenterExcludedItemsContent(
+        state = state,
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 SecurityCenterExcludedItemsUiEvent.Back -> onNavigated(
                     SecurityCenterExcludeItemsDestination.Back
+                )
+
+                is SecurityCenterExcludedItemsUiEvent.OnShowItemDetails -> onNavigated(
+                    SecurityCenterExcludeItemsDestination.ItemDetails(
+                        shareId = uiEvent.shareId,
+                        itemId = uiEvent.itemId
+                    )
                 )
             }
         }

@@ -260,6 +260,7 @@ class GetPasskeysForDomainImplTest {
         createTime = createTime,
         contents = byteArrayOf(),
         userHandle = null,
-        credentialId = id.value.toByteArray()
+        credentialId = id.value.toByteArray(),
+        creationData = null
     )
 }

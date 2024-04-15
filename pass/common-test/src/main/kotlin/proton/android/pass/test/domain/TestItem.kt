@@ -102,7 +102,8 @@ object TestItem {
             createTime = now,
             modificationTime = now,
             lastAutofillTime = None,
-            isPinned = Random.nextBoolean()
+            isPinned = Random.nextBoolean(),
+            flags = Random.nextInt()
         )
     }
 }

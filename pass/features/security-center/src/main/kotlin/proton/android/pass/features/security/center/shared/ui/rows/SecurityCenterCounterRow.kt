@@ -104,7 +104,7 @@ internal fun SecurityCenterCounterRow(
             title = model.title,
             subtitle = model.subtitle,
             showChevron = model.showChevron,
-            accentBackgroundColor = PassTheme.colors.interactionNormMinor2.takeIf { model.isFreeUser },
+            accentBackgroundColor = PassTheme.colors.interactionNormMinor2.takeIf { model.showPassPlusIcon },
             onClick = onClick,
             trailingContent = {
                 SecurityCenterCounterText(
@@ -113,7 +113,7 @@ internal fun SecurityCenterCounterRow(
                     textColor = model.getCounterTextColor()
                 )
 
-                if (model.isFreeUser) {
+                if (model.showPassPlusIcon) {
                     PassPlusIcon()
                 }
             }
@@ -236,12 +236,12 @@ internal sealed interface SecurityCenterCounterRowModel {
         internal val title: String,
         internal val subtitle: String,
         private val count: Int?,
-        internal val isFreeUser: Boolean
+        internal val showPassPlusIcon: Boolean
     ) : SecurityCenterCounterRowModel {
 
         override val counterText: String = count?.toString() ?: "-"
 
-        override val showChevron: Boolean = if (isFreeUser || count == null) {
+        override val showChevron: Boolean = if (showPassPlusIcon || count == null) {
             false
         } else {
             count > 0

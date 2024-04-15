@@ -138,7 +138,7 @@ internal fun SecurityCenterHomeContent(
                     title = stringResource(id = R.string.security_center_home_row_missing_tfa_title),
                     subtitle = stringResource(id = R.string.security_center_home_row_missing_tfa_subtitle),
                     count = missing2faCount,
-                    isFreeUser = isFreeUser
+                    showPassPlusIcon = false
                 ),
                 onClick = { onUiEvent(SecurityCenterHomeUiEvent.OnShowMissingSecondAuthFactors) }
             )

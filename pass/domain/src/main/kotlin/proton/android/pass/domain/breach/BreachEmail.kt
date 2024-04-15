@@ -16,16 +16,15 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.responses
+package proton.android.pass.domain.breach
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-import proton.android.pass.domain.breach.Breaches
-
-@Serializable
-data class EmailBreachesResponse(
-    @SerialName("Code")
-    val code: Int,
-    @SerialName("Breaches")
-    val breaches: Breaches
+data class BreachEmail(
+    val id: String,
+    val email: String,
+    val severity: Double,
+    val name: String,
+    val createdAt: String,
+    val publishedAt: String,
+    val size: Long?,
+    val passwordLastChars: String?
 )

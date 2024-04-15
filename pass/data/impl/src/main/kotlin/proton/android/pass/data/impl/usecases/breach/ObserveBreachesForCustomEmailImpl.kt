@@ -25,7 +25,7 @@ import proton.android.pass.data.api.repositories.BreachRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForCustomEmail
 import proton.android.pass.domain.breach.BreachCustomEmailId
-import proton.android.pass.domain.breach.Breaches
+import proton.android.pass.domain.breach.BreachEmail
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -34,7 +34,11 @@ class ObserveBreachesForCustomEmailImpl @Inject constructor(
     private val breachRepository: BreachRepository,
     private val observeCurrentUser: ObserveCurrentUser
 ) : ObserveBreachesForCustomEmail {
-    override fun invoke(userId: UserId?, id: BreachCustomEmailId): Flow<Breaches> = if (userId == null) {
+
+    override fun invoke(
+        userId: UserId?,
+        id: BreachCustomEmailId
+    ): Flow<List<BreachEmail>> = if (userId == null) {
         observeCurrentUser()
             .flatMapLatest { user ->
                 breachRepository.observeBreachesForCustomEmail(user.userId, id)
@@ -42,4 +46,5 @@ class ObserveBreachesForCustomEmailImpl @Inject constructor(
     } else {
         breachRepository.observeBreachesForCustomEmail(userId, id)
     }
+
 }

@@ -50,7 +50,7 @@ import proton.android.pass.data.impl.responses.CodeOnlyResponse
 import proton.android.pass.data.impl.responses.CreateItemAliasResponse
 import proton.android.pass.data.impl.responses.CreateVaultResponse
 import proton.android.pass.data.impl.responses.DeleteVaultResponse
-import proton.android.pass.data.impl.responses.EmailBreachesResponse
+import proton.android.pass.data.impl.responses.BreachEmailsResponse
 import proton.android.pass.data.impl.responses.GetAliasOptionsResponse
 import proton.android.pass.data.impl.responses.GetAllKeysByAddressResponse
 import proton.android.pass.data.impl.responses.GetEventsResponse
@@ -329,13 +329,13 @@ interface PasswordManagerApi : BaseRetrofitApi {
     ): CodeOnlyResponse
 
     @GET("$PREFIX/breach/custom_email/{customEmailId}/breaches")
-    suspend fun getBreachesForCustomEmail(@Path("customEmailId") emailId: String): EmailBreachesResponse
+    suspend fun getBreachesForCustomEmail(@Path("customEmailId") emailId: String): BreachEmailsResponse
 
     @GET("$PREFIX/share/{shareId}/alias/{itemId}/breaches")
     suspend fun getBreachesForAlias(
         @Path("shareId") shareId: String,
         @Path("itemId") itemId: String
-    ): EmailBreachesResponse
+    ): BreachEmailsResponse
 
     // Core
     @GET("core/v4/keys/all")

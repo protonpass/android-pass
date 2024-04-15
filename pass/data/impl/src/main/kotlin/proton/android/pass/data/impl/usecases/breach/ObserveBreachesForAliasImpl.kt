@@ -26,7 +26,7 @@ import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAlias
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.breach.Breaches
+import proton.android.pass.domain.breach.BreachEmail
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -35,11 +35,12 @@ class ObserveBreachesForAliasImpl @Inject constructor(
     private val breachRepository: BreachRepository,
     private val observeCurrentUser: ObserveCurrentUser
 ) : ObserveBreachesForAlias {
+
     override fun invoke(
         userId: UserId?,
         shareId: ShareId,
         itemId: ItemId
-    ): Flow<Breaches> = if (userId == null) {
+    ): Flow<List<BreachEmail>> = if (userId == null) {
         observeCurrentUser()
             .flatMapLatest { user ->
                 breachRepository.observeBreachesForAlias(user.userId, shareId, itemId)
@@ -47,4 +48,5 @@ class ObserveBreachesForAliasImpl @Inject constructor(
     } else {
         breachRepository.observeBreachesForAlias(userId, shareId, itemId)
     }
+
 }

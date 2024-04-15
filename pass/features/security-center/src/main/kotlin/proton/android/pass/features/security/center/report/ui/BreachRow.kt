@@ -41,10 +41,7 @@ import me.proton.core.compose.theme.defaultSmallWeak
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
-import proton.android.pass.domain.breach.Breach
-import proton.android.pass.domain.breach.Category
-import proton.android.pass.domain.breach.Country
-import proton.android.pass.domain.breach.Source
+import proton.android.pass.domain.breach.BreachEmail
 import proton.android.pass.features.security.center.R
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -53,7 +50,7 @@ import kotlin.random.Random
 private const val SEVERITY_THRESHOLD = 0.5
 
 @Composable
-fun BreachRow(modifier: Modifier = Modifier, breach: Breach) {
+internal fun BreachRow(modifier: Modifier = Modifier, breach: BreachEmail) {
     Row(
         modifier = modifier.padding(horizontal = Spacing.medium, vertical = Spacing.small),
         verticalAlignment = Alignment.CenterVertically,
@@ -98,9 +95,9 @@ fun BreachRow(modifier: Modifier = Modifier, breach: Breach) {
     }
 }
 
-class BreachRowPreviewProvider : PreviewParameterProvider<Breach> {
+class BreachRowPreviewProvider : PreviewParameterProvider<BreachEmail> {
 
-    override val values: Sequence<Breach>
+    override val values: Sequence<BreachEmail>
         get() = sequenceOf(
             createBreach("breach 1", 0.1, "2022-11-02T00:00:00+00:00"),
             createBreach("breach 2", 0.7, "")
@@ -110,35 +107,25 @@ class BreachRowPreviewProvider : PreviewParameterProvider<Breach> {
         name: String,
         severity: Double,
         publishedAt: String
-    ) = Breach(
+    ) = BreachEmail(
         id = Random.nextInt().toString(),
         email = "",
         severity = severity,
         name = name,
         createdAt = "",
         publishedAt = publishedAt,
-        source = Source(
-            isAggregated = false,
-            domain = "",
-            category = Category(code = "", name = ""),
-            country = Country(
-                code = "", name = "", flagEmoji = ""
-            )
-        ),
         size = 0,
-        exposedData = listOf(),
-        passwordLastChars = "",
-        actions = listOf()
+        passwordLastChars = ""
     )
 }
 
-class ThemedBreachRowPreviewProvider : ThemePairPreviewProvider<Breach>(
+class ThemedBreachRowPreviewProvider : ThemePairPreviewProvider<BreachEmail>(
     provider = BreachRowPreviewProvider()
 )
 
 @Preview
 @Composable
-fun BreachRowPreview(@PreviewParameter(ThemedBreachRowPreviewProvider::class) input: Pair<Boolean, Breach>) {
+fun BreachRowPreview(@PreviewParameter(ThemedBreachRowPreviewProvider::class) input: Pair<Boolean, BreachEmail>) {
     PassTheme(isDark = input.first) {
         Surface {
             BreachRow(

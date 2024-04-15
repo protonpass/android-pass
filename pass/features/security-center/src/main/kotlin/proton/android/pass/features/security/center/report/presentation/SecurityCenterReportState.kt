@@ -22,26 +22,33 @@ import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.domain.breach.Breach
+import proton.android.pass.domain.breach.BreachEmail
 
 @Stable
 internal data class SecurityCenterReportState(
-    val email: String,
-    val breachCount: Int,
-    val canLoadExternalImages: Boolean,
-    val breaches: List<Breach>,
-    val usedInItems: ImmutableList<ItemUiModel>,
-    val isLoading: Boolean
+    internal val email: String,
+    internal val breachCount: Int,
+    internal val canLoadExternalImages: Boolean,
+    internal val breachEmails: List<BreachEmail>,
+    internal val usedInItems: ImmutableList<ItemUiModel>,
+    internal val isLoading: Boolean
 ) {
 
-    companion object {
+    internal val hasBreachEmails: Boolean = breachEmails.isNotEmpty()
+
+    internal val hasBeenUsedInItems: Boolean = usedInItems.isNotEmpty()
+
+    internal companion object {
+
         internal fun default(email: String, breaches: Int) = SecurityCenterReportState(
             email = email,
             breachCount = breaches,
             canLoadExternalImages = false,
-            breaches = persistentListOf(),
+            breachEmails = persistentListOf(),
             usedInItems = persistentListOf(),
             isLoading = true
         )
+
     }
+
 }

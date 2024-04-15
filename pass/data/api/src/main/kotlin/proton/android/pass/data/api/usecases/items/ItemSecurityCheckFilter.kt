@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,23 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases
+package proton.android.pass.data.api.usecases.items
 
-import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.api.usecases.items.ItemSecurityCheckFilter
-import proton.android.pass.domain.Item
-import proton.android.pass.domain.ItemState
-import proton.android.pass.domain.ShareSelection
-
-interface ObserveItems {
-
-    operator fun invoke(
-        selection: ShareSelection,
-        itemState: ItemState?,
-        filter: ItemTypeFilter,
-        userId: UserId? = null,
-        securityCheckFilter: ItemSecurityCheckFilter = ItemSecurityCheckFilter.All
-    ): Flow<List<Item>>
-
+enum class ItemSecurityCheckFilter {
+    All,
+    Excluded,
+    Included
 }

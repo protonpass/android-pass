@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.home.presentation
+package proton.android.pass.features.security.center.excludeditems.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -26,29 +26,23 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
-import proton.android.pass.common.api.asLoadingResult
-import proton.android.pass.data.api.usecases.GetUserPlan
+import proton.android.pass.commonui.api.toUiModel
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.items.ItemSecurityCheckFilter
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareSelection
-import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.securitycenter.api.ObserveSecurityAnalysis
-import proton.android.pass.securitycenter.api.sentinel.DisableSentinel
-import proton.android.pass.securitycenter.api.sentinel.ObserveIsSentinelEnabled
+import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.value
 import javax.inject.Inject
 
 @HiltViewModel
-class SecurityCenterHomeViewModel @Inject constructor(
+class SecurityCenterExcludedItemsViewModel @Inject constructor(
     observeItems: ObserveItems,
-    observeSecurityAnalysis: ObserveSecurityAnalysis,
-    observeIsSentinelEnabled: ObserveIsSentinelEnabled,
-    getUserPlan: GetUserPlan,
-    private val disableSentinel: DisableSentinel,
-    private val snackbarDispatcher: SnackbarDispatcher
+    userPreferencesRepository: UserPreferencesRepository,
+    encryptionContextProvider: EncryptionContextProvider
 ) : ViewModel() {
 
     private val excludedLoginItemsFlow: Flow<List<Item>> = observeItems(
@@ -58,31 +52,24 @@ class SecurityCenterHomeViewModel @Inject constructor(
         securityCheckFilter = ItemSecurityCheckFilter.Excluded
     )
 
-    internal val state: StateFlow<SecurityCenterHomeState> = combine(
-        observeIsSentinelEnabled(),
-        observeSecurityAnalysis(),
-        excludedLoginItemsFlow.asLoadingResult(),
-        getUserPlan()
-    ) { isSentinelEnabled, securityAnalysis, excludedLoginItemsLoadingResult, userPlan ->
-        SecurityCenterHomeState(
-            isSentinelEnabled = isSentinelEnabled,
-            insecurePasswordsLoadingResult = securityAnalysis.insecurePasswords,
-            reusedPasswordsLoadingResult = securityAnalysis.reusedPasswords,
-            missing2faResult = securityAnalysis.missing2fa,
-            excludedLoginItemsLoadingResult = excludedLoginItemsLoadingResult,
-            planType = userPlan.planType
-        )
+    internal val state: StateFlow<SecurityCenterExcludedItemsState> = combine(
+        excludedLoginItemsFlow,
+        userPreferencesRepository.getUseFaviconsPreference()
+    ) { excludedLoginItems, useFavIconsPreference ->
+        encryptionContextProvider.withEncryptionContext {
+            excludedLoginItems.map { excludedLoginItem ->
+                excludedLoginItem.toUiModel(this@withEncryptionContext)
+            }
+        }.let { excludedLoginItemsUiModels ->
+            SecurityCenterExcludedItemsState(
+                excludedItemUiModels = excludedLoginItemsUiModels,
+                canLoadExternalImages = useFavIconsPreference.value()
+            )
+        }
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
-        initialValue = SecurityCenterHomeState.Initial
+        initialValue = SecurityCenterExcludedItemsState.Initial
     )
-
-    internal fun onDisableSentinel() = viewModelScope.launch {
-        runCatching { disableSentinel() }
-            .onFailure {
-                snackbarDispatcher(SecurityCenterHomeSnackbarMessage.DisableSentinelError)
-            }
-    }
 
 }

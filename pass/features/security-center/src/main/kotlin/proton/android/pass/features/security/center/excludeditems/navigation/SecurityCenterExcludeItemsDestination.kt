@@ -18,8 +18,16 @@
 
 package proton.android.pass.features.security.center.excludeditems.navigation
 
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+
 sealed interface SecurityCenterExcludeItemsDestination {
 
     data object Back : SecurityCenterExcludeItemsDestination
+
+    data class ItemDetails(
+        val shareId: ShareId,
+        val itemId: ItemId
+    ): SecurityCenterExcludeItemsDestination
 
 }

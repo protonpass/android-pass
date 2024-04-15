@@ -69,7 +69,7 @@ internal fun SecurityCenterReportContent(
         ) {
             ReportHeader(breachCount = breachCount, email = email)
 
-            if(isLoading) {
+            if (isLoading) {
                 Loading()
             } else {
                 LazyColumn(Modifier.fillMaxWidth()) {

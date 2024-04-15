@@ -22,12 +22,14 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.breach.Breaches
+import proton.android.pass.domain.breach.BreachEmail
 
 interface ObserveBreachesForAlias {
+
     operator fun invoke(
         userId: UserId? = null,
         shareId: ShareId,
         itemId: ItemId
-    ): Flow<Breaches>
+    ): Flow<List<BreachEmail>>
+
 }

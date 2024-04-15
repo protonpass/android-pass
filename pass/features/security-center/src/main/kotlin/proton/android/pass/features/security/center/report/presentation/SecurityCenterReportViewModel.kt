@@ -82,6 +82,7 @@ class SecurityCenterReportViewModel @Inject constructor(
             else -> throw IllegalArgumentException("Unsupported email type: $emailType")
         }
             .distinctUntilChanged()
+
     private val usedInLoginItemsFlow = observeItems(
         selection = ShareSelection.AllShares,
         itemState = ItemState.Active,
@@ -106,7 +107,7 @@ class SecurityCenterReportViewModel @Inject constructor(
     ) { breachesForEmailResult, usedInLoginItemsResult, useFavIconsPreference ->
         val isBreachesLoading = breachesForEmailResult is LoadingResult.Loading
         val isUsedInLoading = usedInLoginItemsResult is LoadingResult.Loading
-        val breaches = breachesForEmailResult.getOrNull()?.breaches ?: persistentListOf()
+        val breaches = breachesForEmailResult.getOrNull() ?: persistentListOf()
         SecurityCenterReportState(
             breachCount = breachCount,
             usedInItems = usedInLoginItemsResult.getOrNull()
@@ -114,7 +115,7 @@ class SecurityCenterReportViewModel @Inject constructor(
                 ?: persistentListOf(),
             email = email,
             canLoadExternalImages = useFavIconsPreference.value(),
-            breaches = breaches,
+            breachEmails = breaches,
             isLoading = isBreachesLoading || isUsedInLoading
         )
 

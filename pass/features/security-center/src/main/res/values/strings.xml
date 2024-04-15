@@ -66,6 +66,10 @@
     <string name="security_center_missing_tfa_top_bar_title">Missing two-factor authentication</string>
     <string name="security_center_missing_tfa_top_bar_subtitle">Logins with sites that have two-factor authentication available but you haven\'t set it up yet.</string>
 
+    <!-- Excluded items screen -->
+    <string name="security_center_excluded_items_top_bar_title">Excluded items</string>
+    <string name="security_center_excluded_items_top_bar_subtitle">This items will not be monitored so they will skip our security services checks.</string>
+
     <!-- Dark web monitor -->
     <string name="security_center_dark_web_monitor_top_bar_title">Dark Web Monitoring</string>
     <string

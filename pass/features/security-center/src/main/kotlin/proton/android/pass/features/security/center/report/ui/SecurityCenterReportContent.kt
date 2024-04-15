@@ -48,7 +48,7 @@ internal fun SecurityCenterReportContent(
     modifier: Modifier = Modifier,
     state: SecurityCenterReportState,
     onNavigate: (SecurityCenterReportDestination) -> Unit
-) {
+) = with(state) {
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -67,12 +67,13 @@ internal fun SecurityCenterReportContent(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(Spacing.small)
         ) {
-            ReportHeader(breachCount = state.breachCount, email = state.email)
+            ReportHeader(breachCount = breachCount, email = email)
 
-            if (!state.isLoading) {
+            if(isLoading) {
+                Loading()
+            } else {
                 LazyColumn(Modifier.fillMaxWidth()) {
-
-                    if (state.breaches.isNotEmpty()) {
+                    if (hasBreachEmails) {
                         stickyHeader {
                             Text(
                                 modifier = Modifier
@@ -84,14 +85,14 @@ internal fun SecurityCenterReportContent(
                             )
                         }
                         items(
-                            items = state.breaches,
+                            items = breachEmails,
                             key = { breach -> breach.id }
                         ) { breach ->
                             BreachRow(breach = breach)
                         }
                     }
 
-                    if (state.usedInItems.isNotEmpty()) {
+                    if (hasBeenUsedInItems) {
                         stickyHeader {
                             Text(
                                 modifier = Modifier
@@ -104,12 +105,12 @@ internal fun SecurityCenterReportContent(
                         }
 
                         items(
-                            items = state.usedInItems,
+                            items = usedInItems,
                             key = { itemUiModel -> itemUiModel.id.id }
                         ) { itemUiModel ->
                             SecurityCenterLoginItemRow(
                                 itemUiModel = itemUiModel,
-                                canLoadExternalImages = state.canLoadExternalImages,
+                                canLoadExternalImages = canLoadExternalImages,
                                 onClick = {
 
                                 }
@@ -117,8 +118,6 @@ internal fun SecurityCenterReportContent(
                         }
                     }
                 }
-            } else {
-                Loading()
             }
         }
     }

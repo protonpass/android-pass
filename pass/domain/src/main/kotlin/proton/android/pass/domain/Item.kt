@@ -21,6 +21,7 @@ package proton.android.pass.domain
 import kotlinx.datetime.Instant
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.util.kotlin.hasFlag
 import proton.android.pass.common.api.Option
 import proton.android.pass.domain.entity.PackageInfo
 
@@ -41,11 +42,14 @@ data class Item(
     val createTime: Instant,
     val modificationTime: Instant,
     val lastAutofillTime: Option<Instant>,
-    val isPinned: Boolean
+    val isPinned: Boolean,
+    val flags: Int
 ) {
     val hasPasskeys: Boolean = when (val type = itemType) {
         is ItemType.Login -> type.passkeys.isNotEmpty()
         else -> false
     }
+
+    val hasSkippedHealthCheck: Boolean = flags.hasFlag(ItemFlag.SkipHealthCheck.value)
 
 }

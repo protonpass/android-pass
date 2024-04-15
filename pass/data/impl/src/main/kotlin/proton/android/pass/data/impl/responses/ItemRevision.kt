@@ -72,5 +72,7 @@ data class ItemRevision(
     @SerialName("RevisionTime")
     val revisionTime: Long,
     @SerialName("Pinned")
-    val isPinned: Boolean
+    val isPinned: Boolean,
+    @SerialName("Flags")
+    val flags: Int
 )

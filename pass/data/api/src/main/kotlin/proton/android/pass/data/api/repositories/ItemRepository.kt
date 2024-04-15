@@ -203,5 +203,6 @@ data class ItemRevision(
     val modifyTime: Long,
     val lastUseTime: Long?,
     val revisionTime: Long,
-    val isPinned: Boolean
+    val isPinned: Boolean,
+    val flags: Int
 )

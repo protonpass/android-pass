@@ -1257,7 +1257,8 @@ class ItemRepositoryImpl @Inject constructor(
             encryptedKey = output.itemKey,
             hasTotp = hasTotp,
             isPinned = itemRevision.isPinned,
-            hasPasskeys = output.item.hasPasskeys
+            hasPasskeys = output.item.hasPasskeys,
+            flags = itemRevision.flags
         )
     }
 

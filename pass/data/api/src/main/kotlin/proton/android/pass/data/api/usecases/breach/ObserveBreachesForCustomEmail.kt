@@ -21,8 +21,10 @@ package proton.android.pass.data.api.usecases.breach
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.breach.BreachCustomEmailId
-import proton.android.pass.domain.breach.Breaches
+import proton.android.pass.domain.breach.BreachEmail
 
 interface ObserveBreachesForCustomEmail {
-    operator fun invoke(userId: UserId? = null, id: BreachCustomEmailId): Flow<Breaches>
+
+    operator fun invoke(userId: UserId? = null, id: BreachCustomEmailId): Flow<List<BreachEmail>>
+
 }

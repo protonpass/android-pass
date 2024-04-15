@@ -19,40 +19,59 @@
 package proton.android.pass.features.security.center.excludeditems.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.features.security.center.R
+import proton.android.pass.features.security.center.excludeditems.presentation.SecurityCenterExcludedItemsState
 import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBar
+import proton.android.pass.features.security.center.shared.ui.rows.SecurityCenterLoginItemRow
 
 @Composable
 internal fun SecurityCenterExcludedItemsContent(
     modifier: Modifier = Modifier,
-    onUiEvent: (SecurityCenterExcludedItemsUiEvent) -> Unit
-) {
+    onUiEvent: (SecurityCenterExcludedItemsUiEvent) -> Unit,
+    state: SecurityCenterExcludedItemsState
+) = with(state) {
     Scaffold(
         modifier = modifier,
         topBar = {
             SecurityCenterTopBar(
-                onUpClick = { onUiEvent(SecurityCenterExcludedItemsUiEvent.Back) },
+                modifier = Modifier
+                    .padding(top = Spacing.medium - Spacing.extraSmall),
+                title = stringResource(R.string.security_center_excluded_items_top_bar_title),
+                subtitle = stringResource(R.string.security_center_excluded_items_top_bar_subtitle),
+                onUpClick = { onUiEvent(SecurityCenterExcludedItemsUiEvent.Back) }
             )
         }
     ) { innerPaddingValues ->
-        Column(
+        LazyColumn(
             modifier = Modifier
-                .background(PassTheme.colors.backgroundNorm)
+                .background(PassTheme.colors.backgroundStrong)
                 .padding(paddingValues = innerPaddingValues)
-                .padding(all = Spacing.medium)
-                .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
+                .padding(top = Spacing.large)
         ) {
-
+            items(
+                items = excludedItemUiModels,
+                key = { itemUiModel -> itemUiModel.id.id }
+            ) { itemUiModel ->
+                SecurityCenterLoginItemRow(
+                    itemUiModel = itemUiModel,
+                    canLoadExternalImages = canLoadExternalImages,
+                    onClick = {
+                        SecurityCenterExcludedItemsUiEvent.OnShowItemDetails(
+                            shareId = itemUiModel.shareId,
+                            itemId = itemUiModel.id
+                        ).also(onUiEvent)
+                    }
+                )
+            }
         }
     }
 }

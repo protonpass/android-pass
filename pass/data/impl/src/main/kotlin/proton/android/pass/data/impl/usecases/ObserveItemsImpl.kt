@@ -20,11 +20,13 @@ package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItems
+import proton.android.pass.data.api.usecases.items.ItemSecurityCheckFilter
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareSelection
@@ -39,26 +41,35 @@ class ObserveItemsImpl @Inject constructor(
         selection: ShareSelection,
         itemState: ItemState?,
         filter: ItemTypeFilter,
-        userId: UserId?
+        userId: UserId?,
+        securityCheckFilter: ItemSecurityCheckFilter
     ): Flow<List<Item>> = if (userId == null) {
         observeCurrentUser()
             .flatMapLatest {
-                observeItems(it.userId, selection, itemState, filter)
+                observeItems(it.userId, selection, itemState, filter, securityCheckFilter)
             }
     } else {
-        observeItems(userId, selection, itemState, filter)
+        observeItems(userId, selection, itemState, filter, securityCheckFilter)
     }
 
     private fun observeItems(
         userId: UserId,
         selection: ShareSelection,
         itemState: ItemState?,
-        filter: ItemTypeFilter
+        filter: ItemTypeFilter,
+        exclusionFilter: ItemSecurityCheckFilter
     ): Flow<List<Item>> = itemRepository.observeItems(
         userId = userId,
         shareSelection = selection,
         itemState = itemState,
         itemTypeFilter = filter
-    )
+    ).map { items ->
+        when (exclusionFilter) {
+            ItemSecurityCheckFilter.Excluded -> items.filter { item -> item.hasSkippedHealthCheck }
+            ItemSecurityCheckFilter.Included -> items.filter { item -> !item.hasSkippedHealthCheck }
+            ItemSecurityCheckFilter.All -> items
+        }
+    }
+
 }
 

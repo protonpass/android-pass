@@ -195,7 +195,8 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
                 lastUseTime = now,
                 revisionTime = now,
                 itemKey = null,
-                isPinned = false
+                isPinned = false,
+                flags = 0
             )
         }
     }

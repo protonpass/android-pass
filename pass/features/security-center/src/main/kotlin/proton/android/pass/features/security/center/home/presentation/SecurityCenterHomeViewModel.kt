@@ -25,13 +25,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
+import proton.android.pass.data.api.usecases.items.ItemSecurityCheckFilter
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareSelection
@@ -54,12 +54,9 @@ class SecurityCenterHomeViewModel @Inject constructor(
     private val excludedLoginItemsFlow: Flow<List<Item>> = observeItems(
         selection = ShareSelection.AllShares,
         filter = ItemTypeFilter.Logins,
-        itemState = ItemState.Active
-    ).map { loginItems ->
-        loginItems.filter { loginItem ->
-            loginItem.hasSkippedHealthCheck
-        }
-    }
+        itemState = ItemState.Active,
+        securityCheckFilter = ItemSecurityCheckFilter.Excluded
+    )
 
     internal val state: StateFlow<SecurityCenterHomeState> = combine(
         observeIsSentinelEnabled(),

@@ -30,11 +30,12 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.data.api.repositories.BreachRepository
 import proton.android.pass.data.impl.remote.RemoteBreachDataSource
+import proton.android.pass.data.impl.responses.BreachEmailsResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.breach.BreachCustomEmail
 import proton.android.pass.domain.breach.BreachCustomEmailId
-import proton.android.pass.domain.breach.Breaches
+import proton.android.pass.domain.breach.BreachEmail
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -70,14 +71,20 @@ class BreachRepositoryImpl @Inject constructor(
         refreshFlow.update { true }
     }
 
-    override fun observeBreachesForCustomEmail(userId: UserId, id: BreachCustomEmailId): Flow<Breaches> =
-        oneShot { remote.getBreachesForCustomEmail(userId, id).breaches }
+    override fun observeBreachesForCustomEmail(
+        userId: UserId,
+        id: BreachCustomEmailId
+    ): Flow<List<BreachEmail>> = oneShot {
+        remote.getBreachesForCustomEmail(userId, id).toDomain()
+    }
 
     override fun observeBreachesForAlias(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): Flow<Breaches> = oneShot { remote.getBreachesForAlias(userId, shareId, itemId).breaches }
+    ): Flow<List<BreachEmail>> = oneShot {
+        remote.getBreachesForAlias(userId, shareId, itemId).toDomain()
+    }
 
     private suspend fun refreshEmails(userId: UserId): List<BreachCustomEmail> {
         val response = remote.getCustomEmails(userId)
@@ -90,4 +97,20 @@ class BreachRepositoryImpl @Inject constructor(
         verified = verified,
         breachCount = breachCounter
     )
+
+    private fun BreachEmailsResponse.toDomain() = with(this.breachEmails) {
+        breaches.map { breach ->
+            BreachEmail(
+                id = breach.id,
+                email = breach.email,
+                severity = breach.severity,
+                name = breach.name,
+                createdAt = breach.createdAt,
+                publishedAt = breach.publishedAt,
+                size = breach.size,
+                passwordLastChars = breach.passwordLastChars
+            )
+        }
+    }
+
 }

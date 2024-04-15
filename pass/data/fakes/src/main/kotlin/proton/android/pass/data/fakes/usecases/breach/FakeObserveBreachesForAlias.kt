@@ -24,15 +24,17 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAlias
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.breach.Breaches
+import proton.android.pass.domain.breach.BreachEmail
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class FakeObserveBreachesForAlias @Inject constructor() : ObserveBreachesForAlias {
+
     override fun invoke(
         userId: UserId?,
         shareId: ShareId,
         itemId: ItemId
-    ): Flow<Breaches> = emptyFlow()
+    ): Flow<List<BreachEmail>> = emptyFlow()
+
 }

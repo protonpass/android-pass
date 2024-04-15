@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,26 +16,8 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api
+package proton.android.pass.domain
 
-data class PendingEventItemRevision(
-    val itemId: String,
-    val revision: Long,
-    val contentFormatVersion: Int,
-    val keyRotation: Long,
-    val content: String,
-    val key: String?,
-    val state: Int,
-    val aliasEmail: String?,
-    val createTime: Long,
-    val modifyTime: Long,
-    val lastUseTime: Long?,
-    val revisionTime: Long,
-    val isPinned: Boolean,
-    val flags: Int
-)
-
-data class PendingEventList(
-    val updatedItems: List<PendingEventItemRevision>,
-    val deletedItemIds: List<String>
-)
+enum class ItemFlag(val value: Int) {
+    SkipHealthCheck(value = 1 shl 0)
+}

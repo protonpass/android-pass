@@ -20,6 +20,7 @@ package proton.android.pass.features.security.center.home.presentation
 
 import androidx.compose.runtime.Stable
 import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.domain.Item
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavDestination
@@ -29,11 +30,12 @@ import proton.android.pass.securitycenter.api.ReusedPasswordsResult
 
 @Stable
 internal data class SecurityCenterHomeState(
+    internal val isSentinelEnabled: Boolean,
     private val insecurePasswordsLoadingResult: LoadingResult<InsecurePasswordsResult>,
     private val reusedPasswordsLoadingResult: LoadingResult<ReusedPasswordsResult>,
     private val missing2faResult: LoadingResult<Missing2faResult>,
-    private val planType: PlanType,
-    internal val isSentinelEnabled: Boolean
+    private val excludedLoginItemsLoadingResult: LoadingResult<List<Item>>,
+    private val planType: PlanType
 ) {
 
     internal val insecurePasswordsCount: Int? = when (insecurePasswordsLoadingResult) {
@@ -57,11 +59,11 @@ internal data class SecurityCenterHomeState(
         is LoadingResult.Success -> missing2faResult.data.missing2faCount
     }
 
-    internal val excludedItemsCount: Int? = when (missing2faResult) {
+    internal val excludedItemsCount: Int? = when (excludedLoginItemsLoadingResult) {
         is LoadingResult.Error,
         LoadingResult.Loading -> null
 
-        is LoadingResult.Success -> 0
+        is LoadingResult.Success -> excludedLoginItemsLoadingResult.data.size
     }
 
     internal val missing2faDestination: SecurityCenterHomeNavDestination = when (planType) {
@@ -75,6 +77,7 @@ internal data class SecurityCenterHomeState(
     internal val isSentinelPaidFeature: Boolean = when (planType) {
         is PlanType.Free,
         is PlanType.Unknown -> true
+
         is PlanType.Paid,
         is PlanType.Trial -> false
     }
@@ -82,6 +85,7 @@ internal data class SecurityCenterHomeState(
     internal val isMissing2faPaidFeature: Boolean = when (planType) {
         is PlanType.Free,
         is PlanType.Unknown -> true
+
         is PlanType.Paid,
         is PlanType.Trial -> false
     }
@@ -101,11 +105,12 @@ internal data class SecurityCenterHomeState(
     internal companion object {
 
         internal val Initial: SecurityCenterHomeState = SecurityCenterHomeState(
+            isSentinelEnabled = false,
             insecurePasswordsLoadingResult = LoadingResult.Loading,
             reusedPasswordsLoadingResult = LoadingResult.Loading,
             missing2faResult = LoadingResult.Loading,
-            planType = PlanType.Unknown(),
-            isSentinelEnabled = false
+            excludedLoginItemsLoadingResult = LoadingResult.Loading,
+            planType = PlanType.Unknown()
         )
 
     }

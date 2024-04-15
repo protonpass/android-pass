@@ -21,12 +21,20 @@ package proton.android.pass.features.security.center.home.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.data.api.usecases.GetUserPlan
+import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.data.api.usecases.ObserveItems
+import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.ShareSelection
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.securitycenter.api.ObserveSecurityAnalysis
 import proton.android.pass.securitycenter.api.sentinel.DisableSentinel
@@ -35,6 +43,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SecurityCenterHomeViewModel @Inject constructor(
+    observeItems: ObserveItems,
     observeSecurityAnalysis: ObserveSecurityAnalysis,
     observeIsSentinelEnabled: ObserveIsSentinelEnabled,
     getUserPlan: GetUserPlan,
@@ -42,17 +51,29 @@ class SecurityCenterHomeViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
+    private val excludedLoginItemsFlow: Flow<List<Item>> = observeItems(
+        selection = ShareSelection.AllShares,
+        filter = ItemTypeFilter.Logins,
+        itemState = ItemState.Active
+    ).map { loginItems ->
+        loginItems.filter { loginItem ->
+            loginItem.hasSkippedHealthCheck
+        }
+    }
+
     internal val state: StateFlow<SecurityCenterHomeState> = combine(
+        observeIsSentinelEnabled(),
         observeSecurityAnalysis(),
-        getUserPlan(),
-        observeIsSentinelEnabled()
-    ) { securityAnalysis, userPlan, isSentinelEnabled ->
+        excludedLoginItemsFlow.asLoadingResult(),
+        getUserPlan()
+    ) { isSentinelEnabled, securityAnalysis, excludedLoginItemsLoadingResult, userPlan ->
         SecurityCenterHomeState(
+            isSentinelEnabled = isSentinelEnabled,
             insecurePasswordsLoadingResult = securityAnalysis.insecurePasswords,
             reusedPasswordsLoadingResult = securityAnalysis.reusedPasswords,
             missing2faResult = securityAnalysis.missing2fa,
-            planType = userPlan.planType,
-            isSentinelEnabled = isSentinelEnabled
+            excludedLoginItemsLoadingResult = excludedLoginItemsLoadingResult,
+            planType = userPlan.planType
         )
     }.stateIn(
         scope = viewModelScope,

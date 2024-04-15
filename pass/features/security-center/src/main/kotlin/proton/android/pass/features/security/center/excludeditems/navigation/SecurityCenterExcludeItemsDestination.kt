@@ -28,6 +28,6 @@ sealed interface SecurityCenterExcludeItemsDestination {
     data class ItemDetails(
         val shareId: ShareId,
         val itemId: ItemId
-    ): SecurityCenterExcludeItemsDestination
+    ) : SecurityCenterExcludeItemsDestination
 
 }

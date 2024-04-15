@@ -46,13 +46,13 @@ internal class SecurityCenterCounterRowPreviewProvider : PreviewParameterProvide
                 title = "Standard title",
                 subtitle = "Standard subtitle",
                 count = null,
-                isFreeUser = false
+                showPassPlusIcon = false
             ),
             SecurityCenterCounterRowModel.Standard(
                 title = "Standard title",
                 subtitle = "Standard subtitle",
                 count = 1,
-                isFreeUser = true
+                showPassPlusIcon = true
             )
         )
 }

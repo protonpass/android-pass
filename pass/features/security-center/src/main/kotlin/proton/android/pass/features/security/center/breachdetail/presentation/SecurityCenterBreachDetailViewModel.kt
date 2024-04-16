@@ -33,7 +33,7 @@ import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAlias
+import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAliasEmail
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForCustomEmail
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -47,7 +47,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SecurityCenterBreachDetailViewModel @Inject constructor(
     observeBreachesForCustomEmail: ObserveBreachesForCustomEmail,
-    observeBreachesForAlias: ObserveBreachesForAlias,
+    observeBreachesForAliasEmail: ObserveBreachesForAliasEmail,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -66,7 +66,7 @@ class SecurityCenterBreachDetailViewModel @Inject constructor(
 
     private val breachFlow = when {
         customEmailId != null -> observeBreachesForCustomEmail(id = customEmailId)
-        shareId != null && itemId != null -> observeBreachesForAlias(
+        shareId != null && itemId != null -> observeBreachesForAliasEmail(
             shareId = shareId,
             itemId = itemId
         )

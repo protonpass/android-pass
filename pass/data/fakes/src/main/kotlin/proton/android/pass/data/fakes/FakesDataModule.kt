@@ -131,6 +131,7 @@ import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
 import proton.android.pass.data.api.usecases.items.GetItemCategory
 import proton.android.pass.data.api.usecases.items.ObserveItemRevisions
 import proton.android.pass.data.api.usecases.items.OpenItemRevision
+import proton.android.pass.data.api.usecases.items.UpdateItemFlag
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeyById
 import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
@@ -254,6 +255,7 @@ import proton.android.pass.data.fakes.usecases.breach.FakeVerifyBreachCustomEmai
 import proton.android.pass.data.fakes.usecases.items.FakeGetItemCategory
 import proton.android.pass.data.fakes.usecases.items.FakeObserveItemRevisions
 import proton.android.pass.data.fakes.usecases.items.FakeOpenItemRevision
+import proton.android.pass.data.fakes.usecases.items.FakeUpdateItemFlag
 import javax.inject.Singleton
 
 @Module
@@ -617,4 +619,7 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindMarkEmailBreachAsResolved(impl: FakeMarkEmailBreachAsResolved): MarkEmailBreachAsResolved
+
+    @Binds
+    abstract fun bindUpdateItemFlag(impl: FakeUpdateItemFlag): UpdateItemFlag
 }

@@ -36,6 +36,8 @@
     <string name="item_unpinned_message_error">There was an error unpinning this item</string>
     <string name="login_item_generate_totp_error">Error generating 2FA code</string>
     <string name="login_item_view_alias_button">View alias</string>
+    <string name="login_item_weak_pass_widget_title">Weak Password</string>
+    <string name="login_item_weak_pass_widget_subtitle">This account is vulnerable, visit the service and change your password.</string>
 
     <string name="field_username">Username or email address</string>
     <string name="field_password">Password</string>

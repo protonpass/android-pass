@@ -38,6 +38,7 @@ import proton.android.pass.data.impl.requests.TelemetryRequest
 import proton.android.pass.data.impl.requests.TransferVaultOwnershipRequest
 import proton.android.pass.data.impl.requests.TrashItemsRequest
 import proton.android.pass.data.impl.requests.UpdateAliasMailboxesRequest
+import proton.android.pass.data.impl.requests.UpdateItemFlagsRequest
 import proton.android.pass.data.impl.requests.UpdateItemRequest
 import proton.android.pass.data.impl.requests.UpdateLastUsedTimeRequest
 import proton.android.pass.data.impl.requests.UpdateMemberShareRequest
@@ -139,6 +140,13 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("shareId") shareId: String,
         @Path("itemId") itemId: String,
         @Body request: UpdateItemRequest
+    ): ItemRevisionResponse
+
+    @PUT("$PREFIX/share/{shareId}/item/{itemId}/flags")
+    suspend fun updateItemFlags(
+        @Path("shareId") shareId: String,
+        @Path("itemId") itemId: String,
+        @Body request: UpdateItemFlagsRequest
     ): ItemRevisionResponse
 
     @PUT("$PREFIX/share/{shareId}/item/{itemId}/lastuse")

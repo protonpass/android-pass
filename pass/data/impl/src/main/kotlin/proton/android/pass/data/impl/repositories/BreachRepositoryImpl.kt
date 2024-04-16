@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.data.api.repositories.BreachRepository
 import proton.android.pass.data.impl.remote.RemoteBreachDataSource
@@ -71,17 +72,21 @@ class BreachRepositoryImpl @Inject constructor(
         refreshFlow.update { true }
     }
 
+    override fun observeBreachesForProtonEmail(userId: UserId, id: AddressId): Flow<List<BreachEmail>> = oneShot {
+        remote.getBreachesForProtonEmail(userId, id).toDomain()
+    }
+
     override fun observeBreachesForCustomEmail(userId: UserId, id: BreachCustomEmailId): Flow<List<BreachEmail>> =
         oneShot {
             remote.getBreachesForCustomEmail(userId, id).toDomain()
         }
 
-    override fun observeBreachesForAlias(
+    override fun observeBreachesForAliasEmail(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
     ): Flow<List<BreachEmail>> = oneShot {
-        remote.getBreachesForAlias(userId, shareId, itemId).toDomain()
+        remote.getBreachesForAliasEmail(userId, shareId, itemId).toDomain()
     }
 
     private suspend fun refreshEmails(userId: UserId): List<BreachCustomEmail> {

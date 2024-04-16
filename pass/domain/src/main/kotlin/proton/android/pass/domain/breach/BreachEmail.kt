@@ -26,5 +26,6 @@ data class BreachEmail(
     val createdAt: String,
     val publishedAt: String,
     val size: Long?,
-    val passwordLastChars: String?
+    val passwordLastChars: String?,
+    val exposedData: List<String>
 )

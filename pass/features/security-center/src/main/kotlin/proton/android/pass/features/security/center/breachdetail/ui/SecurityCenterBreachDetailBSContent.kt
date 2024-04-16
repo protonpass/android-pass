@@ -54,13 +54,11 @@ import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.buttons.CircleButton
 import proton.android.pass.composecomponents.impl.container.roundedContainer
+import proton.android.pass.domain.breach.BreachEmail
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.breachdetail.presentation.SecurityCenterBreachDetailState
 import proton.android.pass.features.security.center.shared.ui.image.BreachImage
-import java.time.format.DateTimeFormatter
-import java.util.Locale
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun SecurityCenterBreachDetailBSContent(
     modifier: Modifier = Modifier,
@@ -78,128 +76,12 @@ internal fun SecurityCenterBreachDetailBSContent(
             modifier = Modifier.verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(Spacing.medium)
         ) {
-            Row(horizontalArrangement = Arrangement.spacedBy(Spacing.medium)) {
-                BreachImage()
-                Column(verticalArrangement = Arrangement.spacedBy(Spacing.small)) {
-                    Text(text = state.breachEmail?.name ?: "", style = ProtonTheme.typography.headline)
-                    runCatching {
-                        val date = DateTimeFormatter.ISO_DATE_TIME.parse(state.breachEmail?.publishedAt)
-                        val dateFormat =
-                            DateTimeFormatter.ofPattern("MMM dd, yyyy", Locale.getDefault())
-                        dateFormat.format(date)
-                    }.getOrNull()?.let { date ->
-                        val bodyTextResource =
-                            stringResource(R.string.security_center_report_detail_subtitle)
-                        val bodyText = buildAnnotatedString {
-                            val textParts = bodyTextResource.split("__DATE__")
-                            if (textParts.size == 2) {
-                                append(textParts[0])
-                                append(
-                                    AnnotatedString(
-                                        date,
-                                        SpanStyle(fontWeight = FontWeight.Bold)
-                                    )
-                                )
-                                append(textParts[1])
-                            } else {
-                                append(bodyTextResource)
-                            }
-                        }
-
-                        Text(
-                            text = bodyText,
-                            style = ProtonTheme.typography.body1Regular
-                        )
-                    }
-                }
+            state.breachEmail?.let { breachEmail ->
+                BreachDetailHeader(breachEmail = breachEmail)
+                ExposedData(breachEmail = breachEmail)
+                Details(breachEmail = breachEmail)
             }
-            state.breachEmail?.exposedData?.takeIf { it.isNotEmpty() }?.let { dataList ->
-                Text(
-                    text = stringResource(R.string.security_center_report_detail_your_exposed_information),
-                    style = ProtonTheme.typography.body1Medium
-                )
-                FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(Spacing.small),
-                    verticalArrangement = Arrangement.spacedBy(Spacing.small)
-                ) {
-                    dataList.forEach {
-                        Text(
-                            modifier = Modifier
-                                .clip(CircleShape)
-                                .background(PassTheme.colors.signalDanger)
-                                .padding(Spacing.small),
-                            text = it,
-                            style = PassTheme.typography.body3Norm(),
-                            color = PassTheme.colors.textInvert
-                        )
-                    }
-                }
-            }
-
-            Text(
-                text = stringResource(R.string.security_center_report_detail_details),
-                style = ProtonTheme.typography.body1Medium
-            )
-            state.breachEmail?.email?.let { email ->
-                Column {
-                    Text(
-                        text = stringResource(R.string.security_center_report_detail_email_address),
-                        style = PassTheme.typography.body3Norm()
-                    )
-                    Text(text = email, style = ProtonTheme.typography.body1Regular)
-                }
-            }
-            state.breachEmail?.passwordLastChars?.let { password ->
-                Column {
-                    Text(
-                        text = stringResource(R.string.security_center_report_detail_password),
-                        style = PassTheme.typography.body3Norm()
-                    )
-                    Text(
-                        text = password,
-                        style = ProtonTheme.typography.body1Regular
-                    )
-                }
-            }
-
-            Text(
-                text = stringResource(R.string.security_center_report_detail_recommended_actions),
-                style = ProtonTheme.typography.body1Medium
-            )
-
-            Column(verticalArrangement = Arrangement.spacedBy(Spacing.small)) {
-                Text(
-                    modifier = Modifier
-                        .roundedContainer(
-                            backgroundColor = Color.Transparent,
-                            borderColor = PassTheme.colors.inputBorderNorm
-                        )
-                        .fillMaxWidth()
-                        .padding(Spacing.medium),
-                    text = stringResource(R.string.security_center_report_detail_change_password)
-                )
-                Text(
-                    modifier = Modifier
-                        .roundedContainer(
-                            backgroundColor = Color.Transparent,
-                            borderColor = PassTheme.colors.inputBorderNorm
-                        )
-                        .fillMaxWidth()
-                        .padding(Spacing.medium),
-                    text = stringResource(R.string.security_center_report_detail_use_aliases)
-                )
-                Text(
-                    modifier = Modifier
-                        .roundedContainer(
-                            backgroundColor = Color.Transparent,
-                            borderColor = PassTheme.colors.inputBorderNorm
-                        )
-                        .fillMaxWidth()
-                        .padding(Spacing.medium),
-                    text = stringResource(R.string.security_center_report_detail_enable_2fa)
-                )
-            }
-
+            RecommendedActions()
             Text(
                 text = stringResource(R.string.security_center_report_detail_note),
                 style = ProtonTheme.typography.body2Regular
@@ -221,3 +103,149 @@ internal fun SecurityCenterBreachDetailBSContent(
         }
     }
 }
+
+@Composable
+internal fun RecommendedActions(modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier, verticalArrangement = Arrangement.spacedBy(Spacing.medium)
+    ) {
+        Text(
+            text = stringResource(R.string.security_center_report_detail_recommended_actions),
+            style = ProtonTheme.typography.body1Medium
+        )
+        Column(verticalArrangement = Arrangement.spacedBy(Spacing.small)) {
+            Text(
+                modifier = Modifier
+                    .roundedContainer(
+                        backgroundColor = Color.Transparent,
+                        borderColor = PassTheme.colors.inputBorderNorm
+                    )
+                    .fillMaxWidth()
+                    .padding(Spacing.medium),
+                text = stringResource(R.string.security_center_report_detail_change_password)
+            )
+            Text(
+                modifier = Modifier
+                    .roundedContainer(
+                        backgroundColor = Color.Transparent,
+                        borderColor = PassTheme.colors.inputBorderNorm
+                    )
+                    .fillMaxWidth()
+                    .padding(Spacing.medium),
+                text = stringResource(R.string.security_center_report_detail_use_aliases)
+            )
+            Text(
+                modifier = Modifier
+                    .roundedContainer(
+                        backgroundColor = Color.Transparent,
+                        borderColor = PassTheme.colors.inputBorderNorm
+                    )
+                    .fillMaxWidth()
+                    .padding(Spacing.medium),
+                text = stringResource(R.string.security_center_report_detail_enable_2fa)
+            )
+        }
+    }
+}
+
+@Composable
+private fun Details(modifier: Modifier = Modifier, breachEmail: BreachEmail) {
+    Column(
+        modifier = modifier, verticalArrangement = Arrangement.spacedBy(Spacing.medium)
+    ) {
+        if (breachEmail.email.isNotBlank() || !breachEmail.passwordLastChars.isNullOrBlank()) {
+            Text(
+                text = stringResource(R.string.security_center_report_detail_details),
+                style = ProtonTheme.typography.body1Medium
+            )
+            breachEmail.email.takeIf { it.isNotBlank() }?.let { email ->
+                Column {
+                    Text(
+                        text = stringResource(R.string.security_center_report_detail_email_address),
+                        style = PassTheme.typography.body3Norm()
+                    )
+                    Text(text = email, style = ProtonTheme.typography.body1Regular)
+                }
+            }
+            breachEmail.passwordLastChars?.let { password ->
+                Column {
+                    Text(
+                        text = stringResource(R.string.security_center_report_detail_password),
+                        style = PassTheme.typography.body3Norm()
+                    )
+                    Text(
+                        text = password,
+                        style = ProtonTheme.typography.body1Regular
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+@OptIn(ExperimentalLayoutApi::class)
+private fun ExposedData(modifier: Modifier = Modifier, breachEmail: BreachEmail) {
+    Column(
+        modifier = modifier, verticalArrangement = Arrangement.spacedBy(Spacing.medium)
+    ) {
+        breachEmail.exposedData.takeIf { it.isNotEmpty() }?.let { dataList ->
+            Text(
+                text = stringResource(R.string.security_center_report_detail_your_exposed_information),
+                style = ProtonTheme.typography.body1Medium
+            )
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(Spacing.small),
+                verticalArrangement = Arrangement.spacedBy(Spacing.small)
+            ) {
+                dataList.forEach {
+                    Text(
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .background(PassTheme.colors.signalDanger)
+                            .padding(Spacing.small),
+                        text = it,
+                        style = PassTheme.typography.body3Norm(),
+                        color = PassTheme.colors.textInvert
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun BreachDetailHeader(modifier: Modifier = Modifier, breachEmail: BreachEmail) {
+    Row(modifier = modifier, horizontalArrangement = Arrangement.spacedBy(Spacing.medium)) {
+        BreachImage()
+        Column(verticalArrangement = Arrangement.spacedBy(Spacing.small)) {
+            Text(text = breachEmail.name, style = ProtonTheme.typography.headline)
+            DateUtils.formatDate(breachEmail.publishedAt)
+                .onSuccess { date ->
+                    val bodyTextResource =
+                        stringResource(R.string.security_center_report_detail_subtitle)
+                    val bodyText = buildAnnotatedString {
+                        val textParts = bodyTextResource.split("__DATE__")
+                        if (textParts.size == 2) {
+                            append(textParts[0])
+                            append(
+                                AnnotatedString(
+                                    date,
+                                    SpanStyle(fontWeight = FontWeight.Bold)
+                                )
+                            )
+                            append(textParts[1])
+                        } else {
+                            append(bodyTextResource)
+                        }
+                    }
+
+                    Text(
+                        text = bodyText,
+                        style = ProtonTheme.typography.body1Regular
+                    )
+                }
+        }
+    }
+}
+

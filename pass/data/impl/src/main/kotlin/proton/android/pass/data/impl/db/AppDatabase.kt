@@ -221,7 +221,6 @@ abstract class AppDatabase :
             AppDatabaseMigrations.MIGRATION_40_41,
             AppDatabaseMigrations.MIGRATION_42_43,
             AppDatabaseMigrations.MIGRATION_43_44,
-            AppDatabaseMigrations.MIGRATION_43_44,
             AppDatabaseMigrations.MIGRATION_44_45
         )
 

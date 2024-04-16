@@ -64,6 +64,11 @@ fun LoginContent(
         modifier = modifier.padding(horizontal = Spacing.medium),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
+
+        LoginWeakPassWidget(
+            onMenuClick = { onEvent(LoginDetailEvent.OnExcludeItemMonitoring) }
+        )
+
         LoginTitle(
             modifier = Modifier.padding(Spacing.none, 12.dp),
             title = itemUiModel.contents.title,

@@ -24,26 +24,33 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.R
 
 @Composable
-fun ThreeDotsMenuButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
+fun ThreeDotsMenuButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    dotsColor: Color = PassTheme.colors.textHint,
+    dotsSize: Dp = 24.dp
+) {
     IconButton(
-        modifier = modifier.size(24.dp),
+        modifier = modifier.size(size = dotsSize),
         onClick = onClick
     ) {
         Icon(
             imageVector = ImageVector.vectorResource(R.drawable.ic_three_dots_vertical_24),
             contentDescription = stringResource(id = R.string.action_content_description_menu),
-            tint = PassTheme.colors.textHint
+            tint = dotsColor
         )
     }
 }

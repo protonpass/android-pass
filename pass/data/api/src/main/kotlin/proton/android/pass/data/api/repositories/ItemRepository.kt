@@ -29,6 +29,7 @@ import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Passkey
@@ -68,6 +69,14 @@ interface ItemRepository {
         share: Share,
         item: Item,
         contents: ItemContents
+    ): Item
+
+    suspend fun updateItemFlags(
+        userId: UserId,
+        share: Share,
+        itemId: ItemId,
+        flag: ItemFlag,
+        isFlagEnabled: Boolean
     ): Item
 
     fun observeItems(

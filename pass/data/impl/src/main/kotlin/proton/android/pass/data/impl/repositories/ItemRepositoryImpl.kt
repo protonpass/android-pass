@@ -79,10 +79,12 @@ import proton.android.pass.data.impl.requests.MigrateItemsBody
 import proton.android.pass.data.impl.requests.MigrateItemsRequest
 import proton.android.pass.data.impl.requests.TrashItemRevision
 import proton.android.pass.data.impl.requests.TrashItemsRequest
+import proton.android.pass.data.impl.requests.UpdateItemFlagsRequest
 import proton.android.pass.data.impl.util.TimeUtil
 import proton.android.pass.datamodels.api.serializeToProto
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ItemType
@@ -268,6 +270,38 @@ class ItemRepositoryImpl @Inject constructor(
             item,
             itemContents
         )
+    }
+
+    override suspend fun updateItemFlags(
+        userId: UserId,
+        share: Share,
+        itemId: ItemId,
+        flag: ItemFlag,
+        isFlagEnabled: Boolean
+    ): Item = when (flag) {
+        ItemFlag.SkipHealthCheck -> UpdateItemFlagsRequest().copy(skipHealthCheck = isFlagEnabled)
+    }.let { updateItemFlagsRequest ->
+        remoteItemDataSource.updateItemFlags(
+            userId = userId,
+            shareId = share.id,
+            itemId = itemId,
+            body = updateItemFlagsRequest
+        )
+    }.let { itemRevision ->
+        withUserAddress(userId) { userAddress ->
+            itemResponseToEntity(
+                userAddress = userAddress,
+                itemRevision = itemRevision,
+                share = share,
+                shareKeys = listOf(shareKeyRepository.getLatestKeyForShare(share.id).first())
+            )
+        }
+    }.let { itemEntity ->
+        localItemDataSource.upsertItem(itemEntity)
+
+        encryptionContextProvider.withEncryptionContext {
+            itemEntity.toDomain(this@withEncryptionContext)
+        }
     }
 
     override fun observeItems(
@@ -696,7 +730,8 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         shareIds: List<ShareId>,
         itemState: ItemState?
-    ): Flow<ItemCountSummary> = localItemDataSource.observeItemCountSummary(userId, shareIds, itemState)
+    ): Flow<ItemCountSummary> =
+        localItemDataSource.observeItemCountSummary(userId, shareIds, itemState)
 
     override suspend fun updateItemLastUsed(shareId: ShareId, itemId: ItemId) {
         val userId = accountManager.getPrimaryUserId().first()

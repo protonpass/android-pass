@@ -27,6 +27,7 @@ import proton.android.pass.data.impl.requests.CreateItemRequest
 import proton.android.pass.data.impl.requests.MigrateItemRequest
 import proton.android.pass.data.impl.requests.MigrateItemsRequest
 import proton.android.pass.data.impl.requests.TrashItemsRequest
+import proton.android.pass.data.impl.requests.UpdateItemFlagsRequest
 import proton.android.pass.data.impl.requests.UpdateItemRequest
 import proton.android.pass.data.impl.responses.CreateItemAliasBundle
 import proton.android.pass.data.impl.responses.TrashItemsResponse
@@ -58,6 +59,13 @@ interface RemoteItemDataSource {
         shareId: ShareId,
         itemId: ItemId,
         body: UpdateItemRequest
+    ): ItemRevision
+
+    suspend fun updateItemFlags(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        body: UpdateItemFlagsRequest
     ): ItemRevision
 
     suspend fun getItems(userId: UserId, shareId: ShareId): List<ItemRevision>

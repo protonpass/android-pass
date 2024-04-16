@@ -31,8 +31,6 @@ internal sealed interface SecurityCenterHomeDarkWebMonitoring {
 
     data object PaidNoDataBreaches : SecurityCenterHomeDarkWebMonitoring
 
-    data class PaidDataBreaches(
-        internal val dataBreachesCount: Int
-    ) : SecurityCenterHomeDarkWebMonitoring
+    data class PaidDataBreaches(internal val dataBreachesCount: Int) : SecurityCenterHomeDarkWebMonitoring
 
 }

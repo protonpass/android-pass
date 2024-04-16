@@ -44,10 +44,7 @@ import proton.android.pass.features.security.center.R
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @[Composable Suppress("FunctionMaxLength")]
-internal fun SecurityCenterHomeNoDataBreachesWidget(
-    modifier: Modifier = Modifier,
-    onActionClick: () -> Unit
-) {
+internal fun SecurityCenterHomeNoDataBreachesWidget(modifier: Modifier = Modifier, onActionClick: () -> Unit) {
     Column(
         modifier = modifier
             .roundedContainer(
@@ -88,7 +85,7 @@ internal fun SecurityCenterHomeNoDataBreachesWidget(
                 start = Spacing.medium,
                 top = Spacing.small,
                 end = Spacing.medium,
-                bottom = Spacing.medium,
+                bottom = Spacing.medium
             ),
             text = stringResource(id = CompR.string.action_enable),
             onClick = onActionClick

@@ -36,9 +36,7 @@ data class BreachEmails(
     @SerialName("Count")
     val count: Int,
     @SerialName("Breaches")
-    val breaches: List<Breaches>,
-    @SerialName("Samples")
-    val samples: List<Sample>
+    val breaches: List<Breaches>
 )
 
 @Serializable
@@ -115,20 +113,4 @@ data class Action(
     val desc: String,
     @SerialName("Urls")
     val urls: List<String>?
-)
-
-@Serializable
-data class Sample(
-    @SerialName("ID")
-    val id: String,
-    @SerialName("Email")
-    val email: String,
-    @SerialName("Severity")
-    val severity: Double,
-    @SerialName("Name")
-    val name: String,
-    @SerialName("CreatedAt")
-    val createdAt: String,
-    @SerialName("Source")
-    val source: Source
 )

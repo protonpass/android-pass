@@ -56,15 +56,15 @@ class SecurityCenterBreachDetailViewModel @Inject constructor(
         .let(::BreachId)
     private val customEmailId: BreachCustomEmailId? = savedStateHandleProvider.get()
         .get<String>(BreachEmailIdArgId.key)
-        ?.let { BreachCustomEmailId(it) }
+        ?.let(::BreachCustomEmailId)
     private val shareId: ShareId? = savedStateHandleProvider.get()
         .get<String>(CommonNavArgId.ShareId.key)
-        ?.let { ShareId(it) }
+        ?.let(::ShareId)
     private val itemId: ItemId? = savedStateHandleProvider.get()
         .get<String>(CommonNavArgId.ItemId.key)
-        ?.let { ItemId(it) }
+        ?.let(::ItemId)
 
-    private val breachFlow = when {
+    private val observeBreachForEmailFlow = when {
         customEmailId != null -> observeBreachesForCustomEmail(id = customEmailId)
         shareId != null && itemId != null -> observeBreachesForAliasEmail(
             shareId = shareId,
@@ -72,7 +72,8 @@ class SecurityCenterBreachDetailViewModel @Inject constructor(
         )
 
         else -> emptyFlow()
-    }.map { it.firstOrNull { breach -> breach.id == breachId.id } }
+    }
+        .map { it.firstOrNull { breach -> breach.id == breachId.id } }
         .asLoadingResult()
         .distinctUntilChanged()
 
@@ -81,7 +82,7 @@ class SecurityCenterBreachDetailViewModel @Inject constructor(
         MutableStateFlow<SecurityCenterBreachDetailEvent>(SecurityCenterBreachDetailEvent.Idle)
 
     internal val state: StateFlow<SecurityCenterBreachDetailState> = combine(
-        breachFlow,
+        observeBreachForEmailFlow,
         eventFlow,
         isLoadingStateFlow
     ) { breachResult, event, isLoading ->

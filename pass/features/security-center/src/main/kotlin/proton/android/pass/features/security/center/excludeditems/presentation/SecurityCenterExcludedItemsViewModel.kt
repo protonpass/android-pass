@@ -25,13 +25,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.commonui.api.toUiModel
+import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.items.ItemSecurityCheckFilter
-import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -45,27 +46,27 @@ class SecurityCenterExcludedItemsViewModel @Inject constructor(
     encryptionContextProvider: EncryptionContextProvider
 ) : ViewModel() {
 
-    private val excludedLoginItemsFlow: Flow<List<Item>> = observeItems(
+    private val excludedLoginItemsUiModelFlow: Flow<List<ItemUiModel>> = observeItems(
         selection = ShareSelection.AllShares,
         filter = ItemTypeFilter.Logins,
         itemState = ItemState.Active,
         securityCheckFilter = ItemSecurityCheckFilter.Excluded
-    )
-
-    internal val state: StateFlow<SecurityCenterExcludedItemsState> = combine(
-        excludedLoginItemsFlow,
-        userPreferencesRepository.getUseFaviconsPreference()
-    ) { excludedLoginItems, useFavIconsPreference ->
+    ).map { excludedLoginItems ->
         encryptionContextProvider.withEncryptionContext {
             excludedLoginItems.map { excludedLoginItem ->
                 excludedLoginItem.toUiModel(this@withEncryptionContext)
             }
-        }.let { excludedLoginItemsUiModels ->
-            SecurityCenterExcludedItemsState(
-                excludedItemUiModels = excludedLoginItemsUiModels,
-                canLoadExternalImages = useFavIconsPreference.value()
-            )
         }
+    }
+
+    internal val state: StateFlow<SecurityCenterExcludedItemsState> = combine(
+        excludedLoginItemsUiModelFlow,
+        userPreferencesRepository.getUseFaviconsPreference()
+    ) { excludedLoginItemsUiModels, useFavIconsPreference ->
+        SecurityCenterExcludedItemsState(
+            excludedItemUiModels = excludedLoginItemsUiModels,
+            canLoadExternalImages = useFavIconsPreference.value()
+        )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),

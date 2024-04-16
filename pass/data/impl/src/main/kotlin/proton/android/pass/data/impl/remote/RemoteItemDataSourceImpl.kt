@@ -38,6 +38,7 @@ import proton.android.pass.data.impl.requests.CreateItemRequest
 import proton.android.pass.data.impl.requests.MigrateItemRequest
 import proton.android.pass.data.impl.requests.MigrateItemsRequest
 import proton.android.pass.data.impl.requests.TrashItemsRequest
+import proton.android.pass.data.impl.requests.UpdateItemFlagsRequest
 import proton.android.pass.data.impl.requests.UpdateItemRequest
 import proton.android.pass.data.impl.requests.UpdateLastUsedTimeRequest
 import proton.android.pass.data.impl.responses.CreateItemAliasBundle
@@ -133,6 +134,20 @@ class RemoteItemDataSourceImpl @Inject constructor(
             }
         }
     }
+
+    override suspend fun updateItemFlags(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        body: UpdateItemFlagsRequest
+    ): ItemRevision = api.get<PasswordManagerApi>(userId)
+        .invoke { updateItemFlags(shareId.id, itemId.id, body) }
+        .let { apiResult ->
+            when (apiResult) {
+                is ApiResult.Error -> throw apiResult.cause ?: Exception("Update item flags failed")
+                is ApiResult.Success -> apiResult.value.item.toDomain()
+            }
+        }
 
     override suspend fun getItems(userId: UserId, shareId: ShareId): List<ItemRevision> =
         api.get<PasswordManagerApi>(userId)
@@ -237,7 +252,6 @@ class RemoteItemDataSourceImpl @Inject constructor(
         .invoke { migrateItems(shareId.id, body).items }
         .valueOrThrow
         .toDomain()
-
 
     override suspend fun pinItem(
         userId: UserId,

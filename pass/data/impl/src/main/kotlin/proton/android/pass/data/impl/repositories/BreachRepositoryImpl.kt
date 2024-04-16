@@ -47,6 +47,11 @@ class BreachRepositoryImpl @Inject constructor(
 
     private val refreshFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
+    private val customEmailBreachesCache: MutableMap<Pair<UserId, BreachCustomEmailId>, List<BreachEmail>> =
+        mutableMapOf()
+    private val aliasBreachesCache: MutableMap<Pair<UserId, Pair<ShareId, ItemId>>, List<BreachEmail>> =
+        mutableMapOf()
+
     override fun observeCustomEmails(userId: UserId): Flow<List<BreachCustomEmail>> = refreshFlow
         .filter { it }
         .mapLatest { refreshEmails(userId) }
@@ -78,7 +83,9 @@ class BreachRepositoryImpl @Inject constructor(
 
     override fun observeBreachesForCustomEmail(userId: UserId, id: BreachCustomEmailId): Flow<List<BreachEmail>> =
         oneShot {
-            remote.getBreachesForCustomEmail(userId, id).toDomain()
+            customEmailBreachesCache.getOrPut(userId to id) {
+                remote.getBreachesForCustomEmail(userId, id).toDomain()
+            }
         }
 
     override fun observeBreachesForAliasEmail(
@@ -86,7 +93,9 @@ class BreachRepositoryImpl @Inject constructor(
         shareId: ShareId,
         itemId: ItemId
     ): Flow<List<BreachEmail>> = oneShot {
-        remote.getBreachesForAliasEmail(userId, shareId, itemId).toDomain()
+        aliasBreachesCache.getOrPut(userId to (shareId to itemId)) {
+            remote.getBreachesForAliasEmail(userId, shareId, itemId).toDomain()
+        }
     }
 
     private suspend fun refreshEmails(userId: UserId): List<BreachCustomEmail> {
@@ -111,7 +120,8 @@ class BreachRepositoryImpl @Inject constructor(
                 createdAt = breach.createdAt,
                 publishedAt = breach.publishedAt,
                 size = breach.size,
-                passwordLastChars = breach.passwordLastChars
+                passwordLastChars = breach.passwordLastChars,
+                exposedData = breach.exposedData.map { it.name }
             )
         }
     }

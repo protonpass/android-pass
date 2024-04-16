@@ -49,8 +49,18 @@ data class BreachCustomEmailResponse(
 data class BreachesDetails(
     @SerialName("EmailsCount")
     val emailsCount: Int,
+    @SerialName("DomainsPeek")
+    val domainPeeks: List<BreachDomainPeek>,
     @SerialName("CustomEmails")
     val customEmails: List<BreachCustomEmail>
+)
+
+@Serializable
+data class BreachDomainPeek(
+    @SerialName("Domain")
+    val domain: String,
+    @SerialName("BreachTime")
+    val breachTime: Long
 )
 
 @Serializable

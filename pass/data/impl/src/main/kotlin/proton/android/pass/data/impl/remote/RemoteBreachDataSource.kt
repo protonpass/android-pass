@@ -20,6 +20,7 @@ package proton.android.pass.data.impl.remote
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.BreachAddEmailRequest
 import proton.android.pass.data.impl.requests.BreachVerifyEmailRequest
@@ -40,9 +41,11 @@ interface RemoteBreachDataSource {
         code: String
     )
 
+    suspend fun getBreachesForProtonEmail(userId: UserId, id: AddressId): BreachEmailsResponse
+
     suspend fun getBreachesForCustomEmail(userId: UserId, id: BreachCustomEmailId): BreachEmailsResponse
 
-    suspend fun getBreachesForAlias(
+    suspend fun getBreachesForAliasEmail(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
@@ -80,6 +83,13 @@ class RemoteBreachDataSourceImpl @Inject constructor(
             .valueOrThrow
     }
 
+    override suspend fun getBreachesForProtonEmail(userId: UserId, id: AddressId): BreachEmailsResponse = apiProvider
+        .get<PasswordManagerApi>(userId)
+        .invoke {
+            getBreachesForProtonEmail(id.id)
+        }
+        .valueOrThrow
+
     override suspend fun getBreachesForCustomEmail(userId: UserId, id: BreachCustomEmailId): BreachEmailsResponse =
         apiProvider
             .get<PasswordManagerApi>(userId)
@@ -88,14 +98,14 @@ class RemoteBreachDataSourceImpl @Inject constructor(
             }
             .valueOrThrow
 
-    override suspend fun getBreachesForAlias(
+    override suspend fun getBreachesForAliasEmail(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
     ): BreachEmailsResponse = apiProvider
         .get<PasswordManagerApi>(userId)
         .invoke {
-            getBreachesForAlias(shareId.id, itemId.id)
+            getBreachesForAliasEmail(shareId.id, itemId.id)
         }
         .valueOrThrow
 }

@@ -85,10 +85,7 @@ class BreachRepositoryImpl @Inject constructor(
         refreshFlow.update { true }
     }
 
-    override fun observeBreachesForProtonEmail(
-        userId: UserId,
-        id: AddressId
-    ): Flow<List<BreachEmail>> = oneShot {
+    override fun observeBreachesForProtonEmail(userId: UserId, id: AddressId): Flow<List<BreachEmail>> = oneShot {
         remote.getBreachesForProtonEmail(userId, id).toDomain()
     }
 

@@ -33,8 +33,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.BlurredEdgeTreatment
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -55,6 +53,7 @@ import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
 import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.item.SectionSubtitle
 import proton.android.pass.composecomponents.impl.item.SectionTitle
+import proton.android.pass.composecomponents.impl.utils.PassBlurEffect
 import proton.android.pass.composecomponents.impl.utils.protonFormattedDateText
 import proton.android.pass.features.security.center.R
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -161,15 +160,16 @@ private fun BreachRow(
             style = ProtonTheme.typography.defaultNorm
         )
 
-        Text(
-            modifier = Modifier.blur(
-                radius = 6.dp,
-                edgeTreatment = BlurredEdgeTreatment.Unbounded
-            ),
-            text = value,
-            color = PassTheme.colors.passwordInteractionNormMajor2,
-            style = ProtonTheme.typography.defaultNorm
-        )
+        PassBlurEffect(
+            blurRadius = 5.dp
+        ) { blurModifier ->
+            Text(
+                modifier = blurModifier,
+                text = value,
+                color = PassTheme.colors.passwordInteractionNormMajor2,
+                style = ProtonTheme.typography.defaultNorm
+            )
+        }
     }
 }
 

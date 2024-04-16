@@ -22,8 +22,8 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.breach.BreachCustomEmailId
+import proton.android.pass.domain.breach.BreachId
 import proton.android.pass.domain.features.PaidFeature
-import proton.android.pass.features.security.center.report.navigation.EmailType
 
 sealed interface SecurityCenterNavDestination {
 
@@ -60,7 +60,8 @@ sealed interface SecurityCenterNavDestination {
     @JvmInline
     value class AddCustomEmail(val email: Option<String>) : SecurityCenterNavDestination
 
-    data class VerifyEmail(val id: BreachCustomEmailId, val email: String) : SecurityCenterNavDestination
+    data class VerifyEmail(val id: BreachCustomEmailId, val email: String) :
+        SecurityCenterNavDestination
 
     data class UnverifiedEmailOptions(
         val id: BreachCustomEmailId,
@@ -70,10 +71,20 @@ sealed interface SecurityCenterNavDestination {
     data object EmailVerified : SecurityCenterNavDestination
 
     data class Report(
-        val emailType: EmailType,
         val id: BreachCustomEmailId,
         val email: String,
         val breachCount: Int
+    ) : SecurityCenterNavDestination
+
+    data class CustomEmailBreachDetail(
+        val breachId: BreachId,
+        val customEmailId: BreachCustomEmailId
+    ) : SecurityCenterNavDestination
+
+    data class AliasBreachDetail(
+        val breachId: BreachId,
+        val shareId: ShareId,
+        val itemId: ItemId
     ) : SecurityCenterNavDestination
 
     data object ExcludedItems : SecurityCenterNavDestination

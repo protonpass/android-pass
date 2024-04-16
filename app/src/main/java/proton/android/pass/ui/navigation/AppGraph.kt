@@ -109,6 +109,8 @@ import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestin
 import proton.android.pass.features.item.history.navigation.itemHistoryNavGraph
 import proton.android.pass.features.item.history.restore.navigation.ItemHistoryRestoreNavItem
 import proton.android.pass.features.item.history.timeline.navigation.ItemHistoryTimelineNavItem
+import proton.android.pass.features.security.center.breachdetail.navigation.SecurityCenterAliasBreachDetailNavItem
+import proton.android.pass.features.security.center.breachdetail.navigation.SecurityCenterCustomEmailBreachDetailNavItem
 import proton.android.pass.features.security.center.customemail.navigation.SecurityCenterCustomEmailNavItem
 import proton.android.pass.features.security.center.darkweb.navigation.CustomEmailOptionsNavItem
 import proton.android.pass.features.security.center.darkweb.navigation.DarkWebMonitorNavItem
@@ -1116,10 +1118,9 @@ fun NavGraphBuilder.appGraph(
                 is SecurityCenterNavDestination.Report -> appNavigator.navigate(
                     destination = SecurityCenterReportNavItem,
                     route = SecurityCenterReportNavItem.createNavRoute(
-                        emailType = destination.emailType,
                         id = destination.id,
                         email = destination.email,
-                        breaches = destination.breachCount
+                        breachCount = destination.breachCount
                     )
                 )
 
@@ -1128,6 +1129,24 @@ fun NavGraphBuilder.appGraph(
                     route = CustomEmailOptionsNavItem.buildRoute(
                         breachEmailId = destination.id,
                         customEmail = destination.email
+                    )
+                )
+
+                is SecurityCenterNavDestination.CustomEmailBreachDetail ->
+                    appNavigator.navigate(
+                        destination = SecurityCenterCustomEmailBreachDetailNavItem,
+                        route = SecurityCenterCustomEmailBreachDetailNavItem.createNavRoute(
+                            breachId = destination.breachId,
+                            customEmailId = destination.customEmailId
+                        )
+                    )
+
+                is SecurityCenterNavDestination.AliasBreachDetail -> appNavigator.navigate(
+                    destination = SecurityCenterAliasBreachDetailNavItem,
+                    route = SecurityCenterAliasBreachDetailNavItem.createNavRoute(
+                        breachId = destination.breachId,
+                        shareId = destination.shareId,
+                        itemId = destination.itemId
                     )
                 )
 

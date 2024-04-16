@@ -39,7 +39,7 @@ import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
-import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAlias
+import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAliasEmail
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForCustomEmail
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
@@ -62,7 +62,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SecurityCenterReportViewModel @Inject constructor(
     observeBreachesForCustomEmail: ObserveBreachesForCustomEmail,
-    observeBreachesForAlias: ObserveBreachesForAlias,
+    observeBreachesForAliasEmail: ObserveBreachesForAliasEmail,
     observeItems: ObserveItems,
     userPreferencesRepository: UserPreferencesRepository,
     encryptionContextProvider: EncryptionContextProvider,
@@ -97,7 +97,7 @@ class SecurityCenterReportViewModel @Inject constructor(
 
     private val breachFlow = when {
         customEmailId != null -> observeBreachesForCustomEmail(id = customEmailId)
-        shareId != null && itemId != null -> observeBreachesForAlias(
+        shareId != null && itemId != null -> observeBreachesForAliasEmail(
             shareId = shareId,
             itemId = itemId
         )

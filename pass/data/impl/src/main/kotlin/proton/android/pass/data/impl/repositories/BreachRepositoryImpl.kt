@@ -31,10 +31,11 @@ import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.data.api.repositories.BreachRepository
 import proton.android.pass.data.impl.remote.RemoteBreachDataSource
+import proton.android.pass.data.impl.responses.BreachDomainPeek
 import proton.android.pass.data.impl.responses.BreachEmailsResponse
+import proton.android.pass.data.impl.responses.BreachesResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.data.impl.responses.BreachesResponse
 import proton.android.pass.domain.breach.Breach
 import proton.android.pass.domain.breach.BreachCustomEmail
 import proton.android.pass.domain.breach.BreachCustomEmailId
@@ -84,7 +85,10 @@ class BreachRepositoryImpl @Inject constructor(
         refreshFlow.update { true }
     }
 
-    override fun observeBreachesForProtonEmail(userId: UserId, id: AddressId): Flow<List<BreachEmail>> = oneShot {
+    override fun observeBreachesForProtonEmail(
+        userId: UserId,
+        id: AddressId
+    ): Flow<List<BreachEmail>> = oneShot {
         remote.getBreachesForProtonEmail(userId, id).toDomain()
     }
 
@@ -120,9 +124,15 @@ class BreachRepositoryImpl @Inject constructor(
     private fun BreachesResponse.toDomain() = with(this.breaches) {
         Breach(
             breachesCount = emailsCount,
+            breachedDomainPeeks = domainPeeks.map { domainPeek -> domainPeek.toDomain() },
             breachedCustomEmails = customEmails.map { customEmail -> customEmail.toDomain() }
         )
     }
+
+    private fun BreachDomainPeek.toDomain() = proton.android.pass.domain.breach.BreachDomainPeek(
+        breachDomain = domain,
+        breachTime = breachTime
+    )
 
     private fun BreachEmailsResponse.toDomain() = with(this.breachEmails) {
         breaches.map { breach ->

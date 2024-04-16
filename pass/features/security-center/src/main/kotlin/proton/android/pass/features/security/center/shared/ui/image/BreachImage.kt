@@ -16,22 +16,23 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.shared.navigation
+package proton.android.pass.features.security.center.shared.ui.image
 
-import androidx.navigation.NavType
-import proton.android.pass.navigation.api.NavArgId
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.size
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import proton.android.pass.features.security.center.R
 
-object BreachIdArgId : NavArgId {
-    override val key: String = "breach_id"
-    override val navType: NavType<*> = NavType.StringType
-}
-
-object BreachEmailIdArgId : NavArgId {
-    override val key: String = "breach_email_id"
-    override val navType: NavType<*> = NavType.StringType
-}
-
-object EmailArgId : NavArgId {
-    override val key: String = "email"
-    override val navType: NavType<*> = NavType.StringType
+@Composable
+fun BreachImage(modifier: Modifier = Modifier) {
+    Image(
+        painter = painterResource(id = R.drawable.shield_bolt_neutral_big_red),
+        contentDescription = null,
+        modifier = modifier.size(40.dp),
+        alignment = Alignment.CenterStart
+    )
 }

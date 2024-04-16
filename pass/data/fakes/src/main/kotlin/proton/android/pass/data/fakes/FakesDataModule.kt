@@ -113,8 +113,9 @@ import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.UpdateVault
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.ObserveBreachCustomEmails
-import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAlias
+import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAliasEmail
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForCustomEmail
+import proton.android.pass.data.api.usecases.breach.ObserveBreachesForProtonEmail
 import proton.android.pass.data.api.usecases.breach.ObserveCustomEmailSuggestions
 import proton.android.pass.data.api.usecases.breach.VerifyBreachCustomEmail
 import proton.android.pass.data.api.usecases.capabilities.CanCreateItemInVault
@@ -239,8 +240,9 @@ import proton.android.pass.data.fakes.usecases.TestUpdateItem
 import proton.android.pass.data.fakes.usecases.TestUpdateVault
 import proton.android.pass.data.fakes.usecases.breach.FakeAddBreachCustomEmail
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachCustomEmails
-import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachesForAlias
+import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachesForAliasEmail
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachesForCustomEmail
+import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachesForProtonEmail
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveCustomEmailSuggestions
 import proton.android.pass.data.fakes.usecases.breach.FakeVerifyBreachCustomEmail
 import proton.android.pass.data.fakes.usecases.items.FakeGetItemCategory
@@ -583,12 +585,17 @@ abstract class FakesDataModule {
     abstract fun bindVerifyBreachCustomEmail(impl: FakeVerifyBreachCustomEmail): VerifyBreachCustomEmail
 
     @Binds
+    abstract fun bindObserveBreachesForProtonEmail(
+        impl: FakeObserveBreachesForProtonEmail
+    ): ObserveBreachesForProtonEmail
+
+    @Binds
     abstract fun bindObserveBreachesForCustomEmail(
         impl: FakeObserveBreachesForCustomEmail
     ): ObserveBreachesForCustomEmail
 
     @Binds
-    abstract fun bindObserveBreachesForAlias(impl: FakeObserveBreachesForAlias): ObserveBreachesForAlias
+    abstract fun bindObserveBreachesForAlias(impl: FakeObserveBreachesForAliasEmail): ObserveBreachesForAliasEmail
 
     @Binds
     abstract fun bindObserveCustomEmailSuggestions(

@@ -307,6 +307,10 @@ fun LoginDetail(
                                         )
                                     )
                                 }
+
+                                LoginDetailEvent.OnExcludeItemMonitoring -> {
+                                    viewModel.onExcludeItemFromMonitoring()
+                                }
                             }
                         },
                         isHistoryFeatureEnabled = state.isHistoryFeatureEnabled

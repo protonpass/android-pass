@@ -18,59 +18,73 @@
 
 package proton.android.pass.features.security.center.report.ui
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import me.proton.core.compose.theme.defaultSmallWeak
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.breach.BreachEmail
-import proton.android.pass.features.security.center.R
+import proton.android.pass.domain.breach.BreachId
+import proton.android.pass.features.security.center.report.navigation.SecurityCenterReportDestination
+import proton.android.pass.features.security.center.shared.presentation.AliasEmailType
+import proton.android.pass.features.security.center.shared.presentation.CustomEmailType
+import proton.android.pass.features.security.center.shared.presentation.EmailType
+import proton.android.pass.features.security.center.shared.ui.image.BreachImage
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 import kotlin.random.Random
 
-private const val SEVERITY_THRESHOLD = 0.5
-
 @Composable
-internal fun BreachRow(modifier: Modifier = Modifier, breach: BreachEmail) {
+internal fun BreachRow(
+    modifier: Modifier = Modifier,
+    breach: BreachEmail,
+    emailType: EmailType,
+    onNavigate: (SecurityCenterReportDestination) -> Unit
+) {
     Row(
-        modifier = modifier.padding(horizontal = Spacing.medium, vertical = Spacing.small),
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable {
+                when (emailType) {
+                    is AliasEmailType -> onNavigate(
+                        SecurityCenterReportDestination.AliasBreachDetail(
+                            breachId = BreachId(breach.id),
+                            shareId = emailType.shareId,
+                            itemId = emailType.itemId
+                        )
+                    )
+
+                    is CustomEmailType -> onNavigate(
+                        SecurityCenterReportDestination.CustomEmailBreachDetail(
+                            breachId = BreachId(breach.id),
+                            customEmailId = emailType.breachCustomEmailId
+                        )
+                    )
+                }
+            }
+            .padding(horizontal = Spacing.medium, vertical = Spacing.small),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
-        when {
-            breach.severity > SEVERITY_THRESHOLD -> Image(
-                painter = painterResource(id = R.drawable.shield_bolt_neutral_big_red),
-                contentDescription = null,
-                modifier = Modifier.size(40.dp),
-                alignment = Alignment.CenterStart
-            )
-
-            else -> Image(
-                painter = painterResource(id = R.drawable.shield_bolt_neutral_big_yellow),
-                contentDescription = null,
-                modifier = Modifier.size(40.dp),
-                alignment = Alignment.CenterStart
-            )
-        }
+        BreachImage()
         Column(verticalArrangement = Arrangement.Center) {
             Text(
                 text = breach.name,
@@ -115,7 +129,8 @@ class BreachRowPreviewProvider : PreviewParameterProvider<BreachEmail> {
         createdAt = "",
         publishedAt = publishedAt,
         size = 0,
-        passwordLastChars = ""
+        passwordLastChars = "",
+        exposedData = emptyList()
     )
 }
 
@@ -129,7 +144,9 @@ fun BreachRowPreview(@PreviewParameter(ThemedBreachRowPreviewProvider::class) in
     PassTheme(isDark = input.first) {
         Surface {
             BreachRow(
-                breach = input.second
+                breach = input.second,
+                emailType = AliasEmailType(ShareId(""), ItemId("")),
+                onNavigate = {}
             )
         }
     }

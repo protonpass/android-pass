@@ -16,22 +16,14 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.shared.navigation
+package proton.android.pass.features.security.center.shared.presentation
 
-import androidx.navigation.NavType
-import proton.android.pass.navigation.api.NavArgId
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.breach.BreachCustomEmailId
 
-object BreachIdArgId : NavArgId {
-    override val key: String = "breach_id"
-    override val navType: NavType<*> = NavType.StringType
-}
+sealed interface EmailType
 
-object BreachEmailIdArgId : NavArgId {
-    override val key: String = "breach_email_id"
-    override val navType: NavType<*> = NavType.StringType
-}
-
-object EmailArgId : NavArgId {
-    override val key: String = "email"
-    override val navType: NavType<*> = NavType.StringType
-}
+@JvmInline
+value class CustomEmailType(val breachCustomEmailId: BreachCustomEmailId) : EmailType
+data class AliasEmailType(val shareId: ShareId, val itemId: ItemId) : EmailType

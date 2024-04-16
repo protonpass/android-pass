@@ -16,22 +16,23 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.shared.navigation
+package proton.android.pass.features.security.center.breachdetail.presentation
 
-import androidx.navigation.NavType
-import proton.android.pass.navigation.api.NavArgId
+import androidx.compose.runtime.Stable
+import proton.android.pass.domain.breach.BreachEmail
 
-object BreachIdArgId : NavArgId {
-    override val key: String = "breach_id"
-    override val navType: NavType<*> = NavType.StringType
-}
+@Stable
+internal data class SecurityCenterBreachDetailState(
+    internal val breachEmail: BreachEmail?,
+    internal val event: SecurityCenterBreachDetailEvent,
+    internal val isLoading: Boolean
+) {
 
-object BreachEmailIdArgId : NavArgId {
-    override val key: String = "breach_email_id"
-    override val navType: NavType<*> = NavType.StringType
-}
-
-object EmailArgId : NavArgId {
-    override val key: String = "email"
-    override val navType: NavType<*> = NavType.StringType
+    internal companion object {
+        internal val Initial: SecurityCenterBreachDetailState = SecurityCenterBreachDetailState(
+            breachEmail = null,
+            event = SecurityCenterBreachDetailEvent.Idle,
+            isLoading = false
+        )
+    }
 }

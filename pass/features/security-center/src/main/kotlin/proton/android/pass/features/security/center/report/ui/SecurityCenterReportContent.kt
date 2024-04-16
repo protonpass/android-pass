@@ -88,7 +88,11 @@ internal fun SecurityCenterReportContent(
                             items = breachEmails,
                             key = { breach -> breach.id }
                         ) { breach ->
-                            BreachRow(breach = breach)
+                            BreachRow(
+                                breach = breach,
+                                emailType = state.emailType,
+                                onNavigate = onNavigate
+                            )
                         }
                     }
 

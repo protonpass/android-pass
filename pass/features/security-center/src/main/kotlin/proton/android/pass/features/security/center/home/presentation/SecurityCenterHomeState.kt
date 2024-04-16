@@ -23,6 +23,7 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.breach.Breach
+import proton.android.pass.domain.breach.BreachDomainPeek
 import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavDestination
 import proton.android.pass.securitycenter.api.InsecurePasswordsResult
@@ -48,6 +49,28 @@ internal data class SecurityCenterHomeState(
     }
 
     private val hasDataBreaches: Boolean = dataBreachesCount > 0
+
+    private val breachDomainPeek: BreachDomainPeek by lazy {
+        if (hasBreachDomainPeeks) {
+            breachDomainPeeks.first()
+        } else {
+            BreachDomainPeek(
+                breachDomain = DATA_BREACHED_DOMAIN_DEFAULT,
+                breachTime = DATA_BREACHED_TIME_DEFAULT
+            )
+        }
+    }
+
+    private val hasBreachDomainPeeks: Boolean by lazy { breachDomainPeeks.isNotEmpty() }
+
+    private val breachDomainPeeks: List<BreachDomainPeek> by lazy {
+        when (breachLoadingResult) {
+            is LoadingResult.Error,
+            LoadingResult.Loading -> emptyList()
+
+            is LoadingResult.Success -> breachLoadingResult.data.breachedDomainPeeks
+        }
+    }
 
     internal val insecurePasswordsCount: Int? = when (insecurePasswordsLoadingResult) {
         is LoadingResult.Error,
@@ -107,10 +130,10 @@ internal data class SecurityCenterHomeState(
         is PlanType.Free,
         is PlanType.Unknown -> if (hasDataBreaches) {
             SecurityCenterHomeDarkWebMonitoring.FreeDataBreaches(
-                dataBreachedSite = "", // implement when BE is ready
-                dataBreachedTime = 0L, // implement when BE is ready
-                dateBreachedEmail = DATA_BREACHED_EMAIL,
-                dataBreachedPassword = DATA_BREACHED_PASSWORD
+                dataBreachedSite = breachDomainPeek.breachDomain,
+                dataBreachedTime = breachDomainPeek.breachTime,
+                dateBreachedEmail = DATA_BREACHED_EMAIL_DEFAULT,
+                dataBreachedPassword = DATA_BREACHED_PASSWORD_DEFAULT
             )
         } else {
             SecurityCenterHomeDarkWebMonitoring.FreeNoDataBreaches
@@ -136,9 +159,12 @@ internal data class SecurityCenterHomeState(
             planType = PlanType.Unknown()
         )
 
+        private const val DATA_BREACHED_DOMAIN_DEFAULT = ""
+        private val DATA_BREACHED_TIME_DEFAULT = System.currentTimeMillis()
+
         // This constants are arbitrary values since only will be use for blurry effect on the UI
-        private const val DATA_BREACHED_EMAIL = "email@proton.me"
-        private const val DATA_BREACHED_PASSWORD = "********"
+        private const val DATA_BREACHED_EMAIL_DEFAULT = "email@proton.me"
+        private const val DATA_BREACHED_PASSWORD_DEFAULT = "********"
 
     }
 

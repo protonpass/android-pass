@@ -20,6 +20,7 @@ package proton.android.pass.data.api.repositories
 
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.breach.BreachCustomEmail
@@ -38,9 +39,11 @@ interface BreachRepository {
         code: String
     )
 
+    fun observeBreachesForProtonEmail(userId: UserId, id: AddressId): Flow<List<BreachEmail>>
+
     fun observeBreachesForCustomEmail(userId: UserId, id: BreachCustomEmailId): Flow<List<BreachEmail>>
 
-    fun observeBreachesForAlias(
+    fun observeBreachesForAliasEmail(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId

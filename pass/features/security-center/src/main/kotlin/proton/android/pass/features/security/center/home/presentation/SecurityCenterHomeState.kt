@@ -163,8 +163,8 @@ internal data class SecurityCenterHomeState(
         private val DATA_BREACHED_TIME_DEFAULT = System.currentTimeMillis()
 
         // This constants are arbitrary values since only will be use for blurry effect on the UI
-        private const val DATA_BREACHED_EMAIL_DEFAULT = "email@proton.me"
-        private const val DATA_BREACHED_PASSWORD_DEFAULT = "********"
+        private const val DATA_BREACHED_EMAIL_DEFAULT = "breached@email.com"
+        private const val DATA_BREACHED_PASSWORD_DEFAULT = "breachedPass"
 
     }
 

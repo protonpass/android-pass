@@ -16,22 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.shared.navigation
+package proton.android.pass.features.security.center.breachdetail.navigation
 
-import androidx.navigation.NavType
-import proton.android.pass.navigation.api.NavArgId
+sealed interface SecurityCenterBreachDetailNavDestination {
 
-object BreachIdArgId : NavArgId {
-    override val key: String = "breach_id"
-    override val navType: NavType<*> = NavType.StringType
-}
+    data object Back : SecurityCenterBreachDetailNavDestination
 
-object BreachEmailIdArgId : NavArgId {
-    override val key: String = "breach_email_id"
-    override val navType: NavType<*> = NavType.StringType
-}
+    data object Resolved : SecurityCenterBreachDetailNavDestination
 
-object EmailArgId : NavArgId {
-    override val key: String = "email"
-    override val navType: NavType<*> = NavType.StringType
 }

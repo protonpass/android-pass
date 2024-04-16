@@ -72,10 +72,7 @@
 
     <!-- Dark web monitor -->
     <string name="security_center_dark_web_monitor_top_bar_title">Dark Web Monitoring</string>
-    <string
-        name="security_center_dark_web_monitor_top_bar_subtitle"
-        comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41"
-    >Last check: %s</string>
+    <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Last check: %s</string>
     <string name="security_center_dark_web_monitor_custom_emails_title">Custom email address</string>
     <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">Not verified</string>
     <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Add new custom email address</string>
@@ -116,5 +113,18 @@
     <!-- Email breach report -->
     <string name="security_center_email_report_used_in_header">Used in</string>
     <string name="security_center_email_report_breaches_header">Breaches</string>
+
+    <!-- Breach report detail-->
+    <string name="security_center_report_detail_your_exposed_information">Your exposed information</string>
+    <string name="security_center_report_detail_subtitle">Your info was in a data breach and found on __DATE__</string>
+    <string name="security_center_report_detail_details">Details</string>
+    <string name="security_center_report_detail_email_address">Email address</string>
+    <string name="security_center_report_detail_password">Password</string>
+    <string name="security_center_report_detail_recommended_actions">Recommended actions</string>
+    <string name="security_center_report_detail_note">The exposed information was leaked from LinkedIn. Your Proton Account information remains secure and encrypted.</string>
+    <string name="security_center_report_detail_mark_as_resolved">Mark as Resolved</string>
+    <string name="security_center_report_detail_change_password">Change password</string>
+    <string name="security_center_report_detail_use_aliases">Use aliases in place of your email address</string>
+    <string name="security_center_report_detail_enable_2fa">Enable 2FA</string>
 
 </resources>

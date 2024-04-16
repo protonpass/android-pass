@@ -26,31 +26,18 @@ import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavParamEncoder
 
-object BreachesArgId : NavArgId {
-    override val key: String = "breaches"
+object BreachCountIdArgId : NavArgId {
+    override val key: String = "breaches_custom_email_id"
     override val navType: NavType<*> = NavType.IntType
-}
-
-object EmailTypeArgId : NavArgId {
-    override val key: String = "email_type"
-    override val navType: NavType<*> = NavType.EnumType(EmailType::class.java)
-}
-
-enum class EmailType {
-    Custom,
-    Alias,
-    Proton
 }
 
 object SecurityCenterReportNavItem : NavItem(
     baseRoute = "security/center/report",
-    navArgIds = listOf(EmailTypeArgId, BreachEmailIdArgId, EmailArgId, BreachesArgId)
+    navArgIds = listOf(BreachEmailIdArgId, EmailArgId, BreachCountIdArgId)
 ) {
     fun createNavRoute(
-        emailType: EmailType,
         id: BreachCustomEmailId,
         email: String,
-        breaches: Int
-    ): String = "$baseRoute/$emailType/${id.id}/${NavParamEncoder.encode(email)}/$breaches"
+        breachCount: Int
+    ): String = "$baseRoute/${id.id}/${NavParamEncoder.encode(email)}/$breachCount"
 }
-

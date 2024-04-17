@@ -66,6 +66,7 @@ import proton.android.pass.data.api.usecases.MigrateItems
 import proton.android.pass.data.api.usecases.MigrateVault
 import proton.android.pass.data.api.usecases.ObserveAccounts
 import proton.android.pass.data.api.usecases.ObserveActiveItems
+import proton.android.pass.data.api.usecases.ObserveAddressesByUserId
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveAppNeedsUpdate
@@ -188,6 +189,7 @@ import proton.android.pass.data.impl.usecases.MigrateItemsImpl
 import proton.android.pass.data.impl.usecases.MigrateVaultImpl
 import proton.android.pass.data.impl.usecases.ObserveAccountsImpl
 import proton.android.pass.data.impl.usecases.ObserveActiveItemsImpl
+import proton.android.pass.data.impl.usecases.ObserveAddressesByUserIdImpl
 import proton.android.pass.data.impl.usecases.ObserveAliasOptionsImpl
 import proton.android.pass.data.impl.usecases.ObserveAllSharesImpl
 import proton.android.pass.data.impl.usecases.ObserveAppNeedsUpdateImpl
@@ -641,4 +643,6 @@ abstract class DataUseCaseModule {
     @Binds
     abstract fun bindObserveBreachesForAlias(impl: ObserveBreachesForAliasEmailImpl): ObserveBreachesForAliasEmail
 
+    @Binds
+    abstract fun bindObserveAddressesByUserId(impl: ObserveAddressesByUserIdImpl): ObserveAddressesByUserId
 }

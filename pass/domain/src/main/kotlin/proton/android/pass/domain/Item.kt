@@ -51,5 +51,6 @@ data class Item(
     }
 
     val hasSkippedHealthCheck: Boolean = flags.hasFlag(ItemFlag.SkipHealthCheck.value)
+    val isEmailBreached: Boolean = flags.hasFlag(ItemFlag.EmailBreached.value)
 
 }

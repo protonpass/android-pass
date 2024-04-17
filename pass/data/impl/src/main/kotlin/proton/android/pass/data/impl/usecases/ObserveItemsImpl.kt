@@ -26,6 +26,7 @@ import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItems
+import proton.android.pass.data.api.usecases.items.ItemIsBreachedFilter
 import proton.android.pass.data.api.usecases.items.ItemSecurityCheckFilter
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemState
@@ -42,34 +43,49 @@ class ObserveItemsImpl @Inject constructor(
         itemState: ItemState?,
         filter: ItemTypeFilter,
         userId: UserId?,
-        securityCheckFilter: ItemSecurityCheckFilter
+        securityCheckFilter: ItemSecurityCheckFilter,
+        isBreachedFilter: ItemIsBreachedFilter
     ): Flow<List<Item>> = if (userId == null) {
         observeCurrentUser()
             .flatMapLatest {
-                observeItems(it.userId, selection, itemState, filter, securityCheckFilter)
+                observeItems(
+                    userId = it.userId,
+                    selection = selection,
+                    itemState = itemState,
+                    filter = filter,
+                    exclusionFilter = securityCheckFilter,
+                    isBreachedFilter = isBreachedFilter
+                )
             }
     } else {
-        observeItems(userId, selection, itemState, filter, securityCheckFilter)
+        observeItems(userId, selection, itemState, filter, securityCheckFilter, isBreachedFilter)
     }
 
+    @Suppress("LongParameterList")
     private fun observeItems(
         userId: UserId,
         selection: ShareSelection,
         itemState: ItemState?,
         filter: ItemTypeFilter,
-        exclusionFilter: ItemSecurityCheckFilter
+        exclusionFilter: ItemSecurityCheckFilter,
+        isBreachedFilter: ItemIsBreachedFilter
     ): Flow<List<Item>> = itemRepository.observeItems(
         userId = userId,
         shareSelection = selection,
         itemState = itemState,
         itemTypeFilter = filter
     ).map { items ->
-        when (exclusionFilter) {
-            ItemSecurityCheckFilter.Excluded -> items.filter { item -> item.hasSkippedHealthCheck }
-            ItemSecurityCheckFilter.Included -> items.filter { item -> !item.hasSkippedHealthCheck }
-            ItemSecurityCheckFilter.All -> items
+        items.filter { item ->
+            when (exclusionFilter) {
+                ItemSecurityCheckFilter.Excluded -> item.hasSkippedHealthCheck
+                ItemSecurityCheckFilter.Included -> !item.hasSkippedHealthCheck
+                ItemSecurityCheckFilter.All -> true
+            } && when (isBreachedFilter) {
+                ItemIsBreachedFilter.Breached -> item.isEmailBreached
+                ItemIsBreachedFilter.NotBreached -> !item.isEmailBreached
+                ItemIsBreachedFilter.All -> true
+            }
         }
     }
-
 }
 

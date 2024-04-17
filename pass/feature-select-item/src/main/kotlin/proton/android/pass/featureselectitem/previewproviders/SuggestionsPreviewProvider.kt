@@ -72,7 +72,8 @@ class SuggestionsPreviewProvider : PreviewParameterProvider<SuggestionsInput> {
         createTime = Clock.System.now(),
         modificationTime = Clock.System.now(),
         lastAutofillTime = Clock.System.now(),
-        isPinned = false
+        isPinned = false,
+        isExcludedFromMonitor = false
     )
 }
 

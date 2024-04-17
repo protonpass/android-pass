@@ -16,12 +16,11 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featurehome.impl
+package proton.android.pass.featurehome.impl.saver
 
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.mapSaver
 import kotlinx.datetime.Instant
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import proton.android.pass.commonuimodels.api.ItemUiModel
@@ -37,6 +36,7 @@ val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
     val lastAutofillTime = "last_autofill_time"
     val canModify = "can_modify"
     val isPinned = "is_pinned"
+    val isExcludedFromMonitor = "is_excluded_from_monitor"
     mapSaver(
         save = {
             it?.let { itemUiModel ->
@@ -48,7 +48,8 @@ val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
                     modificationTime to itemUiModel.modificationTime.toString(),
                     lastAutofillTime to itemUiModel.lastAutofillTime?.toString(),
                     canModify to itemUiModel.canModify,
-                    isPinned to itemUiModel.isPinned
+                    isPinned to itemUiModel.isPinned,
+                    isExcludedFromMonitor to itemUiModel.isExcludedFromMonitor
                 )
             } ?: emptyMap()
         },
@@ -63,7 +64,8 @@ val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
                     modificationTime = (values[modificationTime] as String).let { Instant.parse(it) },
                     lastAutofillTime = (values[modificationTime] as? String)?.let { Instant.parse(it) },
                     canModify = values[canModify] as Boolean,
-                    isPinned = values[isPinned] as Boolean
+                    isPinned = values[isPinned] as Boolean,
+                    isExcludedFromMonitor = values[isExcludedFromMonitor] as Boolean
                 )
             } else {
                 null

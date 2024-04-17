@@ -639,9 +639,10 @@ class LoginDetailViewModel @Inject constructor(
                 isFlagEnable = true
             )
         }.onFailure { error ->
-            println("JIBIRI: onExcludeItemFromMonitoring -> onFailure -> $error")
-        }.onSuccess { item ->
-            println("JIBIRI: onExcludeItemFromMonitoring -> onSuccess -> $item")
+            PassLogger.i(TAG, error, "Error excluding item from monitoring")
+            snackbarDispatcher(DetailSnackbarMessages.ItemMonitorExcludedError)
+        }.onSuccess {
+            snackbarDispatcher(DetailSnackbarMessages.ItemMonitorExcludedSuccess)
         }
 
         isLoadingState.update { IsLoadingState.NotLoading }
@@ -658,9 +659,10 @@ class LoginDetailViewModel @Inject constructor(
                 isFlagEnable = false
             )
         }.onFailure { error ->
-            println("JIBIRI: onIncludeItemInMonitoring -> onFailure -> $error")
-        }.onSuccess { item ->
-            println("JIBIRI: onIncludeItemInMonitoring -> onSuccess -> $item")
+            PassLogger.i(TAG, error, "Error including item in monitoring")
+            snackbarDispatcher(DetailSnackbarMessages.ItemMonitorIncludedError)
+        }.onSuccess {
+            snackbarDispatcher(DetailSnackbarMessages.ItemMonitorIncludedSuccess)
         }
 
         isLoadingState.update { IsLoadingState.NotLoading }

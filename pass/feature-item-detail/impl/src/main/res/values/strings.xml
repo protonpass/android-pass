@@ -36,8 +36,12 @@
     <string name="item_unpinned_message_error">There was an error unpinning this item</string>
     <string name="login_item_generate_totp_error">Error generating 2FA code</string>
     <string name="login_item_view_alias_button">View alias</string>
-    <string name="login_item_weak_pass_widget_title">Weak Password</string>
-    <string name="login_item_weak_pass_widget_subtitle">This account is vulnerable, visit the service and change your password.</string>
+    <string name="login_item_monitor_widget_weak_pass_title">Weak Password</string>
+    <string name="login_item_monitor_widget_weak_pass_subtitle">This account is vulnerable, visit the service and change your password.</string>
+    <string name="login_item_monitor_widget_reused_pass_title">Reused Password</string>
+    <string name="login_item_monitor_widget_reused_pass_subtitle">Visit the website and generate a unique password for this item.</string>
+    <string name="login_item_monitor_widget_menu_action_exclude">Exclude from monitoring</string>
+    <string name="login_item_monitor_widget_menu_action_include">Include in monitoring</string>
 
     <string name="field_username">Username or email address</string>
     <string name="field_password">Password</string>

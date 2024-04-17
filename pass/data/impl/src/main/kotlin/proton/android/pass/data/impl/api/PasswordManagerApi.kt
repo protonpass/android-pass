@@ -329,7 +329,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
     ): CodeOnlyResponse
 
     @GET("$PREFIX/breach/address/{addressId}/breaches")
-    suspend fun getBreachesForProtonEmail(@Path("customEmailId") addressId: String): BreachEmailsResponse
+    suspend fun getBreachesForProtonEmail(@Path("addressId") addressId: String): BreachEmailsResponse
 
     @GET("$PREFIX/breach/custom_email/{customEmailId}/breaches")
     suspend fun getBreachesForCustomEmail(@Path("customEmailId") emailId: String): BreachEmailsResponse

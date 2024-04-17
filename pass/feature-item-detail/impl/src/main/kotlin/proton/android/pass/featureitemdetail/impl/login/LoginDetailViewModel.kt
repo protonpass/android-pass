@@ -609,6 +609,8 @@ class LoginDetailViewModel @Inject constructor(
     }
 
     internal fun onExcludeItemFromMonitoring() = viewModelScope.launch {
+        isLoadingState.update { IsLoadingState.Loading }
+
         runCatching {
             updateItemFlag(
                 shareId = shareId,
@@ -617,10 +619,31 @@ class LoginDetailViewModel @Inject constructor(
                 isFlagEnable = true
             )
         }.onFailure { error ->
-            println("JIBIRI: onFailure -> $error")
+            println("JIBIRI: onExcludeItemFromMonitoring -> onFailure -> $error")
         }.onSuccess { item ->
-            println("JIBIRI: onSuccess -> $item")
+            println("JIBIRI: onExcludeItemFromMonitoring -> onSuccess -> $item")
         }
+
+        isLoadingState.update { IsLoadingState.NotLoading }
+    }
+
+    internal fun onIncludeItemInMonitoring() = viewModelScope.launch {
+        isLoadingState.update { IsLoadingState.Loading }
+
+        runCatching {
+            updateItemFlag(
+                shareId = shareId,
+                itemId = itemId,
+                flag = ItemFlag.SkipHealthCheck,
+                isFlagEnable = false
+            )
+        }.onFailure { error ->
+            println("JIBIRI: onIncludeItemInMonitoring -> onFailure -> $error")
+        }.onSuccess { item ->
+            println("JIBIRI: onIncludeItemInMonitoring -> onSuccess -> $item")
+        }
+
+        isLoadingState.update { IsLoadingState.NotLoading }
     }
 
     private fun observeTotp(decryptedTotpUri: String): Flow<TotpUiState> =

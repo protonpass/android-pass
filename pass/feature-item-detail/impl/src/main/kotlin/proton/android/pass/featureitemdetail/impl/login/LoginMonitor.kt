@@ -30,8 +30,7 @@ internal fun LoginMonitor(
     modifier: Modifier = Modifier,
     isPasswordInsecure: Boolean,
     isPasswordReused: Boolean,
-    isExcludedFromMonitor: Boolean,
-    onEvent: (LoginDetailEvent) -> Unit
+    isExcludedFromMonitor: Boolean
 ) {
     Column(
         modifier = modifier,
@@ -43,8 +42,7 @@ internal fun LoginMonitor(
                     titleResId = R.string.login_item_monitor_widget_weak_pass_title,
                     subtitleResId = R.string.login_item_monitor_widget_weak_pass_subtitle,
                     isExcludedFromMonitor = isExcludedFromMonitor
-                ),
-                onMenuActionClick = onEvent
+                )
             )
         }
 
@@ -54,8 +52,7 @@ internal fun LoginMonitor(
                     titleResId = R.string.login_item_monitor_widget_reused_pass_title,
                     subtitleResId = R.string.login_item_monitor_widget_reused_pass_subtitle,
                     isExcludedFromMonitor = isExcludedFromMonitor
-                ),
-                onMenuActionClick = onEvent
+                )
             )
         }
     }

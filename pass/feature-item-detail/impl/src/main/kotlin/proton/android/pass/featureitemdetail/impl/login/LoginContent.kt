@@ -70,7 +70,7 @@ fun LoginContent(
             model = LoginMonitorWidgetModel.WeakPassword(
                 titleResId = R.string.login_item_monitor_widget_weak_pass_title,
                 subtitleResId = R.string.login_item_monitor_widget_weak_pass_subtitle,
-                isExcludedFromMonitor = true
+                isExcludedFromMonitor = itemUiModel.isExcludedFromMonitor
             ),
             onMenuActionClick = onEvent
         )
@@ -79,7 +79,7 @@ fun LoginContent(
             model = LoginMonitorWidgetModel.ReusedPassword(
                 titleResId = R.string.login_item_monitor_widget_reused_pass_title,
                 subtitleResId = R.string.login_item_monitor_widget_reused_pass_subtitle,
-                isExcludedFromMonitor = false
+                isExcludedFromMonitor = itemUiModel.isExcludedFromMonitor
             ),
             onMenuActionClick = onEvent
         )

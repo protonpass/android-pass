@@ -19,20 +19,29 @@
 package proton.android.pass.featureitemdetail.impl.login
 
 import androidx.compose.runtime.Stable
+import proton.android.pass.featureitemdetail.impl.ItemDetailNavScope
 import proton.android.pass.securitycenter.api.passwords.InsecurePasswordsReport
 import proton.android.pass.securitycenter.api.passwords.RepeatedPasswordsReport
 
 @Stable
 internal data class LoginMonitorState(
     internal val isExcludedFromMonitor: Boolean,
+    private val navigationScope: ItemDetailNavScope,
     private val insecurePasswordsReport: InsecurePasswordsReport,
     private val repeatedPasswordsReport: RepeatedPasswordsReport
 ) {
 
-    internal val shouldDisplayMonitoring: Boolean = true
+    internal val shouldDisplayMonitoring: Boolean = when (navigationScope) {
+        ItemDetailNavScope.Default -> false
+        ItemDetailNavScope.Monitor -> true
+    }
 
-    internal val isPasswordInsecure: Boolean = insecurePasswordsReport.insecurePasswordsCount > 0
+    internal val isPasswordInsecure: Boolean by lazy {
+        insecurePasswordsReport.insecurePasswordsCount > 0
+    }
 
-    internal val isPasswordReused: Boolean = repeatedPasswordsReport.repeatedPasswordsCount > 0
+    internal val isPasswordReused: Boolean by lazy {
+        repeatedPasswordsReport.repeatedPasswordsCount > 0
+    }
 
 }

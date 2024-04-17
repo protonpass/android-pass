@@ -88,8 +88,7 @@ data class ItemTitleInput(
         createTime = Instant.fromEpochMilliseconds(1_697_213_366_026),
         modificationTime = Instant.fromEpochMilliseconds(1_707_213_366_026),
         lastAutofillTime = null,
-        isPinned = false,
-        isExcludedFromMonitor = false
+        isPinned = false
     ),
     val vault: Vault?,
     val isPinned: Boolean,

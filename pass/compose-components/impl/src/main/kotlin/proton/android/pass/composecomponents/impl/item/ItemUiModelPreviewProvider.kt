@@ -39,8 +39,7 @@ class ItemUiModelPreviewProvider : PreviewParameterProvider<ItemUiModel> {
                 createTime = Clock.System.now(),
                 modificationTime = Clock.System.now(),
                 lastAutofillTime = Clock.System.now(),
-                isPinned = false,
-                isExcludedFromMonitor = false
+                isPinned = false
             ),
             ItemUiModel(
                 id = ItemId("123"),
@@ -57,8 +56,7 @@ class ItemUiModelPreviewProvider : PreviewParameterProvider<ItemUiModel> {
                 createTime = Clock.System.now(),
                 modificationTime = Clock.System.now(),
                 lastAutofillTime = Clock.System.now(),
-                isPinned = false,
-                isExcludedFromMonitor = false
+                isPinned = false
             )
         )
 }

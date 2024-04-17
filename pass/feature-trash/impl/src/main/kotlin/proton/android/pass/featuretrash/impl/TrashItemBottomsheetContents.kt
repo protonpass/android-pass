@@ -144,8 +144,7 @@ fun TrashItemBottomSheetContentsPreview(@PreviewParameter(ThemePreviewProvider::
                     state = 0,
                     modificationTime = Clock.System.now(),
                     lastAutofillTime = Clock.System.now(),
-                    isPinned = false,
-                    isExcludedFromMonitor = false
+                    isPinned = false
                 ),
                 onRestoreItem = { },
                 onDeleteItem = { },

@@ -111,6 +111,8 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import proton.android.pass.securitycenter.api.passwords.InsecurePasswordChecker
+import proton.android.pass.securitycenter.api.passwords.RepeatedPasswordChecker
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.ObserveTotpFromUri
@@ -141,7 +143,9 @@ class LoginDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandleProvider,
     getItemActions: GetItemActions,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
-    getUserPlan: GetUserPlan
+    getUserPlan: GetUserPlan,
+    insecurePasswordChecker: InsecurePasswordChecker,
+    repeatedPasswordChecker: RepeatedPasswordChecker
 ) : ViewModel() {
 
     private val shareId: ShareId =
@@ -245,7 +249,12 @@ class LoginDetailViewModel @Inject constructor(
                     hasMoreThanOneVault = details.hasMoreThanOneVault,
                     linkedAlias = alias,
                     shareClickAction = shareClickAction,
-                    passwordScore = passwordScore
+                    passwordScore = passwordScore,
+                    securityState = LoginMonitorState(
+                        isExcludedFromMonitor = details.item.hasSkippedHealthCheck,
+                        insecurePasswordsReport = insecurePasswordChecker(listOf(details.item)),
+                        repeatedPasswordsReport = repeatedPasswordChecker(listOf(details.item))
+                    )
                 )
             }
         }
@@ -314,7 +323,8 @@ class LoginDetailViewModel @Inject constructor(
         val hasMoreThanOneVault: Boolean,
         val linkedAlias: Option<LinkedAliasItem>,
         val shareClickAction: ShareClickAction,
-        val passwordScore: PasswordScore?
+        val passwordScore: PasswordScore?,
+        val securityState: LoginMonitorState
     )
 
     private val itemFeaturesFlow = combine(
@@ -328,7 +338,7 @@ class LoginDetailViewModel @Inject constructor(
         )
     }
 
-    val uiState: StateFlow<LoginDetailUiState> = combineN(
+    internal val uiState: StateFlow<LoginDetailUiState> = combineN(
         revealedLoginItemInfoFlow,
         totpUiStateFlow,
         isLoadingState,
@@ -396,7 +406,8 @@ class LoginDetailViewModel @Inject constructor(
                     itemActions = actions,
                     event = event,
                     isPinningFeatureEnabled = itemFeatures.isPinningEnabled,
-                    isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled
+                    isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled,
+                    monitorState = details.securityState
                 )
             }
         }

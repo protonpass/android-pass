@@ -223,6 +223,7 @@ fun LoginDetail(
                         canLoadExternalImages = canLoadExternalImages,
                         customFields = state.customFields,
                         passkeys = state.passkeys,
+                        monitorState = state.monitorState,
                         onEvent = {
                             when (it) {
                                 LoginDetailEvent.OnCopyPasswordClick -> {

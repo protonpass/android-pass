@@ -65,7 +65,6 @@ internal fun EmailBreachRow(
             .padding(horizontal = Spacing.medium, vertical = Spacing.small)
     ) {
         Row(
-            modifier = Modifier,
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(Spacing.small)
         ) {

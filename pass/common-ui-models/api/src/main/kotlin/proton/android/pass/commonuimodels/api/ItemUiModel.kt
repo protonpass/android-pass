@@ -36,6 +36,7 @@ data class ItemUiModel(
     val modificationTime: Instant,
     val lastAutofillTime: Instant?,
     val isPinned: Boolean,
+    val isExcludedFromMonitor: Boolean,
     val canModify: Boolean = true,
     val category: ItemCategory = ItemCategory.Unknown
 ) {

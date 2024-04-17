@@ -18,13 +18,22 @@
 
 package proton.android.pass.features.security.center.breachdetail.ui
 
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.toJavaLocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 object DateUtils {
+    const val SECURITY_CENTER_DATE_PATTERN = "MMM dd, yyyy"
+
     private val isoDateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME
     private val customDateFormatter =
-        DateTimeFormatter.ofPattern("MMM dd, yyyy", Locale.getDefault())
+        DateTimeFormatter.ofPattern(SECURITY_CENTER_DATE_PATTERN, Locale.getDefault())
+
+    fun formatDate(date: LocalDate): String = DateTimeFormatter.ofPattern(
+        SECURITY_CENTER_DATE_PATTERN,
+        Locale.getDefault()
+    ).format(date.toJavaLocalDate())
 
     fun formatDate(isoDateString: String): Result<String> = runCatching {
         val date = isoDateTimeFormatter.parse(isoDateString)

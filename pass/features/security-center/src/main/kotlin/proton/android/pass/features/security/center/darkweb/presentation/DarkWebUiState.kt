@@ -20,6 +20,7 @@ package proton.android.pass.features.security.center.darkweb.presentation
 
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.domain.breach.BreachCustomEmailId
@@ -61,25 +62,52 @@ enum class DarkWebEmailsError {
 }
 
 @Stable
-sealed interface DarkWebEmailsState {
-    data object Loading : DarkWebEmailsState
+sealed interface DarkWebCustomEmailsState {
+    data object Loading : DarkWebCustomEmailsState
 
     @JvmInline
-    value class Error(val reason: DarkWebEmailsError) : DarkWebEmailsState
+    value class Error(val reason: DarkWebEmailsError) : DarkWebCustomEmailsState
 
     @JvmInline
-    value class Success(val emails: ImmutableList<CustomEmailUiState>) : DarkWebEmailsState
+    value class Success(val emails: ImmutableList<CustomEmailUiState>) : DarkWebCustomEmailsState
+}
+
+@Stable
+data class EmailBreachUiState(
+    val email: String,
+    val count: Int,
+    val breachDate: String?
+)
+
+@Stable
+sealed interface DarkWebEmailBreachState {
+    fun list(): ImmutableList<EmailBreachUiState> = when (this) {
+        is Success -> emails
+        else -> persistentListOf()
+    }
+
+    data object Loading : DarkWebEmailBreachState
+
+    @JvmInline
+    value class Error(val reason: DarkWebEmailsError) : DarkWebEmailBreachState
+
+    @JvmInline
+    value class Success(val emails: ImmutableList<EmailBreachUiState>) : DarkWebEmailBreachState
 }
 
 @Stable
 data class DarkWebUiState(
-    val customEmails: DarkWebEmailsState,
+    val protonEmailState: DarkWebEmailBreachState,
+    val aliasEmailState: DarkWebEmailBreachState,
+    val customEmailState: DarkWebCustomEmailsState,
     val darkWebStatus: DarkWebStatus,
     val lastCheckTime: Option<String>
 ) {
     companion object {
         val Initial = DarkWebUiState(
-            customEmails = DarkWebEmailsState.Loading,
+            protonEmailState = DarkWebEmailBreachState.Loading,
+            aliasEmailState = DarkWebEmailBreachState.Loading,
+            customEmailState = DarkWebCustomEmailsState.Loading,
             darkWebStatus = DarkWebStatus.Loading,
             lastCheckTime = None
         )

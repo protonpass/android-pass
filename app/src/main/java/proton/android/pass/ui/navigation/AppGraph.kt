@@ -80,6 +80,7 @@ import proton.android.pass.featureitemcreate.impl.note.updateNoteGraph
 import proton.android.pass.featureitemcreate.impl.totp.CameraTotp
 import proton.android.pass.featureitemcreate.impl.totp.PhotoPickerTotp
 import proton.android.pass.featureitemdetail.impl.ItemDetailCannotPerformAction
+import proton.android.pass.featureitemdetail.impl.ItemDetailNavScope
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ViewItem
 import proton.android.pass.featureitemdetail.impl.itemDetailGraph
@@ -1051,7 +1052,8 @@ fun NavGraphBuilder.appGraph(
                     destination = ViewItem,
                     route = ViewItem.createNavRoute(
                         shareId = destination.shareId,
-                        itemId = destination.itemId
+                        itemId = destination.itemId,
+                        scope = ItemDetailNavScope.Monitor
                     )
                 )
 

@@ -93,6 +93,11 @@ enum class ItemDetailCannotPerformActionType {
     }
 }
 
+enum class ItemDetailNavScope {
+    Default,
+    Monitor
+}
+
 object ItemDetailCannotPerformActionTypeNavArgId : NavArgId {
     override val key = "cannotPerformActionType"
     override val navType = NavType.StringType
@@ -106,11 +111,20 @@ object ItemDetailCannotPerformAction : NavItem(
     fun buildRoute(type: ItemDetailCannotPerformActionType) = "$baseRoute/${type.name}"
 }
 
+object ItemDetailScopeNavArgId :  NavArgId {
+    override val key: String = "itemDetailNavScope"
+    override val navType: NavType<*> = NavType.EnumType(ItemDetailNavScope::class.java)
+}
+
 object ViewItem : NavItem(
     baseRoute = "item/detail/view",
-    navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId)
+    navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId, ItemDetailScopeNavArgId)
 ) {
-    fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
+    fun createNavRoute(
+        shareId: ShareId,
+        itemId: ItemId,
+        scope: ItemDetailNavScope = ItemDetailNavScope.Default
+    ) = "$baseRoute/${shareId.id}/${itemId.id}/$scope"
 }
 
 fun NavGraphBuilder.itemDetailGraph(onNavigate: (ItemDetailNavigation) -> Unit) {
@@ -129,7 +143,7 @@ fun NavGraphBuilder.itemDetailGraph(onNavigate: (ItemDetailNavigation) -> Unit) 
                     .requireArguments()
                     .getString(ItemDetailCannotPerformActionTypeNavArgId.key)
             )
-            val asType = ItemDetailCannotPerformActionType.values().find { it.name == typeArg }
+            val asType = ItemDetailCannotPerformActionType.entries.find { it.name == typeArg }
                 ?: throw IllegalStateException("Cannot find type $typeArg")
             asType.toType()
         }

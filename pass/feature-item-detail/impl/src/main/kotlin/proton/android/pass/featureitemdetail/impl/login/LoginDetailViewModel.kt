@@ -103,6 +103,8 @@ import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.TotpCop
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.UsernameCopiedToClipboard
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.WebsiteCopiedToClipboard
 import proton.android.pass.featureitemdetail.impl.ItemDelete
+import proton.android.pass.featureitemdetail.impl.ItemDetailNavScope
+import proton.android.pass.featureitemdetail.impl.ItemDetailScopeNavArgId
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
 import proton.android.pass.featureitemdetail.impl.common.ItemFeatures
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
@@ -148,10 +150,16 @@ class LoginDetailViewModel @Inject constructor(
     repeatedPasswordChecker: RepeatedPasswordChecker
 ) : ViewModel() {
 
-    private val shareId: ShareId =
-        ShareId(savedStateHandle.get().require(CommonNavArgId.ShareId.key))
-    private val itemId: ItemId =
-        ItemId(savedStateHandle.get().require(CommonNavArgId.ItemId.key))
+    private val shareId: ShareId = savedStateHandle.get()
+        .require<String>(CommonNavArgId.ShareId.key)
+        .let(::ShareId)
+
+    private val itemId: ItemId = savedStateHandle.get()
+        .require<String>(CommonNavArgId.ItemId.key)
+        .let(::ItemId)
+
+    private val navigationScope: ItemDetailNavScope = savedStateHandle.get()
+        .require(ItemDetailScopeNavArgId.key)
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.w(TAG, throwable)
@@ -252,6 +260,7 @@ class LoginDetailViewModel @Inject constructor(
                     passwordScore = passwordScore,
                     securityState = LoginMonitorState(
                         isExcludedFromMonitor = details.item.hasSkippedHealthCheck,
+                        navigationScope = navigationScope,
                         insecurePasswordsReport = insecurePasswordChecker(listOf(details.item)),
                         repeatedPasswordsReport = repeatedPasswordChecker(listOf(details.item))
                     )

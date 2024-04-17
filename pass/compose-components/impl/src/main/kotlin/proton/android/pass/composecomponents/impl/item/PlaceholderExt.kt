@@ -25,7 +25,7 @@ import com.google.accompanist.placeholder.placeholder
 import com.google.accompanist.placeholder.shimmer
 import proton.android.pass.commonui.api.PassTheme
 
-fun Modifier.placeholder(): Modifier = composed {
+fun Modifier.placeholder(): Modifier = this.composed {
     placeholder(
         visible = true,
         color = PassTheme.colors.backgroundWeak,

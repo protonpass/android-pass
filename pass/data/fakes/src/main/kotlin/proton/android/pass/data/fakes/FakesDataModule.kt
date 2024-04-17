@@ -70,6 +70,7 @@ import proton.android.pass.data.api.usecases.LeaveVault
 import proton.android.pass.data.api.usecases.MigrateItems
 import proton.android.pass.data.api.usecases.MigrateVault
 import proton.android.pass.data.api.usecases.ObserveActiveItems
+import proton.android.pass.data.api.usecases.ObserveAddressesByUserId
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveAppNeedsUpdate
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
@@ -144,6 +145,7 @@ import proton.android.pass.data.fakes.repositories.TestInviteRepository
 import proton.android.pass.data.fakes.repositories.TestItemRepository
 import proton.android.pass.data.fakes.repositories.TestUserAccessDataRepository
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
+import proton.android.pass.data.fakes.usecases.FakeObserveAddressesByUserId
 import proton.android.pass.data.fakes.usecases.FakeObserveInviteRecommendations
 import proton.android.pass.data.fakes.usecases.FakePinItem
 import proton.android.pass.data.fakes.usecases.FakeUnpinItem
@@ -601,4 +603,7 @@ abstract class FakesDataModule {
     abstract fun bindObserveCustomEmailSuggestions(
         impl: FakeObserveCustomEmailSuggestions
     ): ObserveCustomEmailSuggestions
+
+    @Binds
+    abstract fun bindObserveAddressesByUserId(impl: FakeObserveAddressesByUserId): ObserveAddressesByUserId
 }

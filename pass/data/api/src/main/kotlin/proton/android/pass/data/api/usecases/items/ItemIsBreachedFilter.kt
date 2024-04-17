@@ -16,9 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.domain
+package proton.android.pass.data.api.usecases.items
 
-enum class ItemFlag(val value: Int) {
-    SkipHealthCheck(value = 1 shl 0),
-    EmailBreached(value = 1 shl 1)
+enum class ItemIsBreachedFilter {
+    All,
+    Breached,
+    NotBreached
 }

@@ -149,13 +149,7 @@ internal class DarkWebViewModel @Inject constructor(
                 EmailBreachUiState(
                     email = it.key,
                     count = it.value.size,
-                    breachDate = it.value.mapNotNull {
-                        runCatching {
-                            Instant.parse(it.publishedAt)
-                                .toLocalDateTime(TimeZone.currentSystemDefault())
-                                .date
-                        }.getOrNull()
-                    }.maxOrNull()?.let(DateUtils::formatDate)
+                    breachDate = it.value.getLatestBreachDate()
                 )
             }.toImmutableList()
         )
@@ -176,17 +170,19 @@ internal class DarkWebViewModel @Inject constructor(
                 EmailBreachUiState(
                     email = it.key,
                     count = it.value.size,
-                    breachDate = it.value.mapNotNull {
-                        runCatching {
-                            Instant.parse(it.publishedAt)
-                                .toLocalDateTime(TimeZone.currentSystemDefault())
-                                .date
-                        }.getOrNull()
-                    }.maxOrNull()?.let(DateUtils::formatDate)
+                    breachDate = it.value.getLatestBreachDate()
                 )
             }.toImmutableList()
         )
     }
+
+    private fun List<BreachEmail>.getLatestBreachDate(): String? = mapNotNull {
+        runCatching {
+            Instant.parse(it.publishedAt)
+                .toLocalDateTime(TimeZone.currentSystemDefault())
+                .date
+        }.getOrNull()
+    }.maxOrNull()?.let(DateUtils::formatDate)
 
     @Suppress("ReturnCount")
     private fun getCustomEmailsState(

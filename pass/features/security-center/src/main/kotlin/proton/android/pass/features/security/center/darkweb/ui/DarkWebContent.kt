@@ -56,12 +56,19 @@ internal fun DarkWebContent(
         }
     ) { padding ->
         Column(
-            modifier = Modifier.padding(padding),
+            modifier = Modifier
+                .padding(padding)
+                .padding(vertical = Spacing.medium),
             verticalArrangement = Arrangement.spacedBy(Spacing.medium)
         ) {
-            DarkWebSummary()
+            DarkWebSummary(
+                modifier = Modifier.padding(horizontal = Spacing.medium),
+                protonEmailsState = state.protonEmailState,
+                aliasEmailsState = state.aliasEmailState,
+                onEvent = onEvent
+            )
             CustomEmailsList(
-                state = state.customEmails,
+                state = state.customEmailState,
                 onEvent = onEvent
             )
         }

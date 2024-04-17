@@ -37,13 +37,13 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.darkweb.presentation.CustomEmailUiStatus
 import proton.android.pass.features.security.center.darkweb.presentation.DarkWebEmailsError
-import proton.android.pass.features.security.center.darkweb.presentation.DarkWebEmailsState
+import proton.android.pass.features.security.center.darkweb.presentation.DarkWebCustomEmailsState
 import proton.android.pass.features.security.center.darkweb.ui.DarkWebUiEvent
 
 @Composable
 internal fun CustomEmailsList(
     modifier: Modifier = Modifier,
-    state: DarkWebEmailsState,
+    state: DarkWebCustomEmailsState,
     onEvent: (DarkWebUiEvent) -> Unit
 ) {
     Column(
@@ -57,7 +57,7 @@ internal fun CustomEmailsList(
         )
 
         when (state) {
-            is DarkWebEmailsState.Error -> {
+            is DarkWebCustomEmailsState.Error -> {
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -74,13 +74,13 @@ internal fun CustomEmailsList(
                 )
             }
 
-            DarkWebEmailsState.Loading -> {
+            DarkWebCustomEmailsState.Loading -> {
                 Box(modifier = Modifier.align(Alignment.CenterHorizontally)) {
                     CircularProgressIndicator(modifier = Modifier.size(48.dp))
                 }
             }
 
-            is DarkWebEmailsState.Success -> {
+            is DarkWebCustomEmailsState.Success -> {
                 LazyColumn {
                     items(items = state.emails, key = { it.email }) { itemEmail ->
                         CustomEmailItem(

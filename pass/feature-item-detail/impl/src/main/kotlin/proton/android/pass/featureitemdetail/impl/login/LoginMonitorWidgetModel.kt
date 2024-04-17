@@ -20,8 +20,6 @@ package proton.android.pass.featureitemdetail.impl.login
 
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Stable
-import proton.android.pass.featureitemdetail.impl.R
-import me.proton.core.presentation.R as CoreR
 
 @Stable
 internal sealed class LoginMonitorWidgetModel {
@@ -31,30 +29,6 @@ internal sealed class LoginMonitorWidgetModel {
     internal abstract val subtitleResId: Int
 
     internal abstract val isExcludedFromMonitor: Boolean
-
-    internal val menuActionTextResId: Int by lazy {
-        if (isExcludedFromMonitor) {
-            R.string.login_item_monitor_widget_menu_action_include
-        } else {
-            R.string.login_item_monitor_widget_menu_action_exclude
-        }
-    }
-
-    internal val menuActionIconResId: Int by lazy {
-        if (isExcludedFromMonitor) {
-            CoreR.drawable.ic_proton_eye
-        } else {
-            CoreR.drawable.ic_proton_eye_slash
-        }
-    }
-
-    internal val menuActionEvent: LoginDetailEvent by lazy {
-        if (isExcludedFromMonitor) {
-            LoginDetailEvent.OnIncludeItemInMonitoring
-        } else {
-            LoginDetailEvent.OnExcludeItemFromMonitoring
-        }
-    }
 
     @Stable
     internal data class ReusedPassword(

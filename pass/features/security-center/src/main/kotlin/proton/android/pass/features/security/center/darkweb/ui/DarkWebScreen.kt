@@ -66,6 +66,11 @@ internal fun DarkWebScreen(
                 DarkWebUiEvent.OnNewCustomEmailClick -> onNavigate(
                     DarkWebMonitorNavDestination.AddEmail(None)
                 )
+
+                is DarkWebUiEvent.OnShowAliasEmailBreachReportClick -> TODO()
+                DarkWebUiEvent.OnShowAllAliasEmailBreachClick -> TODO()
+                DarkWebUiEvent.OnShowAllProtonEmailBreachClick -> TODO()
+                is DarkWebUiEvent.OnShowProtonEmailBreachReportClick -> TODO()
             }
         }
     )

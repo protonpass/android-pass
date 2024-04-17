@@ -37,7 +37,6 @@ import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
 import proton.android.pass.composecomponents.impl.item.details.sections.login.passkeys.PasskeysSection
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Vault
-import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.common.HistorySection
 import proton.android.pass.featureitemdetail.impl.common.MoreInfo
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
@@ -45,7 +44,7 @@ import proton.android.pass.featureitemdetail.impl.common.NoteSection
 import proton.android.pass.featureitemdetail.impl.login.customfield.CustomFieldDetails
 
 @Composable
-fun LoginContent(
+internal fun LoginContent(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
     passwordScore: PasswordScore?,
@@ -57,6 +56,7 @@ fun LoginContent(
     customFields: ImmutableList<CustomFieldUiContent>,
     isHistoryFeatureEnabled: Boolean,
     passkeys: ImmutableList<UIPasskeyContent>,
+    monitorState: LoginMonitorState,
     onEvent: (LoginDetailEvent) -> Unit
 ) {
     val contents = itemUiModel.contents as ItemContents.Login
@@ -65,24 +65,15 @@ fun LoginContent(
         modifier = modifier.padding(horizontal = Spacing.medium),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-
-        LoginMonitorWidget(
-            model = LoginMonitorWidgetModel.WeakPassword(
-                titleResId = R.string.login_item_monitor_widget_weak_pass_title,
-                subtitleResId = R.string.login_item_monitor_widget_weak_pass_subtitle,
-                isExcludedFromMonitor = itemUiModel.isExcludedFromMonitor
-            ),
-            onMenuActionClick = onEvent
-        )
-
-        LoginMonitorWidget(
-            model = LoginMonitorWidgetModel.ReusedPassword(
-                titleResId = R.string.login_item_monitor_widget_reused_pass_title,
-                subtitleResId = R.string.login_item_monitor_widget_reused_pass_subtitle,
-                isExcludedFromMonitor = itemUiModel.isExcludedFromMonitor
-            ),
-            onMenuActionClick = onEvent
-        )
+        if (monitorState.shouldDisplayMonitoring) {
+            LoginMonitor(
+                modifier = Modifier.padding(top = Spacing.small),
+                isPasswordInsecure = monitorState.isPasswordInsecure,
+                isPasswordReused = monitorState.isPasswordReused,
+                isExcludedFromMonitor = monitorState.isExcludedFromMonitor,
+                onEvent = onEvent
+            )
+        }
 
         LoginTitle(
             modifier = Modifier.padding(Spacing.none, 12.dp),

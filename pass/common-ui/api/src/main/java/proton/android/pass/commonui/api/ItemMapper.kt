@@ -36,8 +36,7 @@ fun Item.toUiModel(context: EncryptionContext): ItemUiModel = ItemUiModel(
     modificationTime = modificationTime,
     lastAutofillTime = lastAutofillTime.value(),
     isPinned = isPinned,
-    category = itemType.category,
-    isExcludedFromMonitor = hasSkippedHealthCheck
+    category = itemType.category
 )
 
 fun Item.itemName(context: EncryptionContext): String = context.decrypt(title)

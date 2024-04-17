@@ -27,6 +27,7 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
+import proton.android.pass.data.api.usecases.items.ItemIsBreachedFilter
 import proton.android.pass.data.api.usecases.items.ItemSecurityCheckFilter
 import proton.android.pass.datamodels.api.fromParsed
 import proton.android.pass.datamodels.api.serializeToProto
@@ -60,7 +61,8 @@ class TestObserveItems @Inject constructor() : ObserveItems {
         itemState: ItemState?,
         filter: ItemTypeFilter,
         userId: UserId?,
-        securityCheckFilter: ItemSecurityCheckFilter
+        securityCheckFilter: ItemSecurityCheckFilter,
+        isBreachedFilter: ItemIsBreachedFilter
     ): Flow<List<Item>> = flow
 
     data class DefaultValues(

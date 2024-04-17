@@ -52,11 +52,11 @@ import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
-import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsBottomSheetContents
 import proton.android.pass.featureitemdetail.impl.common.onEditClick
 import proton.android.pass.featureitemdetail.impl.common.onShareClick
 import proton.android.pass.featureitemdetail.impl.login.LoginDetailBottomSheetType.TopBarOptions
 import proton.android.pass.featureitemdetail.impl.login.LoginDetailBottomSheetType.WebsiteOptions
+import proton.android.pass.featureitemdetail.impl.login.bottomsheet.LoginTopBarOptionsBottomSheetContents
 import proton.android.pass.featureitemdetail.impl.login.bottomsheet.WebsiteOptionsBottomSheetContents
 import proton.android.pass.featureitemdetail.impl.login.customfield.CustomFieldEvent
 import proton.android.pass.featuretrash.impl.ConfirmDeleteItemDialog
@@ -121,7 +121,7 @@ fun LoginDetail(
                         )
 
                         TopBarOptions -> when (state.itemUiModel.state) {
-                            ItemState.Active.value -> TopBarOptionsBottomSheetContents(
+                            ItemState.Active.value -> LoginTopBarOptionsBottomSheetContents(
                                 canMigrate = state.itemActions.canMoveToOtherVault.value(),
                                 canMoveToTrash = state.itemActions.canMoveToTrash,
                                 isPinned = state.itemUiModel.isPinned,
@@ -152,7 +152,16 @@ fun LoginDetail(
                                         itemId = state.itemUiModel.id
                                     )
                                 },
-                                isPinningFeatureEnabled = state.isPinningFeatureEnabled
+                                onExcludeFromMonitoring = {
+                                    scope.launch { bottomSheetState.hide() }
+                                    viewModel.onExcludeItemFromMonitoring()
+                                },
+                                onIncludeInMonitoring = {
+                                    scope.launch { bottomSheetState.hide() }
+                                    viewModel.onIncludeItemInMonitoring()
+                                },
+                                isPinningFeatureEnabled = state.isPinningFeatureEnabled,
+                                isExcludedFromMonitor = state.monitorState.isExcludedFromMonitor
                             )
 
                             ItemState.Trashed.value -> TrashItemBottomSheetContents(
@@ -299,6 +308,7 @@ fun LoginDetail(
                                         itemId = state.itemUiModel.id
                                     )
                                 )
+
                                 is LoginDetailEvent.OnSelectPasskey -> {
                                     onNavigate(
                                         ItemDetailNavigation.ViewPasskeyDetails(
@@ -307,14 +317,6 @@ fun LoginDetail(
                                             passkeyId = PasskeyId(it.passkey.id)
                                         )
                                     )
-                                }
-
-                                LoginDetailEvent.OnExcludeItemFromMonitoring -> {
-                                    viewModel.onExcludeItemFromMonitoring()
-                                }
-
-                                LoginDetailEvent.OnIncludeItemInMonitoring -> {
-                                    viewModel.onIncludeItemInMonitoring()
                                 }
                             }
                         },

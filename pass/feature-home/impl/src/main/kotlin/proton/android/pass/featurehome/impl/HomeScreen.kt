@@ -60,10 +60,10 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.AliasOptions
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.CreditCardOptions
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.LoginOptions
-import proton.android.pass.featurehome.impl.HomeBottomSheetType.Unknown
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.NoteOptions
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.TrashItemOptions
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.TrashOptions
+import proton.android.pass.featurehome.impl.HomeBottomSheetType.Unknown
 import proton.android.pass.featurehome.impl.HomeNavigation.SortingBottomsheet
 import proton.android.pass.featurehome.impl.bottomsheet.AliasOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.CreditCardOptionsBottomSheetContents
@@ -214,6 +214,8 @@ fun HomeScreen(
     LaunchedEffect(homeUiState.action) {
         when (homeUiState.action) {
             BottomSheetItemAction.None -> bottomSheetState.hide()
+            BottomSheetItemAction.MonitorExclude,
+            BottomSheetItemAction.MonitorInclude,
             BottomSheetItemAction.Pin,
             BottomSheetItemAction.Unpin,
             BottomSheetItemAction.History -> return@LaunchedEffect

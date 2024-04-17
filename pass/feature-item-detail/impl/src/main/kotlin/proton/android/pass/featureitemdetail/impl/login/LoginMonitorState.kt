@@ -34,7 +34,7 @@ internal data class LoginMonitorState(
     internal val shouldDisplayMonitoring: Boolean = when (navigationScope) {
         ItemDetailNavScope.Default -> false
         ItemDetailNavScope.Monitor -> true
-    }
+    } && !isExcludedFromMonitor
 
     internal val isPasswordInsecure: Boolean by lazy {
         insecurePasswordsReport.insecurePasswordsCount > 0

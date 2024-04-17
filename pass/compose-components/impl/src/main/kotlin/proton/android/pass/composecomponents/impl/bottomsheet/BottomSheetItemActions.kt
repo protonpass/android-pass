@@ -46,6 +46,64 @@ sealed interface BottomSheetItemAction {
     @Stable
     data object History : BottomSheetItemAction
 
+    @Stable
+    data object MonitorExclude : BottomSheetItemAction
+
+    @Stable
+    data object MonitorInclude : BottomSheetItemAction
+
+}
+
+fun monitorExclude(action: BottomSheetItemAction, onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+
+    override val title: @Composable () -> Unit
+        get() = { BottomSheetItemTitle(text = stringResource(R.string.bottomsheet_monitor_exclude)) }
+
+    override val subtitle: @Composable (() -> Unit)?
+        get() = null
+
+    override val leftIcon: @Composable (() -> Unit)
+        get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_eye_slash) }
+
+    override val endIcon: @Composable (() -> Unit)
+        get() = {
+            if (action is BottomSheetItemAction.MonitorExclude) {
+                CircularProgressIndicator(modifier = Modifier.size(20.dp))
+            }
+        }
+
+    override val onClick: (() -> Unit)
+        get() = { onClick() }
+
+    override val isDivider: Boolean
+        get() = false
+
+}
+
+fun monitorInclude(action: BottomSheetItemAction, onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+
+    override val title: @Composable () -> Unit
+        get() = { BottomSheetItemTitle(text = stringResource(R.string.bottomsheet_monitor_include)) }
+
+    override val subtitle: @Composable (() -> Unit)?
+        get() = null
+
+    override val leftIcon: @Composable (() -> Unit)
+        get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_eye) }
+
+    override val endIcon: @Composable (() -> Unit)
+        get() = {
+            if (action is BottomSheetItemAction.MonitorInclude) {
+                CircularProgressIndicator(modifier = Modifier.size(20.dp))
+            }
+        }
+
+    override val onClick: (() -> Unit)
+        get() = { onClick() }
+
+    override val isDivider: Boolean
+        get() = false
+
 }
 
 fun pin(action: BottomSheetItemAction, onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {

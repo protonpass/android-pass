@@ -18,6 +18,7 @@
 
 package proton.android.pass.featureitemdetail.impl.login
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -65,13 +66,12 @@ internal fun LoginContent(
         modifier = modifier.padding(horizontal = Spacing.medium),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        if (monitorState.shouldDisplayMonitoring) {
+        AnimatedVisibility(visible = monitorState.shouldDisplayMonitoring) {
             LoginMonitor(
                 modifier = Modifier.padding(top = Spacing.small),
                 isPasswordInsecure = monitorState.isPasswordInsecure,
                 isPasswordReused = monitorState.isPasswordReused,
-                isExcludedFromMonitor = monitorState.isExcludedFromMonitor,
-                onEvent = onEvent
+                isExcludedFromMonitor = monitorState.isExcludedFromMonitor
             )
         }
 

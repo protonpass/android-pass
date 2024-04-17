@@ -52,8 +52,4 @@ sealed interface LoginDetailEvent {
     @JvmInline
     value class OnSelectPasskey(val passkey: UIPasskeyContent) : LoginDetailEvent
 
-    data object OnExcludeItemFromMonitoring : LoginDetailEvent
-
-    data object OnIncludeItemInMonitoring : LoginDetailEvent
-
 }

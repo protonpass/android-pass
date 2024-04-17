@@ -18,9 +18,34 @@
 
 package proton.android.pass.features.security.center.darkweb.ui.summary
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.features.security.center.darkweb.presentation.DarkWebEmailBreachState
+import proton.android.pass.features.security.center.darkweb.ui.DarkWebUiEvent
 
 @Composable
-internal fun DarkWebSummary() {
-    // TO BE DONE
+internal fun DarkWebSummary(
+    modifier: Modifier = Modifier,
+    protonEmailsState: DarkWebEmailBreachState,
+    aliasEmailsState: DarkWebEmailBreachState,
+    onEvent: (DarkWebUiEvent) -> Unit
+) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(Spacing.medium)
+    ) {
+        EmailBreachSection(
+            state = protonEmailsState,
+            summaryType = DarkWebSummaryType.Proton,
+            onEvent = onEvent
+        )
+        EmailBreachSection(
+            state = aliasEmailsState,
+            summaryType = DarkWebSummaryType.Alias,
+            onEvent = onEvent
+        )
+    }
 }

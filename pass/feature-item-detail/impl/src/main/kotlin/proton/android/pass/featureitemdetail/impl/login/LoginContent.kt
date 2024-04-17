@@ -37,6 +37,7 @@ import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
 import proton.android.pass.composecomponents.impl.item.details.sections.login.passkeys.PasskeysSection
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Vault
+import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.common.HistorySection
 import proton.android.pass.featureitemdetail.impl.common.MoreInfo
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
@@ -65,8 +66,22 @@ fun LoginContent(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
 
-        LoginWeakPassWidget(
-            onMenuClick = { onEvent(LoginDetailEvent.OnExcludeItemMonitoring) }
+        LoginMonitorWidget(
+            model = LoginMonitorWidgetModel.WeakPassword(
+                titleResId = R.string.login_item_monitor_widget_weak_pass_title,
+                subtitleResId = R.string.login_item_monitor_widget_weak_pass_subtitle,
+                isExcludedFromMonitor = true
+            ),
+            onMenuActionClick = onEvent
+        )
+
+        LoginMonitorWidget(
+            model = LoginMonitorWidgetModel.ReusedPassword(
+                titleResId = R.string.login_item_monitor_widget_reused_pass_title,
+                subtitleResId = R.string.login_item_monitor_widget_reused_pass_subtitle,
+                isExcludedFromMonitor = false
+            ),
+            onMenuActionClick = onEvent
         )
 
         LoginTitle(

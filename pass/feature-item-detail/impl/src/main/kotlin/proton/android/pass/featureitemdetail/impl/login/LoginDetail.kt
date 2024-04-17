@@ -308,8 +308,12 @@ fun LoginDetail(
                                     )
                                 }
 
-                                LoginDetailEvent.OnExcludeItemMonitoring -> {
+                                LoginDetailEvent.OnExcludeItemFromMonitoring -> {
                                     viewModel.onExcludeItemFromMonitoring()
+                                }
+
+                                LoginDetailEvent.OnIncludeItemInMonitoring -> {
+                                    viewModel.onIncludeItemInMonitoring()
                                 }
                             }
                         },

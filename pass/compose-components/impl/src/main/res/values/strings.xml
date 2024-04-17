@@ -26,6 +26,8 @@
     <string name="bottomsheet_pin_item">Pin</string>
     <string name="bottomsheet_unpin_item">Unpin</string>
     <string name="bottomsheet_view_item_history">View history</string>
+    <string name="bottomsheet_monitor_exclude">Exclude from monitoring</string>
+    <string name="bottomsheet_monitor_include">Include in monitoring</string>
 
     <!-- Actions -->
     <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Open item action menu</string>

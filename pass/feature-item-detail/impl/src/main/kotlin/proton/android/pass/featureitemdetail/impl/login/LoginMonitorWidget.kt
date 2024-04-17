@@ -66,7 +66,7 @@ internal fun LoginMonitorWidget(
         horizontalArrangement = Arrangement.spacedBy(space = Spacing.small)
     ) {
         Icon(
-            modifier = modifier
+            modifier = Modifier
                 .size(size = 24.dp)
                 .clip(shape = RoundedCornerShape(Radius.small))
                 .background(color = PassTheme.colors.noteInteractionNormMinor1)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,30 +16,23 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.commonuimodels.api
+package proton.android.pass.featureitemdetail.impl.login
 
 import androidx.compose.runtime.Stable
-import kotlinx.datetime.Instant
-import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ItemState
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.items.ItemCategory
+import proton.android.pass.securitycenter.api.passwords.InsecurePasswordsReport
+import proton.android.pass.securitycenter.api.passwords.RepeatedPasswordsReport
 
 @Stable
-data class ItemUiModel(
-    val id: ItemId,
-    val shareId: ShareId,
-    val contents: ItemContents,
-    val state: Int,
-    val createTime: Instant,
-    val modificationTime: Instant,
-    val lastAutofillTime: Instant?,
-    val isPinned: Boolean,
-    val canModify: Boolean = true,
-    val category: ItemCategory = ItemCategory.Unknown
+internal data class LoginMonitorState(
+    internal val isExcludedFromMonitor: Boolean,
+    private val insecurePasswordsReport: InsecurePasswordsReport,
+    private val repeatedPasswordsReport: RepeatedPasswordsReport
 ) {
 
-    fun isInTrash() = state == ItemState.Trashed.value
+    internal val shouldDisplayMonitoring: Boolean = true
+
+    internal val isPasswordInsecure: Boolean = insecurePasswordsReport.insecurePasswordsCount > 0
+
+    internal val isPasswordReused: Boolean = repeatedPasswordsReport.repeatedPasswordsCount > 0
 
 }

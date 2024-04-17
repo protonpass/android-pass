@@ -24,5 +24,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class UpdateItemFlagsRequest(
     @SerialName("SkipHealthCheck")
-    val skipHealthCheck: Boolean? = null,
+    val skipHealthCheck: Boolean? = null
 )

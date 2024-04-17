@@ -52,5 +52,9 @@ enum class DetailSnackbarMessages(
     ItemPinnedSuccess(R.string.item_pinned_message, SnackbarType.SUCCESS),
     ItemPinnedError(R.string.item_pinned_message_error, SnackbarType.ERROR),
     ItemUnpinnedSuccess(R.string.item_unpinned_message, SnackbarType.SUCCESS),
-    ItemUnpinnedError(R.string.item_unpinned_message_error, SnackbarType.ERROR)
+    ItemUnpinnedError(R.string.item_unpinned_message_error, SnackbarType.ERROR),
+    ItemMonitorExcludedSuccess(R.string.item_monitor_exclude_message, SnackbarType.SUCCESS),
+    ItemMonitorExcludedError(R.string.item_monitor_exclude_message_error, SnackbarType.ERROR),
+    ItemMonitorIncludedSuccess(R.string.item_monitor_include_message, SnackbarType.SUCCESS),
+    ItemMonitorIncludedError(R.string.item_monitor_include_message_error, SnackbarType.ERROR),
 }

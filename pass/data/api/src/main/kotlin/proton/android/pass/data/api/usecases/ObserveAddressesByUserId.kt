@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,9 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.domain
+package proton.android.pass.data.api.usecases
 
-enum class ItemFlag(val value: Int) {
-    SkipHealthCheck(value = 1 shl 0),
-    EmailBreached(value = 1 shl 1)
+import kotlinx.coroutines.flow.Flow
+import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.entity.UserAddress
+
+interface ObserveAddressesByUserId {
+
+    operator fun invoke(userId: UserId? = null): Flow<List<UserAddress>>
 }

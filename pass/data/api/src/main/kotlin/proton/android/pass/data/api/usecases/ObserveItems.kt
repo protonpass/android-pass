@@ -20,6 +20,7 @@ package proton.android.pass.data.api.usecases
 
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.usecases.items.ItemIsBreachedFilter
 import proton.android.pass.data.api.usecases.items.ItemSecurityCheckFilter
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemState
@@ -32,7 +33,8 @@ interface ObserveItems {
         itemState: ItemState?,
         filter: ItemTypeFilter,
         userId: UserId? = null,
-        securityCheckFilter: ItemSecurityCheckFilter = ItemSecurityCheckFilter.All
+        securityCheckFilter: ItemSecurityCheckFilter = ItemSecurityCheckFilter.All,
+        isBreachedFilter: ItemIsBreachedFilter = ItemIsBreachedFilter.All
     ): Flow<List<Item>>
 
 }

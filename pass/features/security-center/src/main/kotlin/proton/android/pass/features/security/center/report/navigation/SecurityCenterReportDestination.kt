@@ -18,18 +18,18 @@
 
 package proton.android.pass.features.security.center.report.navigation
 
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.breach.BreachCustomEmailId
-import proton.android.pass.domain.breach.BreachId
+import proton.android.pass.domain.breach.BreachEmailId
 
 sealed interface SecurityCenterReportDestination {
 
     data object Back : SecurityCenterReportDestination
-    data class CustomEmailBreachDetail(val breachId: BreachId, val customEmailId: BreachCustomEmailId) :
+    data class CustomEmailBreachDetail(val id: BreachEmailId.Custom) :
         SecurityCenterReportDestination
 
-    data class AliasBreachDetail(val breachId: BreachId, val shareId: ShareId, val itemId: ItemId) :
+    data class ProtonEmailBreachDetail(val id: BreachEmailId.Proton) :
+        SecurityCenterReportDestination
+
+    data class AliasEmailBreachDetail(val id: BreachEmailId.Alias) :
         SecurityCenterReportDestination
 }
 

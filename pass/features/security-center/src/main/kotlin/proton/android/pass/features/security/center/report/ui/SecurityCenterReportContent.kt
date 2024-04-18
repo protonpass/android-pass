@@ -86,11 +86,10 @@ internal fun SecurityCenterReportContent(
                         }
                         items(
                             items = breachEmails,
-                            key = { breach -> breach.id }
+                            key = { breach -> breach.emailId.hashCode() }
                         ) { breach ->
                             BreachRow(
                                 breach = breach,
-                                emailType = state.emailType,
                                 onNavigate = onNavigate
                             )
                         }

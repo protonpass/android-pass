@@ -18,7 +18,7 @@
 
 package proton.android.pass.features.security.center.darkweb.ui
 
-import proton.android.pass.domain.breach.BreachCustomEmailId
+import proton.android.pass.domain.breach.BreachEmailId
 
 sealed interface DarkWebUiEvent {
 
@@ -28,24 +28,30 @@ sealed interface DarkWebUiEvent {
 
     data object OnShowAllAliasEmailBreachClick : DarkWebUiEvent
 
-    @JvmInline
-    value class OnShowAliasEmailBreachReportClick(val email: String) : DarkWebUiEvent
-
     data object OnShowAllProtonEmailBreachClick : DarkWebUiEvent
-
-    @JvmInline
-    value class OnShowProtonEmailBreachReportClick(val email: String) : DarkWebUiEvent
 
     @JvmInline
     value class OnAddCustomEmailClick(val email: String) : DarkWebUiEvent
 
     data class OnUnverifiedEmailOptionsClick(
-        val id: BreachCustomEmailId,
+        val id: BreachEmailId.Custom,
         val email: String
     ) : DarkWebUiEvent
 
     data class OnCustomEmailReportClick(
-        val id: BreachCustomEmailId,
+        val id: BreachEmailId.Custom,
+        val email: String,
+        val breachCount: Int
+    ) : DarkWebUiEvent
+
+    data class OnShowAliasEmailReportClick(
+        val id: BreachEmailId.Alias,
+        val email: String,
+        val breachCount: Int
+    ) : DarkWebUiEvent
+
+    data class OnShowProtonEmailReportClick(
+        val id: BreachEmailId.Proton,
         val email: String,
         val breachCount: Int
     ) : DarkWebUiEvent

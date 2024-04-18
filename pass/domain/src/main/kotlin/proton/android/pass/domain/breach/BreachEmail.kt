@@ -18,8 +18,25 @@
 
 package proton.android.pass.domain.breach
 
+import me.proton.core.user.domain.entity.AddressId
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+
+@JvmInline
+value class BreachId(val id: String)
+
+sealed interface BreachEmailId {
+    val id: BreachId
+
+    @JvmInline
+    value class Custom(override val id: BreachId) : BreachEmailId
+    data class Proton(override val id: BreachId, val addressId: AddressId) : BreachEmailId
+    data class Alias(override val id: BreachId, val shareId: ShareId, val itemId: ItemId) :
+        BreachEmailId
+}
+
 data class BreachEmail(
-    val id: String,
+    val emailId: BreachEmailId,
     val email: String,
     val severity: Double,
     val name: String,

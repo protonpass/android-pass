@@ -39,14 +39,10 @@ import me.proton.core.compose.theme.defaultSmallWeak
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.breach.BreachEmail
+import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachId
 import proton.android.pass.features.security.center.report.navigation.SecurityCenterReportDestination
-import proton.android.pass.features.security.center.shared.presentation.AliasEmailType
-import proton.android.pass.features.security.center.shared.presentation.CustomEmailType
-import proton.android.pass.features.security.center.shared.presentation.EmailType
 import proton.android.pass.features.security.center.shared.ui.image.BreachImage
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -56,27 +52,23 @@ import kotlin.random.Random
 internal fun BreachRow(
     modifier: Modifier = Modifier,
     breach: BreachEmail,
-    emailType: EmailType,
     onNavigate: (SecurityCenterReportDestination) -> Unit
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .clickable {
-                when (emailType) {
-                    is AliasEmailType -> onNavigate(
-                        SecurityCenterReportDestination.AliasBreachDetail(
-                            breachId = BreachId(breach.id),
-                            shareId = emailType.shareId,
-                            itemId = emailType.itemId
-                        )
+                when (val id = breach.emailId) {
+                    is BreachEmailId.Alias -> onNavigate(
+                        SecurityCenterReportDestination.AliasEmailBreachDetail(id)
                     )
 
-                    is CustomEmailType -> onNavigate(
-                        SecurityCenterReportDestination.CustomEmailBreachDetail(
-                            breachId = BreachId(breach.id),
-                            customEmailId = emailType.breachCustomEmailId
-                        )
+                    is BreachEmailId.Custom -> onNavigate(
+                        SecurityCenterReportDestination.CustomEmailBreachDetail(id)
+                    )
+
+                    is BreachEmailId.Proton -> onNavigate(
+                        SecurityCenterReportDestination.ProtonEmailBreachDetail(id)
                     )
                 }
             }
@@ -122,7 +114,7 @@ class BreachRowPreviewProvider : PreviewParameterProvider<BreachEmail> {
         severity: Double,
         publishedAt: String
     ) = BreachEmail(
-        id = Random.nextInt().toString(),
+        emailId = BreachEmailId.Custom(BreachId(Random.nextInt().toString())),
         email = "",
         severity = severity,
         name = name,
@@ -145,7 +137,6 @@ fun BreachRowPreview(@PreviewParameter(ThemedBreachRowPreviewProvider::class) in
         Surface {
             BreachRow(
                 breach = input.second,
-                emailType = AliasEmailType(ShareId(""), ItemId("")),
                 onNavigate = {}
             )
         }

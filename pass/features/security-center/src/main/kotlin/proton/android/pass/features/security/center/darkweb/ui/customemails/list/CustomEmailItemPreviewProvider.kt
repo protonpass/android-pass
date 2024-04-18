@@ -20,7 +20,8 @@ package proton.android.pass.features.security.center.darkweb.ui.customemails.lis
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
-import proton.android.pass.domain.breach.BreachCustomEmailId
+import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.domain.breach.BreachId
 import proton.android.pass.features.security.center.darkweb.presentation.CustomEmailUiState
 import proton.android.pass.features.security.center.darkweb.presentation.CustomEmailUiStatus
 
@@ -30,14 +31,14 @@ private class CustomEmailItemPreviewProvider : PreviewParameterProvider<CustomEm
             CustomEmailUiState(
                 email = "verified@email.address",
                 status = CustomEmailUiStatus.Verified(
-                    id = BreachCustomEmailId("1"),
+                    id = BreachEmailId.Custom(BreachId("1")),
                     breachesDetected = 2
                 )
             ),
             CustomEmailUiState(
                 email = "unverified@email.address",
                 status = CustomEmailUiStatus.Unverified(
-                    id = BreachCustomEmailId("2")
+                    id = BreachEmailId.Custom(BreachId("2"))
                 )
             ),
             CustomEmailUiState(

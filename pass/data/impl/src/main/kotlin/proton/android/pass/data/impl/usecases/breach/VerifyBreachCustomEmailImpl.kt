@@ -24,7 +24,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.BreachRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.breach.VerifyBreachCustomEmail
-import proton.android.pass.domain.breach.BreachCustomEmailId
+import proton.android.pass.domain.breach.BreachEmailId
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -36,7 +36,7 @@ class VerifyBreachCustomEmailImpl @Inject constructor(
 
     override suspend fun invoke(
         userId: UserId?,
-        id: BreachCustomEmailId,
+        id: BreachEmailId.Custom,
         code: String
     ) = if (userId != null) {
         breachRepository.verifyCustomEmail(userId, id, code)

@@ -19,7 +19,7 @@
 package proton.android.pass.features.security.center.darkweb.navigation
 
 import proton.android.pass.common.api.Option
-import proton.android.pass.domain.breach.BreachCustomEmailId
+import proton.android.pass.domain.breach.BreachEmailId
 
 sealed interface DarkWebMonitorNavDestination {
 
@@ -28,18 +28,29 @@ sealed interface DarkWebMonitorNavDestination {
     @JvmInline
     value class AddEmail(val email: Option<String>) : DarkWebMonitorNavDestination
 
-    data class VerifyEmail(val id: BreachCustomEmailId, val email: String) :
+    data class VerifyEmail(val id: BreachEmailId.Custom, val email: String) :
         DarkWebMonitorNavDestination
 
-
     data class CustomEmailReport(
-        val id: BreachCustomEmailId,
+        val id: BreachEmailId.Custom,
+        val email: String,
+        val breachCount: Int
+    ) : DarkWebMonitorNavDestination
+
+    data class AliasEmailReport(
+        val id: BreachEmailId.Alias,
+        val email: String,
+        val breachCount: Int
+    ) : DarkWebMonitorNavDestination
+
+    data class ProtonEmailReport(
+        val id: BreachEmailId.Proton,
         val email: String,
         val breachCount: Int
     ) : DarkWebMonitorNavDestination
 
     data class UnverifiedEmailOptions(
-        val id: BreachCustomEmailId,
+        val id: BreachEmailId.Custom,
         val email: String
     ) : DarkWebMonitorNavDestination
 

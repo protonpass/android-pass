@@ -62,7 +62,7 @@ fun LoginTopBarOptionsBottomSheetContents(
             }
         }
 
-        if(isSecurityCenterEnabled) {
+        if (isSecurityCenterEnabled) {
             if (isExcludedFromMonitor) {
                 add(monitorInclude(BottomSheetItemAction.None) { onIncludeInMonitoring() })
             } else {

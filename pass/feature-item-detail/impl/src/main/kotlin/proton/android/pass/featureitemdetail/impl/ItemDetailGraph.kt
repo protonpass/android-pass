@@ -111,7 +111,7 @@ object ItemDetailCannotPerformAction : NavItem(
     fun buildRoute(type: ItemDetailCannotPerformActionType) = "$baseRoute/${type.name}"
 }
 
-object ItemDetailScopeNavArgId :  NavArgId {
+object ItemDetailScopeNavArgId : NavArgId {
     override val key: String = "itemDetailNavScope"
     override val navType: NavType<*> = NavType.EnumType(ItemDetailNavScope::class.java)
 }

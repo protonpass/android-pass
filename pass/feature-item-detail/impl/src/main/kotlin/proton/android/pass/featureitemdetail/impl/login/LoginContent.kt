@@ -67,11 +67,10 @@ internal fun LoginContent(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         AnimatedVisibility(visible = monitorState.shouldDisplayMonitoring) {
-            LoginMonitor(
+            LoginMonitorSection(
                 modifier = Modifier.padding(top = Spacing.small),
-                isPasswordInsecure = monitorState.isPasswordInsecure,
-                isPasswordReused = monitorState.isPasswordReused,
-                isExcludedFromMonitor = monitorState.isExcludedFromMonitor
+                monitorState = monitorState,
+                canLoadExternalImages = canLoadExternalImages
             )
         }
 

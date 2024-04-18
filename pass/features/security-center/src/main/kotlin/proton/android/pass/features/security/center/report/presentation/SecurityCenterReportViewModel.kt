@@ -23,12 +23,14 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.common.api.LoadingResult
@@ -40,6 +42,7 @@ import proton.android.pass.common.api.runCatching
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
@@ -55,10 +58,14 @@ import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachId
 import proton.android.pass.features.security.center.report.navigation.BreachCountIdArgId
+import proton.android.pass.features.security.center.report.presentation.SecurityCenterReportSnackbarMessage.BreachResolvedError
+import proton.android.pass.features.security.center.report.presentation.SecurityCenterReportSnackbarMessage.BreachResolvedSuccessfully
 import proton.android.pass.features.security.center.shared.navigation.BreachIdArgId
 import proton.android.pass.features.security.center.shared.navigation.EmailArgId
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavParamEncoder
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import javax.inject.Inject
@@ -70,6 +77,7 @@ class SecurityCenterReportViewModel @Inject constructor(
     observeBreachesForAliasEmail: ObserveBreachesForAliasEmail,
     observeItems: ObserveItems,
     private val markEmailBreachAsResolved: MarkEmailBreachAsResolved,
+    private val snackbarDispatcher: SnackbarDispatcher,
     userPreferencesRepository: UserPreferencesRepository,
     encryptionContextProvider: EncryptionContextProvider,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -143,11 +151,15 @@ class SecurityCenterReportViewModel @Inject constructor(
         .asLoadingResult()
         .distinctUntilChanged()
 
+    private val isResolveButtonLoadingFlow: MutableStateFlow<IsLoadingState> =
+        MutableStateFlow(IsLoadingState.NotLoading)
+
     internal val state: StateFlow<SecurityCenterReportState> = combine(
         observeBreachForEmailFlow,
         usedInLoginItemsFlow,
-        userPreferencesRepository.getUseFaviconsPreference()
-    ) { breachesForEmailResult, usedInLoginItemsResult, useFavIconsPreference ->
+        userPreferencesRepository.getUseFaviconsPreference(),
+        isResolveButtonLoadingFlow
+    ) { breachesForEmailResult, usedInLoginItemsResult, useFavIconsPreference, isResolveButtonLoading ->
         val isBreachesLoading = breachesForEmailResult is LoadingResult.Loading
         val isUsedInLoading = usedInLoginItemsResult is LoadingResult.Loading
         val breaches = breachesForEmailResult.getOrNull() ?: persistentListOf()
@@ -159,7 +171,8 @@ class SecurityCenterReportViewModel @Inject constructor(
             email = email,
             canLoadExternalImages = useFavIconsPreference.value(),
             breachEmails = breaches,
-            isLoading = isBreachesLoading || isUsedInLoading
+            isContentLoading = isBreachesLoading || isUsedInLoading,
+            isResolveLoading = isResolveButtonLoading.value()
         )
     }.stateIn(
         scope = viewModelScope,
@@ -169,10 +182,21 @@ class SecurityCenterReportViewModel @Inject constructor(
 
     fun resolveEmailBreach(emailId: BreachEmailId) {
         viewModelScope.launch {
+            isResolveButtonLoadingFlow.update { IsLoadingState.Loading }
             runCatching { markEmailBreachAsResolved(breachEmailId = emailId) }
                 .onSuccess {
+                    snackbarDispatcher(BreachResolvedSuccessfully)
                 }
-                .onError { }
+                .onError {
+                    snackbarDispatcher(BreachResolvedError)
+                    PassLogger.i(TAG, "Failed to mark as resolved email breach")
+                    PassLogger.w(TAG, it)
+                }
+            isResolveButtonLoadingFlow.update { IsLoadingState.NotLoading }
         }
+    }
+
+    companion object {
+        private const val TAG = "SecurityCenterReportViewModel"
     }
 }

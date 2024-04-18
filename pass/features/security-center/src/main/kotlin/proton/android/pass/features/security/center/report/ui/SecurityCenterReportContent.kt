@@ -71,10 +71,11 @@ internal fun SecurityCenterReportContent(
                 ResolveButton(
                     modifier = Modifier.padding(horizontal = Spacing.medium),
                     emailId = breach.emailId,
+                    isLoading = isResolveLoading,
                     onUiEvent = onUiEvent
                 )
             }
-            if (isLoading) {
+            if (isContentLoading) {
                 Loading()
             } else {
                 LazyColumn(Modifier.fillMaxWidth()) {

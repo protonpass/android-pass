@@ -31,7 +31,8 @@ internal data class SecurityCenterReportState(
     internal val canLoadExternalImages: Boolean,
     internal val breachEmails: List<BreachEmail>,
     internal val usedInItems: ImmutableList<ItemUiModel>,
-    internal val isLoading: Boolean
+    internal val isContentLoading: Boolean,
+    internal val isResolveLoading: Boolean
 ) {
 
     internal val hasBreachEmails: Boolean = breachEmails.isNotEmpty()
@@ -46,7 +47,8 @@ internal data class SecurityCenterReportState(
             canLoadExternalImages = false,
             breachEmails = persistentListOf(),
             usedInItems = persistentListOf(),
-            isLoading = true
+            isContentLoading = true,
+            isResolveLoading = false
         )
 
     }

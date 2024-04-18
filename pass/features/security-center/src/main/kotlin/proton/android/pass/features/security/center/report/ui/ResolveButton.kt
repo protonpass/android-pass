@@ -22,6 +22,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Text
@@ -30,9 +31,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.composecomponents.impl.loading.Loading
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.features.security.center.R
 
@@ -40,6 +43,7 @@ import proton.android.pass.features.security.center.R
 internal fun ResolveButton(
     modifier: Modifier = Modifier,
     emailId: BreachEmailId,
+    isLoading: Boolean,
     onUiEvent: (SecurityCenterReportUiEvent) -> Unit
 ) {
     Box(
@@ -47,14 +51,19 @@ internal fun ResolveButton(
             .fillMaxWidth()
             .clip(CircleShape)
             .background(PassTheme.colors.interactionNormMinor1)
+            .height(48.dp)
             .clickable(onClick = { onUiEvent(SecurityCenterReportUiEvent.MarkAsResolvedClick(emailId)) }),
         contentAlignment = Alignment.Center
     ) {
-        Text(
-            modifier = Modifier.padding(Spacing.medium),
-            text = stringResource(R.string.security_center_email_report_mark_as_resolved),
-            style = ProtonTheme.typography.body1Regular,
-            color = PassTheme.colors.interactionNormMajor2
-        )
+        if (isLoading) {
+            Loading()
+        } else {
+            Text(
+                modifier = Modifier.padding(Spacing.medium),
+                text = stringResource(R.string.security_center_email_report_mark_as_resolved),
+                style = ProtonTheme.typography.body1Regular,
+                color = PassTheme.colors.interactionNormMajor2
+            )
+        }
     }
 }

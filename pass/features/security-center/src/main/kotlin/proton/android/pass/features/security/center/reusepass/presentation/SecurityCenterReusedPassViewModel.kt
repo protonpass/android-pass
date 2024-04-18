@@ -21,6 +21,7 @@ package proton.android.pass.features.security.center.reusepass.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -50,9 +51,16 @@ class SecurityCenterReusedPassViewModel @Inject constructor(
             observeItems(ShareSelection.AllShares, ItemState.Active, ItemTypeFilter.Logins),
             userPreferencesRepository.getUseFaviconsPreference()
         ) { loginItems, useFavIconsPreference ->
+
+            val reusedPasswords = repeatedPasswordChecker(loginItems)
+
             SecurityCenterReusedPassState(
-                reusedPasswords = repeatedPasswordChecker(loginItems).repeatedPasswordsGroups
-                    .mapValues { (_, reusedPassLoginItem) -> reusedPassLoginItem.toUiModels() },
+                reusedPasswords = reusedPasswords.repeatedPasswordsGroups.map { group ->
+                    SecurityCenterReusedPassGroup(
+                        reusedPasswordsCount = group.count,
+                        itemUiModels = group.items.toUiModels().toPersistentList()
+                    )
+                }.toPersistentList(),
                 isLoading = false,
                 canLoadExternalImages = useFavIconsPreference.value()
             )

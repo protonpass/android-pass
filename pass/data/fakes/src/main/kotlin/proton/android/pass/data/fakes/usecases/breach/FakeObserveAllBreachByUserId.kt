@@ -16,13 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.breach
+package proton.android.pass.data.fakes.usecases.breach
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
+import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
 import proton.android.pass.domain.breach.Breach
+import javax.inject.Inject
 
-interface ObserveBreach {
+class FakeObserveAllBreachByUserId @Inject constructor() : ObserveAllBreachByUserId {
 
-    operator fun invoke(): Flow<Breach>
+    override fun invoke(): Flow<Breach> = emptyFlow()
 
 }

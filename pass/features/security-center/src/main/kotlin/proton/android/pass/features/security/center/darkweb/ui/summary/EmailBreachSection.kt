@@ -32,6 +32,8 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
+import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.domain.breach.BreachId
 import proton.android.pass.features.security.center.darkweb.presentation.DarkWebEmailBreachState
 import proton.android.pass.features.security.center.darkweb.presentation.DarkWebEmailsError
 import proton.android.pass.features.security.center.darkweb.presentation.EmailBreachUiState
@@ -57,7 +59,6 @@ internal fun EmailBreachSection(
         repeat(listSize) { index ->
             EmailBreachRow(
                 emailBreachUiState = state.list()[index],
-                summaryType = summaryType,
                 onEvent = onEvent
             )
         }
@@ -74,6 +75,7 @@ class DarkWebEmailBreachStatePreviewProvider : PreviewParameterProvider<DarkWebE
             DarkWebEmailBreachState.Success(
                 emails = persistentListOf(
                     EmailBreachUiState(
+                        id = BreachEmailId.Custom(BreachId("123")),
                         email = "adobe.42nbe@passmail.com",
                         count = 2,
                         breachDate = "2024-04-16T15:30:00Z"

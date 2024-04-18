@@ -18,11 +18,7 @@
 
 package proton.android.pass.features.security.center.breachdetail.navigation
 
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.breach.BreachCustomEmailId
-import proton.android.pass.domain.breach.BreachId
-import proton.android.pass.features.security.center.shared.navigation.BreachEmailIdArgId
+import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.features.security.center.shared.navigation.BreachIdArgId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
@@ -31,13 +27,12 @@ import proton.android.pass.navigation.api.NavItemType
 object SecurityCenterCustomEmailBreachDetailNavItem : NavItem(
     baseRoute = "security/center/customemailbreachdetail",
     navItemType = NavItemType.Bottomsheet,
-    navArgIds = listOf(BreachIdArgId, BreachEmailIdArgId)
+    navArgIds = listOf(BreachIdArgId)
 ) {
-    fun createNavRoute(breachId: BreachId, customEmailId: BreachCustomEmailId): String =
-        "$baseRoute/${breachId.id}/${customEmailId.id}"
+    fun createNavRoute(id: BreachEmailId.Custom): String = "$baseRoute/${id.id.id}"
 }
 
-object SecurityCenterAliasBreachDetailNavItem : NavItem(
+object SecurityCenterAliasEmailBreachDetailNavItem : NavItem(
     baseRoute = "security/center/aliasbreachdetail",
     navItemType = NavItemType.Bottomsheet,
     navArgIds = listOf(
@@ -46,9 +41,13 @@ object SecurityCenterAliasBreachDetailNavItem : NavItem(
         CommonNavArgId.ItemId
     )
 ) {
-    fun createNavRoute(
-        breachId: BreachId,
-        shareId: ShareId,
-        itemId: ItemId
-    ): String = "$baseRoute/${breachId.id}/${shareId.id}/${itemId.id}"
+    fun createNavRoute(id: BreachEmailId.Alias): String = "$baseRoute/${id.id.id}/${id.shareId.id}/${id.itemId.id}"
+}
+
+object SecurityCenterProtonEmailBreachDetailNavItem : NavItem(
+    baseRoute = "security/center/protonbreachdetail",
+    navItemType = NavItemType.Bottomsheet,
+    navArgIds = listOf(BreachIdArgId, CommonNavArgId.AddressId)
+) {
+    fun createNavRoute(id: BreachEmailId.Proton): String = "$baseRoute/${id.id.id}/${id.addressId.id}"
 }

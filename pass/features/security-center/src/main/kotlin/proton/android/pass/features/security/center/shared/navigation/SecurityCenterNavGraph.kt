@@ -21,8 +21,7 @@ package proton.android.pass.features.security.center.shared.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.domain.features.PaidFeature
-import proton.android.pass.features.security.center.breachdetail.navigation.SecurityCenterAliasBreachDetailNavItem
-import proton.android.pass.features.security.center.breachdetail.navigation.SecurityCenterBreachDetailNavDestination
+import proton.android.pass.features.security.center.breachdetail.navigation.SecurityCenterAliasEmailBreachDetailNavItem
 import proton.android.pass.features.security.center.breachdetail.navigation.SecurityCenterCustomEmailBreachDetailNavItem
 import proton.android.pass.features.security.center.breachdetail.ui.SecurityCenterBreachDetailBottomSheet
 import proton.android.pass.features.security.center.customemail.navigation.SecurityCenterCustomEmailNavDestination
@@ -43,8 +42,10 @@ import proton.android.pass.features.security.center.home.ui.SecurityCenterHomeSc
 import proton.android.pass.features.security.center.missingtfa.navigation.SecurityCenterMissingTFADestination
 import proton.android.pass.features.security.center.missingtfa.navigation.SecurityCenterMissingTFANavItem
 import proton.android.pass.features.security.center.missingtfa.ui.SecurityCenterMissingTfaScreen
+import proton.android.pass.features.security.center.report.navigation.SecurityCenterAliasEmailReportNavItem
+import proton.android.pass.features.security.center.report.navigation.SecurityCenterCustomEmailReportNavItem
+import proton.android.pass.features.security.center.report.navigation.SecurityCenterProtonEmailReportNavItem
 import proton.android.pass.features.security.center.report.navigation.SecurityCenterReportDestination
-import proton.android.pass.features.security.center.report.navigation.SecurityCenterReportNavItem
 import proton.android.pass.features.security.center.report.ui.SecurityCenterReportScreen
 import proton.android.pass.features.security.center.reusepass.navigation.SecurityCenterReusedPassDestination
 import proton.android.pass.features.security.center.reusepass.navigation.SecurityCenterReusedPassNavItem
@@ -169,15 +170,13 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                         )
                     )
 
-                    is DarkWebMonitorNavDestination.CustomEmailReport -> {
-                        onNavigated(
-                            SecurityCenterNavDestination.Report(
-                                id = destination.id,
-                                email = destination.email,
-                                breachCount = destination.breachCount
-                            )
+                    is DarkWebMonitorNavDestination.CustomEmailReport -> onNavigated(
+                        SecurityCenterNavDestination.CustomEmailReport(
+                            id = destination.id,
+                            email = destination.email,
+                            breachCount = destination.breachCount
                         )
-                    }
+                    )
 
                     DarkWebMonitorNavDestination.Back -> onNavigated(SecurityCenterNavDestination.Back())
                     is DarkWebMonitorNavDestination.VerifyEmail -> onNavigated(
@@ -191,6 +190,22 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                         SecurityCenterNavDestination.UnverifiedEmailOptions(
                             id = destination.id,
                             email = destination.email
+                        )
+                    )
+
+                    is DarkWebMonitorNavDestination.AliasEmailReport -> onNavigated(
+                        SecurityCenterNavDestination.AliasEmailReport(
+                            id = destination.id,
+                            email = destination.email,
+                            breachCount = destination.breachCount
+                        )
+                    )
+
+                    is DarkWebMonitorNavDestination.ProtonEmailReport -> onNavigated(
+                        SecurityCenterNavDestination.ProtonEmailReport(
+                            id = destination.id,
+                            email = destination.email,
+                            breachCount = destination.breachCount
                         )
                     )
                 }
@@ -225,27 +240,16 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
         )
     }
 
-    composable(SecurityCenterReportNavItem) {
-        SecurityCenterReportScreen(
-            onNavigated = { destination ->
-                val event = when (destination) {
-                    SecurityCenterReportDestination.Back -> SecurityCenterNavDestination.Back()
-                    is SecurityCenterReportDestination.CustomEmailBreachDetail ->
-                        SecurityCenterNavDestination.CustomEmailBreachDetail(
-                            breachId = destination.breachId,
-                            customEmailId = destination.customEmailId
-                        )
+    composable(SecurityCenterCustomEmailReportNavItem) {
+        SecurityCenterReportScreen(onNavigated)
+    }
 
-                    is SecurityCenterReportDestination.AliasBreachDetail ->
-                        SecurityCenterNavDestination.AliasBreachDetail(
-                            breachId = destination.breachId,
-                            shareId = destination.shareId,
-                            itemId = destination.itemId
-                        )
-                }
-                onNavigated(event)
-            }
-        )
+    composable(SecurityCenterAliasEmailReportNavItem) {
+        SecurityCenterReportScreen(onNavigated)
+    }
+
+    composable(SecurityCenterProtonEmailReportNavItem) {
+        SecurityCenterReportScreen(onNavigated)
     }
 
     bottomSheet(CustomEmailOptionsNavItem) {
@@ -267,10 +271,11 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
     }
 
     bottomSheet(navItem = SecurityCenterCustomEmailBreachDetailNavItem) {
-        BreachDetail(onNavigated)
+        SecurityCenterBreachDetailBottomSheet(onNavigated = {})
     }
-    bottomSheet(navItem = SecurityCenterAliasBreachDetailNavItem) {
-        BreachDetail(onNavigated)
+
+    bottomSheet(navItem = SecurityCenterAliasEmailBreachDetailNavItem) {
+        SecurityCenterBreachDetailBottomSheet(onNavigated = {})
     }
 
     composable(SecurityCenterExcludedItemsNavItem) {
@@ -289,13 +294,27 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
 }
 
 @Composable
-fun BreachDetail(onNavigated: (SecurityCenterNavDestination) -> Unit) {
-    SecurityCenterBreachDetailBottomSheet(
+private fun SecurityCenterReportScreen(onNavigated: (SecurityCenterNavDestination) -> Unit) {
+    SecurityCenterReportScreen(
         onNavigated = { destination ->
-            when (destination) {
-                SecurityCenterBreachDetailNavDestination.Back -> SecurityCenterNavDestination.Back()
-                SecurityCenterBreachDetailNavDestination.Resolved -> TODO()
-            }.also(onNavigated)
+            val event = when (destination) {
+                SecurityCenterReportDestination.Back -> SecurityCenterNavDestination.Back()
+                is SecurityCenterReportDestination.CustomEmailBreachDetail ->
+                    SecurityCenterNavDestination.CustomEmailBreachDetail(
+                        id = destination.id
+                    )
+
+                is SecurityCenterReportDestination.AliasEmailBreachDetail ->
+                    SecurityCenterNavDestination.AliasEmailBreachDetail(
+                        id = destination.id
+                    )
+
+                is SecurityCenterReportDestination.ProtonEmailBreachDetail ->
+                    SecurityCenterNavDestination.ProtonEmailBreachDetail(
+                        id = destination.id
+                    )
+            }
+            onNavigated(event)
         }
     )
 }

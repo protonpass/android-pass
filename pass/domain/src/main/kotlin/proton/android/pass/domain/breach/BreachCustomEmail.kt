@@ -18,11 +18,8 @@
 
 package proton.android.pass.domain.breach
 
-@JvmInline
-value class BreachCustomEmailId(val id: String)
-
 data class BreachCustomEmail(
-    val id: BreachCustomEmailId,
+    val id: BreachEmailId.Custom,
     val email: String,
     val verified: Boolean,
     val breachCount: Int

@@ -36,8 +36,9 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.breach.VerifyBreachCustomEmail
-import proton.android.pass.domain.breach.BreachCustomEmailId
-import proton.android.pass.features.security.center.shared.navigation.BreachEmailIdArgId
+import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.domain.breach.BreachId
+import proton.android.pass.features.security.center.shared.navigation.BreachIdArgId
 import proton.android.pass.features.security.center.shared.navigation.EmailArgId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.NavParamEncoder
@@ -49,9 +50,9 @@ class SecurityCenterVerifyEmailViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
-    private val id: BreachCustomEmailId = savedStateHandleProvider.get()
-        .require<String>(BreachEmailIdArgId.key)
-        .let(::BreachCustomEmailId)
+    private val id: BreachEmailId.Custom = savedStateHandleProvider.get()
+        .require<String>(BreachIdArgId.key)
+        .let { BreachEmailId.Custom(BreachId(it)) }
 
     private val email: String = savedStateHandleProvider.get()
         .require<String>(EmailArgId.key)

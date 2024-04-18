@@ -262,7 +262,8 @@ class LoginDetailViewModel @Inject constructor(
                         isExcludedFromMonitor = details.item.hasSkippedHealthCheck,
                         navigationScope = navigationScope,
                         insecurePasswordsReport = insecurePasswordChecker(listOf(details.item)),
-                        duplicatedPasswordsReport = duplicatedPasswordChecker(details.item)
+                        duplicatedPasswordsReport = duplicatedPasswordChecker(details.item),
+                        encryptionContextProvider = encryptionContextProvider
                     )
                 )
             }

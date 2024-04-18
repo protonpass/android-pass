@@ -30,6 +30,7 @@ import proton.android.pass.data.impl.requests.CreateItemRequest
 import proton.android.pass.data.impl.requests.MigrateItemRequest
 import proton.android.pass.data.impl.requests.MigrateItemsRequest
 import proton.android.pass.data.impl.requests.TrashItemsRequest
+import proton.android.pass.data.impl.requests.UpdateItemFlagsRequest
 import proton.android.pass.data.impl.requests.UpdateItemRequest
 import proton.android.pass.data.impl.responses.CreateItemAliasBundle
 import proton.android.pass.data.impl.responses.TrashItemsResponse
@@ -85,6 +86,16 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
     ): ItemRevision {
         throw IllegalStateException("Not yet implemented")
     }
+
+    override suspend fun updateItemFlags(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        body: UpdateItemFlagsRequest
+    ): ItemRevision = TestItem.create(
+        shareId = shareId,
+        itemId = itemId
+    ).let(::createItemRevision)
 
     override suspend fun getItems(userId: UserId, shareId: ShareId): List<ItemRevision> {
         throw IllegalStateException("Not yet implemented")

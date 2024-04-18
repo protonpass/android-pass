@@ -67,10 +67,31 @@ internal fun DarkWebScreen(
                     DarkWebMonitorNavDestination.AddEmail(None)
                 )
 
-                is DarkWebUiEvent.OnShowAliasEmailBreachReportClick -> TODO()
-                DarkWebUiEvent.OnShowAllAliasEmailBreachClick -> TODO()
-                DarkWebUiEvent.OnShowAllProtonEmailBreachClick -> TODO()
-                is DarkWebUiEvent.OnShowProtonEmailBreachReportClick -> TODO()
+                DarkWebUiEvent.OnShowAllAliasEmailBreachClick -> {
+                    // Navigate to new screen
+                }
+
+                DarkWebUiEvent.OnShowAllProtonEmailBreachClick -> {
+                    // Navigate to new screen
+                }
+
+                is DarkWebUiEvent.OnShowAliasEmailReportClick ->
+                    onNavigate(
+                        DarkWebMonitorNavDestination.AliasEmailReport(
+                            id = event.id,
+                            email = event.email,
+                            breachCount = event.breachCount
+                        )
+                    )
+
+                is DarkWebUiEvent.OnShowProtonEmailReportClick ->
+                    onNavigate(
+                        DarkWebMonitorNavDestination.ProtonEmailReport(
+                            id = event.id,
+                            email = event.email,
+                            breachCount = event.breachCount
+                        )
+                    )
             }
         }
     )

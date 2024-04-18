@@ -19,14 +19,15 @@
 package proton.android.pass.data.fakes.usecases.breach
 
 import proton.android.pass.domain.breach.BreachCustomEmail
-import proton.android.pass.domain.breach.BreachCustomEmailId
+import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.domain.breach.BreachId
 import kotlin.random.Random
 
 object BreachCustomEmailMother {
 
     fun random() = BreachCustomEmail(
         email = "email${Random.nextInt()}@proton.me",
-        id = BreachCustomEmailId(id = Random.nextInt().toString()),
+        id = BreachEmailId.Custom(BreachId(id = Random.nextInt().toString())),
         verified = Random.nextBoolean(),
         breachCount = Random.nextInt()
     )

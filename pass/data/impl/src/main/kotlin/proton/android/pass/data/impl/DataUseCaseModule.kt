@@ -113,6 +113,7 @@ import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.UpdateVault
 import proton.android.pass.data.api.usecases.UserPlanWorkerLauncher
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
+import proton.android.pass.data.api.usecases.breach.MarkEmailBreachAsResolved
 import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
 import proton.android.pass.data.api.usecases.breach.ObserveBreachCustomEmails
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAliasEmail
@@ -240,6 +241,7 @@ import proton.android.pass.data.impl.usecases.UpdateItemImpl
 import proton.android.pass.data.impl.usecases.UpdateVaultImpl
 import proton.android.pass.data.impl.usecases.UserPlanWorkerLauncherImpl
 import proton.android.pass.data.impl.usecases.breach.AddBreachCustomEmailImpl
+import proton.android.pass.data.impl.usecases.breach.MarkEmailBreachAsResolvedImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveBreachCustomEmailsImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveAllBreachByUserIdImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveBreachesForAliasEmailImpl
@@ -651,4 +653,7 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindObserveAddressesByUserId(impl: ObserveAddressesByUserIdImpl): ObserveAddressesByUserId
+
+    @Binds
+    abstract fun bindMarkEmailBreachAsResolved(impl: MarkEmailBreachAsResolvedImpl): MarkEmailBreachAsResolved
 }

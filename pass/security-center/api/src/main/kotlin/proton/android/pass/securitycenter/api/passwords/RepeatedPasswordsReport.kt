@@ -21,12 +21,21 @@ package proton.android.pass.securitycenter.api.passwords
 import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.domain.Item
 
+data class RepeatedPasswordsGroup(
+    val password: EncryptedString,
+    val items: List<Item>
+) {
+    val count: Int = items.size
+}
+
 data class RepeatedPasswordsReport(
     private val repeatedPasswords: Map<EncryptedString, List<Item>>
 ) {
 
-    val repeatedPasswordsGroups: Map<Int, List<Item>> by lazy {
-        repeatedPasswords.mapKeys { (_, items) -> items.size }
+    val repeatedPasswordsGroups: List<RepeatedPasswordsGroup> by lazy {
+        repeatedPasswords.map { (password, items) ->
+            RepeatedPasswordsGroup(password, items)
+        }.sortedByDescending { it.count }
     }
 
     val repeatedPasswordsCount: Int = repeatedPasswords.size

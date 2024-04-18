@@ -46,6 +46,7 @@ class DuplicatedPasswordCheckerImpl @Inject constructor(
             filter = ItemTypeFilter.Logins
         )
             .first()
+            .filter { loginItem -> loginItem.id != item.id }
             .let { loginItems ->
                 val duplicatedPasswordItems = mutableSetOf<Item>()
 
@@ -53,7 +54,8 @@ class DuplicatedPasswordCheckerImpl @Inject constructor(
                     val itemPassword = decrypt((item.itemType as ItemType.Login).password)
                     loginItems.forEach { loginItem ->
                         if (loginItem.itemType is ItemType.Login) {
-                            val currentItemPassword = decrypt((loginItem.itemType as ItemType.Login).password)
+                            val currentItemPassword =
+                                decrypt((loginItem.itemType as ItemType.Login).password)
                             if (itemPassword == currentItemPassword) {
                                 duplicatedPasswordItems.add(loginItem)
                             }

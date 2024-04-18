@@ -22,14 +22,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import proton.android.pass.data.api.repositories.BreachRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
-import proton.android.pass.data.api.usecases.breach.ObserveBreach
+import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
 import proton.android.pass.domain.breach.Breach
 import javax.inject.Inject
 
-class ObserveBreachImpl @Inject constructor(
+class ObserveAllBreachByUserIdImpl @Inject constructor(
     private val observeCurrentUser: ObserveCurrentUser,
     private val repository: BreachRepository
-) : ObserveBreach {
+) : ObserveAllBreachByUserId {
 
     override fun invoke(): Flow<Breach> = observeCurrentUser()
         .flatMapLatest { user ->

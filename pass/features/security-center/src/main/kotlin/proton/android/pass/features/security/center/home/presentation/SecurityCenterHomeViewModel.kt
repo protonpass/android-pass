@@ -35,7 +35,7 @@ import proton.android.pass.data.api.usecases.items.ItemSecurityCheckFilter
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareSelection
-import proton.android.pass.data.api.usecases.breach.ObserveBreach
+import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.securitycenter.api.ObserveSecurityAnalysis
 import proton.android.pass.securitycenter.api.sentinel.DisableSentinel
@@ -45,7 +45,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SecurityCenterHomeViewModel @Inject constructor(
     observeItems: ObserveItems,
-    observeBreach: ObserveBreach,
+    observeAllBreachByUserId: ObserveAllBreachByUserId,
     observeSecurityAnalysis: ObserveSecurityAnalysis,
     observeIsSentinelEnabled: ObserveIsSentinelEnabled,
     getUserPlan: GetUserPlan,
@@ -62,7 +62,7 @@ class SecurityCenterHomeViewModel @Inject constructor(
 
     internal val state: StateFlow<SecurityCenterHomeState> = combine(
         observeIsSentinelEnabled(),
-        observeBreach().asLoadingResult(),
+        observeAllBreachByUserId().asLoadingResult(),
         observeSecurityAnalysis(),
         excludedLoginItemsFlow.asLoadingResult(),
         getUserPlan()

@@ -344,10 +344,10 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("itemId") itemId: String
     ): BreachEmailsResponse
 
-    @POST("$PREFIX/breach/address/{addressId}/breaches/resolved")
+    @POST("$PREFIX/breach/address/{addressId}/resolved")
     suspend fun markProtonEmailAsResolved(@Path("addressId") addressId: String): CodeOnlyResponse
 
-    @PUT("$PREFIX/breach/custom_email/{customEmailId}/breaches/resolved")
+    @PUT("$PREFIX/breach/custom_email/{customEmailId}/resolved")
     suspend fun markCustomEmailAsResolved(@Path("customEmailId") emailId: String): CodeOnlyResponse
 
     @POST("$PREFIX/share/{shareId}/alias/{itemId}/breaches/resolved")

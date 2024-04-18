@@ -34,7 +34,16 @@ fun SecurityCenterReportScreen(
 
     SecurityCenterReportContent(
         state = state,
-        onNavigate = onNavigated
+        onUiEvent = {
+            when (it) {
+                SecurityCenterReportUiEvent.Back -> onNavigated(SecurityCenterReportDestination.Back)
+                is SecurityCenterReportUiEvent.EmailBreachDetail ->
+                    onNavigated(SecurityCenterReportDestination.EmailBreachDetail(it.id))
+
+                is SecurityCenterReportUiEvent.MarkAsResolvedClick ->
+                    viewModel.resolveEmailBreach(it.id)
+            }
+        }
     )
 }
 

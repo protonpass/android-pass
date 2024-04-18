@@ -44,6 +44,12 @@
     <string name="login_item_monitor_widget_weak_pass_subtitle">This account is vulnerable, visit the service and change your password.</string>
     <string name="login_item_monitor_widget_reused_pass_title">Reused Password</string>
     <string name="login_item_monitor_widget_reused_pass_subtitle">Visit the website and generate a unique password for this item.</string>
+    <string name="login_item_monitor_widget_reused_pass_count_compact_leading">%d other logins</string>
+    <string name="login_item_monitor_widget_reused_pass_count_compact_trailing">use this password.</string>
+    <plurals name="login_item_monitor_widget_reused_pass_count_expanded">
+        <item quantity="one">Another login uses this password:</item>
+        <item quantity="other">%d other logins use this password:</item>
+    </plurals>
 
     <string name="field_username">Username or email address</string>
     <string name="field_password">Password</string>

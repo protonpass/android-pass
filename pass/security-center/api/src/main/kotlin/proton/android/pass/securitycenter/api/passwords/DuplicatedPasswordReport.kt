@@ -26,4 +26,6 @@ data class DuplicatedPasswordReport(private val duplicatedPasswordItems: Set<Ite
 
     val duplicationCount: Int = duplicatedPasswordItems.size
 
+    val duplications: List<Item> = duplicatedPasswordItems.toList()
+
 }

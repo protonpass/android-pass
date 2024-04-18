@@ -113,8 +113,8 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import proton.android.pass.securitycenter.api.passwords.DuplicatedPasswordChecker
 import proton.android.pass.securitycenter.api.passwords.InsecurePasswordChecker
-import proton.android.pass.securitycenter.api.passwords.RepeatedPasswordChecker
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.ObserveTotpFromUri
@@ -147,7 +147,7 @@ class LoginDetailViewModel @Inject constructor(
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     getUserPlan: GetUserPlan,
     insecurePasswordChecker: InsecurePasswordChecker,
-    repeatedPasswordChecker: RepeatedPasswordChecker
+    duplicatedPasswordChecker: DuplicatedPasswordChecker
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandle.get()
@@ -262,7 +262,7 @@ class LoginDetailViewModel @Inject constructor(
                         isExcludedFromMonitor = details.item.hasSkippedHealthCheck,
                         navigationScope = navigationScope,
                         insecurePasswordsReport = insecurePasswordChecker(listOf(details.item)),
-                        repeatedPasswordsReport = repeatedPasswordChecker(listOf(details.item))
+                        duplicatedPasswordsReport = duplicatedPasswordChecker(details.item)
                     )
                 )
             }

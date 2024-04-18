@@ -143,7 +143,7 @@ private fun ReusedPasswordCarousel(
             ) { reusedPasswordItem ->
                 ReusedPasswordCarouselItem(
                     item = reusedPasswordItem,
-                    canLoadExternalImages = canLoadExternalImages,
+                    canLoadExternalImages = canLoadExternalImages
                 )
             }
         }

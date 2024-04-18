@@ -19,40 +19,31 @@
 package proton.android.pass.features.security.center.reusepass.presentation
 
 import androidx.compose.runtime.Stable
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.commonuimodels.api.ItemUiModel
 
 @Stable
 internal data class SecurityCenterReusedPassState(
-    private val reusedPasswords: Map<Int, List<ItemUiModel>>,
+    internal val reusedPasswords: ImmutableList<SecurityCenterReusedPassGroup>,
     internal val isLoading: Boolean,
     internal val canLoadExternalImages: Boolean
 ) {
-
-    internal val reusedPassGroups: List<SecurityCenterReusedPassGroup> =
-        reusedPasswords
-            .toSortedMap(compareByDescending { reusedPasswordsCount -> reusedPasswordsCount })
-            .map { (reusedPasswordsCount, itemUiModels) ->
-                SecurityCenterReusedPassGroup(
-                    reusedPasswordsCount = reusedPasswordsCount,
-                    itemUiModels = itemUiModels
-                )
-            }
-
-    val shouldNavigateBack = isLoading.not() && reusedPassGroups.sumOf { it.itemUiModels.size } == 0
+    val shouldNavigateBack = isLoading.not() && reusedPasswords.sumOf { it.itemUiModels.size } == 0
 
     internal companion object {
 
         internal val Initial: SecurityCenterReusedPassState = SecurityCenterReusedPassState(
-            reusedPasswords = emptyMap(),
+            reusedPasswords = persistentListOf(),
             isLoading = true,
             canLoadExternalImages = false
         )
-
     }
 
 }
 
+@Stable
 internal data class SecurityCenterReusedPassGroup(
     internal val reusedPasswordsCount: Int,
-    internal val itemUiModels: List<ItemUiModel>
+    internal val itemUiModels: ImmutableList<ItemUiModel>
 )

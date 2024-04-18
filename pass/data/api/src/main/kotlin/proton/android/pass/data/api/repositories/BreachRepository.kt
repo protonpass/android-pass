@@ -51,4 +51,14 @@ interface BreachRepository {
         shareId: ShareId,
         itemId: ItemId
     ): Flow<List<BreachEmail>>
+
+    suspend fun markProtonEmailAsResolved(userId: UserId, id: AddressId)
+
+    suspend fun markAliasEmailAsResolved(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    )
+
+    suspend fun markCustomEmailAsResolved(userId: UserId, id: BreachEmailId.Custom)
 }

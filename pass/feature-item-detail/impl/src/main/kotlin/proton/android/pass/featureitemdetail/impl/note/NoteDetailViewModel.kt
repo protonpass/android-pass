@@ -145,11 +145,13 @@ class NoteDetailViewModel @Inject constructor(
     private val itemFeaturesFlow = combine(
         featureFlagsRepository.get<Boolean>(FeatureFlag.PINNING_V1),
         featureFlagsRepository.get<Boolean>(FeatureFlag.HISTORY_V1),
+        featureFlagsRepository.get<Boolean>(FeatureFlag.SECURITY_CENTER_V1),
         getUserPlan()
-    ) { isPinningFeatureEnabled, isHistoryFeatureFlagEnabled, userPlan ->
+    ) { isPinningFeatureEnabled, isHistoryFeatureFlagEnabled, isSecurityCenterEnabled, userPlan ->
         ItemFeatures(
             isHistoryEnabled = isHistoryFeatureFlagEnabled && userPlan.isPaidPlan,
-            isPinningEnabled = isPinningFeatureEnabled
+            isPinningEnabled = isPinningFeatureEnabled,
+            isSecurityCenterEnabled = isSecurityCenterEnabled
         )
     }
 

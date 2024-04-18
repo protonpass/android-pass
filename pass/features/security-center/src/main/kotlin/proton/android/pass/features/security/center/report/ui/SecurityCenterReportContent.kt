@@ -37,7 +37,6 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.loading.Loading
 import proton.android.pass.features.security.center.R
-import proton.android.pass.features.security.center.report.navigation.SecurityCenterReportDestination
 import proton.android.pass.features.security.center.report.presentation.SecurityCenterReportState
 import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBar
 import proton.android.pass.features.security.center.shared.ui.rows.SecurityCenterLoginItemRow
@@ -47,7 +46,7 @@ import proton.android.pass.features.security.center.shared.ui.rows.SecurityCente
 internal fun SecurityCenterReportContent(
     modifier: Modifier = Modifier,
     state: SecurityCenterReportState,
-    onNavigate: (SecurityCenterReportDestination) -> Unit
+    onUiEvent: (SecurityCenterReportUiEvent) -> Unit
 ) = with(state) {
     Scaffold(
         modifier = modifier,
@@ -55,7 +54,7 @@ internal fun SecurityCenterReportContent(
             SecurityCenterTopBar(
                 modifier = Modifier
                     .padding(top = Spacing.medium - Spacing.extraSmall),
-                onUpClick = { onNavigate(SecurityCenterReportDestination.Back) }
+                onUpClick = { onUiEvent(SecurityCenterReportUiEvent.Back) }
             )
         }
     ) { innerPadding ->
@@ -65,10 +64,16 @@ internal fun SecurityCenterReportContent(
                 .fillMaxWidth()
                 .background(PassTheme.colors.backgroundStrong),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(Spacing.small)
+            verticalArrangement = Arrangement.spacedBy(Spacing.medium)
         ) {
             ReportHeader(breachCount = breachCount, email = email)
-
+            breachEmails.firstOrNull()?.let { breach ->
+                ResolveButton(
+                    modifier = Modifier.padding(horizontal = Spacing.medium),
+                    emailId = breach.emailId,
+                    onUiEvent = onUiEvent
+                )
+            }
             if (isLoading) {
                 Loading()
             } else {
@@ -90,7 +95,7 @@ internal fun SecurityCenterReportContent(
                         ) { breach ->
                             BreachRow(
                                 breach = breach,
-                                onNavigate = onNavigate
+                                onUiEvent = onUiEvent
                             )
                         }
                     }

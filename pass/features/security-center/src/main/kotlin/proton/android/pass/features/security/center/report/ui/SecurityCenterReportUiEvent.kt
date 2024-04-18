@@ -16,12 +16,14 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.breachdetail.navigation
+package proton.android.pass.features.security.center.report.ui
 
-sealed interface SecurityCenterBreachDetailNavDestination {
+import proton.android.pass.domain.breach.BreachEmailId
 
-    data object Back : SecurityCenterBreachDetailNavDestination
+internal sealed interface SecurityCenterReportUiEvent {
+    data object Back : SecurityCenterReportUiEvent
 
-    data object Resolved : SecurityCenterBreachDetailNavDestination
+    data class EmailBreachDetail(val id: BreachEmailId) : SecurityCenterReportUiEvent
 
+    data class MarkAsResolvedClick(val id: BreachEmailId) : SecurityCenterReportUiEvent
 }

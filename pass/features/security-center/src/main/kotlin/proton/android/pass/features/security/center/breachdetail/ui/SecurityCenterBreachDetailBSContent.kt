@@ -20,23 +20,17 @@ package proton.android.pass.features.security.center.breachdetail.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -45,14 +39,11 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.body3Inverted
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.commonui.api.bottomSheet
-import proton.android.pass.composecomponents.impl.buttons.CircleButton
 import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.domain.breach.BreachEmail
 import proton.android.pass.features.security.center.R
@@ -62,45 +53,26 @@ import proton.android.pass.features.security.center.shared.ui.image.BreachImage
 @Composable
 internal fun SecurityCenterBreachDetailBSContent(
     modifier: Modifier = Modifier,
-    state: SecurityCenterBreachDetailState,
-    onUiEvent: (SecurityCenterBreachDetailUiEvent) -> Unit
+    state: SecurityCenterBreachDetailState
 ) {
-    Box(
+    Column(
         modifier = modifier
             .fillMaxWidth()
             .background(color = PassTheme.colors.backgroundNorm)
-            .bottomSheet(Spacing.medium),
-        contentAlignment = Alignment.BottomCenter
+            .bottomSheet(Spacing.medium)
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
-        Column(
-            modifier = Modifier.verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(Spacing.medium)
-        ) {
-            state.breachEmail?.let { breachEmail ->
-                BreachDetailHeader(breachEmail = breachEmail)
-                ExposedData(breachEmail = breachEmail)
-                Details(breachEmail = breachEmail)
-            }
-            RecommendedActions()
-            Text(
-                text = stringResource(R.string.security_center_report_detail_note),
-                style = ProtonTheme.typography.body2Regular
-            )
-            Spacer(modifier = Modifier.height(48.dp))
+        state.breachEmail?.let { breachEmail ->
+            BreachDetailHeader(breachEmail = breachEmail)
+            ExposedData(breachEmail = breachEmail)
+            Details(breachEmail = breachEmail)
         }
-        CircleButton(
-            modifier = Modifier.fillMaxWidth(),
-            contentPadding = PaddingValues(14.dp),
-            color = PassTheme.colors.loginInteractionNormMajor1,
-            elevation = ButtonDefaults.elevation(0.dp),
-            onClick = { onUiEvent(SecurityCenterBreachDetailUiEvent.OnResolveClick) }
-        ) {
-            Text(
-                text = stringResource(R.string.security_center_report_detail_mark_as_resolved),
-                style = PassTheme.typography.body3Inverted(),
-                color = PassTheme.colors.textInvert
-            )
-        }
+        RecommendedActions()
+        Text(
+            text = stringResource(R.string.security_center_report_detail_note),
+            style = ProtonTheme.typography.body2Regular
+        )
     }
 }
 

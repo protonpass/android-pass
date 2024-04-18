@@ -682,25 +682,24 @@ class LoginDetailViewModel @Inject constructor(
                 }
             }
 
-    private fun observeTotpValue(decryptedTotpUri: String): Flow<TotpUiState> =
-        observeTotpFromUri(decryptedTotpUri)
-            .map(TotpManager.TotpWrapper::toOption)
-            .map { totpValue ->
-                when (totpValue) {
-                    None -> TotpUiState.Hidden
-                    is Some -> TotpUiState.Visible(
-                        code = totpValue.value.code,
-                        remainingSeconds = totpValue.value.remainingSeconds,
-                        totalSeconds = totpValue.value.totalSeconds
-                    )
-                }
+    private fun observeTotpValue(decryptedTotpUri: String): Flow<TotpUiState> = observeTotpFromUri(decryptedTotpUri)
+        .map(TotpManager.TotpWrapper::toOption)
+        .map { totpValue ->
+            when (totpValue) {
+                None -> TotpUiState.Hidden
+                is Some -> TotpUiState.Visible(
+                    code = totpValue.value.code,
+                    remainingSeconds = totpValue.value.remainingSeconds,
+                    totalSeconds = totpValue.value.totalSeconds
+                )
             }
-            .catch { e ->
-                PassLogger.w(TAG, "Error observing totp")
-                PassLogger.w(TAG, e)
-                snackbarDispatcher(DetailSnackbarMessages.GenerateTotpError)
-                emit(TotpUiState.Hidden)
-            }
+        }
+        .catch { e ->
+            PassLogger.w(TAG, "Error observing totp")
+            PassLogger.w(TAG, e)
+            snackbarDispatcher(DetailSnackbarMessages.GenerateTotpError)
+            emit(TotpUiState.Hidden)
+        }
 
     private suspend fun getAliasForItem(item: ItemType.Login): Option<LinkedAliasItem> {
         val username = item.username
@@ -723,10 +722,7 @@ class LoginDetailViewModel @Inject constructor(
             )
     }
 
-    private fun startObservingTotpCustomFields(
-        canSeeCustomFields: Boolean,
-        itemUiModel: ItemUiModel
-    ) {
+    private fun startObservingTotpCustomFields(canSeeCustomFields: Boolean, itemUiModel: ItemUiModel) {
         viewModelScope.launch {
             val asLogin = itemUiModel.contents as? ItemContents.Login
             if (asLogin != null) {

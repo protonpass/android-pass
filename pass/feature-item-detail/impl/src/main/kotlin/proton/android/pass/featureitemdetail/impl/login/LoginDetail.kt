@@ -161,6 +161,7 @@ fun LoginDetail(
                                     viewModel.onIncludeItemInMonitoring()
                                 },
                                 isPinningFeatureEnabled = state.isPinningFeatureEnabled,
+                                isSecurityCenterEnabled = state.isSecurityCenterEnabled,
                                 isExcludedFromMonitor = state.monitorState.isExcludedFromMonitor
                             )
 

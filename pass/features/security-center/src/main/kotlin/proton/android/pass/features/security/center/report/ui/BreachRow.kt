@@ -42,7 +42,7 @@ import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.domain.breach.BreachEmail
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachId
-import proton.android.pass.features.security.center.report.navigation.SecurityCenterReportDestination
+import proton.android.pass.features.security.center.report.ui.SecurityCenterReportUiEvent.EmailBreachDetail
 import proton.android.pass.features.security.center.shared.ui.image.BreachImage
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -52,26 +52,12 @@ import kotlin.random.Random
 internal fun BreachRow(
     modifier: Modifier = Modifier,
     breach: BreachEmail,
-    onNavigate: (SecurityCenterReportDestination) -> Unit
+    onUiEvent: (SecurityCenterReportUiEvent) -> Unit
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clickable {
-                when (val id = breach.emailId) {
-                    is BreachEmailId.Alias -> onNavigate(
-                        SecurityCenterReportDestination.AliasEmailBreachDetail(id)
-                    )
-
-                    is BreachEmailId.Custom -> onNavigate(
-                        SecurityCenterReportDestination.CustomEmailBreachDetail(id)
-                    )
-
-                    is BreachEmailId.Proton -> onNavigate(
-                        SecurityCenterReportDestination.ProtonEmailBreachDetail(id)
-                    )
-                }
-            }
+            .clickable { onUiEvent(EmailBreachDetail(breach.emailId)) }
             .padding(horizontal = Spacing.medium, vertical = Spacing.small),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
@@ -137,7 +123,7 @@ fun BreachRowPreview(@PreviewParameter(ThemedBreachRowPreviewProvider::class) in
         Surface {
             BreachRow(
                 breach = input.second,
-                onNavigate = {}
+                onUiEvent = {}
             )
         }
     }

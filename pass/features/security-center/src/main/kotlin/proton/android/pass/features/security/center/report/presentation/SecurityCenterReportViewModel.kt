@@ -27,9 +27,9 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
@@ -41,18 +41,17 @@ import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAliasEmail
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForCustomEmail
+import proton.android.pass.data.api.usecases.breach.ObserveBreachesForProtonEmail
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
-import proton.android.pass.domain.breach.BreachCustomEmailId
+import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.domain.breach.BreachId
 import proton.android.pass.features.security.center.report.navigation.BreachCountIdArgId
-import proton.android.pass.features.security.center.shared.navigation.BreachEmailIdArgId
+import proton.android.pass.features.security.center.shared.navigation.BreachIdArgId
 import proton.android.pass.features.security.center.shared.navigation.EmailArgId
-import proton.android.pass.features.security.center.shared.presentation.AliasEmailType
-import proton.android.pass.features.security.center.shared.presentation.CustomEmailType
-import proton.android.pass.features.security.center.shared.presentation.EmailType
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavParamEncoder
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -62,6 +61,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SecurityCenterReportViewModel @Inject constructor(
     observeBreachesForCustomEmail: ObserveBreachesForCustomEmail,
+    observeBreachesForProtonEmail: ObserveBreachesForProtonEmail,
     observeBreachesForAliasEmail: ObserveBreachesForAliasEmail,
     observeItems: ObserveItems,
     userPreferencesRepository: UserPreferencesRepository,
@@ -69,16 +69,27 @@ class SecurityCenterReportViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
-    private val customEmailId: BreachCustomEmailId? = savedStateHandleProvider.get()
-        .get<String>(BreachEmailIdArgId.key)
-        ?.let { BreachCustomEmailId(it) }
+    private val customEmailId: BreachEmailId.Custom? = savedStateHandleProvider.get()
+        .get<String>(BreachIdArgId.key)
+        ?.let { BreachEmailId.Custom(BreachId(it)) }
 
-    private val shareId: ShareId? = savedStateHandleProvider.get()
-        .get<String>(CommonNavArgId.ShareId.key)
-        ?.let { ShareId(it) }
-    private val itemId: ItemId? = savedStateHandleProvider.get()
-        .get<String>(CommonNavArgId.ItemId.key)
-        ?.let { ItemId(it) }
+    private val aliasEmailId: BreachEmailId.Alias? = run {
+        val shareId = savedStateHandleProvider.get()
+            .get<String>(CommonNavArgId.ShareId.key)
+            ?.let(::ShareId)
+        val itemId = savedStateHandleProvider.get()
+            .get<String>(CommonNavArgId.ItemId.key)
+            ?.let(::ItemId)
+        if (shareId != null && itemId != null) {
+            BreachEmailId.Alias(BreachId(""), shareId, itemId)
+        } else {
+            null
+        }
+    }
+
+    private val protonEmailId: BreachEmailId.Proton? = savedStateHandleProvider.get()
+        .get<String>(CommonNavArgId.AddressId.key)
+        ?.let { BreachEmailId.Proton(BreachId(""), AddressId(it)) }
 
     private val email: String = savedStateHandleProvider.get()
         .require<String>(EmailArgId.key)
@@ -87,23 +98,28 @@ class SecurityCenterReportViewModel @Inject constructor(
     private val breachCount: Int = savedStateHandleProvider.get()
         .require(BreachCountIdArgId.key)
 
-    private val emailType: EmailType by lazy {
+    private val emailType: BreachEmailId by lazy {
         when {
-            customEmailId != null -> CustomEmailType(customEmailId)
-            shareId != null && itemId != null -> AliasEmailType(shareId, itemId)
+            protonEmailId != null -> protonEmailId
+            aliasEmailId != null -> aliasEmailId
+            customEmailId != null -> customEmailId
             else -> throw IllegalStateException("Invalid state")
         }
     }
 
-    private val breachFlow = when {
-        customEmailId != null -> observeBreachesForCustomEmail(id = customEmailId)
-        shareId != null && itemId != null -> observeBreachesForAliasEmail(
-            shareId = shareId,
-            itemId = itemId
+    private val observeBreachForEmailFlow = when (val type = emailType) {
+        is BreachEmailId.Alias -> observeBreachesForAliasEmail(
+            shareId = type.shareId,
+            itemId = type.itemId
         )
 
-        else -> emptyFlow()
-    }.asLoadingResult().distinctUntilChanged()
+        is BreachEmailId.Custom -> observeBreachesForCustomEmail(id = type)
+        is BreachEmailId.Proton -> observeBreachesForProtonEmail(addressId = type.addressId)
+        else -> throw IllegalStateException("Invalid state")
+    }
+        .asLoadingResult()
+        .distinctUntilChanged()
+
     private val usedInLoginItemsFlow = observeItems(
         selection = ShareSelection.AllShares,
         itemState = ItemState.Active,
@@ -122,7 +138,7 @@ class SecurityCenterReportViewModel @Inject constructor(
         .distinctUntilChanged()
 
     internal val state: StateFlow<SecurityCenterReportState> = combine(
-        breachFlow,
+        observeBreachForEmailFlow,
         usedInLoginItemsFlow,
         userPreferencesRepository.getUseFaviconsPreference()
     ) { breachesForEmailResult, usedInLoginItemsResult, useFavIconsPreference ->
@@ -137,13 +153,12 @@ class SecurityCenterReportViewModel @Inject constructor(
             email = email,
             canLoadExternalImages = useFavIconsPreference.value(),
             breachEmails = breaches,
-            isLoading = isBreachesLoading || isUsedInLoading,
-            emailType = emailType
+            isLoading = isBreachesLoading || isUsedInLoading
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
-        initialValue = SecurityCenterReportState.default(email, emailType, breachCount)
+        initialValue = SecurityCenterReportState.default(email, breachCount)
     )
 
 }

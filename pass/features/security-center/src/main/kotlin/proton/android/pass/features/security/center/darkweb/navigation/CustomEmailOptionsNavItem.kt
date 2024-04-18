@@ -19,8 +19,8 @@
 package proton.android.pass.features.security.center.darkweb.navigation
 
 import androidx.navigation.NavType
-import proton.android.pass.domain.breach.BreachCustomEmailId
-import proton.android.pass.features.security.center.shared.navigation.BreachEmailIdArgId
+import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.features.security.center.shared.navigation.BreachIdArgId
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
@@ -33,9 +33,9 @@ internal object CustomEmailNavArgId : NavArgId {
 
 object CustomEmailOptionsNavItem : NavItem(
     baseRoute = "security/center/dark-web/custom-email/options",
-    navArgIds = listOf(BreachEmailIdArgId, CustomEmailNavArgId),
+    navArgIds = listOf(BreachIdArgId, CustomEmailNavArgId),
     navItemType = NavItemType.Bottomsheet
 ) {
-    fun buildRoute(breachEmailId: BreachCustomEmailId, customEmail: String) =
-        "$baseRoute/${breachEmailId.id}/${NavParamEncoder.encode(customEmail)}"
+    fun buildRoute(breachEmailId: BreachEmailId.Custom, customEmail: String) =
+        "$baseRoute/${breachEmailId.id.id}/${NavParamEncoder.encode(customEmail)}"
 }

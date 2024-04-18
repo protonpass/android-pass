@@ -9,6 +9,7 @@ dependencies {
     api(projects.pass.common.api)
 
     compileOnly(libs.compose.stable.marker)
+    implementation(libs.core.user.domain)
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.serialization.json)
 }

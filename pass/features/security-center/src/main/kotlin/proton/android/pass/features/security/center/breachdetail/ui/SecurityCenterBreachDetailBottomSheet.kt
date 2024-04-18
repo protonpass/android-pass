@@ -19,33 +19,17 @@
 package proton.android.pass.features.security.center.breachdetail.ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.features.security.center.breachdetail.navigation.SecurityCenterBreachDetailNavDestination
-import proton.android.pass.features.security.center.breachdetail.presentation.SecurityCenterBreachDetailEvent
 import proton.android.pass.features.security.center.breachdetail.presentation.SecurityCenterBreachDetailViewModel
 
 @Composable
-fun SecurityCenterBreachDetailBottomSheet(
-    onNavigated: (SecurityCenterBreachDetailNavDestination) -> Unit,
-    viewModel: SecurityCenterBreachDetailViewModel = hiltViewModel()
-) {
+fun SecurityCenterBreachDetailBottomSheet(viewModel: SecurityCenterBreachDetailViewModel = hiltViewModel()) {
 
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    LaunchedEffect(key1 = state.event) {
-        when (state.event) {
-            SecurityCenterBreachDetailEvent.Idle -> {}
-        }
-
-        viewModel.onEventConsumed(state.event)
-    }
-
     SecurityCenterBreachDetailBSContent(
-        state = state,
-        onUiEvent = { uiEvent ->
-        }
+        state = state
     )
 }

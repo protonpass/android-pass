@@ -113,7 +113,7 @@ import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.UpdateVault
 import proton.android.pass.data.api.usecases.UserPlanWorkerLauncher
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
-import proton.android.pass.data.api.usecases.breach.ObserveBreach
+import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
 import proton.android.pass.data.api.usecases.breach.ObserveBreachCustomEmails
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAliasEmail
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForCustomEmail
@@ -241,7 +241,7 @@ import proton.android.pass.data.impl.usecases.UpdateVaultImpl
 import proton.android.pass.data.impl.usecases.UserPlanWorkerLauncherImpl
 import proton.android.pass.data.impl.usecases.breach.AddBreachCustomEmailImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveBreachCustomEmailsImpl
-import proton.android.pass.data.impl.usecases.breach.ObserveBreachImpl
+import proton.android.pass.data.impl.usecases.breach.ObserveAllBreachByUserIdImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveBreachesForAliasEmailImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveBreachesForCustomEmailImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveBreachesForProtonEmailImpl
@@ -620,7 +620,7 @@ abstract class DataUseCaseModule {
     abstract fun bindObserveUsableVaults(impl: ObserveUsableVaultsImpl): ObserveUsableVaults
 
     @[Binds Singleton]
-    abstract fun bindObserveBreach(impl: ObserveBreachImpl): ObserveBreach
+    abstract fun bindObserveBreach(impl: ObserveAllBreachByUserIdImpl): ObserveAllBreachByUserId
 
     @Binds
     abstract fun bindObserveBreachCustomEmails(impl: ObserveBreachCustomEmailsImpl): ObserveBreachCustomEmails

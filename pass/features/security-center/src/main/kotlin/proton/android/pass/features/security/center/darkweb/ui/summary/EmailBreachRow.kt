@@ -36,6 +36,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.composecomponents.impl.container.Circle
+import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.darkweb.presentation.EmailBreachUiState
 import proton.android.pass.features.security.center.darkweb.ui.DarkWebUiEvent
@@ -43,7 +44,6 @@ import proton.android.pass.features.security.center.darkweb.ui.DarkWebUiEvent
 @Composable
 internal fun EmailBreachRow(
     modifier: Modifier = Modifier,
-    summaryType: DarkWebSummaryType,
     emailBreachUiState: EmailBreachUiState,
     onEvent: (DarkWebUiEvent) -> Unit
 ) {
@@ -51,13 +51,24 @@ internal fun EmailBreachRow(
         modifier = modifier
             .clickable(
                 onClick = {
-                    when (summaryType) {
-                        DarkWebSummaryType.Proton -> onEvent(
-                            DarkWebUiEvent.OnShowProtonEmailBreachReportClick(emailBreachUiState.email)
+                    when (emailBreachUiState.id) {
+                        is BreachEmailId.Alias -> onEvent(
+                            DarkWebUiEvent.OnShowAliasEmailReportClick(
+                                id = emailBreachUiState.id,
+                                email = emailBreachUiState.email,
+                                breachCount = emailBreachUiState.count
+                            )
                         )
 
-                        DarkWebSummaryType.Alias -> onEvent(
-                            DarkWebUiEvent.OnShowAliasEmailBreachReportClick(emailBreachUiState.email)
+                        is BreachEmailId.Custom -> {
+                            // It won't reach this point
+                        }
+                        is BreachEmailId.Proton -> onEvent(
+                            DarkWebUiEvent.OnShowProtonEmailReportClick(
+                                id = emailBreachUiState.id,
+                                email = emailBreachUiState.email,
+                                breachCount = emailBreachUiState.count
+                            )
                         )
                     }
                 }

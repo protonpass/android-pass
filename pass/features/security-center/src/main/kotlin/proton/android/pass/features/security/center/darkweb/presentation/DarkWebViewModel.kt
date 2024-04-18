@@ -95,7 +95,7 @@ internal class DarkWebViewModel @Inject constructor(
                         shareId = item.shareId,
                         itemId = item.id
                     )
-                }.merge().map { it.groupBy { it.email } }
+                }.merge().map { list -> list.groupBy { it.email } }
             }
         }
         .asLoadingResult()
@@ -147,6 +147,7 @@ internal class DarkWebViewModel @Inject constructor(
         is LoadingResult.Success -> DarkWebEmailBreachState.Success(
             protonEmailResult.data.map {
                 EmailBreachUiState(
+                    id = it.value.first().emailId,
                     email = it.key,
                     count = it.value.size,
                     breachDate = it.value.getLatestBreachDate()
@@ -168,6 +169,7 @@ internal class DarkWebViewModel @Inject constructor(
         is LoadingResult.Success -> DarkWebEmailBreachState.Success(
             aliasEmailsResult.data.map {
                 EmailBreachUiState(
+                    id = it.value.first().emailId,
                     email = it.key,
                     count = it.value.size,
                     breachDate = it.value.getLatestBreachDate()

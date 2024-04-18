@@ -109,15 +109,18 @@ import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestin
 import proton.android.pass.features.item.history.navigation.itemHistoryNavGraph
 import proton.android.pass.features.item.history.restore.navigation.ItemHistoryRestoreNavItem
 import proton.android.pass.features.item.history.timeline.navigation.ItemHistoryTimelineNavItem
-import proton.android.pass.features.security.center.breachdetail.navigation.SecurityCenterAliasBreachDetailNavItem
+import proton.android.pass.features.security.center.breachdetail.navigation.SecurityCenterAliasEmailBreachDetailNavItem
 import proton.android.pass.features.security.center.breachdetail.navigation.SecurityCenterCustomEmailBreachDetailNavItem
+import proton.android.pass.features.security.center.breachdetail.navigation.SecurityCenterProtonEmailBreachDetailNavItem
 import proton.android.pass.features.security.center.customemail.navigation.SecurityCenterCustomEmailNavItem
 import proton.android.pass.features.security.center.darkweb.navigation.CustomEmailOptionsNavItem
 import proton.android.pass.features.security.center.darkweb.navigation.DarkWebMonitorNavItem
 import proton.android.pass.features.security.center.excludeditems.navigation.SecurityCenterExcludedItemsNavItem
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavItem
 import proton.android.pass.features.security.center.missingtfa.navigation.SecurityCenterMissingTFANavItem
-import proton.android.pass.features.security.center.report.navigation.SecurityCenterReportNavItem
+import proton.android.pass.features.security.center.report.navigation.SecurityCenterAliasEmailReportNavItem
+import proton.android.pass.features.security.center.report.navigation.SecurityCenterCustomEmailReportNavItem
+import proton.android.pass.features.security.center.report.navigation.SecurityCenterProtonEmailReportNavItem
 import proton.android.pass.features.security.center.reusepass.navigation.SecurityCenterReusedPassNavItem
 import proton.android.pass.features.security.center.sentinel.navigation.SecurityCenterSentinelNavItem
 import proton.android.pass.features.security.center.shared.navigation.SecurityCenterNavDestination
@@ -1115,9 +1118,27 @@ fun NavGraphBuilder.appGraph(
                     destination = DarkWebMonitorNavItem
                 )
 
-                is SecurityCenterNavDestination.Report -> appNavigator.navigate(
-                    destination = SecurityCenterReportNavItem,
-                    route = SecurityCenterReportNavItem.createNavRoute(
+                is SecurityCenterNavDestination.CustomEmailReport -> appNavigator.navigate(
+                    destination = SecurityCenterCustomEmailReportNavItem,
+                    route = SecurityCenterCustomEmailReportNavItem.createNavRoute(
+                        id = destination.id,
+                        email = destination.email,
+                        breachCount = destination.breachCount
+                    )
+                )
+
+                is SecurityCenterNavDestination.AliasEmailReport -> appNavigator.navigate(
+                    destination = SecurityCenterAliasEmailReportNavItem,
+                    route = SecurityCenterAliasEmailReportNavItem.createNavRoute(
+                        id = destination.id,
+                        email = destination.email,
+                        breachCount = destination.breachCount
+                    )
+                )
+
+                is SecurityCenterNavDestination.ProtonEmailReport -> appNavigator.navigate(
+                    destination = SecurityCenterProtonEmailReportNavItem,
+                    route = SecurityCenterProtonEmailReportNavItem.createNavRoute(
                         id = destination.id,
                         email = destination.email,
                         breachCount = destination.breachCount
@@ -1136,22 +1157,26 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigate(
                         destination = SecurityCenterCustomEmailBreachDetailNavItem,
                         route = SecurityCenterCustomEmailBreachDetailNavItem.createNavRoute(
-                            breachId = destination.breachId,
-                            customEmailId = destination.customEmailId
+                            id = destination.id
                         )
                     )
 
-                is SecurityCenterNavDestination.AliasBreachDetail -> appNavigator.navigate(
-                    destination = SecurityCenterAliasBreachDetailNavItem,
-                    route = SecurityCenterAliasBreachDetailNavItem.createNavRoute(
-                        breachId = destination.breachId,
-                        shareId = destination.shareId,
-                        itemId = destination.itemId
+                is SecurityCenterNavDestination.AliasEmailBreachDetail -> appNavigator.navigate(
+                    destination = SecurityCenterAliasEmailBreachDetailNavItem,
+                    route = SecurityCenterAliasEmailBreachDetailNavItem.createNavRoute(
+                        id = destination.id
                     )
                 )
 
                 SecurityCenterNavDestination.ExcludedItems -> appNavigator.navigate(
                     destination = SecurityCenterExcludedItemsNavItem
+                )
+
+                is SecurityCenterNavDestination.ProtonEmailBreachDetail -> appNavigator.navigate(
+                    destination = SecurityCenterProtonEmailBreachDetailNavItem,
+                    route = SecurityCenterProtonEmailBreachDetailNavItem.createNavRoute(
+                        id = destination.id
+                    )
                 )
             }
         }

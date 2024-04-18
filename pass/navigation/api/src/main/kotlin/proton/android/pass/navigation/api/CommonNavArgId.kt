@@ -27,6 +27,7 @@ interface NavArgId {
 
 private const val SHARE_ID_KEY = "shareId"
 private const val ITEM_ID_KEY = "itemId"
+private const val ADDRESS_ID_KEY = "addressId"
 
 enum class CommonNavArgId : NavArgId {
     ItemId {
@@ -35,6 +36,10 @@ enum class CommonNavArgId : NavArgId {
     },
     ShareId {
         override val key: String = SHARE_ID_KEY
+        override val navType: NavType<*> = NavType.StringType
+    },
+    AddressId {
+        override val key: String = ADDRESS_ID_KEY
         override val navType: NavType<*> = NavType.StringType
     }
 }

@@ -31,9 +31,10 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.domain.breach.BreachCustomEmailId
+import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.domain.breach.BreachId
 import proton.android.pass.features.security.center.darkweb.navigation.CustomEmailNavArgId
-import proton.android.pass.features.security.center.shared.navigation.BreachEmailIdArgId
+import proton.android.pass.features.security.center.shared.navigation.BreachIdArgId
 import proton.android.pass.navigation.api.NavParamEncoder
 import javax.inject.Inject
 
@@ -42,9 +43,9 @@ internal class UnverifiedCustomEmailOptionsBottomSheetViewModel @Inject construc
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
-    private val breachCustomEmailId: BreachCustomEmailId = savedStateHandleProvider.get()
-        .require<String>(BreachEmailIdArgId.key)
-        .let(::BreachCustomEmailId)
+    private val breachCustomEmailId: BreachEmailId.Custom = savedStateHandleProvider.get()
+        .require<String>(BreachIdArgId.key)
+        .let { BreachEmailId.Custom(BreachId(it)) }
 
     private val customEmail: String = savedStateHandleProvider.get()
         .require<String>(CustomEmailNavArgId.key)
@@ -72,7 +73,12 @@ internal class UnverifiedCustomEmailOptionsBottomSheetViewModel @Inject construc
         loadingStateFlow.update { UnverifiedCustomEmailOptionsLoadingState.Verify }
 
         delay(2_000L)
-        eventFlow.update { UnverifiedCustomEmailOptionsEvent.Verify(breachCustomEmailId, customEmail) }
+        eventFlow.update {
+            UnverifiedCustomEmailOptionsEvent.Verify(
+                breachCustomEmailId,
+                customEmail
+            )
+        }
 
         loadingStateFlow.update { UnverifiedCustomEmailOptionsLoadingState.Idle }
     }

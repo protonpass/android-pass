@@ -19,9 +19,10 @@
 package proton.android.pass.features.security.center.report.navigation
 
 import androidx.navigation.NavType
-import proton.android.pass.domain.breach.BreachCustomEmailId
-import proton.android.pass.features.security.center.shared.navigation.BreachEmailIdArgId
+import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.features.security.center.shared.navigation.BreachIdArgId
 import proton.android.pass.features.security.center.shared.navigation.EmailArgId
+import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavParamEncoder
@@ -31,13 +32,40 @@ object BreachCountIdArgId : NavArgId {
     override val navType: NavType<*> = NavType.IntType
 }
 
-object SecurityCenterReportNavItem : NavItem(
-    baseRoute = "security/center/report",
-    navArgIds = listOf(BreachEmailIdArgId, EmailArgId, BreachCountIdArgId)
+object SecurityCenterCustomEmailReportNavItem : NavItem(
+    baseRoute = "security/center/customemailreport",
+    navArgIds = listOf(BreachIdArgId, EmailArgId, BreachCountIdArgId)
 ) {
     fun createNavRoute(
-        id: BreachCustomEmailId,
+        id: BreachEmailId.Custom,
         email: String,
         breachCount: Int
-    ): String = "$baseRoute/${id.id}/${NavParamEncoder.encode(email)}/$breachCount"
+    ): String = "$baseRoute/${id.id.id}/${NavParamEncoder.encode(email)}/$breachCount"
+}
+
+object SecurityCenterAliasEmailReportNavItem : NavItem(
+    baseRoute = "security/center/aliasemailreport",
+    navArgIds = listOf(
+        CommonNavArgId.ShareId,
+        CommonNavArgId.ItemId,
+        EmailArgId,
+        BreachCountIdArgId
+    )
+) {
+    fun createNavRoute(
+        id: BreachEmailId.Alias,
+        email: String,
+        breachCount: Int
+    ): String = "$baseRoute/${id.shareId.id}/${id.itemId.id}/${NavParamEncoder.encode(email)}/$breachCount"
+}
+
+object SecurityCenterProtonEmailReportNavItem : NavItem(
+    baseRoute = "security/center/protonemailreport",
+    navArgIds = listOf(CommonNavArgId.AddressId, EmailArgId, BreachCountIdArgId)
+) {
+    fun createNavRoute(
+        id: BreachEmailId.Proton,
+        email: String,
+        breachCount: Int
+    ): String = "$baseRoute/${id.addressId.id}/${NavParamEncoder.encode(email)}/$breachCount"
 }

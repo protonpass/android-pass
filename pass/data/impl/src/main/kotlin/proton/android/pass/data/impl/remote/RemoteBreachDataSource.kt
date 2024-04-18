@@ -30,7 +30,7 @@ import proton.android.pass.data.impl.responses.BreachEmailsResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.data.impl.responses.BreachesResponse
-import proton.android.pass.domain.breach.BreachCustomEmailId
+import proton.android.pass.domain.breach.BreachEmailId
 import javax.inject.Inject
 
 interface RemoteBreachDataSource {
@@ -43,13 +43,13 @@ interface RemoteBreachDataSource {
 
     suspend fun verifyCustomEmail(
         userId: UserId,
-        id: BreachCustomEmailId,
+        id: BreachEmailId.Custom,
         code: String
     )
 
     suspend fun getBreachesForProtonEmail(userId: UserId, id: AddressId): BreachEmailsResponse
 
-    suspend fun getBreachesForCustomEmail(userId: UserId, id: BreachCustomEmailId): BreachEmailsResponse
+    suspend fun getBreachesForCustomEmail(userId: UserId, id: BreachEmailId.Custom): BreachEmailsResponse
 
     suspend fun getBreachesForAliasEmail(
         userId: UserId,
@@ -84,13 +84,13 @@ class RemoteBreachDataSourceImpl @Inject constructor(
 
     override suspend fun verifyCustomEmail(
         userId: UserId,
-        id: BreachCustomEmailId,
+        id: BreachEmailId.Custom,
         code: String
     ) {
         apiProvider
             .get<PasswordManagerApi>(userId)
             .invoke {
-                verifyBreachEmail(emailId = id.id, request = BreachVerifyEmailRequest(code))
+                verifyBreachEmail(emailId = id.id.id, request = BreachVerifyEmailRequest(code))
             }
             .valueOrThrow
     }
@@ -102,11 +102,11 @@ class RemoteBreachDataSourceImpl @Inject constructor(
         }
         .valueOrThrow
 
-    override suspend fun getBreachesForCustomEmail(userId: UserId, id: BreachCustomEmailId): BreachEmailsResponse =
+    override suspend fun getBreachesForCustomEmail(userId: UserId, id: BreachEmailId.Custom): BreachEmailsResponse =
         apiProvider
             .get<PasswordManagerApi>(userId)
             .invoke {
-                getBreachesForCustomEmail(id.id)
+                getBreachesForCustomEmail(id.id.id)
             }
             .valueOrThrow
 

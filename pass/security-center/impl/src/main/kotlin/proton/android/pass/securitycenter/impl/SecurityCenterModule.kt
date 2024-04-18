@@ -27,6 +27,7 @@ import proton.android.pass.commonrust.TwofaDomainChecker
 import proton.android.pass.securitycenter.api.ObserveSecurityAnalysis
 import proton.android.pass.securitycenter.api.checkers.BreachedDataChecker
 import proton.android.pass.securitycenter.api.helpers.Supports2fa
+import proton.android.pass.securitycenter.api.passwords.DuplicatedPasswordChecker
 import proton.android.pass.securitycenter.api.passwords.InsecurePasswordChecker
 import proton.android.pass.securitycenter.api.passwords.MissingTfaChecker
 import proton.android.pass.securitycenter.api.passwords.RepeatedPasswordChecker
@@ -34,6 +35,7 @@ import proton.android.pass.securitycenter.api.sentinel.DisableSentinel
 import proton.android.pass.securitycenter.api.sentinel.EnableSentinel
 import proton.android.pass.securitycenter.api.sentinel.ObserveIsSentinelEnabled
 import proton.android.pass.securitycenter.impl.checkers.BreachedDataCheckerImpl
+import proton.android.pass.securitycenter.impl.checkers.DuplicatedPasswordCheckerImpl
 import proton.android.pass.securitycenter.impl.checkers.InsecurePasswordCheckerImpl
 import proton.android.pass.securitycenter.impl.checkers.MissingTfaCheckerImpl
 import proton.android.pass.securitycenter.impl.checkers.RepeatedPasswordCheckerImpl
@@ -73,6 +75,9 @@ internal abstract class SecurityCenterBindModule {
 
     @[Binds Singleton]
     abstract fun bindDisableSentinel(impl: DisableSentinelImpl): DisableSentinel
+
+    @[Binds Singleton]
+    abstract fun bindDuplicatedPasswordChecker(impl: DuplicatedPasswordCheckerImpl): DuplicatedPasswordChecker
 
 }
 

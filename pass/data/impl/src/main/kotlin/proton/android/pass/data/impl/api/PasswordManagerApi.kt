@@ -344,6 +344,18 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("itemId") itemId: String
     ): BreachEmailsResponse
 
+    @POST("$PREFIX/breach/address/{addressId}/breaches/resolved")
+    suspend fun markProtonEmailAsResolved(@Path("addressId") addressId: String): CodeOnlyResponse
+
+    @PUT("$PREFIX/breach/custom_email/{customEmailId}/breaches/resolved")
+    suspend fun markCustomEmailAsResolved(@Path("customEmailId") emailId: String): CodeOnlyResponse
+
+    @POST("$PREFIX/share/{shareId}/alias/{itemId}/breaches/resolved")
+    suspend fun markAliasEmailAsResolved(
+        @Path("shareId") shareId: String,
+        @Path("itemId") itemId: String
+    ): CodeOnlyResponse
+
     // Core
     @GET("core/v4/keys/all")
     suspend fun getAllKeysByAddress(

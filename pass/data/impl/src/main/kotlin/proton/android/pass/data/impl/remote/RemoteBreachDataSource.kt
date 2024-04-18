@@ -56,6 +56,14 @@ interface RemoteBreachDataSource {
         shareId: ShareId,
         itemId: ItemId
     ): BreachEmailsResponse
+
+    suspend fun markProtonEmailAsResolved(userId: UserId, id: AddressId)
+    suspend fun markAliasEmailAsResolved(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    )
+    suspend fun markCustomEmailAsResolved(userId: UserId, id: BreachEmailId.Custom)
 }
 
 class RemoteBreachDataSourceImpl @Inject constructor(
@@ -120,4 +128,35 @@ class RemoteBreachDataSourceImpl @Inject constructor(
             getBreachesForAliasEmail(shareId.id, itemId.id)
         }
         .valueOrThrow
+
+    override suspend fun markProtonEmailAsResolved(userId: UserId, id: AddressId) {
+        apiProvider
+            .get<PasswordManagerApi>(userId)
+            .invoke {
+                markProtonEmailAsResolved(id.id)
+            }
+            .valueOrThrow
+    }
+
+    override suspend fun markAliasEmailAsResolved(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ) {
+        apiProvider
+            .get<PasswordManagerApi>(userId)
+            .invoke {
+                markAliasEmailAsResolved(shareId.id, itemId.id)
+            }
+            .valueOrThrow
+    }
+
+    override suspend fun markCustomEmailAsResolved(userId: UserId, id: BreachEmailId.Custom) {
+        apiProvider
+            .get<PasswordManagerApi>(userId)
+            .invoke {
+                markCustomEmailAsResolved(id.id.id)
+            }
+            .valueOrThrow
+    }
 }

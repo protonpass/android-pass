@@ -62,6 +62,7 @@ internal sealed interface LoginDetailUiState {
         val event: ItemDetailEvent,
         val isPinningFeatureEnabled: Boolean,
         val isHistoryFeatureEnabled: Boolean,
+        val isSecurityCenterEnabled: Boolean,
         val monitorState: LoginMonitorState
     ) : LoginDetailUiState
 }

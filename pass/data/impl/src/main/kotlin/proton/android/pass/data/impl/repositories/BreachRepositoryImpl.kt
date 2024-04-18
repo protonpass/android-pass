@@ -111,6 +111,22 @@ class BreachRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun markProtonEmailAsResolved(userId: UserId, id: AddressId) {
+        remote.markProtonEmailAsResolved(userId, id)
+    }
+
+    override suspend fun markAliasEmailAsResolved(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ) {
+        remote.markAliasEmailAsResolved(userId, shareId, itemId)
+    }
+
+    override suspend fun markCustomEmailAsResolved(userId: UserId, id: BreachEmailId.Custom) {
+        remote.markCustomEmailAsResolved(userId, id)
+    }
+
     private suspend fun refreshEmails(userId: UserId): List<BreachCustomEmail> {
         val response = remote.getCustomEmails(userId)
         return response.emails.customEmails.map { it.toDomain() }

@@ -29,16 +29,21 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
+import proton.android.pass.common.api.onError
+import proton.android.pass.common.api.onSuccess
+import proton.android.pass.common.api.runCatching
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
+import proton.android.pass.data.api.usecases.breach.MarkEmailBreachAsResolved
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAliasEmail
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForCustomEmail
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForProtonEmail
@@ -64,6 +69,7 @@ class SecurityCenterReportViewModel @Inject constructor(
     observeBreachesForProtonEmail: ObserveBreachesForProtonEmail,
     observeBreachesForAliasEmail: ObserveBreachesForAliasEmail,
     observeItems: ObserveItems,
+    private val markEmailBreachAsResolved: MarkEmailBreachAsResolved,
     userPreferencesRepository: UserPreferencesRepository,
     encryptionContextProvider: EncryptionContextProvider,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -161,4 +167,12 @@ class SecurityCenterReportViewModel @Inject constructor(
         initialValue = SecurityCenterReportState.default(email, breachCount)
     )
 
+    fun resolveEmailBreach(emailId: BreachEmailId) {
+        viewModelScope.launch {
+            runCatching { markEmailBreachAsResolved(breachEmailId = emailId) }
+                .onSuccess {
+                }
+                .onError { }
+        }
+    }
 }

@@ -20,9 +20,11 @@ package proton.android.pass.features.security.center.shared.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
+import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.features.security.center.breachdetail.navigation.SecurityCenterAliasEmailBreachDetailNavItem
 import proton.android.pass.features.security.center.breachdetail.navigation.SecurityCenterCustomEmailBreachDetailNavItem
+import proton.android.pass.features.security.center.breachdetail.navigation.SecurityCenterProtonEmailBreachDetailNavItem
 import proton.android.pass.features.security.center.breachdetail.ui.SecurityCenterBreachDetailBottomSheet
 import proton.android.pass.features.security.center.customemail.navigation.SecurityCenterCustomEmailNavDestination
 import proton.android.pass.features.security.center.customemail.navigation.SecurityCenterCustomEmailNavItem
@@ -271,11 +273,15 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
     }
 
     bottomSheet(navItem = SecurityCenterCustomEmailBreachDetailNavItem) {
-        SecurityCenterBreachDetailBottomSheet(onNavigated = {})
+        SecurityCenterBreachDetailBottomSheet()
+    }
+
+    bottomSheet(navItem = SecurityCenterProtonEmailBreachDetailNavItem) {
+        SecurityCenterBreachDetailBottomSheet()
     }
 
     bottomSheet(navItem = SecurityCenterAliasEmailBreachDetailNavItem) {
-        SecurityCenterBreachDetailBottomSheet(onNavigated = {})
+        SecurityCenterBreachDetailBottomSheet()
     }
 
     composable(SecurityCenterExcludedItemsNavItem) {
@@ -299,20 +305,17 @@ private fun SecurityCenterReportScreen(onNavigated: (SecurityCenterNavDestinatio
         onNavigated = { destination ->
             val event = when (destination) {
                 SecurityCenterReportDestination.Back -> SecurityCenterNavDestination.Back()
-                is SecurityCenterReportDestination.CustomEmailBreachDetail ->
-                    SecurityCenterNavDestination.CustomEmailBreachDetail(
-                        id = destination.id
-                    )
+                is SecurityCenterReportDestination.EmailBreachDetail -> when (destination.id) {
 
-                is SecurityCenterReportDestination.AliasEmailBreachDetail ->
-                    SecurityCenterNavDestination.AliasEmailBreachDetail(
-                        id = destination.id
-                    )
+                    is BreachEmailId.Alias ->
+                        SecurityCenterNavDestination.AliasEmailBreachDetail(destination.id)
 
-                is SecurityCenterReportDestination.ProtonEmailBreachDetail ->
-                    SecurityCenterNavDestination.ProtonEmailBreachDetail(
-                        id = destination.id
-                    )
+                    is BreachEmailId.Custom ->
+                        SecurityCenterNavDestination.CustomEmailBreachDetail(destination.id)
+
+                    is BreachEmailId.Proton ->
+                        SecurityCenterNavDestination.ProtonEmailBreachDetail(destination.id)
+                }
             }
             onNavigated(event)
         }

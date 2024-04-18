@@ -23,13 +23,9 @@ import proton.android.pass.domain.breach.BreachEmailId
 sealed interface SecurityCenterReportDestination {
 
     data object Back : SecurityCenterReportDestination
-    data class CustomEmailBreachDetail(val id: BreachEmailId.Custom) :
-        SecurityCenterReportDestination
 
-    data class ProtonEmailBreachDetail(val id: BreachEmailId.Proton) :
-        SecurityCenterReportDestination
-
-    data class AliasEmailBreachDetail(val id: BreachEmailId.Alias) :
+    @JvmInline
+    value class EmailBreachDetail(val id: BreachEmailId) :
         SecurityCenterReportDestination
 }
 

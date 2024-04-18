@@ -26,11 +26,6 @@ object BreachIdArgId : NavArgId {
     override val navType: NavType<*> = NavType.StringType
 }
 
-object BreachEmailIdArgId : NavArgId {
-    override val key: String = "breach_email_id"
-    override val navType: NavType<*> = NavType.StringType
-}
-
 object EmailArgId : NavArgId {
     override val key: String = "email"
     override val navType: NavType<*> = NavType.StringType

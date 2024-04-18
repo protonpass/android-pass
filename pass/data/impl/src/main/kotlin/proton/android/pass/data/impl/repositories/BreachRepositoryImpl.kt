@@ -33,13 +33,15 @@ import proton.android.pass.data.api.repositories.BreachRepository
 import proton.android.pass.data.impl.remote.RemoteBreachDataSource
 import proton.android.pass.data.impl.responses.BreachDomainPeek
 import proton.android.pass.data.impl.responses.BreachEmailsResponse
+import proton.android.pass.data.impl.responses.Breaches
 import proton.android.pass.data.impl.responses.BreachesResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.breach.Breach
 import proton.android.pass.domain.breach.BreachCustomEmail
-import proton.android.pass.domain.breach.BreachCustomEmailId
 import proton.android.pass.domain.breach.BreachEmail
+import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.domain.breach.BreachId
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -50,7 +52,7 @@ class BreachRepositoryImpl @Inject constructor(
 
     private val refreshFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    private val customEmailBreachesCache: MutableMap<Pair<UserId, BreachCustomEmailId>, List<BreachEmail>> =
+    private val customEmailBreachesCache: MutableMap<Pair<UserId, BreachId>, List<BreachEmail>> =
         mutableMapOf()
     private val aliasBreachesCache: MutableMap<Pair<UserId, Pair<ShareId, ItemId>>, List<BreachEmail>> =
         mutableMapOf()
@@ -78,7 +80,7 @@ class BreachRepositoryImpl @Inject constructor(
 
     override suspend fun verifyCustomEmail(
         userId: UserId,
-        emailId: BreachCustomEmailId,
+        emailId: BreachEmailId.Custom,
         code: String
     ) {
         remote.verifyCustomEmail(userId, emailId, code)
@@ -86,13 +88,15 @@ class BreachRepositoryImpl @Inject constructor(
     }
 
     override fun observeBreachesForProtonEmail(userId: UserId, id: AddressId): Flow<List<BreachEmail>> = oneShot {
-        remote.getBreachesForProtonEmail(userId, id).toDomain()
+        remote.getBreachesForProtonEmail(userId, id)
+            .toDomain { breach -> BreachEmailId.Proton(BreachId(breach.id), id) }
     }
 
-    override fun observeBreachesForCustomEmail(userId: UserId, id: BreachCustomEmailId): Flow<List<BreachEmail>> =
+    override fun observeBreachesForCustomEmail(userId: UserId, id: BreachEmailId.Custom): Flow<List<BreachEmail>> =
         oneShot {
-            customEmailBreachesCache.getOrPut(userId to id) {
-                remote.getBreachesForCustomEmail(userId, id).toDomain()
+            customEmailBreachesCache.getOrPut(userId to id.id) {
+                remote.getBreachesForCustomEmail(userId, id)
+                    .toDomain { breach -> BreachEmailId.Custom(BreachId(breach.id)) }
             }
         }
 
@@ -102,7 +106,8 @@ class BreachRepositoryImpl @Inject constructor(
         itemId: ItemId
     ): Flow<List<BreachEmail>> = oneShot {
         aliasBreachesCache.getOrPut(userId to (shareId to itemId)) {
-            remote.getBreachesForAliasEmail(userId, shareId, itemId).toDomain()
+            remote.getBreachesForAliasEmail(userId, shareId, itemId)
+                .toDomain { breach -> BreachEmailId.Alias(BreachId(breach.id), shareId, itemId) }
         }
     }
 
@@ -112,7 +117,7 @@ class BreachRepositoryImpl @Inject constructor(
     }
 
     fun proton.android.pass.data.impl.responses.BreachCustomEmail.toDomain() = BreachCustomEmail(
-        id = BreachCustomEmailId(customEmailId),
+        id = BreachEmailId.Custom(BreachId(customEmailId)),
         email = email,
         verified = verified,
         breachCount = breachCounter
@@ -131,10 +136,10 @@ class BreachRepositoryImpl @Inject constructor(
         breachTime = breachTime
     )
 
-    private fun BreachEmailsResponse.toDomain() = with(this.breachEmails) {
+    private fun BreachEmailsResponse.toDomain(createId: (Breaches) -> BreachEmailId) = with(this.breachEmails) {
         breaches.map { breach ->
             BreachEmail(
-                id = breach.id,
+                emailId = createId(breach),
                 email = breach.email,
                 severity = breach.severity,
                 name = breach.name,
@@ -146,5 +151,4 @@ class BreachRepositoryImpl @Inject constructor(
             )
         }
     }
-
 }

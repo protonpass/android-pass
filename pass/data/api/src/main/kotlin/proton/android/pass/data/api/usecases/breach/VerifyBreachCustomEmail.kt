@@ -19,12 +19,12 @@
 package proton.android.pass.data.api.usecases.breach
 
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.domain.breach.BreachCustomEmailId
+import proton.android.pass.domain.breach.BreachEmailId
 
 interface VerifyBreachCustomEmail {
     suspend operator fun invoke(
         userId: UserId? = null,
-        id: BreachCustomEmailId,
+        id: BreachEmailId.Custom,
         code: String
     )
 }

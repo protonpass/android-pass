@@ -21,8 +21,7 @@ package proton.android.pass.features.security.center.shared.navigation
 import proton.android.pass.common.api.Option
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.breach.BreachCustomEmailId
-import proton.android.pass.domain.breach.BreachId
+import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.features.PaidFeature
 
 sealed interface SecurityCenterNavDestination {
@@ -60,31 +59,44 @@ sealed interface SecurityCenterNavDestination {
     @JvmInline
     value class AddCustomEmail(val email: Option<String>) : SecurityCenterNavDestination
 
-    data class VerifyEmail(val id: BreachCustomEmailId, val email: String) :
+    data class VerifyEmail(val id: BreachEmailId.Custom, val email: String) :
         SecurityCenterNavDestination
 
     data class UnverifiedEmailOptions(
-        val id: BreachCustomEmailId,
+        val id: BreachEmailId.Custom,
         val email: String
     ) : SecurityCenterNavDestination
 
     data object EmailVerified : SecurityCenterNavDestination
 
-    data class Report(
-        val id: BreachCustomEmailId,
+    data class CustomEmailReport(
+        val id: BreachEmailId.Custom,
+        val email: String,
+        val breachCount: Int
+    ) : SecurityCenterNavDestination
+
+    data class AliasEmailReport(
+        val id: BreachEmailId.Alias,
+        val email: String,
+        val breachCount: Int
+    ) : SecurityCenterNavDestination
+
+    data class ProtonEmailReport(
+        val id: BreachEmailId.Proton,
         val email: String,
         val breachCount: Int
     ) : SecurityCenterNavDestination
 
     data class CustomEmailBreachDetail(
-        val breachId: BreachId,
-        val customEmailId: BreachCustomEmailId
+        val id: BreachEmailId.Custom
     ) : SecurityCenterNavDestination
 
-    data class AliasBreachDetail(
-        val breachId: BreachId,
-        val shareId: ShareId,
-        val itemId: ItemId
+    data class AliasEmailBreachDetail(
+        val id: BreachEmailId.Alias
+    ) : SecurityCenterNavDestination
+
+    data class ProtonEmailBreachDetail(
+        val id: BreachEmailId.Proton
     ) : SecurityCenterNavDestination
 
     data object ExcludedItems : SecurityCenterNavDestination

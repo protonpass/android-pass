@@ -18,9 +18,11 @@
 
 package proton.android.pass.featureitemdetail.impl.login
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -44,8 +46,10 @@ import proton.android.pass.composecomponents.impl.container.roundedContainer
 @Composable
 internal fun LoginMonitorWidget(
     modifier: Modifier = Modifier,
-    model: LoginMonitorWidgetModel
-) = with(model) {
+    @StringRes titleResId: Int,
+    @StringRes subtitleResId: Int,
+    additionalContent: (@Composable ColumnScope.() -> Unit)? = null
+) {
     Row(
         modifier = modifier
             .roundedContainer(
@@ -75,6 +79,8 @@ internal fun LoginMonitorWidget(
                 color = PassTheme.colors.noteInteractionNormMajor2,
                 style = ProtonTheme.typography.body1Medium
             )
+
+            additionalContent?.let { content -> content() }
 
             Text(
                 text = stringResource(id = subtitleResId),

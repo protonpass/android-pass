@@ -29,20 +29,16 @@ import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.login.LoginMonitorWidget
 
 @Composable
-internal fun LoginMonitorInsecurePassWidget(
-    modifier: Modifier = Modifier
-) {
+internal fun LoginMonitorInsecurePassWidget(modifier: Modifier = Modifier) {
     LoginMonitorWidget(
         modifier = modifier,
         titleResId = R.string.login_item_monitor_widget_weak_pass_title,
-        subtitleResId = R.string.login_item_monitor_widget_weak_pass_subtitle,
+        subtitleResId = R.string.login_item_monitor_widget_weak_pass_subtitle
     )
 }
 
 @[Preview Composable]
-internal fun LoginMonitorInsecurePassWidgetPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+internal fun LoginMonitorInsecurePassWidgetPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             LoginMonitorInsecurePassWidget()

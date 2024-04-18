@@ -54,7 +54,7 @@ internal fun LoginMonitorWidget(
         modifier = modifier
             .roundedContainer(
                 backgroundColor = PassTheme.colors.noteInteractionNormMinor2,
-                borderColor = PassTheme.colors.noteInteractionNormMinor2,
+                borderColor = PassTheme.colors.noteInteractionNormMinor2
             )
             .padding(all = Spacing.medium),
         horizontalArrangement = Arrangement.spacedBy(space = Spacing.small)

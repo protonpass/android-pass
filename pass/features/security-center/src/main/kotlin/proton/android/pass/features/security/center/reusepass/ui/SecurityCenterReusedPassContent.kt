@@ -62,7 +62,7 @@ internal fun SecurityCenterReusedPassContent(
                 .padding(paddingValues = innerPaddingValues)
                 .padding(top = Spacing.large)
         ) {
-            reusedPassGroups.forEach { reusedPassGroup ->
+            reusedPasswords.forEach { reusedPassGroup ->
                 stickyHeader {
                     SecurityCenterListStickyHeader(
                         label = {

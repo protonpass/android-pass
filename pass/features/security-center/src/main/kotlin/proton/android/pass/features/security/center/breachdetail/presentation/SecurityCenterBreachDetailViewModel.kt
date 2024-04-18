@@ -117,8 +117,4 @@ class SecurityCenterBreachDetailViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000L),
         initialValue = SecurityCenterBreachDetailState.Initial
     )
-
-    internal fun onEventConsumed(event: SecurityCenterBreachDetailEvent) {
-        eventFlow.compareAndSet(event, SecurityCenterBreachDetailEvent.Idle)
-    }
 }

@@ -20,15 +20,15 @@ package proton.android.pass.featureitemdetail.impl.login
 
 import androidx.compose.runtime.Stable
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavScope
+import proton.android.pass.securitycenter.api.passwords.DuplicatedPasswordReport
 import proton.android.pass.securitycenter.api.passwords.InsecurePasswordsReport
-import proton.android.pass.securitycenter.api.passwords.RepeatedPasswordsReport
 
 @Stable
 internal data class LoginMonitorState(
     internal val isExcludedFromMonitor: Boolean,
     private val navigationScope: ItemDetailNavScope,
     private val insecurePasswordsReport: InsecurePasswordsReport,
-    private val repeatedPasswordsReport: RepeatedPasswordsReport
+    private val duplicatedPasswordsReport: DuplicatedPasswordReport
 ) {
 
     internal val shouldDisplayMonitoring: Boolean = when (navigationScope) {
@@ -41,7 +41,7 @@ internal data class LoginMonitorState(
     }
 
     internal val isPasswordReused: Boolean by lazy {
-        repeatedPasswordsReport.repeatedPasswordsCount > 0
+        duplicatedPasswordsReport.hasDuplications
     }
 
 }

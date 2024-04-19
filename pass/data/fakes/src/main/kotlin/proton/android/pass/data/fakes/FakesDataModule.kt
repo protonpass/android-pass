@@ -120,6 +120,8 @@ import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAliasEmail
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForCustomEmail
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForProtonEmail
 import proton.android.pass.data.api.usecases.breach.ObserveCustomEmailSuggestions
+import proton.android.pass.data.api.usecases.breach.RemoveCustomEmail
+import proton.android.pass.data.api.usecases.breach.ResendVerificationCode
 import proton.android.pass.data.api.usecases.breach.VerifyBreachCustomEmail
 import proton.android.pass.data.api.usecases.capabilities.CanCreateItemInVault
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
@@ -252,6 +254,8 @@ import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachesForAlia
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachesForCustomEmail
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachesForProtonEmail
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveCustomEmailSuggestions
+import proton.android.pass.data.fakes.usecases.breach.FakeRemoveCustomEmail
+import proton.android.pass.data.fakes.usecases.breach.FakeResendVerificationCode
 import proton.android.pass.data.fakes.usecases.breach.FakeVerifyBreachCustomEmail
 import proton.android.pass.data.fakes.usecases.items.FakeGetItemCategory
 import proton.android.pass.data.fakes.usecases.items.FakeObserveItemRevisions
@@ -628,4 +632,9 @@ abstract class FakesDataModule {
     @[Binds Singleton]
     abstract fun bindObserveMonitoredItems(impl: FakeObserveMonitoredItems): ObserveMonitoredItems
 
+    @Binds
+    abstract fun bindResendVerificationCode(impl: FakeResendVerificationCode): ResendVerificationCode
+
+    @Binds
+    abstract fun bindRemoveCustomEmail(impl: FakeRemoveCustomEmail): RemoveCustomEmail
 }

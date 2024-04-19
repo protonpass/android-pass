@@ -27,9 +27,9 @@ import proton.android.pass.data.impl.requests.BreachVerifyEmailRequest
 import proton.android.pass.data.impl.responses.BreachCustomEmailResponse
 import proton.android.pass.data.impl.responses.BreachCustomEmailsResponse
 import proton.android.pass.data.impl.responses.BreachEmailsResponse
+import proton.android.pass.data.impl.responses.BreachesResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.data.impl.responses.BreachesResponse
 import proton.android.pass.domain.breach.BreachEmailId
 import javax.inject.Inject
 
@@ -64,6 +64,10 @@ interface RemoteBreachDataSource {
         itemId: ItemId
     )
     suspend fun markCustomEmailAsResolved(userId: UserId, id: BreachEmailId.Custom)
+
+    suspend fun resendVerificationCode(userId: UserId, id: BreachEmailId.Custom)
+
+    suspend fun removeCustomEmail(userId: UserId, id: BreachEmailId.Custom)
 }
 
 class RemoteBreachDataSourceImpl @Inject constructor(
@@ -156,6 +160,24 @@ class RemoteBreachDataSourceImpl @Inject constructor(
             .get<PasswordManagerApi>(userId)
             .invoke {
                 markCustomEmailAsResolved(id.id.id)
+            }
+            .valueOrThrow
+    }
+
+    override suspend fun resendVerificationCode(userId: UserId, id: BreachEmailId.Custom) {
+        apiProvider
+            .get<PasswordManagerApi>(userId)
+            .invoke {
+                resendVerificationCode(id.id.id)
+            }
+            .valueOrThrow
+    }
+
+    override suspend fun removeCustomEmail(userId: UserId, id: BreachEmailId.Custom) {
+        apiProvider
+            .get<PasswordManagerApi>(userId)
+            .invoke {
+                removeCustomEmail(id.id.id)
             }
             .valueOrThrow
     }

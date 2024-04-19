@@ -102,6 +102,8 @@ internal fun SecurityCenterVerifyEmailContent(
                 ),
                 onDoneClick = { onUiEvent(SecurityCenterVerifyEmailUiEvent.Verify) }
             )
+
+            CountDownResend(onUiEvent = onUiEvent)
         }
     }
 }

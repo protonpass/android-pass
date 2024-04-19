@@ -58,6 +58,7 @@ fun SecurityCenterVerifyEmailScreen(
                     viewModel.onCodeChange(event.code)
 
                 SecurityCenterVerifyEmailUiEvent.Verify -> viewModel.verifyCode()
+                SecurityCenterVerifyEmailUiEvent.ResendCode -> viewModel.resendCode()
             }
         }
     )

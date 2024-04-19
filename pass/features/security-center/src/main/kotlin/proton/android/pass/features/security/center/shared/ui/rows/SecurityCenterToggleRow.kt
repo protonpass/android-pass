@@ -36,7 +36,8 @@ internal fun SecurityCenterToggleRow(
         modifier = modifier,
         title = title,
         subtitle = subtitle,
-        isClickable = false,
+        isClickable = true,
+        displayChevronWhenClickable = false,
         onClick = onClick,
         trailingContent = {
             Switch(

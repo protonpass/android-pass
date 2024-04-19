@@ -26,4 +26,6 @@ internal sealed interface SecurityCenterVerifyEmailUiEvent {
     data object Back : SecurityCenterVerifyEmailUiEvent
 
     data object Verify : SecurityCenterVerifyEmailUiEvent
+
+    data object ResendCode : SecurityCenterVerifyEmailUiEvent
 }

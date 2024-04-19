@@ -35,6 +35,7 @@ import proton.android.pass.common.api.CommonRegex
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.usecases.breach.ResendVerificationCode
 import proton.android.pass.data.api.usecases.breach.VerifyBreachCustomEmail
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachId
@@ -47,6 +48,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SecurityCenterVerifyEmailViewModel @Inject constructor(
     private val verifyBreachCustomEmail: VerifyBreachCustomEmail,
+    private val resendVerificationCode: ResendVerificationCode,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -108,6 +110,17 @@ class SecurityCenterVerifyEmailViewModel @Inject constructor(
                 codeNotValidStateFlow.update { true }
             }
             isLoadingFlow.update { IsLoadingState.NotLoading }
+        }
+    }
+
+    internal fun resendCode() {
+        viewModelScope.launch {
+            runCatching {
+                resendVerificationCode(id = id)
+            }.onFailure {
+                PassLogger.w(TAG, it)
+                PassLogger.i(TAG, "Failed to resend code")
+            }
         }
     }
 

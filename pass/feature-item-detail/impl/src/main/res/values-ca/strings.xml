@@ -8,7 +8,7 @@
   <!-- Alias details -->
   <string name="field_alias_title">Adreça d\'àlies</string>
   <string name="alias_copied_to_clipboard">S\'ha copiat l\'àlies</string>
-  <string name="alias_detail_field_mailboxes_title">Reenviant a</string>
+  <string name="alias_detail_field_mailboxes_title">S\'està reenviant a</string>
   <string name="alias_create_login_from_alias">Crea un inici de sessió</string>
   <!-- Note details -->
   <string name="field_detail_note_title">Nota</string>

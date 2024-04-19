@@ -28,9 +28,9 @@
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Avaa kohteen toimintovalikko</string>
   <string name="action_upgrade_now">Päivitä tilaus nyt</string>
   <string name="action_not_now">Ei nyt</string>
-  <string name="action_learn_more">Learn more</string>
-  <string name="action_enable">Enable</string>
-  <string name="action_view_details">View details</string>
+  <string name="action_learn_more">Lue lisää</string>
+  <string name="action_enable">Ota käyttöön</string>
+  <string name="action_view_details">Näytä tiedot</string>
   <!-- Empty list -->
   <string name="empty_list_title">Lisää ensimmäinen kohteesi</string>
   <string name="empty_search_results_title">Tuloksia ei löytynyt</string>
@@ -127,5 +127,5 @@
   <string name="dialog_upgrade_plan_action_cancel">Ei nyt</string>
   <!-- Words -->
   <string name="email_address">Sähköpostiosoite</string>
-  <string name="password">Password</string>
+  <string name="password">Salasana</string>
 </resources>

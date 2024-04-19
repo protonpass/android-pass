@@ -28,9 +28,9 @@
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Actiemenu item openen</string>
   <string name="action_upgrade_now">Nu upgraden</string>
   <string name="action_not_now">Niet nu</string>
-  <string name="action_learn_more">Learn more</string>
-  <string name="action_enable">Enable</string>
-  <string name="action_view_details">View details</string>
+  <string name="action_learn_more">Lees meer</string>
+  <string name="action_enable">Inschakelen</string>
+  <string name="action_view_details">Details weergeven</string>
   <!-- Empty list -->
   <string name="empty_list_title">Voeg uw eerste item toe</string>
   <string name="empty_search_results_title">Geen resultaten gevonden</string>
@@ -127,5 +127,5 @@
   <string name="dialog_upgrade_plan_action_cancel">Niet nu</string>
   <!-- Words -->
   <string name="email_address">E-mailadres</string>
-  <string name="password">Password</string>
+  <string name="password">Wachtwoord</string>
 </resources>

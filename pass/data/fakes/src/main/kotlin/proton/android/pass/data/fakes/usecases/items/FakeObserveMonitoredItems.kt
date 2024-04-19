@@ -19,21 +19,19 @@
 package proton.android.pass.data.fakes.usecases.items
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
 import proton.android.pass.domain.Item
 import javax.inject.Inject
 
 class FakeObserveMonitoredItems @Inject constructor() : ObserveMonitoredItems {
 
-    private var monitoredItems: List<Item> = emptyList()
+    private val monitoredItemsFlow = testFlow<List<Item>>()
 
-    fun setMonitoredItems(newMonitoredItems: List<Item>) {
-        monitoredItems = newMonitoredItems
+    fun emitMonitoredItems(newMonitoredItems: List<Item>) {
+        monitoredItemsFlow.tryEmit(newMonitoredItems)
     }
 
-    override fun invoke(): Flow<List<Item>> = flow {
-        emit(monitoredItems)
-    }
+    override fun invoke(): Flow<List<Item>> = monitoredItemsFlow
 
 }

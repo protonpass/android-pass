@@ -39,7 +39,6 @@ import kotlinx.datetime.toLocalDateTime
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.asLoadingResult
-import proton.android.pass.common.api.getOrNull
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.breach.CustomEmailSuggestion
@@ -105,22 +104,23 @@ internal class DarkWebViewModel @Inject constructor(
             .asLoadingResult()
             .distinctUntilChanged()
 
-    private val darkWebStatusFlow: Flow<LoadingResult<DarkWebStatus>> =
-        flowOf(DarkWebStatus.AllGood)
-            .asLoadingResult()
-
     val state: StateFlow<DarkWebUiState> = combine(
         protonEmailFlow,
         aliasEmailFlow,
         customEmailsFlow,
-        darkWebStatusFlow,
         customEmailSuggestionsFlow
-    ) { protonEmailResult, aliasEmailsResult, customEmailsResult, darkWebStatus, suggestionsResult ->
+    ) { protonEmailResult, aliasEmailsResult, customEmailsResult, suggestionsResult ->
+
+        val protonEmail = getProtonEmailState(protonEmailResult)
+        val aliasEmail = getAliasEmailState(aliasEmailsResult)
+        val customEmails = getCustomEmailsState(customEmailsResult, suggestionsResult)
+        val darkWebStatus = getDarkWebStatus(protonEmail, aliasEmail, customEmails)
+
         DarkWebUiState(
-            protonEmailState = getProtonEmailState(protonEmailResult),
-            aliasEmailState = getAliasEmailState(aliasEmailsResult),
-            customEmailState = getCustomEmailsState(customEmailsResult, suggestionsResult),
-            darkWebStatus = darkWebStatus.getOrNull() ?: DarkWebStatus.Loading,
+            protonEmailState = protonEmail,
+            aliasEmailState = aliasEmail,
+            customEmailState = customEmails,
+            darkWebStatus = darkWebStatus,
             lastCheckTime = None
         )
     }.stateIn(
@@ -128,6 +128,45 @@ internal class DarkWebViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = DarkWebUiState.Initial
     )
+
+    @Suppress("ComplexMethod", "CyclomaticComplexMethod")
+    private fun getDarkWebStatus(
+        protonEmail: DarkWebEmailBreachState,
+        aliasEmail: DarkWebEmailBreachState,
+        customEmails: DarkWebCustomEmailsState
+    ): DarkWebStatus = when {
+        protonEmail is DarkWebEmailBreachState.Error ||
+            aliasEmail is DarkWebEmailBreachState.Error ||
+            customEmails is DarkWebCustomEmailsState.Error -> {
+            PassLogger.w(TAG, "Failed to load dark web data")
+            DarkWebStatus.Warning
+        }
+
+        protonEmail is DarkWebEmailBreachState.Loading ||
+            aliasEmail is DarkWebEmailBreachState.Loading ||
+            customEmails is DarkWebCustomEmailsState.Loading -> DarkWebStatus.AllGood
+
+        else -> if (protonEmail is DarkWebEmailBreachState.Success &&
+            aliasEmail is DarkWebEmailBreachState.Success &&
+            customEmails is DarkWebCustomEmailsState.Success
+        ) {
+            val noBreaches = protonEmail.emails.all { it.count == 0 } &&
+                aliasEmail.emails.all { it.count == 0 } &&
+                customEmails.emails.all {
+                    when (it.status) {
+                        is CustomEmailUiStatus.Verified -> it.status.breachesDetected == 0
+                        else -> true
+                    }
+                }
+            if (noBreaches) {
+                DarkWebStatus.AllGood
+            } else {
+                DarkWebStatus.Warning
+            }
+        } else {
+            DarkWebStatus.Loading
+        }
+    }
 
     private fun getProtonEmailState(
         protonEmailResult: LoadingResult<List<BreachProtonEmail>>

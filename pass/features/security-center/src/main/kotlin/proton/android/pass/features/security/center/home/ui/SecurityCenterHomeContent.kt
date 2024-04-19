@@ -94,7 +94,7 @@ internal fun SecurityCenterHomeContent(
                     title = stringResource(id = R.string.security_center_home_row_sentinel_title),
                     subtitle = stringResource(id = R.string.security_center_home_row_sentinel_subtitle),
                     accentBackgroundColor = PassTheme.colors.interactionNormMinor2,
-                    isClickable = false,
+                    isClickable = true,
                     trailingContent = { PassPlusIcon() },
                     onClick = { onUiEvent(SecurityCenterHomeUiEvent.OnUpsell(PaidFeature.Sentinel)) }
                 )

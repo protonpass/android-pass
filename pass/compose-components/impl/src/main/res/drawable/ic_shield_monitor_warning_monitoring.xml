@@ -1,0 +1,27 @@
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:autoMirrored="true" android:height="24dp" android:viewportHeight="24" android:viewportWidth="24" android:width="24dp">
+      
+    <path android:fillColor="@color/icon_norm" android:fillType="evenOdd" android:pathData="M14.326,3.895c0.316,-0.387 0.537,-0.855 0.628,-1.368l5.552,2.02A0.75,0.75 0,0 1,21 5.25v8.439a6.75,6.75 0,0 1,-3.518 5.925l-1.866,1.018a3.362,3.362 0,0 0,-0.88 -1.229l2.028,-1.106A5.25,5.25 0,0 0,19.5 13.69L19.5,5.777l-5.174,-1.882ZM10.533,20.097 L7.236,18.298A5.25,5.25 0,0 1,4.5 13.69L4.5,5.777l5.174,-1.882a2.988,2.988 0,0 1,-0.628 -1.368l-5.552,2.02A0.75,0.75 0,0 0,3 5.25v8.439a6.75,6.75 0,0 0,3.518 5.925l3.648,1.99c-0.047,-0.485 0.075,-1.013 0.367,-1.508Z"/>
+      
+    <path android:fillColor="#00000000" android:pathData="M11.447,2.426 L7.7,3.826m3.747,-1.4L8.874,1.252m2.573,1.174L10.273,5M12.97,21.248l3.498,-1.941m-3.497,1.942 l2.72,0.777m-2.72,-0.777 l0.777,-2.72" android:strokeColor="@color/icon_norm" android:strokeLineCap="round" android:strokeLineJoin="round" android:strokeWidth="1.5"/>
+      
+    <path android:fillColor="@color/icon_norm" android:fillType="evenOdd" android:pathData="m10.807,7.724 l0.578,4.52a0.62,0.62 0,0 0,1.23 0l0.578,-4.52A0.643,0.643 0,0 0,12.556 7h-1.111a0.643,0.643 0,0 0,-0.638 0.724ZM11.998,16a0.973,0.973 0,0 0,0.982 -0.964,0.973 0.973,0 0,0 -0.982,-0.965 0.973,0.973 0,0 0,-0.982 0.965c0,0.532 0.44,0.964 0.982,0.964Z"/>
+    
+</vector>

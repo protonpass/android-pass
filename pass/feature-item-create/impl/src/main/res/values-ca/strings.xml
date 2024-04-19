@@ -25,7 +25,7 @@
   <string name="field_website_address_hint">https://</string>
   <string name="field_website_add_another">Afegeix</string>
   <string name="sticky_button_generate_password" comment="Sticky button on the Create login screen. When tapped, the Generate password bottomsheet is shown">Genera una contrasenya nova</string>
-  <string name="sticky_button_create_alias" comment="Sticky button on the Create login screen. When tapped, the Create alias bottomsheet is shown">Hide-my-email</string>
+  <string name="sticky_button_create_alias" comment="Sticky button on the Create login screen. When tapped, the Create alias bottomsheet is shown">Amaga el correu electrònic</string>
   <string name="sticky_button_use_account_email" comment="Sticky button on the Create login screen. When tapped, the current user email is autofilled">Utilitza %s</string>
   <string name="create_login_item_creation_error">No s\'ha pogut crear l\'inici de sessió</string>
   <string name="create_login_item_update_error">No s\'ha pogut actualitzar l\'inici de sessió</string>

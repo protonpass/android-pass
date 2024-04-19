@@ -28,9 +28,9 @@
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">ელემენტის ქმედების მენიუს გახსნა</string>
   <string name="action_upgrade_now">ტარიფის განახლება</string>
   <string name="action_not_now">არა ახლა</string>
-  <string name="action_learn_more">Learn more</string>
-  <string name="action_enable">Enable</string>
-  <string name="action_view_details">View details</string>
+  <string name="action_learn_more">გაიგეთ მეტი</string>
+  <string name="action_enable">ჩართვა</string>
+  <string name="action_view_details">დეტალების ხილვა</string>
   <!-- Empty list -->
   <string name="empty_list_title">დაამატეთ თქვენი პირველი ელემენტი</string>
   <string name="empty_search_results_title">შედეგების გარეშე</string>
@@ -127,5 +127,5 @@
   <string name="dialog_upgrade_plan_action_cancel">არა ახლა</string>
   <!-- Words -->
   <string name="email_address">ელფოსტის მისამართი</string>
-  <string name="password">Password</string>
+  <string name="password">პაროლი</string>
 </resources>

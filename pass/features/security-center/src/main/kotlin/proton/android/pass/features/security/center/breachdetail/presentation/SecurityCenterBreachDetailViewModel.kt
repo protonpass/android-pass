@@ -99,17 +99,13 @@ class SecurityCenterBreachDetailViewModel @Inject constructor(
         .distinctUntilChanged()
 
     private val isLoadingStateFlow = MutableStateFlow(false)
-    private val eventFlow =
-        MutableStateFlow<SecurityCenterBreachDetailEvent>(SecurityCenterBreachDetailEvent.Idle)
 
     internal val state: StateFlow<SecurityCenterBreachDetailState> = combine(
         observeBreachForEmailFlow,
-        eventFlow,
         isLoadingStateFlow
-    ) { breachResult, event, isLoading ->
+    ) { breachResult, isLoading ->
         SecurityCenterBreachDetailState(
             breachEmail = breachResult.getOrNull(),
-            event = event,
             isLoading = isLoading
         )
     }.stateIn(

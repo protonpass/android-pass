@@ -127,6 +127,15 @@ class BreachRepositoryImpl @Inject constructor(
         remote.markCustomEmailAsResolved(userId, id)
     }
 
+    override suspend fun resendVerificationCode(userId: UserId, id: BreachEmailId.Custom) {
+        remote.resendVerificationCode(userId, id)
+    }
+
+    override suspend fun removeCustomEmail(userId: UserId, id: BreachEmailId.Custom) {
+        remote.removeCustomEmail(userId, id)
+        refreshFlow.update { true }
+    }
+
     private suspend fun refreshEmails(userId: UserId): List<BreachCustomEmail> {
         val response = remote.getCustomEmails(userId)
         return response.emails.customEmails.map { it.toDomain() }

@@ -120,6 +120,8 @@ import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAliasEmail
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForCustomEmail
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForProtonEmail
 import proton.android.pass.data.api.usecases.breach.ObserveCustomEmailSuggestions
+import proton.android.pass.data.api.usecases.breach.RemoveCustomEmail
+import proton.android.pass.data.api.usecases.breach.ResendVerificationCode
 import proton.android.pass.data.api.usecases.breach.VerifyBreachCustomEmail
 import proton.android.pass.data.api.usecases.capabilities.CanCreateItemInVault
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
@@ -244,12 +246,14 @@ import proton.android.pass.data.impl.usecases.UpdateVaultImpl
 import proton.android.pass.data.impl.usecases.UserPlanWorkerLauncherImpl
 import proton.android.pass.data.impl.usecases.breach.AddBreachCustomEmailImpl
 import proton.android.pass.data.impl.usecases.breach.MarkEmailBreachAsResolvedImpl
-import proton.android.pass.data.impl.usecases.breach.ObserveBreachCustomEmailsImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveAllBreachByUserIdImpl
+import proton.android.pass.data.impl.usecases.breach.ObserveBreachCustomEmailsImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveBreachesForAliasEmailImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveBreachesForCustomEmailImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveBreachesForProtonEmailImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveCustomEmailSuggestionsImpl
+import proton.android.pass.data.impl.usecases.breach.RemoveCustomEmailImpl
+import proton.android.pass.data.impl.usecases.breach.ResendVerificationCodeImpl
 import proton.android.pass.data.impl.usecases.breach.VerifyBreachCustomEmailImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanCreateItemInVaultImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanCreateVaultImpl
@@ -666,4 +670,10 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindObserveMonitoredItems(impl: ObserveMonitoredItemsImpl): ObserveMonitoredItems
+
+    @Binds
+    abstract fun bindResendVerificationCode(impl: ResendVerificationCodeImpl): ResendVerificationCode
+
+    @Binds
+    abstract fun bindRemoveCustomEmail(impl: RemoveCustomEmailImpl): RemoveCustomEmail
 }

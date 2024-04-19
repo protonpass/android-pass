@@ -30,9 +30,9 @@
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Otvoriť ponuku akcií položky</string>
   <string name="action_upgrade_now">Navýšiť teraz</string>
   <string name="action_not_now">Teraz nie</string>
-  <string name="action_learn_more">Learn more</string>
-  <string name="action_enable">Enable</string>
-  <string name="action_view_details">View details</string>
+  <string name="action_learn_more">Zistiť viac</string>
+  <string name="action_enable">Zapnúť</string>
+  <string name="action_view_details">Zobraziť podrobnosti</string>
   <!-- Empty list -->
   <string name="empty_list_title">Pridajte prvú položku</string>
   <string name="empty_search_results_title">Žiadne nájdené výsledky</string>
@@ -131,5 +131,5 @@
   <string name="dialog_upgrade_plan_action_cancel">Teraz nie</string>
   <!-- Words -->
   <string name="email_address">Emailová adresa</string>
-  <string name="password">Password</string>
+  <string name="password">Heslo</string>
 </resources>

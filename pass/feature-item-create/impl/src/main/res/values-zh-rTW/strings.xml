@@ -96,7 +96,7 @@
   <string name="changes_saved">更改保存。</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">雙重驗證一次性驗證碼金鑰(TOTP)</string>
-  <string name="totp_create_login_field_invalid">Invalid 2FA secret key (TOTP)</string>
+  <string name="totp_create_login_field_invalid">非正確的雙重驗證碼 (TOTP)</string>
   <string name="totp_create_login_field_placeholder">新增雙重驗證碼 (TOTP)</string>
   <string name="close_scree_icon_content_description">關閉螢幕按鈕</string>
   <string name="totp_paste_code_action">貼上代碼</string>

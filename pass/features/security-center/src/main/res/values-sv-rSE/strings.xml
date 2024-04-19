@@ -19,7 +19,7 @@
 <resources>
   <!-- Home screen -->
   <string name="security_center_home_top_bar_title">Pass Monitor</string>
-  <string name="security_center_home_dark_web_monitoring_title">Dark Web Monitoring</string>
+  <string name="security_center_home_dark_web_monitoring_title">Övervakning Dark Web</string>
   <string name="security_center_home_widget_breaches_title">Intrång upptäckt</string>
   <string name="security_center_home_widget_breaches_subtitle">Dina e-postadresser läckte vid minst ett dataintrång.</string>
   <string name="security_center_home_widget_no_breaches_subtitle">Bli aviserad om din e-post, lösenord eller annan personlig data har läckt.</string>
@@ -27,13 +27,15 @@
   <string name="security_center_home_row_data_breaches_title">Dark Web Alert</string>
   <string name="security_center_home_row_data_breaches_subtitle">Intrång upptäckta</string>
   <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
-  <string name="security_center_home_row_sentinel_subtitle">Advanced account protection program</string>
+  <string name="security_center_home_row_sentinel_subtitle">Avancerat kontoskyddsprogram</string>
   <string name="security_center_home_row_insecure_passwords_title">Svaga lösenord</string>
   <string name="security_center_home_row_insecure_passwords_subtitle">Skapa skarpa lösenord</string>
   <string name="security_center_home_row_reused_passwords_title">Återanvända lösenord</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Skapa unika lösenord</string>
   <string name="security_center_home_row_missing_tfa_title">Saknar tvåfaktorsautentisering</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Öka din säkerhet</string>
+  <string name="security_center_home_row_excludes_items_title">Exkluderade objekt</string>
+  <string name="security_center_home_row_excludes_items_subtitle">Ignorera varningar för dessa objekt</string>
   <string name="security_center_home_section_password_health">Lösenordshälsa</string>
   <string name="security_center_home_snackbar_message_disable_sentinel_error">Det uppstod ett fel vid inaktivering av Proton Sentinel-skydd. Försök igen.</string>
   <!-- Sentinel bottom sheet -->
@@ -52,10 +54,14 @@
   <!-- Missing 2FA -->
   <string name="security_center_missing_tfa_top_bar_title">Saknar tvåfaktorsautentisering</string>
   <string name="security_center_missing_tfa_top_bar_subtitle">Logins with sites that have two-factor authentication available but you haven\'t set it up yet.</string>
+  <!-- Excluded items screen -->
+  <string name="security_center_excluded_items_top_bar_title">Exkluderade objekt</string>
+  <string name="security_center_excluded_items_top_bar_subtitle">This items will not be monitored so they will skip our security services checks.</string>
   <!-- Dark web monitor -->
-  <string name="security_center_dark_web_monitor_top_bar_title">Dark Web Monitoring</string>
+  <string name="security_center_dark_web_monitor_top_bar_title">Övervakning Dark Web</string>
   <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Last check: %s</string>
   <string name="security_center_dark_web_monitor_custom_emails_title">Anpassad e-postadress</string>
+  <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">Inte verifierad</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Lägg till ny anpassad e-postadress</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_button">Lägg till</string>
   <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
@@ -68,6 +74,17 @@
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Fel vid laddning av anpassade e-postadresser</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Kunde inte hämta e-postadresser</string>
+  <string name="security_center_dark_web_monitor_custom_email_option_verify">Verifiera</string>
+  <string name="security_center_dark_web_monitor_custom_email_option_remove">Ta bort</string>
+  <string name="security_center_dark_web_monitor_latest_breach_on">Senaste intrång på %s</string>
+  <plurals name="security_center_dark_web_monitor_found_in_breaches">
+    <item quantity="one">Found in %s breach</item>
+    <item quantity="other">Found in %s breaches</item>
+  </plurals>
+  <string name="security_center_dark_web_monitor_proton_addresses">Proton-adresser</string>
+  <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email-alias</string>
+  <string name="security_center_dark_web_monitor_proton_addresses_error">Error retrieving proton addresses</string>
+  <string name="security_center_dark_web_monitor_alias_addresses_error">Error retrieving Hide-my-email aliases</string>
   <!-- Add custom email monitoring -->
   <string name="security_center_custom_email_top_bar_title">Anpassad e-postövervakning</string>
   <string name="security_center_custom_email_email_address_placeholder">E-postadress</string>
@@ -81,4 +98,22 @@
   <string name="security_center_verify_email_continue">Fortsätt</string>
   <string name="security_center_verify_email_title">Bekräfta din e-post</string>
   <string name="security_center_verify_email_subtitle">Vi har skickat en verifieringskod till %s. Ange den nedan:</string>
+  <!-- Verify email monitoring -->
+  <string name="security_center_verify_report_title_detected">Intrång upptäckta för</string>
+  <string name="security_center_verify_report_title_none">Inga intrång upptäckta för</string>
+  <!-- Email breach report -->
+  <string name="security_center_email_report_used_in_header">Används i</string>
+  <string name="security_center_email_report_breaches_header">Intrång</string>
+  <!-- Breach report detail-->
+  <string name="security_center_report_detail_your_exposed_information">Din exponerade information</string>
+  <string name="security_center_report_detail_subtitle">Din information var i ett dataintrång och hittades den __DATE__</string>
+  <string name="security_center_report_detail_details">Detaljer</string>
+  <string name="security_center_report_detail_email_address">E-postadress</string>
+  <string name="security_center_report_detail_password">Lösenord</string>
+  <string name="security_center_report_detail_recommended_actions">Rekommenderade åtgärder</string>
+  <string name="security_center_report_detail_note">Den exponerade informationen läckte från LinkedIn. Din Proton-kontoinformation förblir säker och krypterad.</string>
+  <string name="security_center_report_detail_mark_as_resolved">Markera som löst</string>
+  <string name="security_center_report_detail_change_password">Ändra lösenord</string>
+  <string name="security_center_report_detail_use_aliases">Använd alias istället för din e-postadress</string>
+  <string name="security_center_report_detail_enable_2fa">Aktivera 2FA</string>
 </resources>

@@ -130,6 +130,7 @@ import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
 import proton.android.pass.data.api.usecases.items.GetItemCategory
 import proton.android.pass.data.api.usecases.items.ObserveItemRevisions
+import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
 import proton.android.pass.data.api.usecases.items.OpenItemRevision
 import proton.android.pass.data.api.usecases.items.UpdateItemFlag
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
@@ -254,6 +255,7 @@ import proton.android.pass.data.fakes.usecases.breach.FakeObserveCustomEmailSugg
 import proton.android.pass.data.fakes.usecases.breach.FakeVerifyBreachCustomEmail
 import proton.android.pass.data.fakes.usecases.items.FakeGetItemCategory
 import proton.android.pass.data.fakes.usecases.items.FakeObserveItemRevisions
+import proton.android.pass.data.fakes.usecases.items.FakeObserveMonitoredItems
 import proton.android.pass.data.fakes.usecases.items.FakeOpenItemRevision
 import proton.android.pass.data.fakes.usecases.items.FakeUpdateItemFlag
 import javax.inject.Singleton
@@ -622,4 +624,8 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindUpdateItemFlag(impl: FakeUpdateItemFlag): UpdateItemFlag
+
+    @[Binds Singleton]
+    abstract fun bindObserveMonitoredItems(impl: FakeObserveMonitoredItems): ObserveMonitoredItems
+
 }

@@ -21,6 +21,7 @@ package proton.android.pass.features.security.center.darkweb.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -210,7 +211,10 @@ internal class DarkWebViewModel @Inject constructor(
                 PassLogger.w(TAG, suggestionsResult.exception)
 
                 // Return the retrieved emails even if suggestions failed
-                return DarkWebCustomEmailsState.Success(emails.toImmutableList())
+                return DarkWebCustomEmailsState.Success(
+                    emails = emails.toImmutableList(),
+                    suggestions = persistentListOf()
+                )
             }
 
             LoadingResult.Loading -> return DarkWebCustomEmailsState.Loading
@@ -220,8 +224,11 @@ internal class DarkWebViewModel @Inject constructor(
                     .map { it.toUiModel() }
         }.take(EMAIL_SUGGESTIONS_COUNT)
 
-        val combined = (verified + unverified + suggestions).toImmutableList()
-        return DarkWebCustomEmailsState.Success(combined)
+        val combined = (verified + unverified).toImmutableList()
+        return DarkWebCustomEmailsState.Success(
+            emails = combined,
+            suggestions = suggestions.toImmutableList()
+        )
     }
 
     private fun CustomEmailSuggestion.toUiModel() = CustomEmailUiState(

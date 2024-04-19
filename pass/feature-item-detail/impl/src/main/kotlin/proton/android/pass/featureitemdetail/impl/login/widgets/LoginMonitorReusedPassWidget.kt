@@ -87,8 +87,9 @@ internal fun LoginMonitorReusedPassWidget(
                                 .clip(shape = RoundedCornerShape(size = Radius.small))
                                 .background(color = PassTheme.colors.noteInteractionNormMinor1)
                                 .padding(all = Spacing.small),
-                            text = stringResource(
-                                id = R.string.login_item_monitor_widget_reused_pass_count_compact_leading,
+                            text = pluralStringResource(
+                                id = R.plurals.login_item_monitor_widget_reused_pass_count_compact_leading,
+                                count = reusedPasswordCount,
                                 reusedPasswordCount
                             ),
                             color = PassTheme.colors.noteInteractionNormMajor2,

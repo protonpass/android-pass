@@ -53,7 +53,7 @@ fun SecurityCenterHomeScreen(
                 }
 
                 SecurityCenterHomeUiEvent.OnShowMissingSecondAuthFactors -> {
-                    onNavigated(state.missing2faDestination)
+                    onNavigated(SecurityCenterHomeNavDestination.MissingTFA)
                 }
 
                 SecurityCenterHomeUiEvent.OnShowReusedPasswords -> {

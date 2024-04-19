@@ -104,7 +104,7 @@ fun HomeBottomBarContent(
                 onClick = { onEvent(HomeBottomBarEvent.OnSecurityCenterSelected) },
                 icon = {
                     Icon(
-                        painter = painterResource(R.drawable.ic_proton_shield_half_filled),
+                        painter = painterResource(CompR.drawable.ic_shield_monitor_ok_monitoring),
                         contentDescription = stringResource(
                             id = CompR.string.bottom_bar_security_center_icon_content_description
                         )

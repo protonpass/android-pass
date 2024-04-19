@@ -340,6 +340,12 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Body request: BreachVerifyEmailRequest
     ): CodeOnlyResponse
 
+    @POST("$PREFIX/breach/custom_email/{customEmailId}/resend_verification")
+    suspend fun resendVerificationCode(@Path("customEmailId") emailId: String): CodeOnlyResponse
+
+    @DELETE("$PREFIX/breach/custom_email/{customEmailId}")
+    suspend fun removeCustomEmail(@Path("customEmailId") emailId: String): CodeOnlyResponse
+
     @GET("$PREFIX/breach/address/{addressId}/breaches")
     suspend fun getBreachesForProtonEmail(@Path("addressId") addressId: String): BreachEmailsResponse
 

@@ -61,4 +61,8 @@ interface BreachRepository {
     )
 
     suspend fun markCustomEmailAsResolved(userId: UserId, id: BreachEmailId.Custom)
+
+    suspend fun resendVerificationCode(userId: UserId, id: BreachEmailId.Custom)
+
+    suspend fun removeCustomEmail(userId: UserId, id: BreachEmailId.Custom)
 }

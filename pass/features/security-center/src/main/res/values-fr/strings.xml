@@ -34,6 +34,8 @@
   <string name="security_center_home_row_reused_passwords_subtitle">Créer des mots de passe uniques</string>
   <string name="security_center_home_row_missing_tfa_title">Authentification à deux facteurs manquante</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Améliorez votre sécurité</string>
+  <string name="security_center_home_row_excludes_items_title">Éléments exclus</string>
+  <string name="security_center_home_row_excludes_items_subtitle">Ignorer les alertes pour ces éléments</string>
   <string name="security_center_home_section_password_health">État du mot de passe</string>
   <string name="security_center_home_snackbar_message_disable_sentinel_error">Une erreur s\'est produite durant la désactivation de la protection Proton Sentinel. Veuillez réessayer plus tard.</string>
   <!-- Sentinel bottom sheet -->
@@ -52,10 +54,14 @@
   <!-- Missing 2FA -->
   <string name="security_center_missing_tfa_top_bar_title">Authentification à deux facteurs manquante</string>
   <string name="security_center_missing_tfa_top_bar_subtitle">Il s\'agit de connexions disponibles à des sites disposant de l\'authentification à deux facteurs (A2F) mais que vous n\'avez pas configuré.</string>
+  <!-- Excluded items screen -->
+  <string name="security_center_excluded_items_top_bar_title">Éléments exclus</string>
+  <string name="security_center_excluded_items_top_bar_subtitle">Ces éléments ne seront pas surveillés. Ils échapperont donc aux contrôles de nos services de sécurité.</string>
   <!-- Dark web monitor -->
   <string name="security_center_dark_web_monitor_top_bar_title">Surveillance du dark web</string>
   <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Dernière vérification : %s</string>
   <string name="security_center_dark_web_monitor_custom_emails_title">Adresse électronique personnalisée</string>
+  <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">Non vérifié</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Ajouter de nouvelles adresse e-mail personnalisées</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_button">Ajouter</string>
   <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
@@ -68,6 +74,17 @@
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Une erreur s\'est produite lors du chargement des adresses e-mail personnalisées.</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Les adresse e-mail n\'ont pu être obtenues.</string>
+  <string name="security_center_dark_web_monitor_custom_email_option_verify">Vérifier</string>
+  <string name="security_center_dark_web_monitor_custom_email_option_remove">Retirer</string>
+  <string name="security_center_dark_web_monitor_latest_breach_on">Dernière fuite de données le %s</string>
+  <plurals name="security_center_dark_web_monitor_found_in_breaches">
+    <item quantity="one">Trouvé dans %s fuite de données</item>
+    <item quantity="other">Trouvé dans %s fuites de données</item>
+  </plurals>
+  <string name="security_center_dark_web_monitor_proton_addresses">Adresses Proton</string>
+  <string name="security_center_dark_web_monitor_hide_my_email_aliases">Alias « hide-my-email »</string>
+  <string name="security_center_dark_web_monitor_proton_addresses_error">Les adresses Proton n\'ont pu être récupérées.</string>
+  <string name="security_center_dark_web_monitor_alias_addresses_error">Une erreur s\'est produite lors de la récupération des alias « hide-my-email ».</string>
   <!-- Add custom email monitoring -->
   <string name="security_center_custom_email_top_bar_title">Surveillance de l\'adresse e-mail personnalisée</string>
   <string name="security_center_custom_email_email_address_placeholder">Adresse e-mail</string>
@@ -81,4 +98,22 @@
   <string name="security_center_verify_email_continue">Continuer</string>
   <string name="security_center_verify_email_title">Confirmez votre email</string>
   <string name="security_center_verify_email_subtitle">Nous avons envoyé un code de vérification à %s. Veuillez le saisir ci-dessous :</string>
+  <!-- Verify email monitoring -->
+  <string name="security_center_verify_report_title_detected">Des fuites de données ont été détectées pour</string>
+  <string name="security_center_verify_report_title_none">Aucune fuite de données n\'a été détectée pour</string>
+  <!-- Email breach report -->
+  <string name="security_center_email_report_used_in_header">Utilisé dans</string>
+  <string name="security_center_email_report_breaches_header">Fuites de données</string>
+  <!-- Breach report detail-->
+  <string name="security_center_report_detail_your_exposed_information">Vos informations exposées</string>
+  <string name="security_center_report_detail_subtitle">Vos informations ont fait l\'objet d\'une fuite de données et ont été trouvées le __DATE__.</string>
+  <string name="security_center_report_detail_details">Informations</string>
+  <string name="security_center_report_detail_email_address">Adresse e-mail</string>
+  <string name="security_center_report_detail_password">Mot de passe</string>
+  <string name="security_center_report_detail_recommended_actions">Actions recommandées</string>
+  <string name="security_center_report_detail_note">Les informations exposées ont été divulguées par LinkedIn. Les informations de votre compte Proton restent en sécurité et chiffrées.</string>
+  <string name="security_center_report_detail_mark_as_resolved">Marquer comme résolu</string>
+  <string name="security_center_report_detail_change_password">Changer le mot de passe</string>
+  <string name="security_center_report_detail_use_aliases">Utilisez des alias au lieu de votre adresse e-mail.</string>
+  <string name="security_center_report_detail_enable_2fa">Activer l\'authentification à deux facteurs (A2F)</string>
 </resources>

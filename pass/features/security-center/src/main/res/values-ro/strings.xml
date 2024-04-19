@@ -19,29 +19,31 @@
 <resources>
   <!-- Home screen -->
   <string name="security_center_home_top_bar_title">Monitorizare Proton Pass</string>
-  <string name="security_center_home_dark_web_monitoring_title">Dark Web Monitoring</string>
-  <string name="security_center_home_widget_breaches_title">Breach detected</string>
-  <string name="security_center_home_widget_breaches_subtitle">Your email addresses were leaked in at least 1 data breach.</string>
-  <string name="security_center_home_widget_no_breaches_subtitle">Get notified if your email, password or other personal data was leaked.</string>
-  <string name="security_center_home_row_no_data_breaches_subtitle">No breaches detected</string>
-  <string name="security_center_home_row_data_breaches_title">Dark Web Alert</string>
-  <string name="security_center_home_row_data_breaches_subtitle">Breaches detected</string>
+  <string name="security_center_home_dark_web_monitoring_title">Monitorizare pe internetul ascuns</string>
+  <string name="security_center_home_widget_breaches_title">Compromitere detectată</string>
+  <string name="security_center_home_widget_breaches_subtitle">Adresele de e-mail v-au fost divulgate în cel puțin o compromitere a datelor.</string>
+  <string name="security_center_home_widget_no_breaches_subtitle">Primiți notificări dacă adresele de e-mail, parolele sau alte date personale au fost divulgate.</string>
+  <string name="security_center_home_row_no_data_breaches_subtitle">Nu există divulgări</string>
+  <string name="security_center_home_row_data_breaches_title">Alertă din internetul ascuns</string>
+  <string name="security_center_home_row_data_breaches_subtitle">Divulgări detectate</string>
   <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
-  <string name="security_center_home_row_sentinel_subtitle">Advanced account protection program</string>
+  <string name="security_center_home_row_sentinel_subtitle">Program avansat de protecție a contului</string>
   <string name="security_center_home_row_insecure_passwords_title">Parole slabe</string>
   <string name="security_center_home_row_insecure_passwords_subtitle">Creați parole puternice</string>
   <string name="security_center_home_row_reused_passwords_title">Parole refolosite</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Creați parole unice</string>
   <string name="security_center_home_row_missing_tfa_title">Autentificarea cu doi factori lipsește</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Măriți-vă securitatea</string>
+  <string name="security_center_home_row_excludes_items_title">Excluded items</string>
+  <string name="security_center_home_row_excludes_items_subtitle">Ignore alerts for these items</string>
   <string name="security_center_home_section_password_health">Stare parolă</string>
-  <string name="security_center_home_snackbar_message_disable_sentinel_error">There was an error disabling Proton Sentinel protection. Please try again.</string>
+  <string name="security_center_home_snackbar_message_disable_sentinel_error">A apărut o eroare la dezactivarea protecției Proton Sentinel. Mai reîncercați.</string>
   <!-- Sentinel bottom sheet -->
   <string name="security_center_sentinel_title">Proton Sentinel</string>
-  <string name="security_center_sentinel_subtitle">Proton Sentinel is an advanced account protection program powered by sophisticated AI systems and specialists working around the clock to protect you from bad actors and security threats.</string>
-  <string name="security_center_sentinel_button_enable">Enable Proton Sentinel</string>
-  <string name="security_center_sentinel_snackbar_message_enable_canceled">Proton Sentinel protection activation has been canceled</string>
-  <string name="security_center_sentinel_snackbar_message_enable_error">There was an error enabling Proton Sentinel protection. Please try again.</string>
+  <string name="security_center_sentinel_subtitle">Proton Sentinel este un program avansat de protecție a conturilor, alimentat de sisteme de IA sofisticate și specialiști care lucrează non-stop pentru a vă proteja de atacatori și amenințările de securitate.</string>
+  <string name="security_center_sentinel_button_enable">Activare Proton Sentinel</string>
+  <string name="security_center_sentinel_snackbar_message_enable_canceled">Activarea protecției Proton Sentinel a fost anulată.</string>
+  <string name="security_center_sentinel_snackbar_message_enable_error">A apărut o eroare la activarea protecției Proton Sentinel. Mai reîncercați.</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Parole slabe</string>
   <string name="security_center_weak_pass_top_bar_subtitle">Parolele slabe sunt ușor de ghicit. Generați parole puternice pentru a vă păstra contul în siguranță.</string>
@@ -52,35 +54,69 @@
   <!-- Missing 2FA -->
   <string name="security_center_missing_tfa_top_bar_title">Autentificarea cu doi factori lipsește</string>
   <string name="security_center_missing_tfa_top_bar_subtitle">Autentificări în site-uri care au disponibilă autentificarea cu doi factori, dar încă nu ați configurat-o.</string>
+  <!-- Excluded items screen -->
+  <string name="security_center_excluded_items_top_bar_title">Excluded items</string>
+  <string name="security_center_excluded_items_top_bar_subtitle">This items will not be monitored so they will skip our security services checks.</string>
   <!-- Dark web monitor -->
-  <string name="security_center_dark_web_monitor_top_bar_title">Dark Web Monitoring</string>
-  <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Last check: %s</string>
-  <string name="security_center_dark_web_monitor_custom_emails_title">Custom email address</string>
-  <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Add new custom email address</string>
-  <string name="security_center_dark_web_monitor_custom_emails_add_button">Add</string>
+  <string name="security_center_dark_web_monitor_top_bar_title">Monitorizare pe internetul ascuns</string>
+  <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Ultima verificare: %s</string>
+  <string name="security_center_dark_web_monitor_custom_emails_title">Domeniu personal adresă de e-mail</string>
+  <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">Not verified</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Adăugare adresă de e-mail cu domeniu personal</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_button">Adăugare</string>
   <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
-    <item quantity="one">Used in %d login</item>
-    <item quantity="few">Used in %d logins</item>
-    <item quantity="other">Used in %d logins</item>
+    <item quantity="one">Folosit la %d conectare</item>
+    <item quantity="few">Folosit la %d conectări</item>
+    <item quantity="other">Folosit la %d de conectări</item>
   </plurals>
   <plurals name="security_center_dark_web_monitor_custom_emails_breaches_found">
-    <item quantity="one">%d breach detected</item>
-    <item quantity="few">%d breaches detected</item>
-    <item quantity="other">%d breaches detected</item>
+    <item quantity="one">%d divulgare detectată</item>
+    <item quantity="few">%d divulgări detectate</item>
+    <item quantity="other">%d de divulgări detectate</item>
   </plurals>
-  <string name="security_center_dark_web_monitor_custom_emails_loading_error">Error loading custom email addresses</string>
-  <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Could not get email addresses</string>
+  <string name="security_center_dark_web_monitor_custom_emails_loading_error">Eroare încărcare adrese de e-mail cu domeniu personal.</string>
+  <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Nu s-au putut obține adresele de e-mail</string>
+  <string name="security_center_dark_web_monitor_custom_email_option_verify">Verify</string>
+  <string name="security_center_dark_web_monitor_custom_email_option_remove">Remove</string>
+  <string name="security_center_dark_web_monitor_latest_breach_on">Latest breach on %s</string>
+  <plurals name="security_center_dark_web_monitor_found_in_breaches">
+    <item quantity="one">Found in %s breach</item>
+    <item quantity="few">Found in %s breaches</item>
+    <item quantity="other">Found in %s breaches</item>
+  </plurals>
+  <string name="security_center_dark_web_monitor_proton_addresses">Proton addresses</string>
+  <string name="security_center_dark_web_monitor_hide_my_email_aliases">Aliasuri hide-my-email</string>
+  <string name="security_center_dark_web_monitor_proton_addresses_error">Error retrieving proton addresses</string>
+  <string name="security_center_dark_web_monitor_alias_addresses_error">Error retrieving Hide-my-email aliases</string>
   <!-- Add custom email monitoring -->
-  <string name="security_center_custom_email_top_bar_title">Custom email monitoring</string>
-  <string name="security_center_custom_email_email_address_placeholder">Email address</string>
-  <string name="security_center_custom_email_invalid_address">Invalid email address</string>
-  <string name="security_center_custom_email_continue">Continue</string>
-  <string name="security_center_custom_email_already_verified">Email already verified</string>
-  <string name="security_center_custom_email_error_adding">Error adding the email address</string>
+  <string name="security_center_custom_email_top_bar_title">Monitorizare adresă de e-mail personalizată</string>
+  <string name="security_center_custom_email_email_address_placeholder">Adresa de e-mail</string>
+  <string name="security_center_custom_email_invalid_address">Adresă de e-mail nevalidă.</string>
+  <string name="security_center_custom_email_continue">Continuare</string>
+  <string name="security_center_custom_email_already_verified">Adresa de e-mail este deja verificată.</string>
+  <string name="security_center_custom_email_error_adding">Eroare adăugare adresă de e-mail.</string>
   <!-- Verify email monitoring -->
-  <string name="security_center_verify_email_code_placeholder">Code</string>
-  <string name="security_center_verify_email_code_error">Invalid code</string>
-  <string name="security_center_verify_email_continue">Continue</string>
-  <string name="security_center_verify_email_title">Confirm your email</string>
-  <string name="security_center_verify_email_subtitle">We\'ve sent a verification code to %s. Please enter it below:</string>
+  <string name="security_center_verify_email_code_placeholder">Cod</string>
+  <string name="security_center_verify_email_code_error">Cod nevalid</string>
+  <string name="security_center_verify_email_continue">Continuare</string>
+  <string name="security_center_verify_email_title">Confirmare adresă de e-mail</string>
+  <string name="security_center_verify_email_subtitle">Vi s-a trimis un cod de verificare la %s. Introduceți codul primit mai jos:</string>
+  <!-- Verify email monitoring -->
+  <string name="security_center_verify_report_title_detected">Divulgări detectate pentru</string>
+  <string name="security_center_verify_report_title_none">Divulgări nedetectate pentru</string>
+  <!-- Email breach report -->
+  <string name="security_center_email_report_used_in_header">Utilizată în</string>
+  <string name="security_center_email_report_breaches_header">Breaches</string>
+  <!-- Breach report detail-->
+  <string name="security_center_report_detail_your_exposed_information">Your exposed information</string>
+  <string name="security_center_report_detail_subtitle">Your info was in a data breach and found on __DATE__</string>
+  <string name="security_center_report_detail_details">Details</string>
+  <string name="security_center_report_detail_email_address">Email address</string>
+  <string name="security_center_report_detail_password">Password</string>
+  <string name="security_center_report_detail_recommended_actions">Acțiuni recomandate</string>
+  <string name="security_center_report_detail_note">The exposed information was leaked from LinkedIn. Your Proton Account information remains secure and encrypted.</string>
+  <string name="security_center_report_detail_mark_as_resolved">Mark as Resolved</string>
+  <string name="security_center_report_detail_change_password">Schimbare parolă</string>
+  <string name="security_center_report_detail_use_aliases">Folosiți aliasuri în locul adreselor de e-mail</string>
+  <string name="security_center_report_detail_enable_2fa">Enable 2FA</string>
 </resources>

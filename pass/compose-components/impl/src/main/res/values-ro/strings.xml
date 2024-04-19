@@ -29,9 +29,9 @@
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Meniu acțiune deschidere articol</string>
   <string name="action_upgrade_now">Modificare</string>
   <string name="action_not_now">Nu acum</string>
-  <string name="action_learn_more">Learn more</string>
-  <string name="action_enable">Enable</string>
-  <string name="action_view_details">View details</string>
+  <string name="action_learn_more">Detalii</string>
+  <string name="action_enable">Activare</string>
+  <string name="action_view_details">Afișare detalii</string>
   <!-- Empty list -->
   <string name="empty_list_title">Adăugați primul articol</string>
   <string name="empty_search_results_title">Nu s-au găsit rezultate</string>
@@ -129,5 +129,5 @@
   <string name="dialog_upgrade_plan_action_cancel">Nu acum</string>
   <!-- Words -->
   <string name="email_address">Adresa de e-mail</string>
-  <string name="password">Password</string>
+  <string name="password">Parola</string>
 </resources>

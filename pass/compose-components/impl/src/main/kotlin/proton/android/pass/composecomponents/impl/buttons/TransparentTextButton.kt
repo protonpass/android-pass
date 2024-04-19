@@ -31,6 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -47,6 +48,7 @@ fun TransparentTextButton(
     @DrawableRes icon: Int? = null,
     iconContentDescription: String? = null,
     color: Color,
+    style: TextStyle = ProtonTheme.typography.captionStrongNorm.copy(fontSize = 14.sp),
     onClick: () -> Unit
 ) {
     Button(
@@ -66,9 +68,8 @@ fun TransparentTextButton(
         }
         Text(
             text = text,
-            style = ProtonTheme.typography.captionStrongNorm,
-            color = color,
-            fontSize = 14.sp
+            style = style,
+            color = color
         )
     }
 }

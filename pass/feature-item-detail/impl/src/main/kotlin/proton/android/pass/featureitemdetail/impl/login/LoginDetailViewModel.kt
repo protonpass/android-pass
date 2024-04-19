@@ -643,7 +643,8 @@ class LoginDetailViewModel @Inject constructor(
                 isFlagEnable = true
             )
         }.onFailure { error ->
-            PassLogger.i(TAG, error, "Error excluding item from monitoring")
+            PassLogger.w(TAG, "Error excluding item from monitoring")
+            PassLogger.w(TAG, error)
             snackbarDispatcher(DetailSnackbarMessages.ItemMonitorExcludedError)
         }.onSuccess {
             snackbarDispatcher(DetailSnackbarMessages.ItemMonitorExcludedSuccess)
@@ -663,7 +664,8 @@ class LoginDetailViewModel @Inject constructor(
                 isFlagEnable = false
             )
         }.onFailure { error ->
-            PassLogger.i(TAG, error, "Error including item in monitoring")
+            PassLogger.w(TAG, "Error including item in monitoring")
+            PassLogger.w(TAG, error)
             snackbarDispatcher(DetailSnackbarMessages.ItemMonitorIncludedError)
         }.onSuccess {
             snackbarDispatcher(DetailSnackbarMessages.ItemMonitorIncludedSuccess)

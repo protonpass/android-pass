@@ -34,6 +34,8 @@
   <string name="security_center_home_row_reused_passwords_subtitle">Opprett unike passord</string>
   <string name="security_center_home_row_missing_tfa_title">Mangler tofaktorautentisering</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Øk sikkerheten din</string>
+  <string name="security_center_home_row_excludes_items_title">Ekskluderte elementer</string>
+  <string name="security_center_home_row_excludes_items_subtitle">Ignorer varsler for disse elementene</string>
   <string name="security_center_home_section_password_health">Passordhelse</string>
   <string name="security_center_home_snackbar_message_disable_sentinel_error">Det oppstod en feil under deaktivering av Proton Sentinel-beskyttelse. Vennligst prøv på nytt.</string>
   <!-- Sentinel bottom sheet -->
@@ -52,10 +54,14 @@
   <!-- Missing 2FA -->
   <string name="security_center_missing_tfa_top_bar_title">Mangler tofaktorautentisering</string>
   <string name="security_center_missing_tfa_top_bar_subtitle">Pålogginger med nettsteder som har tofaktorautentisering tilgjengelig, men som du ikke har konfigurert enda.</string>
+  <!-- Excluded items screen -->
+  <string name="security_center_excluded_items_top_bar_title">Ekskluderte elementer</string>
+  <string name="security_center_excluded_items_top_bar_subtitle">Disse elementene vil ikke bli overvåket, så de vil hoppe over våre sjekker av sikkerhetstjenester.</string>
   <!-- Dark web monitor -->
   <string name="security_center_dark_web_monitor_top_bar_title">Mørk webovervåking</string>
   <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Siste sjekk:%s</string>
   <string name="security_center_dark_web_monitor_custom_emails_title">Tilpasset e-postadresse</string>
+  <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">Ikke verifisert</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Legg til ny tilpasset e-postadresse</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_button">Legg til</string>
   <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
@@ -68,6 +74,17 @@
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Feil under lasting av tilpassede e-postadresser</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Fikk ikke tak i e-postadresser</string>
+  <string name="security_center_dark_web_monitor_custom_email_option_verify">Verifiser</string>
+  <string name="security_center_dark_web_monitor_custom_email_option_remove">Fjern</string>
+  <string name="security_center_dark_web_monitor_latest_breach_on">Siste brudd den %s.</string>
+  <plurals name="security_center_dark_web_monitor_found_in_breaches">
+    <item quantity="one">Funnet i %s brudd</item>
+    <item quantity="other">Funnet i %s brudd</item>
+  </plurals>
+  <string name="security_center_dark_web_monitor_proton_addresses">Proton-adresser</string>
+  <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email-aliaser</string>
+  <string name="security_center_dark_web_monitor_proton_addresses_error">Feil ved henting av Proton-adresser</string>
+  <string name="security_center_dark_web_monitor_alias_addresses_error">Feil ved henting av Hide-my-email-aliaser</string>
   <!-- Add custom email monitoring -->
   <string name="security_center_custom_email_top_bar_title">Overvåking av tilpasset e-post</string>
   <string name="security_center_custom_email_email_address_placeholder">E-postadresse</string>
@@ -81,4 +98,22 @@
   <string name="security_center_verify_email_continue">Fortsett</string>
   <string name="security_center_verify_email_title">Bekreft e-posten din</string>
   <string name="security_center_verify_email_subtitle">Vi har sendt en verifiseringskode til %s. Vennligst angi den nedenfor:</string>
+  <!-- Verify email monitoring -->
+  <string name="security_center_verify_report_title_detected">Brudd oppdaget for</string>
+  <string name="security_center_verify_report_title_none">Ingen brudd oppdaget for</string>
+  <!-- Email breach report -->
+  <string name="security_center_email_report_used_in_header">Brukt i</string>
+  <string name="security_center_email_report_breaches_header">Brudd</string>
+  <!-- Breach report detail-->
+  <string name="security_center_report_detail_your_exposed_information">Din eksponerte informasjon</string>
+  <string name="security_center_report_detail_subtitle">Informasjonen din var i et datainnbrudd og funnet den __DATE__.</string>
+  <string name="security_center_report_detail_details">Detaljer</string>
+  <string name="security_center_report_detail_email_address">E-postadresse</string>
+  <string name="security_center_report_detail_password">Passord</string>
+  <string name="security_center_report_detail_recommended_actions">Anbefalte tiltak</string>
+  <string name="security_center_report_detail_note">Den eksponerte informasjonen ble lekket fra LinkedIn. Proton-kontoinformasjonen din forblir sikker og kryptert.</string>
+  <string name="security_center_report_detail_mark_as_resolved">Merk som løst</string>
+  <string name="security_center_report_detail_change_password">Endre passord</string>
+  <string name="security_center_report_detail_use_aliases">Bruk aliaser i stedet for e-postadressen din</string>
+  <string name="security_center_report_detail_enable_2fa">Aktiver 2FA</string>
 </resources>

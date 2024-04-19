@@ -65,7 +65,8 @@ class SecurityCenterExcludedItemsViewModel @Inject constructor(
     ) { excludedLoginItemsUiModels, useFavIconsPreference ->
         SecurityCenterExcludedItemsState(
             excludedItemUiModels = excludedLoginItemsUiModels,
-            canLoadExternalImages = useFavIconsPreference.value()
+            canLoadExternalImages = useFavIconsPreference.value(),
+            isLoading = false
         )
     }.stateIn(
         scope = viewModelScope,

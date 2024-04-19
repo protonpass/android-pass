@@ -36,7 +36,6 @@ internal sealed interface UnverifiedCustomEmailOptionsEvent {
     ) : UnverifiedCustomEmailOptionsEvent
 }
 
-@Stable
 internal enum class UnverifiedCustomEmailOptionsLoadingState {
     Idle,
     Verify,

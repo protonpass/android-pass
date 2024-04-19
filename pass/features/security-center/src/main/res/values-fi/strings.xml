@@ -19,29 +19,31 @@
 <resources>
   <!-- Home screen -->
   <string name="security_center_home_top_bar_title">Pass Monitor</string>
-  <string name="security_center_home_dark_web_monitoring_title">Dark Web Monitoring</string>
-  <string name="security_center_home_widget_breaches_title">Breach detected</string>
-  <string name="security_center_home_widget_breaches_subtitle">Your email addresses were leaked in at least 1 data breach.</string>
-  <string name="security_center_home_widget_no_breaches_subtitle">Get notified if your email, password or other personal data was leaked.</string>
-  <string name="security_center_home_row_no_data_breaches_subtitle">No breaches detected</string>
-  <string name="security_center_home_row_data_breaches_title">Dark Web Alert</string>
-  <string name="security_center_home_row_data_breaches_subtitle">Breaches detected</string>
+  <string name="security_center_home_dark_web_monitoring_title">Pimeän verkon valvonta</string>
+  <string name="security_center_home_widget_breaches_title">Havaittiin tietovuoto</string>
+  <string name="security_center_home_widget_breaches_subtitle">Sähköpostiosoitteesi ovat vuotaneet ainakin yhdessä tietomurrossa.</string>
+  <string name="security_center_home_widget_no_breaches_subtitle">Vastaanota ilmoituksia, jos sähköpostiosoitteesi, salasanasi tai muita henkilökohtaisia tietojasi on vuotanut.</string>
+  <string name="security_center_home_row_no_data_breaches_subtitle">Tietovuotoja ei havaittu</string>
+  <string name="security_center_home_row_data_breaches_title">Pimeän verkon hälytys</string>
+  <string name="security_center_home_row_data_breaches_subtitle">Tietomurtoja havaittu</string>
   <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
-  <string name="security_center_home_row_sentinel_subtitle">Advanced account protection program</string>
+  <string name="security_center_home_row_sentinel_subtitle">Kehittynyt tilin suojausohjelma</string>
   <string name="security_center_home_row_insecure_passwords_title">Heikot salasanat</string>
   <string name="security_center_home_row_insecure_passwords_subtitle">Luo vahvoja salasanoja</string>
   <string name="security_center_home_row_reused_passwords_title">Uudelleenkäytetyt salasanat</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Luo yksilöllisiä salasanoja</string>
   <string name="security_center_home_row_missing_tfa_title">Kaksivaiheinen tunnistautuminen puuttuu</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Vahvista suojaustasi</string>
+  <string name="security_center_home_row_excludes_items_title">Poissuljetut kohteet</string>
+  <string name="security_center_home_row_excludes_items_subtitle">Ohita näiden kohteiden hälytykset</string>
   <string name="security_center_home_section_password_health">Salasanan terveys</string>
-  <string name="security_center_home_snackbar_message_disable_sentinel_error">There was an error disabling Proton Sentinel protection. Please try again.</string>
+  <string name="security_center_home_snackbar_message_disable_sentinel_error">Proton Sentinel -suojauksen käytöstä poistamisessa tapahtui virhe. Yritä uudelleen.</string>
   <!-- Sentinel bottom sheet -->
   <string name="security_center_sentinel_title">Proton Sentinel</string>
-  <string name="security_center_sentinel_subtitle">Proton Sentinel is an advanced account protection program powered by sophisticated AI systems and specialists working around the clock to protect you from bad actors and security threats.</string>
-  <string name="security_center_sentinel_button_enable">Enable Proton Sentinel</string>
-  <string name="security_center_sentinel_snackbar_message_enable_canceled">Proton Sentinel protection activation has been canceled</string>
-  <string name="security_center_sentinel_snackbar_message_enable_error">There was an error enabling Proton Sentinel protection. Please try again.</string>
+  <string name="security_center_sentinel_subtitle">Proton Sentinel on edistynyt moderneja tekoälyjärjestelmiä ja asiantuntijoita hyödyntävä tilin suojausohjelma, joka suojaa sinua vaarallisilta tahoilta ja tietoturvauhkilta ympäri vuorokauden.</string>
+  <string name="security_center_sentinel_button_enable">Ota Proton Sentinel käyttöön</string>
+  <string name="security_center_sentinel_snackbar_message_enable_canceled">Proton Sentinel -suojan aktivointi on peruttu</string>
+  <string name="security_center_sentinel_snackbar_message_enable_error">Proton Sentinel -suojauksen käyttöönotossa tapahtui virhe. Yritä uudelleen.</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Heikot salasanat</string>
   <string name="security_center_weak_pass_top_bar_subtitle">Heikot salasanat ovat helpommin arvattavissa. Luo vahvoja salasanoja, jotta tilisi pysyy turvassa.</string>
@@ -52,33 +54,66 @@
   <!-- Missing 2FA -->
   <string name="security_center_missing_tfa_top_bar_title">Kaksivaiheinen tunnistautuminen puuttuu</string>
   <string name="security_center_missing_tfa_top_bar_subtitle">Kirjautumistiedot sivustoille, joilla kaksivaiheinen tunnistautuminen on käytettävissä, mutta et ole vielä ottanut sitä käyttöön.</string>
+  <!-- Excluded items screen -->
+  <string name="security_center_excluded_items_top_bar_title">Poissuljetut kohteet</string>
+  <string name="security_center_excluded_items_top_bar_subtitle">This items will not be monitored so they will skip our security services checks.</string>
   <!-- Dark web monitor -->
-  <string name="security_center_dark_web_monitor_top_bar_title">Dark Web Monitoring</string>
-  <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Last check: %s</string>
-  <string name="security_center_dark_web_monitor_custom_emails_title">Custom email address</string>
-  <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Add new custom email address</string>
-  <string name="security_center_dark_web_monitor_custom_emails_add_button">Add</string>
+  <string name="security_center_dark_web_monitor_top_bar_title">Pimeän verkon valvonta</string>
+  <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Viimeisin tarkistus: %s</string>
+  <string name="security_center_dark_web_monitor_custom_emails_title">Oma sähköpostiosoite</string>
+  <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">Ei vahvistettu</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Lisää uusi oma sähköpostiosoite</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_button">Lisää</string>
   <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
-    <item quantity="one">Used in %d login</item>
-    <item quantity="other">Used in %d logins</item>
+    <item quantity="one">Käytössä %d kirjautumistiedossa</item>
+    <item quantity="other">Käytössä %d kirjautumistiedossa</item>
   </plurals>
   <plurals name="security_center_dark_web_monitor_custom_emails_breaches_found">
-    <item quantity="one">%d breach detected</item>
-    <item quantity="other">%d breaches detected</item>
+    <item quantity="one">%d tietomurto havaittu</item>
+    <item quantity="other">%d tietomurtoa havaittu</item>
   </plurals>
-  <string name="security_center_dark_web_monitor_custom_emails_loading_error">Error loading custom email addresses</string>
-  <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Could not get email addresses</string>
+  <string name="security_center_dark_web_monitor_custom_emails_loading_error">Virhe omien sähköpostiosoitteiden lataamisessa</string>
+  <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Sähköpostiosoitteita ei saatu</string>
+  <string name="security_center_dark_web_monitor_custom_email_option_verify">Vahvista</string>
+  <string name="security_center_dark_web_monitor_custom_email_option_remove">Poista</string>
+  <string name="security_center_dark_web_monitor_latest_breach_on">Latest breach on %s</string>
+  <plurals name="security_center_dark_web_monitor_found_in_breaches">
+    <item quantity="one">Löytyi %s murrosta</item>
+    <item quantity="other">Löytyi %s murrosta</item>
+  </plurals>
+  <string name="security_center_dark_web_monitor_proton_addresses">Proton-osoitteet</string>
+  <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email-aliakset</string>
+  <string name="security_center_dark_web_monitor_proton_addresses_error">Virhe Proton-osoitteiden hakemisessa</string>
+  <string name="security_center_dark_web_monitor_alias_addresses_error">Virhe Hide-my-email-aliasten hakemisessa</string>
   <!-- Add custom email monitoring -->
-  <string name="security_center_custom_email_top_bar_title">Custom email monitoring</string>
-  <string name="security_center_custom_email_email_address_placeholder">Email address</string>
-  <string name="security_center_custom_email_invalid_address">Invalid email address</string>
-  <string name="security_center_custom_email_continue">Continue</string>
-  <string name="security_center_custom_email_already_verified">Email already verified</string>
-  <string name="security_center_custom_email_error_adding">Error adding the email address</string>
+  <string name="security_center_custom_email_top_bar_title">Omien sähköpostiosoitteiden seuranta</string>
+  <string name="security_center_custom_email_email_address_placeholder">Sähköpostiosoite</string>
+  <string name="security_center_custom_email_invalid_address">Virheellinen sähköpostiosoite</string>
+  <string name="security_center_custom_email_continue">Jatka</string>
+  <string name="security_center_custom_email_already_verified">Sähköposti on jo vahvistettu</string>
+  <string name="security_center_custom_email_error_adding">Virhe sähköpostiosoitteen lisäämisessä</string>
   <!-- Verify email monitoring -->
-  <string name="security_center_verify_email_code_placeholder">Code</string>
-  <string name="security_center_verify_email_code_error">Invalid code</string>
-  <string name="security_center_verify_email_continue">Continue</string>
-  <string name="security_center_verify_email_title">Confirm your email</string>
-  <string name="security_center_verify_email_subtitle">We\'ve sent a verification code to %s. Please enter it below:</string>
+  <string name="security_center_verify_email_code_placeholder">Koodi</string>
+  <string name="security_center_verify_email_code_error">Virheellinen koodi</string>
+  <string name="security_center_verify_email_continue">Jatka</string>
+  <string name="security_center_verify_email_title">Vahvista sähköpostiosoitteesi</string>
+  <string name="security_center_verify_email_subtitle">Olemme lähettäneet vahvistuskoodin osoitteeseen %s. Syötä se alle:</string>
+  <!-- Verify email monitoring -->
+  <string name="security_center_verify_report_title_detected">Tietomurtoja havaittu:</string>
+  <string name="security_center_verify_report_title_none">Tietovuotoja ei havaittu:</string>
+  <!-- Email breach report -->
+  <string name="security_center_email_report_used_in_header">Käytössä:</string>
+  <string name="security_center_email_report_breaches_header">Murrot</string>
+  <!-- Breach report detail-->
+  <string name="security_center_report_detail_your_exposed_information">Paljastuneet tietosi</string>
+  <string name="security_center_report_detail_subtitle">Your info was in a data breach and found on __DATE__</string>
+  <string name="security_center_report_detail_details">Lisätiedot</string>
+  <string name="security_center_report_detail_email_address">Sähköpostiosoite</string>
+  <string name="security_center_report_detail_password">Salasana</string>
+  <string name="security_center_report_detail_recommended_actions">Suositellut toimenpiteet</string>
+  <string name="security_center_report_detail_note">Paljastuneet tiedot vuotivat LinkedInistä. Proton-tilisi tiedot pysyvät suojattuina ja salattuina.</string>
+  <string name="security_center_report_detail_mark_as_resolved">Merkitse ratkaistuksi</string>
+  <string name="security_center_report_detail_change_password">Vaihda salasana</string>
+  <string name="security_center_report_detail_use_aliases">Käytä aliaksia sähköpostiosoitteesi sijaan</string>
+  <string name="security_center_report_detail_enable_2fa">Ota 2FA käyttöön</string>
 </resources>

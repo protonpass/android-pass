@@ -26,10 +26,10 @@
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">開啟項目行為清單</string>
   <string name="action_upgrade_now">立即升級</string>
-  <string name="action_not_now">Not now</string>
-  <string name="action_learn_more">Learn more</string>
-  <string name="action_enable">Enable</string>
-  <string name="action_view_details">View details</string>
+  <string name="action_not_now">稍後再說</string>
+  <string name="action_learn_more">了解更多</string>
+  <string name="action_enable">啟用</string>
+  <string name="action_view_details">詳情查看</string>
   <!-- Empty list -->
   <string name="empty_list_title">加入您的第一個項目</string>
   <string name="empty_search_results_title">查無結果</string>
@@ -125,5 +125,5 @@
   <string name="dialog_upgrade_plan_action_cancel">現在不要</string>
   <!-- Words -->
   <string name="email_address">電子郵件地址</string>
-  <string name="password">Password</string>
+  <string name="password">密碼</string>
 </resources>

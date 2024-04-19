@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="account_title">帳號</string>
-  <string name="account_recovery_title">Account and Recovery</string>
+  <string name="account_recovery_title">帳戶和恢復</string>
   <string name="account_username_label">使用者名稱</string>
   <string name="account_subscription_label">訂購授權</string>
   <string name="account_permanently_delete_warning">請注意，此動作將會永久刪除您的帳號與其相關資料。您也將無法重新啟用此帳號。</string>

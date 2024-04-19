@@ -19,29 +19,31 @@
 <resources>
   <!-- Home screen -->
   <string name="security_center_home_top_bar_title">Pass izleyicisi</string>
-  <string name="security_center_home_dark_web_monitoring_title">Dark Web Monitoring</string>
-  <string name="security_center_home_widget_breaches_title">Breach detected</string>
-  <string name="security_center_home_widget_breaches_subtitle">Your email addresses were leaked in at least 1 data breach.</string>
-  <string name="security_center_home_widget_no_breaches_subtitle">Get notified if your email, password or other personal data was leaked.</string>
-  <string name="security_center_home_row_no_data_breaches_subtitle">No breaches detected</string>
-  <string name="security_center_home_row_data_breaches_title">Dark Web Alert</string>
-  <string name="security_center_home_row_data_breaches_subtitle">Breaches detected</string>
+  <string name="security_center_home_dark_web_monitoring_title">Dark Web izleme</string>
+  <string name="security_center_home_widget_breaches_title">Veriler açığa çıkmış</string>
+  <string name="security_center_home_widget_breaches_subtitle">E-posta adresleriniz en az 1 verilerin ele geçirilmesi olayında açığa çıkmış.</string>
+  <string name="security_center_home_widget_no_breaches_subtitle">E-posta adresiniz, parolanız veya diğer kişisel verileriniz açığa çıktığında bildirim alın.</string>
+  <string name="security_center_home_row_no_data_breaches_subtitle">Herhangi bir veri açığa çıkmamış</string>
+  <string name="security_center_home_row_data_breaches_title">Dark Web uyarısı</string>
+  <string name="security_center_home_row_data_breaches_subtitle">Veriler açığa çıkmış</string>
   <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
-  <string name="security_center_home_row_sentinel_subtitle">Advanced account protection program</string>
+  <string name="security_center_home_row_sentinel_subtitle">Gelişmiş hesap koruma programı</string>
   <string name="security_center_home_row_insecure_passwords_title">Zayıf parolalar</string>
   <string name="security_center_home_row_insecure_passwords_subtitle">Güçlü parolalar oluşturun</string>
   <string name="security_center_home_row_reused_passwords_title">Yeniden kullanılmış parolalar</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Benzersiz parolalar oluşturun</string>
   <string name="security_center_home_row_missing_tfa_title">İki adımlı kimlik doğrulama eksik</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Güvenliğinizi artırın</string>
+  <string name="security_center_home_row_excludes_items_title">Katılmayacak ögeler</string>
+  <string name="security_center_home_row_excludes_items_subtitle">Şu ögeler için uyarılar yok sayılsın</string>
   <string name="security_center_home_section_password_health">Parola sağlığı</string>
-  <string name="security_center_home_snackbar_message_disable_sentinel_error">There was an error disabling Proton Sentinel protection. Please try again.</string>
+  <string name="security_center_home_snackbar_message_disable_sentinel_error">Proton Sentinel koruması kullanımdan kaldırılırken bir sorun çıktı. Lütfen yeniden deneyin.</string>
   <!-- Sentinel bottom sheet -->
   <string name="security_center_sentinel_title">Proton Sentinel</string>
-  <string name="security_center_sentinel_subtitle">Proton Sentinel is an advanced account protection program powered by sophisticated AI systems and specialists working around the clock to protect you from bad actors and security threats.</string>
-  <string name="security_center_sentinel_button_enable">Proton Sentinel kullanıma al</string>
-  <string name="security_center_sentinel_snackbar_message_enable_canceled">Proton Sentinel protection activation has been canceled</string>
-  <string name="security_center_sentinel_snackbar_message_enable_error">There was an error enabling Proton Sentinel protection. Please try again.</string>
+  <string name="security_center_sentinel_subtitle">Proton Sentinel, sizi kötü niyetli kişilerden ve güvenlik tehditlerinden korumak için günün her saati çalışan, karmaşık yapay zeka sistemleri ile uzmanlar tarafından desteklenen gelişmiş bir hesap koruma programıdır.</string>
+  <string name="security_center_sentinel_button_enable">Proton Sentinel kullanılsın</string>
+  <string name="security_center_sentinel_snackbar_message_enable_canceled">Proton Sentinel korumasını etkinleştirme işlemi iptal edildi</string>
+  <string name="security_center_sentinel_snackbar_message_enable_error">Proton Sentinel koruması kullanıma alınırken bir sorun çıktı. Lütfen yeniden deneyin.</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Zayıf parolalar</string>
   <string name="security_center_weak_pass_top_bar_subtitle">Zayıf parolaların öngörülmesi daha kolaydır. Hesabınızı güvende tutmak için güçlü parolalar oluşturun.</string>
@@ -52,33 +54,66 @@
   <!-- Missing 2FA -->
   <string name="security_center_missing_tfa_top_bar_title">İki adımlı kimlik doğrulama eksik</string>
   <string name="security_center_missing_tfa_top_bar_subtitle">İki adımlı kimlik doğrulaması kullanılabilen ancak henüz ayarlamadığınız site oturum açma kayıtları.</string>
+  <!-- Excluded items screen -->
+  <string name="security_center_excluded_items_top_bar_title">Katılmayacak ögeler</string>
+  <string name="security_center_excluded_items_top_bar_subtitle">Bu ögeler izlenmeyeceğinden güvenlik hizmetleri denetimlerimizden geçmeyecekler.</string>
   <!-- Dark web monitor -->
-  <string name="security_center_dark_web_monitor_top_bar_title">Dark Web Monitoring</string>
-  <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Last check: %s</string>
-  <string name="security_center_dark_web_monitor_custom_emails_title">Custom email address</string>
-  <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Add new custom email address</string>
+  <string name="security_center_dark_web_monitor_top_bar_title">Dark Web izleme</string>
+  <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Son denetim: %s</string>
+  <string name="security_center_dark_web_monitor_custom_emails_title">Özel e-posta adresi</string>
+  <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">Doğrulanmamış</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Yeni özel e-posta adresi ekle</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_button">Ekle</string>
   <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
-    <item quantity="one">Used in %d login</item>
-    <item quantity="other">Used in %d logins</item>
+    <item quantity="one">%d oturum açma kaydında kullanılmış</item>
+    <item quantity="other">%d oturum açma kaydında kullanılmış</item>
   </plurals>
   <plurals name="security_center_dark_web_monitor_custom_emails_breaches_found">
-    <item quantity="one">%d breach detected</item>
-    <item quantity="other">%d breaches detected</item>
+    <item quantity="one">%d veri açığa çıkmış</item>
+    <item quantity="other">%d veri açığa çıkmış</item>
   </plurals>
-  <string name="security_center_dark_web_monitor_custom_emails_loading_error">Error loading custom email addresses</string>
-  <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Could not get email addresses</string>
+  <string name="security_center_dark_web_monitor_custom_emails_loading_error">Özel e-posta adresleri yüklenirken sorun çıktı</string>
+  <string name="security_center_dark_web_monitor_custom_emails_unknown_error">E-posta adresleri alınamadı</string>
+  <string name="security_center_dark_web_monitor_custom_email_option_verify">Doğrula</string>
+  <string name="security_center_dark_web_monitor_custom_email_option_remove">Kaldır</string>
+  <string name="security_center_dark_web_monitor_latest_breach_on">Son ele geçirilme: %s</string>
+  <plurals name="security_center_dark_web_monitor_found_in_breaches">
+    <item quantity="one">%s kez ele geçirilmiş</item>
+    <item quantity="other">%s kez ele geçirilmiş</item>
+  </plurals>
+  <string name="security_center_dark_web_monitor_proton_addresses">Proton adresleri</string>
+  <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email takma adları</string>
+  <string name="security_center_dark_web_monitor_proton_addresses_error">Proton adresleri alınırken sorun çıktı</string>
+  <string name="security_center_dark_web_monitor_alias_addresses_error">Hide-my-email takma adları alınırken sorun çıktı</string>
   <!-- Add custom email monitoring -->
-  <string name="security_center_custom_email_top_bar_title">Custom email monitoring</string>
+  <string name="security_center_custom_email_top_bar_title">Özel e-posta adresi izleme</string>
   <string name="security_center_custom_email_email_address_placeholder">E-posta adresi</string>
-  <string name="security_center_custom_email_invalid_address">Geçersiz e-posta adresi</string>
-  <string name="security_center_custom_email_continue">Devam Et</string>
-  <string name="security_center_custom_email_already_verified">E-posta zaten doğrulandı</string>
-  <string name="security_center_custom_email_error_adding">E-posta adresi eklenirken hata oluştu</string>
+  <string name="security_center_custom_email_invalid_address">E-posta adresi geçersiz</string>
+  <string name="security_center_custom_email_continue">İlerle</string>
+  <string name="security_center_custom_email_already_verified">E-posta zaten doğrulanmış</string>
+  <string name="security_center_custom_email_error_adding">E-posta adresi eklenirken sorun çıktı</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_email_code_placeholder">Kod</string>
-  <string name="security_center_verify_email_code_error">Geçersiz kod</string>
-  <string name="security_center_verify_email_continue">Devam Et</string>
+  <string name="security_center_verify_email_code_error">Kod geçersiz</string>
+  <string name="security_center_verify_email_continue">İlerle</string>
   <string name="security_center_verify_email_title">E-posta adresinizi onaylayın</string>
-  <string name="security_center_verify_email_subtitle">We\'ve sent a verification code to %s. Please enter it below:</string>
+  <string name="security_center_verify_email_subtitle">%s adresine gönderdiğimiz doğrulama kodunu lütfen aşağıya yazın:</string>
+  <!-- Verify email monitoring -->
+  <string name="security_center_verify_report_title_detected">Şunun verileri açığa çıkmış</string>
+  <string name="security_center_verify_report_title_none">Şunun herhangi bir verisi açığa çıkmamış</string>
+  <!-- Email breach report -->
+  <string name="security_center_email_report_used_in_header">Şurada kullanılmış</string>
+  <string name="security_center_email_report_breaches_header">Ele geçirilmeler</string>
+  <!-- Breach report detail-->
+  <string name="security_center_report_detail_your_exposed_information">Açığa çıkmış bilgileriniz</string>
+  <string name="security_center_report_detail_subtitle">Bilgilerinizin ele geçirildiği __DATE__ tarihinde görülmüş</string>
+  <string name="security_center_report_detail_details">Ayrıntılar</string>
+  <string name="security_center_report_detail_email_address">E-posta adresi</string>
+  <string name="security_center_report_detail_password">Parola</string>
+  <string name="security_center_report_detail_recommended_actions">Önerilen işlemler</string>
+  <string name="security_center_report_detail_note">Bilgiler LınkedIn üzerinden açığa çıkmış. Proton hesap bilgileriniz güvende ve şifrelenmiş olarak kalır.</string>
+  <string name="security_center_report_detail_mark_as_resolved">Çözümlenmiş olarak işaretle</string>
+  <string name="security_center_report_detail_change_password">Parolayı değiştirin</string>
+  <string name="security_center_report_detail_use_aliases">E-posta adresiniz yerine takma adlar kullanın</string>
+  <string name="security_center_report_detail_enable_2fa">İki adımlı doğrulama kullanılsın</string>
 </resources>

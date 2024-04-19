@@ -27,9 +27,9 @@
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Buka menu tindakan item</string>
   <string name="action_upgrade_now">Tingkatkan sekarang</string>
   <string name="action_not_now">Tidak sekarang</string>
-  <string name="action_learn_more">Learn more</string>
-  <string name="action_enable">Enable</string>
-  <string name="action_view_details">View details</string>
+  <string name="action_learn_more">Pelajari lebih lanjut</string>
+  <string name="action_enable">Aktifkan</string>
+  <string name="action_view_details">Lihat rincian</string>
   <!-- Empty list -->
   <string name="empty_list_title">Tambahkan item pertama Anda</string>
   <string name="empty_search_results_title">Hasil tidak ditemukan</string>
@@ -125,5 +125,5 @@
   <string name="dialog_upgrade_plan_action_cancel">Tidak sekarang</string>
   <!-- Words -->
   <string name="email_address">Alamat email</string>
-  <string name="password">Password</string>
+  <string name="password">Kata sandi</string>
 </resources>

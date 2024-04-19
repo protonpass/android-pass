@@ -28,9 +28,9 @@
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Άνοιγμα μενού ενεργειών στοιχείου</string>
   <string name="action_upgrade_now">Αναβάθμιση τώρα</string>
   <string name="action_not_now">Όχι τώρα</string>
-  <string name="action_learn_more">Learn more</string>
-  <string name="action_enable">Enable</string>
-  <string name="action_view_details">View details</string>
+  <string name="action_learn_more">Μάθετε περισσότερα</string>
+  <string name="action_enable">Ενεργοποίηση</string>
+  <string name="action_view_details">Προβολή λεπτομερειών</string>
   <!-- Empty list -->
   <string name="empty_list_title">Προσθέστε το πρώτο σας στοιχείο</string>
   <string name="empty_search_results_title">Δε βρέθηκε αποτέλεσμα</string>
@@ -127,5 +127,5 @@
   <string name="dialog_upgrade_plan_action_cancel">Όχι τώρα</string>
   <!-- Words -->
   <string name="email_address">Διεύθυνση ηλεκτρονικού ταχυδρομείου</string>
-  <string name="password">Password</string>
+  <string name="password">Κωδικός πρόσβασης</string>
 </resources>

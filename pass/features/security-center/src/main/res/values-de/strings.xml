@@ -20,28 +20,30 @@
   <!-- Home screen -->
   <string name="security_center_home_top_bar_title">Pass-Monitor</string>
   <string name="security_center_home_dark_web_monitoring_title">Dark Web Monitoring</string>
-  <string name="security_center_home_widget_breaches_title">Breach detected</string>
-  <string name="security_center_home_widget_breaches_subtitle">Your email addresses were leaked in at least 1 data breach.</string>
-  <string name="security_center_home_widget_no_breaches_subtitle">Get notified if your email, password or other personal data was leaked.</string>
-  <string name="security_center_home_row_no_data_breaches_subtitle">No breaches detected</string>
-  <string name="security_center_home_row_data_breaches_title">Dark Web Alert</string>
-  <string name="security_center_home_row_data_breaches_subtitle">Breaches detected</string>
+  <string name="security_center_home_widget_breaches_title">Datendiebstahl entdeckt</string>
+  <string name="security_center_home_widget_breaches_subtitle">Deine E-Mail-Adressen sind bei mindestens 1 Datendiebstahl veröffentlicht worden.</string>
+  <string name="security_center_home_widget_no_breaches_subtitle">Lass dich benachrichtigen, wenn deine E-Mail, dein Passwort oder andere persönliche Daten entwendet wurden.</string>
+  <string name="security_center_home_row_no_data_breaches_subtitle">Kein Datendiebstahl entdeckt</string>
+  <string name="security_center_home_row_data_breaches_title">Dark Web-Alarm</string>
+  <string name="security_center_home_row_data_breaches_subtitle">Datendiebstahl entdeckt</string>
   <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
-  <string name="security_center_home_row_sentinel_subtitle">Advanced account protection program</string>
+  <string name="security_center_home_row_sentinel_subtitle">Erweitertes Programm zum Schutz von Konten</string>
   <string name="security_center_home_row_insecure_passwords_title">Schwache Passwörter</string>
   <string name="security_center_home_row_insecure_passwords_subtitle">Erstelle starke Passwörter</string>
   <string name="security_center_home_row_reused_passwords_title">Wiederverwendete Passwörter</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Erstelle einzigartige Passwörter</string>
   <string name="security_center_home_row_missing_tfa_title">Fehlende Zwei-Faktor-Authentifizierung</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Erhöhe deine Sicherheit</string>
+  <string name="security_center_home_row_excludes_items_title">Excluded items</string>
+  <string name="security_center_home_row_excludes_items_subtitle">Ignore alerts for these items</string>
   <string name="security_center_home_section_password_health">Passwort Sicherheit</string>
-  <string name="security_center_home_snackbar_message_disable_sentinel_error">There was an error disabling Proton Sentinel protection. Please try again.</string>
+  <string name="security_center_home_snackbar_message_disable_sentinel_error">Es ist ein Fehler bei der Deaktivierung des Proton Sentinel Schutzes aufgetreten. Bitte versuch es erneut.</string>
   <!-- Sentinel bottom sheet -->
   <string name="security_center_sentinel_title">Proton Sentinel</string>
-  <string name="security_center_sentinel_subtitle">Proton Sentinel is an advanced account protection program powered by sophisticated AI systems and specialists working around the clock to protect you from bad actors and security threats.</string>
-  <string name="security_center_sentinel_button_enable">Enable Proton Sentinel</string>
-  <string name="security_center_sentinel_snackbar_message_enable_canceled">Proton Sentinel protection activation has been canceled</string>
-  <string name="security_center_sentinel_snackbar_message_enable_error">There was an error enabling Proton Sentinel protection. Please try again.</string>
+  <string name="security_center_sentinel_subtitle">Proton Sentinel ist ein fortschrittliches Kontoschutzprogramm, das von hochentwickelten KI-Systemen und Spezialisten betrieben wird, die rund um die Uhr arbeiten, um dich vor böswilligen Akteuren und Sicherheitsbedrohungen zu schützen.</string>
+  <string name="security_center_sentinel_button_enable">Proton Sentinel aktivieren</string>
+  <string name="security_center_sentinel_snackbar_message_enable_canceled">Die Aktivierung des Protonen-Sentinel-Schutzes wurde annulliert.</string>
+  <string name="security_center_sentinel_snackbar_message_enable_error">Es ist ein Fehler bei der Aktivierung des Proton Sentinel Schutzes aufgetreten. Bitte versuche es erneut.</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Schwache Passwörter</string>
   <string name="security_center_weak_pass_top_bar_subtitle">Schwache Passwörter sind leichter zu erraten. Erstelle sichere Passwörter, um deine Konten zu schützen.</string>
@@ -52,33 +54,66 @@
   <!-- Missing 2FA -->
   <string name="security_center_missing_tfa_top_bar_title">Fehlende Zwei-Faktor-Authentifizierung</string>
   <string name="security_center_missing_tfa_top_bar_subtitle">Anmeldungen bei Websites, die über eine Zwei-Faktor-Authentifizierung verfügen, die du aber noch nicht eingerichtet hast.</string>
+  <!-- Excluded items screen -->
+  <string name="security_center_excluded_items_top_bar_title">Excluded items</string>
+  <string name="security_center_excluded_items_top_bar_subtitle">This items will not be monitored so they will skip our security services checks.</string>
   <!-- Dark web monitor -->
   <string name="security_center_dark_web_monitor_top_bar_title">Dark Web Monitoring</string>
-  <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Last check: %s</string>
-  <string name="security_center_dark_web_monitor_custom_emails_title">Custom email address</string>
-  <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Add new custom email address</string>
-  <string name="security_center_dark_web_monitor_custom_emails_add_button">Add</string>
+  <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Letzte Prüfung: %s</string>
+  <string name="security_center_dark_web_monitor_custom_emails_title">Benutzerdefinierte E-Mail-Adressen</string>
+  <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">Not verified</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Neue benutzerdefinierte E-Mail-Adresse hinzufügen</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_button">Hinzufügen</string>
   <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
-    <item quantity="one">Used in %d login</item>
-    <item quantity="other">Used in %d logins</item>
+    <item quantity="one">Verwendet in %d Anmeldung</item>
+    <item quantity="other">Verwendet in %d Anmeldungen</item>
   </plurals>
   <plurals name="security_center_dark_web_monitor_custom_emails_breaches_found">
-    <item quantity="one">%d breach detected</item>
-    <item quantity="other">%d breaches detected</item>
+    <item quantity="one">%d Datendiebstahl entdeckt</item>
+    <item quantity="other">%d Datendiebstähle entdeckt</item>
   </plurals>
-  <string name="security_center_dark_web_monitor_custom_emails_loading_error">Error loading custom email addresses</string>
-  <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Could not get email addresses</string>
+  <string name="security_center_dark_web_monitor_custom_emails_loading_error">Fehler beim Laden von benutzerdefinierten E-Mail-Adressen</string>
+  <string name="security_center_dark_web_monitor_custom_emails_unknown_error">E-Mail-Adressen konnten nicht abgerufen werden</string>
+  <string name="security_center_dark_web_monitor_custom_email_option_verify">Verify</string>
+  <string name="security_center_dark_web_monitor_custom_email_option_remove">Remove</string>
+  <string name="security_center_dark_web_monitor_latest_breach_on">Latest breach on %s</string>
+  <plurals name="security_center_dark_web_monitor_found_in_breaches">
+    <item quantity="one">Found in %s breach</item>
+    <item quantity="other">Found in %s breaches</item>
+  </plurals>
+  <string name="security_center_dark_web_monitor_proton_addresses">Proton addresses</string>
+  <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email-Aliasse</string>
+  <string name="security_center_dark_web_monitor_proton_addresses_error">Error retrieving proton addresses</string>
+  <string name="security_center_dark_web_monitor_alias_addresses_error">Error retrieving Hide-my-email aliases</string>
   <!-- Add custom email monitoring -->
-  <string name="security_center_custom_email_top_bar_title">Custom email monitoring</string>
-  <string name="security_center_custom_email_email_address_placeholder">Email address</string>
-  <string name="security_center_custom_email_invalid_address">Invalid email address</string>
-  <string name="security_center_custom_email_continue">Continue</string>
-  <string name="security_center_custom_email_already_verified">Email already verified</string>
-  <string name="security_center_custom_email_error_adding">Error adding the email address</string>
+  <string name="security_center_custom_email_top_bar_title">Benutzerdefinierte E-Mail-Überwachung</string>
+  <string name="security_center_custom_email_email_address_placeholder">E‐Mail‐Adresse</string>
+  <string name="security_center_custom_email_invalid_address">Ungültige E-Mail-Adresse</string>
+  <string name="security_center_custom_email_continue">Fortfahren</string>
+  <string name="security_center_custom_email_already_verified">E-Mail-Adresse bereits bestätigt</string>
+  <string name="security_center_custom_email_error_adding">Fehler beim Hinzufügen der E-Mail Adresse</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_email_code_placeholder">Code</string>
-  <string name="security_center_verify_email_code_error">Invalid code</string>
-  <string name="security_center_verify_email_continue">Continue</string>
-  <string name="security_center_verify_email_title">Confirm your email</string>
-  <string name="security_center_verify_email_subtitle">We\'ve sent a verification code to %s. Please enter it below:</string>
+  <string name="security_center_verify_email_code_error">Ungültiger Code</string>
+  <string name="security_center_verify_email_continue">Fortfahren</string>
+  <string name="security_center_verify_email_title">Bestätige deine E-Mail</string>
+  <string name="security_center_verify_email_subtitle">Wir haben einen Verifizierungscode an %s gesendet. Bitte gib ihn unten ein:</string>
+  <!-- Verify email monitoring -->
+  <string name="security_center_verify_report_title_detected">Entdeckte Verstöße für</string>
+  <string name="security_center_verify_report_title_none">Keine Verstöße festgestellt für</string>
+  <!-- Email breach report -->
+  <string name="security_center_email_report_used_in_header">Verwendet in</string>
+  <string name="security_center_email_report_breaches_header">Breaches</string>
+  <!-- Breach report detail-->
+  <string name="security_center_report_detail_your_exposed_information">Deine exponierten Informationen</string>
+  <string name="security_center_report_detail_subtitle">Your info was in a data breach and found on __DATE__</string>
+  <string name="security_center_report_detail_details">Details</string>
+  <string name="security_center_report_detail_email_address">Email address</string>
+  <string name="security_center_report_detail_password">Password</string>
+  <string name="security_center_report_detail_recommended_actions">Empfohlene Aktionen</string>
+  <string name="security_center_report_detail_note">The exposed information was leaked from LinkedIn. Your Proton Account information remains secure and encrypted.</string>
+  <string name="security_center_report_detail_mark_as_resolved">Mark as Resolved</string>
+  <string name="security_center_report_detail_change_password">Passwort ändern</string>
+  <string name="security_center_report_detail_use_aliases">Verwende Aliasnamen anstelle deiner E-Mail Adresse</string>
+  <string name="security_center_report_detail_enable_2fa">Enable 2FA</string>
 </resources>

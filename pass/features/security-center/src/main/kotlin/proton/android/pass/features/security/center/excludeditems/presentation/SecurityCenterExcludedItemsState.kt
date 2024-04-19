@@ -24,14 +24,18 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 @Stable
 internal data class SecurityCenterExcludedItemsState(
     internal val excludedItemUiModels: List<ItemUiModel>,
-    internal val canLoadExternalImages: Boolean
+    internal val canLoadExternalImages: Boolean,
+    private val isLoading: Boolean
 ) {
+
+    internal val shouldNavigateBack: Boolean = !isLoading && excludedItemUiModels.isEmpty()
 
     internal companion object {
 
         internal val Initial: SecurityCenterExcludedItemsState = SecurityCenterExcludedItemsState(
             excludedItemUiModels = emptyList(),
-            canLoadExternalImages = false
+            canLoadExternalImages = false,
+            isLoading = true
         )
 
     }

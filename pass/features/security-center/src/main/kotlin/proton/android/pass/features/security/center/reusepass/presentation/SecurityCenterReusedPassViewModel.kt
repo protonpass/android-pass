@@ -28,11 +28,8 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.usecases.ItemTypeFilter
-import proton.android.pass.data.api.usecases.ObserveItems
+import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
 import proton.android.pass.domain.Item
-import proton.android.pass.domain.ItemState
-import proton.android.pass.domain.ShareSelection
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.securitycenter.api.passwords.RepeatedPasswordChecker
@@ -40,7 +37,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SecurityCenterReusedPassViewModel @Inject constructor(
-    observeItems: ObserveItems,
+    observeMonitoredItems: ObserveMonitoredItems,
     repeatedPasswordChecker: RepeatedPasswordChecker,
     userPreferencesRepository: UserPreferencesRepository,
     private val encryptionContextProvider: EncryptionContextProvider
@@ -48,11 +45,11 @@ class SecurityCenterReusedPassViewModel @Inject constructor(
 
     internal val state: StateFlow<SecurityCenterReusedPassState> =
         combine(
-            observeItems(ShareSelection.AllShares, ItemState.Active, ItemTypeFilter.Logins),
+            observeMonitoredItems(),
             userPreferencesRepository.getUseFaviconsPreference()
-        ) { loginItems, useFavIconsPreference ->
+        ) { monitoredItems, useFavIconsPreference ->
 
-            val reusedPasswords = repeatedPasswordChecker(loginItems)
+            val reusedPasswords = repeatedPasswordChecker(monitoredItems)
 
             SecurityCenterReusedPassState(
                 reusedPasswords = reusedPasswords.repeatedPasswordsGroups.map { group ->

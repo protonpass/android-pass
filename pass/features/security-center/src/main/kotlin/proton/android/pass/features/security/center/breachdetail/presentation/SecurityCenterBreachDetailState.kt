@@ -24,14 +24,12 @@ import proton.android.pass.domain.breach.BreachEmail
 @Stable
 internal data class SecurityCenterBreachDetailState(
     internal val breachEmail: BreachEmail?,
-    internal val event: SecurityCenterBreachDetailEvent,
     internal val isLoading: Boolean
 ) {
 
     internal companion object {
         internal val Initial: SecurityCenterBreachDetailState = SecurityCenterBreachDetailState(
             breachEmail = null,
-            event = SecurityCenterBreachDetailEvent.Idle,
             isLoading = false
         )
     }

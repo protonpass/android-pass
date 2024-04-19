@@ -59,7 +59,8 @@ internal fun SecurityCenterRow(
     accentBackgroundColor: Color? = null,
     titleColor: Color = PassTheme.colors.textNorm,
     subtitleColor: Color = PassTheme.colors.textWeak,
-    chevronTintColor: Color = PassTheme.colors.textNorm
+    chevronTintColor: Color = PassTheme.colors.textNorm,
+    displayChevronWhenClickable: Boolean = true
 ) {
     Column(
         modifier = modifier
@@ -103,7 +104,7 @@ internal fun SecurityCenterRow(
 
             trailingContent?.let { it() }
 
-            if (isClickable) {
+            if (displayChevronWhenClickable && isClickable) {
                 Icon(
                     painter = painterResource(R.drawable.ic_chevron_tiny_right),
                     contentDescription = null,

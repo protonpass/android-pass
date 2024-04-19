@@ -1036,7 +1036,8 @@ fun NavGraphBuilder.appGraph(
             when (destination) {
                 is SecurityCenterNavDestination.Back -> dismissBottomSheet {
                     appNavigator.navigateBack(
-                        comesFromBottomsheet = destination.comesFromBottomSheet
+                        comesFromBottomsheet = destination.comesFromBottomSheet,
+                        force = destination.force
                     )
                 }
 

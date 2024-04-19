@@ -102,17 +102,22 @@ class SecurityCenterVerifyEmailViewModel @Inject constructor(
 
     internal fun verifyCode() {
         viewModelScope.launch {
-            isLoadingFlow.update { IsLoadingState.Loading }
-            runCatching {
-                verifyBreachCustomEmail(id = id, code = code)
-            }.onSuccess {
-                eventFlow.update { SecurityCenterVerifyEmailEvent.EmailVerified }
-            }.onFailure {
-                PassLogger.w(TAG, it)
-                PassLogger.i(TAG, "Failed to verify email")
+            if (code.isBlank()) {
                 codeNotValidStateFlow.update { true }
+            } else {
+                isLoadingFlow.update { IsLoadingState.Loading }
+                runCatching {
+                    verifyBreachCustomEmail(id = id, code = code)
+                }.onSuccess {
+                    eventFlow.update { SecurityCenterVerifyEmailEvent.EmailVerified }
+                }.onFailure {
+                    PassLogger.w(TAG, it)
+                    PassLogger.i(TAG, "Failed to verify email")
+                    codeNotValidStateFlow.update { true }
+                }
+                isLoadingFlow.update { IsLoadingState.NotLoading }
+
             }
-            isLoadingFlow.update { IsLoadingState.NotLoading }
         }
     }
 

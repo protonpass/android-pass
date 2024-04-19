@@ -25,7 +25,7 @@ import org.junit.Before
 import org.junit.Test
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.fakes.TestAppDispatchers
-import proton.android.pass.data.fakes.usecases.TestObserveItems
+import proton.android.pass.data.fakes.usecases.items.FakeObserveMonitoredItems
 import proton.android.pass.securitycenter.api.InsecurePasswordsResult
 import proton.android.pass.securitycenter.api.Missing2faResult
 import proton.android.pass.securitycenter.api.SecurityAnalysis
@@ -36,12 +36,13 @@ import proton.android.pass.securitycenter.fakes.passwords.FakeBreachedDataChecke
 import proton.android.pass.securitycenter.fakes.passwords.FakeInsecurePasswordChecker
 import proton.android.pass.securitycenter.fakes.passwords.FakeMissing2faChecker
 import proton.android.pass.securitycenter.fakes.passwords.FakeRepeatedPasswordChecker
+import proton.android.pass.test.domain.TestItem
 
 class ObserveSecurityAnalysisImplTest {
 
     private lateinit var instance: ObserveSecurityAnalysisImpl
 
-    private lateinit var observeItems: TestObserveItems
+    private lateinit var observeMonitoredItems: FakeObserveMonitoredItems
     private lateinit var repeatedPasswordChecker: FakeRepeatedPasswordChecker
     private lateinit var missing2faChecker: FakeMissing2faChecker
     private lateinit var insecurePasswordChecker: FakeInsecurePasswordChecker
@@ -49,7 +50,7 @@ class ObserveSecurityAnalysisImplTest {
 
     @Before
     fun setup() {
-        observeItems = TestObserveItems()
+        observeMonitoredItems = FakeObserveMonitoredItems()
         repeatedPasswordChecker = FakeRepeatedPasswordChecker()
         missing2faChecker = FakeMissing2faChecker()
         insecurePasswordChecker = FakeInsecurePasswordChecker()
@@ -60,7 +61,7 @@ class ObserveSecurityAnalysisImplTest {
             missing2faChecker = missing2faChecker,
             insecurePasswordChecker = insecurePasswordChecker,
             breachedDataChecker = breachedDataChecker,
-            observeItems = observeItems,
+            observeMonitoredItems = observeMonitoredItems,
             dispatchers = TestAppDispatchers()
         )
     }
@@ -91,7 +92,12 @@ class ObserveSecurityAnalysisImplTest {
         breachedDataChecker.setResult(breachData)
         insecurePasswordChecker.setResult(insecure)
 
-        observeItems.emitDefault()
+        val monitoredItems = listOf(
+            TestItem.random(),
+            TestItem.random()
+        )
+
+        observeMonitoredItems.emitMonitoredItems(monitoredItems)
 
         instance().test {
             skipItems(1) // Initial loading
@@ -109,13 +115,18 @@ class ObserveSecurityAnalysisImplTest {
 
     @Test
     fun `checkers are properly called`() = runTest {
-        observeItems.emitDefault()
+        val monitoredItems = listOf(
+            TestItem.random(),
+            TestItem.random()
+        )
+        observeMonitoredItems.emitMonitoredItems(monitoredItems)
+
         instance().test {
             skipItems(1) // Initial loading
             awaitItem()
         }
 
-        val expectedItems = listOf(TestObserveItems.defaultValues.asList())
+        val expectedItems = listOf(monitoredItems)
 
         assertThat(repeatedPasswordChecker.memory()).isEqualTo(expectedItems)
         assertThat(missing2faChecker.memory()).isEqualTo(expectedItems)

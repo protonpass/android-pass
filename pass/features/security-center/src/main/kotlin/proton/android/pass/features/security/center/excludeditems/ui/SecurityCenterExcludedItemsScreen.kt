@@ -19,6 +19,7 @@
 package proton.android.pass.features.security.center.excludeditems.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -32,12 +33,18 @@ fun SecurityCenterExcludedItemsScreen(
 ) = with(viewModel) {
     val state by state.collectAsStateWithLifecycle()
 
+    LaunchedEffect(key1 = state.shouldNavigateBack) {
+        if (state.shouldNavigateBack) {
+            onNavigated(SecurityCenterExcludeItemsDestination.Back(force = true))
+        }
+    }
+
     SecurityCenterExcludedItemsContent(
         state = state,
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 SecurityCenterExcludedItemsUiEvent.Back -> onNavigated(
-                    SecurityCenterExcludeItemsDestination.Back
+                    SecurityCenterExcludeItemsDestination.Back()
                 )
 
                 is SecurityCenterExcludedItemsUiEvent.OnShowItemDetails -> onNavigated(

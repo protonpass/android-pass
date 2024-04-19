@@ -288,7 +288,9 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
         SecurityCenterExcludedItemsScreen(
             onNavigated = { destination ->
                 when (destination) {
-                    SecurityCenterExcludeItemsDestination.Back -> SecurityCenterNavDestination.Back()
+                    is SecurityCenterExcludeItemsDestination.Back -> SecurityCenterNavDestination.Back(
+                        force = destination.force
+                    )
                     is SecurityCenterExcludeItemsDestination.ItemDetails -> SecurityCenterNavDestination.ItemDetails(
                         shareId = destination.shareId,
                         itemId = destination.itemId

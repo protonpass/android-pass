@@ -23,7 +23,8 @@ import proton.android.pass.domain.ShareId
 
 sealed interface SecurityCenterExcludeItemsDestination {
 
-    data object Back : SecurityCenterExcludeItemsDestination
+    @JvmInline
+    value class Back(val force: Boolean = false) : SecurityCenterExcludeItemsDestination
 
     data class ItemDetails(
         val shareId: ShareId,

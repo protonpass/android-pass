@@ -68,8 +68,10 @@ sealed interface DarkWebCustomEmailsState {
     @JvmInline
     value class Error(val reason: DarkWebEmailsError) : DarkWebCustomEmailsState
 
-    @JvmInline
-    value class Success(val emails: ImmutableList<CustomEmailUiState>) : DarkWebCustomEmailsState
+    data class Success(
+        val emails: ImmutableList<CustomEmailUiState>,
+        val suggestions: ImmutableList<CustomEmailUiState>
+    ) : DarkWebCustomEmailsState
 }
 
 @Stable

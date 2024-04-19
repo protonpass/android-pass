@@ -130,6 +130,7 @@ import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
 import proton.android.pass.data.api.usecases.items.GetItemCategory
 import proton.android.pass.data.api.usecases.items.ObserveItemRevisions
+import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
 import proton.android.pass.data.api.usecases.items.OpenItemRevision
 import proton.android.pass.data.api.usecases.items.RestoreItemRevision
 import proton.android.pass.data.api.usecases.items.UpdateItemFlag
@@ -258,6 +259,7 @@ import proton.android.pass.data.impl.usecases.capabilities.CanShareVaultImpl
 import proton.android.pass.data.impl.usecases.defaultvault.SetDefaultVaultImpl
 import proton.android.pass.data.impl.usecases.items.GetItemCategoryImpl
 import proton.android.pass.data.impl.usecases.items.ObserveItemRevisionsImpl
+import proton.android.pass.data.impl.usecases.items.ObserveMonitoredItemsImpl
 import proton.android.pass.data.impl.usecases.items.OpenItemRevisionImpl
 import proton.android.pass.data.impl.usecases.items.RestoreItemRevisionImpl
 import proton.android.pass.data.impl.usecases.items.UpdateItemFlagImpl
@@ -661,4 +663,7 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindUpdateItemFlag(impl: UpdateItemFlagImpl): UpdateItemFlag
+
+    @Binds
+    abstract fun bindObserveMonitoredItems(impl: ObserveMonitoredItemsImpl): ObserveMonitoredItems
 }

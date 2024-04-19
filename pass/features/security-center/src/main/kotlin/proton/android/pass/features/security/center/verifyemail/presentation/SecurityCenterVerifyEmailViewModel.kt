@@ -41,14 +41,17 @@ import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachId
 import proton.android.pass.features.security.center.shared.navigation.BreachIdArgId
 import proton.android.pass.features.security.center.shared.navigation.EmailArgId
+import proton.android.pass.features.security.center.verifyemail.presentation.SecurityCenterVerifyEmailSnackbarMessage.ResendCodeError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.NavParamEncoder
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
 @HiltViewModel
 class SecurityCenterVerifyEmailViewModel @Inject constructor(
     private val verifyBreachCustomEmail: VerifyBreachCustomEmail,
     private val resendVerificationCode: ResendVerificationCode,
+    private val snackbarDispatcher: SnackbarDispatcher,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -120,6 +123,7 @@ class SecurityCenterVerifyEmailViewModel @Inject constructor(
             }.onFailure {
                 PassLogger.w(TAG, it)
                 PassLogger.i(TAG, "Failed to resend code")
+                snackbarDispatcher(ResendCodeError)
             }
         }
     }

@@ -33,11 +33,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultWeak
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.darkweb.presentation.CustomEmailUiStatus
-import proton.android.pass.features.security.center.darkweb.presentation.DarkWebEmailsError
 import proton.android.pass.features.security.center.darkweb.presentation.DarkWebCustomEmailsState
+import proton.android.pass.features.security.center.darkweb.presentation.DarkWebEmailsError
 import proton.android.pass.features.security.center.darkweb.ui.DarkWebUiEvent
 
 @Composable
@@ -85,11 +87,7 @@ internal fun CustomEmailsList(
                     items(items = state.emails, key = { it.email }) { itemEmail ->
                         CustomEmailItem(
                             email = itemEmail,
-                            onAddClick = {
-                                onEvent(
-                                    DarkWebUiEvent.OnAddCustomEmailClick(itemEmail.email)
-                                )
-                            },
+                            onAddClick = {},
                             onDetailClick = { id ->
                                 onEvent(
                                     DarkWebUiEvent.OnCustomEmailReportClick(
@@ -108,6 +106,31 @@ internal fun CustomEmailsList(
                                 )
                                 onEvent(event)
                             }
+                        )
+                    }
+
+                    if (state.emails.isNotEmpty()) {
+                        item {
+                            Text(
+                                modifier = Modifier.padding(Spacing.medium),
+                                text = stringResource(
+                                    id = R.string.security_center_dark_web_monitor_custom_emails_suggestions
+                                ),
+                                style = ProtonTheme.typography.defaultWeak
+                            )
+                        }
+                    }
+
+                    items(items = state.suggestions, key = { it.email }) { itemEmail ->
+                        CustomEmailItem(
+                            email = itemEmail,
+                            onAddClick = {
+                                onEvent(
+                                    DarkWebUiEvent.OnAddCustomEmailClick(itemEmail.email)
+                                )
+                            },
+                            onDetailClick = { },
+                            onOptionsClick = {}
                         )
                     }
                 }

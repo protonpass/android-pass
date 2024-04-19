@@ -32,20 +32,16 @@ import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
-import proton.android.pass.data.api.usecases.ItemTypeFilter
-import proton.android.pass.data.api.usecases.ObserveItems
-import proton.android.pass.domain.Item
-import proton.android.pass.domain.ItemState
-import proton.android.pass.domain.ShareSelection
+import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
 import proton.android.pass.securitycenter.api.InsecurePasswordsResult
 import proton.android.pass.securitycenter.api.Missing2faResult
 import proton.android.pass.securitycenter.api.ObserveSecurityAnalysis
 import proton.android.pass.securitycenter.api.ReusedPasswordsResult
 import proton.android.pass.securitycenter.api.SecurityAnalysis
+import proton.android.pass.securitycenter.api.checkers.BreachedDataChecker
 import proton.android.pass.securitycenter.api.passwords.InsecurePasswordChecker
 import proton.android.pass.securitycenter.api.passwords.MissingTfaChecker
 import proton.android.pass.securitycenter.api.passwords.RepeatedPasswordChecker
-import proton.android.pass.securitycenter.api.checkers.BreachedDataChecker
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -55,20 +51,14 @@ class ObserveSecurityAnalysisImpl @Inject constructor(
     private val repeatedPasswordChecker: RepeatedPasswordChecker,
     private val insecurePasswordChecker: InsecurePasswordChecker,
     private val missing2faChecker: MissingTfaChecker,
-    observeItems: ObserveItems,
+    observeMonitoredItems: ObserveMonitoredItems,
     dispatchers: AppDispatchers
 ) : ObserveSecurityAnalysis {
 
     private val coroutineScope: CoroutineScope = CoroutineScope(dispatchers.default)
 
-    private val allItemsFlow: Flow<List<Item>> = observeItems(
-        selection = ShareSelection.AllShares,
-        itemState = ItemState.Active,
-        filter = ItemTypeFilter.Logins
-    )
-
-    private val securityAnalysisFlow: SharedFlow<SecurityAnalysis> =
-        allItemsFlow.flatMapLatest { items ->
+    private val securityAnalysisFlow: SharedFlow<SecurityAnalysis> = observeMonitoredItems()
+        .flatMapLatest { items ->
             combine(
                 oneShot { breachedDataChecker(items) }.asLoadingResult(),
                 oneShot { repeatedPasswordChecker(items) }.map {
@@ -82,7 +72,8 @@ class ObserveSecurityAnalysisImpl @Inject constructor(
                 }.asLoadingResult(),
                 ::SecurityAnalysis
             )
-        }.onStart {
+        }
+        .onStart {
             emit(
                 SecurityAnalysis(
                     breachedData = LoadingResult.Loading,
@@ -91,7 +82,8 @@ class ObserveSecurityAnalysisImpl @Inject constructor(
                     missing2fa = LoadingResult.Loading
                 )
             )
-        }.shareIn(
+        }
+        .shareIn(
             scope = coroutineScope,
             started = SharingStarted.Lazily,
             replay = 1

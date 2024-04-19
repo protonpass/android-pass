@@ -27,11 +27,8 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.usecases.ItemTypeFilter
-import proton.android.pass.data.api.usecases.ObserveItems
+import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
 import proton.android.pass.domain.Item
-import proton.android.pass.domain.ItemState
-import proton.android.pass.domain.ShareSelection
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.securitycenter.api.passwords.InsecurePasswordChecker
@@ -39,17 +36,17 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SecurityCenterWeakPassViewModel @Inject constructor(
-    observeItems: ObserveItems,
+    observeMonitoredItems: ObserveMonitoredItems,
     insecurePasswordChecker: InsecurePasswordChecker,
     userPreferencesRepository: UserPreferencesRepository,
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ViewModel() {
 
     internal val state: StateFlow<SecurityCenterWeakPassState> = combine(
-        observeItems(ShareSelection.AllShares, ItemState.Active, ItemTypeFilter.Logins),
+        observeMonitoredItems(),
         userPreferencesRepository.getUseFaviconsPreference()
-    ) { loginItems, useFavIconsPreference ->
-        insecurePasswordChecker(loginItems).let { report ->
+    ) { monitoredItems, useFavIconsPreference ->
+        insecurePasswordChecker(monitoredItems).let { report ->
             SecurityCenterWeakPassState(
                 vulnerablePasswordUiModels = report.vulnerablePasswordItems.toUiModels(),
                 weakPasswordUiModels = report.weakPasswordItems.toUiModels(),

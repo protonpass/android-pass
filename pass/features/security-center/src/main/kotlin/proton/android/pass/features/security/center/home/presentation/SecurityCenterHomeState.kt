@@ -24,8 +24,6 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.breach.Breach
 import proton.android.pass.domain.breach.BreachDomainPeek
-import proton.android.pass.domain.features.PaidFeature
-import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavDestination
 import proton.android.pass.securitycenter.api.InsecurePasswordsResult
 import proton.android.pass.securitycenter.api.Missing2faResult
 import proton.android.pass.securitycenter.api.ReusedPasswordsResult
@@ -98,14 +96,6 @@ internal data class SecurityCenterHomeState(
         LoadingResult.Loading -> null
 
         is LoadingResult.Success -> excludedLoginItemsLoadingResult.data.size
-    }
-
-    internal val missing2faDestination: SecurityCenterHomeNavDestination = when (planType) {
-        is PlanType.Free,
-        is PlanType.Unknown -> SecurityCenterHomeNavDestination.Upsell(PaidFeature.ViewMissing2fa)
-
-        is PlanType.Paid,
-        is PlanType.Trial -> SecurityCenterHomeNavDestination.MissingTFA
     }
 
     internal val isSentinelPaidFeature: Boolean = when (planType) {

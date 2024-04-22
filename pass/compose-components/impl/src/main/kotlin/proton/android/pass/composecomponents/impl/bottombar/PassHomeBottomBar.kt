@@ -33,7 +33,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.core.presentation.R
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarEvent
-import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarMonitorStatus
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarSelection
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarState
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarViewModel
@@ -41,6 +40,7 @@ import proton.android.pass.commonpresentation.impl.bars.bottom.home.presentation
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.domain.PlanType
+import proton.android.pass.preferences.monitor.MonitorStatusPreference
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
@@ -138,7 +138,7 @@ fun HomeBottomBarContentPreview(@PreviewParameter(ThemePreviewProvider::class) i
                 state = HomeBottomBarState(
                     planType = PlanType.Unknown(),
                     isSecurityCenterEnabled = true,
-                    monitorStatus = HomeBottomBarMonitorStatus.NoIssues
+                    monitorStatus = MonitorStatusPreference.NoIssues
                 )
             )
         }

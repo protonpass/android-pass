@@ -54,4 +54,6 @@ sealed interface DarkWebMonitorNavDestination {
         val email: String
     ) : DarkWebMonitorNavDestination
 
+    data object AllProtonEmails : DarkWebMonitorNavDestination
+
 }

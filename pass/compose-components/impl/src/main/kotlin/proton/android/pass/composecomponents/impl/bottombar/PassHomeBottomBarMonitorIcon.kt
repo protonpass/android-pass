@@ -22,12 +22,18 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.LocalContentColor
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.domain.PlanType
 import proton.android.pass.preferences.monitor.MonitorStatusPreference
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -94,3 +100,38 @@ fun PassHomeBottomBarMonitorIcon(
         }
     }
 }
+
+@[Preview Composable]
+internal fun PassHomeBottomBarMonitorIconPreview(
+    @PreviewParameter(ThemePassMonitorIconPreview::class) input: Pair<Boolean, Pair<PlanType, MonitorStatusPreference>>
+) {
+    val (isDark, state) = input
+    val (planType, monitorStatus) = state
+
+    PassTheme(isDark = isDark) {
+        Surface {
+            PassHomeBottomBarMonitorIcon(
+                planType = planType,
+                monitorStatus = monitorStatus,
+            )
+        }
+    }
+}
+
+internal class ThemePassMonitorIconPreview :
+    ThemePairPreviewProvider<Pair<PlanType, MonitorStatusPreference>>(
+        PassPasswordStrengthItemPreviewProvider()
+    )
+
+private class PassPasswordStrengthItemPreviewProvider :
+    PreviewParameterProvider<Pair<PlanType, MonitorStatusPreference>> {
+
+    override val values: Sequence<Pair<PlanType, MonitorStatusPreference>> = sequence {
+        MonitorStatusPreference.entries.forEach { monitorStatusPreference ->
+            Pair(PlanType.Unknown(), monitorStatusPreference)
+            Pair(PlanType.Paid.Plus("", ""), monitorStatusPreference)
+        }
+    }
+
+}
+

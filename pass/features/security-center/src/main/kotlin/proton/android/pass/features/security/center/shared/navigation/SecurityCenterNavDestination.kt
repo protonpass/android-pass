@@ -103,4 +103,6 @@ sealed interface SecurityCenterNavDestination {
 
     data object ExcludedItems : SecurityCenterNavDestination
 
+    data object AllProtonEmails : SecurityCenterNavDestination
+
 }

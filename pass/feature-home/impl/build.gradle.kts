@@ -131,6 +131,7 @@ dependencies {
     androidTestImplementation(projects.pass.preferences.fakes)
     androidTestImplementation(projects.pass.telemetry.fakes)
     androidTestImplementation(projects.pass.featureSearchOptions.fakes)
+    androidTestImplementation(projects.pass.securityCenter.fakes)
 }
 
 kapt {

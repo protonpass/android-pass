@@ -23,22 +23,22 @@ import kotlinx.coroutines.flow.first
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.BreachRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
-import proton.android.pass.data.api.usecases.breach.UpdateProtonAddressesMonitorState
+import proton.android.pass.data.api.usecases.breach.UpdateGlobalProtonAddressesMonitorState
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class UpdateProtonAddressesMonitorStateImpl @Inject constructor(
+class UpdateGlobalProtonAddressesMonitorStateImpl @Inject constructor(
     private val breachRepository: BreachRepository,
     private val observeCurrentUser: ObserveCurrentUser
-) : UpdateProtonAddressesMonitorState {
+) : UpdateGlobalProtonAddressesMonitorState {
 
     override suspend fun invoke(userId: UserId?, enabled: Boolean) {
         if (userId != null) {
-            breachRepository.updateProtonMonitorState(userId, enabled)
+            breachRepository.updateGlobalProtonMonitorState(userId, enabled)
         } else {
             val user = observeCurrentUser().filterNotNull().first()
-            breachRepository.updateProtonMonitorState(user.userId, enabled)
+            breachRepository.updateGlobalProtonMonitorState(user.userId, enabled)
         }
     }
 }

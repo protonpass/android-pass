@@ -21,24 +21,29 @@ package proton.android.pass.data.impl.usecases.breach
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.data.api.repositories.BreachRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
-import proton.android.pass.data.api.usecases.breach.UpdateAliasAddressesMonitorState
+import proton.android.pass.data.api.usecases.breach.UpdateProtonAddressMonitorState
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class UpdateAliasAddressesMonitorStateImpl @Inject constructor(
+class UpdateProtonAddressMonitorStateImpl @Inject constructor(
     private val breachRepository: BreachRepository,
     private val observeCurrentUser: ObserveCurrentUser
-) : UpdateAliasAddressesMonitorState {
+) : UpdateProtonAddressMonitorState {
 
-    override suspend fun invoke(userId: UserId?, enabled: Boolean) {
+    override suspend fun invoke(
+        userId: UserId?,
+        addressId: AddressId,
+        enabled: Boolean
+    ) {
         if (userId != null) {
-            breachRepository.updateAliasMonitorState(userId, enabled)
+            breachRepository.updateProtonAddressMonitorState(userId, addressId, enabled)
         } else {
             val user = observeCurrentUser().filterNotNull().first()
-            breachRepository.updateAliasMonitorState(user.userId, enabled)
+            breachRepository.updateProtonAddressMonitorState(user.userId, addressId, enabled)
         }
     }
 }

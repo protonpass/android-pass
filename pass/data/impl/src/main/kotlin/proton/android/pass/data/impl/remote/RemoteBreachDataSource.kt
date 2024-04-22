@@ -28,8 +28,9 @@ import proton.android.pass.data.impl.responses.BreachCustomEmailResponse
 import proton.android.pass.data.impl.responses.BreachCustomEmailsResponse
 import proton.android.pass.data.impl.responses.BreachEmailsResponse
 import proton.android.pass.data.impl.responses.BreachesResponse
-import proton.android.pass.data.impl.responses.UpdateMonitorStateRequest
-import proton.android.pass.data.impl.responses.UpdateMonitorStateResponse
+import proton.android.pass.data.impl.responses.UpdateGlobalMonitorStateRequest
+import proton.android.pass.data.impl.responses.UpdateGlobalMonitorStateResponse
+import proton.android.pass.data.impl.responses.UpdateMonitorAddressStateRequest
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.breach.BreachEmailId
@@ -72,9 +73,25 @@ interface RemoteBreachDataSource {
 
     suspend fun removeCustomEmail(userId: UserId, id: BreachEmailId.Custom)
 
-    suspend fun updateProtonAddressMonitorState(userId: UserId, enabled: Boolean): UpdateMonitorStateResponse
+    suspend fun updateGlobalProtonAddressMonitorState(
+        userId: UserId,
+        enabled: Boolean
+    ): UpdateGlobalMonitorStateResponse
 
-    suspend fun updateAliasAddressMonitorState(userId: UserId, enabled: Boolean): UpdateMonitorStateResponse
+    suspend fun updateGlobalAliasAddressMonitorState(userId: UserId, enabled: Boolean): UpdateGlobalMonitorStateResponse
+
+    suspend fun updateProtonAddressMonitorState(
+        userId: UserId,
+        id: AddressId,
+        enabled: Boolean
+    )
+
+    suspend fun updateAliasAddressMonitorState(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        enabled: Boolean
+    )
 }
 
 class RemoteBreachDataSourceImpl @Inject constructor(
@@ -189,29 +206,71 @@ class RemoteBreachDataSourceImpl @Inject constructor(
             .valueOrThrow
     }
 
-    override suspend fun updateProtonAddressMonitorState(userId: UserId, enabled: Boolean): UpdateMonitorStateResponse =
-        apiProvider
-            .get<PasswordManagerApi>(userId)
-            .invoke {
-                updateMonitorState(
-                    UpdateMonitorStateRequest(
-                        protonAddress = enabled,
-                        aliases = null
-                    )
+    override suspend fun updateGlobalProtonAddressMonitorState(
+        userId: UserId,
+        enabled: Boolean
+    ): UpdateGlobalMonitorStateResponse = apiProvider
+        .get<PasswordManagerApi>(userId)
+        .invoke {
+            updateGlobalMonitorState(
+                UpdateGlobalMonitorStateRequest(
+                    protonAddress = enabled,
+                    aliases = null
                 )
-            }
-            .valueOrThrow
+            )
+        }
+        .valueOrThrow
 
-    override suspend fun updateAliasAddressMonitorState(userId: UserId, enabled: Boolean): UpdateMonitorStateResponse =
+    override suspend fun updateGlobalAliasAddressMonitorState(
+        userId: UserId,
+        enabled: Boolean
+    ): UpdateGlobalMonitorStateResponse = apiProvider
+        .get<PasswordManagerApi>(userId)
+        .invoke {
+            updateGlobalMonitorState(
+                UpdateGlobalMonitorStateRequest(
+                    protonAddress = null,
+                    aliases = enabled
+                )
+            )
+        }
+        .valueOrThrow
+
+    override suspend fun updateProtonAddressMonitorState(
+        userId: UserId,
+        id: AddressId,
+        enabled: Boolean
+    ) {
         apiProvider
             .get<PasswordManagerApi>(userId)
             .invoke {
-                updateMonitorState(
-                    UpdateMonitorStateRequest(
-                        protonAddress = null,
-                        aliases = enabled
+                updateProtonAddressMonitorState(
+                    id.id,
+                    UpdateMonitorAddressStateRequest(
+                        monitor = enabled
                     )
                 )
             }
             .valueOrThrow
+    }
+
+    override suspend fun updateAliasAddressMonitorState(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        enabled: Boolean
+    ) {
+        apiProvider
+            .get<PasswordManagerApi>(userId)
+            .invoke {
+                updateAliasAddressMonitorState(
+                    shareId.id,
+                    itemId.id,
+                    UpdateMonitorAddressStateRequest(
+                        monitor = enabled
+                    )
+                )
+            }
+            .valueOrThrow
+    }
 }

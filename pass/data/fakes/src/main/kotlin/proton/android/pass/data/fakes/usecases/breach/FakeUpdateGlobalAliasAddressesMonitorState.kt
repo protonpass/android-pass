@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,10 +16,15 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.breach
+package proton.android.pass.data.fakes.usecases.breach
 
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.usecases.breach.UpdateGlobalAliasAddressesMonitorState
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface UpdateProtonAddressesMonitorState {
-    suspend operator fun invoke(userId: UserId? = null, enabled: Boolean)
+@Singleton
+class FakeUpdateGlobalAliasAddressesMonitorState @Inject constructor() :
+    UpdateGlobalAliasAddressesMonitorState {
+    override suspend fun invoke(userId: UserId?, enabled: Boolean) = Unit
 }

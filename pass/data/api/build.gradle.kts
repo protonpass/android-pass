@@ -12,6 +12,7 @@ dependencies {
     implementation(libs.core.userSettings.domain)
 
     implementation(projects.pass.common.api)
+    implementation(projects.pass.crypto.api)
     implementation(projects.pass.domain)
 
     testImplementation(libs.kotlinTest)

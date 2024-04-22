@@ -21,29 +21,64 @@ package proton.android.pass.commonpresentation.impl.bars.bottom.home.presentatio
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
+import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarMonitorStatus
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarState
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarViewModel
 import proton.android.pass.data.api.usecases.GetUserPlan
+import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import proton.android.pass.securitycenter.api.ObserveSecurityAnalysis
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeBottomBarViewModelImpl @Inject constructor(
     getUserPlan: GetUserPlan,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository
+    featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    observeAllBreachByUserId: ObserveAllBreachByUserId,
+    observeSecurityAnalysis: ObserveSecurityAnalysis
 ) : ViewModel(), HomeBottomBarViewModel {
+
+    private val isSecurityCenterEnabledFlow: Flow<Boolean> =
+        featureFlagsRepository[FeatureFlag.SECURITY_CENTER_V1]
+
+    private val monitorStatusFlow: Flow<HomeBottomBarMonitorStatus> = isSecurityCenterEnabledFlow
+        .flatMapLatest { isSecurityCenterEnabled ->
+            if (isSecurityCenterEnabled) {
+                combine(
+                    observeAllBreachByUserId(),
+                    observeSecurityAnalysis()
+                ) { breach, securityAnalysis ->
+                    when {
+                        breach.hasBreaches -> HomeBottomBarMonitorStatus.BreachIssues
+                        securityAnalysis.hasSecurityIssues -> HomeBottomBarMonitorStatus.CheckIssues
+                        else -> HomeBottomBarMonitorStatus.NoIssues
+                    }
+                }
+
+            } else {
+                flowOf(HomeBottomBarMonitorStatus.NoIssues)
+            }
+        }
+        .onStart { emit(HomeBottomBarMonitorStatus.NoIssues) }
 
     override val state: StateFlow<HomeBottomBarState> = combine(
         getUserPlan(),
-        featureFlagsRepository.get<Boolean>(FeatureFlag.SECURITY_CENTER_V1)
-    ) { plan, isSecurityCenterEnabled ->
+        isSecurityCenterEnabledFlow,
+        monitorStatusFlow
+    ) { plan, isSecurityCenterEnabled, monitorStatus ->
         HomeBottomBarState(
-            planType = plan.planType, isSecurityCenterEnabled = isSecurityCenterEnabled
+            planType = plan.planType,
+            isSecurityCenterEnabled = isSecurityCenterEnabled,
+            monitorStatus = monitorStatus
         )
     }.stateIn(
         scope = viewModelScope,

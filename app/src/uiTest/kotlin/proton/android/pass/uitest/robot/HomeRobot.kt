@@ -26,7 +26,7 @@ object HomeRobot : Robot {
 
     private val homeScreen get() = node.withTag(HomeScreenTestTag.SCREEN)
 
-    private val profile get() = node.withTag(BottomBarTestTag.profile)
+    private val profile get() = node.withTag(BottomBarTestTag.PROFILE_TEST_TAG)
     private val settings get() = node.withTag(BottomBarTestTag.PROFILE)
 
     fun homeScreenDisplayed(): HomeRobot = apply {

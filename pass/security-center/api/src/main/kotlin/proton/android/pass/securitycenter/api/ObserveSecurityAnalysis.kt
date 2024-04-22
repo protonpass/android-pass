@@ -43,7 +43,32 @@ data class SecurityAnalysis(
     val reusedPasswords: LoadingResult<ReusedPasswordsResult>,
     val insecurePasswords: LoadingResult<InsecurePasswordsResult>,
     val missing2fa: LoadingResult<Missing2faResult>
-)
+) {
+
+    private val hasReusedPasswords: Boolean = when (reusedPasswords) {
+        is LoadingResult.Error,
+        LoadingResult.Loading -> false
+
+        is LoadingResult.Success -> reusedPasswords.data.reusedPasswordsCount > 0
+    }
+
+    private val hasInsecurePasswords: Boolean = when (insecurePasswords) {
+        is LoadingResult.Error,
+        LoadingResult.Loading -> false
+
+        is LoadingResult.Success -> insecurePasswords.data.insecurePasswordsCount > 0
+    }
+
+    private val hasMissing2fas: Boolean = when (missing2fa) {
+        is LoadingResult.Error,
+        LoadingResult.Loading -> false
+
+        is LoadingResult.Success -> missing2fa.data.missing2faCount > 0
+    }
+
+    val hasSecurityIssues: Boolean = hasReusedPasswords || hasInsecurePasswords || hasMissing2fas
+
+}
 
 interface ObserveSecurityAnalysis {
     operator fun invoke(): Flow<SecurityAnalysis>

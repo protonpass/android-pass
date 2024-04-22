@@ -139,12 +139,29 @@ class BreachRepositoryImpl @Inject constructor(
         refreshFlow.update { true }
     }
 
-    override suspend fun updateProtonMonitorState(userId: UserId, enabled: Boolean) {
-        remote.updateProtonAddressMonitorState(userId, enabled)
+    override suspend fun updateGlobalProtonMonitorState(userId: UserId, enabled: Boolean) {
+        remote.updateGlobalProtonAddressMonitorState(userId, enabled)
     }
 
-    override suspend fun updateAliasMonitorState(userId: UserId, enabled: Boolean) {
-        remote.updateAliasAddressMonitorState(userId, enabled)
+    override suspend fun updateGlobalAliasMonitorState(userId: UserId, enabled: Boolean) {
+        remote.updateGlobalAliasAddressMonitorState(userId, enabled)
+    }
+
+    override suspend fun updateProtonAddressMonitorState(
+        userId: UserId,
+        addressId: AddressId,
+        enabled: Boolean
+    ) {
+        remote.updateProtonAddressMonitorState(userId, addressId, enabled)
+    }
+
+    override suspend fun updateAliasAddressMonitorState(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        enabled: Boolean
+    ) {
+        remote.updateAliasAddressMonitorState(userId, shareId, itemId, enabled)
     }
 
     private suspend fun refreshEmails(userId: UserId): List<BreachCustomEmail> {

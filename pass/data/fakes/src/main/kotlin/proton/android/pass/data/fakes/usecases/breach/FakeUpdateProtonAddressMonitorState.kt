@@ -19,12 +19,17 @@
 package proton.android.pass.data.fakes.usecases.breach
 
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.api.usecases.breach.UpdateProtonAddressesMonitorState
+import me.proton.core.user.domain.entity.AddressId
+import proton.android.pass.data.api.usecases.breach.UpdateProtonAddressMonitorState
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FakeUpdateProtonAddressesMonitorState @Inject constructor() :
-    UpdateProtonAddressesMonitorState {
-    override suspend fun invoke(userId: UserId?, enabled: Boolean) = Unit
+class FakeUpdateProtonAddressMonitorState @Inject constructor() :
+    UpdateProtonAddressMonitorState {
+    override suspend fun invoke(
+        userId: UserId?,
+        addressId: AddressId,
+        enabled: Boolean
+    ) = Unit
 }

@@ -66,7 +66,20 @@ interface BreachRepository {
 
     suspend fun removeCustomEmail(userId: UserId, id: BreachEmailId.Custom)
 
-    suspend fun updateProtonMonitorState(userId: UserId, enabled: Boolean)
+    suspend fun updateGlobalProtonMonitorState(userId: UserId, enabled: Boolean)
 
-    suspend fun updateAliasMonitorState(userId: UserId, enabled: Boolean)
+    suspend fun updateGlobalAliasMonitorState(userId: UserId, enabled: Boolean)
+
+    suspend fun updateProtonAddressMonitorState(
+        userId: UserId,
+        addressId: AddressId,
+        enabled: Boolean
+    )
+
+    suspend fun updateAliasAddressMonitorState(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        enabled: Boolean
+    )
 }

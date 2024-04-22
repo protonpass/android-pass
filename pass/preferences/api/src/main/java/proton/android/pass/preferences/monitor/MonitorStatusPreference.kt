@@ -16,27 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.commonpresentation.api.bars.bottom.home.presentation
+package proton.android.pass.preferences.monitor
 
-import androidx.compose.runtime.Stable
-import proton.android.pass.domain.PlanType
-import proton.android.pass.preferences.monitor.MonitorStatusPreference
-
-@Stable
-data class HomeBottomBarState(
-    val planType: PlanType,
-    val isSecurityCenterEnabled: Boolean,
-    val monitorStatus: MonitorStatusPreference
-) {
-
-    companion object {
-
-        val Initial = HomeBottomBarState(
-            planType = PlanType.Unknown(),
-            isSecurityCenterEnabled = false,
-            monitorStatus = MonitorStatusPreference.NoIssues
-        )
-
-    }
-
+enum class MonitorStatusPreference {
+    BreachIssues,
+    NoIssues,
+    VulnerabilityIssues
 }

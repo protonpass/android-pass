@@ -36,8 +36,9 @@ import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachId
 import proton.android.pass.features.security.center.darkweb.presentation.DarkWebEmailBreachState
 import proton.android.pass.features.security.center.darkweb.presentation.DarkWebEmailsError
-import proton.android.pass.features.security.center.darkweb.presentation.EmailBreachUiState
 import proton.android.pass.features.security.center.darkweb.ui.DarkWebUiEvent
+import proton.android.pass.features.security.center.shared.presentation.EmailBreachUiState
+import proton.android.pass.features.security.center.shared.ui.rows.EmailBreachRow
 
 @Composable
 internal fun EmailBreachSection(
@@ -59,7 +60,29 @@ internal fun EmailBreachSection(
         repeat(listSize) { index ->
             EmailBreachRow(
                 emailBreachUiState = state.list()[index],
-                onEvent = onEvent
+                onClick = {
+                    when (it.id) {
+                        is BreachEmailId.Alias -> onEvent(
+                            DarkWebUiEvent.OnShowAliasEmailReportClick(
+                                id = it.id,
+                                email = it.email,
+                                breachCount = it.count
+                            )
+                        )
+
+                        is BreachEmailId.Custom -> {
+                            // It won't reach this point
+                        }
+
+                        is BreachEmailId.Proton -> onEvent(
+                            DarkWebUiEvent.OnShowProtonEmailReportClick(
+                                id = it.id,
+                                email = it.email,
+                                breachCount = it.count
+                            )
+                        )
+                    }
+                }
             )
         }
 
@@ -78,7 +101,8 @@ class DarkWebEmailBreachStatePreviewProvider : PreviewParameterProvider<DarkWebE
                         id = BreachEmailId.Custom(BreachId("123")),
                         email = "adobe.42nbe@passmail.com",
                         count = 2,
-                        breachDate = "2024-04-16T15:30:00Z"
+                        breachDate = "2024-04-16T15:30:00Z",
+                        isMonitored = false
                     )
                 )
             ),

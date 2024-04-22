@@ -60,12 +60,12 @@ class SecurityCenterProtonListViewModel @Inject constructor(
             is LoadingResult.Error -> ProtonListState.Error(ProtonListError.CannotLoad)
             LoadingResult.Loading -> ProtonListState.Loading
             is LoadingResult.Success -> {
-                val grouped: Map<Boolean, List<BreachProtonEmail>> =
-                    protonEmailsResult.data.groupBy { it.isMonitoringDisabled }
+                val (included, excluded) = protonEmailsResult.data.partition { it.isMonitoringDisabled }
+
 
                 ProtonListState.Success(
-                    includedEmails = grouped[false].toBreachRowState(),
-                    excludedEmails = grouped[true].toBreachRowState()
+                    includedEmails = included.toBreachRowState(),
+                    excludedEmails = excluded.toBreachRowState()
                 )
             }
         }

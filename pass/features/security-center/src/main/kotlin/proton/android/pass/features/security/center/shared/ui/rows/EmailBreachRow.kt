@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.darkweb.ui.summary
+package proton.android.pass.features.security.center.shared.ui.rows
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +24,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
+import androidx.compose.material.LocalContentAlpha
+import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -34,45 +36,22 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.composecomponents.impl.container.Circle
-import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.features.security.center.R
-import proton.android.pass.features.security.center.darkweb.presentation.EmailBreachUiState
-import proton.android.pass.features.security.center.darkweb.ui.DarkWebUiEvent
+import proton.android.pass.features.security.center.shared.presentation.EmailBreachUiState
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 internal fun EmailBreachRow(
     modifier: Modifier = Modifier,
     emailBreachUiState: EmailBreachUiState,
-    onEvent: (DarkWebUiEvent) -> Unit
+    onClick: (EmailBreachUiState) -> Unit
 ) {
     Column(
         modifier = modifier
-            .clickable(
-                onClick = {
-                    when (emailBreachUiState.id) {
-                        is BreachEmailId.Alias -> onEvent(
-                            DarkWebUiEvent.OnShowAliasEmailReportClick(
-                                id = emailBreachUiState.id,
-                                email = emailBreachUiState.email,
-                                breachCount = emailBreachUiState.count
-                            )
-                        )
-
-                        is BreachEmailId.Custom -> {
-                            // It won't reach this point
-                        }
-                        is BreachEmailId.Proton -> onEvent(
-                            DarkWebUiEvent.OnShowProtonEmailReportClick(
-                                id = emailBreachUiState.id,
-                                email = emailBreachUiState.email,
-                                breachCount = emailBreachUiState.count
-                            )
-                        )
-                    }
-                }
-            )
+            .clickable(onClick = { onClick(emailBreachUiState) })
             .padding(horizontal = Spacing.medium, vertical = Spacing.small)
     ) {
         Row(
@@ -83,20 +62,36 @@ internal fun EmailBreachRow(
                 modifier = Modifier.weight(weight = 1f),
                 verticalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
             ) {
-                Text(
-                    text = emailBreachUiState.email,
-                    style = ProtonTheme.typography.defaultNorm.copy(
-                        color = PassTheme.colors.passwordInteractionNormMajor1
-                    )
-                )
-                emailBreachUiState.breachDate?.let { breachDate ->
-                    Text(
-                        text = stringResource(
-                            R.string.security_center_dark_web_monitor_latest_breach_on,
-                            breachDate
-                        ),
-                        style = PassTheme.typography.body3Weak()
-                    )
+                when {
+                    emailBreachUiState.count > 0 -> {
+                        Text(
+                            text = emailBreachUiState.email,
+                            style = ProtonTheme.typography.defaultNorm.copy(
+                                color = PassTheme.colors.passwordInteractionNormMajor1
+                            )
+                        )
+                        emailBreachUiState.breachDate?.let { breachDate ->
+                            Text(
+                                text = stringResource(
+                                    R.string.security_center_dark_web_monitor_latest_breach_on,
+                                    breachDate
+                                ),
+                                style = PassTheme.typography.body3Weak()
+                            )
+                        }
+                    }
+                    else -> {
+                        Text(
+                            text = emailBreachUiState.email,
+                            style = ProtonTheme.typography.defaultNorm
+                        )
+                        Text(
+                            text = stringResource(R.string.security_center_proton_list_no_breaches_detected),
+                            style = PassTheme.typography.body3Norm().copy(
+                                color = PassTheme.colors.cardInteractionNormMajor2
+                            )
+                        )
+                    }
                 }
             }
             if (emailBreachUiState.count > 0) {
@@ -110,10 +105,12 @@ internal fun EmailBreachRow(
                     )
                 }
             }
+
             Icon(
-                painter = painterResource(proton.android.pass.composecomponents.impl.R.drawable.ic_chevron_tiny_right),
+                painter = painterResource(CompR.drawable.ic_chevron_tiny_right),
                 contentDescription = null,
-                tint = PassTheme.colors.passwordInteractionNormMajor1
+                tint = PassTheme.colors.passwordInteractionNormMajor1.takeIf { emailBreachUiState.count > 0 }
+                    ?: LocalContentColor.current.copy(alpha = LocalContentAlpha.current)
             )
         }
     }

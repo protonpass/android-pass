@@ -52,13 +52,15 @@ class BreachRepositoryImpl @Inject constructor(
 
     private val refreshFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
+    private val shouldFetchBreachFlow: Flow<Boolean> = refreshFlow.onStart { emit(true) }
+
     private val customEmailBreachesCache: MutableMap<Pair<UserId, BreachId>, List<BreachEmail>> =
         mutableMapOf()
     private val aliasBreachesCache: MutableMap<Pair<UserId, Pair<ShareId, ItemId>>, List<BreachEmail>> =
         mutableMapOf()
 
-    override fun observeBreach(userId: UserId): Flow<Breach> = refreshFlow
-        .filter { shouldRefresh -> shouldRefresh }
+    override fun observeBreach(userId: UserId): Flow<Breach> = shouldFetchBreachFlow
+        .filter { shouldFetch -> shouldFetch }
         .mapLatest { remote.getAllBreaches(userId).toDomain() }
         .distinctUntilChanged()
 
@@ -87,12 +89,18 @@ class BreachRepositoryImpl @Inject constructor(
         refreshFlow.update { true }
     }
 
-    override fun observeBreachesForProtonEmail(userId: UserId, id: AddressId): Flow<List<BreachEmail>> = oneShot {
+    override fun observeBreachesForProtonEmail(
+        userId: UserId,
+        id: AddressId
+    ): Flow<List<BreachEmail>> = oneShot {
         remote.getBreachesForProtonEmail(userId, id)
             .toDomain { breach -> BreachEmailId.Proton(BreachId(breach.id), id) }
     }
 
-    override fun observeBreachesForCustomEmail(userId: UserId, id: BreachEmailId.Custom): Flow<List<BreachEmail>> =
+    override fun observeBreachesForCustomEmail(
+        userId: UserId,
+        id: BreachEmailId.Custom
+    ): Flow<List<BreachEmail>> =
         oneShot {
             customEmailBreachesCache.getOrPut(userId to id.id) {
                 remote.getBreachesForCustomEmail(userId, id)
@@ -161,19 +169,20 @@ class BreachRepositoryImpl @Inject constructor(
         breachTime = breachTime
     )
 
-    private fun BreachEmailsResponse.toDomain(createId: (Breaches) -> BreachEmailId) = with(this.breachEmails) {
-        breaches.map { breach ->
-            BreachEmail(
-                emailId = createId(breach),
-                email = breach.email,
-                severity = breach.severity,
-                name = breach.name,
-                createdAt = breach.createdAt,
-                publishedAt = breach.publishedAt,
-                size = breach.size,
-                passwordLastChars = breach.passwordLastChars,
-                exposedData = breach.exposedData.map { it.name }
-            )
+    private fun BreachEmailsResponse.toDomain(createId: (Breaches) -> BreachEmailId) =
+        with(this.breachEmails) {
+            breaches.map { breach ->
+                BreachEmail(
+                    emailId = createId(breach),
+                    email = breach.email,
+                    severity = breach.severity,
+                    name = breach.name,
+                    createdAt = breach.createdAt,
+                    publishedAt = breach.publishedAt,
+                    size = breach.size,
+                    passwordLastChars = breach.passwordLastChars,
+                    exposedData = breach.exposedData.map { it.name }
+                )
+            }
         }
-    }
 }

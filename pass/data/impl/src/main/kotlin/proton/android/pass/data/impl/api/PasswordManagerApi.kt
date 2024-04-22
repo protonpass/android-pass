@@ -72,6 +72,8 @@ import proton.android.pass.data.impl.responses.OrganizationGetResponse
 import proton.android.pass.data.impl.responses.PendingInvitesResponse
 import proton.android.pass.data.impl.responses.TrashItemsResponse
 import proton.android.pass.data.impl.responses.UpdateLastUsedTimeResponse
+import proton.android.pass.data.impl.responses.UpdateMonitorStateRequest
+import proton.android.pass.data.impl.responses.UpdateMonitorStateResponse
 import proton.android.pass.data.impl.responses.UserAccessResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -369,6 +371,9 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("shareId") shareId: String,
         @Path("itemId") itemId: String
     ): CodeOnlyResponse
+
+    @PUT("$PREFIX/user/monitor")
+    suspend fun updateMonitorState(@Body request: UpdateMonitorStateRequest): UpdateMonitorStateResponse
 
     // Core
     @GET("core/v4/keys/all")

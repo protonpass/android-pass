@@ -65,4 +65,8 @@ interface BreachRepository {
     suspend fun resendVerificationCode(userId: UserId, id: BreachEmailId.Custom)
 
     suspend fun removeCustomEmail(userId: UserId, id: BreachEmailId.Custom)
+
+    suspend fun updateProtonMonitorState(userId: UserId, enabled: Boolean)
+
+    suspend fun updateAliasMonitorState(userId: UserId, enabled: Boolean)
 }

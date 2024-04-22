@@ -37,6 +37,7 @@ import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDet
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.api.usecases.items.OpenItemRevision
 import proton.android.pass.data.api.usecases.items.RestoreItemRevision
@@ -59,7 +60,8 @@ class ItemHistoryRestoreViewModel @Inject constructor(
     openItemRevision: OpenItemRevision,
     private val restoreItemRevision: RestoreItemRevision,
     private val itemDetailsHandler: ItemDetailsHandler,
-    private val snackbarDispatcher: SnackbarDispatcher
+    private val snackbarDispatcher: SnackbarDispatcher,
+    private val encryptionContextProvider: EncryptionContextProvider
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -76,9 +78,11 @@ class ItemHistoryRestoreViewModel @Inject constructor(
 
     private val eventFlow = MutableStateFlow<ItemHistoryRestoreEvent>(ItemHistoryRestoreEvent.Idle)
 
-    private val itemDetailsStateFlow: Flow<ItemDetailState> =
-        oneShot { openItemRevision(shareId, itemRevision) }
-            .flatMapLatest(itemDetailsHandler::observeItemDetails)
+    private val itemDetailsStateFlow: Flow<ItemDetailState> = oneShot {
+        encryptionContextProvider.withEncryptionContextSuspendable {
+            openItemRevision(shareId, itemRevision, this@withEncryptionContextSuspendable)
+        }
+    }.flatMapLatest(itemDetailsHandler::observeItemDetails)
 
     internal val state = combine(
         itemDetailsStateFlow,

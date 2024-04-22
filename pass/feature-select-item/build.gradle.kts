@@ -116,4 +116,5 @@ dependencies {
     androidTestImplementation(projects.pass.featureSearchOptions.fakes)
     androidTestImplementation(projects.pass.notifications.fakes)
     androidTestImplementation(projects.pass.preferences.fakes)
+    androidTestImplementation(projects.pass.securityCenter.fakes)
 }

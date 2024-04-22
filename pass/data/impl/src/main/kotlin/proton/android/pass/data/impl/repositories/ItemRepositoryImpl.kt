@@ -27,7 +27,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
@@ -616,13 +615,16 @@ class ItemRepositoryImpl @Inject constructor(
         val share = shareRepository.getById(userId, shareId)
         val shareKeys = shareKeyRepository.getShareKeys(userId, addressId, shareId).first()
 
-        val updateAsEntities = events.updatedItems.map {
-            itemResponseToEntity(
-                userAddress,
-                it.toItemRevision().toDomain(),
-                share,
-                shareKeys
-            )
+        val updateAsEntities = encryptionContextProvider.withEncryptionContext {
+            events.updatedItems.map {
+                itemResponseToEntity(
+                    userAddress = userAddress,
+                    itemRevision = it.toItemRevision().toDomain(),
+                    share = share,
+                    shareKeys = shareKeys,
+                    encryptionContext = this@withEncryptionContext
+                )
+            }
         }
 
         if (updateAsEntities.isNotEmpty() && events.deletedItemIds.isNotEmpty()) {
@@ -652,42 +654,26 @@ class ItemRepositoryImpl @Inject constructor(
     override suspend fun setShareItems(userId: UserId, items: Map<ShareId, List<ItemRevision>>) {
         if (items.isEmpty()) return
 
-        val itemsToUpsert = mutableListOf<ItemEntity>()
-        val itemsToDelete = mutableListOf<Pair<ShareId, List<ItemId>>>()
-
-        items.forEach { (shareId, revisions) ->
-            val share = shareRepository.getById(userId, shareId)
-            val address = shareRepository.getAddressForShareId(userId, shareId)
-            val localItemsForShare = localItemDataSource.observeItemsForShares(
-                userId = userId,
-                shareIds = listOf(shareId),
-                itemState = null,
-                filter = ItemTypeFilter.All
-            ).first()
-
-            val itemsNotPresentInRemote = localItemsForShare
-                // Filter out items that are not present in the remote
-                .filter { localItem -> revisions.none { it.itemId == localItem.id } }
-                // Keep only the ItemIDs
-                .map { ItemId(it.id) }
-
-            itemsToDelete.add(shareId to itemsNotPresentInRemote)
-
-            val shareKeys = shareKeyRepository.getShareKeys(
-                userId = userId,
-                addressId = address.addressId,
-                shareId = shareId
-            ).first()
-            val entities = revisions.map {
-                itemResponseToEntity(
-                    userAddress = address,
-                    itemRevision = it,
-                    share = share,
-                    shareKeys = shareKeys
-                )
-            }
-            itemsToUpsert.addAll(entities)
+        val plans: List<Result<SetShareItemsPlan>> = coroutineScope {
+            items.map { (shareId, revisions) ->
+                async {
+                    calculatePlanForSetShareItems(userId, shareId, revisions)
+                }
+            }.awaitAll()
         }
+
+        val (successes, failures) = plans.partition { it.isSuccess }
+
+        if (failures.isNotEmpty()) {
+            failures.first().exceptionOrNull()?.let {
+                PassLogger.w(TAG, "Error calculating plan for setShareItems")
+                PassLogger.w(TAG, it)
+            }
+        }
+
+        val successPlans = successes.mapNotNull { it.getOrNull() }
+        val itemsToUpsert = successPlans.flatMap { it.itemsToUpsert }
+        val itemsToDelete = successPlans.map { it.itemsToDelete }
 
         val insertItemCount = itemsToUpsert.size
         val deleteItemCount = itemsToDelete.flatMap { it.second }.size
@@ -711,14 +697,19 @@ class ItemRepositoryImpl @Inject constructor(
         val share = shareRepository.getById(userId, shareId)
         val shareKeys = shareKeyRepository.getShareKeys(userId, addressId, shareId).first()
 
-        pendingItemRevisions.map { pendingItemRevision ->
-            itemResponseToEntity(
-                userAddress,
-                pendingItemRevision.toItemRevision().toDomain(),
-                share,
-                shareKeys
-            )
-        }.let { items -> localItemDataSource.upsertItems(items) }
+        val items = encryptionContextProvider.withEncryptionContext {
+            pendingItemRevisions.map { pendingItemRevision ->
+                itemResponseToEntity(
+                    userAddress = userAddress,
+                    itemRevision = pendingItemRevision.toItemRevision().toDomain(),
+                    share = share,
+                    shareKeys = shareKeys,
+                    encryptionContext = this@withEncryptionContext
+                )
+            }
+        }
+
+        localItemDataSource.upsertItems(items)
     }
 
     override suspend fun purgePendingEvent(event: ItemPendingEvent) = with(event) {
@@ -872,6 +863,54 @@ class ItemRepositoryImpl @Inject constructor(
         )
     }
 
+    private suspend fun calculatePlanForSetShareItems(
+        userId: UserId,
+        shareId: ShareId,
+        revisions: List<ItemRevision>
+    ) = runCatching {
+        val share = shareRepository.getById(userId, shareId)
+        val address = shareRepository.getAddressForShareId(userId, shareId)
+        val localItemsForShare = localItemDataSource.observeItemsForShares(
+            userId = userId,
+            shareIds = listOf(shareId),
+            itemState = null,
+            filter = ItemTypeFilter.All
+        ).first()
+
+        val itemsNotPresentInRemote = localItemsForShare
+            // Filter out items that are not present in the remote
+            .filter { localItem -> revisions.none { it.itemId == localItem.id } }
+            // Keep only the ItemIDs
+            .map { ItemId(it.id) }
+
+        val shareKeys = shareKeyRepository.getShareKeys(
+            userId = userId,
+            addressId = address.addressId,
+            shareId = shareId
+        ).first()
+
+        val itemsToUpsert = encryptionContextProvider.withEncryptionContext {
+            revisions.map {
+                itemResponseToEntity(
+                    userAddress = address,
+                    itemRevision = it,
+                    share = share,
+                    shareKeys = shareKeys,
+                    encryptionContext = this@withEncryptionContext
+                )
+            }
+        }
+
+        SetShareItemsPlan(
+            itemsToDelete = shareId to itemsNotPresentInRemote,
+            itemsToUpsert = itemsToUpsert
+        )
+    }.onFailure {
+        PassLogger.w(TAG, "Error calculating plan for setShareItems (shareId: ${shareId.id})")
+        PassLogger.w(TAG, it)
+    }
+
+
     private suspend fun handleItemPinning(
         items: List<Pair<ShareId, ItemId>>,
         block: suspend (userId: UserId, shareId: ShareId, itemId: ItemId) -> ItemRevision
@@ -1006,7 +1045,7 @@ class ItemRepositoryImpl @Inject constructor(
     ): List<ItemEntity> {
         val migrations = chunk.map { item ->
             ItemMigrationPayload(
-                itemContent = createItemMigrationContent(
+                itemContent = ItemMigrationContent(
                     encryptedItemContents = item.encryptedContent,
                     contentFormatVersion = item.contentFormatVersion
                 ),
@@ -1036,8 +1075,16 @@ class ItemRepositoryImpl @Inject constructor(
 
         val res = remoteItemDataSource.migrateItems(userId, source, body)
 
-        val resAsEntities = res.map {
-            itemResponseToEntity(userAddress, it, destinationShare, listOf(destinationKey))
+        val resAsEntities = encryptionContextProvider.withEncryptionContext {
+            res.map {
+                itemResponseToEntity(
+                    userAddress = userAddress,
+                    itemRevision = it,
+                    share = destinationShare,
+                    shareKeys = listOf(destinationKey),
+                    encryptionContext = this@withEncryptionContext
+                )
+            }
         }
 
         val itemIdsToDelete = chunk.map { ItemId(it.id) }
@@ -1053,25 +1100,28 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): List<ItemMigrationHistoryContent> = getItemRevisions(userId, shareId, itemId)
-        .drop(n = 1)
-        .take(ITEM_HISTORY_MAX_PREVIOUS_REVISIONS)
-        .map { itemRevision ->
-            openItemRevision(shareId, itemRevision).let { item ->
+    ): List<ItemMigrationHistoryContent> {
+        val itemRevisions = getItemRevisions(userId, shareId, itemId)
+            .drop(n = 1)
+            .take(ITEM_HISTORY_MAX_PREVIOUS_REVISIONS)
+
+        return encryptionContextProvider.withEncryptionContextSuspendable {
+            itemRevisions.map { itemRevision ->
+                val item = openItemRevision(
+                    shareId = shareId,
+                    itemRevision = itemRevision,
+                    encryptionContext = this@withEncryptionContextSuspendable
+                )
                 ItemMigrationHistoryContent(
                     revision = item.revision,
-                    itemContent = createItemMigrationContent(
+                    itemContent = ItemMigrationContent(
                         encryptedItemContents = item.content,
                         contentFormatVersion = itemRevision.contentFormatVersion
                     )
                 )
             }
         }
-
-    private fun createItemMigrationContent(
-        encryptedItemContents: EncryptedByteArray,
-        contentFormatVersion: Int
-    ): ItemMigrationContent = ItemMigrationContent(encryptedItemContents, contentFormatVersion)
+    }
 
     private suspend fun restoreItemsForShare(
         userId: UserId,
@@ -1265,11 +1315,30 @@ class ItemRepositoryImpl @Inject constructor(
         itemRevision: ItemRevision,
         share: Share,
         shareKeys: List<ShareKey>
+    ): ItemEntity = encryptionContextProvider.withEncryptionContext {
+        itemResponseToEntity(
+            userAddress = userAddress,
+            itemRevision = itemRevision,
+            share = share,
+            shareKeys = shareKeys,
+            encryptionContext = this@withEncryptionContext
+        )
+    }
+
+    private fun itemResponseToEntity(
+        userAddress: UserAddress,
+        itemRevision: ItemRevision,
+        share: Share,
+        shareKeys: List<ShareKey>,
+        encryptionContext: EncryptionContext
     ): ItemEntity {
-        val output = openItem.open(itemRevision.toCrypto(), share, shareKeys)
-        val hasTotp = encryptionContextProvider.withEncryptionContext {
-            output.item.hasTotp(this@withEncryptionContext)
-        }
+        val output = openItem.open(
+            response = itemRevision.toCrypto(),
+            share = share,
+            shareKeys = shareKeys,
+            encryptionContext = encryptionContext
+        )
+        val hasTotp = output.item.hasTotp(encryptionContext)
         return ItemEntity(
             id = itemRevision.itemId,
             userId = userAddress.userId.id,
@@ -1296,6 +1365,11 @@ class ItemRepositoryImpl @Inject constructor(
             flags = itemRevision.flags
         )
     }
+
+    private data class SetShareItemsPlan(
+        val itemsToUpsert: List<ItemEntity>,
+        val itemsToDelete: Pair<ShareId, List<ItemId>>
+    )
 
     companion object {
         const val MAX_BATCH_ITEMS_PER_REQUEST = 50

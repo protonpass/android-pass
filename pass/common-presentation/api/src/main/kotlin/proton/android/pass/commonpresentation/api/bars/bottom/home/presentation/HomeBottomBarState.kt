@@ -20,12 +20,13 @@ package proton.android.pass.commonpresentation.api.bars.bottom.home.presentation
 
 import androidx.compose.runtime.Stable
 import proton.android.pass.domain.PlanType
+import proton.android.pass.preferences.monitor.MonitorStatusPreference
 
 @Stable
 data class HomeBottomBarState(
     val planType: PlanType,
     val isSecurityCenterEnabled: Boolean,
-    val monitorStatus: HomeBottomBarMonitorStatus
+    val monitorStatus: MonitorStatusPreference
 ) {
 
     companion object {
@@ -33,7 +34,7 @@ data class HomeBottomBarState(
         val Initial = HomeBottomBarState(
             planType = PlanType.Unknown(),
             isSecurityCenterEnabled = false,
-            monitorStatus = HomeBottomBarMonitorStatus.NoIssues
+            monitorStatus = MonitorStatusPreference.NoIssues
         )
 
     }

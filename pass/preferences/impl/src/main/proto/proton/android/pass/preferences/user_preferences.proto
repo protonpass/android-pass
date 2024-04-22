@@ -6,6 +6,7 @@ import "proton/android/pass/preferences/boolean_pref.proto";
 import "proton/android/pass/preferences/lock_app_pref.proto";
 import "proton/android/pass/preferences/password_generation_pref.proto";
 import "proton/android/pass/preferences/app_lock_type_pref.proto";
+import "proton/android/pass/preferences/monitor_status_pref.proto";
 
 option java_package = "proton.android.pass.preferences";
 option java_multiple_files = true;
@@ -27,5 +28,6 @@ message UserPreferences {
   BooleanPrefProto biometric_system_lock = 14;
   BooleanPrefProto has_dismissed_notification_banner = 15;
   BooleanPrefProto sentinel_status = 16;
-  string default_vault = 17;
+  MonitorStatusPrefProto monitor_status = 17;
+  string default_vault = 18;
 }

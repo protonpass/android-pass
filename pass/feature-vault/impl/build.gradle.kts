@@ -98,4 +98,5 @@ dependencies {
     androidTestImplementation(projects.pass.notifications.fakes)
     androidTestImplementation(projects.pass.preferences.fakes)
     androidTestImplementation(projects.pass.telemetry.fakes)
+    androidTestImplementation(projects.pass.securityCenter.fakes)
 }

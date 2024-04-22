@@ -122,6 +122,8 @@ import proton.android.pass.data.api.usecases.breach.ObserveBreachesForProtonEmai
 import proton.android.pass.data.api.usecases.breach.ObserveCustomEmailSuggestions
 import proton.android.pass.data.api.usecases.breach.RemoveCustomEmail
 import proton.android.pass.data.api.usecases.breach.ResendVerificationCode
+import proton.android.pass.data.api.usecases.breach.UpdateAliasAddressesMonitorState
+import proton.android.pass.data.api.usecases.breach.UpdateProtonAddressesMonitorState
 import proton.android.pass.data.api.usecases.breach.VerifyBreachCustomEmail
 import proton.android.pass.data.api.usecases.capabilities.CanCreateItemInVault
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
@@ -254,6 +256,8 @@ import proton.android.pass.data.impl.usecases.breach.ObserveBreachesForProtonEma
 import proton.android.pass.data.impl.usecases.breach.ObserveCustomEmailSuggestionsImpl
 import proton.android.pass.data.impl.usecases.breach.RemoveCustomEmailImpl
 import proton.android.pass.data.impl.usecases.breach.ResendVerificationCodeImpl
+import proton.android.pass.data.impl.usecases.breach.UpdateAliasAddressesMonitorStateImpl
+import proton.android.pass.data.impl.usecases.breach.UpdateProtonAddressesMonitorStateImpl
 import proton.android.pass.data.impl.usecases.breach.VerifyBreachCustomEmailImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanCreateItemInVaultImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanCreateVaultImpl
@@ -676,4 +680,14 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindRemoveCustomEmail(impl: RemoveCustomEmailImpl): RemoveCustomEmail
+
+    @Binds
+    abstract fun bindUpdateProtonAddressesMonitorState(
+        impl: UpdateProtonAddressesMonitorStateImpl
+    ): UpdateProtonAddressesMonitorState
+
+    @Binds
+    abstract fun bindUpdateAliasAddressesMonitorState(
+        impl: UpdateAliasAddressesMonitorStateImpl
+    ): UpdateAliasAddressesMonitorState
 }

@@ -71,9 +71,8 @@ internal fun DarkWebScreen(
                     // Navigate to new screen
                 }
 
-                DarkWebUiEvent.OnShowAllProtonEmailBreachClick -> {
-                    // Navigate to new screen
-                }
+                DarkWebUiEvent.OnShowAllProtonEmailBreachClick ->
+                    onNavigate(DarkWebMonitorNavDestination.AllProtonEmails)
 
                 is DarkWebUiEvent.OnShowAliasEmailReportClick ->
                     onNavigate(

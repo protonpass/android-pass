@@ -138,6 +138,14 @@ class BreachRepositoryImpl @Inject constructor(
         refreshFlow.update { true }
     }
 
+    override suspend fun updateProtonMonitorState(userId: UserId, enabled: Boolean) {
+        remote.updateProtonAddressMonitorState(userId, enabled)
+    }
+
+    override suspend fun updateAliasMonitorState(userId: UserId, enabled: Boolean) {
+        remote.updateAliasAddressMonitorState(userId, enabled)
+    }
+
     private suspend fun refreshEmails(userId: UserId): List<BreachCustomEmail> {
         val response = remote.getCustomEmails(userId)
         return response.emails.customEmails.map { it.toDomain() }

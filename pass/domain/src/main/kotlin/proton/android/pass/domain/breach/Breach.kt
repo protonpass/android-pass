@@ -23,4 +23,6 @@ data class Breach(
     val breachedDomainPeeks: List<BreachDomainPeek>,
     val breachedCustomEmails: List<BreachCustomEmail>,
     val breachedProtonEmails: List<BreachProtonEmail>
-)
+) {
+    val hasBreaches: Boolean = breachesCount > 0
+}

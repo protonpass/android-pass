@@ -29,6 +29,8 @@ object BreachCustomEmailMother {
         email = "email${Random.nextInt()}@proton.me",
         id = BreachEmailId.Custom(BreachId(id = Random.nextInt().toString())),
         verified = Random.nextBoolean(),
-        breachCount = Random.nextInt()
+        breachCount = Random.nextInt(),
+        flags = 0,
+        lastBreachTime = null
     )
 }

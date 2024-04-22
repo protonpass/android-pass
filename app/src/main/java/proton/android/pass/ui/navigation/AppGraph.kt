@@ -119,6 +119,7 @@ import proton.android.pass.features.security.center.darkweb.navigation.DarkWebMo
 import proton.android.pass.features.security.center.excludeditems.navigation.SecurityCenterExcludedItemsNavItem
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavItem
 import proton.android.pass.features.security.center.missingtfa.navigation.SecurityCenterMissingTFANavItem
+import proton.android.pass.features.security.center.protonlist.navigation.SecurityCenterProtonListBreachDetailNavItem
 import proton.android.pass.features.security.center.report.navigation.SecurityCenterAliasEmailReportNavItem
 import proton.android.pass.features.security.center.report.navigation.SecurityCenterCustomEmailReportNavItem
 import proton.android.pass.features.security.center.report.navigation.SecurityCenterProtonEmailReportNavItem
@@ -1180,6 +1181,10 @@ fun NavGraphBuilder.appGraph(
                     route = SecurityCenterProtonEmailBreachDetailNavItem.createNavRoute(
                         id = destination.id
                     )
+                )
+
+                SecurityCenterNavDestination.AllProtonEmails -> appNavigator.navigate(
+                    destination = SecurityCenterProtonListBreachDetailNavItem
                 )
             }
         }

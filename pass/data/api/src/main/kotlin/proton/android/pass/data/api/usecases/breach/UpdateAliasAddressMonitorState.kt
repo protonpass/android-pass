@@ -19,7 +19,14 @@
 package proton.android.pass.data.api.usecases.breach
 
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
-interface UpdateAliasAddressesMonitorState {
-    suspend operator fun invoke(userId: UserId? = null, enabled: Boolean)
+interface UpdateAliasAddressMonitorState {
+    suspend operator fun invoke(
+        userId: UserId? = null,
+        shareId: ShareId,
+        itemId: ItemId,
+        enabled: Boolean
+    )
 }

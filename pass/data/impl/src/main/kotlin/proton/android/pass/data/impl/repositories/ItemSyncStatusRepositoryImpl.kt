@@ -39,10 +39,10 @@ class ItemSyncStatusRepositoryImpl @Inject constructor(
 ) : ItemSyncStatusRepository {
 
     private val syncStatus: MutableSharedFlow<ItemSyncStatus> =
-        MutableSharedFlow<ItemSyncStatus>(replay = 1, extraBufferCapacity = 1)
+        MutableSharedFlow<ItemSyncStatus>(replay = 1, extraBufferCapacity = 3)
             .apply { tryEmit(ItemSyncStatus.NotStarted) }
     private val accSyncStatus: MutableSharedFlow<Map<ShareId, ItemSyncStatusPayload>> =
-        MutableSharedFlow(replay = 1, extraBufferCapacity = 1)
+        MutableSharedFlow(replay = 1, extraBufferCapacity = 3)
     private val payloadMutableMap: MutableMap<ShareId, ItemSyncStatusPayload> = mutableMapOf()
     private val modeFlow: MutableSharedFlow<SyncMode> = MutableSharedFlow<SyncMode>(
         replay = 1, extraBufferCapacity = 1

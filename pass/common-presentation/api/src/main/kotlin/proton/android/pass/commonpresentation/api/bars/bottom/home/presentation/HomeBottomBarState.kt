@@ -24,14 +24,16 @@ import proton.android.pass.domain.PlanType
 @Stable
 data class HomeBottomBarState(
     val planType: PlanType,
-    val isSecurityCenterEnabled: Boolean
+    val isSecurityCenterEnabled: Boolean,
+    val monitorStatus: HomeBottomBarMonitorStatus
 ) {
 
     companion object {
 
         val Initial = HomeBottomBarState(
             planType = PlanType.Unknown(),
-            isSecurityCenterEnabled = false
+            isSecurityCenterEnabled = false,
+            monitorStatus = HomeBottomBarMonitorStatus.NoIssues
         )
 
     }

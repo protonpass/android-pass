@@ -33,6 +33,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.core.presentation.R
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarEvent
+import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarMonitorStatus
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarSelection
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarState
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarViewModel
@@ -103,11 +104,9 @@ fun HomeBottomBarContent(
                 unselectedContentColor = PassTheme.colors.textNorm,
                 onClick = { onEvent(HomeBottomBarEvent.OnSecurityCenterSelected) },
                 icon = {
-                    Icon(
-                        painter = painterResource(CompR.drawable.ic_shield_monitor_ok_monitoring),
-                        contentDescription = stringResource(
-                            id = CompR.string.bottom_bar_security_center_icon_content_description
-                        )
+                    PassHomeBottomBarMonitorIcon(
+                        planType = planType,
+                        monitorStatus = monitorStatus
                     )
                 }
             )
@@ -126,7 +125,7 @@ fun HomeBottomBarContent(
 }
 
 object BottomBarTestTag {
-    const val profile = "profile"
+    const val PROFILE_TEST_TAG = "profile"
 }
 
 @[Preview Composable]
@@ -138,7 +137,8 @@ fun HomeBottomBarContentPreview(@PreviewParameter(ThemePreviewProvider::class) i
                 onEvent = {},
                 state = HomeBottomBarState(
                     planType = PlanType.Unknown(),
-                    isSecurityCenterEnabled = true
+                    isSecurityCenterEnabled = true,
+                    monitorStatus = HomeBottomBarMonitorStatus.NoIssues
                 )
             )
         }

@@ -24,8 +24,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
-import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -38,6 +36,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.commonui.api.body3Weak
+import proton.android.pass.commonui.api.defaultTint
 import proton.android.pass.composecomponents.impl.container.Circle
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.shared.presentation.EmailBreachUiState
@@ -63,7 +62,7 @@ internal fun EmailBreachRow(
                 verticalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
             ) {
                 when {
-                    emailBreachUiState.count > 0 -> {
+                    emailBreachUiState.hasBreaches -> {
                         Text(
                             text = emailBreachUiState.email,
                             style = ProtonTheme.typography.defaultNorm.copy(
@@ -80,6 +79,7 @@ internal fun EmailBreachRow(
                             )
                         }
                     }
+
                     else -> {
                         Text(
                             text = emailBreachUiState.email,
@@ -94,7 +94,7 @@ internal fun EmailBreachRow(
                     }
                 }
             }
-            if (emailBreachUiState.count > 0) {
+            if (emailBreachUiState.hasBreaches) {
                 Circle(
                     backgroundColor = PassTheme.colors.passwordInteractionNormMinor1
                 ) {
@@ -109,8 +109,9 @@ internal fun EmailBreachRow(
             Icon(
                 painter = painterResource(CompR.drawable.ic_chevron_tiny_right),
                 contentDescription = null,
-                tint = PassTheme.colors.passwordInteractionNormMajor1.takeIf { emailBreachUiState.count > 0 }
-                    ?: LocalContentColor.current.copy(alpha = LocalContentAlpha.current)
+                tint = PassTheme.colors.passwordInteractionNormMajor1
+                    .takeIf { emailBreachUiState.hasBreaches }
+                    ?: defaultTint()
             )
         }
     }

@@ -42,6 +42,7 @@ import proton.android.pass.domain.breach.BreachCustomEmail
 import proton.android.pass.domain.breach.BreachEmail
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachId
+import proton.android.pass.domain.breach.BreachProtonEmail
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -59,7 +60,7 @@ class BreachRepositoryImpl @Inject constructor(
     private val aliasBreachesCache: MutableMap<Pair<UserId, Pair<ShareId, ItemId>>, List<BreachEmail>> =
         mutableMapOf()
 
-    override fun observeBreach(userId: UserId): Flow<Breach> = shouldFetchBreachFlow
+    override fun observeAllBreaches(userId: UserId): Flow<Breach> = shouldFetchBreachFlow
         .filter { shouldFetch -> shouldFetch }
         .mapLatest { remote.getAllBreaches(userId).toDomain() }
         .distinctUntilChanged()
@@ -155,14 +156,25 @@ class BreachRepositoryImpl @Inject constructor(
         id = BreachEmailId.Custom(BreachId(customEmailId)),
         email = email,
         verified = verified,
-        breachCount = breachCounter
+        breachCount = breachCounter,
+        flags = flags,
+        lastBreachTime = lastBreachTime
+    )
+
+    fun proton.android.pass.data.impl.responses.BreachProtonEmail.toDomain() = BreachProtonEmail(
+        addressId = AddressId(addressId),
+        email = email,
+        breachCounter = breachCounter,
+        flags = flags,
+        lastBreachTime = lastBreachTime
     )
 
     private fun BreachesResponse.toDomain() = with(this.breaches) {
         Breach(
             breachesCount = emailsCount,
             breachedDomainPeeks = domainPeeks.map { domainPeek -> domainPeek.toDomain() },
-            breachedCustomEmails = customEmails.map { customEmail -> customEmail.toDomain() }
+            breachedCustomEmails = customEmails.map { customEmail -> customEmail.toDomain() },
+            breachedProtonEmails = protonEmails.map { protonEmail -> protonEmail.toDomain() }
         )
     }
 

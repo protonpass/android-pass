@@ -52,7 +52,9 @@ data class BreachesDetails(
     @SerialName("DomainsPeek")
     val domainPeeks: List<BreachDomainPeek>,
     @SerialName("CustomEmails")
-    val customEmails: List<BreachCustomEmail>
+    val customEmails: List<BreachCustomEmail>,
+    @SerialName("Addresses")
+    val protonEmails: List<BreachProtonEmail>
 )
 
 @Serializable
@@ -78,5 +80,23 @@ data class BreachCustomEmail(
     @SerialName("Verified")
     val verified: Boolean,
     @SerialName("BreachCounter")
-    val breachCounter: Int
+    val breachCounter: Int,
+    @SerialName("Flags")
+    val flags: Int,
+    @SerialName("LastBreachTime")
+    val lastBreachTime: Int?
+)
+
+@Serializable
+data class BreachProtonEmail(
+    @SerialName("AddressID")
+    val addressId: String,
+    @SerialName("Email")
+    val email: String,
+    @SerialName("BreachCounter")
+    val breachCounter: Int,
+    @SerialName("Flags")
+    val flags: Int,
+    @SerialName("LastBreachTime")
+    val lastBreachTime: Int?
 )

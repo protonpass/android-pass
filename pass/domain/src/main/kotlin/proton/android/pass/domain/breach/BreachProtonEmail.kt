@@ -16,21 +16,18 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.fakes.usecases.breach
+package proton.android.pass.domain.breach
 
-import proton.android.pass.domain.breach.BreachCustomEmail
-import proton.android.pass.domain.breach.BreachEmailId
-import proton.android.pass.domain.breach.BreachId
-import kotlin.random.Random
+import me.proton.core.user.domain.entity.AddressId
+import me.proton.core.util.kotlin.hasFlag
 
-object BreachCustomEmailMother {
-
-    fun random() = BreachCustomEmail(
-        email = "email${Random.nextInt()}@proton.me",
-        id = BreachEmailId.Custom(BreachId(id = Random.nextInt().toString())),
-        verified = Random.nextBoolean(),
-        breachCount = Random.nextInt(),
-        flags = 0,
-        lastBreachTime = null
-    )
+data class BreachProtonEmail(
+    val addressId: AddressId,
+    val email: String,
+    val breachCounter: Int,
+    val flags: Int,
+    val lastBreachTime: Int?
+) {
+    val isMonitoringDisabled: Boolean = flags.hasFlag(EmailFlag.MonitoringDisabled.value)
 }
+

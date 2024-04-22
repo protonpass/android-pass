@@ -24,6 +24,7 @@ import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.features.security.center.shared.presentation.EmailBreachUiState
 
 @Stable
 sealed interface CustomEmailUiStatus {
@@ -73,14 +74,6 @@ sealed interface DarkWebCustomEmailsState {
         val suggestions: ImmutableList<CustomEmailUiState>
     ) : DarkWebCustomEmailsState
 }
-
-@Stable
-data class EmailBreachUiState(
-    val id: BreachEmailId,
-    val email: String,
-    val count: Int,
-    val breachDate: String?
-)
 
 @Stable
 sealed interface DarkWebEmailBreachState {

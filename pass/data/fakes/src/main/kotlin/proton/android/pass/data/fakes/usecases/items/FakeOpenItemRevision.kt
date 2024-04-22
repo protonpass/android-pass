@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.fakes.usecases.items
 
+import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.api.usecases.items.OpenItemRevision
 import proton.android.pass.domain.Item
@@ -32,7 +33,11 @@ class FakeOpenItemRevision @Inject constructor() : OpenItemRevision {
         item = newItem
     }
 
-    override suspend fun invoke(shareId: ShareId, itemRevision: ItemRevision): Item = item
+    override suspend fun invoke(
+        shareId: ShareId,
+        itemRevision: ItemRevision,
+        encryptionContext: EncryptionContext
+    ): Item = item
         ?: throw IllegalStateException(
             "Item cannot be null, did you forget to call setItem() before executing the use case?"
         )

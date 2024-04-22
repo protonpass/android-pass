@@ -121,8 +121,8 @@ private class PassHomeBottomBarMonitorIconPreviewProvider :
 
     override val values: Sequence<Pair<PlanType, MonitorStatusPreference>> = sequence {
         MonitorStatusPreference.entries.forEach { monitorStatusPreference ->
-            Pair(PlanType.Unknown(), monitorStatusPreference)
-            Pair(PlanType.Paid.Plus("", ""), monitorStatusPreference)
+            yield(Pair(PlanType.Unknown(), monitorStatusPreference))
+            yield(Pair(PlanType.Paid.Plus("", ""), monitorStatusPreference))
         }
     }
 

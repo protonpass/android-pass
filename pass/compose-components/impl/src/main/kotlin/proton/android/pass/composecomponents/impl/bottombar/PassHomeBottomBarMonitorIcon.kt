@@ -81,7 +81,7 @@ fun PassHomeBottomBarMonitorIcon(
                 painter = painterResource(id = monitorIconResId),
                 contentDescription = stringResource(
                     id = CompR.string.bottom_bar_security_center_icon_content_description
-                ),
+                )
             )
 
             if (needsBadge) {
@@ -113,10 +113,10 @@ internal fun PassHomeBottomBarMonitorIconPreview(
 
 internal class ThemePassMonitorIconPreview :
     ThemePairPreviewProvider<Pair<PlanType, MonitorStatusPreference>>(
-        PassPasswordStrengthItemPreviewProvider()
+        PassHomeBottomBarMonitorIconPreviewProvider()
     )
 
-private class PassPasswordStrengthItemPreviewProvider :
+private class PassHomeBottomBarMonitorIconPreviewProvider :
     PreviewParameterProvider<Pair<PlanType, MonitorStatusPreference>> {
 
     override val values: Sequence<Pair<PlanType, MonitorStatusPreference>> = sequence {

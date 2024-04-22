@@ -16,15 +16,18 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.breachdetail.ui
+package proton.android.pass.features.security.center.shared.ui
 
+import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
+import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toJavaLocalDate
+import kotlinx.datetime.toLocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 object DateUtils {
-    const val SECURITY_CENTER_DATE_PATTERN = "MMM dd, yyyy"
+    private const val SECURITY_CENTER_DATE_PATTERN = "MMM dd, yyyy"
 
     private val isoDateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME
     private val customDateFormatter =
@@ -38,5 +41,11 @@ object DateUtils {
     fun formatDate(isoDateString: String): Result<String> = runCatching {
         val date = isoDateTimeFormatter.parse(isoDateString)
         customDateFormatter.format(date)
+    }
+
+    fun formatDate(timestamp: Int): Result<String> = runCatching {
+        val date = Instant.fromEpochSeconds(timestamp.toLong())
+            .toLocalDateTime(TimeZone.currentSystemDefault())
+        customDateFormatter.format(date.date.toJavaLocalDate())
     }
 }

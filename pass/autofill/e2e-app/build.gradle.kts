@@ -106,6 +106,7 @@ dependencies {
     implementation(projects.pass.passkeys.fakes)
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.preferences.impl)
+    implementation(projects.pass.securityCenter.fakes)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

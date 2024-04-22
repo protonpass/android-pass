@@ -138,6 +138,7 @@ dependencies {
     implementation(projects.pass.totp.fakes)
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.preferences.fakes)
+    implementation(projects.pass.securityCenter.fakes)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

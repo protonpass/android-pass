@@ -48,6 +48,7 @@ import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.domain.breach.BreachEmail
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.breachdetail.presentation.SecurityCenterBreachDetailState
+import proton.android.pass.features.security.center.shared.ui.DateUtils
 import proton.android.pass.features.security.center.shared.ui.image.BreachImage
 
 @Composable

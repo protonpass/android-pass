@@ -16,18 +16,11 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.shared.presentation
+package proton.android.pass.commonui.api
 
-import androidx.compose.runtime.Stable
-import proton.android.pass.domain.breach.BreachEmailId
+import androidx.compose.material.LocalContentAlpha
+import androidx.compose.material.LocalContentColor
+import androidx.compose.runtime.Composable
 
-@Stable
-data class EmailBreachUiState(
-    val id: BreachEmailId,
-    val email: String,
-    val count: Int,
-    val breachDate: String?,
-    val isMonitored: Boolean
-) {
-    val hasBreaches = count > 0
-}
+@Composable
+fun defaultTint() = LocalContentColor.current.copy(alpha = LocalContentAlpha.current)

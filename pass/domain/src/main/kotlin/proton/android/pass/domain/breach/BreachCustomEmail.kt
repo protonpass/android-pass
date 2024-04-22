@@ -18,9 +18,16 @@
 
 package proton.android.pass.domain.breach
 
+import me.proton.core.util.kotlin.hasFlag
+
 data class BreachCustomEmail(
     val id: BreachEmailId.Custom,
     val email: String,
     val verified: Boolean,
-    val breachCount: Int
-)
+    val breachCount: Int,
+    val flags: Int,
+    val lastBreachTime: Int?
+) {
+    val isMonitoringDisabled: Boolean = flags.hasFlag(EmailFlag.MonitoringDisabled.value)
+}
+

@@ -28,29 +28,29 @@ import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarMonitorStatus
 import proton.android.pass.domain.PlanType
+import proton.android.pass.preferences.monitor.MonitorStatusPreference
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 fun PassHomeBottomBarMonitorIcon(
     modifier: Modifier = Modifier,
     planType: PlanType,
-    monitorStatus: HomeBottomBarMonitorStatus
+    monitorStatus: MonitorStatusPreference
 ) {
     when (planType) {
         is PlanType.Free,
         is PlanType.Unknown -> {
             when (monitorStatus) {
-                HomeBottomBarMonitorStatus.BreachIssues -> {
+                MonitorStatusPreference.BreachIssues -> {
                     CompR.drawable.ic_shield_monitor_warning_badge to true
                 }
 
-                HomeBottomBarMonitorStatus.CheckIssues -> {
+                MonitorStatusPreference.VulnerabilityIssues -> {
                     CompR.drawable.ic_shield_monitor_warning to false
                 }
 
-                HomeBottomBarMonitorStatus.NoIssues -> {
+                MonitorStatusPreference.NoIssues -> {
                     CompR.drawable.ic_shield_monitor_ok to false
                 }
             }
@@ -59,15 +59,15 @@ fun PassHomeBottomBarMonitorIcon(
         is PlanType.Paid,
         is PlanType.Trial -> {
             when (monitorStatus) {
-                HomeBottomBarMonitorStatus.BreachIssues -> {
+                MonitorStatusPreference.BreachIssues -> {
                     CompR.drawable.ic_shield_monitor_warning_monitoring_badge to true
                 }
 
-                HomeBottomBarMonitorStatus.CheckIssues -> {
+                MonitorStatusPreference.VulnerabilityIssues -> {
                     CompR.drawable.ic_shield_monitor_warning_monitoring to false
                 }
 
-                HomeBottomBarMonitorStatus.NoIssues -> {
+                MonitorStatusPreference.NoIssues -> {
                     CompR.drawable.ic_shield_monitor_ok_monitoring to false
                 }
             }

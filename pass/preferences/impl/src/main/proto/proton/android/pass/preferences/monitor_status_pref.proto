@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+option java_package = "me.proton.android.pass.preferences";
+option java_multiple_files = true;
+
+enum MonitorStatusPrefProto {
+  BREACH_ISSUES = 0;
+  NO_ISSUES = 1;
+  VULNERABILITY_ISSUES = 2;
+}

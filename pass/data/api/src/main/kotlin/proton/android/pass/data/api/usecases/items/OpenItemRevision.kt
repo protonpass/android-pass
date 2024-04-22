@@ -18,12 +18,17 @@
 
 package proton.android.pass.data.api.usecases.items
 
+import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ShareId
 
 interface OpenItemRevision {
 
-    suspend operator fun invoke(shareId: ShareId, itemRevision: ItemRevision): Item
+    suspend operator fun invoke(
+        shareId: ShareId,
+        itemRevision: ItemRevision,
+        encryptionContext: EncryptionContext
+    ): Item
 
 }

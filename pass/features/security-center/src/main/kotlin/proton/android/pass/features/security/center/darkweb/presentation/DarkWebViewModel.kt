@@ -41,12 +41,11 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.data.api.usecases.ItemTypeFilter
-import proton.android.pass.data.api.usecases.ObserveAddressesByUserId
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.breach.CustomEmailSuggestion
+import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
 import proton.android.pass.data.api.usecases.breach.ObserveBreachCustomEmails
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAliasEmail
-import proton.android.pass.data.api.usecases.breach.ObserveBreachesForProtonEmail
 import proton.android.pass.data.api.usecases.breach.ObserveCustomEmailSuggestions
 import proton.android.pass.data.api.usecases.items.ItemIsBreachedFilter
 import proton.android.pass.data.api.usecases.items.ItemSecurityCheckFilter
@@ -54,30 +53,25 @@ import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.breach.BreachCustomEmail
 import proton.android.pass.domain.breach.BreachEmail
-import proton.android.pass.features.security.center.breachdetail.ui.DateUtils
+import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.domain.breach.BreachId
+import proton.android.pass.domain.breach.BreachProtonEmail
+import proton.android.pass.features.security.center.shared.presentation.EmailBreachUiState
+import proton.android.pass.features.security.center.shared.ui.DateUtils
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 @HiltViewModel
 internal class DarkWebViewModel @Inject constructor(
     observeItems: ObserveItems,
-    observeAddressesByUserId: ObserveAddressesByUserId,
-    observeBreachesForProtonEmail: ObserveBreachesForProtonEmail,
+    observeAllBreachByUserId: ObserveAllBreachByUserId,
     observeBreachesForAliasEmail: ObserveBreachesForAliasEmail,
     observeBreachCustomEmails: ObserveBreachCustomEmails,
     observeCustomEmailSuggestions: ObserveCustomEmailSuggestions
 ) : ViewModel() {
 
-    private val protonEmailFlow = observeAddressesByUserId()
-        .flatMapLatest { addresses ->
-            if (addresses.isEmpty()) {
-                flowOf(emptyMap())
-            } else {
-                addresses.map { address ->
-                    observeBreachesForProtonEmail(addressId = address.addressId)
-                }.merge().map { list -> list.groupBy { it.email } }
-            }
-        }
+    private val protonEmailFlow = observeAllBreachByUserId()
+        .map { breach -> breach.breachedProtonEmails.filter { it.breachCounter > 0 } }
         .asLoadingResult()
 
     private val aliasEmailFlow = observeItems(
@@ -136,7 +130,7 @@ internal class DarkWebViewModel @Inject constructor(
     )
 
     private fun getProtonEmailState(
-        protonEmailResult: LoadingResult<Map<String, List<BreachEmail>>>
+        protonEmailResult: LoadingResult<List<BreachProtonEmail>>
     ): DarkWebEmailBreachState = when (protonEmailResult) {
         is LoadingResult.Error -> {
             PassLogger.w(TAG, "Failed to load proton emails")
@@ -148,10 +142,11 @@ internal class DarkWebViewModel @Inject constructor(
         is LoadingResult.Success -> DarkWebEmailBreachState.Success(
             protonEmailResult.data.map {
                 EmailBreachUiState(
-                    id = it.value.first().emailId,
-                    email = it.key,
-                    count = it.value.size,
-                    breachDate = it.value.getLatestBreachDate()
+                    id = BreachEmailId.Proton(BreachId(it.addressId.id), it.addressId),
+                    email = it.email,
+                    count = it.breachCounter,
+                    breachDate = it.lastBreachTime?.let(DateUtils::formatDate)?.getOrNull(),
+                    isMonitored = !it.isMonitoringDisabled
                 )
             }.toImmutableList()
         )
@@ -173,7 +168,8 @@ internal class DarkWebViewModel @Inject constructor(
                     id = it.value.first().emailId,
                     email = it.key,
                     count = it.value.size,
-                    breachDate = it.value.getLatestBreachDate()
+                    breachDate = it.value.getLatestBreachDate(),
+                    isMonitored = false
                 )
             }.toImmutableList()
         )

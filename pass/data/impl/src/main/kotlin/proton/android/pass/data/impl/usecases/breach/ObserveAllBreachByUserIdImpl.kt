@@ -33,7 +33,7 @@ class ObserveAllBreachByUserIdImpl @Inject constructor(
 
     override fun invoke(): Flow<Breach> = observeCurrentUser()
         .flatMapLatest { user ->
-            repository.observeBreach(user.userId)
+            repository.observeAllBreaches(user.userId)
         }
 
 }

@@ -37,4 +37,5 @@ dependencies {
     implementation(projects.pass.commonUiModels.api)
     implementation(projects.pass.domain)
     implementation(projects.pass.notifications.api)
+    implementation(projects.pass.preferences.api)
 }

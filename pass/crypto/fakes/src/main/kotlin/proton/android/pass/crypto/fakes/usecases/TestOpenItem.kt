@@ -18,9 +18,11 @@
 
 package proton.android.pass.crypto.fakes.usecases
 
+import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.usecases.EncryptedItemRevision
 import proton.android.pass.crypto.api.usecases.OpenItem
 import proton.android.pass.crypto.api.usecases.OpenItemOutput
+import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.key.ShareKey
 
@@ -36,5 +38,12 @@ class TestOpenItem : OpenItem {
         response: EncryptedItemRevision,
         share: Share,
         shareKeys: List<ShareKey>
+    ): OpenItemOutput = open(response, share, shareKeys, TestEncryptionContext)
+
+    override fun open(
+        response: EncryptedItemRevision,
+        share: Share,
+        shareKeys: List<ShareKey>,
+        encryptionContext: EncryptionContext
     ): OpenItemOutput = output ?: throw IllegalStateException("output not set")
 }

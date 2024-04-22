@@ -19,6 +19,7 @@
 package proton.android.pass.crypto.api.usecases
 
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.key.ShareKey
@@ -50,5 +51,12 @@ interface OpenItem {
         response: EncryptedItemRevision,
         share: Share,
         shareKeys: List<ShareKey>
+    ): OpenItemOutput
+
+    fun open(
+        response: EncryptedItemRevision,
+        share: Share,
+        shareKeys: List<ShareKey>,
+        encryptionContext: EncryptionContext
     ): OpenItemOutput
 }

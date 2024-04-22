@@ -16,13 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.domain.breach
+package proton.android.pass.commonpresentation.api.bars.bottom.home.presentation
 
-data class Breach(
-    val breachesCount: Int,
-    val breachedDomainPeeks: List<BreachDomainPeek>,
-    val breachedCustomEmails: List<BreachCustomEmail>,
-    val breachedProtonEmails: List<BreachProtonEmail>
-) {
-    val hasBreaches: Boolean = breachesCount > 0
+enum class HomeBottomBarMonitorStatus {
+    BreachIssues,
+    CheckIssues,
+    NoIssues
 }

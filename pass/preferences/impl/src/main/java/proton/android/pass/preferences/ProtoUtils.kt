@@ -21,7 +21,9 @@ package proton.android.pass.preferences
 import me.proton.android.pass.preferences.AppLockTypePrefProto
 import me.proton.android.pass.preferences.BooleanPrefProto
 import me.proton.android.pass.preferences.LockAppPrefProto
+import me.proton.android.pass.preferences.MonitorStatusPrefProto
 import me.proton.android.pass.preferences.PasswordGenerationPrefProto
+import proton.android.pass.preferences.monitor.MonitorStatusPreference
 import me.proton.android.pass.preferences.PasswordGenerationMode as ProtoPasswordGenerationMode
 import me.proton.android.pass.preferences.WordSeparator as ProtoWordSeparator
 
@@ -89,32 +91,33 @@ fun AppLockTypePrefProto.toValue(default: AppLockTypePreference) = when (this) {
     else -> default
 }
 
-fun PasswordGenerationPreference.toProto(): PasswordGenerationPrefProto = PasswordGenerationPrefProto.newBuilder()
-    .setMode(
-        when (mode) {
-            PasswordGenerationMode.Random -> ProtoPasswordGenerationMode.PASSWORD_GENERATION_MODE_RANDOM
-            PasswordGenerationMode.Words -> ProtoPasswordGenerationMode.PASSWORD_GENERATION_MODE_WORDS
-        }
-    )
-    .setRandomPasswordLength(randomPasswordLength)
-    .setRandomHasSpecialCharacters(randomHasSpecialCharacters.toBooleanPrefProto())
-    .setRandomIncludeCapitalLetters(randomHasCapitalLetters.toBooleanPrefProto())
-    .setRandomIncludeNumbers(randomIncludeNumbers.toBooleanPrefProto())
-    .setWordsCount(wordsCount)
-    .setWordsSeparator(
-        when (wordsSeparator) {
-            WordSeparator.Hyphen -> ProtoWordSeparator.WORD_SEPARATOR_HYPHEN
-            WordSeparator.Space -> ProtoWordSeparator.WORD_SEPARATOR_SPACE
-            WordSeparator.Period -> ProtoWordSeparator.WORD_SEPARATOR_PERIOD
-            WordSeparator.Comma -> ProtoWordSeparator.WORD_SEPARATOR_COMMA
-            WordSeparator.Underscore -> ProtoWordSeparator.WORD_SEPARATOR_UNDERSCORE
-            WordSeparator.Numbers -> ProtoWordSeparator.WORD_SEPARATOR_NUMBERS
-            WordSeparator.NumbersAndSymbols -> ProtoWordSeparator.WORD_SEPARATOR_NUMBERS_AND_SYMBOLS
-        }
-    )
-    .setWordsCapitalise(wordsCapitalise.toBooleanPrefProto())
-    .setWordsIncludeNumbers(wordsIncludeNumbers.toBooleanPrefProto())
-    .build()
+fun PasswordGenerationPreference.toProto(): PasswordGenerationPrefProto =
+    PasswordGenerationPrefProto.newBuilder()
+        .setMode(
+            when (mode) {
+                PasswordGenerationMode.Random -> ProtoPasswordGenerationMode.PASSWORD_GENERATION_MODE_RANDOM
+                PasswordGenerationMode.Words -> ProtoPasswordGenerationMode.PASSWORD_GENERATION_MODE_WORDS
+            }
+        )
+        .setRandomPasswordLength(randomPasswordLength)
+        .setRandomHasSpecialCharacters(randomHasSpecialCharacters.toBooleanPrefProto())
+        .setRandomIncludeCapitalLetters(randomHasCapitalLetters.toBooleanPrefProto())
+        .setRandomIncludeNumbers(randomIncludeNumbers.toBooleanPrefProto())
+        .setWordsCount(wordsCount)
+        .setWordsSeparator(
+            when (wordsSeparator) {
+                WordSeparator.Hyphen -> ProtoWordSeparator.WORD_SEPARATOR_HYPHEN
+                WordSeparator.Space -> ProtoWordSeparator.WORD_SEPARATOR_SPACE
+                WordSeparator.Period -> ProtoWordSeparator.WORD_SEPARATOR_PERIOD
+                WordSeparator.Comma -> ProtoWordSeparator.WORD_SEPARATOR_COMMA
+                WordSeparator.Underscore -> ProtoWordSeparator.WORD_SEPARATOR_UNDERSCORE
+                WordSeparator.Numbers -> ProtoWordSeparator.WORD_SEPARATOR_NUMBERS
+                WordSeparator.NumbersAndSymbols -> ProtoWordSeparator.WORD_SEPARATOR_NUMBERS_AND_SYMBOLS
+            }
+        )
+        .setWordsCapitalise(wordsCapitalise.toBooleanPrefProto())
+        .setWordsIncludeNumbers(wordsIncludeNumbers.toBooleanPrefProto())
+        .build()
 
 @Suppress("MagicNumber")
 fun PasswordGenerationPrefProto.toValue() = PasswordGenerationPreference(
@@ -163,3 +166,15 @@ fun PasswordGenerationPrefProto.toValue() = PasswordGenerationPreference(
     )
 )
 
+internal fun MonitorStatusPreference.toProto(): MonitorStatusPrefProto = when (this) {
+    MonitorStatusPreference.BreachIssues -> MonitorStatusPrefProto.BREACH_ISSUES
+    MonitorStatusPreference.NoIssues -> MonitorStatusPrefProto.NO_ISSUES
+    MonitorStatusPreference.VulnerabilityIssues -> MonitorStatusPrefProto.VULNERABILITY_ISSUES
+}
+
+internal fun MonitorStatusPrefProto.toValue(): MonitorStatusPreference = when (this) {
+    MonitorStatusPrefProto.BREACH_ISSUES -> MonitorStatusPreference.BreachIssues
+    MonitorStatusPrefProto.NO_ISSUES -> MonitorStatusPreference.NoIssues
+    MonitorStatusPrefProto.VULNERABILITY_ISSUES -> MonitorStatusPreference.VulnerabilityIssues
+    MonitorStatusPrefProto.UNRECOGNIZED -> MonitorStatusPreference.NoIssues
+}

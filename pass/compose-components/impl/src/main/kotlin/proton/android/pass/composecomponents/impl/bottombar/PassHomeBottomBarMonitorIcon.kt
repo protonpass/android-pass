@@ -20,13 +20,10 @@ package proton.android.pass.composecomponents.impl.bottombar
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
-import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.LocalContentColor
+import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.BlendMode
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -80,15 +77,11 @@ fun PassHomeBottomBarMonitorIcon(
         }
     }.let { (monitorIconResId, needsBadge) ->
         Box(modifier = modifier) {
-            Image(
+            Icon(
                 painter = painterResource(id = monitorIconResId),
                 contentDescription = stringResource(
                     id = CompR.string.bottom_bar_security_center_icon_content_description
                 ),
-                colorFilter = ColorFilter.tint(
-                    color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current),
-                    blendMode = BlendMode.SrcIn
-                )
             )
 
             if (needsBadge) {

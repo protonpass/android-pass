@@ -44,6 +44,9 @@ import proton.android.pass.features.security.center.home.ui.SecurityCenterHomeSc
 import proton.android.pass.features.security.center.missingtfa.navigation.SecurityCenterMissingTFADestination
 import proton.android.pass.features.security.center.missingtfa.navigation.SecurityCenterMissingTFANavItem
 import proton.android.pass.features.security.center.missingtfa.ui.SecurityCenterMissingTfaScreen
+import proton.android.pass.features.security.center.protonlist.navigation.SecurityCenterProtonListBreachDetailNavItem
+import proton.android.pass.features.security.center.protonlist.navigation.SecurityCenterProtonListNavDestination
+import proton.android.pass.features.security.center.protonlist.ui.SecurityCenterProtonListScreen
 import proton.android.pass.features.security.center.report.navigation.SecurityCenterAliasEmailReportNavItem
 import proton.android.pass.features.security.center.report.navigation.SecurityCenterCustomEmailReportNavItem
 import proton.android.pass.features.security.center.report.navigation.SecurityCenterProtonEmailReportNavItem
@@ -210,6 +213,9 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                             breachCount = destination.breachCount
                         )
                     )
+
+                    DarkWebMonitorNavDestination.AllProtonEmails ->
+                        onNavigated(SecurityCenterNavDestination.AllProtonEmails)
                 }
             }
         )
@@ -291,10 +297,27 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                     is SecurityCenterExcludeItemsDestination.Back -> SecurityCenterNavDestination.Back(
                         force = destination.force
                     )
+
                     is SecurityCenterExcludeItemsDestination.ItemDetails -> SecurityCenterNavDestination.ItemDetails(
                         shareId = destination.shareId,
                         itemId = destination.itemId
                     )
+                }.also(onNavigated)
+            }
+        )
+    }
+
+    composable(SecurityCenterProtonListBreachDetailNavItem) {
+        SecurityCenterProtonListScreen(
+            onNavigated = { destination ->
+                when (destination) {
+                    SecurityCenterProtonListNavDestination.Back -> SecurityCenterNavDestination.Back()
+                    is SecurityCenterProtonListNavDestination.OnEmailClick ->
+                        SecurityCenterNavDestination.ProtonEmailReport(
+                            id = destination.id,
+                            email = destination.email,
+                            breachCount = destination.breachCount
+                        )
                 }.also(onNavigated)
             }
         )

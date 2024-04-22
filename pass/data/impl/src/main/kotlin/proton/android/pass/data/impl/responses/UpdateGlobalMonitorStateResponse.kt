@@ -22,7 +22,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class UpdateMonitorStateResponse(
+data class UpdateGlobalMonitorStateResponse(
     @SerialName("Code")
     val code: Int,
     @SerialName("Monitor")
@@ -38,9 +38,15 @@ data class MonitorStateResponse(
 )
 
 @Serializable
-data class UpdateMonitorStateRequest(
+data class UpdateGlobalMonitorStateRequest(
     @SerialName("ProtonAddress")
     val protonAddress: Boolean?,
     @SerialName("Aliases")
     val aliases: Boolean?
+)
+
+@Serializable
+data class UpdateMonitorAddressStateRequest(
+    @SerialName("Monitor")
+    val monitor: Boolean
 )

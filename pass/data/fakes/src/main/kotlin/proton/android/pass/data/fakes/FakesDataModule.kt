@@ -122,8 +122,10 @@ import proton.android.pass.data.api.usecases.breach.ObserveBreachesForProtonEmai
 import proton.android.pass.data.api.usecases.breach.ObserveCustomEmailSuggestions
 import proton.android.pass.data.api.usecases.breach.RemoveCustomEmail
 import proton.android.pass.data.api.usecases.breach.ResendVerificationCode
-import proton.android.pass.data.api.usecases.breach.UpdateAliasAddressesMonitorState
-import proton.android.pass.data.api.usecases.breach.UpdateProtonAddressesMonitorState
+import proton.android.pass.data.api.usecases.breach.UpdateAliasAddressMonitorState
+import proton.android.pass.data.api.usecases.breach.UpdateGlobalAliasAddressesMonitorState
+import proton.android.pass.data.api.usecases.breach.UpdateGlobalProtonAddressesMonitorState
+import proton.android.pass.data.api.usecases.breach.UpdateProtonAddressMonitorState
 import proton.android.pass.data.api.usecases.breach.VerifyBreachCustomEmail
 import proton.android.pass.data.api.usecases.capabilities.CanCreateItemInVault
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
@@ -258,8 +260,10 @@ import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachesForProt
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveCustomEmailSuggestions
 import proton.android.pass.data.fakes.usecases.breach.FakeRemoveCustomEmail
 import proton.android.pass.data.fakes.usecases.breach.FakeResendVerificationCode
-import proton.android.pass.data.fakes.usecases.breach.FakeUpdateAliasAddressesMonitorState
-import proton.android.pass.data.fakes.usecases.breach.FakeUpdateProtonAddressesMonitorState
+import proton.android.pass.data.fakes.usecases.breach.FakeUpdateAliasAddressMonitorState
+import proton.android.pass.data.fakes.usecases.breach.FakeUpdateGlobalAliasAddressesMonitorState
+import proton.android.pass.data.fakes.usecases.breach.FakeUpdateGlobalProtonAddressesMonitorState
+import proton.android.pass.data.fakes.usecases.breach.FakeUpdateProtonAddressMonitorState
 import proton.android.pass.data.fakes.usecases.breach.FakeVerifyBreachCustomEmail
 import proton.android.pass.data.fakes.usecases.items.FakeGetItemCategory
 import proton.android.pass.data.fakes.usecases.items.FakeObserveItemRevisions
@@ -644,11 +648,21 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindUpdateAliasAddressesMonitorState(
-        impl: FakeUpdateAliasAddressesMonitorState
-    ): UpdateAliasAddressesMonitorState
+        impl: FakeUpdateGlobalAliasAddressesMonitorState
+    ): UpdateGlobalAliasAddressesMonitorState
 
     @Binds
     abstract fun bindUpdateProtonAddressesMonitorState(
-        impl: FakeUpdateProtonAddressesMonitorState
-    ): UpdateProtonAddressesMonitorState
+        impl: FakeUpdateGlobalProtonAddressesMonitorState
+    ): UpdateGlobalProtonAddressesMonitorState
+
+    @Binds
+    abstract fun bindUpdateAliasAddressMonitorState(
+        impl: FakeUpdateAliasAddressMonitorState
+    ): UpdateAliasAddressMonitorState
+
+    @Binds
+    abstract fun bindUpdateProtonAddressMonitorState(
+        impl: FakeUpdateProtonAddressMonitorState
+    ): UpdateProtonAddressMonitorState
 }

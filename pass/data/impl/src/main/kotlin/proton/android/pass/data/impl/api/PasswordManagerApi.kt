@@ -71,9 +71,10 @@ import proton.android.pass.data.impl.responses.MigrateItemsResponse
 import proton.android.pass.data.impl.responses.OrganizationGetResponse
 import proton.android.pass.data.impl.responses.PendingInvitesResponse
 import proton.android.pass.data.impl.responses.TrashItemsResponse
+import proton.android.pass.data.impl.responses.UpdateGlobalMonitorStateRequest
+import proton.android.pass.data.impl.responses.UpdateGlobalMonitorStateResponse
 import proton.android.pass.data.impl.responses.UpdateLastUsedTimeResponse
-import proton.android.pass.data.impl.responses.UpdateMonitorStateRequest
-import proton.android.pass.data.impl.responses.UpdateMonitorStateResponse
+import proton.android.pass.data.impl.responses.UpdateMonitorAddressStateRequest
 import proton.android.pass.data.impl.responses.UserAccessResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -373,7 +374,22 @@ interface PasswordManagerApi : BaseRetrofitApi {
     ): CodeOnlyResponse
 
     @PUT("$PREFIX/user/monitor")
-    suspend fun updateMonitorState(@Body request: UpdateMonitorStateRequest): UpdateMonitorStateResponse
+    suspend fun updateGlobalMonitorState(
+        @Body request: UpdateGlobalMonitorStateRequest
+    ): UpdateGlobalMonitorStateResponse
+
+    @PUT("$PREFIX/breach/address/{addressId}/monitor")
+    suspend fun updateProtonAddressMonitorState(
+        @Path("addressId") addressId: String,
+        @Body request: UpdateMonitorAddressStateRequest
+    ): CodeOnlyResponse
+
+    @PUT("$PREFIX/share/{shareId}/alias/{itemId}/breaches")
+    suspend fun updateAliasAddressMonitorState(
+        @Path("shareId") shareId: String,
+        @Path("itemId") itemId: String,
+        @Body request: UpdateMonitorAddressStateRequest
+    ): CodeOnlyResponse
 
     // Core
     @GET("core/v4/keys/all")

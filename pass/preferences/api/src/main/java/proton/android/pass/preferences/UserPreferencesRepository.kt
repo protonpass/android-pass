@@ -20,6 +20,7 @@ package proton.android.pass.preferences
 
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.common.api.Option
+import proton.android.pass.preferences.monitor.MonitorStatusPreference
 import proton.android.pass.preferences.sentinel.SentinelStatusPreference
 
 @Suppress("TooManyFunctions", "ComplexInterface")
@@ -78,4 +79,8 @@ interface UserPreferencesRepository {
     fun setSentinelStatusPreference(preference: SentinelStatusPreference): Result<Unit>
 
     fun observeSentinelStatusPreference(): Flow<SentinelStatusPreference>
+
+    fun setMonitorStatusPreference(preference: MonitorStatusPreference): Result<Unit>
+
+    fun observeMonitorStatusPreference(): Flow<MonitorStatusPreference>
 }

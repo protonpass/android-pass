@@ -20,6 +20,7 @@ package proton.android.pass.data.impl.usecases.items
 
 import kotlinx.coroutines.flow.first
 import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.usecases.OpenItem
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.api.repositories.ShareRepository
@@ -37,14 +38,19 @@ class OpenItemRevisionImpl @Inject constructor(
     private val openItem: OpenItem
 ) : OpenItemRevision {
 
-    override suspend fun invoke(shareId: ShareId, itemRevision: ItemRevision): Item {
+    override suspend fun invoke(
+        shareId: ShareId,
+        itemRevision: ItemRevision,
+        encryptionContext: EncryptionContext
+    ): Item {
         val userId = requireNotNull(accountManager.getPrimaryUserId().first())
         val addressId = shareRepository.getAddressForShareId(userId, shareId).addressId
 
         return openItem.open(
             response = itemRevision.toCrypto(),
             share = shareRepository.getById(userId, shareId),
-            shareKeys = shareKeyRepository.getShareKeys(userId, addressId, shareId).first()
+            shareKeys = shareKeyRepository.getShareKeys(userId, addressId, shareId).first(),
+            encryptionContext = encryptionContext
         ).item
     }
 

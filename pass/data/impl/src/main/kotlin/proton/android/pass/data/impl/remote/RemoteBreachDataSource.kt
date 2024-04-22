@@ -28,6 +28,8 @@ import proton.android.pass.data.impl.responses.BreachCustomEmailResponse
 import proton.android.pass.data.impl.responses.BreachCustomEmailsResponse
 import proton.android.pass.data.impl.responses.BreachEmailsResponse
 import proton.android.pass.data.impl.responses.BreachesResponse
+import proton.android.pass.data.impl.responses.UpdateMonitorStateRequest
+import proton.android.pass.data.impl.responses.UpdateMonitorStateResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.breach.BreachEmailId
@@ -63,11 +65,16 @@ interface RemoteBreachDataSource {
         shareId: ShareId,
         itemId: ItemId
     )
+
     suspend fun markCustomEmailAsResolved(userId: UserId, id: BreachEmailId.Custom)
 
     suspend fun resendVerificationCode(userId: UserId, id: BreachEmailId.Custom)
 
     suspend fun removeCustomEmail(userId: UserId, id: BreachEmailId.Custom)
+
+    suspend fun updateProtonAddressMonitorState(userId: UserId, enabled: Boolean): UpdateMonitorStateResponse
+
+    suspend fun updateAliasAddressMonitorState(userId: UserId, enabled: Boolean): UpdateMonitorStateResponse
 }
 
 class RemoteBreachDataSourceImpl @Inject constructor(
@@ -181,4 +188,30 @@ class RemoteBreachDataSourceImpl @Inject constructor(
             }
             .valueOrThrow
     }
+
+    override suspend fun updateProtonAddressMonitorState(userId: UserId, enabled: Boolean): UpdateMonitorStateResponse =
+        apiProvider
+            .get<PasswordManagerApi>(userId)
+            .invoke {
+                updateMonitorState(
+                    UpdateMonitorStateRequest(
+                        protonAddress = enabled,
+                        aliases = null
+                    )
+                )
+            }
+            .valueOrThrow
+
+    override suspend fun updateAliasAddressMonitorState(userId: UserId, enabled: Boolean): UpdateMonitorStateResponse =
+        apiProvider
+            .get<PasswordManagerApi>(userId)
+            .invoke {
+                updateMonitorState(
+                    UpdateMonitorStateRequest(
+                        protonAddress = null,
+                        aliases = enabled
+                    )
+                )
+            }
+            .valueOrThrow
 }

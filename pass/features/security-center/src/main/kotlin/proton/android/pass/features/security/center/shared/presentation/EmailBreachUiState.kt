@@ -28,4 +28,6 @@ data class EmailBreachUiState(
     val count: Int,
     val breachDate: String?,
     val isMonitored: Boolean
-)
+) {
+    val hasBreaches = count > 0
+}

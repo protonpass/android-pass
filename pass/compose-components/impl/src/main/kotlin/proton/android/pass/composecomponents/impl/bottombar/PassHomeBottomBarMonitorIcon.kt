@@ -112,7 +112,7 @@ internal fun PassHomeBottomBarMonitorIconPreview(
         Surface {
             PassHomeBottomBarMonitorIcon(
                 planType = planType,
-                monitorStatus = monitorStatus,
+                monitorStatus = monitorStatus
             )
         }
     }

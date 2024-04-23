@@ -91,7 +91,8 @@ internal fun SecurityCenterProtonListContent(
                     if (state.excludedEmails.isNotEmpty()) {
                         item {
                             Text(
-                                text = "Excluded from monitoring",
+                                modifier = Modifier.padding(horizontal = Spacing.medium),
+                                text = stringResource(R.string.security_center_proton_list_excluded_from_monitoring),
                                 style = ProtonTheme.typography.body2Regular
                             )
                         }

@@ -33,12 +33,22 @@ data class UserAccessResponse(
 data class AccessResponse(
     @SerialName("Plan")
     val planResponse: PlanResponse,
+    @SerialName("Monitor")
+    val monitorResponse: MonitorResponse,
     @SerialName("PendingInvites")
     val pendingInvites: Int,
     @SerialName("WaitingNewUserInvites")
     val waitingNewUserInvites: Int,
     @SerialName("MinVersionUpgrade")
     val minVersionUpgrade: String?
+)
+
+@Serializable
+data class MonitorResponse(
+    @SerialName("ProtonAddress")
+    val protonMonitorEnabled: Boolean,
+    @SerialName("Aliases")
+    val aliasMonitorEnabled: Boolean
 )
 
 @Serializable

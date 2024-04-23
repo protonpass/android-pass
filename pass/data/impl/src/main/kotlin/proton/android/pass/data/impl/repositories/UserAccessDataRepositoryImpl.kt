@@ -37,6 +37,8 @@ class UserAccessDataRepositoryImpl @Inject constructor(
     private fun UserAccessDataEntity.toDomain() = UserAccessData(
         pendingInvites = pendingInvites,
         waitingNewUserInvites = waitingNewUserInvites,
-        needsUpdate = minVersionUpgrade != null
+        needsUpdate = minVersionUpgrade != null,
+        protonMonitorEnabled = protonMonitorEnabled,
+        aliasMonitorEnabled = aliasMonitorEnabled
     )
 }

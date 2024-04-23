@@ -23,7 +23,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.features.security.center.addressoptions.navigation.AddressOptionsType
+import proton.android.pass.features.security.center.addressoptions.navigation.AddressOptionsType.DisableMonitoring
+import proton.android.pass.features.security.center.addressoptions.navigation.AddressOptionsType.EnableMonitoring
 import proton.android.pass.features.security.center.addressoptions.navigation.AddressType
 import proton.android.pass.features.security.center.protonlist.navigation.SecurityCenterProtonListNavDestination
 import proton.android.pass.features.security.center.protonlist.presentation.SecurityCenterProtonListEvent
@@ -43,30 +44,28 @@ fun SecurityCenterProtonListScreen(
         }
         viewModel.onEventConsumed(state.event)
     }
-    SecurityCenterProtonListContent(
-        state = state.listState,
-        onUiEvent = { event ->
-            when (event) {
-                SecurityCenterProtonListUiEvent.Back ->
-                    onNavigated(SecurityCenterProtonListNavDestination.Back)
+    SecurityCenterProtonListContent(state = state) { event ->
+        when (event) {
+            SecurityCenterProtonListUiEvent.Back ->
+                onNavigated(SecurityCenterProtonListNavDestination.Back)
 
-                is SecurityCenterProtonListUiEvent.EmailBreachClick ->
-                    onNavigated(
-                        SecurityCenterProtonListNavDestination.OnEmailClick(
-                            event.id,
-                            event.email,
-                            event.breachCount
-                        )
+            is SecurityCenterProtonListUiEvent.EmailBreachClick ->
+                onNavigated(
+                    SecurityCenterProtonListNavDestination.OnEmailClick(
+                        event.id,
+                        event.email,
+                        event.breachCount
                     )
+                )
 
-                SecurityCenterProtonListUiEvent.OptionsClick ->
-                    onNavigated(
-                        SecurityCenterProtonListNavDestination.OnOptionsClick(
-                            AddressType.Proton,
-                            AddressOptionsType.Unknown
-                        )
+            SecurityCenterProtonListUiEvent.OptionsClick -> {
+                onNavigated(
+                    SecurityCenterProtonListNavDestination.OnOptionsClick(
+                        AddressType.Proton,
+                        if (state.isGlobalMonitorEnabled) DisableMonitoring else EnableMonitoring
                     )
+                )
             }
         }
-    )
+    }
 }

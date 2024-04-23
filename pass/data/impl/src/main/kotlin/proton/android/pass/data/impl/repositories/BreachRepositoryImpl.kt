@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.impl.repositories
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -26,6 +27,7 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.common.api.FlowUtils.oneShot
@@ -92,12 +94,18 @@ class BreachRepositoryImpl @Inject constructor(
         refreshFlow.update { true }
     }
 
-    override fun observeBreachesForProtonEmail(userId: UserId, id: AddressId): Flow<List<BreachEmail>> = oneShot {
+    override fun observeBreachesForProtonEmail(
+        userId: UserId,
+        id: AddressId
+    ): Flow<List<BreachEmail>> = oneShot {
         remote.getBreachesForProtonEmail(userId, id)
             .toDomain { breach -> BreachEmailId.Proton(BreachId(breach.id), id) }
     }
 
-    override fun observeBreachesForCustomEmail(userId: UserId, id: BreachEmailId.Custom): Flow<List<BreachEmail>> =
+    override fun observeBreachesForCustomEmail(
+        userId: UserId,
+        id: BreachEmailId.Custom
+    ): Flow<List<BreachEmail>> =
         oneShot {
             customEmailBreachesCache.getOrPut(userId to id.id) {
                 remote.getBreachesForCustomEmail(userId, id)
@@ -142,11 +150,17 @@ class BreachRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updateGlobalProtonMonitorState(userId: UserId, enabled: Boolean) {
-        remote.updateGlobalProtonAddressMonitorState(userId, enabled)
+        withContext(Dispatchers.IO) {
+            remote.updateGlobalProtonAddressMonitorState(userId, enabled)
+            localUserAccessDataDataSource.updateProtonMonitorState(userId, enabled)
+        }
     }
 
     override suspend fun updateGlobalAliasMonitorState(userId: UserId, enabled: Boolean) {
-        remote.updateGlobalAliasAddressMonitorState(userId, enabled)
+        withContext(Dispatchers.IO) {
+            remote.updateGlobalAliasAddressMonitorState(userId, enabled)
+            localUserAccessDataDataSource.updateAliasMonitorState(userId, enabled)
+        }
     }
 
     override suspend fun updateProtonAddressMonitorState(
@@ -155,8 +169,8 @@ class BreachRepositoryImpl @Inject constructor(
         enabled: Boolean
     ) {
         remote.updateProtonAddressMonitorState(userId, addressId, enabled)
-            .also { localUserAccessDataDataSource.updateProtonMonitorState(userId, enabled) }
     }
+
 
     override suspend fun updateAliasAddressMonitorState(
         userId: UserId,
@@ -165,7 +179,6 @@ class BreachRepositoryImpl @Inject constructor(
         enabled: Boolean
     ) {
         remote.updateAliasAddressMonitorState(userId, shareId, itemId, enabled)
-            .also { localUserAccessDataDataSource.updateAliasMonitorState(userId, enabled) }
     }
 
     private suspend fun refreshEmails(userId: UserId): List<BreachCustomEmail> {
@@ -204,19 +217,20 @@ class BreachRepositoryImpl @Inject constructor(
         breachTime = breachTime
     )
 
-    private fun BreachEmailsResponse.toDomain(createId: (Breaches) -> BreachEmailId) = with(this.breachEmails) {
-        breaches.map { breach ->
-            BreachEmail(
-                emailId = createId(breach),
-                email = breach.email,
-                severity = breach.severity,
-                name = breach.name,
-                createdAt = breach.createdAt,
-                publishedAt = breach.publishedAt,
-                size = breach.size,
-                passwordLastChars = breach.passwordLastChars,
-                exposedData = breach.exposedData.map { it.name }
-            )
+    private fun BreachEmailsResponse.toDomain(createId: (Breaches) -> BreachEmailId) =
+        with(this.breachEmails) {
+            breaches.map { breach ->
+                BreachEmail(
+                    emailId = createId(breach),
+                    email = breach.email,
+                    severity = breach.severity,
+                    name = breach.name,
+                    createdAt = breach.createdAt,
+                    publishedAt = breach.publishedAt,
+                    size = breach.size,
+                    passwordLastChars = breach.passwordLastChars,
+                    exposedData = breach.exposedData.map { it.name }
+                )
+            }
         }
-    }
 }

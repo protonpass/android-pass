@@ -19,6 +19,8 @@
 package proton.android.pass.features.security.center.protonlist.navigation
 
 import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.features.security.center.addressoptions.navigation.AddressOptionsType
+import proton.android.pass.features.security.center.addressoptions.navigation.AddressType
 
 sealed interface SecurityCenterProtonListNavDestination {
     data object Back : SecurityCenterProtonListNavDestination
@@ -26,5 +28,10 @@ sealed interface SecurityCenterProtonListNavDestination {
         val id: BreachEmailId.Proton,
         val email: String,
         val breachCount: Int
+    ) : SecurityCenterProtonListNavDestination
+
+    data class OnOptionsClick(
+        val addressType: AddressType,
+        val addressOptionsType: AddressOptionsType
     ) : SecurityCenterProtonListNavDestination
 }

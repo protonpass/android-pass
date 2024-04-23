@@ -29,4 +29,6 @@ internal sealed interface SecurityCenterProtonListUiEvent {
         val email: String,
         val breachCount: Int
     ) : SecurityCenterProtonListUiEvent
+
+    data object OptionsClick : SecurityCenterProtonListUiEvent
 }

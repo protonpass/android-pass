@@ -22,6 +22,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.features.PaidFeature
+import proton.android.pass.features.security.center.addressoptions.navigation.SecurityCenterAddressOptionsNavDestination
+import proton.android.pass.features.security.center.addressoptions.ui.SecurityCenterAddressOptionsBS
 import proton.android.pass.features.security.center.breachdetail.navigation.SecurityCenterAliasEmailBreachDetailNavItem
 import proton.android.pass.features.security.center.breachdetail.navigation.SecurityCenterCustomEmailBreachDetailNavItem
 import proton.android.pass.features.security.center.breachdetail.navigation.SecurityCenterProtonEmailBreachDetailNavItem
@@ -318,6 +320,23 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                             email = destination.email,
                             breachCount = destination.breachCount
                         )
+
+                    is SecurityCenterProtonListNavDestination.OnOptionsClick ->
+                        SecurityCenterNavDestination.AddressOptions(
+                            addressType = destination.addressType,
+                            addressOptionsType = destination.addressOptionsType
+                        )
+                }.also(onNavigated)
+            }
+        )
+    }
+
+    bottomSheet(navItem = SecurityCenterCustomEmailBreachDetailNavItem) {
+        SecurityCenterAddressOptionsBS(
+            onNavigated = { destination ->
+                when (destination) {
+                    SecurityCenterAddressOptionsNavDestination.Back ->
+                        SecurityCenterNavDestination.Back(comesFromBottomSheet = true)
                 }.also(onNavigated)
             }
         )

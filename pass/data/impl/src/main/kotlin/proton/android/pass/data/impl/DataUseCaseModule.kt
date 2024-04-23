@@ -72,6 +72,7 @@ import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveAppNeedsUpdate
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveCurrentUserSettings
+import proton.android.pass.data.api.usecases.ObserveGlobalMonitorState
 import proton.android.pass.data.api.usecases.ObserveHasConfirmedInvite
 import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
 import proton.android.pass.data.api.usecases.ObserveInvites
@@ -123,7 +124,6 @@ import proton.android.pass.data.api.usecases.breach.ObserveCustomEmailSuggestion
 import proton.android.pass.data.api.usecases.breach.RemoveCustomEmail
 import proton.android.pass.data.api.usecases.breach.ResendVerificationCode
 import proton.android.pass.data.api.usecases.breach.UpdateAliasAddressMonitorState
-import proton.android.pass.data.api.usecases.breach.UpdateGlobalAliasAddressesMonitorState
 import proton.android.pass.data.api.usecases.breach.UpdateGlobalProtonAddressesMonitorState
 import proton.android.pass.data.api.usecases.breach.UpdateProtonAddressMonitorState
 import proton.android.pass.data.api.usecases.breach.VerifyBreachCustomEmail
@@ -206,6 +206,7 @@ import proton.android.pass.data.impl.usecases.ObserveAppNeedsUpdateImpl
 import proton.android.pass.data.impl.usecases.ObserveCurrentUserImpl
 import proton.android.pass.data.impl.usecases.ObserveCurrentUserSettingsImpl
 import proton.android.pass.data.impl.usecases.ObserveDefaultVaultImpl
+import proton.android.pass.data.impl.usecases.ObserveGlobalMonitorStateImpl
 import proton.android.pass.data.impl.usecases.ObserveHasConfirmedInviteImpl
 import proton.android.pass.data.impl.usecases.ObserveInviteRecommendationsImpl
 import proton.android.pass.data.impl.usecases.ObserveInvitesImpl
@@ -259,7 +260,6 @@ import proton.android.pass.data.impl.usecases.breach.ObserveCustomEmailSuggestio
 import proton.android.pass.data.impl.usecases.breach.RemoveCustomEmailImpl
 import proton.android.pass.data.impl.usecases.breach.ResendVerificationCodeImpl
 import proton.android.pass.data.impl.usecases.breach.UpdateAliasAddressMonitorStateImpl
-import proton.android.pass.data.impl.usecases.breach.UpdateGlobalAliasAddressesMonitorStateImpl
 import proton.android.pass.data.impl.usecases.breach.UpdateGlobalProtonAddressesMonitorStateImpl
 import proton.android.pass.data.impl.usecases.breach.UpdateProtonAddressMonitorStateImpl
 import proton.android.pass.data.impl.usecases.breach.VerifyBreachCustomEmailImpl
@@ -691,9 +691,9 @@ abstract class DataUseCaseModule {
     ): UpdateGlobalProtonAddressesMonitorState
 
     @Binds
-    abstract fun bindUpdateAliasAddressesMonitorState(
-        impl: UpdateGlobalAliasAddressesMonitorStateImpl
-    ): UpdateGlobalAliasAddressesMonitorState
+    abstract fun bindObserveGlobalMonitorState(
+        impl: ObserveGlobalMonitorStateImpl
+    ): ObserveGlobalMonitorState
 
     @Binds
     abstract fun bindUpdateProtonAddressMonitorState(

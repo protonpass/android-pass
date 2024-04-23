@@ -83,7 +83,9 @@ class PlanRepositoryImpl @Inject constructor(
                     userId = userId.id,
                     pendingInvites = response.accessResponse.pendingInvites,
                     waitingNewUserInvites = response.accessResponse.waitingNewUserInvites,
-                    minVersionUpgrade = response.accessResponse.minVersionUpgrade
+                    minVersionUpgrade = response.accessResponse.minVersionUpgrade,
+                    protonMonitorEnabled = response.accessResponse.monitorResponse.protonMonitorEnabled,
+                    aliasMonitorEnabled = response.accessResponse.monitorResponse.aliasMonitorEnabled
                 )
             )
         }.onSuccess {

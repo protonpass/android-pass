@@ -23,6 +23,7 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.features.security.center.addressoptions.navigation.SecurityCenterAddressOptionsNavDestination
+import proton.android.pass.features.security.center.addressoptions.navigation.SecurityCenterAddressOptionsNavItem
 import proton.android.pass.features.security.center.addressoptions.ui.SecurityCenterAddressOptionsBS
 import proton.android.pass.features.security.center.breachdetail.navigation.SecurityCenterAliasEmailBreachDetailNavItem
 import proton.android.pass.features.security.center.breachdetail.navigation.SecurityCenterCustomEmailBreachDetailNavItem
@@ -331,7 +332,7 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
         )
     }
 
-    bottomSheet(navItem = SecurityCenterCustomEmailBreachDetailNavItem) {
+    bottomSheet(SecurityCenterAddressOptionsNavItem) {
         SecurityCenterAddressOptionsBS(
             onNavigated = { destination ->
                 when (destination) {

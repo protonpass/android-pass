@@ -34,5 +34,23 @@ abstract class UserAccessDataDao : BaseDao<UserAccessDataEntity>() {
         """
     )
     abstract fun observeByUserId(userId: String): Flow<UserAccessDataEntity?>
+
+    @Query(
+        """
+        UPDATE ${UserAccessDataEntity.TABLE}
+        SET ${UserAccessDataEntity.Columns.MONITOR_PROTON_ADDRESSES} = :enabled
+        WHERE ${UserAccessDataEntity.Columns.USER_ID} = :userId
+        """
+    )
+    abstract fun updateProtonMonitorState(userId: String, enabled: Boolean)
+
+    @Query(
+        """
+        UPDATE ${UserAccessDataEntity.TABLE}
+        SET ${UserAccessDataEntity.Columns.MONITOR_ALIAS_ADDRESSES} = :enabled
+        WHERE ${UserAccessDataEntity.Columns.USER_ID} = :userId
+        """
+    )
+    abstract fun updateAliasMonitorState(userId: String, enabled: Boolean)
 }
 

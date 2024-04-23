@@ -23,6 +23,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.UserAccessDataEntity
 import javax.inject.Inject
+import javax.inject.Singleton
 
 interface LocalUserAccessDataDataSource {
     suspend fun store(entity: UserAccessDataEntity)
@@ -31,6 +32,7 @@ interface LocalUserAccessDataDataSource {
     suspend fun updateAliasMonitorState(userId: UserId, enabled: Boolean)
 }
 
+@Singleton
 class LocalUserAccessDataDataSourceImpl @Inject constructor(
     private val passDatabase: PassDatabase
 ) : LocalUserAccessDataDataSource {

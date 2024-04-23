@@ -25,10 +25,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
+import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarState
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarViewModel
 import proton.android.pass.data.api.usecases.GetUserPlan
@@ -56,13 +59,15 @@ class HomeBottomBarViewModelImpl @Inject constructor(
         .flatMapLatest { isSecurityCenterEnabled ->
             if (isSecurityCenterEnabled) {
                 combine(
-                    observeAllBreachByUserId(),
+                    observeAllBreachByUserId().asLoadingResult(),
                     observeSecurityAnalysis()
-                ) { breach, securityAnalysis ->
+                ) { breachLoadingResult, securityAnalysis ->
                     when {
-                        breach.hasBreaches -> MonitorStatusPreference.BreachIssues
+                        breachLoadingResult is LoadingResult.Success &&
+                            breachLoadingResult.data.hasBreaches -> MonitorStatusPreference.BreachIssues
+
                         securityAnalysis.hasSecurityIssues -> MonitorStatusPreference.VulnerabilityIssues
-                        else -> MonitorStatusPreference.NoIssues
+                        else -> userPreferencesRepository.observeMonitorStatusPreference().first()
                     }.also(userPreferencesRepository::setMonitorStatusPreference)
                 }
             } else {
@@ -74,6 +79,7 @@ class HomeBottomBarViewModelImpl @Inject constructor(
                 .first()
                 .also { monitorStatusPreference -> emit(monitorStatusPreference) }
         }
+        .distinctUntilChanged()
 
     override val state: StateFlow<HomeBottomBarState> = combine(
         getUserPlan(),

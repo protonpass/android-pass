@@ -23,6 +23,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.features.security.center.addressoptions.navigation.AddressOptionsType
+import proton.android.pass.features.security.center.addressoptions.navigation.AddressType
 import proton.android.pass.features.security.center.protonlist.navigation.SecurityCenterProtonListNavDestination
 import proton.android.pass.features.security.center.protonlist.presentation.SecurityCenterProtonListEvent
 import proton.android.pass.features.security.center.protonlist.presentation.SecurityCenterProtonListViewModel
@@ -54,6 +56,14 @@ fun SecurityCenterProtonListScreen(
                             event.id,
                             event.email,
                             event.breachCount
+                        )
+                    )
+
+                SecurityCenterProtonListUiEvent.OptionsClick ->
+                    onNavigated(
+                        SecurityCenterProtonListNavDestination.OnOptionsClick(
+                            AddressType.Proton,
+                            AddressOptionsType.Unknown
                         )
                     )
             }

@@ -27,6 +27,8 @@ import javax.inject.Inject
 interface LocalUserAccessDataDataSource {
     suspend fun store(entity: UserAccessDataEntity)
     fun observe(userId: UserId): Flow<UserAccessDataEntity?>
+    suspend fun updateProtonMonitorState(userId: UserId, enabled: Boolean)
+    suspend fun updateAliasMonitorState(userId: UserId, enabled: Boolean)
 }
 
 class LocalUserAccessDataDataSourceImpl @Inject constructor(
@@ -39,4 +41,11 @@ class LocalUserAccessDataDataSourceImpl @Inject constructor(
     override fun observe(userId: UserId): Flow<UserAccessDataEntity?> =
         passDatabase.userAccessDataDao().observeByUserId(userId.id)
 
+    override suspend fun updateProtonMonitorState(userId: UserId, enabled: Boolean) {
+        passDatabase.userAccessDataDao().updateProtonMonitorState(userId.id, enabled)
+    }
+
+    override suspend fun updateAliasMonitorState(userId: UserId, enabled: Boolean) {
+        passDatabase.userAccessDataDao().updateAliasMonitorState(userId.id, enabled)
+    }
 }

@@ -32,6 +32,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.data.api.usecases.ObserveGlobalMonitorState
 import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachId
@@ -42,7 +43,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SecurityCenterProtonListViewModel @Inject constructor(
-    observeAllBreachByUserId: ObserveAllBreachByUserId
+    observeAllBreachByUserId: ObserveAllBreachByUserId,
+    observeGlobalMonitorState: ObserveGlobalMonitorState
 ) : ViewModel() {
 
     private val protonEmailFlow = observeAllBreachByUserId()
@@ -53,14 +55,19 @@ class SecurityCenterProtonListViewModel @Inject constructor(
         MutableStateFlow<SecurityCenterProtonListEvent>(SecurityCenterProtonListEvent.Idle)
 
     internal val state: StateFlow<SecurityCenterProtonListState> = combine(
+        observeGlobalMonitorState(),
         protonEmailFlow,
         eventFlow
-    ) { protonEmailsResult, event ->
+    ) { monitorState, protonEmailsResult, event ->
         val listState = when (protonEmailsResult) {
             is LoadingResult.Error -> ProtonListState.Error(ProtonListError.CannotLoad)
             LoadingResult.Loading -> ProtonListState.Loading
             is LoadingResult.Success -> {
-                val (excluded, included) = protonEmailsResult.data.partition { it.isMonitoringDisabled }
+                val (excluded, included) = if (!monitorState.protonMonitorEnabled) {
+                    protonEmailsResult.data.map { it.copy(flags = 0) }
+                } else {
+                    protonEmailsResult.data
+                }.partition { it.isMonitoringDisabled }
 
                 ProtonListState.Success(
                     includedEmails = included.toBreachRowState(),
@@ -69,6 +76,7 @@ class SecurityCenterProtonListViewModel @Inject constructor(
             }
         }
         SecurityCenterProtonListState(
+            isGlobalMonitorEnabled = monitorState.protonMonitorEnabled,
             listState = listState,
             event = event
         )
@@ -77,7 +85,6 @@ class SecurityCenterProtonListViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000L),
         initialValue = SecurityCenterProtonListState.Initial
     )
-
 
     private fun List<BreachProtonEmail>?.toBreachRowState(): ImmutableList<EmailBreachUiState> = if (this != null) {
         map { breachProtonEmail ->

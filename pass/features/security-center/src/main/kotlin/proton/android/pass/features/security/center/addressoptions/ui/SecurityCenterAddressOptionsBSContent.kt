@@ -34,6 +34,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.addressoptions.navigation.AddressOptionsType
 import proton.android.pass.features.security.center.addressoptions.presentation.SecurityCenterAddressOptionsState
+import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun SecurityCenterAddressOptionsBSContent(
@@ -73,7 +74,7 @@ private fun enableMonitoring(loading: Boolean, onClick: () -> Unit): BottomSheet
     override val subtitle: (@Composable () -> Unit)?
         get() = null
     override val leftIcon: (@Composable () -> Unit)
-        get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_eye) }
+        get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_eye) }
     override val endIcon: (@Composable () -> Unit)?
         get() = if (loading) {
             { CircularProgressIndicator(modifier = Modifier.size(24.dp)) }
@@ -93,7 +94,7 @@ private fun disableMonitoring(loading: Boolean, onClick: () -> Unit): BottomShee
     override val subtitle: (@Composable () -> Unit)?
         get() = null
     override val leftIcon: (@Composable () -> Unit)
-        get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_eye_slash) }
+        get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_eye_slash) }
     override val endIcon: (@Composable () -> Unit)?
         get() = if (loading) {
             { CircularProgressIndicator(modifier = Modifier.size(24.dp)) }

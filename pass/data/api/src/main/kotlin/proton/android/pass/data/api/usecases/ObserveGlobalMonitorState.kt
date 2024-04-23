@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,12 +16,15 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.domain
+package proton.android.pass.data.api.usecases
 
-data class UserAccessData(
-    val pendingInvites: Int,
-    val waitingNewUserInvites: Int,
-    val needsUpdate: Boolean,
+import kotlinx.coroutines.flow.Flow
+
+interface ObserveGlobalMonitorState {
+    operator fun invoke(): Flow<MonitorState>
+}
+
+data class MonitorState(
     val protonMonitorEnabled: Boolean,
     val aliasMonitorEnabled: Boolean
 )

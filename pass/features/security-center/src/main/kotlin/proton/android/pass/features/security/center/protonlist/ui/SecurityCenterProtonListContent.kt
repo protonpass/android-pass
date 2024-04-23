@@ -29,10 +29,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.composecomponents.impl.buttons.CircleIconButton
 import proton.android.pass.composecomponents.impl.loading.Loading
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.features.security.center.R
@@ -40,6 +42,7 @@ import proton.android.pass.features.security.center.protonlist.presentation.Prot
 import proton.android.pass.features.security.center.protonlist.ui.SecurityCenterProtonListUiEvent.EmailBreachClick
 import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBar
 import proton.android.pass.features.security.center.shared.ui.rows.EmailBreachRow
+import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun SecurityCenterProtonListContent(
@@ -52,7 +55,17 @@ internal fun SecurityCenterProtonListContent(
         topBar = {
             SecurityCenterTopBar(
                 title = stringResource(R.string.security_center_proton_list_top_bar_title),
-                onUpClick = { onUiEvent(SecurityCenterProtonListUiEvent.Back) }
+                onUpClick = { onUiEvent(SecurityCenterProtonListUiEvent.Back) },
+                actions = {
+                    CircleIconButton(
+                        iconPainter = painterResource(CoreR.drawable.ic_proton_three_dots_vertical),
+                        size = 40,
+                        backgroundColor = PassTheme.colors.interactionNormMinor1,
+                        tintColor = PassTheme.colors.interactionNormMajor2,
+                        iconContentDescription = "",
+                        onClick = { onUiEvent(SecurityCenterProtonListUiEvent.OptionsClick) }
+                    )
+                }
             )
         }
     ) { innerPaddingValues ->

@@ -23,6 +23,8 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.features.PaidFeature
+import proton.android.pass.features.security.center.addressoptions.navigation.AddressOptionsType
+import proton.android.pass.features.security.center.addressoptions.navigation.AddressType
 
 sealed interface SecurityCenterNavDestination {
 
@@ -105,4 +107,8 @@ sealed interface SecurityCenterNavDestination {
 
     data object AllProtonEmails : SecurityCenterNavDestination
 
+    data class AddressOptions(
+        val addressOptionsType: AddressOptionsType,
+        val addressType: AddressType
+    ) : SecurityCenterNavDestination
 }

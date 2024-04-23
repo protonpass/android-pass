@@ -82,13 +82,20 @@ sealed interface DarkWebEmailBreachState {
         else -> persistentListOf()
     }
 
+    fun enabledMonitoring(): Boolean = when (this) {
+        is Success -> enabledMonitoring
+        else -> false
+    }
+
     data object Loading : DarkWebEmailBreachState
 
     @JvmInline
     value class Error(val reason: DarkWebEmailsError) : DarkWebEmailBreachState
 
-    @JvmInline
-    value class Success(val emails: ImmutableList<EmailBreachUiState>) : DarkWebEmailBreachState
+    data class Success(
+        val emails: ImmutableList<EmailBreachUiState>,
+        val enabledMonitoring: Boolean
+    ) : DarkWebEmailBreachState
 }
 
 @Stable

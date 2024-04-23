@@ -104,10 +104,16 @@ class DarkWebEmailBreachStatePreviewProvider : PreviewParameterProvider<DarkWebE
                         breachDate = "2024-04-16T15:30:00Z",
                         isMonitored = false
                     )
-                )
+                ),
+                enabledMonitoring = true
             ),
             DarkWebEmailBreachState.Success(
-                emails = persistentListOf()
+                emails = persistentListOf(),
+                enabledMonitoring = true
+            ),
+            DarkWebEmailBreachState.Success(
+                emails = persistentListOf(),
+                enabledMonitoring = false
             ),
             DarkWebEmailBreachState.Loading,
             DarkWebEmailBreachState.Error(DarkWebEmailsError.CannotLoad)

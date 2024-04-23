@@ -50,8 +50,8 @@ import proton.android.pass.features.security.center.darkweb.ui.DarkWebUiEvent
 internal fun EmailBreachHeader(
     modifier: Modifier = Modifier,
     summaryType: DarkWebSummaryType,
-    onEvent: (DarkWebUiEvent) -> Unit,
-    state: DarkWebEmailBreachState
+    state: DarkWebEmailBreachState,
+    onEvent: (DarkWebUiEvent) -> Unit
 ) {
     val list = state.list()
     Row(
@@ -69,10 +69,10 @@ internal fun EmailBreachHeader(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
-        val accentColor = if (list.isEmpty() && state is DarkWebEmailBreachState.Success) {
-            PassTheme.colors.cardInteractionNormMajor1
-        } else {
-            PassTheme.colors.passwordInteractionNormMajor1
+        val accentColor = when {
+            state.enabledMonitoring() && list.isEmpty() -> PassTheme.colors.cardInteractionNormMajor1
+            !state.enabledMonitoring() -> PassTheme.colors.textWeak
+            else -> PassTheme.colors.passwordInteractionNormMajor1
         }
         Column(
             modifier = Modifier.weight(weight = 1f),
@@ -82,10 +82,14 @@ internal fun EmailBreachHeader(
                 DarkWebSummaryType.Proton -> {
                     val title =
                         stringResource(R.string.security_center_dark_web_monitor_proton_addresses)
-                    val subtitle = if (state is DarkWebEmailBreachState.Error) {
-                        stringResource(R.string.security_center_dark_web_monitor_proton_addresses_error)
-                    } else {
-                        pluralStringResource(
+                    val subtitle = when {
+                        state is DarkWebEmailBreachState.Error ->
+                            stringResource(R.string.security_center_dark_web_monitor_proton_addresses_error)
+
+                        !state.enabledMonitoring() ->
+                            stringResource(R.string.security_center_dark_web_monitor_monitoring_disabled)
+
+                        else -> pluralStringResource(
                             R.plurals.security_center_dark_web_monitor_found_in_breaches,
                             list.count(),
                             list.count()
@@ -97,10 +101,14 @@ internal fun EmailBreachHeader(
                 DarkWebSummaryType.Alias -> {
                     val title =
                         stringResource(R.string.security_center_dark_web_monitor_hide_my_email_aliases)
-                    val subtitle = if (state is DarkWebEmailBreachState.Error) {
-                        stringResource(R.string.security_center_dark_web_monitor_alias_addresses_error)
-                    } else {
-                        pluralStringResource(
+                    val subtitle = when {
+                        state is DarkWebEmailBreachState.Error ->
+                            stringResource(R.string.security_center_dark_web_monitor_alias_addresses_error)
+
+                        !state.enabledMonitoring() ->
+                            stringResource(R.string.security_center_dark_web_monitor_monitoring_disabled)
+
+                        else -> pluralStringResource(
                             R.plurals.security_center_dark_web_monitor_found_in_breaches,
                             list.count(),
                             list.count()

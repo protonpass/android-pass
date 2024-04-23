@@ -154,4 +154,10 @@
     <string name="security_center_proton_list_no_breaches_detected">No breaches detected</string>
     <string name="security_center_proton_list_excluded_from_monitoring">Excluded from monitoring</string>
 
+    <!-- Address Bottomsheet options -->
+    <string name="security_center_address_bottomsheet_disable_monitoring">Disable monitoring</string>
+    <string name="security_center_address_bottomsheet_enable_monitoring">Enable monitoring</string>
+    <string name="security_center_address_bottomsheet_snackbar_message_enable_error">Could not enable monitoring</string>
+    <string name="security_center_address_bottomsheet_snackbar_message_disable_error">Could not disable monitoring</string>
+
 </resources>

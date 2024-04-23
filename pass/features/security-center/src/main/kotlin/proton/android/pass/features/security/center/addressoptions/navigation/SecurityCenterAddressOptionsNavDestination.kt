@@ -16,19 +16,8 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.protonlist.ui
+package proton.android.pass.features.security.center.addressoptions.navigation
 
-import proton.android.pass.domain.breach.BreachEmailId
-
-internal sealed interface SecurityCenterProtonListUiEvent {
-
-    data object Back : SecurityCenterProtonListUiEvent
-
-    data class EmailBreachClick(
-        val id: BreachEmailId.Proton,
-        val email: String,
-        val breachCount: Int
-    ) : SecurityCenterProtonListUiEvent
-
-    data object OptionsClick : SecurityCenterProtonListUiEvent
+sealed interface SecurityCenterAddressOptionsNavDestination {
+    data object Back : SecurityCenterAddressOptionsNavDestination
 }

@@ -3,6 +3,7 @@
 This repository contains the source code for the Proton Pass Android application.
 
 [![](https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png)](https://play.google.com/store/apps/details?id=proton.android.pass)
+[![](https://fdroid.gitlab.io/artwork/badge/get-it-on.png)](https://f-droid.org/packages/proton.android.pass.fdroid)
 
 ## How to build
 

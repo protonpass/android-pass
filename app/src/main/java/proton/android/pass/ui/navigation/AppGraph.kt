@@ -110,6 +110,7 @@ import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestin
 import proton.android.pass.features.item.history.navigation.itemHistoryNavGraph
 import proton.android.pass.features.item.history.restore.navigation.ItemHistoryRestoreNavItem
 import proton.android.pass.features.item.history.timeline.navigation.ItemHistoryTimelineNavItem
+import proton.android.pass.features.security.center.addressoptions.navigation.SecurityCenterAddressOptionsNavItem
 import proton.android.pass.features.security.center.breachdetail.navigation.SecurityCenterAliasEmailBreachDetailNavItem
 import proton.android.pass.features.security.center.breachdetail.navigation.SecurityCenterCustomEmailBreachDetailNavItem
 import proton.android.pass.features.security.center.breachdetail.navigation.SecurityCenterProtonEmailBreachDetailNavItem
@@ -1185,6 +1186,14 @@ fun NavGraphBuilder.appGraph(
 
                 SecurityCenterNavDestination.AllProtonEmails -> appNavigator.navigate(
                     destination = SecurityCenterProtonListBreachDetailNavItem
+                )
+
+                is SecurityCenterNavDestination.AddressOptions -> appNavigator.navigate(
+                    destination = SecurityCenterAddressOptionsNavItem,
+                    route = SecurityCenterAddressOptionsNavItem.createNavRoute(
+                        addressOptionsType = destination.addressOptionsType,
+                        addressType = destination.addressType
+                    )
                 )
             }
         }

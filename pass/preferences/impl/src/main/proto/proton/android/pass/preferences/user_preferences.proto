@@ -27,7 +27,7 @@ message UserPreferences {
   AppLockTypePrefProto app_lock_type = 13;
   BooleanPrefProto biometric_system_lock = 14;
   BooleanPrefProto has_dismissed_notification_banner = 15;
-  BooleanPrefProto sentinel_status = 16;
-  MonitorStatusPrefProto monitor_status = 17;
-  string default_vault = 18;
+  string default_vault = 16;
+  BooleanPrefProto sentinel_status = 17;
+  MonitorStatusPrefProto monitor_status = 18;
 }

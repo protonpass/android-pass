@@ -30,6 +30,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.data.api.repositories.BreachRepository
+import proton.android.pass.data.impl.local.LocalUserAccessDataDataSource
 import proton.android.pass.data.impl.remote.RemoteBreachDataSource
 import proton.android.pass.data.impl.responses.BreachDomainPeek
 import proton.android.pass.data.impl.responses.BreachEmailsResponse
@@ -48,6 +49,7 @@ import javax.inject.Singleton
 
 @Singleton
 class BreachRepositoryImpl @Inject constructor(
+    private val localUserAccessDataDataSource: LocalUserAccessDataDataSource,
     private val remote: RemoteBreachDataSource
 ) : BreachRepository {
 
@@ -153,6 +155,7 @@ class BreachRepositoryImpl @Inject constructor(
         enabled: Boolean
     ) {
         remote.updateProtonAddressMonitorState(userId, addressId, enabled)
+            .also { localUserAccessDataDataSource.updateProtonMonitorState(userId, enabled) }
     }
 
     override suspend fun updateAliasAddressMonitorState(
@@ -162,6 +165,7 @@ class BreachRepositoryImpl @Inject constructor(
         enabled: Boolean
     ) {
         remote.updateAliasAddressMonitorState(userId, shareId, itemId, enabled)
+            .also { localUserAccessDataDataSource.updateAliasMonitorState(userId, enabled) }
     }
 
     private suspend fun refreshEmails(userId: UserId): List<BreachCustomEmail> {

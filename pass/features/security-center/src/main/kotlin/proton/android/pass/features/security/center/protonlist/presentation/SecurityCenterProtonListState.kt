@@ -24,18 +24,19 @@ import proton.android.pass.features.security.center.shared.presentation.EmailBre
 
 @Stable
 internal data class SecurityCenterProtonListState(
+    internal val isGlobalMonitorEnabled: Boolean,
     internal val listState: ProtonListState,
     internal val event: SecurityCenterProtonListEvent
 ) {
 
     internal companion object {
         internal val Initial: SecurityCenterProtonListState = SecurityCenterProtonListState(
+            isGlobalMonitorEnabled = true,
             listState = ProtonListState.Loading,
             event = SecurityCenterProtonListEvent.Idle
         )
     }
 }
-
 
 @Stable
 enum class ProtonListError {

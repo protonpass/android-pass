@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultWeak
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.CircleIconButton
@@ -39,6 +40,7 @@ import proton.android.pass.composecomponents.impl.loading.Loading
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.protonlist.presentation.ProtonListState
+import proton.android.pass.features.security.center.protonlist.presentation.SecurityCenterProtonListState
 import proton.android.pass.features.security.center.protonlist.ui.SecurityCenterProtonListUiEvent.EmailBreachClick
 import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBar
 import proton.android.pass.features.security.center.shared.ui.rows.EmailBreachRow
@@ -47,7 +49,7 @@ import me.proton.core.presentation.R as CoreR
 @Composable
 internal fun SecurityCenterProtonListContent(
     modifier: Modifier = Modifier,
-    state: ProtonListState,
+    state: SecurityCenterProtonListState,
     onUiEvent: (SecurityCenterProtonListUiEvent) -> Unit
 ) {
     Scaffold(
@@ -77,17 +79,28 @@ internal fun SecurityCenterProtonListContent(
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            when (state) {
+            when (val list = state.listState) {
                 is ProtonListState.Loading -> Loading()
 
-                is ProtonListState.Error -> {
-
-                }
+                is ProtonListState.Error -> Text(
+                    text = stringResource(R.string.security_center_proton_list_error),
+                    style = ProtonTheme.typography.body2Regular,
+                    color = ProtonTheme.colors.notificationError
+                )
 
                 is ProtonListState.Success -> LazyColumn(
                     modifier = Modifier.padding(vertical = Spacing.small)
                 ) {
-                    items(state.includedEmails, key = { it.email }) { itemState ->
+                    if (!state.isGlobalMonitorEnabled) {
+                        item {
+                            Text(
+                                modifier = Modifier.padding(horizontal = Spacing.medium),
+                                text = stringResource(R.string.security_center_proton_list_included_in_monitoring),
+                                style = ProtonTheme.typography.defaultWeak
+                            )
+                        }
+                    }
+                    items(list.includedEmails, key = { it.email }) { itemState ->
                         EmailBreachRow(
                             emailBreachUiState = itemState,
                             onClick = {
@@ -101,7 +114,7 @@ internal fun SecurityCenterProtonListContent(
                             }
                         )
                     }
-                    if (state.excludedEmails.isNotEmpty()) {
+                    if (list.excludedEmails.isNotEmpty()) {
                         item {
                             Text(
                                 modifier = Modifier.padding(horizontal = Spacing.medium),
@@ -110,7 +123,7 @@ internal fun SecurityCenterProtonListContent(
                             )
                         }
                     }
-                    items(state.excludedEmails, key = { it.email }) { itemState ->
+                    items(list.excludedEmails, key = { it.email }) { itemState ->
                         EmailBreachRow(
                             emailBreachUiState = itemState,
                             onClick = {

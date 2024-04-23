@@ -60,8 +60,7 @@ class SecurityCenterProtonListViewModel @Inject constructor(
             is LoadingResult.Error -> ProtonListState.Error(ProtonListError.CannotLoad)
             LoadingResult.Loading -> ProtonListState.Loading
             is LoadingResult.Success -> {
-                val (included, excluded) = protonEmailsResult.data.partition { it.isMonitoringDisabled }
-
+                val (excluded, included) = protonEmailsResult.data.partition { it.isMonitoringDisabled }
 
                 ProtonListState.Success(
                     includedEmails = included.toBreachRowState(),

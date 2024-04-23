@@ -39,7 +39,9 @@ import kotlinx.datetime.toLocalDateTime
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.map
 import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.data.api.usecases.ObserveGlobalMonitorState
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.breach.CustomEmailSuggestion
 import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
@@ -66,12 +68,22 @@ internal class DarkWebViewModel @Inject constructor(
     observeAllBreachByUserId: ObserveAllBreachByUserId,
     observeBreachesForAliasEmail: ObserveBreachesForAliasEmail,
     observeBreachCustomEmails: ObserveBreachCustomEmails,
-    observeCustomEmailSuggestions: ObserveCustomEmailSuggestions
+    observeCustomEmailSuggestions: ObserveCustomEmailSuggestions,
+    observeGlobalMonitorState: ObserveGlobalMonitorState
 ) : ViewModel() {
 
     private val protonEmailFlow = observeAllBreachByUserId()
         .map { breach -> breach.breachedProtonEmails.filter { it.breachCounter > 0 } }
         .asLoadingResult()
+
+    private val protonEmailFlowIfEnabled = observeGlobalMonitorState()
+        .flatMapLatest { monitorState ->
+            if (monitorState.protonMonitorEnabled) {
+                protonEmailFlow.map { result -> result.map { it to true } }
+            } else {
+                flowOf(LoadingResult.Success(emptyList<BreachProtonEmail>() to false))
+            }
+        }
 
     private val aliasEmailFlow = observeItems(
         selection = ShareSelection.AllShares,
@@ -94,6 +106,15 @@ internal class DarkWebViewModel @Inject constructor(
         }
         .asLoadingResult()
 
+    private val aliasEmailFlowIfEnabled = observeGlobalMonitorState()
+        .flatMapLatest { monitorState ->
+            if (monitorState.aliasMonitorEnabled) {
+                aliasEmailFlow.map { result -> result.map { it to true } }
+            } else {
+                flowOf(LoadingResult.Success(emptyMap<String, List<BreachEmail>>() to false))
+            }
+        }
+
     private val customEmailsFlow: Flow<LoadingResult<List<BreachCustomEmail>>> =
         observeBreachCustomEmails()
             .asLoadingResult()
@@ -105,8 +126,8 @@ internal class DarkWebViewModel @Inject constructor(
             .distinctUntilChanged()
 
     val state: StateFlow<DarkWebUiState> = combine(
-        protonEmailFlow,
-        aliasEmailFlow,
+        protonEmailFlowIfEnabled,
+        aliasEmailFlowIfEnabled,
         customEmailsFlow,
         customEmailSuggestionsFlow
     ) { protonEmailResult, aliasEmailsResult, customEmailsResult, suggestionsResult ->
@@ -169,7 +190,7 @@ internal class DarkWebViewModel @Inject constructor(
     }
 
     private fun getProtonEmailState(
-        protonEmailResult: LoadingResult<List<BreachProtonEmail>>
+        protonEmailResult: LoadingResult<Pair<List<BreachProtonEmail>, Boolean>>
     ): DarkWebEmailBreachState = when (protonEmailResult) {
         is LoadingResult.Error -> {
             PassLogger.w(TAG, "Failed to load proton emails")
@@ -179,7 +200,7 @@ internal class DarkWebViewModel @Inject constructor(
 
         LoadingResult.Loading -> DarkWebEmailBreachState.Loading
         is LoadingResult.Success -> DarkWebEmailBreachState.Success(
-            protonEmailResult.data.map {
+            protonEmailResult.data.first.map {
                 EmailBreachUiState(
                     id = BreachEmailId.Proton(BreachId(it.addressId.id), it.addressId),
                     email = it.email,
@@ -187,12 +208,13 @@ internal class DarkWebViewModel @Inject constructor(
                     breachDate = it.lastBreachTime?.let(DateUtils::formatDate)?.getOrNull(),
                     isMonitored = !it.isMonitoringDisabled
                 )
-            }.toImmutableList()
+            }.toImmutableList(),
+            protonEmailResult.data.second
         )
     }
 
     private fun getAliasEmailState(
-        aliasEmailsResult: LoadingResult<Map<String, List<BreachEmail>>>
+        aliasEmailsResult: LoadingResult<Pair<Map<String, List<BreachEmail>>, Boolean>>
     ): DarkWebEmailBreachState = when (aliasEmailsResult) {
         is LoadingResult.Error -> {
             PassLogger.w(TAG, "Failed to load alias emails")
@@ -202,7 +224,7 @@ internal class DarkWebViewModel @Inject constructor(
 
         LoadingResult.Loading -> DarkWebEmailBreachState.Loading
         is LoadingResult.Success -> DarkWebEmailBreachState.Success(
-            aliasEmailsResult.data.map {
+            aliasEmailsResult.data.first.map {
                 EmailBreachUiState(
                     id = it.value.first().emailId,
                     email = it.key,
@@ -210,7 +232,8 @@ internal class DarkWebViewModel @Inject constructor(
                     breachDate = it.value.getLatestBreachDate(),
                     isMonitored = false
                 )
-            }.toImmutableList()
+            }.toImmutableList(),
+            aliasEmailsResult.data.second
         )
     }
 

@@ -72,7 +72,7 @@ class OnBoardingScreenTest {
     @Before
     fun setup() {
         hiltRule.inject()
-        observeUserAccessData.sendValue(UserAccessData(0, 0, false))
+        observeUserAccessData.sendValue(UserAccessData(0, 0, false, false, false))
     }
 
     @Test

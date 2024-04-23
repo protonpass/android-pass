@@ -27,7 +27,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.common.api.LoadingResult
@@ -55,31 +54,23 @@ class HomeBottomBarViewModelImpl @Inject constructor(
     private val isSecurityCenterEnabledFlow: Flow<Boolean> =
         featureFlagsRepository[FeatureFlag.SECURITY_CENTER_V1]
 
-    private val monitorStatusFlow: Flow<MonitorStatusPreference> = isSecurityCenterEnabledFlow
-        .flatMapLatest { isSecurityCenterEnabled ->
-            if (isSecurityCenterEnabled) {
-                combine(
-                    observeAllBreachByUserId().asLoadingResult(),
-                    observeSecurityAnalysis()
-                ) { breachLoadingResult, securityAnalysis ->
-                    when {
-                        breachLoadingResult is LoadingResult.Success &&
-                            breachLoadingResult.data.hasBreaches -> MonitorStatusPreference.BreachIssues
+    private val monitorStatusFlow: Flow<MonitorStatusPreference> = combine(
+        observeAllBreachByUserId().asLoadingResult(),
+        observeSecurityAnalysis()
+    ) { breachLoadingResult, securityAnalysis ->
+        when {
+            breachLoadingResult is LoadingResult.Success &&
+                breachLoadingResult.data.hasBreaches -> MonitorStatusPreference.BreachIssues
 
-                        securityAnalysis.hasSecurityIssues -> MonitorStatusPreference.VulnerabilityIssues
-                        else -> userPreferencesRepository.observeMonitorStatusPreference().first()
-                    }.also(userPreferencesRepository::setMonitorStatusPreference)
-                }
-            } else {
-                userPreferencesRepository.observeMonitorStatusPreference()
-            }
-        }
-        .onStart {
-            userPreferencesRepository.observeMonitorStatusPreference()
-                .first()
-                .also { monitorStatusPreference -> emit(monitorStatusPreference) }
-        }
-        .distinctUntilChanged()
+            securityAnalysis.hasSecurityIssues -> MonitorStatusPreference.VulnerabilityIssues
+            breachLoadingResult is LoadingResult.Success -> MonitorStatusPreference.NoIssues
+            else -> userPreferencesRepository.observeMonitorStatusPreference().first()
+        }.also(userPreferencesRepository::setMonitorStatusPreference)
+    }.onStart {
+        userPreferencesRepository.observeMonitorStatusPreference()
+            .first()
+            .also { monitorStatusPreference -> emit(monitorStatusPreference) }
+    }.distinctUntilChanged()
 
     override val state: StateFlow<HomeBottomBarState> = combine(
         getUserPlan(),

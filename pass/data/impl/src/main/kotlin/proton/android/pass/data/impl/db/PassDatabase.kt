@@ -48,7 +48,6 @@ interface PassDatabase : Database {
     fun userAccessDataDao(): UserAccessDataDao
     fun organizationSettingsDao(): PassOrganizationSettingsDao
 
-
     suspend fun <R> inTransaction(name: String, block: suspend () -> R): R {
         PassLogger.i(TAG, "$name transaction started")
         return inTransaction { block() }

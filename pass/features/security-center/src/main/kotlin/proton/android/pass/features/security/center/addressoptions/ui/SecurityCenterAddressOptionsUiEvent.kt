@@ -16,19 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.protonlist.ui
+package proton.android.pass.features.security.center.addressoptions.ui
 
-import proton.android.pass.domain.breach.BreachEmailId
+internal sealed interface SecurityCenterAddressOptionsUiEvent {
 
-internal sealed interface SecurityCenterProtonListUiEvent {
+    data object DisableMonitoring : SecurityCenterAddressOptionsUiEvent
 
-    data object Back : SecurityCenterProtonListUiEvent
+    data object EnableMonitoring : SecurityCenterAddressOptionsUiEvent
 
-    data class EmailBreachClick(
-        val id: BreachEmailId.Proton,
-        val email: String,
-        val breachCount: Int
-    ) : SecurityCenterProtonListUiEvent
-
-    data object OptionsClick : SecurityCenterProtonListUiEvent
 }

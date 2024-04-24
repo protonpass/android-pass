@@ -19,12 +19,14 @@
 package proton.android.pass.features.security.center.sentinel.presentation
 
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.PlanType
 
 internal object SecurityCenterSentinelStateMother {
 
     internal fun create(
         event: SecurityCenterSentinelEvent = SecurityCenterSentinelEvent.Idle,
-        isLoadingState: IsLoadingState = IsLoadingState.NotLoading
-    ): SecurityCenterSentinelState = SecurityCenterSentinelState(event, isLoadingState)
+        isLoadingState: IsLoadingState = IsLoadingState.NotLoading,
+        planType: PlanType = PlanType.Unknown()
+    ): SecurityCenterSentinelState = SecurityCenterSentinelState(event, isLoadingState, planType)
 
 }

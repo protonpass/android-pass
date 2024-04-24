@@ -216,14 +216,12 @@ private fun ExposedData(modifier: Modifier = Modifier, breachEmail: BreachEmail)
 
 @Composable
 private fun BreachDetailHeader(modifier: Modifier = Modifier, breachEmail: BreachEmail) {
-    Row(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(Spacing.medium),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        BreachImage()
+    Row(modifier = modifier, horizontalArrangement = Arrangement.spacedBy(Spacing.medium)) {
+        BreachImage(isResolved = breachEmail.isResolved)
+
         Column(verticalArrangement = Arrangement.spacedBy(Spacing.small)) {
             Text(text = breachEmail.name, style = ProtonTheme.typography.headline)
+
             DateUtils.formatDate(breachEmail.publishedAt)
                 .onSuccess { date ->
                     val bodyTextResource =

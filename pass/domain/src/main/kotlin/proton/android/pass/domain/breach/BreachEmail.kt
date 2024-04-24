@@ -44,5 +44,6 @@ data class BreachEmail(
     val publishedAt: String,
     val size: Long?,
     val passwordLastChars: String?,
-    val exposedData: List<String>
+    val exposedData: List<String>,
+    val isResolved: Boolean
 )

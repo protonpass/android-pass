@@ -48,6 +48,8 @@ androidComponents.beforeVariants { variant ->
 
 dependencies {
     implementation(libs.androidx.startup.runtime)
+    implementation(libs.core.utilKotlin)
+    implementation(libs.timber)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

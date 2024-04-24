@@ -18,7 +18,7 @@
 
 package proton.android.pass.log.api
 
-import me.proton.core.util.android.sentry.TimberLogger
+import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.Logger
 
-object PassLogger : Logger by TimberLogger
+object PassLogger : Logger by CoreLogger

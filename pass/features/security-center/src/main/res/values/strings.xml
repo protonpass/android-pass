@@ -144,10 +144,19 @@
     <string name="security_center_report_detail_email_address">Email address</string>
     <string name="security_center_report_detail_password">Password</string>
     <string name="security_center_report_detail_recommended_actions">Recommended actions</string>
-    <string name="security_center_report_detail_note">The exposed information was leaked from LinkedIn. Your Proton Account information remains secure and encrypted.</string>
-    <string name="security_center_report_detail_change_password">Change password</string>
+    <string
+        name="security_center_report_detail_note"
+        comment="The placeholder argument contains the name of the service where the breach occurred."
+    >The exposed information was leaked from %s. Your Proton Account information remains secure and encrypted.</string>
+    <string
+        name="security_center_report_detail_change_password"
+        comment="The placeholder argument contains the name of the service where the breach occurred."
+    >Change password on %s</string>
     <string name="security_center_report_detail_use_aliases">Use aliases in place of your email address</string>
-    <string name="security_center_report_detail_enable_2fa">Enable 2FA</string>
+    <string
+        name="security_center_report_detail_enable_2fa"
+        comment="The placeholder argument contains the name of the service where the breach occurred."
+    >Enable 2FA on %s</string>
 
     <!-- Proton list -->
     <string name="security_center_proton_list_top_bar_title">Proton addresses</string>

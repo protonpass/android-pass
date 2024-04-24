@@ -1,5 +1,3 @@
-import org.gradle.api.internal.catalog.DelegatingProjectDependency
-
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
@@ -39,8 +37,8 @@ androidComponents.beforeVariants { variant ->
 }
 
 fun DependencyHandlerScope.addFdroidSpecialLib(
-    default: DelegatingProjectDependency,
-    fdroid: DelegatingProjectDependency?
+    default: Any,
+    fdroid: Any?
 ) {
 
     val devImplementation = configurations.getByName("devImplementation")
@@ -70,7 +68,6 @@ dependencies {
     implementation(libs.androidx.startup.runtime)
     implementation(libs.timber)
     implementation(libs.core.utilKotlin)
-    implementation(libs.core.utilAndroidSentry)
     implementation(libs.kotlinx.datetime)
 
     implementation(libs.dagger.hilt.android)

@@ -56,4 +56,6 @@ sealed interface DarkWebMonitorNavDestination {
 
     data object AllProtonEmails : DarkWebMonitorNavDestination
 
+    data object AllAliasEmails : DarkWebMonitorNavDestination
+
 }

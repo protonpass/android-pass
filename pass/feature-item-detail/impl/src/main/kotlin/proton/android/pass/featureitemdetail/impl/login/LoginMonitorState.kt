@@ -27,6 +27,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavScope
 import proton.android.pass.securitycenter.api.passwords.DuplicatedPasswordReport
 import proton.android.pass.securitycenter.api.passwords.InsecurePasswordsReport
+import proton.android.pass.securitycenter.api.passwords.Missing2faReport
 
 private const val REUSED_PASSWORD_DISPLAY_MODE_THRESHOLD = 5
 
@@ -36,6 +37,7 @@ internal data class LoginMonitorState(
     private val navigationScope: ItemDetailNavScope,
     private val insecurePasswordsReport: InsecurePasswordsReport,
     private val duplicatedPasswordsReport: DuplicatedPasswordReport,
+    private val missing2faReport: Missing2faReport,
     private val encryptionContextProvider: EncryptionContextProvider
 ) {
 
@@ -50,11 +52,15 @@ internal data class LoginMonitorState(
     } && !isExcludedFromMonitor
 
     internal val isPasswordInsecure: Boolean by lazy {
-        insecurePasswordsReport.insecurePasswordsCount > 0
+        insecurePasswordsReport.hasInsecurePasswords
     }
 
     internal val isPasswordReused: Boolean by lazy {
         duplicatedPasswordsReport.hasDuplications
+    }
+
+    internal val isMissingTwoFa: Boolean by lazy {
+        missing2faReport.isMissingTwoFa
     }
 
     internal val reusedPasswordDisplayMode: ReusedPasswordDisplayMode by lazy {

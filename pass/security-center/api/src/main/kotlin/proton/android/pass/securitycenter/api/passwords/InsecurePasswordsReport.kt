@@ -27,4 +27,6 @@ data class InsecurePasswordsReport(
 
     val insecurePasswordsCount: Int = weakPasswordItems.size + vulnerablePasswordItems.size
 
+    val hasInsecurePasswords: Boolean = insecurePasswordsCount > 0
+
 }

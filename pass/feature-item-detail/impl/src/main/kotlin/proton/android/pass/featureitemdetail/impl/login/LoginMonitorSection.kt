@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.featureitemdetail.impl.login.widgets.LoginMonitorInsecurePassWidget
+import proton.android.pass.featureitemdetail.impl.login.widgets.LoginMonitorMissingTwoFaWidget
 import proton.android.pass.featureitemdetail.impl.login.widgets.LoginMonitorReusedPassWidget
 
 @Composable
@@ -47,6 +48,10 @@ internal fun LoginMonitorSection(
                 reusedPasswordItems = reusedPasswordItems,
                 canLoadExternalImages = canLoadExternalImages
             )
+        }
+
+        if (isMissingTwoFa) {
+            LoginMonitorMissingTwoFaWidget()
         }
     }
 }

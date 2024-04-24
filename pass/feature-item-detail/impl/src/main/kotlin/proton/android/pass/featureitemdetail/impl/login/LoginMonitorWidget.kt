@@ -42,19 +42,24 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.roundedContainer
+import proton.android.pass.composecomponents.impl.utils.passItemColors
+import proton.android.pass.domain.items.ItemCategory
 
 @Composable
 internal fun LoginMonitorWidget(
     modifier: Modifier = Modifier,
     @StringRes titleResId: Int,
     @StringRes subtitleResId: Int,
+    itemCategory: ItemCategory = ItemCategory.Note,
     additionalContent: (@Composable ColumnScope.() -> Unit)? = null
 ) {
+    val itemColors = passItemColors(itemCategory = itemCategory)
+
     Row(
         modifier = modifier
             .roundedContainer(
-                backgroundColor = PassTheme.colors.noteInteractionNormMinor2,
-                borderColor = PassTheme.colors.noteInteractionNormMinor2
+                backgroundColor = itemColors.minorSecondary,
+                borderColor = itemColors.minorSecondary
             )
             .padding(all = Spacing.medium),
         horizontalArrangement = Arrangement.spacedBy(space = Spacing.small)
@@ -63,11 +68,11 @@ internal fun LoginMonitorWidget(
             modifier = Modifier
                 .size(size = 24.dp)
                 .clip(shape = RoundedCornerShape(Radius.small))
-                .background(color = PassTheme.colors.noteInteractionNormMinor1)
+                .background(color = itemColors.minorPrimary)
                 .padding(all = Spacing.extraSmall),
             painter = painterResource(id = R.drawable.ic_exclamation_mark),
             contentDescription = null,
-            tint = PassTheme.colors.noteInteractionNormMajor2
+            tint = itemColors.majorSecondary
         )
 
         Column(
@@ -76,7 +81,7 @@ internal fun LoginMonitorWidget(
         ) {
             Text(
                 text = stringResource(id = titleResId),
-                color = PassTheme.colors.noteInteractionNormMajor2,
+                color = itemColors.majorSecondary,
                 style = ProtonTheme.typography.body1Medium
             )
 
@@ -84,7 +89,7 @@ internal fun LoginMonitorWidget(
 
             Text(
                 text = stringResource(id = subtitleResId),
-                color = PassTheme.colors.noteInteractionNormMajor2,
+                color = itemColors.majorSecondary,
                 style = PassTheme.typography.body3Norm()
             )
         }

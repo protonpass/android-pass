@@ -39,8 +39,11 @@ internal fun SecurityCenterReportListHeader(
         modifier = modifier
             .fillMaxWidth()
             .background(color = PassTheme.colors.backgroundStrong)
-            .padding(horizontal = Spacing.medium),
+            .padding(
+                horizontal = Spacing.medium,
+                vertical = Spacing.small
+            ),
         text = stringResource(id = titleResId),
-        style = ProtonTheme.typography.body1Medium
+        style = ProtonTheme.typography.body2Regular
     )
 }

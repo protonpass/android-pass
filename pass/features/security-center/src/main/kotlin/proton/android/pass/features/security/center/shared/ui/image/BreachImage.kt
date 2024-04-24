@@ -28,9 +28,15 @@ import androidx.compose.ui.unit.dp
 import proton.android.pass.features.security.center.R
 
 @Composable
-fun BreachImage(modifier: Modifier = Modifier) {
+internal fun BreachImage(modifier: Modifier = Modifier, isResolved: Boolean) {
+    val breachImageResId = if (isResolved) {
+        R.drawable.shield_bolt_neutral_big_grey
+    } else {
+        R.drawable.shield_bolt_neutral_big_red
+    }
+
     Image(
-        painter = painterResource(id = R.drawable.shield_bolt_neutral_big_red),
+        painter = painterResource(id = breachImageResId),
         contentDescription = null,
         modifier = modifier.size(40.dp),
         alignment = Alignment.CenterStart

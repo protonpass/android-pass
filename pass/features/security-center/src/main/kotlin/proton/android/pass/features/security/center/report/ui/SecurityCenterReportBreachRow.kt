@@ -34,11 +34,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultNorm
-import me.proton.core.compose.theme.defaultSmallWeak
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.domain.breach.BreachEmail
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachId
@@ -64,10 +63,12 @@ internal fun SecurityCenterReportBreachRow(
     ) {
         BreachImage(isResolved = breach.isResolved)
 
-        Column(verticalArrangement = Arrangement.Center) {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
+        ) {
             Text(
                 text = breach.name,
-                style = ProtonTheme.typography.defaultNorm,
+                style = ProtonTheme.typography.body1Regular,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1
             )
@@ -79,7 +80,7 @@ internal fun SecurityCenterReportBreachRow(
             formattedDate?.let {
                 Text(
                     text = it,
-                    style = ProtonTheme.typography.defaultSmallWeak,
+                    style = PassTheme.typography.body3Weak(),
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1
                 )

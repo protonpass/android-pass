@@ -110,41 +110,40 @@ class ApplyPendingEventsImpl @Inject constructor(
             wasFirstSync = refreshSharesResult.wasFirstSync
         )
 
-        refreshSharesResult.allShareIds
+        val existingShareIds = refreshSharesResult.allShareIds
             .subtract(refreshSharesResult.newShareIds)
-            .let { existingShareIds ->
-                coroutineScope {
-                    existingShareIds.map { shareId ->
-                        async {
-                            runCatching { fetchItemPendingEvent(userId, shareId, addressId) }
-                                .onFailure { error ->
-                                    if (error is ShareNotAvailableError) {
-                                        onShareNotAvailable(userId, shareId)
-                                    }
-                                }
+
+        val eventResults = coroutineScope {
+            existingShareIds.map { shareId ->
+                async {
+                    runCatching {
+                        fetchItemPendingEvent(userId, shareId, addressId)
+                    }.onFailure { error ->
+                        if (error is ShareNotAvailableError) {
+                            onShareNotAvailable(userId, shareId)
                         }
-                    }.let { deferredEventResults ->
-                        deferredEventResults.awaitAll()
-                            .filter { eventResult -> eventResult.isSuccess }
-                            .mapNotNull { successEventResult -> successEventResult.getOrNull() }
-                            .let { events -> applyItemPendingEvents(events) }
                     }
                 }
-            }
+            }.awaitAll()
+        }
+
+        val eventSuccesses = eventResults
+            .filter { eventResult -> eventResult.isSuccess }
+            .mapNotNull { successEventResult -> successEventResult.getOrNull() }
+
+        applyItemPendingEvents(eventSuccesses)
     }
 
     private suspend fun onShareNotAvailable(userId: UserId, shareId: ShareId) {
         PassLogger.i(TAG, "Deleting share not available")
         runCatching {
             shareRepository.deleteVault(userId, shareId)
+        }.onSuccess {
+            PassLogger.i(TAG, "Deleted unavailable share id: $shareId")
+        }.onFailure { t ->
+            PassLogger.w(TAG, "Error deleting unavailable share id: $shareId")
+            PassLogger.w(TAG, t)
         }
-            .onSuccess {
-                PassLogger.i(TAG, "Deleted unavailable share id: $shareId")
-            }
-            .onFailure { t ->
-                PassLogger.w(TAG, "Error deleting unavailable share id: $shareId")
-                PassLogger.w(TAG, t)
-            }
     }
 
     private suspend fun createDefaultVault(userId: UserId) {

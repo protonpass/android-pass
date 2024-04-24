@@ -32,6 +32,7 @@ import proton.android.pass.data.impl.fakes.TestLocalUserAccessDataDataSource
 import proton.android.pass.data.impl.fakes.TestRemotePlanDataSource
 import proton.android.pass.data.impl.repositories.PlanRepositoryImpl
 import proton.android.pass.data.impl.responses.AccessResponse
+import proton.android.pass.data.impl.responses.MonitorResponse
 import proton.android.pass.data.impl.responses.PlanResponse
 import proton.android.pass.data.impl.responses.UserAccessResponse
 import proton.android.pass.domain.PlanType
@@ -191,7 +192,10 @@ internal class PlanRepositoryImplTest {
                 ),
                 pendingInvites = pendingInvites,
                 waitingNewUserInvites = waitingNewUserInvites,
-                minVersionUpgrade = null
+                minVersionUpgrade = null,
+                monitorResponse = MonitorResponse(
+                    protonMonitorEnabled = false, aliasMonitorEnabled = false
+                )
             )
         )
         remote.setResult(Result.success(userAccessResponse))

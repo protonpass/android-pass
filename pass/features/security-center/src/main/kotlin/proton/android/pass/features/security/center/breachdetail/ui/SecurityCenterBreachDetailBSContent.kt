@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.security.center.breachdetail.ui
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,20 +30,28 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Icon
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.body3Norm
+import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.domain.breach.BreachEmail
@@ -50,6 +59,7 @@ import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.breachdetail.presentation.SecurityCenterBreachDetailState
 import proton.android.pass.features.security.center.shared.ui.DateUtils
 import proton.android.pass.features.security.center.shared.ui.image.BreachImage
+import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun SecurityCenterBreachDetailBSContent(
@@ -68,17 +78,20 @@ internal fun SecurityCenterBreachDetailBSContent(
             BreachDetailHeader(breachEmail = breachEmail)
             ExposedData(breachEmail = breachEmail)
             Details(breachEmail = breachEmail)
+            RecommendedActions(breachEmail = breachEmail)
+            Text(
+                text = stringResource(
+                    id = R.string.security_center_report_detail_note,
+                    breachEmail.name
+                ),
+                style = ProtonTheme.typography.body2Regular
+            )
         }
-        RecommendedActions()
-        Text(
-            text = stringResource(R.string.security_center_report_detail_note),
-            style = ProtonTheme.typography.body2Regular
-        )
     }
 }
 
 @Composable
-internal fun RecommendedActions(modifier: Modifier = Modifier) {
+internal fun RecommendedActions(modifier: Modifier = Modifier, breachEmail: BreachEmail) {
     Column(
         modifier = modifier, verticalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
@@ -87,37 +100,51 @@ internal fun RecommendedActions(modifier: Modifier = Modifier) {
             style = ProtonTheme.typography.body1Medium
         )
         Column(verticalArrangement = Arrangement.spacedBy(Spacing.small)) {
-            Text(
-                modifier = Modifier
-                    .roundedContainer(
-                        backgroundColor = Color.Transparent,
-                        borderColor = PassTheme.colors.inputBorderNorm
-                    )
-                    .fillMaxWidth()
-                    .padding(Spacing.medium),
-                text = stringResource(R.string.security_center_report_detail_change_password)
+            RecommendedAction(
+                icon = CoreR.drawable.ic_proton_key,
+                text = stringResource(
+                    id = R.string.security_center_report_detail_change_password,
+                    breachEmail.name
+                )
             )
-            Text(
-                modifier = Modifier
-                    .roundedContainer(
-                        backgroundColor = Color.Transparent,
-                        borderColor = PassTheme.colors.inputBorderNorm
-                    )
-                    .fillMaxWidth()
-                    .padding(Spacing.medium),
+            RecommendedAction(
+                icon = CoreR.drawable.ic_proton_alias,
                 text = stringResource(R.string.security_center_report_detail_use_aliases)
             )
-            Text(
-                modifier = Modifier
-                    .roundedContainer(
-                        backgroundColor = Color.Transparent,
-                        borderColor = PassTheme.colors.inputBorderNorm
-                    )
-                    .fillMaxWidth()
-                    .padding(Spacing.medium),
-                text = stringResource(R.string.security_center_report_detail_enable_2fa)
+            RecommendedAction(
+                icon = CoreR.drawable.ic_proton_locks,
+                text = stringResource(
+                    id = R.string.security_center_report_detail_enable_2fa,
+                    breachEmail.name
+                )
             )
         }
+    }
+}
+
+@Composable
+private fun RecommendedAction(
+    modifier: Modifier = Modifier,
+    text: String,
+    @DrawableRes icon: Int
+) {
+    Row(
+        modifier = modifier
+            .roundedContainer(
+                backgroundColor = Color.Transparent,
+                borderColor = PassTheme.colors.inputBorderNorm
+            )
+            .fillMaxWidth()
+            .padding(Spacing.medium),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(Spacing.small)
+    ) {
+        Icon(
+            painter = painterResource(icon),
+            contentDescription = null,
+            tint = PassTheme.colors.loginInteractionNormMajor2
+        )
+        Text(text = text)
     }
 }
 
@@ -189,7 +216,11 @@ private fun ExposedData(modifier: Modifier = Modifier, breachEmail: BreachEmail)
 
 @Composable
 private fun BreachDetailHeader(modifier: Modifier = Modifier, breachEmail: BreachEmail) {
-    Row(modifier = modifier, horizontalArrangement = Arrangement.spacedBy(Spacing.medium)) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(Spacing.medium),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         BreachImage()
         Column(verticalArrangement = Arrangement.spacedBy(Spacing.small)) {
             Text(text = breachEmail.name, style = ProtonTheme.typography.headline)
@@ -215,10 +246,22 @@ private fun BreachDetailHeader(modifier: Modifier = Modifier, breachEmail: Breac
 
                     Text(
                         text = bodyText,
-                        style = ProtonTheme.typography.body1Regular
+                        style = PassTheme.typography.body3Weak()
                     )
                 }
         }
     }
 }
 
+@Preview
+@Composable
+fun RecommendedActionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            RecommendedAction(
+                text = "A recommended action",
+                icon = CoreR.drawable.ic_proton_key
+            )
+        }
+    }
+}

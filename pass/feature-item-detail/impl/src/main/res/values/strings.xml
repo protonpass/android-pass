@@ -53,6 +53,8 @@
         <item quantity="one">Another login uses this password:</item>
         <item quantity="other">%d other logins use this password:</item>
     </plurals>
+    <string name="login_item_monitor_widget_missing_two_fa_title">Missing two-factor authentication</string>
+    <string name="login_item_monitor_widget_missing_two_fa_subtitle">It would be more secure to set up 2FA for this item.</string>
 
     <string name="field_username">Username or email address</string>
     <string name="field_password">Password</string>

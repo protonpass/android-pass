@@ -90,7 +90,9 @@ class ObserveAppNeedsUpdateImplTest {
             UserAccessData(
                 pendingInvites = 0,
                 waitingNewUserInvites = 0,
-                needsUpdate = it
+                needsUpdate = it,
+                protonMonitorEnabled = false,
+                aliasMonitorEnabled = false
             )
         }
         userAccessDataRepository.sendValue(value)

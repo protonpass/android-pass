@@ -103,7 +103,7 @@ class DarkWebEmailBreachStatePreviewProvider : PreviewParameterProvider<DarkWebE
                         email = "adobe.42nbe@passmail.com",
                         count = 2,
                         breachDate = "2024-04-16T15:30:00Z",
-                        isMonitored = false
+                        isMonitored = true
                     )
                 ),
                 enabledMonitoring = true

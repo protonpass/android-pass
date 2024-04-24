@@ -16,10 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.protonlist.navigation
+package proton.android.pass.features.security.center.aliaslist.navigation
 
 import proton.android.pass.navigation.api.NavItem
 
-object SecurityCenterProtonListNavItem : NavItem(
-    baseRoute = "security/center/protonlist"
+object SecurityCenterAliasListNavItem : NavItem(
+    baseRoute = "security/center/aliaslist"
 )

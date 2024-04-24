@@ -93,7 +93,7 @@ internal fun EmailBreachSection(
     }
 }
 
-class DarkWebEmailBreachStatePreviewProvider : PreviewParameterProvider<DarkWebEmailBreachState> {
+internal class DarkWebEmailBreachStatePreviewProvider : PreviewParameterProvider<DarkWebEmailBreachState> {
     override val values: Sequence<DarkWebEmailBreachState>
         get() = sequenceOf(
             DarkWebEmailBreachState.Success(
@@ -121,12 +121,12 @@ class DarkWebEmailBreachStatePreviewProvider : PreviewParameterProvider<DarkWebE
         )
 }
 
-class ThemedDarkWebEmailBreachStatePreviewProvider :
+internal class ThemedDarkWebEmailBreachStatePreviewProvider :
     ThemePairPreviewProvider<DarkWebEmailBreachState>(DarkWebEmailBreachStatePreviewProvider())
 
 @Preview
 @Composable
-fun EmailBreachSectionPreview(
+internal fun EmailBreachSectionPreview(
     @PreviewParameter(ThemedDarkWebEmailBreachStatePreviewProvider::class) input: Pair<Boolean, DarkWebEmailBreachState>
 ) {
     PassTheme(isDark = input.first) {

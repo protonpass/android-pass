@@ -43,8 +43,13 @@ fun SecurityCenterReportScreen(
                 is SecurityCenterReportUiEvent.MarkAsResolvedClick ->
                     viewModel.resolveEmailBreach(it.id)
 
-                is SecurityCenterReportUiEvent.OnItemClick ->
-                    onNavigated(SecurityCenterReportDestination.ItemDetail(it.item))
+                is SecurityCenterReportUiEvent.OnItemClick -> {
+                    val event = SecurityCenterReportDestination.ItemDetail(
+                        shareId = it.shareId,
+                        itemId = it.itemId
+                    )
+                    onNavigated(event)
+                }
             }
         }
     )

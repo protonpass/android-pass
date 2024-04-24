@@ -121,7 +121,11 @@ internal fun SecurityCenterReportContent(
                                 itemUiModel = itemUiModel,
                                 canLoadExternalImages = canLoadExternalImages,
                                 onClick = {
-                                    onUiEvent(SecurityCenterReportUiEvent.OnItemClick(itemUiModel))
+                                    val event = SecurityCenterReportUiEvent.OnItemClick(
+                                        shareId = itemUiModel.shareId,
+                                        itemId = itemUiModel.id
+                                    )
+                                    onUiEvent(event)
                                 }
                             )
                         }

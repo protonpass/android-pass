@@ -34,10 +34,10 @@ suspend fun <T, R> runConcurrently(
     block: suspend (T) -> R,
     onSuccess: (T, R) -> Unit = { _, _ -> },
     onFailure: (T, Throwable) -> Unit = { _, _ -> }
-) : List<Result<R>> {
+): List<Result<R>> {
     val semaphore = Semaphore(maxParallelCalls)
     return coroutineScope {
-        items.map {item ->
+        items.map { item ->
             async {
                 semaphore.acquire()
                 val res = runCatching {

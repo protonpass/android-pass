@@ -29,6 +29,7 @@ internal data class SecurityCenterAddressOptionsState(
     internal val event: SecurityCenterAddressOptionsEvent,
     internal val isLoadingState: IsLoadingState
 ) {
+    fun isLoading(): Boolean = isLoadingState.value()
 
     internal companion object {
 

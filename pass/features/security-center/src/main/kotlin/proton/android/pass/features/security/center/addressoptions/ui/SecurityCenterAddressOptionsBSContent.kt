@@ -45,13 +45,13 @@ internal fun SecurityCenterAddressOptionsBSContent(
     val list = mutableListOf<BottomSheetItem>()
     when (state.addressOptionsType) {
         AddressOptionsType.EnableMonitoring -> list.add(
-            enableMonitoring(state.isLoadingState.value()) {
+            enableMonitoring(state.isLoading()) {
                 onClick(SecurityCenterAddressOptionsUiEvent.EnableMonitoring)
             }
         )
 
         AddressOptionsType.DisableMonitoring -> list.add(
-            disableMonitoring(state.isLoadingState.value()) {
+            disableMonitoring(state.isLoading()) {
                 onClick(SecurityCenterAddressOptionsUiEvent.DisableMonitoring)
             }
         )

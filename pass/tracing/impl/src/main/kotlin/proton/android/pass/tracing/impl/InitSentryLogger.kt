@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,9 +16,11 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.log.api
+package proton.android.pass.tracing.impl
 
+import me.proton.core.util.android.sentry.TimberLogger
 import me.proton.core.util.kotlin.CoreLogger
-import me.proton.core.util.kotlin.Logger
 
-object PassLogger : Logger by CoreLogger
+fun initSentryLogger(coreLogger: CoreLogger) {
+    coreLogger.set(TimberLogger)
+}

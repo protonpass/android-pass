@@ -55,7 +55,7 @@ class ForceSyncItemsImpl @Inject constructor(
                     userId = userId,
                     shareId = shareId,
                     onProgress = { progress ->
-                        if (!hasItems.get() && progress.current > 0) {
+                        if (!hasItems.get() && (progress.total == 0 || progress.current > 0)) {
                             hasItems.set(true)
                         }
                         itemSyncStatusRepository.emit(

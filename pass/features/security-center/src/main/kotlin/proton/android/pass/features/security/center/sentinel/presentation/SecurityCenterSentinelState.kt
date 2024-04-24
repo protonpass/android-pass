@@ -20,18 +20,29 @@ package proton.android.pass.features.security.center.sentinel.presentation
 
 import androidx.compose.runtime.Stable
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.PlanType
 
 @Stable
 internal data class SecurityCenterSentinelState(
     internal val event: SecurityCenterSentinelEvent,
-    internal val isLoadingState: IsLoadingState
+    internal val isLoadingState: IsLoadingState,
+    private val planType: PlanType
 ) {
+
+    internal val isFreeUser: Boolean = when (planType) {
+        is PlanType.Free,
+        is PlanType.Unknown -> true
+
+        is PlanType.Paid,
+        is PlanType.Trial -> false
+    }
 
     internal companion object {
 
         internal val Initial: SecurityCenterSentinelState = SecurityCenterSentinelState(
             event = SecurityCenterSentinelEvent.Idle,
-            isLoadingState = IsLoadingState.NotLoading
+            isLoadingState = IsLoadingState.NotLoading,
+            planType = PlanType.Unknown()
         )
 
     }

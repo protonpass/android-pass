@@ -103,7 +103,18 @@ class BreachRepositoryImpl @Inject constructor(
         oneShot {
             customEmailBreachesCache.getOrPut(userId to id.id) {
                 remote.getBreachesForCustomEmail(userId, id)
+                    .let {response ->
+                        response.copy(
+                            breachEmails = response.breachEmails.copy(
+                                breaches = response.breachEmails.breaches.map { it.copy(resolvedState = 1) }
+                            )
+                        )
+                    }
+                    .also {
+                        println("JIBIRI: $it")
+                    }
                     .toDomain { breach -> BreachEmailId.Custom(BreachId(breach.id)) }
+
             }
         }
 
@@ -222,8 +233,15 @@ class BreachRepositoryImpl @Inject constructor(
                 publishedAt = breach.publishedAt,
                 size = breach.size,
                 passwordLastChars = breach.passwordLastChars,
-                exposedData = breach.exposedData.map { it.name }
+                exposedData = breach.exposedData.map { it.name },
+                isResolved = breach.resolvedState == BREACH_EMAIL_RESOLVED_STATE_VALUE
             )
         }
+    }
+
+    private companion object {
+
+        private const val BREACH_EMAIL_RESOLVED_STATE_VALUE = 3
+
     }
 }

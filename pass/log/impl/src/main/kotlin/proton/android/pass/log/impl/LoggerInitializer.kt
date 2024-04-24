@@ -47,11 +47,11 @@ import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
-import me.proton.core.util.android.sentry.TimberLogger
 import me.proton.core.util.kotlin.CoreLogger
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.tracing.impl.SentryInitializer
+import proton.android.pass.tracing.impl.initSentryLogger
 import timber.log.Timber
 import java.text.DecimalFormat
 
@@ -70,7 +70,7 @@ class LoggerInitializer : Initializer<Unit> {
         deviceInfo(context, entryPoint.appConfig())
 
         // Forward Core Logs to Timber, using TimberLogger.
-        CoreLogger.set(TimberLogger)
+        initSentryLogger(CoreLogger)
     }
 
     override fun dependencies(): List<Class<out Initializer<*>>> = listOf(

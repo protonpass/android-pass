@@ -25,6 +25,9 @@ import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.features.security.center.addressoptions.navigation.SecurityCenterAddressOptionsNavDestination
 import proton.android.pass.features.security.center.addressoptions.navigation.SecurityCenterAddressOptionsNavItem
 import proton.android.pass.features.security.center.addressoptions.ui.SecurityCenterAddressOptionsBS
+import proton.android.pass.features.security.center.aliaslist.navigation.SecurityCenterAliasListNavDestination
+import proton.android.pass.features.security.center.aliaslist.navigation.SecurityCenterAliasListNavItem
+import proton.android.pass.features.security.center.aliaslist.ui.SecurityCenterAliasListScreen
 import proton.android.pass.features.security.center.breachdetail.navigation.SecurityCenterAliasEmailBreachDetailNavItem
 import proton.android.pass.features.security.center.breachdetail.navigation.SecurityCenterCustomEmailBreachDetailNavItem
 import proton.android.pass.features.security.center.breachdetail.navigation.SecurityCenterProtonEmailBreachDetailNavItem
@@ -47,8 +50,8 @@ import proton.android.pass.features.security.center.home.ui.SecurityCenterHomeSc
 import proton.android.pass.features.security.center.missingtfa.navigation.SecurityCenterMissingTFADestination
 import proton.android.pass.features.security.center.missingtfa.navigation.SecurityCenterMissingTFANavItem
 import proton.android.pass.features.security.center.missingtfa.ui.SecurityCenterMissingTfaScreen
-import proton.android.pass.features.security.center.protonlist.navigation.SecurityCenterProtonListBreachDetailNavItem
 import proton.android.pass.features.security.center.protonlist.navigation.SecurityCenterProtonListNavDestination
+import proton.android.pass.features.security.center.protonlist.navigation.SecurityCenterProtonListNavItem
 import proton.android.pass.features.security.center.protonlist.ui.SecurityCenterProtonListScreen
 import proton.android.pass.features.security.center.report.navigation.SecurityCenterAliasEmailReportNavItem
 import proton.android.pass.features.security.center.report.navigation.SecurityCenterCustomEmailReportNavItem
@@ -219,6 +222,9 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
 
                     DarkWebMonitorNavDestination.AllProtonEmails ->
                         onNavigated(SecurityCenterNavDestination.AllProtonEmails)
+
+                    DarkWebMonitorNavDestination.AllAliasEmails ->
+                        onNavigated(SecurityCenterNavDestination.AllAliasEmails)
                 }
             }
         )
@@ -310,7 +316,7 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
         )
     }
 
-    composable(SecurityCenterProtonListBreachDetailNavItem) {
+    composable(SecurityCenterProtonListNavItem) {
         SecurityCenterProtonListScreen(
             onNavigated = { destination ->
                 when (destination) {
@@ -323,6 +329,29 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                         )
 
                     is SecurityCenterProtonListNavDestination.OnOptionsClick ->
+                        SecurityCenterNavDestination.AddressOptions(
+                            addressType = destination.addressType,
+                            addressOptionsType = destination.addressOptionsType
+                        )
+                }.also(onNavigated)
+            }
+        )
+    }
+
+
+    composable(SecurityCenterAliasListNavItem) {
+        SecurityCenterAliasListScreen(
+            onNavigated = { destination ->
+                when (destination) {
+                    SecurityCenterAliasListNavDestination.Back -> SecurityCenterNavDestination.Back()
+                    is SecurityCenterAliasListNavDestination.OnEmailClick ->
+                        SecurityCenterNavDestination.AliasEmailReport(
+                            id = destination.id,
+                            email = destination.email,
+                            breachCount = destination.breachCount
+                        )
+
+                    is SecurityCenterAliasListNavDestination.OnOptionsClick ->
                         SecurityCenterNavDestination.AddressOptions(
                             addressType = destination.addressType,
                             addressOptionsType = destination.addressOptionsType

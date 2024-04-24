@@ -230,7 +230,7 @@ internal class DarkWebViewModel @Inject constructor(
                     email = it.key,
                     count = it.value.size,
                     breachDate = it.value.getLatestBreachDate(),
-                    isMonitored = false
+                    isMonitored = true
                 )
             }.toImmutableList(),
             aliasEmailsResult.data.second

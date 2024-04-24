@@ -20,6 +20,6 @@ package proton.android.pass.features.security.center.protonlist.navigation
 
 import proton.android.pass.navigation.api.NavItem
 
-object SecurityCenterProtonListBreachDetailNavItem : NavItem(
+object SecurityCenterProtonListNavItem : NavItem(
     baseRoute = "security/center/protonlist"
 )

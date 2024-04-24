@@ -364,8 +364,8 @@ private fun SecurityCenterReportScreen(onNavigated: (SecurityCenterNavDestinatio
 
                 is SecurityCenterReportDestination.ItemDetail ->
                     SecurityCenterNavDestination.ItemDetails(
-                        shareId = destination.item.shareId,
-                        itemId = destination.item.id
+                        shareId = destination.shareId,
+                        itemId = destination.itemId
                     )
             }
             onNavigated(event)

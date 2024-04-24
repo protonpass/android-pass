@@ -18,7 +18,8 @@
 
 package proton.android.pass.features.security.center.report.ui
 
-import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.breach.BreachEmailId
 
 internal sealed interface SecurityCenterReportUiEvent {
@@ -30,6 +31,8 @@ internal sealed interface SecurityCenterReportUiEvent {
     @JvmInline
     value class MarkAsResolvedClick(val id: BreachEmailId) : SecurityCenterReportUiEvent
 
-    @JvmInline
-    value class OnItemClick(val item: ItemUiModel) : SecurityCenterReportUiEvent
+    data class OnItemClick(
+        val shareId: ShareId,
+        val itemId: ItemId
+    ) : SecurityCenterReportUiEvent
 }

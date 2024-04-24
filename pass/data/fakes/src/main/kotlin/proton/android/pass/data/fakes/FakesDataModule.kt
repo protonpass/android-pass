@@ -75,6 +75,7 @@ import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveAppNeedsUpdate
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveCurrentUserSettings
+import proton.android.pass.data.api.usecases.ObserveGlobalMonitorState
 import proton.android.pass.data.api.usecases.ObserveHasConfirmedInvite
 import proton.android.pass.data.api.usecases.ObserveInviteRecommendations
 import proton.android.pass.data.api.usecases.ObserveInvites
@@ -258,6 +259,7 @@ import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachesForAlia
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachesForCustomEmail
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachesForProtonEmail
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveCustomEmailSuggestions
+import proton.android.pass.data.fakes.usecases.breach.FakeObserveGlobalMonitorState
 import proton.android.pass.data.fakes.usecases.breach.FakeRemoveCustomEmail
 import proton.android.pass.data.fakes.usecases.breach.FakeResendVerificationCode
 import proton.android.pass.data.fakes.usecases.breach.FakeUpdateAliasAddressMonitorState
@@ -665,4 +667,7 @@ abstract class FakesDataModule {
     abstract fun bindUpdateProtonAddressMonitorState(
         impl: FakeUpdateProtonAddressMonitorState
     ): UpdateProtonAddressMonitorState
+
+    @Binds
+    abstract fun bindObserveGlobalMonitorState(impl: FakeObserveGlobalMonitorState): ObserveGlobalMonitorState
 }

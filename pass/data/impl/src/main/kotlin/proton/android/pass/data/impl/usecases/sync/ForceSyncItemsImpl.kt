@@ -18,10 +18,6 @@
 
 package proton.android.pass.data.impl.usecases.sync
 
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.sync.Semaphore
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemRevision
@@ -30,7 +26,7 @@ import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.usecases.sync.ForceSyncItems
 import proton.android.pass.data.api.usecases.sync.ForceSyncResult
-import proton.android.pass.data.impl.util.maxParallelAsyncCalls
+import proton.android.pass.data.impl.util.runConcurrently
 import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
 import java.util.concurrent.atomic.AtomicBoolean
@@ -48,46 +44,41 @@ class ForceSyncItemsImpl @Inject constructor(
         if (shareIds.isEmpty()) return ForceSyncResult.Success
 
         val hasItems = AtomicBoolean(false)
-        val semaphore = Semaphore(maxParallelAsyncCalls())
 
         val mode = getSyncMode(isBackground)
         itemSyncStatusRepository.setMode(mode)
 
-        val results: List<Result<Pair<ShareId, List<ItemRevision>>>> = coroutineScope {
-            shareIds.map { shareId ->
-                async {
-                    semaphore.acquire()
-                    val result = runCatching {
-                        val shareItems = itemRepository.refreshItemsAndObserveProgress(
-                            userId = userId,
-                            shareId = shareId,
-                            onProgress = { progress ->
-                                if (!hasItems.get() && progress.current > 0) {
-                                    hasItems.set(true)
-                                }
-                                itemSyncStatusRepository.emit(
-                                    ItemSyncStatus.Syncing(
-                                        shareId = shareId,
-                                        current = progress.current,
-                                        total = progress.total
-                                    )
-                                )
-                                PassLogger.d(TAG, "ShareId ${shareId.id} progress: $progress")
-                            }
+        val results: List<Result<Pair<ShareId, List<ItemRevision>>>> = runConcurrently(
+            items = shareIds,
+            block = { shareId ->
+                val shareItems = itemRepository.refreshItemsAndObserveProgress(
+                    userId = userId,
+                    shareId = shareId,
+                    onProgress = { progress ->
+                        if (!hasItems.get() && progress.current > 0) {
+                            hasItems.set(true)
+                        }
+                        itemSyncStatusRepository.emit(
+                            ItemSyncStatus.Syncing(
+                                shareId = shareId,
+                                current = progress.current,
+                                total = progress.total
+                            )
                         )
-
-                        shareId to shareItems
-                    }.onSuccess {
-                        PassLogger.d(TAG, "Share ${shareId.id} refreshed successfully")
-                    }.onFailure {
-                        PassLogger.w(TAG, "Error refreshing items on share ${shareId.id}")
-                        PassLogger.w(TAG, it)
+                        PassLogger.d(TAG, "ShareId ${shareId.id} progress: $progress")
                     }
-                    semaphore.release()
-                    result
-                }
-            }.awaitAll()
-        }
+                )
+
+                shareId to shareItems
+            },
+            onSuccess = { shareId, _ ->
+                PassLogger.d(TAG, "Share ${shareId.id} refreshed successfully")
+            },
+            onFailure = { shareId, err ->
+                PassLogger.w(TAG, "Error refreshing items on share ${shareId.id}")
+                PassLogger.w(TAG, err)
+            }
+        )
 
         return handleResults(
             userId = userId,

@@ -18,7 +18,38 @@
 
 package proton.android.pass.data.impl.util
 
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.sync.Semaphore
+
 fun maxParallelAsyncCalls(): Int {
     val availableCores = Runtime.getRuntime().availableProcessors()
     return (availableCores / 2).coerceAtLeast(1)
+}
+
+suspend fun <T, R> runConcurrently(
+    maxParallelCalls: Int = maxParallelAsyncCalls(),
+    items: Iterable<T>,
+    block: suspend (T) -> R,
+    onSuccess: (T, R) -> Unit = { _, _ -> },
+    onFailure: (T, Throwable) -> Unit = { _, _ -> }
+) : List<Result<R>> {
+    val semaphore = Semaphore(maxParallelCalls)
+    return coroutineScope {
+        items.map {item ->
+            async {
+                semaphore.acquire()
+                val res = runCatching {
+                    block(item)
+                }.onSuccess { res ->
+                    onSuccess(item, res)
+                }.onFailure { err ->
+                    onFailure(item, err)
+                }
+                semaphore.release()
+                res
+            }
+        }.awaitAll()
+    }
 }

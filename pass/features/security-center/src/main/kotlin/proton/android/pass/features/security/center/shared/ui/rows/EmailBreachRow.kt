@@ -69,15 +69,7 @@ internal fun EmailBreachRow(
             ) {
 
                 when {
-                    emailBreachUiState.isMonitored -> EmailAndBreachDate(
-                        email = emailBreachUiState.email,
-                        breachDate = emailBreachUiState.breachDate,
-                        textStyle = ProtonTheme.typography.defaultNorm,
-                        dateStyle = PassTheme.typography.body3Weak(),
-                        hasBreaches = emailBreachUiState.hasBreaches
-                    )
-
-                    emailBreachUiState.hasBreaches -> EmailAndBreachDate(
+                    emailBreachUiState.hasBreaches && emailBreachUiState.isMonitored -> EmailAndBreachDate(
                         email = emailBreachUiState.email,
                         breachDate = emailBreachUiState.breachDate,
                         textStyle = ProtonTheme.typography.defaultNorm
@@ -86,13 +78,21 @@ internal fun EmailBreachRow(
                         hasBreaches = true
                     )
 
+                    !emailBreachUiState.hasBreaches && emailBreachUiState.isMonitored -> EmailAndBreachDate(
+                        email = emailBreachUiState.email,
+                        breachDate = emailBreachUiState.breachDate,
+                        textStyle = ProtonTheme.typography.defaultNorm,
+                        dateStyle = PassTheme.typography.body3Norm()
+                            .copy(color = PassTheme.colors.cardInteractionNormMajor2),
+                        hasBreaches = false
+                    )
+
                     else -> EmailAndBreachDate(
                         email = emailBreachUiState.email,
                         breachDate = emailBreachUiState.breachDate,
-                        hasBreaches = false,
                         textStyle = ProtonTheme.typography.defaultNorm,
-                        dateStyle = PassTheme.typography.body3Norm()
-                            .copy(color = PassTheme.colors.cardInteractionNormMajor2)
+                        dateStyle = PassTheme.typography.body3Weak(),
+                        hasBreaches = false
                     )
                 }
             }

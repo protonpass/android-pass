@@ -107,6 +107,8 @@ sealed interface SecurityCenterNavDestination {
 
     data object AllProtonEmails : SecurityCenterNavDestination
 
+    data object AllAliasEmails : SecurityCenterNavDestination
+
     data class AddressOptions(
         val addressOptionsType: AddressOptionsType,
         val addressType: AddressType

@@ -691,9 +691,7 @@ abstract class DataUseCaseModule {
     ): UpdateGlobalProtonAddressesMonitorState
 
     @Binds
-    abstract fun bindObserveGlobalMonitorState(
-        impl: ObserveGlobalMonitorStateImpl
-    ): ObserveGlobalMonitorState
+    abstract fun bindObserveGlobalMonitorState(impl: ObserveGlobalMonitorStateImpl): ObserveGlobalMonitorState
 
     @Binds
     abstract fun bindUpdateProtonAddressMonitorState(

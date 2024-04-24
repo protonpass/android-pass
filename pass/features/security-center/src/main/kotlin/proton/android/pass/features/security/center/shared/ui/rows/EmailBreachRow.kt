@@ -30,10 +30,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.commonui.api.defaultTint
@@ -46,11 +48,15 @@ import proton.android.pass.composecomponents.impl.R as CompR
 internal fun EmailBreachRow(
     modifier: Modifier = Modifier,
     emailBreachUiState: EmailBreachUiState,
+    globalMonitorEnabled: Boolean,
     onClick: (EmailBreachUiState) -> Unit
 ) {
     Column(
         modifier = modifier
-            .clickable(onClick = { onClick(emailBreachUiState) })
+            .applyIf(
+                condition = globalMonitorEnabled,
+                ifTrue = { clickable(onClick = { onClick(emailBreachUiState) }) }
+            )
             .padding(horizontal = Spacing.medium, vertical = Spacing.small)
     ) {
         Row(
@@ -61,37 +67,33 @@ internal fun EmailBreachRow(
                 modifier = Modifier.weight(weight = 1f),
                 verticalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
             ) {
-                when {
-                    emailBreachUiState.hasBreaches -> {
-                        Text(
-                            text = emailBreachUiState.email,
-                            style = ProtonTheme.typography.defaultNorm.copy(
-                                color = PassTheme.colors.passwordInteractionNormMajor1
-                            )
-                        )
-                        emailBreachUiState.breachDate?.let { breachDate ->
-                            Text(
-                                text = stringResource(
-                                    R.string.security_center_dark_web_monitor_latest_breach_on,
-                                    breachDate
-                                ),
-                                style = PassTheme.typography.body3Weak()
-                            )
-                        }
-                    }
 
-                    else -> {
-                        Text(
-                            text = emailBreachUiState.email,
-                            style = ProtonTheme.typography.defaultNorm
-                        )
-                        Text(
-                            text = stringResource(R.string.security_center_proton_list_no_breaches_detected),
-                            style = PassTheme.typography.body3Norm().copy(
-                                color = PassTheme.colors.cardInteractionNormMajor2
-                            )
-                        )
-                    }
+                when {
+                    emailBreachUiState.isMonitored -> EmailAndBreachDate(
+                        email = emailBreachUiState.email,
+                        breachDate = emailBreachUiState.breachDate,
+                        textStyle = ProtonTheme.typography.defaultNorm,
+                        dateStyle = PassTheme.typography.body3Weak(),
+                        hasBreaches = emailBreachUiState.hasBreaches
+                    )
+
+                    emailBreachUiState.hasBreaches -> EmailAndBreachDate(
+                        email = emailBreachUiState.email,
+                        breachDate = emailBreachUiState.breachDate,
+                        textStyle = ProtonTheme.typography.defaultNorm
+                            .copy(color = PassTheme.colors.passwordInteractionNormMajor1),
+                        dateStyle = PassTheme.typography.body3Weak(),
+                        hasBreaches = true
+                    )
+
+                    else -> EmailAndBreachDate(
+                        email = emailBreachUiState.email,
+                        breachDate = emailBreachUiState.breachDate,
+                        hasBreaches = false,
+                        textStyle = ProtonTheme.typography.defaultNorm,
+                        dateStyle = PassTheme.typography.body3Norm()
+                            .copy(color = PassTheme.colors.cardInteractionNormMajor2)
+                    )
                 }
             }
             if (emailBreachUiState.hasBreaches) {
@@ -106,13 +108,46 @@ internal fun EmailBreachRow(
                 }
             }
 
-            Icon(
-                painter = painterResource(CompR.drawable.ic_chevron_tiny_right),
-                contentDescription = null,
-                tint = PassTheme.colors.passwordInteractionNormMajor1
-                    .takeIf { emailBreachUiState.hasBreaches }
-                    ?: defaultTint()
+            if (globalMonitorEnabled) {
+                Icon(
+                    painter = painterResource(CompR.drawable.ic_chevron_tiny_right),
+                    contentDescription = null,
+                    tint = PassTheme.colors.passwordInteractionNormMajor1
+                        .takeIf { emailBreachUiState.hasBreaches }
+                        ?: defaultTint()
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun EmailAndBreachDate(
+    email: String,
+    breachDate: String?,
+    textStyle: TextStyle,
+    dateStyle: TextStyle,
+    hasBreaches: Boolean
+) {
+    Text(
+        text = email,
+        style = textStyle
+    )
+    if (hasBreaches) {
+        breachDate?.let {
+            Text(
+                text = stringResource(
+                    R.string.security_center_dark_web_monitor_latest_breach_on,
+                    it
+                ),
+                style = dateStyle
             )
         }
+    } else {
+        Text(
+            text = stringResource(R.string.security_center_proton_list_no_breaches_detected),
+            style = PassTheme.typography.body3Norm()
+                .copy(color = PassTheme.colors.cardInteractionNormMajor2)
+        )
     }
 }

@@ -121,7 +121,7 @@ internal fun SecurityCenterReportContent(
                                 itemUiModel = itemUiModel,
                                 canLoadExternalImages = canLoadExternalImages,
                                 onClick = {
-
+                                    onUiEvent(SecurityCenterReportUiEvent.OnItemClick(itemUiModel))
                                 }
                             )
                         }

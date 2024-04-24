@@ -18,30 +18,22 @@
 
 package proton.android.pass.features.security.center.report.ui
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.loading.Loading
-import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.report.presentation.SecurityCenterReportState
 import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBar
-import proton.android.pass.features.security.center.shared.ui.rows.SecurityCenterLoginItemRow
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun SecurityCenterReportContent(
     modifier: Modifier = Modifier,
@@ -67,70 +59,24 @@ internal fun SecurityCenterReportContent(
             verticalArrangement = Arrangement.spacedBy(Spacing.medium)
         ) {
             ReportHeader(breachCount = breachCount, email = email)
-            breachEmails.firstOrNull()?.let { breach ->
+
+            if (hasUnresolvedBreachEmails) {
                 ResolveButton(
                     modifier = Modifier.padding(horizontal = Spacing.medium),
-                    emailId = breach.emailId,
+                    emailId = unresolvedBreachEmails.first().emailId,
                     isLoading = isResolveLoading,
                     onUiEvent = onUiEvent
                 )
             }
+
             if (isContentLoading) {
-                Loading()
+                Loading(modifier = Modifier.fillMaxSize())
             } else {
-                LazyColumn(Modifier.fillMaxWidth()) {
-                    if (hasBreachEmails) {
-                        stickyHeader {
-                            Text(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .background(color = PassTheme.colors.backgroundStrong)
-                                    .padding(horizontal = Spacing.medium),
-                                text = stringResource(R.string.security_center_email_report_breaches_header),
-                                style = ProtonTheme.typography.body1Medium
-                            )
-                        }
-                        items(
-                            items = breachEmails,
-                            key = { breach -> breach.emailId.hashCode() }
-                        ) { breach ->
-                            BreachRow(
-                                breach = breach,
-                                onUiEvent = onUiEvent
-                            )
-                        }
-                    }
-
-                    if (hasBeenUsedInItems) {
-                        stickyHeader {
-                            Text(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .background(color = PassTheme.colors.backgroundStrong)
-                                    .padding(horizontal = Spacing.medium),
-                                text = stringResource(R.string.security_center_email_report_used_in_header),
-                                style = ProtonTheme.typography.body1Medium
-                            )
-                        }
-
-                        items(
-                            items = usedInItems,
-                            key = { itemUiModel -> itemUiModel.id.id }
-                        ) { itemUiModel ->
-                            SecurityCenterLoginItemRow(
-                                itemUiModel = itemUiModel,
-                                canLoadExternalImages = canLoadExternalImages,
-                                onClick = {
-                                    val event = SecurityCenterReportUiEvent.OnItemClick(
-                                        shareId = itemUiModel.shareId,
-                                        itemId = itemUiModel.id
-                                    )
-                                    onUiEvent(event)
-                                }
-                            )
-                        }
-                    }
-                }
+                SecurityCenterReportList(
+                    modifier = Modifier.fillMaxWidth(),
+                    state = state,
+                    onUiEvent = onUiEvent
+                )
             }
         }
     }

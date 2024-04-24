@@ -30,12 +30,14 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.securitycenter.api.sentinel.EnableSentinel
 import javax.inject.Inject
 
 @HiltViewModel
 class SecurityCenterSentinelViewModel @Inject constructor(
+    observeUserPlan: GetUserPlan,
     private val enableSentinel: EnableSentinel,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
@@ -49,8 +51,14 @@ class SecurityCenterSentinelViewModel @Inject constructor(
     internal val state: StateFlow<SecurityCenterSentinelState> = combine(
         eventFlow,
         isLoadingFlow,
-        ::SecurityCenterSentinelState
-    ).stateIn(
+        observeUserPlan()
+    ) { event, isLoading, userPlan ->
+        SecurityCenterSentinelState(
+            event = event,
+            isLoadingState = isLoading,
+            planType = userPlan.planType
+        )
+    }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000),
         initialValue = SecurityCenterSentinelState.Initial

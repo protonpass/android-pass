@@ -35,7 +35,6 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.bottombar.PassHomeBottomBar
 import proton.android.pass.composecomponents.impl.icon.PassPlusIcon
 import proton.android.pass.composecomponents.impl.item.SectionTitle
-import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavDestination
 import proton.android.pass.features.security.center.home.presentation.SecurityCenterHomeState
@@ -96,7 +95,7 @@ internal fun SecurityCenterHomeContent(
                     accentBackgroundColor = PassTheme.colors.interactionNormMinor2,
                     isClickable = true,
                     trailingContent = { PassPlusIcon() },
-                    onClick = { onUiEvent(SecurityCenterHomeUiEvent.OnUpsell(PaidFeature.Sentinel)) }
+                    onClick = { onUiEvent(SecurityCenterHomeUiEvent.OnShowSentinelBottomSheet) }
                 )
             } else {
                 SecurityCenterToggleRow(

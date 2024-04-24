@@ -77,7 +77,13 @@ internal fun SecurityCenterSentinelBottomSheetContent(
         ) {
             PassCircleButton(
                 text = stringResource(id = R.string.security_center_sentinel_button_enable),
-                onClick = { onUiEvent(SecurityCenterSentinelUiEvent.OnEnableSentinel) },
+                onClick = {
+                    if (isFreeUser) {
+                        onUiEvent(SecurityCenterSentinelUiEvent.OnUpsell)
+                    } else {
+                        onUiEvent(SecurityCenterSentinelUiEvent.OnEnableSentinel)
+                    }
+                },
                 isLoading = isLoadingState.value()
             )
 

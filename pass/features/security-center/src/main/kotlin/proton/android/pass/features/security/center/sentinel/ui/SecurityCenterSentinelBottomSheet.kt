@@ -64,6 +64,7 @@ fun SecurityCenterSentinelBottomSheet(
             when (uiEvent) {
                 SecurityCenterSentinelUiEvent.OnEnableSentinel -> onEnableSentinel()
                 SecurityCenterSentinelUiEvent.OnLearnMore -> onLearnMore()
+                SecurityCenterSentinelUiEvent.OnUpsell -> onNavigated(SecurityCenterSentinelDestination.Upsell)
             }
         }
     )

@@ -111,6 +111,7 @@ import proton.android.pass.features.item.history.navigation.itemHistoryNavGraph
 import proton.android.pass.features.item.history.restore.navigation.ItemHistoryRestoreNavItem
 import proton.android.pass.features.item.history.timeline.navigation.ItemHistoryTimelineNavItem
 import proton.android.pass.features.security.center.addressoptions.navigation.SecurityCenterAddressOptionsNavItem
+import proton.android.pass.features.security.center.aliaslist.navigation.SecurityCenterAliasListNavItem
 import proton.android.pass.features.security.center.breachdetail.navigation.SecurityCenterAliasEmailBreachDetailNavItem
 import proton.android.pass.features.security.center.breachdetail.navigation.SecurityCenterCustomEmailBreachDetailNavItem
 import proton.android.pass.features.security.center.breachdetail.navigation.SecurityCenterProtonEmailBreachDetailNavItem
@@ -120,7 +121,7 @@ import proton.android.pass.features.security.center.darkweb.navigation.DarkWebMo
 import proton.android.pass.features.security.center.excludeditems.navigation.SecurityCenterExcludedItemsNavItem
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavItem
 import proton.android.pass.features.security.center.missingtfa.navigation.SecurityCenterMissingTFANavItem
-import proton.android.pass.features.security.center.protonlist.navigation.SecurityCenterProtonListBreachDetailNavItem
+import proton.android.pass.features.security.center.protonlist.navigation.SecurityCenterProtonListNavItem
 import proton.android.pass.features.security.center.report.navigation.SecurityCenterAliasEmailReportNavItem
 import proton.android.pass.features.security.center.report.navigation.SecurityCenterCustomEmailReportNavItem
 import proton.android.pass.features.security.center.report.navigation.SecurityCenterProtonEmailReportNavItem
@@ -1185,7 +1186,11 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 SecurityCenterNavDestination.AllProtonEmails -> appNavigator.navigate(
-                    destination = SecurityCenterProtonListBreachDetailNavItem
+                    destination = SecurityCenterProtonListNavItem
+                )
+
+                SecurityCenterNavDestination.AllAliasEmails -> appNavigator.navigate(
+                    destination = SecurityCenterAliasListNavItem
                 )
 
                 is SecurityCenterNavDestination.AddressOptions -> appNavigator.navigate(

@@ -124,6 +124,7 @@ import proton.android.pass.data.api.usecases.breach.ObserveCustomEmailSuggestion
 import proton.android.pass.data.api.usecases.breach.RemoveCustomEmail
 import proton.android.pass.data.api.usecases.breach.ResendVerificationCode
 import proton.android.pass.data.api.usecases.breach.UpdateAliasAddressMonitorState
+import proton.android.pass.data.api.usecases.breach.UpdateGlobalAliasAddressesMonitorState
 import proton.android.pass.data.api.usecases.breach.UpdateGlobalProtonAddressesMonitorState
 import proton.android.pass.data.api.usecases.breach.UpdateProtonAddressMonitorState
 import proton.android.pass.data.api.usecases.breach.VerifyBreachCustomEmail
@@ -260,6 +261,7 @@ import proton.android.pass.data.impl.usecases.breach.ObserveCustomEmailSuggestio
 import proton.android.pass.data.impl.usecases.breach.RemoveCustomEmailImpl
 import proton.android.pass.data.impl.usecases.breach.ResendVerificationCodeImpl
 import proton.android.pass.data.impl.usecases.breach.UpdateAliasAddressMonitorStateImpl
+import proton.android.pass.data.impl.usecases.breach.UpdateGlobalAliasAddressesMonitorStateImpl
 import proton.android.pass.data.impl.usecases.breach.UpdateGlobalProtonAddressesMonitorStateImpl
 import proton.android.pass.data.impl.usecases.breach.UpdateProtonAddressMonitorStateImpl
 import proton.android.pass.data.impl.usecases.breach.VerifyBreachCustomEmailImpl
@@ -689,6 +691,11 @@ abstract class DataUseCaseModule {
     abstract fun bindUpdateProtonAddressesMonitorState(
         impl: UpdateGlobalProtonAddressesMonitorStateImpl
     ): UpdateGlobalProtonAddressesMonitorState
+
+    @Binds
+    abstract fun bindUpdateAliasAddressesMonitorState(
+        impl: UpdateGlobalAliasAddressesMonitorStateImpl
+    ): UpdateGlobalAliasAddressesMonitorState
 
     @Binds
     abstract fun bindObserveGlobalMonitorState(impl: ObserveGlobalMonitorStateImpl): ObserveGlobalMonitorState

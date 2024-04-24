@@ -24,6 +24,8 @@ data class Missing2faReport(
     val items: List<Item>
 ) {
     val missing2faCount: Int = items.size
+
+    val isMissingTwoFa: Boolean = missing2faCount > 0
 }
 
 interface MissingTfaChecker {

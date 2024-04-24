@@ -16,10 +16,9 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.protonlist.navigation
+package proton.android.pass.features.security.center.aliaslist.presentation
 
-import proton.android.pass.navigation.api.NavItem
+sealed interface SecurityCenterAliasListEvent {
 
-object SecurityCenterProtonListNavItem : NavItem(
-    baseRoute = "security/center/protonlist"
-)
+    data object Idle : SecurityCenterAliasListEvent
+}

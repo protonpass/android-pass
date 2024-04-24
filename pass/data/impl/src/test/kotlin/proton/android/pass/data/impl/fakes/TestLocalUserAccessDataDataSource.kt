@@ -33,4 +33,10 @@ class TestLocalUserAccessDataDataSource : LocalUserAccessDataDataSource {
     }
 
     override fun observe(userId: UserId): Flow<UserAccessDataEntity?> = observeFlow
+
+    override suspend fun updateProtonMonitorState(userId: UserId, enabled: Boolean) {
+    }
+
+    override suspend fun updateAliasMonitorState(userId: UserId, enabled: Boolean) {
+    }
 }

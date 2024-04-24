@@ -173,7 +173,6 @@
 
     <!-- Alias list -->
     <string name="security_center_alias_list_top_bar_title">Hide-my-email aliases</string>
-    <string name="security_center_alias_list_no_breaches_detected">No breaches detected</string>
     <string name="security_center_alias_list_excluded_from_monitoring">Excluded from monitoring</string>
     <string name="security_center_alias_list_error">Could not load addresses</string>
     <string name="security_center_alias_list_included_in_monitoring">Enable monitoring to get notified if your Hide-my-email aliases were leaked.</string>

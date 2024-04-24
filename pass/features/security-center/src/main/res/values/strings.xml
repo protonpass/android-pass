@@ -133,6 +133,7 @@
     <!-- Email breach report -->
     <string name="security_center_email_report_used_in_header">Used in</string>
     <string name="security_center_email_report_breaches_header">Breaches</string>
+    <string name="security_center_email_report_resolved_breaches_header">Resolved breaches</string>
     <string name="security_center_email_report_mark_as_resolved">Mark as resolved</string>
     <string name="security_center_email_report_snackbar_marked_as_resolved_success">Breach has been marked as resolved</string>
     <string name="security_center_email_report_snackbar_marked_as_resolved_error">Could not mark as resolved</string>

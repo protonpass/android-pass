@@ -109,7 +109,7 @@ internal fun CustomEmailsList(
                         )
                     }
 
-                    if (state.emails.isNotEmpty()) {
+                    if (state.emails.isNotEmpty() && state.suggestions.isNotEmpty()) {
                         item {
                             Text(
                                 modifier = Modifier.padding(Spacing.medium),

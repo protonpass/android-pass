@@ -21,6 +21,7 @@ package proton.android.pass.features.security.center.report.presentation
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.breach.BreachEmail
 
@@ -29,11 +30,23 @@ internal data class SecurityCenterReportState(
     internal val email: String,
     val breachCount: Int,
     internal val canLoadExternalImages: Boolean,
-    internal val breachEmails: List<BreachEmail>,
+    private val breachEmails: List<BreachEmail>,
     internal val usedInItems: ImmutableList<ItemUiModel>,
     internal val isContentLoading: Boolean,
     internal val isResolveLoading: Boolean
 ) {
+
+    internal val resolvedBreachEmails: ImmutableList<BreachEmail> = breachEmails
+        .filter { breachEmail -> breachEmail.isResolved }
+        .toPersistentList()
+
+    internal val hasResolvedBreachEmails: Boolean = resolvedBreachEmails.isNotEmpty()
+
+    internal val unresolvedBreachEmails: ImmutableList<BreachEmail> = breachEmails
+        .filter { breachEmail -> !breachEmail.isResolved }
+        .toPersistentList()
+
+    internal val hasUnresolvedBreachEmails: Boolean = unresolvedBreachEmails.isNotEmpty()
 
     internal val hasBreachEmails: Boolean = breachEmails.isNotEmpty()
 

@@ -49,7 +49,7 @@ import java.util.Locale
 import kotlin.random.Random
 
 @Composable
-internal fun BreachRow(
+internal fun SecurityCenterReportBreachRow(
     modifier: Modifier = Modifier,
     breach: BreachEmail,
     onUiEvent: (SecurityCenterReportUiEvent) -> Unit
@@ -62,7 +62,8 @@ internal fun BreachRow(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
-        BreachImage()
+        BreachImage(isResolved = breach.isResolved)
+
         Column(verticalArrangement = Arrangement.Center) {
             Text(
                 text = breach.name,
@@ -91,14 +92,37 @@ class BreachRowPreviewProvider : PreviewParameterProvider<BreachEmail> {
 
     override val values: Sequence<BreachEmail>
         get() = sequenceOf(
-            createBreach("breach 1", 0.1, "2022-11-02T00:00:00+00:00"),
-            createBreach("breach 2", 0.7, "")
+            createBreach(
+                name = "breach 1",
+                severity = 0.1,
+                publishedAt = "2022-11-02T00:00:00+00:00",
+                isResolved = false
+            ),
+            createBreach(
+                name = "breach 2",
+                severity = 0.7,
+                publishedAt = "",
+                isResolved = false
+            ),
+            createBreach(
+                name = "breach 1",
+                severity = 0.1,
+                publishedAt = "2022-11-02T00:00:00+00:00",
+                isResolved = true
+            ),
+            createBreach(
+                name = "breach 2",
+                severity = 0.7,
+                publishedAt = "",
+                isResolved = true
+            )
         )
 
     private fun createBreach(
         name: String,
         severity: Double,
-        publishedAt: String
+        publishedAt: String,
+        isResolved: Boolean
     ) = BreachEmail(
         emailId = BreachEmailId.Custom(BreachId(Random.nextInt().toString())),
         email = "",
@@ -108,7 +132,8 @@ class BreachRowPreviewProvider : PreviewParameterProvider<BreachEmail> {
         publishedAt = publishedAt,
         size = 0,
         passwordLastChars = "",
-        exposedData = emptyList()
+        exposedData = emptyList(),
+        isResolved = isResolved
     )
 }
 
@@ -121,7 +146,7 @@ class ThemedBreachRowPreviewProvider : ThemePairPreviewProvider<BreachEmail>(
 fun BreachRowPreview(@PreviewParameter(ThemedBreachRowPreviewProvider::class) input: Pair<Boolean, BreachEmail>) {
     PassTheme(isDark = input.first) {
         Surface {
-            BreachRow(
+            SecurityCenterReportBreachRow(
                 breach = input.second,
                 onUiEvent = {}
             )

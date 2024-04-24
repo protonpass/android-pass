@@ -45,6 +45,8 @@ data class Breaches(
     val id: String,
     @SerialName("Email")
     val email: String,
+    @SerialName("ResolvedState")
+    val resolvedState: Int,
     @SerialName("Severity")
     val severity: Double,
     @SerialName("Name")

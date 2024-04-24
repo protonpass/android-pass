@@ -27,7 +27,7 @@ import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.features.security.center.shared.presentation.EmailBreachUiState
 
 @Stable
-sealed interface CustomEmailUiStatus {
+internal sealed interface CustomEmailUiStatus {
 
     @JvmInline
     value class Suggestion(val usedInLoginsCount: Int) : CustomEmailUiStatus
@@ -44,26 +44,27 @@ sealed interface CustomEmailUiStatus {
 }
 
 @Stable
-data class CustomEmailUiState(
-    val email: String,
-    val status: CustomEmailUiStatus
+internal data class CustomEmailUiState(
+    internal val email: String,
+    internal val status: CustomEmailUiStatus
 )
 
 @Stable
-enum class DarkWebStatus {
+internal enum class DarkWebStatus {
     AllGood,
     Warning,
     Loading
 }
 
 @Stable
-enum class DarkWebEmailsError {
+internal enum class DarkWebEmailsError {
     CannotLoad,
     Unknown
 }
 
 @Stable
-sealed interface DarkWebCustomEmailsState {
+internal sealed interface DarkWebCustomEmailsState {
+
     data object Loading : DarkWebCustomEmailsState
 
     @JvmInline
@@ -72,11 +73,16 @@ sealed interface DarkWebCustomEmailsState {
     data class Success(
         val emails: ImmutableList<CustomEmailUiState>,
         val suggestions: ImmutableList<CustomEmailUiState>
-    ) : DarkWebCustomEmailsState
+    ) : DarkWebCustomEmailsState {
+
+        internal val hasSuggestions: Boolean = suggestions.isNotEmpty()
+
+    }
 }
 
 @Stable
-sealed interface DarkWebEmailBreachState {
+internal sealed interface DarkWebEmailBreachState {
+
     fun list(): ImmutableList<EmailBreachUiState> = when (this) {
         is Success -> emails
         else -> persistentListOf()
@@ -96,23 +102,28 @@ sealed interface DarkWebEmailBreachState {
         val emails: ImmutableList<EmailBreachUiState>,
         val enabledMonitoring: Boolean
     ) : DarkWebEmailBreachState
+
 }
 
 @Stable
-data class DarkWebUiState(
-    val protonEmailState: DarkWebEmailBreachState,
-    val aliasEmailState: DarkWebEmailBreachState,
-    val customEmailState: DarkWebCustomEmailsState,
-    val darkWebStatus: DarkWebStatus,
-    val lastCheckTime: Option<String>
+internal data class DarkWebUiState(
+    internal val protonEmailState: DarkWebEmailBreachState,
+    internal val aliasEmailState: DarkWebEmailBreachState,
+    internal val customEmailState: DarkWebCustomEmailsState,
+    internal val darkWebStatus: DarkWebStatus,
+    internal val lastCheckTime: Option<String>
 ) {
-    companion object {
-        val Initial = DarkWebUiState(
+
+    internal companion object {
+
+        internal val Initial = DarkWebUiState(
             protonEmailState = DarkWebEmailBreachState.Loading,
             aliasEmailState = DarkWebEmailBreachState.Loading,
             customEmailState = DarkWebCustomEmailsState.Loading,
             darkWebStatus = DarkWebStatus.Loading,
             lastCheckTime = None
         )
+
     }
+
 }

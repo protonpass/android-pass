@@ -246,9 +246,8 @@ private fun CustomEmailItemVerified(
 
 @Preview
 @Composable
-fun CustomEmailItemPreview(
-    @PreviewParameter(ThemeCustomEmailItemPreviewProvider::class)
-    input: Pair<Boolean, CustomEmailUiState>
+internal fun CustomEmailItemPreview(
+    @PreviewParameter(ThemeCustomEmailItemPreviewProvider::class) input: Pair<Boolean, CustomEmailUiState>
 ) {
     PassTheme(isDark = input.first) {
         Surface {

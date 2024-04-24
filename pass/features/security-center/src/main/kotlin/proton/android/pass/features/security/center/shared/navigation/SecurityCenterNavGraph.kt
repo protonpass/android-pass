@@ -361,6 +361,12 @@ private fun SecurityCenterReportScreen(onNavigated: (SecurityCenterNavDestinatio
                     is BreachEmailId.Proton ->
                         SecurityCenterNavDestination.ProtonEmailBreachDetail(destination.id)
                 }
+
+                is SecurityCenterReportDestination.ItemDetail ->
+                    SecurityCenterNavDestination.ItemDetails(
+                        shareId = destination.item.shareId,
+                        itemId = destination.item.id
+                    )
             }
             onNavigated(event)
         }

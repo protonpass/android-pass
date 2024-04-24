@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.security.center.report.navigation
 
+import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.breach.BreachEmailId
 
 sealed interface SecurityCenterReportDestination {
@@ -25,7 +26,9 @@ sealed interface SecurityCenterReportDestination {
     data object Back : SecurityCenterReportDestination
 
     @JvmInline
-    value class EmailBreachDetail(val id: BreachEmailId) :
-        SecurityCenterReportDestination
+    value class EmailBreachDetail(val id: BreachEmailId) : SecurityCenterReportDestination
+
+    @JvmInline
+    value class ItemDetail(val item: ItemUiModel) : SecurityCenterReportDestination
 }
 

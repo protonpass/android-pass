@@ -71,6 +71,7 @@ internal fun EmailBreachHeader(
     ) {
         val accentColor = when {
             state.enabledMonitoring() && list.isEmpty() -> PassTheme.colors.cardInteractionNormMajor1
+            state is DarkWebEmailBreachState.Error -> PassTheme.colors.passwordInteractionNormMajor1
             !state.enabledMonitoring() -> PassTheme.colors.textWeak
             else -> PassTheme.colors.passwordInteractionNormMajor1
         }

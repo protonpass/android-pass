@@ -75,7 +75,6 @@ internal fun SecurityCenterProtonListContent(
             modifier = Modifier
                 .background(PassTheme.colors.backgroundNorm)
                 .padding(paddingValues = innerPaddingValues)
-                .padding(vertical = Spacing.medium)
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -94,7 +93,7 @@ internal fun SecurityCenterProtonListContent(
                     if (!state.isGlobalMonitorEnabled) {
                         item {
                             Text(
-                                modifier = Modifier.padding(horizontal = Spacing.medium),
+                                modifier = Modifier.padding(Spacing.medium),
                                 text = stringResource(R.string.security_center_proton_list_included_in_monitoring),
                                 style = ProtonTheme.typography.defaultWeak
                             )
@@ -103,6 +102,7 @@ internal fun SecurityCenterProtonListContent(
                     items(list.includedEmails, key = { it.email }) { itemState ->
                         EmailBreachRow(
                             emailBreachUiState = itemState,
+                            globalMonitorEnabled = state.isGlobalMonitorEnabled,
                             onClick = {
                                 onUiEvent(
                                     EmailBreachClick(
@@ -126,6 +126,7 @@ internal fun SecurityCenterProtonListContent(
                     items(list.excludedEmails, key = { it.email }) { itemState ->
                         EmailBreachRow(
                             emailBreachUiState = itemState,
+                            globalMonitorEnabled = state.isGlobalMonitorEnabled,
                             onClick = {
                                 onUiEvent(
                                     EmailBreachClick(

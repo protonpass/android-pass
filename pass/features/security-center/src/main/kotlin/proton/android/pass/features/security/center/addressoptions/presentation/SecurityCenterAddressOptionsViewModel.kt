@@ -32,8 +32,7 @@ import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.data.api.usecases.breach.UpdateAliasAddressesMonitorState
-import proton.android.pass.data.api.usecases.breach.UpdateProtonAddressesMonitorState
+import proton.android.pass.data.api.usecases.breach.UpdateGlobalProtonAddressesMonitorState
 import proton.android.pass.features.security.center.addressoptions.navigation.AddressOptionsType
 import proton.android.pass.features.security.center.addressoptions.navigation.AddressOptionsTypeArgId
 import proton.android.pass.features.security.center.addressoptions.navigation.AddressType
@@ -47,8 +46,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SecurityCenterAddressOptionsViewModel @Inject constructor(
-    private val updateProtonAddressesMonitorState: UpdateProtonAddressesMonitorState,
-    private val updateAliasAddressesMonitorState: UpdateAliasAddressesMonitorState,
+    private val updateProtonAddressesMonitorState: UpdateGlobalProtonAddressesMonitorState,
+    private val updateAliasAddressesMonitorState: UpdateGlobalProtonAddressesMonitorState,
     private val snackbarDispatcher: SnackbarDispatcher,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {

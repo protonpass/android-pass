@@ -18,12 +18,18 @@
 
 package proton.android.pass.features.security.center.report.ui
 
+import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.breach.BreachEmailId
 
 internal sealed interface SecurityCenterReportUiEvent {
     data object Back : SecurityCenterReportUiEvent
 
-    data class EmailBreachDetail(val id: BreachEmailId) : SecurityCenterReportUiEvent
+    @JvmInline
+    value class EmailBreachDetail(val id: BreachEmailId) : SecurityCenterReportUiEvent
 
-    data class MarkAsResolvedClick(val id: BreachEmailId) : SecurityCenterReportUiEvent
+    @JvmInline
+    value class MarkAsResolvedClick(val id: BreachEmailId) : SecurityCenterReportUiEvent
+
+    @JvmInline
+    value class OnItemClick(val item: ItemUiModel) : SecurityCenterReportUiEvent
 }

@@ -115,6 +115,7 @@ import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.securitycenter.api.passwords.DuplicatedPasswordChecker
 import proton.android.pass.securitycenter.api.passwords.InsecurePasswordChecker
+import proton.android.pass.securitycenter.api.passwords.MissingTfaChecker
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.ObserveTotpFromUri
@@ -147,7 +148,8 @@ class LoginDetailViewModel @Inject constructor(
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
     getUserPlan: GetUserPlan,
     insecurePasswordChecker: InsecurePasswordChecker,
-    duplicatedPasswordChecker: DuplicatedPasswordChecker
+    duplicatedPasswordChecker: DuplicatedPasswordChecker,
+    missingTfaChecker: MissingTfaChecker
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandle.get()
@@ -263,6 +265,7 @@ class LoginDetailViewModel @Inject constructor(
                         navigationScope = navigationScope,
                         insecurePasswordsReport = insecurePasswordChecker(listOf(details.item)),
                         duplicatedPasswordsReport = duplicatedPasswordChecker(details.item),
+                        missing2faReport = missingTfaChecker(listOf(details.item)),
                         encryptionContextProvider = encryptionContextProvider
                     )
                 )

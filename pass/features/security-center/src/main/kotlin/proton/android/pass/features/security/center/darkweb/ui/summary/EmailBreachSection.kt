@@ -82,7 +82,8 @@ internal fun EmailBreachSection(
                             )
                         )
                     }
-                }
+                },
+                globalMonitorEnabled = state.enabledMonitoring()
             )
         }
 

@@ -48,6 +48,8 @@ class TestInternalSettingsRepository @Inject constructor() : InternalSettingsRep
     private val inAppReviewTriggeredFlow = MutableStateFlow(false)
     private val homeFilterOptionFlow = MutableStateFlow(FilterOptionPreference.All)
     private val autofillFilterOptionFlow = MutableStateFlow(FilterOptionPreference.All)
+    private val isDarkWebAliasMessageFlow =
+        MutableStateFlow(IsDarkWebAliasMessageDismissedPreference.Show)
 
     override fun setLastUnlockedTime(time: Long): Result<Unit> {
         lastUnlockedTimeFlow.update { Some(time) }
@@ -146,6 +148,14 @@ class TestInternalSettingsRepository @Inject constructor() : InternalSettingsRep
     }
 
     override fun getItemAutofillCount(): Flow<Int> = itemAutofillCountFlow
+
+    override fun setDarkWebAliasMessageVisibility(visibility: IsDarkWebAliasMessageDismissedPreference): Result<Unit> {
+        isDarkWebAliasMessageFlow.update { visibility }
+        return Result.success(Unit)
+    }
+
+    override fun getDarkWebAliasMessageVisibility(): Flow<IsDarkWebAliasMessageDismissedPreference> =
+        isDarkWebAliasMessageFlow
 
     override fun clearSettings(): Result<Unit> = Result.success(Unit)
 }

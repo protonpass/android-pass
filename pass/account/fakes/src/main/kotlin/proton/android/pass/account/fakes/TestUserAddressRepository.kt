@@ -90,10 +90,14 @@ class TestUserAddressRepository : UserAddressRepository {
     override suspend fun updateOrder(sessionUserId: SessionUserId, addressIds: List<AddressId>): List<UserAddress> =
         addresses
 
-    fun generateAddress(displayName: String, userId: UserId = UserId("userid-123")): UserAddress = UserAddress(
+    fun generateAddress(
+        displayName: String,
+        userId: UserId = UserId("userid-123"),
+        email: String = "test@email.local"
+    ): UserAddress = UserAddress(
         userId = userId,
         addressId = AddressId("addressid-123"),
-        email = "test@email.local",
+        email = email,
         displayName = displayName,
         signature = null,
         domainId = null,

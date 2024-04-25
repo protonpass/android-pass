@@ -158,6 +158,15 @@ class InternalSettingsRepositoryImpl @Inject constructor(
 
     override fun getItemAutofillCount(): Flow<Int> = getPreference { it.itemAutofillCount }
 
+    override fun setDarkWebAliasMessageVisibility(visibility: IsDarkWebAliasMessageDismissedPreference): Result<Unit> =
+        setPreference {
+            it.setDarkWebAliasMessageDismissed(visibility.value())
+        }
+
+    override fun getDarkWebAliasMessageVisibility(): Flow<IsDarkWebAliasMessageDismissedPreference> = getPreference {
+        IsDarkWebAliasMessageDismissedPreference.from(it.darkWebAliasMessageDismissed)
+    }
+
     override fun setMasterPasswordAttemptsCount(count: Int): Result<Unit> = setPreference {
         it.setMasterPasswordAttempts(count)
     }

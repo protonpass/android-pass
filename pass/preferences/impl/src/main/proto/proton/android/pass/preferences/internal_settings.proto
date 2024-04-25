@@ -19,4 +19,5 @@ message InternalSettings {
   AppUsage app_usage = 11;
   int32 item_autofill_count = 12;
   int32 home_filtering_option = 13;
+  bool dark_web_alias_message_dismissed = 14;
 }

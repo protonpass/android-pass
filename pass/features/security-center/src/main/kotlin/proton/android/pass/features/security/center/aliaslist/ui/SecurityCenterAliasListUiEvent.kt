@@ -31,4 +31,6 @@ internal sealed interface SecurityCenterAliasListUiEvent {
     ) : SecurityCenterAliasListUiEvent
 
     data object OptionsClick : SecurityCenterAliasListUiEvent
+
+    data object DismissCustomEmailMessageClick : SecurityCenterAliasListUiEvent
 }

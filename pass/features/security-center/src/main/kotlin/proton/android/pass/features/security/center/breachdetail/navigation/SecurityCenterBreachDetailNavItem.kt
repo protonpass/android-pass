@@ -19,6 +19,7 @@
 package proton.android.pass.features.security.center.breachdetail.navigation
 
 import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.features.security.center.darkweb.navigation.CustomEmailNavArgId
 import proton.android.pass.features.security.center.shared.navigation.BreachIdArgId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
@@ -27,9 +28,12 @@ import proton.android.pass.navigation.api.NavItemType
 object SecurityCenterCustomEmailBreachDetailNavItem : NavItem(
     baseRoute = "security/center/customemailbreachdetail",
     navItemType = NavItemType.Bottomsheet,
-    navArgIds = listOf(BreachIdArgId)
+    navArgIds = listOf(
+        CustomEmailNavArgId,
+        BreachIdArgId
+    )
 ) {
-    fun createNavRoute(id: BreachEmailId.Custom): String = "$baseRoute/${id.id.id}"
+    fun createNavRoute(id: BreachEmailId.Custom): String = "$baseRoute/${id.customEmailId.id}/${id.id.id}"
 }
 
 object SecurityCenterAliasEmailBreachDetailNavItem : NavItem(

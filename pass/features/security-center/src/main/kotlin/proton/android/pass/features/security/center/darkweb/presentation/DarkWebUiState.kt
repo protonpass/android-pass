@@ -23,7 +23,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.domain.breach.CustomEmailId
 import proton.android.pass.features.security.center.shared.presentation.EmailBreachUiState
 
 @Stable
@@ -33,10 +33,10 @@ internal sealed interface CustomEmailUiStatus {
     value class Suggestion(val usedInLoginsCount: Int) : CustomEmailUiStatus
 
     @JvmInline
-    value class Unverified(val id: BreachEmailId.Custom) : CustomEmailUiStatus
+    value class Unverified(val id: CustomEmailId) : CustomEmailUiStatus
 
     data class Verified(
-        val id: BreachEmailId.Custom,
+        val id: CustomEmailId,
         val breachesDetected: Int
     ) : CustomEmailUiStatus {
         internal val hasBreaches: Boolean = breachesDetected > 0

@@ -26,13 +26,13 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.breach.Breach
 import proton.android.pass.domain.breach.BreachCustomEmail
 import proton.android.pass.domain.breach.BreachEmail
-import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.domain.breach.CustomEmailId
 
 interface BreachRepository {
 
     fun observeAllBreaches(userId: UserId): Flow<Breach>
 
-    fun observeCustomEmail(userId: UserId, customEmailId: BreachEmailId.Custom): Flow<BreachCustomEmail>
+    fun observeCustomEmail(userId: UserId, customEmailId: CustomEmailId): Flow<BreachCustomEmail>
 
     fun observeCustomEmails(userId: UserId): Flow<List<BreachCustomEmail>>
 
@@ -40,13 +40,13 @@ interface BreachRepository {
 
     suspend fun verifyCustomEmail(
         userId: UserId,
-        emailId: BreachEmailId.Custom,
+        emailId: CustomEmailId,
         code: String
     )
 
     fun observeBreachesForProtonEmail(userId: UserId, id: AddressId): Flow<List<BreachEmail>>
 
-    fun observeBreachesForCustomEmail(userId: UserId, id: BreachEmailId.Custom): Flow<List<BreachEmail>>
+    fun observeBreachesForCustomEmail(userId: UserId, id: CustomEmailId): Flow<List<BreachEmail>>
 
     fun observeBreachesForAliasEmail(
         userId: UserId,
@@ -62,11 +62,11 @@ interface BreachRepository {
         itemId: ItemId
     )
 
-    suspend fun markCustomEmailAsResolved(userId: UserId, id: BreachEmailId.Custom)
+    suspend fun markCustomEmailAsResolved(userId: UserId, id: CustomEmailId)
 
-    suspend fun resendVerificationCode(userId: UserId, id: BreachEmailId.Custom)
+    suspend fun resendVerificationCode(userId: UserId, id: CustomEmailId)
 
-    suspend fun removeCustomEmail(userId: UserId, id: BreachEmailId.Custom)
+    suspend fun removeCustomEmail(userId: UserId, id: CustomEmailId)
 
     suspend fun updateGlobalProtonMonitorState(userId: UserId, enabled: Boolean)
 

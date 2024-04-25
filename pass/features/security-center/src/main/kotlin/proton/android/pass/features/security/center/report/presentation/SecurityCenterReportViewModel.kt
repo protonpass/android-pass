@@ -52,6 +52,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachId
+import proton.android.pass.domain.breach.CustomEmailId
 import proton.android.pass.features.security.center.report.presentation.SecurityCenterReportSnackbarMessage.BreachResolvedError
 import proton.android.pass.features.security.center.report.presentation.SecurityCenterReportSnackbarMessage.BreachResolvedSuccessfully
 import proton.android.pass.features.security.center.shared.navigation.BreachIdArgId
@@ -78,7 +79,7 @@ class SecurityCenterReportViewModel @Inject constructor(
 
     private val customEmailId: BreachEmailId.Custom? = savedStateHandleProvider.get()
         .get<String>(BreachIdArgId.key)
-        ?.let { BreachEmailId.Custom(BreachId(it)) }
+        ?.let { BreachEmailId.Custom(BreachId(""), CustomEmailId(it)) }
 
     private val aliasEmailId: BreachEmailId.Alias? = run {
         val shareId = savedStateHandleProvider.get()

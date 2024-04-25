@@ -21,7 +21,7 @@ package proton.android.pass.domain.breach
 import me.proton.core.util.kotlin.hasFlag
 
 data class BreachCustomEmail(
-    val id: BreachEmailId.Custom,
+    val id: CustomEmailId,
     val email: String,
     val verified: Boolean,
     val breachCount: Int,

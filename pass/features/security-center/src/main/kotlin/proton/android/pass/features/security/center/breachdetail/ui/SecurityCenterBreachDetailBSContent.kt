@@ -94,9 +94,7 @@ internal fun SecurityCenterBreachDetailBSContent(
                 Details(breachEmail = breachEmail)
                 RecommendedActions(
                     breachEmail = breachEmail,
-                    onOpenUrl = {
-
-                    }
+                    onOpenUrl = onOpenUrl
                 )
                 Text(
                     text = stringResource(

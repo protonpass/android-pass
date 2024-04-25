@@ -24,6 +24,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.core.datasources.LocalSentinelDataSource
 import proton.android.pass.data.impl.core.datasources.LocalSentinelDataSourceImpl
+import proton.android.pass.data.impl.local.LocalBreachesDataSource
+import proton.android.pass.data.impl.local.LocalBreachesDataSourceImpl
 import proton.android.pass.data.impl.local.LocalDataMigrationDataSource
 import proton.android.pass.data.impl.local.LocalDataMigrationDataSourceImpl
 import proton.android.pass.data.impl.local.LocalEventDataSource
@@ -91,5 +93,8 @@ abstract class DataLocalDataSourceModule {
 
     @[Binds Singleton]
     abstract fun bindLocalSentinelDataSource(impl: LocalSentinelDataSourceImpl): LocalSentinelDataSource
+
+    @[Binds Singleton]
+    abstract fun bindLocalBreachesDataSource(impl: LocalBreachesDataSourceImpl): LocalBreachesDataSource
 
 }

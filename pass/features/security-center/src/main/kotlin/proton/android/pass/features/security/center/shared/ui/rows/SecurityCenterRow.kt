@@ -49,6 +49,7 @@ import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.item.SectionSubtitle
 import proton.android.pass.composecomponents.impl.item.SectionTitle
+import proton.android.pass.composecomponents.impl.item.placeholder
 
 @Composable
 internal fun SecurityCenterRow(
@@ -56,6 +57,7 @@ internal fun SecurityCenterRow(
     title: String,
     subtitle: String,
     isClickable: Boolean,
+    isLoading: Boolean = false,
     leadingContent: @Composable (RowScope.() -> Unit)? = null,
     trailingContent: @Composable (RowScope.() -> Unit)? = null,
     onClick: (() -> Unit)? = null,
@@ -100,6 +102,10 @@ internal fun SecurityCenterRow(
                 )
 
                 SectionTitle(
+                    modifier = Modifier.applyIf(
+                        condition = isLoading,
+                        ifTrue = { fillMaxWidth().placeholder() }
+                    ),
                     text = subtitle,
                     textColor = subtitleColor
                 )

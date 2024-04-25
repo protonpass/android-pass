@@ -47,9 +47,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.breach.MarkEmailBreachAsResolved
-import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAliasEmail
-import proton.android.pass.data.api.usecases.breach.ObserveBreachesForCustomEmail
-import proton.android.pass.data.api.usecases.breach.ObserveBreachesForProtonEmail
+import proton.android.pass.data.api.usecases.breach.ObserveBreachesForEmail
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ItemType
@@ -72,9 +70,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SecurityCenterReportViewModel @Inject constructor(
-    observeBreachesForCustomEmail: ObserveBreachesForCustomEmail,
-    observeBreachesForProtonEmail: ObserveBreachesForProtonEmail,
-    observeBreachesForAliasEmail: ObserveBreachesForAliasEmail,
+    observeBreachesForEmail: ObserveBreachesForEmail,
     observeItems: ObserveItems,
     private val markEmailBreachAsResolved: MarkEmailBreachAsResolved,
     private val snackbarDispatcher: SnackbarDispatcher,
@@ -112,25 +108,14 @@ class SecurityCenterReportViewModel @Inject constructor(
     private val breachCount: Int = savedStateHandleProvider.get()
         .require(BreachCountIdArgId.key)
 
-    private val emailType: BreachEmailId by lazy {
-        when {
-            protonEmailId != null -> protonEmailId
-            aliasEmailId != null -> aliasEmailId
-            customEmailId != null -> customEmailId
-            else -> throw IllegalStateException("Invalid state")
-        }
-    }
-
-    private val observeBreachForEmailFlow = when (val type = emailType) {
-        is BreachEmailId.Alias -> observeBreachesForAliasEmail(
-            shareId = type.shareId,
-            itemId = type.itemId
-        )
-
-        is BreachEmailId.Custom -> observeBreachesForCustomEmail(id = type)
-        is BreachEmailId.Proton -> observeBreachesForProtonEmail(addressId = type.addressId)
+    private val breachEmailId: BreachEmailId = when {
+        protonEmailId != null -> protonEmailId
+        aliasEmailId != null -> aliasEmailId
+        customEmailId != null -> customEmailId
         else -> throw IllegalStateException("Invalid state")
     }
+
+    private val observeBreachForEmailFlow = observeBreachesForEmail(breachEmailId)
         .asLoadingResult()
         .distinctUntilChanged()
 
@@ -139,14 +124,16 @@ class SecurityCenterReportViewModel @Inject constructor(
         itemState = ItemState.Active,
         filter = ItemTypeFilter.Logins
     )
-        .map { items ->
-            items.mapNotNull { item ->
-                item.takeIf { (item.itemType as ItemType.Login).username == email }
-            }.let {
-                encryptionContextProvider.withEncryptionContext {
-                    it.map { item -> item.toUiModel(this) }
+        .map { loginItems ->
+            loginItems
+                .filter { loginItem ->
+                    (loginItem.itemType as ItemType.Login).username == email
                 }
-            }
+                .let { usedInLoginItems ->
+                    encryptionContextProvider.withEncryptionContext {
+                        usedInLoginItems.map { usedInLoginItem -> usedInLoginItem.toUiModel(this) }
+                    }
+                }
         }
         .asLoadingResult()
         .distinctUntilChanged()

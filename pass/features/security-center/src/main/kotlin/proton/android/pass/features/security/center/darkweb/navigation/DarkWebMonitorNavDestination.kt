@@ -58,4 +58,6 @@ sealed interface DarkWebMonitorNavDestination {
 
     data object AllAliasEmails : DarkWebMonitorNavDestination
 
+    data object Help : DarkWebMonitorNavDestination
+
 }

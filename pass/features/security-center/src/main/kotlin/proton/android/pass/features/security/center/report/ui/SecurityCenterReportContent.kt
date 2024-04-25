@@ -57,7 +57,7 @@ internal fun SecurityCenterReportContent(
                         size = 40,
                         backgroundColor = PassTheme.colors.interactionNormMinor1,
                         tintColor = PassTheme.colors.interactionNormMajor2,
-                        onClick = { }
+                        onClick = { onUiEvent(SecurityCenterReportUiEvent.OnMenuClick) }
                     )
                 }
             )
@@ -71,9 +71,9 @@ internal fun SecurityCenterReportContent(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(Spacing.medium)
         ) {
-            ReportHeader(breachCount = breachCount, email = email)
+            ReportHeader(breachCount = breachCount, email = breachEmail)
 
-            if (hasUnresolvedBreachEmails) {
+            if (hasUnresolvedBreaches) {
                 ResolveButton(
                     modifier = Modifier.padding(horizontal = Spacing.medium),
                     emailId = unresolvedBreachEmails.first().emailId,

@@ -34,24 +34,30 @@ fun SecurityCenterReportScreen(
 
     SecurityCenterReportContent(
         state = state,
-        onUiEvent = {
-            when (it) {
-                SecurityCenterReportUiEvent.Back -> onNavigated(SecurityCenterReportDestination.Back)
-                is SecurityCenterReportUiEvent.EmailBreachDetail ->
-                    onNavigated(SecurityCenterReportDestination.EmailBreachDetail(it.id))
+        onUiEvent = { uiEvent ->
+            when (uiEvent) {
+                SecurityCenterReportUiEvent.Back -> onNavigated(
+                    SecurityCenterReportDestination.Back
+                )
+
+                SecurityCenterReportUiEvent.OnMenuClick -> {
+                    //Display bottom sheet to exclude/include monitoring
+                }
+
+                is SecurityCenterReportUiEvent.EmailBreachDetail -> onNavigated(
+                    SecurityCenterReportDestination.EmailBreachDetail(uiEvent.id)
+                )
 
                 is SecurityCenterReportUiEvent.MarkAsResolvedClick ->
-                    viewModel.resolveEmailBreach(it.id)
+                    viewModel.resolveEmailBreach(uiEvent.id)
 
                 is SecurityCenterReportUiEvent.OnItemClick -> {
-                    val event = SecurityCenterReportDestination.ItemDetail(
-                        shareId = it.shareId,
-                        itemId = it.itemId
-                    )
-                    onNavigated(event)
+                    SecurityCenterReportDestination.ItemDetail(
+                        shareId = uiEvent.shareId,
+                        itemId = uiEvent.itemId
+                    ).also(onNavigated)
                 }
             }
         }
     )
 }
-

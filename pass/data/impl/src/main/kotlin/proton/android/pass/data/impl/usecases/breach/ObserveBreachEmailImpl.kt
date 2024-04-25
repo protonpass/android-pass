@@ -22,35 +22,27 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import proton.android.pass.data.api.repositories.BreachRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
-import proton.android.pass.data.api.usecases.breach.ObserveBreachesForEmail
-import proton.android.pass.domain.breach.BreachEmail
+import proton.android.pass.data.api.usecases.breach.ObserveBreachEmail
+import proton.android.pass.domain.breach.BreachCustomEmail
 import proton.android.pass.domain.breach.BreachEmailId
 import javax.inject.Inject
 
-class ObserveBreachesForEmailImpl @Inject constructor(
+class ObserveBreachEmailImpl @Inject constructor(
     private val observeCurrentUser: ObserveCurrentUser,
     private val breachRepository: BreachRepository
-) : ObserveBreachesForEmail {
+) : ObserveBreachEmail {
 
-    override fun invoke(breachEmailId: BreachEmailId): Flow<List<BreachEmail>> =
+    override fun invoke(breachEmailId: BreachEmailId): Flow<BreachCustomEmail> =
         observeCurrentUser()
             .flatMapLatest { user ->
                 when (breachEmailId) {
-                    is BreachEmailId.Alias -> breachRepository.observeBreachesForAliasEmail(
+                    is BreachEmailId.Alias -> TODO()
+                    is BreachEmailId.Custom -> breachRepository.observeCustomEmail(
                         userId = user.userId,
-                        shareId = breachEmailId.shareId,
-                        itemId = breachEmailId.itemId
+                        customEmailId = breachEmailId
                     )
 
-                    is BreachEmailId.Custom -> breachRepository.observeBreachesForCustomEmail(
-                        userId = user.userId,
-                        id = breachEmailId
-                    )
-
-                    is BreachEmailId.Proton -> breachRepository.observeBreachesForProtonEmail(
-                        userId = user.userId,
-                        id = breachEmailId.addressId,
-                    )
+                    is BreachEmailId.Proton -> TODO()
                 }
             }
 

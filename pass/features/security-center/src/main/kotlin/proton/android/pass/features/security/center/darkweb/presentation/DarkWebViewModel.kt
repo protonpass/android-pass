@@ -134,7 +134,12 @@ internal class DarkWebViewModel @Inject constructor(
 
         val protonEmail = getProtonEmailState(protonEmailResult)
         val aliasEmail = getAliasEmailState(aliasEmailsResult)
-        val customEmails = getCustomEmailsState(customEmailsResult, suggestionsResult)
+        val customEmails = getCustomEmailsState(
+            protonEmailState = protonEmail,
+            aliasEmailState = aliasEmail,
+            customEmailsResult = customEmailsResult,
+            suggestionsResult = suggestionsResult
+        )
         val darkWebStatus = getDarkWebStatus(protonEmail, aliasEmail, customEmails)
 
         DarkWebUiState(
@@ -247,9 +252,24 @@ internal class DarkWebViewModel @Inject constructor(
 
     @Suppress("ReturnCount")
     private fun getCustomEmailsState(
+        protonEmailState: DarkWebEmailBreachState,
+        aliasEmailState: DarkWebEmailBreachState,
         customEmailsResult: LoadingResult<List<BreachCustomEmail>>,
         suggestionsResult: LoadingResult<List<CustomEmailSuggestion>>
     ): DarkWebCustomEmailsState {
+
+        val alreadyAddedProtonEmails = when (protonEmailState) {
+            is DarkWebEmailBreachState.Success -> protonEmailState.emails.map { it.email }
+            else -> emptyList()
+        }
+
+        val alreadyAddedAliases = when (aliasEmailState) {
+            is DarkWebEmailBreachState.Success -> aliasEmailState.emails.map { it.email }
+            else -> emptyList()
+        }
+
+        val alreadyAddedEmails = (alreadyAddedProtonEmails + alreadyAddedAliases).toSet()
+
         val emails = when (customEmailsResult) {
             is LoadingResult.Error -> {
                 PassLogger.w(TAG, "Failed to load custom emails")
@@ -278,7 +298,7 @@ internal class DarkWebViewModel @Inject constructor(
             LoadingResult.Loading -> return DarkWebCustomEmailsState.Loading
             is LoadingResult.Success ->
                 suggestionsResult.data
-                    .filter { it.usedInLoginsCount >= EMAIL_SUGGESTIONS_MIN_USED_IN_COUNT }
+                    .filter { !alreadyAddedEmails.contains(it.email) }
                     .map { it.toUiModel() }
         }.take(EMAIL_SUGGESTIONS_COUNT)
 
@@ -309,7 +329,6 @@ internal class DarkWebViewModel @Inject constructor(
     companion object {
         private const val TAG = "DarkWebViewModel"
 
-        private const val EMAIL_SUGGESTIONS_MIN_USED_IN_COUNT = 3
         private const val EMAIL_SUGGESTIONS_COUNT = 3
     }
 }

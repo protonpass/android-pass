@@ -20,6 +20,7 @@ package proton.android.pass.features.security.center.report.navigation
 
 import androidx.navigation.NavType
 import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.domain.breach.CustomEmailId
 import proton.android.pass.features.security.center.shared.navigation.BreachIdArgId
 import proton.android.pass.features.security.center.shared.navigation.EmailArgId
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -37,10 +38,10 @@ object SecurityCenterCustomEmailReportNavItem : NavItem(
     navArgIds = listOf(BreachIdArgId, EmailArgId, BreachCountIdArgId)
 ) {
     fun createNavRoute(
-        id: BreachEmailId.Custom,
+        id: CustomEmailId,
         email: String,
         breachCount: Int
-    ): String = "$baseRoute/${id.id.id}/${NavParamEncoder.encode(email)}/$breachCount"
+    ): String = "$baseRoute/${id.id}/${NavParamEncoder.encode(email)}/$breachCount"
 }
 
 object SecurityCenterAliasEmailReportNavItem : NavItem(

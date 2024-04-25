@@ -45,7 +45,7 @@ class MarkEmailBreachAsResolvedImpl @Inject constructor(
 
             is BreachEmailId.Custom -> breachRepository.markCustomEmailAsResolved(
                 userId = finalUserId,
-                id = breachEmailId
+                id = breachEmailId.customEmailId
             )
 
             is BreachEmailId.Proton -> breachRepository.markProtonEmailAsResolved(

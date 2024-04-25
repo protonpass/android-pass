@@ -18,11 +18,11 @@
 
 package proton.android.pass.features.security.center.customemail.presentation
 
-import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.domain.breach.CustomEmailId
 
 sealed interface SecurityCenterCustomEmailEvent {
 
-    data class OnEmailSent(val id: BreachEmailId.Custom, val email: String) :
+    data class OnEmailSent(val id: CustomEmailId, val email: String) :
         SecurityCenterCustomEmailEvent
 
     data object Idle : SecurityCenterCustomEmailEvent

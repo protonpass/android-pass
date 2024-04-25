@@ -16,21 +16,21 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.aliaslist.ui
+package proton.android.pass.preferences
 
-import proton.android.pass.domain.breach.BreachEmailId
+enum class IsDarkWebAliasMessageDismissedPreference {
+    Dismissed,
+    Show;
 
-internal sealed interface SecurityCenterAliasListUiEvent {
+    fun value(): Boolean = when (this) {
+        Dismissed -> true
+        Show -> false
+    }
 
-    data object Back : SecurityCenterAliasListUiEvent
-
-    data class EmailBreachClick(
-        val id: BreachEmailId.Alias,
-        val email: String,
-        val breachCount: Int
-    ) : SecurityCenterAliasListUiEvent
-
-    data object OptionsClick : SecurityCenterAliasListUiEvent
-
-    data object DismissCustomEmailMessageClick : SecurityCenterAliasListUiEvent
+    companion object {
+        fun from(value: Boolean): IsDarkWebAliasMessageDismissedPreference = when (value) {
+            true -> Dismissed
+            false -> Show
+        }
+    }
 }

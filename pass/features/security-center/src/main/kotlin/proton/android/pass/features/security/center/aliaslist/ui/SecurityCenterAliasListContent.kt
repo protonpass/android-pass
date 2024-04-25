@@ -18,12 +18,16 @@
 
 package proton.android.pass.features.security.center.aliaslist.ui
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -35,7 +39,9 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultWeak
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.composecomponents.impl.buttons.CircleIconButton
+import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.loading.Loading
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.features.security.center.R
@@ -78,6 +84,15 @@ internal fun SecurityCenterAliasListContent(
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            AnimatedVisibility(
+                visible = state.isCustomEmailMessageEnabled,
+                label = "SecurityCenterAliasListContent-CustomEmailMessage"
+            ) {
+                CustomEmailMessage(
+                    modifier = Modifier.padding(Spacing.medium),
+                    onUiEvent = onUiEvent
+                )
+            }
             when (val list = state.listState) {
                 is AliasListState.Loading -> Loading(
                     modifier = Modifier
@@ -171,6 +186,29 @@ internal fun SecurityCenterAliasListContent(
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+internal fun CustomEmailMessage(modifier: Modifier = Modifier, onUiEvent: (SecurityCenterAliasListUiEvent) -> Unit) {
+    Row(
+        modifier = modifier.roundedContainerNorm(),
+        verticalAlignment = Alignment.Top
+    ) {
+        Text(
+            modifier = Modifier
+                .weight(1f)
+                .padding(Spacing.medium),
+            text = stringResource(R.string.security_center_alias_list_custom_email_message),
+            style = PassTheme.typography.body3Weak()
+        )
+        IconButton(onClick = { onUiEvent(SecurityCenterAliasListUiEvent.DismissCustomEmailMessageClick) }) {
+            Icon(
+                painter = painterResource(id = CoreR.drawable.ic_proton_cross_circle_filled),
+                contentDescription = null,
+                tint = ProtonTheme.colors.iconWeak
+            )
         }
     }
 }

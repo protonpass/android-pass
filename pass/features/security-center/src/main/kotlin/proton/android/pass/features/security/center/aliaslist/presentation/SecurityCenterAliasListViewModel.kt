@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -106,6 +107,7 @@ class SecurityCenterAliasListViewModel @Inject constructor(
         eventFlow
     ) { monitorState,
         aliasIncludedWithoutBreaches, aliasIncludedWithBreaches, aliasExcluded, event ->
+        val isGlobalAliasMonitorEnabled = monitorState.getOrNull()?.aliasMonitorEnabled ?: true
 
         val isLoading = monitorState is LoadingResult.Loading ||
             aliasIncludedWithoutBreaches is LoadingResult.Loading ||
@@ -127,17 +129,29 @@ class SecurityCenterAliasListViewModel @Inject constructor(
             LoadingResult.Loading -> emptyList()
             is LoadingResult.Success -> aliasExcluded.data
         }
-        val listState = if (!isLoading) {
-            AliasListState.Success(
+        val listState = when {
+            isLoading -> AliasListState.Loading
+            !isGlobalAliasMonitorEnabled -> AliasListState.Success(
+                includedBreachedEmails = persistentListOf(),
+                includedMonitoredEmails = persistentListOf(),
+                excludedEmails = (
+                    aliasIncludedWithBreachesList.toEmailBreachUiState()
+                        .map { it.copy(isMonitored = false) } +
+                        aliasExcludedEmailsList.toEmailBreachUiState()
+                            .map { it.copy(isMonitored = false) } +
+                        aliasIncludedWithoutBreachesList.toEmailBreachUiState()
+                            .map { it.copy(isMonitored = false) }
+                    ).toPersistentList()
+            )
+
+            else -> AliasListState.Success(
                 includedBreachedEmails = aliasIncludedWithBreachesList.toEmailBreachUiState(),
                 includedMonitoredEmails = aliasIncludedWithoutBreachesList.toEmailBreachUiState(),
                 excludedEmails = aliasExcludedEmailsList.toEmailBreachUiState()
             )
-        } else {
-            AliasListState.Loading
         }
         SecurityCenterAliasListState(
-            isGlobalMonitorEnabled = monitorState.getOrNull()?.aliasMonitorEnabled ?: false,
+            isGlobalMonitorEnabled = isGlobalAliasMonitorEnabled,
             listState = listState,
             event = event
         )

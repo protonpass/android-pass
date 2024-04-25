@@ -27,7 +27,6 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -35,6 +34,7 @@ import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveGlobalMonitorState
@@ -51,13 +51,17 @@ import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachId
 import proton.android.pass.features.security.center.shared.presentation.EmailBreachUiState
 import proton.android.pass.features.security.center.shared.ui.DateUtils
+import proton.android.pass.preferences.InternalSettingsRepository
+import proton.android.pass.preferences.IsDarkWebAliasMessageDismissedPreference
+import proton.android.pass.preferences.IsDarkWebAliasMessageDismissedPreference.Show
 import javax.inject.Inject
 
 @HiltViewModel
 class SecurityCenterAliasListViewModel @Inject constructor(
     observeItems: ObserveItems,
     observeBreachesForAliasEmail: ObserveBreachesForAliasEmail,
-    observeGlobalMonitorState: ObserveGlobalMonitorState
+    observeGlobalMonitorState: ObserveGlobalMonitorState,
+    private val internalSettingsRepository: InternalSettingsRepository
 ) : ViewModel() {
 
     private val aliasIncludedWithoutBreachesFlow = observeItems(
@@ -99,14 +103,19 @@ class SecurityCenterAliasListViewModel @Inject constructor(
     private val eventFlow =
         MutableStateFlow<SecurityCenterAliasListEvent>(SecurityCenterAliasListEvent.Idle)
 
-    internal val state: StateFlow<SecurityCenterAliasListState> = combine(
+    internal val state: StateFlow<SecurityCenterAliasListState> = combineN(
         observeGlobalMonitorState().asLoadingResult(),
         aliasIncludedWithoutBreachesFlow,
         aliasIncludedWithBreachesFlow,
         aliasExcludedEmailFlow,
+        internalSettingsRepository.getDarkWebAliasMessageVisibility(),
         eventFlow
     ) { monitorState,
-        aliasIncludedWithoutBreaches, aliasIncludedWithBreaches, aliasExcluded, event ->
+        aliasIncludedWithoutBreaches,
+        aliasIncludedWithBreaches,
+        aliasExcluded,
+        darkWebAliasMessageVisibility,
+        event ->
         val isGlobalAliasMonitorEnabled = monitorState.getOrNull()?.aliasMonitorEnabled ?: true
 
         val isLoading = monitorState is LoadingResult.Loading ||
@@ -152,6 +161,7 @@ class SecurityCenterAliasListViewModel @Inject constructor(
         }
         SecurityCenterAliasListState(
             isGlobalMonitorEnabled = isGlobalAliasMonitorEnabled,
+            isCustomEmailMessageEnabled = darkWebAliasMessageVisibility == Show,
             listState = listState,
             event = event
         )
@@ -194,6 +204,12 @@ class SecurityCenterAliasListViewModel @Inject constructor(
 
     internal fun onEventConsumed(event: SecurityCenterAliasListEvent) {
         eventFlow.compareAndSet(event, SecurityCenterAliasListEvent.Idle)
+    }
+
+    internal fun dismissCustomEmailMessage() {
+        internalSettingsRepository.setDarkWebAliasMessageVisibility(
+            IsDarkWebAliasMessageDismissedPreference.Dismissed
+        )
     }
 }
 

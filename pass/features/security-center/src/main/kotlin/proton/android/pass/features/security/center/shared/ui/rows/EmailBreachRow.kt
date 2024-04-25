@@ -96,7 +96,7 @@ internal fun EmailBreachRow(
                     )
                 }
             }
-            if (emailBreachUiState.hasBreaches) {
+            if (emailBreachUiState.hasBreaches && emailBreachUiState.isMonitored) {
                 Circle(
                     backgroundColor = PassTheme.colors.passwordInteractionNormMinor1
                 ) {

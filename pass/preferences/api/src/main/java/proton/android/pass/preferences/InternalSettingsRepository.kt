@@ -66,5 +66,8 @@ interface InternalSettingsRepository {
     fun setItemAutofillCount(count: Int): Result<Unit>
     fun getItemAutofillCount(): Flow<Int>
 
+    fun setDarkWebAliasMessageVisibility(visibility: IsDarkWebAliasMessageDismissedPreference): Result<Unit>
+    fun getDarkWebAliasMessageVisibility(): Flow<IsDarkWebAliasMessageDismissedPreference>
+
     fun clearSettings(): Result<Unit>
 }

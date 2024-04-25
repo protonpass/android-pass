@@ -34,7 +34,7 @@ internal fun SecurityCenterReportList(
     onUiEvent: (SecurityCenterReportUiEvent) -> Unit
 ) = with(state) {
     LazyColumn(modifier = modifier) {
-        if (hasUnresolvedBreachEmails) {
+        if (hasUnresolvedBreaches) {
             stickyHeader {
                 SecurityCenterReportListHeader(
                     titleResId = R.string.security_center_email_report_breaches_header
@@ -52,7 +52,7 @@ internal fun SecurityCenterReportList(
             }
         }
 
-        if (hasResolvedBreachEmails) {
+        if (hasResolvedBreaches) {
             stickyHeader {
                 SecurityCenterReportListHeader(
                     titleResId = R.string.security_center_email_report_resolved_breaches_header
@@ -70,7 +70,7 @@ internal fun SecurityCenterReportList(
             }
         }
 
-        if (hasBeenUsedInItems) {
+        if (hasBeenUsedInLoginItems) {
             stickyHeader {
                 SecurityCenterReportListHeader(
                     titleResId = R.string.security_center_email_report_used_in_header
@@ -78,7 +78,7 @@ internal fun SecurityCenterReportList(
             }
 
             items(
-                items = usedInItems,
+                items = usedInLoginItems,
                 key = { itemUiModel -> itemUiModel.id.id }
             ) { itemUiModel ->
                 SecurityCenterLoginItemRow(

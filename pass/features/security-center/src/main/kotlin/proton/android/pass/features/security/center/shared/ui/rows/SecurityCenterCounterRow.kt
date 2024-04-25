@@ -137,6 +137,17 @@ internal fun SecurityCenterCounterRow(
             }
         )
     }
+
+    is SecurityCenterCounterRowModel.Loading ->
+        SecurityCenterRow(
+            modifier = modifier,
+            title = model.title,
+            subtitle = "",
+            isClickable = model.isClickable,
+            isLoading = true,
+            onClick = onClick,
+            leadingContent = {}
+        )
 }
 
 @Stable
@@ -279,6 +290,15 @@ internal sealed interface SecurityCenterCounterRowModel {
 
     }
 
+    @Stable
+    data class Loading(
+        internal val title: String
+    ) : SecurityCenterCounterRowModel {
+
+        override val counterText: String = ""
+
+        override val isClickable: Boolean = false
+    }
 }
 
 internal class ThemeSecurityCenterCounterRowPreviewProvider :

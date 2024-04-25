@@ -41,6 +41,8 @@ import proton.android.pass.data.impl.responses.BreachesResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.breach.Breach
+import proton.android.pass.domain.breach.BreachAction
+import proton.android.pass.domain.breach.BreachActionCode
 import proton.android.pass.domain.breach.BreachCustomEmail
 import proton.android.pass.domain.breach.BreachEmail
 import proton.android.pass.domain.breach.BreachEmailId
@@ -245,7 +247,14 @@ class BreachRepositoryImpl @Inject constructor(
                 size = breach.size,
                 passwordLastChars = breach.passwordLastChars,
                 exposedData = breach.exposedData.map { it.name },
-                isResolved = breach.resolvedState == BREACH_EMAIL_RESOLVED_STATE_VALUE
+                isResolved = breach.resolvedState == BREACH_EMAIL_RESOLVED_STATE_VALUE,
+                actions = breach.actions.map {
+                    BreachAction(
+                        name = it.name,
+                        code = BreachActionCode.from(it.code),
+                        url = it.urls?.firstOrNull()
+                    )
+                }
             )
         }
     }

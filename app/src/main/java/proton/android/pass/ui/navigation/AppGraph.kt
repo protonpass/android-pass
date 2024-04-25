@@ -118,6 +118,7 @@ import proton.android.pass.features.security.center.breachdetail.navigation.Secu
 import proton.android.pass.features.security.center.customemail.navigation.SecurityCenterCustomEmailNavItem
 import proton.android.pass.features.security.center.darkweb.navigation.CustomEmailOptionsNavItem
 import proton.android.pass.features.security.center.darkweb.navigation.DarkWebMonitorNavItem
+import proton.android.pass.features.security.center.darkweb.navigation.help.DarkWebHelpNavItem
 import proton.android.pass.features.security.center.excludeditems.navigation.SecurityCenterExcludedItemsNavItem
 import proton.android.pass.features.security.center.home.navigation.SecurityCenterHomeNavItem
 import proton.android.pass.features.security.center.missingtfa.navigation.SecurityCenterMissingTFANavItem
@@ -1200,6 +1201,9 @@ fun NavGraphBuilder.appGraph(
                         addressType = destination.addressType
                     )
                 )
+
+                SecurityCenterNavDestination.DarkWebHelp ->
+                    appNavigator.navigate(DarkWebHelpNavItem)
             }
         }
     )

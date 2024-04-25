@@ -23,6 +23,8 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.user.domain.entity.UserAddress
+import me.proton.core.user.domain.repository.UserAddressRepository
 import proton.android.pass.common.api.CommonRegex.EMAIL_VALIDATION_REGEX
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
@@ -35,11 +37,15 @@ import javax.inject.Inject
 
 class ObserveCustomEmailSuggestionsImpl @Inject constructor(
     private val accountManager: AccountManager,
+    private val addressRepository: UserAddressRepository,
     private val observeItems: ObserveItems
 ) : ObserveCustomEmailSuggestions {
     override fun invoke(): Flow<List<CustomEmailSuggestion>> = accountManager.getPrimaryUserId()
         .filterNotNull()
         .flatMapLatest { userId ->
+
+            val addressesForUser = addressRepository.getAddresses(userId)
+
             val itemsFlow = observeItems(
                 userId = userId,
                 selection = ShareSelection.AllShares,
@@ -53,10 +59,19 @@ class ObserveCustomEmailSuggestionsImpl @Inject constructor(
                 filter = ItemTypeFilter.Aliases,
                 itemState = null
             )
-            combine(itemsFlow, aliasesFlow) { logins, aliases -> combineItems(logins, aliases) }
+            combine(itemsFlow, aliasesFlow) { logins, aliases ->
+                combineItems(logins, aliases, addressesForUser)
+            }
         }
 
-    private fun combineItems(loginItems: List<Item>, aliasItems: List<Item>): List<CustomEmailSuggestion> {
+    private fun combineItems(
+        loginItems: List<Item>,
+        aliasItems: List<Item>,
+        addressesForUser: List<UserAddress>
+    ): List<CustomEmailSuggestion> {
+
+        val userAddresses = addressesForUser.map { it.email }.toSet()
+
         val aliases = aliasItems
             .mapNotNull { it.itemType as? ItemType.Alias }
             .map { it.aliasEmail }
@@ -66,8 +81,11 @@ class ObserveCustomEmailSuggestionsImpl @Inject constructor(
             .mapNotNull { it.itemType as? ItemType.Login }
             .map { it.username }
             .filter { username ->
-                !aliases.contains(username) && EMAIL_VALIDATION_REGEX.matches(username)
+                !aliases.contains(username) &&
+                    !userAddresses.contains(username) &&
+                    EMAIL_VALIDATION_REGEX.matches(username)
             }
+            .sortedBy { it }
 
         val loginUsernamesCount = loginUsernames.groupingBy { it }.eachCount()
 

@@ -40,32 +40,31 @@ class DuplicatedPasswordCheckerImpl @Inject constructor(
             return DuplicatedPasswordReport(emptySet())
         }
 
-        return observeItems(
+        val itemPassword = encryptionContextProvider.withEncryptionContext {
+            decrypt((item.itemType as ItemType.Login).password)
+        }
+        if (itemPassword.isBlank()) {
+            return DuplicatedPasswordReport(emptySet())
+        }
+        val items = observeItems(
             selection = ShareSelection.AllShares,
             itemState = ItemState.Active,
             filter = ItemTypeFilter.Logins
-        )
-            .first()
-            .filter { loginItem -> loginItem.id != item.id }
-            .let { loginItems ->
-                val duplicatedPasswordItems = mutableSetOf<Item>()
+        ).first().filter { loginItem -> loginItem.id != item.id }
 
-                encryptionContextProvider.withEncryptionContext {
-                    val itemPassword = decrypt((item.itemType as ItemType.Login).password)
-                    loginItems.forEach { loginItem ->
-                        if (loginItem.itemType is ItemType.Login) {
-                            val currentItemPassword =
-                                decrypt((loginItem.itemType as ItemType.Login).password)
-                            if (itemPassword == currentItemPassword) {
-                                duplicatedPasswordItems.add(loginItem)
-                            }
-                        }
+        val duplicatedPasswordItems = mutableSetOf<Item>()
+        encryptionContextProvider.withEncryptionContext {
+            items.forEach { loginItem ->
+                if (loginItem.itemType is ItemType.Login) {
+                    val currentItemPassword =
+                        decrypt((loginItem.itemType as ItemType.Login).password)
+                    if (itemPassword == currentItemPassword) {
+                        duplicatedPasswordItems.add(loginItem)
                     }
                 }
-
-                duplicatedPasswordItems
             }
-            .let(::DuplicatedPasswordReport)
+        }
+        return DuplicatedPasswordReport(duplicatedPasswordItems)
     }
 
 }

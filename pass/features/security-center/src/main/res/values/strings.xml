@@ -178,4 +178,8 @@
     <string name="security_center_alias_list_included_in_monitoring">Enable monitoring to get notified if your Hide-my-email aliases were leaked.</string>
     <string name="security_center_alias_list_monitored">Monitored</string>
 
+    <!-- Dark web help dialog -->
+    <string name="dark_web_help_dialog_title">Data Security</string>
+    <string name="dark_web_help_dialog_subtitle">Proton never shares your information with third parties. All data comes from searches for the appearance of Proton domains on the dark web.</string>
+
 </resources>

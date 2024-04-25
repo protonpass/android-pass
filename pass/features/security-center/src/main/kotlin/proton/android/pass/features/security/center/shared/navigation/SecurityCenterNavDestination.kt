@@ -109,6 +109,8 @@ sealed interface SecurityCenterNavDestination {
 
     data object AllAliasEmails : SecurityCenterNavDestination
 
+    data object DarkWebHelp : SecurityCenterNavDestination
+
     data class AddressOptions(
         val addressOptionsType: AddressOptionsType,
         val addressType: AddressType

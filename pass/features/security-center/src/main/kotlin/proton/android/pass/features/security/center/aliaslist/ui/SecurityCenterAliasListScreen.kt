@@ -66,6 +66,9 @@ fun SecurityCenterAliasListScreen(
                     )
                 )
             }
+
+            SecurityCenterAliasListUiEvent.DismissCustomEmailMessageClick ->
+                viewModel.dismissCustomEmailMessage()
         }
     }
 }

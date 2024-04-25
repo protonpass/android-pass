@@ -24,7 +24,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.mapLatest
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.withContext
@@ -32,6 +31,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.data.api.repositories.BreachRepository
+import proton.android.pass.data.impl.local.LocalBreachesDataSource
 import proton.android.pass.data.impl.local.LocalUserAccessDataDataSource
 import proton.android.pass.data.impl.remote.RemoteBreachDataSource
 import proton.android.pass.data.impl.responses.BreachDomainPeek
@@ -52,15 +52,14 @@ import javax.inject.Singleton
 @Singleton
 class BreachRepositoryImpl @Inject constructor(
     private val localUserAccessDataDataSource: LocalUserAccessDataDataSource,
-    private val remote: RemoteBreachDataSource
+    private val remote: RemoteBreachDataSource,
+    private val localBreachesDataSource: LocalBreachesDataSource
 ) : BreachRepository {
 
     private val refreshFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     private val shouldFetchBreachFlow: Flow<Boolean> = refreshFlow.onStart { emit(true) }
 
-    private val customEmailBreachesCache: MutableMap<Pair<UserId, BreachId>, List<BreachEmail>> =
-        mutableMapOf()
     private val aliasBreachesCache: MutableMap<Pair<UserId, Pair<ShareId, ItemId>>, List<BreachEmail>> =
         mutableMapOf()
 
@@ -69,21 +68,27 @@ class BreachRepositoryImpl @Inject constructor(
         .mapLatest { remote.getAllBreaches(userId).toDomain() }
         .distinctUntilChanged()
 
-    override fun observeCustomEmails(userId: UserId): Flow<List<BreachCustomEmail>> = refreshFlow
-        .filter { it }
-        .mapLatest { refreshEmails(userId) }
-        .onEach {
-            refreshFlow.update { false }
-        }
-        .distinctUntilChanged()
-        .onStart {
-            emit(refreshEmails(userId))
-        }
+    override fun observeCustomEmail(
+        userId: UserId,
+        customEmailId: BreachEmailId.Custom
+    ): Flow<BreachCustomEmail> = localBreachesDataSource.observeCustomEmail(customEmailId)
+
+    override fun observeCustomEmails(userId: UserId): Flow<List<BreachCustomEmail>> =
+        localBreachesDataSource.observeCustomEmails()
+            .onStart {
+                remote.getCustomEmails(userId)
+                    .emails
+                    .customEmails
+                    .map { customEmailDto -> customEmailDto.toDomain() }
+                    .also { customEmails -> localBreachesDataSource.upsertCustomEmails(customEmails) }
+            }
 
     override suspend fun addCustomEmail(userId: UserId, email: String): BreachCustomEmail =
-        remote.addCustomEmail(userId, email).email.toDomain().also {
-            refreshFlow.update { true }
-        }
+        remote.addCustomEmail(userId, email)
+            .email
+            .toDomain()
+            .also { customEmail -> localBreachesDataSource.upsertCustomEmail(customEmail) }
+            .also { refreshFlow.update { true } }
 
     override suspend fun verifyCustomEmail(
         userId: UserId,
@@ -91,31 +96,33 @@ class BreachRepositoryImpl @Inject constructor(
         code: String
     ) {
         remote.verifyCustomEmail(userId, emailId, code)
-        refreshFlow.update { true }
+
+        localBreachesDataSource.getCustomEmail(emailId)
+            .copy(verified = true)
+            .also { verifiedCustomEmail ->
+                localBreachesDataSource.upsertCustomEmail(verifiedCustomEmail)
+            }
+            .also { refreshFlow.update { true } }
     }
 
-    override fun observeBreachesForProtonEmail(userId: UserId, id: AddressId): Flow<List<BreachEmail>> = oneShot {
+    override fun observeBreachesForProtonEmail(
+        userId: UserId,
+        id: AddressId
+    ): Flow<List<BreachEmail>> = oneShot {
         remote.getBreachesForProtonEmail(userId, id)
             .toDomain { breach -> BreachEmailId.Proton(BreachId(breach.id), id) }
     }
 
-    override fun observeBreachesForCustomEmail(userId: UserId, id: BreachEmailId.Custom): Flow<List<BreachEmail>> =
-        oneShot {
-            customEmailBreachesCache.getOrPut(userId to id.id) {
-                remote.getBreachesForCustomEmail(userId, id)
-                    .let {response ->
-                        response.copy(
-                            breachEmails = response.breachEmails.copy(
-                                breaches = response.breachEmails.breaches.map { it.copy(resolvedState = 1) }
-                            )
-                        )
-                    }
-                    .also {
-                        println("JIBIRI: $it")
-                    }
-                    .toDomain { breach -> BreachEmailId.Custom(BreachId(breach.id)) }
-
-            }
+    override fun observeBreachesForCustomEmail(
+        userId: UserId,
+        id: BreachEmailId.Custom
+    ): Flow<List<BreachEmail>> = localBreachesDataSource.observeCustomEmailBreaches()
+        .onStart {
+            remote.getBreachesForCustomEmail(userId, id)
+                .toDomain { breachDto -> BreachEmailId.Custom(BreachId(breachDto.id)) }
+                .also { customEmailBreaches ->
+                    localBreachesDataSource.upsertCustomEmailBreaches(customEmailBreaches)
+                }
         }
 
     override fun observeBreachesForAliasEmail(
@@ -186,11 +193,6 @@ class BreachRepositoryImpl @Inject constructor(
         remote.updateAliasAddressMonitorState(userId, shareId, itemId, enabled)
     }
 
-    private suspend fun refreshEmails(userId: UserId): List<BreachCustomEmail> {
-        val response = remote.getCustomEmails(userId)
-        return response.emails.customEmails.map { it.toDomain() }
-    }
-
     fun proton.android.pass.data.impl.responses.BreachCustomEmail.toDomain() = BreachCustomEmail(
         id = BreachEmailId.Custom(BreachId(customEmailId)),
         email = email,
@@ -222,22 +224,23 @@ class BreachRepositoryImpl @Inject constructor(
         breachTime = breachTime
     )
 
-    private fun BreachEmailsResponse.toDomain(createId: (Breaches) -> BreachEmailId) = with(this.breachEmails) {
-        breaches.map { breach ->
-            BreachEmail(
-                emailId = createId(breach),
-                email = breach.email,
-                severity = breach.severity,
-                name = breach.name,
-                createdAt = breach.createdAt,
-                publishedAt = breach.publishedAt,
-                size = breach.size,
-                passwordLastChars = breach.passwordLastChars,
-                exposedData = breach.exposedData.map { it.name },
-                isResolved = breach.resolvedState == BREACH_EMAIL_RESOLVED_STATE_VALUE
-            )
+    private fun BreachEmailsResponse.toDomain(createId: (Breaches) -> BreachEmailId) =
+        with(this.breachEmails) {
+            breaches.map { breach ->
+                BreachEmail(
+                    emailId = createId(breach),
+                    email = breach.email,
+                    severity = breach.severity,
+                    name = breach.name,
+                    createdAt = breach.createdAt,
+                    publishedAt = breach.publishedAt,
+                    size = breach.size,
+                    passwordLastChars = breach.passwordLastChars,
+                    exposedData = breach.exposedData.map { it.name },
+                    isResolved = breach.resolvedState == BREACH_EMAIL_RESOLVED_STATE_VALUE
+                )
+            }
         }
-    }
 
     private companion object {
 

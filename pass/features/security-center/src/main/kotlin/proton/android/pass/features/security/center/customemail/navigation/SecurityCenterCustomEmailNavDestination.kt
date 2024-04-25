@@ -18,12 +18,12 @@
 
 package proton.android.pass.features.security.center.customemail.navigation
 
-import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.domain.breach.CustomEmailId
 
 sealed interface SecurityCenterCustomEmailNavDestination {
 
     data object Back : SecurityCenterCustomEmailNavDestination
 
-    data class VerifyEmail(val id: BreachEmailId.Custom, val email: String) :
+    data class VerifyEmail(val id: CustomEmailId, val email: String) :
         SecurityCenterCustomEmailNavDestination
 }

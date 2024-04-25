@@ -24,7 +24,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.BreachRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.breach.ResendVerificationCode
-import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.domain.breach.CustomEmailId
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -34,7 +34,7 @@ class ResendVerificationCodeImpl @Inject constructor(
     private val observeCurrentUser: ObserveCurrentUser
 ) : ResendVerificationCode {
 
-    override suspend fun invoke(userId: UserId?, id: BreachEmailId.Custom) = if (userId != null) {
+    override suspend fun invoke(userId: UserId?, id: CustomEmailId) = if (userId != null) {
         breachRepository.resendVerificationCode(userId, id)
     } else {
         val user = observeCurrentUser().filterNotNull().first()

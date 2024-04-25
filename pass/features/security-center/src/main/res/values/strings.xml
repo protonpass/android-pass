@@ -158,6 +158,7 @@
         name="security_center_report_detail_enable_2fa"
         comment="The placeholder argument contains the name of the service where the breach occurred."
     >Enable 2FA on %s</string>
+    <string name="security_center_report_detail_snackbar_error">Could not load breach details</string>
 
     <!-- Proton list -->
     <string name="security_center_proton_list_top_bar_title">Proton addresses</string>

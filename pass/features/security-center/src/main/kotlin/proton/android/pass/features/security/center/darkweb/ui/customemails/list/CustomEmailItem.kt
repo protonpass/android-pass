@@ -46,7 +46,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.composecomponents.impl.item.icon.ThreeDotsMenuButton
-import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.domain.breach.CustomEmailId
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.darkweb.presentation.CustomEmailUiState
 import proton.android.pass.features.security.center.darkweb.presentation.CustomEmailUiStatus
@@ -57,8 +57,8 @@ internal fun CustomEmailItem(
     modifier: Modifier = Modifier,
     email: CustomEmailUiState,
     onAddClick: () -> Unit,
-    onOptionsClick: (BreachEmailId.Custom) -> Unit,
-    onDetailClick: (BreachEmailId.Custom) -> Unit
+    onOptionsClick: (CustomEmailId) -> Unit,
+    onDetailClick: (CustomEmailId) -> Unit
 ) {
     when (email.status) {
         is CustomEmailUiStatus.Suggestion -> {

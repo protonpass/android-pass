@@ -23,6 +23,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.breach.BreachEmailId
 
 internal sealed interface SecurityCenterReportUiEvent {
+
     data object Back : SecurityCenterReportUiEvent
 
     @JvmInline
@@ -35,4 +36,7 @@ internal sealed interface SecurityCenterReportUiEvent {
         val shareId: ShareId,
         val itemId: ItemId
     ) : SecurityCenterReportUiEvent
+
+    data object OnMenuClick : SecurityCenterReportUiEvent
+
 }

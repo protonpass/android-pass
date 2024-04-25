@@ -20,41 +20,38 @@ package proton.android.pass.data.impl.usecases.breach
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
+import proton.android.pass.data.api.repositories.BreachRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
-import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAliasEmail
-import proton.android.pass.data.api.usecases.breach.ObserveBreachesForCustomEmail
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForEmail
-import proton.android.pass.data.api.usecases.breach.ObserveBreachesForProtonEmail
 import proton.android.pass.domain.breach.BreachEmail
 import proton.android.pass.domain.breach.BreachEmailId
 import javax.inject.Inject
 
 class ObserveBreachesForEmailImpl @Inject constructor(
     private val observeCurrentUser: ObserveCurrentUser,
-    private val observeBreachesForAliasEmail: ObserveBreachesForAliasEmail,
-    private val observeBreachesForCustomEmail: ObserveBreachesForCustomEmail,
-    private val observeBreachesForProtonEmail: ObserveBreachesForProtonEmail
+    private val breachRepository: BreachRepository
 ) : ObserveBreachesForEmail {
 
-    override fun invoke(breachEmailId: BreachEmailId): Flow<List<BreachEmail>> = observeCurrentUser()
-        .flatMapLatest { user ->
-            when (breachEmailId) {
-                is BreachEmailId.Alias -> observeBreachesForAliasEmail(
-                    userId = user.userId,
-                    shareId = breachEmailId.shareId,
-                    itemId = breachEmailId.itemId
-                )
+    override fun invoke(breachEmailId: BreachEmailId): Flow<List<BreachEmail>> =
+        observeCurrentUser()
+            .flatMapLatest { user ->
+                when (breachEmailId) {
+                    is BreachEmailId.Alias -> breachRepository.observeBreachesForAliasEmail(
+                        userId = user.userId,
+                        shareId = breachEmailId.shareId,
+                        itemId = breachEmailId.itemId
+                    )
 
-                is BreachEmailId.Custom -> observeBreachesForCustomEmail(
-                    userId = user.userId,
-                    id = breachEmailId
-                )
+                    is BreachEmailId.Custom -> breachRepository.observeBreachesForCustomEmail(
+                        userId = user.userId,
+                        id = breachEmailId
+                    )
 
-                is BreachEmailId.Proton -> observeBreachesForProtonEmail(
-                    userId = user.userId,
-                    addressId = breachEmailId.addressId,
-                )
+                    is BreachEmailId.Proton -> breachRepository.observeBreachesForProtonEmail(
+                        userId = user.userId,
+                        id = breachEmailId.addressId,
+                    )
+                }
             }
-        }
 
 }

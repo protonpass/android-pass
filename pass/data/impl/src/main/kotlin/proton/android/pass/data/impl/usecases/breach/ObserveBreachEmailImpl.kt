@@ -38,7 +38,7 @@ class ObserveBreachEmailImpl @Inject constructor(
                 is BreachEmailId.Alias -> TODO()
                 is BreachEmailId.Custom -> breachRepository.observeCustomEmail(
                     userId = user.userId,
-                    customEmailId = breachEmailId
+                    customEmailId = breachEmailId.customEmailId
                 )
 
                 is BreachEmailId.Proton -> TODO()

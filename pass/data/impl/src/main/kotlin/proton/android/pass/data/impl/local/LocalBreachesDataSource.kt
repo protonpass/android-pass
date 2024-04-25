@@ -27,13 +27,14 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.breach.BreachCustomEmail
 import proton.android.pass.domain.breach.BreachEmail
 import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.domain.breach.CustomEmailId
 import javax.inject.Inject
 
 interface LocalBreachesDataSource {
 
-    suspend fun getCustomEmail(userId: UserId, customEmailId: BreachEmailId.Custom): BreachCustomEmail
+    suspend fun getCustomEmail(userId: UserId, customEmailId: CustomEmailId): BreachCustomEmail
 
-    fun observeCustomEmail(userId: UserId, customEmailId: BreachEmailId.Custom): Flow<BreachCustomEmail>
+    fun observeCustomEmail(userId: UserId, customEmailId: CustomEmailId): Flow<BreachCustomEmail>
 
     suspend fun upsertCustomEmail(userId: UserId, customEmail: BreachCustomEmail)
 
@@ -41,7 +42,7 @@ interface LocalBreachesDataSource {
 
     suspend fun upsertCustomEmails(userId: UserId, customEmails: List<BreachCustomEmail>)
 
-    suspend fun deleteCustomEmail(userId: UserId, customEmailId: BreachEmailId.Custom)
+    suspend fun deleteCustomEmail(userId: UserId, customEmailId: CustomEmailId)
 
     fun observeCustomEmailBreaches(): Flow<List<BreachEmail>>
 
@@ -52,7 +53,7 @@ interface LocalBreachesDataSource {
 class LocalBreachesDataSourceImpl @Inject constructor() : LocalBreachesDataSource {
 
     private val customEmailsFlow =
-        MutableSharedFlow<Map<Pair<UserId, BreachEmailId.Custom>, BreachCustomEmail>>(
+        MutableSharedFlow<Map<Pair<UserId, CustomEmailId>, BreachCustomEmail>>(
             replay = 1,
             onBufferOverflow = BufferOverflow.DROP_OLDEST
         )
@@ -64,15 +65,15 @@ class LocalBreachesDataSourceImpl @Inject constructor() : LocalBreachesDataSourc
         )
 
     private val customEmailsCache =
-        mutableMapOf<Pair<UserId, BreachEmailId.Custom>, BreachCustomEmail>()
+        mutableMapOf<Pair<UserId, CustomEmailId>, BreachCustomEmail>()
 
     private val customEmailBreachesCache = mutableMapOf<Pair<UserId, BreachEmailId>, BreachEmail>()
 
-    override suspend fun getCustomEmail(userId: UserId, customEmailId: BreachEmailId.Custom): BreachCustomEmail =
+    override suspend fun getCustomEmail(userId: UserId, customEmailId: CustomEmailId): BreachCustomEmail =
         customEmailsCache[Pair(userId, customEmailId)]
-            ?: throw IllegalArgumentException("There's no custom email with id: ${customEmailId.id.id}")
+            ?: throw IllegalArgumentException("There's no custom email with id: ${customEmailId.id}")
 
-    override fun observeCustomEmail(userId: UserId, customEmailId: BreachEmailId.Custom): Flow<BreachCustomEmail> =
+    override fun observeCustomEmail(userId: UserId, customEmailId: CustomEmailId): Flow<BreachCustomEmail> =
         customEmailsFlow
             .map { customEmailsMap -> customEmailsMap[Pair(userId, customEmailId)] }
             .filterNotNull()
@@ -94,7 +95,7 @@ class LocalBreachesDataSourceImpl @Inject constructor() : LocalBreachesDataSourc
             .also { emitCustomEmailsChanges() }
     }
 
-    override suspend fun deleteCustomEmail(userId: UserId, customEmailId: BreachEmailId.Custom) {
+    override suspend fun deleteCustomEmail(userId: UserId, customEmailId: CustomEmailId) {
         customEmailsCache.remove(Pair(userId, customEmailId))
             .also { emitCustomEmailsChanges() }
     }

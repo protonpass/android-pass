@@ -32,6 +32,11 @@ interface BreachRepository {
 
     fun observeAllBreaches(userId: UserId): Flow<Breach>
 
+    fun observeCustomEmail(
+        userId: UserId,
+        customEmailId: BreachEmailId.Custom
+    ): Flow<BreachCustomEmail>
+
     fun observeCustomEmails(userId: UserId): Flow<List<BreachCustomEmail>>
 
     suspend fun addCustomEmail(userId: UserId, email: String): BreachCustomEmail
@@ -44,7 +49,10 @@ interface BreachRepository {
 
     fun observeBreachesForProtonEmail(userId: UserId, id: AddressId): Flow<List<BreachEmail>>
 
-    fun observeBreachesForCustomEmail(userId: UserId, id: BreachEmailId.Custom): Flow<List<BreachEmail>>
+    fun observeBreachesForCustomEmail(
+        userId: UserId,
+        id: BreachEmailId.Custom
+    ): Flow<List<BreachEmail>>
 
     fun observeBreachesForAliasEmail(
         userId: UserId,

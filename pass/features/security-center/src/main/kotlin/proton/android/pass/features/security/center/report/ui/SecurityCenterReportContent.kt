@@ -28,8 +28,11 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import me.proton.core.presentation.R
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.composecomponents.impl.buttons.CircleIconButton
 import proton.android.pass.composecomponents.impl.loading.Loading
 import proton.android.pass.features.security.center.report.presentation.SecurityCenterReportState
 import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBar
@@ -46,7 +49,17 @@ internal fun SecurityCenterReportContent(
             SecurityCenterTopBar(
                 modifier = Modifier
                     .padding(top = Spacing.medium - Spacing.extraSmall),
-                onUpClick = { onUiEvent(SecurityCenterReportUiEvent.Back) }
+                onUpClick = { onUiEvent(SecurityCenterReportUiEvent.Back) },
+                actions = {
+                    CircleIconButton(
+                        modifier = modifier,
+                        iconPainter = painterResource(id = R.drawable.ic_proton_three_dots_vertical),
+                        size = 40,
+                        backgroundColor = PassTheme.colors.interactionNormMinor1,
+                        tintColor = PassTheme.colors.interactionNormMajor2,
+                        onClick = { }
+                    )
+                }
             )
         }
     ) { innerPadding ->

@@ -28,7 +28,6 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -212,7 +211,6 @@ private fun CustomEmailItemVerified(
 
     Row(
         modifier = modifier
-            .clip(RoundedCornerShape(8.dp))
             .clickable(onClick = onDetailClick)
             .padding(horizontal = Spacing.medium, vertical = Spacing.small),
         verticalAlignment = Alignment.CenterVertically,

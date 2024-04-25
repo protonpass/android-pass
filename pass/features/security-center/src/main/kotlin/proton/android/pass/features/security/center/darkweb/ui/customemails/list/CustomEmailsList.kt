@@ -97,7 +97,9 @@ fun LazyListScope.customEmailsList(state: DarkWebUiState, onEvent: (DarkWebUiEve
             if (state.customEmailState.emails.isNotEmpty() && state.customEmailState.suggestions.isNotEmpty()) {
                 item {
                     Text(
-                        modifier = Modifier.padding(Spacing.medium),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(Spacing.medium),
                         text = stringResource(
                             id = R.string.security_center_dark_web_monitor_custom_emails_suggestions
                         ),

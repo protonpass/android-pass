@@ -21,47 +21,85 @@ package proton.android.pass.features.security.center.report.presentation
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toPersistentList
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.breach.BreachCustomEmail
 import proton.android.pass.domain.breach.BreachEmail
 
 @Stable
 internal data class SecurityCenterReportState(
-    internal val email: String,
-    val breachCount: Int,
     internal val canLoadExternalImages: Boolean,
-    private val breachEmails: List<BreachEmail>,
-    internal val usedInItems: ImmutableList<ItemUiModel>,
-    internal val isContentLoading: Boolean,
-    internal val isResolveLoading: Boolean
+    private val breachEmailResult: LoadingResult<BreachCustomEmail>,
+    private val breachEmailsResult: LoadingResult<List<BreachEmail>>,
+    private val usedInLoginItemsResult: LoadingResult<List<ItemUiModel>>,
+    private val isResolvingBreachState: IsLoadingState
 ) {
+
+    internal val isBreachExcludedFromMonitoring: Boolean = when (breachEmailResult) {
+        is LoadingResult.Error,
+        LoadingResult.Loading -> false
+
+        is LoadingResult.Success -> breachEmailResult.data.isMonitoringDisabled
+    }
+
+    internal val breachCount: Int = when (breachEmailResult) {
+        is LoadingResult.Error,
+        LoadingResult.Loading -> 0
+
+        is LoadingResult.Success -> breachEmailResult.data.breachCount
+    }
+
+    internal val breachEmail: String = when (breachEmailResult) {
+        is LoadingResult.Error,
+        LoadingResult.Loading -> ""
+
+        is LoadingResult.Success -> breachEmailResult.data.email
+    }
+
+    private val breachEmails: List<BreachEmail> = when (breachEmailsResult) {
+        is LoadingResult.Error,
+        LoadingResult.Loading -> emptyList()
+
+        is LoadingResult.Success -> breachEmailsResult.data
+    }
 
     internal val resolvedBreachEmails: ImmutableList<BreachEmail> = breachEmails
         .filter { breachEmail -> breachEmail.isResolved }
         .toPersistentList()
 
-    internal val hasResolvedBreachEmails: Boolean = resolvedBreachEmails.isNotEmpty()
+    internal val hasResolvedBreaches: Boolean = resolvedBreachEmails.isNotEmpty()
 
     internal val unresolvedBreachEmails: ImmutableList<BreachEmail> = breachEmails
         .filter { breachEmail -> !breachEmail.isResolved }
         .toPersistentList()
 
-    internal val hasUnresolvedBreachEmails: Boolean = unresolvedBreachEmails.isNotEmpty()
+    internal val hasUnresolvedBreaches: Boolean = unresolvedBreachEmails.isNotEmpty()
 
-    internal val hasBreachEmails: Boolean = breachEmails.isNotEmpty()
+    internal val usedInLoginItems: ImmutableList<ItemUiModel> = when (usedInLoginItemsResult) {
+        is LoadingResult.Error,
+        LoadingResult.Loading -> persistentListOf()
 
-    internal val hasBeenUsedInItems: Boolean = usedInItems.isNotEmpty()
+        is LoadingResult.Success -> usedInLoginItemsResult.data.toImmutableList()
+    }
+
+    internal val hasBeenUsedInLoginItems: Boolean = usedInLoginItems.isNotEmpty()
+
+    internal val isContentLoading: Boolean = usedInLoginItemsResult is LoadingResult.Loading ||
+        breachEmailsResult is LoadingResult.Loading
+
+    internal val isResolveLoading: Boolean = isResolvingBreachState.value()
 
     internal companion object {
 
-        internal fun default(email: String, breaches: Int) = SecurityCenterReportState(
-            email = email,
-            breachCount = breaches,
+        internal val Initial = SecurityCenterReportState(
             canLoadExternalImages = false,
-            breachEmails = persistentListOf(),
-            usedInItems = persistentListOf(),
-            isContentLoading = true,
-            isResolveLoading = false
+            breachEmailResult = LoadingResult.Loading,
+            breachEmailsResult = LoadingResult.Loading,
+            usedInLoginItemsResult = LoadingResult.Loading,
+            isResolvingBreachState = IsLoadingState.NotLoading,
         )
 
     }

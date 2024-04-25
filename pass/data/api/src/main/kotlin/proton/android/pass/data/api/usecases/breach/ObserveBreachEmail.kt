@@ -16,27 +16,14 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.report.ui
+package proton.android.pass.data.api.usecases.breach
 
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
+import kotlinx.coroutines.flow.Flow
+import proton.android.pass.domain.breach.BreachCustomEmail
 import proton.android.pass.domain.breach.BreachEmailId
 
-internal sealed interface SecurityCenterReportUiEvent {
+interface ObserveBreachEmail {
 
-    data object Back : SecurityCenterReportUiEvent
-
-    @JvmInline
-    value class EmailBreachDetail(val id: BreachEmailId) : SecurityCenterReportUiEvent
-
-    @JvmInline
-    value class MarkAsResolvedClick(val id: BreachEmailId) : SecurityCenterReportUiEvent
-
-    data class OnItemClick(
-        val shareId: ShareId,
-        val itemId: ItemId
-    ) : SecurityCenterReportUiEvent
-
-    data object OnMenuClick : SecurityCenterReportUiEvent
+    operator fun invoke(breachEmailId: BreachEmailId): Flow<BreachCustomEmail>
 
 }

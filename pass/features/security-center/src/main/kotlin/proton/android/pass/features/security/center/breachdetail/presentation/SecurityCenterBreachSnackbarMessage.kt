@@ -16,14 +16,21 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.customemail.navigation
+package proton.android.pass.features.security.center.breachdetail.presentation
 
-import proton.android.pass.domain.breach.CustomEmailId
+import androidx.annotation.StringRes
+import proton.android.pass.features.security.center.R
+import proton.android.pass.notifications.api.SnackbarMessage
+import proton.android.pass.notifications.api.SnackbarType
 
-sealed interface SecurityCenterCustomEmailNavDestination {
+internal enum class SecurityCenterBreachSnackbarMessage(
+    @StringRes override val id: Int,
+    override val type: SnackbarType,
+    override val isClipboard: Boolean = false
+) : SnackbarMessage {
 
-    data object Back : SecurityCenterCustomEmailNavDestination
-
-    data class VerifyEmail(val id: CustomEmailId, val email: String) :
-        SecurityCenterCustomEmailNavDestination
+    GetBreachDetailsError(
+        id = R.string.security_center_report_detail_snackbar_error,
+        type = SnackbarType.ERROR
+    )
 }

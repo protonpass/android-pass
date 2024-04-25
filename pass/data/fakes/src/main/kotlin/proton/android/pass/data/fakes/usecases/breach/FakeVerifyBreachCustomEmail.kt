@@ -20,7 +20,7 @@ package proton.android.pass.data.fakes.usecases.breach
 
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.breach.VerifyBreachCustomEmail
-import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.domain.breach.CustomEmailId
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -28,7 +28,7 @@ import javax.inject.Singleton
 class FakeVerifyBreachCustomEmail @Inject constructor() : VerifyBreachCustomEmail {
     override suspend fun invoke(
         userId: UserId?,
-        id: BreachEmailId.Custom,
+        id: CustomEmailId,
         code: String
     ) = Unit
 }

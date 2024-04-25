@@ -37,8 +37,7 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.breach.ResendVerificationCode
 import proton.android.pass.data.api.usecases.breach.VerifyBreachCustomEmail
-import proton.android.pass.domain.breach.BreachEmailId
-import proton.android.pass.domain.breach.BreachId
+import proton.android.pass.domain.breach.CustomEmailId
 import proton.android.pass.features.security.center.shared.navigation.BreachIdArgId
 import proton.android.pass.features.security.center.shared.navigation.EmailArgId
 import proton.android.pass.features.security.center.verifyemail.presentation.SecurityCenterVerifyEmailSnackbarMessage.ResendCodeError
@@ -55,9 +54,9 @@ class SecurityCenterVerifyEmailViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
-    private val id: BreachEmailId.Custom = savedStateHandleProvider.get()
+    private val id: CustomEmailId = savedStateHandleProvider.get()
         .require<String>(BreachIdArgId.key)
-        .let { BreachEmailId.Custom(BreachId(it)) }
+        .let(::CustomEmailId)
 
     private val email: String = savedStateHandleProvider.get()
         .require<String>(EmailArgId.key)

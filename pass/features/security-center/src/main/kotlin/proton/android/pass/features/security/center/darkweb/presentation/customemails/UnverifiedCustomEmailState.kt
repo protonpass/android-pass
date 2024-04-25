@@ -19,7 +19,7 @@
 package proton.android.pass.features.security.center.darkweb.presentation.customemails
 
 import androidx.compose.runtime.Stable
-import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.domain.breach.CustomEmailId
 
 @Stable
 internal sealed interface UnverifiedCustomEmailOptionsEvent {
@@ -31,7 +31,7 @@ internal sealed interface UnverifiedCustomEmailOptionsEvent {
 
     @Stable
     data class Verify(
-        val id: BreachEmailId.Custom,
+        val id: CustomEmailId,
         val email: String
     ) : UnverifiedCustomEmailOptionsEvent
 }

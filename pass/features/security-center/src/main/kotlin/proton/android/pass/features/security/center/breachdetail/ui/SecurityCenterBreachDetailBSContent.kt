@@ -20,6 +20,7 @@ package proton.android.pass.features.security.center.breachdetail.ui
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -52,11 +53,13 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.container.roundedContainer
+import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.domain.breach.BreachEmail
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.breachdetail.presentation.SecurityCenterBreachDetailState
@@ -67,7 +70,8 @@ import me.proton.core.presentation.R as CoreR
 @Composable
 internal fun SecurityCenterBreachDetailBSContent(
     modifier: Modifier = Modifier,
-    state: SecurityCenterBreachDetailState
+    state: SecurityCenterBreachDetailState,
+    onOpenUrl: (String) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -88,7 +92,12 @@ internal fun SecurityCenterBreachDetailBSContent(
                 BreachDetailHeader(breachEmail = breachEmail)
                 ExposedData(breachEmail = breachEmail)
                 Details(breachEmail = breachEmail)
-                RecommendedActions(breachEmail = breachEmail)
+                RecommendedActions(
+                    breachEmail = breachEmail,
+                    onOpenUrl = {
+
+                    }
+                )
                 Text(
                     text = stringResource(
                         id = R.string.security_center_report_detail_note,
@@ -102,33 +111,33 @@ internal fun SecurityCenterBreachDetailBSContent(
 }
 
 @Composable
-internal fun RecommendedActions(modifier: Modifier = Modifier, breachEmail: BreachEmail) {
+internal fun RecommendedActions(
+    modifier: Modifier = Modifier,
+    breachEmail: BreachEmail,
+    onOpenUrl: (String) -> Unit
+) {
     Column(
         modifier = modifier, verticalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
-        Text(
-            text = stringResource(R.string.security_center_report_detail_recommended_actions),
-            style = ProtonTheme.typography.body1Medium
-        )
+        if (breachEmail.actions.isNotEmpty()) {
+            Text(
+                text = stringResource(R.string.security_center_report_detail_recommended_actions),
+                style = ProtonTheme.typography.body1Medium
+            )
+        }
+
+
         Column(verticalArrangement = Arrangement.spacedBy(Spacing.small)) {
-            RecommendedAction(
-                icon = CoreR.drawable.ic_proton_key,
-                text = stringResource(
-                    id = R.string.security_center_report_detail_change_password,
-                    breachEmail.name
+            breachEmail.actions.forEach { action ->
+                RecommendedAction(
+                    text = action.name,
+                    icon = action.code.toResource(),
+                    url = action.url,
+                    onClick = {
+                        action.url?.let { onOpenUrl(it) }
+                    }
                 )
-            )
-            RecommendedAction(
-                icon = CoreR.drawable.ic_proton_alias,
-                text = stringResource(R.string.security_center_report_detail_use_aliases)
-            )
-            RecommendedAction(
-                icon = CoreR.drawable.ic_proton_locks,
-                text = stringResource(
-                    id = R.string.security_center_report_detail_enable_2fa,
-                    breachEmail.name
-                )
-            )
+            }
         }
     }
 }
@@ -137,13 +146,19 @@ internal fun RecommendedActions(modifier: Modifier = Modifier, breachEmail: Brea
 private fun RecommendedAction(
     modifier: Modifier = Modifier,
     text: String,
-    @DrawableRes icon: Int
+    @DrawableRes icon: Int,
+    url: String?,
+    onClick: () -> Unit
 ) {
     Row(
         modifier = modifier
             .roundedContainer(
                 backgroundColor = Color.Transparent,
                 borderColor = PassTheme.colors.inputBorderNorm
+            )
+            .applyIf(
+                condition = url != null,
+                ifTrue = { clickable(onClick = onClick) }
             )
             .fillMaxWidth()
             .padding(Spacing.medium),
@@ -155,7 +170,16 @@ private fun RecommendedAction(
             contentDescription = null,
             tint = PassTheme.colors.loginInteractionNormMajor2
         )
-        Text(text = text)
+        Text(
+            modifier = Modifier.weight(1f),
+            text = text
+        )
+        if (url != null) {
+            Icon(
+                painter = painterResource(id = CoreR.drawable.ic_proton_arrow_out_square),
+                contentDescription = null
+            )
+        }
     }
 }
 
@@ -268,12 +292,15 @@ private fun BreachDetailHeader(modifier: Modifier = Modifier, breachEmail: Breac
 
 @Preview
 @Composable
-fun RecommendedActionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
-    PassTheme(isDark = isDark) {
+fun RecommendedActionPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
+    val url = if (input.second) "test.url" else null
+    PassTheme(isDark = input.first) {
         Surface {
             RecommendedAction(
                 text = "A recommended action",
-                icon = CoreR.drawable.ic_proton_key
+                icon = CoreR.drawable.ic_proton_key,
+                url = url,
+                onClick = {}
             )
         }
     }

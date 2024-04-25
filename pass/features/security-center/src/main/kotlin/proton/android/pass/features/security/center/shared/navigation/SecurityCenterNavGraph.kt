@@ -195,7 +195,7 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                     DarkWebMonitorNavDestination.Back -> onNavigated(SecurityCenterNavDestination.Back())
                     is DarkWebMonitorNavDestination.VerifyEmail -> onNavigated(
                         SecurityCenterNavDestination.VerifyEmail(
-                            id = destination.id,
+                            id = destination.id.customEmailId,
                             email = destination.email
                         )
                     )
@@ -294,15 +294,27 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
     }
 
     bottomSheet(navItem = SecurityCenterCustomEmailBreachDetailNavItem) {
-        SecurityCenterBreachDetailBottomSheet()
+        SecurityCenterBreachDetailBottomSheet(
+            onDismiss = {
+                onNavigated(SecurityCenterNavDestination.Back(comesFromBottomSheet = true))
+            }
+        )
     }
 
     bottomSheet(navItem = SecurityCenterProtonEmailBreachDetailNavItem) {
-        SecurityCenterBreachDetailBottomSheet()
+        SecurityCenterBreachDetailBottomSheet(
+            onDismiss = {
+                onNavigated(SecurityCenterNavDestination.Back(comesFromBottomSheet = true))
+            }
+        )
     }
 
     bottomSheet(navItem = SecurityCenterAliasEmailBreachDetailNavItem) {
-        SecurityCenterBreachDetailBottomSheet()
+        SecurityCenterBreachDetailBottomSheet(
+            onDismiss = {
+                onNavigated(SecurityCenterNavDestination.Back(comesFromBottomSheet = true))
+            }
+        )
     }
 
     composable(SecurityCenterExcludedItemsNavItem) {

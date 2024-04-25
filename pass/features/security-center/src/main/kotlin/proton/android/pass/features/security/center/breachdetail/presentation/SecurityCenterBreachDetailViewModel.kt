@@ -29,8 +29,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import me.proton.core.user.domain.entity.AddressId
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
-import proton.android.pass.common.api.getOrNull
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAliasEmail
@@ -40,8 +40,12 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachId
+import proton.android.pass.domain.breach.CustomEmailId
+import proton.android.pass.features.security.center.darkweb.navigation.CustomEmailNavArgId
 import proton.android.pass.features.security.center.shared.navigation.BreachIdArgId
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
 @HiltViewModel
@@ -49,16 +53,26 @@ class SecurityCenterBreachDetailViewModel @Inject constructor(
     observeBreachesForCustomEmail: ObserveBreachesForCustomEmail,
     observeBreachesForAliasEmail: ObserveBreachesForAliasEmail,
     observeBreachesForProtonEmail: ObserveBreachesForProtonEmail,
-    savedStateHandleProvider: SavedStateHandleProvider
+    savedStateHandleProvider: SavedStateHandleProvider,
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     private val selectedBreachId: BreachId = savedStateHandleProvider.get()
         .require<String>(BreachIdArgId.key)
         .let(::BreachId)
+        .also {
+            PassLogger.i(TAG, "Selected breach id: $it")
+        }
 
-    private val customEmailId: BreachEmailId.Custom = savedStateHandleProvider.get()
-        .require<String>(BreachIdArgId.key)
-        .let { BreachEmailId.Custom(BreachId(it)) }
+    private val customEmailId: BreachEmailId.Custom? = run {
+        val customEmailId: CustomEmailId? = savedStateHandleProvider.get()
+            .get<String>(CustomEmailNavArgId.key)
+            ?.let(::CustomEmailId)
+
+        if (customEmailId != null) {
+            BreachEmailId.Custom(id = selectedBreachId, customEmailId = customEmailId)
+        } else null
+    }
 
     private val aliasEmailId: BreachEmailId.Alias? = run {
         val shareId = savedStateHandleProvider.get()
@@ -81,7 +95,10 @@ class SecurityCenterBreachDetailViewModel @Inject constructor(
         when {
             protonEmailId != null -> protonEmailId
             aliasEmailId != null -> aliasEmailId
-            else -> customEmailId
+            customEmailId != null -> customEmailId
+            else -> throw IllegalStateException("Invalid email type")
+        }.also {
+            PassLogger.i(TAG, "BreachEmailId: $it")
         }
     }
 
@@ -91,12 +108,12 @@ class SecurityCenterBreachDetailViewModel @Inject constructor(
             itemId = type.itemId
         )
 
-        is BreachEmailId.Custom -> observeBreachesForCustomEmail(id = type)
+        is BreachEmailId.Custom -> observeBreachesForCustomEmail(id = type.customEmailId)
         is BreachEmailId.Proton -> observeBreachesForProtonEmail(addressId = type.addressId)
         else -> throw IllegalStateException("Invalid state")
-    }.map { it.firstOrNull { breach -> breach.emailId.id == selectedBreachId } }
-        .asLoadingResult()
-        .distinctUntilChanged()
+    }.map {
+        it.firstOrNull { breach -> breach.emailId.id == selectedBreachId }
+    }.asLoadingResult().distinctUntilChanged()
 
     private val isLoadingStateFlow = MutableStateFlow(false)
 
@@ -104,13 +121,43 @@ class SecurityCenterBreachDetailViewModel @Inject constructor(
         observeBreachForEmailFlow,
         isLoadingStateFlow
     ) { breachResult, isLoading ->
-        SecurityCenterBreachDetailState(
-            breachEmail = breachResult.getOrNull(),
-            isLoading = isLoading
-        )
+
+        when (breachResult) {
+            is LoadingResult.Error -> {
+                PassLogger.w(TAG, "Error loading breach information")
+                PassLogger.w(TAG, breachResult.exception)
+
+                snackbarDispatcher(SecurityCenterBreachSnackbarMessage.GetBreachDetailsError)
+                SecurityCenterBreachDetailState(
+                    breachEmail = null,
+                    isLoading = false,
+                    event = SecurityCenterBreachDetailEvent.Close
+                )
+            }
+
+            is LoadingResult.Loading -> {
+                SecurityCenterBreachDetailState(
+                    breachEmail = null,
+                    isLoading = true,
+                    event = SecurityCenterBreachDetailEvent.Idle
+                )
+            }
+
+            is LoadingResult.Success -> {
+                SecurityCenterBreachDetailState(
+                    breachEmail = breachResult.data,
+                    isLoading = isLoading,
+                    event = SecurityCenterBreachDetailEvent.Idle
+                )
+            }
+        }
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
         initialValue = SecurityCenterBreachDetailState.Initial
     )
+
+    companion object {
+        private const val TAG = "SecurityCenterBreachDetailViewModel"
+    }
 }

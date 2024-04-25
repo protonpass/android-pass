@@ -20,11 +20,11 @@ package proton.android.pass.data.fakes.usecases.breach
 
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.breach.RemoveCustomEmail
-import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.domain.breach.CustomEmailId
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class FakeRemoveCustomEmail @Inject constructor() : RemoveCustomEmail {
-    override suspend fun invoke(userId: UserId?, id: BreachEmailId.Custom) = Unit
+    override suspend fun invoke(userId: UserId?, id: CustomEmailId) = Unit
 }

@@ -46,6 +46,7 @@ import proton.android.pass.domain.breach.BreachEmail
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachId
 import proton.android.pass.domain.breach.BreachProtonEmail
+import proton.android.pass.domain.breach.CustomEmailId
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -68,7 +69,7 @@ class BreachRepositoryImpl @Inject constructor(
         .mapLatest { remote.getAllBreaches(userId).toDomain() }
         .distinctUntilChanged()
 
-    override fun observeCustomEmail(userId: UserId, customEmailId: BreachEmailId.Custom): Flow<BreachCustomEmail> =
+    override fun observeCustomEmail(userId: UserId, customEmailId: CustomEmailId): Flow<BreachCustomEmail> =
         localBreachesDataSource.observeCustomEmail(userId, customEmailId)
 
     override fun observeCustomEmails(userId: UserId): Flow<List<BreachCustomEmail>> =
@@ -92,7 +93,7 @@ class BreachRepositoryImpl @Inject constructor(
 
     override suspend fun verifyCustomEmail(
         userId: UserId,
-        emailId: BreachEmailId.Custom,
+        emailId: CustomEmailId,
         code: String
     ) {
         remote.verifyCustomEmail(userId, emailId, code)
@@ -110,11 +111,16 @@ class BreachRepositoryImpl @Inject constructor(
             .toDomain { breach -> BreachEmailId.Proton(BreachId(breach.id), id) }
     }
 
-    override fun observeBreachesForCustomEmail(userId: UserId, id: BreachEmailId.Custom): Flow<List<BreachEmail>> =
+    override fun observeBreachesForCustomEmail(userId: UserId, id: CustomEmailId): Flow<List<BreachEmail>> =
         localBreachesDataSource.observeCustomEmailBreaches()
             .onStart {
                 remote.getBreachesForCustomEmail(userId, id)
-                    .toDomain { breachDto -> BreachEmailId.Custom(BreachId(breachDto.id)) }
+                    .toDomain { breachDto ->
+                        BreachEmailId.Custom(
+                            id = BreachId(breachDto.id),
+                            customEmailId = id
+                        )
+                    }
                     .also { customEmailBreaches ->
                         localBreachesDataSource.upsertCustomEmailBreaches(userId, customEmailBreaches)
                     }
@@ -143,7 +149,7 @@ class BreachRepositoryImpl @Inject constructor(
         remote.markAliasEmailAsResolved(userId, shareId, itemId)
     }
 
-    override suspend fun markCustomEmailAsResolved(userId: UserId, id: BreachEmailId.Custom) {
+    override suspend fun markCustomEmailAsResolved(userId: UserId, id: CustomEmailId) {
         remote.markCustomEmailAsResolved(userId, id)
             .also { response ->
                 localBreachesDataSource.upsertCustomEmail(userId, response.email.toDomain())
@@ -152,13 +158,13 @@ class BreachRepositoryImpl @Inject constructor(
         // Update locally custom email breaches state to resolved
     }
 
-    override suspend fun resendVerificationCode(userId: UserId, id: BreachEmailId.Custom) {
+    override suspend fun resendVerificationCode(userId: UserId, id: CustomEmailId) {
         remote.resendVerificationCode(userId, id)
             .let { localBreachesDataSource.getCustomEmail(userId, id).copy(verified = true) }
             .also { customEmail -> localBreachesDataSource.upsertCustomEmail(userId, customEmail) }
     }
 
-    override suspend fun removeCustomEmail(userId: UserId, id: BreachEmailId.Custom) {
+    override suspend fun removeCustomEmail(userId: UserId, id: CustomEmailId) {
         remote.removeCustomEmail(userId, id)
             .also { localBreachesDataSource.deleteCustomEmail(userId, id) }
             .also { refreshFlow.update { true } }
@@ -197,7 +203,7 @@ class BreachRepositoryImpl @Inject constructor(
     }
 
     fun proton.android.pass.data.impl.responses.BreachCustomEmail.toDomain() = BreachCustomEmail(
-        id = BreachEmailId.Custom(BreachId(customEmailId)),
+        id = CustomEmailId(customEmailId),
         email = email,
         verified = verified,
         breachCount = breachCounter,

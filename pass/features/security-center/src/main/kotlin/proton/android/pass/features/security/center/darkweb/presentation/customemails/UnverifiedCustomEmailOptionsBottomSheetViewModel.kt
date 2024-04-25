@@ -32,8 +32,7 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.breach.RemoveCustomEmail
 import proton.android.pass.data.api.usecases.breach.ResendVerificationCode
-import proton.android.pass.domain.breach.BreachEmailId
-import proton.android.pass.domain.breach.BreachId
+import proton.android.pass.domain.breach.CustomEmailId
 import proton.android.pass.features.security.center.darkweb.navigation.CustomEmailNavArgId
 import proton.android.pass.features.security.center.darkweb.presentation.customemails.UnverifiedCustomEmailSnackbarMessage.RemoveCustomEmailError
 import proton.android.pass.features.security.center.darkweb.presentation.customemails.UnverifiedCustomEmailSnackbarMessage.ResendCodeError
@@ -51,9 +50,9 @@ internal class UnverifiedCustomEmailOptionsBottomSheetViewModel @Inject construc
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
-    private val breachCustomEmailId: BreachEmailId.Custom = savedStateHandleProvider.get()
+    private val breachCustomEmailId: CustomEmailId = savedStateHandleProvider.get()
         .require<String>(BreachIdArgId.key)
-        .let { BreachEmailId.Custom(BreachId(it)) }
+        .let(::CustomEmailId)
 
     private val customEmail: String = savedStateHandleProvider.get()
         .require<String>(CustomEmailNavArgId.key)

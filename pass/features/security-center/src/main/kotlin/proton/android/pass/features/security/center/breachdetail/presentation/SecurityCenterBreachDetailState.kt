@@ -22,15 +22,26 @@ import androidx.compose.runtime.Stable
 import proton.android.pass.domain.breach.BreachEmail
 
 @Stable
+sealed interface SecurityCenterBreachDetailEvent {
+    @Stable
+    data object Idle : SecurityCenterBreachDetailEvent
+
+    @Stable
+    data object Close : SecurityCenterBreachDetailEvent
+}
+
+@Stable
 internal data class SecurityCenterBreachDetailState(
     internal val breachEmail: BreachEmail?,
-    internal val isLoading: Boolean
+    internal val isLoading: Boolean,
+    internal val event: SecurityCenterBreachDetailEvent
 ) {
 
     internal companion object {
         internal val Initial: SecurityCenterBreachDetailState = SecurityCenterBreachDetailState(
             breachEmail = null,
-            isLoading = false
+            isLoading = false,
+            event = SecurityCenterBreachDetailEvent.Idle
         )
     }
 }

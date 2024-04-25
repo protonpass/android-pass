@@ -20,11 +20,11 @@ package proton.android.pass.data.fakes.usecases.breach
 
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.breach.ResendVerificationCode
-import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.domain.breach.CustomEmailId
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class FakeResendVerificationCode @Inject constructor() : ResendVerificationCode {
-    override suspend fun invoke(userId: UserId?, id: BreachEmailId.Custom) = Unit
+    override suspend fun invoke(userId: UserId?, id: CustomEmailId) = Unit
 }

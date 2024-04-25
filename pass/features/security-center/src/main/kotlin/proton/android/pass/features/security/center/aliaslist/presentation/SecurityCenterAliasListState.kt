@@ -25,6 +25,7 @@ import proton.android.pass.features.security.center.shared.presentation.EmailBre
 @Stable
 internal data class SecurityCenterAliasListState(
     internal val isGlobalMonitorEnabled: Boolean,
+    internal val isCustomEmailMessageEnabled: Boolean,
     internal val listState: AliasListState,
     internal val event: SecurityCenterAliasListEvent
 ) {
@@ -32,6 +33,7 @@ internal data class SecurityCenterAliasListState(
     internal companion object {
         internal val Initial: SecurityCenterAliasListState = SecurityCenterAliasListState(
             isGlobalMonitorEnabled = true,
+            isCustomEmailMessageEnabled = false,
             listState = AliasListState.Loading,
             event = SecurityCenterAliasListEvent.Idle
         )

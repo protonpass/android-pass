@@ -177,6 +177,7 @@
     <string name="security_center_alias_list_error">Could not load addresses</string>
     <string name="security_center_alias_list_included_in_monitoring">Enable monitoring to get notified if your Hide-my-email aliases were leaked.</string>
     <string name="security_center_alias_list_monitored">Monitored</string>
+    <string name="security_center_alias_list_custom_email_message">Aliases with custom domains are not monitored, please add them as a custom email for monitoring.</string>
 
     <!-- Dark web help dialog -->
     <string name="dark_web_help_dialog_title">Data Security</string>

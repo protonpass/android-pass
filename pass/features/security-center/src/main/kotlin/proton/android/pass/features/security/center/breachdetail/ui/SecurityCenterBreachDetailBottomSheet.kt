@@ -21,8 +21,10 @@ package proton.android.pass.features.security.center.breachdetail.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.features.security.center.breachdetail.presentation.SecurityCenterBreachDetailEvent
 import proton.android.pass.features.security.center.breachdetail.presentation.SecurityCenterBreachDetailViewModel
 
@@ -31,7 +33,6 @@ fun SecurityCenterBreachDetailBottomSheet(
     onDismiss: () -> Unit,
     viewModel: SecurityCenterBreachDetailViewModel = hiltViewModel()
 ) {
-
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(state.event) {
@@ -39,11 +40,16 @@ fun SecurityCenterBreachDetailBottomSheet(
             SecurityCenterBreachDetailEvent.Close -> {
                 onDismiss()
             }
+
             SecurityCenterBreachDetailEvent.Idle -> {}
         }
     }
 
+    val context = LocalContext.current
     SecurityCenterBreachDetailBSContent(
-        state = state
+        state = state,
+        onOpenUrl = {
+            BrowserUtils.openWebsite(context, it)
+        }
     )
 }

@@ -59,5 +59,27 @@ data class BreachEmail(
     val size: Long?,
     val passwordLastChars: String?,
     val exposedData: List<String>,
-    val isResolved: Boolean
+    val isResolved: Boolean,
+    val actions: List<BreachAction>
 )
+
+data class BreachAction(
+    val name: String,
+    val code: BreachActionCode,
+    val url: String?
+)
+
+enum class BreachActionCode(private val code: String) {
+    StayAlert("stay_alert"),
+    PasswordSource("password_source"),
+    PasswordExposed("password_exposed"),
+    PasswordsAll("passwords_all"),
+    Twofa("2fa"),
+    Aliases("aliases");
+
+    companion object {
+        fun from(value: String): BreachActionCode = entries
+            .firstOrNull { it.code == value }
+            ?: StayAlert
+    }
+}

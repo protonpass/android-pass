@@ -39,8 +39,10 @@ import proton.android.pass.features.security.center.darkweb.navigation.CustomEma
 import proton.android.pass.features.security.center.darkweb.navigation.CustomEmailOptionsNavItem
 import proton.android.pass.features.security.center.darkweb.navigation.DarkWebMonitorNavDestination
 import proton.android.pass.features.security.center.darkweb.navigation.DarkWebMonitorNavItem
+import proton.android.pass.features.security.center.darkweb.navigation.help.DarkWebHelpNavItem
 import proton.android.pass.features.security.center.darkweb.ui.DarkWebScreen
 import proton.android.pass.features.security.center.darkweb.ui.customemails.options.UnverifiedCustomEmailOptionsBottomSheet
+import proton.android.pass.features.security.center.darkweb.ui.help.DarkWebHelpDialog
 import proton.android.pass.features.security.center.excludeditems.navigation.SecurityCenterExcludeItemsDestination
 import proton.android.pass.features.security.center.excludeditems.navigation.SecurityCenterExcludedItemsNavItem
 import proton.android.pass.features.security.center.excludeditems.ui.SecurityCenterExcludedItemsScreen
@@ -72,6 +74,7 @@ import proton.android.pass.features.security.center.weakpass.navigation.Security
 import proton.android.pass.features.security.center.weakpass.ui.SecurityCenterWeakPassScreen
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
+import proton.android.pass.navigation.api.dialog
 
 @Suppress("ComplexMethod", "CyclomaticComplexity", "LongMethod")
 fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestination) -> Unit) {
@@ -225,6 +228,9 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
 
                     DarkWebMonitorNavDestination.AllAliasEmails ->
                         onNavigated(SecurityCenterNavDestination.AllAliasEmails)
+
+                    DarkWebMonitorNavDestination.Help ->
+                        onNavigated(SecurityCenterNavDestination.DarkWebHelp)
                 }
             }
         )
@@ -370,6 +376,10 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                 }.also(onNavigated)
             }
         )
+    }
+
+    dialog(DarkWebHelpNavItem) {
+        DarkWebHelpDialog(onDismiss = { onNavigated(SecurityCenterNavDestination.Back()) })
     }
 }
 

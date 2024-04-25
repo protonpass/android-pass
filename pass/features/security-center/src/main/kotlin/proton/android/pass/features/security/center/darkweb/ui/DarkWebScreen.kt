@@ -90,6 +90,10 @@ internal fun DarkWebScreen(
                             breachCount = event.breachCount
                         )
                     )
+
+                DarkWebUiEvent.HelpClick -> {
+                    onNavigate(DarkWebMonitorNavDestination.Help)
+                }
             }
         }
     )

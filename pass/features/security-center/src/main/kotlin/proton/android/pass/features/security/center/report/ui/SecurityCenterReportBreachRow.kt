@@ -138,7 +138,8 @@ class BreachRowPreviewProvider : PreviewParameterProvider<BreachEmail> {
         size = 0,
         passwordLastChars = "",
         exposedData = emptyList(),
-        isResolved = isResolved
+        isResolved = isResolved,
+        actions = emptyList()
     )
 }
 

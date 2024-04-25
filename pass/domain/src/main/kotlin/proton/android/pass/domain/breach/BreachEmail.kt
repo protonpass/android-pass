@@ -26,13 +26,22 @@ import proton.android.pass.domain.ShareId
 value class BreachId(val id: String)
 
 sealed interface BreachEmailId {
+
     val id: BreachId
 
     @JvmInline
     value class Custom(override val id: BreachId) : BreachEmailId
-    data class Proton(override val id: BreachId, val addressId: AddressId) : BreachEmailId
-    data class Alias(override val id: BreachId, val shareId: ShareId, val itemId: ItemId) :
-        BreachEmailId
+
+    data class Proton(
+        override val id: BreachId,
+        val addressId: AddressId
+    ) : BreachEmailId
+
+    data class Alias(
+        override val id: BreachId,
+        val shareId: ShareId,
+        val itemId: ItemId
+    ) : BreachEmailId
 }
 
 data class BreachEmail(

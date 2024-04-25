@@ -18,7 +18,6 @@
 
 package proton.android.pass.features.security.center.darkweb.ui
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
@@ -60,13 +59,12 @@ internal fun DarkWebContent(
         LazyColumn(
             modifier = Modifier
                 .padding(padding)
-                .padding(vertical = Spacing.medium),
-            verticalArrangement = Arrangement.spacedBy(Spacing.medium),
+                .padding(top = Spacing.medium),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
                 DarkWebSummary(
-                    modifier = Modifier.padding(horizontal = Spacing.medium),
+                    modifier = Modifier.padding(Spacing.medium),
                     protonEmailsState = state.protonEmailState,
                     aliasEmailsState = state.aliasEmailState,
                     onEvent = onEvent
@@ -74,7 +72,7 @@ internal fun DarkWebContent(
             }
             item {
                 CustomEmailsHeader(
-                    modifier = Modifier.padding(horizontal = Spacing.medium),
+                    modifier = Modifier.padding(Spacing.medium),
                     onAddClick = { onEvent(DarkWebUiEvent.OnNewCustomEmailClick) }
                 )
             }

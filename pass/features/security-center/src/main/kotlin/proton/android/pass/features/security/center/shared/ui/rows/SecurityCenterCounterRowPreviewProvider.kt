@@ -53,6 +53,9 @@ internal class SecurityCenterCounterRowPreviewProvider : PreviewParameterProvide
                 subtitle = "Standard subtitle",
                 count = 1,
                 showPassPlusIcon = true
+            ),
+            SecurityCenterCounterRowModel.Loading(
+                title = "Loading title"
             )
         )
 }

@@ -20,6 +20,8 @@ package proton.android.pass.features.security.center.home.presentation
 
 internal sealed interface SecurityCenterHomeDarkWebMonitoring {
 
+    data object FreeLoading : SecurityCenterHomeDarkWebMonitoring
+
     data object FreeNoDataBreaches : SecurityCenterHomeDarkWebMonitoring
 
     data class FreeDataBreaches(
@@ -28,6 +30,8 @@ internal sealed interface SecurityCenterHomeDarkWebMonitoring {
         internal val dateBreachedEmail: String,
         internal val dataBreachedPassword: String
     ) : SecurityCenterHomeDarkWebMonitoring
+
+    data object PaidLoading : SecurityCenterHomeDarkWebMonitoring
 
     data object PaidNoDataBreaches : SecurityCenterHomeDarkWebMonitoring
 

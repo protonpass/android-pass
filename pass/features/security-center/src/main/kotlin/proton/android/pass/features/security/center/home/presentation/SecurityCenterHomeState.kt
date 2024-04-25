@@ -110,22 +110,25 @@ internal data class SecurityCenterHomeState(
 
     internal val darkWebMonitoring: SecurityCenterHomeDarkWebMonitoring = when (planType) {
         is PlanType.Free,
-        is PlanType.Unknown -> if (hasDataBreaches) {
-            SecurityCenterHomeDarkWebMonitoring.FreeDataBreaches(
+        is PlanType.Unknown -> when {
+            breachLoadingResult is LoadingResult.Loading ->
+                SecurityCenterHomeDarkWebMonitoring.FreeLoading
+            hasDataBreaches -> SecurityCenterHomeDarkWebMonitoring.FreeDataBreaches(
                 dataBreachedSite = breachDomainPeek.breachDomain,
                 dataBreachedTime = breachDomainPeek.breachTime,
                 dateBreachedEmail = DATA_BREACHED_EMAIL_DEFAULT,
                 dataBreachedPassword = DATA_BREACHED_PASSWORD_DEFAULT
             )
-        } else {
-            SecurityCenterHomeDarkWebMonitoring.FreeNoDataBreaches
+
+            else -> SecurityCenterHomeDarkWebMonitoring.FreeNoDataBreaches
         }
 
         is PlanType.Trial,
-        is PlanType.Paid -> if (hasDataBreaches) {
-            SecurityCenterHomeDarkWebMonitoring.PaidDataBreaches(dataBreachesCount)
-        } else {
-            SecurityCenterHomeDarkWebMonitoring.PaidNoDataBreaches
+        is PlanType.Paid -> when {
+            breachLoadingResult is LoadingResult.Loading ->
+                SecurityCenterHomeDarkWebMonitoring.PaidLoading
+            hasDataBreaches -> SecurityCenterHomeDarkWebMonitoring.PaidDataBreaches(dataBreachesCount)
+            else -> SecurityCenterHomeDarkWebMonitoring.PaidNoDataBreaches
         }
     }
 

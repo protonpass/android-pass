@@ -71,7 +71,7 @@ class BreachRepositoryImpl @Inject constructor(
     override fun observeCustomEmail(
         userId: UserId,
         customEmailId: BreachEmailId.Custom
-    ): Flow<BreachCustomEmail> = localBreachesDataSource.observeCustomEmail(customEmailId)
+    ): Flow<BreachCustomEmail> = localBreachesDataSource.observeCustomEmail(userId, customEmailId)
 
     override fun observeCustomEmails(userId: UserId): Flow<List<BreachCustomEmail>> =
         localBreachesDataSource.observeCustomEmails()
@@ -80,14 +80,16 @@ class BreachRepositoryImpl @Inject constructor(
                     .emails
                     .customEmails
                     .map { customEmailDto -> customEmailDto.toDomain() }
-                    .also { customEmails -> localBreachesDataSource.upsertCustomEmails(customEmails) }
+                    .also { customEmails ->
+                        localBreachesDataSource.upsertCustomEmails(userId, customEmails)
+                    }
             }
 
     override suspend fun addCustomEmail(userId: UserId, email: String): BreachCustomEmail =
         remote.addCustomEmail(userId, email)
             .email
             .toDomain()
-            .also { customEmail -> localBreachesDataSource.upsertCustomEmail(customEmail) }
+            .also { customEmail -> localBreachesDataSource.upsertCustomEmail(userId, customEmail) }
             .also { refreshFlow.update { true } }
 
     override suspend fun verifyCustomEmail(
@@ -97,10 +99,10 @@ class BreachRepositoryImpl @Inject constructor(
     ) {
         remote.verifyCustomEmail(userId, emailId, code)
 
-        localBreachesDataSource.getCustomEmail(emailId)
+        localBreachesDataSource.getCustomEmail(userId, emailId)
             .copy(verified = true)
             .also { verifiedCustomEmail ->
-                localBreachesDataSource.upsertCustomEmail(verifiedCustomEmail)
+                localBreachesDataSource.upsertCustomEmail(userId, verifiedCustomEmail)
             }
             .also { refreshFlow.update { true } }
     }
@@ -121,7 +123,7 @@ class BreachRepositoryImpl @Inject constructor(
             remote.getBreachesForCustomEmail(userId, id)
                 .toDomain { breachDto -> BreachEmailId.Custom(BreachId(breachDto.id)) }
                 .also { customEmailBreaches ->
-                    localBreachesDataSource.upsertCustomEmailBreaches(customEmailBreaches)
+                    localBreachesDataSource.upsertCustomEmailBreaches(userId, customEmailBreaches)
                 }
         }
 

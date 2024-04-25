@@ -20,11 +20,13 @@ package proton.android.pass.features.security.center.shared.ui.bars
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -41,6 +43,7 @@ internal fun SecurityCenterTopBar(
     title: String? = null,
     subtitle: String? = null,
     onUpClick: (() -> Unit)? = null,
+    titleIcon: (@Composable RowScope.() -> Unit) = { },
     actions: (@Composable RowScope.() -> Unit) = { }
 ) {
     Column(
@@ -54,12 +57,15 @@ internal fun SecurityCenterTopBar(
             )
         }
 
-        title?.let { topBarTitle ->
-            Text(
-                modifier = Modifier.padding(horizontal = Spacing.medium),
-                text = topBarTitle,
-                style = PassTheme.typography.heroNorm()
-            )
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            title?.let { topBarTitle ->
+                Text(
+                    modifier = Modifier.padding(horizontal = Spacing.medium),
+                    text = topBarTitle,
+                    style = PassTheme.typography.heroNorm()
+                )
+            }
+            titleIcon()
         }
 
         subtitle?.let { topBarSubtitle ->

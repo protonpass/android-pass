@@ -55,4 +55,6 @@ sealed interface DarkWebUiEvent {
         val email: String,
         val breachCount: Int
     ) : DarkWebUiEvent
+
+    data object HelpClick : DarkWebUiEvent
 }

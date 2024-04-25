@@ -41,6 +41,7 @@ import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.domain.breach.BreachEmail
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachId
+import proton.android.pass.domain.breach.CustomEmailId
 import proton.android.pass.features.security.center.report.ui.SecurityCenterReportUiEvent.EmailBreachDetail
 import proton.android.pass.features.security.center.shared.ui.image.BreachImage
 import java.time.format.DateTimeFormatter
@@ -125,7 +126,10 @@ class BreachRowPreviewProvider : PreviewParameterProvider<BreachEmail> {
         publishedAt: String,
         isResolved: Boolean
     ) = BreachEmail(
-        emailId = BreachEmailId.Custom(BreachId(Random.nextInt().toString())),
+        emailId = BreachEmailId.Custom(
+            id = BreachId(Random.nextInt().toString()),
+            customEmailId = CustomEmailId(Random.nextInt().toString())
+        ),
         email = "",
         severity = severity,
         name = name,

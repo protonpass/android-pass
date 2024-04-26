@@ -26,19 +26,16 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
+import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
 import proton.android.pass.data.api.usecases.items.ItemSecurityCheckFilter
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareSelection
-import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
-import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.securitycenter.api.ObserveSecurityAnalysis
-import proton.android.pass.securitycenter.api.sentinel.DisableSentinel
 import proton.android.pass.securitycenter.api.sentinel.ObserveIsSentinelEnabled
 import javax.inject.Inject
 
@@ -48,9 +45,7 @@ class SecurityCenterHomeViewModel @Inject constructor(
     observeAllBreachByUserId: ObserveAllBreachByUserId,
     observeSecurityAnalysis: ObserveSecurityAnalysis,
     observeIsSentinelEnabled: ObserveIsSentinelEnabled,
-    getUserPlan: GetUserPlan,
-    private val disableSentinel: DisableSentinel,
-    private val snackbarDispatcher: SnackbarDispatcher
+    getUserPlan: GetUserPlan
 ) : ViewModel() {
 
     private val excludedLoginItemsFlow: Flow<List<Item>> = observeItems(
@@ -81,12 +76,5 @@ class SecurityCenterHomeViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000L),
         initialValue = SecurityCenterHomeState.Initial
     )
-
-    internal fun onDisableSentinel() = viewModelScope.launch {
-        runCatching { disableSentinel() }
-            .onFailure {
-                snackbarDispatcher(SecurityCenterHomeSnackbarMessage.DisableSentinelError)
-            }
-    }
 
 }

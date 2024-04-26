@@ -37,6 +37,16 @@ internal enum class SecurityCenterSentinelSnackbarMessage(
     EnableSentinelError(
         id = R.string.security_center_sentinel_snackbar_message_enable_error,
         type = SnackbarType.ERROR
+    ),
+
+    DisableSentinelCanceled(
+        id = R.string.security_center_sentinel_snackbar_message_disable_canceled,
+        type = SnackbarType.WARNING
+    ),
+
+    DisableSentinelError(
+        id = R.string.security_center_sentinel_snackbar_message_disable_error,
+        type = SnackbarType.ERROR
     )
 
 }

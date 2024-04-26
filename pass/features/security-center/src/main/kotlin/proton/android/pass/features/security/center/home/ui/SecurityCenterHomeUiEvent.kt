@@ -30,8 +30,6 @@ internal sealed interface SecurityCenterHomeUiEvent {
 
     data object OnShowDataBreaches : SecurityCenterHomeUiEvent
 
-    data object OnDisableSentinel : SecurityCenterHomeUiEvent
-
     data object OnShowSentinelBottomSheet : SecurityCenterHomeUiEvent
 
     data object OnShowWeakPasswords : SecurityCenterHomeUiEvent

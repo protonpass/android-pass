@@ -102,13 +102,7 @@ internal fun SecurityCenterHomeContent(
                     title = stringResource(id = R.string.security_center_home_row_sentinel_title),
                     subtitle = stringResource(id = R.string.security_center_home_row_sentinel_subtitle),
                     isChecked = isSentinelEnabled,
-                    onClick = {
-                        if (isSentinelEnabled) {
-                            SecurityCenterHomeUiEvent.OnDisableSentinel
-                        } else {
-                            SecurityCenterHomeUiEvent.OnShowSentinelBottomSheet
-                        }.also(onUiEvent)
-                    }
+                    onClick = { onUiEvent(SecurityCenterHomeUiEvent.OnShowSentinelBottomSheet) }
                 )
             }
 

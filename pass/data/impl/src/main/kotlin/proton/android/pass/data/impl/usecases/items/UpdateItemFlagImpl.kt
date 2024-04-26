@@ -39,7 +39,7 @@ class UpdateItemFlagImpl @Inject constructor(
         shareId: ShareId,
         itemId: ItemId,
         flag: ItemFlag,
-        isFlagEnable: Boolean
+        isFlagEnabled: Boolean
     ): Item {
         val userId = requireNotNull(accountManager.getPrimaryUserId().first())
         val share = shareRepository.getById(userId, shareId)
@@ -49,7 +49,7 @@ class UpdateItemFlagImpl @Inject constructor(
             share = share,
             itemId = itemId,
             flag = flag,
-            isFlagEnabled = isFlagEnable
+            isFlagEnabled = isFlagEnabled
         )
     }
 

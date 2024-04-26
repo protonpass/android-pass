@@ -113,9 +113,13 @@ class BreachRepositoryImpl @Inject constructor(
             .toDomain { breach -> BreachEmailId.Proton(BreachId(breach.id), id) }
     }
 
-    override fun observeBreachesForCustomEmail(userId: UserId, id: CustomEmailId): Flow<List<BreachEmail>> =
-        localBreachesDataSource.observeCustomEmailBreaches()
-            .onStart {
+    override fun observeBreachesForCustomEmail(
+        userId: UserId,
+        id: CustomEmailId,
+        refresh: Boolean
+    ): Flow<List<BreachEmail>> = localBreachesDataSource.observeCustomEmailBreaches()
+        .onStart {
+            if (refresh) {
                 remote.getBreachesForCustomEmail(userId, id)
                     .toDomain { breachDto ->
                         BreachEmailId.Custom(
@@ -124,9 +128,13 @@ class BreachRepositoryImpl @Inject constructor(
                         )
                     }
                     .also { customEmailBreaches ->
-                        localBreachesDataSource.upsertCustomEmailBreaches(userId, customEmailBreaches)
+                        localBreachesDataSource.upsertCustomEmailBreaches(
+                            userId,
+                            customEmailBreaches
+                        )
                     }
             }
+        }
 
     override fun observeBreachesForAliasEmail(
         userId: UserId,

@@ -46,7 +46,11 @@ interface BreachRepository {
 
     fun observeBreachesForProtonEmail(userId: UserId, id: AddressId): Flow<List<BreachEmail>>
 
-    fun observeBreachesForCustomEmail(userId: UserId, id: CustomEmailId): Flow<List<BreachEmail>>
+    fun observeBreachesForCustomEmail(
+        userId: UserId,
+        id: CustomEmailId,
+        refresh: Boolean = true
+    ): Flow<List<BreachEmail>>
 
     fun observeBreachesForAliasEmail(
         userId: UserId,

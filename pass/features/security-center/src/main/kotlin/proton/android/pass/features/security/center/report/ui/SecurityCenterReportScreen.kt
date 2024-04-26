@@ -41,7 +41,7 @@ fun SecurityCenterReportScreen(
                 )
 
                 SecurityCenterReportUiEvent.OnMenuClick -> {
-                    //Display bottom sheet to exclude/include monitoring
+                    // Display bottom sheet to exclude/include monitoring
                 }
 
                 is SecurityCenterReportUiEvent.EmailBreachDetail -> onNavigated(

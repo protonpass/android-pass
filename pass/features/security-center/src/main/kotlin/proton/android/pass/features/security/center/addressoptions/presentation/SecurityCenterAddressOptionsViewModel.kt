@@ -48,13 +48,13 @@ import proton.android.pass.features.security.center.addressoptions.navigation.Ad
 import proton.android.pass.features.security.center.addressoptions.navigation.AddressOptionsTypeArgId
 import proton.android.pass.features.security.center.addressoptions.navigation.AddressTypeArgId
 import proton.android.pass.features.security.center.addressoptions.navigation.GlobalMonitorAddressType
-import proton.android.pass.features.security.center.addressoptions.navigation.GlobalMonitorAddressType.Alias
-import proton.android.pass.features.security.center.addressoptions.navigation.GlobalMonitorAddressType.None
-import proton.android.pass.features.security.center.addressoptions.navigation.GlobalMonitorAddressType.Proton
 import proton.android.pass.features.security.center.addressoptions.navigation.SecurityCenterAddressOptionsEvent
 import proton.android.pass.features.security.center.addressoptions.presentation.SecurityCenterAddressOptionsSnackbarMessage.DisableMonitoringError
+import proton.android.pass.features.security.center.addressoptions.presentation.SecurityCenterAddressOptionsSnackbarMessage.DisableMonitoringSuccess
 import proton.android.pass.features.security.center.addressoptions.presentation.SecurityCenterAddressOptionsSnackbarMessage.EnableMonitoringError
+import proton.android.pass.features.security.center.addressoptions.presentation.SecurityCenterAddressOptionsSnackbarMessage.EnableMonitoringSuccess
 import proton.android.pass.features.security.center.addressoptions.presentation.SecurityCenterAddressOptionsSnackbarMessage.RemoveCustomEmailError
+import proton.android.pass.features.security.center.addressoptions.presentation.SecurityCenterAddressOptionsSnackbarMessage.RemoveCustomEmailSuccess
 import proton.android.pass.features.security.center.shared.navigation.BreachIdArgId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -76,7 +76,7 @@ class SecurityCenterAddressOptionsViewModel @Inject constructor(
         .require(AddressOptionsTypeArgId.key)
     private val globalMonitorAddressType: GlobalMonitorAddressType = savedStateHandleProvider.get()
         .get<GlobalMonitorAddressType>(AddressTypeArgId.key)
-        ?: None
+        ?: GlobalMonitorAddressType.None
 
     private val breachCustomEmailId: BreachEmailId.Custom? = savedStateHandleProvider.get()
         .get<String>(BreachIdArgId.key)
@@ -133,9 +133,13 @@ class SecurityCenterAddressOptionsViewModel @Inject constructor(
             isLoadingState.update { IsLoadingState.Loading }
             runCatching {
                 when (globalMonitorAddressType) {
-                    Proton -> updateGlobalProtonAddressesMonitorState(enabled = enabled)
-                    Alias -> updateGlobalAliasAddressesMonitorState(enabled = enabled)
-                    None -> {
+                    GlobalMonitorAddressType.Proton ->
+                        updateGlobalProtonAddressesMonitorState(enabled = enabled)
+
+                    GlobalMonitorAddressType.Alias ->
+                        updateGlobalAliasAddressesMonitorState(enabled = enabled)
+
+                    GlobalMonitorAddressType.None ->
                         when (breachEmailId) {
                             is BreachEmailId.Proton -> updateProtonAddressMonitorState(
                                 addressId = breachEmailId.addressId,
@@ -151,12 +155,16 @@ class SecurityCenterAddressOptionsViewModel @Inject constructor(
 
                             else -> throw IllegalStateException("Invalid state")
                         }
-                    }
                 }
             }
                 .onSuccess {
                     PassLogger.i(TAG, "Monitor state updated $enabled")
                     eventFlow.update { SecurityCenterAddressOptionsEvent.OnMonitorStateUpdated }
+                    if (enabled) {
+                        snackbarDispatcher(EnableMonitoringSuccess)
+                    } else {
+                        snackbarDispatcher(DisableMonitoringSuccess)
+                    }
                 }
                 .onFailure {
                     PassLogger.w(
@@ -186,6 +194,7 @@ class SecurityCenterAddressOptionsViewModel @Inject constructor(
                 .onSuccess {
                     PassLogger.i(TAG, "Custom email removed")
                     eventFlow.update { SecurityCenterAddressOptionsEvent.OnMonitorStateUpdated }
+                    snackbarDispatcher(RemoveCustomEmailSuccess)
                 }
                 .onFailure {
                     PassLogger.w(TAG, "Failed to remove custom email")

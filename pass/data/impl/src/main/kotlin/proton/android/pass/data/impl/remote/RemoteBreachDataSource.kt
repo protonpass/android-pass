@@ -85,13 +85,6 @@ interface RemoteBreachDataSource {
         id: AddressId,
         enabled: Boolean
     )
-
-    suspend fun updateAliasAddressMonitorState(
-        userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId,
-        enabled: Boolean
-    )
 }
 
 class RemoteBreachDataSourceImpl @Inject constructor(
@@ -253,23 +246,4 @@ class RemoteBreachDataSourceImpl @Inject constructor(
             .valueOrThrow
     }
 
-    override suspend fun updateAliasAddressMonitorState(
-        userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId,
-        enabled: Boolean
-    ) {
-        apiProvider
-            .get<PasswordManagerApi>(userId)
-            .invoke {
-                updateAliasAddressMonitorState(
-                    shareId.id,
-                    itemId.id,
-                    UpdateMonitorAddressStateRequest(
-                        monitor = enabled
-                    )
-                )
-            }
-            .valueOrThrow
-    }
 }

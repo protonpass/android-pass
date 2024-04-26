@@ -29,7 +29,7 @@ interface UpdateItemFlag {
         shareId: ShareId,
         itemId: ItemId,
         flag: ItemFlag,
-        isFlagEnable: Boolean
+        isFlagEnabled: Boolean
     ): Item
 
 }

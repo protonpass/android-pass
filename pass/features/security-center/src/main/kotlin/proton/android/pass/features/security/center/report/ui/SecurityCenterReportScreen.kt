@@ -22,6 +22,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.features.security.center.addressoptions.navigation.AddressOptionsType
 import proton.android.pass.features.security.center.report.navigation.SecurityCenterReportDestination
 import proton.android.pass.features.security.center.report.presentation.SecurityCenterReportViewModel
 
@@ -40,9 +42,22 @@ fun SecurityCenterReportScreen(
                     SecurityCenterReportDestination.Back
                 )
 
-                SecurityCenterReportUiEvent.OnMenuClick -> {
-                    // Display bottom sheet to exclude/include monitoring
+                is SecurityCenterReportUiEvent.OnMenuClick -> {
+                    val addressOptionsType = if (uiEvent.id is BreachEmailId.Custom) {
+                        AddressOptionsType.RemoveCustomEmail
+                    } else {
+                        if (state.isBreachExcludedFromMonitoring) {
+                            AddressOptionsType.EnableMonitoring
+                        } else {
+                            AddressOptionsType.DisableMonitoring
+                        }
+                    }
+                    SecurityCenterReportDestination.OnMenuClick(
+                        id = uiEvent.id,
+                        addressOptionsType = addressOptionsType
+                    ).also(onNavigated)
                 }
+
 
                 is SecurityCenterReportUiEvent.EmailBreachDetail -> onNavigated(
                     SecurityCenterReportDestination.EmailBreachDetail(uiEvent.id)

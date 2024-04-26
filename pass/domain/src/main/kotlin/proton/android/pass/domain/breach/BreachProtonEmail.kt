@@ -28,6 +28,10 @@ data class BreachProtonEmail(
     val flags: Int,
     val lastBreachTime: Int?
 ) {
+
+    val hasBreaches: Boolean = breachCounter > 0
+
     val isMonitoringDisabled: Boolean = flags.hasFlag(EmailFlag.MonitoringDisabled.value)
+
 }
 

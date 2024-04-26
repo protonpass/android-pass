@@ -216,7 +216,11 @@ private fun ExposedData(modifier: Modifier = Modifier, breachEmail: BreachEmail)
 
 @Composable
 private fun BreachDetailHeader(modifier: Modifier = Modifier, breachEmail: BreachEmail) {
-    Row(modifier = modifier, horizontalArrangement = Arrangement.spacedBy(Spacing.medium)) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(Spacing.medium),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         BreachImage(isResolved = breachEmail.isResolved)
 
         Column(verticalArrangement = Arrangement.spacedBy(Spacing.small)) {

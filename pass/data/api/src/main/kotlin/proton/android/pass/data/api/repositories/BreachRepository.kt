@@ -77,11 +77,4 @@ interface BreachRepository {
         addressId: AddressId,
         enabled: Boolean
     )
-
-    suspend fun updateAliasAddressMonitorState(
-        userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId,
-        enabled: Boolean
-    )
 }

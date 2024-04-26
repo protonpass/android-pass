@@ -384,13 +384,6 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Body request: UpdateMonitorAddressStateRequest
     ): CodeOnlyResponse
 
-    @PUT("$PREFIX/share/{shareId}/alias/{itemId}/breaches")
-    suspend fun updateAliasAddressMonitorState(
-        @Path("shareId") shareId: String,
-        @Path("itemId") itemId: String,
-        @Body request: UpdateMonitorAddressStateRequest
-    ): CodeOnlyResponse
-
     // Core
     @GET("core/v4/keys/all")
     suspend fun getAllKeysByAddress(

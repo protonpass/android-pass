@@ -194,16 +194,6 @@ class BreachRepositoryImpl @Inject constructor(
         remote.updateProtonAddressMonitorState(userId, addressId, enabled)
     }
 
-
-    override suspend fun updateAliasAddressMonitorState(
-        userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId,
-        enabled: Boolean
-    ) {
-        remote.updateAliasAddressMonitorState(userId, shareId, itemId, enabled)
-    }
-
     fun proton.android.pass.data.impl.responses.BreachCustomEmail.toDomain() = BreachCustomEmail(
         id = CustomEmailId(customEmailId),
         email = email,

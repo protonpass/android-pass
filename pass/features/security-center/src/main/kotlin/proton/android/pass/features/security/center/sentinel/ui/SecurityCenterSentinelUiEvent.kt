@@ -22,6 +22,8 @@ internal sealed interface SecurityCenterSentinelUiEvent {
 
     data object OnEnableSentinel : SecurityCenterSentinelUiEvent
 
+    data object OnDisableSentinel : SecurityCenterSentinelUiEvent
+
     data object OnLearnMore : SecurityCenterSentinelUiEvent
 
     data object OnUpsell : SecurityCenterSentinelUiEvent

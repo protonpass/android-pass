@@ -23,6 +23,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
@@ -108,10 +110,16 @@ class BreachRepositoryImpl @Inject constructor(
             .also { refreshFlow.update { true } }
     }
 
-    override fun observeBreachesForProtonEmail(userId: UserId, id: AddressId): Flow<List<BreachEmail>> = oneShot {
-        remote.getBreachesForProtonEmail(userId, id)
-            .toDomain { breach -> BreachEmailId.Proton(BreachId(breach.id), id) }
-    }
+    override fun observeProtonEmails(userId: UserId): Flow<List<BreachProtonEmail>> =
+        localBreachesDataSource.observeProtonEmails()
+            .onStart {
+                observeAllBreaches(userId)
+                    .first()
+                    .breachedProtonEmails
+                    .also { protonEmails ->
+                        localBreachesDataSource.upsertProtonEmails(userId, protonEmails)
+                    }
+            }
 
     override fun observeBreachesForCustomEmail(
         userId: UserId,
@@ -136,6 +144,22 @@ class BreachRepositoryImpl @Inject constructor(
             }
         }
 
+    override fun observeBreachesForProtonEmail(
+        userId: UserId,
+        id: AddressId
+    ): Flow<List<BreachEmail>> =
+        localBreachesDataSource.observeProtonEmailBreaches()
+            .onStart {
+                remote.getBreachesForProtonEmail(userId, id)
+                    .toDomain { breachDto -> BreachEmailId.Custom(BreachId(breachDto.id)) }
+                    .also { protonEmailBreaches ->
+                        localBreachesDataSource.upsertProtonEmailBreaches(
+                            userId,
+                            protonEmailBreaches
+                        )
+                    }
+            }
+
     override fun observeBreachesForAliasEmail(
         userId: UserId,
         shareId: ShareId,
@@ -149,6 +173,12 @@ class BreachRepositoryImpl @Inject constructor(
 
     override suspend fun markProtonEmailAsResolved(userId: UserId, id: AddressId) {
         remote.markProtonEmailAsResolved(userId, id)
+
+        localBreachesDataSource.getProtonEmail(userId, id)
+            .copy(flags = BREACH_EMAIL_RESOLVED_STATE_VALUE)
+            .also { verifiedProtonEmail ->
+                localBreachesDataSource.upsertProtonEmail(userId, verifiedProtonEmail)
+            }
     }
 
     override suspend fun markAliasEmailAsResolved(

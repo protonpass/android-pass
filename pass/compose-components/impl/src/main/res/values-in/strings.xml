@@ -23,6 +23,8 @@
   <string name="bottomsheet_pin_item">Sematkan</string>
   <string name="bottomsheet_unpin_item">Lepas sematan</string>
   <string name="bottomsheet_view_item_history">Lihat riwayat</string>
+  <string name="bottomsheet_monitor_exclude">Kecualikan dari pemantauan</string>
+  <string name="bottomsheet_monitor_include">Masukkan dalam pemantauan</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Buka menu tindakan item</string>
   <string name="action_upgrade_now">Tingkatkan sekarang</string>

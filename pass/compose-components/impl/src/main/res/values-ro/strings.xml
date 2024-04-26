@@ -25,6 +25,8 @@
   <string name="bottomsheet_pin_item">Fixare</string>
   <string name="bottomsheet_unpin_item">Anulare fixare</string>
   <string name="bottomsheet_view_item_history">Afișare istoric</string>
+  <string name="bottomsheet_monitor_exclude">Excludere de la monitorizare</string>
+  <string name="bottomsheet_monitor_include">Includere în monitorizare</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Meniu acțiune deschidere articol</string>
   <string name="action_upgrade_now">Modificare</string>

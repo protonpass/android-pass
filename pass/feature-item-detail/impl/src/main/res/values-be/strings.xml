@@ -27,11 +27,34 @@
   <string name="item_restored_message">Элемент адноўлены</string>
   <string name="item_restored_message_error">Памылка аднаўлення элемента</string>
   <string name="item_pinned_message">Элемент паспяхова замацаваны</string>
-  <string name="item_pinned_message_error">Памылка замацавання гэтага элемента</string>
+  <string name="item_pinned_message_error">Адбылася памылка падчас замацавання гэтага элемента</string>
   <string name="item_unpinned_message">Элемент паспяхова адмацаваны</string>
-  <string name="item_unpinned_message_error">Памылка адмацавання гэтага элемента</string>
+  <string name="item_unpinned_message_error">Адбылася памылка падчас адмацавання гэтага элемента</string>
+  <string name="item_monitor_exclude_message">Элемент паспяхова выключаны з назірання</string>
+  <string name="item_monitor_exclude_message_error">Адбылася памылка падчас выключэння элемента з назірання</string>
+  <string name="item_monitor_include_message">Элемент паспяхова ўключаны ў назіранне</string>
+  <string name="item_monitor_include_message_error">Адбылася памылка падчас уключэння элемента ў назіранне</string>
   <string name="login_item_generate_totp_error">Памылка генерацыі кода 2ФА</string>
   <string name="login_item_view_alias_button">Паглядзець псеўданім</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Ненадзейны пароль</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Гэты ўліковы запіс з\'яўляецца ўразлівым. Наведайце сэрвіс і змяніце пароль.</string>
+  <string name="login_item_monitor_widget_reused_pass_title">Паўторна выкарыстаныя паролі</string>
+  <string name="login_item_monitor_widget_reused_pass_subtitle">Наведайце вэб-сайт і згенерыруйце ўнікальны пароль для гэтага элемента.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_count_compact_leading">
+    <item quantity="one">%d іншы запіс уваходу</item>
+    <item quantity="few">%d іншыя запісы ўваходу</item>
+    <item quantity="many">%d іншых запісаў уваходу</item>
+    <item quantity="other">%d іншых запісаў уваходу</item>
+  </plurals>
+  <string name="login_item_monitor_widget_reused_pass_count_compact_trailing" comment="This is the trailing part of the sentence above. A full example of its usage will be '4 other logins use this password.'">выкарыстоўваюць гэты пароль.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_count_expanded">
+    <item quantity="one">Яшчэ адзін запіс уваходу выкарыстоўвае гэты пароль:</item>
+    <item quantity="few">%d іншыя запісы ўваходу выкарыстоўваюць гэты пароль:</item>
+    <item quantity="many">%d іншых запісаў уваходу выкарыстоўваюць гэты пароль:</item>
+    <item quantity="other">%d іншых запісаў уваходу выкарыстоўваюць гэты пароль:</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Адсутнічае двухфактарная аўтэнтыфікацыя</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Будзе больш бяспечна наладзіць 2ФА для гэтага элемента.</string>
   <string name="field_username">Імя карыстальніка або адрас электроннай пошты</string>
   <string name="field_password">Пароль</string>
   <string name="websites_section_title">Вэб-сайты</string>

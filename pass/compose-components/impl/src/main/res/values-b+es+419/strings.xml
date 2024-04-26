@@ -24,6 +24,8 @@
   <string name="bottomsheet_pin_item">Anclar</string>
   <string name="bottomsheet_unpin_item">Desanclar</string>
   <string name="bottomsheet_view_item_history">Ver historial</string>
+  <string name="bottomsheet_monitor_exclude">Excluir del monitoreo</string>
+  <string name="bottomsheet_monitor_include">Incluir en el monitoreo</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Abrir menú de acciones del elemento</string>
   <string name="action_upgrade_now">Mejorar ahora</string>
@@ -32,7 +34,7 @@
   <string name="action_enable">Activar</string>
   <string name="action_view_details">Mostrar los detalles</string>
   <!-- Empty list -->
-  <string name="empty_list_title">Añada su primer elemento</string>
+  <string name="empty_list_title">Añada el primer elemento</string>
   <string name="empty_search_results_title">No se encontraron resultados</string>
   <string name="empty_list_open_extension">Visitar sitio web de la extensión</string>
   <string name="empty_list_create_item_button">Crear elemento</string>
@@ -117,12 +119,12 @@
   <string name="item_details_login_section_primary_totp_title">Token 2FA (TOTP)</string>
   <string name="item_details_login_section_websites_title">Sitios web</string>
   <string name="item_details_shared_section_note_title">Nota</string>
-  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">La versión de la app ya no es compatible, actualice su app.</string>
+  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">La versión de la aplicación ya no es compatible, actualice la aplicación.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Clave de acceso</string>
   <!-- Upgrade -->
   <string name="dialog_upgrade_plan_title">¿Mejorar plan?</string>
-  <string name="dialog_upgrade_plan_message">Esta función no está disponible para usuarios del plan gratuito. Si desea disfrutar de esto junto con otras funciones interesantes, mejore su plan y pruébelo.</string>
+  <string name="dialog_upgrade_plan_message">Esta función no está disponible para usuarios del plan gratuito. Si desea disfrutar de esto junto con otras funciones interesantes, mejore el plan y pruébelo.</string>
   <string name="dialog_upgrade_plan_action_confirm">Mejorar</string>
   <string name="dialog_upgrade_plan_action_cancel">Ahora no</string>
   <!-- Words -->

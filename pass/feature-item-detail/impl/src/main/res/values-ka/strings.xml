@@ -30,8 +30,27 @@
   <string name="item_pinned_message_error">ელემენტის მიმაგრების შეცდომა</string>
   <string name="item_unpinned_message">ელემენტის მოხსნა წარმატებულია</string>
   <string name="item_unpinned_message_error">ელემენტის მოხსნის შეცდომა</string>
+  <string name="item_monitor_exclude_message">ელემენტის მონიტორინგიდან ამოღება წარმატებულია</string>
+  <string name="item_monitor_exclude_message_error">There was an error excluding item from monitoring</string>
+  <string name="item_monitor_include_message">ელემენტის მონიტორინგში ჩასმა წარმატებულია</string>
+  <string name="item_monitor_include_message_error">ელემენტის მონიტორინგში ჩასმის შეცდომა</string>
   <string name="login_item_generate_totp_error">2FA კოდის გენერაციის შეცდომა</string>
   <string name="login_item_view_alias_button">ფსევდონიმის ნახვა</string>
+  <string name="login_item_monitor_widget_weak_pass_title">პაროლი სუსტია</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">ეს ანგარიში მოწყვლადია. მიმართეთ სერვისს და შეცვალეთ თქვენი პაროლი.</string>
+  <string name="login_item_monitor_widget_reused_pass_title">განმეორებით გამოყენებული პაროლი</string>
+  <string name="login_item_monitor_widget_reused_pass_subtitle">ეწვიეთ ვებსაიტს და შექმენით უნიკალური პაროლი ამ ელემენტისთვის.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_count_compact_leading">
+    <item quantity="one">%d სხვა შესვლის ჩანაწერი</item>
+    <item quantity="other">%d სხვა შესვლის ჩანაწერი</item>
+  </plurals>
+  <string name="login_item_monitor_widget_reused_pass_count_compact_trailing" comment="This is the trailing part of the sentence above. A full example of its usage will be '4 other logins use this password.'">ამ პაროლის გამოყენება.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_count_expanded">
+    <item quantity="one">სხვა მომხმარებელი იყენებს ამ პაროლს:</item>
+    <item quantity="other">%d სხვა მომხმარებელი იყენებს ამ პაროლს:</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">SSO ჩართული არაა</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">უფრო უსაფრთხო იქნება, თუ ამ ელემენტისთვის 2FA-ს მოარგებთ.</string>
   <string name="field_username">მომხმარებლის სახელი ან ელფოსტის მისამართი</string>
   <string name="field_password">პაროლი</string>
   <string name="websites_section_title">ვებსაიტები</string>

@@ -27,9 +27,11 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -46,6 +48,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
@@ -74,18 +77,26 @@ internal fun SecurityCenterBreachDetailBSContent(
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
-        state.breachEmail?.let { breachEmail ->
-            BreachDetailHeader(breachEmail = breachEmail)
-            ExposedData(breachEmail = breachEmail)
-            Details(breachEmail = breachEmail)
-            RecommendedActions(breachEmail = breachEmail)
-            Text(
-                text = stringResource(
-                    id = R.string.security_center_report_detail_note,
-                    breachEmail.name
-                ),
-                style = ProtonTheme.typography.body2Regular
+        if (state.isLoading) {
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .size(48.dp)
+                    .align(Alignment.CenterHorizontally)
             )
+        } else {
+            state.breachEmail?.let { breachEmail ->
+                BreachDetailHeader(breachEmail = breachEmail)
+                ExposedData(breachEmail = breachEmail)
+                Details(breachEmail = breachEmail)
+                RecommendedActions(breachEmail = breachEmail)
+                Text(
+                    text = stringResource(
+                        id = R.string.security_center_report_detail_note,
+                        breachEmail.name
+                    ),
+                    style = ProtonTheme.typography.body2Regular
+                )
+            }
         }
     }
 }

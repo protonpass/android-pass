@@ -50,7 +50,9 @@ fun SecurityCenterSentinelBottomSheet(
             }
 
             SecurityCenterSentinelEvent.OnSentinelEnableError,
-            SecurityCenterSentinelEvent.OnSentinelEnableSuccess -> {
+            SecurityCenterSentinelEvent.OnSentinelEnableSuccess,
+            SecurityCenterSentinelEvent.OnSentinelDisableError,
+            SecurityCenterSentinelEvent.OnSentinelDisableSuccess -> {
                 onNavigated(SecurityCenterSentinelDestination.Dismiss)
             }
         }
@@ -63,6 +65,7 @@ fun SecurityCenterSentinelBottomSheet(
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 SecurityCenterSentinelUiEvent.OnEnableSentinel -> onEnableSentinel()
+                SecurityCenterSentinelUiEvent.OnDisableSentinel -> onDisableSentinel()
                 SecurityCenterSentinelUiEvent.OnLearnMore -> onLearnMore()
                 SecurityCenterSentinelUiEvent.OnUpsell -> onNavigated(SecurityCenterSentinelDestination.Upsell)
             }

@@ -152,15 +152,23 @@ class BreachRepositoryImpl @Inject constructor(
 
     override suspend fun markCustomEmailAsResolved(userId: UserId, id: BreachEmailId.Custom) {
         remote.markCustomEmailAsResolved(userId, id)
+            .also { response ->
+                localBreachesDataSource.upsertCustomEmail(userId, response.email.toDomain())
+            }
+
+        // Update locally custom email breaches state to resolved
     }
 
     override suspend fun resendVerificationCode(userId: UserId, id: BreachEmailId.Custom) {
         remote.resendVerificationCode(userId, id)
+            .let { localBreachesDataSource.getCustomEmail(userId, id).copy(verified = true) }
+            .also { customEmail -> localBreachesDataSource.upsertCustomEmail(userId, customEmail) }
     }
 
     override suspend fun removeCustomEmail(userId: UserId, id: BreachEmailId.Custom) {
         remote.removeCustomEmail(userId, id)
-        refreshFlow.update { true }
+            .also { localBreachesDataSource.deleteCustomEmail(userId, id) }
+            .also { refreshFlow.update { true } }
     }
 
     override suspend fun updateGlobalProtonMonitorState(userId: UserId, enabled: Boolean) {

@@ -22,7 +22,9 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -121,7 +123,14 @@ internal fun SecurityCenterAliasListContent(
                             )
                         }
                     }
-                    items(list.includedBreachedEmails, key = { it.email }) { itemState ->
+                    items(
+                        items = list.includedBreachedEmails,
+                        key = { emailBreach ->
+                            (emailBreach.id as BreachEmailId.Alias).let {
+                                "breached-${it.shareId.id}-${it.itemId.id}"
+                            }
+                        }
+                    ) { itemState ->
                         EmailBreachRow(
                             emailBreachUiState = itemState,
                             globalMonitorEnabled = state.isGlobalMonitorEnabled,
@@ -137,6 +146,7 @@ internal fun SecurityCenterAliasListContent(
                         )
                     }
                     if (list.includedMonitoredEmails.isNotEmpty()) {
+                        item { Spacer(modifier = Modifier.height(Spacing.medium)) }
                         item {
                             Text(
                                 modifier = Modifier.padding(horizontal = Spacing.medium),
@@ -145,7 +155,14 @@ internal fun SecurityCenterAliasListContent(
                             )
                         }
                     }
-                    items(list.includedMonitoredEmails, key = { it.email }) { itemState ->
+                    items(
+                        items = list.includedMonitoredEmails,
+                        key = { emailBreach ->
+                            (emailBreach.id as BreachEmailId.Alias).let {
+                                "included-${it.shareId.id}-${it.itemId.id}"
+                            }
+                        }
+                    ) { itemState ->
                         EmailBreachRow(
                             emailBreachUiState = itemState,
                             globalMonitorEnabled = state.isGlobalMonitorEnabled,
@@ -161,6 +178,7 @@ internal fun SecurityCenterAliasListContent(
                         )
                     }
                     if (list.excludedEmails.isNotEmpty()) {
+                        item { Spacer(modifier = Modifier.height(Spacing.medium)) }
                         item {
                             Text(
                                 modifier = Modifier.padding(horizontal = Spacing.medium),
@@ -169,7 +187,14 @@ internal fun SecurityCenterAliasListContent(
                             )
                         }
                     }
-                    items(list.excludedEmails, key = { it.email }) { itemState ->
+                    items(
+                        items = list.excludedEmails,
+                        key = { emailBreach ->
+                            (emailBreach.id as BreachEmailId.Alias).let {
+                                "excluded-${it.shareId.id}-${it.itemId.id}"
+                            }
+                        }
+                    ) { itemState ->
                         EmailBreachRow(
                             emailBreachUiState = itemState,
                             globalMonitorEnabled = state.isGlobalMonitorEnabled,

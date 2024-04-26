@@ -21,5 +21,6 @@ package proton.android.pass.features.security.center.addressoptions.navigation
 enum class AddressOptionsType {
     DisableMonitoring,
     EnableMonitoring,
+    RemoveCustomEmail,
     Unknown
 }

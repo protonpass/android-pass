@@ -25,7 +25,7 @@ import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.CustomEmailId
 import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.features.security.center.addressoptions.navigation.AddressOptionsType
-import proton.android.pass.features.security.center.addressoptions.navigation.AddressType
+import proton.android.pass.features.security.center.addressoptions.navigation.GlobalMonitorAddressType
 
 sealed interface SecurityCenterNavDestination {
 
@@ -112,8 +112,23 @@ sealed interface SecurityCenterNavDestination {
 
     data object DarkWebHelp : SecurityCenterNavDestination
 
-    data class AddressOptions(
+    data class GlobalMonitorAddressOptions(
         val addressOptionsType: AddressOptionsType,
-        val addressType: AddressType
+        val globalMonitorAddressType: GlobalMonitorAddressType
+    ) : SecurityCenterNavDestination
+
+    data class ReportAliasAddressOptions(
+        val breachEmailId: BreachEmailId.Alias,
+        val addressOptionsType: AddressOptionsType
+    ) : SecurityCenterNavDestination
+
+    data class ReportProtonAddressOptions(
+        val breachEmailId: BreachEmailId.Proton,
+        val addressOptionsType: AddressOptionsType
+    ) : SecurityCenterNavDestination
+
+    data class ReportCustomAddressOptions(
+        val breachEmailId: BreachEmailId.Custom,
+        val addressOptionsType: AddressOptionsType
     ) : SecurityCenterNavDestination
 }

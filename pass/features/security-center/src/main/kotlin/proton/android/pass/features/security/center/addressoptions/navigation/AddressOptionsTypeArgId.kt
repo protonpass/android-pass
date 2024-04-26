@@ -16,14 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.addressoptions.ui
+package proton.android.pass.features.security.center.addressoptions.navigation
 
-internal sealed interface SecurityCenterAddressOptionsUiEvent {
+import androidx.navigation.NavType
+import proton.android.pass.navigation.api.NavArgId
 
-    data object DisableMonitoring : SecurityCenterAddressOptionsUiEvent
-
-    data object EnableMonitoring : SecurityCenterAddressOptionsUiEvent
-
-    data object RemoveCustomEmail : SecurityCenterAddressOptionsUiEvent
-
+object AddressOptionsTypeArgId : NavArgId {
+    override val key: String = "address_options_type"
+    override val navType: NavType<*> = NavType.EnumType(AddressOptionsType::class.java)
 }

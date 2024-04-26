@@ -19,6 +19,7 @@
 package proton.android.pass.features.security.center.aliaslist.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -44,6 +45,7 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.composecomponents.impl.buttons.CircleIconButton
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
+import proton.android.pass.composecomponents.impl.item.ListHeader
 import proton.android.pass.composecomponents.impl.loading.Loading
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.features.security.center.R
@@ -54,6 +56,7 @@ import proton.android.pass.features.security.center.shared.ui.bars.SecurityCente
 import proton.android.pass.features.security.center.shared.ui.rows.EmailBreachRow
 import me.proton.core.presentation.R as CoreR
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun SecurityCenterAliasListContent(
     modifier: Modifier = Modifier,
@@ -147,12 +150,8 @@ internal fun SecurityCenterAliasListContent(
                     }
                     if (list.includedMonitoredEmails.isNotEmpty()) {
                         item { Spacer(modifier = Modifier.height(Spacing.medium)) }
-                        item {
-                            Text(
-                                modifier = Modifier.padding(horizontal = Spacing.medium),
-                                text = stringResource(R.string.security_center_alias_list_monitored),
-                                style = ProtonTheme.typography.body2Regular
-                            )
+                        stickyHeader {
+                            ListHeader(title = stringResource(R.string.security_center_alias_list_monitored))
                         }
                     }
                     items(
@@ -178,12 +177,9 @@ internal fun SecurityCenterAliasListContent(
                         )
                     }
                     if (list.excludedEmails.isNotEmpty()) {
-                        item { Spacer(modifier = Modifier.height(Spacing.medium)) }
-                        item {
-                            Text(
-                                modifier = Modifier.padding(horizontal = Spacing.medium),
-                                text = stringResource(R.string.security_center_alias_list_excluded_from_monitoring),
-                                style = ProtonTheme.typography.body2Regular
+                        stickyHeader {
+                            ListHeader(
+                                title = stringResource(R.string.security_center_alias_list_excluded_from_monitoring)
                             )
                         }
                     }

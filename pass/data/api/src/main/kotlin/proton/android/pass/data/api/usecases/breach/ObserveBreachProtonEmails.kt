@@ -16,22 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.domain.breach
+package proton.android.pass.data.api.usecases.breach
 
-import me.proton.core.user.domain.entity.AddressId
-import me.proton.core.util.kotlin.hasFlag
+import kotlinx.coroutines.flow.Flow
+import proton.android.pass.domain.breach.BreachProtonEmail
 
-data class BreachProtonEmail(
-    val addressId: AddressId,
-    val email: String,
-    val breachCounter: Int,
-    val flags: Int,
-    val lastBreachTime: Int?
-) {
+interface ObserveBreachProtonEmails {
 
-    val hasBreaches: Boolean = breachCounter > 0
-
-    val isMonitoringDisabled: Boolean = flags.hasFlag(EmailFlag.MonitoringDisabled.value)
+    operator fun invoke(): Flow<List<BreachProtonEmail>>
 
 }
-

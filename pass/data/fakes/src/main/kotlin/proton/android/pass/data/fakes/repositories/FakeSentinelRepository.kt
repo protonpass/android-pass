@@ -18,26 +18,23 @@
 
 package proton.android.pass.data.fakes.repositories
 
-import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import proton.android.pass.data.api.core.repositories.SentinelRepository
 import javax.inject.Inject
 
 class FakeSentinelRepository @Inject constructor() : SentinelRepository {
 
-    private val isSentinelEnabled = MutableSharedFlow<Boolean>(
-        replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST
-    )
+    private val isSentinelEnabledFlow = MutableStateFlow(false)
 
     override suspend fun disableSentinel() {
-        isSentinelEnabled.tryEmit(false)
+        isSentinelEnabledFlow.tryEmit(false)
     }
 
     override suspend fun enableSentinel() {
-        isSentinelEnabled.tryEmit(true)
+        isSentinelEnabledFlow.tryEmit(true)
     }
 
-    override fun observeIsSentinelEnabled(): Flow<Boolean> = isSentinelEnabled
+    override fun observeIsSentinelEnabled(): Flow<Boolean> = isSentinelEnabledFlow
 
 }

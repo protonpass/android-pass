@@ -52,7 +52,6 @@ internal fun SecurityCenterReportContent(
                 onUpClick = { onUiEvent(SecurityCenterReportUiEvent.Back) },
                 actions = {
                     CircleIconButton(
-                        modifier = modifier,
                         iconPainter = painterResource(id = R.drawable.ic_proton_three_dots_vertical),
                         size = 40,
                         backgroundColor = PassTheme.colors.interactionNormMinor1,

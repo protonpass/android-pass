@@ -32,13 +32,17 @@ import kotlinx.coroutines.launch
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.securitycenter.api.sentinel.DisableSentinel
 import proton.android.pass.securitycenter.api.sentinel.EnableSentinel
+import proton.android.pass.securitycenter.api.sentinel.ObserveIsSentinelEnabled
 import javax.inject.Inject
 
 @HiltViewModel
 class SecurityCenterSentinelViewModel @Inject constructor(
+    observeIsSentinelEnabled: ObserveIsSentinelEnabled,
     observeUserPlan: GetUserPlan,
     private val enableSentinel: EnableSentinel,
+    private val disableSentinel: DisableSentinel,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
@@ -49,11 +53,13 @@ class SecurityCenterSentinelViewModel @Inject constructor(
         MutableStateFlow(IsLoadingState.NotLoading)
 
     internal val state: StateFlow<SecurityCenterSentinelState> = combine(
+        observeIsSentinelEnabled(),
         eventFlow,
         isLoadingFlow,
         observeUserPlan()
-    ) { event, isLoading, userPlan ->
+    ) { isSentinelEnabled, event, isLoading, userPlan ->
         SecurityCenterSentinelState(
+            isSentinelEnabled = isSentinelEnabled,
             event = event,
             isLoadingState = isLoading,
             planType = userPlan.planType
@@ -83,6 +89,26 @@ class SecurityCenterSentinelViewModel @Inject constructor(
             }
             .onSuccess {
                 eventFlow.update { SecurityCenterSentinelEvent.OnSentinelEnableSuccess }
+            }
+
+        isLoadingFlow.update { IsLoadingState.NotLoading }
+    }
+
+    internal fun onDisableSentinel() = viewModelScope.launch {
+        isLoadingFlow.update { IsLoadingState.Loading }
+
+        runCatching { disableSentinel() }
+            .onFailure { error ->
+                if (error is CancellationException) {
+                    SecurityCenterSentinelSnackbarMessage.DisableSentinelCanceled
+                } else {
+                    SecurityCenterSentinelSnackbarMessage.DisableSentinelError
+                }.also { snackbarMessage -> snackbarDispatcher(snackbarMessage) }
+
+                eventFlow.update { SecurityCenterSentinelEvent.OnSentinelDisableError }
+            }
+            .onSuccess {
+                eventFlow.update { SecurityCenterSentinelEvent.OnSentinelDisableSuccess }
             }
 
         isLoadingFlow.update { IsLoadingState.NotLoading }

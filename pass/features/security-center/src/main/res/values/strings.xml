@@ -166,6 +166,9 @@
     <string name="security_center_address_bottomsheet_snackbar_message_enable_error">Could not enable monitoring</string>
     <string name="security_center_address_bottomsheet_snackbar_message_disable_error">Could not disable monitoring</string>
     <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_error">Could not remove custom email</string>
+    <string name="security_center_address_bottomsheet_snackbar_message_enable_success">Monitoring enabled</string>
+    <string name="security_center_address_bottomsheet_snackbar_message_disable_success">Monitoring disabled</string>
+    <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">Custom email removed</string>
 
     <!-- Alias list -->
     <string name="security_center_alias_list_top_bar_title">Hide-my-email aliases</string>

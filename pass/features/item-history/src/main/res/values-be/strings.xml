@@ -20,11 +20,11 @@
   <string name="item_history_restore_action">Аднавіць</string>
   <string name="item_history_restore_confirmation_dialog_title">Аднавіць гэту версію?</string>
   <string name="item_history_restore_confirmation_dialog_message" comment="The item will be reverted to a version from an specific date, for instance: Your current item will revert to the version from 19 February 2024 at 09:30">Ваш бягучы элемент будзе вернуты да версіі ад %1$s</string>
-  <string name="item_history_restore_snackbar_message_error">Адбылася памылка пры аднаўленні рэдакцыі элемента</string>
+  <string name="item_history_restore_snackbar_message_error">Адбылася памылка падчас аднаўлення рэдакцыі элемента</string>
   <string name="item_history_restore_snackbar_message_success">Рэдакцыя элемента паспяхова адноўлена</string>
   <string name="item_history_timeline_title">Гісторыя</string>
   <string name="item_history_timeline_node_child_title">Зменена</string>
   <string name="item_history_timeline_node_leaf_title">Створана</string>
   <string name="item_history_timeline_node_root_title">Бягучая версія</string>
-  <string name="item_history_timeline_snackbar_message_error">Адбылася памылка пры атрыманні рэдакцый элемента</string>
+  <string name="item_history_timeline_snackbar_message_error">Адбылася памылка падчас атрымання рэдакцыі элемента</string>
 </resources>

@@ -24,6 +24,8 @@
   <string name="bottomsheet_pin_item">Fäst</string>
   <string name="bottomsheet_unpin_item">Lossa</string>
   <string name="bottomsheet_view_item_history">Visa historik</string>
+  <string name="bottomsheet_monitor_exclude">Exkludera från övervakning</string>
+  <string name="bottomsheet_monitor_include">Inkludera i övervakning</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Öppna åtgärdsmeny för objekt</string>
   <string name="action_upgrade_now">Uppgradera nu</string>

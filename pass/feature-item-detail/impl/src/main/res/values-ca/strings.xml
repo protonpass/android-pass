@@ -30,12 +30,31 @@
   <string name="item_pinned_message_error">There was an error pinning this item</string>
   <string name="item_unpinned_message">S\'ha desancorat l\'element.</string>
   <string name="item_unpinned_message_error">There was an error unpinning this item</string>
+  <string name="item_monitor_exclude_message">Element exclòs correctament del seguiment</string>
+  <string name="item_monitor_exclude_message_error">S\'ha produït un error en excloure l\'element del seguiment</string>
+  <string name="item_monitor_include_message">Item successfully included in monitoring</string>
+  <string name="item_monitor_include_message_error">S\'ha produït un error en incloure l\'element al seguiment</string>
   <string name="login_item_generate_totp_error">S\'ha produït un error en generar el codi 2FA</string>
   <string name="login_item_view_alias_button">Mostra l\'àlies</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Contrasenya feble</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Aquest compte és vulnerable, visiti el servei i canviï la contrasenya.</string>
+  <string name="login_item_monitor_widget_reused_pass_title">Contrasenya reutilitzada</string>
+  <string name="login_item_monitor_widget_reused_pass_subtitle">Visiti el lloc web i generi una contrasenya única per a aquest element.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_count_compact_leading">
+    <item quantity="one">%d altre inici de sessió</item>
+    <item quantity="other">%d altres inicis de sessió</item>
+  </plurals>
+  <string name="login_item_monitor_widget_reused_pass_count_compact_trailing" comment="This is the trailing part of the sentence above. A full example of its usage will be '4 other logins use this password.'">usi aquesta contrasenya</string>
+  <plurals name="login_item_monitor_widget_reused_pass_count_expanded">
+    <item quantity="one">Un altre inici de sessió utilitza aquesta contrasenya:</item>
+    <item quantity="other">%d altres inicis de sessió fan servir aquesta contrasenya:</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Falta l\'autenticació de dos factors</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Seria més segur configurar 2FA per a aquest element.</string>
   <string name="field_username">Nom d\'usuari o adreça de correu electrònic</string>
   <string name="field_password">Contrasenya</string>
   <string name="websites_section_title">Llocs web</string>
-  <string name="totp_section_title">Testimoni 2FA (TOTP)</string>
+  <string name="totp_section_title">Token 2FA (TOTP)</string>
   <string name="action_reveal_password">Mostra la contrasenya</string>
   <string name="action_conceal_password">Oculta la contrasenya</string>
   <string name="action_reveal_number">Mostra el número</string>

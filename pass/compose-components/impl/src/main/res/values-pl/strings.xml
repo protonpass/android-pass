@@ -26,6 +26,8 @@
   <string name="bottomsheet_pin_item">Przypnij</string>
   <string name="bottomsheet_unpin_item">Odepnij</string>
   <string name="bottomsheet_view_item_history">Pokaż historię</string>
+  <string name="bottomsheet_monitor_exclude">Wyklucz z monitoringu</string>
+  <string name="bottomsheet_monitor_include">Uwzględnij w monitoringu</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Otwórz menu akcji elementu</string>
   <string name="action_upgrade_now">Ulepsz teraz</string>

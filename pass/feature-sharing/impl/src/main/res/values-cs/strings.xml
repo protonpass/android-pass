@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="share_continue">Pokračovat</string>
-  <string name="sharing_can_view">Přihlížející</string>
+  <string name="sharing_can_view">Prohlížející</string>
   <string name="sharing_can_edit">Editor</string>
   <string name="sharing_can_manage">Správce</string>
   <string name="sharing_can_view_description">Může zobrazovat položky v tomto trezoru.</string>

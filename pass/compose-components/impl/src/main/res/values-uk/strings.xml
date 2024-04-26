@@ -26,6 +26,8 @@
   <string name="bottomsheet_pin_item">Прикріпити</string>
   <string name="bottomsheet_unpin_item">Відкріпити</string>
   <string name="bottomsheet_view_item_history">Переглянути історію</string>
+  <string name="bottomsheet_monitor_exclude">Exclude from monitoring</string>
+  <string name="bottomsheet_monitor_include">Include in monitoring</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Відкрити меню дій елемента</string>
   <string name="action_upgrade_now">Покращити</string>

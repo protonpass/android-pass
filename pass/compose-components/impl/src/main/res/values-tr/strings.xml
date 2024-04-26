@@ -24,6 +24,8 @@
   <string name="bottomsheet_pin_item">Sabitle</string>
   <string name="bottomsheet_unpin_item">Sabitlemeyi kaldır</string>
   <string name="bottomsheet_view_item_history">Geçmişi görüntüle</string>
+  <string name="bottomsheet_monitor_exclude">İzlemeye katma</string>
+  <string name="bottomsheet_monitor_include">İzlemeye kat</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Öge işlem menüsünü aç</string>
   <string name="action_upgrade_now">Şimdi yükselt</string>

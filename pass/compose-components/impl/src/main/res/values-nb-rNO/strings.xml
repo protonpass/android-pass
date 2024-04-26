@@ -24,6 +24,8 @@
   <string name="bottomsheet_pin_item">Fest</string>
   <string name="bottomsheet_unpin_item">Løs</string>
   <string name="bottomsheet_view_item_history">Vis historikk</string>
+  <string name="bottomsheet_monitor_exclude">Ekskluder fra overvåking</string>
+  <string name="bottomsheet_monitor_include">Inkluder i overvåking</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Åpne elementhandlingsmenyen</string>
   <string name="action_upgrade_now">Oppgrader nå</string>

@@ -35,13 +35,17 @@ class ObserveBreachesForCustomEmailImpl @Inject constructor(
     private val observeCurrentUser: ObserveCurrentUser
 ) : ObserveBreachesForCustomEmail {
 
-    override fun invoke(userId: UserId?, id: CustomEmailId): Flow<List<BreachEmail>> = if (userId == null) {
+    override fun invoke(
+        userId: UserId?,
+        id: CustomEmailId,
+        refresh: Boolean
+    ): Flow<List<BreachEmail>> = if (userId == null) {
         observeCurrentUser()
             .flatMapLatest { user ->
-                breachRepository.observeBreachesForCustomEmail(user.userId, id)
+                breachRepository.observeBreachesForCustomEmail(user.userId, id, refresh)
             }
     } else {
-        breachRepository.observeBreachesForCustomEmail(userId, id)
+        breachRepository.observeBreachesForCustomEmail(userId, id, refresh)
     }
 
 }

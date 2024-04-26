@@ -365,7 +365,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
     suspend fun markProtonEmailAsResolved(@Path("addressId") addressId: String): CodeOnlyResponse
 
     @PUT("$PREFIX/breach/custom_email/{customEmailId}/resolved")
-    suspend fun markCustomEmailAsResolved(@Path("customEmailId") emailId: String): CodeOnlyResponse
+    suspend fun markCustomEmailAsResolved(@Path("customEmailId") emailId: String): BreachCustomEmailResponse
 
     @POST("$PREFIX/share/{shareId}/alias/{itemId}/breaches/resolved")
     suspend fun markAliasEmailAsResolved(

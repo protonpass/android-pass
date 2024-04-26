@@ -28,6 +28,7 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.breach.BreachCustomEmail
 import proton.android.pass.domain.breach.BreachEmail
+import proton.android.pass.domain.breach.BreachEmailId
 
 @Stable
 internal data class SecurityCenterReportState(
@@ -35,7 +36,8 @@ internal data class SecurityCenterReportState(
     private val breachEmailResult: LoadingResult<BreachCustomEmail>,
     private val breachEmailsResult: LoadingResult<List<BreachEmail>>,
     private val usedInLoginItemsResult: LoadingResult<List<ItemUiModel>>,
-    private val isResolvingBreachState: IsLoadingState
+    private val isResolvingBreachState: IsLoadingState,
+    internal val breachEmailId: BreachEmailId?
 ) {
 
     internal val isBreachExcludedFromMonitoring: Boolean = when (breachEmailResult) {
@@ -99,7 +101,8 @@ internal data class SecurityCenterReportState(
             breachEmailResult = LoadingResult.Loading,
             breachEmailsResult = LoadingResult.Loading,
             usedInLoginItemsResult = LoadingResult.Loading,
-            isResolvingBreachState = IsLoadingState.NotLoading
+            isResolvingBreachState = IsLoadingState.NotLoading,
+            breachEmailId = null
         )
 
     }

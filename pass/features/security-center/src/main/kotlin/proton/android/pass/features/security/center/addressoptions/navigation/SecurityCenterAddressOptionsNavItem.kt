@@ -18,26 +18,39 @@
 
 package proton.android.pass.features.security.center.addressoptions.navigation
 
-import androidx.navigation.NavType
-import proton.android.pass.navigation.api.NavArgId
+import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.features.security.center.shared.navigation.BreachIdArgId
+import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
 
-object AddressOptionsTypeArgId : NavArgId {
-    override val key: String = "address_options_type"
-    override val navType: NavType<*> = NavType.EnumType(AddressOptionsType::class.java)
-}
-
-object AddressTypeArgId : NavArgId {
-    override val key: String = "address_type"
-    override val navType: NavType<*> = NavType.EnumType(AddressType::class.java)
-}
-
-object SecurityCenterAddressOptionsNavItem : NavItem(
-    baseRoute = "security/center/addressoptions/bottomsheet",
-    navItemType = NavItemType.Bottomsheet,
-    navArgIds = listOf(AddressOptionsTypeArgId, AddressTypeArgId)
+object SecurityCenterCustomAddressOptionsNavItem : NavItem(
+    baseRoute = "security/center/custom/addressoptions/bottomsheet",
+    navArgIds = listOf(BreachIdArgId, AddressOptionsTypeArgId),
+    navItemType = NavItemType.Bottomsheet
 ) {
-    fun createNavRoute(addressOptionsType: AddressOptionsType, addressType: AddressType): String =
-        "$baseRoute/$addressOptionsType/$addressType"
+    fun createNavRoute(id: BreachEmailId.Custom, addressOptionsType: AddressOptionsType): String =
+        "$baseRoute/${id.customEmailId.id}/$addressOptionsType"
+}
+
+object SecurityCenterAliasAddressOptionsNavItem : NavItem(
+    baseRoute = "security/center/alias/addressoptions/bottomsheet",
+    navArgIds = listOf(
+        CommonNavArgId.ShareId,
+        CommonNavArgId.ItemId,
+        AddressOptionsTypeArgId
+    ),
+    navItemType = NavItemType.Bottomsheet
+) {
+    fun createNavRoute(id: BreachEmailId.Alias, addressOptionsType: AddressOptionsType): String =
+        "$baseRoute/${id.shareId.id}/${id.itemId.id}/$addressOptionsType"
+}
+
+object SecurityCenterProtonAddressOptionsNavItem : NavItem(
+    baseRoute = "security/center/proton/addressoptions/bottomsheet",
+    navArgIds = listOf(CommonNavArgId.AddressId, AddressOptionsTypeArgId),
+    navItemType = NavItemType.Bottomsheet
+) {
+    fun createNavRoute(id: BreachEmailId.Proton, addressOptionsType: AddressOptionsType): String =
+        "$baseRoute/${id.addressId.id}/$addressOptionsType"
 }

@@ -37,6 +37,11 @@ internal enum class SecurityCenterAddressOptionsSnackbarMessage(
     DisableMonitoringError(
         id = R.string.security_center_address_bottomsheet_snackbar_message_disable_error,
         type = SnackbarType.ERROR
+    ),
+
+    RemoveCustomEmailError(
+        id = R.string.security_center_address_bottomsheet_snackbar_message_remove_custom_email_error,
+        type = SnackbarType.ERROR
     )
 
 }

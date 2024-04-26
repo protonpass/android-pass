@@ -16,14 +16,18 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.addressoptions.ui
+package proton.android.pass.features.security.center.addressoptions.navigation
 
-internal sealed interface SecurityCenterAddressOptionsUiEvent {
+import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
 
-    data object DisableMonitoring : SecurityCenterAddressOptionsUiEvent
-
-    data object EnableMonitoring : SecurityCenterAddressOptionsUiEvent
-
-    data object RemoveCustomEmail : SecurityCenterAddressOptionsUiEvent
-
+object SecurityCenterGlobalAddressOptionsNavItem : NavItem(
+    baseRoute = "security/center/addressoptions/bottomsheet",
+    navItemType = NavItemType.Bottomsheet,
+    navArgIds = listOf(AddressOptionsTypeArgId, AddressTypeArgId)
+) {
+    fun createNavRoute(
+        addressOptionsType: AddressOptionsType,
+        globalMonitorAddressType: GlobalMonitorAddressType
+    ): String = "$baseRoute/$addressOptionsType/$globalMonitorAddressType"
 }

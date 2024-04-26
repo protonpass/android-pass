@@ -23,7 +23,10 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.features.security.center.addressoptions.navigation.SecurityCenterAddressOptionsNavDestination
-import proton.android.pass.features.security.center.addressoptions.navigation.SecurityCenterAddressOptionsNavItem
+import proton.android.pass.features.security.center.addressoptions.navigation.SecurityCenterAliasAddressOptionsNavItem
+import proton.android.pass.features.security.center.addressoptions.navigation.SecurityCenterCustomAddressOptionsNavItem
+import proton.android.pass.features.security.center.addressoptions.navigation.SecurityCenterGlobalAddressOptionsNavItem
+import proton.android.pass.features.security.center.addressoptions.navigation.SecurityCenterProtonAddressOptionsNavItem
 import proton.android.pass.features.security.center.addressoptions.ui.SecurityCenterAddressOptionsBS
 import proton.android.pass.features.security.center.aliaslist.navigation.SecurityCenterAliasListNavDestination
 import proton.android.pass.features.security.center.aliaslist.navigation.SecurityCenterAliasListNavItem
@@ -347,8 +350,8 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                         )
 
                     is SecurityCenterProtonListNavDestination.OnOptionsClick ->
-                        SecurityCenterNavDestination.AddressOptions(
-                            addressType = destination.addressType,
+                        SecurityCenterNavDestination.GlobalMonitorAddressOptions(
+                            globalMonitorAddressType = destination.globalMonitorAddressType,
                             addressOptionsType = destination.addressOptionsType
                         )
                 }.also(onNavigated)
@@ -370,8 +373,8 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                         )
 
                     is SecurityCenterAliasListNavDestination.OnOptionsClick ->
-                        SecurityCenterNavDestination.AddressOptions(
-                            addressType = destination.addressType,
+                        SecurityCenterNavDestination.GlobalMonitorAddressOptions(
+                            globalMonitorAddressType = destination.globalMonitorAddressType,
                             addressOptionsType = destination.addressOptionsType
                         )
                 }.also(onNavigated)
@@ -379,20 +382,34 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
         )
     }
 
-    bottomSheet(SecurityCenterAddressOptionsNavItem) {
-        SecurityCenterAddressOptionsBS(
-            onNavigated = { destination ->
-                when (destination) {
-                    SecurityCenterAddressOptionsNavDestination.Back ->
-                        SecurityCenterNavDestination.Back(comesFromBottomSheet = true)
-                }.also(onNavigated)
-            }
-        )
+    bottomSheet(SecurityCenterGlobalAddressOptionsNavItem) {
+        SecurityCenterAddressOptionsBottomsheet(onNavigated)
+    }
+    bottomSheet(SecurityCenterCustomAddressOptionsNavItem) {
+        SecurityCenterAddressOptionsBottomsheet(onNavigated)
+    }
+    bottomSheet(SecurityCenterAliasAddressOptionsNavItem) {
+        SecurityCenterAddressOptionsBottomsheet(onNavigated)
+    }
+    bottomSheet(SecurityCenterProtonAddressOptionsNavItem) {
+        SecurityCenterAddressOptionsBottomsheet(onNavigated)
     }
 
     dialog(DarkWebHelpNavItem) {
         DarkWebHelpDialog(onDismiss = { onNavigated(SecurityCenterNavDestination.Back()) })
     }
+}
+
+@Composable
+private fun SecurityCenterAddressOptionsBottomsheet(onNavigated: (SecurityCenterNavDestination) -> Unit) {
+    SecurityCenterAddressOptionsBS(
+        onNavigated = { destination ->
+            when (destination) {
+                SecurityCenterAddressOptionsNavDestination.Back ->
+                    SecurityCenterNavDestination.Back(comesFromBottomSheet = true)
+            }.also(onNavigated)
+        }
+    )
 }
 
 @Composable
@@ -418,6 +435,23 @@ private fun SecurityCenterReportScreen(onNavigated: (SecurityCenterNavDestinatio
                         shareId = destination.shareId,
                         itemId = destination.itemId
                     )
+
+                is SecurityCenterReportDestination.OnMenuClick -> when (destination.id) {
+                    is BreachEmailId.Alias -> SecurityCenterNavDestination.ReportAliasAddressOptions(
+                        breachEmailId = destination.id,
+                        addressOptionsType = destination.addressOptionsType
+                    )
+
+                    is BreachEmailId.Custom -> SecurityCenterNavDestination.ReportCustomAddressOptions(
+                        breachEmailId = destination.id,
+                        addressOptionsType = destination.addressOptionsType
+                    )
+
+                    is BreachEmailId.Proton -> SecurityCenterNavDestination.ReportProtonAddressOptions(
+                        breachEmailId = destination.id,
+                        addressOptionsType = destination.addressOptionsType
+                    )
+                }
             }
             onNavigated(event)
         }

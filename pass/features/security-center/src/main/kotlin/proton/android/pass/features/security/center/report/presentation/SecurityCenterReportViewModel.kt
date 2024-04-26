@@ -157,6 +157,7 @@ class SecurityCenterReportViewModel @Inject constructor(
         useFavIconsPreference,
         isResolveButtonLoading ->
         SecurityCenterReportState(
+            breachEmailId = breachEmailId,
             canLoadExternalImages = useFavIconsPreference.value(),
             breachEmailResult = breachEmailResult,
             breachEmailsResult = breachesForEmailResult,

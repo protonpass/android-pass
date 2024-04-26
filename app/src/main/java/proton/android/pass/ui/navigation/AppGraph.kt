@@ -109,7 +109,10 @@ import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestin
 import proton.android.pass.features.item.history.navigation.itemHistoryNavGraph
 import proton.android.pass.features.item.history.restore.navigation.ItemHistoryRestoreNavItem
 import proton.android.pass.features.item.history.timeline.navigation.ItemHistoryTimelineNavItem
-import proton.android.pass.features.security.center.addressoptions.navigation.SecurityCenterAddressOptionsNavItem
+import proton.android.pass.features.security.center.addressoptions.navigation.SecurityCenterAliasAddressOptionsNavItem
+import proton.android.pass.features.security.center.addressoptions.navigation.SecurityCenterCustomAddressOptionsNavItem
+import proton.android.pass.features.security.center.addressoptions.navigation.SecurityCenterGlobalAddressOptionsNavItem
+import proton.android.pass.features.security.center.addressoptions.navigation.SecurityCenterProtonAddressOptionsNavItem
 import proton.android.pass.features.security.center.aliaslist.navigation.SecurityCenterAliasListNavItem
 import proton.android.pass.features.security.center.breachdetail.navigation.SecurityCenterAliasEmailBreachDetailNavItem
 import proton.android.pass.features.security.center.breachdetail.navigation.SecurityCenterCustomEmailBreachDetailNavItem
@@ -1191,16 +1194,40 @@ fun NavGraphBuilder.appGraph(
                     destination = SecurityCenterAliasListNavItem
                 )
 
-                is SecurityCenterNavDestination.AddressOptions -> appNavigator.navigate(
-                    destination = SecurityCenterAddressOptionsNavItem,
-                    route = SecurityCenterAddressOptionsNavItem.createNavRoute(
+                is SecurityCenterNavDestination.GlobalMonitorAddressOptions -> appNavigator.navigate(
+                    destination = SecurityCenterGlobalAddressOptionsNavItem,
+                    route = SecurityCenterGlobalAddressOptionsNavItem.createNavRoute(
                         addressOptionsType = destination.addressOptionsType,
-                        addressType = destination.addressType
+                        globalMonitorAddressType = destination.globalMonitorAddressType
                     )
                 )
 
                 SecurityCenterNavDestination.DarkWebHelp ->
                     appNavigator.navigate(DarkWebHelpNavItem)
+
+                is SecurityCenterNavDestination.ReportAliasAddressOptions -> appNavigator.navigate(
+                    destination = SecurityCenterAliasAddressOptionsNavItem,
+                    route = SecurityCenterAliasAddressOptionsNavItem.createNavRoute(
+                        id = destination.breachEmailId,
+                        addressOptionsType = destination.addressOptionsType
+                    )
+                )
+
+                is SecurityCenterNavDestination.ReportCustomAddressOptions -> appNavigator.navigate(
+                    destination = SecurityCenterCustomAddressOptionsNavItem,
+                    route = SecurityCenterCustomAddressOptionsNavItem.createNavRoute(
+                        id = destination.breachEmailId,
+                        addressOptionsType = destination.addressOptionsType
+                    )
+                )
+
+                is SecurityCenterNavDestination.ReportProtonAddressOptions -> appNavigator.navigate(
+                    destination = SecurityCenterProtonAddressOptionsNavItem,
+                    route = SecurityCenterProtonAddressOptionsNavItem.createNavRoute(
+                        id = destination.breachEmailId,
+                        addressOptionsType = destination.addressOptionsType
+                    )
+                )
             }
         }
     )

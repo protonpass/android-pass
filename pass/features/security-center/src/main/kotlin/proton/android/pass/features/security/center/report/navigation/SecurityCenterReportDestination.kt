@@ -21,6 +21,7 @@ package proton.android.pass.features.security.center.report.navigation
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.features.security.center.addressoptions.navigation.AddressOptionsType
 
 sealed interface SecurityCenterReportDestination {
 
@@ -32,6 +33,11 @@ sealed interface SecurityCenterReportDestination {
     data class ItemDetail(
         val shareId: ShareId,
         val itemId: ItemId
+    ) : SecurityCenterReportDestination
+
+    data class OnMenuClick(
+        val id: BreachEmailId,
+        val addressOptionsType: AddressOptionsType
     ) : SecurityCenterReportDestination
 }
 

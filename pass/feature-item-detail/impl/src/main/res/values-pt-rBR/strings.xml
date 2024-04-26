@@ -30,8 +30,27 @@
   <string name="item_pinned_message_error">Houve um erro ao fixar este item</string>
   <string name="item_unpinned_message">Item desafixado com sucesso</string>
   <string name="item_unpinned_message_error">Houve um erro ao desafixar este item</string>
+  <string name="item_monitor_exclude_message">Item excluído com sucesso do monitoramento.</string>
+  <string name="item_monitor_exclude_message_error">Ocorreu um erro ao excluir o item do monitoramento</string>
+  <string name="item_monitor_include_message">Item incluído com sucesso no monitoramento</string>
+  <string name="item_monitor_include_message_error">Ocorreu um erro ao incluir o item no monitoramento</string>
   <string name="login_item_generate_totp_error">Erro ao gerar código A2F</string>
   <string name="login_item_view_alias_button">Visualizar alias</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Senha Fraca</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Esta conta está vulnerável, visite o serviço e altere sua senha.</string>
+  <string name="login_item_monitor_widget_reused_pass_title">Senha Reutilizada</string>
+  <string name="login_item_monitor_widget_reused_pass_subtitle">Visite o site e gere uma senha exclusiva para este item.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_count_compact_leading">
+    <item quantity="one">%d other login</item>
+    <item quantity="other">%d other logins</item>
+  </plurals>
+  <string name="login_item_monitor_widget_reused_pass_count_compact_trailing" comment="This is the trailing part of the sentence above. A full example of its usage will be '4 other logins use this password.'">use this password.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_count_expanded">
+    <item quantity="one">Another login uses this password:</item>
+    <item quantity="other">%d outras sessões usam esta senha:</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Autenticação de dois fatores em falta</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Seria mais seguro configurar A2F para este item.</string>
   <string name="field_username">Nome de usuário ou endereço de e-mail</string>
   <string name="field_password">Senha</string>
   <string name="websites_section_title">Sites</string>

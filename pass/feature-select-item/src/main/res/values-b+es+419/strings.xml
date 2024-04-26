@@ -17,7 +17,7 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="select_item_only_searching_in_oldest_vaults">Su plan únicamente permite crear elementos en sus bóvedas antiguas.</string>
+  <string name="select_item_only_searching_in_oldest_vaults">El plan únicamente permite crear elementos en sus bóvedas antiguas.</string>
   <string name="error_credentials_not_found">No se encontraron credenciales coincidentes</string>
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="select_item_suggestions_for_placeholder">Sugerencias para %s</string>

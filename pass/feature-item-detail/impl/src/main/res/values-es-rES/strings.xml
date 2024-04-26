@@ -30,8 +30,27 @@
   <string name="item_pinned_message_error">Se ha producido un error al anclar este elemento.</string>
   <string name="item_unpinned_message">Elemento desanclado con éxito</string>
   <string name="item_unpinned_message_error">Se ha producido un error al desanclar este elemento.</string>
+  <string name="item_monitor_exclude_message">El elemento ha sido excluido del monitoreo.</string>
+  <string name="item_monitor_exclude_message_error">Se ha producido un error al excluir un elemento del monitoreo.</string>
+  <string name="item_monitor_include_message">El elemento ha sido incluido en el monitoreo.</string>
+  <string name="item_monitor_include_message_error">Se ha producido un error al incluir un elemento en el monitoreo.</string>
   <string name="login_item_generate_totp_error">Error al generar el código 2FA</string>
   <string name="login_item_view_alias_button">Ver el alias</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Contraseña débil</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Esta cuenta es vulnerable. Visita el servicio y cambia tu contraseña.</string>
+  <string name="login_item_monitor_widget_reused_pass_title">Contraseña reusada</string>
+  <string name="login_item_monitor_widget_reused_pass_subtitle">Visita el sitio web y genera una contraseña única para este elemento.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_count_compact_leading">
+    <item quantity="one">%d otro inicio de sesión</item>
+    <item quantity="other">%d otros inicios de sesión</item>
+  </plurals>
+  <string name="login_item_monitor_widget_reused_pass_count_compact_trailing" comment="This is the trailing part of the sentence above. A full example of its usage will be '4 other logins use this password.'">usan esta contraseña.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_count_expanded">
+    <item quantity="one">Un otro inicio de sesión usa esta contraseña:</item>
+    <item quantity="other">%d otros inicios de sesión usan esta contraseña:</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Falta la autenticación de dos factores.</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Podría mejorar tu seguridad al configurar 2FA para este elemento.</string>
   <string name="field_username">Nombre de usuario o dirección de correo electrónico</string>
   <string name="field_password">Contraseña</string>
   <string name="websites_section_title">Sitios web</string>

@@ -4,7 +4,7 @@
   <string name="action_save">Uložit</string>
   <string name="action_remove">Odstranit</string>
   <!-- Create item bottomsheet -->
-  <string name="action_login">Přihlásit se</string>
+  <string name="action_login">Přihlášení</string>
   <string name="action_alias">Alias</string>
   <string name="action_note">Poznámka</string>
   <string name="action_credit_card">Platební karta</string>

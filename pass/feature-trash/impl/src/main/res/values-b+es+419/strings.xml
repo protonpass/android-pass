@@ -5,6 +5,6 @@
   <string name="alert_confirm_delete_item_dialog_title">¿Eliminar permanentemente?</string>
   <string name="alert_confirm_delete_item_dialog_message">Esta acción es irreversible.</string>
   <string name="alias_dialog_move_to_trash_title">¿Mover a la papelera?</string>
-  <string name="alias_dialog_move_to_trash_content">Si mueve un alias a la papelera, dejará de reenviar correos a su buzón.</string>
+  <string name="alias_dialog_move_to_trash_content">Si mueve un alias a la papelera, dejará de reenviar correos a el buzón.</string>
   <string name="alias_dialog_move_to_trash_confirm">Confirmar</string>
 </resources>

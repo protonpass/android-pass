@@ -30,8 +30,31 @@
   <string name="item_pinned_message_error">Pri pripenjanju tega predmeta je prišlo do napake</string>
   <string name="item_unpinned_message">Predmet je bil uspešno odpet</string>
   <string name="item_unpinned_message_error">Pri odpenjanju tega predmeta je prišlo do napake</string>
+  <string name="item_monitor_exclude_message">Artikel uspešno izključen iz spremljanja</string>
+  <string name="item_monitor_exclude_message_error">Pri izključevanju predmeta iz spremljanja je prišlo do napake</string>
+  <string name="item_monitor_include_message">Predmet je bil uspešno vključen v spremljanje</string>
+  <string name="item_monitor_include_message_error">Pri vključitvi predmeta v nadzor je prišlo do napake</string>
   <string name="login_item_generate_totp_error">Napaka pri ustvarjanju kode 2FA</string>
   <string name="login_item_view_alias_button">Prikaži vzdevek</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Šibko geslo.</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Vaš račun je ranljiv, pojdite v nastavitve in spremenite geslo.</string>
+  <string name="login_item_monitor_widget_reused_pass_title">Ponovno uporabljeno geslo</string>
+  <string name="login_item_monitor_widget_reused_pass_subtitle">Obiščite spletno stran in ustvarite edinstveno geslo za ta predmet.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_count_compact_leading">
+    <item quantity="one">%d other login</item>
+    <item quantity="two">%d other logins</item>
+    <item quantity="few">%d other logins</item>
+    <item quantity="other">%d other logins</item>
+  </plurals>
+  <string name="login_item_monitor_widget_reused_pass_count_compact_trailing" comment="This is the trailing part of the sentence above. A full example of its usage will be '4 other logins use this password.'">uporabite to geslo.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_count_expanded">
+    <item quantity="one">Druga prijava uporablja to geslo:</item>
+    <item quantity="two">%d drugi prijavi uporabljata to geslo:</item>
+    <item quantity="few">%d drugih prijav uporablja to geslo:</item>
+    <item quantity="other">%d drugih prijav uporablja to geslo:</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Manjkajoče dvojno preverjanje pristnosti</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">It would be more secure to set up 2FA for this item.</string>
   <string name="field_username">Uporabniško ime ali elektronski naslov</string>
   <string name="field_password">Geslo</string>
   <string name="websites_section_title">Spletne strani</string>

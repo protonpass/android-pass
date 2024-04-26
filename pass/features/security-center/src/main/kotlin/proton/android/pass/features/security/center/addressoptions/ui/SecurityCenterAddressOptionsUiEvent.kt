@@ -24,4 +24,6 @@ internal sealed interface SecurityCenterAddressOptionsUiEvent {
 
     data object EnableMonitoring : SecurityCenterAddressOptionsUiEvent
 
+    data object RemoveCustomEmail : SecurityCenterAddressOptionsUiEvent
+
 }

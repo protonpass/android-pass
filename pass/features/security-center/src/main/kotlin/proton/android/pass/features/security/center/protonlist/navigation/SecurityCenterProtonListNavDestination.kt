@@ -20,7 +20,7 @@ package proton.android.pass.features.security.center.protonlist.navigation
 
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.features.security.center.addressoptions.navigation.AddressOptionsType
-import proton.android.pass.features.security.center.addressoptions.navigation.AddressType
+import proton.android.pass.features.security.center.addressoptions.navigation.GlobalMonitorAddressType
 
 sealed interface SecurityCenterProtonListNavDestination {
     data object Back : SecurityCenterProtonListNavDestination
@@ -31,7 +31,7 @@ sealed interface SecurityCenterProtonListNavDestination {
     ) : SecurityCenterProtonListNavDestination
 
     data class OnOptionsClick(
-        val addressType: AddressType,
+        val globalMonitorAddressType: GlobalMonitorAddressType,
         val addressOptionsType: AddressOptionsType
     ) : SecurityCenterProtonListNavDestination
 }

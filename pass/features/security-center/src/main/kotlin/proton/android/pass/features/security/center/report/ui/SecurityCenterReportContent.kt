@@ -35,6 +35,7 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.CircleIconButton
 import proton.android.pass.composecomponents.impl.loading.Loading
 import proton.android.pass.features.security.center.report.presentation.SecurityCenterReportState
+import proton.android.pass.features.security.center.report.ui.SecurityCenterReportUiEvent.OnMenuClick
 import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBar
 
 @Composable
@@ -51,13 +52,15 @@ internal fun SecurityCenterReportContent(
                     .padding(top = Spacing.medium - Spacing.extraSmall),
                 onUpClick = { onUiEvent(SecurityCenterReportUiEvent.Back) },
                 actions = {
-                    CircleIconButton(
-                        iconPainter = painterResource(id = R.drawable.ic_proton_three_dots_vertical),
-                        size = 40,
-                        backgroundColor = PassTheme.colors.interactionNormMinor1,
-                        tintColor = PassTheme.colors.interactionNormMajor2,
-                        onClick = { onUiEvent(SecurityCenterReportUiEvent.OnMenuClick) }
-                    )
+                    breachEmailId?.let { id ->
+                        CircleIconButton(
+                            iconPainter = painterResource(id = R.drawable.ic_proton_three_dots_vertical),
+                            size = 40,
+                            backgroundColor = PassTheme.colors.interactionNormMinor1,
+                            tintColor = PassTheme.colors.interactionNormMajor2,
+                            onClick = { onUiEvent(OnMenuClick(id, state.isBreachExcludedFromMonitoring)) }
+                        )
+                    }
                 }
             )
         }

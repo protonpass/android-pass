@@ -24,9 +24,15 @@ import proton.android.pass.domain.PlanType
 internal object SecurityCenterSentinelStateMother {
 
     internal fun create(
+        isSentinelEnabled: Boolean = false,
         event: SecurityCenterSentinelEvent = SecurityCenterSentinelEvent.Idle,
         isLoadingState: IsLoadingState = IsLoadingState.NotLoading,
         planType: PlanType = PlanType.Unknown()
-    ): SecurityCenterSentinelState = SecurityCenterSentinelState(event, isLoadingState, planType)
+    ): SecurityCenterSentinelState = SecurityCenterSentinelState(
+        isSentinelEnabled = isSentinelEnabled,
+        event = event,
+        isLoadingState = isLoadingState,
+        planType = planType
+    )
 
 }

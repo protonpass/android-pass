@@ -83,8 +83,12 @@
   </plurals>
   <string name="security_center_dark_web_monitor_proton_addresses">Indirizzi Proton</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Alias Hide-my-email</string>
-  <string name="security_center_dark_web_monitor_proton_addresses_error">Impossibile recuperare gli indirizzi Proton</string>
-  <string name="security_center_dark_web_monitor_alias_addresses_error">Impossibile recuperare gli alias Hide-my-email</string>
+  <string name="security_center_dark_web_monitor_proton_addresses_error">Caricamento degli indirizzi Proton non riuscito</string>
+  <string name="security_center_dark_web_monitor_alias_addresses_error">Caricamento degli alias Hide-my-email non riuscito</string>
+  <string name="security_center_dark_web_monitor_custom_emails_suggestions">Suggerimenti</string>
+  <string name="security_center_dark_web_monitor_monitoring_disabled">Monitoraggio disabilitato</string>
+  <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Si è verificato un errore nell\'invio del codice di verifica. Riprova più tardi.</string>
+  <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Si è verificato un errore nella rimozione dell\'email. Riprova più tardi.</string>
   <!-- Add custom email monitoring -->
   <string name="security_center_custom_email_top_bar_title">Monitoraggio dell\'indirizzo email personalizzato</string>
   <string name="security_center_custom_email_email_address_placeholder">Indirizzo email</string>
@@ -98,22 +102,47 @@
   <string name="security_center_verify_email_continue">Continua</string>
   <string name="security_center_verify_email_title">Conferma l\'email</string>
   <string name="security_center_verify_email_subtitle">Abbiamo inviato un codice di verifica a %s. Inseriscilo qui sotto:</string>
+  <string name="security_center_verify_email_snackbar_message_resend_code_error">Si è verificato un errore nell\'invio del codice di verifica. Riprova più tardi.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Violazioni di dati rilevate per</string>
   <string name="security_center_verify_report_title_none">Nessuna violazione di dati rilevata per</string>
+  <string name="security_center_verify_resend_code">Reinvia il codice</string>
+  <string name="security_center_verify_resend_code_in_00">Reinvia il codice tra 00:%s</string>
   <!-- Email breach report -->
   <string name="security_center_email_report_used_in_header">Usato in</string>
   <string name="security_center_email_report_breaches_header">Violazioni di dati</string>
+  <string name="security_center_email_report_mark_as_resolved">Segna come risolta</string>
+  <string name="security_center_email_report_snackbar_marked_as_resolved_success">Violazione di dati contrassegnata come risolta</string>
+  <string name="security_center_email_report_snackbar_marked_as_resolved_error">Impossibile contrassegnare come risolta</string>
   <!-- Breach report detail-->
   <string name="security_center_report_detail_your_exposed_information">Le tue informazioni rese pubbliche</string>
-  <string name="security_center_report_detail_subtitle">Le tue informazioni sono state oggetto di una violazione di dati e sono state trovate il __DATE__</string>
+  <string name="security_center_report_detail_subtitle">Le tue informazioni sono finite in una violazione di dati e sono state trovate il __DATE__</string>
   <string name="security_center_report_detail_details">Dettagli</string>
   <string name="security_center_report_detail_email_address">Indirizzo email</string>
   <string name="security_center_report_detail_password">Password</string>
   <string name="security_center_report_detail_recommended_actions">Azioni consigliate</string>
-  <string name="security_center_report_detail_note">Le informazioni sono state rese pubbliche da LinkedIn. Quelle relative al tuo account rimangono sicure e crittografate.</string>
-  <string name="security_center_report_detail_mark_as_resolved">Segna come risolto</string>
-  <string name="security_center_report_detail_change_password">Cambia la password</string>
+  <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">Le informazioni sono state rese pubbliche da %s. Quelle relative al tuo account Proton rimangono sicure e crittografate.</string>
+  <string name="security_center_report_detail_change_password" comment="The placeholder argument contains the name of the service where the breach occurred.">Cambia la password su %s</string>
   <string name="security_center_report_detail_use_aliases">Utilizza gli alias al posto del tuo indirizzo email</string>
-  <string name="security_center_report_detail_enable_2fa">Abilita 2FA</string>
+  <string name="security_center_report_detail_enable_2fa" comment="The placeholder argument contains the name of the service where the breach occurred.">Abilita 2FA su %s</string>
+  <!-- Proton list -->
+  <string name="security_center_proton_list_top_bar_title">Indirizzi Proton</string>
+  <string name="security_center_proton_list_no_breaches_detected">Nessuna violazione di dati rilevata</string>
+  <string name="security_center_proton_list_excluded_from_monitoring">Escluso dal monitoraggio</string>
+  <string name="security_center_proton_list_error">Impossibile caricare gli indirizzi</string>
+  <string name="security_center_proton_list_included_in_monitoring">Abilita il monitoraggio per ricevere una notifica qualora i tuoi indirizzi Proton vengano resi pubblici.</string>
+  <!-- Address Bottomsheet options -->
+  <string name="security_center_address_bottomsheet_disable_monitoring">Disabilita il monitoraggio</string>
+  <string name="security_center_address_bottomsheet_enable_monitoring">Abilita il monitoraggio</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_enable_error">Impossibile abilitare il monitoraggio</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_error">Impossibile disabilitare il monitoraggio</string>
+  <!-- Alias list -->
+  <string name="security_center_alias_list_top_bar_title">Alias Hide-my-email</string>
+  <string name="security_center_alias_list_excluded_from_monitoring">Esclusi dal monitoraggio</string>
+  <string name="security_center_alias_list_error">Impossibile caricare gli indirizzi</string>
+  <string name="security_center_alias_list_included_in_monitoring">Abilita il monitoraggio per ricevere una notifica qualora i tuoi alias Hide-my-email vengano resi pubblici.</string>
+  <string name="security_center_alias_list_monitored">Monitorato</string>
+  <!-- Dark web help dialog -->
+  <string name="dark_web_help_dialog_title">Sicurezza dei dati</string>
+  <string name="dark_web_help_dialog_subtitle">Proton non condivide mai le tue informazioni con terze parti. Tutti i dati provengono da ricerche sulla presenza dei domini Proton sul dark web.</string>
 </resources>

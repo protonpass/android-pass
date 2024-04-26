@@ -24,13 +24,15 @@
   <string name="bottomsheet_pin_item">Ancora</string>
   <string name="bottomsheet_unpin_item">Desancora</string>
   <string name="bottomsheet_view_item_history">Visualitza l\'historial</string>
+  <string name="bottomsheet_monitor_exclude">Excloure del monitoratge</string>
+  <string name="bottomsheet_monitor_include">Incloure en la supervisió</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Obre el menú d\'acció de l\'element</string>
   <string name="action_upgrade_now">Millora ara</string>
   <string name="action_not_now">Ara no</string>
-  <string name="action_learn_more">Learn more</string>
-  <string name="action_enable">Activa</string>
-  <string name="action_view_details">View details</string>
+  <string name="action_learn_more">Saber-ne més</string>
+  <string name="action_enable">Activi</string>
+  <string name="action_view_details">Veure detalls</string>
   <!-- Empty list -->
   <string name="empty_list_title">Afegeix el primer element</string>
   <string name="empty_search_results_title">No s\'han trobat resultats</string>
@@ -66,7 +68,7 @@
   <string name="most_recent_last_60_days">Els últims 60 dies</string>
   <string name="most_recent_last_90_days">Els últims 90 dies</string>
   <string name="most_recent_within_the_last_year">En l\'últim any</string>
-  <string name="most_recent_more_than_1_year">Older than 1 year</string>
+  <string name="most_recent_more_than_1_year">Més d\'1 any</string>
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">Icona de cerca</string>
   <!-- Select Vault BottomSheet -->
@@ -114,7 +116,7 @@
   <string name="item_details_credit_card_section_pin_title">Codi PIN</string>
   <string name="item_details_login_section_username_title">Nom d\'usuari o adreça de correu electrònic</string>
   <string name="item_details_login_section_password_title">Contrasenya</string>
-  <string name="item_details_login_section_primary_totp_title">Testimoni 2FA (TOTP)</string>
+  <string name="item_details_login_section_primary_totp_title">Token 2FA (TOTP)</string>
   <string name="item_details_login_section_websites_title">Llocs web</string>
   <string name="item_details_shared_section_note_title">Nota</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">The app version is not supported anymore, please update your app.</string>

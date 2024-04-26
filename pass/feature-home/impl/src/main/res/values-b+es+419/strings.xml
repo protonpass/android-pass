@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Home -->
-  <string name="home_empty_vault_title">Su bóveda está vacía</string>
-  <string name="home_empty_vault_subtitle">Comience creando su primer elemento.</string>
+  <string name="home_empty_vault_title">La bóveda está vacía</string>
+  <string name="home_empty_vault_subtitle">Comience creando el primer elemento.</string>
   <string name="home_empty_read_only_vault_title">Esta bóveda está vacía</string>
   <string name="home_empty_read_only_vault_subtitle">No puede añadir elementos a una bóveda de solo lectura.</string>
   <string name="home_empty_vault_create_login">Crear un inicio de sesión</string>
@@ -22,7 +22,7 @@
   <string name="home_autofill_banner_text">¡Una pulsación y listo! Su nombre de usuario y contraseña se completan al instante.</string>
   <string name="home_autofill_banner_settings">Activar el completado automático ›</string>
   <string name="home_trial_banner_title">Nuestro regalo de bienvenida para usted</string>
-  <string name="home_trial_banner_text">Pruebe gratis las funciones premium durante 7 días, solo durante su primera semana de Proton Pass.</string>
+  <string name="home_trial_banner_text">Pruebe gratis las funciones premium durante 7 días, solo durante la primera semana de Proton Pass.</string>
   <string name="home_trial_banner_settings">Más información ›</string>
   <string name="home_notification_permission_banner_title">Obtenga actualizaciones importantes</string>
   <string name="home_notification_permission_banner_text">Active las notificaciones push para informarse cuando otros compartan una bóveda con usted.</string>

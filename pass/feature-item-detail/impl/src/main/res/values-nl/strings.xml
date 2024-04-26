@@ -30,8 +30,27 @@
   <string name="item_pinned_message_error">Fout bij het vastmaken van dit item</string>
   <string name="item_unpinned_message">Item succesvol losgemaakt</string>
   <string name="item_unpinned_message_error">Er is een fout opgetreden bij het losmaken van dit item</string>
+  <string name="item_monitor_exclude_message">Item succesvol uitgesloten van monitoring</string>
+  <string name="item_monitor_exclude_message_error">Er is een fout opgetreden bij het uitsluiten van het item van de monitoring</string>
+  <string name="item_monitor_include_message">Item succesvol opgenomen in monitoring</string>
+  <string name="item_monitor_include_message_error">Er is een fout opgetreden bij het opnemen van het item in de monitoring</string>
   <string name="login_item_generate_totp_error">Fout bij genereren van 2FA-code</string>
   <string name="login_item_view_alias_button">Alias bekijken</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Zwak wachtwoord</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Dit account is kwetsbaar, bezoek de service en wijzig uw wachtwoord.</string>
+  <string name="login_item_monitor_widget_reused_pass_title">Hergebruikt Wachtwoord</string>
+  <string name="login_item_monitor_widget_reused_pass_subtitle">Bezoek de website en genereer een uniek wachtwoord voor dit item.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_count_compact_leading">
+    <item quantity="one">%d andere login</item>
+    <item quantity="other">%d andere logins</item>
+  </plurals>
+  <string name="login_item_monitor_widget_reused_pass_count_compact_trailing" comment="This is the trailing part of the sentence above. A full example of its usage will be '4 other logins use this password.'">gebruik dit wachtwoord.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_count_expanded">
+    <item quantity="one">Een andere login gebruikt dit wachtwoord:</item>
+    <item quantity="other">%d andere logins gebruiken dit wachtwoord:</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Tweevoudige verificatie ontbreekt</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Het zou veiliger zijn om 2FA op te zetten voor dit item.</string>
   <string name="field_username">Gebruikersnaam of e-mailadres</string>
   <string name="field_password">Wachtwoord</string>
   <string name="websites_section_title">Websites</string>

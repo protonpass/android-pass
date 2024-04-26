@@ -26,6 +26,8 @@
   <string name="bottomsheet_pin_item">Замацаваць</string>
   <string name="bottomsheet_unpin_item">Адмацаваць</string>
   <string name="bottomsheet_view_item_history">Паглядзець гісторыю</string>
+  <string name="bottomsheet_monitor_exclude">Выключыць з назірання</string>
+  <string name="bottomsheet_monitor_include">Уключыць у назіранне</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Адкрыць меню дзеянняў элемента</string>
   <string name="action_upgrade_now">Палепшыць</string>

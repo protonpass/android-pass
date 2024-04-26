@@ -4,7 +4,7 @@
   <string name="account_recovery_title">Račun in obnovitev</string>
   <string name="account_username_label">Uporabniško ime</string>
   <string name="account_subscription_label">Naročnina</string>
-  <string name="account_permanently_delete_warning">S tem boste trajno izbrisali svoj račun in vse njegove podatke. Tega računa ne boste mogli ponovno aktivirati.</string>
+  <string name="account_permanently_delete_warning">S tem boste trajno izbrisali svoj račun in vse podatke v njem. Tega računa ne boste mogli ponovno aktivirati.</string>
   <string name="account_delete_account">Izbriši račun</string>
   <string name="account_delete_account_icon_content_description">Gumb za brisanje računa</string>
   <string name="account_sign_out">Odjavi se</string>

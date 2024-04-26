@@ -24,6 +24,8 @@
   <string name="bottomsheet_pin_item">მიმაგრება</string>
   <string name="bottomsheet_unpin_item">მოხსნა</string>
   <string name="bottomsheet_view_item_history">ისტორიის ნახვა</string>
+  <string name="bottomsheet_monitor_exclude">მონიტორინგიდან ამოღება</string>
+  <string name="bottomsheet_monitor_include">მონიტორინგში ჩასმა</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">ელემენტის ქმედების მენიუს გახსნა</string>
   <string name="action_upgrade_now">ტარიფის განახლება</string>

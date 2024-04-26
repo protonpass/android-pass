@@ -30,8 +30,27 @@
   <string name="item_pinned_message_error">Det gick inte att fästa detta objekt</string>
   <string name="item_unpinned_message">Objekt lossat</string>
   <string name="item_unpinned_message_error">Det gick inte att lossa detta objekt</string>
+  <string name="item_monitor_exclude_message">Item successfully excluded from monitoring</string>
+  <string name="item_monitor_exclude_message_error">Det uppstod ett fel när objekt skulle exkluderas från övervakning</string>
+  <string name="item_monitor_include_message">Objekt inkluderat i övervakning</string>
+  <string name="item_monitor_include_message_error">Det uppstod ett fel när objekt skulle inkluderas i övervakning</string>
   <string name="login_item_generate_totp_error">Gick inte generera 2FA-kod</string>
   <string name="login_item_view_alias_button">Visa alias</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Svagt lösenord</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Detta konto är sårbart, besök tjänsten och ändra ditt lösenord.</string>
+  <string name="login_item_monitor_widget_reused_pass_title">Återanvänt lösenord</string>
+  <string name="login_item_monitor_widget_reused_pass_subtitle">Besök webbplatsen och generera ett unikt lösenord för detta objekt.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_count_compact_leading">
+    <item quantity="one">%d other login</item>
+    <item quantity="other">%d other logins</item>
+  </plurals>
+  <string name="login_item_monitor_widget_reused_pass_count_compact_trailing" comment="This is the trailing part of the sentence above. A full example of its usage will be '4 other logins use this password.'">använd detta lösenord.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_count_expanded">
+    <item quantity="one">En annan inloggning använder detta lösenord:</item>
+    <item quantity="other">%d andra inloggningar använder detta lösenord:</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Saknar tvåfaktorsautentisering</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Det skulle vara säkrare att ställa in 2FA för detta objekt.</string>
   <string name="field_username">Användarnamn eller e-postadress</string>
   <string name="field_password">Lösenord</string>
   <string name="websites_section_title">Webbplatser</string>

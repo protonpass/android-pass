@@ -18,7 +18,8 @@
 
 package proton.android.pass.features.security.center.addressoptions.navigation
 
-enum class AddressType {
+enum class GlobalMonitorAddressType {
     Proton,
-    Alias
+    Alias,
+    None
 }

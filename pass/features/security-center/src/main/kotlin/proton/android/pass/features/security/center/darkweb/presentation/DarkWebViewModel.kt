@@ -44,8 +44,8 @@ import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveGlobalMonitorState
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.breach.CustomEmailSuggestion
-import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
 import proton.android.pass.data.api.usecases.breach.ObserveBreachCustomEmails
+import proton.android.pass.data.api.usecases.breach.ObserveBreachProtonEmails
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAliasEmail
 import proton.android.pass.data.api.usecases.breach.ObserveCustomEmailSuggestions
 import proton.android.pass.data.api.usecases.items.ItemIsBreachedFilter
@@ -67,7 +67,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class DarkWebViewModel @Inject constructor(
     observeItems: ObserveItems,
-    observeAllBreachByUserId: ObserveAllBreachByUserId,
+    observeBreachProtonEmails: ObserveBreachProtonEmails,
     observeBreachesForAliasEmail: ObserveBreachesForAliasEmail,
     observeBreachCustomEmails: ObserveBreachCustomEmails,
     observeCustomEmailSuggestions: ObserveCustomEmailSuggestions,
@@ -79,8 +79,10 @@ internal class DarkWebViewModel @Inject constructor(
         telemetryManager.sendEvent(PassMonitorDisplayDarkWebMonitoring)
     }
 
-    private val protonEmailFlow = observeAllBreachByUserId()
-        .map { breach -> breach.breachedProtonEmails.filter { it.breachCounter > 0 } }
+    private val protonEmailFlow = observeBreachProtonEmails()
+        .map { protonEmails ->
+            protonEmails.filter { protonEmail -> protonEmail.hasBreaches }
+        }
         .asLoadingResult()
 
     private val protonEmailFlowIfEnabled = observeGlobalMonitorState()

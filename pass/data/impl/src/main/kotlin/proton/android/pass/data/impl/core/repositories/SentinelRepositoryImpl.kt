@@ -36,13 +36,9 @@ class SentinelRepositoryImpl @Inject constructor(
 ) : SentinelRepository {
 
     override suspend fun disableSentinel() {
-        localSentinelDataSource.disableSentinel()
-            .also {
-                runCatching { remoteSentinelDataSource.disableSentinel() }
-                    .onFailure { error ->
-                        localSentinelDataSource.enableSentinel()
-                        throw error
-                    }
+        runCatching { remoteSentinelDataSource.disableSentinel() }
+            .onSuccess {
+                localSentinelDataSource.disableSentinel()
             }
     }
 

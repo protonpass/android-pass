@@ -37,6 +37,11 @@ internal enum class SecurityCenterReportSnackbarMessage(
     BreachResolvedError(
         id = R.string.security_center_email_report_snackbar_marked_as_resolved_error,
         type = SnackbarType.ERROR
+    ),
+
+    GetBreachesError(
+        id = R.string.security_center_email_report_snackbar_get_breaches_error,
+        type = SnackbarType.ERROR
     )
 
 }

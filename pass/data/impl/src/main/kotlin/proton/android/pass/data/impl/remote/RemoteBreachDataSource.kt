@@ -52,7 +52,10 @@ interface RemoteBreachDataSource {
 
     suspend fun getBreachesForProtonEmail(userId: UserId, id: AddressId): BreachEmailsResponse
 
-    suspend fun getBreachesForCustomEmail(userId: UserId, id: BreachEmailId.Custom): BreachEmailsResponse
+    suspend fun getBreachesForCustomEmail(
+        userId: UserId,
+        id: BreachEmailId.Custom
+    ): BreachEmailsResponse
 
     suspend fun getBreachesForAliasEmail(
         userId: UserId,
@@ -67,7 +70,10 @@ interface RemoteBreachDataSource {
         itemId: ItemId
     )
 
-    suspend fun markCustomEmailAsResolved(userId: UserId, id: BreachEmailId.Custom)
+    suspend fun markCustomEmailAsResolved(
+        userId: UserId,
+        id: BreachEmailId.Custom
+    ): BreachCustomEmailResponse
 
     suspend fun resendVerificationCode(userId: UserId, id: BreachEmailId.Custom)
 
@@ -78,7 +84,10 @@ interface RemoteBreachDataSource {
         enabled: Boolean
     ): UpdateGlobalMonitorStateResponse
 
-    suspend fun updateGlobalAliasAddressMonitorState(userId: UserId, enabled: Boolean): UpdateGlobalMonitorStateResponse
+    suspend fun updateGlobalAliasAddressMonitorState(
+        userId: UserId,
+        enabled: Boolean
+    ): UpdateGlobalMonitorStateResponse
 
     suspend fun updateProtonAddressMonitorState(
         userId: UserId,
@@ -111,12 +120,13 @@ class RemoteBreachDataSourceImpl @Inject constructor(
         .valueOrThrow
 
 
-    override suspend fun addCustomEmail(userId: UserId, email: String): BreachCustomEmailResponse = apiProvider
-        .get<PasswordManagerApi>(userId)
-        .invoke {
-            addBreachEmailToMonitor(BreachAddEmailRequest(email))
-        }
-        .valueOrThrow
+    override suspend fun addCustomEmail(userId: UserId, email: String): BreachCustomEmailResponse =
+        apiProvider
+            .get<PasswordManagerApi>(userId)
+            .invoke {
+                addBreachEmailToMonitor(BreachAddEmailRequest(email))
+            }
+            .valueOrThrow
 
     override suspend fun verifyCustomEmail(
         userId: UserId,
@@ -131,14 +141,20 @@ class RemoteBreachDataSourceImpl @Inject constructor(
             .valueOrThrow
     }
 
-    override suspend fun getBreachesForProtonEmail(userId: UserId, id: AddressId): BreachEmailsResponse = apiProvider
+    override suspend fun getBreachesForProtonEmail(
+        userId: UserId,
+        id: AddressId
+    ): BreachEmailsResponse = apiProvider
         .get<PasswordManagerApi>(userId)
         .invoke {
             getBreachesForProtonEmail(id.id)
         }
         .valueOrThrow
 
-    override suspend fun getBreachesForCustomEmail(userId: UserId, id: BreachEmailId.Custom): BreachEmailsResponse =
+    override suspend fun getBreachesForCustomEmail(
+        userId: UserId,
+        id: BreachEmailId.Custom
+    ): BreachEmailsResponse =
         apiProvider
             .get<PasswordManagerApi>(userId)
             .invoke {
@@ -179,14 +195,15 @@ class RemoteBreachDataSourceImpl @Inject constructor(
             .valueOrThrow
     }
 
-    override suspend fun markCustomEmailAsResolved(userId: UserId, id: BreachEmailId.Custom) {
-        apiProvider
-            .get<PasswordManagerApi>(userId)
-            .invoke {
-                markCustomEmailAsResolved(id.id.id)
-            }
-            .valueOrThrow
-    }
+    override suspend fun markCustomEmailAsResolved(
+        userId: UserId,
+        id: BreachEmailId.Custom
+    ): BreachCustomEmailResponse = apiProvider
+        .get<PasswordManagerApi>(userId)
+        .invoke {
+            markCustomEmailAsResolved(id.id.id)
+        }
+        .valueOrThrow
 
     override suspend fun resendVerificationCode(userId: UserId, id: BreachEmailId.Custom) {
         apiProvider

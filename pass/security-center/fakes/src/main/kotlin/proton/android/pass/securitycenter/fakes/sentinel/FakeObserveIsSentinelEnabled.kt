@@ -19,12 +19,16 @@
 package proton.android.pass.securitycenter.fakes.sentinel
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
+import proton.android.pass.data.api.core.repositories.SentinelRepository
 import proton.android.pass.securitycenter.api.sentinel.ObserveIsSentinelEnabled
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FakeObserveIsSentinelEnabled @Inject constructor() : ObserveIsSentinelEnabled {
-    override fun invoke(): Flow<Boolean> = emptyFlow()
+class FakeObserveIsSentinelEnabled @Inject constructor(
+    private val repository: SentinelRepository
+) : ObserveIsSentinelEnabled {
+
+    override fun invoke(): Flow<Boolean> = repository.observeIsSentinelEnabled()
+
 }

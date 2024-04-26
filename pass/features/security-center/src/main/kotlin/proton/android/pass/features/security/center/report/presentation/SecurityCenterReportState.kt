@@ -99,7 +99,7 @@ internal data class SecurityCenterReportState(
             breachEmailResult = LoadingResult.Loading,
             breachEmailsResult = LoadingResult.Loading,
             usedInLoginItemsResult = LoadingResult.Loading,
-            isResolvingBreachState = IsLoadingState.NotLoading,
+            isResolvingBreachState = IsLoadingState.NotLoading
         )
 
     }

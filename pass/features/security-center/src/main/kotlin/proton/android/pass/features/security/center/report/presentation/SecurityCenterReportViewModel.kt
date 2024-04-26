@@ -27,10 +27,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.user.domain.entity.AddressId
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
@@ -113,6 +115,13 @@ class SecurityCenterReportViewModel @Inject constructor(
     private val observeBreachForEmailFlow = observeBreachesForEmail(breachEmailId)
         .asLoadingResult()
         .distinctUntilChanged()
+        .onEach {
+            if (it is LoadingResult.Error) {
+                PassLogger.w(TAG, "Failed to observe breaches for email")
+                PassLogger.w(TAG, it.exception)
+                snackbarDispatcher(SecurityCenterReportSnackbarMessage.GetBreachesError)
+            }
+        }
 
     private val usedInLoginItemsFlow = observeItems(
         selection = ShareSelection.AllShares,

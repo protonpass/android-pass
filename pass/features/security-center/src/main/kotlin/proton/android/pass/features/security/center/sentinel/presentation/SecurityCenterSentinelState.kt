@@ -24,6 +24,7 @@ import proton.android.pass.domain.PlanType
 
 @Stable
 internal data class SecurityCenterSentinelState(
+    internal val isSentinelEnabled: Boolean,
     internal val event: SecurityCenterSentinelEvent,
     internal val isLoadingState: IsLoadingState,
     private val planType: PlanType
@@ -40,6 +41,7 @@ internal data class SecurityCenterSentinelState(
     internal companion object {
 
         internal val Initial: SecurityCenterSentinelState = SecurityCenterSentinelState(
+            isSentinelEnabled = false,
             event = SecurityCenterSentinelEvent.Idle,
             isLoadingState = IsLoadingState.NotLoading,
             planType = PlanType.Unknown()

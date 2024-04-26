@@ -44,10 +44,6 @@ fun SecurityCenterHomeScreen(
                     onNavigated(SecurityCenterHomeNavDestination.DarkWebMonitoring)
                 }
 
-                SecurityCenterHomeUiEvent.OnDisableSentinel -> {
-                    onDisableSentinel()
-                }
-
                 SecurityCenterHomeUiEvent.OnShowSentinelBottomSheet -> {
                     onNavigated(SecurityCenterHomeNavDestination.Sentinel)
                 }

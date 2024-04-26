@@ -47,6 +47,8 @@ interface LocalBreachesDataSource {
 
     suspend fun upsertCustomEmails(userId: UserId, customEmails: List<BreachCustomEmail>)
 
+    suspend fun deleteCustomEmail(userId: UserId, customEmailId: BreachEmailId.Custom)
+
     fun observeCustomEmailBreaches(): Flow<List<BreachEmail>>
 
     suspend fun upsertCustomEmailBreaches(userId: UserId, customEmailBreaches: List<BreachEmail>)
@@ -96,7 +98,14 @@ class LocalBreachesDataSourceImpl @Inject constructor() : LocalBreachesDataSourc
 
     override suspend fun upsertCustomEmails(userId: UserId, customEmails: List<BreachCustomEmail>) {
         customEmails
-            .forEach { customEmail -> customEmailsCache[Pair(userId, customEmail.id)] = customEmail }
+            .forEach { customEmail ->
+                customEmailsCache[Pair(userId, customEmail.id)] = customEmail
+            }
+            .also { emitCustomEmailsChanges() }
+    }
+
+    override suspend fun deleteCustomEmail(userId: UserId, customEmailId: BreachEmailId.Custom) {
+        customEmailsCache.remove(Pair(userId, customEmailId))
             .also { emitCustomEmailsChanges() }
     }
 
@@ -109,7 +118,8 @@ class LocalBreachesDataSourceImpl @Inject constructor() : LocalBreachesDataSourc
     ) {
         customEmailBreaches
             .forEach { customEmailBreach ->
-                customEmailBreachesCache[Pair(userId, customEmailBreach.emailId)] = customEmailBreach
+                customEmailBreachesCache[Pair(userId, customEmailBreach.emailId)] =
+                    customEmailBreach
             }
             .also { emitCustomEmailBreachesChanges() }
     }

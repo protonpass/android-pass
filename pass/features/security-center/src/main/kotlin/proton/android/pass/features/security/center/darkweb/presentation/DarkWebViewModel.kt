@@ -132,7 +132,7 @@ internal class DarkWebViewModel @Inject constructor(
             .asLoadingResult()
             .distinctUntilChanged()
 
-    val state: StateFlow<DarkWebUiState> = combine(
+    internal val state: StateFlow<DarkWebUiState> = combine(
         protonEmailFlowIfEnabled,
         aliasEmailFlowIfEnabled,
         customEmailsFlow,

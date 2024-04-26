@@ -643,7 +643,7 @@ class LoginDetailViewModel @Inject constructor(
                 shareId = shareId,
                 itemId = itemId,
                 flag = ItemFlag.SkipHealthCheck,
-                isFlagEnable = true
+                isFlagEnabled = true
             )
         }.onFailure { error ->
             PassLogger.w(TAG, "Error excluding item from monitoring")
@@ -664,7 +664,7 @@ class LoginDetailViewModel @Inject constructor(
                 shareId = shareId,
                 itemId = itemId,
                 flag = ItemFlag.SkipHealthCheck,
-                isFlagEnable = false
+                isFlagEnabled = false
             )
         }.onFailure { error ->
             PassLogger.w(TAG, "Error including item in monitoring")

@@ -5,6 +5,6 @@
   <string name="alert_confirm_delete_item_dialog_title">영구적으로 삭제하시겠습니까?</string>
   <string name="alert_confirm_delete_item_dialog_message">이 작업은 되돌릴 수 없습니다.</string>
   <string name="alias_dialog_move_to_trash_title">휴지통으로 이동할까요?</string>
-  <string name="alias_dialog_move_to_trash_content">별명을 휴지통으로 이동하면 더 이상 메일함으로 메일을 전달하지 않게 됩니다.</string>
+  <string name="alias_dialog_move_to_trash_content">별칭을 쓰레기통으로 이동하게 되면, 내 메일함으로의 전달도 중단됩니다.</string>
   <string name="alias_dialog_move_to_trash_confirm">확인</string>
 </resources>

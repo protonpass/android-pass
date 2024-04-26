@@ -82,6 +82,10 @@
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email 별칭</string>
   <string name="security_center_dark_web_monitor_proton_addresses_error">Proton 주소 수신 실패</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Hide-my-email 별칭 수신 오류</string>
+  <string name="security_center_dark_web_monitor_custom_emails_suggestions">제안</string>
+  <string name="security_center_dark_web_monitor_monitoring_disabled">모니터링 비활성화됨</string>
+  <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">인증 코드 전송에 문제가 발생했습니다. 다시 시도해 주세요.</string>
+  <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">이메일을 삭제하는데 문제가 발생했습니다. 다시 시도해 주세요.</string>
   <!-- Add custom email monitoring -->
   <string name="security_center_custom_email_top_bar_title">사용자 지정 이메일 모니터링</string>
   <string name="security_center_custom_email_email_address_placeholder">이메일 주소</string>
@@ -95,22 +99,47 @@
   <string name="security_center_verify_email_continue">계속하기</string>
   <string name="security_center_verify_email_title">이메일을 확인하세요</string>
   <string name="security_center_verify_email_subtitle">%s(으)로 인증 코드를 발송해 드렸습니다. 아래에 코드를 입력해 주세요:</string>
+  <string name="security_center_verify_email_snackbar_message_resend_code_error">인증 코드 전송에 오류가 발생함. 다시 시도하세요.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">침해 사례가 다음에서 감지됨:</string>
   <string name="security_center_verify_report_title_none">다음에서 침해 사례가 감지되지 않음:</string>
+  <string name="security_center_verify_resend_code">코드 재발송</string>
+  <string name="security_center_verify_resend_code_in_00">00:%s내에 코드 재발송</string>
   <!-- Email breach report -->
   <string name="security_center_email_report_used_in_header">다음에서 사용됨:</string>
   <string name="security_center_email_report_breaches_header">유출</string>
+  <string name="security_center_email_report_mark_as_resolved">해결됨으로 표시</string>
+  <string name="security_center_email_report_snackbar_marked_as_resolved_success">침해 사례가 해결됨으로 표시됨</string>
+  <string name="security_center_email_report_snackbar_marked_as_resolved_error">해결됨으로 표시할 수 없음</string>
   <!-- Breach report detail-->
   <string name="security_center_report_detail_your_exposed_information">사용자의 노출된 정보</string>
   <string name="security_center_report_detail_subtitle">사용자의 정보가 데이터 유출되었으며 __DATE__에 발견되었습니다.</string>
   <string name="security_center_report_detail_details">세부 사항</string>
   <string name="security_center_report_detail_email_address">이메일 주소</string>
   <string name="security_center_report_detail_password">비밀번호</string>
-  <string name="security_center_report_detail_recommended_actions">권장하는 조치</string>
-  <string name="security_center_report_detail_note">노출된 정보가 LinkedIn에서 유출되었습니다. 사용자의 계정 정보는 안전하고 암호화 상태로 유지됩니다.</string>
-  <string name="security_center_report_detail_mark_as_resolved">해결된 것으로 표시</string>
-  <string name="security_center_report_detail_change_password">비밀번호 변경</string>
+  <string name="security_center_report_detail_recommended_actions">조치 권장</string>
+  <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">노출된 정보가 %s(에)서 유출되었습니다. 사용자의 계정 정보는 안전하고 암호화 상태로 유지됩니다.</string>
+  <string name="security_center_report_detail_change_password" comment="The placeholder argument contains the name of the service where the breach occurred.">%s(에)서 비밀번호 변경</string>
   <string name="security_center_report_detail_use_aliases">이메일 주소를 대신해 별칭을 사용하세요.</string>
-  <string name="security_center_report_detail_enable_2fa">2FA 활성화</string>
+  <string name="security_center_report_detail_enable_2fa" comment="The placeholder argument contains the name of the service where the breach occurred.">%s(에)서 2단계 인증 활성화</string>
+  <!-- Proton list -->
+  <string name="security_center_proton_list_top_bar_title">Proton 주소</string>
+  <string name="security_center_proton_list_no_breaches_detected">감지한 침해사례 없음</string>
+  <string name="security_center_proton_list_excluded_from_monitoring">모니터링에서 제외된 항목</string>
+  <string name="security_center_proton_list_error">주소를 불러올 수 없습니다.</string>
+  <string name="security_center_proton_list_included_in_monitoring">Proton 주소가 유출되었다면 알림을 받기 위해 모니터링을 활성화 하세요.</string>
+  <!-- Address Bottomsheet options -->
+  <string name="security_center_address_bottomsheet_disable_monitoring">모니터링 비활성화</string>
+  <string name="security_center_address_bottomsheet_enable_monitoring">모니터링 활성화</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_enable_error">모니터링 활성화할 수 없습니다.</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_error">모니터링 비활성화할 수 없습니다.</string>
+  <!-- Alias list -->
+  <string name="security_center_alias_list_top_bar_title">Hide-my-email 별칭</string>
+  <string name="security_center_alias_list_excluded_from_monitoring">모니터링에서 제외된 항목</string>
+  <string name="security_center_alias_list_error">주소를 불러올 수 없습니다.</string>
+  <string name="security_center_alias_list_included_in_monitoring">Hide-my-email 별칭이 유출되었다면 알림을 받기 위해 모니터링을 활성화 하세요.</string>
+  <string name="security_center_alias_list_monitored">모니터링됨</string>
+  <!-- Dark web help dialog -->
+  <string name="dark_web_help_dialog_title">데이터 보안</string>
+  <string name="dark_web_help_dialog_subtitle">Proton never shares your information with third parties. All data comes from searches for the appearance of Proton domains on the dark web.</string>
 </resources>

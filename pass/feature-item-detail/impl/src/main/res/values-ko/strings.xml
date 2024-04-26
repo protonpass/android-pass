@@ -6,8 +6,8 @@
   <string name="detail_init_error">항목 정보를 검색하는 데 문제가 있습니다.</string>
   <string name="top_bar_edit_button_text">편집</string>
   <!-- Alias details -->
-  <string name="field_alias_title">별명 주소</string>
-  <string name="alias_copied_to_clipboard">별명 복사됨</string>
+  <string name="field_alias_title">별칭 주소</string>
+  <string name="alias_copied_to_clipboard">별칭 복사됨</string>
   <string name="alias_detail_field_mailboxes_title">다음으로 전달:</string>
   <string name="alias_create_login_from_alias">로그인 생성</string>
   <!-- Note details -->
@@ -30,12 +30,29 @@
   <string name="item_pinned_message_error">이 항목을 고정하는데 오류가 발생했습니다.</string>
   <string name="item_unpinned_message">항목을 성공적으로 고정 해제했습니다.</string>
   <string name="item_unpinned_message_error">이 항목을 고정 해제하는데 오류가 발생했습니다.</string>
-  <string name="login_item_generate_totp_error">2FA 코드 구성에 오류가 발생했습니다</string>
-  <string name="login_item_view_alias_button">별명 보기</string>
+  <string name="item_monitor_exclude_message">성공적으로 항목을 모니터링에서 제외함</string>
+  <string name="item_monitor_exclude_message_error">항목을 모니터링에서 제외하는 중 오류 발생</string>
+  <string name="item_monitor_include_message">성공적으로 항목을 모니터링에서 포함함</string>
+  <string name="item_monitor_include_message_error">항목을 모니터링에서 포함하는 중 오류 발생</string>
+  <string name="login_item_generate_totp_error">2단계 인증 코드 구성에 오류가 발생했습니다</string>
+  <string name="login_item_view_alias_button">별칭 보기</string>
+  <string name="login_item_monitor_widget_weak_pass_title">약한 비밀번호</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">이 계정은 취약합니다. 서비스를 방문하여 비밀번호를 변경하십시오.</string>
+  <string name="login_item_monitor_widget_reused_pass_title">재사용한 비밀번호</string>
+  <string name="login_item_monitor_widget_reused_pass_subtitle">웹사이트를 방문하여 이 항목을 위한 고유한 비밀번호를 생성하십시오.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_count_compact_leading">
+    <item quantity="other">다른 로그인 %d개가</item>
+  </plurals>
+  <string name="login_item_monitor_widget_reused_pass_count_compact_trailing" comment="This is the trailing part of the sentence above. A full example of its usage will be '4 other logins use this password.'">이 비밀번호를 사용합니다.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_count_expanded">
+    <item quantity="other">%d개의 다른 로그인에 이 비밀번호가 쓰이고 있습니다:</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">2단계 인증이 없습니다</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">이 항목은 2단계 인증을 설정하는 것이 더욱 안전합니다.</string>
   <string name="field_username">아이디 또는 이메일 주소</string>
   <string name="field_password">비밀번호</string>
   <string name="websites_section_title">웹사이트</string>
-  <string name="totp_section_title">2FA 토큰 (TOTP)</string>
+  <string name="totp_section_title">2단계 인증 토큰 (TOTP)</string>
   <string name="action_reveal_password">비밀번호 표시</string>
   <string name="action_conceal_password">비밀번호 숨기기</string>
   <string name="action_reveal_number">번호 표시하기</string>
@@ -51,11 +68,11 @@
   <string name="more_info_last_time_modified">마지막 동기화 시점: %s</string>
   <string name="share_button_content_description">공유 버튼 열기</string>
   <string name="open_menu_icon_content_description">매뉴 버튼 열기</string>
-  <string name="mfa_limit_reached">2FA 제한 도달</string>
-  <string name="mfa_icon_content_description">2FA 아이콘</string>
+  <string name="mfa_limit_reached">2단계 인증 제한 도달</string>
+  <string name="mfa_icon_content_description">2단계 인증 아이콘</string>
   <string name="custom_field_text_icon_description">커스텀 입력란 입력</string>
   <string name="custom_field_hidden_icon_description">커스텀 입력란 숨기기</string>
-  <string name="custom_field_totp_icon_description">2FA 커스텀 입력란</string>
+  <string name="custom_field_totp_icon_description">2단계 인증 커스텀 입력란</string>
   <!-- Credit card details -->
   <string name="credit_card_cardholder_field_name">카드 소유자 이름</string>
   <string name="credit_card_number_field_name">카드 번호</string>

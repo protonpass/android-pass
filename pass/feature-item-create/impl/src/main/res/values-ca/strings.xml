@@ -97,7 +97,7 @@
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">Clau secreta A2F (TOTP)</string>
   <string name="totp_create_login_field_invalid">Invalid 2FA secret key (TOTP)</string>
-  <string name="totp_create_login_field_placeholder">Add 2FA secret key (TOTP)</string>
+  <string name="totp_create_login_field_placeholder">Afegeix una clau secreta A2F (TOTP)</string>
   <string name="close_scree_icon_content_description">Botó de tancament de pantalla</string>
   <string name="totp_paste_code_action">Enganxa el codi</string>
   <string name="totp_scan_code_action">Escaneja el codi</string>

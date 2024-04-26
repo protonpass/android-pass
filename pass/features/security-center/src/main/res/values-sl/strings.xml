@@ -21,29 +21,29 @@
   <string name="security_center_home_top_bar_title">Spremljanje gesel</string>
   <string name="security_center_home_dark_web_monitoring_title">Spremljanje Dark Web</string>
   <string name="security_center_home_widget_breaches_title">Odkrito je uhajanje podatkov</string>
-  <string name="security_center_home_widget_breaches_subtitle">Your email addresses were leaked in at least 1 data breach.</string>
-  <string name="security_center_home_widget_no_breaches_subtitle">Get notified if your email, password or other personal data was leaked.</string>
+  <string name="security_center_home_widget_breaches_subtitle">Vaši e-poštni naslovi so pricurljali zaradi vsaj 1 kršitve podatkov</string>
+  <string name="security_center_home_widget_no_breaches_subtitle">Prejmite obvestilo, če je pricurljal vaš e-poštni naslov, geslo ali drugi osebni podatki.</string>
   <string name="security_center_home_row_no_data_breaches_subtitle">Ni odkritih uhajanj podatkov</string>
   <string name="security_center_home_row_data_breaches_title">Dark Web Alert</string>
-  <string name="security_center_home_row_data_breaches_subtitle">Breaches detected</string>
+  <string name="security_center_home_row_data_breaches_subtitle">Zaznana kršitev</string>
   <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
-  <string name="security_center_home_row_sentinel_subtitle">Advanced account protection program</string>
+  <string name="security_center_home_row_sentinel_subtitle">Napredni program za zaščito računa</string>
   <string name="security_center_home_row_insecure_passwords_title">Šibka gesla</string>
   <string name="security_center_home_row_insecure_passwords_subtitle">Ustvarite močna gesla</string>
   <string name="security_center_home_row_reused_passwords_title">Ponovno uporabljena gesla</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Ustvarite edinstvena gesla</string>
   <string name="security_center_home_row_missing_tfa_title">Manjkajoče dvojno preverjanje pristnosti</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Povečajte svojo varnost</string>
-  <string name="security_center_home_row_excludes_items_title">Excluded items</string>
-  <string name="security_center_home_row_excludes_items_subtitle">Ignore alerts for these items</string>
+  <string name="security_center_home_row_excludes_items_title">Izključeni predmeti</string>
+  <string name="security_center_home_row_excludes_items_subtitle">Prezri opozorila za te elemente</string>
   <string name="security_center_home_section_password_health">Močno geslo</string>
-  <string name="security_center_home_snackbar_message_disable_sentinel_error">There was an error disabling Proton Sentinel protection. Please try again.</string>
+  <string name="security_center_home_snackbar_message_disable_sentinel_error">Pri onemogočanju zaščite Proton Sentinel je prišlo do napake. Prosim poskusite ponovno.</string>
   <!-- Sentinel bottom sheet -->
   <string name="security_center_sentinel_title">Proton Sentinel</string>
   <string name="security_center_sentinel_subtitle">Proton Sentinel je napreden program za zaščito računa, ki ga poganjajo prefinjeni sistemi umetne inteligence in strokovnjaki, ki delajo 24 ur na dan, da vas zaščitijo pred zlobnimi akterji in varnostnimi grožnjami.</string>
   <string name="security_center_sentinel_button_enable">Omogoči Proton Sentinel</string>
-  <string name="security_center_sentinel_snackbar_message_enable_canceled">Proton Sentinel protection activation has been canceled</string>
-  <string name="security_center_sentinel_snackbar_message_enable_error">There was an error enabling Proton Sentinel protection. Please try again.</string>
+  <string name="security_center_sentinel_snackbar_message_enable_canceled">Aktivacija zaščite Proton Sentinel je bila preklicana</string>
+  <string name="security_center_sentinel_snackbar_message_enable_error">Pri omogočanju zaščite Proton Sentinel je prišlo do napake. Prosim poskusite ponovno.</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Šibka gesla</string>
   <string name="security_center_weak_pass_top_bar_subtitle">Šibka gesla je lažje uganiti. Ustvarite močna gesla, da bodo vaši računi varni.</string>
@@ -55,15 +55,15 @@
   <string name="security_center_missing_tfa_top_bar_title">Manjkajoče dvojno preverjanje pristnosti</string>
   <string name="security_center_missing_tfa_top_bar_subtitle">Prijave v spletna mesta, ki imajo na voljo dvojno preverjanje pristnosti, vendar ga še niste nastavili.</string>
   <!-- Excluded items screen -->
-  <string name="security_center_excluded_items_top_bar_title">Excluded items</string>
-  <string name="security_center_excluded_items_top_bar_subtitle">This items will not be monitored so they will skip our security services checks.</string>
+  <string name="security_center_excluded_items_top_bar_title">Izključeni predmeti</string>
+  <string name="security_center_excluded_items_top_bar_subtitle">Ti elementi ne bodo nadzorovani, zato bodo preskočili preglede naših varnostnih služb.</string>
   <!-- Dark web monitor -->
   <string name="security_center_dark_web_monitor_top_bar_title">Spremljanje Dark Web</string>
-  <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Last check: %s</string>
-  <string name="security_center_dark_web_monitor_custom_emails_title">Custom email address</string>
-  <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">Not verified</string>
-  <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Add new custom email address</string>
-  <string name="security_center_dark_web_monitor_custom_emails_add_button">Add</string>
+  <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Zadnjič preverjeno: %s</string>
+  <string name="security_center_dark_web_monitor_custom_emails_title">E-poštni naslov po meri</string>
+  <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">Ni potrjen</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Dodajte nov e-poštni naslov po meri</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_button">Dodaj</string>
   <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
     <item quantity="one">Used in %d login</item>
     <item quantity="two">Used in %d logins</item>
@@ -78,48 +78,77 @@
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Error loading custom email addresses</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Could not get email addresses</string>
-  <string name="security_center_dark_web_monitor_custom_email_option_verify">Verify</string>
-  <string name="security_center_dark_web_monitor_custom_email_option_remove">Remove</string>
-  <string name="security_center_dark_web_monitor_latest_breach_on">Latest breach on %s</string>
+  <string name="security_center_dark_web_monitor_custom_email_option_verify">Preveri</string>
+  <string name="security_center_dark_web_monitor_custom_email_option_remove">Odstrani</string>
+  <string name="security_center_dark_web_monitor_latest_breach_on">Zadnja kršitev dne %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
-    <item quantity="one">Found in %s breach</item>
-    <item quantity="two">Found in %s breaches</item>
-    <item quantity="few">Found in %s breaches</item>
-    <item quantity="other">Found in %s breaches</item>
+    <item quantity="one">Najdeno v %s kršitvi</item>
+    <item quantity="two">Najdeno v %s kršitvi</item>
+    <item quantity="few">Najdeno v %s kršitvah</item>
+    <item quantity="other">Najdeno v %s kršitvah</item>
   </plurals>
-  <string name="security_center_dark_web_monitor_proton_addresses">Proton addresses</string>
+  <string name="security_center_dark_web_monitor_proton_addresses">Naslov Proton</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Vzdevki hide-my-email</string>
-  <string name="security_center_dark_web_monitor_proton_addresses_error">Error retrieving proton addresses</string>
-  <string name="security_center_dark_web_monitor_alias_addresses_error">Error retrieving Hide-my-email aliases</string>
+  <string name="security_center_dark_web_monitor_proton_addresses_error">Napaka pri pridobivanju Proton-skih naslovov</string>
+  <string name="security_center_dark_web_monitor_alias_addresses_error">Napaka pri pridobivanju vzdevkov Hide-my-email</string>
+  <string name="security_center_dark_web_monitor_custom_emails_suggestions">Suggestions</string>
+  <string name="security_center_dark_web_monitor_monitoring_disabled">Monitoring disabled</string>
+  <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">There was an error sending the verification code. Please try again later.</string>
+  <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">There was an error removing the email. Please try again later.</string>
   <!-- Add custom email monitoring -->
   <string name="security_center_custom_email_top_bar_title">Custom email monitoring</string>
-  <string name="security_center_custom_email_email_address_placeholder">Email address</string>
+  <string name="security_center_custom_email_email_address_placeholder">E-poštni naslov</string>
   <string name="security_center_custom_email_invalid_address">Neveljaven e-poštni naslov</string>
-  <string name="security_center_custom_email_continue">Continue</string>
+  <string name="security_center_custom_email_continue">Nadaljuj</string>
   <string name="security_center_custom_email_already_verified">Email already verified</string>
   <string name="security_center_custom_email_error_adding">Error adding the email address</string>
   <!-- Verify email monitoring -->
-  <string name="security_center_verify_email_code_placeholder">Code</string>
-  <string name="security_center_verify_email_code_error">Invalid code</string>
-  <string name="security_center_verify_email_continue">Continue</string>
+  <string name="security_center_verify_email_code_placeholder">Koda</string>
+  <string name="security_center_verify_email_code_error">Neveljavna koda</string>
+  <string name="security_center_verify_email_continue">Nadaljuj</string>
   <string name="security_center_verify_email_title">Confirm your email</string>
   <string name="security_center_verify_email_subtitle">We\'ve sent a verification code to %s. Please enter it below:</string>
+  <string name="security_center_verify_email_snackbar_message_resend_code_error">There was an error sending the verification code. Please try again later.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Zaznane kršitve za</string>
   <string name="security_center_verify_report_title_none">Zaznane niso bile nobene kršitve</string>
+  <string name="security_center_verify_resend_code">Znova pošlji kodo</string>
+  <string name="security_center_verify_resend_code_in_00">Resend code in 00:%s</string>
   <!-- Email breach report -->
   <string name="security_center_email_report_used_in_header">Uporablja se v</string>
   <string name="security_center_email_report_breaches_header">Breaches</string>
+  <string name="security_center_email_report_mark_as_resolved">Označi kot rešeno</string>
+  <string name="security_center_email_report_snackbar_marked_as_resolved_success">Kršitev je bila označena kot razrešena</string>
+  <string name="security_center_email_report_snackbar_marked_as_resolved_error">Ni bilo mogoče označiti kot rešeno</string>
   <!-- Breach report detail-->
   <string name="security_center_report_detail_your_exposed_information">Vaša razkrita informacija</string>
-  <string name="security_center_report_detail_subtitle">Your info was in a data breach and found on __DATE__</string>
-  <string name="security_center_report_detail_details">Details</string>
-  <string name="security_center_report_detail_email_address">Email address</string>
-  <string name="security_center_report_detail_password">Password</string>
+  <string name="security_center_report_detail_subtitle">Vaši podatki so bili v podatkovni kršitvi in najdeni __DATE__</string>
+  <string name="security_center_report_detail_details">Podrobnosti</string>
+  <string name="security_center_report_detail_email_address">E-poštni naslov</string>
+  <string name="security_center_report_detail_password">Geslo</string>
   <string name="security_center_report_detail_recommended_actions">Priporočena dejanja</string>
-  <string name="security_center_report_detail_note">The exposed information was leaked from LinkedIn. Your Proton Account information remains secure and encrypted.</string>
-  <string name="security_center_report_detail_mark_as_resolved">Mark as Resolved</string>
-  <string name="security_center_report_detail_change_password">Spremeni geslo</string>
+  <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">The exposed information was leaked from %s. Your Proton Account information remains secure and encrypted.</string>
+  <string name="security_center_report_detail_change_password" comment="The placeholder argument contains the name of the service where the breach occurred.">Change password on %s</string>
   <string name="security_center_report_detail_use_aliases">Namesto vašega e-poštnega naslova uporabite vzdevke</string>
-  <string name="security_center_report_detail_enable_2fa">Enable 2FA</string>
+  <string name="security_center_report_detail_enable_2fa" comment="The placeholder argument contains the name of the service where the breach occurred.">Enable 2FA on %s</string>
+  <!-- Proton list -->
+  <string name="security_center_proton_list_top_bar_title">Naslov Proton</string>
+  <string name="security_center_proton_list_no_breaches_detected">Ni odkritih uhajanj podatkov</string>
+  <string name="security_center_proton_list_excluded_from_monitoring">Excluded from monitoring</string>
+  <string name="security_center_proton_list_error">Could not load addresses</string>
+  <string name="security_center_proton_list_included_in_monitoring">Enable monitoring to get notified if your Proton addresses were leaked.</string>
+  <!-- Address Bottomsheet options -->
+  <string name="security_center_address_bottomsheet_disable_monitoring">Disable monitoring</string>
+  <string name="security_center_address_bottomsheet_enable_monitoring">Enable monitoring</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_enable_error">Could not enable monitoring</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_error">Could not disable monitoring</string>
+  <!-- Alias list -->
+  <string name="security_center_alias_list_top_bar_title">Vzdevki hide-my-email</string>
+  <string name="security_center_alias_list_excluded_from_monitoring">Excluded from monitoring</string>
+  <string name="security_center_alias_list_error">Could not load addresses</string>
+  <string name="security_center_alias_list_included_in_monitoring">Enable monitoring to get notified if your Hide-my-email aliases were leaked.</string>
+  <string name="security_center_alias_list_monitored">Monitored</string>
+  <!-- Dark web help dialog -->
+  <string name="dark_web_help_dialog_title">Data Security</string>
+  <string name="dark_web_help_dialog_subtitle">Proton never shares your information with third parties. All data comes from searches for the appearance of Proton domains on the dark web.</string>
 </resources>

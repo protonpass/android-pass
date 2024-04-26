@@ -24,6 +24,8 @@
   <string name="bottomsheet_pin_item">Anheften</string>
   <string name="bottomsheet_unpin_item">Loslösen</string>
   <string name="bottomsheet_view_item_history">Verlauf anzeigen</string>
+  <string name="bottomsheet_monitor_exclude">Von der Überwachung ausschließen</string>
+  <string name="bottomsheet_monitor_include">In die Überwachung einbeziehen</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Aktionsmenü für Eintrag öffnen.</string>
   <string name="action_upgrade_now">Jetzt upgraden</string>

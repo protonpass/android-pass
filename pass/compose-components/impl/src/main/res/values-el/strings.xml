@@ -24,6 +24,8 @@
   <string name="bottomsheet_pin_item">Καρφίτσωμα</string>
   <string name="bottomsheet_unpin_item">Ξεκαρφίτσωμα</string>
   <string name="bottomsheet_view_item_history">Προβολή ιστορικού</string>
+  <string name="bottomsheet_monitor_exclude">Εξαίρεση από την παρακολούθηση</string>
+  <string name="bottomsheet_monitor_include">Συμπερίληψη στην παρακολούθηση</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Άνοιγμα μενού ενεργειών στοιχείου</string>
   <string name="action_upgrade_now">Αναβάθμιση τώρα</string>

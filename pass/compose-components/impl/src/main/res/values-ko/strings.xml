@@ -23,6 +23,8 @@
   <string name="bottomsheet_pin_item">고정</string>
   <string name="bottomsheet_unpin_item">고정 해제</string>
   <string name="bottomsheet_view_item_history">기록 보기</string>
+  <string name="bottomsheet_monitor_exclude">감시에서 제외하기</string>
+  <string name="bottomsheet_monitor_include">모니터링에 포함</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">항목을 액션 매뉴서 열기</string>
   <string name="action_upgrade_now">지금 업그레이드</string>
@@ -112,7 +114,7 @@
   <string name="item_details_credit_card_section_pin_title">PIN 코드</string>
   <string name="item_details_login_section_username_title">사용자 이름 또는 이메일 주소</string>
   <string name="item_details_login_section_password_title">비밀번호</string>
-  <string name="item_details_login_section_primary_totp_title">2FA 토큰 (TOTP)</string>
+  <string name="item_details_login_section_primary_totp_title">2단계 인증 토큰 (TOTP)</string>
   <string name="item_details_login_section_websites_title">웹사이트</string>
   <string name="item_details_shared_section_note_title">메모</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">더 이상 지원하지 않는 앱 버전입니다. 앱을 업데이트하십시오.</string>

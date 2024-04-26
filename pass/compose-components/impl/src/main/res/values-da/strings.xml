@@ -24,6 +24,8 @@
   <string name="bottomsheet_pin_item">Fastgør</string>
   <string name="bottomsheet_unpin_item">Frigør</string>
   <string name="bottomsheet_view_item_history">Se historik</string>
+  <string name="bottomsheet_monitor_exclude">Undtag fra overvågning</string>
+  <string name="bottomsheet_monitor_include">Inkluder i monitorering</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Åbn handlingsmenu for element</string>
   <string name="action_upgrade_now">Opgradér nu</string>

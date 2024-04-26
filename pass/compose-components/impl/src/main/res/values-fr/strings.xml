@@ -24,6 +24,8 @@
   <string name="bottomsheet_pin_item">Épingler</string>
   <string name="bottomsheet_unpin_item">Désépingler</string>
   <string name="bottomsheet_view_item_history">Voir l\'historique</string>
+  <string name="bottomsheet_monitor_exclude">Exclure de la surveillance</string>
+  <string name="bottomsheet_monitor_include">Inclure dans la surveillance</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Ouvrir le menu d\'action de l\'élément</string>
   <string name="action_upgrade_now">Changer d\'abonnement</string>

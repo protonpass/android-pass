@@ -26,6 +26,8 @@
   <string name="bottomsheet_pin_item">Pripnúť</string>
   <string name="bottomsheet_unpin_item">Odopnúť</string>
   <string name="bottomsheet_view_item_history">Zobraziť históriu</string>
+  <string name="bottomsheet_monitor_exclude">Vylúčiť z monitorovania</string>
+  <string name="bottomsheet_monitor_include">Zaharnúť do monitorovania</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Otvoriť ponuku akcií položky</string>
   <string name="action_upgrade_now">Navýšiť teraz</string>

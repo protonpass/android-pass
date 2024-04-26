@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="share_continue">Continuare</string>
-  <string name="sharing_can_view">Cititor</string>
+  <string name="sharing_can_view">Utilizator</string>
   <string name="sharing_can_edit">Editor</string>
   <string name="sharing_can_manage">Administrator</string>
   <string name="sharing_can_view_description">Poate vizualiza articolele din acest seif.</string>

@@ -5,12 +5,12 @@
   <string name="action_remove">제거</string>
   <!-- Create item bottomsheet -->
   <string name="action_login">로그인</string>
-  <string name="action_alias">별명</string>
+  <string name="action_alias">별칭</string>
   <string name="action_note">메모</string>
   <string name="action_credit_card">신용 카드</string>
   <string name="action_password">비밀번호</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">앱 및 사이트의 로그인 상세 정보 추가</string>
-  <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">새 앱에서 사용할 이메일 별명 받기</string>
+  <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">새 앱에서 사용할 이메일 별칭 받기</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">PIN, 코드 또는 메모 적기</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">안전하게 결제 수단 정보 저장하기</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">보안 비밀번호 생성</string>
@@ -30,13 +30,13 @@
   <string name="create_login_item_creation_error">로그인 생성 실패</string>
   <string name="create_login_item_update_error">로그인 업데이트 실패</string>
   <string name="create_login_init_error">로그인 정보를 검색하는 데 문제가 있습니다.</string>
-  <string name="create_login_invalid_totp">2FA 콘텐츠가 유효하지 않습니다</string>
+  <string name="create_login_invalid_totp">2단계 인증값이 유효하지 않습니다</string>
   <string name="login_created">로그인 생성됨</string>
-  <string name="bottomsheet_modify_alias_title">별명 수정</string>
+  <string name="bottomsheet_modify_alias_title">별칭 수정</string>
   <string name="bottomsheet_custom_field_type_text">텍스트</string>
   <string name="bottomsheet_custom_field_type_text_content_description">사용자 정의 입력란 입력</string>
   <string name="bottomsheet_custom_field_type_hidden">숨김</string>
-  <string name="bottomsheet_custom_field_type_totp">2FA 시크릿 키 (TOTP)</string>
+  <string name="bottomsheet_custom_field_type_totp">2단계 인증 비밀 키 (TOTP)</string>
   <string name="bottomsheet_custom_field_option_edit">이름 편집</string>
   <string name="bottomsheet_custom_field_option_remove">입력란 제거</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">사용자 정의 입력란 제거</string>
@@ -55,23 +55,23 @@
   <string name="create_note_init_error">메모 정보를 검색하는 데 문제가 있습니다.</string>
   <string name="note_created">메모 생성됨</string>
   <!-- Create Alias -->
-  <string name="title_create_alias">별명 생성</string>
-  <string name="field_alias_title">별명 주소</string>
+  <string name="title_create_alias">별칭 생성</string>
+  <string name="field_alias_title">별칭 주소</string>
   <string name="field_mailboxes_creation_title">다음으로 전달:</string>
   <string name="field_mailboxes_edit_title">다음으로 전달:</string>
   <string name="field_alias_you_are_about_to_create">생성하려고 하는 주소:</string>
   <string name="field_alias_prefix">접두사</string>
   <string name="field_alias_suffix">접미사</string>
-  <string name="alias_bottomsheet_alias_title">별명</string>
+  <string name="alias_bottomsheet_alias_title">별칭</string>
   <string name="alias_bottomsheet_suffix_title">접미사</string>
-  <string name="create_alias_item_creation_error">별명을 생성할 수 없습니다</string>
-  <string name="create_alias_cannot_create_more_aliases_error">더 이상의 별명을 생성할 수 없습니다.</string>
-  <string name="create_alias_email_not_validated_error">첫 이메일 검증 없이 별명을 생성할 수 없습니다.</string>
+  <string name="create_alias_item_creation_error">별칭을 생성할 수 없습니다</string>
+  <string name="create_alias_cannot_create_more_aliases_error">더 이상의 별칭을 생성할 수 없습니다.</string>
+  <string name="create_alias_email_not_validated_error">먼저 이메일을 검증해야 이메일 별칭을 생성을 생성하실 수 있습니다.</string>
   <string name="alias_rate_limited">최근에 만든 별칭이 너무 많습니다.</string>
-  <string name="create_alias_item_update_error">별명을 업데이트할 수 없습니다.</string>
-  <string name="create_alias_init_error">별명 정보를 검색하는 데 문제가 있습니다.</string>
-  <string name="alias_created">별명을 생성했습니다.</string>
-  <string name="cannot_retrieve_alias_options">별명 옵션을 수신할 수 없음</string>
+  <string name="create_alias_item_update_error">별칭을 업데이트할 수 없습니다.</string>
+  <string name="create_alias_init_error">별칭 정보를 검색하는 데 문제가 있습니다.</string>
+  <string name="alias_created">별칭을 생성했습니다.</string>
+  <string name="cannot_retrieve_alias_options">별칭 옵션을 수신할 수 없음</string>
   <string name="alias_mailbox_dialog_title">다음으로 전달:</string>
   <!-- Create note -->
   <string name="note_hint">메모</string>
@@ -95,9 +95,9 @@
   <!--  Common create items  -->
   <string name="changes_saved">변경 사항 저장됨</string>
   <!--  TOTP  -->
-  <string name="totp_create_login_field_title">2FA 시크릿 키 (TOTP)</string>
-  <string name="totp_create_login_field_invalid">유효하지 않은 2FA 시크릿 키 (TOTP)</string>
-  <string name="totp_create_login_field_placeholder">2FA 시크릿 키 (TOTP) 추가하기</string>
+  <string name="totp_create_login_field_title">2단계 인증 비밀 키 (TOTP)</string>
+  <string name="totp_create_login_field_invalid">유효하지 않은 2단계 인증 비밀 키 (TOTP)</string>
+  <string name="totp_create_login_field_placeholder">2단계 인증 비밀 키 (TOTP) 추가하기</string>
   <string name="close_scree_icon_content_description">스크린 버튼 닫기</string>
   <string name="totp_paste_code_action">붙여넣기</string>
   <string name="totp_scan_code_action">코드 스캔</string>
@@ -105,12 +105,12 @@
   <string name="camera_permission_explanation">이 기능을 사용하기 위해 카메라 권한이 필요합니다.</string>
   <string name="camera_permission_open_settings">설정 열기</string>
   <!--  TOTP limit  -->
-  <string name="mfa_limit_reached">2FA 제한 도달</string>
+  <string name="mfa_limit_reached">2단계 인증 제한 도달</string>
   <string name="upgrade">업그레이드</string>
-  <string name="mfa_icon_content_description">2FA 아이콘</string>
+  <string name="mfa_icon_content_description">2단계 인증 아이콘</string>
   <string name="select_suffix_upgrade_for_custom_domains">사용자 지정 도메인을 위해 업그레이드</string>
   <string name="select_mailbox_upgrade_for_more_inboxes">더 많은 받은 편지함을 위해 업그레이드</string>
-  <string name="create_alias_content_limit_banner">사용자가 생성할 수 있는 최대 별명 수에 도달했습니다. 구독을 업그레이드하여 무제한 별명을 생성하세요.</string>
+  <string name="create_alias_content_limit_banner">사용자가 생성할 수 있는 최대 별칭 수에 도달했습니다. 구독을 업그레이드하여 무제한 별명을 생성하세요.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">이 항목을 편집하려면 앱 업데이트가 필요합니다.</string>
   <string name="remove_passkey_dialog_title">이 패스키를 삭제하시겠습니까?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">\'%2$s\'에 대한 사용자 \'%1$s\'의 패스키를 삭제하려합니다. 확실한가요?</string>

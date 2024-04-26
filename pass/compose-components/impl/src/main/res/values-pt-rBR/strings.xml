@@ -24,6 +24,8 @@
   <string name="bottomsheet_pin_item">Fixar</string>
   <string name="bottomsheet_unpin_item">Desafixar</string>
   <string name="bottomsheet_view_item_history">Visualizar histórico</string>
+  <string name="bottomsheet_monitor_exclude">Excluir do monitoramento</string>
+  <string name="bottomsheet_monitor_include">Incluir no monitoramento</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Abrir menu de ação do item</string>
   <string name="action_upgrade_now">Fazer upgrade agora</string>

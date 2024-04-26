@@ -9,8 +9,8 @@
   <string name="action_note">Nota</string>
   <string name="action_credit_card">Tarjeta de crédito</string>
   <string name="action_password">Contraseña</string>
-  <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Añada detalles de inicio de sesión para una app o sitio web</string>
-  <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Obtenga un alias de correo para usar en apps nuevas</string>
+  <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Añada detalles de inicio de sesión para una aplicación o sitio web</string>
+  <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Obtenga un alias de correo para usar en aplicaciones nuevas</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Anote un PIN, un código o una nota para usted</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Almacene de forma segura su información de pago</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Genere una contraseña segura</string>
@@ -66,7 +66,7 @@
   <string name="alias_bottomsheet_suffix_title">Sufijo</string>
   <string name="create_alias_item_creation_error">No se pudo crear el alias</string>
   <string name="create_alias_cannot_create_more_aliases_error">No puede crear más alias</string>
-  <string name="create_alias_email_not_validated_error">No puede crear alias sin validar su correo primero</string>
+  <string name="create_alias_email_not_validated_error">No puede crear alias sin validar el correo primero</string>
   <string name="alias_rate_limited">Demasiados alias creados recientemente</string>
   <string name="create_alias_item_update_error">No se pudo actualizar el alias</string>
   <string name="create_alias_init_error">Problema al recuperar los detalles del alias</string>
@@ -110,8 +110,8 @@
   <string name="mfa_icon_content_description">Ícono de 2FA</string>
   <string name="select_suffix_upgrade_for_custom_domains">Actualice para obtener dominios personalizados</string>
   <string name="select_mailbox_upgrade_for_more_inboxes">Actualice para obtener más buzones</string>
-  <string name="create_alias_content_limit_banner">Ha alcanzado el límite de alias que puede crear. Cree alias ilimitados al actualizar su suscripción.</string>
-  <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">La app necesita actualizarse para editar este elemento</string>
+  <string name="create_alias_content_limit_banner">Ha alcanzado el límite de alias que puede crear. Cree alias ilimitados al actualizar la suscripción.</string>
+  <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">La aplicación necesita actualizarse para editar este elemento</string>
   <string name="remove_passkey_dialog_title">¿Borrar esta clave de acceso?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Está a punto de borrar la clave de acceso de \'%1$s\' para \'%2$s\'. ¿Está seguro?</string>
 </resources>

@@ -30,8 +30,27 @@
   <string name="item_pinned_message_error">Virhe kiinnitettäessä kohdetta</string>
   <string name="item_unpinned_message">Kohde irrotettiin</string>
   <string name="item_unpinned_message_error">Virhe irrotettaessa kohdetta</string>
+  <string name="item_monitor_exclude_message">Kohde poistettiin valvonnasta</string>
+  <string name="item_monitor_exclude_message_error">Virhe kohteen valvonnasta poistamisessa</string>
+  <string name="item_monitor_include_message">Kohde lisättiin valvontaan</string>
+  <string name="item_monitor_include_message_error">Virhe kohteen valvontaan lisäämisessä</string>
   <string name="login_item_generate_totp_error">Virhe luotaessa 2FA-koodia</string>
   <string name="login_item_view_alias_button">Näytä alias</string>
+  <string name="login_item_monitor_widget_weak_pass_title">Heikko salasana</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Tämä tili on vaarassa, käy palvelussa ja vaihda salasanasi.</string>
+  <string name="login_item_monitor_widget_reused_pass_title">Uudelleenkäytetty salasana</string>
+  <string name="login_item_monitor_widget_reused_pass_subtitle">Avaa verkkosivusto ja luo kohteelle ainutlaatuinen salasana.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_count_compact_leading">
+    <item quantity="one">%d muu kirjautuminen</item>
+    <item quantity="other">%d muuta kirjautumista</item>
+  </plurals>
+  <string name="login_item_monitor_widget_reused_pass_count_compact_trailing" comment="This is the trailing part of the sentence above. A full example of its usage will be '4 other logins use this password.'">Käytä tätä salasanaa.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_count_expanded">
+    <item quantity="one">Toinen kirjautumistieto käyttää jo tätä salasanaa:</item>
+    <item quantity="other">%d muuta kirjautumistietoa käyttää jo tätä salasanaa:</item>
+  </plurals>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Kaksivaiheinen tunnistautuminen puuttuu</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Kohteelle olisi turvallisempaa määrittää kaksivaiheinen tunnistautuminen.</string>
   <string name="field_username">Käyttäjätunnus tai sähköpostiosoite</string>
   <string name="field_password">Salasana</string>
   <string name="websites_section_title">Verkkosivustot</string>

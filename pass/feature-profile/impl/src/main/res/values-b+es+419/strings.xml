@@ -8,7 +8,7 @@
   <string name="profile_option_feedback">Comentarios</string>
   <string name="profile_option_import_export">Importar/exportar</string>
   <string name="profile_option_tutorial">Cómo usar Proton Pass</string>
-  <string name="profile_option_rating">Calificar app</string>
+  <string name="profile_option_rating">Calificar aplicación</string>
   <string name="profile_option_autofill">Completar automáticamente</string>
   <string name="profile_option_autofill_subtitle">Complete automáticamente sus nombres de usuario y contraseñas.</string>
   <string name="profile_error_biometry_failed_to_start">No se pudo iniciar la autenticación biométrica</string>
@@ -16,7 +16,7 @@
   <string name="profile_fingerprint_lock_enabled">Bloqueo de huella dactilar activado</string>
   <string name="profile_fingerprint_lock_disabled">Bloqueo de huella dactilar desactivado</string>
   <string name="profile_error_performing_operation">Error al ejecutar la operación</string>
-  <string name="profile_app_version_copied_to_clipboard">Versión de la app copiada</string>
+  <string name="profile_app_version_copied_to_clipboard">Versión de la aplicación copiada</string>
   <string name="feedback_option_reddit">Eche un vistazo a Proton en Reddit</string>
   <string name="feedback_option_mail">Envíenos un mensaje</string>
   <string name="feedback_option_vote_new_features">Vote para nuevas funciones</string>
@@ -34,7 +34,7 @@
   <string name="app_lock_config_app_lock_time">Bloqueo automático</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Usar el bloqueo del sistema cuando el biométrico no funcione</string>
   <string name="configure_pin_set_pin_code">Establecer código PIN</string>
-  <string name="configure_pin_unlock_the_app_with_this_code">Desbloquee la app con este código</string>
+  <string name="configure_pin_unlock_the_app_with_this_code">Desbloquee la aplicación con este código</string>
   <string name="configure_pin_enter_pin_code">Ingresar código PIN</string>
   <string name="configure_pin_repeat_pin_code">Repetir código PIN</string>
   <string name="configure_pin_continue">Continuar</string>
@@ -49,7 +49,7 @@
   <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">El navegador Samsung es el navegador por defecto. No admite el completado automático de gestores de contraseñas externos.</string>
   <string name="profile_passkey_support_section_title">Claves de acceso</string>
   <string name="profile_passkey_support_subtitle_supported">Las claves de acceso están admitidas</string>
-  <string name="profile_passkey_support_subtitle_not_supported_android_version">Su versión de Android no admite claves de acceso</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">La versión de Android no admite claves de acceso</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Su dispositivo no admite claves de acceso</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">No se puede comprobar el soporte para claves de acceso</string>
 </resources>

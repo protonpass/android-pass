@@ -10,10 +10,10 @@
   <string name="autofill_dialog_cancel">Cancelar</string>
   <string name="autofill_notification_copy_to_clipboard">El TOTP fue copiado al portapapeles.</string>
   <string name="autofill_dialog_associate_title">¿Usar inicio de sesión?</string>
-  <string name="autofill_user_logged_out">Se ha cerrado la sesión. Inicie sesión de nuevo abriendo la app.</string>
+  <string name="autofill_user_logged_out">Se ha cerrado la sesión. Inicie sesión de nuevo abriendo la aplicación.</string>
   <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Completar los datos de la tarjeta</string>
-  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">El completado automático de la tarjeta de crédito es una función de pago. Mejore a un plan de pago si desea que Proton Pass ingrese automáticamente los datos de su tarjeta en apps y sitios web.</string>
+  <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">El completado automático de la tarjeta de crédito es una función de pago. Mejore a un plan de pago si desea que Proton Pass ingrese automáticamente los datos de la tarjeta en aplicaciones y sitios web.</string>
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Confirmar su acción</string>
-  <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Está por completar automáticamente sus credenciales en un sitio web abierto por su app actual. La app puede tener acceso a la credencial después de completarla.. Hágalo solo si confía en la app.</string>
+  <string name="autofill_confirm_dangerous_body" comment="Body for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Está por completar automáticamente las credenciales en un sitio web abierto por la aplicación actual. La aplicación puede tener acceso a la credencial después de completarla.. Hágalo solo si confía en la aplicación.</string>
   <string name="autofill_confirm_button" comment="Confirmation button for actually performing the autofill action">Completar automáticamente</string>
 </resources>

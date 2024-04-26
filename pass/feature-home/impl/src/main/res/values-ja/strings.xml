@@ -109,7 +109,7 @@
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">最近の検索</string>
-  <string name="recent_search_clear">Clear</string>
+  <string name="recent_search_clear">クリア</string>
   <string name="recent_search_remove_item">最近の検索から削除</string>
   <!-- Pinning -->
   <string name="home_snackbar_item_pinned_success">Item successfully pinned</string>

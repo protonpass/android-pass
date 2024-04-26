@@ -24,6 +24,8 @@
   <string name="bottomsheet_pin_item">Kiinnitä</string>
   <string name="bottomsheet_unpin_item">Irrota</string>
   <string name="bottomsheet_view_item_history">Näytä historia</string>
+  <string name="bottomsheet_monitor_exclude">Poissuljettu seurannasta</string>
+  <string name="bottomsheet_monitor_include">Lisää valvontaan</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Avaa kohteen toimintovalikko</string>
   <string name="action_upgrade_now">Päivitä tilaus nyt</string>

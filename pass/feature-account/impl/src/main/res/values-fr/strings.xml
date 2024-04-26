@@ -17,6 +17,6 @@
   <string name="account_settings_list_item_password_header">Gestion des mots de passe</string>
   <string name="account_settings_list_item_recovery_header">E-mail de récupération</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Non défini</string>
-  <string name="account_settings_list_item_password_hint_grace">Réinitialisation du mot de passe en attente</string>
+  <string name="account_settings_list_item_password_hint_grace">La réinitialisation du mot de passe est en attente.</string>
   <string name="account_settings_list_item_password_hint_insecure">La réinitialisation du mot de passe est prête.</string>
 </resources>

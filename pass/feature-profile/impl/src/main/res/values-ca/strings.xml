@@ -13,8 +13,8 @@
   <string name="profile_option_autofill_subtitle">Ompliu automàticament els vostres noms d\'usuari i contrasenyes.</string>
   <string name="profile_error_biometry_failed_to_start">No s\'ha pogut iniciar l\'autenticació biomètrica</string>
   <string name="profile_error_biometry_failed_to_authenticate">No s’ha pogut autenticar</string>
-  <string name="profile_fingerprint_lock_enabled">Fingerprint lock enabled</string>
-  <string name="profile_fingerprint_lock_disabled">Fingerprint lock disabled</string>
+  <string name="profile_fingerprint_lock_enabled">S\'ha activat el bloqueig per empremta digital.</string>
+  <string name="profile_fingerprint_lock_disabled">S\'ha desactivat el bloqueig per empremta digital.</string>
   <string name="profile_error_performing_operation">S\'ha produït un error en realitzar l\'operació</string>
   <string name="profile_app_version_copied_to_clipboard">S\'ha copiat la versió de l\'aplicació</string>
   <string name="feedback_option_reddit">Descobriu Proton en Reddit</string>
@@ -42,7 +42,7 @@
   <string name="configure_pin_pin_too_short">El codi PIN és massa curt.</string>
   <string name="configure_pin_pin_cannot_be_blank">El codi PIN no pot estar buit.</string>
   <string name="configure_pin_pin_lock_enabled">Bloqueig amb codi PIN activat</string>
-  <string name="configure_pin_pin_lock_disabled">Bloqueig amb codi PIN desactivat</string>
+  <string name="configure_pin_pin_lock_disabled">S\'ha desactivat el bloqueig amb codi PIN.</string>
   <string name="profile_option_lock_with">Bloqueja amb</string>
   <string name="profile_option_unlock_with">Desbloqueja amb</string>
   <string name="profile_option_change_pin_code">Canviar el codi PIN</string>

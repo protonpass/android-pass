@@ -7,7 +7,7 @@
   <string name="settings_authentication_section_title">Autenticación</string>
   <string name="settings_authentication_preference_title">Bloqueo de huella dactilar</string>
   <string name="settings_authentication_preference_description_enabled">Abra la aplicación de forma rápida y segura con su huella dactilar.</string>
-  <string name="settings_authentication_preference_description_no_fingerprint">No puede solicitar su huella dactilar para interactuar con la app, ya que no hay huellas dactilares registradas en este dispositivo.</string>
+  <string name="settings_authentication_preference_description_no_fingerprint">No puede solicitar su huella dactilar para interactuar con la aplicación, ya que no hay huellas dactilares registradas en este dispositivo.</string>
   <string name="settings_appearance_preference_title">Tema</string>
   <string name="settings_appearance_preference_subtitle_match_system" comment="Subtitle for the appearance preference when the theme is set to match the system theme">Del sistema</string>
   <string name="settings_appearance_preference_subtitle_light">Modo claro</string>
@@ -25,12 +25,12 @@
   <string name="settings_use_favicons_preference_title">Usar íconos web</string>
   <string name="settings_use_favicons_preference_subtitle">Decida si quiere ver los íconos de sitio web en sus elementos.</string>
   <string name="settings_allow_screenshots_preference_title">Permitir capturas de pantalla</string>
-  <string name="settings_allow_screenshots_preference_subtitle">Si está activado, podrá tomar capturas de pantalla de la app.</string>
+  <string name="settings_allow_screenshots_preference_subtitle">Si está activado, podrá tomar capturas de pantalla de la aplicación.</string>
   <string name="settings_clear_icon_cache_success">Caché de íconos vaciada</string>
   <string name="settings_clear_icon_cache_error">No se pudo vaciar la caché de íconos</string>
   <string name="settings_share_telemetry">Compartir uso anónimo</string>
   <string name="settings_share_crashes">Compartir reportes de error anónimos</string>
-  <string name="settings_preference_updated">Su preferencia ha sido actualizada</string>
+  <string name="settings_preference_updated">La preferencia ha sido actualizada</string>
   <string name="settings_default_vault_updated">Se actualizó su bóveda por defecto.</string>
   <string name="settings_default_vault_update_error">No se pudo actualizar la bóveda por defecto.</string>
   <string name="settings_default_vault_section_title">Bóvedas</string>

@@ -24,6 +24,8 @@
   <string name="bottomsheet_pin_item">Fissa</string>
   <string name="bottomsheet_unpin_item">Non fissare</string>
   <string name="bottomsheet_view_item_history">Visualizza la cronologia</string>
+  <string name="bottomsheet_monitor_exclude">Escludi dal monitoraggio</string>
+  <string name="bottomsheet_monitor_include">Includi nel monitoraggio</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Menu apri azioni elemento</string>
   <string name="action_upgrade_now">Effettua l\'upgrade ora</string>

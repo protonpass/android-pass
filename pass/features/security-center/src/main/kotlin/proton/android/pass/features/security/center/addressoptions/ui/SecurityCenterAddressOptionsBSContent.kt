@@ -56,6 +56,12 @@ internal fun SecurityCenterAddressOptionsBSContent(
             }
         )
 
+        AddressOptionsType.RemoveCustomEmail -> list.add(
+            removeCustomEmail(state.isLoading()) {
+                onClick(SecurityCenterAddressOptionsUiEvent.RemoveCustomEmail)
+            }
+        )
+
         AddressOptionsType.Unknown -> {}
     }
     BottomSheetItemList(
@@ -95,6 +101,26 @@ private fun disableMonitoring(loading: Boolean, onClick: () -> Unit): BottomShee
         get() = null
     override val leftIcon: (@Composable () -> Unit)
         get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_eye_slash) }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = if (loading) {
+            { CircularProgressIndicator(modifier = Modifier.size(24.dp)) }
+        } else null
+    override val onClick: () -> Unit
+        get() = { onClick() }
+    override val isDivider = false
+}
+
+private fun removeCustomEmail(loading: Boolean, onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = {
+            BottomSheetItemTitle(
+                text = stringResource(R.string.security_center_address_bottomsheet_remove_custom_email)
+            )
+        }
+    override val subtitle: (@Composable () -> Unit)?
+        get() = null
+    override val leftIcon: (@Composable () -> Unit)
+        get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_cross_circle) }
     override val endIcon: (@Composable () -> Unit)?
         get() = if (loading) {
             { CircularProgressIndicator(modifier = Modifier.size(24.dp)) }

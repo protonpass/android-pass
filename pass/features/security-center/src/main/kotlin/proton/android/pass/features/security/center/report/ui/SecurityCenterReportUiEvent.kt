@@ -37,6 +37,9 @@ internal sealed interface SecurityCenterReportUiEvent {
         val itemId: ItemId
     ) : SecurityCenterReportUiEvent
 
-    data object OnMenuClick : SecurityCenterReportUiEvent
+    data class OnMenuClick(
+        val id: BreachEmailId,
+        val isMonitored: Boolean
+    ) : SecurityCenterReportUiEvent
 
 }

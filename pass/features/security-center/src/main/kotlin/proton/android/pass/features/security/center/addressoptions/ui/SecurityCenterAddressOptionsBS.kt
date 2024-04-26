@@ -34,7 +34,6 @@ fun SecurityCenterAddressOptionsBS(
 ) {
 
     val state by viewModel.state.collectAsStateWithLifecycle()
-
     LaunchedEffect(state.event) {
         when (state.event) {
             SecurityCenterAddressOptionsEvent.Idle -> {}
@@ -55,6 +54,9 @@ fun SecurityCenterAddressOptionsBS(
 
                 SecurityCenterAddressOptionsUiEvent.EnableMonitoring ->
                     viewModel.updateMonitorState(true)
+
+                SecurityCenterAddressOptionsUiEvent.RemoveCustomEmail ->
+                    viewModel.removeCustomEmailClick()
             }
         }
     )

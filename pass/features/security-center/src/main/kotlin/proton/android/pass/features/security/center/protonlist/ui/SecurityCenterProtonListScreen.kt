@@ -25,7 +25,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.security.center.addressoptions.navigation.AddressOptionsType.DisableMonitoring
 import proton.android.pass.features.security.center.addressoptions.navigation.AddressOptionsType.EnableMonitoring
-import proton.android.pass.features.security.center.addressoptions.navigation.AddressType
+import proton.android.pass.features.security.center.addressoptions.navigation.GlobalMonitorAddressType
 import proton.android.pass.features.security.center.protonlist.navigation.SecurityCenterProtonListNavDestination
 import proton.android.pass.features.security.center.protonlist.presentation.SecurityCenterProtonListEvent
 import proton.android.pass.features.security.center.protonlist.presentation.SecurityCenterProtonListViewModel
@@ -61,7 +61,7 @@ fun SecurityCenterProtonListScreen(
             SecurityCenterProtonListUiEvent.OptionsClick -> {
                 onNavigated(
                     SecurityCenterProtonListNavDestination.OnOptionsClick(
-                        AddressType.Proton,
+                        GlobalMonitorAddressType.Proton,
                         if (state.isGlobalMonitorEnabled) DisableMonitoring else EnableMonitoring
                     )
                 )

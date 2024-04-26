@@ -31,10 +31,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 
 @Composable
-internal fun SecurityCenterReportListHeader(
-    modifier: Modifier = Modifier,
-    @StringRes titleResId: Int,
-) {
+internal fun SecurityCenterReportListHeader(modifier: Modifier = Modifier, @StringRes titleResId: Int) {
     Text(
         modifier = modifier
             .fillMaxWidth()

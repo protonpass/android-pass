@@ -68,10 +68,8 @@ class BreachRepositoryImpl @Inject constructor(
         .mapLatest { remote.getAllBreaches(userId).toDomain() }
         .distinctUntilChanged()
 
-    override fun observeCustomEmail(
-        userId: UserId,
-        customEmailId: BreachEmailId.Custom
-    ): Flow<BreachCustomEmail> = localBreachesDataSource.observeCustomEmail(userId, customEmailId)
+    override fun observeCustomEmail(userId: UserId, customEmailId: BreachEmailId.Custom): Flow<BreachCustomEmail> =
+        localBreachesDataSource.observeCustomEmail(userId, customEmailId)
 
     override fun observeCustomEmails(userId: UserId): Flow<List<BreachCustomEmail>> =
         localBreachesDataSource.observeCustomEmails()
@@ -107,25 +105,20 @@ class BreachRepositoryImpl @Inject constructor(
             .also { refreshFlow.update { true } }
     }
 
-    override fun observeBreachesForProtonEmail(
-        userId: UserId,
-        id: AddressId
-    ): Flow<List<BreachEmail>> = oneShot {
+    override fun observeBreachesForProtonEmail(userId: UserId, id: AddressId): Flow<List<BreachEmail>> = oneShot {
         remote.getBreachesForProtonEmail(userId, id)
             .toDomain { breach -> BreachEmailId.Proton(BreachId(breach.id), id) }
     }
 
-    override fun observeBreachesForCustomEmail(
-        userId: UserId,
-        id: BreachEmailId.Custom
-    ): Flow<List<BreachEmail>> = localBreachesDataSource.observeCustomEmailBreaches()
-        .onStart {
-            remote.getBreachesForCustomEmail(userId, id)
-                .toDomain { breachDto -> BreachEmailId.Custom(BreachId(breachDto.id)) }
-                .also { customEmailBreaches ->
-                    localBreachesDataSource.upsertCustomEmailBreaches(userId, customEmailBreaches)
-                }
-        }
+    override fun observeBreachesForCustomEmail(userId: UserId, id: BreachEmailId.Custom): Flow<List<BreachEmail>> =
+        localBreachesDataSource.observeCustomEmailBreaches()
+            .onStart {
+                remote.getBreachesForCustomEmail(userId, id)
+                    .toDomain { breachDto -> BreachEmailId.Custom(BreachId(breachDto.id)) }
+                    .also { customEmailBreaches ->
+                        localBreachesDataSource.upsertCustomEmailBreaches(userId, customEmailBreaches)
+                    }
+            }
 
     override fun observeBreachesForAliasEmail(
         userId: UserId,
@@ -234,23 +227,22 @@ class BreachRepositoryImpl @Inject constructor(
         breachTime = breachTime
     )
 
-    private fun BreachEmailsResponse.toDomain(createId: (Breaches) -> BreachEmailId) =
-        with(this.breachEmails) {
-            breaches.map { breach ->
-                BreachEmail(
-                    emailId = createId(breach),
-                    email = breach.email,
-                    severity = breach.severity,
-                    name = breach.name,
-                    createdAt = breach.createdAt,
-                    publishedAt = breach.publishedAt,
-                    size = breach.size,
-                    passwordLastChars = breach.passwordLastChars,
-                    exposedData = breach.exposedData.map { it.name },
-                    isResolved = breach.resolvedState == BREACH_EMAIL_RESOLVED_STATE_VALUE
-                )
-            }
+    private fun BreachEmailsResponse.toDomain(createId: (Breaches) -> BreachEmailId) = with(this.breachEmails) {
+        breaches.map { breach ->
+            BreachEmail(
+                emailId = createId(breach),
+                email = breach.email,
+                severity = breach.severity,
+                name = breach.name,
+                createdAt = breach.createdAt,
+                publishedAt = breach.publishedAt,
+                size = breach.size,
+                passwordLastChars = breach.passwordLastChars,
+                exposedData = breach.exposedData.map { it.name },
+                isResolved = breach.resolvedState == BREACH_EMAIL_RESOLVED_STATE_VALUE
+            )
         }
+    }
 
     private companion object {
 

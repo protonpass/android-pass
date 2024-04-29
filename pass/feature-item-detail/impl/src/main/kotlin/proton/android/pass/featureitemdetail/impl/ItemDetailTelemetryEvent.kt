@@ -27,3 +27,12 @@ data class ItemDelete(val itemType: EventItemType) : TelemetryEvent("item.deleti
 data class ItemRead(val itemType: EventItemType) : TelemetryEvent("item.read") {
     override fun dimensions(): Map<String, String> = mapOf("type" to itemType.itemTypeName)
 }
+
+data object PassMonitorItemDetailFromWeakPassword :
+    TelemetryEvent("pass_monitor.item_detail_from_weak_password")
+
+data object PassMonitorItemDetailFromMissing2FA :
+    TelemetryEvent("pass_monitor.item_detail_from_missing_2fa")
+
+data object PassMonitorItemDetailFromReusedPassword :
+    TelemetryEvent("pass_monitor.item_detail_from_reused_password")

@@ -49,11 +49,13 @@ import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.breach.BreachEmail
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachId
+import proton.android.pass.features.security.center.PassMonitorDisplayMonitoringEmailAliases
 import proton.android.pass.features.security.center.shared.presentation.EmailBreachUiState
 import proton.android.pass.features.security.center.shared.ui.DateUtils
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.IsDarkWebAliasMessageDismissedPreference
 import proton.android.pass.preferences.IsDarkWebAliasMessageDismissedPreference.Show
+import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
 @HiltViewModel
@@ -61,8 +63,13 @@ class SecurityCenterAliasListViewModel @Inject constructor(
     observeItems: ObserveItems,
     observeBreachesForAliasEmail: ObserveBreachesForAliasEmail,
     observeGlobalMonitorState: ObserveGlobalMonitorState,
+    telemetryManager: TelemetryManager,
     private val internalSettingsRepository: InternalSettingsRepository
 ) : ViewModel() {
+
+    init {
+        telemetryManager.sendEvent(PassMonitorDisplayMonitoringEmailAliases)
+    }
 
     private val aliasIncludedWithoutBreachesFlow = observeItems(
         selection = ShareSelection.AllShares,

@@ -131,7 +131,8 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
 
                     is SecurityCenterWeakPassDestination.ItemDetails -> SecurityCenterNavDestination.ItemDetails(
                         shareId = destination.shareId,
-                        itemId = destination.itemId
+                        itemId = destination.itemId,
+                        origin = SecurityCenterNavDestination.ItemDetails.Origin.WeakPasswords
                     )
 
                     SecurityCenterWeakPassDestination.Empty -> SecurityCenterNavDestination.Empty
@@ -150,7 +151,8 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
 
                     is SecurityCenterReusedPassDestination.ItemDetails -> SecurityCenterNavDestination.ItemDetails(
                         shareId = destination.shareId,
-                        itemId = destination.itemId
+                        itemId = destination.itemId,
+                        origin = SecurityCenterNavDestination.ItemDetails.Origin.ReusedPassword
                     )
 
                     SecurityCenterReusedPassDestination.Empty -> SecurityCenterNavDestination.Empty
@@ -169,7 +171,8 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
 
                     is SecurityCenterMissingTFADestination.ItemDetails -> SecurityCenterNavDestination.ItemDetails(
                         shareId = destination.shareId,
-                        itemId = destination.itemId
+                        itemId = destination.itemId,
+                        origin = SecurityCenterNavDestination.ItemDetails.Origin.Missing2fa
                     )
 
                     SecurityCenterMissingTFADestination.Empty -> SecurityCenterNavDestination.Empty
@@ -335,7 +338,8 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
 
                     is SecurityCenterExcludeItemsDestination.ItemDetails -> SecurityCenterNavDestination.ItemDetails(
                         shareId = destination.shareId,
-                        itemId = destination.itemId
+                        itemId = destination.itemId,
+                        origin = SecurityCenterNavDestination.ItemDetails.Origin.Excluded
                     )
                 }.also(onNavigated)
             }
@@ -447,7 +451,8 @@ private fun SecurityCenterReportScreen(onNavigated: (SecurityCenterNavDestinatio
                 is SecurityCenterReportDestination.ItemDetail ->
                     SecurityCenterNavDestination.ItemDetails(
                         shareId = destination.shareId,
-                        itemId = destination.itemId
+                        itemId = destination.itemId,
+                        origin = SecurityCenterNavDestination.ItemDetails.Origin.Report
                     )
 
                 is SecurityCenterReportDestination.OnMenuClick -> when (destination.id) {

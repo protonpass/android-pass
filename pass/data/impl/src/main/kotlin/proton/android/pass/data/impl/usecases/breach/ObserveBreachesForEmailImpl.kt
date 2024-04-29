@@ -32,25 +32,25 @@ class ObserveBreachesForEmailImpl @Inject constructor(
     private val breachRepository: BreachRepository
 ) : ObserveBreachesForEmail {
 
-    override fun invoke(breachEmailId: BreachEmailId): Flow<List<BreachEmail>> = observeCurrentUser()
-        .flatMapLatest { user ->
-            when (breachEmailId) {
-                is BreachEmailId.Alias -> breachRepository.observeBreachesForAliasEmail(
-                    userId = user.userId,
-                    shareId = breachEmailId.shareId,
-                    itemId = breachEmailId.itemId
-                )
+    override fun invoke(breachEmailId: BreachEmailId): Flow<List<BreachEmail>> =
+        observeCurrentUser()
+            .flatMapLatest { user ->
+                when (breachEmailId) {
+                    is BreachEmailId.Alias -> breachRepository.observeBreachesForAliasEmail(
+                        userId = user.userId,
+                        shareId = breachEmailId.shareId,
+                        itemId = breachEmailId.itemId
+                    )
 
-                is BreachEmailId.Custom -> breachRepository.observeBreachesForCustomEmail(
-                    userId = user.userId,
-                    id = breachEmailId.customEmailId
-                )
+                    is BreachEmailId.Custom -> breachRepository.observeBreachesForCustomEmail(
+                        userId = user.userId,
+                        id = breachEmailId.customEmailId
+                    )
 
-                is BreachEmailId.Proton -> breachRepository.observeBreachesForProtonEmail(
-                    userId = user.userId,
-                    id = breachEmailId.addressId
-                )
+                    is BreachEmailId.Proton -> breachRepository.observeBreachesForProtonEmail(
+                        userId = user.userId,
+                        id = breachEmailId.addressId
+                    )
+                }
             }
-        }
-
 }

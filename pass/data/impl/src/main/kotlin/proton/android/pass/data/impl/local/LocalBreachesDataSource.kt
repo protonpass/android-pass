@@ -27,7 +27,6 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.domain.breach.BreachCustomEmail
 import proton.android.pass.domain.breach.BreachEmail
-import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachProtonEmail
 import proton.android.pass.domain.breach.CustomEmailId
 import javax.inject.Inject
@@ -73,9 +72,13 @@ interface LocalBreachesDataSource {
 
     suspend fun upsertProtonEmails(userId: UserId, protonEmails: List<BreachProtonEmail>)
 
-    fun observeProtonEmailBreaches(): Flow<List<BreachEmail>>
+    fun observeProtonEmailBreaches(userId: UserId, addressId: AddressId): Flow<List<BreachEmail>>
 
-    suspend fun upsertProtonEmailBreaches(userId: UserId, protonEmailBreaches: List<BreachEmail>)
+    suspend fun upsertProtonEmailBreaches(
+        userId: UserId,
+        addressId: AddressId,
+        protonEmailBreaches: List<BreachEmail>
+    )
 
 }
 
@@ -106,7 +109,7 @@ class LocalBreachesDataSourceImpl @Inject constructor() : LocalBreachesDataSourc
         )
 
     private val protonEmailBreachesFlow =
-        MutableSharedFlow<Map<Pair<UserId, BreachEmailId>, BreachEmail>>(
+        MutableSharedFlow<Map<Pair<UserId, AddressId>, List<BreachEmail>>>(
             replay = 1,
             onBufferOverflow = BufferOverflow.DROP_OLDEST
         )
@@ -114,7 +117,8 @@ class LocalBreachesDataSourceImpl @Inject constructor() : LocalBreachesDataSourc
     private val protonEmailsCache =
         mutableMapOf<Pair<UserId, AddressId>, BreachProtonEmail>()
 
-    private val protonEmailBreachesCache = mutableMapOf<Pair<UserId, BreachEmailId>, BreachEmail>()
+    private val protonEmailBreachesCache =
+        mutableMapOf<Pair<UserId, AddressId>, List<BreachEmail>>()
 
     override suspend fun getCustomEmail(
         userId: UserId,
@@ -168,6 +172,7 @@ class LocalBreachesDataSourceImpl @Inject constructor() : LocalBreachesDataSourc
             .also { currentCustomEmailBreaches ->
                 customEmailBreachesCache[Pair(userId, customEmailId)] = currentCustomEmailBreaches
                     .plus(customEmailBreaches)
+                    .toSet()
                     .toMutableList()
             }
             .also { emitCustomEmailBreachesChanges() }
@@ -207,17 +212,24 @@ class LocalBreachesDataSourceImpl @Inject constructor() : LocalBreachesDataSourc
             .also { emitProtonEmailsChanges() }
     }
 
-    override fun observeProtonEmailBreaches(): Flow<List<BreachEmail>> = protonEmailBreachesFlow
-        .map { protonEmailBreachesMap -> protonEmailBreachesMap.values.toList() }
+    override fun observeProtonEmailBreaches(
+        userId: UserId,
+        addressId: AddressId
+    ): Flow<List<BreachEmail>> = protonEmailBreachesFlow.map { protonEmailBreachesMap ->
+        protonEmailBreachesMap.getOrElse(Pair(userId, addressId)) { emptyList() }
+    }
 
     override suspend fun upsertProtonEmailBreaches(
         userId: UserId,
+        addressId: AddressId,
         protonEmailBreaches: List<BreachEmail>
     ) {
-        protonEmailBreaches.toSet()
-            .forEach { protonEmailBreach ->
-                protonEmailBreachesCache[Pair(userId, protonEmailBreach.emailId)] =
-                    protonEmailBreach
+        protonEmailBreachesCache.getOrElse(Pair(userId, addressId)) { emptyList() }
+            .also { currentProtonEmailBreaches ->
+                protonEmailBreachesCache[Pair(userId, addressId)] = currentProtonEmailBreaches
+                    .plus(protonEmailBreaches)
+                    .toSet()
+                    .toMutableList()
             }
             .also { emitProtonEmailBreachesChanges() }
     }

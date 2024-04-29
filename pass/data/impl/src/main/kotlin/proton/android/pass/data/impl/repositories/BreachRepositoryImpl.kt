@@ -75,10 +75,7 @@ class BreachRepositoryImpl @Inject constructor(
         .mapLatest { remote.getAllBreaches(userId).toDomain() }
         .distinctUntilChanged()
 
-    override fun observeCustomEmail(
-        userId: UserId,
-        customEmailId: CustomEmailId
-    ): Flow<BreachEmailReport.Custom> =
+    override fun observeCustomEmail(userId: UserId, customEmailId: CustomEmailId): Flow<BreachEmailReport.Custom> =
         localBreachesDataSource
             .observeCustomEmail(userId, customEmailId)
             .map { breachCustomEmail ->
@@ -126,10 +123,7 @@ class BreachRepositoryImpl @Inject constructor(
             .also { refreshFlow.update { true } }
     }
 
-    override fun observeProtonEmail(
-        userId: UserId,
-        addressId: AddressId
-    ): Flow<BreachEmailReport.Proton> =
+    override fun observeProtonEmail(userId: UserId, addressId: AddressId): Flow<BreachEmailReport.Proton> =
         localBreachesDataSource.observeProtonEmail(userId, addressId)
             .map { breachProtonEmail ->
                 BreachEmailReport.Proton(
@@ -176,10 +170,7 @@ class BreachRepositoryImpl @Inject constructor(
             }
         }
 
-    override fun observeBreachesForProtonEmail(
-        userId: UserId,
-        id: AddressId
-    ): Flow<List<BreachEmail>> =
+    override fun observeBreachesForProtonEmail(userId: UserId, id: AddressId): Flow<List<BreachEmail>> =
         localBreachesDataSource.observeProtonEmailBreaches(userId, id)
             .onStart {
                 remote.getBreachesForProtonEmail(userId, id)
@@ -285,13 +276,11 @@ class BreachRepositoryImpl @Inject constructor(
         remote.updateProtonAddressMonitorState(userId, addressId, enabled)
 
         localBreachesDataSource.getProtonEmail(userId, addressId)
-            .copy(
-                flags = if (enabled) {
-                    EmailFlag.MonitoringEnabled.value
-                } else {
-                    EmailFlag.MonitoringDisabled.value
-                }
-            )
+            .let { breachProtonEmail ->
+                breachProtonEmail.copy(
+                    flags = breachProtonEmail.flags xor EmailFlag.MonitoringDisabled.value
+                )
+            }
             .also { flaggedBreachProtonEmail ->
                 localBreachesDataSource.upsertProtonEmail(userId, flaggedBreachProtonEmail)
             }
@@ -328,30 +317,29 @@ class BreachRepositoryImpl @Inject constructor(
         breachTime = breachTime
     )
 
-    private fun BreachEmailsResponse.toDomain(createId: (Breaches) -> BreachEmailId) =
-        with(this.breachEmails) {
-            breaches.map { breach ->
-                BreachEmail(
-                    emailId = createId(breach),
-                    email = breach.email,
-                    severity = breach.severity,
-                    name = breach.name,
-                    createdAt = breach.createdAt,
-                    publishedAt = breach.publishedAt,
-                    size = breach.size,
-                    passwordLastChars = breach.passwordLastChars,
-                    exposedData = breach.exposedData.map { it.name },
-                    isResolved = breach.resolvedState == BREACH_EMAIL_RESOLVED_STATE_VALUE,
-                    actions = breach.actions.map {
-                        BreachAction(
-                            name = it.name,
-                            code = BreachActionCode.from(it.code),
-                            url = it.urls?.firstOrNull()
-                        )
-                    }
-                )
-            }
+    private fun BreachEmailsResponse.toDomain(createId: (Breaches) -> BreachEmailId) = with(this.breachEmails) {
+        breaches.map { breach ->
+            BreachEmail(
+                emailId = createId(breach),
+                email = breach.email,
+                severity = breach.severity,
+                name = breach.name,
+                createdAt = breach.createdAt,
+                publishedAt = breach.publishedAt,
+                size = breach.size,
+                passwordLastChars = breach.passwordLastChars,
+                exposedData = breach.exposedData.map { it.name },
+                isResolved = breach.resolvedState == BREACH_EMAIL_RESOLVED_STATE_VALUE,
+                actions = breach.actions.map {
+                    BreachAction(
+                        name = it.name,
+                        code = BreachActionCode.from(it.code),
+                        url = it.urls?.firstOrNull()
+                    )
+                }
+            )
         }
+    }
 
     private companion object {
 

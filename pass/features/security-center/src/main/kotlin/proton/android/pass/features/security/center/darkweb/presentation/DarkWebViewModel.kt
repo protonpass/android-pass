@@ -279,10 +279,20 @@ internal class DarkWebViewModel @Inject constructor(
             is LoadingResult.Success -> customEmailsResult.data.map { it.toUiModel() }
         }
 
+        val (verified, unverified) = emails.partition { it.status is CustomEmailUiStatus.Verified }
+
+        // If we have reached the limit, no suggestions should be shown
+        if (emails.size >= CUSTOM_EMAILS_LIMIT) {
+            return DarkWebCustomEmailsState.Success(
+                emails = (verified + unverified).toImmutableList(),
+                suggestions = persistentListOf()
+            )
+        }
+
+        // We have not reached the limits, calculate the suggestions
         val alreadyAddedCustomEmails = emails.map { it.email }
         val alreadyAddedEmails = (alreadyAddedProtonEmails + alreadyAddedAliases + alreadyAddedCustomEmails).toSet()
 
-        val (verified, unverified) = emails.partition { it.status is CustomEmailUiStatus.Verified }
 
         val suggestions = when (suggestionsResult) {
             is LoadingResult.Error -> {
@@ -331,5 +341,6 @@ internal class DarkWebViewModel @Inject constructor(
         private const val TAG = "DarkWebViewModel"
 
         private const val EMAIL_SUGGESTIONS_COUNT = 3
+        private const val CUSTOM_EMAILS_LIMIT = 10
     }
 }

@@ -407,6 +407,9 @@ private fun SecurityCenterAddressOptionsBottomsheet(onNavigated: (SecurityCenter
             when (destination) {
                 SecurityCenterAddressOptionsNavDestination.Back ->
                     SecurityCenterNavDestination.Back(comesFromBottomSheet = true)
+
+                SecurityCenterAddressOptionsNavDestination.OnCustomEmailRemoved ->
+                    SecurityCenterNavDestination.BackToDarkWebMonitoring
             }.also(onNavigated)
         }
     )

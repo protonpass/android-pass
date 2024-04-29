@@ -85,8 +85,8 @@ internal fun SecurityCenterAliasListContent(
         Column(
             modifier = Modifier
                 .background(PassTheme.colors.backgroundNorm)
-                .padding(paddingValues = innerPaddingValues)
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(paddingValues = innerPaddingValues),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AnimatedVisibility(
@@ -148,11 +148,16 @@ internal fun SecurityCenterAliasListContent(
                             }
                         )
                     }
+                    item { Spacer(modifier = Modifier.height(Spacing.medium)) }
                     if (list.includedMonitoredEmails.isNotEmpty()) {
-                        item { Spacer(modifier = Modifier.height(Spacing.medium)) }
                         stickyHeader {
-                            ListHeader(title = stringResource(R.string.security_center_alias_list_monitored))
+                            ListHeader(
+                                title = stringResource(R.string.security_center_alias_list_monitored),
+                                style = ProtonTheme.typography.body1Bold,
+                                color = PassTheme.colors.textNorm
+                            )
                         }
+                        item { Spacer(modifier = Modifier.height(Spacing.medium)) }
                     }
                     items(
                         items = list.includedMonitoredEmails,
@@ -177,11 +182,15 @@ internal fun SecurityCenterAliasListContent(
                         )
                     }
                     if (list.excludedEmails.isNotEmpty()) {
+                        item { Spacer(modifier = Modifier.height(Spacing.medium)) }
                         stickyHeader {
                             ListHeader(
-                                title = stringResource(R.string.security_center_alias_list_excluded_from_monitoring)
+                                title = stringResource(R.string.security_center_alias_list_excluded_from_monitoring),
+                                style = ProtonTheme.typography.body1Bold,
+                                color = PassTheme.colors.textNorm
                             )
                         }
+                        item { Spacer(modifier = Modifier.height(Spacing.medium)) }
                     }
                     items(
                         items = list.excludedEmails,

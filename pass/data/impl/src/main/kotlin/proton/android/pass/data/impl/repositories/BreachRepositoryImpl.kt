@@ -52,6 +52,7 @@ import proton.android.pass.domain.breach.BreachEmailReport
 import proton.android.pass.domain.breach.BreachId
 import proton.android.pass.domain.breach.BreachProtonEmail
 import proton.android.pass.domain.breach.CustomEmailId
+import proton.android.pass.domain.breach.EmailFlag
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -273,6 +274,20 @@ class BreachRepositoryImpl @Inject constructor(
         enabled: Boolean
     ) {
         remote.updateProtonAddressMonitorState(userId, addressId, enabled)
+
+        localBreachesDataSource.getProtonEmail(userId, addressId)
+            .let { breachProtonEmail ->
+                breachProtonEmail.copy(
+                    flags = if (enabled) {
+                        EmailFlag.MonitoringEnabled.value
+                    } else {
+                        EmailFlag.MonitoringDisabled.value
+                    }
+                )
+            }
+            .also { flaggedBreachProtonEmail ->
+                localBreachesDataSource.upsertProtonEmail(userId, flaggedBreachProtonEmail)
+            }
     }
 
     fun proton.android.pass.data.impl.responses.BreachCustomEmail.toDomain() = BreachCustomEmail(

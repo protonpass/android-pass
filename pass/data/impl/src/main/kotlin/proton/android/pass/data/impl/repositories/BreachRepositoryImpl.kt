@@ -210,6 +210,17 @@ class BreachRepositoryImpl @Inject constructor(
             .also { verifiedProtonEmail ->
                 localBreachesDataSource.upsertProtonEmail(userId, verifiedProtonEmail)
             }
+
+        localBreachesDataSource.observeProtonEmailBreaches(userId, id)
+            .first()
+            .map { protonEmailBreach -> protonEmailBreach.copy(isResolved = true) }
+            .also { resolvedProtonEmailBreaches ->
+                localBreachesDataSource.upsertProtonEmailBreaches(
+                    userId = userId,
+                    addressId = id,
+                    protonEmailBreaches = resolvedProtonEmailBreaches
+                )
+            }
     }
 
     override suspend fun markAliasEmailAsResolved(
@@ -226,7 +237,16 @@ class BreachRepositoryImpl @Inject constructor(
                 localBreachesDataSource.upsertCustomEmail(userId, response.email.toDomain())
             }
 
-        // Update locally custom email breaches state to resolved
+        localBreachesDataSource.observeCustomEmailBreaches(userId, id)
+            .first()
+            .map { customEmailBreach -> customEmailBreach.copy(isResolved = true) }
+            .also { resolvedCustomEmailBreaches ->
+                localBreachesDataSource.upsertCustomEmailBreaches(
+                    userId = userId,
+                    customEmailId = id,
+                    customEmailBreaches = resolvedCustomEmailBreaches
+                )
+            }
     }
 
     override suspend fun resendVerificationCode(userId: UserId, id: CustomEmailId) {

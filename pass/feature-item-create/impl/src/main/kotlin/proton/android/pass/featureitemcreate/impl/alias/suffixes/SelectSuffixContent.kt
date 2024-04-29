@@ -73,7 +73,7 @@ fun SelectSuffixContent(
             title = stringResource(R.string.alias_bottomsheet_suffix_title)
         )
         var suffixState by remember { mutableStateOf(selectedSuffix ?: suffixes.firstOrNull()) }
-        LazyColumn {
+        LazyColumn(modifier = Modifier.weight(1f)) {
             items(items = suffixes, key = { it.suffix }) { item ->
                 SelectSuffixItemRow(
                     suffix = item.suffix,

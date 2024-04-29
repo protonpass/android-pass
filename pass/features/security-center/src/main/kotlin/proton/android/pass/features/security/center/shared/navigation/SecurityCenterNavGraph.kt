@@ -40,10 +40,12 @@ import proton.android.pass.features.security.center.customemail.navigation.Secur
 import proton.android.pass.features.security.center.customemail.ui.SecurityCenterCustomEmailScreen
 import proton.android.pass.features.security.center.darkweb.navigation.CustomEmailOptionsNavDestination
 import proton.android.pass.features.security.center.darkweb.navigation.CustomEmailOptionsNavItem
+import proton.android.pass.features.security.center.darkweb.navigation.DarkWebCannotAddCustomEmailNavItem
 import proton.android.pass.features.security.center.darkweb.navigation.DarkWebMonitorNavDestination
 import proton.android.pass.features.security.center.darkweb.navigation.DarkWebMonitorNavItem
 import proton.android.pass.features.security.center.darkweb.navigation.help.DarkWebHelpNavItem
 import proton.android.pass.features.security.center.darkweb.ui.DarkWebScreen
+import proton.android.pass.features.security.center.darkweb.ui.customemails.dialog.CannotAddCustomEmailsDialog
 import proton.android.pass.features.security.center.darkweb.ui.customemails.options.UnverifiedCustomEmailOptionsBottomSheet
 import proton.android.pass.features.security.center.darkweb.ui.help.DarkWebHelpDialog
 import proton.android.pass.features.security.center.excludeditems.navigation.SecurityCenterExcludeItemsDestination
@@ -234,6 +236,9 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
 
                     DarkWebMonitorNavDestination.Help ->
                         onNavigated(SecurityCenterNavDestination.DarkWebHelp)
+
+                    DarkWebMonitorNavDestination.CannotAddCustomEmails ->
+                        onNavigated(SecurityCenterNavDestination.CannotAddCustomEmails)
                 }
             }
         )
@@ -397,6 +402,12 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
 
     dialog(DarkWebHelpNavItem) {
         DarkWebHelpDialog(onDismiss = { onNavigated(SecurityCenterNavDestination.Back()) })
+    }
+
+    dialog(DarkWebCannotAddCustomEmailNavItem) {
+        CannotAddCustomEmailsDialog(
+            onDismiss = { onNavigated(SecurityCenterNavDestination.Back()) }
+        )
     }
 }
 

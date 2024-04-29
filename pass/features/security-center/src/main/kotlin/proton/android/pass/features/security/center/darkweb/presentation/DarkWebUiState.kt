@@ -111,7 +111,8 @@ internal data class DarkWebUiState(
     internal val aliasEmailState: DarkWebEmailBreachState,
     internal val customEmailState: DarkWebCustomEmailsState,
     internal val darkWebStatus: DarkWebStatus,
-    internal val lastCheckTime: Option<String>
+    internal val lastCheckTime: Option<String>,
+    internal val canAddCustomEmails: Boolean
 ) {
 
     internal companion object {
@@ -121,7 +122,8 @@ internal data class DarkWebUiState(
             aliasEmailState = DarkWebEmailBreachState.Loading,
             customEmailState = DarkWebCustomEmailsState.Loading,
             darkWebStatus = DarkWebStatus.Loading,
-            lastCheckTime = None
+            lastCheckTime = None,
+            canAddCustomEmails = false
         )
 
     }

@@ -112,6 +112,8 @@ sealed interface SecurityCenterNavDestination {
 
     data object DarkWebHelp : SecurityCenterNavDestination
 
+    data object CannotAddCustomEmails : SecurityCenterNavDestination
+
     data class GlobalMonitorAddressOptions(
         val addressOptionsType: AddressOptionsType,
         val globalMonitorAddressType: GlobalMonitorAddressType

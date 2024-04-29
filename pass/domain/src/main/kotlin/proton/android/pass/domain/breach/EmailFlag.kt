@@ -19,6 +19,5 @@
 package proton.android.pass.domain.breach
 
 enum class EmailFlag(val value: Int) {
-    MonitoringEnabled(value = 0),
     MonitoringDisabled(value = 1 shl 0)
 }

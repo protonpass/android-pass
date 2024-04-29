@@ -63,9 +63,11 @@ internal fun DarkWebScreen(
                         )
                     )
 
-                DarkWebUiEvent.OnNewCustomEmailClick -> onNavigate(
-                    DarkWebMonitorNavDestination.AddEmail(None)
-                )
+                DarkWebUiEvent.OnNewCustomEmailClick -> if (state.canAddCustomEmails) {
+                    onNavigate(DarkWebMonitorNavDestination.AddEmail(None))
+                } else {
+                    onNavigate(DarkWebMonitorNavDestination.CannotAddCustomEmails)
+                }
 
                 DarkWebUiEvent.OnShowAllAliasEmailBreachClick ->
                     onNavigate(DarkWebMonitorNavDestination.AllAliasEmails)

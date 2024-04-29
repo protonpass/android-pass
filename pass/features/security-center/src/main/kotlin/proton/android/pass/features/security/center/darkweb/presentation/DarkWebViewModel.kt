@@ -140,14 +140,15 @@ internal class DarkWebViewModel @Inject constructor(
             customEmailsResult = customEmailsResult,
             suggestionsResult = suggestionsResult
         )
-        val darkWebStatus = getDarkWebStatus(protonEmail, aliasEmail, customEmails)
+        val darkWebStatus = getDarkWebStatus(protonEmail, aliasEmail, customEmails.state)
 
         DarkWebUiState(
             protonEmailState = protonEmail,
             aliasEmailState = aliasEmail,
-            customEmailState = customEmails,
+            customEmailState = customEmails.state,
             darkWebStatus = darkWebStatus,
-            lastCheckTime = None
+            lastCheckTime = None,
+            canAddCustomEmails = customEmails.canAddCustomEmails
         )
     }.stateIn(
         scope = viewModelScope,
@@ -250,13 +251,13 @@ internal class DarkWebViewModel @Inject constructor(
         }.getOrNull()
     }.maxOrNull()?.let(DateUtils::formatDate)
 
-    @Suppress("ReturnCount")
+    @Suppress("LongMethod", "ReturnCount")
     private fun getCustomEmailsState(
         protonEmailState: DarkWebEmailBreachState,
         aliasEmailState: DarkWebEmailBreachState,
         customEmailsResult: LoadingResult<List<BreachCustomEmail>>,
         suggestionsResult: LoadingResult<List<CustomEmailSuggestion>>
-    ): DarkWebCustomEmailsState {
+    ): CustomEmailsStatus {
 
         val alreadyAddedProtonEmails = when (protonEmailState) {
             is DarkWebEmailBreachState.Success -> protonEmailState.emails.map { it.email }
@@ -272,10 +273,17 @@ internal class DarkWebViewModel @Inject constructor(
             is LoadingResult.Error -> {
                 PassLogger.w(TAG, "Failed to load custom emails")
                 PassLogger.w(TAG, customEmailsResult.exception)
-                return DarkWebCustomEmailsState.Error(DarkWebEmailsError.CannotLoad)
+                return CustomEmailsStatus(
+                    state = DarkWebCustomEmailsState.Error(DarkWebEmailsError.CannotLoad),
+                    canAddCustomEmails = false
+                )
             }
 
-            LoadingResult.Loading -> return DarkWebCustomEmailsState.Loading
+            LoadingResult.Loading -> return CustomEmailsStatus(
+                state = DarkWebCustomEmailsState.Loading,
+                canAddCustomEmails = false
+            )
+
             is LoadingResult.Success -> customEmailsResult.data.map { it.toUiModel() }
         }
 
@@ -283,9 +291,12 @@ internal class DarkWebViewModel @Inject constructor(
 
         // If we have reached the limit, no suggestions should be shown
         if (emails.size >= CUSTOM_EMAILS_LIMIT) {
-            return DarkWebCustomEmailsState.Success(
-                emails = (verified + unverified).toImmutableList(),
-                suggestions = persistentListOf()
+            return CustomEmailsStatus(
+                state = DarkWebCustomEmailsState.Success(
+                    emails = (verified + unverified).toImmutableList(),
+                    suggestions = persistentListOf()
+                ),
+                canAddCustomEmails = false
             )
         }
 
@@ -293,20 +304,26 @@ internal class DarkWebViewModel @Inject constructor(
         val alreadyAddedCustomEmails = emails.map { it.email }
         val alreadyAddedEmails = (alreadyAddedProtonEmails + alreadyAddedAliases + alreadyAddedCustomEmails).toSet()
 
-
         val suggestions = when (suggestionsResult) {
             is LoadingResult.Error -> {
                 PassLogger.w(TAG, "Failed to load custom email suggestions")
                 PassLogger.w(TAG, suggestionsResult.exception)
 
                 // Return the retrieved emails even if suggestions failed
-                return DarkWebCustomEmailsState.Success(
-                    emails = emails.toImmutableList(),
-                    suggestions = persistentListOf()
+                return CustomEmailsStatus(
+                    state = DarkWebCustomEmailsState.Success(
+                        emails = emails.toImmutableList(),
+                        suggestions = persistentListOf()
+                    ),
+                    canAddCustomEmails = false
                 )
             }
 
-            LoadingResult.Loading -> return DarkWebCustomEmailsState.Loading
+            LoadingResult.Loading -> return CustomEmailsStatus(
+                state = DarkWebCustomEmailsState.Loading,
+                canAddCustomEmails = false
+            )
+
             is LoadingResult.Success ->
                 suggestionsResult.data
                     .filter { !alreadyAddedEmails.contains(it.email) }
@@ -314,9 +331,12 @@ internal class DarkWebViewModel @Inject constructor(
         }.take(EMAIL_SUGGESTIONS_COUNT)
 
         val combined = (verified + unverified).toImmutableList()
-        return DarkWebCustomEmailsState.Success(
-            emails = combined,
-            suggestions = suggestions.toImmutableList()
+        return CustomEmailsStatus(
+            state = DarkWebCustomEmailsState.Success(
+                emails = combined,
+                suggestions = suggestions.toImmutableList()
+            ),
+            canAddCustomEmails = true
         )
     }
 
@@ -336,6 +356,11 @@ internal class DarkWebViewModel @Inject constructor(
             status = status
         )
     }
+
+    private data class CustomEmailsStatus(
+        val state: DarkWebCustomEmailsState,
+        val canAddCustomEmails: Boolean
+    )
 
     companion object {
         private const val TAG = "DarkWebViewModel"

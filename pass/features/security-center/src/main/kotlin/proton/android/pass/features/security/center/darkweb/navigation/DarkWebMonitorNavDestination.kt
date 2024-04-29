@@ -61,4 +61,6 @@ sealed interface DarkWebMonitorNavDestination {
 
     data object Help : DarkWebMonitorNavDestination
 
+    data object CannotAddCustomEmails : DarkWebMonitorNavDestination
+
 }

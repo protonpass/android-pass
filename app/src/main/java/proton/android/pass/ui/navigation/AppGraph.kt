@@ -132,6 +132,7 @@ import proton.android.pass.features.security.center.report.navigation.SecurityCe
 import proton.android.pass.features.security.center.reusepass.navigation.SecurityCenterReusedPassNavItem
 import proton.android.pass.features.security.center.sentinel.navigation.SecurityCenterSentinelNavItem
 import proton.android.pass.features.security.center.shared.navigation.SecurityCenterNavDestination
+import proton.android.pass.features.security.center.shared.navigation.SecurityCenterNavDestination.ItemDetails.Origin
 import proton.android.pass.features.security.center.shared.navigation.securityCenterNavGraph
 import proton.android.pass.features.security.center.verifyemail.navigation.SecurityCenterVerifyEmailNavItem
 import proton.android.pass.features.security.center.weakpass.navigation.SecurityCenterWeakPassNavItem
@@ -1059,7 +1060,13 @@ fun NavGraphBuilder.appGraph(
                     route = ViewItem.createNavRoute(
                         shareId = destination.shareId,
                         itemId = destination.itemId,
-                        scope = ItemDetailNavScope.Monitor
+                        scope = when (destination.origin) {
+                            Origin.Excluded -> ItemDetailNavScope.MonitorExcluded
+                            Origin.Missing2fa -> ItemDetailNavScope.MonitorMissing2fa
+                            Origin.Report -> ItemDetailNavScope.MonitorReport
+                            Origin.ReusedPassword -> ItemDetailNavScope.MonitorReusedPassword
+                            Origin.WeakPasswords -> ItemDetailNavScope.MonitorWeakPassword
+                        }
                     )
                 )
 

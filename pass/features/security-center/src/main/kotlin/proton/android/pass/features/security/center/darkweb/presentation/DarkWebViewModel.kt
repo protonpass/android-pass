@@ -57,9 +57,11 @@ import proton.android.pass.domain.breach.BreachEmail
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachId
 import proton.android.pass.domain.breach.BreachProtonEmail
+import proton.android.pass.features.security.center.PassMonitorDisplayDarkWebMonitoring
 import proton.android.pass.features.security.center.shared.presentation.EmailBreachUiState
 import proton.android.pass.features.security.center.shared.ui.DateUtils
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
 @HiltViewModel
@@ -69,8 +71,13 @@ internal class DarkWebViewModel @Inject constructor(
     observeBreachesForAliasEmail: ObserveBreachesForAliasEmail,
     observeBreachCustomEmails: ObserveBreachCustomEmails,
     observeCustomEmailSuggestions: ObserveCustomEmailSuggestions,
-    observeGlobalMonitorState: ObserveGlobalMonitorState
+    observeGlobalMonitorState: ObserveGlobalMonitorState,
+    telemetryManager: TelemetryManager
 ) : ViewModel() {
+
+    init {
+        telemetryManager.sendEvent(PassMonitorDisplayDarkWebMonitoring)
+    }
 
     private val protonEmailFlow = observeAllBreachByUserId()
         .map { breach -> breach.breachedProtonEmails.filter { it.breachCounter > 0 } }

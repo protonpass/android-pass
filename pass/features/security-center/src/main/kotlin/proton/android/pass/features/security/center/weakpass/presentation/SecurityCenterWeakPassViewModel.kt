@@ -29,9 +29,11 @@ import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
 import proton.android.pass.domain.Item
+import proton.android.pass.features.security.center.PassMonitorDisplayWeakPasswords
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.securitycenter.api.passwords.InsecurePasswordChecker
+import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,8 +41,13 @@ class SecurityCenterWeakPassViewModel @Inject constructor(
     observeMonitoredItems: ObserveMonitoredItems,
     insecurePasswordChecker: InsecurePasswordChecker,
     userPreferencesRepository: UserPreferencesRepository,
+    telemetryManager: TelemetryManager,
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ViewModel() {
+
+    init {
+        telemetryManager.sendEvent(PassMonitorDisplayWeakPasswords)
+    }
 
     internal val state: StateFlow<SecurityCenterWeakPassState> = combine(
         observeMonitoredItems(),

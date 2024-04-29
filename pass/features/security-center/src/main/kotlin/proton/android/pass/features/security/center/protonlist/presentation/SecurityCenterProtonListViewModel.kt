@@ -37,15 +37,22 @@ import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachId
 import proton.android.pass.domain.breach.BreachProtonEmail
+import proton.android.pass.features.security.center.PassMonitorDisplayMonitoringProtonAddresses
 import proton.android.pass.features.security.center.shared.presentation.EmailBreachUiState
 import proton.android.pass.features.security.center.shared.ui.DateUtils
+import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
 @HiltViewModel
 class SecurityCenterProtonListViewModel @Inject constructor(
     observeAllBreachByUserId: ObserveAllBreachByUserId,
-    observeGlobalMonitorState: ObserveGlobalMonitorState
+    observeGlobalMonitorState: ObserveGlobalMonitorState,
+    telemetryManager: TelemetryManager
 ) : ViewModel() {
+
+    init {
+        telemetryManager.sendEvent(PassMonitorDisplayMonitoringProtonAddresses)
+    }
 
     private val protonEmailFlow = observeAllBreachByUserId()
         .map { breach -> breach.breachedProtonEmails }

@@ -40,7 +40,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
@@ -215,14 +217,19 @@ fun LazyListScope.stickyItemListHeader(key: GroupingKeys) {
 }
 
 @Composable
-fun ListHeader(modifier: Modifier = Modifier, title: String) {
+fun ListHeader(
+    modifier: Modifier = Modifier,
+    title: String,
+    style: TextStyle = ProtonTheme.typography.captionWeak,
+    color: Color = PassTheme.colors.textWeak
+) {
     Text(
         modifier = modifier
             .padding(16.dp, 0.dp)
             .fillMaxWidth()
             .background(PassTheme.colors.backgroundNorm),
         text = title,
-        style = ProtonTheme.typography.captionWeak,
-        color = PassTheme.colors.textWeak
+        style = style,
+        color = color
     )
 }

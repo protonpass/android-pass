@@ -45,7 +45,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.breach.MarkEmailBreachAsResolved
-import proton.android.pass.data.api.usecases.breach.ObserveBreachEmail
+import proton.android.pass.data.api.usecases.breach.ObserveBreachEmailReport
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForEmail
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
@@ -69,7 +69,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SecurityCenterReportViewModel @Inject constructor(
-    observeBreachEmail: ObserveBreachEmail,
+    observeBreachEmailReport: ObserveBreachEmailReport,
     observeBreachesForEmail: ObserveBreachesForEmail,
     observeItems: ObserveItems,
     private val markEmailBreachAsResolved: MarkEmailBreachAsResolved,
@@ -146,12 +146,12 @@ class SecurityCenterReportViewModel @Inject constructor(
         MutableStateFlow(IsLoadingState.NotLoading)
 
     internal val state: StateFlow<SecurityCenterReportState> = combine(
-        observeBreachEmail(breachEmailId).asLoadingResult(),
+        observeBreachEmailReport(breachEmailId).asLoadingResult(),
         observeBreachForEmailFlow,
         usedInLoginItemsFlow,
         userPreferencesRepository.getUseFaviconsPreference(),
         isResolveButtonLoadingFlow
-    ) { breachEmailResult,
+    ) { breachEmailReportResult,
         breachesForEmailResult,
         usedInLoginItemsResult,
         useFavIconsPreference,
@@ -159,7 +159,7 @@ class SecurityCenterReportViewModel @Inject constructor(
         SecurityCenterReportState(
             breachEmailId = breachEmailId,
             canLoadExternalImages = useFavIconsPreference.value(),
-            breachEmailResult = breachEmailResult,
+            breachEmailResult = breachEmailReportResult,
             breachEmailsResult = breachesForEmailResult,
             usedInLoginItemsResult = usedInLoginItemsResult,
             isResolvingBreachState = isResolveButtonLoading

@@ -26,6 +26,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.breach.Breach
 import proton.android.pass.domain.breach.BreachCustomEmail
 import proton.android.pass.domain.breach.BreachEmail
+import proton.android.pass.domain.breach.BreachEmailReport
 import proton.android.pass.domain.breach.CustomEmailId
 import proton.android.pass.domain.breach.BreachProtonEmail
 
@@ -33,7 +34,7 @@ interface BreachRepository {
 
     fun observeAllBreaches(userId: UserId): Flow<Breach>
 
-    fun observeCustomEmail(userId: UserId, customEmailId: CustomEmailId): Flow<BreachCustomEmail>
+    fun observeCustomEmail(userId: UserId, customEmailId: CustomEmailId): Flow<BreachEmailReport.Custom>
 
     fun observeCustomEmails(userId: UserId): Flow<List<BreachCustomEmail>>
 
@@ -44,6 +45,8 @@ interface BreachRepository {
         emailId: CustomEmailId,
         code: String
     )
+
+    fun observeProtonEmail(userId: UserId, addressId: AddressId): Flow<BreachEmailReport.Proton>
 
     fun observeProtonEmails(userId: UserId): Flow<List<BreachProtonEmail>>
 

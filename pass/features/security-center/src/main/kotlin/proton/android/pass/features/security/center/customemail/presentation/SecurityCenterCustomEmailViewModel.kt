@@ -34,14 +34,17 @@ import kotlinx.coroutines.launch
 import proton.android.pass.common.api.CommonRegex
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
+import proton.android.pass.features.security.center.PassMonitorAddCustomEmailFromSuggestion
 import proton.android.pass.features.security.center.customemail.navigation.CustomEmailContentArgId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.NavParamEncoder
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
 @HiltViewModel
 class SecurityCenterCustomEmailViewModel @Inject constructor(
+    private val telemetryManager: TelemetryManager,
     private val addBreachCustomEmail: AddBreachCustomEmail,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val savedStateHandleProvider: SavedStateHandleProvider
@@ -92,6 +95,12 @@ class SecurityCenterCustomEmailViewModel @Inject constructor(
                             )
                         }
                     }
+
+                    val email = savedStateHandleProvider.get()
+                        .get<String>(CustomEmailContentArgId.key)
+                    if (!email.isNullOrBlank()) {
+                        telemetryManager.sendEvent(PassMonitorAddCustomEmailFromSuggestion)
+                    }
                 }
                 .onFailure {
                     PassLogger.i(TAG, "Failed to add custom email")
@@ -108,7 +117,7 @@ class SecurityCenterCustomEmailViewModel @Inject constructor(
 
     private fun getInitialEmailState(): String {
         val provider = savedStateHandleProvider.get()
-        return provider.get<String>(CustomEmailContentArgId.key) ?.let { email ->
+        return provider.get<String>(CustomEmailContentArgId.key)?.let { email ->
             NavParamEncoder.decode(email)
         } ?: ""
     }

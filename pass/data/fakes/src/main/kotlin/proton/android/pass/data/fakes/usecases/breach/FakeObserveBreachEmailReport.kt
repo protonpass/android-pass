@@ -21,12 +21,12 @@ package proton.android.pass.data.fakes.usecases.breach
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import proton.android.pass.data.api.usecases.breach.ObserveBreachEmailReport
-import proton.android.pass.domain.breach.BreachCustomEmail
 import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.domain.breach.BreachEmailReport
 import javax.inject.Inject
 
 class FakeObserveBreachEmailReport @Inject constructor() : ObserveBreachEmailReport {
 
-    override fun invoke(breachEmailId: BreachEmailId): Flow<BreachCustomEmail> = emptyFlow()
+    override fun invoke(breachEmailId: BreachEmailId): Flow<BreachEmailReport> = emptyFlow()
 
 }

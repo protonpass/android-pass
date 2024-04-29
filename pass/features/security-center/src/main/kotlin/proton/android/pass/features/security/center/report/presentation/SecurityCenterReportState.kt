@@ -26,14 +26,14 @@ import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.domain.breach.BreachCustomEmail
 import proton.android.pass.domain.breach.BreachEmail
 import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.domain.breach.BreachEmailReport
 
 @Stable
 internal data class SecurityCenterReportState(
     internal val canLoadExternalImages: Boolean,
-    private val breachEmailResult: LoadingResult<BreachCustomEmail>,
+    private val breachEmailResult: LoadingResult<BreachEmailReport>,
     private val breachEmailsResult: LoadingResult<List<BreachEmail>>,
     private val usedInLoginItemsResult: LoadingResult<List<ItemUiModel>>,
     private val isResolvingBreachState: IsLoadingState,

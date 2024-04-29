@@ -268,8 +268,6 @@ internal class DarkWebViewModel @Inject constructor(
             else -> emptyList()
         }
 
-        val alreadyAddedEmails = (alreadyAddedProtonEmails + alreadyAddedAliases).toSet()
-
         val emails = when (customEmailsResult) {
             is LoadingResult.Error -> {
                 PassLogger.w(TAG, "Failed to load custom emails")
@@ -280,6 +278,9 @@ internal class DarkWebViewModel @Inject constructor(
             LoadingResult.Loading -> return DarkWebCustomEmailsState.Loading
             is LoadingResult.Success -> customEmailsResult.data.map { it.toUiModel() }
         }
+
+        val alreadyAddedCustomEmails = emails.map { it.email }
+        val alreadyAddedEmails = (alreadyAddedProtonEmails + alreadyAddedAliases + alreadyAddedCustomEmails).toSet()
 
         val (verified, unverified) = emails.partition { it.status is CustomEmailUiStatus.Verified }
 

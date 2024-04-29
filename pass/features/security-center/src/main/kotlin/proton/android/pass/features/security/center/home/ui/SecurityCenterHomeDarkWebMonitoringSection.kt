@@ -61,16 +61,17 @@ internal fun SecurityCenterHomeDarkWebMonitoringSection(
 
     Box(modifier = modifier) {
         AnimatedVisibility(freeDataBreachesVisible, enter = fadeIn(), exit = fadeOut()) {
-            val state = darkWebMonitoring as SecurityCenterHomeDarkWebMonitoring.FreeDataBreaches
-            SecurityCenterHomeDataBreachesWidget(
-                dataBreachedSite = state.dataBreachedSite,
-                dataBreachedTime = state.dataBreachedTime,
-                dataBreachedEmail = state.dateBreachedEmail,
-                dataBreachedPassword = state.dataBreachedPassword,
-                onActionClick = {
-                    onUiEvent(SecurityCenterHomeUiEvent.OnUpsell(PaidFeature.DarkWebMonitoring))
-                }
-            )
+            if (darkWebMonitoring is SecurityCenterHomeDarkWebMonitoring.FreeDataBreaches) {
+                SecurityCenterHomeDataBreachesWidget(
+                    dataBreachedSite = darkWebMonitoring.dataBreachedSite,
+                    dataBreachedTime = darkWebMonitoring.dataBreachedTime,
+                    dataBreachedEmail = darkWebMonitoring.dateBreachedEmail,
+                    dataBreachedPassword = darkWebMonitoring.dataBreachedPassword,
+                    onActionClick = {
+                        onUiEvent(SecurityCenterHomeUiEvent.OnUpsell(PaidFeature.DarkWebMonitoring))
+                    }
+                )
+            }
         }
 
         AnimatedVisibility(freeNoDataBreachesVisible, enter = fadeIn(), exit = fadeOut()) {
@@ -86,15 +87,16 @@ internal fun SecurityCenterHomeDarkWebMonitoringSection(
         }
 
         AnimatedVisibility(paidDataBreachesVisible, enter = fadeIn(), exit = fadeOut()) {
-            val state = darkWebMonitoring as SecurityCenterHomeDarkWebMonitoring.PaidDataBreaches
-            SecurityCenterCounterRow(
-                model = SecurityCenterCounterRowModel.Alert(
-                    title = stringResource(id = R.string.security_center_home_row_data_breaches_title),
-                    subtitle = stringResource(id = R.string.security_center_home_row_data_breaches_subtitle),
-                    count = state.dataBreachesCount
-                ),
-                onClick = { onUiEvent(SecurityCenterHomeUiEvent.OnShowDataBreaches) }
-            )
+            if (darkWebMonitoring is SecurityCenterHomeDarkWebMonitoring.PaidDataBreaches) {
+                SecurityCenterCounterRow(
+                    model = SecurityCenterCounterRowModel.Alert(
+                        title = stringResource(id = R.string.security_center_home_row_data_breaches_title),
+                        subtitle = stringResource(id = R.string.security_center_home_row_data_breaches_subtitle),
+                        count = darkWebMonitoring.dataBreachesCount
+                    ),
+                    onClick = { onUiEvent(SecurityCenterHomeUiEvent.OnShowDataBreaches) }
+                )
+            }
         }
 
         AnimatedVisibility(paidNoDataBreachesVisible, enter = fadeIn(), exit = fadeOut()) {

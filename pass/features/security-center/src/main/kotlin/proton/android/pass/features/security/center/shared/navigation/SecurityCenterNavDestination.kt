@@ -131,4 +131,6 @@ sealed interface SecurityCenterNavDestination {
         val breachEmailId: BreachEmailId.Custom,
         val addressOptionsType: AddressOptionsType
     ) : SecurityCenterNavDestination
+
+    data object BackToDarkWebMonitoring : SecurityCenterNavDestination
 }

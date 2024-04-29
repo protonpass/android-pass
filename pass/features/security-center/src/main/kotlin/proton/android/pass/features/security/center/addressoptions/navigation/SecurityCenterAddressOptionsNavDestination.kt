@@ -20,4 +20,5 @@ package proton.android.pass.features.security.center.addressoptions.navigation
 
 sealed interface SecurityCenterAddressOptionsNavDestination {
     data object Back : SecurityCenterAddressOptionsNavDestination
+    data object OnCustomEmailRemoved : SecurityCenterAddressOptionsNavDestination
 }

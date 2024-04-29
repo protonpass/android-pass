@@ -84,7 +84,14 @@ internal fun SecurityCenterReportList(
                 SecurityCenterLoginItemRow(
                     itemUiModel = itemUiModel,
                     canLoadExternalImages = canLoadExternalImages,
-                    onClick = {}
+                    onClick = {
+                        onUiEvent(
+                            SecurityCenterReportUiEvent.OnItemClick(
+                                shareId = itemUiModel.shareId,
+                                itemId = itemUiModel.id
+                            )
+                        )
+                    }
                 )
             }
         }

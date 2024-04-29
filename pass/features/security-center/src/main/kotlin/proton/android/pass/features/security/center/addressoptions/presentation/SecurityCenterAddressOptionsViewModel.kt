@@ -193,7 +193,7 @@ class SecurityCenterAddressOptionsViewModel @Inject constructor(
             }
                 .onSuccess {
                     PassLogger.i(TAG, "Custom email removed")
-                    eventFlow.update { SecurityCenterAddressOptionsEvent.OnMonitorStateUpdated }
+                    eventFlow.update { SecurityCenterAddressOptionsEvent.OnCustomEmailRemoved }
                     snackbarDispatcher(RemoveCustomEmailSuccess)
                 }
                 .onFailure {

@@ -37,9 +37,11 @@ fun SecurityCenterAddressOptionsBS(
     LaunchedEffect(state.event) {
         when (state.event) {
             SecurityCenterAddressOptionsEvent.Idle -> {}
-            SecurityCenterAddressOptionsEvent.OnMonitorStateUpdated -> {
+            SecurityCenterAddressOptionsEvent.OnMonitorStateUpdated ->
                 onNavigated(SecurityCenterAddressOptionsNavDestination.Back)
-            }
+
+            SecurityCenterAddressOptionsEvent.OnCustomEmailRemoved ->
+                onNavigated(SecurityCenterAddressOptionsNavDestination.OnCustomEmailRemoved)
         }
 
         viewModel.onEventConsumed(state.event)

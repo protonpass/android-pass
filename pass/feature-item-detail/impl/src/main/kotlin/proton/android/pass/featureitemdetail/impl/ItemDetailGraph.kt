@@ -95,7 +95,11 @@ enum class ItemDetailCannotPerformActionType {
 
 enum class ItemDetailNavScope {
     Default,
-    Monitor
+    MonitorExcluded,
+    MonitorReport,
+    MonitorWeakPassword,
+    MonitorReusedPassword,
+    MonitorMissing2fa
 }
 
 object ItemDetailCannotPerformActionTypeNavArgId : NavArgId {

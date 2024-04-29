@@ -124,6 +124,7 @@ dependencies {
     androidTestImplementation(projects.pass.notifications.fakes)
     androidTestImplementation(projects.pass.preferences.fakes)
     androidTestImplementation(projects.pass.securityCenter.fakes)
+    androidTestImplementation(projects.pass.telemetry.fakes)
 
     androidTestImplementation(libs.androidx.test.espresso.intents)
 }

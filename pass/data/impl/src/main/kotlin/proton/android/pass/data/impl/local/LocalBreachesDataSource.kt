@@ -45,10 +45,7 @@ interface LocalBreachesDataSource {
 
     suspend fun deleteCustomEmail(userId: UserId, customEmailId: CustomEmailId)
 
-    fun observeCustomEmailBreaches(
-        userId: UserId,
-        customEmailId: CustomEmailId
-    ): Flow<List<BreachEmail>>
+    fun observeCustomEmailBreaches(userId: UserId, customEmailId: CustomEmailId): Flow<List<BreachEmail>>
 
     suspend fun upsertCustomEmailBreaches(
         userId: UserId,
@@ -56,15 +53,9 @@ interface LocalBreachesDataSource {
         customEmailBreaches: List<BreachEmail>
     )
 
-    suspend fun getProtonEmail(
-        userId: UserId,
-        addressId: AddressId
-    ): BreachProtonEmail
+    suspend fun getProtonEmail(userId: UserId, addressId: AddressId): BreachProtonEmail
 
-    fun observeProtonEmail(
-        userId: UserId,
-        addressId: AddressId
-    ): Flow<BreachProtonEmail>
+    fun observeProtonEmail(userId: UserId, addressId: AddressId): Flow<BreachProtonEmail>
 
     suspend fun upsertProtonEmail(userId: UserId, protonEmail: BreachProtonEmail)
 
@@ -120,16 +111,11 @@ class LocalBreachesDataSourceImpl @Inject constructor() : LocalBreachesDataSourc
     private val protonEmailBreachesCache =
         mutableMapOf<Pair<UserId, AddressId>, List<BreachEmail>>()
 
-    override suspend fun getCustomEmail(
-        userId: UserId,
-        customEmailId: CustomEmailId
-    ): BreachCustomEmail = customEmailsCache[Pair(userId, customEmailId)]
-        ?: throw IllegalArgumentException("There's no custom email with id: ${customEmailId.id}")
+    override suspend fun getCustomEmail(userId: UserId, customEmailId: CustomEmailId): BreachCustomEmail =
+        customEmailsCache[Pair(userId, customEmailId)]
+            ?: throw IllegalArgumentException("There's no custom email with id: ${customEmailId.id}")
 
-    override fun observeCustomEmail(
-        userId: UserId,
-        customEmailId: CustomEmailId
-    ): Flow<BreachCustomEmail> =
+    override fun observeCustomEmail(userId: UserId, customEmailId: CustomEmailId): Flow<BreachCustomEmail> =
         customEmailsFlow
             .map { customEmailsMap -> customEmailsMap[Pair(userId, customEmailId)] }
             .filterNotNull()
@@ -156,12 +142,10 @@ class LocalBreachesDataSourceImpl @Inject constructor() : LocalBreachesDataSourc
             .also { emitCustomEmailsChanges() }
     }
 
-    override fun observeCustomEmailBreaches(
-        userId: UserId,
-        customEmailId: CustomEmailId
-    ): Flow<List<BreachEmail>> = customEmailBreachesFlow.map { customEmailBreachesMap ->
-        customEmailBreachesMap.getOrElse(Pair(userId, customEmailId)) { emptyList() }
-    }
+    override fun observeCustomEmailBreaches(userId: UserId, customEmailId: CustomEmailId): Flow<List<BreachEmail>> =
+        customEmailBreachesFlow.map { customEmailBreachesMap ->
+            customEmailBreachesMap.getOrElse(Pair(userId, customEmailId)) { emptyList() }
+        }
 
     override suspend fun upsertCustomEmailBreaches(
         userId: UserId,
@@ -184,10 +168,9 @@ class LocalBreachesDataSourceImpl @Inject constructor() : LocalBreachesDataSourc
         protonEmailsCache[Pair(userId, addressId)]
             ?: throw IllegalArgumentException("There's no proton email with id: ${addressId.id}")
 
-    override fun observeProtonEmail(userId: UserId, addressId: AddressId): Flow<BreachProtonEmail> =
-        protonEmailsFlow
-            .map { protonEmailsMap -> protonEmailsMap[Pair(userId, addressId)] }
-            .filterNotNull()
+    override fun observeProtonEmail(userId: UserId, addressId: AddressId): Flow<BreachProtonEmail> = protonEmailsFlow
+        .map { protonEmailsMap -> protonEmailsMap[Pair(userId, addressId)] }
+        .filterNotNull()
 
     override suspend fun upsertProtonEmail(userId: UserId, protonEmail: BreachProtonEmail) {
         protonEmailsCache
@@ -206,12 +189,10 @@ class LocalBreachesDataSourceImpl @Inject constructor() : LocalBreachesDataSourc
             .also { emitProtonEmailsChanges() }
     }
 
-    override fun observeProtonEmailBreaches(
-        userId: UserId,
-        addressId: AddressId
-    ): Flow<List<BreachEmail>> = protonEmailBreachesFlow.map { protonEmailBreachesMap ->
-        protonEmailBreachesMap.getOrElse(Pair(userId, addressId)) { emptyList() }
-    }
+    override fun observeProtonEmailBreaches(userId: UserId, addressId: AddressId): Flow<List<BreachEmail>> =
+        protonEmailBreachesFlow.map { protonEmailBreachesMap ->
+            protonEmailBreachesMap.getOrElse(Pair(userId, addressId)) { emptyList() }
+        }
 
     override suspend fun upsertProtonEmailBreaches(
         userId: UserId,

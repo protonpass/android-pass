@@ -46,9 +46,16 @@ interface LocalBreachesDataSource {
 
     suspend fun deleteCustomEmail(userId: UserId, customEmailId: CustomEmailId)
 
-    fun observeCustomEmailBreaches(): Flow<List<BreachEmail>>
+    fun observeCustomEmailBreaches(
+        userId: UserId,
+        customEmailId: CustomEmailId
+    ): Flow<List<BreachEmail>>
 
-    suspend fun upsertCustomEmailBreaches(userId: UserId, customEmailBreaches: List<BreachEmail>)
+    suspend fun upsertCustomEmailBreaches(
+        userId: UserId,
+        customEmailId: CustomEmailId,
+        customEmailBreaches: List<BreachEmail>
+    )
 
     suspend fun getProtonEmail(
         userId: UserId,
@@ -81,7 +88,7 @@ class LocalBreachesDataSourceImpl @Inject constructor() : LocalBreachesDataSourc
         )
 
     private val customEmailBreachesFlow =
-        MutableSharedFlow<Map<Pair<UserId, BreachEmailId>, BreachEmail>>(
+        MutableSharedFlow<Map<Pair<UserId, CustomEmailId>, List<BreachEmail>>>(
             replay = 1,
             onBufferOverflow = BufferOverflow.DROP_OLDEST
         )
@@ -89,7 +96,8 @@ class LocalBreachesDataSourceImpl @Inject constructor() : LocalBreachesDataSourc
     private val customEmailsCache =
         mutableMapOf<Pair<UserId, CustomEmailId>, BreachCustomEmail>()
 
-    private val customEmailBreachesCache = mutableMapOf<Pair<UserId, BreachEmailId>, BreachEmail>()
+    private val customEmailBreachesCache =
+        mutableMapOf<Pair<UserId, CustomEmailId>, MutableList<BreachEmail>>()
 
     private val protonEmailsFlow =
         MutableSharedFlow<Map<Pair<UserId, AddressId>, BreachProtonEmail>>(
@@ -144,17 +152,23 @@ class LocalBreachesDataSourceImpl @Inject constructor() : LocalBreachesDataSourc
             .also { emitCustomEmailsChanges() }
     }
 
-    override fun observeCustomEmailBreaches(): Flow<List<BreachEmail>> = customEmailBreachesFlow
-        .map { customEmailBreachesMap -> customEmailBreachesMap.values.toList() }
+    override fun observeCustomEmailBreaches(
+        userId: UserId,
+        customEmailId: CustomEmailId
+    ): Flow<List<BreachEmail>> = customEmailBreachesFlow.map { customEmailBreachesMap ->
+        customEmailBreachesMap.getOrElse(Pair(userId, customEmailId)) { emptyList() }
+    }
 
     override suspend fun upsertCustomEmailBreaches(
         userId: UserId,
+        customEmailId: CustomEmailId,
         customEmailBreaches: List<BreachEmail>
     ) {
-        customEmailBreaches.toSet()
-            .forEach { customEmailBreach ->
-                customEmailBreachesCache[Pair(userId, customEmailBreach.emailId)] =
-                    customEmailBreach
+        customEmailBreachesCache.getOrElse(Pair(userId, customEmailId)) { emptyList() }
+            .also { currentCustomEmailBreaches ->
+                customEmailBreachesCache[Pair(userId, customEmailId)] = currentCustomEmailBreaches
+                    .plus(customEmailBreaches)
+                    .toMutableList()
             }
             .also { emitCustomEmailBreachesChanges() }
     }

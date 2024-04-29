@@ -154,7 +154,7 @@ class BreachRepositoryImpl @Inject constructor(
         userId: UserId,
         id: CustomEmailId,
         refresh: Boolean
-    ): Flow<List<BreachEmail>> = localBreachesDataSource.observeCustomEmailBreaches()
+    ): Flow<List<BreachEmail>> = localBreachesDataSource.observeCustomEmailBreaches(userId, id)
         .onStart {
             if (refresh) {
                 remote.getBreachesForCustomEmail(userId, id)
@@ -166,8 +166,9 @@ class BreachRepositoryImpl @Inject constructor(
                     }
                     .also { customEmailBreaches ->
                         localBreachesDataSource.upsertCustomEmailBreaches(
-                            userId,
-                            customEmailBreaches
+                            userId = userId,
+                            customEmailId = id,
+                            customEmailBreaches = customEmailBreaches,
                         )
                     }
             }

@@ -35,8 +35,10 @@ import proton.android.pass.data.api.usecases.items.ItemSecurityCheckFilter
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareSelection
+import proton.android.pass.features.security.center.PassMonitorDisplayHome
 import proton.android.pass.securitycenter.api.ObserveSecurityAnalysis
 import proton.android.pass.securitycenter.api.sentinel.ObserveIsSentinelEnabled
+import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
 @HiltViewModel
@@ -45,8 +47,13 @@ class SecurityCenterHomeViewModel @Inject constructor(
     observeAllBreachByUserId: ObserveAllBreachByUserId,
     observeSecurityAnalysis: ObserveSecurityAnalysis,
     observeIsSentinelEnabled: ObserveIsSentinelEnabled,
-    getUserPlan: GetUserPlan
+    getUserPlan: GetUserPlan,
+    telemetryManager: TelemetryManager
 ) : ViewModel() {
+
+    init {
+        telemetryManager.sendEvent(PassMonitorDisplayHome)
+    }
 
     private val excludedLoginItemsFlow: Flow<List<Item>> = observeItems(
         selection = ShareSelection.AllShares,

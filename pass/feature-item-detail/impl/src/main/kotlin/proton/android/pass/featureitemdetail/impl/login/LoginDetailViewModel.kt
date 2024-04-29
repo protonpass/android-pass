@@ -105,6 +105,9 @@ import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.Website
 import proton.android.pass.featureitemdetail.impl.ItemDelete
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavScope
 import proton.android.pass.featureitemdetail.impl.ItemDetailScopeNavArgId
+import proton.android.pass.featureitemdetail.impl.PassMonitorItemDetailFromMissing2FA
+import proton.android.pass.featureitemdetail.impl.PassMonitorItemDetailFromReusedPassword
+import proton.android.pass.featureitemdetail.impl.PassMonitorItemDetailFromWeakPassword
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
 import proton.android.pass.featureitemdetail.impl.common.ItemFeatures
 import proton.android.pass.featureitemdetail.impl.common.ShareClickAction
@@ -162,6 +165,24 @@ class LoginDetailViewModel @Inject constructor(
 
     private val navigationScope: ItemDetailNavScope = savedStateHandle.get()
         .require(ItemDetailScopeNavArgId.key)
+
+    init {
+        when (navigationScope) {
+            ItemDetailNavScope.MonitorWeakPassword ->
+                telemetryManager.sendEvent(PassMonitorItemDetailFromWeakPassword)
+
+            ItemDetailNavScope.MonitorReusedPassword ->
+                telemetryManager.sendEvent(PassMonitorItemDetailFromReusedPassword)
+
+            ItemDetailNavScope.MonitorMissing2fa ->
+                telemetryManager.sendEvent(PassMonitorItemDetailFromMissing2FA)
+
+            ItemDetailNavScope.Default,
+            ItemDetailNavScope.MonitorExcluded,
+            ItemDetailNavScope.MonitorReport -> {
+            }
+        }
+    }
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.w(TAG, throwable)

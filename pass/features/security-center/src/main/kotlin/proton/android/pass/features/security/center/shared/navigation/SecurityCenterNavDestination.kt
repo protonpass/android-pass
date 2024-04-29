@@ -38,7 +38,19 @@ sealed interface SecurityCenterNavDestination {
 
     data object Home : SecurityCenterNavDestination
 
-    data class ItemDetails(val shareId: ShareId, val itemId: ItemId) : SecurityCenterNavDestination
+    data class ItemDetails(
+        val shareId: ShareId,
+        val itemId: ItemId,
+        val origin: Origin
+    ) : SecurityCenterNavDestination {
+        sealed interface Origin {
+            data object WeakPasswords : Origin
+            data object ReusedPassword : Origin
+            data object Missing2fa : Origin
+            data object Excluded : Origin
+            data object Report : Origin
+        }
+    }
 
     data object MainHome : SecurityCenterNavDestination
 

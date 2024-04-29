@@ -29,10 +29,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.composecomponents.impl.item.PassPasswordStrengthItem
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBar
-import proton.android.pass.features.security.center.shared.ui.headers.SecurityCenterListStickyHeader
 import proton.android.pass.features.security.center.shared.ui.rows.SecurityCenterLoginItemRow
 import proton.android.pass.features.security.center.weakpass.navigation.SecurityCenterWeakPassDestination
 import proton.android.pass.features.security.center.weakpass.presentation.SecurityCenterWeakPassState
@@ -63,16 +61,6 @@ internal fun SecurityCenterWeakPassContent(
                 .padding(top = Spacing.large)
         ) {
             weakPassGroups.forEach { weakPassGroup ->
-                stickyHeader {
-                    SecurityCenterListStickyHeader(
-                        label = {
-                            PassPasswordStrengthItem(
-                                passwordStrength = weakPassGroup.passwordStrength
-                            )
-                        }
-                    )
-                }
-
                 items(
                     items = weakPassGroup.itemUiModels,
                     key = { itemUiModel -> itemUiModel.id.id }

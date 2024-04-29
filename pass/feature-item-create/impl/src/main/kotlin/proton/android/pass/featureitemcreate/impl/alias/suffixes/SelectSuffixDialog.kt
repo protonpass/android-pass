@@ -45,7 +45,6 @@ fun SelectSuffixDialog(
         onDismissRequest = onDismiss
     ) {
         SelectSuffixContent(
-            modifier = Modifier,
             suffixes = suffixes,
             canUpgrade = canUpgrade,
             selectedSuffix = selectedSuffix,

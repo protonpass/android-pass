@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.security.center.report.ui
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -75,6 +76,10 @@ internal fun SecurityCenterReportContent(
         ) {
             ReportHeader(breachCount = breachCount, email = breachEmail)
 
+            AnimatedVisibility(state.isBreachExcludedFromMonitoring) {
+                ExcludedTag()
+            }
+
             if (hasUnresolvedBreaches) {
                 ResolveButton(
                     modifier = Modifier.padding(horizontal = Spacing.medium),
@@ -96,3 +101,4 @@ internal fun SecurityCenterReportContent(
         }
     }
 }
+

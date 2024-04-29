@@ -152,6 +152,7 @@
         comment="The placeholder argument contains the name of the service where the breach occurred."
     >The exposed information was leaked from %s. Your Proton Account information remains secure and encrypted.</string>
     <string name="security_center_report_detail_snackbar_error">Could not load breach details</string>
+    <string name="security_center_report_detail_excluded_from_monitoring">Excluded from monitoring</string>
 
     <!-- Proton list -->
     <string name="security_center_proton_list_top_bar_title">Proton addresses</string>

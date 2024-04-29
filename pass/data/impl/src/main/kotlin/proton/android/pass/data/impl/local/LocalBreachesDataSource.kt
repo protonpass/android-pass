@@ -100,7 +100,7 @@ class LocalBreachesDataSourceImpl @Inject constructor() : LocalBreachesDataSourc
         mutableMapOf<Pair<UserId, CustomEmailId>, BreachCustomEmail>()
 
     private val customEmailBreachesCache =
-        mutableMapOf<Pair<UserId, CustomEmailId>, MutableList<BreachEmail>>()
+        mutableMapOf<Pair<UserId, CustomEmailId>, List<BreachEmail>>()
 
     private val protonEmailsFlow =
         MutableSharedFlow<Map<Pair<UserId, AddressId>, BreachProtonEmail>>(
@@ -168,13 +168,7 @@ class LocalBreachesDataSourceImpl @Inject constructor() : LocalBreachesDataSourc
         customEmailId: CustomEmailId,
         customEmailBreaches: List<BreachEmail>
     ) {
-        customEmailBreachesCache.getOrElse(Pair(userId, customEmailId)) { emptyList() }
-            .also { currentCustomEmailBreaches ->
-                customEmailBreachesCache[Pair(userId, customEmailId)] = currentCustomEmailBreaches
-                    .plus(customEmailBreaches)
-                    .toSet()
-                    .toMutableList()
-            }
+        customEmailBreachesCache.put(Pair(userId, customEmailId), customEmailBreaches)
             .also { emitCustomEmailBreachesChanges() }
     }
 
@@ -224,13 +218,7 @@ class LocalBreachesDataSourceImpl @Inject constructor() : LocalBreachesDataSourc
         addressId: AddressId,
         protonEmailBreaches: List<BreachEmail>
     ) {
-        protonEmailBreachesCache.getOrElse(Pair(userId, addressId)) { emptyList() }
-            .also { currentProtonEmailBreaches ->
-                protonEmailBreachesCache[Pair(userId, addressId)] = currentProtonEmailBreaches
-                    .plus(protonEmailBreaches)
-                    .toSet()
-                    .toMutableList()
-            }
+        protonEmailBreachesCache.put(Pair(userId, addressId), protonEmailBreaches)
             .also { emitProtonEmailBreachesChanges() }
     }
 

@@ -141,24 +141,23 @@ class FileLoggingTree(private val context: Context) : Timber.Tree() {
 
     @Suppress("TooGenericExceptionCaught")
     private fun String.sanitise(): String = split('/')
-        .joinToString(separator = "/") {
-            if (idRegex.containsMatchIn(it)) {
-                try {
+        .joinToString(separator = "/") { value ->
+            if (idRegex.containsMatchIn(value)) {
+                runCatching {
                     idRegex.replace(
-                        it,
+                        value,
                         buildString {
-                            append(it.substring(0, ID_OFFSET))
+                            append(value.substring(0, ID_OFFSET))
                             append(Typography.ellipsis)
-                            append(it.substring(ID_LENGTH - ID_OFFSET))
+                            append(value.substring(ID_LENGTH - ID_OFFSET))
                         }
                     )
-                } catch (e: IndexOutOfBoundsException) {
+                }.onFailure {
                     PassLogger.w(TAG, "Could not sanitise id")
-                    PassLogger.w(TAG, e)
-                    it
-                }
+                    PassLogger.w(TAG, it)
+                }.getOrDefault("COULD_NOT_SANITIZE_ID")
             } else {
-                it
+                value
             }
         }
 

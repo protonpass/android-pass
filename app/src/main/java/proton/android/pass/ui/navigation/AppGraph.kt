@@ -119,6 +119,7 @@ import proton.android.pass.features.security.center.breachdetail.navigation.Secu
 import proton.android.pass.features.security.center.breachdetail.navigation.SecurityCenterProtonEmailBreachDetailNavItem
 import proton.android.pass.features.security.center.customemail.navigation.SecurityCenterCustomEmailNavItem
 import proton.android.pass.features.security.center.darkweb.navigation.CustomEmailOptionsNavItem
+import proton.android.pass.features.security.center.darkweb.navigation.DarkWebCannotAddCustomEmailNavItem
 import proton.android.pass.features.security.center.darkweb.navigation.DarkWebMonitorNavItem
 import proton.android.pass.features.security.center.darkweb.navigation.help.DarkWebHelpNavItem
 import proton.android.pass.features.security.center.excludeditems.navigation.SecurityCenterExcludedItemsNavItem
@@ -1204,6 +1205,9 @@ fun NavGraphBuilder.appGraph(
 
                 SecurityCenterNavDestination.DarkWebHelp ->
                     appNavigator.navigate(DarkWebHelpNavItem)
+
+                SecurityCenterNavDestination.CannotAddCustomEmails ->
+                    appNavigator.navigate(DarkWebCannotAddCustomEmailNavItem)
 
                 is SecurityCenterNavDestination.ReportAliasAddressOptions -> appNavigator.navigate(
                     destination = SecurityCenterAliasAddressOptionsNavItem,

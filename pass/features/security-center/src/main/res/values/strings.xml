@@ -184,4 +184,9 @@
     <string name="dark_web_help_dialog_title">Data Security</string>
     <string name="dark_web_help_dialog_subtitle">Proton never shares your information with third parties. All data comes from searches for the appearance of Proton domains on the dark web.</string>
 
+    <!-- Cannot add custom emails -->
+    <string name="dark_web_cannot_add_custom_emails_dialog_title">Cannot add custom email</string>
+    <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">You have reached the limit of custom emails.</string>
+
+
 </resources>

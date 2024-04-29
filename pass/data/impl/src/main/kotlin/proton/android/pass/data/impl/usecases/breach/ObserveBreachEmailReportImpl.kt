@@ -22,27 +22,31 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import proton.android.pass.data.api.repositories.BreachRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
-import proton.android.pass.data.api.usecases.breach.ObserveBreachEmail
-import proton.android.pass.domain.breach.BreachCustomEmail
+import proton.android.pass.data.api.usecases.breach.ObserveBreachEmailReport
 import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.domain.breach.BreachEmailReport
 import javax.inject.Inject
 
-class ObserveBreachEmailImpl @Inject constructor(
+class ObserveBreachEmailReportImpl @Inject constructor(
     private val observeCurrentUser: ObserveCurrentUser,
     private val breachRepository: BreachRepository
-) : ObserveBreachEmail {
+) : ObserveBreachEmailReport {
 
-    override fun invoke(breachEmailId: BreachEmailId): Flow<BreachCustomEmail> = observeCurrentUser()
-        .flatMapLatest { user ->
-            when (breachEmailId) {
-                is BreachEmailId.Alias -> TODO()
-                is BreachEmailId.Custom -> breachRepository.observeCustomEmail(
-                    userId = user.userId,
-                    customEmailId = breachEmailId.customEmailId
-                )
+    override fun invoke(breachEmailId: BreachEmailId): Flow<BreachEmailReport> =
+        observeCurrentUser()
+            .flatMapLatest { user ->
+                when (breachEmailId) {
+                    is BreachEmailId.Alias -> TODO()
+                    is BreachEmailId.Custom -> breachRepository.observeCustomEmail(
+                        userId = user.userId,
+                        customEmailId = breachEmailId.customEmailId
+                    )
 
-                is BreachEmailId.Proton -> TODO()
+                    is BreachEmailId.Proton -> breachRepository.observeProtonEmail(
+                        userId = user.userId,
+                        addressId = breachEmailId.addressId
+                    )
+                }
             }
-        }
 
 }

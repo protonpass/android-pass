@@ -118,7 +118,7 @@ import proton.android.pass.data.api.usecases.breach.MarkEmailBreachAsResolved
 import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
 import proton.android.pass.data.api.usecases.breach.ObserveBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.ObserveBreachCustomEmails
-import proton.android.pass.data.api.usecases.breach.ObserveBreachEmail
+import proton.android.pass.data.api.usecases.breach.ObserveBreachEmailReport
 import proton.android.pass.data.api.usecases.breach.ObserveBreachProtonEmails
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAliasEmail
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForCustomEmail
@@ -258,7 +258,7 @@ import proton.android.pass.data.impl.usecases.breach.MarkEmailBreachAsResolvedIm
 import proton.android.pass.data.impl.usecases.breach.ObserveAllBreachByUserIdImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveBreachCustomEmailImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveBreachCustomEmailsImpl
-import proton.android.pass.data.impl.usecases.breach.ObserveBreachEmailImpl
+import proton.android.pass.data.impl.usecases.breach.ObserveBreachEmailReportImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveBreachProtonEmailsImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveBreachesForAliasEmailImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveBreachesForCustomEmailImpl
@@ -649,7 +649,7 @@ abstract class DataUseCaseModule {
     abstract fun bindObserveBreach(impl: ObserveAllBreachByUserIdImpl): ObserveAllBreachByUserId
 
     @[Binds Singleton]
-    abstract fun bindObserveBreachEmail(impl: ObserveBreachEmailImpl): ObserveBreachEmail
+    abstract fun bindObserveBreachEmailReport(impl: ObserveBreachEmailReportImpl): ObserveBreachEmailReport
 
     @[Binds Singleton]
     abstract fun bindObserveBreachCustomEmail(impl: ObserveBreachCustomEmailImpl): ObserveBreachCustomEmail
@@ -719,12 +719,6 @@ abstract class DataUseCaseModule {
     abstract fun bindUpdateProtonAddressMonitorState(
         impl: UpdateProtonAddressMonitorStateImpl
     ): UpdateProtonAddressMonitorState
-
-
-    @Binds
-    abstract fun bindUpdateAliasAddressMonitorState(
-        impl: UpdateAliasAddressMonitorStateImpl
-    ): UpdateAliasAddressMonitorState
 
     @[Binds Singleton]
     abstract fun bindObserveBreachProtonEmails(impl: ObserveBreachProtonEmailsImpl): ObserveBreachProtonEmails

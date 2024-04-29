@@ -33,12 +33,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.container.Circle
 import proton.android.pass.features.security.center.R
 
 @Composable
-internal fun CustomEmailsHeader(modifier: Modifier = Modifier, onAddClick: () -> Unit) {
+internal fun CustomEmailsHeader(
+    modifier: Modifier = Modifier,
+    canAddCustomEmails: Boolean,
+    onAddClick: () -> Unit
+) {
     Row(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -49,8 +53,15 @@ internal fun CustomEmailsHeader(modifier: Modifier = Modifier, onAddClick: () ->
             style = ProtonTheme.typography.body1Regular
         )
 
+        val (background, foreground) = if (canAddCustomEmails) {
+            PassTheme.colors.interactionNormMinor1 to PassTheme.colors.interactionNormMajor2
+        } else {
+            PassTheme.colors.interactionNormMinor1.copy(alpha = DISABLED_ALPHA) to
+                PassTheme.colors.interactionNormMajor2.copy(alpha = DISABLED_ALPHA)
+        }
+
         Circle(
-            backgroundColor = PassTheme.colors.interactionNormMinor1,
+            backgroundColor = background,
             onClick = onAddClick
         ) {
             Icon(
@@ -58,7 +69,7 @@ internal fun CustomEmailsHeader(modifier: Modifier = Modifier, onAddClick: () ->
                 contentDescription = stringResource(
                     id = R.string.security_center_dark_web_monitor_custom_emails_add_content_description
                 ),
-                tint = PassTheme.colors.interactionNormMajor2
+                tint = foreground
             )
         }
 
@@ -67,10 +78,15 @@ internal fun CustomEmailsHeader(modifier: Modifier = Modifier, onAddClick: () ->
 
 @Preview
 @Composable
-fun CustomEmailsHeaderPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
-    PassTheme(isDark = isDark) {
+fun CustomEmailsHeaderPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
+    PassTheme(isDark = input.first) {
         Surface {
-            CustomEmailsHeader {}
+            CustomEmailsHeader(
+                canAddCustomEmails = input.second,
+                onAddClick = {}
+            )
         }
     }
 }
+
+private const val DISABLED_ALPHA = 0.3f

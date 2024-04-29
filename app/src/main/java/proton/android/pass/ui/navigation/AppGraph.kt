@@ -1228,6 +1228,10 @@ fun NavGraphBuilder.appGraph(
                         addressOptionsType = destination.addressOptionsType
                     )
                 )
+
+                SecurityCenterNavDestination.BackToDarkWebMonitoring -> dismissBottomSheet {
+                    appNavigator.popUpTo(DarkWebMonitorNavItem)
+                }
             }
         }
     )

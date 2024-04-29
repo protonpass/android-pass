@@ -117,7 +117,7 @@ import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.MarkEmailBreachAsResolved
 import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
 import proton.android.pass.data.api.usecases.breach.ObserveBreachCustomEmails
-import proton.android.pass.data.api.usecases.breach.ObserveBreachEmail
+import proton.android.pass.data.api.usecases.breach.ObserveBreachEmailReport
 import proton.android.pass.data.api.usecases.breach.ObserveBreachProtonEmails
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAliasEmail
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForCustomEmail
@@ -257,7 +257,7 @@ import proton.android.pass.data.fakes.usecases.breach.FakeAddBreachCustomEmail
 import proton.android.pass.data.fakes.usecases.breach.FakeMarkEmailBreachAsResolved
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveAllBreachByUserId
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachCustomEmails
-import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachEmail
+import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachEmailReport
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachProtonEmails
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachesForAliasEmail
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachesForCustomEmail
@@ -674,7 +674,7 @@ abstract class FakesDataModule {
     abstract fun bindObserveBreachesForEmail(impl: FakeObserveBreachesForEmail): ObserveBreachesForEmail
 
     @[Binds Singleton]
-    abstract fun bindObserveBreachEmail(impl: FakeObserveBreachEmail): ObserveBreachEmail
+    abstract fun bindObserveBreachEmailReport(impl: FakeObserveBreachEmailReport): ObserveBreachEmailReport
 
     @[Binds Singleton]
     abstract fun bindObserveBreachProtonEmails(impl: FakeObserveBreachProtonEmails): ObserveBreachProtonEmails

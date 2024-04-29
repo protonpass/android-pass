@@ -23,8 +23,8 @@ import kotlinx.coroutines.flow.flatMapLatest
 import proton.android.pass.data.api.repositories.BreachRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.breach.ObserveBreachCustomEmail
-import proton.android.pass.domain.breach.BreachCustomEmail
 import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.domain.breach.BreachEmailReport
 import javax.inject.Inject
 
 class ObserveBreachCustomEmailImpl @Inject constructor(
@@ -32,9 +32,10 @@ class ObserveBreachCustomEmailImpl @Inject constructor(
     private val breachRepository: BreachRepository
 ) : ObserveBreachCustomEmail {
 
-    override fun invoke(customEmailId: BreachEmailId.Custom): Flow<BreachCustomEmail> = observeCurrentUser()
-        .flatMapLatest { user ->
-            breachRepository.observeCustomEmail(user.userId, customEmailId.customEmailId)
-        }
+    override fun invoke(customEmailId: BreachEmailId.Custom): Flow<BreachEmailReport.Custom> =
+        observeCurrentUser()
+            .flatMapLatest { user ->
+                breachRepository.observeCustomEmail(user.userId, customEmailId.customEmailId)
+            }
 
 }

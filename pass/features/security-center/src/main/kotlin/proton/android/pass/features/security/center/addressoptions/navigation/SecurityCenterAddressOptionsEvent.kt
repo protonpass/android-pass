@@ -23,4 +23,6 @@ internal sealed interface SecurityCenterAddressOptionsEvent {
     data object Idle : SecurityCenterAddressOptionsEvent
 
     data object OnMonitorStateUpdated : SecurityCenterAddressOptionsEvent
+
+    data object OnCustomEmailRemoved : SecurityCenterAddressOptionsEvent
 }

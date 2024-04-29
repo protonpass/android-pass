@@ -51,7 +51,7 @@ sealed interface BreachEmailReport {
         override val breachCount: Int,
         override val flags: Int,
         override val lastBreachTime: Int?
-    ): BreachEmailReport {
+    ) : BreachEmailReport {
 
         override val isMonitoringDisabled: Boolean = flags
             .hasFlag(EmailFlag.MonitoringDisabled.value)

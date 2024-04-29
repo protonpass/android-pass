@@ -178,14 +178,15 @@ class BreachRepositoryImpl @Inject constructor(
         userId: UserId,
         id: AddressId
     ): Flow<List<BreachEmail>> =
-        localBreachesDataSource.observeProtonEmailBreaches()
+        localBreachesDataSource.observeProtonEmailBreaches(userId, id)
             .onStart {
                 remote.getBreachesForProtonEmail(userId, id)
                     .toDomain { breachDto -> BreachEmailId.Proton(BreachId(breachDto.id), id) }
                     .also { protonEmailBreaches ->
                         localBreachesDataSource.upsertProtonEmailBreaches(
-                            userId,
-                            protonEmailBreaches
+                            userId = userId,
+                            addressId = id,
+                            protonEmailBreaches = protonEmailBreaches
                         )
                     }
             }

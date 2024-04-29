@@ -32,21 +32,20 @@ class ObserveBreachEmailReportImpl @Inject constructor(
     private val breachRepository: BreachRepository
 ) : ObserveBreachEmailReport {
 
-    override fun invoke(breachEmailId: BreachEmailId): Flow<BreachEmailReport> =
-        observeCurrentUser()
-            .flatMapLatest { user ->
-                when (breachEmailId) {
-                    is BreachEmailId.Alias -> TODO()
-                    is BreachEmailId.Custom -> breachRepository.observeCustomEmail(
-                        userId = user.userId,
-                        customEmailId = breachEmailId.customEmailId
-                    )
+    override fun invoke(breachEmailId: BreachEmailId): Flow<BreachEmailReport> = observeCurrentUser()
+        .flatMapLatest { user ->
+            when (breachEmailId) {
+                is BreachEmailId.Alias -> TODO()
+                is BreachEmailId.Custom -> breachRepository.observeCustomEmail(
+                    userId = user.userId,
+                    customEmailId = breachEmailId.customEmailId
+                )
 
-                    is BreachEmailId.Proton -> breachRepository.observeProtonEmail(
-                        userId = user.userId,
-                        addressId = breachEmailId.addressId
-                    )
-                }
+                is BreachEmailId.Proton -> breachRepository.observeProtonEmail(
+                    userId = user.userId,
+                    addressId = breachEmailId.addressId
+                )
             }
+        }
 
 }

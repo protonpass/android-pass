@@ -21,10 +21,12 @@ package proton.android.pass.features.security.center.weakpass.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.withContext
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
@@ -67,9 +69,11 @@ class SecurityCenterWeakPassViewModel @Inject constructor(
         initialValue = SecurityCenterWeakPassState.Initial
     )
 
-    private fun List<Item>.toUiModels() = encryptionContextProvider.withEncryptionContext {
-        map { item ->
-            item.toUiModel(this@withEncryptionContext).copy(isPinned = false)
+    private suspend fun List<Item>.toUiModels() = withContext(Dispatchers.Default) {
+        encryptionContextProvider.withEncryptionContext {
+            map { item ->
+                item.toUiModel(this@withEncryptionContext).copy(isPinned = false)
+            }
         }
     }
 

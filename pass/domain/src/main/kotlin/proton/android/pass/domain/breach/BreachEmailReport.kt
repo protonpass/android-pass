@@ -25,17 +25,28 @@ sealed interface BreachEmailReport {
 
     val email: String
     val breachCount: Int
-    val flags: Int
     val lastBreachTime: Int?
     val isMonitoringDisabled: Boolean
     val hasBreaches: Boolean
 
+    data class Alias(
+        val id: AliasEmailId,
+        override val email: String,
+        override val breachCount: Int,
+        override val isMonitoringDisabled: Boolean,
+        override val lastBreachTime: Int?
+    ): BreachEmailReport {
+
+        override val hasBreaches: Boolean = breachCount > 0
+
+    }
+
     data class Custom(
         val id: CustomEmailId,
         val isVerified: Boolean,
+        val flags: Int,
         override val email: String,
         override val breachCount: Int,
-        override val flags: Int,
         override val lastBreachTime: Int?
     ) : BreachEmailReport {
 
@@ -43,13 +54,14 @@ sealed interface BreachEmailReport {
             .hasFlag(EmailFlag.MonitoringDisabled.value)
 
         override val hasBreaches: Boolean = breachCount > 0
+
     }
 
     data class Proton(
         val addressId: AddressId,
+        val flags: Int,
         override val email: String,
         override val breachCount: Int,
-        override val flags: Int,
         override val lastBreachTime: Int?
     ) : BreachEmailReport {
 

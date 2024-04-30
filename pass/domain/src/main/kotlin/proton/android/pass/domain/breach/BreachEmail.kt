@@ -28,6 +28,11 @@ value class BreachId(val id: String)
 @JvmInline
 value class CustomEmailId(val id: String)
 
+data class AliasEmailId(
+    val shareId: ShareId,
+    val itemId: ItemId
+)
+
 sealed interface BreachEmailId {
 
     val id: BreachId

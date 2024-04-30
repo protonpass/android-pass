@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import proton.android.pass.data.api.repositories.BreachRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.breach.ObserveBreachEmailReport
+import proton.android.pass.domain.breach.AliasEmailId
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachEmailReport
 import javax.inject.Inject
@@ -32,20 +33,28 @@ class ObserveBreachEmailReportImpl @Inject constructor(
     private val breachRepository: BreachRepository
 ) : ObserveBreachEmailReport {
 
-    override fun invoke(breachEmailId: BreachEmailId): Flow<BreachEmailReport> = observeCurrentUser()
-        .flatMapLatest { user ->
-            when (breachEmailId) {
-                is BreachEmailId.Alias -> TODO()
-                is BreachEmailId.Custom -> breachRepository.observeCustomEmail(
-                    userId = user.userId,
-                    customEmailId = breachEmailId.customEmailId
-                )
+    override fun invoke(breachEmailId: BreachEmailId): Flow<BreachEmailReport> =
+        observeCurrentUser()
+            .flatMapLatest { user ->
+                when (breachEmailId) {
+                    is BreachEmailId.Alias -> breachRepository.observeAliasEmail(
+                        userId = user.userId,
+                        aliasEmailId = AliasEmailId(
+                            shareId = breachEmailId.shareId,
+                            itemId = breachEmailId.itemId
+                        )
+                    )
 
-                is BreachEmailId.Proton -> breachRepository.observeProtonEmail(
-                    userId = user.userId,
-                    addressId = breachEmailId.addressId
-                )
+                    is BreachEmailId.Custom -> breachRepository.observeCustomEmail(
+                        userId = user.userId,
+                        customEmailId = breachEmailId.customEmailId
+                    )
+
+                    is BreachEmailId.Proton -> breachRepository.observeProtonEmail(
+                        userId = user.userId,
+                        addressId = breachEmailId.addressId
+                    )
+                }
             }
-        }
 
 }

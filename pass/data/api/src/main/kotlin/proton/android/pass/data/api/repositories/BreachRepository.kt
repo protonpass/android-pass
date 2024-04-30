@@ -23,6 +23,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.breach.AliasEmailId
 import proton.android.pass.domain.breach.Breach
 import proton.android.pass.domain.breach.BreachCustomEmail
 import proton.android.pass.domain.breach.BreachEmail
@@ -46,6 +47,8 @@ interface BreachRepository {
         code: String
     )
 
+    fun observeAliasEmail(userId: UserId, aliasEmailId: AliasEmailId): Flow<BreachEmailReport.Alias>
+
     fun observeProtonEmail(userId: UserId, addressId: AddressId): Flow<BreachEmailReport.Proton>
 
     fun observeProtonEmails(userId: UserId): Flow<List<BreachProtonEmail>>
@@ -60,8 +63,7 @@ interface BreachRepository {
 
     fun observeBreachesForAliasEmail(
         userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId
+        aliasEmailId: AliasEmailId
     ): Flow<List<BreachEmail>>
 
     suspend fun markProtonEmailAsResolved(userId: UserId, id: AddressId)

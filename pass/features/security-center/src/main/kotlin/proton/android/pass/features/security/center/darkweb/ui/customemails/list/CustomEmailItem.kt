@@ -204,7 +204,7 @@ private fun CustomEmailItemVerified(
     onDetailClick: () -> Unit
 ) {
     val color = if (status.hasBreaches) {
-        PassTheme.colors.noteInteractionNormMajor1
+        PassTheme.colors.passwordInteractionNormMajor1
     } else {
         PassTheme.colors.cardInteractionNormMajor1
     }

@@ -57,8 +57,8 @@ private fun DarkWebStatus.toContent() = when (this) {
 
     )
     DarkWebStatus.Warning -> DarkWebStatusIndicatorContent(
-        backgroundColor = PassTheme.colors.noteInteractionNormMinor2,
-        iconColor = PassTheme.colors.noteInteractionNormMajor2,
+        backgroundColor = PassTheme.colors.passwordInteractionNormMinor2,
+        iconColor = PassTheme.colors.passwordInteractionNormMajor2,
         icon = CoreR.drawable.ic_proton_exclamation_circle_filled
     )
     DarkWebStatus.Loading -> DarkWebStatusIndicatorContent(

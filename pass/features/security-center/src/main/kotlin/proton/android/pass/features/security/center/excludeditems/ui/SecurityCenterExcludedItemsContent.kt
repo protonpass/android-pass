@@ -64,6 +64,7 @@ internal fun SecurityCenterExcludedItemsContent(
                 SecurityCenterLoginItemRow(
                     itemUiModel = itemUiModel,
                     canLoadExternalImages = canLoadExternalImages,
+                    shareIcon = getShareIcon(itemUiModel.shareId),
                     onClick = {
                         SecurityCenterExcludedItemsUiEvent.OnShowItemDetails(
                             shareId = itemUiModel.shareId,

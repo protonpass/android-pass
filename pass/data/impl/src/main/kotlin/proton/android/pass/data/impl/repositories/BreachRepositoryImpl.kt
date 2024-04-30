@@ -42,9 +42,7 @@ import proton.android.pass.data.impl.responses.BreachDomainPeek
 import proton.android.pass.data.impl.responses.BreachEmailsResponse
 import proton.android.pass.data.impl.responses.Breaches
 import proton.android.pass.data.impl.responses.BreachesResponse
-import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
-import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.breach.AliasEmailId
 import proton.android.pass.domain.breach.Breach
 import proton.android.pass.domain.breach.BreachAction
@@ -256,12 +254,19 @@ class BreachRepositoryImpl @Inject constructor(
             }
     }
 
-    override suspend fun markAliasEmailAsResolved(
-        userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId
-    ) {
-        remote.markAliasEmailAsResolved(userId, shareId, itemId)
+    override suspend fun markAliasEmailAsResolved(userId: UserId, aliasEmailId: AliasEmailId) {
+        remote.markAliasEmailAsResolved(userId, aliasEmailId.shareId, aliasEmailId.itemId)
+
+        localBreachesDataSource.observeAliasEmailBreaches(userId, aliasEmailId)
+            .first()
+            .map { aliasEmailBreach -> aliasEmailBreach.copy(isResolved = true) }
+            .also { resolvedAliasEmailBreach ->
+                localBreachesDataSource.upsertAliasEmailBreaches(
+                    userId = userId,
+                    aliasEmailId = aliasEmailId,
+                    aliasEmailBreaches = resolvedAliasEmailBreach
+                )
+            }
     }
 
     override suspend fun markCustomEmailAsResolved(userId: UserId, id: CustomEmailId) {

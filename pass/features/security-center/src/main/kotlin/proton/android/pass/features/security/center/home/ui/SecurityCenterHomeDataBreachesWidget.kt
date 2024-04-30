@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
@@ -57,6 +58,7 @@ import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.composecomponents.impl.utils.PassBlurEffect
 import proton.android.pass.composecomponents.impl.utils.protonFormattedDateText
 import proton.android.pass.features.security.center.R
+import proton.android.pass.features.security.center.shared.ui.DateUtils
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @[Composable Suppress("FunctionMaxLength")]
@@ -69,81 +71,98 @@ internal fun SecurityCenterHomeDataBreachesWidget(
     dataBreachedPassword: String
 ) {
     Column(
-        modifier = modifier
-            .roundedContainer(
-                backgroundColor = PassTheme.colors.passwordInteractionNormMinor2,
-                borderColor = PassTheme.colors.passwordInteractionNormMinor1
-            )
-            .padding(all = 24.dp),
-        verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
+        modifier = modifier.roundedContainer(
+            backgroundColor = PassTheme.colors.passwordInteractionNormMinor2,
+            borderColor = PassTheme.colors.passwordInteractionNormMinor1
+        ),
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
     ) {
-        PassPlusIcon(modifier = Modifier.align(Alignment.End))
-        Text(
-            text = stringResource(id = R.string.security_center_home_widget_breaches_title),
-            color = PassTheme.colors.passwordInteractionNormMajor2,
-            fontSize = 24.sp,
-            style = PassTheme.typography.heroNorm()
-        )
-
-        Text(
-            text = stringResource(id = R.string.security_center_home_widget_breaches_subtitle),
-            color = PassTheme.colors.passwordInteractionNormMajor2,
-            style = ProtonTheme.typography.body1Regular
-        )
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(Spacing.small)
-        ) {
-            Icon(
-                modifier = Modifier
-                    .size(36.dp)
-                    .clip(shape = RoundedCornerShape(Radius.small))
-                    .background(color = PassTheme.colors.passwordInteractionNormMinor1)
-                    .padding(all = Spacing.small),
-                painter = painterResource(id = CompR.drawable.ic_union_filled),
-                contentDescription = null,
-                tint = PassTheme.colors.passwordInteractionNormMajor2
-            )
-
-            Column(
-                modifier = Modifier.padding(start = Spacing.extraSmall)
-            ) {
-                SectionSubtitle(text = dataBreachedSite.asAnnotatedString())
-
-                SectionTitle(
-                    text = protonFormattedDateText(
-                        endInstant = Instant.fromEpochSeconds(dataBreachedTime)
-                    )
+        PassPlusIcon(
+            modifier = Modifier
+                .align(Alignment.End)
+                .padding(
+                    top = Spacing.medium,
+                    end = Spacing.medium
                 )
-            }
-        }
+        )
 
         Column(
-            modifier = Modifier
-                .clip(PassTheme.shapes.containerInputShape)
-                .background(color = PassTheme.colors.passwordInteractionNormMajor2.copy(alpha = 0.05F))
-                .fillMaxWidth()
-                .padding(all = Spacing.medium),
-            verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
+            modifier = Modifier.padding(
+                start = 24.dp,
+                end = 24.dp,
+                bottom = 24.dp
+            ),
+            verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
         ) {
-            BreachRow(
-                labelResId = CompR.string.email_address,
-                value = dataBreachedEmail
+            Text(
+                text = stringResource(id = R.string.security_center_home_widget_breaches_title),
+                color = PassTheme.colors.passwordInteractionNormMajor2,
+                fontSize = 24.sp,
+                style = PassTheme.typography.heroNorm()
             )
 
-            BreachRow(
-                labelResId = CompR.string.password,
-                value = dataBreachedPassword
+            Text(
+                text = stringResource(id = R.string.security_center_home_widget_breaches_subtitle),
+                color = PassTheme.colors.passwordInteractionNormMajor2,
+                style = ProtonTheme.typography.body1Regular
+            )
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(Spacing.small)
+            ) {
+                Icon(
+                    modifier = Modifier
+                        .size(36.dp)
+                        .clip(shape = RoundedCornerShape(Radius.small))
+                        .background(color = PassTheme.colors.passwordInteractionNormMinor1)
+                        .padding(all = Spacing.small),
+                    painter = painterResource(id = CompR.drawable.ic_union_filled),
+                    contentDescription = null,
+                    tint = PassTheme.colors.passwordInteractionNormMajor2
+                )
+
+                Column(
+                    modifier = Modifier.padding(start = Spacing.extraSmall)
+                ) {
+                    SectionSubtitle(text = dataBreachedSite.asAnnotatedString())
+
+                    SectionTitle(
+                        text = DateUtils.formatDate(dataBreachedTime.toInt()).getOrElse {
+                            protonFormattedDateText(
+                                endInstant = Instant.fromEpochSeconds(dataBreachedTime)
+                            )
+                        }
+                    )
+                }
+            }
+
+            Column(
+                modifier = Modifier
+                    .clip(PassTheme.shapes.containerInputShape)
+                    .background(color = PassTheme.colors.passwordInteractionNormMinor1)
+                    .fillMaxWidth()
+                    .padding(all = Spacing.medium),
+                verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
+            ) {
+                BreachRow(
+                    labelResId = CompR.string.email_address,
+                    value = dataBreachedEmail
+                )
+
+                BreachRow(
+                    labelResId = CompR.string.password,
+                    value = dataBreachedPassword
+                )
+            }
+
+            PassCircleButton(
+                text = stringResource(id = CompR.string.action_view_details),
+                backgroundColor = PassTheme.colors.passwordInteractionNormMajor2,
+                onClick = onActionClick
             )
         }
-
-        PassCircleButton(
-            text = stringResource(id = CompR.string.action_view_details),
-            backgroundColor = PassTheme.colors.passwordInteractionNormMajor2,
-            onClick = onActionClick
-        )
     }
 }
 
@@ -163,10 +182,12 @@ private fun BreachRow(
         )
 
         PassBlurEffect(
-            blurRadius = 5.dp
+            blurRadius = 4.dp,
+            shape = CircleShape,
+            noiseFactor = 0.2f
         ) { blurModifier ->
             Text(
-                modifier = blurModifier,
+                modifier = blurModifier.padding(1.dp),
                 text = value,
                 color = PassTheme.colors.passwordInteractionNormMajor2,
                 style = ProtonTheme.typography.defaultNorm

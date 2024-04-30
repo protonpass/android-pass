@@ -25,9 +25,6 @@ import proton.android.pass.domain.breach.BreachEmail
 
 interface ObserveBreachesForAliasEmail {
 
-    operator fun invoke(
-        shareId: ShareId,
-        itemId: ItemId
-    ): Flow<List<BreachEmail>>
+    operator fun invoke(shareId: ShareId, itemId: ItemId): Flow<List<BreachEmail>>
 
 }

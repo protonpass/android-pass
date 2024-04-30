@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.domain.breach.AliasEmailId
@@ -228,9 +229,11 @@ class LocalBreachesDataSourceImpl @Inject constructor() : LocalBreachesDataSourc
     }
 
     override fun observeAliasEmailBreaches(userId: UserId, aliasEmailId: AliasEmailId): Flow<List<BreachEmail>> =
-        aliasEmailBreachesFlow.map { aliasEmailBreachesMap ->
-            aliasEmailBreachesMap.getOrElse(Pair(userId, aliasEmailId)) { emptyList() }
-        }
+        aliasEmailBreachesFlow
+            .onStart { emitAliasEmailBreachesChanges() }
+            .map { aliasEmailBreachesMap ->
+                aliasEmailBreachesMap.getOrElse(Pair(userId, aliasEmailId)) { emptyList() }
+            }
 
     override suspend fun upsertAliasEmailBreaches(
         userId: UserId,

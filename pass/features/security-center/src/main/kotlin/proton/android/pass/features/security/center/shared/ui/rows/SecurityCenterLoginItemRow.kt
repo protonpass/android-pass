@@ -34,7 +34,7 @@ internal fun SecurityCenterLoginItemRow(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
     canLoadExternalImages: Boolean,
-    shareIcon: ShareIcon? = null,
+    shareIcon: ShareIcon?,
     onClick: () -> Unit
 ) {
     Box(

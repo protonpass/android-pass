@@ -26,6 +26,9 @@ import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.ShareIcon
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 import proton.android.pass.domain.breach.BreachEmail
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachEmailReport
@@ -47,7 +50,8 @@ internal data class SecurityCenterReportState(
     private val usedInLoginItemsResult: LoadingResult<List<ItemUiModel>>,
     private val isResolvingBreachState: IsLoadingState,
     internal val breachEmailId: BreachEmailId?,
-    internal val event: SecurityCenterReportEvent
+    internal val event: SecurityCenterReportEvent,
+    private val groupedVaults: Map<ShareId, Vault>
 ) {
 
     internal val isBreachExcludedFromMonitoring: Boolean = when (breachEmailResult) {
@@ -104,6 +108,8 @@ internal data class SecurityCenterReportState(
 
     internal val isResolveLoading: Boolean = isResolvingBreachState.value()
 
+    internal fun getShareIcon(shareId: ShareId): ShareIcon? = groupedVaults[shareId]?.icon
+
     internal companion object {
 
         internal val Initial = SecurityCenterReportState(
@@ -113,7 +119,8 @@ internal data class SecurityCenterReportState(
             usedInLoginItemsResult = LoadingResult.Loading,
             isResolvingBreachState = IsLoadingState.NotLoading,
             breachEmailId = null,
-            event = SecurityCenterReportEvent.Idle
+            event = SecurityCenterReportEvent.Idle,
+            groupedVaults = emptyMap()
         )
 
     }

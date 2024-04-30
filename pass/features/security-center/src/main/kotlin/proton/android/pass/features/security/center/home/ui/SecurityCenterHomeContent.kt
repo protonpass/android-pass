@@ -28,6 +28,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarEvent
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarSelection
 import proton.android.pass.commonui.api.PassTheme
@@ -106,7 +107,10 @@ internal fun SecurityCenterHomeContent(
                 )
             }
 
-            SectionTitle(text = stringResource(id = R.string.security_center_home_section_password_health))
+            SectionTitle(
+                text = stringResource(id = R.string.security_center_home_section_password_health),
+                textColor = ProtonTheme.colors.textNorm
+            )
 
             SecurityCenterCounterRow(
                 model = SecurityCenterCounterRowModel.Indicator(

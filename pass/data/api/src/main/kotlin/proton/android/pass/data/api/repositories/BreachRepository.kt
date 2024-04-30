@@ -21,21 +21,22 @@ package proton.android.pass.data.api.repositories
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.breach.AliasEmailId
 import proton.android.pass.domain.breach.Breach
 import proton.android.pass.domain.breach.BreachCustomEmail
 import proton.android.pass.domain.breach.BreachEmail
 import proton.android.pass.domain.breach.BreachEmailReport
-import proton.android.pass.domain.breach.CustomEmailId
 import proton.android.pass.domain.breach.BreachProtonEmail
+import proton.android.pass.domain.breach.CustomEmailId
 
 interface BreachRepository {
 
     fun observeAllBreaches(userId: UserId): Flow<Breach>
 
-    fun observeCustomEmail(userId: UserId, customEmailId: CustomEmailId): Flow<BreachEmailReport.Custom>
+    fun observeCustomEmail(
+        userId: UserId,
+        customEmailId: CustomEmailId
+    ): Flow<BreachEmailReport.Custom>
 
     fun observeCustomEmails(userId: UserId): Flow<List<BreachCustomEmail>>
 
@@ -70,8 +71,7 @@ interface BreachRepository {
 
     suspend fun markAliasEmailAsResolved(
         userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId
+        aliasEmailId: AliasEmailId
     )
 
     suspend fun markCustomEmailAsResolved(userId: UserId, id: CustomEmailId)

@@ -32,7 +32,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.applyIf
@@ -72,7 +71,7 @@ internal fun EmailBreachRow(
                     emailBreachUiState.hasBreaches && emailBreachUiState.isMonitored -> EmailAndBreachDate(
                         email = emailBreachUiState.email,
                         breachDate = emailBreachUiState.breachDate,
-                        textStyle = ProtonTheme.typography.defaultNorm
+                        textStyle = ProtonTheme.typography.body1Regular
                             .copy(color = PassTheme.colors.passwordInteractionNormMajor1),
                         dateStyle = PassTheme.typography.body3Weak(),
                         hasBreaches = true
@@ -81,7 +80,7 @@ internal fun EmailBreachRow(
                     !emailBreachUiState.hasBreaches && emailBreachUiState.isMonitored -> EmailAndBreachDate(
                         email = emailBreachUiState.email,
                         breachDate = emailBreachUiState.breachDate,
-                        textStyle = ProtonTheme.typography.defaultNorm,
+                        textStyle = ProtonTheme.typography.body1Regular,
                         dateStyle = PassTheme.typography.body3Norm()
                             .copy(color = PassTheme.colors.cardInteractionNormMajor2),
                         hasBreaches = false
@@ -90,7 +89,7 @@ internal fun EmailBreachRow(
                     else -> EmailAndBreachDate(
                         email = emailBreachUiState.email,
                         breachDate = emailBreachUiState.breachDate,
-                        textStyle = ProtonTheme.typography.defaultNorm,
+                        textStyle = ProtonTheme.typography.body1Regular,
                         dateStyle = PassTheme.typography.body3Weak(),
                         hasBreaches = false
                     )

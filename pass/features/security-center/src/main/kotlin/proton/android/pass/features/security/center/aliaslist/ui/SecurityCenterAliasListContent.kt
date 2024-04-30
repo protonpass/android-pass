@@ -99,11 +99,7 @@ internal fun SecurityCenterAliasListContent(
                 )
             }
             when (val list = state.listState) {
-                is AliasListState.Loading -> Loading(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(Spacing.medium)
-                )
+                is AliasListState.Loading -> Loading(Modifier.weight(1f))
 
                 is AliasListState.Error -> Text(
                     modifier = Modifier

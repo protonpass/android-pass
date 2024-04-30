@@ -308,7 +308,8 @@ class BreachRepositoryImpl @Inject constructor(
             breachesCount = emailsCount,
             breachedDomainPeeks = domainPeeks.map { domainPeek -> domainPeek.toDomain() },
             breachedCustomEmails = customEmails.map { customEmail -> customEmail.toDomain() },
-            breachedProtonEmails = protonEmails.map { protonEmail -> protonEmail.toDomain() }
+            breachedProtonEmails = protonEmails.map { protonEmail -> protonEmail.toDomain() },
+            breachedAliases = emptyList()
         )
     }
 

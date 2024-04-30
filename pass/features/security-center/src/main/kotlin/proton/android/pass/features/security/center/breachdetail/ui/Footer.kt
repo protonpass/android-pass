@@ -19,6 +19,7 @@
 package proton.android.pass.features.security.center.breachdetail.ui
 
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -26,10 +27,13 @@ import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withAnnotation
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallNorm
 import me.proton.core.compose.theme.defaultSmallWeak
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.features.security.center.R
 
 private const val LINK_ANNOTATION_TAG = "link"
@@ -75,4 +79,14 @@ internal fun Footer(
                 }
         }
     )
+}
+
+@Preview
+@Composable
+fun FooterPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            Footer(name = "Breach site", onOpenUrl = {})
+        }
+    }
 }

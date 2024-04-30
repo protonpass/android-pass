@@ -24,7 +24,7 @@ import proton.android.pass.domain.breach.BreachActionCode
 
 @DrawableRes
 fun BreachActionCode.toResource(): Int = when (this) {
-    BreachActionCode.StayAlert -> R.drawable.ic_proton_eye
+    BreachActionCode.StayAlert -> R.drawable.ic_proton_checkmark
     BreachActionCode.PasswordSource -> R.drawable.ic_proton_key
     BreachActionCode.PasswordExposed -> R.drawable.ic_proton_key
     BreachActionCode.PasswordsAll -> R.drawable.ic_proton_key

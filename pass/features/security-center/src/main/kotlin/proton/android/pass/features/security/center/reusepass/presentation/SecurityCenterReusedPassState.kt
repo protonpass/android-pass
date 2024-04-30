@@ -22,22 +22,32 @@ import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.domain.ShareIcon
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 
 @Stable
 internal data class SecurityCenterReusedPassState(
     internal val reusedPasswords: ImmutableList<SecurityCenterReusedPassGroup>,
     internal val isLoading: Boolean,
-    internal val canLoadExternalImages: Boolean
+    internal val canLoadExternalImages: Boolean,
+    private val groupedVaults: Map<ShareId, Vault>
 ) {
-    val shouldNavigateBack = isLoading.not() && reusedPasswords.sumOf { it.itemUiModels.size } == 0
+
+    internal val shouldNavigateBack =
+        !isLoading && reusedPasswords.sumOf { it.itemUiModels.size } == 0
+
+    internal fun getShareIcon(shareId: ShareId): ShareIcon? = groupedVaults[shareId]?.icon
 
     internal companion object {
 
         internal val Initial: SecurityCenterReusedPassState = SecurityCenterReusedPassState(
             reusedPasswords = persistentListOf(),
             isLoading = true,
-            canLoadExternalImages = false
+            canLoadExternalImages = false,
+            groupedVaults = emptyMap()
         )
+
     }
 
 }

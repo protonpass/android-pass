@@ -84,6 +84,7 @@ internal fun SecurityCenterReportList(
                 SecurityCenterLoginItemRow(
                     itemUiModel = itemUiModel,
                     canLoadExternalImages = canLoadExternalImages,
+                    shareIcon = getShareIcon(itemUiModel.shareId),
                     onClick = {
                         onUiEvent(
                             SecurityCenterReportUiEvent.OnItemClick(

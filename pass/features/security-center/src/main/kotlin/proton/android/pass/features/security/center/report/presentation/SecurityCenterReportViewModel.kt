@@ -48,6 +48,7 @@ import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.breach.MarkEmailBreachAsResolved
 import proton.android.pass.data.api.usecases.breach.ObserveBreachEmailReport
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForEmail
+import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ItemType
@@ -74,6 +75,7 @@ class SecurityCenterReportViewModel @Inject constructor(
     observeBreachEmailReport: ObserveBreachEmailReport,
     observeBreachesForEmail: ObserveBreachesForEmail,
     observeItems: ObserveItems,
+    observeVaultsGroupedByShareId: ObserveVaultsGroupedByShareId,
     private val markEmailBreachAsResolved: MarkEmailBreachAsResolved,
     private val snackbarDispatcher: SnackbarDispatcher,
     userPreferencesRepository: UserPreferencesRepository,
@@ -166,13 +168,15 @@ class SecurityCenterReportViewModel @Inject constructor(
         usedInLoginItemsFlow,
         userPreferencesRepository.getUseFaviconsPreference(),
         isResolveButtonLoadingFlow,
-        eventFlow
+        eventFlow,
+        observeVaultsGroupedByShareId()
     ) { breachEmailReportResult,
         breachesForEmailResult,
         usedInLoginItemsResult,
         useFavIconsPreference,
         isResolveButtonLoading,
-        event ->
+        event,
+        groupedVaults ->
         SecurityCenterReportState(
             breachEmailId = breachEmailId,
             canLoadExternalImages = useFavIconsPreference.value(),
@@ -180,7 +184,8 @@ class SecurityCenterReportViewModel @Inject constructor(
             breachEmailsResult = breachesForEmailResult,
             usedInLoginItemsResult = usedInLoginItemsResult,
             isResolvingBreachState = isResolveButtonLoading,
-            event = event
+            event = event,
+            groupedVaults = groupedVaults
         )
     }.stateIn(
         scope = viewModelScope,

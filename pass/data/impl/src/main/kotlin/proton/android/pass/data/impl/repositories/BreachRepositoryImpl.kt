@@ -278,8 +278,6 @@ class BreachRepositoryImpl @Inject constructor(
 
     override suspend fun resendVerificationCode(userId: UserId, id: CustomEmailId) {
         remote.resendVerificationCode(userId, id)
-            .let { localBreachesDataSource.getCustomEmail(userId, id).copy(verified = true) }
-            .also { customEmail -> localBreachesDataSource.upsertCustomEmail(userId, customEmail) }
     }
 
     override suspend fun removeCustomEmail(userId: UserId, id: CustomEmailId) {

@@ -20,22 +20,29 @@ package proton.android.pass.features.security.center.excludeditems.presentation
 
 import androidx.compose.runtime.Stable
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.domain.ShareIcon
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 
 @Stable
 internal data class SecurityCenterExcludedItemsState(
     internal val excludedItemUiModels: List<ItemUiModel>,
     internal val canLoadExternalImages: Boolean,
-    private val isLoading: Boolean
+    private val isLoading: Boolean,
+    private val groupedVaults: Map<ShareId, Vault>
 ) {
 
     internal val shouldNavigateBack: Boolean = !isLoading && excludedItemUiModels.isEmpty()
+
+    internal fun getShareIcon(shareId: ShareId): ShareIcon? = groupedVaults[shareId]?.icon
 
     internal companion object {
 
         internal val Initial: SecurityCenterExcludedItemsState = SecurityCenterExcludedItemsState(
             excludedItemUiModels = emptyList(),
             canLoadExternalImages = false,
-            isLoading = true
+            isLoading = true,
+            groupedVaults = emptyMap()
         )
 
     }

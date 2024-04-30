@@ -22,21 +22,31 @@ import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.domain.ShareIcon
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 
 @Stable
 internal data class SecurityCenterMissingTFAState(
     internal val missingTfaItems: ImmutableList<ItemUiModel>,
     internal val isLoading: Boolean,
-    internal val canLoadExternalImages: Boolean
+    internal val canLoadExternalImages: Boolean,
+    private val groupedVaults: Map<ShareId, Vault>
 ) {
 
-    val shouldNavigateBack = isLoading.not() && missingTfaItems.isEmpty()
+    internal val shouldNavigateBack = !isLoading && missingTfaItems.isEmpty()
 
-    companion object {
+    internal fun getShareIcon(shareId: ShareId): ShareIcon? = groupedVaults[shareId]?.icon
+
+    internal companion object {
+
         internal val Initial = SecurityCenterMissingTFAState(
             missingTfaItems = persistentListOf(),
             isLoading = true,
-            canLoadExternalImages = false
+            canLoadExternalImages = false,
+            groupedVaults = emptyMap()
         )
+
     }
+
 }

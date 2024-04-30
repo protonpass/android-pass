@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
+import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareId
 import proton.android.pass.domain.Item
 import proton.android.pass.features.security.center.PassMonitorDisplayMissing2FA
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -40,6 +41,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SecurityCenterMissingTFAViewModel @Inject constructor(
     observeMonitoredItems: ObserveMonitoredItems,
+    observeVaultsGroupedByShareId: ObserveVaultsGroupedByShareId,
     missingTfaChecker: MissingTfaChecker,
     userPreferencesRepository: UserPreferencesRepository,
     telemetryManager: TelemetryManager,
@@ -52,13 +54,15 @@ class SecurityCenterMissingTFAViewModel @Inject constructor(
 
     internal val state: StateFlow<SecurityCenterMissingTFAState> = combine(
         observeMonitoredItems(),
-        userPreferencesRepository.getUseFaviconsPreference()
-    ) { monitoredItems, useFavIconsPreference ->
+        userPreferencesRepository.getUseFaviconsPreference(),
+        observeVaultsGroupedByShareId()
+    ) { monitoredItems, useFavIconsPreference, groupedVaults ->
         val report = missingTfaChecker(monitoredItems)
         SecurityCenterMissingTFAState(
             missingTfaItems = report.items.toUiModels().toPersistentList(),
             isLoading = false,
-            canLoadExternalImages = useFavIconsPreference.value()
+            canLoadExternalImages = useFavIconsPreference.value(),
+            groupedVaults = groupedVaults
         )
     }.stateIn(
         scope = viewModelScope,

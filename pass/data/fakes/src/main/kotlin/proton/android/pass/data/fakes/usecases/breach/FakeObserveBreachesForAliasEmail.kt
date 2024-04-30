@@ -20,7 +20,6 @@ package proton.android.pass.data.fakes.usecases.breach
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAliasEmail
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -31,10 +30,6 @@ import javax.inject.Singleton
 @Singleton
 class FakeObserveBreachesForAliasEmail @Inject constructor() : ObserveBreachesForAliasEmail {
 
-    override fun invoke(
-        userId: UserId?,
-        shareId: ShareId,
-        itemId: ItemId
-    ): Flow<List<BreachEmail>> = emptyFlow()
+    override fun invoke(shareId: ShareId, itemId: ItemId): Flow<List<BreachEmail>> = emptyFlow()
 
 }

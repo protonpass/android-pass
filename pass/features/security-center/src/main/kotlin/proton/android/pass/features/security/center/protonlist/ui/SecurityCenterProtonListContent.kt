@@ -20,6 +20,7 @@ package proton.android.pass.features.security.center.protonlist.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -75,13 +76,16 @@ internal fun SecurityCenterProtonListContent(
             modifier = Modifier
                 .background(PassTheme.colors.backgroundNorm)
                 .padding(paddingValues = innerPaddingValues)
-                .fillMaxWidth(),
+                .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             when (val list = state.listState) {
-                is ProtonListState.Loading -> Loading()
+                is ProtonListState.Loading -> Loading(Modifier.weight(1f))
 
                 is ProtonListState.Error -> Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(Spacing.medium),
                     text = stringResource(R.string.security_center_proton_list_error),
                     style = ProtonTheme.typography.body2Regular,
                     color = ProtonTheme.colors.notificationError

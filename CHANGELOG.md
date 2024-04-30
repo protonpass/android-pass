@@ -6,6 +6,23 @@
 
 ### Other
 
+## 1.21.0 (2024-04-30)
+
+### Features :tada:
+
+- Include Pass Monitor.
+- Do not include sentry in FDroid builds.
+
+### Fixes :bug:
+
+- Allow to select an alias suffix when there are many suffixes to pick from.
+
+### Other
+
+- Allow to delete data when logging out.
+- Updated core libraries.
+- Updated translations.
+
 ## 1.20.4 (2024-04-12)
 
 ### Fixes :bug:

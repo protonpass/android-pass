@@ -30,6 +30,7 @@ import kotlinx.coroutines.withContext
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
+import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareId
 import proton.android.pass.domain.Item
 import proton.android.pass.features.security.center.PassMonitorDisplayWeakPasswords
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -41,6 +42,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SecurityCenterWeakPassViewModel @Inject constructor(
     observeMonitoredItems: ObserveMonitoredItems,
+    observeVaultsGroupedByShareId: ObserveVaultsGroupedByShareId,
     insecurePasswordChecker: InsecurePasswordChecker,
     userPreferencesRepository: UserPreferencesRepository,
     telemetryManager: TelemetryManager,
@@ -53,14 +55,16 @@ class SecurityCenterWeakPassViewModel @Inject constructor(
 
     internal val state: StateFlow<SecurityCenterWeakPassState> = combine(
         observeMonitoredItems(),
-        userPreferencesRepository.getUseFaviconsPreference()
-    ) { monitoredItems, useFavIconsPreference ->
+        userPreferencesRepository.getUseFaviconsPreference(),
+        observeVaultsGroupedByShareId()
+    ) { monitoredItems, useFavIconsPreference, groupedVaults ->
         insecurePasswordChecker(monitoredItems).let { report ->
             SecurityCenterWeakPassState(
                 vulnerablePasswordUiModels = report.vulnerablePasswordItems.toUiModels(),
                 weakPasswordUiModels = report.weakPasswordItems.toUiModels(),
                 isLoading = false,
-                canLoadExternalImages = useFavIconsPreference.value()
+                canLoadExternalImages = useFavIconsPreference.value(),
+                groupedVaults = groupedVaults
             )
         }
     }.stateIn(

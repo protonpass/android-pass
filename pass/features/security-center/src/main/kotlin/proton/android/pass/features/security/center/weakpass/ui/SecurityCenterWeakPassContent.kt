@@ -18,7 +18,6 @@
 
 package proton.android.pass.features.security.center.weakpass.ui
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -35,7 +34,6 @@ import proton.android.pass.features.security.center.shared.ui.rows.SecurityCente
 import proton.android.pass.features.security.center.weakpass.navigation.SecurityCenterWeakPassDestination
 import proton.android.pass.features.security.center.weakpass.presentation.SecurityCenterWeakPassState
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun SecurityCenterWeakPassContent(
     modifier: Modifier = Modifier,
@@ -68,6 +66,7 @@ internal fun SecurityCenterWeakPassContent(
                     SecurityCenterLoginItemRow(
                         itemUiModel = itemUiModel,
                         canLoadExternalImages = canLoadExternalImages,
+                        shareIcon = getShareIcon(itemUiModel.shareId),
                         onClick = {
                             SecurityCenterWeakPassDestination.ItemDetails(
                                 shareId = itemUiModel.shareId,

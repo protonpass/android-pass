@@ -33,28 +33,27 @@ class ObserveBreachEmailReportImpl @Inject constructor(
     private val breachRepository: BreachRepository
 ) : ObserveBreachEmailReport {
 
-    override fun invoke(breachEmailId: BreachEmailId): Flow<BreachEmailReport> =
-        observeCurrentUser()
-            .flatMapLatest { user ->
-                when (breachEmailId) {
-                    is BreachEmailId.Alias -> breachRepository.observeAliasEmail(
-                        userId = user.userId,
-                        aliasEmailId = AliasEmailId(
-                            shareId = breachEmailId.shareId,
-                            itemId = breachEmailId.itemId
-                        )
+    override fun invoke(breachEmailId: BreachEmailId): Flow<BreachEmailReport> = observeCurrentUser()
+        .flatMapLatest { user ->
+            when (breachEmailId) {
+                is BreachEmailId.Alias -> breachRepository.observeAliasEmail(
+                    userId = user.userId,
+                    aliasEmailId = AliasEmailId(
+                        shareId = breachEmailId.shareId,
+                        itemId = breachEmailId.itemId
                     )
+                )
 
-                    is BreachEmailId.Custom -> breachRepository.observeCustomEmail(
-                        userId = user.userId,
-                        customEmailId = breachEmailId.customEmailId
-                    )
+                is BreachEmailId.Custom -> breachRepository.observeCustomEmail(
+                    userId = user.userId,
+                    customEmailId = breachEmailId.customEmailId
+                )
 
-                    is BreachEmailId.Proton -> breachRepository.observeProtonEmail(
-                        userId = user.userId,
-                        addressId = breachEmailId.addressId
-                    )
-                }
+                is BreachEmailId.Proton -> breachRepository.observeProtonEmail(
+                    userId = user.userId,
+                    addressId = breachEmailId.addressId
+                )
             }
+        }
 
 }

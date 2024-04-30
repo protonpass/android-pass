@@ -25,13 +25,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.composecomponents.impl.extension.toSmallResource
 import proton.android.pass.composecomponents.impl.item.LoginRow
+import proton.android.pass.domain.ShareIcon
 
 @Composable
 internal fun SecurityCenterLoginItemRow(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
     canLoadExternalImages: Boolean,
+    shareIcon: ShareIcon?,
     onClick: () -> Unit
 ) {
     Box(
@@ -44,7 +47,8 @@ internal fun SecurityCenterLoginItemRow(
     ) {
         LoginRow(
             item = itemUiModel,
-            canLoadExternalImages = canLoadExternalImages
+            canLoadExternalImages = canLoadExternalImages,
+            vaultIcon = shareIcon?.toSmallResource()
         )
     }
 

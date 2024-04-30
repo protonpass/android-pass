@@ -83,6 +83,7 @@ internal fun SecurityCenterReusedPassContent(
                     SecurityCenterLoginItemRow(
                         itemUiModel = itemUiModel,
                         canLoadExternalImages = canLoadExternalImages,
+                        shareIcon = getShareIcon(itemUiModel.shareId),
                         onClick = {
                             SecurityCenterReusedPassDestination.ItemDetails(
                                 shareId = itemUiModel.shareId,

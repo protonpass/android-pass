@@ -31,6 +31,7 @@ import kotlinx.coroutines.withContext
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
+import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareId
 import proton.android.pass.domain.Item
 import proton.android.pass.features.security.center.PassMonitorDisplayReusedPasswords
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -42,6 +43,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SecurityCenterReusedPassViewModel @Inject constructor(
     observeMonitoredItems: ObserveMonitoredItems,
+    observeVaultsGroupedByShareId: ObserveVaultsGroupedByShareId,
     repeatedPasswordChecker: RepeatedPasswordChecker,
     userPreferencesRepository: UserPreferencesRepository,
     telemetryManager: TelemetryManager,
@@ -55,8 +57,9 @@ class SecurityCenterReusedPassViewModel @Inject constructor(
     internal val state: StateFlow<SecurityCenterReusedPassState> =
         combine(
             observeMonitoredItems(),
-            userPreferencesRepository.getUseFaviconsPreference()
-        ) { monitoredItems, useFavIconsPreference ->
+            userPreferencesRepository.getUseFaviconsPreference(),
+            observeVaultsGroupedByShareId()
+        ) { monitoredItems,  useFavIconsPreference, groupedVaults ->
 
             val reusedPasswords = repeatedPasswordChecker(monitoredItems)
 
@@ -68,7 +71,8 @@ class SecurityCenterReusedPassViewModel @Inject constructor(
                     )
                 }.toPersistentList(),
                 isLoading = false,
-                canLoadExternalImages = useFavIconsPreference.value()
+                canLoadExternalImages = useFavIconsPreference.value(),
+                groupedVaults = groupedVaults
             )
         }.stateIn(
             scope = viewModelScope,

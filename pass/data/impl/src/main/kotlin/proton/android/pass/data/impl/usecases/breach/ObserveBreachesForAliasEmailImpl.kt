@@ -36,14 +36,12 @@ class ObserveBreachesForAliasEmailImpl @Inject constructor(
     private val observeCurrentUser: ObserveCurrentUser
 ) : ObserveBreachesForAliasEmail {
 
-    override fun invoke(
-        shareId: ShareId,
-        itemId: ItemId
-    ): Flow<List<BreachEmail>> = AliasEmailId(shareId, itemId).let { aliasEmailId ->
-        observeCurrentUser()
-            .flatMapLatest { user ->
-                breachRepository.observeBreachesForAliasEmail(user.userId, aliasEmailId)
-            }
-    }
+    override fun invoke(shareId: ShareId, itemId: ItemId): Flow<List<BreachEmail>> =
+        AliasEmailId(shareId, itemId).let { aliasEmailId ->
+            observeCurrentUser()
+                .flatMapLatest { user ->
+                    breachRepository.observeBreachesForAliasEmail(user.userId, aliasEmailId)
+                }
+        }
 
 }

@@ -19,7 +19,8 @@
 package proton.android.pass.data.fakes.usecases.breach
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import proton.android.pass.data.api.usecases.MonitorState
 import proton.android.pass.data.api.usecases.ObserveGlobalMonitorState
 import javax.inject.Inject
@@ -28,6 +29,13 @@ import javax.inject.Singleton
 @Singleton
 class FakeObserveGlobalMonitorState @Inject constructor() : ObserveGlobalMonitorState {
 
-    override fun invoke(): Flow<MonitorState> = emptyFlow()
+    private val flow: MutableStateFlow<MonitorState> =
+        MutableStateFlow(MonitorState(protonMonitorEnabled = true, aliasMonitorEnabled = true))
+
+    fun emit(state: MonitorState) {
+        flow.update { state }
+    }
+
+    override fun invoke(): Flow<MonitorState> = flow
 
 }

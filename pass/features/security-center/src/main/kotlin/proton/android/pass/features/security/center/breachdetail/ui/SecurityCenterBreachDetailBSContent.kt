@@ -26,17 +26,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.bottomSheet
-import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.breachdetail.presentation.SecurityCenterBreachDetailState
 
 @Composable
@@ -68,13 +64,7 @@ internal fun SecurityCenterBreachDetailBSContent(
                     breachEmail = breachEmail,
                     onOpenUrl = onOpenUrl
                 )
-                Text(
-                    text = stringResource(
-                        id = R.string.security_center_report_detail_note,
-                        breachEmail.name
-                    ),
-                    style = ProtonTheme.typography.body2Regular
-                )
+                Footer(name = breachEmail.name, onOpenUrl = onOpenUrl)
             }
         }
     }

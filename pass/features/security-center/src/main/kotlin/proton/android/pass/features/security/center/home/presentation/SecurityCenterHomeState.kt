@@ -66,7 +66,7 @@ internal data class SecurityCenterHomeState(
             is LoadingResult.Error,
             LoadingResult.Loading -> emptyList()
 
-            is LoadingResult.Success -> breachLoadingResult.data.breachedDomainPeeks
+            is LoadingResult.Success -> breachLoadingResult.data.domainPeeks
         }
     }
 

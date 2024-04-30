@@ -31,13 +31,23 @@ import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachEmailReport
 
 @Stable
+internal sealed interface SecurityCenterReportEvent {
+    @Stable
+    data object Idle : SecurityCenterReportEvent
+
+    @Stable
+    data object Close : SecurityCenterReportEvent
+}
+
+@Stable
 internal data class SecurityCenterReportState(
     internal val canLoadExternalImages: Boolean,
     private val breachEmailResult: LoadingResult<BreachEmailReport>,
     private val breachEmailsResult: LoadingResult<List<BreachEmail>>,
     private val usedInLoginItemsResult: LoadingResult<List<ItemUiModel>>,
     private val isResolvingBreachState: IsLoadingState,
-    internal val breachEmailId: BreachEmailId?
+    internal val breachEmailId: BreachEmailId?,
+    internal val event: SecurityCenterReportEvent
 ) {
 
     internal val isBreachExcludedFromMonitoring: Boolean = when (breachEmailResult) {
@@ -102,7 +112,8 @@ internal data class SecurityCenterReportState(
             breachEmailsResult = LoadingResult.Loading,
             usedInLoginItemsResult = LoadingResult.Loading,
             isResolvingBreachState = IsLoadingState.NotLoading,
-            breachEmailId = null
+            breachEmailId = null,
+            event = SecurityCenterReportEvent.Idle
         )
 
     }

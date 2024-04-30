@@ -149,6 +149,7 @@ import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry
+import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareId
 import proton.android.pass.data.fakes.repositories.FakeSentinelRepository
 import proton.android.pass.data.fakes.repositories.TestAliasRepository
 import proton.android.pass.data.fakes.repositories.TestBulkInviteRepository
@@ -276,6 +277,7 @@ import proton.android.pass.data.fakes.usecases.items.FakeObserveItemRevisions
 import proton.android.pass.data.fakes.usecases.items.FakeObserveMonitoredItems
 import proton.android.pass.data.fakes.usecases.items.FakeOpenItemRevision
 import proton.android.pass.data.fakes.usecases.items.FakeUpdateItemFlag
+import proton.android.pass.data.fakes.usecases.vaults.FakeObserveVaultsGroupedByShareId
 import javax.inject.Singleton
 
 @Module
@@ -678,5 +680,10 @@ abstract class FakesDataModule {
 
     @[Binds Singleton]
     abstract fun bindObserveBreachProtonEmails(impl: FakeObserveBreachProtonEmails): ObserveBreachProtonEmails
+
+    @[Binds Singleton]
+    abstract fun bindObserveVaultsGroupedByShareId(
+        impl: FakeObserveVaultsGroupedByShareId
+    ): ObserveVaultsGroupedByShareId
 
 }

@@ -23,6 +23,8 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.chrisbanes.haze.HazeState
@@ -34,6 +36,8 @@ import dev.chrisbanes.haze.hazeChild
 fun PassBlurEffect(
     modifier: Modifier = Modifier,
     blurRadius: Dp = 20.dp,
+    shape: Shape = RectangleShape,
+    noiseFactor: Float = -1f,
     content: @Composable BoxScope.(Modifier) -> Unit
 ) {
     val hazeState = remember { HazeState() }
@@ -44,8 +48,10 @@ fun PassBlurEffect(
         content(
             Modifier.hazeChild(
                 state = hazeState,
+                shape = shape,
                 style = HazeStyle(
-                    blurRadius = blurRadius
+                    blurRadius = blurRadius,
+                    noiseFactor = noiseFactor
                 )
             )
         )

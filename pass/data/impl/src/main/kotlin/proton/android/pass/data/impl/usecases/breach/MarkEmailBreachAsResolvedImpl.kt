@@ -24,6 +24,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.BreachRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.breach.MarkEmailBreachAsResolved
+import proton.android.pass.domain.breach.AliasEmailId
 import proton.android.pass.domain.breach.BreachEmailId
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -39,8 +40,10 @@ class MarkEmailBreachAsResolvedImpl @Inject constructor(
         when (breachEmailId) {
             is BreachEmailId.Alias -> breachRepository.markAliasEmailAsResolved(
                 userId = finalUserId,
-                shareId = breachEmailId.shareId,
-                itemId = breachEmailId.itemId
+                aliasEmailId = AliasEmailId(
+                    shareId = breachEmailId.shareId,
+                    itemId = breachEmailId.itemId
+                )
             )
 
             is BreachEmailId.Custom -> breachRepository.markCustomEmailAsResolved(

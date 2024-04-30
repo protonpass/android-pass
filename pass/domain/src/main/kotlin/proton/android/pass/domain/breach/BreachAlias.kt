@@ -18,19 +18,19 @@
 
 package proton.android.pass.domain.breach
 
-data class Breach(
-    val breachesCount: Int,
-    val breachedDomainPeeks: List<BreachDomainPeek>,
-    val breachedCustomEmails: List<BreachCustomEmail>,
-    val breachedProtonEmails: List<BreachProtonEmail>,
-    val breachedAliases: List<BreachAlias>
-) {
-    val hasBreaches: Boolean = breachesCount > 0
+import me.proton.core.util.kotlin.hasFlag
+import proton.android.pass.domain.ItemFlag
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
-    val domainPeeks = breachedDomainPeeks + breachedAliases.map {
-        BreachDomainPeek(
-            breachDomain = it.email,
-            breachTime = it.lastBreachTime
-        )
-    }
+data class BreachAlias(
+    val shareId: ShareId,
+    val itemId: ItemId,
+    val email: String,
+    val breachCounter: Int,
+    val flags: Int,
+    val lastBreachTime: Long
+) {
+    val isMonitoringDisabled: Boolean = flags.hasFlag(ItemFlag.SkipHealthCheck.value)
 }
+

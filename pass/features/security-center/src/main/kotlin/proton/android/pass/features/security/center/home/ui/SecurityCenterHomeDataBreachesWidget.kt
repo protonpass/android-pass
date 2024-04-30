@@ -51,6 +51,7 @@ import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
 import proton.android.pass.composecomponents.impl.container.roundedContainer
+import proton.android.pass.composecomponents.impl.icon.PassPlusIcon
 import proton.android.pass.composecomponents.impl.item.SectionSubtitle
 import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.composecomponents.impl.utils.PassBlurEffect
@@ -76,6 +77,7 @@ internal fun SecurityCenterHomeDataBreachesWidget(
             .padding(all = 24.dp),
         verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
     ) {
+        PassPlusIcon(modifier = Modifier.align(Alignment.End))
         Text(
             text = stringResource(id = R.string.security_center_home_widget_breaches_title),
             color = PassTheme.colors.passwordInteractionNormMajor2,

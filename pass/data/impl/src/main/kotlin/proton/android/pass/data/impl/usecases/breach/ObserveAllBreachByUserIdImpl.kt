@@ -34,6 +34,7 @@ import proton.android.pass.data.api.usecases.items.ItemIsBreachedFilter
 import proton.android.pass.data.api.usecases.items.ItemSecurityCheckFilter
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareSelection
+import proton.android.pass.domain.breach.AliasEmailId
 import proton.android.pass.domain.breach.Breach
 import proton.android.pass.domain.breach.BreachAlias
 import javax.inject.Inject
@@ -66,8 +67,12 @@ class ObserveAllBreachByUserIdImpl @Inject constructor(
     ).flatMapLatest { aliases ->
         val firstAlias = aliases.firstOrNull()
             ?: return@flatMapLatest flowOf(emptyList<BreachAlias>())
+        val aliasEmailId = AliasEmailId(
+            shareId = firstAlias.shareId,
+            itemId = firstAlias.id
+        )
 
-        repository.observeBreachesForAliasEmail(userId, firstAlias.shareId, firstAlias.id)
+        repository.observeBreachesForAliasEmail(userId, aliasEmailId)
             .mapLatest { breachesForAlias ->
                 breachesForAlias.map { breachEmail ->
                     val parsedTime = runCatching {

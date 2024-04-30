@@ -65,6 +65,7 @@ internal fun SecurityCenterMissingTfaContent(
                 SecurityCenterLoginItemRow(
                     itemUiModel = itemUiModel,
                     canLoadExternalImages = state.canLoadExternalImages,
+                    shareIcon = state.getShareIcon(itemUiModel.shareId),
                     onClick = {
                         val event = SecurityCenterMissingTFADestination.ItemDetails(
                             shareId = itemUiModel.shareId,

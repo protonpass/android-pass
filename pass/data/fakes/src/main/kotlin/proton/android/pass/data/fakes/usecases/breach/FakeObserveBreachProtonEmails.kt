@@ -19,13 +19,20 @@
 package proton.android.pass.data.fakes.usecases.breach
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import proton.android.pass.data.api.usecases.breach.ObserveBreachProtonEmails
 import proton.android.pass.domain.breach.BreachProtonEmail
 import javax.inject.Inject
 
 class FakeObserveBreachProtonEmails @Inject constructor() : ObserveBreachProtonEmails {
 
-    override fun invoke(): Flow<List<BreachProtonEmail>> = emptyFlow()
+    private val flow: MutableStateFlow<List<BreachProtonEmail>> = MutableStateFlow(emptyList())
+
+    fun emit(emails: List<BreachProtonEmail>) {
+        flow.update { emails }
+    }
+
+    override fun invoke(): Flow<List<BreachProtonEmail>> = flow
 
 }

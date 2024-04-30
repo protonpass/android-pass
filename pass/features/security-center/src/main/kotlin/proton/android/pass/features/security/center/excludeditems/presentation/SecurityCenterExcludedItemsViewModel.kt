@@ -33,6 +33,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.items.ItemSecurityCheckFilter
+import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.features.security.center.PassMonitorDisplayExcludedItems
@@ -44,6 +45,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SecurityCenterExcludedItemsViewModel @Inject constructor(
     observeItems: ObserveItems,
+    observeVaultsGroupedByShareId: ObserveVaultsGroupedByShareId,
     userPreferencesRepository: UserPreferencesRepository,
     encryptionContextProvider: EncryptionContextProvider,
     telemetryManager: TelemetryManager
@@ -68,12 +70,14 @@ class SecurityCenterExcludedItemsViewModel @Inject constructor(
 
     internal val state: StateFlow<SecurityCenterExcludedItemsState> = combine(
         excludedLoginItemsUiModelFlow,
-        userPreferencesRepository.getUseFaviconsPreference()
-    ) { excludedLoginItemsUiModels, useFavIconsPreference ->
+        userPreferencesRepository.getUseFaviconsPreference(),
+        observeVaultsGroupedByShareId()
+    ) { excludedLoginItemsUiModels, useFavIconsPreference, groupedVaults ->
         SecurityCenterExcludedItemsState(
             excludedItemUiModels = excludedLoginItemsUiModels,
             canLoadExternalImages = useFavIconsPreference.value(),
-            isLoading = false
+            isLoading = false,
+            groupedVaults = groupedVaults
         )
     }.stateIn(
         scope = viewModelScope,

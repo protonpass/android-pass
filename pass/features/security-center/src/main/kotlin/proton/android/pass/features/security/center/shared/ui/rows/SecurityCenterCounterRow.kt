@@ -177,7 +177,7 @@ internal sealed interface SecurityCenterCounterRowModel {
         internal fun getCounterTextColor(): Color = PassTheme.colors.passwordInteractionNormMajor2
 
         @Composable
-        internal fun getAccentBackgroundColor(): Color = PassTheme.colors.passwordInteractionNormMinor1
+        internal fun getAccentBackgroundColor(): Color = PassTheme.colors.passwordInteractionNormMinor2
 
         @Composable
         internal fun getCounterIconPainter(): Painter = painterResource(id = CompR.drawable.ic_exclamation_mark)
@@ -220,7 +220,7 @@ internal sealed interface SecurityCenterCounterRowModel {
             null,
             0 -> null
 
-            else -> PassTheme.colors.noteInteractionNormMinor1
+            else -> PassTheme.colors.noteInteractionNormMinor2
         }
 
         @Composable

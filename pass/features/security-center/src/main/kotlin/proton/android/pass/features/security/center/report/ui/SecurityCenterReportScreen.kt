@@ -19,12 +19,14 @@
 package proton.android.pass.features.security.center.report.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.features.security.center.addressoptions.navigation.AddressOptionsType
 import proton.android.pass.features.security.center.report.navigation.SecurityCenterReportDestination
+import proton.android.pass.features.security.center.report.presentation.SecurityCenterReportEvent
 import proton.android.pass.features.security.center.report.presentation.SecurityCenterReportViewModel
 
 @Composable
@@ -33,6 +35,17 @@ fun SecurityCenterReportScreen(
     viewModel: SecurityCenterReportViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(state.event) {
+        when (state.event) {
+            SecurityCenterReportEvent.Close -> {
+                onNavigated(SecurityCenterReportDestination.Back)
+            }
+            SecurityCenterReportEvent.Idle -> {}
+        }
+
+        viewModel.consumeEvent(state.event)
+    }
 
     SecurityCenterReportContent(
         state = state,

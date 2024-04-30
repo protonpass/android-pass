@@ -21,10 +21,10 @@ package proton.android.pass.features.security.center.report.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -34,6 +34,7 @@ import kotlinx.coroutines.launch
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.runCatching
@@ -53,6 +54,7 @@ import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.domain.breach.BreachEmailReport
 import proton.android.pass.domain.breach.BreachId
 import proton.android.pass.domain.breach.CustomEmailId
 import proton.android.pass.features.security.center.report.presentation.SecurityCenterReportSnackbarMessage.BreachResolvedError
@@ -112,6 +114,9 @@ class SecurityCenterReportViewModel @Inject constructor(
         else -> throw IllegalStateException("Invalid state")
     }
 
+    private val eventFlow: MutableStateFlow<SecurityCenterReportEvent> =
+        MutableStateFlow(SecurityCenterReportEvent.Idle)
+
     private val observeBreachForEmailFlow = observeBreachesForEmail(breachEmailId)
         .asLoadingResult()
         .distinctUntilChanged()
@@ -119,6 +124,7 @@ class SecurityCenterReportViewModel @Inject constructor(
             if (it is LoadingResult.Error) {
                 PassLogger.w(TAG, "Failed to observe breaches for email")
                 PassLogger.w(TAG, it.exception)
+                eventFlow.update { SecurityCenterReportEvent.Close }
                 snackbarDispatcher(SecurityCenterReportSnackbarMessage.GetBreachesError)
             }
         }
@@ -127,42 +133,54 @@ class SecurityCenterReportViewModel @Inject constructor(
         selection = ShareSelection.AllShares,
         itemState = ItemState.Active,
         filter = ItemTypeFilter.Logins
-    )
-        .map { loginItems ->
-            loginItems
-                .filter { loginItem ->
-                    (loginItem.itemType as ItemType.Login).username == email
+    ).map { loginItems ->
+        loginItems
+            .filter { loginItem ->
+                (loginItem.itemType as ItemType.Login).username == email
+            }
+            .let { usedInLoginItems ->
+                encryptionContextProvider.withEncryptionContext {
+                    usedInLoginItems.map { usedInLoginItem -> usedInLoginItem.toUiModel(this) }
                 }
-                .let { usedInLoginItems ->
-                    encryptionContextProvider.withEncryptionContext {
-                        usedInLoginItems.map { usedInLoginItem -> usedInLoginItem.toUiModel(this) }
-                    }
-                }
-        }
-        .asLoadingResult()
-        .distinctUntilChanged()
+            }
+    }.asLoadingResult().distinctUntilChanged()
 
     private val isResolveButtonLoadingFlow: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
 
-    internal val state: StateFlow<SecurityCenterReportState> = combine(
-        observeBreachEmailReport(breachEmailId).asLoadingResult(),
+    private val breachReportFlow: Flow<LoadingResult<BreachEmailReport>> =
+        observeBreachEmailReport(breachEmailId)
+            .asLoadingResult()
+            .onEach {
+                if (it is LoadingResult.Error) {
+                    PassLogger.w(TAG, "Failed to observe breach email report")
+                    PassLogger.w(TAG, it.exception)
+                    eventFlow.update { SecurityCenterReportEvent.Close }
+                    snackbarDispatcher(SecurityCenterReportSnackbarMessage.GetBreachesError)
+                }
+            }
+
+    internal val state: StateFlow<SecurityCenterReportState> = combineN(
+        breachReportFlow,
         observeBreachForEmailFlow,
         usedInLoginItemsFlow,
         userPreferencesRepository.getUseFaviconsPreference(),
-        isResolveButtonLoadingFlow
+        isResolveButtonLoadingFlow,
+        eventFlow
     ) { breachEmailReportResult,
         breachesForEmailResult,
         usedInLoginItemsResult,
         useFavIconsPreference,
-        isResolveButtonLoading ->
+        isResolveButtonLoading,
+        event ->
         SecurityCenterReportState(
             breachEmailId = breachEmailId,
             canLoadExternalImages = useFavIconsPreference.value(),
             breachEmailResult = breachEmailReportResult,
             breachEmailsResult = breachesForEmailResult,
             usedInLoginItemsResult = usedInLoginItemsResult,
-            isResolvingBreachState = isResolveButtonLoading
+            isResolvingBreachState = isResolveButtonLoading,
+            event = event
         )
     }.stateIn(
         scope = viewModelScope,
@@ -184,6 +202,10 @@ class SecurityCenterReportViewModel @Inject constructor(
             }
 
         isResolveButtonLoadingFlow.update { IsLoadingState.NotLoading }
+    }
+
+    internal fun consumeEvent(event: SecurityCenterReportEvent) {
+        eventFlow.compareAndSet(event, SecurityCenterReportEvent.Idle)
     }
 
     internal companion object {

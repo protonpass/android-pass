@@ -25,7 +25,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemTypeFilter
@@ -35,7 +37,10 @@ import proton.android.pass.data.api.usecases.items.ItemSecurityCheckFilter
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareSelection
+import proton.android.pass.domain.breach.Breach
 import proton.android.pass.features.security.center.PassMonitorDisplayHome
+import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.securitycenter.api.ObserveSecurityAnalysis
 import proton.android.pass.securitycenter.api.sentinel.ObserveIsSentinelEnabled
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -48,7 +53,8 @@ class SecurityCenterHomeViewModel @Inject constructor(
     observeSecurityAnalysis: ObserveSecurityAnalysis,
     observeIsSentinelEnabled: ObserveIsSentinelEnabled,
     getUserPlan: GetUserPlan,
-    telemetryManager: TelemetryManager
+    telemetryManager: TelemetryManager,
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     init {
@@ -62,9 +68,19 @@ class SecurityCenterHomeViewModel @Inject constructor(
         securityCheckFilter = ItemSecurityCheckFilter.Excluded
     )
 
+    private val observeBreachesFlow: Flow<LoadingResult<Breach>> = observeAllBreachByUserId()
+        .asLoadingResult()
+        .onEach {
+            if (it is LoadingResult.Error) {
+                PassLogger.w(TAG, "Error observing breaches")
+                PassLogger.w(TAG, it.exception)
+                snackbarDispatcher(SecurityCenterHomeSnackbarMessage.GetBreachesError)
+            }
+        }
+
     internal val state: StateFlow<SecurityCenterHomeState> = combine(
         observeIsSentinelEnabled(),
-        observeAllBreachByUserId().asLoadingResult(),
+        observeBreachesFlow,
         observeSecurityAnalysis(),
         excludedLoginItemsFlow.asLoadingResult(),
         getUserPlan()
@@ -84,4 +100,7 @@ class SecurityCenterHomeViewModel @Inject constructor(
         initialValue = SecurityCenterHomeState.Initial
     )
 
+    companion object {
+        private const val TAG = "SecurityCenterHomeViewModel"
+    }
 }

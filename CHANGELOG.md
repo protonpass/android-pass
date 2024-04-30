@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.21.1 (2024-04-30)
+
+### Fixes :bug:
+
+- Crash in Dark web monitor screen.
+
 ## 1.21.0 (2024-04-30)
 
 ### Features :tada:

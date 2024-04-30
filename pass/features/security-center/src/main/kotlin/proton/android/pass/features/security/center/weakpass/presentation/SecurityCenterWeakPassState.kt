@@ -23,13 +23,17 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.domain.ShareIcon
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 
 @Stable
 internal data class SecurityCenterWeakPassState(
     private val vulnerablePasswordUiModels: List<ItemUiModel>,
     private val weakPasswordUiModels: List<ItemUiModel>,
     internal val isLoading: Boolean,
-    internal val canLoadExternalImages: Boolean
+    internal val canLoadExternalImages: Boolean,
+    private val groupedVaults: Map<ShareId, Vault>
 ) {
 
     internal val weakPassGroups: ImmutableList<SecurityCenterWeakPassGroup> =
@@ -52,7 +56,9 @@ internal data class SecurityCenterWeakPassState(
             }
         }.toPersistentList()
 
-    val shouldNavigateBack = isLoading.not() && weakPassGroups.sumOf { it.itemUiModels.size } == 0
+    internal val shouldNavigateBack = !isLoading && weakPassGroups.sumOf { it.itemUiModels.size } == 0
+
+    internal fun getShareIcon(shareId: ShareId): ShareIcon? = groupedVaults[shareId]?.icon
 
     internal companion object {
 
@@ -60,7 +66,8 @@ internal data class SecurityCenterWeakPassState(
             vulnerablePasswordUiModels = emptyList(),
             weakPasswordUiModels = emptyList(),
             isLoading = true,
-            canLoadExternalImages = false
+            canLoadExternalImages = false,
+            groupedVaults = emptyMap()
         )
 
     }

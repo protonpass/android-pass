@@ -132,8 +132,11 @@ class BreachRepositoryImpl @Inject constructor(
             email = (aliasItem.itemType as ItemType.Alias).aliasEmail,
             breachCount = aliasEmailBreaches.filter { !it.isResolved }.size,
             isMonitoringDisabled = aliasItem.hasSkippedHealthCheck,
-            lastBreachTime = aliasEmailBreaches.firstOrNull()?.let {
-                Instant.parse(it.publishedAt).toEpochMilliseconds().toInt()
+            lastBreachTime = aliasEmailBreaches.firstOrNull()?.let { aliasEmailBreach ->
+                runCatching { Instant.parse(aliasEmailBreach.publishedAt) }
+                    .getOrElse { Instant.DISTANT_PAST }
+                    .epochSeconds
+                    .toInt()
             }
         )
     }

@@ -155,6 +155,7 @@ import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry
 import proton.android.pass.data.api.usecases.sync.ForceSyncItems
+import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareId
 import proton.android.pass.data.impl.autofill.SuggestionItemFilterer
 import proton.android.pass.data.impl.autofill.SuggestionItemFiltererImpl
 import proton.android.pass.data.impl.autofill.SuggestionSorter
@@ -294,6 +295,7 @@ import proton.android.pass.data.impl.usecases.searchentry.DeleteAllSearchEntryIm
 import proton.android.pass.data.impl.usecases.searchentry.DeleteSearchEntryImpl
 import proton.android.pass.data.impl.usecases.searchentry.ObserveSearchEntryImpl
 import proton.android.pass.data.impl.usecases.sync.ForceSyncItemsImpl
+import proton.android.pass.data.impl.usecases.vaults.ObserveVaultsGroupedByShareIdImpl
 import javax.inject.Singleton
 
 @Suppress("TooManyFunctions")
@@ -722,5 +724,10 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindObserveBreachProtonEmails(impl: ObserveBreachProtonEmailsImpl): ObserveBreachProtonEmails
+
+    @[Binds Singleton]
+    abstract fun bindObserveVaultsGroupedByShareId(
+        impl: ObserveVaultsGroupedByShareIdImpl
+    ): ObserveVaultsGroupedByShareId
 
 }

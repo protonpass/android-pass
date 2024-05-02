@@ -84,7 +84,10 @@ internal fun DarkWebContent(
             }
             item {
                 CustomEmailsHeader(
-                    modifier = Modifier.padding(Spacing.medium),
+                    modifier = Modifier.padding(
+                        horizontal = Spacing.medium,
+                        vertical = Spacing.small
+                    ),
                     canAddCustomEmails = state.canAddCustomEmails,
                     onAddClick = { onEvent(DarkWebUiEvent.OnNewCustomEmailClick) }
                 )

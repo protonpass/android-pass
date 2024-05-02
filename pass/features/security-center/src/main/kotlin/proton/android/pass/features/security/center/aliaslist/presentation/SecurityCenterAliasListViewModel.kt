@@ -27,10 +27,10 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.runningReduce
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
@@ -43,8 +43,10 @@ import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAliasEmail
 import proton.android.pass.data.api.usecases.items.ItemIsBreachedFilter
 import proton.android.pass.data.api.usecases.items.ItemSecurityCheckFilter
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.breach.BreachEmail
 import proton.android.pass.domain.breach.BreachEmailId
@@ -86,18 +88,20 @@ class SecurityCenterAliasListViewModel @Inject constructor(
         securityCheckFilter = ItemSecurityCheckFilter.Included,
         isBreachedFilter = ItemIsBreachedFilter.Breached
     )
-        .flatMapLatest { items ->
-            if (items.isEmpty()) {
-                flowOf(emptyMap())
-            } else {
-                items.map { item ->
-                    observeBreachesForAliasEmail(
-                        shareId = item.shareId,
-                        itemId = item.id
-                    )
-                }.merge().map { list -> list.groupBy { it.email } }
-            }
+        .flatMapConcat { it.asFlow() }
+        .flatMapConcat { item ->
+            val aliasKeyId = AliasKeyId(
+                shareId = item.shareId,
+                itemId = item.id,
+                alias = (item.itemType as ItemType.Alias).aliasEmail
+            )
+            observeBreachesForAliasEmail(
+                shareId = item.shareId,
+                itemId = item.id
+            ).map { aliasKeyId to it }
         }
+        .map { (aliasId, breachData) -> mapOf(aliasId to breachData) }
+        .runningReduce { acc, map -> acc + map }
         .asLoadingResult()
 
     private val aliasExcludedEmailFlow = observeItems(
@@ -192,17 +196,17 @@ class SecurityCenterAliasListViewModel @Inject constructor(
         )
     }.toPersistentList()
 
-    private fun Map<String, List<BreachEmail>>.toEmailBreachUiState(): ImmutableList<EmailBreachUiState> =
+    private fun Map<AliasKeyId, List<BreachEmail>>.toEmailBreachUiState(): ImmutableList<EmailBreachUiState> =
         map { entry ->
-            val id = entry.value.first().emailId as BreachEmailId.Alias
-            val breachDate = entry.value.first().publishedAt.let(DateUtils::formatDate).getOrNull()
+            val breachDate =
+                entry.value.firstOrNull()?.publishedAt?.let(DateUtils::formatDate)?.getOrNull()
             EmailBreachUiState(
                 id = BreachEmailId.Alias(
-                    id = id.id,
-                    shareId = id.shareId,
-                    itemId = id.itemId
+                    id = BreachId(""),
+                    shareId = entry.key.shareId,
+                    itemId = entry.key.itemId
                 ),
-                email = entry.key,
+                email = entry.key.alias,
                 count = entry.value.count(),
                 breachDate = breachDate,
                 isMonitored = true
@@ -218,5 +222,7 @@ class SecurityCenterAliasListViewModel @Inject constructor(
             IsDarkWebAliasMessageDismissedPreference.Dismissed
         )
     }
+
+    private data class AliasKeyId(val shareId: ShareId, val itemId: ItemId, val alias: String)
 }
 

@@ -28,9 +28,6 @@ object DarkWebHelpNavItem : NavItem(
     navItemType = NavItemType.Dialog
 ) {
 
-    fun createRoute(
-        @StringRes titleResId: Int,
-        @StringRes textResId: Int
-    ) = "$baseRoute/$titleResId/$textResId"
+    fun createRoute(@StringRes titleResId: Int, @StringRes textResId: Int) = "$baseRoute/$titleResId/$textResId"
 
 }

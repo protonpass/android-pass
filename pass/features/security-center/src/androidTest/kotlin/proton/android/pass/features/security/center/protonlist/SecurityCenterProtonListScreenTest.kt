@@ -20,18 +20,24 @@ package proton.android.pass.features.security.center.protonlist
 
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import me.proton.core.user.domain.entity.AddressId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.data.fakes.usecases.breach.FakeObserveAllBreachByUserId
+import proton.android.pass.domain.breach.Breach
+import proton.android.pass.domain.breach.BreachProtonEmail
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.protonlist.navigation.SecurityCenterProtonListNavDestination
 import proton.android.pass.features.security.center.protonlist.ui.SecurityCenterProtonListScreen
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
+import javax.inject.Inject
 import proton.android.pass.composecomponents.impl.R as ComposeR
 
 @HiltAndroidTest
@@ -43,9 +49,13 @@ class SecurityCenterProtonListScreenTest {
     @get:Rule(order = 1)
     val composeTestRule = createAndroidComposeRule<HiltComponentActivity>()
 
+    @Inject
+    lateinit var observeAllBreachByUserId: FakeObserveAllBreachByUserId
+
     @Before
     fun setup() {
         hiltRule.inject()
+        observeAllBreachByUserId.emitDefault()
     }
 
     @Test
@@ -91,6 +101,46 @@ class SecurityCenterProtonListScreenTest {
                 composeTestRule.activity.getString(R.string.security_center_proton_list_options_menu)
             onNodeWithContentDescription(menu).performClick()
 
+            waitUntil { checker.isCalled }
+        }
+    }
+
+    @Test
+    fun onEmailClickCalled() {
+        val checker = CallChecker<Unit>()
+        val protonEmail = "protonEmail"
+
+        observeAllBreachByUserId.emit(
+            Breach(
+                breachesCount = 0,
+                breachedDomainPeeks = emptyList(),
+                breachedCustomEmails = emptyList(),
+                breachedProtonEmails = listOf(
+                    BreachProtonEmail(
+                        addressId = AddressId(""),
+                        email = protonEmail,
+                        breachCounter = 0,
+                        flags = 0,
+                        lastBreachTime = null
+                    )
+                ),
+                breachedAliases = emptyList()
+            )
+        )
+        composeTestRule.apply {
+            setContent {
+                PassTheme(isDark = true) {
+                    SecurityCenterProtonListScreen(
+                        onNavigated = {
+                            if (it is SecurityCenterProtonListNavDestination.OnEmailClick) {
+                                checker.call()
+                            }
+                        }
+                    )
+                }
+            }
+
+            onNodeWithText(protonEmail).performClick()
             waitUntil { checker.isCalled }
         }
     }

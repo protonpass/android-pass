@@ -32,28 +32,42 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.container.Circle
 import proton.android.pass.features.security.center.R
+import proton.android.pass.features.security.center.darkweb.ui.SecurityCenterDarkWebHelpIcon
 
 @Composable
 internal fun CustomEmailsHeader(
     modifier: Modifier = Modifier,
     canAddCustomEmails: Boolean,
-    onAddClick: () -> Unit
+    onAddClick: () -> Unit,
+    onHelpClick: () -> Unit
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(
-            text = stringResource(id = R.string.security_center_dark_web_monitor_custom_emails_title),
-            style = ProtonTheme.typography.body2Regular
-        )
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(space = Spacing.small),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = stringResource(id = R.string.security_center_dark_web_monitor_custom_emails_title),
+                style = ProtonTheme.typography.body2Regular
+            )
+
+            SecurityCenterDarkWebHelpIcon(
+                iconTint = PassTheme.colors.textWeak,
+                iconSize = 18.dp,
+                onClick = onHelpClick
+            )
+        }
 
         val (background, foreground) = if (canAddCustomEmails) {
             PassTheme.colors.interactionNormMinor1 to PassTheme.colors.interactionNormMajor2
@@ -86,7 +100,8 @@ fun CustomEmailsHeaderPreview(@PreviewParameter(ThemedBooleanPreviewProvider::cl
         Surface {
             CustomEmailsHeader(
                 canAddCustomEmails = input.second,
-                onAddClick = {}
+                onAddClick = {},
+                onHelpClick = {}
             )
         }
     }

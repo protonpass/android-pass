@@ -20,6 +20,7 @@ package proton.android.pass.features.security.center.aliaslist
 
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -27,11 +28,16 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.data.api.usecases.items.ItemIsBreachedFilter
+import proton.android.pass.data.api.usecases.items.ItemSecurityCheckFilter
+import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.aliaslist.navigation.SecurityCenterAliasListNavDestination
 import proton.android.pass.features.security.center.aliaslist.ui.SecurityCenterAliasListScreen
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
+import javax.inject.Inject
 import proton.android.pass.composecomponents.impl.R as ComposeR
 
 @HiltAndroidTest
@@ -42,6 +48,9 @@ class SecurityCenterAliasListScreenTest {
 
     @get:Rule(order = 1)
     val composeTestRule = createAndroidComposeRule<HiltComponentActivity>()
+
+    @Inject
+    lateinit var observeItems: TestObserveItems
 
     @Before
     fun setup() {
@@ -91,6 +100,37 @@ class SecurityCenterAliasListScreenTest {
                 composeTestRule.activity.getString(R.string.security_center_alias_list_options_menu)
             onNodeWithContentDescription(menu).performClick()
 
+            waitUntil { checker.isCalled }
+        }
+    }
+
+    @Test
+    fun onEmailClickCalled() {
+        val checker = CallChecker<Unit>()
+        val aliasEmail = "aliasEmail"
+        observeItems.emit(
+            params = TestObserveItems.Params(
+                filter = ItemTypeFilter.Aliases,
+                securityCheckFilter = ItemSecurityCheckFilter.Included,
+                isBreachedFilter = ItemIsBreachedFilter.NotBreached
+            ),
+            value = listOf(TestObserveItems.createAlias(alias = aliasEmail))
+        )
+        observeItems.emitValue(emptyList())
+        composeTestRule.apply {
+            setContent {
+                PassTheme(isDark = true) {
+                    SecurityCenterAliasListScreen(
+                        onNavigated = {
+                            if (it is SecurityCenterAliasListNavDestination.OnEmailClick) {
+                                checker.call()
+                            }
+                        }
+                    )
+                }
+            }
+
+            onNodeWithText(aliasEmail).performClick()
             waitUntil { checker.isCalled }
         }
     }

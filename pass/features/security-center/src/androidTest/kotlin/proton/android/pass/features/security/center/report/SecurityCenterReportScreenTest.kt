@@ -28,7 +28,9 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
-import proton.android.pass.composecomponents.impl.R
+import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachesForEmail
+import proton.android.pass.data.fakes.usecases.vaults.FakeObserveVaultsGroupedByShareId
+import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.report.navigation.SecurityCenterReportDestination
 import proton.android.pass.features.security.center.report.ui.SecurityCenterReportScreen
 import proton.android.pass.features.security.center.shared.navigation.EmailArgId
@@ -36,6 +38,7 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import javax.inject.Inject
+import proton.android.pass.composecomponents.impl.R as ComposeR
 
 @HiltAndroidTest
 class SecurityCenterReportScreenTest {
@@ -49,6 +52,12 @@ class SecurityCenterReportScreenTest {
     @Inject
     lateinit var savedStateHandle: TestSavedStateHandleProvider
 
+    @Inject
+    lateinit var observeBreachesForEmail: FakeObserveBreachesForEmail
+
+    @Inject
+    lateinit var observeVaultsGroupedByShareId: FakeObserveVaultsGroupedByShareId
+
     @Before
     fun setup() {
         hiltRule.inject()
@@ -56,6 +65,8 @@ class SecurityCenterReportScreenTest {
             set(EmailArgId.key, "email")
             set(CommonNavArgId.AddressId.key, "addressId")
         }
+        observeBreachesForEmail.emitDefault()
+        observeVaultsGroupedByShareId.emitDefault()
     }
 
     @Test
@@ -75,11 +86,33 @@ class SecurityCenterReportScreenTest {
             }
 
             val backArrow =
-                composeTestRule.activity.getString(R.string.navigate_back_icon_content_description)
+                composeTestRule.activity.getString(ComposeR.string.navigate_back_icon_content_description)
             onNodeWithContentDescription(backArrow).performClick()
 
             waitUntil { checker.isCalled }
         }
     }
 
+    @Test
+    fun onOptionsClickCalled() {
+        val checker = CallChecker<Unit>()
+        composeTestRule.apply {
+            setContent {
+                PassTheme(isDark = true) {
+                    SecurityCenterReportScreen(
+                        onNavigated = {
+                            if (it is SecurityCenterReportDestination.OnMenuClick) {
+                                checker.call()
+                            }
+                        }
+                    )
+                }
+            }
+            val menu =
+                composeTestRule.activity.getString(R.string.security_center_email_report_options_menu)
+            onNodeWithContentDescription(menu).performClick()
+
+            waitUntil { checker.isCalled }
+        }
+    }
 }

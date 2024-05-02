@@ -20,14 +20,12 @@ package proton.android.pass.features.security.center.darkweb.ui
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.darkweb.presentation.DarkWebUiState
@@ -35,7 +33,6 @@ import proton.android.pass.features.security.center.darkweb.ui.customemails.list
 import proton.android.pass.features.security.center.darkweb.ui.customemails.list.customEmailsList
 import proton.android.pass.features.security.center.darkweb.ui.summary.DarkWebSummary
 import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBar
-import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun DarkWebContent(
@@ -57,12 +54,10 @@ internal fun DarkWebContent(
                 subtitle = subtitle,
                 onUpClick = { onEvent(DarkWebUiEvent.OnUpClick) },
                 titleIcon = {
-                    IconButton(onClick = { onEvent(DarkWebUiEvent.HelpClick) }) {
-                        Icon(
-                            painter = painterResource(id = CoreR.drawable.ic_proton_question_circle),
-                            contentDescription = null
-                        )
-                    }
+                    SecurityCenterDarkWebHelpIcon(
+                        iconTint = PassTheme.colors.textNorm,
+                        onClick = { onEvent(DarkWebUiEvent.HelpClick) }
+                    )
                 },
                 actions = { DarkWebStatusIndicator(status = state.darkWebStatus) }
             )
@@ -89,7 +84,8 @@ internal fun DarkWebContent(
                         vertical = Spacing.small
                     ),
                     canAddCustomEmails = state.canAddCustomEmails,
-                    onAddClick = { onEvent(DarkWebUiEvent.OnNewCustomEmailClick) }
+                    onAddClick = { onEvent(DarkWebUiEvent.OnNewCustomEmailClick) },
+                    onHelpClick = { onEvent(DarkWebUiEvent.HelpClick) }
                 )
             }
 

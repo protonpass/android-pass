@@ -138,6 +138,15 @@ class LocalBreachesDataSourceImpl @Inject constructor() : LocalBreachesDataSourc
             .filterNotNull()
 
     override suspend fun upsertCustomEmail(userId: UserId, customEmail: BreachCustomEmail) {
+        // Check that it didn't exist previously any entry with the custom email
+        for ((key, value) in customEmailsCache) {
+            if (value.email == customEmail.email) {
+                customEmailsCache.remove(key)
+                break
+            }
+        }
+
+        // Actually add the custom email
         customEmailsCache
             .put(Pair(userId, customEmail.id), customEmail)
             .also { emitCustomEmailsChanges() }

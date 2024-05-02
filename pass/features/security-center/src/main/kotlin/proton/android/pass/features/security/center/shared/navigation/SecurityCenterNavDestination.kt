@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.security.center.shared.navigation
 
+import androidx.annotation.StringRes
 import proton.android.pass.common.api.Option
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -122,7 +123,10 @@ sealed interface SecurityCenterNavDestination {
 
     data object AllAliasEmails : SecurityCenterNavDestination
 
-    data object DarkWebHelp : SecurityCenterNavDestination
+    data class DarkWebHelp(
+        @StringRes val titleResId: Int,
+        @StringRes val textResId: Int
+    ) : SecurityCenterNavDestination
 
     data object CannotAddCustomEmails : SecurityCenterNavDestination
 

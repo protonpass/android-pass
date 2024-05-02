@@ -30,15 +30,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import me.proton.core.presentation.R
+import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.CircleIconButton
 import proton.android.pass.composecomponents.impl.loading.Loading
+import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.report.presentation.SecurityCenterReportState
 import proton.android.pass.features.security.center.report.ui.SecurityCenterReportUiEvent.OnMenuClick
 import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBar
-
+import me.proton.core.presentation.R as CoreR
 @Composable
 internal fun SecurityCenterReportContent(
     modifier: Modifier = Modifier,
@@ -55,10 +56,13 @@ internal fun SecurityCenterReportContent(
                 actions = {
                     breachEmailId?.let { id ->
                         CircleIconButton(
-                            iconPainter = painterResource(id = R.drawable.ic_proton_three_dots_vertical),
+                            iconPainter = painterResource(id = CoreR.drawable.ic_proton_three_dots_vertical),
                             size = 40,
                             backgroundColor = PassTheme.colors.interactionNormMinor1,
                             tintColor = PassTheme.colors.interactionNormMajor2,
+                            iconContentDescription = stringResource(
+                                id = R.string.security_center_email_report_options_menu
+                            ),
                             onClick = { onUiEvent(OnMenuClick(id, state.isBreachExcludedFromMonitoring)) }
                         )
                     }

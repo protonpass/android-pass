@@ -24,7 +24,9 @@ import kotlinx.coroutines.flow.update
 import proton.android.pass.data.api.usecases.breach.ObserveBreachProtonEmails
 import proton.android.pass.domain.breach.BreachProtonEmail
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class FakeObserveBreachProtonEmails @Inject constructor() : ObserveBreachProtonEmails {
 
     private val flow: MutableStateFlow<List<BreachProtonEmail>> = MutableStateFlow(emptyList())

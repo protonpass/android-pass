@@ -24,7 +24,9 @@ import proton.android.pass.data.api.usecases.breach.ObserveBreachEmailReport
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachEmailReport
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class FakeObserveBreachEmailReport @Inject constructor() : ObserveBreachEmailReport {
 
     override fun invoke(breachEmailId: BreachEmailId): Flow<BreachEmailReport> = emptyFlow()

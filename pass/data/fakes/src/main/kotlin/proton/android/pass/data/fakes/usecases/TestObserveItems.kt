@@ -19,6 +19,7 @@
 package proton.android.pass.data.fakes.usecases
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.datetime.Clock
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.testFlow
@@ -46,14 +47,16 @@ import javax.inject.Singleton
 @Singleton
 class TestObserveItems @Inject constructor() : ObserveItems {
 
-    private val flow = testFlow<List<Item>>()
+    private val fallback: MutableSharedFlow<List<Item>> = testFlow()
+    private val flowsMap = mutableMapOf<Params, MutableSharedFlow<List<Item>>>()
 
     fun emitValue(value: List<Item>) {
-        flow.tryEmit(value)
+        fallback.tryEmit(value)
     }
 
-    fun emitDefault() {
-        flow.tryEmit(defaultValues.asList())
+    fun emit(params: Params, value: List<Item>) {
+        flowsMap[params] = flowsMap[params] ?: testFlow()
+        flowsMap[params]?.tryEmit(value)
     }
 
     override fun invoke(
@@ -63,7 +66,16 @@ class TestObserveItems @Inject constructor() : ObserveItems {
         userId: UserId?,
         securityCheckFilter: ItemSecurityCheckFilter,
         isBreachedFilter: ItemIsBreachedFilter
-    ): Flow<List<Item>> = flow
+    ): Flow<List<Item>> = flowsMap[
+        Params(
+            selection = selection,
+            itemState = itemState,
+            filter = filter,
+            userId = userId,
+            securityCheckFilter = securityCheckFilter,
+            isBreachedFilter = isBreachedFilter
+        )
+    ] ?: fallback
 
     data class DefaultValues(
         val login: Item,
@@ -131,7 +143,10 @@ class TestObserveItems @Inject constructor() : ObserveItems {
                 password = HiddenState.Concealed(TestEncryptionContext.encrypt(password)),
                 urls = emptyList(),
                 packageInfoSet = emptySet(),
-                primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(primaryTotp), primaryTotp),
+                primaryTotp = HiddenState.Revealed(
+                    TestEncryptionContext.encrypt(primaryTotp),
+                    primaryTotp
+                ),
                 customFields = emptyList(),
                 passkeys = emptyList()
             )
@@ -201,4 +216,13 @@ class TestObserveItems @Inject constructor() : ObserveItems {
             )
         )
     }
+
+    data class Params(
+        val selection: ShareSelection = ShareSelection.AllShares,
+        val itemState: ItemState? = ItemState.Active,
+        val filter: ItemTypeFilter = ItemTypeFilter.All,
+        val userId: UserId? = null,
+        val securityCheckFilter: ItemSecurityCheckFilter = ItemSecurityCheckFilter.All,
+        val isBreachedFilter: ItemIsBreachedFilter = ItemIsBreachedFilter.NotBreached
+    )
 }

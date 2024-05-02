@@ -19,13 +19,26 @@
 package proton.android.pass.data.fakes.usecases.breach
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
 import proton.android.pass.domain.breach.Breach
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class FakeObserveAllBreachByUserId @Inject constructor() : ObserveAllBreachByUserId {
 
-    override fun invoke(): Flow<Breach> = emptyFlow()
+    private val flow: MutableSharedFlow<Breach> = testFlow()
+
+    fun emit(value: Breach) {
+        flow.tryEmit(value)
+    }
+
+    fun emitDefault() {
+        flow.tryEmit(Breach(0, emptyList(), emptyList(), emptyList(), emptyList()))
+    }
+
+    override fun invoke(): Flow<Breach> = flow
 
 }

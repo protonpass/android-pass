@@ -32,16 +32,13 @@ import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserRepository
 
+@Suppress("TooManyFunctions")
 class TestUserRepository : UserRepository {
     override fun addOnPassphraseChangedListener(listener: PassphraseRepository.OnPassphraseChangedListener) {
         throw IllegalStateException("Not implemented")
     }
 
     override suspend fun addUser(user: User) {
-        throw IllegalStateException("Not implemented")
-    }
-
-    override suspend fun checkExternalEmailAvailable(email: String) {
         throw IllegalStateException("Not implemented")
     }
 
@@ -130,6 +127,10 @@ class TestUserRepository : UserRepository {
     }
 
     override suspend fun updateUserUsedDriveSpace(userId: UserId, usedDriveSpace: Long) {
+        throw IllegalStateException("Not implemented")
+    }
+
+    override suspend fun checkExternalEmailAvailable(sessionUserId: SessionUserId?, email: String) {
         throw IllegalStateException("Not implemented")
     }
 }

@@ -672,16 +672,16 @@ abstract class FakesDataModule {
     @Binds
     abstract fun bindObserveGlobalMonitorState(impl: FakeObserveGlobalMonitorState): ObserveGlobalMonitorState
 
-    @[Binds Singleton]
+    @Binds
     abstract fun bindObserveBreachesForEmail(impl: FakeObserveBreachesForEmail): ObserveBreachesForEmail
 
-    @[Binds Singleton]
+    @Binds
     abstract fun bindObserveBreachEmailReport(impl: FakeObserveBreachEmailReport): ObserveBreachEmailReport
 
-    @[Binds Singleton]
+    @Binds
     abstract fun bindObserveBreachProtonEmails(impl: FakeObserveBreachProtonEmails): ObserveBreachProtonEmails
 
-    @[Binds Singleton]
+    @Binds
     abstract fun bindObserveVaultsGroupedByShareId(
         impl: FakeObserveVaultsGroupedByShareId
     ): ObserveVaultsGroupedByShareId

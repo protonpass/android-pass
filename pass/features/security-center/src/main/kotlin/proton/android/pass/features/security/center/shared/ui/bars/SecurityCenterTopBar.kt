@@ -57,10 +57,12 @@ internal fun SecurityCenterTopBar(
             )
         }
 
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            modifier = Modifier.padding(horizontal = Spacing.medium),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             title?.let { topBarTitle ->
                 Text(
-                    modifier = Modifier.padding(horizontal = Spacing.medium),
                     text = topBarTitle,
                     style = PassTheme.typography.heroNorm()
                 )

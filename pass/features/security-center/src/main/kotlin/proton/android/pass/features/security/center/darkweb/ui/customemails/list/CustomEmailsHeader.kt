@@ -21,6 +21,7 @@ package proton.android.pass.features.security.center.darkweb.ui.customemails.lis
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -33,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.container.Circle
 import proton.android.pass.features.security.center.R
@@ -50,7 +52,7 @@ internal fun CustomEmailsHeader(
     ) {
         Text(
             text = stringResource(id = R.string.security_center_dark_web_monitor_custom_emails_title),
-            style = ProtonTheme.typography.body1Regular
+            style = ProtonTheme.typography.body2Regular
         )
 
         val (background, foreground) = if (canAddCustomEmails) {
@@ -65,6 +67,7 @@ internal fun CustomEmailsHeader(
             onClick = onAddClick
         ) {
             Icon(
+                modifier = Modifier.padding(all = Spacing.medium.minus(Spacing.extraSmall)),
                 painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_plus),
                 contentDescription = stringResource(
                     id = R.string.security_center_dark_web_monitor_custom_emails_add_content_description

@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.security.center.darkweb.ui
 
+import androidx.annotation.StringRes
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.CustomEmailId
 
@@ -57,5 +58,8 @@ sealed interface DarkWebUiEvent {
         val breachCount: Int
     ) : DarkWebUiEvent
 
-    data object HelpClick : DarkWebUiEvent
+    data class HelpClick(
+        @StringRes val titleResId: Int,
+        @StringRes val textResId: Int
+    ) : DarkWebUiEvent
 }

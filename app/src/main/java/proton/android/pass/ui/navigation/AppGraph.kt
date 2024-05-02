@@ -1210,8 +1210,13 @@ fun NavGraphBuilder.appGraph(
                     )
                 )
 
-                SecurityCenterNavDestination.DarkWebHelp ->
-                    appNavigator.navigate(DarkWebHelpNavItem)
+                is SecurityCenterNavDestination.DarkWebHelp -> appNavigator.navigate(
+                    destination = DarkWebHelpNavItem,
+                    route = DarkWebHelpNavItem.createRoute(
+                        titleResId = destination.titleResId,
+                        textResId = destination.textResId
+                    )
+                )
 
                 SecurityCenterNavDestination.CannotAddCustomEmails ->
                     appNavigator.navigate(DarkWebCannotAddCustomEmailNavItem)

@@ -18,22 +18,27 @@
 
 package proton.android.pass.features.security.center.darkweb.ui.help
 
+import androidx.annotation.StringRes
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import proton.android.pass.features.security.center.R
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun DarkWebHelpDialog(modifier: Modifier = Modifier, onDismiss: () -> Unit) {
+fun DarkWebHelpDialog(
+    modifier: Modifier = Modifier,
+    @StringRes titleResId: Int,
+    @StringRes textResId: Int,
+    onDismiss: () -> Unit
+) {
     AlertDialog(
         modifier = modifier,
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.dark_web_help_dialog_title)) },
-        text = { Text(stringResource(R.string.dark_web_help_dialog_subtitle)) },
+        title = { Text(stringResource(id = titleResId)) },
+        text = { Text(stringResource(id = textResId)) },
         confirmButton = {
             TextButton(
                 onClick = { onDismiss() }

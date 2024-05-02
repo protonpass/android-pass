@@ -20,6 +20,7 @@ package proton.android.pass.features.security.center.shared.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
+import me.proton.core.compose.navigation.requireArguments
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.features.security.center.addressoptions.navigation.SecurityCenterAddressOptionsNavDestination
@@ -44,6 +45,8 @@ import proton.android.pass.features.security.center.darkweb.navigation.DarkWebCa
 import proton.android.pass.features.security.center.darkweb.navigation.DarkWebMonitorNavDestination
 import proton.android.pass.features.security.center.darkweb.navigation.DarkWebMonitorNavItem
 import proton.android.pass.features.security.center.darkweb.navigation.help.DarkWebHelpNavItem
+import proton.android.pass.features.security.center.darkweb.navigation.help.DarkWebHelpTextNavArgId
+import proton.android.pass.features.security.center.darkweb.navigation.help.DarkWebHelpTitleNavArgId
 import proton.android.pass.features.security.center.darkweb.ui.DarkWebScreen
 import proton.android.pass.features.security.center.darkweb.ui.customemails.dialog.CannotAddCustomEmailsDialog
 import proton.android.pass.features.security.center.darkweb.ui.customemails.options.UnverifiedCustomEmailOptionsBottomSheet
@@ -237,8 +240,12 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                     DarkWebMonitorNavDestination.AllAliasEmails ->
                         onNavigated(SecurityCenterNavDestination.AllAliasEmails)
 
-                    DarkWebMonitorNavDestination.Help ->
-                        onNavigated(SecurityCenterNavDestination.DarkWebHelp)
+                    is DarkWebMonitorNavDestination.Help -> onNavigated(
+                        SecurityCenterNavDestination.DarkWebHelp(
+                            titleResId = destination.titleResId,
+                            textResId = destination.textResId
+                        )
+                    )
 
                     DarkWebMonitorNavDestination.CannotAddCustomEmails ->
                         onNavigated(SecurityCenterNavDestination.CannotAddCustomEmails)
@@ -404,8 +411,14 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
         SecurityCenterAddressOptionsBottomsheet(onNavigated)
     }
 
-    dialog(DarkWebHelpNavItem) {
-        DarkWebHelpDialog(onDismiss = { onNavigated(SecurityCenterNavDestination.Back()) })
+    dialog(DarkWebHelpNavItem) { navBackStackEntry ->
+        DarkWebHelpDialog(
+            titleResId = navBackStackEntry.requireArguments().getInt(DarkWebHelpTitleNavArgId.key),
+            textResId = navBackStackEntry.requireArguments().getInt(DarkWebHelpTextNavArgId.key),
+            onDismiss = {
+                onNavigated(SecurityCenterNavDestination.Back())
+            }
+        )
     }
 
     dialog(DarkWebCannotAddCustomEmailNavItem) {

@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.security.center.darkweb.navigation
 
+import androidx.annotation.StringRes
 import proton.android.pass.common.api.Option
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.CustomEmailId
@@ -59,7 +60,10 @@ sealed interface DarkWebMonitorNavDestination {
 
     data object AllAliasEmails : DarkWebMonitorNavDestination
 
-    data object Help : DarkWebMonitorNavDestination
+    data class Help(
+        @StringRes val titleResId: Int,
+        @StringRes val textResId: Int
+    ) : DarkWebMonitorNavDestination
 
     data object CannotAddCustomEmails : DarkWebMonitorNavDestination
 

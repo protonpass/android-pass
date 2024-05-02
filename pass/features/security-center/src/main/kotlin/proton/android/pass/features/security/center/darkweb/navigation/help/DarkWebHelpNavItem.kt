@@ -18,10 +18,19 @@
 
 package proton.android.pass.features.security.center.darkweb.navigation.help
 
+import androidx.annotation.StringRes
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
 
 object DarkWebHelpNavItem : NavItem(
     baseRoute = "security/center/dark-web/help",
+    navArgIds = listOf(DarkWebHelpTitleNavArgId, DarkWebHelpTextNavArgId),
     navItemType = NavItemType.Dialog
-)
+) {
+
+    fun createRoute(
+        @StringRes titleResId: Int,
+        @StringRes textResId: Int
+    ) = "$baseRoute/$titleResId/$textResId"
+
+}

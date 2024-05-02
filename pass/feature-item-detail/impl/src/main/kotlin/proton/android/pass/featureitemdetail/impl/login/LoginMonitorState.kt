@@ -55,7 +55,7 @@ internal data class LoginMonitorState(
         ItemDetailNavScope.MonitorMissing2fa,
         ItemDetailNavScope.MonitorReusedPassword -> true
 
-    } && !isExcludedFromMonitor
+    }
 
     internal val isPasswordInsecure: Boolean by lazy {
         insecurePasswordsReport.hasInsecurePasswords

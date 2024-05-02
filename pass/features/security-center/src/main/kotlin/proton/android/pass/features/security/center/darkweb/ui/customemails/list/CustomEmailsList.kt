@@ -40,10 +40,7 @@ import proton.android.pass.features.security.center.darkweb.presentation.DarkWeb
 import proton.android.pass.features.security.center.darkweb.ui.DarkWebUiEvent
 
 @Suppress("LongMethod")
-internal fun LazyListScope.customEmailsList(
-    state: DarkWebUiState,
-    onEvent: (DarkWebUiEvent) -> Unit
-) {
+internal fun LazyListScope.customEmailsList(state: DarkWebUiState, onEvent: (DarkWebUiEvent) -> Unit) {
     when (state.customEmailState) {
         is DarkWebCustomEmailsState.Error -> {
             item {

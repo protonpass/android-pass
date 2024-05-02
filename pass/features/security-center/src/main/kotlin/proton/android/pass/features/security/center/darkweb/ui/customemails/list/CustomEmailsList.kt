@@ -30,7 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
-import me.proton.core.compose.theme.defaultWeak
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.darkweb.presentation.CustomEmailUiStatus
@@ -40,7 +40,10 @@ import proton.android.pass.features.security.center.darkweb.presentation.DarkWeb
 import proton.android.pass.features.security.center.darkweb.ui.DarkWebUiEvent
 
 @Suppress("LongMethod")
-internal fun LazyListScope.customEmailsList(state: DarkWebUiState, onEvent: (DarkWebUiEvent) -> Unit) {
+internal fun LazyListScope.customEmailsList(
+    state: DarkWebUiState,
+    onEvent: (DarkWebUiEvent) -> Unit
+) {
     when (state.customEmailState) {
         is DarkWebCustomEmailsState.Error -> {
             item {
@@ -106,7 +109,8 @@ internal fun LazyListScope.customEmailsList(state: DarkWebUiState, onEvent: (Dar
                         text = stringResource(
                             id = R.string.security_center_dark_web_monitor_custom_emails_suggestions
                         ),
-                        style = ProtonTheme.typography.defaultWeak
+                        color = PassTheme.colors.textWeak,
+                        style = ProtonTheme.typography.body2Regular
                     )
                 }
             }

@@ -27,11 +27,12 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.composecomponents.impl.R
+import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.protonlist.navigation.SecurityCenterProtonListNavDestination
 import proton.android.pass.features.security.center.protonlist.ui.SecurityCenterProtonListScreen
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
+import proton.android.pass.composecomponents.impl.R as ComposeR
 
 @HiltAndroidTest
 class SecurityCenterProtonListScreenTest {
@@ -64,11 +65,33 @@ class SecurityCenterProtonListScreenTest {
             }
 
             val backArrow =
-                composeTestRule.activity.getString(R.string.navigate_back_icon_content_description)
+                composeTestRule.activity.getString(ComposeR.string.navigate_back_icon_content_description)
             onNodeWithContentDescription(backArrow).performClick()
 
             waitUntil { checker.isCalled }
         }
     }
 
+    @Test
+    fun onOptionsClickCalled() {
+        val checker = CallChecker<Unit>()
+        composeTestRule.apply {
+            setContent {
+                PassTheme(isDark = true) {
+                    SecurityCenterProtonListScreen(
+                        onNavigated = {
+                            if (it is SecurityCenterProtonListNavDestination.OnOptionsClick) {
+                                checker.call()
+                            }
+                        }
+                    )
+                }
+            }
+            val menu =
+                composeTestRule.activity.getString(R.string.security_center_proton_list_options_menu)
+            onNodeWithContentDescription(menu).performClick()
+
+            waitUntil { checker.isCalled }
+        }
+    }
 }

@@ -65,7 +65,7 @@ internal fun SecurityCenterProtonListContent(
                         size = 40,
                         backgroundColor = PassTheme.colors.interactionNormMinor1,
                         tintColor = PassTheme.colors.interactionNormMajor2,
-                        iconContentDescription = "",
+                        iconContentDescription = stringResource(id = R.string.security_center_proton_list_options_menu),
                         onClick = { onUiEvent(SecurityCenterProtonListUiEvent.OptionsClick) }
                     )
                 }

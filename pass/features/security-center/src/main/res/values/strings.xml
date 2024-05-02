@@ -140,6 +140,7 @@
     <string name="security_center_email_report_snackbar_marked_as_resolved_success">Breach has been marked as resolved</string>
     <string name="security_center_email_report_snackbar_marked_as_resolved_error">Could not mark as resolved</string>
     <string name="security_center_email_report_snackbar_get_breaches_error">Could not load breaches</string>
+    <string name="security_center_email_report_options_menu">Breach report options menu</string>
 
     <!-- Breach report detail-->
     <string name="security_center_report_detail_your_exposed_information">Your exposed information</string>
@@ -163,6 +164,7 @@
     <string name="security_center_proton_list_excluded_from_monitoring">Excluded from monitoring</string>
     <string name="security_center_proton_list_error">Could not load addresses</string>
     <string name="security_center_proton_list_included_in_monitoring">Enable monitoring to get notified if your Proton addresses were leaked.</string>
+    <string name="security_center_proton_list_options_menu">Proton screen options menu</string>
 
     <!-- Address Bottomsheet options -->
     <string name="security_center_address_bottomsheet_disable_monitoring">Disable monitoring</string>
@@ -182,6 +184,7 @@
     <string name="security_center_alias_list_included_in_monitoring">Enable monitoring to get notified if your Hide-my-email aliases were leaked.</string>
     <string name="security_center_alias_list_monitored">Monitored</string>
     <string name="security_center_alias_list_custom_email_message">Aliases with custom domains are not monitored, please add them as a custom email for monitoring.</string>
+    <string name="security_center_alias_list_options_menu">Alias screen options menu</string>
 
     <!-- Dark web help dialog -->
     <string name="dark_web_help_dialog_title">Data Security</string>

@@ -19,14 +19,26 @@
 package proton.android.pass.data.fakes.usecases.vaults
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
+import proton.android.pass.common.api.FlowUtils
 import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class FakeObserveVaultsGroupedByShareId @Inject constructor() : ObserveVaultsGroupedByShareId {
 
-    override fun invoke(): Flow<Map<ShareId, Vault>> = emptyFlow()
+    private val flow = FlowUtils.testFlow<Map<ShareId, Vault>>()
+
+    fun emit(item: Map<ShareId, Vault>) {
+        flow.tryEmit(item)
+    }
+
+    fun emitDefault() {
+        flow.tryEmit(emptyMap())
+    }
+
+    override fun invoke(): Flow<Map<ShareId, Vault>> = flow
 
 }

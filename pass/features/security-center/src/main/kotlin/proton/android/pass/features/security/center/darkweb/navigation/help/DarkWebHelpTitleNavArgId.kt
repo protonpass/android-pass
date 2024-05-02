@@ -18,19 +18,15 @@
 
 package proton.android.pass.features.security.center.darkweb.navigation.help
 
-import androidx.annotation.StringRes
-import proton.android.pass.navigation.api.NavItem
-import proton.android.pass.navigation.api.NavItemType
+import androidx.navigation.NavType
+import proton.android.pass.navigation.api.NavArgId
 
-object DarkWebHelpNavItem : NavItem(
-    baseRoute = "security/center/dark-web/help",
-    navArgIds = listOf(DarkWebHelpTitleNavArgId, DarkWebHelpTextNavArgId),
-    navItemType = NavItemType.Dialog
-) {
+private const val DARK_WEB_HELP_TITLE_KEY = "DarkWebHelpTitleKey"
 
-    fun createRoute(
-        @StringRes titleResId: Int,
-        @StringRes textResId: Int
-    ) = "$baseRoute/$titleResId/$textResId"
+internal object DarkWebHelpTitleNavArgId : NavArgId {
+
+    override val key: String = DARK_WEB_HELP_TITLE_KEY
+
+    override val navType: NavType<*> = NavType.IntType
 
 }

@@ -93,9 +93,10 @@ internal fun DarkWebScreen(
                         )
                     )
 
-                DarkWebUiEvent.HelpClick -> {
-                    onNavigate(DarkWebMonitorNavDestination.Help)
-                }
+                is DarkWebUiEvent.HelpClick ->  DarkWebMonitorNavDestination.Help(
+                    titleResId = event.titleResId,
+                    textResId = event.textResId
+                ).also(onNavigate)
             }
         }
     )

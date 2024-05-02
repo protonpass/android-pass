@@ -56,7 +56,12 @@ internal fun DarkWebContent(
                 titleIcon = {
                     SecurityCenterDarkWebHelpIcon(
                         iconTint = PassTheme.colors.textNorm,
-                        onClick = { onEvent(DarkWebUiEvent.HelpClick) }
+                        onClick = {
+                            DarkWebUiEvent.HelpClick(
+                                titleResId = R.string.dark_web_help_dialog_title,
+                                textResId = R.string.dark_web_help_dialog_subtitle
+                            ).also(onEvent)
+                        }
                     )
                 },
                 actions = { DarkWebStatusIndicator(status = state.darkWebStatus) }
@@ -85,7 +90,12 @@ internal fun DarkWebContent(
                     ),
                     canAddCustomEmails = state.canAddCustomEmails,
                     onAddClick = { onEvent(DarkWebUiEvent.OnNewCustomEmailClick) },
-                    onHelpClick = { onEvent(DarkWebUiEvent.HelpClick) }
+                    onHelpClick = {
+                        DarkWebUiEvent.HelpClick(
+                            titleResId = R.string.dark_web_help_dialog_custom_address_title,
+                            textResId = R.string.dark_web_help_dialog_custom_address_subtitle
+                        ).also(onEvent)
+                    }
                 )
             }
 

@@ -682,8 +682,14 @@ class ItemRepositoryImpl @Inject constructor(
             "Going to insert $insertItemCount items and delete $deleteItemCount items"
         )
 
-        database.inTransaction("setShareItems") {
-            localItemDataSource.upsertItems(itemsToUpsert)
+        val upsertChunks: List<List<ItemEntity>> = itemsToUpsert.chunked(MAX_ITEMS_PER_TRANSACTION)
+        upsertChunks.forEachIndexed { idx, chunk ->
+            database.inTransaction("setShareItems insert(${idx + 1}/$upsertChunks.size)") {
+                localItemDataSource.upsertItems(chunk)
+            }
+        }
+
+        database.inTransaction("setShareItems delete") {
             itemsToDelete.forEach { (shareId, toDelete) ->
                 localItemDataSource.deleteList(shareId, toDelete)
             }
@@ -1377,5 +1383,8 @@ class ItemRepositoryImpl @Inject constructor(
 
         // Max history item revisions supported in BE is 50, so, 49 previous revisions + current revision = 50
         const val ITEM_HISTORY_MAX_PREVIOUS_REVISIONS = 49
+
+        // Max items to insert per transaction
+        const val MAX_ITEMS_PER_TRANSACTION = 100
     }
 }

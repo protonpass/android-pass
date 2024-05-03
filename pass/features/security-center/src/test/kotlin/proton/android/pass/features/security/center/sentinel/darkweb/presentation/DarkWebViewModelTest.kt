@@ -27,10 +27,12 @@ import me.proton.core.user.domain.entity.AddressId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.breach.CustomEmailSuggestion
 import proton.android.pass.data.fakes.usecases.TestObserveItemCount
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.breach.BreachCustomEmailMother
+import proton.android.pass.data.fakes.usecases.breach.FakeAddBreachCustomEmail
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachCustomEmails
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachProtonEmails
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachesForAliasEmail
@@ -49,6 +51,7 @@ import proton.android.pass.features.security.center.darkweb.presentation.DarkWeb
 import proton.android.pass.features.security.center.darkweb.presentation.DarkWebViewModel
 import proton.android.pass.features.security.center.shared.presentation.EmailBreachUiState
 import proton.android.pass.features.security.center.shared.ui.DateUtils
+import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
 
@@ -66,7 +69,6 @@ class DarkWebViewModelTest {
     private lateinit var observeBreachCustomEmails: FakeObserveBreachCustomEmails
     private lateinit var observeCustomEmailSuggestions: FakeObserveCustomEmailSuggestions
     private lateinit var observeGlobalMonitorState: FakeObserveGlobalMonitorState
-    private lateinit var telemetryManager: TestTelemetryManager
 
     @Before
     fun setUp() {
@@ -77,7 +79,6 @@ class DarkWebViewModelTest {
         observeBreachCustomEmails = FakeObserveBreachCustomEmails()
         observeCustomEmailSuggestions = FakeObserveCustomEmailSuggestions()
         observeGlobalMonitorState = FakeObserveGlobalMonitorState()
-        telemetryManager = TestTelemetryManager()
         instance = DarkWebViewModel(
             observeItems = observeItems,
             observeItemCount = observeItemCount,
@@ -86,7 +87,9 @@ class DarkWebViewModelTest {
             observeBreachCustomEmails = observeBreachCustomEmails,
             observeCustomEmailSuggestions = observeCustomEmailSuggestions,
             observeGlobalMonitorState = observeGlobalMonitorState,
-            telemetryManager = telemetryManager
+            telemetryManager = TestTelemetryManager(),
+            addBreachCustomEmail = FakeAddBreachCustomEmail(),
+            snackbarDispatcher = TestSnackbarDispatcher()
         )
     }
 
@@ -203,7 +206,10 @@ class DarkWebViewModelTest {
         val expectedSuggestions = emails.map { breachEmail ->
             CustomEmailUiState(
                 email = breachEmail.email,
-                status = CustomEmailUiStatus.Suggestion(breachEmail.usedInLoginsCount)
+                status = CustomEmailUiStatus.Suggestion(
+                    usedInLoginsCount = breachEmail.usedInLoginsCount,
+                    isLoadingState = IsLoadingState.NotLoading
+                )
             )
         }
 
@@ -354,7 +360,10 @@ class DarkWebViewModelTest {
             suggestions = listOf(suggestion1, suggestion2).map {
                 CustomEmailUiState(
                     email = it,
-                    status = CustomEmailUiStatus.Suggestion(suggestionUsedInLoginsCount)
+                    status = CustomEmailUiStatus.Suggestion(
+                        usedInLoginsCount = suggestionUsedInLoginsCount,
+                        isLoadingState = IsLoadingState.NotLoading
+                    )
                 )
             }.toPersistentList()
         )

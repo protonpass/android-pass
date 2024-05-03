@@ -54,7 +54,9 @@ data class BreachesDetails(
     @SerialName("CustomEmails")
     val customEmails: List<BreachCustomEmail>,
     @SerialName("Addresses")
-    val protonEmails: List<BreachProtonEmail>
+    val protonEmails: List<BreachProtonEmail>,
+    @SerialName("HasCustomDomains")
+    val hasCustomDomains: Boolean
 )
 
 @Serializable

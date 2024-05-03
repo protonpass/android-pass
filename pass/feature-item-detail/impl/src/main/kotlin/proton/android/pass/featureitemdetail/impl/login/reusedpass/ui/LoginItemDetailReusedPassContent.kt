@@ -57,7 +57,7 @@ internal fun LoginItemDetailReusedPassContent(
         ) {
             LoginItemDetailReusedPassHeader(
                 modifier = Modifier.padding(horizontal = Spacing.medium),
-                password = "a*****J"
+                password = password
             )
 
             LazyColumn(

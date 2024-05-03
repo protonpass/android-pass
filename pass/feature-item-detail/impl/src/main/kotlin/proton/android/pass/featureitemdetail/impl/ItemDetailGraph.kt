@@ -29,6 +29,8 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemdetail.impl.common.CannotPerformActionDialog
 import proton.android.pass.featureitemdetail.impl.common.CannotPerformActionDialogType
 import proton.android.pass.featureitemdetail.impl.login.passkey.bottomsheet.navigation.passkeyDetailBottomSheetGraph
+import proton.android.pass.featureitemdetail.impl.login.reusedpass.navigation.LoginItemDetailsReusedPassNavItem
+import proton.android.pass.featureitemdetail.impl.login.reusedpass.ui.LoginItemDetailReusedPassScreen
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
@@ -164,4 +166,9 @@ fun NavGraphBuilder.itemDetailGraph(onNavigate: (ItemDetailNavigation) -> Unit) 
     passkeyDetailBottomSheetGraph(
         onDismiss = { onNavigate(ItemDetailNavigation.CloseBottomSheet) }
     )
+
+    composable(navItem = LoginItemDetailsReusedPassNavItem) {
+        LoginItemDetailReusedPassScreen(onNavigated = onNavigate)
+    }
+
 }

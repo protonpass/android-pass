@@ -53,7 +53,7 @@ internal fun LoginItemDetailReusedPassContent(
             )
         }
     ) { innerPaddingValues ->
-        when(isLoadingState) {
+        when (isLoadingState) {
             IsLoadingState.Loading -> {
                 Loading(
                     modifier = Modifier

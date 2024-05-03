@@ -45,26 +45,28 @@ import proton.android.pass.composecomponents.impl.item.placeholder
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.darkweb.presentation.DarkWebEmailBreachState
 import proton.android.pass.features.security.center.darkweb.ui.DarkWebUiEvent
-
+import proton.android.pass.composecomponents.impl.R as CompR
 @Composable
 internal fun EmailBreachHeader(
     modifier: Modifier = Modifier,
     summaryType: DarkWebSummaryType,
     state: DarkWebEmailBreachState,
+    isClickable: Boolean,
     onEvent: (DarkWebUiEvent) -> Unit
 ) {
     val list = state.list()
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clickable(
-                onClick = {
+            .applyIf(condition = isClickable, ifTrue = {
+                clickable {
                     when (summaryType) {
                         DarkWebSummaryType.Proton -> onEvent(DarkWebUiEvent.OnShowAllProtonEmailBreachClick)
                         DarkWebSummaryType.Alias -> onEvent(DarkWebUiEvent.OnShowAllAliasEmailBreachClick)
                     }
+
                 }
-            )
+            })
             .padding(all = Spacing.medium),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.small)
@@ -132,13 +134,15 @@ internal fun EmailBreachHeader(
             )
         }
 
-        Icon(
-            painter = painterResource(proton.android.pass.composecomponents.impl.R.drawable.ic_chevron_tiny_right),
-            contentDescription = null,
-            tint = accentColor.takeIf { list.isNotEmpty() } ?: LocalContentColor.current.copy(
-                alpha = LocalContentAlpha.current
+        if (isClickable) {
+            Icon(
+                painter = painterResource(CompR.drawable.ic_chevron_tiny_right),
+                contentDescription = null,
+                tint = accentColor.takeIf { list.isNotEmpty() } ?: LocalContentColor.current.copy(
+                    alpha = LocalContentAlpha.current
+                )
             )
-        )
+        }
     }
     if (list.isNotEmpty()) {
         PassDivider(modifier = Modifier.padding(horizontal = Spacing.small))

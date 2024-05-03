@@ -117,6 +117,7 @@ class SecurityCenterVerifyEmailViewModel @Inject constructor(
 
                     when (it) {
                         is CustomEmailDoesNotExistException -> {
+                            snackbarDispatcher(SecurityCenterVerifyEmailSnackbarMessage.TooManyVerificationsError)
                             eventFlow.update { SecurityCenterVerifyEmailEvent.GoBackToHome }
                         }
                         is InvalidVerificationCodeException -> {

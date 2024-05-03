@@ -93,7 +93,7 @@ internal fun LoginMonitorReusedPassWidget(
                             ),
                         text = stringResource(id = CompR.string.action_see_all),
                         color = PassTheme.colors.noteInteractionNormMajor2,
-                        style = ProtonTheme.typography.captionMedium,
+                        style = ProtonTheme.typography.captionMedium
                     )
                 }
 

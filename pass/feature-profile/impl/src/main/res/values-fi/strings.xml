@@ -11,8 +11,8 @@
   <string name="profile_option_rating">Arvioi sovellus</string>
   <string name="profile_option_autofill">Automaattitäyttö</string>
   <string name="profile_option_autofill_subtitle">Täytä käyttäjätunnukset ja salasanat automaattisesti.</string>
-  <string name="profile_error_biometry_failed_to_start">Biometristä todennusta ei voitu aloittaa</string>
-  <string name="profile_error_biometry_failed_to_authenticate">Tunnistautuminen epäonnistui</string>
+  <string name="profile_error_biometry_failed_to_start">Biometristä todennusta ei voitu käynnistää</string>
+  <string name="profile_error_biometry_failed_to_authenticate">Todennus epäonnistui</string>
   <string name="profile_fingerprint_lock_enabled">Sormenjälkilukitus otettiin käyttöön</string>
   <string name="profile_fingerprint_lock_disabled">Sormenjälkilukitus poistettiin käytöstä</string>
   <string name="profile_error_performing_operation">Virhe suoritettaessa toimintoa</string>

@@ -108,7 +108,7 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">この保管庫を共有するための十分な権限がありません。</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
   <string name="item_detail_history_created">Created</string>
-  <string name="item_detail_history_modified_last">Last modified</string>
+  <string name="item_detail_history_modified_last">最終更新日時</string>
   <string name="item_detail_history_button_view">View item history</string>
   <string name="password_score_vulnerable">脆弱</string>
   <string name="password_score_weak">弱い</string>

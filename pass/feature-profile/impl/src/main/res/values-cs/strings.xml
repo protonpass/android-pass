@@ -13,8 +13,8 @@
   <string name="profile_option_autofill_subtitle">Automatické vyplňování uživatelských jmen a hesel.</string>
   <string name="profile_error_biometry_failed_to_start">Nelze spustit biometrické ověřování</string>
   <string name="profile_error_biometry_failed_to_authenticate">Ověření selhalo</string>
-  <string name="profile_fingerprint_lock_enabled">Fingerprint lock enabled</string>
-  <string name="profile_fingerprint_lock_disabled">Fingerprint lock disabled</string>
+  <string name="profile_fingerprint_lock_enabled">Zamykání otiskem prstu povoleno</string>
+  <string name="profile_fingerprint_lock_disabled">Zamykání otiskem prstu zakázáno</string>
   <string name="profile_error_performing_operation">Chyba při provádění operace</string>
   <string name="profile_app_version_copied_to_clipboard">Verze aplikace zkopírována</string>
   <string name="feedback_option_reddit">Podívejte se na Proton na Redditu</string>
@@ -47,9 +47,9 @@
   <string name="profile_option_unlock_with">Odemknout pomocí</string>
   <string name="profile_option_change_pin_code">Změnit PIN kód</string>
   <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Jako výchozí prohlížeč je nastaven prohlížeč Samsung. Nepodporuje automatické vyplňování externími správci hesel.</string>
-  <string name="profile_passkey_support_section_title">Passkeys</string>
-  <string name="profile_passkey_support_subtitle_supported">Passkeys are supported</string>
-  <string name="profile_passkey_support_subtitle_not_supported_android_version">Your android version does not support passkeys</string>
-  <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Your device does not support passkeys</string>
-  <string name="profile_passkey_support_subtitle_not_supported_unknown">Could not check support for passkeys</string>
+  <string name="profile_passkey_support_section_title">Přístupové klíče</string>
+  <string name="profile_passkey_support_subtitle_supported">Přístupové klíče jsou podporovány</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">Vaše verze systému Android nepodporuje přístupové klíče</string>
+  <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Vaše zařízení nepodporuje přístupové klíče</string>
+  <string name="profile_passkey_support_subtitle_not_supported_unknown">Nepodařilo se ověřit podporu přístupových klíčů</string>
 </resources>

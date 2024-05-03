@@ -22,5 +22,5 @@
   <string name="passkeys_user_logged_out">Sei stato disconnesso. Apri l\'app per effettuare nuovamente l\'accesso.</string>
   <string name="passkey_confirm_item_title" comment="Title of the dialog for confirming the generation of a passkey for an item">Genera la passkey</string>
   <string name="passkey_confirm_item_body" comment="Body of the dialog for confirming the generation of a passkey for an item. The placeholder contains the item title">Sei sicuro di voler generare una passkey per l\'elemento \'%s\'?</string>
-  <string name="passkey_error_generating_passkey">Impossibile generare la passkey</string>
+  <string name="passkey_error_generating_passkey">Generazione della passkey non riuscita</string>
 </resources>

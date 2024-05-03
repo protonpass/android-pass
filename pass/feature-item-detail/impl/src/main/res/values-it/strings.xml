@@ -50,7 +50,7 @@
     <item quantity="other">Altri %d login utilizzano questa password:</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Autenticazione a due fattori mancante</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Sarebbe più sicuro impostare la 2FA per questo elemento.</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Sarebbe più sicuro impostare 2FA per questo elemento.</string>
   <string name="field_username">Nome utente o indirizzo email</string>
   <string name="field_password">Password</string>
   <string name="websites_section_title">Siti web</string>

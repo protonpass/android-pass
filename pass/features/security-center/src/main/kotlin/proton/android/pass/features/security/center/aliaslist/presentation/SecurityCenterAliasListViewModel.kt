@@ -28,7 +28,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.runningFold
 import kotlinx.coroutines.flow.stateIn
@@ -88,19 +89,24 @@ class SecurityCenterAliasListViewModel @Inject constructor(
         securityCheckFilter = ItemSecurityCheckFilter.Included,
         isBreachedFilter = ItemIsBreachedFilter.Breached
     )
-        .flatMapConcat { it.asFlow() }
-        .flatMapConcat { item ->
-            val aliasKeyId = AliasKeyId(
-                shareId = item.shareId,
-                itemId = item.id,
-                alias = (item.itemType as ItemType.Alias).aliasEmail
-            )
-            observeBreachesForAliasEmail(
-                shareId = item.shareId,
-                itemId = item.id
-            ).map { aliasKeyId to it }
+        .flatMapLatest { list ->
+            list
+                .map { item ->
+                    AliasKeyId(
+                        shareId = item.shareId,
+                        itemId = item.id,
+                        alias = (item.itemType as ItemType.Alias).aliasEmail
+                    )
+                }
+                .map { aliasKey ->
+                    observeBreachesForAliasEmail(
+                        shareId = aliasKey.shareId,
+                        itemId = aliasKey.itemId
+                    ).map { aliasKey to it }
+                }
+                .asFlow()
         }
-        .map { (aliasId, breachData) -> mapOf(aliasId to breachData) }
+        .flatMapMerge { it }
         .runningFold(mapOf<AliasKeyId, List<BreachEmail>>()) { acc, map -> acc + map }
         .asLoadingResult()
 

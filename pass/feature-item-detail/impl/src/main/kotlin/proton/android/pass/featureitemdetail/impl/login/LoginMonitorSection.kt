@@ -31,7 +31,8 @@ import proton.android.pass.featureitemdetail.impl.login.widgets.LoginMonitorReus
 internal fun LoginMonitorSection(
     modifier: Modifier = Modifier,
     monitorState: LoginMonitorState,
-    canLoadExternalImages: Boolean
+    canLoadExternalImages: Boolean,
+    onEvent: (LoginDetailEvent) -> Unit
 ) = with(monitorState) {
     Column(
         modifier = modifier,
@@ -46,7 +47,8 @@ internal fun LoginMonitorSection(
                 reusedPasswordDisplayMode = reusedPasswordDisplayMode,
                 reusedPasswordCount = reusedPasswordCount,
                 reusedPasswordItems = reusedPasswordItems,
-                canLoadExternalImages = canLoadExternalImages
+                canLoadExternalImages = canLoadExternalImages,
+                onEvent = onEvent
             )
         }
 

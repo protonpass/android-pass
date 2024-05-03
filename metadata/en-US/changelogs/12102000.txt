@@ -1,0 +1,5 @@
+## 1.21.2 (2024-05-03)
+
+### Fixes :bug:
+
+- Pass monitor fixes and improvements.

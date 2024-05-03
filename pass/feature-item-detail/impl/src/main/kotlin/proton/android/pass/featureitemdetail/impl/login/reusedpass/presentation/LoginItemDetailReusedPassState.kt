@@ -22,6 +22,7 @@ import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
@@ -31,6 +32,7 @@ internal data class LoginItemDetailReusedPassState(
     internal val password: String,
     internal val duplicatedPasswordLoginItems: ImmutableList<ItemUiModel>,
     internal val canLoadExternalImages: Boolean,
+    internal val isLoadingState: IsLoadingState,
     private val groupedVaults: Map<ShareId, Vault>
 ) {
 
@@ -42,6 +44,7 @@ internal data class LoginItemDetailReusedPassState(
             password = "",
             duplicatedPasswordLoginItems = persistentListOf(),
             canLoadExternalImages = false,
+            isLoadingState = IsLoadingState.Loading,
             groupedVaults = emptyMap()
         )
 

@@ -33,6 +33,8 @@ import kotlinx.coroutines.withContext
 import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
+import proton.android.pass.data.api.errors.CustomEmailDoesNotExistException
+import proton.android.pass.data.api.errors.InvalidVerificationCodeException
 import proton.android.pass.data.api.repositories.BreachRepository
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.impl.local.LocalBreachesDataSource
@@ -58,6 +60,7 @@ import proton.android.pass.domain.breach.EmailFlag
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.IsDarkWebAliasMessageDismissedPreference.Dismissed
 import proton.android.pass.preferences.IsDarkWebAliasMessageDismissedPreference.Show
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -128,14 +131,28 @@ class BreachRepositoryImpl @Inject constructor(
         emailId: CustomEmailId,
         code: String
     ) {
-        remote.verifyCustomEmail(userId, emailId, code)
-
-        localBreachesDataSource.getCustomEmail(userId, emailId)
-            .copy(verified = true)
-            .also { verifiedCustomEmail ->
-                localBreachesDataSource.upsertCustomEmail(userId, verifiedCustomEmail)
+        runCatching {
+            remote.verifyCustomEmail(userId, emailId, code)
+        }.onSuccess {
+            PassLogger.i(TAG, "Custom email verified successfully")
+            localBreachesDataSource.getCustomEmail(userId, emailId)
+                .copy(verified = true)
+                .also { verifiedCustomEmail ->
+                    localBreachesDataSource.upsertCustomEmail(userId, verifiedCustomEmail)
+                }
+                .also { refreshFlow.update { true } }
+        }.onFailure {
+            PassLogger.w(TAG, "Error verifying custom email")
+            PassLogger.w(TAG, it)
+            when (it) {
+                is InvalidVerificationCodeException -> throw InvalidVerificationCodeException()
+                is CustomEmailDoesNotExistException -> {
+                    localBreachesDataSource.deleteCustomEmail(userId, emailId)
+                    refreshFlow.update { true }
+                }
+                else -> throw it
             }
-            .also { refreshFlow.update { true } }
+        }
     }
 
     override fun observeAliasEmail(userId: UserId, aliasEmailId: AliasEmailId): Flow<BreachEmailReport.Alias> = combine(
@@ -390,7 +407,7 @@ class BreachRepositoryImpl @Inject constructor(
     }
 
     private companion object {
-
+        private const val TAG = "BreachRepositoryImpl"
         private const val BREACH_EMAIL_RESOLVED_STATE_VALUE = 3
 
     }

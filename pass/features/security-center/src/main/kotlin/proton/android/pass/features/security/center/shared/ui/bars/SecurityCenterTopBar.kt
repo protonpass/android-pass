@@ -36,6 +36,12 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
+import proton.android.pass.composecomponents.impl.topbar.CrossTopAppBar
+
+internal enum class SecurityCenterTopBarBackButton {
+    BackArrow,
+    Cross
+}
 
 @Composable
 internal fun SecurityCenterTopBar(
@@ -44,17 +50,24 @@ internal fun SecurityCenterTopBar(
     subtitle: String? = null,
     onUpClick: (() -> Unit)? = null,
     titleIcon: (@Composable RowScope.() -> Unit) = { },
-    actions: (@Composable RowScope.() -> Unit) = { }
+    actions: (@Composable RowScope.() -> Unit) = { },
+    backButton: SecurityCenterTopBarBackButton = SecurityCenterTopBarBackButton.BackArrow
 ) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
     ) {
         onUpClick?.let { topBarOnUpClick ->
-            BackArrowTopAppBar(
-                onUpClick = topBarOnUpClick,
-                actions = actions
-            )
+            when (backButton) {
+                SecurityCenterTopBarBackButton.BackArrow -> BackArrowTopAppBar(
+                    onUpClick = topBarOnUpClick,
+                    actions = actions
+                )
+                SecurityCenterTopBarBackButton.Cross -> CrossTopAppBar(
+                    onUpClick = topBarOnUpClick,
+                    actions = actions
+                )
+            }
         }
 
         Row(

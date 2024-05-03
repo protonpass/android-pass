@@ -20,7 +20,10 @@ package proton.android.pass.data.impl.remote
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.domain.ApiResult
 import me.proton.core.user.domain.entity.AddressId
+import proton.android.pass.data.api.errors.CustomEmailDoesNotExistException
+import proton.android.pass.data.api.errors.InvalidVerificationCodeException
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.BreachAddEmailRequest
 import proton.android.pass.data.impl.requests.BreachVerifyEmailRequest
@@ -116,12 +119,25 @@ class RemoteBreachDataSourceImpl @Inject constructor(
         id: CustomEmailId,
         code: String
     ) {
-        apiProvider
-            .get<PasswordManagerApi>(userId)
+        val response = apiProvider.get<PasswordManagerApi>(userId)
             .invoke {
                 verifyBreachEmail(emailId = id.id, request = BreachVerifyEmailRequest(code))
             }
-            .valueOrThrow
+
+        when (response) {
+            is ApiResult.Error.Http -> {
+                val protonCode = response.proton?.code
+
+                when (protonCode) {
+                    INVALID_VALUE -> throw InvalidVerificationCodeException()
+                    NOT_ALLOWED -> throw CustomEmailDoesNotExistException()
+                    else -> response.throwIfError()
+                }
+
+            }
+            is ApiResult.Success -> {} // All good
+            else -> { response.throwIfError() }
+        }
     }
 
     override suspend fun getBreachesForProtonEmail(userId: UserId, id: AddressId): BreachEmailsResponse = apiProvider
@@ -244,6 +260,11 @@ class RemoteBreachDataSourceImpl @Inject constructor(
                 )
             }
             .valueOrThrow
+    }
+
+    companion object {
+        private const val INVALID_VALUE = 2001
+        private const val NOT_ALLOWED = 2011
     }
 
 }

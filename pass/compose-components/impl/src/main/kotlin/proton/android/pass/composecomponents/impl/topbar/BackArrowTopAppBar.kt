@@ -19,17 +19,16 @@
 package proton.android.pass.composecomponents.impl.topbar
 
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.material.Text
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import me.proton.core.compose.component.appbar.ProtonTopAppBar
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.heroNorm
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
 
 @Composable
@@ -40,17 +39,11 @@ fun BackArrowTopAppBar(
     actions: (@Composable RowScope.() -> Unit)? = null,
     onUpClick: () -> Unit
 ) {
-    ProtonTopAppBar(
+    IconTopAppBar(
         modifier = modifier,
+        title = title,
         backgroundColor = backgroundColor,
-        title = {
-            title?.let {
-                Text(
-                    text = title,
-                    style = PassTheme.typography.heroNorm()
-                )
-            }
-        },
+        actions = actions,
         navigationIcon = {
             BackArrowCircleIconButton(
                 modifier = Modifier.padding(
@@ -61,12 +54,20 @@ fun BackArrowTopAppBar(
                 backgroundColor = PassTheme.colors.interactionNormMinor1,
                 onUpClick = onUpClick
             )
-        },
-        actions = {
-            actions?.let {
-                actions()
-                Spacer(modifier = Modifier.width(Spacing.medium - Spacing.extraSmall))
-            }
         }
     )
+}
+
+@Preview
+@Composable
+fun BackArrowTopAppBarPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
+    val title = if (input.first) "Title" else null
+    PassTheme(isDark = input.first) {
+        Surface {
+            BackArrowTopAppBar(
+                title = title,
+                onUpClick = { }
+            )
+        }
+    }
 }

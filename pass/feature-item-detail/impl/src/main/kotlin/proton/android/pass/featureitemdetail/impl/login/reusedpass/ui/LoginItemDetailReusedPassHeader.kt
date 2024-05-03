@@ -31,10 +31,7 @@ import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.featureitemdetail.impl.R
 
 @Composable
-internal fun LoginItemDetailReusedPassHeader(
-    modifier: Modifier = Modifier,
-    password: String,
-) {
+internal fun LoginItemDetailReusedPassHeader(modifier: Modifier = Modifier, password: String) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)

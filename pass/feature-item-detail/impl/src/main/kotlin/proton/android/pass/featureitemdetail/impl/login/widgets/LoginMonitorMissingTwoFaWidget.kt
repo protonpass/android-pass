@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.login.LoginMonitorWidget
@@ -36,7 +37,7 @@ internal fun LoginMonitorMissingTwoFaWidget(modifier: Modifier = Modifier) {
         modifier = modifier,
         title = stringResource(id = R.string.login_item_monitor_widget_missing_two_fa_title),
         subtitleResId = R.string.login_item_monitor_widget_missing_two_fa_subtitle,
-        itemCategory = ItemCategory.Login
+        itemColors = passItemColors(itemCategory = ItemCategory.Login)
     )
 }
 

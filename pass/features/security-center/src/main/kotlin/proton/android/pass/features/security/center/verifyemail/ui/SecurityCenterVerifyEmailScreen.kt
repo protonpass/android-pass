@@ -41,6 +41,10 @@ fun SecurityCenterVerifyEmailScreen(
                 onNavigated(SecurityCenterVerifyEmailDestination.EmailVerified)
             }
 
+            is SecurityCenterVerifyEmailEvent.GoBackToHome -> {
+                onNavigated(SecurityCenterVerifyEmailDestination.Back)
+            }
+
             SecurityCenterVerifyEmailEvent.Idle -> {}
         }
         viewModel.onEventConsumed(state.event)

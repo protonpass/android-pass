@@ -75,6 +75,9 @@ sealed interface ItemDetailNavigation {
         val itemId: ItemId,
         val passkeyId: PasskeyId
     ) : ItemDetailNavigation
+
+    data class ViewReusedPasswords(val shareId: ShareId, val itemId: ItemId) : ItemDetailNavigation
+
 }
 
 enum class ItemDetailCannotPerformActionType {

@@ -18,20 +18,18 @@
 
 package proton.android.pass.featureitemdetail.impl.login.widgets
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -44,11 +42,8 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionStrongNorm
 import proton.android.pass.common.api.ellipsize
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.Radius
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.commonui.api.body3Bold
-import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
@@ -57,8 +52,10 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemdetail.impl.R
+import proton.android.pass.featureitemdetail.impl.login.LoginDetailEvent
 import proton.android.pass.featureitemdetail.impl.login.LoginMonitorState
 import proton.android.pass.featureitemdetail.impl.login.LoginMonitorWidget
+import proton.android.pass.composecomponents.impl.R as CompR
 
 private const val REUSED_LOGIN_ITEM_ICON_SIZE = 24
 private const val REUSED_LOGIN_ITEM_TITLE_MAX_LENGTH = 20
@@ -69,53 +66,38 @@ internal fun LoginMonitorReusedPassWidget(
     reusedPasswordDisplayMode: LoginMonitorState.ReusedPasswordDisplayMode,
     reusedPasswordCount: Int,
     reusedPasswordItems: ImmutableList<ItemUiModel>,
-    canLoadExternalImages: Boolean
+    canLoadExternalImages: Boolean,
+    onEvent: (LoginDetailEvent) -> Unit
 ) {
+
     LoginMonitorWidget(
         modifier = modifier,
-        titleResId = R.string.login_item_monitor_widget_reused_pass_title,
-        subtitleResId = R.string.login_item_monitor_widget_reused_pass_subtitle,
+        title = pluralStringResource(
+            id = R.plurals.login_item_monitor_widget_reused_pass_title,
+            count = reusedPasswordCount,
+            reusedPasswordCount
+        ),
         additionalContent = {
             when (reusedPasswordDisplayMode) {
                 LoginMonitorState.ReusedPasswordDisplayMode.Compact -> {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
-                    ) {
-                        Text(
-                            modifier = Modifier
-                                .clip(shape = RoundedCornerShape(size = Radius.small))
-                                .background(color = PassTheme.colors.noteInteractionNormMinor1)
-                                .padding(all = Spacing.small),
-                            text = pluralStringResource(
-                                id = R.plurals.login_item_monitor_widget_reused_pass_count_compact_leading,
-                                count = reusedPasswordCount,
-                                reusedPasswordCount
+                    Text(
+                        modifier = Modifier
+                            .roundedContainer(
+                                backgroundColor = PassTheme.colors.noteInteractionNormMinor1,
+                                borderColor = PassTheme.colors.noteInteractionNormMinor1
+                            )
+                            .clickable { onEvent(LoginDetailEvent.OnShowReusedPasswords) }
+                            .padding(
+                                vertical = Spacing.small,
+                                horizontal = Spacing.medium
                             ),
-                            color = PassTheme.colors.noteInteractionNormMajor2,
-                            style = PassTheme.typography.body3Bold()
-                        )
-
-                        Text(
-                            text = stringResource(
-                                id = R.string.login_item_monitor_widget_reused_pass_count_compact_trailing
-                            ),
-                            color = PassTheme.colors.noteInteractionNormMajor2,
-                            style = PassTheme.typography.body3Norm()
-                        )
-                    }
+                        text = stringResource(id = CompR.string.action_see_all),
+                        color = PassTheme.colors.noteInteractionNormMajor2,
+                        style = ProtonTheme.typography.captionMedium,
+                    )
                 }
 
                 LoginMonitorState.ReusedPasswordDisplayMode.Expanded -> {
-                    Text(
-                        text = pluralStringResource(
-                            id = R.plurals.login_item_monitor_widget_reused_pass_count_expanded,
-                            count = reusedPasswordCount, reusedPasswordCount
-                        ),
-                        color = PassTheme.colors.noteInteractionNormMajor2,
-                        style = PassTheme.typography.body3Norm()
-                    )
-
                     ReusedPasswordCarousel(
                         reusedPasswordItems = reusedPasswordItems,
                         canLoadExternalImages = canLoadExternalImages
@@ -196,7 +178,8 @@ internal fun LoginMonitorReusedPassWidgetCompactPreview(
                 reusedPasswordDisplayMode = LoginMonitorState.ReusedPasswordDisplayMode.Compact,
                 reusedPasswordCount = 8,
                 reusedPasswordItems = persistentListOf(),
-                canLoadExternalImages = false
+                canLoadExternalImages = false,
+                onEvent = {}
             )
         }
     }
@@ -233,7 +216,8 @@ internal fun LoginMonitorReusedPassWidgetExpandedPreview(
                         isPinned = false
                     )
                 ),
-                canLoadExternalImages = false
+                canLoadExternalImages = false,
+                onEvent = {}
             )
         }
     }

@@ -52,4 +52,6 @@ sealed interface LoginDetailEvent {
     @JvmInline
     value class OnSelectPasskey(val passkey: UIPasskeyContent) : LoginDetailEvent
 
+    data object OnShowReusedPasswords : LoginDetailEvent
+
 }

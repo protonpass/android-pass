@@ -78,7 +78,7 @@ internal fun LoginItemDetailReusedPassContent(
                     LoginRow(
                         item = itemUiModel,
                         canLoadExternalImages = canLoadExternalImages,
-                        vaultIcon = getShareIcon(itemUiModel.shareId)?.toSmallResource(),
+                        vaultIcon = getShareIcon(itemUiModel.shareId)?.toSmallResource()
                     )
                 }
             }

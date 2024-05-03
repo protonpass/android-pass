@@ -39,7 +39,7 @@
   <string name="share_with_title">Абагуліць з</string>
   <string name="share_with_email_hint">Адрас электроннай пошты</string>
   <string name="share_with_email_error">Памылковы адрас электроннай пошты</string>
-  <string name="share_with_email_cannot_invite_outside_org">У вас няма магчымасці запрашаць людзей па-за межамі вашай арганізацыі. Звяжыцеся з адміністратарам, каб атрымаць дадатковыя звесткі</string>
+  <string name="share_with_email_cannot_invite_outside_org">У вас няма магчымасці запрашаць карыстальнікаў па-за межамі вашай арганізацыі. Звяжыцеся з адміністратарам, каб атрымаць дадатковыя звесткі</string>
   <string name="share_permissions_title">Задаць узровень доступу</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s запрасіў(-ла) вас атрымаць доступ да элементаў у</string>
   <string name="sharing_join_shared_vault">Далучыцца і сінхранізаваць</string>
@@ -65,7 +65,7 @@
   <string name="share_summary_vault">%s сховішча</string>
   <string name="share_summary_share_vault">Абагуліць сховішча</string>
   <string name="share_summary_vault_title">Сховішча</string>
-  <string name="share_manage_vault_share_with_more_people">Абагуліць з большай колькасцю людзей</string>
+  <string name="share_manage_vault_share_with_more_people">Абагуліць з большай колькасцю карыстальнікаў</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
     <item quantity="one">Засталося %d запрашэнне</item>
     <item quantity="few">Засталося %d запрашэнні</item>

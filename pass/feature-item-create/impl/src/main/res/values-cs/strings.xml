@@ -96,8 +96,8 @@
   <string name="changes_saved">Změny uloženy</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">Klíč 2FA secret (TOTP)</string>
-  <string name="totp_create_login_field_invalid">Invalid 2FA secret key (TOTP)</string>
-  <string name="totp_create_login_field_placeholder">Add 2FA secret key (TOTP)</string>
+  <string name="totp_create_login_field_invalid">Neplatný klíč 2FA secret (TOTP)</string>
+  <string name="totp_create_login_field_placeholder">Přidat klíč 2FA secret (TOTP)</string>
   <string name="close_scree_icon_content_description">Tlačítko zavření obrazovky</string>
   <string name="totp_paste_code_action">Vložit kód</string>
   <string name="totp_scan_code_action">Skenovat kód</string>
@@ -111,7 +111,7 @@
   <string name="select_suffix_upgrade_for_custom_domains">Navyšte tarif pro vlastní domény</string>
   <string name="select_mailbox_upgrade_for_more_inboxes">Navyšte tarif pro více schránek</string>
   <string name="create_alias_content_limit_banner">Dosáhli jste limitu aliasů, které můžete vytvořit. Po navýšení předplatného můžete vytvářet neomezený počet aliasů.</string>
-  <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">The app needs to be updated to edit this item</string>
-  <string name="remove_passkey_dialog_title">Remove this passkey?</string>
-  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">You are about to remove the passkey for user \'%1$s\' for \'%2$s\'. Are you sure?</string>
+  <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Pro úpravu této položky je třeba aplikaci aktualizovat.</string>
+  <string name="remove_passkey_dialog_title">Odebrat tento přístupový klíč?</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Chystáte se odebrat přístupový klíč uživatele \'%1$s\' pro \'%2$s\'. Jste si jisti?</string>
 </resources>

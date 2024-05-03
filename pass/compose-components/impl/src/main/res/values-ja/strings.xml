@@ -28,10 +28,10 @@
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">アイテムアクションメニューを開く</string>
   <string name="action_upgrade_now">今すぐアップグレード</string>
-  <string name="action_not_now">Not now</string>
-  <string name="action_learn_more">Learn more</string>
+  <string name="action_not_now">今ではない</string>
+  <string name="action_learn_more">詳細</string>
   <string name="action_enable">Enable</string>
-  <string name="action_view_details">View details</string>
+  <string name="action_view_details">詳細の表示</string>
   <!-- Empty list -->
   <string name="empty_list_title">最初の項目を追加</string>
   <string name="empty_search_results_title">結果が見つかりません</string>
@@ -63,7 +63,7 @@
   <string name="most_recent_yesterday">昨日</string>
   <string name="most_recent_this_week">今週</string>
   <string name="most_recent_last_two_weeks">過去 2 週間</string>
-  <string name="most_recent_last_30_days">Last month</string>
+  <string name="most_recent_last_30_days">先月</string>
   <string name="most_recent_last_60_days">過去 60 日間</string>
   <string name="most_recent_last_90_days">過去 90 日間</string>
   <string name="most_recent_within_the_last_year">過去 1 年以内</string>
@@ -106,7 +106,7 @@
   <string name="date_full_date_format_with_year">yyyy LLLL dd HH:mm</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">Alias address</string>
-  <string name="item_details_alias_section_mailboxes_title">Forwarding to</string>
+  <string name="item_details_alias_section_mailboxes_title">転送先</string>
   <string name="item_details_credit_card_section_cardholder_title">カード名義人</string>
   <string name="item_details_credit_card_section_card_number_title">カード番号</string>
   <string name="item_details_credit_card_section_expiration_date_title">有効期限</string>

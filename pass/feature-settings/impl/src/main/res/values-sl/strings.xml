@@ -26,7 +26,7 @@
   <string name="settings_use_favicons_preference_subtitle">Odločite se, ali želite videti ikone spletnega mesta na svojih predmetih.</string>
   <string name="settings_allow_screenshots_preference_title">Dovoli posnetke zaslona</string>
   <string name="settings_allow_screenshots_preference_subtitle">Če je omogočeno, boste lahko posneli posnetke zaslona aplikacije.</string>
-  <string name="settings_clear_icon_cache_success">Predpomnilnik za ikoe je počiščen</string>
+  <string name="settings_clear_icon_cache_success">Predpomnilnik za ikone je počiščen</string>
   <string name="settings_clear_icon_cache_error">Predpomnilnika za ikone ni bilo mogoče počistiti</string>
   <string name="settings_share_telemetry">Delite anonimno uporabo</string>
   <string name="settings_share_crashes">Delite anonimna poročila o zrušitvah</string>

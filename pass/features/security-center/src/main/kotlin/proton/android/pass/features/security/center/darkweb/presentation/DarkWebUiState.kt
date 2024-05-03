@@ -112,7 +112,8 @@ internal data class DarkWebUiState(
     internal val customEmailState: DarkWebCustomEmailsState,
     internal val darkWebStatus: DarkWebStatus,
     internal val lastCheckTime: Option<String>,
-    internal val canAddCustomEmails: Boolean
+    internal val canAddCustomEmails: Boolean,
+    internal val canNavigateToAlias: Boolean
 ) {
 
     internal companion object {
@@ -123,7 +124,8 @@ internal data class DarkWebUiState(
             customEmailState = DarkWebCustomEmailsState.Loading,
             darkWebStatus = DarkWebStatus.Loading,
             lastCheckTime = None,
-            canAddCustomEmails = false
+            canAddCustomEmails = false,
+            canNavigateToAlias = false
         )
 
     }

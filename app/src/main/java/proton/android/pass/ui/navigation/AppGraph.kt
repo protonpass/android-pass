@@ -1047,10 +1047,6 @@ fun NavGraphBuilder.appGraph(
                     )
                 }
 
-                SecurityCenterNavDestination.BackToHome -> {
-                    appNavigator.popUpTo(DarkWebMonitorNavItem)
-                }
-
                 SecurityCenterNavDestination.Home -> appNavigator.navigate(
                     destination = SecurityCenterHomeNavItem
                 )

@@ -55,6 +55,9 @@ import proton.android.pass.domain.breach.BreachId
 import proton.android.pass.domain.breach.BreachProtonEmail
 import proton.android.pass.domain.breach.CustomEmailId
 import proton.android.pass.domain.breach.EmailFlag
+import proton.android.pass.preferences.InternalSettingsRepository
+import proton.android.pass.preferences.IsDarkWebAliasMessageDismissedPreference.Dismissed
+import proton.android.pass.preferences.IsDarkWebAliasMessageDismissedPreference.Show
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -63,7 +66,8 @@ class BreachRepositoryImpl @Inject constructor(
     private val localUserAccessDataDataSource: LocalUserAccessDataDataSource,
     private val remote: RemoteBreachDataSource,
     private val localBreachesDataSource: LocalBreachesDataSource,
-    private val observeItemById: ObserveItemById
+    private val observeItemById: ObserveItemById,
+    private val internalSettings: InternalSettingsRepository
 ) : BreachRepository {
 
     private val refreshFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
@@ -72,7 +76,18 @@ class BreachRepositoryImpl @Inject constructor(
 
     override fun observeAllBreaches(userId: UserId): Flow<Breach> = shouldFetchBreachFlow
         .filter { shouldFetch -> shouldFetch }
-        .mapLatest { remote.getAllBreaches(userId).toDomain() }
+        .mapLatest {
+            val breachesResponse = remote.getAllBreaches(userId)
+
+            runCatching {
+                val showMessage = internalSettings.getDarkWebAliasMessageVisibility().first()
+                if (showMessage == Show && !breachesResponse.breaches.hasCustomDomains) {
+                    internalSettings.setDarkWebAliasMessageVisibility(Dismissed)
+                }
+            }
+
+            breachesResponse.toDomain()
+        }
         .distinctUntilChanged()
 
     override fun observeCustomEmail(userId: UserId, customEmailId: CustomEmailId): Flow<BreachEmailReport.Custom> =

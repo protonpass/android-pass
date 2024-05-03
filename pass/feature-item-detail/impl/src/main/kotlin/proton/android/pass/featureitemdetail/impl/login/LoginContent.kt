@@ -70,7 +70,8 @@ internal fun LoginContent(
             LoginMonitorSection(
                 modifier = Modifier.padding(top = Spacing.small),
                 monitorState = monitorState,
-                canLoadExternalImages = canLoadExternalImages
+                canLoadExternalImages = canLoadExternalImages,
+                onEvent = onEvent
             )
         }
 

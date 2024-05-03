@@ -70,7 +70,6 @@
 
     <!-- Excluded items screen -->
     <string name="security_center_excluded_items_top_bar_title">Excluded items</string>
-    <string name="security_center_excluded_items_top_bar_subtitle">This items will not be monitored so they will skip our security services checks.</string>
 
     <!-- Dark web monitor -->
     <string name="security_center_dark_web_monitor_top_bar_title">Dark Web Monitoring</string>

@@ -21,32 +21,34 @@ package proton.android.pass.featureitemdetail.impl.login.reusedpass.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.commonui.api.toUiModel
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.ObserveItemById
-import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
 import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
-import proton.android.pass.securitycenter.api.passwords.RepeatedPasswordChecker
+import proton.android.pass.securitycenter.api.passwords.DuplicatedPasswordChecker
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginItemDetailReusedPassViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     observeItemById: ObserveItemById,
-    observeMonitoredItems: ObserveMonitoredItems,
     observeVaultsGroupedByShareId: ObserveVaultsGroupedByShareId,
     userPreferencesRepository: UserPreferencesRepository,
-    repeatedPasswordChecker: RepeatedPasswordChecker,
+    duplicatedPasswordChecker: DuplicatedPasswordChecker,
+    encryptionContextProvider: EncryptionContextProvider
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -57,21 +59,26 @@ class LoginItemDetailReusedPassViewModel @Inject constructor(
         .require<String>(CommonNavArgId.ItemId.key)
         .let(::ItemId)
 
-    internal val state: StateFlow<LoginItemDetailReusedPassState> = combine(
-        observeItemById(shareId, itemId),
-        observeMonitoredItems(),
-        userPreferencesRepository.getUseFaviconsPreference(),
-        observeVaultsGroupedByShareId(),
-    ) { item, monitoredItems, useFavIconsPreference, groupedVaults ->
-
-        repeatedPasswordChecker(monitoredItems).also {
-            println("JIBIRI: ${it.repeatedPasswordsGroups}")
+    private val duplicatedLoginItemsFlow = observeItemById(shareId, itemId)
+        .map { loginItem ->
+            duplicatedPasswordChecker(loginItem).let { duplicatedPasswordReport ->
+                encryptionContextProvider.withEncryptionContext {
+                    duplicatedPasswordReport.duplications.map { duplicatedPassLoginItem ->
+                        duplicatedPassLoginItem.toUiModel(this@withEncryptionContext)
+                    }
+                }
+            }
         }
 
+    internal val state: StateFlow<LoginItemDetailReusedPassState> = combine(
+        observeItemById(shareId, itemId),
+        duplicatedLoginItemsFlow,
+        userPreferencesRepository.getUseFaviconsPreference(),
+        observeVaultsGroupedByShareId(),
+    ) { item, duplicatedLoginItems, useFavIconsPreference, groupedVaults ->
         LoginItemDetailReusedPassState(
             password = "",
-            reusedPasswordItems = persistentListOf(),
-            repeatedPasswordsGroups = repeatedPasswordChecker(monitoredItems).repeatedPasswordsGroups,
+            duplicatedPasswordLoginItems = duplicatedLoginItems.toImmutableList(),
             canLoadExternalImages = useFavIconsPreference.value(),
             groupedVaults = groupedVaults
         )

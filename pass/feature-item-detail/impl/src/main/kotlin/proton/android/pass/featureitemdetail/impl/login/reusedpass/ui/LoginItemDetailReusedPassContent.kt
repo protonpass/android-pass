@@ -21,6 +21,7 @@ package proton.android.pass.featureitemdetail.impl.login.reusedpass.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -32,7 +33,9 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.masks.TextMask
 import proton.android.pass.composecomponents.impl.extension.toSmallResource
 import proton.android.pass.composecomponents.impl.item.LoginRow
+import proton.android.pass.composecomponents.impl.loading.Loading
 import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.login.reusedpass.presentation.LoginItemDetailReusedPassState
 
@@ -50,36 +53,47 @@ internal fun LoginItemDetailReusedPassContent(
             )
         }
     ) { innerPaddingValues ->
-        Column(
-            modifier = Modifier
-                .background(PassTheme.colors.backgroundStrong)
-                .padding(paddingValues = innerPaddingValues)
-                .padding(top = Spacing.large)
-        ) {
-            LoginItemDetailReusedPassHeader(
-                modifier = Modifier.padding(horizontal = Spacing.medium),
-                password = TextMask.TextBetweenFirstAndLastChar(input = password).masked
-            )
-
-            LazyColumn(
-                modifier = Modifier
-                    .background(PassTheme.colors.backgroundStrong)
-                    .padding(
-                        start = Spacing.medium,
-                        top = Spacing.large,
-                        end = Spacing.medium
-                    ),
-                verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
-            ) {
-                items(
-                    items = duplicatedPasswordLoginItems,
-                    key = { itemUiModel -> itemUiModel.id.id }
-                ) { itemUiModel ->
-                    LoginRow(
-                        item = itemUiModel,
-                        canLoadExternalImages = canLoadExternalImages,
-                        vaultIcon = getShareIcon(itemUiModel.shareId)?.toSmallResource()
+        when(isLoadingState) {
+            IsLoadingState.Loading -> {
+                Loading(
+                    modifier = Modifier
+                        .padding(paddingValues = innerPaddingValues)
+                        .fillMaxSize()
+                )
+            }
+            IsLoadingState.NotLoading -> {
+                Column(
+                    modifier = Modifier
+                        .background(PassTheme.colors.backgroundStrong)
+                        .padding(paddingValues = innerPaddingValues)
+                        .padding(top = Spacing.large)
+                ) {
+                    LoginItemDetailReusedPassHeader(
+                        modifier = Modifier.padding(horizontal = Spacing.medium),
+                        password = TextMask.TextBetweenFirstAndLastChar(input = password).masked
                     )
+
+                    LazyColumn(
+                        modifier = Modifier
+                            .background(PassTheme.colors.backgroundStrong)
+                            .padding(
+                                start = Spacing.medium,
+                                top = Spacing.large,
+                                end = Spacing.medium
+                            ),
+                        verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
+                    ) {
+                        items(
+                            items = duplicatedPasswordLoginItems,
+                            key = { itemUiModel -> itemUiModel.id.id }
+                        ) { itemUiModel ->
+                            LoginRow(
+                                item = itemUiModel,
+                                canLoadExternalImages = canLoadExternalImages,
+                                vaultIcon = getShareIcon(itemUiModel.shareId)?.toSmallResource()
+                            )
+                        }
+                    }
                 }
             }
         }

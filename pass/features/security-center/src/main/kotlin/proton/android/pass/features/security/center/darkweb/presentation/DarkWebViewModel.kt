@@ -64,6 +64,7 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
+@Suppress("LongParameterList")
 @HiltViewModel
 internal class DarkWebViewModel @Inject constructor(
     observeItems: ObserveItems,
@@ -140,7 +141,6 @@ internal class DarkWebViewModel @Inject constructor(
         customEmailsFlow,
         customEmailSuggestionsFlow
     ) { protonEmailResult, aliasEmailsResult, customEmailsResult, suggestionsResult ->
-
         val protonEmail = getProtonEmailState(protonEmailResult)
         val aliasEmail = getAliasEmailState(aliasEmailsResult)
         val customEmails = getCustomEmailsState(
@@ -270,15 +270,23 @@ internal class DarkWebViewModel @Inject constructor(
 
         val alreadyAddedProtonEmails = when (protonEmailState) {
             is DarkWebEmailBreachState.Success -> protonEmailState.emails.map { it.email }
-            else -> emptyList()
+            is DarkWebEmailBreachState.Error -> emptyList()
+            DarkWebEmailBreachState.Loading -> return CustomEmailsStatus(
+                state = DarkWebCustomEmailsState.Loading,
+                canAddCustomEmails = false
+            )
         }
 
         val alreadyAddedAliases = when (aliasEmailState) {
             is DarkWebEmailBreachState.Success -> aliasEmailState.emails.map { it.email }
-            else -> emptyList()
+            is DarkWebEmailBreachState.Error -> emptyList()
+            DarkWebEmailBreachState.Loading -> return CustomEmailsStatus(
+                state = DarkWebCustomEmailsState.Loading,
+                canAddCustomEmails = false
+            )
         }
 
-        val emails = when (customEmailsResult) {
+        val customEmails = when (customEmailsResult) {
             is LoadingResult.Error -> {
                 PassLogger.w(TAG, "Failed to load custom emails")
                 PassLogger.w(TAG, customEmailsResult.exception)
@@ -296,10 +304,10 @@ internal class DarkWebViewModel @Inject constructor(
             is LoadingResult.Success -> customEmailsResult.data.map { it.toUiModel() }
         }
 
-        val (verified, unverified) = emails.partition { it.status is CustomEmailUiStatus.Verified }
+        val (verified, unverified) = customEmails.partition { it.status is CustomEmailUiStatus.Verified }
 
         // If we have reached the limit, no suggestions should be shown
-        if (emails.size >= CUSTOM_EMAILS_LIMIT) {
+        if (customEmails.size >= CUSTOM_EMAILS_LIMIT) {
             return CustomEmailsStatus(
                 state = DarkWebCustomEmailsState.Success(
                     emails = (verified + unverified).toImmutableList(),
@@ -310,7 +318,7 @@ internal class DarkWebViewModel @Inject constructor(
         }
 
         // We have not reached the limits, calculate the suggestions
-        val alreadyAddedCustomEmails = emails.map { it.email }
+        val alreadyAddedCustomEmails = customEmails.map { it.email }
         val alreadyAddedEmails = (alreadyAddedProtonEmails + alreadyAddedAliases + alreadyAddedCustomEmails).toSet()
 
         val suggestions = when (suggestionsResult) {
@@ -321,7 +329,7 @@ internal class DarkWebViewModel @Inject constructor(
                 // Return the retrieved emails even if suggestions failed
                 return CustomEmailsStatus(
                     state = DarkWebCustomEmailsState.Success(
-                        emails = emails.toImmutableList(),
+                        emails = customEmails.toImmutableList(),
                         suggestions = persistentListOf()
                     ),
                     canAddCustomEmails = false
@@ -335,6 +343,8 @@ internal class DarkWebViewModel @Inject constructor(
 
             is LoadingResult.Success ->
                 suggestionsResult.data
+                    .distinctBy { it.email }
+                    .sortedByDescending { it.usedInLoginsCount }
                     .filter { !alreadyAddedEmails.contains(it.email) }
                     .map { it.toUiModel() }
         }.take(EMAIL_SUGGESTIONS_COUNT)

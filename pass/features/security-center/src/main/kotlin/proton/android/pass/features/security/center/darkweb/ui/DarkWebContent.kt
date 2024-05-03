@@ -79,6 +79,7 @@ internal fun DarkWebContent(
                     modifier = Modifier.padding(Spacing.medium),
                     protonEmailsState = state.protonEmailState,
                     aliasEmailsState = state.aliasEmailState,
+                    canNavigateToAlias = state.canNavigateToAlias,
                     onEvent = onEvent
                 )
             }

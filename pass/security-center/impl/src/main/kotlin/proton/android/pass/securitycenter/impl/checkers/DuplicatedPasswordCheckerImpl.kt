@@ -18,7 +18,9 @@
 
 package proton.android.pass.securitycenter.impl.checkers
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.withContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
@@ -52,19 +54,21 @@ class DuplicatedPasswordCheckerImpl @Inject constructor(
             filter = ItemTypeFilter.Logins
         ).first().filter { loginItem -> loginItem.id != item.id }
 
-        val duplicatedPasswordItems = mutableSetOf<Item>()
-        encryptionContextProvider.withEncryptionContext {
-            items.forEach { loginItem ->
-                if (loginItem.itemType is ItemType.Login) {
-                    val currentItemPassword =
-                        decrypt((loginItem.itemType as ItemType.Login).password)
-                    if (itemPassword == currentItemPassword) {
-                        duplicatedPasswordItems.add(loginItem)
+        return withContext(Dispatchers.Default) {
+            val duplicatedPasswordItems = mutableSetOf<Item>()
+            encryptionContextProvider.withEncryptionContext {
+                items.forEach { loginItem ->
+                    if (loginItem.itemType is ItemType.Login) {
+                        val currentItemPassword =
+                            decrypt((loginItem.itemType as ItemType.Login).password)
+                        if (itemPassword == currentItemPassword) {
+                            duplicatedPasswordItems.add(loginItem)
+                        }
                     }
                 }
             }
+            DuplicatedPasswordReport(duplicatedPasswordItems)
         }
-        return DuplicatedPasswordReport(duplicatedPasswordItems)
     }
 
 }

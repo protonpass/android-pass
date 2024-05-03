@@ -22,7 +22,7 @@
   <string name="home_autofill_banner_text">En dotik in — hitro! — vaše uporabniško ime in geslo sta v trenutku izpolnjena.</string>
   <string name="home_autofill_banner_settings">Vklopi samodejno izpolnjevanje ›</string>
   <string name="home_trial_banner_title">Naše darilo dobrodošlice za vas</string>
-  <string name="home_trial_banner_text">7 dni, da brezplačno preizkusite vrhunske funkcije. Samo v prvem tednu Proton Pass.</string>
+  <string name="home_trial_banner_text">7 dni, da brezplačno preizkusite premijske funkcije. Samo v prvem tednu Proton Pass.</string>
   <string name="home_trial_banner_settings">Izvedi več ›</string>
   <string name="home_notification_permission_banner_title">Pridobite pomembne posodobitve</string>
   <string name="home_notification_permission_banner_text">Omogočite potisna obvestila, da boste obveščeni, ko drugi delijo shrambo z vami.</string>
@@ -133,14 +133,14 @@
   <string name="recent_search_clear">Počisti</string>
   <string name="recent_search_remove_item">Izhod iz zadnjih iskanj</string>
   <!-- Pinning -->
-  <string name="home_snackbar_item_pinned_success">Predmet je bil uspešno pripet</string>
+  <string name="home_snackbar_item_pinned_success">Predmet je bil pripet.</string>
   <string name="home_snackbar_item_pinned_error">Pri pripenjanju tega predmeta je prišlo do napake</string>
-  <string name="home_snackbar_item_unpinned_success">Predmet je bil uspešno odpet</string>
+  <string name="home_snackbar_item_unpinned_success">Predmet je bil odpet.</string>
   <string name="home_snackbar_item_unpinned_error">Pri odpenjanju tega predmeta je prišlo do napake</string>
-  <string name="home_snackbar_items_pinned_success">Predmeti so bili uspešno pripeti</string>
+  <string name="home_snackbar_items_pinned_success">Predmeti so bili pripeti.</string>
   <string name="home_snackbar_items_pinned_partial_success">Napaka pri pripenjanju nekaterih predmetov</string>
   <string name="home_snackbar_items_pinned_error">Napaka pri pripenjanju predmetov</string>
-  <string name="home_snackbar_items_unpinned_success">Predmeti so bili uspešno odpeti</string>
+  <string name="home_snackbar_items_unpinned_success">Predmeti so bili odpeti.</string>
   <string name="home_snackbar_items_unpinned_partial_success">Napaka pri odpenjanju nekaterih predmetov</string>
   <string name="home_snackbar_items_unpinned_error">Napaka pri odpenjanju predmetov</string>
 </resources>

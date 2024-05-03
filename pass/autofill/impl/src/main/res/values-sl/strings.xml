@@ -10,7 +10,7 @@
   <string name="autofill_dialog_cancel">Prekliči</string>
   <string name="autofill_notification_copy_to_clipboard">TOTP je bil kopiran v odložišče</string>
   <string name="autofill_dialog_associate_title">Uporabim prijavo?</string>
-  <string name="autofill_user_logged_out">Ste izpisani. Prosimo, ponovno se prijavite z odprtjem aplikacije.</string>
+  <string name="autofill_user_logged_out">Ste izpisani. Ponovno se prijavite z odprtjem aplikacije.</string>
   <string name="autofill_cc_upgrade_dialog_title" comment="Title of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Samodejno izpolnjevanje podatkov za kartice</string>
   <string name="autofill_cc_upgrade_dialog_message" comment="Message of the dialog that will appear when the user clicks on Autofill credit card but is on Free plan">Samodejno izpolnjevanje podatkov o plačilni kartici je plačljiva funkcija. Če želite, da Proton Pass samodejno vnese podatke o vaši kartici v aplikacije in na spletna mesta, nadgradite na plačljivi paket.</string>
   <string name="autofill_confirm_dangerous_title" comment="Title for the dialog that will appear when the user clicks on Autofill but we think it may be a dangerous action">Potrdite svoje dejanje</string>

@@ -119,7 +119,7 @@
   <string name="recent_search_clear">Rensa</string>
   <string name="recent_search_remove_item">Ta bort från senaste sökningar</string>
   <!-- Pinning -->
-  <string name="home_snackbar_item_pinned_success">Item successfully pinned</string>
+  <string name="home_snackbar_item_pinned_success">Lyckades fästa objekt</string>
   <string name="home_snackbar_item_pinned_error">Det gick inte att fästa detta objekt</string>
   <string name="home_snackbar_item_unpinned_success">Objekt lossat</string>
   <string name="home_snackbar_item_unpinned_error">Det gick inte att lossa detta objekt</string>

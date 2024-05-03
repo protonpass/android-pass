@@ -22,5 +22,5 @@
   <string name="passkeys_user_logged_out">Heu tancat la sessió. Torneu a iniciar sessió obrint l\'aplicació.</string>
   <string name="passkey_confirm_item_title" comment="Title of the dialog for confirming the generation of a passkey for an item">Genera una clau d\'accés</string>
   <string name="passkey_confirm_item_body" comment="Body of the dialog for confirming the generation of a passkey for an item. The placeholder contains the item title">Are you sure you want to generate a passkey for the item \'%s\'?</string>
-  <string name="passkey_error_generating_passkey">Could not generate passkey</string>
+  <string name="passkey_error_generating_passkey">No s\'ha pogut generar la clau d\'accés.</string>
 </resources>

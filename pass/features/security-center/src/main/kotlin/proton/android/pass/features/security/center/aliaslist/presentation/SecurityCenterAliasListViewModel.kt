@@ -30,7 +30,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.runningReduce
+import kotlinx.coroutines.flow.runningFold
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
@@ -101,7 +101,7 @@ class SecurityCenterAliasListViewModel @Inject constructor(
             ).map { aliasKeyId to it }
         }
         .map { (aliasId, breachData) -> mapOf(aliasId to breachData) }
-        .runningReduce { acc, map -> acc + map }
+        .runningFold(mapOf<AliasKeyId, List<BreachEmail>>()) { acc, map -> acc + map }
         .asLoadingResult()
 
     private val aliasExcludedEmailFlow = observeItems(

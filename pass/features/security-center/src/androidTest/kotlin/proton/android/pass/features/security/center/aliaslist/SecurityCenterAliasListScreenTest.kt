@@ -29,9 +29,11 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.data.api.usecases.MonitorState
 import proton.android.pass.data.api.usecases.items.ItemIsBreachedFilter
 import proton.android.pass.data.api.usecases.items.ItemSecurityCheckFilter
 import proton.android.pass.data.fakes.usecases.TestObserveItems
+import proton.android.pass.data.fakes.usecases.breach.FakeObserveGlobalMonitorState
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.aliaslist.navigation.SecurityCenterAliasListNavDestination
 import proton.android.pass.features.security.center.aliaslist.ui.SecurityCenterAliasListScreen
@@ -52,9 +54,18 @@ class SecurityCenterAliasListScreenTest {
     @Inject
     lateinit var observeItems: TestObserveItems
 
+    @Inject
+    lateinit var observeGlobalMonitorState: FakeObserveGlobalMonitorState
+
     @Before
     fun setup() {
         hiltRule.inject()
+        observeGlobalMonitorState.emit(
+            MonitorState(
+                protonMonitorEnabled = true,
+                aliasMonitorEnabled = true
+            )
+        )
     }
 
     @Test

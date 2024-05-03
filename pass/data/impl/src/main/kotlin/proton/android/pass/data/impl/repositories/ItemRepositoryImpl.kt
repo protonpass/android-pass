@@ -684,7 +684,7 @@ class ItemRepositoryImpl @Inject constructor(
 
         val upsertChunks: List<List<ItemEntity>> = itemsToUpsert.chunked(MAX_ITEMS_PER_TRANSACTION)
         upsertChunks.forEachIndexed { idx, chunk ->
-            PassLogger.i(TAG, "setShareItems insert(${idx + 1}/$upsertChunks.size)")
+            PassLogger.i(TAG, "setShareItems insert(${idx + 1}/${upsertChunks.size})")
             localItemDataSource.upsertItems(chunk)
         }
 

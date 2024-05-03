@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="account_title">Účet</string>
-  <string name="account_recovery_title">Account and Recovery</string>
+  <string name="account_recovery_title">Účet a obnovení</string>
   <string name="account_username_label">Uživatelské jméno</string>
   <string name="account_subscription_label">Tarif předplatného</string>
   <string name="account_permanently_delete_warning">Tímto trvale smažete váš účet a všechna jeho data. Tento účet neubude možné znovu aktivovat.</string>

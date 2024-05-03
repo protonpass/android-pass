@@ -15,7 +15,7 @@
   <string name="account_get_user_info_error">Käyttäjätietoja ei voitu noutaa</string>
   <string name="manage_subscription_icon_content_description">Hallitse tilausta -painike</string>
   <string name="account_settings_list_item_password_header">Salasanan hallinta</string>
-  <string name="account_settings_list_item_recovery_header">Palautuksen sähköpostiosoite</string>
+  <string name="account_settings_list_item_recovery_header">Palautusosoite</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Ei määritetty</string>
   <string name="account_settings_list_item_password_hint_grace">Salasanan nollaus odottaa</string>
   <string name="account_settings_list_item_password_hint_insecure">Salasanan nollaus on valmis</string>

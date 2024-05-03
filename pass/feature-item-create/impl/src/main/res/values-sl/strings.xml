@@ -46,7 +46,7 @@
   <string name="custom_field_text_placeholder">Dodajte tekst</string>
   <string name="custom_field_dialog_title">Ime polja po meri</string>
   <string name="custom_field_dialog_body">Poimenujte svoje polje po meri</string>
-  <string name="custom_field_dialog_placeholder">Npr., Uporabnikov ID, PIN</string>
+  <string name="custom_field_dialog_placeholder">Npr., uporabnikov ID, PIN</string>
   <string name="custom_field_options_content_description">Možnosti polja po meri</string>
   <!-- Create Note -->
   <string name="title_create_note">Ustvari opombo</string>

@@ -273,7 +273,7 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
         SecurityCenterVerifyEmailScreen(
             onNavigated = { destination ->
                 val event = when (destination) {
-                    SecurityCenterVerifyEmailDestination.Back -> SecurityCenterNavDestination.BackToHome
+                    SecurityCenterVerifyEmailDestination.Back -> SecurityCenterNavDestination.BackToDarkWebMonitoring
                     SecurityCenterVerifyEmailDestination.EmailVerified -> SecurityCenterNavDestination.EmailVerified
                 }
                 onNavigated(event)

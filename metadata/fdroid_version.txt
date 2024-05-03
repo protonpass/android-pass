@@ -1,2 +1,2 @@
-versionName=1.21.1
-versionCode=12101000
+versionName=1.21.2
+versionCode=12102000

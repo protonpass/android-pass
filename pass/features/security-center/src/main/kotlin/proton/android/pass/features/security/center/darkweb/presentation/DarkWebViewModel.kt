@@ -24,27 +24,34 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
+import proton.android.pass.common.api.some
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveGlobalMonitorState
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveItems
+import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.CustomEmailSuggestion
 import proton.android.pass.data.api.usecases.breach.ObserveBreachCustomEmails
 import proton.android.pass.data.api.usecases.breach.ObserveBreachProtonEmails
@@ -60,9 +67,11 @@ import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachId
 import proton.android.pass.domain.breach.BreachProtonEmail
 import proton.android.pass.features.security.center.PassMonitorDisplayDarkWebMonitoring
+import proton.android.pass.features.security.center.customemail.presentation.SecurityCenterCustomEmailSnackbarMessage
 import proton.android.pass.features.security.center.shared.presentation.EmailBreachUiState
 import proton.android.pass.features.security.center.shared.ui.DateUtils
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
@@ -76,12 +85,18 @@ internal class DarkWebViewModel @Inject constructor(
     observeBreachCustomEmails: ObserveBreachCustomEmails,
     observeCustomEmailSuggestions: ObserveCustomEmailSuggestions,
     observeGlobalMonitorState: ObserveGlobalMonitorState,
-    telemetryManager: TelemetryManager
+    telemetryManager: TelemetryManager,
+    private val addBreachCustomEmail: AddBreachCustomEmail,
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     init {
         telemetryManager.sendEvent(PassMonitorDisplayDarkWebMonitoring)
     }
+
+    private val eventFlow: MutableStateFlow<DarkWebEvent> = MutableStateFlow(DarkWebEvent.Idle)
+    private val loadingSuggestionFlow: MutableStateFlow<Option<String>> =
+        MutableStateFlow(None)
 
     private val protonEmailFlow = observeBreachProtonEmails()
         .map { protonEmails ->
@@ -138,13 +153,16 @@ internal class DarkWebViewModel @Inject constructor(
             .asLoadingResult()
             .distinctUntilChanged()
 
-    internal val state: StateFlow<DarkWebUiState> = combine(
+    internal val state: StateFlow<DarkWebUiState> = combineN(
         protonEmailFlowIfEnabled,
         aliasEmailFlowIfEnabled,
         customEmailsFlow,
         customEmailSuggestionsFlow,
-        observeItemCount().asLoadingResult()
-    ) { protonEmailResult, aliasEmailsResult, customEmailsResult, suggestionsResult, itemCount ->
+        observeItemCount().asLoadingResult(),
+        eventFlow,
+        loadingSuggestionFlow
+    ) { protonEmailResult, aliasEmailsResult, customEmailsResult, suggestionsResult, itemCount,
+        event, loadingSuggestion ->
         val aliasCount = itemCount.getOrNull()?.alias ?: 0
         val canNavigateToAlias = aliasCount > 0
         val protonEmail = getProtonEmailState(protonEmailResult)
@@ -153,7 +171,8 @@ internal class DarkWebViewModel @Inject constructor(
             protonEmailState = protonEmail,
             aliasEmailState = aliasEmail,
             customEmailsResult = customEmailsResult,
-            suggestionsResult = suggestionsResult
+            suggestionsResult = suggestionsResult,
+            loadingSuggestion = loadingSuggestion
         )
         val darkWebStatus = getDarkWebStatus(protonEmail, aliasEmail, customEmails.state)
 
@@ -164,13 +183,36 @@ internal class DarkWebViewModel @Inject constructor(
             darkWebStatus = darkWebStatus,
             lastCheckTime = None,
             canAddCustomEmails = customEmails.canAddCustomEmails,
-            canNavigateToAlias = canNavigateToAlias
+            canNavigateToAlias = canNavigateToAlias,
+            event = event
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = DarkWebUiState.Initial
     )
+
+    fun onAddSuggestion(suggestion: String) = viewModelScope.launch {
+        loadingSuggestionFlow.update { suggestion.some() }
+        runCatching {
+            addBreachCustomEmail(email = suggestion)
+        }.onSuccess { breachCustomEmail ->
+            val event = DarkWebEvent.OnVerifyCustomEmail(
+                email = breachCustomEmail.email,
+                customEmailId = breachCustomEmail.id
+            )
+            eventFlow.update { event }
+        }.onFailure {
+            PassLogger.w(TAG, "Error adding custom email")
+            PassLogger.w(TAG, it)
+            snackbarDispatcher(SecurityCenterCustomEmailSnackbarMessage.ErrorAddingEmail)
+        }
+        loadingSuggestionFlow.update { None }
+    }
+
+    fun consumeEvent(event: DarkWebEvent) = viewModelScope.launch {
+        eventFlow.compareAndSet(DarkWebEvent.Idle, event)
+    }
 
     @Suppress("ComplexMethod", "CyclomaticComplexMethod")
     private fun getDarkWebStatus(
@@ -272,7 +314,8 @@ internal class DarkWebViewModel @Inject constructor(
         protonEmailState: DarkWebEmailBreachState,
         aliasEmailState: DarkWebEmailBreachState,
         customEmailsResult: LoadingResult<List<BreachCustomEmail>>,
-        suggestionsResult: LoadingResult<List<CustomEmailSuggestion>>
+        suggestionsResult: LoadingResult<List<CustomEmailSuggestion>>,
+        loadingSuggestion: Option<String>
     ): CustomEmailsStatus {
 
         val alreadyAddedProtonEmails = when (protonEmailState) {
@@ -326,7 +369,8 @@ internal class DarkWebViewModel @Inject constructor(
 
         // We have not reached the limits, calculate the suggestions
         val alreadyAddedCustomEmails = customEmails.map { it.email }
-        val alreadyAddedEmails = (alreadyAddedProtonEmails + alreadyAddedAliases + alreadyAddedCustomEmails).toSet()
+        val alreadyAddedEmails =
+            (alreadyAddedProtonEmails + alreadyAddedAliases + alreadyAddedCustomEmails).toSet()
 
         val suggestions = when (suggestionsResult) {
             is LoadingResult.Error -> {
@@ -353,7 +397,9 @@ internal class DarkWebViewModel @Inject constructor(
                     .distinctBy { it.email }
                     .sortedByDescending { it.usedInLoginsCount }
                     .filter { !alreadyAddedEmails.contains(it.email) }
-                    .map { it.toUiModel() }
+                    .map {
+                        it.toUiModel(loadingSuggestion.value() == it.email)
+                    }
         }.take(EMAIL_SUGGESTIONS_COUNT)
 
         val combined = (verified + unverified).toImmutableList()
@@ -366,9 +412,12 @@ internal class DarkWebViewModel @Inject constructor(
         )
     }
 
-    private fun CustomEmailSuggestion.toUiModel() = CustomEmailUiState(
+    private fun CustomEmailSuggestion.toUiModel(loading: Boolean) = CustomEmailUiState(
         email = email,
-        status = CustomEmailUiStatus.Suggestion(usedInLoginsCount)
+        status = CustomEmailUiStatus.Suggestion(
+            usedInLoginsCount = usedInLoginsCount,
+            isLoadingState = IsLoadingState.from(loading)
+        )
     )
 
     private fun BreachCustomEmail.toUiModel(): CustomEmailUiState {

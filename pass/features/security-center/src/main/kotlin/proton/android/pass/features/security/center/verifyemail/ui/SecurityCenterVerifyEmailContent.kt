@@ -42,6 +42,7 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBar
+import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBarBackButton
 import proton.android.pass.features.security.center.verifyemail.presentation.SecurityCenterVerifyEmailState
 
 @Composable
@@ -60,6 +61,7 @@ internal fun SecurityCenterVerifyEmailContent(
                     R.string.security_center_verify_email_subtitle,
                     state.email
                 ),
+                backButton = SecurityCenterTopBarBackButton.Cross,
                 onUpClick = { onUiEvent(SecurityCenterVerifyEmailUiEvent.Back) },
                 actions = {
                     LoadingCircleButton(

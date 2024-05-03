@@ -84,6 +84,7 @@ import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ViewItem
 import proton.android.pass.featureitemdetail.impl.itemDetailGraph
 import proton.android.pass.featureitemdetail.impl.login.passkey.bottomsheet.navigation.ViewPasskeyDetailsBottomSheet
+import proton.android.pass.featureitemdetail.impl.login.reusedpass.navigation.LoginItemDetailsReusedPassNavItem
 import proton.android.pass.featuremigrate.impl.MigrateConfirmVault
 import proton.android.pass.featuremigrate.impl.MigrateNavigation
 import proton.android.pass.featuremigrate.impl.MigrateSelectVault
@@ -909,9 +910,13 @@ fun NavGraphBuilder.appGraph(
                     )
                 )
 
-                is ItemDetailNavigation.ViewReusedPasswords -> {
-                    println("JIBIRI: ItemDetailNavigation.ViewReusedPasswords")
-                }
+                is ItemDetailNavigation.ViewReusedPasswords -> appNavigator.navigate(
+                    destination = LoginItemDetailsReusedPassNavItem,
+                    route = LoginItemDetailsReusedPassNavItem.createNavRoute(
+                        shareId = it.shareId,
+                        itemId = it.itemId
+                    )
+                )
             }
         }
     )

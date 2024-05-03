@@ -79,21 +79,18 @@ sealed interface TextMask {
 
     data class TextBetweenFirstAndLastChar(
         private val input: String,
-        private val replacement: String = "•"
+        private val replacementLength: Int = 10,
+        private val replacementSymbol: Char = '•'
     ) : TextMask {
 
-        override val masked: String = if (input.length <= 2) {
+        override val masked: String = if (input.length < 2) {
             input
         } else {
-            input
-                .mapIndexed { index, char ->
-                    if (index == 0 || index == input.length.minus(1)) {
-                        char
-                    } else {
-                        replacement
-                    }
-                }
-                .joinToString(separator = "")
+            buildString {
+                append(input.first())
+                repeat(replacementLength) { append(replacementSymbol) }
+                append(input.last())
+            }
         }
 
         override val unmasked: String = input

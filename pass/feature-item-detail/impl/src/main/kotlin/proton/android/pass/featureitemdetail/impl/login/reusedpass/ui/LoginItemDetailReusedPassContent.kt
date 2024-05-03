@@ -29,6 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonuimodels.api.masks.TextMask
 import proton.android.pass.composecomponents.impl.extension.toSmallResource
 import proton.android.pass.composecomponents.impl.item.LoginRow
 import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
@@ -57,7 +58,7 @@ internal fun LoginItemDetailReusedPassContent(
         ) {
             LoginItemDetailReusedPassHeader(
                 modifier = Modifier.padding(horizontal = Spacing.medium),
-                password = password
+                password = TextMask.TextBetweenFirstAndLastChar(input = password).masked
             )
 
             LazyColumn(

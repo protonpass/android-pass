@@ -24,4 +24,6 @@ internal sealed interface SecurityCenterVerifyEmailEvent {
 
     data object EmailVerified : SecurityCenterVerifyEmailEvent
 
+    data object GoBackToHome : SecurityCenterVerifyEmailEvent
+
 }

@@ -35,6 +35,8 @@ import proton.android.pass.common.api.CommonRegex
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.errors.CustomEmailDoesNotExistException
+import proton.android.pass.data.api.errors.InvalidVerificationCodeException
 import proton.android.pass.data.api.usecases.breach.ResendVerificationCode
 import proton.android.pass.data.api.usecases.breach.VerifyBreachCustomEmail
 import proton.android.pass.domain.breach.CustomEmailId
@@ -110,9 +112,21 @@ class SecurityCenterVerifyEmailViewModel @Inject constructor(
                 }.onSuccess {
                     eventFlow.update { SecurityCenterVerifyEmailEvent.EmailVerified }
                 }.onFailure {
-                    PassLogger.w(TAG, it)
                     PassLogger.i(TAG, "Failed to verify email")
-                    codeNotValidStateFlow.update { true }
+                    PassLogger.w(TAG, it)
+
+                    when (it) {
+                        is CustomEmailDoesNotExistException -> {
+                            eventFlow.update { SecurityCenterVerifyEmailEvent.GoBackToHome }
+                        }
+                        is InvalidVerificationCodeException -> {
+                            codeNotValidStateFlow.update { true }
+                        }
+                        else -> {
+                            codeNotValidStateFlow.update { true }
+                        }
+                    }
+
                 }
                 isLoadingFlow.update { IsLoadingState.NotLoading }
 

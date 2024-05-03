@@ -23,14 +23,26 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.breach.CustomEmailId
 import proton.android.pass.features.security.center.shared.presentation.EmailBreachUiState
+
+internal sealed interface DarkWebEvent {
+    data object Idle : DarkWebEvent
+
+    data class OnVerifyCustomEmail(
+        val email: String,
+        val customEmailId: CustomEmailId
+    ) : DarkWebEvent
+}
 
 @Stable
 internal sealed interface CustomEmailUiStatus {
 
-    @JvmInline
-    value class Suggestion(val usedInLoginsCount: Int) : CustomEmailUiStatus
+    data class Suggestion(
+        val usedInLoginsCount: Int,
+        val isLoadingState: IsLoadingState
+    ) : CustomEmailUiStatus
 
     @JvmInline
     value class Unverified(val id: CustomEmailId) : CustomEmailUiStatus
@@ -113,7 +125,8 @@ internal data class DarkWebUiState(
     internal val darkWebStatus: DarkWebStatus,
     internal val lastCheckTime: Option<String>,
     internal val canAddCustomEmails: Boolean,
-    internal val canNavigateToAlias: Boolean
+    internal val canNavigateToAlias: Boolean,
+    internal val event: DarkWebEvent
 ) {
 
     internal companion object {
@@ -125,7 +138,8 @@ internal data class DarkWebUiState(
             darkWebStatus = DarkWebStatus.Loading,
             lastCheckTime = None,
             canAddCustomEmails = false,
-            canNavigateToAlias = false
+            canNavigateToAlias = false,
+            event = DarkWebEvent.Idle
         )
 
     }

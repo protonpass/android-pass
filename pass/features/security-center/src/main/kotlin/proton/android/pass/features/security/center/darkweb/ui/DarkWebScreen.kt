@@ -19,13 +19,14 @@
 package proton.android.pass.features.security.center.darkweb.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.common.api.None
-import proton.android.pass.common.api.some
 import proton.android.pass.features.security.center.darkweb.navigation.DarkWebMonitorNavDestination
+import proton.android.pass.features.security.center.darkweb.presentation.DarkWebEvent
 import proton.android.pass.features.security.center.darkweb.presentation.DarkWebViewModel
 
 @Composable
@@ -36,6 +37,21 @@ internal fun DarkWebScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
+    LaunchedEffect(state.event) {
+        when (val event = state.event) {
+            DarkWebEvent.Idle -> {}
+            is DarkWebEvent.OnVerifyCustomEmail -> {
+                onNavigate(
+                    DarkWebMonitorNavDestination.VerifyEmail(
+                        id = event.customEmailId,
+                        email = event.email
+                    )
+                )
+            }
+        }
+        viewModel.consumeEvent(state.event)
+    }
+
     DarkWebContent(
         modifier = modifier,
         state = state,
@@ -43,9 +59,9 @@ internal fun DarkWebScreen(
             when (event) {
                 DarkWebUiEvent.OnUpClick -> onNavigate(DarkWebMonitorNavDestination.Back)
 
-                is DarkWebUiEvent.OnAddCustomEmailClick -> onNavigate(
-                    DarkWebMonitorNavDestination.AddEmail(event.email.some())
-                )
+                is DarkWebUiEvent.OnAddCustomEmailClick -> {
+                    viewModel.onAddSuggestion(event.email)
+                }
 
                 is DarkWebUiEvent.OnUnverifiedEmailOptionsClick -> onNavigate(
                     DarkWebMonitorNavDestination.UnverifiedEmailOptions(

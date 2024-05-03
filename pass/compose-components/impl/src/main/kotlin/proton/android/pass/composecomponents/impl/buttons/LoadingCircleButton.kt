@@ -19,7 +19,6 @@
 package proton.android.pass.composecomponents.impl.buttons
 
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -44,7 +43,6 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.applyIf
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun LoadingCircleButton(
     modifier: Modifier = Modifier,
@@ -55,6 +53,7 @@ fun LoadingCircleButton(
     buttonEnabled: Boolean = true,
     showClickEffect: Boolean = true,
     buttonHeight: Dp = 20.dp,
+    loadingColor: Color = ProtonTheme.colors.iconInverted,
     onClick: () -> Unit
 ) {
     Row(
@@ -88,7 +87,7 @@ fun LoadingCircleButton(
                 CircularProgressIndicator(
                     modifier = Modifier.size(buttonHeight),
                     strokeWidth = 2.dp,
-                    color = ProtonTheme.colors.iconInverted
+                    color = loadingColor
                 )
             } else {
                 Row(

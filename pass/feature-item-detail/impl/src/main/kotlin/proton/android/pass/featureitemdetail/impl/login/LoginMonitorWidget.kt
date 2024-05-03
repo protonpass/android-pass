@@ -42,6 +42,7 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.roundedContainer
+import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.items.ItemCategory
 
@@ -50,11 +51,9 @@ internal fun LoginMonitorWidget(
     modifier: Modifier = Modifier,
     title: String,
     @StringRes subtitleResId: Int? = null,
-    itemCategory: ItemCategory = ItemCategory.Note,
+    itemColors: PassItemColors = passItemColors(itemCategory = ItemCategory.Note),
     additionalContent: (@Composable ColumnScope.() -> Unit)? = null
 ) {
-    val itemColors = passItemColors(itemCategory = itemCategory)
-
     Row(
         modifier = modifier
             .roundedContainer(

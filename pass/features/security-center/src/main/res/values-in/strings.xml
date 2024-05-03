@@ -21,8 +21,8 @@
   <string name="security_center_home_top_bar_title">Pemantauan Pass</string>
   <string name="security_center_home_dark_web_monitoring_title">Pemantauan Dark Web</string>
   <string name="security_center_home_widget_breaches_title">Kebocoran terdeteksi</string>
-  <string name="security_center_home_widget_breaches_subtitle">Alamat email Anda telah ditemukan bocor pada setidaknya 1 insiden kebocoran data.</string>
-  <string name="security_center_home_widget_no_breaches_subtitle">Dapatkan notifikasi ketika kata sandi atau data pribadi Anda lainnya terpapar.</string>
+  <string name="security_center_home_widget_breaches_subtitle">Alamat surel Anda telah ditemukan bocor pada setidaknya 1 insiden kebocoran data.</string>
+  <string name="security_center_home_widget_no_breaches_subtitle">Dapatkan notifikasi apabila email, kata sandi, atau data pribadi Anda lainnya dibocorkan.</string>
   <string name="security_center_home_row_no_data_breaches_subtitle">Tidak ada kebocoran yang terdeteksi</string>
   <string name="security_center_home_row_data_breaches_title">Peringatan Dark Web</string>
   <string name="security_center_home_row_data_breaches_subtitle">Kebocoran terdeteksi</string>
@@ -36,14 +36,17 @@
   <string name="security_center_home_row_missing_tfa_subtitle">Tingkatkan keamanan Anda</string>
   <string name="security_center_home_row_excludes_items_title">Item yang dikecualikan</string>
   <string name="security_center_home_row_excludes_items_subtitle">Abaikan peringatan untuk rangkaian item ini</string>
+  <string name="security_center_get_breaches_error">Kebocoran tidak dapat dimuat</string>
   <string name="security_center_home_section_password_health">Kesehatan Kata Sandi</string>
-  <string name="security_center_home_snackbar_message_disable_sentinel_error">Terdapat kesalahan dalam menonaktifkan perlindungan Proton Sentinel. Silakan coba lagi.</string>
   <!-- Sentinel bottom sheet -->
   <string name="security_center_sentinel_title">Proton Sentinel</string>
   <string name="security_center_sentinel_subtitle">Proton Sentinel merupakan program perlindungan akun tingkat lanjut yang diberdayakan oleh sistem AI canggih serta para ahli yang bekerja tanpa henti untuk melindungi Anda dari pelaku tindak kejahatan dan ancaman keamanan.</string>
   <string name="security_center_sentinel_button_enable">Aktifkan Proton Sentinel</string>
+  <string name="security_center_sentinel_button_disable">Nonaktifkan Proton Sentinel</string>
   <string name="security_center_sentinel_snackbar_message_enable_canceled">Aktivasi perlindungan Proton Sentinel telah dibatalkan</string>
   <string name="security_center_sentinel_snackbar_message_enable_error">Terdapat kesalahan dalam mengaktifkan perlindungan Proton Sentinel. Silakan coba lagi.</string>
+  <string name="security_center_sentinel_snackbar_message_disable_canceled">Penonaktifan perlindungan Proton Sentinel telah dibatalkan</string>
+  <string name="security_center_sentinel_snackbar_message_disable_error">Terdapat kesalahan dalam menonaktifkan perlindungan Proton Sentinel. Silakan coba lagi.</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Kata sandi lemah</string>
   <string name="security_center_weak_pass_top_bar_subtitle">Kata sandi yang lemah akan lebih mudah untuk ditebak. Hasilkan kata sandi yang kuat untuk menjaga akun Anda tetap aman.</string>
@@ -108,9 +111,12 @@
   <!-- Email breach report -->
   <string name="security_center_email_report_used_in_header">Digunakan dalam</string>
   <string name="security_center_email_report_breaches_header">Kebocoran</string>
+  <string name="security_center_email_report_resolved_breaches_header">Kebocoran yang telah terselesaikan</string>
   <string name="security_center_email_report_mark_as_resolved">Tandai sebagai terselesaikan</string>
   <string name="security_center_email_report_snackbar_marked_as_resolved_success">Kebocoran telah ditandai sebagai terselesaikan</string>
   <string name="security_center_email_report_snackbar_marked_as_resolved_error">Tidak dapat menandai sebagai selesai</string>
+  <string name="security_center_email_report_snackbar_get_breaches_error">Kebocoran tidak dapat dimuat</string>
+  <string name="security_center_email_report_options_menu">Breach report options menu</string>
   <!-- Breach report detail-->
   <string name="security_center_report_detail_your_exposed_information">Informasi Anda yang terpapar</string>
   <string name="security_center_report_detail_subtitle">Informasi pribadi Anda ditemukan dalam kebocoran data yang tertanggal __DATE__</string>
@@ -119,27 +125,38 @@
   <string name="security_center_report_detail_password">Kata sandi</string>
   <string name="security_center_report_detail_recommended_actions">Tindakan yang direkomendasikan</string>
   <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">Informasi yang terpapar ini dibocorkan dari %s. Informasi Akun Proton Anda tetap aman dan terenkripsi.</string>
-  <string name="security_center_report_detail_change_password" comment="The placeholder argument contains the name of the service where the breach occurred.">Ubah kata sandi di %s</string>
-  <string name="security_center_report_detail_use_aliases">Gunakan alias alih-alih alamat email pribadi Anda</string>
-  <string name="security_center_report_detail_enable_2fa" comment="The placeholder argument contains the name of the service where the breach occurred.">Aktifkan 2FA di %s</string>
+  <string name="security_center_report_detail_learn_more">Pelajari lebih lanjut</string>
+  <string name="security_center_report_detail_snackbar_error">Rincian kebocoran tidak dapat dimuat</string>
+  <string name="security_center_report_detail_excluded_from_monitoring">Dikecualikan dari pemantauan</string>
   <!-- Proton list -->
   <string name="security_center_proton_list_top_bar_title">Alamat Proton</string>
   <string name="security_center_proton_list_no_breaches_detected">Tidak ada kebocoran yang terdeteksi</string>
   <string name="security_center_proton_list_excluded_from_monitoring">Dikecualikan dari pemantauan</string>
   <string name="security_center_proton_list_error">Alamat tidak dapat dimuat</string>
   <string name="security_center_proton_list_included_in_monitoring">Aktifkan pemantauan untuk memperoleh notifikasi apabila alamat Proton Anda dibocorkan.</string>
+  <string name="security_center_proton_list_options_menu">Proton screen options menu</string>
   <!-- Address Bottomsheet options -->
   <string name="security_center_address_bottomsheet_disable_monitoring">Nonaktifkan pemantauan</string>
   <string name="security_center_address_bottomsheet_enable_monitoring">Aktifkan pemantauan</string>
+  <string name="security_center_address_bottomsheet_remove_custom_email">Hapus email khusus</string>
   <string name="security_center_address_bottomsheet_snackbar_message_enable_error">Pemantauan tidak dapat diaktifkan</string>
   <string name="security_center_address_bottomsheet_snackbar_message_disable_error">Pemantauan tidak dapat dinonaktifkan</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_error">Email khusus tidak dapat dihapus</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_enable_success">Pemantauan diaktifkan</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_success">Pemantauan dinonaktifkan</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">Email khusus dihapus</string>
   <!-- Alias list -->
   <string name="security_center_alias_list_top_bar_title">Alias hide-my-email</string>
   <string name="security_center_alias_list_excluded_from_monitoring">Dikecualikan dari pemantauan</string>
   <string name="security_center_alias_list_error">Alamat tidak dapat dimuat</string>
   <string name="security_center_alias_list_included_in_monitoring">Aktifkan pemantauan untuk memperoleh notifikasi apabila alias Hide-my-email Anda dibocorkan.</string>
   <string name="security_center_alias_list_monitored">Dipantau</string>
+  <string name="security_center_alias_list_custom_email_message">Alias dengan domain khusus tidak dipantau. Silakan tambahkan alias ini sebagai email khusus untuk keperluan pemantauan.</string>
+  <string name="security_center_alias_list_options_menu">Alias screen options menu</string>
   <!-- Dark web help dialog -->
-  <string name="dark_web_help_dialog_title">Data Security</string>
-  <string name="dark_web_help_dialog_subtitle">Proton never shares your information with third parties. All data comes from searches for the appearance of Proton domains on the dark web.</string>
+  <string name="dark_web_help_dialog_title">Keamanan Data</string>
+  <string name="dark_web_help_dialog_subtitle">Proton tidak pernah membagikan informasi Anda dengan pihak ketiga. Seluruh data yang tersedia berasal dari hasil kemunculan domain Proton pada pencarian di dark web.</string>
+  <!-- Cannot add custom emails -->
+  <string name="dark_web_cannot_add_custom_emails_dialog_title">Cannot add custom email</string>
+  <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">Anda telah mencapai batas jumlah email khusus yang dapat dibuat.</string>
 </resources>

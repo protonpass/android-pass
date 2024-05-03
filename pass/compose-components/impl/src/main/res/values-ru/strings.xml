@@ -32,9 +32,9 @@
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Открыть меню действий с элементом</string>
   <string name="action_upgrade_now">Улучшить сейчас</string>
   <string name="action_not_now">Не сейчас</string>
-  <string name="action_learn_more">Learn more</string>
-  <string name="action_enable">Enable</string>
-  <string name="action_view_details">View details</string>
+  <string name="action_learn_more">Подробнее</string>
+  <string name="action_enable">Включить</string>
+  <string name="action_view_details">Просмотреть детали</string>
   <!-- Empty list -->
   <string name="empty_list_title">Добавьте свой первый элемент</string>
   <string name="empty_search_results_title">Ничего не найдено</string>

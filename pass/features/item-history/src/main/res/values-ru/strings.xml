@@ -17,12 +17,12 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="item_history_restore_action">Restore</string>
+  <string name="item_history_restore_action">Восстановить</string>
   <string name="item_history_restore_confirmation_dialog_title">Восстановить эту версию?</string>
   <string name="item_history_restore_confirmation_dialog_message" comment="The item will be reverted to a version from an specific date, for instance: Your current item will revert to the version from 19 February 2024 at 09:30">Your current item will revert to the version from %1$s</string>
   <string name="item_history_restore_snackbar_message_error">There was an error restoring item revision</string>
   <string name="item_history_restore_snackbar_message_success">Item revision restored successfully</string>
-  <string name="item_history_timeline_title">History</string>
+  <string name="item_history_timeline_title">История</string>
   <string name="item_history_timeline_node_child_title">Modified</string>
   <string name="item_history_timeline_node_leaf_title">Created</string>
   <string name="item_history_timeline_node_root_title">Текущая версия</string>

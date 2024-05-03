@@ -41,8 +41,8 @@
   <string name="login_item_monitor_widget_reused_pass_title">Wiederverwendetes Passwort</string>
   <string name="login_item_monitor_widget_reused_pass_subtitle">Besuche die Website und generiere ein einmaliges Passwort für diesen Eintrag.</string>
   <plurals name="login_item_monitor_widget_reused_pass_count_compact_leading">
-    <item quantity="one">%d other login</item>
-    <item quantity="other">%d other logins</item>
+    <item quantity="one">%d andere Anmeldung</item>
+    <item quantity="other">%d andere Anmeldungen</item>
   </plurals>
   <string name="login_item_monitor_widget_reused_pass_count_compact_trailing" comment="This is the trailing part of the sentence above. A full example of its usage will be '4 other logins use this password.'">dieses Passwort verwenden.</string>
   <plurals name="login_item_monitor_widget_reused_pass_count_expanded">
@@ -50,7 +50,7 @@
     <item quantity="other">%d andere Logins verwenden dieses Passwort:</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Fehlende Zwei-Faktor-Authentifizierung</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">It would be more secure to set up 2FA for this item.</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Es wäre sicherer, 2FA für dieses Element einzurichten.</string>
   <string name="field_username">Benutzername oder E-Mail-Adresse</string>
   <string name="field_password">Passwort</string>
   <string name="websites_section_title">Websites</string>

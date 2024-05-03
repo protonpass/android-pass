@@ -4,7 +4,7 @@
   <string name="settings_autofill_section_title">Automaattitäyttö</string>
   <string name="settings_autofill_preference_title">Automaattitäyttö</string>
   <string name="settings_autofill_preference_description">Kirjaudu nopeasti ja helposti antamalla Proton Passin täyttää käyttäjätunnuksesi ja salasanasi.</string>
-  <string name="settings_authentication_section_title">Todennus</string>
+  <string name="settings_authentication_section_title">Tunnistautuminen</string>
   <string name="settings_authentication_preference_title">Sormenjälkilukitus</string>
   <string name="settings_authentication_preference_description_enabled">Avaa sovellus nopeasti ja turvallisesti sormenjäljellä.</string>
   <string name="settings_authentication_preference_description_no_fingerprint">Et voi avata sovellusta sormenjäljellä, koska laitteelle ei ole tallennettu sormenjälkiä.</string>

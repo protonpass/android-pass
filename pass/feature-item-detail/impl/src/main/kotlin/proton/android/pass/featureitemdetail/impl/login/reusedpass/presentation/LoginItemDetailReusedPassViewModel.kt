@@ -34,6 +34,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareId
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -59,6 +60,13 @@ class LoginItemDetailReusedPassViewModel @Inject constructor(
         .require<String>(CommonNavArgId.ItemId.key)
         .let(::ItemId)
 
+    private val loginItemPasswordFlow = observeItemById(shareId, itemId)
+        .map { loginItem ->
+            encryptionContextProvider.withEncryptionContext {
+                decrypt((loginItem.itemType as ItemType.Login).password)
+            }
+        }
+
     private val duplicatedLoginItemsFlow = observeItemById(shareId, itemId)
         .map { loginItem ->
             duplicatedPasswordChecker(loginItem).let { duplicatedPasswordReport ->
@@ -71,13 +79,13 @@ class LoginItemDetailReusedPassViewModel @Inject constructor(
         }
 
     internal val state: StateFlow<LoginItemDetailReusedPassState> = combine(
-        observeItemById(shareId, itemId),
+        loginItemPasswordFlow,
         duplicatedLoginItemsFlow,
         userPreferencesRepository.getUseFaviconsPreference(),
         observeVaultsGroupedByShareId(),
-    ) { item, duplicatedLoginItems, useFavIconsPreference, groupedVaults ->
+    ) { loginItemPassword, duplicatedLoginItems, useFavIconsPreference, groupedVaults ->
         LoginItemDetailReusedPassState(
-            password = "",
+            password = loginItemPassword,
             duplicatedPasswordLoginItems = duplicatedLoginItems.toImmutableList(),
             canLoadExternalImages = useFavIconsPreference.value(),
             groupedVaults = groupedVaults

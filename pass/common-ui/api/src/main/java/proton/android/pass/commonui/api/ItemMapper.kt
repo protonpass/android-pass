@@ -18,8 +18,6 @@
 
 package proton.android.pass.commonui.api
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.toEncryptedByteArray
@@ -28,12 +26,6 @@ import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemType
-
-suspend fun List<Item>.toUiModels(
-    context: EncryptionContext
-): List<ItemUiModel> = withContext(Dispatchers.Default) {
-    map { item -> item.toUiModel(context) }
-}
 
 fun Item.toUiModel(context: EncryptionContext): ItemUiModel = ItemUiModel(
     id = id,

@@ -31,6 +31,7 @@ internal fun DarkWebSummary(
     modifier: Modifier = Modifier,
     protonEmailsState: DarkWebEmailBreachState,
     aliasEmailsState: DarkWebEmailBreachState,
+    canNavigateToAlias: Boolean,
     onEvent: (DarkWebUiEvent) -> Unit
 ) {
     Column(
@@ -40,10 +41,12 @@ internal fun DarkWebSummary(
         EmailBreachSection(
             state = protonEmailsState,
             summaryType = DarkWebSummaryType.Proton,
+            isClickable = true,
             onEvent = onEvent
         )
         EmailBreachSection(
             state = aliasEmailsState,
+            isClickable = canNavigateToAlias,
             summaryType = DarkWebSummaryType.Alias,
             onEvent = onEvent
         )

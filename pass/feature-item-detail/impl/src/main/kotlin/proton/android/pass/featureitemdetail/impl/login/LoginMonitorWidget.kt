@@ -48,8 +48,8 @@ import proton.android.pass.domain.items.ItemCategory
 @Composable
 internal fun LoginMonitorWidget(
     modifier: Modifier = Modifier,
-    @StringRes titleResId: Int,
-    @StringRes subtitleResId: Int,
+    title: String,
+    @StringRes subtitleResId: Int? = null,
     itemCategory: ItemCategory = ItemCategory.Note,
     additionalContent: (@Composable ColumnScope.() -> Unit)? = null
 ) {
@@ -80,18 +80,20 @@ internal fun LoginMonitorWidget(
             verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
         ) {
             Text(
-                text = stringResource(id = titleResId),
+                text = title,
                 color = itemColors.majorSecondary,
                 style = ProtonTheme.typography.body1Medium
             )
 
             additionalContent?.let { content -> content() }
 
-            Text(
-                text = stringResource(id = subtitleResId),
-                color = itemColors.majorSecondary,
-                style = PassTheme.typography.body3Norm()
-            )
+            subtitleResId?.let { id ->
+                Text(
+                    text = stringResource(id = id),
+                    color = itemColors.majorSecondary,
+                    style = PassTheme.typography.body3Norm()
+                )
+            }
         }
     }
 }

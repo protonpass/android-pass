@@ -36,6 +36,7 @@
     <string name="action_learn_more">Learn more</string>
     <string name="action_enable">Enable</string>
     <string name="action_view_details">View details</string>
+    <string name="action_see_all">See all</string>
 
     <!-- Empty list -->
     <string name="empty_list_title">Add your first item</string>

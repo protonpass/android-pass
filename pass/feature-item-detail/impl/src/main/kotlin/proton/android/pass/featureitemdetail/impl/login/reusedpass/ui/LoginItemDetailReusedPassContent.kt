@@ -19,6 +19,7 @@
 package proton.android.pass.featureitemdetail.impl.login.reusedpass.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -55,16 +56,22 @@ internal fun LoginItemDetailReusedPassContent(
                 .padding(top = Spacing.large)
         ) {
             LoginItemDetailReusedPassHeader(
+                modifier = Modifier.padding(horizontal = Spacing.medium),
                 password = "a*****J"
             )
 
             LazyColumn(
                 modifier = Modifier
                     .background(PassTheme.colors.backgroundStrong)
-                    .padding(top = Spacing.large)
+                    .padding(
+                        start = Spacing.medium,
+                        top = Spacing.large,
+                        end = Spacing.medium
+                    ),
+                verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
             ) {
                 items(
-                    items = loginItemsWithSamePassword,
+                    items = duplicatedPasswordLoginItems,
                     key = { itemUiModel -> itemUiModel.id.id }
                 ) { itemUiModel ->
                     LoginRow(

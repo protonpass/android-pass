@@ -908,6 +908,10 @@ fun NavGraphBuilder.appGraph(
                         itemId = it.itemId
                     )
                 )
+
+                is ItemDetailNavigation.ViewReusedPasswords -> {
+                    println("JIBIRI: ItemDetailNavigation.ViewReusedPasswords")
+                }
             }
         }
     )

@@ -319,6 +319,13 @@ fun LoginDetail(
                                         )
                                     )
                                 }
+
+                                LoginDetailEvent.OnShowReusedPasswords -> {
+                                    ItemDetailNavigation.ViewReusedPasswords(
+                                        shareId = state.itemUiModel.shareId,
+                                        itemId = state.itemUiModel.id
+                                    ).also(onNavigate)
+                                }
                             }
                         },
                         isHistoryFeatureEnabled = state.isHistoryFeatureEnabled

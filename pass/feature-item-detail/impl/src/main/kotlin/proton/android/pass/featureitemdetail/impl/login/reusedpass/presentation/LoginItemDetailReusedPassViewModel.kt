@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareId
@@ -88,6 +89,7 @@ class LoginItemDetailReusedPassViewModel @Inject constructor(
             password = loginItemPassword,
             duplicatedPasswordLoginItems = duplicatedLoginItems.toImmutableList(),
             canLoadExternalImages = useFavIconsPreference.value(),
+            isLoadingState = IsLoadingState.NotLoading,
             groupedVaults = groupedVaults
         )
     }.stateIn(

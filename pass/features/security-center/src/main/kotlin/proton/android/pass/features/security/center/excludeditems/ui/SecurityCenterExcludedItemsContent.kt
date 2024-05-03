@@ -46,7 +46,6 @@ internal fun SecurityCenterExcludedItemsContent(
                 modifier = Modifier
                     .padding(top = Spacing.medium - Spacing.extraSmall),
                 title = stringResource(R.string.security_center_excluded_items_top_bar_title),
-                subtitle = stringResource(R.string.security_center_excluded_items_top_bar_subtitle),
                 onUpClick = { onUiEvent(SecurityCenterExcludedItemsUiEvent.Back) }
             )
         }

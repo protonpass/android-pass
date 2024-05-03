@@ -39,8 +39,6 @@ sealed interface SecurityCenterNavDestination {
 
     data object Home : SecurityCenterNavDestination
 
-    data object BackToHome : SecurityCenterNavDestination
-
     data class ItemDetails(
         val shareId: ShareId,
         val itemId: ItemId,

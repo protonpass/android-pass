@@ -28,11 +28,13 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.darkweb.navigation.DarkWebMonitorNavDestination
 import proton.android.pass.features.security.center.darkweb.ui.DarkWebScreen
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
+import javax.inject.Inject
 
 @HiltAndroidTest
 class DarkWebScreenTest {
@@ -46,9 +48,13 @@ class DarkWebScreenTest {
     @get:Rule(order = 2)
     val intentsRule = IntentsRule()
 
+    @Inject
+    lateinit var observeItems: TestObserveItems
+
     @Before
     fun setup() {
         hiltRule.inject()
+        observeItems.emitValue(TestObserveItems.defaultValues.asList())
     }
 
     @Test

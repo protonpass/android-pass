@@ -20,6 +20,7 @@ package proton.android.pass.features.security.center.darkweb.ui.customemails.lis
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.breach.CustomEmailId
 import proton.android.pass.features.security.center.darkweb.presentation.CustomEmailUiState
 import proton.android.pass.features.security.center.darkweb.presentation.CustomEmailUiStatus
@@ -41,9 +42,17 @@ private class CustomEmailItemPreviewProvider : PreviewParameterProvider<CustomEm
                 )
             ),
             CustomEmailUiState(
-                email = "suggestion@email.address",
+                email = "suggestion-notloading@email.address",
                 status = CustomEmailUiStatus.Suggestion(
-                    usedInLoginsCount = 3
+                    usedInLoginsCount = 3,
+                    isLoadingState = IsLoadingState.NotLoading
+                )
+            ),
+            CustomEmailUiState(
+                email = "suggestion-loading@email.address",
+                status = CustomEmailUiStatus.Suggestion(
+                    usedInLoginsCount = 3,
+                    isLoadingState = IsLoadingState.Loading
                 )
             )
         )

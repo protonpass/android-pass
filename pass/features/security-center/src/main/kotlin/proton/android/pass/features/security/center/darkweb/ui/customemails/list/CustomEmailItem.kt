@@ -27,7 +27,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -45,7 +44,9 @@ import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.body3Weak
+import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.item.icon.ThreeDotsMenuButton
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.breach.CustomEmailId
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.darkweb.presentation.CustomEmailUiState
@@ -66,6 +67,7 @@ internal fun CustomEmailItem(
                 modifier = modifier,
                 email = email.email,
                 status = email.status,
+                loading = email.status.isLoadingState,
                 onAddClick = onAddClick
             )
         }
@@ -95,6 +97,7 @@ private fun CustomEmailSuggestion(
     modifier: Modifier = Modifier,
     email: String,
     status: CustomEmailUiStatus.Suggestion,
+    loading: IsLoadingState,
     onAddClick: () -> Unit
 ) {
     CustomEmailRow(
@@ -111,22 +114,21 @@ private fun CustomEmailSuggestion(
             )
         },
         trailingContent = {
-            Box(
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .background(PassTheme.colors.interactionNormMinor1)
-                    .clickable(onClick = onAddClick)
-            ) {
-                Text(
-                    modifier = Modifier.padding(
-                        horizontal = Spacing.medium,
-                        vertical = Spacing.small
-                    ),
-                    text = stringResource(id = R.string.security_center_dark_web_monitor_custom_emails_add_button),
-                    style = ProtonTheme.typography.captionMedium,
-                    color = PassTheme.colors.interactionNormMajor2
-                )
-            }
+            LoadingCircleButton(
+                text = {
+                    Text(
+                        text = stringResource(
+                            id = R.string.security_center_dark_web_monitor_custom_emails_add_button
+                        ),
+                        style = ProtonTheme.typography.captionMedium,
+                        color = PassTheme.colors.interactionNormMajor2
+                    )
+                },
+                color = PassTheme.colors.interactionNormMinor1,
+                loadingColor = PassTheme.colors.interactionNormMajor2,
+                isLoading = loading.value(),
+                onClick = onAddClick
+            )
         }
     )
 }

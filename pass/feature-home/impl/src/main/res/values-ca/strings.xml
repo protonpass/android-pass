@@ -26,7 +26,7 @@
   <string name="home_trial_banner_settings">Més informació ›</string>
   <string name="home_notification_permission_banner_title">Obteniu actualitzacions importants</string>
   <string name="home_notification_permission_banner_text">Habiliteu les notificacions push per rebre una notificació quan altres persones comparteixin una caixa forta amb vosaltres.</string>
-  <string name="home_notification_permission_banner_settings">Habilitar permisos ›</string>
+  <string name="home_notification_permission_banner_settings">Activar permisos ›</string>
   <string name="home_invite_banner_title">Caixa forta compartida amb vosaltres</string>
   <string name="home_invite_banner_subtitle">Esteu convidat a una caixa forta compartida. Toqueu per obtenir més informació.</string>
   <!-- Common bottomsheet -->
@@ -120,10 +120,10 @@
   <string name="recent_search_remove_item">Esborra de les cerques recents</string>
   <!-- Pinning -->
   <string name="home_snackbar_item_pinned_success">S\'ha ancorat l\'element.</string>
-  <string name="home_snackbar_item_pinned_error">There was an error pinning this item</string>
+  <string name="home_snackbar_item_pinned_error">S\'ha produït un error en ancorar aquest element.</string>
   <string name="home_snackbar_item_unpinned_success">S\'ha ancorat l\'element.</string>
   <string name="home_snackbar_item_unpinned_error">There was an error unpinning this item</string>
-  <string name="home_snackbar_items_pinned_success">Items pinned successfully</string>
+  <string name="home_snackbar_items_pinned_success">S\'ha ancorat l\'element.</string>
   <string name="home_snackbar_items_pinned_partial_success">Error pinning some of the items</string>
   <string name="home_snackbar_items_pinned_error">S\'ha produït un error en ancorar els elements.</string>
   <string name="home_snackbar_items_unpinned_success">Items unpinned successfully</string>

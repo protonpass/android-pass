@@ -51,12 +51,12 @@
   <string name="sharing_snackbar_invite_reject_error">Errore nel rifiuto dell\'invito</string>
   <string name="sharing_snackbar_vault_not_found">Impossibile trovare la cassaforte</string>
   <string name="sharing_snackbar_invite_sent_success">Invito spedito</string>
-  <string name="sharing_snackbar_invite_sent_error">Impossibile spedire l\'invito</string>
-  <string name="sharing_snackbar_get_vault_members_error">Impossibile ottenere i membri della cassaforte</string>
+  <string name="sharing_snackbar_invite_sent_error">Spedizione dell\'invito non riuscita</string>
+  <string name="sharing_snackbar_get_vault_members_error">Caricamento dei membri non riuscito</string>
   <string name="sharing_snackbar_change_permission_success">Autorizzazioni cambiate</string>
-  <string name="sharing_snackbar_change_permission_error">Impossibile cambiare le autorizzazioni</string>
+  <string name="sharing_snackbar_change_permission_error">Cambio delle autorizzazioni non riuscito</string>
   <string name="sharing_snackbar_remove_member_success">Membro rimosso dalla cassaforte</string>
-  <string name="sharing_snackbar_remove_member_error">Impossibile rimuovere il membro dalla cassaforte</string>
+  <string name="sharing_snackbar_remove_member_error">Rimozione del membro non riuscita</string>
   <string name="share_summary_title">Controlla e condividi</string>
   <string name="share_summary_vault">la cassaforte %s</string>
   <string name="share_summary_share_vault">Condividi la cassaforte</string>

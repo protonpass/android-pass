@@ -17,10 +17,10 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="select_passkey_action_title" comment="Title of the action to select a passkey. Will appear in the system passkey selector">Select another passkey</string>
-  <string name="select_passkey_action_subtitle" comment="Subtitle of the action to select a passkey. Will appear in the system passkey selector">Select a passkey from Proton Pass</string>
+  <string name="select_passkey_action_title" comment="Title of the action to select a passkey. Will appear in the system passkey selector">Vyberte jiný přístupový klíč</string>
+  <string name="select_passkey_action_subtitle" comment="Subtitle of the action to select a passkey. Will appear in the system passkey selector">Vyberte přístupový klíč z Proton Pass</string>
   <string name="passkeys_user_logged_out">Byli jste odhlášeni. Přihlaste se prosím znovu otevřením aplikace.</string>
-  <string name="passkey_confirm_item_title" comment="Title of the dialog for confirming the generation of a passkey for an item">Generate passkey</string>
-  <string name="passkey_confirm_item_body" comment="Body of the dialog for confirming the generation of a passkey for an item. The placeholder contains the item title">Are you sure you want to generate a passkey for the item \'%s\'?</string>
-  <string name="passkey_error_generating_passkey">Could not generate passkey</string>
+  <string name="passkey_confirm_item_title" comment="Title of the dialog for confirming the generation of a passkey for an item">Vygenerovat přístupový klíč</string>
+  <string name="passkey_confirm_item_body" comment="Body of the dialog for confirming the generation of a passkey for an item. The placeholder contains the item title">Jste si jisti, že chcete vygenerovat přístupový klíč pro položku \'%s\'?</string>
+  <string name="passkey_error_generating_passkey">Přístupový klíč nemohl být vygenerován</string>
 </resources>

@@ -19,12 +19,12 @@
 <resources>
   <string name="item_history_restore_action">Obnovit</string>
   <string name="item_history_restore_confirmation_dialog_title">Obnovit tuto verzi?</string>
-  <string name="item_history_restore_confirmation_dialog_message" comment="The item will be reverted to a version from an specific date, for instance: Your current item will revert to the version from 19 February 2024 at 09:30">Your current item will revert to the version from %1$s</string>
-  <string name="item_history_restore_snackbar_message_error">There was an error restoring item revision</string>
-  <string name="item_history_restore_snackbar_message_success">Item revision restored successfully</string>
+  <string name="item_history_restore_confirmation_dialog_message" comment="The item will be reverted to a version from an specific date, for instance: Your current item will revert to the version from 19 February 2024 at 09:30">Vaše aktuální položka se vrátí k verzi z %1$s</string>
+  <string name="item_history_restore_snackbar_message_error">Při obnovování revize položky došlo k chybě</string>
+  <string name="item_history_restore_snackbar_message_success">Revize položky byla úspěšně obnovena</string>
   <string name="item_history_timeline_title">Historie</string>
   <string name="item_history_timeline_node_child_title">Upraveno</string>
   <string name="item_history_timeline_node_leaf_title">Vytvořeno</string>
   <string name="item_history_timeline_node_root_title">Aktuální verze</string>
-  <string name="item_history_timeline_snackbar_message_error">There was an error fetching item revisions</string>
+  <string name="item_history_timeline_snackbar_message_error">Při načítání revize položky došlo k chybě</string>
 </resources>

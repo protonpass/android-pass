@@ -36,14 +36,17 @@
   <string name="security_center_home_row_missing_tfa_subtitle">Măriți-vă securitatea</string>
   <string name="security_center_home_row_excludes_items_title">Articole excluse</string>
   <string name="security_center_home_row_excludes_items_subtitle">Ignorare alerte pentru acest articol</string>
+  <string name="security_center_get_breaches_error">Nu s-au putut încărca datele divulgate.</string>
   <string name="security_center_home_section_password_health">Stare parolă</string>
-  <string name="security_center_home_snackbar_message_disable_sentinel_error">A apărut o eroare la dezactivarea protecției Proton Sentinel. Mai reîncercați.</string>
   <!-- Sentinel bottom sheet -->
   <string name="security_center_sentinel_title">Proton Sentinel</string>
   <string name="security_center_sentinel_subtitle">Proton Sentinel este un program avansat de protecție a conturilor, alimentat de sisteme de IA sofisticate și specialiști care lucrează non-stop pentru a vă proteja de atacatori și amenințările de securitate.</string>
   <string name="security_center_sentinel_button_enable">Activare Proton Sentinel</string>
+  <string name="security_center_sentinel_button_disable">Dezactivare Proton Sentinel</string>
   <string name="security_center_sentinel_snackbar_message_enable_canceled">Activarea protecției Proton Sentinel a fost anulată.</string>
   <string name="security_center_sentinel_snackbar_message_enable_error">A apărut o eroare la activarea protecției Proton Sentinel. Mai reîncercați.</string>
+  <string name="security_center_sentinel_snackbar_message_disable_canceled">Dezactivarea protecției Proton Sentinel a fost anulată.</string>
+  <string name="security_center_sentinel_snackbar_message_disable_error">A apărut o eroare la dezactivarea protecției Proton Sentinel. Mai reîncercați.</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Parole slabe</string>
   <string name="security_center_weak_pass_top_bar_subtitle">Parolele slabe sunt ușor de ghicit. Generați parole puternice pentru a vă păstra contul în siguranță.</string>
@@ -114,9 +117,12 @@
   <!-- Email breach report -->
   <string name="security_center_email_report_used_in_header">Utilizată în</string>
   <string name="security_center_email_report_breaches_header">Divulgări</string>
+  <string name="security_center_email_report_resolved_breaches_header">Divulgări rezolvate</string>
   <string name="security_center_email_report_mark_as_resolved">Marcare ca rezolvată</string>
   <string name="security_center_email_report_snackbar_marked_as_resolved_success">Divulgarea a fost marcată ca rezolvată.</string>
   <string name="security_center_email_report_snackbar_marked_as_resolved_error">Marcarea ca rezolvată nu s-a putut efectua.</string>
+  <string name="security_center_email_report_snackbar_get_breaches_error">Nu s-au putut încărca datele divulgate.</string>
+  <string name="security_center_email_report_options_menu">Meniu opțiuni raport divulgări</string>
   <!-- Breach report detail-->
   <string name="security_center_report_detail_your_exposed_information">Informațiile divulgate</string>
   <string name="security_center_report_detail_subtitle">Informațiile v-au apărut într-o divulgare la data: __DATE__</string>
@@ -125,27 +131,38 @@
   <string name="security_center_report_detail_password">Parola</string>
   <string name="security_center_report_detail_recommended_actions">Acțiuni recomandate</string>
   <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">Informațiile expuse au fost divulgate de pe %s. Informațiile din contul Proton vă rămân securizate și criptate.</string>
-  <string name="security_center_report_detail_change_password" comment="The placeholder argument contains the name of the service where the breach occurred.">Schimbați parola pe %s</string>
-  <string name="security_center_report_detail_use_aliases">Folosiți aliasuri în locul adreselor de e-mail</string>
-  <string name="security_center_report_detail_enable_2fa" comment="The placeholder argument contains the name of the service where the breach occurred.">Activare A2F la %s</string>
+  <string name="security_center_report_detail_learn_more">Detalii</string>
+  <string name="security_center_report_detail_snackbar_error">Nu s-au putut încărca detaliile divulgării.</string>
+  <string name="security_center_report_detail_excluded_from_monitoring">Exclusă de la monitorizare</string>
   <!-- Proton list -->
   <string name="security_center_proton_list_top_bar_title">Adrese Proton</string>
   <string name="security_center_proton_list_no_breaches_detected">Nu există divulgări</string>
   <string name="security_center_proton_list_excluded_from_monitoring">Exclus de la monitorizare</string>
   <string name="security_center_proton_list_error">Nu s-au putut încărca adresele.</string>
   <string name="security_center_proton_list_included_in_monitoring">Activați monitorizarea pentru a primi notificări dacă adresele Proton v-au fost divulgate.</string>
+  <string name="security_center_proton_list_options_menu">Meniu opțiuni ecran Proton</string>
   <!-- Address Bottomsheet options -->
   <string name="security_center_address_bottomsheet_disable_monitoring">Dezactivare monitorizare</string>
   <string name="security_center_address_bottomsheet_enable_monitoring">Activare monitorizare</string>
+  <string name="security_center_address_bottomsheet_remove_custom_email">Eliminare e-mail personal</string>
   <string name="security_center_address_bottomsheet_snackbar_message_enable_error">Nu s-a putut activa monitorizarea.</string>
   <string name="security_center_address_bottomsheet_snackbar_message_disable_error">Nu s-a putut dezactiva monitorizarea.</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_error">Nu s-a putut elimina adresa de e-mail personală.</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_enable_success">Monitorizare activată</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_success">Monitorizare dezactivată</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">Adresa de e-mail personală s-a eliminat.</string>
   <!-- Alias list -->
   <string name="security_center_alias_list_top_bar_title">Aliasuri hide-my-email</string>
   <string name="security_center_alias_list_excluded_from_monitoring">Exclus de la monitorizare</string>
   <string name="security_center_alias_list_error">Nu s-au putut încărca adresele.</string>
   <string name="security_center_alias_list_included_in_monitoring">Activați monitorizarea pentru a primi notificări dacă aliasurile hide-my-email v-au fost divulgate.</string>
   <string name="security_center_alias_list_monitored">Monitorizată</string>
+  <string name="security_center_alias_list_custom_email_message">Aliasurile cu domenii personale nu sunt monitorizate. Adăugați-le ca e-mail personal pentru monitorizare.</string>
+  <string name="security_center_alias_list_options_menu">Meniu opțiuni ecran alias</string>
   <!-- Dark web help dialog -->
-  <string name="dark_web_help_dialog_title">Data Security</string>
-  <string name="dark_web_help_dialog_subtitle">Proton never shares your information with third parties. All data comes from searches for the appearance of Proton domains on the dark web.</string>
+  <string name="dark_web_help_dialog_title">Securitate date</string>
+  <string name="dark_web_help_dialog_subtitle">Proton nu vă partajează niciodată informațiile cu terțe părți. Toate datele provin din căutări pentru apariția domeniilor Proton pe internetul ascuns.</string>
+  <!-- Cannot add custom emails -->
+  <string name="dark_web_cannot_add_custom_emails_dialog_title">Nu se poate adăuga un e-mail personal</string>
+  <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">Ați atins limita de adrese personale</string>
 </resources>

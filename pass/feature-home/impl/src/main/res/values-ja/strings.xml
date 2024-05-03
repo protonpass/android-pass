@@ -76,7 +76,7 @@
   <string name="bottomsheet_trash_all_items_title">ごみ箱</string>
   <string name="bottomsheet_restore_all_items">すべてのアイテムを復元する</string>
   <string name="bottomsheet_empty_trash">ごみ箱を空にする</string>
-  <string name="bottomsheet_select_items">Select items</string>
+  <string name="bottomsheet_select_items">項目を選択する</string>
   <string name="trash_error_clearing_trash">ごみ箱整理のエラー</string>
   <string name="trash_success_restoring_items">アイテムが復元されました</string>
   <string name="trash_error_restoring_items">アイテムの復元エラー</string>

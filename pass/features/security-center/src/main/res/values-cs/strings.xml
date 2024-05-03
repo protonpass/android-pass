@@ -36,14 +36,17 @@
   <string name="security_center_home_row_missing_tfa_subtitle">Increase your security</string>
   <string name="security_center_home_row_excludes_items_title">Excluded items</string>
   <string name="security_center_home_row_excludes_items_subtitle">Ignore alerts for these items</string>
+  <string name="security_center_get_breaches_error">Could not load breaches</string>
   <string name="security_center_home_section_password_health">Password Health</string>
-  <string name="security_center_home_snackbar_message_disable_sentinel_error">There was an error disabling Proton Sentinel protection. Please try again.</string>
   <!-- Sentinel bottom sheet -->
   <string name="security_center_sentinel_title">Proton Sentinel</string>
   <string name="security_center_sentinel_subtitle">Proton Sentinel is an advanced account protection program powered by sophisticated AI systems and specialists working around the clock to protect you from bad actors and security threats.</string>
   <string name="security_center_sentinel_button_enable">Povolit Proton Sentinel</string>
+  <string name="security_center_sentinel_button_disable">Deaktivovat Proton Sentinel</string>
   <string name="security_center_sentinel_snackbar_message_enable_canceled">Proton Sentinel protection activation has been canceled</string>
   <string name="security_center_sentinel_snackbar_message_enable_error">There was an error enabling Proton Sentinel protection. Please try again.</string>
+  <string name="security_center_sentinel_snackbar_message_disable_canceled">Proton Sentinel protection deactivation has been canceled</string>
+  <string name="security_center_sentinel_snackbar_message_disable_error">There was an error disabling Proton Sentinel protection. Please try again.</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Weak passwords</string>
   <string name="security_center_weak_pass_top_bar_subtitle">Weak passwords are easier to guess. Generate strong passwords to keep your account safe.</string>
@@ -63,7 +66,7 @@
   <string name="security_center_dark_web_monitor_custom_emails_title">Custom email address</string>
   <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">Not verified</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Add new custom email address</string>
-  <string name="security_center_dark_web_monitor_custom_emails_add_button">Add</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_button">Přidat</string>
   <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
     <item quantity="one">Used in %d login</item>
     <item quantity="few">Used in %d logins</item>
@@ -78,8 +81,8 @@
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Error loading custom email addresses</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Could not get email addresses</string>
-  <string name="security_center_dark_web_monitor_custom_email_option_verify">Verify</string>
-  <string name="security_center_dark_web_monitor_custom_email_option_remove">Remove</string>
+  <string name="security_center_dark_web_monitor_custom_email_option_verify">Ověřit</string>
+  <string name="security_center_dark_web_monitor_custom_email_option_remove">Odebrat</string>
   <string name="security_center_dark_web_monitor_latest_breach_on">Latest breach on %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
     <item quantity="one">Found in %s breach</item>
@@ -91,64 +94,78 @@
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Aliasy Hide-my-email</string>
   <string name="security_center_dark_web_monitor_proton_addresses_error">Error retrieving proton addresses</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Error retrieving Hide-my-email aliases</string>
-  <string name="security_center_dark_web_monitor_custom_emails_suggestions">Suggestions</string>
+  <string name="security_center_dark_web_monitor_custom_emails_suggestions">Návrhy</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">Monitoring disabled</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">There was an error sending the verification code. Please try again later.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">There was an error removing the email. Please try again later.</string>
   <!-- Add custom email monitoring -->
   <string name="security_center_custom_email_top_bar_title">Custom email monitoring</string>
-  <string name="security_center_custom_email_email_address_placeholder">Email address</string>
+  <string name="security_center_custom_email_email_address_placeholder">E-mailová adresa</string>
   <string name="security_center_custom_email_invalid_address">Neplatná e-mailová adresa</string>
-  <string name="security_center_custom_email_continue">Continue</string>
+  <string name="security_center_custom_email_continue">Pokračovat</string>
   <string name="security_center_custom_email_already_verified">Email already verified</string>
   <string name="security_center_custom_email_error_adding">Error adding the email address</string>
   <!-- Verify email monitoring -->
-  <string name="security_center_verify_email_code_placeholder">Code</string>
-  <string name="security_center_verify_email_code_error">Invalid code</string>
-  <string name="security_center_verify_email_continue">Continue</string>
+  <string name="security_center_verify_email_code_placeholder">Kód</string>
+  <string name="security_center_verify_email_code_error">Neplatný kód</string>
+  <string name="security_center_verify_email_continue">Pokračovat</string>
   <string name="security_center_verify_email_title">Confirm your email</string>
   <string name="security_center_verify_email_subtitle">We\'ve sent a verification code to %s. Please enter it below:</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">There was an error sending the verification code. Please try again later.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Breaches detected for</string>
   <string name="security_center_verify_report_title_none">No breaches detected for</string>
-  <string name="security_center_verify_resend_code">Resend code</string>
+  <string name="security_center_verify_resend_code">Znovu odeslat kód</string>
   <string name="security_center_verify_resend_code_in_00">Resend code in 00:%s</string>
   <!-- Email breach report -->
   <string name="security_center_email_report_used_in_header">Used in</string>
   <string name="security_center_email_report_breaches_header">Breaches</string>
+  <string name="security_center_email_report_resolved_breaches_header">Resolved breaches</string>
   <string name="security_center_email_report_mark_as_resolved">Označit jako vyřešené</string>
   <string name="security_center_email_report_snackbar_marked_as_resolved_success">Breach has been marked as resolved</string>
   <string name="security_center_email_report_snackbar_marked_as_resolved_error">Could not mark as resolved</string>
+  <string name="security_center_email_report_snackbar_get_breaches_error">Could not load breaches</string>
+  <string name="security_center_email_report_options_menu">Breach report options menu</string>
   <!-- Breach report detail-->
   <string name="security_center_report_detail_your_exposed_information">Your exposed information</string>
   <string name="security_center_report_detail_subtitle">Your info was in a data breach and found on __DATE__</string>
-  <string name="security_center_report_detail_details">Details</string>
-  <string name="security_center_report_detail_email_address">Email address</string>
-  <string name="security_center_report_detail_password">Password</string>
+  <string name="security_center_report_detail_details">Podrobnosti</string>
+  <string name="security_center_report_detail_email_address">E-mailová adresa</string>
+  <string name="security_center_report_detail_password">Heslo</string>
   <string name="security_center_report_detail_recommended_actions">Doporučené akce</string>
   <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">The exposed information was leaked from %s. Your Proton Account information remains secure and encrypted.</string>
-  <string name="security_center_report_detail_change_password" comment="The placeholder argument contains the name of the service where the breach occurred.">Change password on %s</string>
-  <string name="security_center_report_detail_use_aliases">Use aliases in place of your email address</string>
-  <string name="security_center_report_detail_enable_2fa" comment="The placeholder argument contains the name of the service where the breach occurred.">Enable 2FA on %s</string>
+  <string name="security_center_report_detail_learn_more">Learn more</string>
+  <string name="security_center_report_detail_snackbar_error">Could not load breach details</string>
+  <string name="security_center_report_detail_excluded_from_monitoring">Excluded from monitoring</string>
   <!-- Proton list -->
   <string name="security_center_proton_list_top_bar_title">Proton addresses</string>
   <string name="security_center_proton_list_no_breaches_detected">Žádné úniky informací nebyly zjištěny</string>
   <string name="security_center_proton_list_excluded_from_monitoring">Excluded from monitoring</string>
   <string name="security_center_proton_list_error">Could not load addresses</string>
   <string name="security_center_proton_list_included_in_monitoring">Enable monitoring to get notified if your Proton addresses were leaked.</string>
+  <string name="security_center_proton_list_options_menu">Proton screen options menu</string>
   <!-- Address Bottomsheet options -->
   <string name="security_center_address_bottomsheet_disable_monitoring">Disable monitoring</string>
   <string name="security_center_address_bottomsheet_enable_monitoring">Enable monitoring</string>
+  <string name="security_center_address_bottomsheet_remove_custom_email">Remove custom email</string>
   <string name="security_center_address_bottomsheet_snackbar_message_enable_error">Could not enable monitoring</string>
   <string name="security_center_address_bottomsheet_snackbar_message_disable_error">Could not disable monitoring</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_error">Could not remove custom email</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_enable_success">Monitoring enabled</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_success">Monitoring disabled</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">Custom email removed</string>
   <!-- Alias list -->
   <string name="security_center_alias_list_top_bar_title">Aliasy Hide-my-email</string>
   <string name="security_center_alias_list_excluded_from_monitoring">Excluded from monitoring</string>
   <string name="security_center_alias_list_error">Could not load addresses</string>
   <string name="security_center_alias_list_included_in_monitoring">Enable monitoring to get notified if your Hide-my-email aliases were leaked.</string>
   <string name="security_center_alias_list_monitored">Monitored</string>
+  <string name="security_center_alias_list_custom_email_message">Aliases with custom domains are not monitored, please add them as a custom email for monitoring.</string>
+  <string name="security_center_alias_list_options_menu">Alias screen options menu</string>
   <!-- Dark web help dialog -->
   <string name="dark_web_help_dialog_title">Data Security</string>
   <string name="dark_web_help_dialog_subtitle">Proton never shares your information with third parties. All data comes from searches for the appearance of Proton domains on the dark web.</string>
+  <!-- Cannot add custom emails -->
+  <string name="dark_web_cannot_add_custom_emails_dialog_title">Cannot add custom email</string>
+  <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">You have reached the limit of custom emails.</string>
 </resources>

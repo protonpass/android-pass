@@ -36,14 +36,17 @@
   <string name="security_center_home_row_missing_tfa_subtitle">გაზარდეთ თქვენი უსაფრთხოების დონე</string>
   <string name="security_center_home_row_excludes_items_title">ამოღებული ელემენტები</string>
   <string name="security_center_home_row_excludes_items_subtitle">გაფრთხილებების გამოტოვება ამ ელემენტებისთვის</string>
+  <string name="security_center_get_breaches_error">გაჟონვების ჩატვირთვა შეუძლებელია</string>
   <string name="security_center_home_section_password_health">პაროლის სიძლიერე</string>
-  <string name="security_center_home_snackbar_message_disable_sentinel_error">შეცდომა Proton Sentinel-ის დაცვის გამორთვისას. თავიდან სცადეთ.</string>
   <!-- Sentinel bottom sheet -->
   <string name="security_center_sentinel_title">Proton Sentinel</string>
   <string name="security_center_sentinel_subtitle">Proton Sentinel დამატებითი ანგარიშის დაცვის პროგრამაა, რომელიც რთულ AI სისტემებს ეყრდნობა და გვყავს სპეციალისტები, რომლებიც მუხლჩაუხრელად მუშაობენ, რათა თქვენი უსაფრთხოება არასასურველი პირებისგან დაიცვან.</string>
   <string name="security_center_sentinel_button_enable">Proton Sentinel-ის ჩართვა</string>
+  <string name="security_center_sentinel_button_disable">Proton Sentinel-ის გათიშვა</string>
   <string name="security_center_sentinel_snackbar_message_enable_canceled">Proton Sentinel-ით დაცვის აქტივაცია გაუქმდა</string>
   <string name="security_center_sentinel_snackbar_message_enable_error">შეცდომა Proton Sentinel-ის დაცვის ჩართვისას. თავიდან სცადეთ.</string>
+  <string name="security_center_sentinel_snackbar_message_disable_canceled">Proton Sentinel protection deactivation has been canceled</string>
+  <string name="security_center_sentinel_snackbar_message_disable_error">შეცდომა Proton Sentinel-ის დაცვის გამორთვისას. თავიდან სცადეთ.</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">სუსტი პაროლები</string>
   <string name="security_center_weak_pass_top_bar_subtitle">სუსტი პაროლების გამოცნობა უფრო ადვილია. შექმენით ძლიერი პაროლები თქვენი ანგარიშის უსაფრთხოებისთვის.</string>
@@ -86,7 +89,7 @@
   <string name="security_center_dark_web_monitor_proton_addresses_error">Proton-ის მისამართების მიღების შეცდომა</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Hide-my-email-ის ფსევდონიმების მიღების შეცდომა</string>
   <string name="security_center_dark_web_monitor_custom_emails_suggestions">შეთავაზებები</string>
-  <string name="security_center_dark_web_monitor_monitoring_disabled">Monitoring disabled</string>
+  <string name="security_center_dark_web_monitor_monitoring_disabled">მონიტორინგი გათიშულია</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">There was an error sending the verification code. Please try again later.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">There was an error removing the email. Please try again later.</string>
   <!-- Add custom email monitoring -->
@@ -111,9 +114,12 @@
   <!-- Email breach report -->
   <string name="security_center_email_report_used_in_header">გამოყენებულია სად</string>
   <string name="security_center_email_report_breaches_header">გაჟონვები</string>
+  <string name="security_center_email_report_resolved_breaches_header">ამოხსნილი გაჟონვები</string>
   <string name="security_center_email_report_mark_as_resolved">მონიშნე გადაწყვეტილად</string>
   <string name="security_center_email_report_snackbar_marked_as_resolved_success">გაჟონვა მოინიშნა, როგორც გადაწყვეტილი</string>
   <string name="security_center_email_report_snackbar_marked_as_resolved_error">ვერ მოვნიშნე, როგორც გადაწყვეტილი</string>
+  <string name="security_center_email_report_snackbar_get_breaches_error">გაჟონვების ჩატვირთვა შეუძლებელია</string>
+  <string name="security_center_email_report_options_menu">Breach report options menu</string>
   <!-- Breach report detail-->
   <string name="security_center_report_detail_your_exposed_information">თქვენი გაჟონილი ინფორმაცია</string>
   <string name="security_center_report_detail_subtitle">Your info was in a data breach and found on __DATE__</string>
@@ -122,27 +128,38 @@
   <string name="security_center_report_detail_password">პაროლი</string>
   <string name="security_center_report_detail_recommended_actions">რეკომენდებული ქმედებები</string>
   <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">The exposed information was leaked from %s. Your Proton Account information remains secure and encrypted.</string>
-  <string name="security_center_report_detail_change_password" comment="The placeholder argument contains the name of the service where the breach occurred.">Change password on %s</string>
-  <string name="security_center_report_detail_use_aliases">გამოიყენეთ ფსევდონიმები თქვენი ელფოსტის მისამართის მაგიერ</string>
-  <string name="security_center_report_detail_enable_2fa" comment="The placeholder argument contains the name of the service where the breach occurred.">Enable 2FA on %s</string>
+  <string name="security_center_report_detail_learn_more">Learn more</string>
+  <string name="security_center_report_detail_snackbar_error">Could not load breach details</string>
+  <string name="security_center_report_detail_excluded_from_monitoring">ამოღებულია მონიტორინგიდან</string>
   <!-- Proton list -->
   <string name="security_center_proton_list_top_bar_title">Proton-ის მისამართები</string>
   <string name="security_center_proton_list_no_breaches_detected">გაჟონვები აღმოჩენილი არაა</string>
-  <string name="security_center_proton_list_excluded_from_monitoring">Excluded from monitoring</string>
-  <string name="security_center_proton_list_error">Could not load addresses</string>
+  <string name="security_center_proton_list_excluded_from_monitoring">ამოღებულია მონიტორინგიდან</string>
+  <string name="security_center_proton_list_error">მისამართების ჩატვირთვა შეუძლებელია</string>
   <string name="security_center_proton_list_included_in_monitoring">Enable monitoring to get notified if your Proton addresses were leaked.</string>
+  <string name="security_center_proton_list_options_menu">Proton screen options menu</string>
   <!-- Address Bottomsheet options -->
-  <string name="security_center_address_bottomsheet_disable_monitoring">Disable monitoring</string>
-  <string name="security_center_address_bottomsheet_enable_monitoring">Enable monitoring</string>
+  <string name="security_center_address_bottomsheet_disable_monitoring">მონიტორინგის გათიშვა</string>
+  <string name="security_center_address_bottomsheet_enable_monitoring">მონიტორინგის ჩართვა</string>
+  <string name="security_center_address_bottomsheet_remove_custom_email">მომხმარებლის ელფოსტის წაშლა</string>
   <string name="security_center_address_bottomsheet_snackbar_message_enable_error">Could not enable monitoring</string>
   <string name="security_center_address_bottomsheet_snackbar_message_disable_error">Could not disable monitoring</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_error">Could not remove custom email</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_enable_success">მონიტორინგი ჩართულია</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_success">მონიტორინგი გათიშულია</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">მომხმარებლის ელფოსტა წაიშალა</string>
   <!-- Alias list -->
   <string name="security_center_alias_list_top_bar_title">Hide-my-email-ის ფსევდონიმები</string>
-  <string name="security_center_alias_list_excluded_from_monitoring">Excluded from monitoring</string>
-  <string name="security_center_alias_list_error">Could not load addresses</string>
+  <string name="security_center_alias_list_excluded_from_monitoring">ამოღებულია მონიტორინგიდან</string>
+  <string name="security_center_alias_list_error">მისამართების ჩატვირთვა შეუძლებელია</string>
   <string name="security_center_alias_list_included_in_monitoring">Enable monitoring to get notified if your Hide-my-email aliases were leaked.</string>
-  <string name="security_center_alias_list_monitored">Monitored</string>
+  <string name="security_center_alias_list_monitored">მონიტორინგით</string>
+  <string name="security_center_alias_list_custom_email_message">Aliases with custom domains are not monitored, please add them as a custom email for monitoring.</string>
+  <string name="security_center_alias_list_options_menu">Alias screen options menu</string>
   <!-- Dark web help dialog -->
-  <string name="dark_web_help_dialog_title">Data Security</string>
+  <string name="dark_web_help_dialog_title">მონაცემების უსაფრთხოება</string>
   <string name="dark_web_help_dialog_subtitle">Proton never shares your information with third parties. All data comes from searches for the appearance of Proton domains on the dark web.</string>
+  <!-- Cannot add custom emails -->
+  <string name="dark_web_cannot_add_custom_emails_dialog_title">Cannot add custom email</string>
+  <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">You have reached the limit of custom emails.</string>
 </resources>

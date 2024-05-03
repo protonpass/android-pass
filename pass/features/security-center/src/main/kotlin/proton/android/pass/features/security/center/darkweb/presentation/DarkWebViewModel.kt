@@ -39,9 +39,11 @@ import kotlinx.datetime.toLocalDateTime
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveGlobalMonitorState
+import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.breach.CustomEmailSuggestion
 import proton.android.pass.data.api.usecases.breach.ObserveBreachCustomEmails
@@ -68,6 +70,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class DarkWebViewModel @Inject constructor(
     observeItems: ObserveItems,
+    observeItemCount: ObserveItemCount,
     observeBreachProtonEmails: ObserveBreachProtonEmails,
     observeBreachesForAliasEmail: ObserveBreachesForAliasEmail,
     observeBreachCustomEmails: ObserveBreachCustomEmails,
@@ -139,8 +142,11 @@ internal class DarkWebViewModel @Inject constructor(
         protonEmailFlowIfEnabled,
         aliasEmailFlowIfEnabled,
         customEmailsFlow,
-        customEmailSuggestionsFlow
-    ) { protonEmailResult, aliasEmailsResult, customEmailsResult, suggestionsResult ->
+        customEmailSuggestionsFlow,
+        observeItemCount().asLoadingResult()
+    ) { protonEmailResult, aliasEmailsResult, customEmailsResult, suggestionsResult, itemCount ->
+        val aliasCount = itemCount.getOrNull()?.alias ?: 0
+        val canNavigateToAlias = aliasCount > 0
         val protonEmail = getProtonEmailState(protonEmailResult)
         val aliasEmail = getAliasEmailState(aliasEmailsResult)
         val customEmails = getCustomEmailsState(
@@ -157,7 +163,8 @@ internal class DarkWebViewModel @Inject constructor(
             customEmailState = customEmails.state,
             darkWebStatus = darkWebStatus,
             lastCheckTime = None,
-            canAddCustomEmails = customEmails.canAddCustomEmails
+            canAddCustomEmails = customEmails.canAddCustomEmails,
+            canNavigateToAlias = canNavigateToAlias
         )
     }.stateIn(
         scope = viewModelScope,

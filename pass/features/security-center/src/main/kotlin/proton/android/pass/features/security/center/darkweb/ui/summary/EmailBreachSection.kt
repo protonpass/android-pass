@@ -46,6 +46,7 @@ internal fun EmailBreachSection(
     modifier: Modifier = Modifier,
     state: DarkWebEmailBreachState,
     summaryType: DarkWebSummaryType,
+    isClickable: Boolean,
     onEvent: (DarkWebUiEvent) -> Unit
 ) {
     Column(
@@ -53,6 +54,7 @@ internal fun EmailBreachSection(
     ) {
         EmailBreachHeader(
             summaryType = summaryType,
+            isClickable = isClickable,
             onEvent = onEvent,
             state = state
         )
@@ -138,7 +140,8 @@ internal fun EmailBreachSectionPreview(
             EmailBreachSection(
                 state = input.second,
                 summaryType = DarkWebSummaryType.Proton,
-                onEvent = {}
+                onEvent = {},
+                isClickable = true
             )
         }
     }

@@ -25,19 +25,14 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
-import proton.android.pass.securitycenter.api.passwords.RepeatedPasswordsGroup
 
 @Stable
 internal data class LoginItemDetailReusedPassState(
-
     internal val password: String,
-    internal val reusedPasswordItems: ImmutableList<ItemUiModel>,
+    internal val duplicatedPasswordLoginItems: ImmutableList<ItemUiModel>,
     internal val canLoadExternalImages: Boolean,
-    private val repeatedPasswordsGroups: List<RepeatedPasswordsGroup>,
     private val groupedVaults: Map<ShareId, Vault>
 ) {
-
-    internal val loginItemsWithSamePassword: ImmutableList<ItemUiModel> = persistentListOf()
 
     internal fun getShareIcon(shareId: ShareId): ShareIcon? = groupedVaults[shareId]?.icon
 
@@ -45,8 +40,7 @@ internal data class LoginItemDetailReusedPassState(
 
         internal val Initial: LoginItemDetailReusedPassState = LoginItemDetailReusedPassState(
             password = "",
-            reusedPasswordItems = persistentListOf(),
-            repeatedPasswordsGroups = emptyList(),
+            duplicatedPasswordLoginItems = persistentListOf(),
             canLoadExternalImages = false,
             groupedVaults = emptyMap()
         )

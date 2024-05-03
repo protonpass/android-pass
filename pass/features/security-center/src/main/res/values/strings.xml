@@ -31,7 +31,7 @@
     <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
     <string name="security_center_home_row_sentinel_subtitle">Advanced account protection program</string>
     <string name="security_center_home_row_insecure_passwords_title">Weak passwords</string>
-    <string name="security_center_home_row_insecure_passwords_subtitle">Create strong passwords</string>
+    <string name="security_center_home_row_insecure_passwords_subtitle">Change your passwords</string>
     <string name="security_center_home_row_reused_passwords_title">Reused passwords</string>
     <string name="security_center_home_row_reused_passwords_subtitle">Generate unique passwords</string>
     <string name="security_center_home_row_missing_tfa_title">Inactive 2FA</string>
@@ -56,7 +56,7 @@
 
     <!-- Weak passwords screen -->
     <string name="security_center_weak_pass_top_bar_title">Weak passwords</string>
-    <string name="security_center_weak_pass_top_bar_subtitle">Weak passwords are easier to guess. Generate strong passwords to keep your account safe.</string>
+    <string name="security_center_weak_pass_top_bar_subtitle">Weak passwords are easier to guess. Generate strong passwords to keep your accounts safe.</string>
 
     <!-- Reused passwords screen -->
     <string name="security_center_reused_pass_top_bar_title">Reused passwords</string>

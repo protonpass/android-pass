@@ -26,9 +26,9 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
-import proton.android.pass.account.fakes.TestDeviceSettingsRepository
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.impl.db.entities.TelemetryEntity
+import proton.android.pass.data.impl.fakes.TestIsTelemetryEnabled
 import proton.android.pass.data.impl.fakes.TestLocalTelemetryDataSource
 import proton.android.pass.data.impl.fakes.TestRemoteTelemetryDataSource
 import proton.android.pass.data.impl.repositories.TelemetryRepositoryImpl
@@ -50,7 +50,7 @@ class TelemetryRepositoryTest {
     private lateinit var localDataSource: TestLocalTelemetryDataSource
     private lateinit var remoteDataSource: TestRemoteTelemetryDataSource
     private lateinit var clock: Clock
-    private lateinit var deviceSettingsRepository: TestDeviceSettingsRepository
+    private lateinit var telemetryEnabled: TestIsTelemetryEnabled
 
     @Before
     fun setup() {
@@ -59,7 +59,7 @@ class TelemetryRepositoryTest {
         localDataSource = TestLocalTelemetryDataSource()
         remoteDataSource = TestRemoteTelemetryDataSource()
         clock = FixedClock(Clock.System.now())
-        deviceSettingsRepository = TestDeviceSettingsRepository()
+        telemetryEnabled = TestIsTelemetryEnabled()
 
         instance = TelemetryRepositoryImpl(
             localDataSource = localDataSource,
@@ -67,7 +67,7 @@ class TelemetryRepositoryTest {
             accountManager = accountManager,
             getUserPlan = getUserPlan,
             clock = clock,
-            deviceSettingsRepository = deviceSettingsRepository
+            isTelemetryEnabled = telemetryEnabled
         )
     }
 
@@ -158,7 +158,7 @@ class TelemetryRepositoryTest {
 
         runSetup(1, "123", plan, event)
         remoteDataSource.setResult(Result.success(Unit))
-        deviceSettingsRepository.updateIsTelemetryEnabled(false)
+        telemetryEnabled.setValue(false)
 
         // WHEN
         instance.sendEvents()

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Sorting -->
-  <string name="sort_by_title_asc">Naslov (A–Z)</string>
-  <string name="sort_by_title_desc">Naslov (Z–A)</string>
+  <string name="sort_by_title_asc">Naslov (A-Ž)</string>
+  <string name="sort_by_title_desc">Naslov (Ž-A)</string>
   <string name="sort_by_creation_asc">Od starejšega do najnovejšega</string>
   <string name="sort_by_creation_desc">Od najnovejšega do najstarejšega</string>
   <string name="sort_by_modification_date">Nedavno uporabljeno</string>
@@ -123,7 +123,7 @@
   <string name="item_details_login_section_primary_totp_title">Žeton 2FA (TOTP)</string>
   <string name="item_details_login_section_websites_title">Spletne strani</string>
   <string name="item_details_shared_section_note_title">Opomba</string>
-  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Ta različica ni več podprta, prosimo posodobite aplikacijo.</string>
+  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Ta različica ni več podprta, zato priporočamo posodobitev aplikacije.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Identifikacijski ključ</string>
   <!-- Upgrade -->

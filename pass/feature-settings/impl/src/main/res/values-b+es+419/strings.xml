@@ -29,7 +29,7 @@
   <string name="settings_clear_icon_cache_success">Caché de íconos vaciada</string>
   <string name="settings_clear_icon_cache_error">No se pudo vaciar la caché de íconos</string>
   <string name="settings_share_telemetry">Compartir uso anónimo</string>
-  <string name="settings_share_crashes">Compartir reportes de error anónimos</string>
+  <string name="settings_share_crashes">Compartir informes de error anónimos</string>
   <string name="settings_preference_updated">La preferencia ha sido actualizada</string>
   <string name="settings_default_vault_updated">Se actualizó su bóveda por defecto.</string>
   <string name="settings_default_vault_update_error">No se pudo actualizar la bóveda por defecto.</string>

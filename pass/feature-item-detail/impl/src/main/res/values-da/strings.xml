@@ -50,7 +50,7 @@
     <item quantity="other">%d andre logins bruger denne adgangskode:</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Mangler to-faktor-godkendelse</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">It would be more secure to set up 2FA for this item.</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Det ville være mere sikkert at indstille 2FA for dette element.</string>
   <string name="field_username">Brugernavn eller e-mailadresse</string>
   <string name="field_password">Adgangskode</string>
   <string name="websites_section_title">Websider</string>

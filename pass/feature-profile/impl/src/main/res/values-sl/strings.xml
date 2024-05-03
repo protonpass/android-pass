@@ -17,13 +17,13 @@
   <string name="profile_fingerprint_lock_disabled">Zaklepanje s prstnim odtisom onemogočeno</string>
   <string name="profile_error_performing_operation">Napaka pri izvajanju operacije</string>
   <string name="profile_app_version_copied_to_clipboard">Različica aplikacije je kopirana</string>
-  <string name="feedback_option_reddit">Oglejte si Proton na Redditu</string>
+  <string name="feedback_option_reddit">Oglejte si Proton na spletišču Reddit</string>
   <string name="feedback_option_mail">Pošlji sporočilo</string>
   <string name="feedback_option_vote_new_features">Glasujte za nove funkcije</string>
   <string name="app_lock_immediately">Takoj</string>
   <string name="app_lock_one_minute">Po 1 minuti</string>
   <string name="app_lock_two_minutes">Po 2 minutah</string>
-  <string name="app_lock_five_minutes">Po 5 minut</string>
+  <string name="app_lock_five_minutes">Čez 5 minut</string>
   <string name="app_lock_ten_minutes">Po 10 minut</string>
   <string name="app_lock_one_hour">Po 1 uri</string>
   <string name="app_lock_four_hours">Po 4 urah</string>

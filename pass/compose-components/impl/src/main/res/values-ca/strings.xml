@@ -24,7 +24,7 @@
   <string name="bottomsheet_pin_item">Ancora</string>
   <string name="bottomsheet_unpin_item">Desancora</string>
   <string name="bottomsheet_view_item_history">Visualitza l\'historial</string>
-  <string name="bottomsheet_monitor_exclude">Excloure del monitoratge</string>
+  <string name="bottomsheet_monitor_exclude">Exclou de la supervisió</string>
   <string name="bottomsheet_monitor_include">Incloure en la supervisió</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Obre el menú d\'acció de l\'element</string>

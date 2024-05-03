@@ -24,7 +24,7 @@
     <item quantity="other">%d predmetov</item>
   </plurals>
   <string name="sync_progress_item_count">%1$d od %2$d predmetov</string>
-  <string name="sync_dialog_title">Sinhronizacija predmetov…</string>
+  <string name="sync_dialog_title">Sinhronizacija predmetov …</string>
   <string name="sync_dialog_subtitle">Prenašamo in dešifriramo vaše predmete. To lahko traja nekaj minut.</string>
   <string name="sync_dialog_confirm_button">Nadaljuj</string>
   <string name="sync_item_not_started">Ni se začelo</string>

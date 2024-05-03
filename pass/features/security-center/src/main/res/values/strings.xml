@@ -36,8 +36,8 @@
     <string name="security_center_home_row_reused_passwords_subtitle">Create unique passwords</string>
     <string name="security_center_home_row_missing_tfa_title">Inactive 2FA</string>
     <string name="security_center_home_row_missing_tfa_subtitle">Set up 2FA for more security</string>
-    <string name="security_center_home_row_excludes_items_title">Excluded items</string>
-    <string name="security_center_home_row_excludes_items_subtitle">Ignore alerts for these items</string>
+    <string name="security_center_home_row_excludes_items_title">Excluded from monitoring</string>
+    <string name="security_center_home_row_excludes_items_subtitle">These items remain at risk</string>
     <string name="security_center_get_breaches_error">Could not load breaches</string>
 
     <string name="security_center_home_section_password_health">Password Health</string>

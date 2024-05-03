@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -29,10 +29,10 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
-import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
+import proton.android.pass.composecomponents.impl.topbar.iconbutton.CrossBackCircleIconButton
 
 @Composable
-fun BackArrowTopAppBar(
+fun CrossTopAppBar(
     modifier: Modifier = Modifier,
     title: String? = null,
     backgroundColor: Color = PassTheme.colors.backgroundStrong,
@@ -45,7 +45,7 @@ fun BackArrowTopAppBar(
         backgroundColor = backgroundColor,
         actions = actions,
         navigationIcon = {
-            BackArrowCircleIconButton(
+            CrossBackCircleIconButton(
                 modifier = Modifier.padding(
                     horizontal = Spacing.medium - Spacing.extraSmall,
                     vertical = Spacing.extraSmall
@@ -60,11 +60,11 @@ fun BackArrowTopAppBar(
 
 @Preview
 @Composable
-fun BackArrowTopAppBarPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
+fun CrossTopAppBarPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
     val title = if (input.first) "Title" else null
     PassTheme(isDark = input.first) {
         Surface {
-            BackArrowTopAppBar(
+            CrossTopAppBar(
                 title = title,
                 onUpClick = { }
             )

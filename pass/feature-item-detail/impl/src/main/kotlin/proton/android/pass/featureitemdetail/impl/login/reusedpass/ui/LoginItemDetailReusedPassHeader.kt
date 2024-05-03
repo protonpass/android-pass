@@ -20,7 +20,6 @@ package proton.android.pass.featureitemdetail.impl.login.reusedpass.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -37,7 +36,7 @@ internal fun LoginItemDetailReusedPassHeader(
     password: String,
 ) {
     Column(
-        modifier = modifier.padding(horizontal = Spacing.medium),
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
     ) {
         Text(

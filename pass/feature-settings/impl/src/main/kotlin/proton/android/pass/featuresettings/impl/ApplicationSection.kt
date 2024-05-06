@@ -44,8 +44,7 @@ import me.proton.core.presentation.compose.R as CoreR
 @Composable
 fun ApplicationSection(
     modifier: Modifier = Modifier,
-    shareTelemetry: Boolean,
-    shareCrashes: Boolean,
+    telemetryStatus: TelemetryStatus,
     onEvent: (SettingsContentEvent) -> Unit
 ) {
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
@@ -74,18 +73,25 @@ fun ApplicationSection(
                 },
                 onClick = { onEvent(SettingsContentEvent.ForceSync) }
             )
-            PassDivider()
-            SettingToggle(
-                text = stringResource(R.string.settings_share_telemetry),
-                isChecked = shareTelemetry,
-                onClick = { onEvent(SettingsContentEvent.TelemetryChange(it)) }
-            )
-            PassDivider()
-            SettingToggle(
-                text = stringResource(R.string.settings_share_crashes),
-                isChecked = shareCrashes,
-                onClick = { onEvent(SettingsContentEvent.CrashReportChange(it)) }
-            )
+
+            when (telemetryStatus) {
+                TelemetryStatus.Hide -> {}
+                is TelemetryStatus.Show -> {
+
+                    PassDivider()
+                    SettingToggle(
+                        text = stringResource(R.string.settings_share_telemetry),
+                        isChecked = telemetryStatus.shareTelemetry,
+                        onClick = { onEvent(SettingsContentEvent.TelemetryChange(it)) }
+                    )
+                    PassDivider()
+                    SettingToggle(
+                        text = stringResource(R.string.settings_share_crashes),
+                        isChecked = telemetryStatus.shareCrashes,
+                        onClick = { onEvent(SettingsContentEvent.CrashReportChange(it)) }
+                    )
+                }
+            }
         }
     }
 }
@@ -93,11 +99,16 @@ fun ApplicationSection(
 @Preview
 @Composable
 fun ApplicationSectionPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
+    val telemetry = if (input.first) {
+        TelemetryStatus.Show(shareTelemetry = true, shareCrashes = false)
+    } else {
+        TelemetryStatus.Hide
+    }
+
     PassTheme(isDark = input.first) {
         Surface {
             ApplicationSection(
-                shareTelemetry = input.second,
-                shareCrashes = input.second,
+                telemetryStatus = telemetry,
                 onEvent = {}
             )
         }

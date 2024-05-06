@@ -174,22 +174,22 @@ android {
             resourceConfigurations.addAll(listOf("en", "xxhdpi"))
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
-            buildConfigField("Boolean", "ALLOW_SCREENSHOTS", "true")
+            buildConfigField("Boolean", "ALLOW_SCREENSHOTS_DEFAULT_VALUE", "true")
         }
         create("alpha") {
             dimension = "version"
             applicationIdSuffix = ".alpha"
             versionNameSuffix = "-alpha.$appVersionCode"
-            buildConfigField("Boolean", "ALLOW_SCREENSHOTS", "true")
+            buildConfigField("Boolean", "ALLOW_SCREENSHOTS_DEFAULT_VALUE", "false")
         }
         create("play") {
             dimension = "version"
-            buildConfigField("Boolean", "ALLOW_SCREENSHOTS", "true")
+            buildConfigField("Boolean", "ALLOW_SCREENSHOTS_DEFAULT_VALUE", "false")
         }
         create("fdroid") {
             dimension = "version"
             applicationIdSuffix = ".fdroid"
-            buildConfigField("Boolean", "ALLOW_SCREENSHOTS", "true")
+            buildConfigField("Boolean", "ALLOW_SCREENSHOTS_DEFAULT_VALUE", "false")
         }
     }
     flavorDimensions += "env"

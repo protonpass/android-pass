@@ -158,6 +158,9 @@
     <string name="security_center_report_detail_snackbar_error">Could not load breach details</string>
     <string name="security_center_report_detail_excluded_from_monitoring">Excluded from monitoring</string>
 
+    <string name="security_center_report_resolve_confirmation_dialog_title">Resolve all breaches?</string>
+    <string name="security_center_report_resolve_confirmation_dialog_message">All current breaches will be marked as resolved. In case of future data breaches, you will be notified.</string>
+
     <!-- Proton list -->
     <string name="security_center_proton_list_top_bar_title">Proton addresses</string>
     <string name="security_center_proton_list_no_breaches_detected">No breaches detected</string>

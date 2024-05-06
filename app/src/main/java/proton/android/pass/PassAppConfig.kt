@@ -41,4 +41,6 @@ class PassAppConfig @Inject constructor(
     override val accountSentryDSN: String? =
         BuildConfig.ACCOUNT_SENTRY_DSN.takeIf { !BuildConfig.DEBUG }
     override val androidVersion: Int = Build.VERSION.SDK_INT
+    override val allowScreenshotsDefaultValue: Boolean =
+        BuildConfig.ALLOW_SCREENSHOTS_DEFAULT_VALUE
 }

@@ -46,6 +46,7 @@ import proton.android.pass.preferences.CopyTotpToClipboard
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.telemetry.api.CanConfigureTelemetry
 import javax.inject.Inject
 
 @HiltViewModel
@@ -55,6 +56,7 @@ class SettingsViewModel @Inject constructor(
     private val refreshContent: RefreshContent,
     private val clearIconCache: ClearIconCache,
     private val deviceSettingsRepository: DeviceSettingsRepository,
+    private val canConfigureTelemetry: CanConfigureTelemetry,
     syncStatusRepository: ItemSyncStatusRepository,
     observeDefaultVault: ObserveDefaultVault
 ) : ViewModel() {
@@ -104,14 +106,22 @@ class SettingsViewModel @Inject constructor(
         eventState,
         defaultVaultState
     ) { preferences, deviceSettings, allowScreenshots, sync, event, defaultVault ->
+        val telemetryStatus = if (canConfigureTelemetry()) {
+            TelemetryStatus.Show(
+                shareTelemetry = deviceSettings.isTelemetryEnabled,
+                shareCrashes = deviceSettings.isCrashReportEnabled
+            )
+        } else {
+            TelemetryStatus.Hide
+        }
+
         SettingsUiState(
             themePreference = preferences.theme,
             copyTotpToClipboard = preferences.copyTotpToClipboard,
             isForceRefreshing = sync is ItemSyncStatus.Started || sync is ItemSyncStatus.Syncing,
             useFavicons = preferences.useFavicons,
             allowScreenshots = allowScreenshots,
-            shareTelemetry = deviceSettings.isTelemetryEnabled,
-            shareCrashes = deviceSettings.isCrashReportEnabled,
+            telemetryStatus = telemetryStatus,
             event = event,
             defaultVault = defaultVault
         )

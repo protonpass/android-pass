@@ -22,6 +22,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import proton.android.pass.telemetry.api.CanConfigureTelemetry
 import proton.android.pass.telemetry.api.TelemetryManager
 
 @Module
@@ -30,5 +31,8 @@ abstract class FakesTelemetryModule {
 
     @Binds
     abstract fun bindTelemetryManager(impl: TestTelemetryManager): TelemetryManager
+
+    @Binds
+    abstract fun bindCanConfigureTelemetry(impl: TestCanConfigureTelemetry): CanConfigureTelemetry
 }
 

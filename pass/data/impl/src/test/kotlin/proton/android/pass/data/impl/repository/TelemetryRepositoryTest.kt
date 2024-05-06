@@ -28,7 +28,7 @@ import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.impl.db.entities.TelemetryEntity
-import proton.android.pass.data.impl.fakes.TestIsTelemetryEnabled
+import proton.android.pass.data.impl.fakes.FakeIsTelemetryEnabled
 import proton.android.pass.data.impl.fakes.TestLocalTelemetryDataSource
 import proton.android.pass.data.impl.fakes.TestRemoteTelemetryDataSource
 import proton.android.pass.data.impl.repositories.TelemetryRepositoryImpl
@@ -50,7 +50,7 @@ class TelemetryRepositoryTest {
     private lateinit var localDataSource: TestLocalTelemetryDataSource
     private lateinit var remoteDataSource: TestRemoteTelemetryDataSource
     private lateinit var clock: Clock
-    private lateinit var telemetryEnabled: TestIsTelemetryEnabled
+    private lateinit var telemetryEnabled: FakeIsTelemetryEnabled
 
     @Before
     fun setup() {
@@ -59,7 +59,7 @@ class TelemetryRepositoryTest {
         localDataSource = TestLocalTelemetryDataSource()
         remoteDataSource = TestRemoteTelemetryDataSource()
         clock = FixedClock(Clock.System.now())
-        telemetryEnabled = TestIsTelemetryEnabled()
+        telemetryEnabled = FakeIsTelemetryEnabled()
 
         instance = TelemetryRepositoryImpl(
             localDataSource = localDataSource,

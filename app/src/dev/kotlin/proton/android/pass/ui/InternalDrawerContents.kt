@@ -30,12 +30,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import me.proton.core.accountmanager.presentation.compose.AccountPrimaryItem
 import proton.android.pass.log.api.PassLogger
 
 @Composable
 fun InternalDrawerContents(
     modifier: Modifier = Modifier,
     onOpenFeatureFlag: () -> Unit,
+    onAppNavigation: (AppNavigation) -> Unit,
     viewModel: InternalDrawerViewModel = hiltViewModel()
 ) {
     Column(
@@ -45,7 +47,21 @@ fun InternalDrawerContents(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-
+        AccountPrimaryItem(
+            modifier= Modifier.fillMaxWidth(),
+            onSignIn = {
+                onAppNavigation(AppNavigation.AddAccount)
+            },
+            onSignOut = {
+                onAppNavigation(AppNavigation.SignOut)
+            },
+            onRemove = {
+                onAppNavigation(AppNavigation.ForceSignOut)
+            },
+            onSwitch = {
+                onAppNavigation(AppNavigation.SwitchAccount(it))
+            }
+        )
         ShowkaseDrawerButton()
         Button(
             modifier = Modifier.fillMaxWidth(),

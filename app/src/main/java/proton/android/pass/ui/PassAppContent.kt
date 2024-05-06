@@ -130,6 +130,7 @@ fun PassAppContent(
                 appNavigator.navigate(FeatureFlagRoute)
                 coroutineScope.launch { internalDrawerState.close() }
             },
+            onAppNavigation = onNavigate,
             content = {
                 Column(modifier = Modifier.padding(contentPadding)) {
                     AnimatedVisibility(

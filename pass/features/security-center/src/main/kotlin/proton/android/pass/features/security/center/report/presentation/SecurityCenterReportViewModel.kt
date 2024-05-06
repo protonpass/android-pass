@@ -41,7 +41,6 @@ import proton.android.pass.common.api.runCatching
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
@@ -145,10 +144,9 @@ class SecurityCenterReportViewModel @Inject constructor(
                     usedInLoginItems.map { usedInLoginItem -> usedInLoginItem.toUiModel(this) }
                 }
             }
-    }.asLoadingResult().distinctUntilChanged()
-
-    private val isResolveButtonLoadingFlow: MutableStateFlow<IsLoadingState> =
-        MutableStateFlow(IsLoadingState.NotLoading)
+    }
+        .asLoadingResult()
+        .distinctUntilChanged()
 
     private val breachReportFlow: Flow<LoadingResult<BreachEmailReport>> =
         observeBreachEmailReport(breachEmailId)
@@ -167,14 +165,12 @@ class SecurityCenterReportViewModel @Inject constructor(
         observeBreachForEmailFlow,
         usedInLoginItemsFlow,
         userPreferencesRepository.getUseFaviconsPreference(),
-        isResolveButtonLoadingFlow,
         eventFlow,
         observeVaultsGroupedByShareId()
     ) { breachEmailReportResult,
         breachesForEmailResult,
         usedInLoginItemsResult,
         useFavIconsPreference,
-        isResolveButtonLoading,
         event,
         groupedVaults ->
         SecurityCenterReportState(
@@ -183,7 +179,6 @@ class SecurityCenterReportViewModel @Inject constructor(
             breachEmailResult = breachEmailReportResult,
             breachEmailsResult = breachesForEmailResult,
             usedInLoginItemsResult = usedInLoginItemsResult,
-            isResolvingBreachState = isResolveButtonLoading,
             event = event,
             groupedVaults = groupedVaults
         )
@@ -193,20 +188,28 @@ class SecurityCenterReportViewModel @Inject constructor(
         initialValue = SecurityCenterReportState.Initial
     )
 
-    internal fun resolveEmailBreach(emailId: BreachEmailId) = viewModelScope.launch {
-        isResolveButtonLoadingFlow.update { IsLoadingState.Loading }
+    internal fun onResolveEmailBreaches() {
+        eventFlow.update { SecurityCenterReportEvent.OnResolveEmailBreaches }
+    }
+
+    internal fun onResolveEmailBreachesConfirmed(emailId: BreachEmailId) = viewModelScope.launch {
+        eventFlow.update { SecurityCenterReportEvent.OnResolveEmailBreachesConfirmed }
 
         runCatching { markEmailBreachAsResolved(breachEmailId = emailId) }
             .onSuccess {
+                eventFlow.update { SecurityCenterReportEvent.OnEmailBreachesResolved }
                 snackbarDispatcher(BreachResolvedSuccessfully)
             }
             .onError {
+                eventFlow.update { SecurityCenterReportEvent.OnResolveEmailBreachesCancelled }
                 snackbarDispatcher(BreachResolvedError)
                 PassLogger.i(TAG, "Failed to mark as resolved email breach")
                 PassLogger.w(TAG, it)
             }
+    }
 
-        isResolveButtonLoadingFlow.update { IsLoadingState.NotLoading }
+    internal fun onResolveEmailBreachesCancelled() {
+        eventFlow.update { SecurityCenterReportEvent.OnResolveEmailBreachesCancelled }
     }
 
     internal fun consumeEvent(event: SecurityCenterReportEvent) {

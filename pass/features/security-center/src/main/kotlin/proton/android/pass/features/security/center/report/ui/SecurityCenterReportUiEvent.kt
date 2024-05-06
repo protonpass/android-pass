@@ -42,4 +42,8 @@ internal sealed interface SecurityCenterReportUiEvent {
         val isMonitored: Boolean
     ) : SecurityCenterReportUiEvent
 
+    data object OnMarkEmailBreachesAsResolved : SecurityCenterReportUiEvent
+
+    data object OnMarkEmailBreachesAsResolvedCancelled : SecurityCenterReportUiEvent
+
 }

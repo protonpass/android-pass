@@ -6,6 +6,20 @@
 
 ### Other
 
+## 1.21.3 (2024-05-06)
+
+### Features :tada:
+
+- FDroid releases now don't bundle any telemetry library.
+
+### Fixes :bug:
+
+- Pass monitor fixes and improvements.
+
+### Other
+
+- Updated translations
+
 ## 1.21.2 (2024-05-03)
 
 ### Fixes :bug:

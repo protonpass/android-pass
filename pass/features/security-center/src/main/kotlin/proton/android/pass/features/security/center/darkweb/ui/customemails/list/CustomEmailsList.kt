@@ -71,7 +71,7 @@ internal fun LazyListScope.customEmailsList(state: DarkWebUiState, onEvent: (Dar
         is DarkWebCustomEmailsState.Success -> {
             items(
                 items = state.customEmailState.emails,
-                key = { "custom-" + it.email }
+                key = { it.key }
             ) { itemEmail ->
                 CustomEmailItem(
                     email = itemEmail,
@@ -114,7 +114,7 @@ internal fun LazyListScope.customEmailsList(state: DarkWebUiState, onEvent: (Dar
 
             items(
                 items = state.customEmailState.suggestions,
-                key = { "suggestion-" + it.email }
+                key = { it.key }
             ) { itemEmail ->
                 CustomEmailItem(
                     email = itemEmail,

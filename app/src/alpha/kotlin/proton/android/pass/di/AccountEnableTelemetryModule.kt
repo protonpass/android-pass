@@ -24,10 +24,19 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.telemetry.data.usecase.IsTelemetryEnabledImpl
 import me.proton.core.telemetry.domain.usecase.IsTelemetryEnabled
+import proton.android.pass.telemetry.api.CanConfigureTelemetry
+import javax.inject.Inject
+
+class CanConfigureTelemetryImpl @Inject constructor(): CanConfigureTelemetry {
+    override fun invoke() = true
+}
 
 @Module
 @InstallIn(SingletonComponent::class)
 public interface AccountEnableTelemetryModule {
+
+    @Binds
+    public fun bindCanConfigureTelemetry(impl: CanConfigureTelemetryImpl): CanConfigureTelemetry
 
     @Binds
     public fun bindIsTelemetryEnabled(impl: IsTelemetryEnabledImpl): IsTelemetryEnabled

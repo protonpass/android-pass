@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -18,21 +18,9 @@
 
 package proton.android.pass.telemetry.fakes
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import proton.android.pass.telemetry.api.CanConfigureTelemetry
-import proton.android.pass.telemetry.api.TelemetryManager
+import javax.inject.Inject
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class FakesTelemetryModule {
-
-    @Binds
-    abstract fun bindTelemetryManager(impl: TestTelemetryManager): TelemetryManager
-
-    @Binds
-    abstract fun bindCanConfigureTelemetry(impl: TestCanConfigureTelemetry): CanConfigureTelemetry
+class TestCanConfigureTelemetry @Inject constructor() : CanConfigureTelemetry {
+    override fun invoke() = true
 }
-

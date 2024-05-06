@@ -40,5 +40,7 @@ data class OrganizationGetOrganization(
 @Serializable
 data class OrganizationGetOrganizationSettings(
     @SerialName("ShareMode")
-    val shareMode: Int
+    val shareMode: Int,
+    @SerialName("ForceLockSeconds")
+    val forceLockSeconds: Int
 )

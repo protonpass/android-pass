@@ -25,7 +25,6 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
@@ -35,11 +34,25 @@ import proton.android.pass.domain.breach.BreachEmailReport
 
 @Stable
 internal sealed interface SecurityCenterReportEvent {
+
     @Stable
     data object Idle : SecurityCenterReportEvent
 
     @Stable
     data object Close : SecurityCenterReportEvent
+
+    @Stable
+    data object OnEmailBreachesResolved : SecurityCenterReportEvent
+
+    @Stable
+    data object OnResolveEmailBreaches : SecurityCenterReportEvent
+
+    @Stable
+    data object OnResolveEmailBreachesCancelled : SecurityCenterReportEvent
+
+    @Stable
+    data object OnResolveEmailBreachesConfirmed : SecurityCenterReportEvent
+
 }
 
 @Stable
@@ -48,7 +61,6 @@ internal data class SecurityCenterReportState(
     private val breachEmailResult: LoadingResult<BreachEmailReport>,
     private val breachEmailsResult: LoadingResult<List<BreachEmail>>,
     private val usedInLoginItemsResult: LoadingResult<List<ItemUiModel>>,
-    private val isResolvingBreachState: IsLoadingState,
     internal val breachEmailId: BreachEmailId?,
     internal val event: SecurityCenterReportEvent,
     private val groupedVaults: Map<ShareId, Vault>
@@ -92,6 +104,8 @@ internal data class SecurityCenterReportState(
         .filter { breachEmail -> !breachEmail.isResolved }
         .toPersistentList()
 
+    internal val unresolvedBreachesEmailId: BreachEmailId? = unresolvedBreachEmails.firstOrNull()?.emailId
+
     internal val hasUnresolvedBreaches: Boolean = unresolvedBreachEmails.isNotEmpty()
 
     internal val usedInLoginItems: ImmutableList<ItemUiModel> = when (usedInLoginItemsResult) {
@@ -106,8 +120,6 @@ internal data class SecurityCenterReportState(
     internal val isContentLoading: Boolean = usedInLoginItemsResult is LoadingResult.Loading ||
         breachEmailsResult is LoadingResult.Loading
 
-    internal val isResolveLoading: Boolean = isResolvingBreachState.value()
-
     internal fun getShareIcon(shareId: ShareId): ShareIcon? = groupedVaults[shareId]?.icon
 
     internal companion object {
@@ -117,7 +129,6 @@ internal data class SecurityCenterReportState(
             breachEmailResult = LoadingResult.Loading,
             breachEmailsResult = LoadingResult.Loading,
             usedInLoginItemsResult = LoadingResult.Loading,
-            isResolvingBreachState = IsLoadingState.NotLoading,
             breachEmailId = null,
             event = SecurityCenterReportEvent.Idle,
             groupedVaults = emptyMap()

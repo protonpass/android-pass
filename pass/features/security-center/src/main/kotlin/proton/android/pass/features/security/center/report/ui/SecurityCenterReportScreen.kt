@@ -21,6 +21,9 @@ package proton.android.pass.features.security.center.report.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.domain.breach.BreachEmailId
@@ -36,12 +39,34 @@ fun SecurityCenterReportScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
+    var isDialogVisible by remember { mutableStateOf(false) }
+    var isDialogLoading by remember { mutableStateOf(false) }
+
     LaunchedEffect(state.event) {
         when (state.event) {
             SecurityCenterReportEvent.Close -> {
                 onNavigated(SecurityCenterReportDestination.Back)
             }
+
             SecurityCenterReportEvent.Idle -> {}
+
+            SecurityCenterReportEvent.OnEmailBreachesResolved -> {
+                isDialogVisible = false
+                isDialogLoading = false
+            }
+
+            SecurityCenterReportEvent.OnResolveEmailBreaches -> {
+                isDialogVisible = true
+            }
+
+            SecurityCenterReportEvent.OnResolveEmailBreachesCancelled -> {
+                isDialogVisible = false
+                isDialogLoading = false
+            }
+
+            SecurityCenterReportEvent.OnResolveEmailBreachesConfirmed -> {
+                isDialogLoading = true
+            }
         }
 
         viewModel.consumeEvent(state.event)
@@ -49,6 +74,8 @@ fun SecurityCenterReportScreen(
 
     SecurityCenterReportContent(
         state = state,
+        isDialogVisible = isDialogVisible,
+        isDialogLoading = isDialogLoading,
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 SecurityCenterReportUiEvent.Back -> onNavigated(
@@ -71,19 +98,26 @@ fun SecurityCenterReportScreen(
                     ).also(onNavigated)
                 }
 
-
                 is SecurityCenterReportUiEvent.EmailBreachDetail -> onNavigated(
                     SecurityCenterReportDestination.EmailBreachDetail(uiEvent.id)
                 )
 
                 is SecurityCenterReportUiEvent.MarkAsResolvedClick ->
-                    viewModel.resolveEmailBreach(uiEvent.id)
+                    viewModel.onResolveEmailBreachesConfirmed(uiEvent.id)
 
                 is SecurityCenterReportUiEvent.OnItemClick -> {
                     SecurityCenterReportDestination.ItemDetail(
                         shareId = uiEvent.shareId,
                         itemId = uiEvent.itemId
                     ).also(onNavigated)
+                }
+
+                SecurityCenterReportUiEvent.OnMarkEmailBreachesAsResolved -> {
+                    viewModel.onResolveEmailBreaches()
+                }
+
+                SecurityCenterReportUiEvent.OnMarkEmailBreachesAsResolvedCancelled -> {
+                    viewModel.onResolveEmailBreachesCancelled()
                 }
             }
         }

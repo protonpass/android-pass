@@ -34,17 +34,21 @@ import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.CircleIconButton
+import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
 import proton.android.pass.composecomponents.impl.loading.Loading
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.report.presentation.SecurityCenterReportState
 import proton.android.pass.features.security.center.report.ui.SecurityCenterReportUiEvent.OnMenuClick
 import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBar
 import me.proton.core.presentation.R as CoreR
+
 @Composable
 internal fun SecurityCenterReportContent(
     modifier: Modifier = Modifier,
     state: SecurityCenterReportState,
-    onUiEvent: (SecurityCenterReportUiEvent) -> Unit
+    onUiEvent: (SecurityCenterReportUiEvent) -> Unit,
+    isDialogVisible: Boolean,
+    isDialogLoading: Boolean
 ) = with(state) {
     Scaffold(
         modifier = modifier,
@@ -63,7 +67,12 @@ internal fun SecurityCenterReportContent(
                             iconContentDescription = stringResource(
                                 id = R.string.security_center_email_report_options_menu
                             ),
-                            onClick = { onUiEvent(OnMenuClick(id, state.isBreachExcludedFromMonitoring)) }
+                            onClick = {
+                                OnMenuClick(
+                                    id = id,
+                                    isMonitored = state.isBreachExcludedFromMonitoring
+                                ).also(onUiEvent)
+                            }
                         )
                     }
                 }
@@ -85,11 +94,12 @@ internal fun SecurityCenterReportContent(
             }
 
             if (hasUnresolvedBreaches) {
-                ResolveButton(
+                PassCircleButton(
                     modifier = Modifier.padding(horizontal = Spacing.medium),
-                    emailId = unresolvedBreachEmails.first().emailId,
-                    isLoading = isResolveLoading,
-                    onUiEvent = onUiEvent
+                    backgroundColor = PassTheme.colors.interactionNormMinor1,
+                    text = stringResource(id = R.string.security_center_email_report_mark_as_resolved),
+                    textColor = PassTheme.colors.interactionNormMajor2,
+                    onClick = { onUiEvent(SecurityCenterReportUiEvent.OnMarkEmailBreachesAsResolved) }
                 )
             }
 
@@ -104,5 +114,18 @@ internal fun SecurityCenterReportContent(
             }
         }
     }
+
+    SecurityCenterReportResolveBreachDialog(
+        isDialogVisible = isDialogVisible,
+        isDialogLoading = isDialogLoading,
+        onConfirm = {
+            unresolvedBreachesEmailId?.let { emailId ->
+                onUiEvent(SecurityCenterReportUiEvent.MarkAsResolvedClick(emailId))
+            }
+        },
+        onDismiss = {
+            onUiEvent(SecurityCenterReportUiEvent.OnMarkEmailBreachesAsResolvedCancelled)
+        }
+    )
 }
 

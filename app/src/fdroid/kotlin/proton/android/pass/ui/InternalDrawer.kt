@@ -28,6 +28,7 @@ fun InternalDrawer(
     modifier: Modifier = Modifier,
     drawerState: InternalDrawerState,
     onOpenFeatureFlag: () -> Unit,
+    onAppNavigation: (AppNavigation) -> Unit,
     content: @Composable () -> Unit
 ) {
     content()

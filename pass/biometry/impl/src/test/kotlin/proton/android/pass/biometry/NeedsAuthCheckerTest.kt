@@ -24,6 +24,9 @@ import org.junit.Test
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
+import proton.android.pass.domain.ForceLockSeconds
+import proton.android.pass.domain.OrganizationSettings
+import proton.android.pass.domain.OrganizationShareMode
 import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.AppLockTimePreference
 import proton.android.pass.preferences.HasAuthenticated
@@ -40,7 +43,8 @@ class NeedsAuthCheckerTest {
             lastUnlockTime = None,
             now = Clock.System.now().toEpochMilliseconds(),
             lastBootCount = Some(0),
-            bootCount = 0
+            bootCount = 0,
+            organizationSettings = OrganizationSettings.NotAnOrganization
         )
 
         assertThat(res).isInstanceOf(NoNeedsAuthReason.AuthDisabled::class.java)
@@ -55,7 +59,8 @@ class NeedsAuthCheckerTest {
             lastUnlockTime = None,
             now = Clock.System.now().toEpochMilliseconds(),
             lastBootCount = Some(0),
-            bootCount = 0
+            bootCount = 0,
+            organizationSettings = OrganizationSettings.NotAnOrganization
         )
 
         assertThat(res).isInstanceOf(NeedsAuthReason.LockImmediatelyAndHadNotAuthenticated::class.java)
@@ -70,7 +75,8 @@ class NeedsAuthCheckerTest {
             lastUnlockTime = None,
             now = Clock.System.now().toEpochMilliseconds(),
             lastBootCount = Some(0),
-            bootCount = 0
+            bootCount = 0,
+            organizationSettings = OrganizationSettings.NotAnOrganization
         )
 
         assertThat(res).isInstanceOf(NoNeedsAuthReason.LockImmediatelyButHadAuthenticated::class.java)
@@ -88,7 +94,8 @@ class NeedsAuthCheckerTest {
             lastUnlockTime = oneMinuteAgo.toEpochMilliseconds().some(),
             now = now.toEpochMilliseconds(),
             lastBootCount = Some(0),
-            bootCount = 0
+            bootCount = 0,
+            organizationSettings = OrganizationSettings.NotAnOrganization
         )
 
         assertThat(res).isInstanceOf(NoNeedsAuthReason.LockTimeNotElapsed::class.java)
@@ -107,7 +114,8 @@ class NeedsAuthCheckerTest {
             lastUnlockTime = threeMinutesAgo.toEpochMilliseconds().some(),
             now = now.toEpochMilliseconds(),
             lastBootCount = None,
-            bootCount = 0
+            bootCount = 0,
+            organizationSettings = OrganizationSettings.NotAnOrganization
         )
 
         assertThat(res).isInstanceOf(NeedsAuthReason.LockTimeElapsed::class.java)
@@ -125,12 +133,12 @@ class NeedsAuthCheckerTest {
             lastUnlockTime = inThreeMinutes.toEpochMilliseconds().some(),
             now = now.toEpochMilliseconds(),
             lastBootCount = Some(0),
-            bootCount = 0
+            bootCount = 0,
+            organizationSettings = OrganizationSettings.NotAnOrganization
         )
 
         assertThat(res).isInstanceOf(NeedsAuthReason.LastUnlockTimeInTheFuture::class.java)
     }
-
 
     @Test
     fun `if boot count has changed, auth is required`() {
@@ -144,11 +152,57 @@ class NeedsAuthCheckerTest {
             lastUnlockTime = oneMinuteAgo.toEpochMilliseconds().some(),
             now = now.toEpochMilliseconds(),
             lastBootCount = Some(1),
-            bootCount = 2
+            bootCount = 2,
+            organizationSettings = OrganizationSettings.NotAnOrganization
         )
 
 
         assertThat(res).isInstanceOf(NeedsAuthReason.BootCountChanged::class.java)
     }
 
+    @Test
+    fun `if organization enforces lock time, checkUnlockTime should be called`() {
+        val organizationSettings = OrganizationSettings.Organization(
+            canUpdate = true,
+            shareMode = OrganizationShareMode.Unrestricted,
+            forceLockSeconds = ForceLockSeconds.Enforced(600) // 10 minutes
+        )
+        val now = Clock.System.now()
+        val elevenMinutesAgo = now.minus(11.minutes)
+
+        val result = NeedsAuthChecker.needsAuth(
+            appLockState = AppLockState.Enabled,
+            hasAuthenticated = HasAuthenticated.NotAuthenticated,
+            appLockTimePreference = AppLockTimePreference.InTwoMinutes,
+            lastUnlockTime = elevenMinutesAgo.toEpochMilliseconds().some(),
+            now = now.toEpochMilliseconds(),
+            lastBootCount = Some(0),
+            bootCount = 0,
+            organizationSettings = organizationSettings
+        )
+
+        assertThat(result).isInstanceOf(NeedsAuthReason.LockTimeElapsed::class.java)
+    }
+
+    @Test
+    fun `if organization doesn't enforce lock time, checkUnlockTime should not be called`() {
+        val organizationSettings = OrganizationSettings.Organization(
+            canUpdate = true,
+            shareMode = OrganizationShareMode.Unrestricted,
+            forceLockSeconds = ForceLockSeconds.NotEnforced
+        )
+
+        val result = NeedsAuthChecker.needsAuth(
+            appLockState = AppLockState.Disabled,
+            hasAuthenticated = HasAuthenticated.NotAuthenticated,
+            appLockTimePreference = AppLockTimePreference.Immediately,
+            lastUnlockTime = None,
+            now = Clock.System.now().toEpochMilliseconds(),
+            lastBootCount = Some(0),
+            bootCount = 0,
+            organizationSettings = organizationSettings
+        )
+
+        assertThat(result).isInstanceOf(NoNeedsAuthReason.AuthDisabled::class.java)
+    }
 }

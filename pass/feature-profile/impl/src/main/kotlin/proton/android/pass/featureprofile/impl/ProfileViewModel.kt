@@ -49,6 +49,7 @@ import proton.android.pass.data.api.usecases.GetDefaultBrowser
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveMFACount
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
+import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
 import proton.android.pass.domain.PlanType
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.AppVersionCopied
 import proton.android.pass.log.api.PassLogger
@@ -70,7 +71,8 @@ class ProfileViewModel @Inject constructor(
     observeItemCount: ObserveItemCount,
     observeMFACount: ObserveMFACount,
     observeUpgradeInfo: ObserveUpgradeInfo,
-    getDefaultBrowser: GetDefaultBrowser
+    getDefaultBrowser: GetDefaultBrowser,
+    observeOrganizationSettings: ObserveOrganizationSettings
 ) : ViewModel() {
 
     private val appLockSectionState: Flow<AppLockSectionState> = combine(

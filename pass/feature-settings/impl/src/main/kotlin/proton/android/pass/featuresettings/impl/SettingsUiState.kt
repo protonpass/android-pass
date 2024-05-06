@@ -32,6 +32,14 @@ sealed interface SettingsEvent {
     data object RestartApp : SettingsEvent
 }
 
+sealed interface TelemetryStatus {
+    data object Hide : TelemetryStatus
+    data class Show(
+        val shareTelemetry: Boolean,
+        val shareCrashes: Boolean
+    ) : TelemetryStatus
+}
+
 @Stable
 data class SettingsUiState(
     val themePreference: ThemePreference,
@@ -39,8 +47,7 @@ data class SettingsUiState(
     val isForceRefreshing: Boolean,
     val useFavicons: UseFaviconsPreference,
     val allowScreenshots: AllowScreenshotsPreference,
-    val shareTelemetry: Boolean,
-    val shareCrashes: Boolean,
+    val telemetryStatus: TelemetryStatus,
     val event: SettingsEvent,
     val defaultVault: Option<VaultWithItemCount>
 ) {
@@ -51,8 +58,7 @@ data class SettingsUiState(
             isForceRefreshing = false,
             useFavicons = UseFaviconsPreference.Enabled,
             allowScreenshots = AllowScreenshotsPreference.Disabled,
-            shareTelemetry = true,
-            shareCrashes = true,
+            telemetryStatus = TelemetryStatus.Hide,
             event = SettingsEvent.Unknown,
             defaultVault = None
         )

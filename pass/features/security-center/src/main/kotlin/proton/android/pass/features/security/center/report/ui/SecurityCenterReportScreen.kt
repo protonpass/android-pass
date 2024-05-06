@@ -22,7 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -39,8 +39,8 @@ fun SecurityCenterReportScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    var isDialogVisible by remember { mutableStateOf(false) }
-    var isDialogLoading by remember { mutableStateOf(false) }
+    var isDialogVisible by rememberSaveable { mutableStateOf(false) }
+    var isDialogLoading by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(state.event) {
         when (state.event) {

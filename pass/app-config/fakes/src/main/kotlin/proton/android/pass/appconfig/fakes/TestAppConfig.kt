@@ -54,6 +54,8 @@ class TestAppConfig @Inject constructor() : AppConfig {
         get() = ""
     override val androidVersion: Int
         get() = androidVersionValue
+    override val allowScreenshotsDefaultValue: Boolean
+        get() = true
 
     fun setAndroidVersion(value: Int) {
         androidVersionValue = value

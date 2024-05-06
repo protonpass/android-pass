@@ -33,6 +33,6 @@ abstract class FakesTelemetryModule {
     abstract fun bindTelemetryManager(impl: TestTelemetryManager): TelemetryManager
 
     @Binds
-    abstract fun bindCanConfigureTelemetry(impl: TestCanConfigureTelemetry): CanConfigureTelemetry
+    abstract fun bindCanConfigureTelemetry(impl: FakeCanConfigureTelemetry): CanConfigureTelemetry
 }
 

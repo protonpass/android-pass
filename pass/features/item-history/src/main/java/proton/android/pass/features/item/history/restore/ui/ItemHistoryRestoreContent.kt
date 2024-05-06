@@ -25,7 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -79,8 +79,8 @@ private fun ItemHistoryRestoreDetails(
     onEvent: (ItemHistoryRestoreUiEvent) -> Unit,
     state: ItemHistoryRestoreState.ItemDetails
 ) = with(state) {
-    var isDialogVisible by remember { mutableStateOf(false) }
-    var isDialogLoading by remember { mutableStateOf(false) }
+    var isDialogVisible by rememberSaveable { mutableStateOf(false) }
+    var isDialogLoading by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(key1 = event) {
         when (event) {
@@ -133,12 +133,14 @@ private fun ItemHistoryRestoreDetails(
 
                     )
                 )
+
                 is PassItemDetailsUiEvent.OnHiddenSectionClick -> onEvent(
                     ItemHistoryRestoreUiEvent.OnHiddenSectionClick(
                         state = it.state,
                         field = it.field
                     )
                 )
+
                 is PassItemDetailsUiEvent.OnHiddenSectionToggle -> onEvent(
                     ItemHistoryRestoreUiEvent.OnHiddenSectionToggle(
                         state = it.state,
@@ -146,9 +148,11 @@ private fun ItemHistoryRestoreDetails(
                         field = it.field
                     )
                 )
+
                 is PassItemDetailsUiEvent.OnLinkClick -> {
                     BrowserUtils.openWebsite(context, it.link)
                 }
+
                 is PassItemDetailsUiEvent.OnPasskeyClick -> onEvent(
                     ItemHistoryRestoreUiEvent.OnPasskeyClick(
                         shareId = shareId,

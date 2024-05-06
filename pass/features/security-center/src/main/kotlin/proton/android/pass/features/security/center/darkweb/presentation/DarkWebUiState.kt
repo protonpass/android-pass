@@ -59,7 +59,13 @@ internal sealed interface CustomEmailUiStatus {
 internal data class CustomEmailUiState(
     internal val email: String,
     internal val status: CustomEmailUiStatus
-)
+) {
+    internal val key = when (status) {
+        is CustomEmailUiStatus.Unverified -> "custom-unverified-$email-${status.id}"
+        is CustomEmailUiStatus.Verified -> "custom-verified-$email-${status.id}"
+        is CustomEmailUiStatus.Suggestion -> "custom-suggestion-$email"
+    }
+}
 
 @Stable
 internal enum class DarkWebStatus {

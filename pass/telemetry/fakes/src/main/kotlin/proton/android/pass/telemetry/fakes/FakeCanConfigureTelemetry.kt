@@ -21,6 +21,6 @@ package proton.android.pass.telemetry.fakes
 import proton.android.pass.telemetry.api.CanConfigureTelemetry
 import javax.inject.Inject
 
-class TestCanConfigureTelemetry @Inject constructor() : CanConfigureTelemetry {
+class FakeCanConfigureTelemetry @Inject constructor() : CanConfigureTelemetry {
     override fun invoke() = true
 }

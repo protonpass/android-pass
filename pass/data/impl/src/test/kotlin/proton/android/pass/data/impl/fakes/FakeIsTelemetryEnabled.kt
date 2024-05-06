@@ -22,7 +22,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.telemetry.domain.usecase.IsTelemetryEnabled
 import javax.inject.Inject
 
-class TestIsTelemetryEnabled @Inject constructor() : IsTelemetryEnabled {
+class FakeIsTelemetryEnabled @Inject constructor() : IsTelemetryEnabled {
 
     private var enabled: Boolean = true
 

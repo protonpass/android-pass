@@ -21,7 +21,6 @@ package proton.android.pass.ui
 import me.proton.core.domain.entity.UserId
 
 sealed interface AppNavigation {
-    data object SignOut : AppNavigation
     data object ForceSignOut : AppNavigation
     data object Report : AppNavigation
     data object Subscription : AppNavigation
@@ -31,6 +30,12 @@ sealed interface AppNavigation {
     data object PasswordManagement : AppNavigation
     data object RecoveryEmail : AppNavigation
     data object AddAccount : AppNavigation
+
+    @JvmInline
+    value class SignOut(val userId: UserId? = null) : AppNavigation
+
+    @JvmInline
+    value class RemoveAccount(val userId: UserId) : AppNavigation
 
     @JvmInline
     value class SwitchAccount(val userId: UserId) : AppNavigation

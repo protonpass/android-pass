@@ -55,6 +55,7 @@ fun InternalDrawer(
     modifier: Modifier = Modifier,
     drawerState: InternalDrawerState,
     onOpenFeatureFlag: () -> Unit,
+    onAppNavigation: (AppNavigation) -> Unit,
     content: @Composable () -> Unit
 ) {
     val scope = rememberCoroutineScope()
@@ -110,7 +111,10 @@ fun InternalDrawer(
                 contentColor = contentColorFor(MaterialTheme.colors.surface),
                 elevation = 16.dp
             ) {
-                InternalDrawerContents(onOpenFeatureFlag = onOpenFeatureFlag)
+                InternalDrawerContents(
+                    onOpenFeatureFlag = onOpenFeatureFlag,
+                    onAppNavigation = onAppNavigation
+                )
             }
         }
     }

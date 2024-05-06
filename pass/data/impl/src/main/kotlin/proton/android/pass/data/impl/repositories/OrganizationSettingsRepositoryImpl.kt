@@ -26,6 +26,7 @@ import proton.android.pass.data.impl.db.entities.PassOrganizationSettingsEntity
 import proton.android.pass.data.impl.local.LocalOrganizationSettingsDataSource
 import proton.android.pass.data.impl.remote.RemoteOrganizationSettingsDataSource
 import proton.android.pass.data.impl.responses.OrganizationGetOrganization
+import proton.android.pass.domain.ForceLockSeconds
 import proton.android.pass.domain.OrganizationSettings
 import proton.android.pass.domain.OrganizationShareMode
 import javax.inject.Inject
@@ -48,14 +49,16 @@ class OrganizationSettingsRepositoryImpl @Inject constructor(
             userId = userId.id,
             hasOrganization = true,
             canUpdate = canUpdate,
-            shareMode = settings?.shareMode ?: OrganizationShareMode.Unrestricted.value
+            shareMode = settings?.shareMode ?: OrganizationShareMode.Unrestricted.value,
+            forceLockSeconds = settings?.forceLockSeconds ?: 0
         )
     }
 
     private fun PassOrganizationSettingsEntity.toDomain() = if (hasOrganization) {
         OrganizationSettings.Organization(
             canUpdate = canUpdate,
-            shareMode = OrganizationShareMode.fromValue(shareMode)
+            shareMode = OrganizationShareMode.fromValue(shareMode),
+            forceLockSeconds = ForceLockSeconds.fromValue(forceLockSeconds)
         )
     } else {
         OrganizationSettings.NotAnOrganization

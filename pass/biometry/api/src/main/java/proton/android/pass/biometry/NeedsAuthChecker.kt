@@ -20,6 +20,7 @@ package proton.android.pass.biometry
 
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.domain.OrganizationSettings
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.AppLockTimePreference
@@ -51,7 +52,7 @@ object NeedsAuthChecker {
 
     private const val TAG = "NeedsAuthChecker"
 
-    @Suppress("ReturnCount", "LongParameterList")
+    @Suppress("LongParameterList")
     fun needsAuth(
         appLockState: AppLockState,
         hasAuthenticated: HasAuthenticated,
@@ -59,15 +60,22 @@ object NeedsAuthChecker {
         lastUnlockTime: Option<Long>,
         now: Long,
         lastBootCount: Option<Long>,
-        bootCount: Long
+        bootCount: Long,
+        organizationSettings: OrganizationSettings
     ): NeedsAuthResult {
-        // Check for biometric lock. If it's disabled, no auth is needed.
+        if (organizationSettings.isEnforced()) {
+            return checkUnlockTime(
+                lastUnlockTime = lastUnlockTime,
+                now = now,
+                appLockTimePreference = appLockTimePreference
+            )
+        }
+
         if (appLockState is AppLockState.Disabled) {
             PassLogger.d(TAG, "AppLockState.Disabled, no need to auth")
             return NoNeedsAuthReason.AuthDisabled
         }
 
-        // Check if boot count has changed. If it has, needs auth
         if (lastBootCount is Some && lastBootCount.value != bootCount) {
             PassLogger.d(TAG, "Boot count has changed, needs auth")
             return NeedsAuthReason.BootCountChanged
@@ -81,12 +89,22 @@ object NeedsAuthChecker {
             } else {
                 NoNeedsAuthReason.LockImmediatelyButHadAuthenticated
             }
-
         }
 
+        return checkUnlockTime(
+            lastUnlockTime = lastUnlockTime,
+            now = now,
+            appLockTimePreference = appLockTimePreference
+        )
+    }
+
+    private fun checkUnlockTime(
+        lastUnlockTime: Option<Long>,
+        now: Long,
+        appLockTimePreference: AppLockTimePreference
+    ): NeedsAuthResult {
         PassLogger.d(TAG, "Checking unlock time")
 
-        // User has set an expiration time preference. Check if we need to perform auth again.
         val unlockTime = lastUnlockTime.value() ?: return NeedsAuthReason.LastUnlockTimeNotSet
         val appLockDuration = appLockTimePreference.toDuration()
         val timeSinceLastAuth = now - unlockTime
@@ -105,10 +123,7 @@ object NeedsAuthChecker {
             "timeSinceLastAuth: $timeSinceLastAuth |" +
                 " appLockDuration: $appLockDuration | shouldPerformAuth: $shouldPerform"
         )
-        return if (shouldPerform) {
-            NeedsAuthReason.LockTimeElapsed
-        } else {
-            NoNeedsAuthReason.LockTimeNotElapsed
-        }
+        return if (shouldPerform) NeedsAuthReason.LockTimeElapsed else NoNeedsAuthReason.LockTimeNotElapsed
     }
+
 }

@@ -21,6 +21,7 @@ package proton.android.pass.biometry
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 
@@ -28,15 +29,17 @@ class NeedsBiometricAuthImpl @Inject constructor(
     private val preferencesRepository: UserPreferencesRepository,
     private val authTimeHolder: BiometryAuthTimeHolder,
     private val bootCountRetriever: BootCountRetriever,
-    private val elapsedTimeProvider: ElapsedTimeProvider
+    private val elapsedTimeProvider: ElapsedTimeProvider,
+    private val observeOrganizationSettings: ObserveOrganizationSettings
 ) : NeedsBiometricAuth {
 
     override fun invoke(): Flow<Boolean> = combine(
         preferencesRepository.getAppLockState().distinctUntilChanged(),
         preferencesRepository.getHasAuthenticated().distinctUntilChanged(),
         preferencesRepository.getAppLockTimePreference().distinctUntilChanged(),
-        authTimeHolder.getBiometryAuthData().distinctUntilChanged()
-    ) { appLockState, hasAuthenticated, appLockTimePreference, biometryAuthTime ->
+        authTimeHolder.getBiometryAuthData().distinctUntilChanged(),
+        observeOrganizationSettings().distinctUntilChanged()
+    ) { appLockState, hasAuthenticated, appLockTimePreference, biometryAuthTime, organizationSettings ->
         NeedsAuthChecker.needsAuth(
             appLockState = appLockState,
             hasAuthenticated = hasAuthenticated,
@@ -44,7 +47,8 @@ class NeedsBiometricAuthImpl @Inject constructor(
             lastUnlockTime = biometryAuthTime.authTime,
             now = elapsedTimeProvider.getElapsedTime(),
             lastBootCount = biometryAuthTime.bootCount,
-            bootCount = bootCountRetriever.get()
+            bootCount = bootCountRetriever.get(),
+            organizationSettings = organizationSettings
         ).value()
     }
 }

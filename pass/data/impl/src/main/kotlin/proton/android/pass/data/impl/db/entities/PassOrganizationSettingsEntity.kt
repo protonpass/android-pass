@@ -45,14 +45,18 @@ data class PassOrganizationSettingsEntity(
     @ColumnInfo(name = Columns.SHARE_MODE)
     val shareMode: Int,
     @ColumnInfo(name = Columns.HAS_ORGANIZATION)
-    val hasOrganization: Boolean
+    val hasOrganization: Boolean,
+    @ColumnInfo(name = Columns.FORCE_LOCK_SECONDS, defaultValue = "0")
+    val forceLockSeconds: Int
 ) {
     object Columns {
         const val USER_ID = "user_id"
         const val CAN_UPDATE = "can_update"
         const val SHARE_MODE = "share_mode"
+        const val FORCE_LOCK_SECONDS = "force_lock_seconds"
         const val HAS_ORGANIZATION = "has_organization"
     }
+
     companion object {
         const val TABLE = "PassOrganizationSettingsEntity"
 
@@ -60,7 +64,8 @@ data class PassOrganizationSettingsEntity(
             userId = userId,
             canUpdate = false,
             shareMode = 0,
-            hasOrganization = false
+            hasOrganization = false,
+            forceLockSeconds = 0
         )
     }
 }

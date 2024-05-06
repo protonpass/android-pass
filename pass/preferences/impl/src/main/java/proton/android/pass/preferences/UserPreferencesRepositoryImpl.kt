@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
+import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
@@ -38,7 +39,8 @@ import javax.inject.Singleton
 @Singleton
 class UserPreferencesRepositoryImpl @Inject constructor(
     private val dataStore: DataStore<UserPreferences>,
-    private val inMemoryPreferences: InMemoryPreferences
+    private val inMemoryPreferences: InMemoryPreferences,
+    private val appConfig: AppConfig
 ) : UserPreferencesRepository {
 
     override fun setAppLockState(state: AppLockState): Result<Unit> = setPreference {
@@ -174,7 +176,11 @@ class UserPreferencesRepositoryImpl @Inject constructor(
     }
 
     override fun getAllowScreenshotsPreference(): Flow<AllowScreenshotsPreference> = getPreference {
-        AllowScreenshotsPreference.from(fromBooleanPrefProto(it.allowScreenshots))
+        val value = fromBooleanPrefProto(
+            pref = it.allowScreenshots,
+            default = appConfig.allowScreenshotsDefaultValue
+        )
+        AllowScreenshotsPreference.from(value)
     }
 
     override fun setDefaultVault(shareId: String): Result<Unit> = setPreference {

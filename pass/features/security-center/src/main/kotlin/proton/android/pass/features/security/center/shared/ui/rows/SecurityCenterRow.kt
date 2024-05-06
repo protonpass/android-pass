@@ -37,6 +37,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
@@ -65,7 +66,8 @@ internal fun SecurityCenterRow(
     titleColor: Color = PassTheme.colors.textNorm,
     subtitleColor: Color = PassTheme.colors.textWeak,
     chevronTintColor: Color = PassTheme.colors.textNorm,
-    displayChevronWhenClickable: Boolean = true
+    displayChevronWhenClickable: Boolean = true,
+    endSpace: Dp? = ICON_SIZE
 ) {
     Column(
         modifier = modifier
@@ -121,7 +123,9 @@ internal fun SecurityCenterRow(
                     tint = chevronTintColor
                 )
             } else {
-                Spacer(modifier = Modifier.size(ICON_SIZE))
+                endSpace?.let { size ->
+                    Spacer(modifier = Modifier.size(size = size))
+                }
             }
         }
     }

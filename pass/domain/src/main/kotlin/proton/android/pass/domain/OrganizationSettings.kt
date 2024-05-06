@@ -23,9 +23,18 @@ enum class OrganizationShareMode(val value: Int) {
     OrganizationOnly(1);
 
     companion object {
-        fun fromValue(value: Int): OrganizationShareMode = values()
+        fun fromValue(value: Int): OrganizationShareMode = entries
             .firstOrNull { it.value == value }
             ?: Unrestricted
+    }
+}
+
+sealed class ForceLockSeconds {
+    data object NotEnforced : ForceLockSeconds()
+    data class Enforced(val value: Int) : ForceLockSeconds()
+
+    companion object {
+        fun fromValue(value: Int): ForceLockSeconds = if (value == 0) NotEnforced else Enforced(value)
     }
 }
 
@@ -33,6 +42,12 @@ sealed interface OrganizationSettings {
     data object NotAnOrganization : OrganizationSettings
     data class Organization(
         val canUpdate: Boolean,
-        val shareMode: OrganizationShareMode
+        val shareMode: OrganizationShareMode,
+        val forceLockSeconds: ForceLockSeconds
     ) : OrganizationSettings
+
+    fun isEnforced(): Boolean = when (this) {
+        is Organization -> forceLockSeconds is ForceLockSeconds.Enforced
+        else -> false
+    }
 }

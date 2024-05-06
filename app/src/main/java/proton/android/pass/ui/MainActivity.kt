@@ -110,16 +110,17 @@ class MainActivity : FragmentActivity() {
                     PassApp(
                         onNavigate = {
                             when (it) {
-                                AppNavigation.Finish -> finish()
-                                AppNavigation.SignOut -> SignOutDialogActivity.start(this)
-                                AppNavigation.ForceSignOut -> launcherViewModel.disable()
-                                AppNavigation.Report -> launcherViewModel.report()
-                                AppNavigation.Subscription -> launcherViewModel.subscription()
-                                AppNavigation.Upgrade -> launcherViewModel.upgrade()
-                                AppNavigation.Restart -> restartApp()
-                                AppNavigation.PasswordManagement -> launcherViewModel.passwordManagement()
-                                AppNavigation.RecoveryEmail -> launcherViewModel.recoveryEmail()
-                                AppNavigation.AddAccount -> launcherViewModel.addAccount()
+                                is AppNavigation.Finish -> finish()
+                                is AppNavigation.SignOut -> SignOutDialogActivity.start(this)
+                                is AppNavigation.ForceSignOut -> launcherViewModel.disable()
+                                is AppNavigation.Report -> launcherViewModel.report()
+                                is AppNavigation.Subscription -> launcherViewModel.subscription()
+                                is AppNavigation.Upgrade -> launcherViewModel.upgrade()
+                                is AppNavigation.Restart -> restartApp()
+                                is AppNavigation.PasswordManagement -> launcherViewModel.passwordManagement()
+                                is AppNavigation.RecoveryEmail -> launcherViewModel.recoveryEmail()
+                                is AppNavigation.AddAccount -> launcherViewModel.addAccount()
+                                is AppNavigation.RemoveAccount -> launcherViewModel.remove(it.userId)
                                 is AppNavigation.SwitchAccount -> launcherViewModel.switch(it.userId)
                             }
                         }

@@ -75,8 +75,7 @@ fun SettingsContent(
                 onEvent = onEvent
             )
             ApplicationSection(
-                shareTelemetry = state.shareTelemetry,
-                shareCrashes = state.shareCrashes,
+                telemetryStatus = state.telemetryStatus,
                 onEvent = onEvent
             )
         }

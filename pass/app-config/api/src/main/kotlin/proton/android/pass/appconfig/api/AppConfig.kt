@@ -31,6 +31,7 @@ interface AppConfig {
     val sentryDSN: String?
     val accountSentryDSN: String?
     val androidVersion: Int
+    val allowScreenshotsDefaultValue: Boolean
 }
 
 enum class BuildEnv {

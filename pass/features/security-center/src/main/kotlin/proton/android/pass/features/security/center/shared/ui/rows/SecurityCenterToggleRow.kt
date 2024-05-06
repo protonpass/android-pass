@@ -47,6 +47,7 @@ internal fun SecurityCenterToggleRow(
                 ),
                 onCheckedChange = null
             )
-        }
+        },
+        endSpace = null
     )
 }

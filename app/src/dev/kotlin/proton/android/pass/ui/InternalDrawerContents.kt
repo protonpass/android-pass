@@ -48,19 +48,11 @@ fun InternalDrawerContents(
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         AccountPrimaryItem(
-            modifier= Modifier.fillMaxWidth(),
-            onSignIn = {
-                onAppNavigation(AppNavigation.AddAccount)
-            },
-            onSignOut = {
-                onAppNavigation(AppNavigation.SignOut)
-            },
-            onRemove = {
-                onAppNavigation(AppNavigation.ForceSignOut)
-            },
-            onSwitch = {
-                onAppNavigation(AppNavigation.SwitchAccount(it))
-            }
+            modifier = Modifier.fillMaxWidth(),
+            onSignIn = { onAppNavigation(AppNavigation.AddAccount) },
+            onSignOut = { onAppNavigation(AppNavigation.SignOut(it)) },
+            onRemove = { onAppNavigation(AppNavigation.RemoveAccount(it)) },
+            onSwitch = { onAppNavigation(AppNavigation.SwitchAccount(it)) }
         )
         ShowkaseDrawerButton()
         Button(

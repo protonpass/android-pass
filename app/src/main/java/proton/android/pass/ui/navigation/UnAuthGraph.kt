@@ -51,7 +51,7 @@ fun NavGraphBuilder.unAuthGraph(appNavigator: AppNavigator, onNavigate: (AppNavi
                         AuthNavigation.Failed -> {
                         }
 
-                        AuthNavigation.SignOut -> onNavigate(AppNavigation.SignOut)
+                        AuthNavigation.SignOut -> onNavigate(AppNavigation.SignOut())
                         AuthNavigation.ForceSignOut -> onNavigate(AppNavigation.ForceSignOut)
                         AuthNavigation.EnterPin -> appNavigator.navigate(EnterPin)
                     }

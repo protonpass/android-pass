@@ -33,6 +33,7 @@ dependencies {
     implementation (libs.core.utilKotlin)
 
     implementation(projects.pass.commonUi.api)
+    implementation(projects.pass.domain)
     implementation(projects.pass.log.api)
     implementation(projects.pass.preferences.api)
 }

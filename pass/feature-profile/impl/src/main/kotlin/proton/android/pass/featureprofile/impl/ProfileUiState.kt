@@ -90,19 +90,43 @@ sealed interface PlanInfo {
     ) : PlanInfo
 }
 
-sealed interface AppLockSectionState {
+sealed interface AppLockSectionState
+sealed interface BiometricSection : AppLockSectionState {
+    val biometricSystemLockPreference: BiometricSystemLockPreference
+}
+sealed interface PinSection : AppLockSectionState
+sealed interface UserAppLockSectionState {
     @Stable
     data class Biometric(
         val appLockTimePreference: AppLockTimePreference,
-        val biometricSystemLockPreference: BiometricSystemLockPreference
-    ) : AppLockSectionState
+        override val biometricSystemLockPreference: BiometricSystemLockPreference
+    ) : UserAppLockSectionState, BiometricSection
+
+    @JvmInline
+    @Stable
+    value class Pin(
+        val appLockTimePreference: AppLockTimePreference
+    ) : UserAppLockSectionState, PinSection
+
+    data object None : UserAppLockSectionState, AppLockSectionState
+}
+
+sealed interface EnforcedAppLockSectionState {
 
     @Stable
-    data class Pin(
-        val appLockTimePreference: AppLockTimePreference
-    ) : AppLockSectionState
+    data class Biometric(
+        val seconds: Int,
+        override val biometricSystemLockPreference: BiometricSystemLockPreference
+    ) : EnforcedAppLockSectionState, BiometricSection
 
-    data object None : AppLockSectionState
+    @JvmInline
+    @Stable
+    value class Pin(val seconds: Int) : EnforcedAppLockSectionState, PinSection
+
+    @JvmInline
+    @Stable
+    value class Password(val seconds: Int) : EnforcedAppLockSectionState, AppLockSectionState
+
 }
 
 data class ItemSummaryUiState(

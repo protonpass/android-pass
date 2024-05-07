@@ -27,74 +27,75 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
-class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
-    override val values: Sequence<ItemUiModel>
-        get() = sequenceOf(
-            ItemUiModel(
-                id = ItemId("123"),
-                shareId = ShareId("345"),
-                contents = ItemContents.Note(
-                    "Item with long text and a maximum",
-                    ""
-                ),
-                state = 0,
-                createTime = Clock.System.now(),
-                modificationTime = Clock.System.now(),
-                lastAutofillTime = Clock.System.now(),
-                isPinned = true
+internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
+
+    override val values: Sequence<ItemUiModel> = sequenceOf(
+        ItemUiModel(
+            id = ItemId("123"),
+            shareId = ShareId("345"),
+            contents = ItemContents.Note(
+                "Item with long text and a maximum",
+                ""
             ),
-            ItemUiModel(
-                id = ItemId("123"),
-                shareId = ShareId("345"),
-                contents = ItemContents.Login(
-                    title = "Login title",
-                    note = "",
-                    itemEmail = "",
-                    password = HiddenState.Empty(""),
-                    urls = listOf(),
-                    packageInfoSet = setOf(),
-                    primaryTotp = HiddenState.Empty(""),
-                    customFields = listOf(),
-                    passkeys = emptyList()
-                ),
-                state = 0,
-                createTime = Clock.System.now(),
-                modificationTime = Clock.System.now(),
-                lastAutofillTime = Clock.System.now(),
-                isPinned = true
+            state = 0,
+            createTime = Clock.System.now(),
+            modificationTime = Clock.System.now(),
+            lastAutofillTime = Clock.System.now(),
+            isPinned = true
+        ),
+        ItemUiModel(
+            id = ItemId("123"),
+            shareId = ShareId("345"),
+            contents = ItemContents.Login(
+                title = "Login title",
+                note = "",
+                itemEmail = "",
+                itemUsername = "",
+                password = HiddenState.Empty(""),
+                urls = listOf(),
+                packageInfoSet = setOf(),
+                primaryTotp = HiddenState.Empty(""),
+                customFields = listOf(),
+                passkeys = emptyList()
             ),
-            ItemUiModel(
-                id = ItemId("123"),
-                shareId = ShareId("345"),
-                contents = ItemContents.Alias(
-                    title = "Alias title",
-                    note = "",
-                    aliasEmail = ""
-                ),
-                state = 0,
-                createTime = Clock.System.now(),
-                modificationTime = Clock.System.now(),
-                lastAutofillTime = Clock.System.now(),
-                isPinned = true
+            state = 0,
+            createTime = Clock.System.now(),
+            modificationTime = Clock.System.now(),
+            lastAutofillTime = Clock.System.now(),
+            isPinned = true
+        ),
+        ItemUiModel(
+            id = ItemId("123"),
+            shareId = ShareId("345"),
+            contents = ItemContents.Alias(
+                title = "Alias title",
+                note = "",
+                aliasEmail = ""
             ),
-            ItemUiModel(
-                id = ItemId("123"),
-                shareId = ShareId("345"),
-                contents = ItemContents.CreditCard(
-                    title = "Credit card title",
-                    note = "",
-                    cardHolder = "",
-                    type = CreditCardType.MasterCard,
-                    number = "",
-                    cvv = HiddenState.Empty(""),
-                    pin = HiddenState.Empty(""),
-                    expirationDate = ""
-                ),
-                state = 0,
-                createTime = Clock.System.now(),
-                modificationTime = Clock.System.now(),
-                lastAutofillTime = Clock.System.now(),
-                isPinned = true
-            )
+            state = 0,
+            createTime = Clock.System.now(),
+            modificationTime = Clock.System.now(),
+            lastAutofillTime = Clock.System.now(),
+            isPinned = true
+        ),
+        ItemUiModel(
+            id = ItemId("123"),
+            shareId = ShareId("345"),
+            contents = ItemContents.CreditCard(
+                title = "Credit card title",
+                note = "",
+                cardHolder = "",
+                type = CreditCardType.MasterCard,
+                number = "",
+                cvv = HiddenState.Empty(""),
+                pin = HiddenState.Empty(""),
+                expirationDate = ""
+            ),
+            state = 0,
+            createTime = Clock.System.now(),
+            modificationTime = Clock.System.now(),
+            lastAutofillTime = Clock.System.now(),
+            isPinned = true
         )
+    )
 }

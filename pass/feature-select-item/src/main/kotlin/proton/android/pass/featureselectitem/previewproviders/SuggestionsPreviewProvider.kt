@@ -60,7 +60,7 @@ class SuggestionsPreviewProvider : PreviewParameterProvider<SuggestionsInput> {
         contents = ItemContents.Login(
             title = name,
             note = "",
-            username = username,
+            itemEmail = username,
             password = HiddenState.Concealed(""),
             urls = emptyList(),
             packageInfoSet = emptySet(),

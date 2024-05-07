@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -75,19 +76,43 @@ class ProfileViewModel @Inject constructor(
     observeOrganizationSettings: ObserveOrganizationSettings
 ) : ViewModel() {
 
-    private val appLockSectionState: Flow<AppLockSectionState> = combine(
+    private val userAppLockSectionStateFlow: Flow<AppLockSectionState> = combine(
         userPreferencesRepository.getAppLockTimePreference(),
         userPreferencesRepository.getAppLockTypePreference(),
         userPreferencesRepository.getBiometricSystemLockPreference()
     ) { time, type, biometricSystemLock ->
         when (type) {
             AppLockTypePreference.Biometrics ->
-                AppLockSectionState.Biometric(time, biometricSystemLock)
+                UserAppLockSectionState.Biometric(time, biometricSystemLock)
 
-            AppLockTypePreference.Pin -> AppLockSectionState.Pin(time)
-            AppLockTypePreference.None -> AppLockSectionState.None
+            AppLockTypePreference.Pin -> UserAppLockSectionState.Pin(time)
+            AppLockTypePreference.None -> UserAppLockSectionState.None
         }
     }
+
+    private val appLockSectionStateFlow: Flow<AppLockSectionState> = observeOrganizationSettings()
+        .flatMapLatest { orgSettings ->
+            if (orgSettings.isEnforced()) {
+                val seconds = orgSettings.secondsToForceLock()
+                combine(
+                    userPreferencesRepository.getAppLockTypePreference(),
+                    userPreferencesRepository.getBiometricSystemLockPreference()
+                ) { type, biometricSystemLock ->
+                    when (type) {
+                        AppLockTypePreference.Biometrics ->
+                            EnforcedAppLockSectionState.Biometric(seconds, biometricSystemLock)
+
+                        AppLockTypePreference.Pin ->
+                            EnforcedAppLockSectionState.Pin(seconds)
+
+                        AppLockTypePreference.None ->
+                            EnforcedAppLockSectionState.Password(seconds)
+                    }
+                }
+            } else {
+                userAppLockSectionStateFlow
+            }
+        }
 
     private val autofillStatusFlow: Flow<AutofillSupportedStatus> = autofillManager
         .getAutofillStatus()
@@ -134,7 +159,7 @@ class ProfileViewModel @Inject constructor(
         }.distinctUntilChanged()
 
     val state: StateFlow<ProfileUiState> = combineN(
-        appLockSectionState,
+        appLockSectionStateFlow,
         autofillStatusFlow,
         itemSummaryUiStateFlow,
         upgradeInfoFlow,
@@ -184,7 +209,7 @@ class ProfileViewModel @Inject constructor(
         initialValue = runBlocking {
             ProfileUiState.getInitialState(
                 appVersion = appConfig.versionName,
-                appLockSectionState = appLockSectionState.first()
+                appLockSectionState = userAppLockSectionStateFlow.first()
             )
         }
     )

@@ -31,7 +31,7 @@ enum class OrganizationShareMode(val value: Int) {
 
 sealed class ForceLockSeconds {
     data object NotEnforced : ForceLockSeconds()
-    data class Enforced(val value: Int) : ForceLockSeconds()
+    data class Enforced(val seconds: Int) : ForceLockSeconds()
 
     companion object {
         fun fromValue(value: Int): ForceLockSeconds = if (value == 0) NotEnforced else Enforced(value)
@@ -49,5 +49,10 @@ sealed interface OrganizationSettings {
     fun isEnforced(): Boolean = when (this) {
         is Organization -> forceLockSeconds is ForceLockSeconds.Enforced
         else -> false
+    }
+
+    fun secondsToForceLock(): Int = when (this) {
+        is Organization -> (forceLockSeconds as? ForceLockSeconds.Enforced)?.seconds ?: 0
+        else -> 0
     }
 }

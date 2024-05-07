@@ -39,6 +39,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -120,7 +121,8 @@ fun AuthScreenMasterPasswordForm(
             editable = isEditAllowed,
             keyboardOptions = KeyboardOptions(
                 autoCorrect = false,
-                keyboardType = KeyboardType.Password
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Done
             ),
             textStyle = ProtonTheme.typography.defaultNorm(isEditAllowed),
             onChange = { onEvent(AuthUiEvent.OnPasswordUpdate(it)) },

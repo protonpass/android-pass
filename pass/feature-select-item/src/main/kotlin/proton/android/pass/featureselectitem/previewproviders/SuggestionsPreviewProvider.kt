@@ -26,33 +26,32 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
-class SuggestionsPreviewProvider : PreviewParameterProvider<SuggestionsInput> {
-    override val values: Sequence<SuggestionsInput>
-        get() = sequence {
-            for (showUpgrade in listOf(true, false)) {
-                yield(
-                    SuggestionsInput(
-                        items = listOf(
-                            item("item 1", "some username"),
-                            item("item 2", "other username")
-                        ),
-                        showUpgradeMessage = showUpgrade,
-                        canUpgrade = false
-                    )
-                )
-            }
+internal class SuggestionsPreviewProvider : PreviewParameterProvider<SuggestionsInput> {
+
+    override val values: Sequence<SuggestionsInput> = sequence {
+        for (showUpgrade in listOf(true, false)) {
             yield(
                 SuggestionsInput(
                     items = listOf(
                         item("item 1", "some username"),
                         item("item 2", "other username")
                     ),
-                    showUpgradeMessage = true,
-                    canUpgrade = true
+                    showUpgradeMessage = showUpgrade,
+                    canUpgrade = false
                 )
             )
         }
-
+        yield(
+            SuggestionsInput(
+                items = listOf(
+                    item("item 1", "some username"),
+                    item("item 2", "other username")
+                ),
+                showUpgradeMessage = true,
+                canUpgrade = true
+            )
+        )
+    }
 
     private fun item(name: String, username: String): ItemUiModel = ItemUiModel(
         id = ItemId(name),
@@ -60,7 +59,8 @@ class SuggestionsPreviewProvider : PreviewParameterProvider<SuggestionsInput> {
         contents = ItemContents.Login(
             title = name,
             note = "",
-            itemEmail = username,
+            itemEmail = "",
+            itemUsername = username,
             password = HiddenState.Concealed(""),
             urls = emptyList(),
             packageInfoSet = emptySet(),
@@ -76,7 +76,7 @@ class SuggestionsPreviewProvider : PreviewParameterProvider<SuggestionsInput> {
     )
 }
 
-data class SuggestionsInput(
+internal data class SuggestionsInput(
     val items: List<ItemUiModel>,
     val showUpgradeMessage: Boolean,
     val canUpgrade: Boolean

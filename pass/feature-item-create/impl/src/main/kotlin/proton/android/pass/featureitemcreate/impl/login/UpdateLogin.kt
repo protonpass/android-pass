@@ -45,7 +45,7 @@ import proton.android.pass.featureitemcreate.impl.login.dialog.ConfirmDeletePass
 
 @Suppress("ComplexMethod")
 @Composable
-fun UpdateLogin(
+internal fun UpdateLogin(
     modifier: Modifier = Modifier,
     draftAlias: AliasItemFormState? = null,
     navTotpUri: String? = null,
@@ -71,6 +71,7 @@ fun UpdateLogin(
             actionAfterKeyboardHide = { onNavigate(BaseLoginNavigation.Close) }
         }
     }
+
     BackHandler { onExit() }
 
     LaunchedEffect(draftAlias) {
@@ -88,7 +89,7 @@ fun UpdateLogin(
             is UpdateUiEvent.ConfirmDeletePasskey -> confirmDeletePasskey = event
         }
 
-        viewModel.clearEvent()
+        viewModel.consumeEvent(uiState.uiEvent)
     }
 
     Box(
@@ -108,7 +109,7 @@ fun UpdateLogin(
                 when (it) {
                     LoginContentEvent.Up -> onExit()
                     is LoginContentEvent.Submit -> viewModel.updateItem(it.shareId)
-                    is LoginContentEvent.OnUsernameChange -> viewModel.onUsernameChange(it.username)
+                    is LoginContentEvent.OnEmailChanged -> viewModel.onEmailChanged(it.email)
                     is LoginContentEvent.OnPasswordChange -> viewModel.onPasswordChange(it.password)
                     is LoginContentEvent.OnWebsiteEvent -> when (val event = it.event) {
                         WebsiteSectionEvent.AddWebsite -> viewModel.onAddWebsite()
@@ -235,6 +236,7 @@ fun UpdateLogin(
             actionAfterKeyboardHide = { onNavigate(BaseLoginNavigation.OnUpdateLoginEvent(event)) }
         }
     )
+
     InAppReviewTriggerLaunchedEffect(
         triggerCondition = uiState.baseLoginUiState.isItemSaved is ItemSavedState.Success
     )

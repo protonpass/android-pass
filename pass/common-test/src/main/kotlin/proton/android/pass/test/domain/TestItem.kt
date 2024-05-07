@@ -72,7 +72,7 @@ object TestItem {
         content: ByteArray? = null
     ): Item {
         val itemTypeParam = itemType ?: ItemType.Login(
-            username = randomString(),
+            itemEmail = randomString(),
             password = randomString().encrypt(TestKeyStoreCrypto),
             websites = emptyList(),
             packageInfoSet = emptySet(),

@@ -68,7 +68,7 @@ class OpenItemImplTest {
         assertTrue(item.itemType is ItemType.Login)
         val loginContents = item.itemType as ItemType.Login
 
-        assertEquals(ITEM_LOGIN_USERNAME, loginContents.username)
+        assertEquals(ITEM_LOGIN_USERNAME, loginContents.itemEmail)
         encryptionContextProvider.withEncryptionContext {
             assertEquals(ITEM_TITLE, decrypt(item.title))
             assertEquals(ITEM_NOTE, decrypt(item.note))

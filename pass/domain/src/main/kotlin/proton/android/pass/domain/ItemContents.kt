@@ -103,6 +103,7 @@ sealed class ItemContents {
         override val title: String,
         override val note: String,
         val itemEmail: String,
+        val itemUsername: String,
         val password: HiddenState,
         val urls: List<String>,
         val packageInfoSet: Set<PackageInfo>,
@@ -110,6 +111,8 @@ sealed class ItemContents {
         val customFields: List<CustomFieldContent>,
         val passkeys: List<Passkey>
     ) : ItemContents() {
+
+        val loginUsername: String = itemUsername.ifEmpty { itemEmail }
 
         val websiteUrl: String? = urls.firstOrNull()
 
@@ -125,6 +128,7 @@ sealed class ItemContents {
             fun create(password: HiddenState, primaryTotp: HiddenState) = Login(
                 title = "",
                 itemEmail = "",
+                itemUsername = "",
                 password = password,
                 urls = listOf(""),
                 packageInfoSet = emptySet(),

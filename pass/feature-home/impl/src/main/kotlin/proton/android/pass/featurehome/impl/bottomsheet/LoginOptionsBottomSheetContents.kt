@@ -153,7 +153,7 @@ private fun copyPassword(password: EncryptedString, onCopyPassword: (EncryptedSt
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
-fun LoginOptionsBottomSheetContentsPreview(
+internal fun LoginOptionsBottomSheetContentsPreview(
     @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
     PassTheme(isDark = input.first) {
@@ -165,7 +165,8 @@ fun LoginOptionsBottomSheetContentsPreview(
                     contents = ItemContents.Login(
                         title = "My Login",
                         note = "Note content",
-                        itemEmail = "My username",
+                        itemEmail = "",
+                        itemUsername = "My username",
                         password = HiddenState.Revealed("", "My password"),
                         urls = emptyList(),
                         packageInfoSet = emptySet(),
@@ -195,4 +196,3 @@ fun LoginOptionsBottomSheetContentsPreview(
         }
     }
 }
-

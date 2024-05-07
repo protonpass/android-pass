@@ -724,7 +724,7 @@ class LoginDetailViewModel @Inject constructor(
         }
 
     private suspend fun getAliasForItem(item: ItemType.Login): Option<LinkedAliasItem> {
-        val username = item.username
+        val username = item.itemEmail
         if (username.isBlank()) return None
 
         return runCatching { getItemByAliasEmail(aliasEmail = username) }

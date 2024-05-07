@@ -26,42 +26,55 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
-class LoginRowPreviewProvider : PreviewParameterProvider<LoginRowParameter> {
-    override val values: Sequence<LoginRowParameter>
-        get() = sequenceOf(
-            with(title = "Empty username", username = ""),
-            with(title = "This is a login item", username = "the username"),
-            with(
-                title = "Very long text",
-                username = "this is a very long username that should become " +
-                    "ellipsized if the text does not fit properly"
-            ),
-            with(
-                title = "Very long text",
-                username = "this is a very long username that should " +
-                    "highlight the word proton during the rendering",
-                note = "this is a very long note that should " +
-                    "highlight the word proton during the rendering",
-                websites = listOf(
-                    "https://somerandomwebsite.com/",
-                    "https://proton.ch/",
-                    "https://proton.me/",
-                    "https://anotherrandomwebsite.com/"
-                ),
-                highlight = "proton"
-            ),
-            with(
-                title = "With multiline content to check highlight",
-                username = "username",
-                note = "A note \n with \n multiline \n text \n to \n verify \n that" +
-                    " the \n word \n local \n is highlighted",
-                highlight = "local"
-            )
-        )
+internal class LoginRowPreviewProvider : PreviewParameterProvider<LoginRowParameter> {
 
-    companion object {
+    override val values: Sequence<LoginRowParameter> = sequenceOf(
+        with(
+            title = "Empty username",
+            email = "",
+            username = ""
+        ),
+        with(
+            title = "This is a login item",
+            email = "",
+            username = "the username"
+        ),
+        with(
+            title = "Very long text",
+            email = "",
+            username = "this is a very long username that should become " +
+                "ellipsized if the text does not fit properly"
+        ),
+        with(
+            title = "Very long text",
+            email = "",
+            username = "this is a very long username that should " +
+                "highlight the word proton during the rendering",
+            note = "this is a very long note that should " +
+                "highlight the word proton during the rendering",
+            websites = listOf(
+                "https://somerandomwebsite.com/",
+                "https://proton.ch/",
+                "https://proton.me/",
+                "https://anotherrandomwebsite.com/"
+            ),
+            highlight = "proton"
+        ),
+        with(
+            title = "With multiline content to check highlight",
+            email = "",
+            username = "username",
+            note = "A note \n with \n multiline \n text \n to \n verify \n that" +
+                " the \n word \n local \n is highlighted",
+            highlight = "local"
+        )
+    )
+
+    private companion object {
+
         private fun with(
             title: String,
+            email: String,
             username: String,
             note: String = "Note content",
             websites: List<String> = emptyList(),
@@ -73,7 +86,8 @@ class LoginRowPreviewProvider : PreviewParameterProvider<LoginRowParameter> {
                 contents = ItemContents.Login(
                     title = title,
                     note = note,
-                    itemEmail = username,
+                    itemEmail = email,
+                    itemUsername = username,
                     password = HiddenState.Concealed(""),
                     urls = websites,
                     packageInfoSet = emptySet(),
@@ -93,7 +107,7 @@ class LoginRowPreviewProvider : PreviewParameterProvider<LoginRowParameter> {
     }
 }
 
-data class LoginRowParameter(
+internal data class LoginRowParameter(
     val model: ItemUiModel,
     val highlight: String
 )

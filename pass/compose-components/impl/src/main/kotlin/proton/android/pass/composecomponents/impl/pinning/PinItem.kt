@@ -114,12 +114,12 @@ fun PinItem(
     }
 }
 
-class ThemedPinItemPreviewProvider :
+internal class ThemedPinItemPreviewProvider :
     ThemePairPreviewProvider<ItemUiModel>(PinItemPreviewProvider())
 
 @Preview
 @Composable
-fun PinItemPreview(@PreviewParameter(ThemedPinItemPreviewProvider::class) input: Pair<Boolean, ItemUiModel>) {
+internal fun PinItemPreview(@PreviewParameter(ThemedPinItemPreviewProvider::class) input: Pair<Boolean, ItemUiModel>) {
     PassTheme(isDark = input.first) {
         Surface {
             PinItem(item = input.second, canLoadExternalImages = true, onItemClick = { _ -> })

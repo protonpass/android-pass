@@ -116,12 +116,12 @@ fun LazyListScope.SelectItemListHeader(
     }
 }
 
-class ThemedSuggestionsPreviewProvider :
+internal class ThemedSuggestionsPreviewProvider :
     ThemePairPreviewProvider<SuggestionsInput>(SuggestionsPreviewProvider())
 
 @Preview
 @Composable
-fun SelectItemListHeaderPreview(
+internal fun SelectItemListHeaderPreview(
     @PreviewParameter(ThemedSuggestionsPreviewProvider::class) input: Pair<Boolean, SuggestionsInput>
 ) {
     PassTheme(isDark = input.first) {

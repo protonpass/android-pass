@@ -87,10 +87,12 @@ internal class BaseLoginViewModelTest {
     }
 
     @Test
-    fun `when the username has changed the state should hold it`() = runTest {
-        val usernameInput = "Username Changed"
-        baseLoginViewModel.onUsernameChange(usernameInput)
-        assertThat(baseLoginViewModel.loginItemFormState.username).isEqualTo(usernameInput)
+    internal fun `WHEN item email changes THEN state should be updated accordingly`() = runTest {
+        val emailInput = "Username Changed"
+
+        baseLoginViewModel.onEmailChanged(emailInput)
+
+        assertThat(baseLoginViewModel.loginItemFormState.email).isEqualTo(emailInput)
     }
 
     @Test

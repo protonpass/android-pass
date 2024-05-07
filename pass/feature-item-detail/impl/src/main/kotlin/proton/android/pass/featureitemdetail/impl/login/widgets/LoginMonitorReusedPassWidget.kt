@@ -69,7 +69,6 @@ internal fun LoginMonitorReusedPassWidget(
     canLoadExternalImages: Boolean,
     onEvent: (LoginDetailEvent) -> Unit
 ) {
-
     LoginMonitorWidget(
         modifier = modifier,
         title = pluralStringResource(
@@ -202,6 +201,7 @@ internal fun LoginMonitorReusedPassWidgetExpandedPreview(
                             title = "Proton",
                             note = "",
                             itemEmail = "",
+                            itemUsername = "",
                             password = HiddenState.Concealed(""),
                             urls = emptyList(),
                             packageInfoSet = emptySet(),

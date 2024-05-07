@@ -136,7 +136,7 @@ class SecurityCenterReportViewModel @Inject constructor(
     ).map { loginItems ->
         loginItems
             .filter { loginItem ->
-                (loginItem.itemType as ItemType.Login).username == email
+                (loginItem.itemType as ItemType.Login).itemEmail == email
             }
             .let { usedInLoginItems ->
                 encryptionContextProvider.withEncryptionContext {

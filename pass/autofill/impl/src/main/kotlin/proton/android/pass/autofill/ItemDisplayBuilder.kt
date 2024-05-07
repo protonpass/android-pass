@@ -41,7 +41,7 @@ object ItemDisplayBuilder {
 
     fun createSubtitle(item: Item, encryptionContext: EncryptionContext): String = when (val itemType = item.itemType) {
         is ItemType.CreditCard -> createCreditCardSubtitle(encryptionContext, itemType)
-        is ItemType.Login -> itemType.username.takeIf { it.isNotBlank() } ?: "---"
+        is ItemType.Login -> itemType.itemEmail.takeIf { it.isNotBlank() } ?: "---"
         else -> {
             PassLogger.e(TAG, "Unsupported item type for subtitle: ${item.itemType.javaClass.name}")
             SUBTITLE_ON_ERROR

@@ -46,7 +46,8 @@ sealed interface ItemType {
 
     @Serializable
     data class Login(
-        val username: String,
+        val itemEmail: String,
+        val itemUsername: String,
         val password: EncryptedString,
         val websites: List<String>,
         val packageInfoSet: Set<PackageInfo>,

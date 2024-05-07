@@ -28,7 +28,7 @@ fun ItemUiModel.toAutoFillItem(): AutofillItem = when (val content = contents) {
     is ItemContents.Login -> AutofillItem.Login(
         shareId = shareId.id,
         itemId = id.id,
-        username = content.username,
+        username = content.itemEmail,
         password = content.password.encrypted,
         totp = content.primaryTotp.encrypted
     )

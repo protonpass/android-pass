@@ -39,7 +39,7 @@ fun ItemType.Companion.fromParsed(
 ): ItemType {
     return when (parsed.content.contentCase) {
         ItemV1.Content.ContentCase.LOGIN -> ItemType.Login(
-            username = parsed.content.login.username,
+            username = parsed.content.login.itemEmail,
             password = context.encrypt(parsed.content.login.password),
             websites = parsed.content.login.urlsList,
             packageInfoSet = parsed.platformSpecific.android.allowedAppsList.map {

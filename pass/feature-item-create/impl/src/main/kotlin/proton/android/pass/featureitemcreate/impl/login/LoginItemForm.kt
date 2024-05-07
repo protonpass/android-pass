@@ -45,6 +45,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
 import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
@@ -98,8 +99,8 @@ internal fun LoginItemForm(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+                .padding(all = Spacing.medium),
+            verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
         ) {
             TitleSection(
                 modifier = Modifier
@@ -112,6 +113,7 @@ internal fun LoginItemForm(
                 isRounded = true,
                 onChange = { onEvent(LoginContentEvent.OnTitleChange(it)) }
             )
+
             if (passkeyState is Some) {
                 PasskeyEditRow(
                     domain = passkeyState.value.domain,
@@ -120,10 +122,14 @@ internal fun LoginItemForm(
                     onDeleteClick = {}
                 )
             }
-            PasskeysSection(
-                passkeys = loginItemFormState.passkeys.toImmutableList(),
-                onEvent = onEvent
-            )
+
+            if (loginItemFormState.hasPasskeys) {
+                PasskeysSection(
+                    passkeys = loginItemFormState.passkeys.toImmutableList(),
+                    onEvent = onEvent
+                )
+            }
+
             MainLoginSection(
                 loginItemFormState = loginItemFormState,
                 canUpdateUsername = canUpdateUsername,
@@ -134,6 +140,7 @@ internal fun LoginItemForm(
                 hasReachedAliasLimit = hasReachedAliasLimit,
                 onEvent = onEvent
             )
+
             WebsitesSection(
                 websites = loginItemFormState.urls.toImmutableList(),
                 isEditAllowed = isEditAllowed,
@@ -141,11 +148,13 @@ internal fun LoginItemForm(
                 focusLastWebsite = focusLastWebsite,
                 onWebsiteSectionEvent = { onEvent(LoginContentEvent.OnWebsiteEvent(it)) }
             )
+
             SimpleNoteSection(
                 value = loginItemFormState.note,
                 enabled = isEditAllowed,
                 onChange = { onEvent(LoginContentEvent.OnNoteChange(it)) }
             )
+
             CustomFieldsContent(
                 customFields = loginItemFormState.customFields.toImmutableList(),
                 focusedField = focusedField as? LoginCustomField,
@@ -154,6 +163,7 @@ internal fun LoginItemForm(
                 validationErrors = customFieldValidationErrors,
                 onEvent = { onEvent(LoginContentEvent.OnCustomFieldEvent(it)) }
             )
+
             if (isUpdate) {
                 LinkedAppsListSection(
                     packageInfoUiSet = loginItemFormState.packageInfoSet.toImmutableSet(),
@@ -161,6 +171,7 @@ internal fun LoginItemForm(
                     onLinkedAppDelete = { onEvent(LoginContentEvent.OnLinkedAppDelete(it)) }
                 )
             }
+
             if (isCurrentStickyVisible) {
                 Spacer(modifier = Modifier.height(48.dp))
             }

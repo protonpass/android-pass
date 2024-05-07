@@ -24,6 +24,7 @@ import kotlinx.coroutines.withContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
+import proton.android.pass.data.api.usecases.items.ItemSecurityCheckFilter
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ItemType
@@ -45,13 +46,16 @@ class DuplicatedPasswordCheckerImpl @Inject constructor(
         val itemPassword = encryptionContextProvider.withEncryptionContext {
             decrypt((item.itemType as ItemType.Login).password)
         }
+
         if (itemPassword.isBlank()) {
             return DuplicatedPasswordReport(emptySet())
         }
+
         val items = observeItems(
             selection = ShareSelection.AllShares,
             itemState = ItemState.Active,
-            filter = ItemTypeFilter.Logins
+            filter = ItemTypeFilter.Logins,
+            securityCheckFilter = ItemSecurityCheckFilter.Included
         ).first().filter { loginItem -> loginItem.id != item.id }
 
         return withContext(Dispatchers.Default) {

@@ -201,7 +201,7 @@ internal fun LoginMonitorReusedPassWidgetExpandedPreview(
                         contents = ItemContents.Login(
                             title = "Proton",
                             note = "",
-                            username = "",
+                            itemEmail = "",
                             password = HiddenState.Concealed(""),
                             urls = emptyList(),
                             packageInfoSet = emptySet(),

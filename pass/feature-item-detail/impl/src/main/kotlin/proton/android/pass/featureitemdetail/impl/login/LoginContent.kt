@@ -96,7 +96,7 @@ internal fun LoginContent(
         }
 
         MainLoginSection(
-            username = contents.username,
+            username = contents.itemEmail,
             passwordHiddenState = contents.password,
             passwordScore = passwordScore,
             totpUiState = totpUiState,

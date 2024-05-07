@@ -102,7 +102,7 @@ sealed class ItemContents {
     data class Login(
         override val title: String,
         override val note: String,
-        val username: String,
+        val itemEmail: String,
         val password: HiddenState,
         val urls: List<String>,
         val packageInfoSet: Set<PackageInfo>,
@@ -124,7 +124,7 @@ sealed class ItemContents {
 
             fun create(password: HiddenState, primaryTotp: HiddenState) = Login(
                 title = "",
-                username = "",
+                itemEmail = "",
                 password = password,
                 urls = listOf(""),
                 packageInfoSet = emptySet(),

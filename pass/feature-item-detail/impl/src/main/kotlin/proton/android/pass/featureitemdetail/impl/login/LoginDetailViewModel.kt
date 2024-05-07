@@ -473,7 +473,7 @@ class LoginDetailViewModel @Inject constructor(
     fun copyUsernameToClipboard() = viewModelScope.launch {
         val state = uiState.value as? LoginDetailUiState.Success ?: return@launch
         val itemType = state.itemUiModel.contents as? ItemContents.Login ?: return@launch
-        clipboardManager.copyToClipboard(itemType.username)
+        clipboardManager.copyToClipboard(itemType.itemEmail)
         snackbarDispatcher(UsernameCopiedToClipboard)
     }
 

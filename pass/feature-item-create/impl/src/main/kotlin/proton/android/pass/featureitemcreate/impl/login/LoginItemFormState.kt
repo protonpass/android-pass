@@ -65,7 +65,7 @@ data class LoginItemFormState(
     fun toItemContents(): ItemContents.Login = ItemContents.Login(
         title = title,
         note = note,
-        username = username,
+        itemEmail = username,
         password = password.toHiddenState(),
         urls = urls,
         packageInfoSet = packageInfoSet.map(PackageInfoUi::toPackageInfo).toSet(),

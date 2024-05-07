@@ -344,7 +344,7 @@ class SelectItemScreenTest {
                 itemContents = ItemContents.Login(
                     title = "${SUGGESTION_TITLE_PREFIX}$it",
                     note = "",
-                    username = "${SUGGESTION_USERNAME_PREFIX}$it",
+                    itemEmail = "${SUGGESTION_USERNAME_PREFIX}$it",
                     password = HiddenState.Concealed(TestEncryptionContext.encrypt("")),
                     urls = emptyList(),
                     packageInfoSet = setOf(
@@ -365,7 +365,7 @@ class SelectItemScreenTest {
                 itemContents = ItemContents.Login(
                     title = "${OTHER_ITEM_TITLE_PREFIX}$it",
                     note = "",
-                    username = "${SUGGESTION_USERNAME_PREFIX}$it",
+                    itemEmail = "${SUGGESTION_USERNAME_PREFIX}$it",
                     password = HiddenState.Concealed(TestEncryptionContext.encrypt("")),
                     urls = emptyList(),
                     packageInfoSet = setOf(

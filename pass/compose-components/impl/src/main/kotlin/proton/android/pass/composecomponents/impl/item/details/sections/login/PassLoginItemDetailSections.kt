@@ -65,7 +65,7 @@ internal fun PassLoginItemDetailSections(
         }
 
         PassLoginItemDetailMainSection(
-            username = username,
+            username = itemEmail,
             password = password,
             passwordStrength = passwordStrength,
             primaryTotp = primaryTotp,

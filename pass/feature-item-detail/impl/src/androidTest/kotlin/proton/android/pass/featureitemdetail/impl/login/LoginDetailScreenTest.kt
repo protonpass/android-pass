@@ -252,7 +252,7 @@ class LoginDetailScreenTest {
             itemId = ItemId(ITEM_ID),
             itemContents = ItemContents.Login(
                 title = title,
-                username = username,
+                itemEmail = username,
                 password = HiddenState.Concealed(TestEncryptionContext.encrypt(password)),
                 note = note,
                 urls = urls,

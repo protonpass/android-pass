@@ -55,7 +55,7 @@ object ItemUiFilter {
 
     @Suppress("ReturnCount")
     private fun isLoginMatch(content: ItemContents.Login, query: String): Boolean {
-        if (content.username.preprocess().contains(query)) return true
+        if (content.itemEmail.preprocess().contains(query)) return true
 
         val anyWebsiteMatches = content.urls.any { it.preprocess().contains(query) }
         if (anyWebsiteMatches) return true

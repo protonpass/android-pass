@@ -73,7 +73,7 @@ class LoginRowPreviewProvider : PreviewParameterProvider<LoginRowParameter> {
                 contents = ItemContents.Login(
                     title = title,
                     note = note,
-                    username = username,
+                    itemEmail = username,
                     password = HiddenState.Concealed(""),
                     urls = websites,
                     packageInfoSet = emptySet(),

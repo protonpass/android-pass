@@ -101,7 +101,7 @@ fun ItemContents.serializeToProto(
 
             builder.content.toBuilder().setLogin(
                 builder.content.login.toBuilder()
-                    .setUsername(username)
+                    .setItemEmail(itemEmail)
                     .setPassword(encryptionContext.decrypt(password.encrypted))
                     .setTotpUri(encryptionContext.decrypt(primaryTotp.encrypted))
 

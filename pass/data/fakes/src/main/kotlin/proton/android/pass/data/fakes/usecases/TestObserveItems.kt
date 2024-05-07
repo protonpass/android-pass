@@ -139,7 +139,7 @@ class TestObserveItems @Inject constructor() : ObserveItems {
             itemContents = ItemContents.Login(
                 title = title,
                 note = note,
-                username = username,
+                itemEmail = username,
                 password = HiddenState.Concealed(TestEncryptionContext.encrypt(password)),
                 urls = emptyList(),
                 packageInfoSet = emptySet(),

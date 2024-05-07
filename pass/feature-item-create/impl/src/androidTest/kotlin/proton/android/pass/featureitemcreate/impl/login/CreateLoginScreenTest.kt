@@ -238,7 +238,7 @@ class CreateLoginScreenTest {
             shareId = ShareId(SHARE_ID),
             itemContents = ItemContents.Login(
                 title = title,
-                username = username,
+                itemEmail = username,
                 note = note,
                 customFields = persistentListOf(),
                 packageInfoSet = emptySet(),
@@ -341,7 +341,7 @@ class CreateLoginScreenTest {
             shareId = ShareId(SHARE_ID),
             itemContents = ItemContents.Login(
                 title = title,
-                username = "",
+                itemEmail = "",
                 note = "",
                 customFields = persistentListOf(
                     textCustomField,

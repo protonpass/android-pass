@@ -192,8 +192,8 @@ internal fun LoginItemForm(
                             )
                         )
                     },
-                    onPrefillCurrentEmailClick = {
-                        onEvent(LoginContentEvent.OnUsernameChange(it))
+                    onPrefillCurrentEmailClick = { prefillEmail ->
+                        onEvent(LoginContentEvent.OnEmailChanged(prefillEmail))
                     }
                 )
 

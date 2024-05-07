@@ -108,7 +108,7 @@ class ItemOptionsViewModel @Inject constructor(
 
     fun onCopyUsername() = viewModelScope.launch {
         getLoginItem().onSuccess {
-            clipboardManager.copyToClipboard(it.username)
+            clipboardManager.copyToClipboard(it.itemEmail)
             eventFlow.update { ItemOptionsEvent.Close }
             snackbarDispatcher(ItemOptionsSnackbarMessage.UsernameCopiedToClipboard)
         }.onFailure {

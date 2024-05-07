@@ -25,10 +25,14 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.login.customfields.CustomFieldEvent
 
 sealed interface LoginContentEvent {
+
     data object Up : LoginContentEvent
 
     @JvmInline
     value class Submit(val shareId: ShareId) : LoginContentEvent
+
+    @JvmInline
+    value class OnEmailChanged(val email: String) : LoginContentEvent
 
     @JvmInline
     value class OnUsernameChange(val username: String) : LoginContentEvent
@@ -44,6 +48,7 @@ sealed interface LoginContentEvent {
 
     @JvmInline
     value class OnTotpChange(val totp: String) : LoginContentEvent
+
     data object PasteTotp : LoginContentEvent
 
     @JvmInline
@@ -51,7 +56,9 @@ sealed interface LoginContentEvent {
 
     @JvmInline
     value class OnCustomFieldEvent(val event: CustomFieldEvent) : LoginContentEvent
+
     data class OnFocusChange(val field: LoginField, val isFocused: Boolean) : LoginContentEvent
+
     data class OnDeletePasskey(val idx: Int, val passkey: UIPasskeyContent) : LoginContentEvent
 
     @JvmInline
@@ -77,4 +84,5 @@ sealed interface LoginContentEvent {
 
     @JvmInline
     value class OnScanTotp(val index: Option<Int>) : LoginContentEvent
+
 }

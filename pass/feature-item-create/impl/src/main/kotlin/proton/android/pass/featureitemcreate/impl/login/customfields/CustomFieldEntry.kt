@@ -25,7 +25,7 @@ import proton.android.pass.featureitemcreate.impl.login.LoginCustomField
 import proton.android.pass.featureitemcreate.impl.login.LoginItemValidationErrors
 
 @Composable
-fun CustomFieldEntry(
+internal fun CustomFieldEntry(
     modifier: Modifier = Modifier,
     entry: UICustomFieldContent,
     validationError: LoginItemValidationErrors.CustomFieldValidationError?,

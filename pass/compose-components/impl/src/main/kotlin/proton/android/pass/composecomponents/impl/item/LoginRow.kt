@@ -189,13 +189,15 @@ private data class LoginHighlightFields(
     val subtitles: ImmutableList<AnnotatedString>
 )
 
-class ThemedLoginItemPreviewProvider : ThemePairPreviewProvider<LoginRowParameter>(
+internal class ThemedLoginItemPreviewProvider : ThemePairPreviewProvider<LoginRowParameter>(
     LoginRowPreviewProvider()
 )
 
 @Preview
 @Composable
-fun LoginRowPreview(@PreviewParameter(ThemedLoginItemPreviewProvider::class) input: Pair<Boolean, LoginRowParameter>) {
+internal fun LoginRowPreview(
+    @PreviewParameter(ThemedLoginItemPreviewProvider::class) input: Pair<Boolean, LoginRowParameter>
+) {
     PassTheme(isDark = input.first) {
         Surface {
             LoginRow(

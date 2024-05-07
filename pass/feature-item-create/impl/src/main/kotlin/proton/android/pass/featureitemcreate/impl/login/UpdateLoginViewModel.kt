@@ -112,13 +112,15 @@ class UpdateLoginViewModel @Inject constructor(
     passwordStrengthCalculator = passwordStrengthCalculator,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
-    private val navShareId: ShareId =
-        ShareId(savedStateHandleProvider.get().require(CommonNavArgId.ShareId.key))
-    private val navItemId: ItemId =
-        ItemId(savedStateHandleProvider.get().require(CommonNavArgId.ItemId.key))
+    private val navShareId: ShareId = savedStateHandleProvider.get()
+        .require<String>(CommonNavArgId.ShareId.key)
+        .let(::ShareId)
 
-    private val updateEventFlow: MutableStateFlow<UpdateUiEvent> =
-        MutableStateFlow(UpdateUiEvent.Idle)
+    private val navItemId: ItemId = savedStateHandleProvider.get()
+        .require<String>(CommonNavArgId.ItemId.key)
+        .let(::ItemId)
+
+    private val updateEventFlow: MutableStateFlow<UpdateUiEvent> = MutableStateFlow(UpdateUiEvent.Idle)
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.w(TAG, throwable)
@@ -145,7 +147,7 @@ class UpdateLoginViewModel @Inject constructor(
         }
     }
 
-    val updateLoginUiState: StateFlow<UpdateLoginUiState> = combine(
+    internal val updateLoginUiState: StateFlow<UpdateLoginUiState> = combine(
         flowOf(navShareId),
         baseLoginUiState,
         updateEventFlow,
@@ -156,16 +158,16 @@ class UpdateLoginViewModel @Inject constructor(
         initialValue = UpdateLoginUiState.Initial
     )
 
-    fun setAliasItem(aliasItemFormState: AliasItemFormState) {
+    internal fun setAliasItem(aliasItemFormState: AliasItemFormState) {
         val currentState = loginItemFormState
         canUpdateUsernameState.update { false }
         aliasLocalItemState.update { aliasItemFormState.toOption() }
         loginItemFormMutableState = currentState.copy(
-            username = aliasItemFormState.aliasToBeCreated ?: currentState.username
+            email = aliasItemFormState.aliasToBeCreated ?: currentState.email
         )
     }
 
-    fun setTotp(navTotpUri: String?, navTotpIndex: Int?) {
+    internal fun setTotp(navTotpUri: String?, navTotpIndex: Int?) {
         onUserEditedContent()
         val currentState = loginItemFormState
         val primaryTotp = updatePrimaryTotpIfNeeded(navTotpUri, navTotpIndex, currentState)
@@ -176,7 +178,7 @@ class UpdateLoginViewModel @Inject constructor(
         )
     }
 
-    fun updateItem(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {
+    internal fun updateItem(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {
         val currentItem = itemOption.value() ?: return@launch
         val shouldUpdate = validateItem(currentItem.some(), originalTotpCustomFields)
         if (!shouldUpdate) return@launch
@@ -200,11 +202,11 @@ class UpdateLoginViewModel @Inject constructor(
         isLoadingState.update { IsLoadingState.NotLoading }
     }
 
-    fun onDeletePasskey(idx: Int, passkey: UIPasskeyContent) = viewModelScope.launch {
+    internal fun onDeletePasskey(idx: Int, passkey: UIPasskeyContent) {
         updateEventFlow.update { UpdateUiEvent.ConfirmDeletePasskey(idx, passkey) }
     }
 
-    fun onDeletePasskeyConfirmed(idx: Int, passkey: UIPasskeyContent) = viewModelScope.launch {
+    internal fun onDeletePasskeyConfirmed(idx: Int, passkey: UIPasskeyContent) {
         val newPasskeyList = loginItemFormMutableState.passkeys.toMutableList()
         if (idx in 0 until newPasskeyList.size) {
             val removed = newPasskeyList.removeAt(idx)
@@ -214,8 +216,8 @@ class UpdateLoginViewModel @Inject constructor(
         }
     }
 
-    fun clearEvent() = viewModelScope.launch {
-        updateEventFlow.update { UpdateUiEvent.Idle }
+    internal fun consumeEvent(event: UpdateUiEvent) {
+        updateEventFlow.compareAndSet(event, UpdateUiEvent.Idle)
     }
 
     @Suppress("LongMethod")
@@ -268,10 +270,9 @@ class UpdateLoginViewModel @Inject constructor(
                     }
                 }
 
-
                 loginItemFormMutableState = loginItemFormState.copy(
                     title = decrypt(item.title),
-                    username = itemContents.username,
+                    email = itemContents.itemEmail,
                     password = passwordHiddenState,
                     passwordStrength = passwordStrengthCalculator.calculateStrength(password),
                     urls = websites,
@@ -413,7 +414,10 @@ class UpdateLoginViewModel @Inject constructor(
         return totpManager.sanitiseToEdit(totp).getOrNull() ?: totp
     }
 
-    companion object {
+    private companion object {
+
         private const val TAG = "UpdateLoginViewModel"
+
     }
+
 }

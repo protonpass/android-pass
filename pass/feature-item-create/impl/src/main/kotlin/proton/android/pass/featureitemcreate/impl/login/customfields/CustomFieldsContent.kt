@@ -39,7 +39,7 @@ import proton.android.pass.featureitemcreate.impl.login.LoginItemValidationError
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun CustomFieldsContent(
+internal fun CustomFieldsContent(
     modifier: Modifier = Modifier,
     customFields: ImmutableList<UICustomFieldContent>,
     canUseCustomFields: Boolean,

@@ -54,8 +54,8 @@ data class ProfileUiState(
     val passkeySupport: ProfilePasskeySupportSection
 ) {
     companion object {
-        fun getInitialState(appVersion: String, appLockSectionState: AppLockSectionState) = ProfileUiState(
-            appLockSectionState = appLockSectionState,
+        fun getInitialState(appVersion: String) = ProfileUiState(
+            appLockSectionState = AppLockSectionState.Loading,
             autofillStatus = AutofillSupportedStatus.Supported(AutofillStatus.Disabled),
             itemSummaryUiState = ItemSummaryUiState(),
             appVersion = appVersion,
@@ -90,7 +90,9 @@ sealed interface PlanInfo {
     ) : PlanInfo
 }
 
-sealed interface AppLockSectionState
+sealed interface AppLockSectionState {
+    data object Loading : AppLockSectionState
+}
 sealed interface BiometricSection : AppLockSectionState {
     val biometricSystemLockPreference: BiometricSystemLockPreference
 }

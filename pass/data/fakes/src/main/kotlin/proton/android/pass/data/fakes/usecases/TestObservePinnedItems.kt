@@ -107,6 +107,7 @@ class TestObservePinnedItems @Inject constructor() : ObservePinnedItems {
             shareId: ShareId = ShareId("share-123"),
             itemId: ItemId = ItemId("item-123"),
             title: String = "login-item",
+            email: String = "user@email.com",
             username: String = "username",
             password: String = "",
             primaryTotp: String = "",
@@ -117,11 +118,15 @@ class TestObservePinnedItems @Inject constructor() : ObservePinnedItems {
             itemContents = ItemContents.Login(
                 title = title,
                 note = note,
-                itemEmail = username,
+                itemEmail = email,
+                itemUsername = username,
                 password = HiddenState.Concealed(TestEncryptionContext.encrypt(password)),
                 urls = emptyList(),
                 packageInfoSet = emptySet(),
-                primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(primaryTotp), primaryTotp),
+                primaryTotp = HiddenState.Revealed(
+                    TestEncryptionContext.encrypt(primaryTotp),
+                    primaryTotp
+                ),
                 customFields = emptyList(),
                 passkeys = emptyList()
             )

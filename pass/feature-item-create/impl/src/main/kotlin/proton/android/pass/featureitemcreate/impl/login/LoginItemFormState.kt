@@ -37,6 +37,7 @@ data class LoginItemFormState(
     val title: String,
     val note: String,
     val email: String,
+    val username: String,
     val password: UIHiddenState,
     val passwordStrength: PasswordStrength,
     val urls: List<String>,
@@ -46,6 +47,8 @@ data class LoginItemFormState(
     val passkeys: List<UIPasskeyContent>,
     val passkeyToBeGenerated: UIPasskeyContent?
 ) : Parcelable {
+
+    internal val hasPasskeys: Boolean = passkeys.isNotEmpty()
 
     internal fun validate(): Set<LoginItemValidationErrors> {
         val mutableSet = mutableSetOf<LoginItemValidationErrors>()
@@ -66,7 +69,7 @@ data class LoginItemFormState(
         title = title,
         note = note,
         itemEmail = email,
-        itemUsername = "",
+        itemUsername = username,
         password = password.toHiddenState(),
         urls = urls,
         packageInfoSet = packageInfoSet.map(PackageInfoUi::toPackageInfo).toSet(),
@@ -83,6 +86,7 @@ data class LoginItemFormState(
         title == other.title &&
             note == other.note &&
             email == other.email &&
+            username == other.username &&
             encryptionContext.decrypt(password.encrypted.toEncryptedByteArray())
                 .contentEquals(encryptionContext.decrypt(other.password.encrypted.toEncryptedByteArray())) &&
             urls == other.urls &&
@@ -98,6 +102,7 @@ data class LoginItemFormState(
             title = "",
             note = "",
             email = "",
+            username = "",
             password = UIHiddenState.Empty(encryptionContext.encrypt("")),
             passwordStrength = PasswordStrength.None,
             urls = listOf(""),

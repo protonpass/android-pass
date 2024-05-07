@@ -27,6 +27,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -40,6 +41,7 @@ import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.setting.ColorSettingOption
 import proton.android.pass.composecomponents.impl.setting.SettingOption
 import proton.android.pass.composecomponents.impl.setting.SettingToggle
+import proton.android.pass.featureprofile.impl.EnforcedAppLockSectionState.Password
 import proton.android.pass.preferences.AppLockTimePreference
 import proton.android.pass.preferences.value
 import me.proton.core.presentation.compose.R as CoreR
@@ -58,56 +60,99 @@ fun AppLockSection(
         Column(
             modifier = Modifier.roundedContainerNorm()
         ) {
-            val label = if (appLockSectionState is AppLockSectionState.None) {
+            val unlockMethodLabel = if (appLockSectionState is UserAppLockSectionState.None) {
                 stringResource(R.string.profile_option_lock_with)
             } else {
                 stringResource(R.string.profile_option_unlock_with)
             }
-            val text = when (appLockSectionState) {
-                is AppLockSectionState.Biometric -> stringResource(id = R.string.app_lock_config_biometric)
-                AppLockSectionState.None -> stringResource(id = R.string.app_lock_config_none)
-                is AppLockSectionState.Pin -> stringResource(id = R.string.app_lock_config_pin_code)
+
+            val unlockMethodValue = when (appLockSectionState) {
+                is UserAppLockSectionState.Biometric, is EnforcedAppLockSectionState.Biometric ->
+                    stringResource(id = R.string.app_lock_config_biometric)
+
+                is UserAppLockSectionState.None ->
+                    stringResource(id = R.string.app_lock_config_none)
+
+                is UserAppLockSectionState.Pin, is EnforcedAppLockSectionState.Pin ->
+                    stringResource(id = R.string.app_lock_config_pin_code)
+
+                is Password ->
+                    stringResource(id = R.string.app_lock_config_password)
             }
             SettingOption(
-                text = text,
-                label = label,
+                text = unlockMethodValue,
+                label = unlockMethodLabel,
                 onClick = { onEvent(ProfileUiEvent.OnAppLockTypeClick) }
             )
-            AnimatedVisibility(visible = appLockSectionState is AppLockSectionState.Biometric) {
-                Column {
-                    val biometricState = appLockSectionState as? AppLockSectionState.Biometric
-                    PassDivider()
-                    val timePreferenceText = biometricState
-                        ?.let { getAppLockTimePreferenceText(biometricState.appLockTimePreference) }
-                        ?: ""
 
+            AnimatedVisibility(visible = appLockSectionState is Password) {
+                if (appLockSectionState is Password) {
+                    PassDivider()
                     SettingOption(
                         label = stringResource(R.string.app_lock_config_app_lock_time),
-                        text = timePreferenceText,
-                        onClick = { onEvent(ProfileUiEvent.OnAppLockTimeClick) }
+                        text = secondsToText(seconds = appLockSectionState.seconds)
                     )
+                }
+            }
+
+            AnimatedVisibility(visible = appLockSectionState is BiometricSection) {
+                Column {
                     PassDivider()
+                    when (appLockSectionState) {
+                        is UserAppLockSectionState.Biometric -> {
+                            SettingOption(
+                                label = stringResource(R.string.app_lock_config_app_lock_time),
+                                text = getAppLockTimePreferenceText(appLockSectionState.appLockTimePreference),
+                                onClick = { onEvent(ProfileUiEvent.OnAppLockTimeClick) }
+                            )
+                            PassDivider()
+                        }
+
+                        is EnforcedAppLockSectionState.Biometric -> {
+                            SettingOption(
+                                label = stringResource(R.string.app_lock_config_app_lock_time),
+                                text = secondsToText(seconds = appLockSectionState.seconds)
+                            )
+                            PassDivider()
+                        }
+
+                        else -> {}
+                    }
+
                     SettingToggle(
                         text = stringResource(R.string.app_lock_config_use_system_lock_when_biometric_fails),
-                        isChecked = biometricState?.biometricSystemLockPreference?.value() ?: false,
+                        isChecked = (appLockSectionState as? BiometricSection)
+                            ?.biometricSystemLockPreference
+                            ?.value()
+                            ?: false,
                         onClick = { onEvent(ProfileUiEvent.OnToggleBiometricSystemLock(it)) }
                     )
                 }
             }
-            AnimatedVisibility(visible = appLockSectionState is AppLockSectionState.Pin) {
+            AnimatedVisibility(visible = appLockSectionState is PinSection) {
                 Column {
-                    val pinState = appLockSectionState as? AppLockSectionState.Pin
+                    PassDivider()
+                    when (appLockSectionState) {
+                        is UserAppLockSectionState.Pin -> {
+                            SettingOption(
+                                label = stringResource(R.string.app_lock_config_app_lock_time),
+                                text = getAppLockTimePreferenceText(appLockSectionState.appLockTimePreference),
+                                onClick = { onEvent(ProfileUiEvent.OnAppLockTimeClick) }
+                            )
+                            PassDivider()
+                        }
 
-                    PassDivider()
-                    val timePreferenceText = pinState
-                        ?.let { getAppLockTimePreferenceText(pinState.appLockTimePreference) }
-                        ?: ""
-                    SettingOption(
-                        label = stringResource(R.string.app_lock_config_app_lock_time),
-                        text = timePreferenceText,
-                        onClick = { onEvent(ProfileUiEvent.OnAppLockTimeClick) }
-                    )
-                    PassDivider()
+                        is EnforcedAppLockSectionState.Pin -> {
+                            SettingOption(
+                                label = stringResource(R.string.app_lock_config_app_lock_time),
+                                text = secondsToText(seconds = appLockSectionState.seconds)
+                            )
+                            PassDivider()
+                        }
+
+                        else -> {}
+                    }
+
                     ColorSettingOption(
                         text = stringResource(R.string.profile_option_change_pin_code),
                         textColor = PassTheme.colors.interactionNormMajor2,
@@ -124,6 +169,20 @@ fun AppLockSection(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun secondsToText(seconds: Int): String {
+    val minutes = seconds / 60
+    val hours = minutes / 60
+    val days = hours / 24
+
+    return when {
+        days > 0 -> pluralStringResource(R.plurals.profile_after_days, days, days)
+        hours > 0 -> pluralStringResource(R.plurals.profile_after_hours, hours, hours)
+        minutes > 0 -> pluralStringResource(R.plurals.profile_after_minutes, minutes, minutes)
+        else -> stringResource(R.string.profile_less_than_a_minute)
     }
 }
 

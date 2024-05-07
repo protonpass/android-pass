@@ -78,10 +78,13 @@ fun AppLockSection(
 
                 is Password ->
                     stringResource(id = R.string.app_lock_config_password)
+
+                else -> ""
             }
             SettingOption(
                 text = unlockMethodValue,
                 label = unlockMethodLabel,
+                isLoading = appLockSectionState is AppLockSectionState.Loading,
                 onClick = { onEvent(ProfileUiEvent.OnAppLockTypeClick) }
             )
 

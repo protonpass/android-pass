@@ -64,7 +64,7 @@ fun TrashItemBottomSheetContents(
             subtitle = {
                 val text = when (val itemType = itemUiModel.contents) {
                     is ItemContents.Alias -> itemType.aliasEmail
-                    is ItemContents.Login -> itemType.username
+                    is ItemContents.Login -> itemType.itemEmail
                     is ItemContents.Note -> itemType.note.replace("\n", " ")
                     else -> ""
                 }

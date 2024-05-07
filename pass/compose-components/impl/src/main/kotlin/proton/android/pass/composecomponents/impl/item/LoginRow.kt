@@ -59,7 +59,7 @@ fun LoginRow(
     }
     val fields = remember(
         content.title,
-        content.username,
+        content.itemEmail,
         content.note,
         content.urls,
         textCustomFields,
@@ -67,7 +67,7 @@ fun LoginRow(
     ) {
         getHighlightedFields(
             title = content.title,
-            username = content.username,
+            username = content.itemEmail,
             note = content.note,
             urls = content.urls,
             customFields = textCustomFields,

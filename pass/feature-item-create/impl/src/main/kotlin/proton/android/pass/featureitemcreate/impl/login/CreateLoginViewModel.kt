@@ -125,10 +125,11 @@ class CreateLoginViewModel @Inject constructor(
     passwordStrengthCalculator = passwordStrengthCalculator,
     savedStateHandleProvider = savedStateHandleProvider
 ) {
-    private val navShareId: Option<ShareId> =
-        savedStateHandleProvider.get().get<String>(CommonOptionalNavArgId.ShareId.key)
-            .toOption()
-            .map { ShareId(it) }
+    private val navShareId: Option<ShareId> = savedStateHandleProvider.get()
+        .get<String>(CommonOptionalNavArgId.ShareId.key)
+        .toOption()
+        .map(::ShareId)
+
     private val initialUsername: Option<String> = savedStateHandleProvider.get()
         .get<String>(CreateLoginDefaultUsernameArg.key)
         .toOption()
@@ -170,7 +171,7 @@ class CreateLoginViewModel @Inject constructor(
         tag = TAG
     )
 
-    val createLoginUiState: StateFlow<CreateLoginUiState> = combine(
+    internal val createLoginUiState: StateFlow<CreateLoginUiState> = combine(
         shareUiState,
         baseLoginUiState,
         createPasskeyStateFlow,
@@ -181,13 +182,12 @@ class CreateLoginViewModel @Inject constructor(
         initialValue = CreateLoginUiState.Initial
     )
 
-    fun changeVault(shareId: ShareId) = viewModelScope.launch {
+    internal fun changeVault(shareId: ShareId) {
         selectedShareIdMutableState = Some(shareId)
     }
 
     @Suppress("ComplexMethod", "LongMethod")
-    fun setInitialContents(initialContents: InitialCreateLoginUiState) {
-
+    internal fun setInitialContents(initialContents: InitialCreateLoginUiState) {
         val currentValue = loginItemFormState
         val websites = currentValue.urls.toMutableList()
 
@@ -208,7 +208,7 @@ class CreateLoginViewModel @Inject constructor(
                 initialContents.aliasItemFormState.aliasToBeCreated
 
             initialUsername is Some -> initialUsername.value
-            else -> currentValue.username
+            else -> currentValue.email
         }
 
         if (initialContents.aliasItemFormState?.aliasToBeCreated?.isNotEmpty() == true) {
@@ -255,10 +255,9 @@ class CreateLoginViewModel @Inject constructor(
             }
         }
 
-
         loginItemFormMutableState = loginItemFormState.copy(
             title = initialContents.title ?: currentValue.title,
-            username = username,
+            email = username,
             password = password,
             passwordStrength = currentValue.passwordStrength,
             urls = websites,
@@ -269,7 +268,7 @@ class CreateLoginViewModel @Inject constructor(
         )
     }
 
-    fun createItem() = viewModelScope.launch(coroutineExceptionHandler) {
+    internal fun createItem() = viewModelScope.launch(coroutineExceptionHandler) {
         val shouldCreate = validateItem(None, emptyList())
         if (!shouldCreate) return@launch
 
@@ -450,7 +449,10 @@ class CreateLoginViewModel @Inject constructor(
         }
     }
 
-    companion object {
+    private companion object {
+
         private const val TAG = "CreateLoginViewModel"
+
     }
+
 }

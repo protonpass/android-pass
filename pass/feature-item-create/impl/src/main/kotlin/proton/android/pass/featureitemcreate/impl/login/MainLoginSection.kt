@@ -27,7 +27,7 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.domain.ShareId
 
 @Composable
-fun MainLoginSection(
+internal fun MainLoginSection(
     modifier: Modifier = Modifier,
     loginItemFormState: LoginItemFormState,
     canUpdateUsername: Boolean,
@@ -42,19 +42,23 @@ fun MainLoginSection(
         modifier = modifier.roundedContainerNorm()
     ) {
         UsernameInput(
-            value = loginItemFormState.username,
+            value = loginItemFormState.email,
             canUpdateUsername = canUpdateUsername,
             isEditAllowed = isEditAllowed,
-            onChange = { onEvent(LoginContentEvent.OnUsernameChange(it)) },
             onAliasOptionsClick = {
                 selectedShareId ?: return@UsernameInput
                 onEvent(LoginContentEvent.OnAliasOptions(selectedShareId, hasReachedAliasLimit))
             },
             onFocus = { isFocused ->
                 onEvent(LoginContentEvent.OnFocusChange(LoginField.Username, isFocused))
+            },
+            onChange = { newEmail ->
+                onEvent(LoginContentEvent.OnEmailChanged(newEmail))
             }
         )
+
         Divider(color = PassTheme.colors.inputBorderNorm)
+
         PasswordInput(
             value = loginItemFormState.password,
             passwordStrength = loginItemFormState.passwordStrength,
@@ -64,7 +68,9 @@ fun MainLoginSection(
                 onEvent(LoginContentEvent.OnFocusChange(LoginField.Password, isFocused))
             }
         )
+
         Divider(color = PassTheme.colors.inputBorderNorm)
+
         val enabled = when (totpUiState) {
             TotpUiState.NotInitialised,
             TotpUiState.Loading,
@@ -73,6 +79,7 @@ fun MainLoginSection(
             is TotpUiState.Limited -> totpUiState.isEdit && isEditAllowed
             TotpUiState.Success -> isEditAllowed
         }
+
         if (totpUiState is TotpUiState.Limited && !totpUiState.isEdit) {
             TotpLimit(onUpgrade = { onEvent(LoginContentEvent.OnUpgrade) })
         } else {

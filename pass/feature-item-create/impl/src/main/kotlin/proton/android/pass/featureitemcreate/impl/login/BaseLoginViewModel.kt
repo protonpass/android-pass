@@ -107,7 +107,9 @@ abstract class BaseLoginViewModel(
                 }
             )
         }
-    val loginItemFormState: LoginItemFormState get() = loginItemFormMutableState
+
+    internal val loginItemFormState: LoginItemFormState
+        get() = loginItemFormMutableState
 
     protected val aliasLocalItemState: MutableStateFlow<Option<AliasItemFormState>> =
         MutableStateFlow(None)
@@ -147,7 +149,7 @@ abstract class BaseLoginViewModel(
 
     private val eventsFlow: Flow<Events> = combine(isItemSavedState, openScanState, ::Events)
 
-    data class Events(
+    private data class Events(
         val itemSavedState: ItemSavedState,
         val openScanState: OpenScanState
     )
@@ -184,7 +186,7 @@ abstract class BaseLoginViewModel(
         ::UserInteractionWrapper
     )
 
-    data class UserInteractionWrapper(
+    private data class UserInteractionWrapper(
         val canUpdateUsername: Boolean,
         val focusLastWebsite: Boolean,
         val focusedField: Option<LoginField>,
@@ -193,7 +195,7 @@ abstract class BaseLoginViewModel(
     )
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    val baseLoginUiState: StateFlow<BaseLoginUiState> = combineN(
+    internal val baseLoginUiState: StateFlow<BaseLoginUiState> = combineN(
         loginItemValidationErrorsState,
         observeCurrentUser().map { it.email },
         aliasItemFormState,
@@ -239,9 +241,9 @@ abstract class BaseLoginViewModel(
         }
     }
 
-    fun onUsernameChange(value: String) {
+    internal fun onEmailChanged(newEmail: String) {
         onUserEditedContent()
-        loginItemFormMutableState = loginItemFormMutableState.copy(username = value)
+        loginItemFormMutableState = loginItemFormMutableState.copy(email = newEmail)
     }
 
     fun onPasswordChange(newPasswordValue: String) {
@@ -320,7 +322,7 @@ abstract class BaseLoginViewModel(
         aliasLocalItemState.update { aliasItemFormState.toOption() }
         val alias = aliasItemFormState.aliasToBeCreated
         if (alias != null) {
-            loginItemFormMutableState = loginItemFormMutableState.copy(username = alias)
+            loginItemFormMutableState = loginItemFormMutableState.copy(email = alias)
             canUpdateUsernameState.update { false }
         }
     }
@@ -561,7 +563,7 @@ abstract class BaseLoginViewModel(
         aliasLocalItemState.update { None }
         draftRepository.delete<AliasItemFormState>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
 
-        loginItemFormMutableState = loginItemFormState.copy(username = "")
+        loginItemFormMutableState = loginItemFormState.copy(email = "")
         canUpdateUsernameState.update { true }
     }
 

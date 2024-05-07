@@ -80,7 +80,7 @@ class ObserveCustomEmailSuggestionsImpl @Inject constructor(
 
         val loginUsernames = loginItems
             .mapNotNull { it.itemType as? ItemType.Login }
-            .map { it.username }
+            .map { it.itemEmail }
             .filter { username ->
                 !aliases.contains(username) &&
                     !userAddresses.contains(username) &&

@@ -109,7 +109,7 @@ fun PinCarouselPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
                         contents = ItemContents.Login(
                             title = "Login title",
                             note = "",
-                            username = "",
+                            itemEmail = "",
                             password = HiddenState.Empty(""),
                             urls = listOf(),
                             packageInfoSet = setOf(),

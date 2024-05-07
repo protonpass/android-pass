@@ -139,7 +139,7 @@ class ItemUiFilterTest {
                 itemContents = ItemContents.Login(
                     title = "tablet",
                     note = "Tablet note",
-                    username = "username",
+                    itemEmail = "username",
                     password = HiddenState.Concealed(""),
                     urls = listOf("exampleurl.test", "otherurl.test"),
                     packageInfoSet = setOf(),
@@ -155,7 +155,7 @@ class ItemUiFilterTest {
                 itemContents = ItemContents.Login(
                     title = "tablet",
                     note = "Tablet note",
-                    username = "username",
+                    itemEmail = "username",
                     password = HiddenState.Concealed(""),
                     urls = listOf("randomurl.test", "testurl.test"),
                     packageInfoSet = setOf(),
@@ -171,7 +171,7 @@ class ItemUiFilterTest {
                 itemContents = ItemContents.Login(
                     title = "phone",
                     note = "Phone note",
-                    username = "username",
+                    itemEmail = "username",
                     password = HiddenState.Concealed(""),
                     urls = listOf("exampleurl.test", "testurl.test"),
                     packageInfoSet = setOf(),
@@ -197,7 +197,7 @@ class ItemUiFilterTest {
                 itemContents = ItemContents.Login(
                     title = "tablet",
                     note = "Tablet note",
-                    username = "username",
+                    itemEmail = "username",
                     password = HiddenState.Concealed(""),
                     urls = listOf("exampleurl.test", "otherurl.test"),
                     packageInfoSet = setOf(),
@@ -280,7 +280,7 @@ class ItemUiFilterTest {
             itemContents = ItemContents.Login(
                 title = "Login Item",
                 note = "Note",
-                username = "username",
+                itemEmail = "username",
                 urls = listOf("example.com", "test.com"),
                 password = HiddenState.Empty(""),
                 packageInfoSet = setOf(),
@@ -293,7 +293,7 @@ class ItemUiFilterTest {
             itemContents = ItemContents.Login(
                 title = "Another Login",
                 note = "Note",
-                username = "user",
+                itemEmail = "user",
                 urls = listOf("google.com"),
                 password = HiddenState.Empty(""),
                 packageInfoSet = setOf(),

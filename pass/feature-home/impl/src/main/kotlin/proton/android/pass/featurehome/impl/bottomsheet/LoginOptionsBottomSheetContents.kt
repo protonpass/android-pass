@@ -76,10 +76,10 @@ fun LoginOptionsBottomSheetContents(
     Column(modifier.bottomSheet()) {
         BottomSheetItemRow(
             title = { BottomSheetItemTitle(text = contents.title) },
-            subtitle = if (contents.username.isEmpty()) {
+            subtitle = if (contents.itemEmail.isEmpty()) {
                 null
             } else {
-                { BottomSheetItemSubtitle(text = contents.username) }
+                { BottomSheetItemSubtitle(text = contents.itemEmail) }
             },
             leftIcon = {
                 val sortedPackages = contents.packageInfoSet.sortedBy { it.packageName.value }
@@ -95,7 +95,7 @@ fun LoginOptionsBottomSheetContents(
         )
 
         val bottomSheetItems = mutableListOf(
-            copyUsername(contents.username, onCopyUsername),
+            copyUsername(contents.itemEmail, onCopyUsername),
             copyPassword(contents.password.encrypted, onCopyPassword)
         ).apply {
             if (isPinningFeatureEnabled) {
@@ -171,7 +171,7 @@ fun LoginOptionsBottomSheetContentsPreview(
                     contents = ItemContents.Login(
                         title = "My Login",
                         note = "Note content",
-                        username = "My username",
+                        itemEmail = "My username",
                         password = HiddenState.Revealed("", "My password"),
                         urls = emptyList(),
                         packageInfoSet = emptySet(),

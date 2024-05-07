@@ -123,8 +123,7 @@ class UpdateLoginViewModel @Inject constructor(
         .require<String>(CommonNavArgId.ItemId.key)
         .let(::ItemId)
 
-    private val updateEventFlow: MutableStateFlow<UpdateUiEvent> =
-        MutableStateFlow(UpdateUiEvent.Idle)
+    private val updateEventFlow: MutableStateFlow<UpdateUiEvent> = MutableStateFlow(UpdateUiEvent.Idle)
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.w(TAG, throwable)

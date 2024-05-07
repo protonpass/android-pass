@@ -27,7 +27,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
@@ -207,10 +206,7 @@ class ProfileViewModel @Inject constructor(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
         initialValue = runBlocking {
-            ProfileUiState.getInitialState(
-                appVersion = appConfig.versionName,
-                appLockSectionState = userAppLockSectionStateFlow.first()
-            )
+            ProfileUiState.getInitialState(appConfig.versionName)
         }
     )
 

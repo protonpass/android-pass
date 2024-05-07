@@ -56,7 +56,6 @@ internal class BaseLoginViewModelTest {
     private lateinit var draftRepository: DraftRepository
     private lateinit var passwordStrengthCalculator: TestPasswordStrengthCalculator
 
-
     @Before
     fun setUp() {
         totpManager = TestTotpManager()
@@ -87,12 +86,21 @@ internal class BaseLoginViewModelTest {
     }
 
     @Test
-    internal fun `WHEN item email changes THEN state should be updated accordingly`() = runTest {
-        val emailInput = "Username Changed"
+    internal fun `WHEN email changes THEN state email should be updated`() = runTest {
+        val emailInput = "user@email.com"
 
         baseLoginViewModel.onEmailChanged(emailInput)
 
         assertThat(baseLoginViewModel.loginItemFormState.email).isEqualTo(emailInput)
+    }
+
+    @Test
+    internal fun `WHEN username changes THEN state username should be updated`() = runTest {
+        val usernameInput = "new username"
+
+        baseLoginViewModel.onUsernameChanged(usernameInput)
+
+        assertThat(baseLoginViewModel.loginItemFormState.username).isEqualTo(usernameInput)
     }
 
     @Test

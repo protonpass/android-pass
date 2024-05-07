@@ -124,6 +124,7 @@ fun CreateLoginScreen(
                     LoginContentEvent.Up -> onExit()
                     is LoginContentEvent.Submit -> viewModel.createItem()
                     is LoginContentEvent.OnEmailChanged -> viewModel.onEmailChanged(it.email)
+                    is LoginContentEvent.OnUsernameChanged -> viewModel.onUsernameChanged(it.username)
                     is LoginContentEvent.OnPasswordChange -> viewModel.onPasswordChange(it.password)
                     is LoginContentEvent.OnWebsiteEvent -> when (val event = it.event) {
                         WebsiteSectionEvent.AddWebsite -> viewModel.onAddWebsite()

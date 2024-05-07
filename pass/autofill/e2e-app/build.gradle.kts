@@ -85,6 +85,7 @@ dependencies {
     implementation(libs.core.userSettings.domain)
 
     implementation(projects.pass.account.fakes)
+    implementation(projects.pass.appConfig.fakes)
     implementation(projects.pass.autofill.impl)
     implementation(projects.pass.biometry.fakes)
     implementation(projects.pass.clipboard.fakes)

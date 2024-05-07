@@ -29,12 +29,12 @@ enum class OrganizationShareMode(val value: Int) {
     }
 }
 
-sealed class ForceLockSeconds {
-    data object NotEnforced : ForceLockSeconds()
-    data class Enforced(val seconds: Int) : ForceLockSeconds()
+sealed interface ForceLockSeconds {
+    data object NotEnforced : ForceLockSeconds
+    data class Enforced(val seconds: Int) : ForceLockSeconds
 
     companion object {
-        fun fromValue(value: Int): ForceLockSeconds = if (value == 0) NotEnforced else Enforced(value)
+        fun fromValue(value: Int): ForceLockSeconds = if (value <= 0) NotEnforced else Enforced(value)
     }
 }
 

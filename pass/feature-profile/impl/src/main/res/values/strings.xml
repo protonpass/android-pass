@@ -64,19 +64,19 @@
     <string name="profile_passkey_support_subtitle_not_supported_unknown">Could not check support for passkeys</string>
 
     <plurals name="profile_after_days">
-        <item quantity="one">after %d day</item>
-        <item quantity="other">after %d days</item>
+        <item quantity="one">After %d day</item>
+        <item quantity="other">After %d days</item>
     </plurals>
 
     <plurals name="profile_after_minutes">
-        <item quantity="one">after %d minute</item>
-        <item quantity="other">after %d minutes</item>
+        <item quantity="one">After %d minute</item>
+        <item quantity="other">After %d minutes</item>
     </plurals>
 
     <plurals name="profile_after_hours">
-        <item quantity="one">after %d hour</item>
-        <item quantity="other">after %d hours</item>
+        <item quantity="one">After %d hour</item>
+        <item quantity="other">After %d hours</item>
     </plurals>
-    <string name="profile_less_than_a_minute">less than a minute</string>
+    <string name="profile_less_than_a_minute">Less than a minute</string>
 
 </resources>

@@ -22,28 +22,22 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.onEach
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.OrganizationSettingsRepository
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
 import proton.android.pass.domain.OrganizationSettings
 import javax.inject.Inject
 
 class ObserveOrganizationSettingsImpl @Inject constructor(
-    private val accountManager: AccountManager,
+    private val observeCurrentUser: ObserveCurrentUser,
     private val repository: OrganizationSettingsRepository
 ) : ObserveOrganizationSettings {
 
-    override fun invoke(): Flow<OrganizationSettings> = accountManager.getPrimaryUserId()
-        .filterNotNull()
-        .flatMapLatest(::observeSettings)
-        .filterNotNull()
-
-    private fun observeSettings(userId: UserId): Flow<OrganizationSettings?> = repository.observe(userId)
-        .onEach {
-            if (it == null) {
-                runCatching { repository.refresh(userId) }
-            }
+    override fun invoke(): Flow<OrganizationSettings> = observeCurrentUser()
+        .flatMapLatest { user ->
+            repository.observe(user.userId)
+                .onEach { if (it == null) runCatching { repository.refresh(user.userId) } }
         }
+        .filterNotNull()
 
 }

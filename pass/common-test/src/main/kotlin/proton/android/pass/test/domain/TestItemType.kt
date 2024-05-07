@@ -25,20 +25,24 @@ import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.test.TestUtils
 
 object TestItemType {
+
     fun login(
-        username: String? = null,
-        password: String? = null,
-        primaryTotp: String? = null,
+        email: String = TestUtils.randomString(),
+        username: String = TestUtils.randomString(),
+        password: String = TestUtils.randomString(),
+        primaryTotp: String = "",
         websites: List<String> = emptyList(),
         packageInfoSet: Set<PackageInfo> = emptySet(),
         passkeys: List<Passkey> = emptyList()
     ): ItemType.Login = ItemType.Login(
-        itemEmail = username ?: TestUtils.randomString(),
-        password = password ?: TestUtils.randomString(),
+        itemEmail = email,
+        itemUsername = username,
+        password = password,
         websites = websites,
         packageInfoSet = packageInfoSet,
-        primaryTotp = TestKeyStoreCrypto.encrypt(primaryTotp ?: ""),
+        primaryTotp = TestKeyStoreCrypto.encrypt(primaryTotp),
         customFields = emptyList(),
         passkeys = passkeys
     )
+
 }

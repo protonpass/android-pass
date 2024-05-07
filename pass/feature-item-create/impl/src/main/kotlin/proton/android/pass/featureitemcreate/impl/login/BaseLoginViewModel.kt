@@ -228,7 +228,7 @@ abstract class BaseLoginViewModel(
             initialValue = BaseLoginUiState.Initial
         )
 
-    fun onTitleChange(value: String) {
+    internal fun onTitleChange(value: String) {
         onUserEditedContent()
         loginItemFormMutableState = loginItemFormMutableState.copy(title = value)
         loginItemValidationErrorsState.update {
@@ -246,7 +246,12 @@ abstract class BaseLoginViewModel(
         loginItemFormMutableState = loginItemFormMutableState.copy(email = newEmail)
     }
 
-    fun onPasswordChange(newPasswordValue: String) {
+    internal fun onUsernameChanged(newUsername: String) {
+        onUserEditedContent()
+        loginItemFormMutableState = loginItemFormMutableState.copy(username = newUsername)
+    }
+
+    internal fun onPasswordChange(newPasswordValue: String) {
         onUserEditedContent()
         loginItemFormMutableState = encryptionContextProvider.withEncryptionContext {
             loginItemFormMutableState.copy(
@@ -259,7 +264,7 @@ abstract class BaseLoginViewModel(
         }
     }
 
-    fun onTotpChange(value: String) {
+    internal fun onTotpChange(value: String) {
         onUserEditedContent()
         val newValue = totpManager.sanitiseToEdit(value).getOrNull() ?: value
         loginItemFormMutableState = encryptionContextProvider.withEncryptionContext {
@@ -272,7 +277,7 @@ abstract class BaseLoginViewModel(
         }
     }
 
-    fun onWebsiteChange(value: String, index: Int) {
+    internal fun onWebsiteChange(value: String, index: Int) {
         onUserEditedContent()
         val newValue = value.replace(" ", "").replace("\n", "")
         loginItemFormMutableState = loginItemFormState.copy(
@@ -289,14 +294,14 @@ abstract class BaseLoginViewModel(
         focusLastWebsiteState.update { false }
     }
 
-    fun onAddWebsite() {
+    internal fun onAddWebsite() {
         onUserEditedContent()
         loginItemFormMutableState =
             loginItemFormState.copy(urls = sanitizeWebsites(loginItemFormState.urls) + "")
         focusLastWebsiteState.update { true }
     }
 
-    fun onRemoveWebsite(index: Int) {
+    internal fun onRemoveWebsite(index: Int) {
         onUserEditedContent()
         loginItemFormMutableState = loginItemFormState.copy(
             urls = loginItemFormState.urls.toMutableList()
@@ -308,16 +313,16 @@ abstract class BaseLoginViewModel(
         focusLastWebsiteState.update { false }
     }
 
-    fun onNoteChange(value: String) {
+    internal fun onNoteChange(value: String) {
         onUserEditedContent()
         loginItemFormMutableState = loginItemFormMutableState.copy(note = value)
     }
 
-    fun onEmitSnackbarMessage(snackbarMessage: LoginSnackbarMessages) = viewModelScope.launch {
+    internal fun onEmitSnackbarMessage(snackbarMessage: LoginSnackbarMessages) = viewModelScope.launch {
         snackbarDispatcher(snackbarMessage)
     }
 
-    fun onAliasCreated(aliasItemFormState: AliasItemFormState) {
+    internal fun onAliasCreated(aliasItemFormState: AliasItemFormState) {
         onUserEditedContent()
         aliasLocalItemState.update { aliasItemFormState.toOption() }
         val alias = aliasItemFormState.aliasToBeCreated
@@ -327,7 +332,7 @@ abstract class BaseLoginViewModel(
         }
     }
 
-    fun onClose() {
+    internal fun onClose() {
         draftRepository.delete<AliasItemFormState>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
         draftRepository.delete<CustomFieldContent>(DRAFT_CUSTOM_FIELD_KEY)
     }

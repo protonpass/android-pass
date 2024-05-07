@@ -112,7 +112,7 @@ sealed class ItemContents {
         val passkeys: List<Passkey>
     ) : ItemContents() {
 
-        val loginUsername: String = itemUsername.ifEmpty { itemEmail }
+        val displayUsername: String = itemUsername.ifEmpty { itemEmail }
 
         val websiteUrl: String? = urls.firstOrNull()
 

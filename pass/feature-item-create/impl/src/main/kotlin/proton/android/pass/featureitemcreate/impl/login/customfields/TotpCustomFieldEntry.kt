@@ -46,7 +46,7 @@ import proton.android.pass.featureitemcreate.impl.login.LoginCustomField
 import proton.android.pass.featureitemcreate.impl.login.LoginItemValidationErrors
 
 @Composable
-fun TotpCustomFieldEntry(
+internal fun TotpCustomFieldEntry(
     modifier: Modifier = Modifier,
     content: UICustomFieldContent.Totp,
     validationError: LoginItemValidationErrors.CustomFieldValidationError?,
@@ -112,7 +112,7 @@ fun TotpCustomFieldEntry(
 
 @Preview
 @Composable
-fun TotpCustomFieldEntryPreview(
+internal fun TotpCustomFieldEntryPreview(
     @PreviewParameter(ThemeTotpCustomFieldInput::class) input: Pair<Boolean, TotpCustomFieldInput>
 ) {
     PassTheme(isDark = input.first) {

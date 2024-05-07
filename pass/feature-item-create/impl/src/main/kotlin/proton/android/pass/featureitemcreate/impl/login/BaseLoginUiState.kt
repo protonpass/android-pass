@@ -32,7 +32,7 @@ import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 
 @Immutable
-data class BaseLoginUiState(
+internal data class BaseLoginUiState(
     val aliasItemFormState: AliasItemFormState?,
     val validationErrors: PersistentSet<LoginItemValidationErrors>,
     val isLoadingState: IsLoadingState,
@@ -47,8 +47,9 @@ data class BaseLoginUiState(
     val totpUiState: TotpUiState,
     val focusedField: LoginField?
 ) {
-    companion object {
-        val Initial = BaseLoginUiState(
+    internal companion object {
+
+        internal val Initial = BaseLoginUiState(
             aliasItemFormState = null,
             validationErrors = persistentSetOf(),
             isLoadingState = IsLoadingState.NotLoading,
@@ -63,51 +64,56 @@ data class BaseLoginUiState(
             totpUiState = TotpUiState.NotInitialised,
             focusedField = null
         )
+
     }
 }
 
 @Immutable
-data class CreateLoginUiState(
+internal data class CreateLoginUiState(
     val shareUiState: ShareUiState,
     val baseLoginUiState: BaseLoginUiState,
     val passkeyState: Option<CreatePasskeyState> = None
 ) {
-    companion object {
-        val Initial = CreateLoginUiState(
+    internal companion object {
+
+        internal val Initial = CreateLoginUiState(
             shareUiState = ShareUiState.NotInitialised,
             baseLoginUiState = BaseLoginUiState.Initial
         )
+
     }
 }
 
 @Immutable
-data class CreatePasskeyState(
+internal data class CreatePasskeyState(
     val domain: String,
     val username: String
 )
 
 @Immutable
-sealed interface UpdateUiEvent {
+internal sealed interface UpdateUiEvent {
     data object Idle : UpdateUiEvent
     data class ConfirmDeletePasskey(val index: Int, val passkey: UIPasskeyContent) : UpdateUiEvent
 }
 
 @Immutable
-data class UpdateLoginUiState(
+internal data class UpdateLoginUiState(
     val selectedShareId: ShareId?,
     val baseLoginUiState: BaseLoginUiState,
     val uiEvent: UpdateUiEvent = UpdateUiEvent.Idle
 ) {
     companion object {
+
         val Initial = UpdateLoginUiState(
             selectedShareId = null,
             baseLoginUiState = BaseLoginUiState.Initial
         )
+
     }
 }
 
+internal sealed interface TotpUiState {
 
-sealed interface TotpUiState {
     @Immutable
     data object NotInitialised : TotpUiState
 
@@ -122,4 +128,5 @@ sealed interface TotpUiState {
 
     @Immutable
     data class Limited(val isEdit: Boolean) : TotpUiState
+
 }

@@ -24,7 +24,7 @@ import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.login.customfields.CustomFieldEvent
 
-sealed interface LoginContentEvent {
+internal sealed interface LoginContentEvent {
 
     data object Up : LoginContentEvent
 
@@ -33,6 +33,9 @@ sealed interface LoginContentEvent {
 
     @JvmInline
     value class OnEmailChanged(val email: String) : LoginContentEvent
+
+    @JvmInline
+    value class OnUsernameChanged(val username: String) : LoginContentEvent
 
     @JvmInline
     value class OnUsernameChange(val username: String) : LoginContentEvent

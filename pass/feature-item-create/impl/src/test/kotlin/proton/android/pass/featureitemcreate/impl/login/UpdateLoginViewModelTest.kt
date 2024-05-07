@@ -104,7 +104,8 @@ class UpdateLoginViewModelTest {
             itemContents = ItemContents.Login(
                 title = "item",
                 note = "note",
-                itemEmail = "username",
+                itemEmail = "user@email.com",
+                itemUsername = "username",
                 password = HiddenState.Empty(TestEncryptionContext.encrypt("password")),
                 urls = emptyList(),
                 packageInfoSet = emptySet(),
@@ -130,7 +131,8 @@ class UpdateLoginViewModelTest {
             itemContents = ItemContents.Login(
                 title = "item",
                 note = "note",
-                itemEmail = "username",
+                itemEmail = "user@email.com",
+                itemUsername = "username",
                 password = HiddenState.Empty(TestEncryptionContext.encrypt("password")),
                 urls = emptyList(),
                 packageInfoSet = emptySet(),

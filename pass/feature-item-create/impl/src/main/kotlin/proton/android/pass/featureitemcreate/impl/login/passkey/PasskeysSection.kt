@@ -28,13 +28,11 @@ import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.featureitemcreate.impl.login.LoginContentEvent
 
 @Composable
-fun PasskeysSection(
+internal fun PasskeysSection(
     modifier: Modifier = Modifier,
     passkeys: ImmutableList<UIPasskeyContent>,
     onEvent: (LoginContentEvent) -> Unit
 ) {
-    if (passkeys.isEmpty()) return
-
     Column(modifier = modifier) {
         passkeys.forEachIndexed { idx, passkey ->
             PasskeyEditRow(

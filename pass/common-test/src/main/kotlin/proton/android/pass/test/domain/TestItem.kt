@@ -73,6 +73,7 @@ object TestItem {
     ): Item {
         val itemTypeParam = itemType ?: ItemType.Login(
             itemEmail = randomString(),
+            itemUsername = randomString(),
             password = randomString().encrypt(TestKeyStoreCrypto),
             websites = emptyList(),
             packageInfoSet = emptySet(),

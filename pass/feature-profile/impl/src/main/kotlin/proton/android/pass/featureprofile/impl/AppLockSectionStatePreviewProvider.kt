@@ -21,17 +21,25 @@ package proton.android.pass.featureprofile.impl
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import proton.android.pass.preferences.AppLockTimePreference
 import proton.android.pass.preferences.BiometricSystemLockPreference
+import kotlin.time.Duration.Companion.hours
+import kotlin.time.Duration.Companion.minutes
 
 class AppLockSectionStatePreviewProvider : PreviewParameterProvider<AppLockSectionState> {
     override val values: Sequence<AppLockSectionState>
         get() = sequenceOf(
-            AppLockSectionState.None,
-            AppLockSectionState.Pin(
+            UserAppLockSectionState.None,
+            UserAppLockSectionState.Pin(
                 appLockTimePreference = AppLockTimePreference.InOneMinute
             ),
-            AppLockSectionState.Biometric(
+            UserAppLockSectionState.Biometric(
                 appLockTimePreference = AppLockTimePreference.InOneMinute,
                 biometricSystemLockPreference = BiometricSystemLockPreference.Enabled
-            )
+            ),
+            EnforcedAppLockSectionState.Pin(seconds = 1.minutes.inWholeSeconds.toInt()),
+            EnforcedAppLockSectionState.Biometric(
+                seconds = 1.hours.inWholeSeconds.toInt(),
+                biometricSystemLockPreference = BiometricSystemLockPreference.Enabled
+            ),
+            EnforcedAppLockSectionState.Password(seconds = 10.hours.inWholeSeconds.toInt())
         )
 }

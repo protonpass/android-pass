@@ -51,7 +51,8 @@ fun Item.toItemContents(encryptionContext: EncryptionContext): ItemContents = wh
     is ItemType.Login -> ItemContents.Login(
         title = encryptionContext.decrypt(title),
         note = encryptionContext.decrypt(note),
-        itemEmail = type.username,
+        itemEmail = type.itemEmail,
+        itemUsername = type.itemUsername,
         password = concealedOrEmpty(type.password, encryptionContext),
         urls = type.websites,
         packageInfoSet = type.packageInfoSet,

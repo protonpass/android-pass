@@ -33,7 +33,7 @@ object TestItemType {
         packageInfoSet: Set<PackageInfo> = emptySet(),
         passkeys: List<Passkey> = emptyList()
     ): ItemType.Login = ItemType.Login(
-        username = username ?: TestUtils.randomString(),
+        itemEmail = username ?: TestUtils.randomString(),
         password = password ?: TestUtils.randomString(),
         websites = websites,
         packageInfoSet = packageInfoSet,

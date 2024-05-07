@@ -36,7 +36,7 @@ import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 data class LoginItemFormState(
     val title: String,
     val note: String,
-    val username: String,
+    val email: String,
     val password: UIHiddenState,
     val passwordStrength: PasswordStrength,
     val urls: List<String>,
@@ -47,7 +47,7 @@ data class LoginItemFormState(
     val passkeyToBeGenerated: UIPasskeyContent?
 ) : Parcelable {
 
-    fun validate(): Set<LoginItemValidationErrors> {
+    internal fun validate(): Set<LoginItemValidationErrors> {
         val mutableSet = mutableSetOf<LoginItemValidationErrors>()
         if (title.isBlank()) mutableSet.add(LoginItemValidationErrors.BlankTitle)
         urls.forEachIndexed { idx, url ->
@@ -62,10 +62,11 @@ data class LoginItemFormState(
         return mutableSet.toSet()
     }
 
-    fun toItemContents(): ItemContents.Login = ItemContents.Login(
+    internal fun toItemContents(): ItemContents.Login = ItemContents.Login(
         title = title,
         note = note,
-        itemEmail = username,
+        itemEmail = email,
+        itemUsername = "",
         password = password.toHiddenState(),
         urls = urls,
         packageInfoSet = packageInfoSet.map(PackageInfoUi::toPackageInfo).toSet(),
@@ -78,24 +79,25 @@ data class LoginItemFormState(
         }
     )
 
-    fun compare(other: LoginItemFormState, encryptionContext: EncryptionContext): Boolean = title == other.title &&
-        note == other.note &&
-        username == other.username &&
-        encryptionContext.decrypt(password.encrypted.toEncryptedByteArray())
-            .contentEquals(encryptionContext.decrypt(other.password.encrypted.toEncryptedByteArray())) &&
-        urls == other.urls &&
-        packageInfoSet == other.packageInfoSet &&
-        encryptionContext.decrypt(primaryTotp.encrypted.toEncryptedByteArray())
-            .contentEquals(encryptionContext.decrypt(other.primaryTotp.encrypted.toEncryptedByteArray())) &&
-        customFields.size == other.customFields.size &&
-        customFields.zip(other.customFields).all { (a, b) -> a.compare(b, encryptionContext) }
+    internal fun compare(other: LoginItemFormState, encryptionContext: EncryptionContext): Boolean =
+        title == other.title &&
+            note == other.note &&
+            email == other.email &&
+            encryptionContext.decrypt(password.encrypted.toEncryptedByteArray())
+                .contentEquals(encryptionContext.decrypt(other.password.encrypted.toEncryptedByteArray())) &&
+            urls == other.urls &&
+            packageInfoSet == other.packageInfoSet &&
+            encryptionContext.decrypt(primaryTotp.encrypted.toEncryptedByteArray())
+                .contentEquals(encryptionContext.decrypt(other.primaryTotp.encrypted.toEncryptedByteArray())) &&
+            customFields.size == other.customFields.size &&
+            customFields.zip(other.customFields).all { (a, b) -> a.compare(b, encryptionContext) }
 
-    companion object {
+    internal companion object {
 
-        fun default(encryptionContext: EncryptionContext) = LoginItemFormState(
+        internal fun default(encryptionContext: EncryptionContext) = LoginItemFormState(
             title = "",
             note = "",
-            username = "",
+            email = "",
             password = UIHiddenState.Empty(encryptionContext.encrypt("")),
             passwordStrength = PasswordStrength.None,
             urls = listOf(""),
@@ -110,7 +112,7 @@ data class LoginItemFormState(
 
 }
 
-sealed interface LoginItemValidationErrors {
+internal sealed interface LoginItemValidationErrors {
     data object BlankTitle : LoginItemValidationErrors
     data class InvalidUrl(val index: Int) : LoginItemValidationErrors
     data object InvalidTotp : LoginItemValidationErrors

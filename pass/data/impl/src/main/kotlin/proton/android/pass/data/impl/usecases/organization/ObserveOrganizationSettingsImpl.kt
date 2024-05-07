@@ -40,6 +40,10 @@ class ObserveOrganizationSettingsImpl @Inject constructor(
         .filterNotNull()
 
     private fun observeSettings(userId: UserId): Flow<OrganizationSettings?> = repository.observe(userId)
-        .onEach { if (it == null) repository.refresh(userId) }
+        .onEach {
+            if (it == null) {
+                runCatching { repository.refresh(userId) }
+            }
+        }
 
 }

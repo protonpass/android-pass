@@ -78,7 +78,12 @@ internal fun LoginItemForm(
     websitesWithErrors: ImmutableList<Int>,
     selectedShareId: ShareId?,
     hasReachedAliasLimit: Boolean,
-    onEvent: (LoginContentEvent) -> Unit
+    onEvent: (LoginContentEvent) -> Unit,
+    onGeneratePasswordClick: () -> Unit,
+    onCreateAliasClick: () -> Unit,
+    onAliasOptionsClick: () -> Unit,
+    onNavigate: (BaseLoginNavigation) -> Unit,
+    isUsernameSplitEnabled: Boolean
 ) {
     Box(modifier = modifier) {
         val currentStickyFormOption = when (focusedField) {
@@ -139,7 +144,13 @@ internal fun LoginItemForm(
                 isEditAllowed = isEditAllowed,
                 isTotpError = isTotpError,
                 hasReachedAliasLimit = hasReachedAliasLimit,
-                onEvent = onEvent
+                onEvent = onEvent,
+                onAliasOptionsClick = onAliasOptionsClick,
+                onFocusChange = { field, isFocused ->
+                    onEvent(LoginContentEvent.OnFocusChange(field, isFocused))
+                },
+                onUpgrade = { onNavigate(BaseLoginNavigation.Upgrade) },
+                isUsernameSplitEnabled = isUsernameSplitEnabled
             )
 
             WebsitesSection(

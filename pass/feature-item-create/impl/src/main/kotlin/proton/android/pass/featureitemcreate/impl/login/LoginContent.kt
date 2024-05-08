@@ -97,7 +97,18 @@ internal fun LoginContent(
                 .toPersistentList(),
             selectedShareId = selectedShareId,
             hasReachedAliasLimit = uiState.hasReachedAliasLimit,
-            onEvent = onEvent
+            onEvent = onEvent,
+            onAliasOptionsClick = {
+                selectedShareId ?: return@LoginItemForm
+                onNavigate(
+                    BaseLoginNavigation.AliasOptions(
+                        shareId = selectedShareId,
+                        showUpgrade = uiState.hasReachedAliasLimit
+                    )
+                )
+            },
+            onNavigate = onNavigate,
+            isUsernameSplitEnabled = uiState.isUsernameSplitEnabled
         )
     }
 }

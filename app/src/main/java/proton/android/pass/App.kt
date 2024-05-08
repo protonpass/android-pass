@@ -30,7 +30,6 @@ import kotlinx.coroutines.launch
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.initializer.MainInitializer
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 import javax.inject.Provider
@@ -51,7 +50,6 @@ class App : Application(), ImageLoaderFactory {
     override fun onCreate() {
         super.onCreate()
         MainInitializer.init(this)
-        preferenceRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
         registerActivityLifecycleCallbacks(
             activityLifecycleCallbacks(
                 onActivityCreated = { activity, _ ->

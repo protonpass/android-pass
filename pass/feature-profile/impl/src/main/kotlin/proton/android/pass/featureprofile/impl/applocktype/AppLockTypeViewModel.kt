@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -37,6 +38,7 @@ import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.BiometryType
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.data.api.usecases.ClearPin
+import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.BiometryFailedToAuthenticateError
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.BiometryFailedToStartError
@@ -57,7 +59,8 @@ class AppLockTypeViewModel @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository,
     private val biometryManager: BiometryManager,
     private val snackbarDispatcher: SnackbarDispatcher,
-    private val clearPin: ClearPin
+    private val clearPin: ClearPin,
+    private val observeOrganizationSettings: ObserveOrganizationSettings
 ) : ViewModel() {
     private val eventState: MutableStateFlow<AppLockTypeEvent> =
         MutableStateFlow(AppLockTypeEvent.Unknown)
@@ -67,11 +70,13 @@ class AppLockTypeViewModel @Inject constructor(
     val state: StateFlow<AppLockTypeUiState> = combine(
         flow { emit(biometryManager.getBiometryStatus()) },
         userPreferencesRepository.getAppLockTypePreference(),
+        observeOrganizationSettings().map { it.isEnforced() },
         eventState
-    ) { biometryStatus, appLockTypePreference, event ->
+    ) { biometryStatus, appLockTypePreference, isForceLockMandatory, event ->
         AppLockTypeUiState(
             items = appLockTypePreferences(biometryStatus),
             selected = appLockTypePreference,
+            isForceLockMandatory = isForceLockMandatory,
             event = event
         )
     }.stateIn(

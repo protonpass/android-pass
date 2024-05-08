@@ -30,12 +30,14 @@ sealed interface AppLockTypeEvent {
 data class AppLockTypeUiState(
     val items: List<AppLockTypePreference>,
     val selected: AppLockTypePreference,
+    val isForceLockMandatory: Boolean,
     val event: AppLockTypeEvent
 ) {
     companion object {
         fun default(preferences: List<AppLockTypePreference>) = AppLockTypeUiState(
             items = preferences,
             selected = AppLockTypePreference.None,
+            isForceLockMandatory = false,
             event = AppLockTypeEvent.Unknown
         )
     }

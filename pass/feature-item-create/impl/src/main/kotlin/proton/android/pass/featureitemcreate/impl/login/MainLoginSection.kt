@@ -41,21 +41,32 @@ internal fun MainLoginSection(
     Column(
         modifier = modifier.roundedContainerNorm()
     ) {
-        UsernameInput(
-            value = loginItemFormState.email,
+        ExpandableEmailUsernameInput(
+            email = loginItemFormState.email,
+            username = loginItemFormState.username,
+            isExpanded = loginItemFormState.isEmailUsernameExpanded,
             canUpdateUsername = canUpdateUsername,
             isEditAllowed = isEditAllowed,
             onAliasOptionsClick = {
-                selectedShareId ?: return@UsernameInput
+                selectedShareId ?: return@ExpandableEmailUsernameInput
                 onEvent(LoginContentEvent.OnAliasOptions(selectedShareId, hasReachedAliasLimit))
             },
-            onFocus = { isFocused ->
-                onEvent(LoginContentEvent.OnFocusChange(LoginField.Username, isFocused))
+            onFocusChange = { loginField, isFocused ->
+                onEvent(LoginContentEvent.OnFocusChange(loginField, isFocused))
             },
-            onChange = { newEmail ->
-                onEvent(LoginContentEvent.OnEmailChanged(newEmail))
-            }
+            onEvent = onEvent,
         )
+
+//        UsernameInput(
+//            value = loginItemFormState.email,
+//            canUpdateUsername = canUpdateUsername,
+//            isEditAllowed = isEditAllowed,
+//            onChange = { newEmail ->
+//                onEvent(LoginContentEvent.OnEmailChanged(newEmail))
+//            },
+//            onAliasOptionsClick = onAliasOptionsClick,
+//            onFocus = { onFocusChange(LoginField.Username, it) }
+//        )
 
         Divider(color = PassTheme.colors.inputBorderNorm)
 

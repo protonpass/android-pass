@@ -17,4 +17,5 @@ message FeatureFlagsPreferences {
   BoolFlagPrefProto history_v1_enabled = 9;
   BoolFlagPrefProto security_center_v1_enabled = 10;
   BoolFlagPrefProto identity_item_type_enabled = 11;
+  BoolFlagPrefProto username_split_enabled = 12;
 }

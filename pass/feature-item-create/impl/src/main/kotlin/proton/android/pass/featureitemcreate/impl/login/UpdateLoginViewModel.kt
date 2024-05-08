@@ -79,6 +79,7 @@ import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.Up
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
@@ -99,7 +100,8 @@ class UpdateLoginViewModel @Inject constructor(
     observeCurrentUser: ObserveCurrentUser,
     observeUpgradeInfo: ObserveUpgradeInfo,
     savedStateHandleProvider: SavedStateHandleProvider,
-    draftRepository: DraftRepository
+    draftRepository: DraftRepository,
+    featureFlagsRepository: FeatureFlagsPreferencesRepository
 ) : BaseLoginViewModel(
     accountManager = accountManager,
     snackbarDispatcher = snackbarDispatcher,
@@ -110,7 +112,8 @@ class UpdateLoginViewModel @Inject constructor(
     draftRepository = draftRepository,
     encryptionContextProvider = encryptionContextProvider,
     passwordStrengthCalculator = passwordStrengthCalculator,
-    savedStateHandleProvider = savedStateHandleProvider
+    savedStateHandleProvider = savedStateHandleProvider,
+    featureFlagsRepository = featureFlagsRepository
 ) {
     private val navShareId: ShareId = savedStateHandleProvider.get()
         .require<String>(CommonNavArgId.ShareId.key)
@@ -120,7 +123,8 @@ class UpdateLoginViewModel @Inject constructor(
         .require<String>(CommonNavArgId.ItemId.key)
         .let(::ItemId)
 
-    private val updateEventFlow: MutableStateFlow<UpdateUiEvent> = MutableStateFlow(UpdateUiEvent.Idle)
+    private val updateEventFlow: MutableStateFlow<UpdateUiEvent> =
+        MutableStateFlow(UpdateUiEvent.Idle)
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.w(TAG, throwable)

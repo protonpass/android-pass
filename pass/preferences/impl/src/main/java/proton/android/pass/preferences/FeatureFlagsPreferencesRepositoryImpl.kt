@@ -34,6 +34,7 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.IDENTITY_V1
 import proton.android.pass.preferences.FeatureFlag.SECURITY_CENTER_V1
+import proton.android.pass.preferences.FeatureFlag.USERNAME_SPLIT
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -61,6 +62,11 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
         ) { identityItemTypeEnabled.value }
+
+        USERNAME_SPLIT -> getFeatureFlag(
+            key = featureFlag.key,
+            defaultValue = featureFlag.isEnabledDefault
+        ) { usernameSplitEnabled.value }
     }
 
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> = when (featureFlag) {
@@ -74,6 +80,10 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
 
         IDENTITY_V1 -> setFeatureFlag {
             identityItemTypeEnabled = boolFlagPrefProto(value)
+        }
+
+        USERNAME_SPLIT -> setFeatureFlag {
+            usernameSplitEnabled = boolFlagPrefProto(value)
         }
     }
 

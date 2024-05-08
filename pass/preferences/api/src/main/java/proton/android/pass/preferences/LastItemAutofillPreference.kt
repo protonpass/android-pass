@@ -18,6 +18,7 @@
 
 package proton.android.pass.preferences
 
+import kotlinx.datetime.Clock
 import kotlin.time.Duration.Companion.minutes
 
 data class LastItemAutofillPreference(
@@ -25,6 +26,6 @@ data class LastItemAutofillPreference(
     val shareId: String,
     val itemId: String
 ) {
-    fun isAutofillPreferenceTooOld(currentTimestamp: Long): Boolean =
-        currentTimestamp - lastAutofillTimestamp > 1.minutes.inWholeSeconds
+    val isTooOld: Boolean
+        get() = Clock.System.now().epochSeconds - lastAutofillTimestamp > 1.minutes.inWholeSeconds
 }

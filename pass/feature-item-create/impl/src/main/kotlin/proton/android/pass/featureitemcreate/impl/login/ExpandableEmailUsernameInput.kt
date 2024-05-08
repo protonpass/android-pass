@@ -30,6 +30,8 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,7 +39,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import me.proton.core.presentation.R as CoreR
 
@@ -46,13 +47,14 @@ internal fun ExpandableEmailUsernameInput(
     modifier: Modifier = Modifier,
     email: String,
     username: String,
-    isExpanded: Boolean,
     onEvent: (LoginContentEvent) -> Unit,
     onFocusChange: (LoginField, Boolean) -> Unit,
     onAliasOptionsClick: () -> Unit,
     canUpdateUsername: Boolean,
     isEditAllowed: Boolean
 ) {
+    val isExpanded = rememberSaveable { mutableStateOf(username.isNotEmpty()) }
+
     Column(
         modifier = modifier
     ) {
@@ -66,27 +68,22 @@ internal fun ExpandableEmailUsernameInput(
                 onFocusChange(LoginField.Email, isFocused)
             },
             leadingIcon = {
-                Box(
-                    modifier = Modifier.applyIf(
-                        condition = !isExpanded,
-                        ifTrue = {
-                            clickable { onEvent(LoginContentEvent.OnEmailUsernameExpanded) }
-                        }
-                    )
-                ) {
+                if (isExpanded.value) {
                     Icon(
-                        modifier = Modifier.applyIf(
-                            condition = !isExpanded,
-                            ifTrue = {
-                                padding(horizontal = 2.dp)
-                            }
-                        ),
-                        painter = painterResource(id = CoreR.drawable.ic_proton_envelope),
+                        painter = painterResource(CoreR.drawable.ic_proton_envelope),
                         contentDescription = null,
                         tint = ProtonTheme.colors.iconWeak
                     )
+                } else {
+                    Box(
+                        modifier = Modifier.clickable { isExpanded.value = true }
+                    ) {
+                        Icon(
+                            painter = painterResource(id = CoreR.drawable.ic_proton_envelope),
+                            contentDescription = null,
+                            tint = ProtonTheme.colors.iconWeak
+                        )
 
-                    if (!isExpanded) {
                         Icon(
                             modifier = Modifier
                                 .align(alignment = Alignment.TopEnd)
@@ -126,7 +123,7 @@ internal fun ExpandableEmailUsernameInput(
             }
         )
 
-        AnimatedVisibility(visible = isExpanded) {
+        AnimatedVisibility(visible = isExpanded.value) {
             Divider(color = PassTheme.colors.inputBorderNorm)
 
             UsernameInput(

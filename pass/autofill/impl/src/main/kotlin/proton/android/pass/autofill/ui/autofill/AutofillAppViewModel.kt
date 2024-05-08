@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
 import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.autofill.AutofillDisplayed
 import proton.android.pass.autofill.AutofillDone
@@ -55,6 +56,8 @@ import proton.android.pass.domain.entity.PackageName
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
+import proton.android.pass.preferences.InternalSettingsRepository
+import proton.android.pass.preferences.LastItemAutofillPreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -94,7 +97,8 @@ class AutofillAppViewModel @Inject constructor(
     private val preferenceRepository: UserPreferencesRepository,
     private val telemetryManager: TelemetryManager,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
-    private val getItemById: GetItemById
+    private val getItemById: GetItemById,
+    private val internalSettingsRepository: InternalSettingsRepository
 ) : ViewModel() {
 
     private var hadSelectedAutofillItem: Option<Boolean> = None
@@ -130,11 +134,13 @@ class AutofillAppViewModel @Inject constructor(
             state.autofillData.isDangerousAutofill -> _eventFlow.update {
                 AutofillAppEvent.ShowWarningDialog(itemUiModel)
             }
+
             !isSuggestion && shouldAskForAssociation(itemUiModel.contents, state) -> {
                 _eventFlow.update {
                     AutofillAppEvent.ShowAssociateDialog(itemUiModel)
                 }
             }
+
             else -> sendMappings(
                 item = itemUiModel.toAutoFillItem(),
                 state = state,
@@ -188,6 +194,7 @@ class AutofillAppViewModel @Inject constructor(
         state: AutofillAppState,
         associate: Boolean
     ) {
+        setLastItemAutofillForMultiStep(item)
         sendItemSelectedTelemetry(state)
         val (updatePackageInfo, updateUrl) = state.updateAutofillFields()
         updateAutofillItem(
@@ -206,6 +213,16 @@ class AutofillAppViewModel @Inject constructor(
         } else {
             _eventFlow.update { AutofillAppEvent.Cancel }
         }
+    }
+
+    private fun setLastItemAutofillForMultiStep(item: AutofillItem) {
+        internalSettingsRepository.setLastItemAutofill(
+            LastItemAutofillPreference(
+                itemId = item.itemId().id,
+                shareId = item.shareId().id,
+                lastAutofillTimestamp = Clock.System.now().epochSeconds
+            )
+        )
     }
 
     private suspend fun sendItemSelectedTelemetry(state: AutofillAppState) {
@@ -250,6 +267,7 @@ class AutofillAppViewModel @Inject constructor(
                 packageName = state.autofillData.packageInfo.packageName,
                 webDomain = state.autofillData.assistInfo.url.value()
             )
+
             else -> false
         }
 

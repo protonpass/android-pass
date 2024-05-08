@@ -46,7 +46,8 @@ data class LoginItemFormState(
     val primaryTotp: UIHiddenState,
     val customFields: List<UICustomFieldContent>,
     val passkeys: List<UIPasskeyContent>,
-    val passkeyToBeGenerated: UIPasskeyContent?
+    val passkeyToBeGenerated: UIPasskeyContent?,
+    val isEmailUsernameExpanded: Boolean
 ) : Parcelable {
 
     @IgnoredOnParcel
@@ -112,7 +113,8 @@ data class LoginItemFormState(
             packageInfoSet = emptySet(),
             customFields = emptyList(),
             passkeys = emptyList(),
-            passkeyToBeGenerated = null
+            passkeyToBeGenerated = null,
+            isEmailUsernameExpanded = false
         )
 
     }

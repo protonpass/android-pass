@@ -103,7 +103,7 @@ class LauncherViewModel @Inject constructor(
     private val plansOrchestrator: PlansOrchestrator,
     private val reportOrchestrator: ReportOrchestrator,
     private val userSettingsOrchestrator: UserSettingsOrchestrator,
-    private val preferenceRepository: UserPreferencesRepository,
+    private val userPreferencesRepository: UserPreferencesRepository,
     private val internalSettingsRepository: InternalSettingsRepository,
     private val userPlanWorkerLauncher: UserPlanWorkerLauncher,
     private val itemSyncStatusRepository: ItemSyncStatusRepository,
@@ -227,7 +227,7 @@ class LauncherViewModel @Inject constructor(
     private suspend fun clearPreferencesIfNeeded() {
         val accounts = accountManager.getAccounts().first()
         if (accounts.isEmpty()) {
-            preferenceRepository.clearPreferences()
+            userPreferencesRepository.clearPreferences()
                 .flatMap { internalSettingsRepository.clearSettings() }
                 .onSuccess { PassLogger.d(TAG, "Clearing preferences success") }
                 .onFailure {
@@ -289,7 +289,7 @@ class LauncherViewModel @Inject constructor(
         // If there are no accounts left, disable autofill and clear preferences
         val allDisabled = accounts.all { it.isDisabled() }
         if (accounts.isEmpty() || allDisabled) {
-            preferenceRepository.clearPreferences()
+            userPreferencesRepository.clearPreferences()
                 .flatMap { internalSettingsRepository.clearSettings() }
                 .onSuccess { PassLogger.d(TAG, "Clearing preferences success") }
                 .onFailure {

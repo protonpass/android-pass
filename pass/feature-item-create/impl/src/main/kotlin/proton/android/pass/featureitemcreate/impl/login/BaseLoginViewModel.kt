@@ -704,10 +704,6 @@ abstract class BaseLoginViewModel(
         }
     }
 
-    internal fun onEmailUsernameExpanded() {
-        loginItemFormMutableState = loginItemFormState.copy(isEmailUsernameExpanded = true)
-    }
-
     private fun updateCustomFieldHiddenOnFocusChange(field: LoginCustomField.CustomFieldHidden, isFocused: Boolean) {
         val customFields = loginItemFormState.customFields.toMutableList()
         val customFieldContent: UICustomFieldContent.Hidden? = customFields.getOrNull(field.index)

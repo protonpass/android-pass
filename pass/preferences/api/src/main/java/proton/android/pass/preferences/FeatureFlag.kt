@@ -41,5 +41,11 @@ enum class FeatureFlag(
         description = "Enable identity type",
         key = "PassIdentityV1",
         isEnabledDefault = false
+    ),
+    USERNAME_SPLIT(
+        title = "Username split",
+        description = "Enable split email/username",
+        key = "PassUsernameSplit",
+        isEnabledDefault = false
     )
 }

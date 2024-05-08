@@ -36,37 +36,41 @@ internal fun MainLoginSection(
     totpUiState: TotpUiState,
     selectedShareId: ShareId?,
     hasReachedAliasLimit: Boolean,
-    onEvent: (LoginContentEvent) -> Unit
+    onEvent: (LoginContentEvent) -> Unit,
+    onFocusChange: (LoginField, Boolean) -> Unit,
+    onAliasOptionsClick: () -> Unit,
+    onUpgrade: () -> Unit,
+    isUsernameSplitEnabled: Boolean
 ) {
     Column(
         modifier = modifier.roundedContainerNorm()
     ) {
-        ExpandableEmailUsernameInput(
-            email = loginItemFormState.email,
-            username = loginItemFormState.username,
-            isExpanded = loginItemFormState.isEmailUsernameExpanded,
-            canUpdateUsername = canUpdateUsername,
-            isEditAllowed = isEditAllowed,
-            onAliasOptionsClick = {
-                selectedShareId ?: return@ExpandableEmailUsernameInput
-                onEvent(LoginContentEvent.OnAliasOptions(selectedShareId, hasReachedAliasLimit))
-            },
-            onFocusChange = { loginField, isFocused ->
-                onEvent(LoginContentEvent.OnFocusChange(loginField, isFocused))
-            },
-            onEvent = onEvent,
-        )
-
-//        UsernameInput(
-//            value = loginItemFormState.email,
-//            canUpdateUsername = canUpdateUsername,
-//            isEditAllowed = isEditAllowed,
-//            onChange = { newEmail ->
-//                onEvent(LoginContentEvent.OnEmailChanged(newEmail))
-//            },
-//            onAliasOptionsClick = onAliasOptionsClick,
-//            onFocus = { onFocusChange(LoginField.Username, it) }
-//        )
+        if (isUsernameSplitEnabled) {
+            ExpandableEmailUsernameInput(
+                email = loginItemFormState.email,
+                username = loginItemFormState.username,
+                isExpanded = loginItemFormState.isEmailUsernameExpanded,
+                canUpdateUsername = canUpdateUsername,
+                isEditAllowed = isEditAllowed,
+                onEvent = onEvent,
+                onFocusChange = onFocusChange,
+                onAliasOptionsClick = {
+                    selectedShareId ?: return@ExpandableEmailUsernameInput
+                    onEvent(LoginContentEvent.OnAliasOptions(selectedShareId, hasReachedAliasLimit))
+                }
+            )
+        } else {
+            UsernameInput(
+                value = loginItemFormState.email,
+                canUpdateUsername = canUpdateUsername,
+                isEditAllowed = isEditAllowed,
+                onChange = { newEmail ->
+                    onEvent(LoginContentEvent.OnEmailChanged(newEmail))
+                },
+                onAliasOptionsClick = onAliasOptionsClick,
+                onFocus = { onFocusChange(LoginField.Username, it) }
+            )
+        }
 
         Divider(color = PassTheme.colors.inputBorderNorm)
 

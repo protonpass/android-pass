@@ -80,6 +80,8 @@ import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 import proton.android.pass.featureitemcreate.impl.login.LoginItemValidationErrors.CustomFieldValidationError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.totp.api.TotpManager
 
 @Suppress("TooManyFunctions", "LargeClass")
@@ -93,7 +95,8 @@ abstract class BaseLoginViewModel(
     private val passwordStrengthCalculator: PasswordStrengthCalculator,
     observeCurrentUser: ObserveCurrentUser,
     observeUpgradeInfo: ObserveUpgradeInfo,
-    savedStateHandleProvider: SavedStateHandleProvider
+    savedStateHandleProvider: SavedStateHandleProvider,
+    featureFlagsRepository: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
 
     private val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
@@ -202,9 +205,10 @@ abstract class BaseLoginViewModel(
         isLoadingState,
         totpUiStateFlow,
         upgradeInfoFlow.asLoadingResult(),
-        userInteractionFlow
+        userInteractionFlow,
+        featureFlagsRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT)
     ) { loginItemValidationErrors, primaryEmail, aliasItemFormState, isLoading,
-        totpUiState, upgradeInfoResult, userInteraction ->
+        totpUiState, upgradeInfoResult, userInteraction, isUsernameSplitEnabled ->
         val userPlan = upgradeInfoResult.getOrNull()?.plan
         BaseLoginUiState(
             validationErrors = loginItemValidationErrors.toPersistentSet(),
@@ -219,7 +223,8 @@ abstract class BaseLoginViewModel(
             hasUserEditedContent = userInteraction.hasUserEditedContent,
             hasReachedAliasLimit = upgradeInfoResult.getOrNull()?.hasReachedAliasLimit() ?: false,
             totpUiState = totpUiState,
-            focusedField = userInteraction.focusedField.value()
+            focusedField = userInteraction.focusedField.value(),
+            isUsernameSplitEnabled = isUsernameSplitEnabled
         )
     }
         .stateIn(

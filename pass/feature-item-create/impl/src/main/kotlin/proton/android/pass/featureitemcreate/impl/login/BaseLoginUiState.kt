@@ -45,7 +45,8 @@ internal data class BaseLoginUiState(
     val hasUserEditedContent: Boolean,
     val hasReachedAliasLimit: Boolean,
     val totpUiState: TotpUiState,
-    val focusedField: LoginField?
+    val focusedField: LoginField?,
+    val isUsernameSplitEnabled: Boolean
 ) {
     internal companion object {
 
@@ -62,7 +63,8 @@ internal data class BaseLoginUiState(
             hasUserEditedContent = false,
             hasReachedAliasLimit = false,
             totpUiState = TotpUiState.NotInitialised,
-            focusedField = null
+            focusedField = null,
+            isUsernameSplitEnabled = false
         )
 
     }

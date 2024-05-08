@@ -98,7 +98,8 @@ class AutofillAppViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     private val getItemById: GetItemById,
-    private val internalSettingsRepository: InternalSettingsRepository
+    private val internalSettingsRepository: InternalSettingsRepository,
+    private val clock: Clock
 ) : ViewModel() {
 
     private var hadSelectedAutofillItem: Option<Boolean> = None
@@ -220,7 +221,7 @@ class AutofillAppViewModel @Inject constructor(
             LastItemAutofillPreference(
                 itemId = item.itemId().id,
                 shareId = item.shareId().id,
-                lastAutofillTimestamp = Clock.System.now().epochSeconds
+                lastAutofillTimestamp = clock.now().epochSeconds
             )
         )
     }

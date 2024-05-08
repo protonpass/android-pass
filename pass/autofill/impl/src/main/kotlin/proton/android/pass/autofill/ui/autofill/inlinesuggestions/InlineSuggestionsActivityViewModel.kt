@@ -73,6 +73,7 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
     private val internalSettingsRepository: InternalSettingsRepository,
     preferenceRepository: UserPreferencesRepository,
     inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
+    clock: Clock,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -88,7 +89,7 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
             LastItemAutofillPreference(
                 itemId = it.itemId().id,
                 shareId = it.shareId().id,
-                lastAutofillTimestamp = Clock.System.now().epochSeconds
+                lastAutofillTimestamp = clock.now().epochSeconds
             )
         }
         preference.value()?.let { internalSettingsRepository.setLastItemAutofill(it) }

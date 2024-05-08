@@ -55,8 +55,9 @@ class SuggestionSorterImpl @Inject constructor(
     ): List<Item> = when (lastItemAutofillOption) {
         is Some -> {
             val lastItemAutofill = lastItemAutofillOption.value
-            val lastItem = find { it.id.id == lastItemAutofill.itemId }
-                ?.takeIf { !lastItemAutofill.isAutofillPreferenceTooOld(Clock.System.now().epochSeconds) }
+            val lastItem =
+                find { it.id.id == lastItemAutofill.itemId && it.shareId.id == lastItemAutofill.shareId }
+                    ?.takeIf { !lastItemAutofill.isAutofillPreferenceTooOld(Clock.System.now().epochSeconds) }
             lastItem?.let {
                 val mutableItems = toMutableList()
                 mutableItems.remove(it)
@@ -64,6 +65,7 @@ class SuggestionSorterImpl @Inject constructor(
                 mutableItems
             } ?: this
         }
+
         else -> this
     }
 

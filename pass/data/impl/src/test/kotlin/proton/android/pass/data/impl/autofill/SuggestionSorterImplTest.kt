@@ -26,6 +26,7 @@ import proton.android.pass.common.api.some
 import proton.android.pass.data.fakes.usecases.TestGetPublicSuffixList
 import proton.android.pass.data.impl.url.HostParserImpl
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.preferences.LastItemAutofillPreference
 import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestItemType
@@ -137,10 +138,15 @@ class SuggestionSorterImplTest {
     @Test
     fun `last item autofill - last item exists and not too old`() {
         val itemId = "lastItemId"
+        val shareId = "lastShareId"
         val currentTime = Clock.System.now().epochSeconds
         val notTooOldTime = currentTime - 10
-        val lastItemAutofillPreference = LastItemAutofillPreference(notTooOldTime, "", itemId)
-        val item1 = TestItem.create(itemId = ItemId(itemId), itemType = TestItemType.login())
+        val lastItemAutofillPreference = LastItemAutofillPreference(notTooOldTime, shareId, itemId)
+        val item1 = TestItem.create(
+            itemId = ItemId(itemId),
+            shareId = ShareId(shareId),
+            itemType = TestItemType.login()
+        )
         val item2 = TestItem.random(TestItemType.login())
 
         val res = instance.sort(
@@ -155,10 +161,15 @@ class SuggestionSorterImplTest {
     @Test
     fun `last item autofill - last item exists but too old`() {
         val itemId = "lastItemId"
+        val shareId = "lastShareId"
         val currentTime = Clock.System.now().epochSeconds
         val tooOldTime = currentTime - 2.minutes.inWholeSeconds
-        val lastItemAutofillPreference = LastItemAutofillPreference(tooOldTime, "", itemId)
-        val item1 = TestItem.create(itemId = ItemId(itemId), itemType = TestItemType.login())
+        val lastItemAutofillPreference = LastItemAutofillPreference(tooOldTime, shareId, itemId)
+        val item1 = TestItem.create(
+            itemId = ItemId(itemId),
+            shareId = ShareId(shareId),
+            itemType = TestItemType.login()
+        )
         val item2 = TestItem.create(itemType = TestItemType.login())
 
         val res = instance.sort(

@@ -77,6 +77,7 @@ import me.proton.core.plan.presentation.onUpgradeResult
 import me.proton.core.report.presentation.ReportOrchestrator
 import me.proton.core.user.domain.UserManager
 import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
+import proton.android.pass.biometry.StoreAuthSuccessful
 import proton.android.pass.common.api.flatMap
 import proton.android.pass.commonrust.api.CommonLibraryVersionChecker
 import proton.android.pass.data.api.repositories.ItemSyncStatus
@@ -111,6 +112,7 @@ class LauncherViewModel @Inject constructor(
     private val refreshPlan: RefreshPlan,
     private val inAppUpdatesManager: InAppUpdatesManager,
     private val refreshOrganizationSettings: RefreshOrganizationSettings,
+    private val storeAuthSuccessful: StoreAuthSuccessful,
     commonLibraryVersionChecker: CommonLibraryVersionChecker
 ) : ViewModel() {
 
@@ -186,7 +188,10 @@ class LauncherViewModel @Inject constructor(
 
     fun onUserStateChanced(state: State) = viewModelScope.launch {
         when (state) {
-            State.AccountNeeded -> userPlanWorkerLauncher.cancel()
+            State.AccountNeeded -> {
+                storeAuthSuccessful()
+                userPlanWorkerLauncher.cancel()
+            }
             State.PrimaryExist -> userPlanWorkerLauncher.start()
             State.Processing,
             State.StepNeeded -> {

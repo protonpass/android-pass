@@ -20,6 +20,7 @@ package proton.android.pass.autofill.ui.autofill
 
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
+import kotlinx.datetime.Clock
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.autofill.entities.AssistInfo
@@ -62,7 +63,8 @@ class AutofillAppViewModelTest {
             telemetryManager = TestTelemetryManager(),
             inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics(),
             getItemById = FakeGetItemById(),
-            internalSettingsRepository = TestInternalSettingsRepository()
+            internalSettingsRepository = TestInternalSettingsRepository(),
+            clock = Clock.System
         )
     }
 

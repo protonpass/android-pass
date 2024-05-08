@@ -18,7 +18,6 @@
 
 package proton.android.pass.data.impl.autofill
 
-import kotlinx.datetime.Clock
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -57,7 +56,7 @@ class SuggestionSorterImpl @Inject constructor(
             val lastItemAutofill = lastItemAutofillOption.value
             val lastItem =
                 find { it.id.id == lastItemAutofill.itemId && it.shareId.id == lastItemAutofill.shareId }
-                    ?.takeIf { !lastItemAutofill.isAutofillPreferenceTooOld(Clock.System.now().epochSeconds) }
+                    ?.takeIf { !lastItemAutofill.isTooOld }
             lastItem?.let {
                 val mutableItems = toMutableList()
                 mutableItems.remove(it)

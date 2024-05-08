@@ -27,9 +27,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Instant
 import me.proton.android.pass.preferences.AppUsage
+import me.proton.android.pass.preferences.LastItemAutofill
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.log.api.PassLogger
 import java.io.IOException
 import javax.inject.Inject
@@ -169,6 +171,32 @@ class InternalSettingsRepositoryImpl @Inject constructor(
 
     override fun setMasterPasswordAttemptsCount(count: Int): Result<Unit> = setPreference {
         it.setMasterPasswordAttempts(count)
+    }
+
+    override fun setLastItemAutofill(lastItemAutofillPreference: LastItemAutofillPreference): Result<Unit> =
+        setPreference {
+            it.setLastItemAutofill(
+                LastItemAutofill.newBuilder()
+                    .setItemId(lastItemAutofillPreference.itemId)
+                    .setShareId(lastItemAutofillPreference.shareId)
+                    .setLastAutofillTimestamp(
+                        Timestamp.newBuilder()
+                            .setSeconds(lastItemAutofillPreference.lastAutofillTimestamp)
+                            .build()
+                    )
+            )
+        }
+
+    override fun getLastItemAutofill(): Flow<Option<LastItemAutofillPreference>> = getPreference {
+        it.lastItemAutofill.takeIf { item -> item != LastItemAutofill.getDefaultInstance() }
+            .toOption()
+            .map { item ->
+                LastItemAutofillPreference(
+                    lastAutofillTimestamp = item.lastAutofillTimestamp.seconds,
+                    shareId = item.shareId,
+                    itemId = item.itemId
+                )
+            }
     }
 
     override fun clearSettings(): Result<Unit> = setPreference { it.clear() }

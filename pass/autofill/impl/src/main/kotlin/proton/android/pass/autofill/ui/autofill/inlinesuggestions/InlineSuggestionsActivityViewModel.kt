@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
 import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.autofill.AutofillDone
 import proton.android.pass.autofill.AutofillTriggerSource
@@ -52,6 +53,8 @@ import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
 import proton.android.pass.preferences.CopyTotpToClipboard
+import proton.android.pass.preferences.InternalSettingsRepository
+import proton.android.pass.preferences.LastItemAutofillPreference
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
@@ -67,6 +70,7 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
     private val toastManager: ToastManager,
     private val updateAutofillItem: UpdateAutofillItem,
     private val telemetryManager: TelemetryManager,
+    private val internalSettingsRepository: InternalSettingsRepository,
     preferenceRepository: UserPreferencesRepository,
     inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     savedStateHandle: SavedStateHandle
@@ -75,8 +79,20 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
     private val extras = AutofillIntentExtras.fromExtras(
         savedStateHandle.require(AutofillIntentExtras.ARG_EXTRAS_BUNDLE)
     )
+
     private val appState = AutofillAppState(extras.first)
     private val selectedAutofillItem: Option<AutofillItem> = extras.second
+
+    init {
+        val preference = selectedAutofillItem.map {
+            LastItemAutofillPreference(
+                itemId = it.itemId().id,
+                shareId = it.shareId().id,
+                lastAutofillTimestamp = Clock.System.now().epochSeconds
+            )
+        }
+        preference.value()?.let { internalSettingsRepository.setLastItemAutofill(it) }
+    }
 
     private val copyTotpToClipboardState = preferenceRepository
         .getCopyTotpToClipboardEnabled()

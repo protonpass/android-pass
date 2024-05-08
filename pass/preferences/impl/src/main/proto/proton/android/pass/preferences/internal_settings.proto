@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 import "proton/android/pass/preferences/app_usage.proto";
+import "proton/android/pass/preferences/last_item_autofill.proto";
 
 option java_package = "proton.android.pass.preferences";
 option java_multiple_files = true;
@@ -20,4 +21,5 @@ message InternalSettings {
   int32 item_autofill_count = 12;
   int32 home_filtering_option = 13;
   bool dark_web_alias_message_dismissed = 14;
+  LastItemAutofill last_item_autofill = 15;
 }

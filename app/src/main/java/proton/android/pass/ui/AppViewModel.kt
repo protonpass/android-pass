@@ -100,7 +100,7 @@ class AppViewModel @Inject constructor(
     }
 
     fun onStart() = viewModelScope.launch {
-        if (!appUiState.value.needsAuth) {
+        if (!needsBiometricAuth().first()) {
             preferenceRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
         }
     }

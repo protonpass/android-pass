@@ -25,6 +25,9 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.AppLockTimePreference
 import proton.android.pass.preferences.HasAuthenticated
+import kotlin.time.Duration
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 sealed interface NeedsAuthResult {
     fun value(): Boolean
@@ -63,11 +66,11 @@ object NeedsAuthChecker {
         bootCount: Long,
         organizationSettings: OrganizationSettings
     ): NeedsAuthResult {
-        if (organizationSettings.isEnforced()) {
+        if (organizationSettings.isEnforced() && hasAuthenticated is HasAuthenticated.NotAuthenticated) {
             return checkUnlockTime(
                 lastUnlockTime = lastUnlockTime,
                 now = now,
-                appLockTimePreference = appLockTimePreference
+                appLockDuration = organizationSettings.secondsToForceLock().toDuration(DurationUnit.SECONDS)
             )
         }
 
@@ -94,19 +97,18 @@ object NeedsAuthChecker {
         return checkUnlockTime(
             lastUnlockTime = lastUnlockTime,
             now = now,
-            appLockTimePreference = appLockTimePreference
+            appLockDuration = appLockTimePreference.toDuration()
         )
     }
 
     private fun checkUnlockTime(
         lastUnlockTime: Option<Long>,
         now: Long,
-        appLockTimePreference: AppLockTimePreference
+        appLockDuration: Duration
     ): NeedsAuthResult {
         PassLogger.d(TAG, "Checking unlock time")
 
         val unlockTime = lastUnlockTime.value() ?: return NeedsAuthReason.LastUnlockTimeNotSet
-        val appLockDuration = appLockTimePreference.toDuration()
         val timeSinceLastAuth = now - unlockTime
         if (timeSinceLastAuth < 0) {
             PassLogger.w(

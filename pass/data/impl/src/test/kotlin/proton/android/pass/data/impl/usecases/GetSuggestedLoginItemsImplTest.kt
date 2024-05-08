@@ -41,6 +41,8 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.Vault
+import proton.android.pass.preferences.LastItemAutofillPreference
+import proton.android.pass.preferences.TestInternalSettingsRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestItem
 import kotlin.test.assertEquals
@@ -65,7 +67,11 @@ internal class FakeSuggestionItemFilterer : SuggestionItemFilterer {
 }
 
 class FakeSuggestionSorter : SuggestionSorter {
-    override fun sort(items: List<Item>, url: Option<String>): List<Item> = items
+    override fun sort(
+        items: List<Item>,
+        url: Option<String>,
+        lastItemAutofill: Option<LastItemAutofillPreference>
+    ): List<Item> = items
 }
 
 @RunWith(JUnit4::class)
@@ -78,17 +84,20 @@ class GetSuggestedLoginItemsImplTest {
     private lateinit var filter: FakeSuggestionItemFilterer
     private lateinit var getSuggestedLoginItems: GetSuggestedLoginItems
     private lateinit var observeVaults: TestObserveUsableVaults
+    private lateinit var internalSettingsRepository: TestInternalSettingsRepository
 
     @Before
     fun setUp() {
         observeActiveItems = TestObserveActiveItems()
         filter = FakeSuggestionItemFilterer()
         observeVaults = TestObserveUsableVaults()
+        internalSettingsRepository = TestInternalSettingsRepository()
         getSuggestedLoginItems = GetSuggestedLoginItemsImpl(
             observeUsableVaults = observeVaults,
             observeActiveItems = observeActiveItems,
             suggestionItemFilter = filter,
-            suggestionSorter = FakeSuggestionSorter()
+            suggestionSorter = FakeSuggestionSorter(),
+            internalSettingsRepository = internalSettingsRepository
         )
     }
 

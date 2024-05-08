@@ -18,15 +18,19 @@
 
 package proton.android.pass.data.impl.autofill
 
+import kotlinx.datetime.Clock
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.some
 import proton.android.pass.data.fakes.usecases.TestGetPublicSuffixList
 import proton.android.pass.data.impl.url.HostParserImpl
+import proton.android.pass.domain.ItemId
+import proton.android.pass.preferences.LastItemAutofillPreference
 import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestItemType
 import kotlin.test.assertEquals
+import kotlin.time.Duration.Companion.minutes
 
 class SuggestionSorterImplTest {
 
@@ -46,7 +50,11 @@ class SuggestionSorterImplTest {
             TestItem.random(TestItemType.login())
         )
 
-        val res = instance.sort(list, None)
+        val res = instance.sort(
+            items = list,
+            url = None,
+            lastItemAutofill = None
+        )
         assertEquals(res, list)
     }
 
@@ -57,7 +65,11 @@ class SuggestionSorterImplTest {
             TestItem.random(TestItemType.login())
         )
 
-        val res = instance.sort(list, "some invalid url".some())
+        val res = instance.sort(
+            items = list,
+            url = "some invalid url".some(),
+            lastItemAutofill = None
+        )
         assertEquals(res, list)
     }
 
@@ -69,7 +81,11 @@ class SuggestionSorterImplTest {
             TestItem.random(TestItemType.login(websites = listOf(ip)))
         )
 
-        val res = instance.sort(list, ip.some())
+        val res = instance.sort(
+            items = list,
+            url = ip.some(),
+            lastItemAutofill = None
+        )
         assertEquals(res, list)
     }
 
@@ -85,7 +101,11 @@ class SuggestionSorterImplTest {
 
         // The result should be [item3, item1, item2] as we want the domain match before the
         // subdomain when we filtered by domain
-        val res = instance.sort(listOf(item1, item2, item3), domain.some())
+        val res = instance.sort(
+            items = listOf(item1, item2, item3),
+            url = domain.some(),
+            lastItemAutofill = None
+        )
         assertEquals(res, listOf(item3, item1, item2))
     }
 
@@ -106,8 +126,47 @@ class SuggestionSorterImplTest {
         // - only base domain
         // - rest of subdomains
         val items = listOf(item1, item2, item3, item4)
-        val res = instance.sort(items, subdomain.some())
+        val res = instance.sort(
+            items = items,
+            url = subdomain.some(),
+            lastItemAutofill = None
+        )
         assertEquals(res, listOf(item3, item4, item1, item2))
     }
 
+    @Test
+    fun `last item autofill - last item exists and not too old`() {
+        val itemId = "lastItemId"
+        val currentTime = Clock.System.now().epochSeconds
+        val notTooOldTime = currentTime - 10
+        val lastItemAutofillPreference = LastItemAutofillPreference(notTooOldTime, "", itemId)
+        val item1 = TestItem.create(itemId = ItemId(itemId), itemType = TestItemType.login())
+        val item2 = TestItem.random(TestItemType.login())
+
+        val res = instance.sort(
+            items = listOf(item2, item1),
+            url = None,
+            lastItemAutofill = lastItemAutofillPreference.some()
+        )
+
+        assertEquals(res, listOf(item1, item2))
+    }
+
+    @Test
+    fun `last item autofill - last item exists but too old`() {
+        val itemId = "lastItemId"
+        val currentTime = Clock.System.now().epochSeconds
+        val tooOldTime = currentTime - 2.minutes.inWholeSeconds
+        val lastItemAutofillPreference = LastItemAutofillPreference(tooOldTime, "", itemId)
+        val item1 = TestItem.create(itemId = ItemId(itemId), itemType = TestItemType.login())
+        val item2 = TestItem.create(itemType = TestItemType.login())
+
+        val res = instance.sort(
+            items = listOf(item2, item1),
+            url = None,
+            lastItemAutofill = lastItemAutofillPreference.some()
+        )
+
+        assertEquals(res, listOf(item2, item1))
+    }
 }

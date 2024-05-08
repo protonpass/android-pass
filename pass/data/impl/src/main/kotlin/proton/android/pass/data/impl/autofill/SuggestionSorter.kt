@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.impl.autofill
 
+import kotlinx.datetime.Clock
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -25,20 +26,45 @@ import proton.android.pass.data.api.url.HostInfo
 import proton.android.pass.data.api.url.HostParser
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemType
+import proton.android.pass.preferences.LastItemAutofillPreference
 import javax.inject.Inject
 
 interface SuggestionSorter {
-    fun sort(items: List<Item>, url: Option<String>): List<Item>
+    fun sort(
+        items: List<Item>,
+        url: Option<String>,
+        lastItemAutofill: Option<LastItemAutofillPreference>
+    ): List<Item>
 }
 
 class SuggestionSorterImpl @Inject constructor(
     private val hostParser: HostParser
 ) : SuggestionSorter {
 
-    override fun sort(items: List<Item>, url: Option<String>): List<Item> = if (url is Some) {
-        sortWithUrl(items, url.value)
-    } else {
-        items
+    override fun sort(
+        items: List<Item>,
+        url: Option<String>,
+        lastItemAutofill: Option<LastItemAutofillPreference>
+    ): List<Item> = when (url) {
+        is Some -> sortWithUrl(items, url.value)
+        else -> items
+    }.putLastItemAutofillOnTop(lastItemAutofill)
+
+    private fun List<Item>.putLastItemAutofillOnTop(
+        lastItemAutofillOption: Option<LastItemAutofillPreference>
+    ): List<Item> = when (lastItemAutofillOption) {
+        is Some -> {
+            val lastItemAutofill = lastItemAutofillOption.value
+            val lastItem = find { it.id.id == lastItemAutofill.itemId }
+                ?.takeIf { !lastItemAutofill.isAutofillPreferenceTooOld(Clock.System.now().epochSeconds) }
+            lastItem?.let {
+                val mutableItems = toMutableList()
+                mutableItems.remove(it)
+                mutableItems.add(0, it)
+                mutableItems
+            } ?: this
+        }
+        else -> this
     }
 
     private fun sortWithUrl(items: List<Item>, url: String): List<Item> {

@@ -37,6 +37,7 @@ import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.entity.PackageName
 import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
 import proton.android.pass.notifications.fakes.TestToastManager
+import proton.android.pass.preferences.TestInternalSettingsRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.totp.fakes.TestGetTotpCodeFromUri
@@ -60,7 +61,8 @@ class AutofillAppViewModelTest {
             preferenceRepository = TestPreferenceRepository(),
             telemetryManager = TestTelemetryManager(),
             inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics(),
-            getItemById = FakeGetItemById()
+            getItemById = FakeGetItemById(),
+            internalSettingsRepository = TestInternalSettingsRepository()
         )
     }
 

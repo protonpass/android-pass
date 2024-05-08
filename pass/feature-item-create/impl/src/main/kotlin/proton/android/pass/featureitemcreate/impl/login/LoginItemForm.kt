@@ -82,6 +82,7 @@ internal fun LoginItemForm(
 ) {
     Box(modifier = modifier) {
         val currentStickyFormOption = when (focusedField) {
+            LoginField.Email -> AliasOptions
             LoginField.Username -> AliasOptions
             LoginField.Password -> GeneratePassword
             LoginField.PrimaryTotp,

@@ -46,7 +46,7 @@ import proton.android.pass.featureitemcreate.impl.login.LoginCustomField
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun TextCustomFieldEntry(
+internal fun TextCustomFieldEntry(
     modifier: Modifier = Modifier,
     content: UICustomFieldContent.Text,
     index: Int,
@@ -89,7 +89,7 @@ fun TextCustomFieldEntry(
 
 @Preview
 @Composable
-fun TextCustomFieldEntryPreview(
+internal fun TextCustomFieldEntryPreview(
     @PreviewParameter(ThemeCustomFieldPreviewProvider::class) input: Pair<Boolean, CustomFieldInput>
 ) {
     PassTheme(isDark = input.first) {

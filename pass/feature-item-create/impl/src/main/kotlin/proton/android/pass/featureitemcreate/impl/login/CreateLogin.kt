@@ -174,7 +174,9 @@ fun CreateLoginScreen(
 
                     // Cannot delete passkey from Create Login
                     is LoginContentEvent.OnDeletePasskey -> {}
+
                     is LoginContentEvent.OnTitleChange -> viewModel.onTitleChange(it.title)
+
                     is LoginContentEvent.OnVaultSelect ->
                         actionAfterKeyboardHide = {
                             onNavigate(
@@ -214,6 +216,8 @@ fun CreateLoginScreen(
                     LoginContentEvent.OnUpgrade ->
                         actionAfterKeyboardHide =
                             { onNavigate(BaseLoginNavigation.Upgrade) }
+
+                    LoginContentEvent.OnEmailUsernameExpanded -> {}
                 }
             }
         )
@@ -243,8 +247,8 @@ fun CreateLoginScreen(
             actionAfterKeyboardHide = { onNavigate(OnCreateLoginEvent(event)) }
         }
     )
+
     InAppReviewTriggerLaunchedEffect(
         triggerCondition = uiState.baseLoginUiState.isItemSaved is ItemSavedState.Success
     )
 }
-

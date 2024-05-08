@@ -38,9 +38,6 @@ internal sealed interface LoginContentEvent {
     value class OnUsernameChanged(val username: String) : LoginContentEvent
 
     @JvmInline
-    value class OnUsernameChange(val username: String) : LoginContentEvent
-
-    @JvmInline
     value class OnPasswordChange(val password: String) : LoginContentEvent
 
     @JvmInline
@@ -87,5 +84,7 @@ internal sealed interface LoginContentEvent {
 
     @JvmInline
     value class OnScanTotp(val index: Option<Int>) : LoginContentEvent
+
+    data object OnEmailUsernameExpanded : LoginContentEvent
 
 }

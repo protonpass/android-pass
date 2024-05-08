@@ -49,7 +49,7 @@ import proton.android.pass.featureitemcreate.impl.login.PASSWORD_CONCEALED_LENGT
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun HiddenCustomFieldEntry(
+internal fun HiddenCustomFieldEntry(
     modifier: Modifier = Modifier,
     content: UICustomFieldContent.Hidden,
     canEdit: Boolean,
@@ -102,7 +102,7 @@ fun HiddenCustomFieldEntry(
 
 @Preview
 @Composable
-fun HiddenCustomFieldEntryPreview(
+internal fun HiddenCustomFieldEntryPreview(
     @PreviewParameter(ThemeCustomFieldPreviewProvider::class) input: Pair<Boolean, CustomFieldInput>
 ) {
     PassTheme(isDark = input.first) {

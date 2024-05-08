@@ -110,7 +110,7 @@ internal fun UpdateLogin(
                     LoginContentEvent.Up -> onExit()
                     is LoginContentEvent.Submit -> viewModel.updateItem(it.shareId)
                     is LoginContentEvent.OnEmailChanged -> viewModel.onEmailChanged(it.email)
-                    is LoginContentEvent.OnUsernameChanged -> viewModel.onEmailChanged(it.username)
+                    is LoginContentEvent.OnUsernameChanged -> viewModel.onUsernameChanged(it.username)
                     is LoginContentEvent.OnPasswordChange -> viewModel.onPasswordChange(it.password)
                     is LoginContentEvent.OnWebsiteEvent -> when (val event = it.event) {
                         WebsiteSectionEvent.AddWebsite -> viewModel.onAddWebsite()

@@ -277,6 +277,7 @@ class UpdateLoginViewModel @Inject constructor(
                 loginItemFormMutableState = loginItemFormState.copy(
                     title = decrypt(item.title),
                     email = itemContents.itemEmail,
+                    username = itemContents.itemUsername,
                     password = passwordHiddenState,
                     passwordStrength = passwordStrengthCalculator.calculateStrength(password),
                     urls = websites,

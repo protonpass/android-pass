@@ -25,6 +25,7 @@ import kotlinx.datetime.Clock
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.some
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -50,6 +51,8 @@ class TestInternalSettingsRepository @Inject constructor() : InternalSettingsRep
     private val autofillFilterOptionFlow = MutableStateFlow(FilterOptionPreference.All)
     private val isDarkWebAliasMessageFlow =
         MutableStateFlow(IsDarkWebAliasMessageDismissedPreference.Show)
+    private val lastItemAutofillPreferenceFlow: MutableStateFlow<Option<LastItemAutofillPreference>> =
+        MutableStateFlow(None)
 
     override fun setLastUnlockedTime(time: Long): Result<Unit> {
         lastUnlockedTimeFlow.update { Some(time) }
@@ -156,6 +159,13 @@ class TestInternalSettingsRepository @Inject constructor() : InternalSettingsRep
 
     override fun getDarkWebAliasMessageVisibility(): Flow<IsDarkWebAliasMessageDismissedPreference> =
         isDarkWebAliasMessageFlow
+
+    override fun setLastItemAutofill(lastItemAutofillPreference: LastItemAutofillPreference): Result<Unit> {
+        lastItemAutofillPreferenceFlow.update { lastItemAutofillPreference.some() }
+        return Result.success(Unit)
+    }
+
+    override fun getLastItemAutofill(): Flow<Option<LastItemAutofillPreference>> = lastItemAutofillPreferenceFlow
 
     override fun clearSettings(): Result<Unit> = Result.success(Unit)
 }

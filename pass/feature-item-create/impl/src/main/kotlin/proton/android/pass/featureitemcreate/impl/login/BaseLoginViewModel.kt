@@ -678,13 +678,14 @@ abstract class BaseLoginViewModel(
             }
     }
 
-    fun onFocusChange(field: LoginField, isFocused: Boolean) {
+    internal fun onFocusChange(field: LoginField, isFocused: Boolean) {
         when (field) {
             LoginField.Password -> updatePasswordOnFocusChange(isFocused)
             LoginField.PrimaryTotp -> updatePrimaryTotpOnFocusChange()
             is LoginCustomField.CustomFieldHidden ->
                 updateCustomFieldHiddenOnFocusChange(field, isFocused)
 
+            LoginField.Email,
             LoginField.Username,
             is LoginCustomField.CustomFieldTOTP,
             is LoginCustomField.CustomFieldText,
@@ -696,6 +697,10 @@ abstract class BaseLoginViewModel(
         } else {
             focusedFieldFlow.update { None }
         }
+    }
+
+    internal fun onEmailUsernameExpanded() {
+        loginItemFormMutableState = loginItemFormState.copy(isEmailUsernameExpanded = true)
     }
 
     private fun updateCustomFieldHiddenOnFocusChange(field: LoginCustomField.CustomFieldHidden, isFocused: Boolean) {

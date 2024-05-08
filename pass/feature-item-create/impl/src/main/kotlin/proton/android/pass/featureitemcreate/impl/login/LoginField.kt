@@ -19,17 +19,31 @@
 package proton.android.pass.featureitemcreate.impl.login
 
 
-sealed interface LoginField {
+internal sealed interface LoginField {
+
     data object Title : LoginField
+
+    data object Email : LoginField
+
     data object Username : LoginField
+
     data object Password : LoginField
+
     data object PrimaryTotp : LoginField
+
 }
 
-sealed class LoginCustomField : LoginField {
-    abstract val index: Int
+internal sealed interface LoginCustomField : LoginField {
 
-    data class CustomFieldText(override val index: Int) : LoginCustomField()
-    data class CustomFieldHidden(override val index: Int) : LoginCustomField()
-    data class CustomFieldTOTP(override val index: Int) : LoginCustomField()
+    val index: Int
+
+    @JvmInline
+    value class CustomFieldText(override val index: Int) : LoginCustomField
+
+    @JvmInline
+    value class CustomFieldHidden(override val index: Int) : LoginCustomField
+
+    @JvmInline
+    value class CustomFieldTOTP(override val index: Int) : LoginCustomField
+
 }

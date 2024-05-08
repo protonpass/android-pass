@@ -217,7 +217,7 @@ fun CreateLoginScreen(
                         actionAfterKeyboardHide =
                             { onNavigate(BaseLoginNavigation.Upgrade) }
 
-                    LoginContentEvent.OnEmailUsernameExpanded -> {}
+                    LoginContentEvent.OnEmailUsernameExpanded -> TODO()
                 }
             }
         )

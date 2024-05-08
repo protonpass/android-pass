@@ -76,16 +76,6 @@ internal fun MainLoginSection(
                 }
             )
         }
-        UsernameInput(
-            value = loginItemFormState.email,
-            canUpdateUsername = canUpdateUsername,
-            isEditAllowed = isEditAllowed,
-            onChange = { newEmail ->
-                onEvent(LoginContentEvent.OnEmailChanged(newEmail))
-            },
-            onAliasOptionsClick = onAliasOptionsClick,
-            onFocus = { onFocusChange(LoginField.Username, it) }
-        )
 
         Divider(color = PassTheme.colors.inputBorderNorm)
 

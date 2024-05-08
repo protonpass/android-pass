@@ -44,8 +44,8 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
-import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
 import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
@@ -88,7 +88,7 @@ internal fun LoginItemForm(
     Box(modifier = modifier) {
         val currentStickyFormOption = when (focusedField) {
             LoginField.Email -> AliasOptions
-            LoginField.Username -> AliasOptions
+            LoginField.Username -> if (isUsernameSplitEnabled) None else AliasOptions
             LoginField.Password -> GeneratePassword
             LoginField.PrimaryTotp,
             is LoginCustomField.CustomFieldTOTP -> AddTotp

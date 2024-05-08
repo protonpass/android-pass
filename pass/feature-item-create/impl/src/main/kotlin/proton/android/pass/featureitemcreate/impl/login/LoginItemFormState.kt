@@ -20,6 +20,7 @@ package proton.android.pass.featureitemcreate.impl.login
 
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonuimodels.api.PackageInfoUi
@@ -45,10 +46,10 @@ data class LoginItemFormState(
     val primaryTotp: UIHiddenState,
     val customFields: List<UICustomFieldContent>,
     val passkeys: List<UIPasskeyContent>,
-    val passkeyToBeGenerated: UIPasskeyContent?,
-    val isEmailUsernameExpanded: Boolean
+    val passkeyToBeGenerated: UIPasskeyContent?
 ) : Parcelable {
 
+    @IgnoredOnParcel
     internal val hasPasskeys: Boolean = passkeys.isNotEmpty()
 
     internal fun validate(): Set<LoginItemValidationErrors> {
@@ -111,8 +112,7 @@ data class LoginItemFormState(
             packageInfoSet = emptySet(),
             customFields = emptyList(),
             passkeys = emptyList(),
-            passkeyToBeGenerated = null,
-            isEmailUsernameExpanded = false
+            passkeyToBeGenerated = null
         )
 
     }

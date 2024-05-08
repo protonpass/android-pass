@@ -18,6 +18,7 @@
 
 package proton.android.pass.featureitemcreate.impl.login
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -28,10 +29,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
@@ -47,17 +48,24 @@ internal fun UsernameInput(
     isEditAllowed: Boolean,
     onChange: (String) -> Unit,
     onAliasOptionsClick: () -> Unit,
-    onFocus: (Boolean) -> Unit
+    onFocus: (Boolean) -> Unit,
+    @StringRes labelResId: Int = R.string.field_username_title,
+    @StringRes placeholderResId: Int = R.string.field_username_hint
 ) {
     ProtonTextField(
-        modifier = modifier.padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
+        modifier = modifier.padding(
+            start = Spacing.none,
+            top = Spacing.medium,
+            end = Spacing.extraSmall,
+            bottom = Spacing.medium
+        ),
         value = value,
         onChange = onChange,
         moveToNextOnEnter = true,
         textStyle = ProtonTheme.typography.defaultNorm(isEditAllowed && canUpdateUsername),
         editable = isEditAllowed && canUpdateUsername,
-        label = { ProtonTextFieldLabel(text = stringResource(id = R.string.field_username_title)) },
-        placeholder = { ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.field_username_hint)) },
+        label = { ProtonTextFieldLabel(text = stringResource(id = labelResId)) },
+        placeholder = { ProtonTextFieldPlaceHolder(text = stringResource(id = placeholderResId)) },
         leadingIcon = {
             Icon(
                 painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_user),
@@ -87,12 +95,12 @@ internal fun UsernameInput(
     )
 }
 
-class ThemedUsernameInputPreviewProvider :
+internal class ThemedUsernameInputPreviewProvider :
     ThemePairPreviewProvider<UsernameInputPreview>(UsernameInputPreviewProvider())
 
 @Preview
 @Composable
-fun UsernameInputCanUpdateTruePreview(
+internal fun UsernameInputCanUpdateTruePreview(
     @PreviewParameter(ThemedUsernameInputPreviewProvider::class) input: Pair<Boolean, UsernameInputPreview>
 ) {
     PassTheme(isDark = input.first) {

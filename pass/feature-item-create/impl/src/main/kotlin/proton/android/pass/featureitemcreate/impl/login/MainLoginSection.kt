@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.domain.ShareId
+import proton.android.pass.featureitemcreate.impl.R
 
 @Composable
 internal fun MainLoginSection(
@@ -49,7 +50,6 @@ internal fun MainLoginSection(
             ExpandableEmailUsernameInput(
                 email = loginItemFormState.email,
                 username = loginItemFormState.username,
-                isExpanded = loginItemFormState.isEmailUsernameExpanded,
                 canUpdateUsername = canUpdateUsername,
                 isEditAllowed = isEditAllowed,
                 onEvent = onEvent,
@@ -60,7 +60,10 @@ internal fun MainLoginSection(
                 }
             )
         } else {
+            // Here we're using email field and email callback to support proto backwards compatibility
             UsernameInput(
+                labelResId = R.string.field_username_or_email_title,
+                placeholderResId = R.string.field_username_or_email_hint,
                 value = loginItemFormState.email,
                 canUpdateUsername = canUpdateUsername,
                 isEditAllowed = isEditAllowed,
@@ -68,7 +71,9 @@ internal fun MainLoginSection(
                     onEvent(LoginContentEvent.OnEmailChanged(newEmail))
                 },
                 onAliasOptionsClick = onAliasOptionsClick,
-                onFocus = { onFocusChange(LoginField.Username, it) }
+                onFocus = { isFocused ->
+                    onFocusChange(LoginField.Email, isFocused)
+                }
             )
         }
 

@@ -25,6 +25,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.PassTheme
@@ -44,6 +46,10 @@ internal fun SecurityCenterReusedPassContent(
     onNavigated: (SecurityCenterReusedPassDestination) -> Unit,
     state: SecurityCenterReusedPassState
 ) = with(state) {
+    val isGroupCollapsed = remember(reusedPasswords) {
+        SnapshotStateMap<String, Boolean>().apply { putAll(reusedPasswords.associate { it.key to false }) }
+    }
+
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -65,6 +71,11 @@ internal fun SecurityCenterReusedPassContent(
             reusedPasswords.forEach { reusedPassGroup ->
                 stickyHeader {
                     SecurityCenterListStickyHeader(
+                        onClick = {
+                            isGroupCollapsed[reusedPassGroup.key] =
+                                isGroupCollapsed[reusedPassGroup.key]?.not() ?: true
+                        },
+                        isCollapsed = isGroupCollapsed[reusedPassGroup.key] ?: false,
                         label = {
                             SectionTitle(
                                 text = stringResource(
@@ -76,21 +87,23 @@ internal fun SecurityCenterReusedPassContent(
                     )
                 }
 
-                items(
-                    items = reusedPassGroup.itemUiModels,
-                    key = { itemUiModel -> itemUiModel.id.id }
-                ) { itemUiModel ->
-                    SecurityCenterLoginItemRow(
-                        itemUiModel = itemUiModel,
-                        canLoadExternalImages = canLoadExternalImages,
-                        shareIcon = getShareIcon(itemUiModel.shareId),
-                        onClick = {
-                            SecurityCenterReusedPassDestination.ItemDetails(
-                                shareId = itemUiModel.shareId,
-                                itemId = itemUiModel.id
-                            ).also(onNavigated)
-                        }
-                    )
+                if (isGroupCollapsed[reusedPassGroup.key] == false) {
+                    items(
+                        items = reusedPassGroup.itemUiModels,
+                        key = { itemUiModel -> itemUiModel.id.id }
+                    ) { itemUiModel ->
+                        SecurityCenterLoginItemRow(
+                            itemUiModel = itemUiModel,
+                            canLoadExternalImages = canLoadExternalImages,
+                            shareIcon = getShareIcon(itemUiModel.shareId),
+                            onClick = {
+                                SecurityCenterReusedPassDestination.ItemDetails(
+                                    shareId = itemUiModel.shareId,
+                                    itemId = itemUiModel.id
+                                ).also(onNavigated)
+                            }
+                        )
+                    }
                 }
             }
         }

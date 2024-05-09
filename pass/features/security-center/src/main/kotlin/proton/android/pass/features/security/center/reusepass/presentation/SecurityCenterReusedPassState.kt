@@ -21,6 +21,7 @@ package proton.android.pass.features.security.center.reusepass.presentation
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
@@ -54,6 +55,7 @@ internal data class SecurityCenterReusedPassState(
 
 @Stable
 internal data class SecurityCenterReusedPassGroup(
+    internal val key: EncryptedString,
     internal val reusedPasswordsCount: Int,
     internal val itemUiModels: ImmutableList<ItemUiModel>
 )

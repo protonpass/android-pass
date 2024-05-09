@@ -21,5 +21,5 @@ package proton.android.pass.biometry
 import javax.inject.Inject
 
 class TestStoreAuthSuccessful @Inject constructor() : StoreAuthSuccessful {
-    override fun invoke() {}
+    override fun invoke(resetAttempts: Boolean) {}
 }

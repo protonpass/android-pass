@@ -84,7 +84,8 @@ class ShouldAskForAssociationTest {
         ItemContents.Login(
             title = "title",
             note = "note",
-            itemEmail = "username",
+            itemEmail = "user@email.com",
+            itemUsername = "username",
             password = HiddenState.Empty(TestEncryptionContext.encrypt("")),
             urls = mutableListOf<String>().apply { url?.let { add(it) } },
             customFields = emptyList(),

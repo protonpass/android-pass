@@ -143,6 +143,7 @@ class LauncherViewModel @Inject constructor(
                     }
                     State.PrimaryExist
                 }
+
                 accounts.any { it.isStepNeeded() } -> State.StepNeeded
                 else -> State.Processing
             }
@@ -189,9 +190,10 @@ class LauncherViewModel @Inject constructor(
     fun onUserStateChanced(state: State) = viewModelScope.launch {
         when (state) {
             State.AccountNeeded -> {
-                storeAuthSuccessful()
+                storeAuthSuccessful(resetAttempts = false)
                 userPlanWorkerLauncher.cancel()
             }
+
             State.PrimaryExist -> userPlanWorkerLauncher.start()
             State.Processing,
             State.StepNeeded -> {

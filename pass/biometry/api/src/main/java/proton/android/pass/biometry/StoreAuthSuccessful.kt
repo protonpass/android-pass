@@ -19,5 +19,5 @@
 package proton.android.pass.biometry
 
 interface StoreAuthSuccessful {
-    operator fun invoke()
+    operator fun invoke(resetAttempts: Boolean = true)
 }

@@ -53,7 +53,7 @@ class Missing2faCheckerTest {
     @Test
     fun `can handle non-empty list without websites nor totps`() = runTest {
         val items = (0 until 2).map {
-            TestItem.random(TestItemType.login(websites = emptyList(), primaryTotp = null))
+            TestItem.random(TestItemType.login(websites = emptyList()))
         }
         val res = instance.invoke(items)
         assertThat(res.items).isEmpty()
@@ -101,10 +101,7 @@ class Missing2faCheckerTest {
         val domain = "some.domain"
         supports2fa.setSupportsList(listOf(domain))
         val item = TestItem.random(
-            TestItemType.login(
-                websites = listOf("https://$domain"),
-                primaryTotp = null
-            )
+            TestItemType.login(websites = listOf("https://$domain"))
         )
 
         val res = instance.invoke(listOf(item))
@@ -118,16 +115,10 @@ class Missing2faCheckerTest {
         supports2fa.setSupportsList(listOf(domain))
 
         val item1 = TestItem.random(
-            TestItemType.login(
-                websites = listOf(domain),
-                primaryTotp = null
-            )
+            TestItemType.login(websites = listOf(domain))
         )
         val item2 = TestItem.random(
-            TestItemType.login(
-                websites = listOf("random.domain", domain),
-                primaryTotp = null
-            )
+            TestItemType.login(websites = listOf("random.domain", domain))
         )
         val item3 = TestItem.random(
             TestItemType.login(
@@ -136,10 +127,7 @@ class Missing2faCheckerTest {
             )
         )
         val item4 = TestItem.random(
-            TestItemType.login(
-                websites = listOf("other.domain"),
-                primaryTotp = null
-            )
+            TestItemType.login(websites = listOf("other.domain"))
         )
 
         val res = instance.invoke(listOf(item1, item2, item3, item4))

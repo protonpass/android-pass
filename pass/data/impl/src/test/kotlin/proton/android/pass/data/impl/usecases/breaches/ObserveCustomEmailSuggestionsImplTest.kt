@@ -33,7 +33,7 @@ import proton.android.pass.data.impl.usecases.breach.ObserveCustomEmailSuggestio
 import proton.android.pass.domain.breach.BreachProtonEmail
 import proton.android.pass.test.domain.TestUser
 
-class ObserveCustomEmailSuggestionsImplTest {
+internal class ObserveCustomEmailSuggestionsImplTest {
 
     private lateinit var instance: ObserveCustomEmailSuggestionsImpl
 
@@ -69,12 +69,12 @@ class ObserveCustomEmailSuggestionsImplTest {
         val email3 = "yetanother@email.lol"
 
         val logins = listOf(
-            TestObserveItems.createLogin(username = email1),
-            TestObserveItems.createLogin(username = email1),
-            TestObserveItems.createLogin(username = email1),
-            TestObserveItems.createLogin(username = email2),
-            TestObserveItems.createLogin(username = email2),
-            TestObserveItems.createLogin(username = email3)
+            TestObserveItems.createLogin(email = email1),
+            TestObserveItems.createLogin(email = email1),
+            TestObserveItems.createLogin(email = email1),
+            TestObserveItems.createLogin(email = email2),
+            TestObserveItems.createLogin(email = email2),
+            TestObserveItems.createLogin(email = email3)
         )
         val aliases = listOf(
             TestObserveItems.createAlias(alias = email3),
@@ -98,10 +98,10 @@ class ObserveCustomEmailSuggestionsImplTest {
         val second = "second@email.test"
 
         val logins = listOf(
-            TestObserveItems.createLogin(username = second),
-            TestObserveItems.createLogin(username = first),
-            TestObserveItems.createLogin(username = first),
-            TestObserveItems.createLogin(username = second)
+            TestObserveItems.createLogin(email = second),
+            TestObserveItems.createLogin(email = first),
+            TestObserveItems.createLogin(email = first),
+            TestObserveItems.createLogin(email = second)
         )
         observeItems.emitValue(logins)
 
@@ -119,9 +119,9 @@ class ObserveCustomEmailSuggestionsImplTest {
         val email = "first@email.test"
 
         val logins = listOf(
-            TestObserveItems.createLogin(username = email),
-            TestObserveItems.createLogin(username = email),
-            TestObserveItems.createLogin(username = USER_PROTON_ADDRESS)
+            TestObserveItems.createLogin(email = email),
+            TestObserveItems.createLogin(email = email),
+            TestObserveItems.createLogin(email = USER_PROTON_ADDRESS)
         )
         observeItems.emitValue(logins)
         observeBreachProtonEmails.emit(
@@ -141,7 +141,8 @@ class ObserveCustomEmailSuggestionsImplTest {
         assertThat(res).isEqualTo(expected)
     }
 
-    companion object {
+    private companion object {
         private const val USER_PROTON_ADDRESS = "some@address.test"
     }
+
 }

@@ -38,6 +38,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestUtils
 import proton.android.pass.test.domain.TestUser
@@ -74,7 +75,8 @@ internal class BaseLoginViewModelTest {
             observeUpgradeInfo = TestObserveUpgradeInfo(),
             encryptionContextProvider = encryptionContextProvider,
             passwordStrengthCalculator = passwordStrengthCalculator,
-            savedStateHandleProvider = TestSavedStateHandleProvider()
+            savedStateHandleProvider = TestSavedStateHandleProvider(),
+            featureFlagsRepository = TestFeatureFlagsPreferenceRepository()
         ) {}
     }
 

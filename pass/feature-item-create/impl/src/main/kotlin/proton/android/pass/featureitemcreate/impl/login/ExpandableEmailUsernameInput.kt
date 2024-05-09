@@ -29,6 +29,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -36,9 +37,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import me.proton.core.presentation.R as CoreR
 
@@ -79,6 +83,7 @@ internal fun ExpandableEmailUsernameInput(
                         modifier = Modifier.clickable { isExpanded.value = true }
                     ) {
                         Icon(
+                            modifier = Modifier.padding(horizontal = 2.dp),
                             painter = painterResource(id = CoreR.drawable.ic_proton_envelope),
                             contentDescription = null,
                             tint = ProtonTheme.colors.iconWeak
@@ -90,10 +95,10 @@ internal fun ExpandableEmailUsernameInput(
                                 .size(size = 14.dp)
                                 .clip(shape = CircleShape)
                                 .background(color = PassTheme.colors.loginInteractionNormMinor1)
-                                .padding(all = 2.dp),
+                                .padding(all = 3.dp),
                             painter = painterResource(id = CoreR.drawable.ic_proton_plus),
                             contentDescription = null,
-                            tint = PassTheme.colors.loginInteractionNormMajor2
+                            tint = PassTheme.colors.loginInteractionNormMajor1
                         )
                     }
                 }
@@ -137,6 +142,31 @@ internal fun ExpandableEmailUsernameInput(
                 onFocus = { isFocused ->
                     onFocusChange(LoginField.Username, isFocused)
                 }
+            )
+        }
+    }
+}
+
+internal class ThemedEmailUsernameInputPreviewProvider :
+    ThemePairPreviewProvider<EmailUsernameInputPreviewParams>(EmailUsernameInputPreviewProvider())
+
+@[Preview Composable]
+internal fun ExpandableEmailUsernameInputPreview(
+    @PreviewParameter(ThemedEmailUsernameInputPreviewProvider::class)
+    input: Pair<Boolean, EmailUsernameInputPreviewParams>
+) {
+    val (isDark, params) = input
+
+    PassTheme(isDark = isDark) {
+        Surface {
+            ExpandableEmailUsernameInput(
+                email = params.email,
+                username = params.username,
+                onEvent = {},
+                onFocusChange = { _, _ -> },
+                onAliasOptionsClick = {},
+                canUpdateUsername = params.canUpdateUsername,
+                isEditAllowed = params.isEditAllowed
             )
         }
     }

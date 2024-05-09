@@ -144,7 +144,7 @@ class CreateLoginScreenTest {
     @Test
     fun canCreateLogin() {
         val title = "Some title"
-        val username = "username"
+        val email = "user@email.com"
         val password = "password"
         val totp =
             "otpauth://totp/thisisthelabel?secret=thisisthesecret&algorithm=SHA1&digits=6&period=10"
@@ -156,7 +156,7 @@ class CreateLoginScreenTest {
 
         val item = TestObserveItems.createLogin(
             title = title,
-            username = username,
+            username = email,
             note = note,
         )
         totpManager.setSanitisedEditResult(Result.success(totp))
@@ -192,7 +192,7 @@ class CreateLoginScreenTest {
             // Username
             val usernameText = activity.getString(R.string.field_username_title)
             onNode(hasText(usernameText)).performScrollTo()
-            writeTextAndWait(hasText(usernameText), username)
+            writeTextAndWait(hasText(usernameText), email)
 
             // Password
             val passwordText = activity.getString(R.string.field_password_title)
@@ -238,7 +238,8 @@ class CreateLoginScreenTest {
             shareId = ShareId(SHARE_ID),
             itemContents = ItemContents.Login(
                 title = title,
-                itemEmail = username,
+                itemEmail = email,
+                itemUsername = "",
                 note = note,
                 customFields = persistentListOf(),
                 packageInfoSet = emptySet(),
@@ -342,6 +343,7 @@ class CreateLoginScreenTest {
             itemContents = ItemContents.Login(
                 title = title,
                 itemEmail = "",
+                itemUsername = "",
                 note = "",
                 customFields = persistentListOf(
                     textCustomField,

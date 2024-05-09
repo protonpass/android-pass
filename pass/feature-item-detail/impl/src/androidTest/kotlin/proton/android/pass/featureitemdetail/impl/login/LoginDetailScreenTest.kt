@@ -239,6 +239,7 @@ class LoginDetailScreenTest {
 
     private fun performSetup(
         title: String = "some title",
+        email: String = "user@email.com",
         username: String = "someusername",
         password: String = "password",
         note: String = "a note",
@@ -252,7 +253,8 @@ class LoginDetailScreenTest {
             itemId = ItemId(ITEM_ID),
             itemContents = ItemContents.Login(
                 title = title,
-                itemEmail = username,
+                itemEmail = email,
+                itemUsername = username,
                 password = HiddenState.Concealed(TestEncryptionContext.encrypt(password)),
                 note = note,
                 urls = urls,

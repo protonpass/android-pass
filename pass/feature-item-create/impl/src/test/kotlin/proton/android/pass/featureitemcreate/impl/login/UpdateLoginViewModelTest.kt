@@ -47,6 +47,7 @@ import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestUser
@@ -91,7 +92,8 @@ class UpdateLoginViewModelTest {
             draftRepository = TestDraftRepository(),
             observeUpgradeInfo = TestObserveUpgradeInfo(),
             updateItem = updateItem,
-            createAlias = TestCreateAlias()
+            createAlias = TestCreateAlias(),
+            featureFlagsRepository = TestFeatureFlagsPreferenceRepository()
         )
     }
 

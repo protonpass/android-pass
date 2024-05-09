@@ -344,7 +344,8 @@ class SelectItemScreenTest {
                 itemContents = ItemContents.Login(
                     title = "${SUGGESTION_TITLE_PREFIX}$it",
                     note = "",
-                    itemEmail = "${SUGGESTION_USERNAME_PREFIX}$it",
+                    itemEmail = "${SUGGESTION_EMAIL_PREFIX}$it",
+                    itemUsername = "",
                     password = HiddenState.Concealed(TestEncryptionContext.encrypt("")),
                     urls = emptyList(),
                     packageInfoSet = setOf(
@@ -365,7 +366,8 @@ class SelectItemScreenTest {
                 itemContents = ItemContents.Login(
                     title = "${OTHER_ITEM_TITLE_PREFIX}$it",
                     note = "",
-                    itemEmail = "${SUGGESTION_USERNAME_PREFIX}$it",
+                    itemEmail = "${SUGGESTION_EMAIL_PREFIX}$it",
+                    itemUsername = "",
                     password = HiddenState.Concealed(TestEncryptionContext.encrypt("")),
                     urls = emptyList(),
                     packageInfoSet = setOf(
@@ -423,10 +425,10 @@ class SelectItemScreenTest {
         fun provideClock(): Clock = Clock.System
     }
 
-    companion object {
+    private companion object {
         private const val SUGGESTION_TITLE_PREFIX = "suggestion-"
         private const val OTHER_ITEM_TITLE_PREFIX = "other-"
-        private const val SUGGESTION_USERNAME_PREFIX = "username-"
+        private const val SUGGESTION_EMAIL_PREFIX = "email-"
 
         private const val PACKAGE_NAME = "some.package.name"
     }

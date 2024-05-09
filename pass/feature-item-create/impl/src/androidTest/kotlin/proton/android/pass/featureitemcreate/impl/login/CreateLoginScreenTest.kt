@@ -190,7 +190,7 @@ class CreateLoginScreenTest {
             writeTextAndWait(hasText(titleText), title)
 
             // Username
-            val usernameText = activity.getString(R.string.field_username_title)
+            val usernameText = activity.getString(R.string.field_username_or_email_title)
             onNode(hasText(usernameText)).performScrollTo()
             writeTextAndWait(hasText(usernameText), email)
 
@@ -381,7 +381,7 @@ class CreateLoginScreenTest {
             val buttonText = activity.getString(R.string.title_create)
             waitUntilExists(hasText(buttonText))
 
-            val usernameText = activity.getString(R.string.field_username_title)
+            val usernameText = activity.getString(R.string.field_username_or_email_title)
             onNodeWithText(usernameText).performClick()
 
             val createAliasText = activity.getString(R.string.sticky_button_create_alias)
@@ -408,7 +408,7 @@ class CreateLoginScreenTest {
             val buttonText = activity.getString(R.string.title_create)
             waitUntilExists(hasText(buttonText))
 
-            val usernameText = activity.getString(R.string.field_username_title)
+            val usernameText = activity.getString(R.string.field_username_or_email_title)
             onNodeWithText(usernameText).performClick()
 
             val fillUsernameText =

@@ -101,9 +101,9 @@ class LoginDetailScreenTest {
     @Test
     fun displayLoginContents() {
         val itemTitle = "item title"
-        val username = "username"
+        val emailOrUsername = "user@email.com"
         val note = "some note for the item"
-        performSetup(title = itemTitle, username = username, note = note)
+        performSetup(title = itemTitle, email = emailOrUsername, note = note)
         composeTestRule.apply {
             setContent {
                 PassTheme(isDark = true) {
@@ -116,7 +116,7 @@ class LoginDetailScreenTest {
             waitUntilExists(hasText(itemTitle))
 
             onNode(hasText(itemTitle)).assertExists()
-            onNode(hasText(username)).assertExists()
+            onNode(hasText(emailOrUsername)).assertExists()
             onNode(hasText(note)).assertExists()
         }
     }
@@ -148,9 +148,9 @@ class LoginDetailScreenTest {
     }
 
     @Test
-    fun clickUsernameCopiesUsername() {
-        val username = "some_username"
-        performSetup(username = username)
+    fun clickEmailOrUsernameCopiesEmailOrUsername() {
+        val emailOrUsername = "user@email.com"
+        performSetup(email = emailOrUsername)
         composeTestRule.apply {
             setContent {
                 PassTheme(isDark = true) {
@@ -160,10 +160,10 @@ class LoginDetailScreenTest {
                 }
             }
 
-            waitUntilExists(hasText(username))
+            waitUntilExists(hasText(emailOrUsername))
 
-            onNode(hasText(username)).performClick()
-            assertEquals(username, clipboardManager.getContents())
+            onNode(hasText(emailOrUsername)).performClick()
+            assertEquals(emailOrUsername, clipboardManager.getContents())
         }
     }
 

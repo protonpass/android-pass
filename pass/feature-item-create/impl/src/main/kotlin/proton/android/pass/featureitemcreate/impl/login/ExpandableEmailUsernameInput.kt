@@ -57,7 +57,7 @@ internal fun ExpandableEmailUsernameInput(
     canUpdateUsername: Boolean,
     isEditAllowed: Boolean
 ) {
-    val isExpanded = rememberSaveable { mutableStateOf(username.isNotEmpty()) }
+    val isExpanded = rememberSaveable(username) { mutableStateOf(username.isNotEmpty()) }
 
     Column(
         modifier = modifier

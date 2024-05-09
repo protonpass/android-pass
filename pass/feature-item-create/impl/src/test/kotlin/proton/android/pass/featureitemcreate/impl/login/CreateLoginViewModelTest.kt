@@ -62,6 +62,7 @@ import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.inappreview.fakes.TestInAppReviewTriggerMetrics
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.passkeys.fakes.TestGeneratePasskey
+import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
@@ -113,7 +114,8 @@ internal class CreateLoginViewModelTest {
             observeUpgradeInfo = observeUpgradeInfo,
             inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics(),
             observeDefaultVault = TestObserveDefaultVault(),
-            generatePasskey = TestGeneratePasskey()
+            generatePasskey = TestGeneratePasskey(),
+            featureFlagsRepository = TestFeatureFlagsPreferenceRepository()
         )
     }
 

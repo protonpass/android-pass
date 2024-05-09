@@ -66,6 +66,7 @@ class SecurityCenterReusedPassViewModel @Inject constructor(
             SecurityCenterReusedPassState(
                 reusedPasswords = reusedPasswords.repeatedPasswordsGroups.map { group ->
                     SecurityCenterReusedPassGroup(
+                        key = group.password,
                         reusedPasswordsCount = group.count,
                         itemUiModels = group.items.toUiModels().toPersistentList()
                     )

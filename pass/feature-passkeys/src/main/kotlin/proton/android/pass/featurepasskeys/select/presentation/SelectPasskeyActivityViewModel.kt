@@ -38,6 +38,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.account.api.AccountOrchestrators
 import proton.android.pass.account.api.Orchestrator
 import proton.android.pass.biometry.NeedsBiometricAuth
+import proton.android.pass.biometry.StoreAuthOnStop
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -49,7 +50,6 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.featurepasskeys.R
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
-import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -132,6 +132,7 @@ class SelectPasskeyActivityViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val toastManager: ToastManager,
     private val internalSettingsRepository: InternalSettingsRepository,
+    private val storeAuthOnStop: StoreAuthOnStop,
     needsBiometricAuth: NeedsBiometricAuth
 ) : ViewModel() {
 
@@ -151,6 +152,7 @@ class SelectPasskeyActivityViewModel @Inject constructor(
                     requestJson = request.requestJson,
                     requestClientDataHash = request.clientDataHash
                 )
+
                 is SelectPasskeyRequest.UsePasskey -> SelectPasskeyRequestData.UsePasskey(
                     requestDomain = request.requestOrigin,
                     requestJson = request.requestJson,
@@ -181,6 +183,7 @@ class SelectPasskeyActivityViewModel @Inject constructor(
                         is SelectPasskeyRequestData.SelectPasskey -> {
                             SelectPasskeyActionAfterAuth.SelectItem
                         }
+
                         is SelectPasskeyRequestData.UsePasskey -> {
                             SelectPasskeyActionAfterAuth.EmitEvent
                         }
@@ -207,7 +210,7 @@ class SelectPasskeyActivityViewModel @Inject constructor(
     }
 
     fun onStop() = viewModelScope.launch {
-        preferenceRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
+        storeAuthOnStop()
     }
 
     fun signOut() = viewModelScope.launch {

@@ -21,6 +21,7 @@ package proton.android.pass.data.impl.repositories
 import androidx.lifecycle.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -29,6 +30,7 @@ import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusPayload
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.SyncMode
+import proton.android.pass.data.api.repositories.SyncState
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -50,7 +52,10 @@ class ItemSyncStatusRepositoryImpl @Inject constructor(
 
     private val mutex: Mutex = Mutex()
 
-    private suspend fun updateSyncStatus(status: ItemSyncStatus, emit: suspend (ItemSyncStatus) -> Unit) {
+    private suspend fun updateSyncStatus(
+        status: ItemSyncStatus,
+        emit: suspend (ItemSyncStatus) -> Unit
+    ) {
         mutex.withLock {
             when (status) {
                 is ItemSyncStatus.Syncing -> {
@@ -98,4 +103,11 @@ class ItemSyncStatusRepositoryImpl @Inject constructor(
     override fun observeSyncStatus(): Flow<ItemSyncStatus> = syncStatus
 
     override fun observeAccSyncStatus(): Flow<Map<ShareId, ItemSyncStatusPayload>> = accSyncStatus
+
+    override fun observeSyncState(): Flow<SyncState> = combine(
+        observeSyncStatus(),
+        observeMode(),
+        ::SyncState
+    )
+
 }

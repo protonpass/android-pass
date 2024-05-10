@@ -19,5 +19,7 @@
 package proton.android.pass.data.api.usecases
 
 interface RefreshContent {
+
     suspend operator fun invoke()
+
 }

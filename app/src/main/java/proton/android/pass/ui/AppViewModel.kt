@@ -37,6 +37,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import proton.android.pass.biometry.NeedsBiometricAuth
+import proton.android.pass.biometry.StoreAuthOnStop
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.inappupdates.api.InAppUpdatesManager
@@ -55,6 +56,7 @@ class AppViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val needsBiometricAuth: NeedsBiometricAuth,
     private val inAppUpdatesManager: InAppUpdatesManager,
+    private val storeAuthOnStop: StoreAuthOnStop,
     networkMonitor: NetworkMonitor
 ) : ViewModel() {
 
@@ -95,7 +97,7 @@ class AppViewModel @Inject constructor(
     )
 
     fun onStop() = viewModelScope.launch {
-        preferenceRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
+        storeAuthOnStop()
         inAppUpdatesManager.completeUpdate()
     }
 

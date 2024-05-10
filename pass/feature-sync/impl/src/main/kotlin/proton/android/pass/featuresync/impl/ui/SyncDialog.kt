@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,20 +16,27 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featuresync.impl
+package proton.android.pass.featuresync.impl.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.featuresync.impl.navigation.SyncNavDestination
+import proton.android.pass.featuresync.impl.presentation.SyncDialogViewModel
 
 @Composable
 fun SyncDialog(
     modifier: Modifier = Modifier,
-    viewModel: SyncDialogViewModel = hiltViewModel(),
-    onNavigate: (SyncNavigation) -> Unit
+    onNavigate: (SyncNavDestination) -> Unit,
+    viewModel: SyncDialogViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-    SyncContent(modifier, state, onNavigate)
+
+    SyncDialogContent(
+        modifier = modifier,
+        state = state,
+        onNavigate = onNavigate
+    )
 }

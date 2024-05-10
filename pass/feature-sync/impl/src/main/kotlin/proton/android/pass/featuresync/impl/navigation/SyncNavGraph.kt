@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,26 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featuresync.impl
+package proton.android.pass.featuresync.impl.navigation
 
 import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavGraphBuilder
-import proton.android.pass.navigation.api.NavItem
-import proton.android.pass.navigation.api.NavItemType
+import proton.android.pass.featuresync.impl.ui.SyncDialog
 import proton.android.pass.navigation.api.dialog
 
-object SyncDialog : NavItem(
-    baseRoute = "sync/dialog",
-    navItemType = NavItemType.Dialog
-)
-
-sealed interface SyncNavigation {
-    data object FinishedFetching : SyncNavigation
-}
-
-fun NavGraphBuilder.syncGraph(onNavigate: (SyncNavigation) -> Unit) {
+fun NavGraphBuilder.syncNavGraph(onNavigate: (SyncNavDestination) -> Unit) {
     dialog(
-        navItem = SyncDialog,
+        navItem = SyncNavItem,
         dialogProperties = DialogProperties(
             dismissOnBackPress = false,
             dismissOnClickOutside = false

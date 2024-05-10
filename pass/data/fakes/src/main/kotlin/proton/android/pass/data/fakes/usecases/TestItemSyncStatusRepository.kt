@@ -33,7 +33,7 @@ import javax.inject.Singleton
 class TestItemSyncStatusRepository @Inject constructor() : ItemSyncStatusRepository {
 
     private val flow: MutableSharedFlow<ItemSyncStatus> = testFlow<ItemSyncStatus>()
-        .apply { tryEmit(ItemSyncStatus.NotStarted) }
+        .apply { tryEmit(ItemSyncStatus.SyncNotStarted) }
     private val accumulatedFlow: MutableSharedFlow<Map<ShareId, ItemSyncStatusPayload>> =
         testFlow<Map<ShareId, ItemSyncStatusPayload>>()
             .apply { emptyMap<ShareId, ItemSyncStatusPayload>() }

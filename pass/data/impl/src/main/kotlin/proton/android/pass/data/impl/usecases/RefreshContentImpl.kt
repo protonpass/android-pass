@@ -41,7 +41,7 @@ class RefreshContentImpl @Inject constructor(
     override suspend fun invoke() {
         PassLogger.i(TAG, "Refreshing shares")
         syncStatusRepository.clear()
-        syncStatusRepository.emit(ItemSyncStatus.Started)
+        syncStatusRepository.emit(ItemSyncStatus.SyncStarted)
         val userId = accountManager.getPrimaryUserId().firstOrNull()
             ?: throw UserIdNotAvailableError()
         val (refreshSharesResult, time) = measureTimedValue {

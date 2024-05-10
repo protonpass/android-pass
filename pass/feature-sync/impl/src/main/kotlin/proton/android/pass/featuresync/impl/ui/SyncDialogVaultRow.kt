@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featuresync.impl
+package proton.android.pass.featuresync.impl.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallNorm
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.composecomponents.impl.extension.toColor
@@ -48,20 +49,22 @@ import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.composecomponents.impl.loading.Loading
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
+import proton.android.pass.featuresync.impl.R
 import me.proton.core.presentation.compose.R as CoreR
 
 @Composable
-fun SyncVaultRow(
+internal fun SyncDialogVaultRow(
     modifier: Modifier = Modifier,
     name: String,
     itemCurrent: Int,
     itemTotal: Int,
     color: ShareColor,
-    icon: ShareIcon
+    icon: ShareIcon,
+    hasSyncFailed: Boolean
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(space = Spacing.medium),
         verticalAlignment = Alignment.CenterVertically
     ) {
         VaultIcon(
@@ -69,6 +72,7 @@ fun SyncVaultRow(
             icon = icon.toResource(),
             iconColor = color.toColor()
         )
+
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = name,
@@ -76,9 +80,12 @@ fun SyncVaultRow(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
+
             val subtitle = when {
                 itemCurrent == itemTotal && itemTotal != -1 ->
                     pluralStringResource(R.plurals.sync_item_count, itemTotal, itemTotal)
+
+                hasSyncFailed -> stringResource(id = R.string.sync_item_failed)
 
                 itemCurrent != -1 && itemTotal != -1 ->
                     stringResource(R.string.sync_progress_item_count, itemCurrent, itemTotal)
@@ -91,22 +98,35 @@ fun SyncVaultRow(
                 maxLines = 1
             )
         }
+
         Box(
             modifier = Modifier.weight(LOADING_ROW_WEIGHT),
             contentAlignment = Alignment.Center
         ) {
-            if (itemCurrent != -1 && itemCurrent == itemTotal) {
-                Icon(
-                    painter = painterResource(id = CoreR.drawable.ic_proton_checkmark),
-                    tint = PassTheme.colors.interactionNormMajor1,
-                    contentDescription = ""
-                )
-            } else {
-                Loading(
-                    modifier = Modifier.size(24.dp),
-                    color = PassTheme.colors.interactionNormMajor1,
-                    strokeWidth = 2.dp
-                )
+            when {
+                itemCurrent != -1 && itemCurrent == itemTotal -> {
+                    Icon(
+                        painter = painterResource(id = CoreR.drawable.ic_proton_checkmark),
+                        tint = PassTheme.colors.interactionNormMajor1,
+                        contentDescription = null
+                    )
+                }
+
+                hasSyncFailed -> {
+                    Icon(
+                        painter = painterResource(id = CoreR.drawable.ic_proton_cross_big),
+                        tint = PassTheme.colors.signalDanger,
+                        contentDescription = null
+                    )
+                }
+
+                else -> {
+                    Loading(
+                        modifier = Modifier.size(24.dp),
+                        color = PassTheme.colors.interactionNormMajor1,
+                        strokeWidth = 2.dp
+                    )
+                }
             }
         }
     }
@@ -116,16 +136,17 @@ private const val LOADING_ROW_WEIGHT = 0.2f
 
 @Preview
 @Composable
-fun SyncVaultLoadingRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun SyncVaultLoadingRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             Column {
-                SyncVaultRow(
+                SyncDialogVaultRow(
                     name = "vault name",
                     itemCurrent = 1,
                     itemTotal = 4,
                     color = ShareColor.Color1,
-                    icon = ShareIcon.Icon1
+                    icon = ShareIcon.Icon1,
+                    hasSyncFailed = false
                 )
             }
         }
@@ -134,16 +155,17 @@ fun SyncVaultLoadingRowPreview(@PreviewParameter(ThemePreviewProvider::class) is
 
 @Preview
 @Composable
-fun SyncVaultNotLoadingRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun SyncVaultNotLoadingRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             Column {
-                SyncVaultRow(
+                SyncDialogVaultRow(
                     name = "vault name",
                     itemCurrent = 4,
                     itemTotal = 4,
                     color = ShareColor.Color1,
-                    icon = ShareIcon.Icon1
+                    icon = ShareIcon.Icon1,
+                    hasSyncFailed = false
                 )
             }
         }

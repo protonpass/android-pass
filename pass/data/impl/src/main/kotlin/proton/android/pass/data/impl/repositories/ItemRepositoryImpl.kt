@@ -23,6 +23,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
@@ -597,9 +598,12 @@ class ItemRepositoryImpl @Inject constructor(
     ): List<ItemRevision> {
         val items = mutableListOf<ItemRevision>()
         remoteItemDataSource.observeItems(userId, shareId)
-            .collect {
-                items.addAll(it.items)
-                onProgress(VaultProgress(total = it.total, current = it.created))
+            .catch { error ->
+                throw error
+            }
+            .collect { itemTotal ->
+                items.addAll(itemTotal.items)
+                onProgress(VaultProgress(total = itemTotal.total, current = itemTotal.created))
             }
 
         return items

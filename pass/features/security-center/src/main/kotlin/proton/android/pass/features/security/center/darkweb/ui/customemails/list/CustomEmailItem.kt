@@ -206,9 +206,9 @@ private fun CustomEmailItemVerified(
     onDetailClick: () -> Unit
 ) {
     val color = if (status.hasBreaches) {
-        PassTheme.colors.passwordInteractionNormMajor1
+        PassTheme.colors.passwordInteractionNormMajor2
     } else {
-        PassTheme.colors.cardInteractionNormMajor1
+        PassTheme.colors.cardInteractionNormMajor2
     }
 
     Row(
@@ -227,15 +227,23 @@ private fun CustomEmailItemVerified(
                 style = ProtonTheme.typography.body1Regular
             )
 
-            Text(
-                text = pluralStringResource(
-                    id = R.plurals.security_center_dark_web_monitor_custom_emails_breaches_found,
-                    count = status.breachesDetected,
-                    status.breachesDetected
-                ),
-                style = PassTheme.typography.body3Weak(),
-                color = color
-            )
+            if (status.breachesDetected == 0) {
+                Text(
+                    text = stringResource(R.string.security_center_dark_web_monitor_found_in_breaches),
+                    style = PassTheme.typography.body3Weak(),
+                    color = color
+                )
+            } else {
+                Text(
+                    text = pluralStringResource(
+                        id = R.plurals.security_center_dark_web_monitor_custom_emails_breaches_found,
+                        count = status.breachesDetected,
+                        status.breachesDetected
+                    ),
+                    style = PassTheme.typography.body3Weak(),
+                    color = color
+                )
+            }
         }
 
         Icon(

@@ -91,10 +91,11 @@ internal sealed interface DarkWebCustomEmailsState {
     data class Success(
         val emails: ImmutableList<CustomEmailUiState>,
         val suggestions: ImmutableList<CustomEmailUiState>
-    ) : DarkWebCustomEmailsState {
+    ) : DarkWebCustomEmailsState
 
-        internal val hasSuggestions: Boolean = suggestions.isNotEmpty()
-
+    fun count() = when (this) {
+        is Success -> emails.size + suggestions.size
+        else -> 0
     }
 }
 

@@ -18,34 +18,28 @@
 
 package proton.android.pass.features.security.center.darkweb.ui.summary
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
-import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultNorm
+import me.proton.core.compose.theme.defaultSmallNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.body3Weak
-import proton.android.pass.composecomponents.impl.form.PassDivider
+import proton.android.pass.composecomponents.impl.buttons.TransparentTextButton
 import proton.android.pass.composecomponents.impl.item.placeholder
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.darkweb.presentation.DarkWebEmailBreachState
 import proton.android.pass.features.security.center.darkweb.ui.DarkWebUiEvent
-import proton.android.pass.composecomponents.impl.R as CompR
+
 @Composable
 internal fun EmailBreachHeader(
     modifier: Modifier = Modifier,
@@ -54,25 +48,15 @@ internal fun EmailBreachHeader(
     isClickable: Boolean,
     onEvent: (DarkWebUiEvent) -> Unit
 ) {
-    val list = state.list()
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .applyIf(condition = isClickable, ifTrue = {
-                clickable {
-                    when (summaryType) {
-                        DarkWebSummaryType.Proton -> onEvent(DarkWebUiEvent.OnShowAllProtonEmailBreachClick)
-                        DarkWebSummaryType.Alias -> onEvent(DarkWebUiEvent.OnShowAllAliasEmailBreachClick)
-                    }
-
-                }
-            })
-            .padding(all = Spacing.medium),
+            .padding(horizontal = Spacing.medium),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
         val accentColor = when {
-            state.enabledMonitoring() && list.isEmpty() -> PassTheme.colors.cardInteractionNormMajor1
+            state.enabledMonitoring() && state.list().isEmpty() -> PassTheme.colors.cardInteractionNormMajor1
             state is DarkWebEmailBreachState.Error -> PassTheme.colors.passwordInteractionNormMajor1
             !state.enabledMonitoring() -> PassTheme.colors.textWeak
             else -> PassTheme.colors.passwordInteractionNormMajor1
@@ -92,11 +76,7 @@ internal fun EmailBreachHeader(
                         !state.enabledMonitoring() ->
                             stringResource(R.string.security_center_dark_web_monitor_monitoring_disabled)
 
-                        else -> pluralStringResource(
-                            R.plurals.security_center_dark_web_monitor_found_in_breaches,
-                            list.count(),
-                            list.count()
-                        )
+                        else -> null
                     }
                     title to subtitle
                 }
@@ -111,40 +91,38 @@ internal fun EmailBreachHeader(
                         !state.enabledMonitoring() ->
                             stringResource(R.string.security_center_dark_web_monitor_monitoring_disabled)
 
-                        else -> pluralStringResource(
-                            R.plurals.security_center_dark_web_monitor_found_in_breaches,
-                            list.count(),
-                            list.count()
-                        )
+                        else -> null
                     }
                     title to subtitle
                 }
             }
             Text(
-                text = title,
-                style = ProtonTheme.typography.defaultNorm
+                text = title.plus(" (${state.list().size})"),
+                style = ProtonTheme.typography.defaultSmallNorm
             )
-            Text(
-                modifier = Modifier.applyIf(
-                    condition = state is DarkWebEmailBreachState.Loading,
-                    ifTrue = { placeholder() }
-                ),
-                text = subtitle,
-                style = PassTheme.typography.body3Weak().copy(color = accentColor)
-            )
+            subtitle?.let {
+                Text(
+                    modifier = Modifier.applyIf(
+                        condition = state is DarkWebEmailBreachState.Loading,
+                        ifTrue = { placeholder() }
+                    ),
+                    text = subtitle,
+                    style = PassTheme.typography.body3Weak().copy(color = accentColor)
+                )
+            }
         }
 
         if (isClickable) {
-            Icon(
-                painter = painterResource(CompR.drawable.ic_chevron_tiny_right),
-                contentDescription = null,
-                tint = accentColor.takeIf { list.isNotEmpty() } ?: LocalContentColor.current.copy(
-                    alpha = LocalContentAlpha.current
-                )
+            TransparentTextButton(
+                text = stringResource(R.string.security_center_dark_web_monitor_see_all),
+                color = PassTheme.colors.interactionNormMajor2,
+                onClick = {
+                    when (summaryType) {
+                        DarkWebSummaryType.Proton -> onEvent(DarkWebUiEvent.OnShowAllProtonEmailBreachClick)
+                        DarkWebSummaryType.Alias -> onEvent(DarkWebUiEvent.OnShowAllAliasEmailBreachClick)
+                    }
+                }
             )
         }
-    }
-    if (list.isNotEmpty()) {
-        PassDivider(modifier = Modifier.padding(horizontal = Spacing.small))
     }
 }

@@ -149,6 +149,9 @@
         <!-- /Core-Auth activities -->
 
         <meta-data
+            android:name="asset_statements"
+            android:resource="@string/asset_statements" />
+        <meta-data
             android:name="io.sentry.auto-init"
             android:value="false" />
 

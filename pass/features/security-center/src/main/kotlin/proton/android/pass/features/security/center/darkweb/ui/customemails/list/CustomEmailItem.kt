@@ -151,7 +151,10 @@ private fun CustomEmailItemUnverified(
             )
         },
         trailingContent = {
-            ThreeDotsMenuButton(onClick = onOptionsClick)
+            ThreeDotsMenuButton(
+                modifier = Modifier.padding(horizontal = Spacing.medium),
+                onClick = onOptionsClick
+            )
         }
     )
 }

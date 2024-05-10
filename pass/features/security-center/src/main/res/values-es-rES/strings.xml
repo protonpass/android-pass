@@ -87,8 +87,7 @@
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Alias de hide-my-email</string>
   <string name="security_center_dark_web_monitor_proton_addresses_error">Error al recuperar las direcciones de Proton</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Error al recuperar los alias de hide-my-email</string>
-  <string name="security_center_dark_web_monitor_custom_emails_suggestions">Sugerencias</string>
-  <string name="security_center_dark_web_monitor_monitoring_disabled">El monitoreo ha sido desactivado.</string>
+    <string name="security_center_dark_web_monitor_monitoring_disabled">El monitoreo ha sido desactivado.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Se ha producido un error al enviar el código de verificación. Intenta de nuevo más tarde.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Se ha producido un error al borrar el correo. Intenta de nuevo más tarde.</string>
   <!-- Add custom email monitoring -->

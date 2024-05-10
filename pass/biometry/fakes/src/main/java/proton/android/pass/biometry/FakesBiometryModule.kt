@@ -38,4 +38,7 @@ abstract class FakesBiometryModule {
 
     @Binds
     abstract fun bindStoreAuthSuccessful(impl: TestStoreAuthSuccessful): StoreAuthSuccessful
+
+    @Binds
+    abstract fun bindStoreAuthOnStop(impl: FakeStoreAuthOnStop): StoreAuthOnStop
 }

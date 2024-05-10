@@ -29,10 +29,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallWeak
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
@@ -42,12 +42,15 @@ import proton.android.pass.composecomponents.impl.setting.SettingToggle
 import me.proton.core.presentation.compose.R as CoreR
 
 @Composable
-fun ApplicationSection(
+internal fun ApplicationSection(
     modifier: Modifier = Modifier,
     telemetryStatus: TelemetryStatus,
     onEvent: (SettingsContentEvent) -> Unit
 ) {
-    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
+    ) {
         Text(
             text = stringResource(R.string.settings_application_section_title),
             style = ProtonTheme.typography.defaultSmallWeak
@@ -98,7 +101,9 @@ fun ApplicationSection(
 
 @Preview
 @Composable
-fun ApplicationSectionPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
+internal fun ApplicationSectionPreview(
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+) {
     val telemetry = if (input.first) {
         TelemetryStatus.Show(shareTelemetry = true, shareCrashes = false)
     } else {

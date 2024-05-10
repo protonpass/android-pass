@@ -239,14 +239,16 @@ class HomeScreenTest {
 
             waitUntilExists(hasText(title))
 
-            val menuContentDescription = activity.getString(CompR.string.action_content_description_menu)
+            val menuContentDescription =
+                activity.getString(CompR.string.action_content_description_menu)
             onNodeWithContentDescription(menuContentDescription).performClick()
 
             val trashItemText = activity.getString(CompR.string.bottomsheet_move_to_trash)
             waitUntilExists(hasText(trashItemText))
             onNodeWithText(trashItemText).performClick()
 
-            val confirmDialogText = activity.getString(TrashR.string.alias_dialog_move_to_trash_confirm)
+            val confirmDialogText =
+                activity.getString(TrashR.string.alias_dialog_move_to_trash_confirm)
             waitUntilExists(hasText(confirmDialogText))
             onNodeWithText(confirmDialogText).performClick()
 
@@ -319,7 +321,7 @@ class HomeScreenTest {
             )
         }
 
-        itemSyncStatusRepository.tryEmit(ItemSyncStatus.SyncSuccess(hasItems = items.isNotEmpty()))
+        itemSyncStatusRepository.tryEmit(ItemSyncStatus.SyncSuccess)
         observeVaults.sendResult(Result.success(vaults))
         observeItems.emitValue(items)
         observeSearchEntry.emit(searchEntries)

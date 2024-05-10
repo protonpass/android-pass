@@ -87,8 +87,7 @@
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email-aliassen</string>
   <string name="security_center_dark_web_monitor_proton_addresses_error">Fout bij het ophalen van Proton adressen</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Fout bij ophalen van Hide-my-email aliassen</string>
-  <string name="security_center_dark_web_monitor_custom_emails_suggestions">Aanbevelingen</string>
-  <string name="security_center_dark_web_monitor_monitoring_disabled">Monitoring uitgeschakeld</string>
+    <string name="security_center_dark_web_monitor_monitoring_disabled">Monitoring uitgeschakeld</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Er is een fout opgetreden bij het verzenden van de verificatiecode. Probeer het later nog eens.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Er is een fout opgetreden bij het verwijderen van de e-mail. Probeer het later opnieuw.</string>
   <!-- Add custom email monitoring -->

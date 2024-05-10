@@ -29,13 +29,13 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
 import proton.android.pass.preferences.value
 
 @Composable
-fun SettingsContent(
+internal fun SettingsContent(
     modifier: Modifier = Modifier,
     state: SettingsUiState,
     onEvent: (SettingsContentEvent) -> Unit
@@ -55,8 +55,8 @@ fun SettingsContent(
                 .background(PassTheme.colors.backgroundStrong)
                 .verticalScroll(rememberScrollState())
                 .padding(contentPadding)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .padding(all = Spacing.medium),
+            verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
         ) {
             PreferencesSection(
                 theme = state.themePreference,

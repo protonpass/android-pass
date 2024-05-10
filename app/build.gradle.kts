@@ -16,6 +16,7 @@
  * along with Proton Mail. If not, see <https://www.gnu.org/licenses/>.
  */
 
+import com.android.build.api.dsl.VariantDimension
 import configuration.EnvironmentConfigSettings
 import configuration.extensions.protonEnvironment
 import java.util.Properties
@@ -89,6 +90,8 @@ android {
 
         buildConfigField("String", "SENTRY_DSN", sentryDSN.toBuildConfigValue())
         buildConfigField("String", "ACCOUNT_SENTRY_DSN", accountSentryDSN.toBuildConfigValue())
+
+        setAssetLinksResValue("proton.me")
 
         protonEnvironment {
             proxyToken = atlasProxyToken
@@ -198,11 +201,14 @@ android {
             dimension = "env"
             applicationIdSuffix = ".black"
 
+            val protonHost = "proton.black"
             protonEnvironment {
-                host = "proton.black"
+                host = protonHost
 
                 printInfo(name)
             }
+
+            setAssetLinksResValue(protonHost)
         }
         create("prod") {
             dimension = "env"
@@ -503,4 +509,16 @@ sentry {
     autoInstallation.enabled.set(false)
     ignoredBuildTypes.set(setOf("debug"))
     ignoredFlavors.set(setOf("fdroid"))
+}
+
+fun VariantDimension.setAssetLinksResValue(host: String) {
+    resValue(
+        type = "string", name = "asset_statements",
+        value = """
+            [{
+              "relation": ["delegate_permission/common.handle_all_urls", "delegate_permission/common.get_login_creds"],
+              "target": { "namespace": "web", "site": "https://$host" }
+            }]
+        """.trimIndent()
+    )
 }

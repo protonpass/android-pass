@@ -55,8 +55,8 @@ import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.CustomEmailSuggestion
-import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
 import proton.android.pass.data.api.usecases.breach.ObserveBreachCustomEmails
+import proton.android.pass.data.api.usecases.breach.ObserveBreachProtonEmails
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAliasEmail
 import proton.android.pass.data.api.usecases.breach.ObserveCustomEmailSuggestions
 import proton.android.pass.data.api.usecases.items.ItemSecurityCheckFilter
@@ -69,8 +69,8 @@ import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachId
 import proton.android.pass.domain.breach.BreachProtonEmail
 import proton.android.pass.features.security.center.PassMonitorDisplayDarkWebMonitoring
-import proton.android.pass.features.security.center.shared.presentation.AliasKeyId
 import proton.android.pass.features.security.center.customemail.presentation.SecurityCenterCustomEmailSnackbarMessage
+import proton.android.pass.features.security.center.shared.presentation.AliasKeyId
 import proton.android.pass.features.security.center.shared.presentation.EmailBreachUiState
 import proton.android.pass.features.security.center.shared.ui.DateUtils
 import proton.android.pass.log.api.PassLogger
@@ -83,7 +83,7 @@ import javax.inject.Inject
 internal class DarkWebViewModel @Inject constructor(
     observeItems: ObserveItems,
     observeItemCount: ObserveItemCount,
-    observeAllBreachByUserId: ObserveAllBreachByUserId,
+    observeBreachProtonEmails: ObserveBreachProtonEmails,
     observeBreachesForAliasEmail: ObserveBreachesForAliasEmail,
     observeBreachCustomEmails: ObserveBreachCustomEmails,
     observeCustomEmailSuggestions: ObserveCustomEmailSuggestions,
@@ -101,18 +101,15 @@ internal class DarkWebViewModel @Inject constructor(
     private val loadingSuggestionFlow: MutableStateFlow<Option<String>> =
         MutableStateFlow(None)
 
-    private val protonEmailFlow = observeAllBreachByUserId()
-        .map { breach -> breach.breachedProtonEmails }
-        .asLoadingResult()
-
     private val protonEmailFlowIfEnabled = observeGlobalMonitorState()
         .flatMapLatest { monitorState ->
             if (monitorState.protonMonitorEnabled) {
-                protonEmailFlow.map { result -> result.map { it to true } }
+                observeBreachProtonEmails().map { list -> list to true }
             } else {
-                flowOf(LoadingResult.Success(emptyList<BreachProtonEmail>() to false))
+                flowOf(emptyList<BreachProtonEmail>() to false)
             }
         }
+        .asLoadingResult()
 
     private val aliasEmailFlow = observeItems(
         selection = ShareSelection.AllShares,
@@ -134,7 +131,7 @@ internal class DarkWebViewModel @Inject constructor(
                             itemId = aliasKey.itemId
                         ).map { aliasKey to it }
                     } else {
-                        flowOf<Pair<AliasKeyId, List<BreachEmail>>>(aliasKey to emptyList())
+                        flowOf(aliasKey to emptyList())
                     }
                 }
                 .asFlow()

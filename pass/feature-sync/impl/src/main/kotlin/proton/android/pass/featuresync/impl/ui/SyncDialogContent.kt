@@ -33,7 +33,6 @@ import me.proton.core.compose.theme.defaultNorm
 import me.proton.core.compose.theme.headlineNorm
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.featuresync.impl.R
-import proton.android.pass.featuresync.impl.navigation.SyncNavDestination
 import proton.android.pass.featuresync.impl.presentation.SyncDialogState
 import proton.android.pass.composecomponents.impl.R as CompR
 
@@ -41,7 +40,7 @@ import proton.android.pass.composecomponents.impl.R as CompR
 internal fun SyncDialogContent(
     modifier: Modifier = Modifier,
     state: SyncDialogState,
-    onNavigate: (SyncNavDestination) -> Unit
+    onUiEvent: (SyncDialogUiEvent) -> Unit
 ) = with(state) {
     ProtonAlertDialog(
         modifier = modifier,
@@ -98,14 +97,14 @@ internal fun SyncDialogContent(
                 hasSyncFailed -> {
                     SyncDialogButton(
                         textResId = CompR.string.action_retry,
-                        onClick = { println("JIBIRI: Retry Sync!") }
+                        onClick = { onUiEvent(SyncDialogUiEvent.OnRetrySync) }
                     )
                 }
 
                 hasSyncSucceeded -> {
                     SyncDialogButton(
                         textResId = CompR.string.action_continue,
-                        onClick = { onNavigate(SyncNavDestination.Back) }
+                        onClick = { onUiEvent(SyncDialogUiEvent.OnCompleteSync) }
                     )
                 }
             }
@@ -114,7 +113,7 @@ internal fun SyncDialogContent(
             if (hasSyncFailed) {
                 SyncDialogButton(
                     textResId = CompR.string.action_not_now,
-                    onClick = { onNavigate(SyncNavDestination.Back) }
+                    onClick = { onUiEvent(SyncDialogUiEvent.OnCloseSync) }
                 )
             }
         }

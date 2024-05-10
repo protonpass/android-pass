@@ -64,6 +64,7 @@ internal data class SyncDialogState(
             itemSyncPayloadMap = emptyMap(),
             vaultsLoadingResult = LoadingResult.Loading
         )
+
     }
 
 }

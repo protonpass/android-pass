@@ -32,6 +32,7 @@
   <string name="app_lock_config_biometric">Биометрический</string>
   <string name="app_lock_config_pin_code">PIN-код</string>
   <string name="app_lock_config_app_lock_time">Автоблокировка</string>
+  <string name="app_lock_config_password">Password</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Используйте системную блокировку, если биометрия не работает</string>
   <string name="configure_pin_set_pin_code">Установите PIN-код</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Разблокируйте приложение с помощью этого кода</string>
@@ -52,4 +53,23 @@
   <string name="profile_passkey_support_subtitle_not_supported_android_version">Your android version does not support passkeys</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Your device does not support passkeys</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Could not check support for passkeys</string>
+  <plurals name="profile_after_days">
+    <item quantity="one">Через %d день</item>
+    <item quantity="few">Через %d дня</item>
+    <item quantity="many">Через %d дня</item>
+    <item quantity="other">Через %d дней</item>
+  </plurals>
+  <plurals name="profile_after_minutes">
+    <item quantity="one">Через %d минуту</item>
+    <item quantity="few">Через %d минуты</item>
+    <item quantity="many">Через %d минуты</item>
+    <item quantity="other">Через %d минут</item>
+  </plurals>
+  <plurals name="profile_after_hours">
+    <item quantity="one">Через %d час</item>
+    <item quantity="few">Через %d часа</item>
+    <item quantity="many">Через %d часа</item>
+    <item quantity="other">Через %d часов</item>
+  </plurals>
+  <string name="profile_less_than_a_minute">Less than a minute</string>
 </resources>

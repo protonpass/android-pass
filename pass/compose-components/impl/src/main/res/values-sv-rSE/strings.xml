@@ -33,6 +33,8 @@
   <string name="action_learn_more">Lär dig mer</string>
   <string name="action_enable">Aktivera</string>
   <string name="action_view_details">Visa detaljer</string>
+  <string name="action_see_all">Se alla</string>
+  <string name="action_confirm">Bekräfta</string>
   <!-- Empty list -->
   <string name="empty_list_title">Lägg till ditt första objekt</string>
   <string name="empty_search_results_title">Inga resultat hittades</string>

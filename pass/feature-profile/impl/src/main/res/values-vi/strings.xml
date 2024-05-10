@@ -32,6 +32,7 @@
   <string name="app_lock_config_biometric">Sinh trắc học</string>
   <string name="app_lock_config_pin_code">Mã PIN</string>
   <string name="app_lock_config_app_lock_time">Khóa tự động</string>
+  <string name="app_lock_config_password">Password</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Sử dụng khóa thiết bị khi sinh trắc học thất bại</string>
   <string name="configure_pin_set_pin_code">Đặt mã PIN</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Mở khóa ứng dụng với mã này</string>
@@ -52,4 +53,14 @@
   <string name="profile_passkey_support_subtitle_not_supported_android_version">Your android version does not support passkeys</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Your device does not support passkeys</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Could not check support for passkeys</string>
+  <plurals name="profile_after_days">
+    <item quantity="other">Sau %d ngày</item>
+  </plurals>
+  <plurals name="profile_after_minutes">
+    <item quantity="other">Sau %d phút</item>
+  </plurals>
+  <plurals name="profile_after_hours">
+    <item quantity="other">Sau %d giờ</item>
+  </plurals>
+  <string name="profile_less_than_a_minute">Less than a minute</string>
 </resources>

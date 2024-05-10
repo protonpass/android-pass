@@ -33,6 +33,8 @@
   <string name="action_learn_more">Lees meer</string>
   <string name="action_enable">Inschakelen</string>
   <string name="action_view_details">Details weergeven</string>
+  <string name="action_see_all">Alles weergeven</string>
+  <string name="action_confirm">Bevestigen</string>
   <!-- Empty list -->
   <string name="empty_list_title">Voeg uw eerste item toe</string>
   <string name="empty_search_results_title">Geen resultaten gevonden</string>

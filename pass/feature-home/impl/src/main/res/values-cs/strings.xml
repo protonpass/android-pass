@@ -111,10 +111,10 @@
     <item quantity="other">Přesunout do koše %d položek?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
-    <item quantity="one">Jste si jisti, že chcete položku přesunout do koše?</item>
-    <item quantity="few">Jste si jisti, že chcete %d položky přesunout do koše?</item>
-    <item quantity="many">Jste si jisti, že chcete %d položek přesunout do koše?</item>
-    <item quantity="other">Jste si jisti, že chcete %d položek přesunout do koše?</item>
+    <item quantity="one">Opravdu chcete položku přesunout do koše?</item>
+    <item quantity="few">Opravdu chcete %d položky přesunout do koše?</item>
+    <item quantity="many">Opravdu chcete %d položek přesunout do koše?</item>
+    <item quantity="other">Opravdu chcete %d položek přesunout do koše?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
     <item quantity="one">Trvale smazat %d položku?</item>

@@ -7,14 +7,14 @@
   <string name="profile_security">Безпека</string>
   <string name="profile_option_feedback">Відгук</string>
   <string name="profile_option_import_export">Імпорт/експорт</string>
-  <string name="profile_option_tutorial">How to use Proton Pass</string>
+  <string name="profile_option_tutorial">Як користуватися Proton Pass</string>
   <string name="profile_option_rating">Оцінити програму</string>
   <string name="profile_option_autofill">Автозаповнення</string>
   <string name="profile_option_autofill_subtitle">Автоматично заповнюйте ім\'я користувача і паролі.</string>
   <string name="profile_error_biometry_failed_to_start">Не вдалося запустити біометричну автентифікацію</string>
   <string name="profile_error_biometry_failed_to_authenticate">Не вдалося здійснити автентифікацію</string>
-  <string name="profile_fingerprint_lock_enabled">Fingerprint lock enabled</string>
-  <string name="profile_fingerprint_lock_disabled">Fingerprint lock disabled</string>
+  <string name="profile_fingerprint_lock_enabled">Блокування відбитком пальця увімкнено</string>
+  <string name="profile_fingerprint_lock_disabled">Блокування відбитком пальця вимкнено</string>
   <string name="profile_error_performing_operation">Помилка під час виконання операції</string>
   <string name="profile_app_version_copied_to_clipboard">Версію програми скопійовано</string>
   <string name="feedback_option_reddit">Приєднуйтеся до спільноти Proton на Reddit</string>
@@ -32,6 +32,7 @@
   <string name="app_lock_config_biometric">Біометрія</string>
   <string name="app_lock_config_pin_code">PIN-код</string>
   <string name="app_lock_config_app_lock_time">Автоматичне блокування</string>
+  <string name="app_lock_config_password">Пароль</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Системне блокування у разі збою біометрії</string>
   <string name="configure_pin_set_pin_code">Встановити PIN-код</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Розблокуйте програму за допомогою цього коду</string>
@@ -46,10 +47,29 @@
   <string name="profile_option_lock_with">Спосіб блокування</string>
   <string name="profile_option_unlock_with">Спосіб розблокування</string>
   <string name="profile_option_change_pin_code">Змінити PIN-код</string>
-  <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Samsung Browser is set as the default browser. It does not support autofill by external password managers.</string>
-  <string name="profile_passkey_support_section_title">Passkeys</string>
-  <string name="profile_passkey_support_subtitle_supported">Passkeys are supported</string>
-  <string name="profile_passkey_support_subtitle_not_supported_android_version">Your android version does not support passkeys</string>
-  <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Your device does not support passkeys</string>
-  <string name="profile_passkey_support_subtitle_not_supported_unknown">Could not check support for passkeys</string>
+  <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Браузер Samsung Browser встановлено за замовчуванням. Він не підтримує автозаповнення зовнішніми менеджерами паролів.</string>
+  <string name="profile_passkey_support_section_title">Ключі доступу</string>
+  <string name="profile_passkey_support_subtitle_supported">Підтримуються ключі доступу</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">Ваша версія Android не підтримує ключів доступу</string>
+  <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Ваш пристрій не підтримує ключів доступу</string>
+  <string name="profile_passkey_support_subtitle_not_supported_unknown">Не вдалося перевірити підтримку ключів доступу</string>
+  <plurals name="profile_after_days">
+    <item quantity="one">За %d день</item>
+    <item quantity="few">За %d дні</item>
+    <item quantity="many">За %d днів</item>
+    <item quantity="other">За %d днів</item>
+  </plurals>
+  <plurals name="profile_after_minutes">
+    <item quantity="one">За %d хвилину</item>
+    <item quantity="few">За %d хвилини</item>
+    <item quantity="many">За %d хвилин</item>
+    <item quantity="other">За %d хвилин</item>
+  </plurals>
+  <plurals name="profile_after_hours">
+    <item quantity="one">За %d годину</item>
+    <item quantity="few">За %d години</item>
+    <item quantity="many">За %d годин</item>
+    <item quantity="other">За %d годин</item>
+  </plurals>
+  <string name="profile_less_than_a_minute">Менш ніж за хвилину</string>
 </resources>

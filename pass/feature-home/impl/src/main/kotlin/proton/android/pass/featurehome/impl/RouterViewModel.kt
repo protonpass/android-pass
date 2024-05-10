@@ -28,9 +28,8 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
-import proton.android.pass.data.api.repositories.SyncMode
+import proton.android.pass.data.api.repositories.SyncState
 import proton.android.pass.data.api.usecases.ObserveHasConfirmedInvite
 import proton.android.pass.preferences.HasCompletedOnBoarding
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -52,15 +51,9 @@ class RouterViewModel @Inject constructor(
         }
         .distinctUntilChanged()
 
-    private val showSyncDialogFlow: Flow<SyncState> = combine(
-        itemSyncStatusRepository.observeSyncStatus(),
-        itemSyncStatusRepository.observeMode(),
-        ::SyncState
-    )
-
-    val eventStateFlow: StateFlow<RouterEvent> = combine(
+    internal val eventStateFlow: StateFlow<RouterEvent> = combine(
         userPreferencesRepository.getHasCompletedOnBoarding(),
-        showSyncDialogFlow,
+        itemSyncStatusRepository.observeSyncState(),
         confirmedInviteFlow,
         ::routerEvent
     )
@@ -78,16 +71,10 @@ class RouterViewModel @Inject constructor(
     ) = when {
         hasConfirmedInvite -> RouterEvent.ConfirmedInvite
         hasCompletedOnBoarding == HasCompletedOnBoarding.NotCompleted -> RouterEvent.OnBoarding
-        syncState.syncStatus.isSyncing() && syncState.syncMode == SyncMode.ShownToUser -> RouterEvent.SyncDialog
+        syncState.isSyncing && syncState.isVisibleSyncing -> RouterEvent.SyncDialog
         else -> RouterEvent.None
     }
 
-    private fun ItemSyncStatus.isSyncing() = this is ItemSyncStatus.Syncing || this is ItemSyncStatus.SyncStarted
-
-    private data class SyncState(
-        val syncStatus: ItemSyncStatus,
-        val syncMode: SyncMode
-    )
 }
 
 sealed interface RouterEvent {

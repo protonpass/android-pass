@@ -20,11 +20,13 @@ package proton.android.pass.data.fakes.usecases
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.combine
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusPayload
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.SyncMode
+import proton.android.pass.data.api.repositories.SyncState
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -32,12 +34,14 @@ import javax.inject.Singleton
 @Singleton
 class TestItemSyncStatusRepository @Inject constructor() : ItemSyncStatusRepository {
 
-    private val flow: MutableSharedFlow<ItemSyncStatus> = testFlow<ItemSyncStatus>()
+    private val syncStatusFlow: MutableSharedFlow<ItemSyncStatus> = testFlow<ItemSyncStatus>()
         .apply { tryEmit(ItemSyncStatus.SyncNotStarted) }
+
     private val accumulatedFlow: MutableSharedFlow<Map<ShareId, ItemSyncStatusPayload>> =
         testFlow<Map<ShareId, ItemSyncStatusPayload>>()
             .apply { emptyMap<ShareId, ItemSyncStatusPayload>() }
-    private val modeFlow: MutableSharedFlow<SyncMode> = testFlow<SyncMode>()
+
+    private val syncModeFlow: MutableSharedFlow<SyncMode> = testFlow<SyncMode>()
         .apply { tryEmit(SyncMode.Background) }
 
     fun emitAccumulated(map: Map<ShareId, ItemSyncStatusPayload>) {
@@ -45,29 +49,30 @@ class TestItemSyncStatusRepository @Inject constructor() : ItemSyncStatusReposit
     }
 
     override suspend fun emit(status: ItemSyncStatus) {
-        flow.emit(status)
+        syncStatusFlow.emit(status)
     }
 
     override fun tryEmit(status: ItemSyncStatus) {
-        flow.tryEmit(status)
+        syncStatusFlow.tryEmit(status)
     }
 
     override suspend fun setMode(mode: SyncMode) {
-        modeFlow.emit(mode)
+        syncModeFlow.emit(mode)
     }
 
     override fun trySetMode(mode: SyncMode) {
-        modeFlow.tryEmit(mode)
+        syncModeFlow.tryEmit(mode)
     }
 
     override suspend fun clear() {
     }
 
-    override fun observeMode(): Flow<SyncMode> = modeFlow
+    override fun observeMode(): Flow<SyncMode> = syncModeFlow
 
-    override fun observeSyncStatus(): Flow<ItemSyncStatus> = flow
+    override fun observeSyncStatus(): Flow<ItemSyncStatus> = syncStatusFlow
 
     override fun observeAccSyncStatus(): Flow<Map<ShareId, ItemSyncStatusPayload>> = accumulatedFlow
 
+    override fun observeSyncState(): Flow<SyncState> = combine(syncStatusFlow, syncModeFlow, ::SyncState)
 
 }

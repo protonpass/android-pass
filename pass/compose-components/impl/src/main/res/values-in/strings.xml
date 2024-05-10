@@ -32,6 +32,8 @@
   <string name="action_learn_more">Pelajari lebih lanjut</string>
   <string name="action_enable">Aktifkan</string>
   <string name="action_view_details">Lihat rincian</string>
+  <string name="action_see_all">Lihat semua</string>
+  <string name="action_confirm">Konfirmasi</string>
   <!-- Empty list -->
   <string name="empty_list_title">Tambahkan item pertama Anda</string>
   <string name="empty_search_results_title">Hasil tidak ditemukan</string>

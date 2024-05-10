@@ -32,6 +32,7 @@
   <string name="app_lock_config_biometric">Biometric</string>
   <string name="app_lock_config_pin_code">Cod PIN</string>
   <string name="app_lock_config_app_lock_time">Blocare automată</string>
+  <string name="app_lock_config_password">Password</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Folosire blocare sistem când cel biometric eșuează</string>
   <string name="configure_pin_set_pin_code">Setare cod PIN</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Deblocare aplicație cu acest cod</string>
@@ -52,4 +53,20 @@
   <string name="profile_passkey_support_subtitle_not_supported_android_version">Versiunea de Android nu suportă chei de acces</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Dispozitivul nu suportă chei de acces</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Nu s-a putut verifica suportul pentru chei de acces</string>
+  <plurals name="profile_after_days">
+    <item quantity="one">După %d zi</item>
+    <item quantity="few">După %d zile</item>
+    <item quantity="other">După %d de zile</item>
+  </plurals>
+  <plurals name="profile_after_minutes">
+    <item quantity="one">După %d minut</item>
+    <item quantity="few">După %d de minute</item>
+    <item quantity="other">După %d minute</item>
+  </plurals>
+  <plurals name="profile_after_hours">
+    <item quantity="one">După %d oră</item>
+    <item quantity="few">După %d de ore</item>
+    <item quantity="other">După %d ore</item>
+  </plurals>
+  <string name="profile_less_than_a_minute">Less than a minute</string>
 </resources>

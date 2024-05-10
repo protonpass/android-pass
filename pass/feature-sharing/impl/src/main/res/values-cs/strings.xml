@@ -39,7 +39,7 @@
   <string name="share_with_title">Sdílet s</string>
   <string name="share_with_email_hint">E-mailová adresa</string>
   <string name="share_with_email_error">Neplatná e-mailová adresa</string>
-  <string name="share_with_email_cannot_invite_outside_org">You can\'t invite people outside of your organization, contact admin for more info</string>
+  <string name="share_with_email_cannot_invite_outside_org">Nemůžete pozvat lidi mimo vaši organizaci. Pro více informací kontaktujte správce.</string>
   <string name="share_permissions_title">Nastavit úroveň přístupu</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s vás zve k přístupu k položkám v</string>
   <string name="sharing_join_shared_vault">Připojit a synchronizovat</string>
@@ -106,8 +106,8 @@
   <string name="sharing_snackbar_transfer_ownership_error">Chyba při převodu vlastnictví</string>
   <string name="sharing_invites_info_dialog_title">Limit počtu členů</string>
   <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
-    <item quantity="one">This vault can have up to %1$d members. You still have %2$d invite left.</item>
-    <item quantity="few">Tento trezor může mít až %1$d členů. Zbývá vám ještě %2$d pozvánek.</item>
+    <item quantity="one">Tento trezor může mít %1$d člena. Zbývá vám ještě %2$d pozvánka.</item>
+    <item quantity="few">Tento trezor může mít až %1$d členy. Zbývají vám ještě %2$d pozvánky.</item>
     <item quantity="many">Tento trezor může mít až %1$d členů. Zbývá vám ještě %2$d pozvánek.</item>
     <item quantity="other">Tento trezor může mít až %1$d členů. Zbývá vám ještě %2$d pozvánek.</item>
   </plurals>
@@ -125,10 +125,10 @@
   <string name="share_with_recents_title">Nedávné</string>
   <string name="share_with_remove_email_content_description">Odebrat e-mail</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Nastavit přístupovou úroveň pro všechny členy</string>
-  <string name="sharing_edit_permissions_set_access_level_single_member">Set access level for %s</string>
+  <string name="sharing_edit_permissions_set_access_level_single_member">Nastavte úroveň přístupu pro %s</string>
   <string name="sharing_edit_permissions_remove_user">Odebrat uživatele</string>
   <string name="sharing_error_dialog_title">Neznámá chyba</string>
-  <string name="sharing_error_dialog_message">There was an error sending an invite for this vault. If the issue persists, please contact customer support service.</string>
-  <string name="sharing_with_no_addresses_can_be_invited">No addresses can be invited</string>
-  <string name="sharing_with_some_addresses_cannot_be_invited">Some addresses cannot be invited</string>
+  <string name="sharing_error_dialog_message">Při odesílání pozvánky k tomuto trezoru došlo k chybě. Pokud problém přetrvává, obraťte se na zákaznickou podporu.</string>
+  <string name="sharing_with_no_addresses_can_be_invited">Nelze pozvat žádné adresy</string>
+  <string name="sharing_with_some_addresses_cannot_be_invited">Některé adresy nelze pozvat</string>
 </resources>

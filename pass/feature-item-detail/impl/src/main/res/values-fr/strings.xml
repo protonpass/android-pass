@@ -38,19 +38,13 @@
   <string name="login_item_view_alias_button">Afficher l\'alias</string>
   <string name="login_item_monitor_widget_weak_pass_title">Mot de passe faible</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Ce compte est vulnérable. Visitez le service et changez votre mot de passe.</string>
-  <string name="login_item_monitor_widget_reused_pass_title">Mot de passe réutilisé</string>
-  <string name="login_item_monitor_widget_reused_pass_subtitle">Visitez le site internet et générez un mot de passe unique pour cet élément.</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_compact_leading">
-    <item quantity="one">%d autre identifiant</item>
-    <item quantity="other">%d autres identifiants</item>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d autre identifiant utilise le même mot de passe.</item>
+    <item quantity="other">%d autres identifiants utilisent le même mot de passe.</item>
   </plurals>
-  <string name="login_item_monitor_widget_reused_pass_count_compact_trailing" comment="This is the trailing part of the sentence above. A full example of its usage will be '4 other logins use this password.'">utilisent ce mot de passe.</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_expanded">
-    <item quantity="one">Un autre identifiant utilise ce mot de passe :</item>
-    <item quantity="other">%d autres identifiants utilisent ce mot de passe :</item>
-  </plurals>
-  <string name="login_item_monitor_widget_missing_two_fa_title">L\'authentification à deux facteurs est manquante.</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Il serait plus sûr d\'activer l\'A2F pour cet élément.</string>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Configurez l\'A2F pour plus de sécurité</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Ce service offre l\'A2F. Activez-le pour améliorer votre sécurité.</string>
+  <string name="login_item_reused_passwords_subtitle">Éléments de vos coffre-forts qui utilisent ce mot de passe.</string>
   <string name="field_username">Nom d\'utilisateur ou adresse e-mail</string>
   <string name="field_password">Mot de passe</string>
   <string name="websites_section_title">Sites internet</string>

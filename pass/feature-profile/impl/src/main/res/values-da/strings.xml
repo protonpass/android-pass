@@ -32,6 +32,7 @@
   <string name="app_lock_config_biometric">Biometrisk</string>
   <string name="app_lock_config_pin_code">Pinkode</string>
   <string name="app_lock_config_app_lock_time">Automatisk lås</string>
+  <string name="app_lock_config_password">Adgangskode</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Brug systemlås, når biometrien svigter</string>
   <string name="configure_pin_set_pin_code">Indstil pinkode</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Lås appen op med denne kode</string>
@@ -52,4 +53,17 @@
   <string name="profile_passkey_support_subtitle_not_supported_android_version">Din Android-version understøtter ikke adgangsnøgler</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Din enhed understøtter ikke adgangsnøgler</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Kunne ikke tjekke understøttelse af adgangsnøgler</string>
+  <plurals name="profile_after_days">
+    <item quantity="one">Efter %d dag</item>
+    <item quantity="other">Efter %d dage</item>
+  </plurals>
+  <plurals name="profile_after_minutes">
+    <item quantity="one">Efter %d minut</item>
+    <item quantity="other">Efter %d minutter</item>
+  </plurals>
+  <plurals name="profile_after_hours">
+    <item quantity="one">Efter %d time</item>
+    <item quantity="other">Efter %d timer</item>
+  </plurals>
+  <string name="profile_less_than_a_minute">Mindre end et minut</string>
 </resources>

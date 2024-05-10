@@ -32,6 +32,7 @@
   <string name="app_lock_config_biometric">Biometria</string>
   <string name="app_lock_config_pin_code">Codice PIN</string>
   <string name="app_lock_config_app_lock_time">Blocco automatico</string>
+  <string name="app_lock_config_password">Password</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Usa il blocco di sistema quando lo sblocco con la biometria non funziona</string>
   <string name="configure_pin_set_pin_code">Imposta il codice PIN</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Sblocca l\'app con questo codice</string>
@@ -52,4 +53,17 @@
   <string name="profile_passkey_support_subtitle_not_supported_android_version">La tua versione di Android non supporta le passkey</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Il tuo dispositivo non supporta le passkey</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Impossibile verificare il supporto per le passkey</string>
+  <plurals name="profile_after_days">
+    <item quantity="one">%d giorno</item>
+    <item quantity="other">%d giorni</item>
+  </plurals>
+  <plurals name="profile_after_minutes">
+    <item quantity="one">%d minuto</item>
+    <item quantity="other">%d minuti</item>
+  </plurals>
+  <plurals name="profile_after_hours">
+    <item quantity="one">%d ora</item>
+    <item quantity="other">%d ore</item>
+  </plurals>
+  <string name="profile_less_than_a_minute">Meno di un minuto</string>
 </resources>

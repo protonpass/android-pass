@@ -38,19 +38,13 @@
   <string name="login_item_view_alias_button">Takma adları görüntüle</string>
   <string name="login_item_monitor_widget_weak_pass_title">Zayıf Parola</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Bu hesap ele geçirilebilir. Hizmeti ziyaret edin ve parolanızı değiştirin.</string>
-  <string name="login_item_monitor_widget_reused_pass_title">Yeniden kullanılmış parola</string>
-  <string name="login_item_monitor_widget_reused_pass_subtitle">Siteye giderek bu öge için benzersiz bir parola oluşturun.</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_compact_leading">
-    <item quantity="one">%d oturum açma kaydında daha</item>
-    <item quantity="other">%d oturum açma kaydında daha</item>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d oturum açma kaydı aynı parolayı kullanıyor</item>
+    <item quantity="other">%d oturum açma kaydı aynı parolayı kullanıyor</item>
   </plurals>
-  <string name="login_item_monitor_widget_reused_pass_count_compact_trailing" comment="This is the trailing part of the sentence above. A full example of its usage will be '4 other logins use this password.'">bu parolayı kullanıyor.</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_expanded">
-    <item quantity="one">Bu parolayı kullanan bir oturum açma kaydı daha var:</item>
-    <item quantity="other">Bu parolayı kullanan %d oturum açma kaydı daha var:</item>
-  </plurals>
-  <string name="login_item_monitor_widget_missing_two_fa_title">İki adımlı doğrulama eksik</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Bu öge için iki adımlı doğrulamayı ayarlamak daha güvenli olur.</string>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Güvenliği artırmak için iki adımlı doğrulamayı açın</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">This service offers 2FA. Enable it for added account security.</string>
+  <string name="login_item_reused_passwords_subtitle">Items from your vaults that use this password.</string>
   <string name="field_username">Kullanıcı adı ya da e-posta adresi</string>
   <string name="field_password">Parola</string>
   <string name="websites_section_title">Siteler</string>

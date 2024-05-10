@@ -33,6 +33,8 @@
   <string name="action_learn_more">Μάθετε περισσότερα</string>
   <string name="action_enable">Ενεργοποίηση</string>
   <string name="action_view_details">Προβολή λεπτομερειών</string>
+  <string name="action_see_all">Προβολή όλων</string>
+  <string name="action_confirm">Επιβεβαίωση</string>
   <!-- Empty list -->
   <string name="empty_list_title">Προσθέστε το πρώτο σας στοιχείο</string>
   <string name="empty_search_results_title">Δε βρέθηκε αποτέλεσμα</string>

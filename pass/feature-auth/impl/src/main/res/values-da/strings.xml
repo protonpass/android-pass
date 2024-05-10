@@ -32,7 +32,7 @@
   <string name="auth_action_enter_fingerprint_instead" comment="This text shows under the Master password input, in case the user dismissed the PIN input">Brug fingeraftryk i stedet</string>
   <string name="auth_unlock_button">Lås op</string>
   <string name="auth_error_verifying_password">Fejl ved bekræftelse af din adgangskode</string>
-  <string name="auth_error_empty_password">Adgangskode kan ikke være tom</string>
+  <string name="auth_error_empty_password">Adgangskode må ikke være tom</string>
   <string name="auth_error_pin_cannot_be_empty">Pinkode må ikke være tom</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Forkert adgangskode. %d forsøg tilbage</item>

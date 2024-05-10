@@ -33,6 +33,8 @@
   <string name="action_learn_more">Ayrıntılı bilgi alın</string>
   <string name="action_enable">Kullanıma al</string>
   <string name="action_view_details">Ayrıntıları görüntüle</string>
+  <string name="action_see_all">Tümünü görüntüle</string>
+  <string name="action_confirm">Onayla</string>
   <!-- Empty list -->
   <string name="empty_list_title">İlk ögenizi ekleyin</string>
   <string name="empty_search_results_title">Herhangi bir sonuç bulunamadı</string>

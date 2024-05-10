@@ -32,6 +32,8 @@
   <string name="action_learn_more">더 알아보기</string>
   <string name="action_enable">활성화</string>
   <string name="action_view_details">자세히 보기</string>
+  <string name="action_see_all">모두 보기</string>
+  <string name="action_confirm">확인</string>
   <!-- Empty list -->
   <string name="empty_list_title">첫 번째 항목 추가</string>
   <string name="empty_search_results_title">결과가 없습니다</string>
@@ -40,7 +42,7 @@
   <!-- Field -->
   <string name="field_title_title">제목</string>
   <string name="field_title_hint">제목 없음</string>
-  <string name="field_title_required">제목 필수</string>
+  <string name="field_title_required">제목이 필요합니다</string>
   <string name="small_cross_icon_content_description">작은 십자가 아이콘</string>
   <string name="field_note_title">메모</string>
   <string name="field_note_hint">메모 추가</string>

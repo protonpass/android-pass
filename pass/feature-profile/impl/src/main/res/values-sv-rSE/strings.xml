@@ -32,6 +32,7 @@
   <string name="app_lock_config_biometric">Biometrisk</string>
   <string name="app_lock_config_pin_code">PIN-kod</string>
   <string name="app_lock_config_app_lock_time">Automatiskt lås</string>
+  <string name="app_lock_config_password">Lösenord</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Använd systemlås när biometriska misslyckas</string>
   <string name="configure_pin_set_pin_code">Ställ in PIN-kod</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Lås upp appen med denna kod</string>
@@ -52,4 +53,17 @@
   <string name="profile_passkey_support_subtitle_not_supported_android_version">Din Android-version stöder inte passkeys</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Din enhet stöder inte passkeys</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Kunde inte kontrollera stöd för passkeys</string>
+  <plurals name="profile_after_days">
+    <item quantity="one">Efter %d dag</item>
+    <item quantity="other">Efter %d dagar</item>
+  </plurals>
+  <plurals name="profile_after_minutes">
+    <item quantity="one">Efter %d minut</item>
+    <item quantity="other">Efter %d minuter</item>
+  </plurals>
+  <plurals name="profile_after_hours">
+    <item quantity="one">Efter %d timme</item>
+    <item quantity="other">Efter %d timmar</item>
+  </plurals>
+  <string name="profile_less_than_a_minute">Mindre än en minut</string>
 </resources>

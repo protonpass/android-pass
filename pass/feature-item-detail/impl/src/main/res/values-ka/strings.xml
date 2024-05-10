@@ -38,19 +38,13 @@
   <string name="login_item_view_alias_button">ფსევდონიმის ნახვა</string>
   <string name="login_item_monitor_widget_weak_pass_title">პაროლი სუსტია</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">ეს ანგარიში მოწყვლადია. მიმართეთ სერვისს და შეცვალეთ თქვენი პაროლი.</string>
-  <string name="login_item_monitor_widget_reused_pass_title">განმეორებით გამოყენებული პაროლი</string>
-  <string name="login_item_monitor_widget_reused_pass_subtitle">ეწვიეთ ვებსაიტს და შექმენით უნიკალური პაროლი ამ ელემენტისთვის.</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_compact_leading">
-    <item quantity="one">%d სხვა შესვლის ჩანაწერი</item>
-    <item quantity="other">%d სხვა შესვლის ჩანაწერი</item>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d other login uses the same password</item>
+    <item quantity="other">%d other logins use the same password</item>
   </plurals>
-  <string name="login_item_monitor_widget_reused_pass_count_compact_trailing" comment="This is the trailing part of the sentence above. A full example of its usage will be '4 other logins use this password.'">ამ პაროლის გამოყენება.</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_expanded">
-    <item quantity="one">სხვა მომხმარებელი იყენებს ამ პაროლს:</item>
-    <item quantity="other">%d სხვა მომხმარებელი იყენებს ამ პაროლს:</item>
-  </plurals>
-  <string name="login_item_monitor_widget_missing_two_fa_title">SSO ჩართული არაა</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">უფრო უსაფრთხო იქნება, თუ ამ ელემენტისთვის 2FA-ს მოარგებთ.</string>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Set up 2FA for more security</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">This service offers 2FA. Enable it for added account security.</string>
+  <string name="login_item_reused_passwords_subtitle">Items from your vaults that use this password.</string>
   <string name="field_username">მომხმარებლის სახელი ან ელფოსტის მისამართი</string>
   <string name="field_password">პაროლი</string>
   <string name="websites_section_title">ვებსაიტები</string>

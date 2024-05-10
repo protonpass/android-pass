@@ -25,7 +25,7 @@
   <string name="bottomsheet_pin_item">Fixare</string>
   <string name="bottomsheet_unpin_item">Anulare fixare</string>
   <string name="bottomsheet_view_item_history">Afișare istoric</string>
-  <string name="bottomsheet_monitor_exclude">Excludere de la monitorizare</string>
+  <string name="bottomsheet_monitor_exclude">Excludere din monitorizare</string>
   <string name="bottomsheet_monitor_include">Includere în monitorizare</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Meniu acțiune deschidere articol</string>
@@ -34,6 +34,8 @@
   <string name="action_learn_more">Detalii</string>
   <string name="action_enable">Activare</string>
   <string name="action_view_details">Afișare detalii</string>
+  <string name="action_see_all">See all</string>
+  <string name="action_confirm">Confirm</string>
   <!-- Empty list -->
   <string name="empty_list_title">Adăugați primul articol</string>
   <string name="empty_search_results_title">Nu s-au găsit rezultate</string>

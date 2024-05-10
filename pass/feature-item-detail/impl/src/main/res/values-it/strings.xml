@@ -31,26 +31,20 @@
   <string name="item_unpinned_message">Elemento non più fissato</string>
   <string name="item_unpinned_message_error">Errore nell\'annullamento del fissaggio di questo elemento</string>
   <string name="item_monitor_exclude_message">Elemento escluso dal monitoraggio</string>
-  <string name="item_monitor_exclude_message_error">Impossibile escludere l\'elemento dal monitoraggio</string>
+  <string name="item_monitor_exclude_message_error">Esclusione dell\'elemento dal monitoraggio non riuscita</string>
   <string name="item_monitor_include_message">Elemento incluso nel monitoraggio</string>
-  <string name="item_monitor_include_message_error">Impossibile includere l\'elemento nel monitoraggio</string>
+  <string name="item_monitor_include_message_error">Inclusione dell\'elemento nel monitoraggio non riuscita</string>
   <string name="login_item_generate_totp_error">Errore nella generazione del codice 2FA</string>
   <string name="login_item_view_alias_button">Visualizza l\'alias</string>
   <string name="login_item_monitor_widget_weak_pass_title">Password debole</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Questo account è vulnerabile, visita il servizio e cambia la password.</string>
-  <string name="login_item_monitor_widget_reused_pass_title">Password utilizzate più volte</string>
-  <string name="login_item_monitor_widget_reused_pass_subtitle">Visita il sito web e genera una password univoca per questo elemento.</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_compact_leading">
-    <item quantity="one">%d altro login</item>
-    <item quantity="other">Altri %d login</item>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d altro login utilizza la stessa password</item>
+    <item quantity="other">%d altri login utilizzano la stessa password</item>
   </plurals>
-  <string name="login_item_monitor_widget_reused_pass_count_compact_trailing" comment="This is the trailing part of the sentence above. A full example of its usage will be '4 other logins use this password.'">utilizzano questa password.</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_expanded">
-    <item quantity="one">Un altro login utilizza questa password:</item>
-    <item quantity="other">Altri %d login utilizzano questa password:</item>
-  </plurals>
-  <string name="login_item_monitor_widget_missing_two_fa_title">Autenticazione a due fattori mancante</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Sarebbe più sicuro impostare 2FA per questo elemento.</string>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Configura 2FA per maggiore sicurezza</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Questo servizio offre 2FA. Abilitalo per una maggiore sicurezza dell\'account.</string>
+  <string name="login_item_reused_passwords_subtitle">Elementi delle tue casseforti che utilizzano questa password.</string>
   <string name="field_username">Nome utente o indirizzo email</string>
   <string name="field_password">Password</string>
   <string name="websites_section_title">Siti web</string>

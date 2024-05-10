@@ -37,20 +37,14 @@
   <string name="login_item_generate_totp_error">Fejl i generering af 2FA-kode</string>
   <string name="login_item_view_alias_button">Vis alias</string>
   <string name="login_item_monitor_widget_weak_pass_title">Svag adgangskode</string>
-  <string name="login_item_monitor_widget_weak_pass_subtitle">Denne konto er sårbar, besøg tjenesten og skift din adgangskode.</string>
-  <string name="login_item_monitor_widget_reused_pass_title">Genbrugt adgangskode</string>
-  <string name="login_item_monitor_widget_reused_pass_subtitle">Besøg hjemmesiden, og generér en unik adgangskode til dette element.</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_compact_leading">
-    <item quantity="one">%d andet login</item>
-    <item quantity="other">%d andre logins</item>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Denne konto er sårbar. Besøg tjenesten og skift din adgangskode.</string>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d anden indlogning bruger samme adgangskode</item>
+    <item quantity="other">%d andre indlogninger bruger samme adgangskode</item>
   </plurals>
-  <string name="login_item_monitor_widget_reused_pass_count_compact_trailing" comment="This is the trailing part of the sentence above. A full example of its usage will be '4 other logins use this password.'">brug denne adgangskode.</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_expanded">
-    <item quantity="one">Et andet login bruger denne adgangskode:</item>
-    <item quantity="other">%d andre logins bruger denne adgangskode:</item>
-  </plurals>
-  <string name="login_item_monitor_widget_missing_two_fa_title">Mangler to-faktor-godkendelse</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Det ville være mere sikkert at indstille 2FA for dette element.</string>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Indstil 2FA for mere sikkerhed</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Denne tjeneste tilbyder 2FA. Aktivér det for at få ekstra kontosikkerhed.</string>
+  <string name="login_item_reused_passwords_subtitle">Emner fra dine bokse, der har denne adgangskode.</string>
   <string name="field_username">Brugernavn eller e-mailadresse</string>
   <string name="field_password">Adgangskode</string>
   <string name="websites_section_title">Websider</string>

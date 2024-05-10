@@ -35,6 +35,8 @@
   <string name="action_learn_more">Dowiedz się więcej</string>
   <string name="action_enable">Włącz</string>
   <string name="action_view_details">Pokaż szczegóły</string>
+  <string name="action_see_all">Zobacz wszystko</string>
+  <string name="action_confirm">Potwierdź</string>
   <!-- Empty list -->
   <string name="empty_list_title">Dodaj pierwszy element</string>
   <string name="empty_search_results_title">Nie znaleziono żadnych wyników</string>

@@ -32,6 +32,7 @@
   <string name="app_lock_config_biometric">Βιομετρικό</string>
   <string name="app_lock_config_pin_code">Κωδικός PIN</string>
   <string name="app_lock_config_app_lock_time">Αυτόματο κλείδωμα</string>
+  <string name="app_lock_config_password">Κωδικός πρόσβασης</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Κλείδωμα του συστήματος όταν αποτυγχάνει το βιομετρικό</string>
   <string name="configure_pin_set_pin_code">Ορισμός κωδικού PIN</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Ξεκλειδώστε την εφαρμογή με αυτόν τον κωδικό</string>
@@ -52,4 +53,17 @@
   <string name="profile_passkey_support_subtitle_not_supported_android_version">Η έκδοση Android σας δεν υποστηρίζει κλειδιά πρόσβασης</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Η συσκευή σας δεν υποστηρίζει κλειδιά πρόσβασης</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Δεν ήταν δυνατός ο έλεγχος της υποστήριξης για κλειδιά πρόσβασης</string>
+  <plurals name="profile_after_days">
+    <item quantity="one">Μετά από %d μέρα</item>
+    <item quantity="other">Μετά από %d μέρες</item>
+  </plurals>
+  <plurals name="profile_after_minutes">
+    <item quantity="one">Μετά από %d λεπτό</item>
+    <item quantity="other">Μετά από %d λεπτά</item>
+  </plurals>
+  <plurals name="profile_after_hours">
+    <item quantity="one">Μετά από %d ώρα</item>
+    <item quantity="other">Μετά από %d ώρες</item>
+  </plurals>
+  <string name="profile_less_than_a_minute">Λιγότερο από ένα λεπτό</string>
 </resources>

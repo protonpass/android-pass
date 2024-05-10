@@ -20,23 +20,23 @@
   <!-- Home screen -->
   <string name="security_center_home_top_bar_title">Pass Monitor</string>
   <string name="security_center_home_dark_web_monitoring_title">Pimeän verkon valvonta</string>
-  <string name="security_center_home_widget_breaches_title">Havaittiin tietovuoto</string>
-  <string name="security_center_home_widget_breaches_subtitle">Sähköpostiosoitteesi ovat paljastuneet ainakin yhdessä tietovuodossa.</string>
+  <string name="security_center_home_widget_breaches_title">Tietomurto havaittiin</string>
+  <string name="security_center_home_widget_breaches_subtitle">Sähköpostiosoitteesi on paljastunut ainakin yhdessä tietomurrossa.</string>
   <string name="security_center_home_widget_no_breaches_subtitle">Vastaanota ilmoituksia, jos sähköpostiosoitteesi, salasanasi tai muita henkilökohtaisia tietojasi on vuotanut.</string>
-  <string name="security_center_home_row_no_data_breaches_subtitle">Tietovuotoja ei havaittu</string>
+  <string name="security_center_home_row_no_data_breaches_subtitle">Tietomurtoja ei havaittu</string>
   <string name="security_center_home_row_data_breaches_title">Pimeän verkon hälytys</string>
-  <string name="security_center_home_row_data_breaches_subtitle">Tietovuotoja havaittiin</string>
+  <string name="security_center_home_row_data_breaches_subtitle">Tietomurtoja havaittiin</string>
   <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
   <string name="security_center_home_row_sentinel_subtitle">Kehittynyt tilin suojausohjelma</string>
   <string name="security_center_home_row_insecure_passwords_title">Heikot salasanat</string>
-  <string name="security_center_home_row_insecure_passwords_subtitle">Luo vahvoja salasanoja</string>
+  <string name="security_center_home_row_insecure_passwords_subtitle">Vaihda salasanasi</string>
   <string name="security_center_home_row_reused_passwords_title">Uudelleenkäytetyt salasanat</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Luo yksilöllisiä salasanoja</string>
-  <string name="security_center_home_row_missing_tfa_title">Kaksivaiheinen tunnistautuminen puuttuu</string>
-  <string name="security_center_home_row_missing_tfa_subtitle">Vahvista suojaustasi</string>
-  <string name="security_center_home_row_excludes_items_title">Poissuljetut kohteet</string>
-  <string name="security_center_home_row_excludes_items_subtitle">Ohita näiden kohteiden hälytykset</string>
-  <string name="security_center_get_breaches_error">Tietovuotoja ei voitu ladata</string>
+  <string name="security_center_home_row_missing_tfa_title">2FA ei ole käytössä</string>
+  <string name="security_center_home_row_missing_tfa_subtitle">Tehosta suojausta määrittämällä 2FA</string>
+  <string name="security_center_home_row_excludes_items_title">Sulje valvonnan ulkopuolelle</string>
+  <string name="security_center_home_row_excludes_items_subtitle">Nämä kohteet ovat edelleen vaarassa</string>
+  <string name="security_center_get_breaches_error">Tietomurtoja ei voitu ladata</string>
   <string name="security_center_home_section_password_health">Salasanan terveys</string>
   <!-- Sentinel bottom sheet -->
   <string name="security_center_sentinel_title">Proton Sentinel</string>
@@ -45,27 +45,26 @@
   <string name="security_center_sentinel_button_disable">Poista Proton Sentinel käytöstä</string>
   <string name="security_center_sentinel_snackbar_message_enable_canceled">Proton Sentinel -suojan aktivointi on peruttu</string>
   <string name="security_center_sentinel_snackbar_message_enable_error">Proton Sentinel -suojauksen käyttöönotossa tapahtui virhe. Yritä uudelleen.</string>
-  <string name="security_center_sentinel_snackbar_message_disable_canceled">Proton Sentinel protection deactivation has been canceled</string>
+  <string name="security_center_sentinel_snackbar_message_disable_canceled">Proton Sentinel -suojan aktivointi on peruttu</string>
   <string name="security_center_sentinel_snackbar_message_disable_error">Proton Sentinel -suojauksen käytöstä poistamisessa tapahtui virhe. Yritä uudelleen.</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Heikot salasanat</string>
-  <string name="security_center_weak_pass_top_bar_subtitle">Heikot salasanat ovat helpommin arvattavissa. Luo vahvoja salasanoja, jotta tilisi pysyy turvassa.</string>
+  <string name="security_center_weak_pass_top_bar_subtitle">Heikot salasanat ovat helpommin arvattavissa. Suojaa tilisi luomalla niille vahvat salasanat.</string>
   <!-- Reused passwords screen -->
   <string name="security_center_reused_pass_top_bar_title">Uudelleenkäytetyt salasanat</string>
-  <string name="security_center_reused_pass_top_bar_subtitle">Luo ainutlaatuisia salasanoja turvallisuuden lisäämiseksi.</string>
+  <string name="security_center_reused_pass_top_bar_subtitle">Vahvista suojaustasi luomalla kaikille tileille ainutlaatuiset salasanat.</string>
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Uudelleenkäytetty %1$d kertaa</string>
   <!-- Missing 2FA -->
-  <string name="security_center_missing_tfa_top_bar_title">Kaksivaiheinen tunnistautuminen puuttuu</string>
-  <string name="security_center_missing_tfa_top_bar_subtitle">Kirjautumistiedot sivustoille, joilla kaksivaiheinen tunnistautuminen on käytettävissä, mutta et ole vielä ottanut sitä käyttöön.</string>
+  <string name="security_center_missing_tfa_top_bar_title">2FA ei ole käytössä</string>
+  <string name="security_center_missing_tfa_top_bar_subtitle">Paranna suojaustasi määrittämällä kaksivaiheinen tunnistautuminen seuraaville tileille.</string>
   <!-- Excluded items screen -->
   <string name="security_center_excluded_items_top_bar_title">Poissuljetut kohteet</string>
-  <string name="security_center_excluded_items_top_bar_subtitle">Näitä kohteita ei valvota, joten ne ohitetaan turvallisuuspalvelumme tarkastuksissa.</string>
   <!-- Dark web monitor -->
   <string name="security_center_dark_web_monitor_top_bar_title">Pimeän verkon valvonta</string>
   <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Viimeisin tarkistus: %s</string>
-  <string name="security_center_dark_web_monitor_custom_emails_title">Oma sähköpostiosoite</string>
+  <string name="security_center_dark_web_monitor_custom_emails_title">Mukautetut sähköpostiosoitteet</string>
   <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">Ei vahvistettu</string>
-  <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Lisää uusi oma sähköpostiosoite</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Lisää uusi mukautettu sähköpostiosoite</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_button">Lisää</string>
   <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
     <item quantity="one">Käytössä %d kirjautumistiedossa</item>
@@ -75,11 +74,11 @@
     <item quantity="one">%d tietomurto havaittu</item>
     <item quantity="other">%d tietomurtoa havaittu</item>
   </plurals>
-  <string name="security_center_dark_web_monitor_custom_emails_loading_error">Virhe omien sähköpostiosoitteiden lataamisessa</string>
+  <string name="security_center_dark_web_monitor_custom_emails_loading_error">Virhe ladattaessa mukautettuja sähköpostiosoitteita</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Sähköpostiosoitteita ei saatu</string>
   <string name="security_center_dark_web_monitor_custom_email_option_verify">Vahvista</string>
   <string name="security_center_dark_web_monitor_custom_email_option_remove">Poista</string>
-  <string name="security_center_dark_web_monitor_latest_breach_on">Viimeisin tietomurto %s</string>
+  <string name="security_center_dark_web_monitor_latest_breach_on">Viimeisin tietomurto tapahtui %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
     <item quantity="one">Löytyi %s murrosta</item>
     <item quantity="other">Löytyi %s murrosta</item>
@@ -93,7 +92,7 @@
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Virhe lähetettässä vahvistuskoodia. Yritä myöhemmin uudelleen.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Virhe poistettaessa viestiä. Yritä myöhemmin uudelleen.</string>
   <!-- Add custom email monitoring -->
-  <string name="security_center_custom_email_top_bar_title">Omien sähköpostiosoitteiden valvonta</string>
+  <string name="security_center_custom_email_top_bar_title">Mukautettujen sähköpostiosoitteiden valvonta</string>
   <string name="security_center_custom_email_email_address_placeholder">Sähköpostiosoite</string>
   <string name="security_center_custom_email_invalid_address">Virheellinen sähköpostiosoite</string>
   <string name="security_center_custom_email_continue">Jatka</string>
@@ -106,6 +105,7 @@
   <string name="security_center_verify_email_title">Vahvista sähköpostiosoitteesi</string>
   <string name="security_center_verify_email_subtitle">Olemme lähettäneet vahvistuskoodin osoitteeseen %s. Syötä se alle:</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">Virhe lähetettässä vahvistuskoodia. Yritä myöhemmin uudelleen.</string>
+  <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Liian monta virheellista vahvistusta. Mukautettu sähköpostiosoite poistetaan.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Tietomurtoja havaittu:</string>
   <string name="security_center_verify_report_title_none">Tietomurtoja ei havaittu:</string>
@@ -114,39 +114,41 @@
   <!-- Email breach report -->
   <string name="security_center_email_report_used_in_header">Käytössä:</string>
   <string name="security_center_email_report_breaches_header">Murrot</string>
-  <string name="security_center_email_report_resolved_breaches_header">Ratkaistut tietovuodot</string>
+  <string name="security_center_email_report_resolved_breaches_header">Ratkaistut tietomurrot</string>
   <string name="security_center_email_report_mark_as_resolved">Merkitse ratkaistuksi</string>
-  <string name="security_center_email_report_snackbar_marked_as_resolved_success">Tietomurto on merkitty ratkaistuksi</string>
+  <string name="security_center_email_report_snackbar_marked_as_resolved_success">Tietomurto merkittiin ratkaistuksi</string>
   <string name="security_center_email_report_snackbar_marked_as_resolved_error">Ei voitu merkitä ratkaistuksi</string>
-  <string name="security_center_email_report_snackbar_get_breaches_error">Tietovuotoja ei voitu ladata</string>
-  <string name="security_center_email_report_options_menu">Breach report options menu</string>
+  <string name="security_center_email_report_snackbar_get_breaches_error">Tietomurtoja ei voitu ladata</string>
+  <string name="security_center_email_report_options_menu">Tietomurtoraporttien asetusvalikko</string>
   <!-- Breach report detail-->
   <string name="security_center_report_detail_your_exposed_information">Paljastuneet tietosi</string>
-  <string name="security_center_report_detail_subtitle">Tietojasi sisältyi tietovuotoon, joka havaittiin __DATE__</string>
+  <string name="security_center_report_detail_subtitle">Tietojasi sisältyi tietomurtoon, joka havaittiin __DATE__</string>
   <string name="security_center_report_detail_details">Lisätiedot</string>
   <string name="security_center_report_detail_email_address">Sähköpostiosoite</string>
   <string name="security_center_report_detail_password">Salasana</string>
   <string name="security_center_report_detail_recommended_actions">Suositellut toimenpiteet</string>
   <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">Vuotaneiden tietojen lähde oli %s. Proton-tilisi tiedot ovat turvassa ja salattuina.</string>
-  <string name="security_center_report_detail_learn_more">Learn more</string>
-  <string name="security_center_report_detail_snackbar_error">Tietovuodon tietoja ei voitu ladata</string>
+  <string name="security_center_report_detail_learn_more">Lue lisää</string>
+  <string name="security_center_report_detail_snackbar_error">Tietomurron tietoja ei voitu ladata</string>
   <string name="security_center_report_detail_excluded_from_monitoring">Poistettu valvonnasta</string>
+  <string name="security_center_report_resolve_confirmation_dialog_title">Ratkaise kaikki tietomurrot?</string>
+  <string name="security_center_report_resolve_confirmation_dialog_message">Kaikki nykyiset tietomurrot merkitään ratkaistuiksi. Tulevista tietomurroista ilmoitetaan sinulle.</string>
   <!-- Proton list -->
   <string name="security_center_proton_list_top_bar_title">Proton-osoitteet</string>
   <string name="security_center_proton_list_no_breaches_detected">Tietomurtoja ei havaittu</string>
   <string name="security_center_proton_list_excluded_from_monitoring">Poistettu valvonnasta</string>
   <string name="security_center_proton_list_error">Osoitteita ei voitu ladata</string>
   <string name="security_center_proton_list_included_in_monitoring">Käytä valvontaa saadaksesi ilmoituksen, jos Proton-osoitteitasi on vuotanut.</string>
-  <string name="security_center_proton_list_options_menu">Proton screen options menu</string>
+  <string name="security_center_proton_list_options_menu">Proton-näytön asetusvalikko</string>
   <!-- Address Bottomsheet options -->
-  <string name="security_center_address_bottomsheet_disable_monitoring">Poista valvonta käytöstä</string>
-  <string name="security_center_address_bottomsheet_enable_monitoring">Ota valvonta käyttöön</string>
+  <string name="security_center_address_bottomsheet_disable_monitoring">Keskeytä valvonta</string>
+  <string name="security_center_address_bottomsheet_enable_monitoring">Palauta valvonta</string>
   <string name="security_center_address_bottomsheet_remove_custom_email">Poista mukautettu sähköpostiosoite</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_enable_error">Valvontaa ei voitu ottaa käyttöön</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_disable_error">Valvontaa ei voitu poistaa käytöstä</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_enable_error">Virhe keskeytettäessä valvontaa</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_error">Virhe palautettaessa valvontaa</string>
   <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_error">Mukautettua sähköpostiosoitetta ei voitu poistaa</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_enable_success">Valvonta otettiin käyttöön</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_disable_success">Valvonta poistettiin käytöstä</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_enable_success">Valvonta palautettiin</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_success">Valvonta keskeytettiin</string>
   <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">Mukautettu sähköpostiosoite poistettiin</string>
   <!-- Alias list -->
   <string name="security_center_alias_list_top_bar_title">Hide-my-email-aliakset</string>
@@ -155,11 +157,13 @@
   <string name="security_center_alias_list_included_in_monitoring">Käytä valvontaa saadaksesi ilmoituksen, jos Hide-my-email-aliaksiasi on vuotanut.</string>
   <string name="security_center_alias_list_monitored">Valvonnassa</string>
   <string name="security_center_alias_list_custom_email_message">Omia verkkotunnuksiasi käyttäviä aliaksia ei valvota. Lisää ne valvontaan mukautettuina sähköpostiosoitteina.</string>
-  <string name="security_center_alias_list_options_menu">Alias screen options menu</string>
-  <!-- Dark web help dialog -->
+  <string name="security_center_alias_list_options_menu">Alias-näytön asetusvalikko</string>
+  <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">Tietoturva</string>
   <string name="dark_web_help_dialog_subtitle">Proton ei koskaan jaa tietojasi ulkopuolisille tahoille. Kaikki tiedot ovat peräisin pimeässä verkossa suoritettavasta Proton-verkkotunnusten valvonnasta.</string>
+  <string name="dark_web_help_dialog_custom_address_title">Mukautetut sähköpostiosoitteet</string>
+  <string name="dark_web_help_dialog_custom_address_subtitle">Voit lisätä valvontaan myös 10 sähköpostiosoitetta, jotka eivät ole Proton-osoitteita tai -sähköpostialiaksia. Ne lähetetään valvottavaksi HIBP-palveluun – HIBP-palvelulle ei jaeta muita tietoja.</string>
   <!-- Cannot add custom emails -->
-  <string name="dark_web_cannot_add_custom_emails_dialog_title">Cannot add custom email</string>
-  <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">You have reached the limit of custom emails.</string>
+  <string name="dark_web_cannot_add_custom_emails_dialog_title">Mukautettua sähköpostiosoitetta ei voida lisätä</string>
+  <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">Olet saavuttanut mukautettujen sähköpostiosoitteiden enimmäismäärän.</string>
 </resources>

@@ -21,7 +21,7 @@
   <string name="security_center_home_top_bar_title">Controllore di Pass</string>
   <string name="security_center_home_dark_web_monitoring_title">Monitoraggio del dark web</string>
   <string name="security_center_home_widget_breaches_title">Violazione di dati rilevata</string>
-  <string name="security_center_home_widget_breaches_subtitle">I tuoi indirizzi email sono stati resi pubblici in almeno 1 violazione di dati.</string>
+  <string name="security_center_home_widget_breaches_subtitle">Il tuo indirizzo email è stato reso pubblico in almeno una violazione di dati.</string>
   <string name="security_center_home_widget_no_breaches_subtitle">Ricevi una notifica se un\'email, una password o altri dati personali vengono resi pubblici.</string>
   <string name="security_center_home_row_no_data_breaches_subtitle">Nessuna violazione di dati rilevata</string>
   <string name="security_center_home_row_data_breaches_title">Avviso sul dark web</string>
@@ -29,13 +29,13 @@
   <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
   <string name="security_center_home_row_sentinel_subtitle">Programma avanzato di protezione dell\'account</string>
   <string name="security_center_home_row_insecure_passwords_title">Password deboli</string>
-  <string name="security_center_home_row_insecure_passwords_subtitle">Crea password sicure</string>
+  <string name="security_center_home_row_insecure_passwords_subtitle">Cambia le password</string>
   <string name="security_center_home_row_reused_passwords_title">Password utilizzate più volte</string>
-  <string name="security_center_home_row_reused_passwords_subtitle">Crea password univoche</string>
-  <string name="security_center_home_row_missing_tfa_title">Autenticazione a due fattori mancante</string>
-  <string name="security_center_home_row_missing_tfa_subtitle">Migliora la tua sicurezza</string>
-  <string name="security_center_home_row_excludes_items_title">Elementi esclusi</string>
-  <string name="security_center_home_row_excludes_items_subtitle">Ignora gli avvisi per questi elementi</string>
+  <string name="security_center_home_row_reused_passwords_subtitle">Genera password univoche</string>
+  <string name="security_center_home_row_missing_tfa_title">2FA non attivi</string>
+  <string name="security_center_home_row_missing_tfa_subtitle">Configura 2FA per maggiore sicurezza</string>
+  <string name="security_center_home_row_excludes_items_title">Esclusi dal monitoraggio</string>
+  <string name="security_center_home_row_excludes_items_subtitle">Questi elementi rimangono a rischio</string>
   <string name="security_center_get_breaches_error">Caricamento delle violazioni non riuscito</string>
   <string name="security_center_home_section_password_health">Stato della password</string>
   <!-- Sentinel bottom sheet -->
@@ -49,21 +49,20 @@
   <string name="security_center_sentinel_snackbar_message_disable_error">Errore nella disabilitazione della protezione Proton Sentinel. Riprova.</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Password deboli</string>
-  <string name="security_center_weak_pass_top_bar_subtitle">Le password deboli sono più facili da indovinare. Genera password complesse per mantenere il tuo account al sicuro.</string>
+  <string name="security_center_weak_pass_top_bar_subtitle">Le password deboli sono più facili da indovinare. Genera password complesse per mantenere i tuoi account al sicuro.</string>
   <!-- Reused passwords screen -->
   <string name="security_center_reused_pass_top_bar_title">Password utilizzate più volte</string>
-  <string name="security_center_reused_pass_top_bar_subtitle">Genera password univoche per aumentare la tua sicurezza.</string>
+  <string name="security_center_reused_pass_top_bar_subtitle">Genera password univoche per ciascun account per aumentare la tua sicurezza.</string>
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Utilizzata %1$d volte</string>
   <!-- Missing 2FA -->
-  <string name="security_center_missing_tfa_top_bar_title">Autenticazione a due fattori mancante</string>
-  <string name="security_center_missing_tfa_top_bar_subtitle">Login che supportano l\'autenticazione a due fattori ma in cui non la hai ancora impostata.</string>
+  <string name="security_center_missing_tfa_top_bar_title">2FA non attivi</string>
+  <string name="security_center_missing_tfa_top_bar_subtitle">Per maggiore sicurezza, configura l\'autenticazione a due fattori per i seguenti account.</string>
   <!-- Excluded items screen -->
   <string name="security_center_excluded_items_top_bar_title">Elementi esclusi</string>
-  <string name="security_center_excluded_items_top_bar_subtitle">Questi elementi non verranno monitorati e non verranno sottoposti ai controlli dei nostri servizi di sicurezza.</string>
   <!-- Dark web monitor -->
   <string name="security_center_dark_web_monitor_top_bar_title">Monitoraggio del dark web</string>
   <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Ultima verifica: %s</string>
-  <string name="security_center_dark_web_monitor_custom_emails_title">Indirizzo email personalizzato</string>
+  <string name="security_center_dark_web_monitor_custom_emails_title">Indirizzi email personalizzati</string>
   <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">Non verificata</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Aggiungi un nuovo indirizzo email personalizzato</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_button">Aggiungi</string>
@@ -106,6 +105,7 @@
   <string name="security_center_verify_email_title">Conferma l\'email</string>
   <string name="security_center_verify_email_subtitle">Abbiamo inviato un codice di verifica a %s. Inseriscilo qui sotto:</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">Si è verificato un errore nell\'invio del codice di verifica. Riprova più tardi.</string>
+  <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Troppe verifiche non valide. Rimozione dell\'email personalizzata in corso.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Violazioni di dati rilevate per</string>
   <string name="security_center_verify_report_title_none">Nessuna violazione di dati rilevata per</string>
@@ -130,7 +130,9 @@
   <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">Le informazioni sono state rese pubbliche da %s. Quelle relative al tuo account Proton rimangono sicure e crittografate.</string>
   <string name="security_center_report_detail_learn_more">Scopri di più</string>
   <string name="security_center_report_detail_snackbar_error">Caricamento dei dettagli delle violazioni non riuscito</string>
-  <string name="security_center_report_detail_excluded_from_monitoring">Esclusi dal monitoraggio</string>
+  <string name="security_center_report_detail_excluded_from_monitoring">Escluso dal monitoraggio</string>
+  <string name="security_center_report_resolve_confirmation_dialog_title">Vuoi risolvere tutte le violazioni di dati?</string>
+  <string name="security_center_report_resolve_confirmation_dialog_message">Tutte le violazioni di dati attuali verranno contrassegnate come risolte. In caso di future violazioni di dati, sarai nuovamente avvisato.</string>
   <!-- Proton list -->
   <string name="security_center_proton_list_top_bar_title">Indirizzi Proton</string>
   <string name="security_center_proton_list_no_breaches_detected">Nessuna violazione di dati rilevata</string>
@@ -139,14 +141,14 @@
   <string name="security_center_proton_list_included_in_monitoring">Abilita il monitoraggio per ricevere una notifica qualora i tuoi indirizzi Proton vengano resi pubblici.</string>
   <string name="security_center_proton_list_options_menu">Menu delle opzioni dello schermata Proton</string>
   <!-- Address Bottomsheet options -->
-  <string name="security_center_address_bottomsheet_disable_monitoring">Disabilita il monitoraggio</string>
-  <string name="security_center_address_bottomsheet_enable_monitoring">Abilita il monitoraggio</string>
+  <string name="security_center_address_bottomsheet_disable_monitoring">Sospendi il monitoraggio</string>
+  <string name="security_center_address_bottomsheet_enable_monitoring">Riprendi il monitoraggio</string>
   <string name="security_center_address_bottomsheet_remove_custom_email">Rimuovi l\'indirizzo personalizzato</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_enable_error">Abilitazione del monitoraggio non riuscita</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_disable_error">Disabilitazione del monitoraggio non riuscita</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_enable_error">Sospensione del monitoraggio non riuscita</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_error">Ripresa del monitoraggio non riuscita</string>
   <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_error">Rimozione dell\'indirizzo personalizzato non riuscita</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_enable_success">Monitoraggio abilitato</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_disable_success">Monitoraggio disabilitato</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_enable_success">Monitoraggio ripreso</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_success">Monitoraggio sospeso</string>
   <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">Indirizzo personalizzato rimosso</string>
   <!-- Alias list -->
   <string name="security_center_alias_list_top_bar_title">Alias Hide-my-email</string>
@@ -156,9 +158,11 @@
   <string name="security_center_alias_list_monitored">Monitorati</string>
   <string name="security_center_alias_list_custom_email_message">Gli alias con domini personalizzati non vengono monitorati, aggiungili come email personalizzata per il monitoraggio.</string>
   <string name="security_center_alias_list_options_menu">Menu delle opzioni della schermata alias</string>
-  <!-- Dark web help dialog -->
+  <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">Sicurezza dei dati</string>
   <string name="dark_web_help_dialog_subtitle">Proton non condivide mai le tue informazioni con terze parti. Tutti i dati provengono da ricerche sulla presenza dei domini Proton nel dark web.</string>
+  <string name="dark_web_help_dialog_custom_address_title">Indirizzi email personalizzati</string>
+  <string name="dark_web_help_dialog_custom_address_subtitle">Puoi anche monitorare fino a 10 indirizzi email che non siano Proton o alias email. Verranno inviati a HIBP per il monitoraggio, non verranno condivisi altri dati.</string>
   <!-- Cannot add custom emails -->
   <string name="dark_web_cannot_add_custom_emails_dialog_title">Impossibile aggiungere un\'email personalizzata</string>
   <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">Hai raggiunto il limite di email personalizzate.</string>

@@ -32,6 +32,7 @@
   <string name="app_lock_config_biometric">Biyometrik</string>
   <string name="app_lock_config_pin_code">PIN kodu</string>
   <string name="app_lock_config_app_lock_time">Otomatik kilitleme</string>
+  <string name="app_lock_config_password">Parola</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Biyometrik kullanılamadığında sistem kilidi kullanılsın</string>
   <string name="configure_pin_set_pin_code">PIN kodu ayarla</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Uygulama kilidi bu kod ile açılsın</string>
@@ -52,4 +53,17 @@
   <string name="profile_passkey_support_subtitle_not_supported_android_version">Android sürümünüz geçiş anahtarlarını desteklemiyor</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Aygıtınız geçiş anahtarlarını desteklemiyor</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Geçiş anahtarı desteği olup olmadığı denetlenemedi</string>
+  <plurals name="profile_after_days">
+    <item quantity="one">%d gün sonra</item>
+    <item quantity="other">%d gün sonra</item>
+  </plurals>
+  <plurals name="profile_after_minutes">
+    <item quantity="one">%d dakika sonra</item>
+    <item quantity="other">%d dakika sonra</item>
+  </plurals>
+  <plurals name="profile_after_hours">
+    <item quantity="one">%d saat sonra</item>
+    <item quantity="other">%d saat sonra</item>
+  </plurals>
+  <string name="profile_less_than_a_minute">Bir dakikadan daha az</string>
 </resources>

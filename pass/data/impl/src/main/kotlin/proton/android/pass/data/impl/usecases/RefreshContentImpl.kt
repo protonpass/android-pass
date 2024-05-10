@@ -25,6 +25,7 @@ import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.ShareRepository
+import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.impl.work.FetchItemsWorker
 import proton.android.pass.log.api.PassLogger
@@ -41,6 +42,7 @@ class RefreshContentImpl @Inject constructor(
     override suspend fun invoke() {
         PassLogger.i(TAG, "Refreshing shares")
         syncStatusRepository.clear()
+        syncStatusRepository.setMode(SyncMode.ShownToUser)
         syncStatusRepository.emit(ItemSyncStatus.SyncStarted)
         val userId = accountManager.getPrimaryUserId().firstOrNull()
             ?: throw UserIdNotAvailableError()
@@ -56,8 +58,10 @@ class RefreshContentImpl @Inject constructor(
         workManager.enqueue(request)
     }
 
-    companion object {
-        private const val TAG = "RefreshContentImpl"
-    }
-}
+    private companion object {
 
+        private const val TAG = "RefreshContentImpl"
+
+    }
+
+}

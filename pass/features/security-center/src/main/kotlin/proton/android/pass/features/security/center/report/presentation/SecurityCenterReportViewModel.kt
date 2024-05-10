@@ -125,7 +125,6 @@ class SecurityCenterReportViewModel @Inject constructor(
             if (it is LoadingResult.Error) {
                 PassLogger.w(TAG, "Failed to observe breaches for email")
                 PassLogger.w(TAG, it.exception)
-                eventFlow.update { SecurityCenterReportEvent.Close }
                 snackbarDispatcher(SecurityCenterReportSnackbarMessage.GetBreachesError)
             }
         }
@@ -155,7 +154,6 @@ class SecurityCenterReportViewModel @Inject constructor(
                 if (it is LoadingResult.Error) {
                     PassLogger.w(TAG, "Failed to observe breach email report")
                     PassLogger.w(TAG, it.exception)
-                    eventFlow.update { SecurityCenterReportEvent.Close }
                     snackbarDispatcher(SecurityCenterReportSnackbarMessage.GetBreachesError)
                 }
             }

@@ -57,6 +57,8 @@ class RemoteItemDataSourceImpl @Inject constructor(
     private val api: ApiProvider
 ) : RemoteItemDataSource {
 
+    private var errorCount: Int = 0
+
     override suspend fun createItem(
         userId: UserId,
         shareId: ShareId,
@@ -177,7 +179,14 @@ class RemoteItemDataSourceImpl @Inject constructor(
             .invoke {
                 var sinceToken: String? = null
                 var itemsRetrieved = 0
+
                 while (true) {
+                    if (shareId.id ==
+                        "S-PrMXHPZMlAoSfdH00kyBpNB4blAum3rF5w3zpsw9W7fUOBobGYNwjupmKagxAZK4aIe5C-nLE6PBjlrCVkiA=="
+                    ) {
+                        val foo = sinceToken!!.length //chetos
+                    }
+                    errorCount++
                     val response = getItems(
                         shareId = shareId.id,
                         sinceToken = sinceToken,

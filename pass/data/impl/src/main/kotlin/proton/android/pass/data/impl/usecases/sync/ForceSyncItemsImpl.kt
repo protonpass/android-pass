@@ -29,21 +29,19 @@ import proton.android.pass.data.api.usecases.sync.ForceSyncResult
 import proton.android.pass.data.impl.util.runConcurrently
 import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
-import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
 class ForceSyncItemsImpl @Inject constructor(
     private val itemRepository: ItemRepository,
     private val itemSyncStatusRepository: ItemSyncStatusRepository
 ) : ForceSyncItems {
+
     override suspend fun invoke(
         userId: UserId,
         shareIds: List<ShareId>,
         isBackground: Boolean
     ): ForceSyncResult {
         if (shareIds.isEmpty()) return ForceSyncResult.Success
-
-        val hasItems = AtomicBoolean(false)
 
         val mode = getSyncMode(isBackground)
         itemSyncStatusRepository.setMode(mode)
@@ -55,9 +53,6 @@ class ForceSyncItemsImpl @Inject constructor(
                     userId = userId,
                     shareId = shareId,
                     onProgress = { progress ->
-                        if (!hasItems.get() && (progress.total == 0 || progress.current > 0)) {
-                            hasItems.set(true)
-                        }
                         itemSyncStatusRepository.emit(
                             ItemSyncStatus.Syncing(
                                 shareId = shareId,
@@ -82,17 +77,18 @@ class ForceSyncItemsImpl @Inject constructor(
 
         return handleResults(
             userId = userId,
-            hasItems = hasItems.get(),
             results = results
         )
     }
 
     private suspend fun handleResults(
         userId: UserId,
-        hasItems: Boolean,
         results: List<Result<Pair<ShareId, List<ItemRevision>>>>
     ): ForceSyncResult {
         val (successes, errors) = results.partition { it.isSuccess }
+
+        println("JIBIRI: handleResults -> success -> $successes")
+        println("JIBIRI: handleResults -> error -> $errors")
 
         val itemsToInsert: Map<ShareId, List<ItemRevision>> = successes
             .mapNotNull { it.getOrNull() }
@@ -101,10 +97,10 @@ class ForceSyncItemsImpl @Inject constructor(
         itemRepository.setShareItems(userId, itemsToInsert)
 
         val result = if (errors.isEmpty()) {
-            itemSyncStatusRepository.emit(ItemSyncStatus.CompletedSyncing(hasItems = hasItems))
+            itemSyncStatusRepository.emit(ItemSyncStatus.SyncSuccess)
             ForceSyncResult.Success
         } else {
-            itemSyncStatusRepository.emit(ItemSyncStatus.ErrorSyncing)
+            itemSyncStatusRepository.emit(ItemSyncStatus.SyncError)
             ForceSyncResult.Error
         }
 
@@ -118,7 +114,10 @@ class ForceSyncItemsImpl @Inject constructor(
         SyncMode.ShownToUser
     }
 
-    companion object {
+    private companion object {
+
         private const val TAG = "ForceSyncItemsImpl"
+
     }
+
 }

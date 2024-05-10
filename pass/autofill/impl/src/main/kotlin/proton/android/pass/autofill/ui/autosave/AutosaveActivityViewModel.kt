@@ -31,13 +31,13 @@ import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.account.api.AccountOrchestrators
 import proton.android.pass.account.api.Orchestrator
 import proton.android.pass.autofill.service.R
+import proton.android.pass.biometry.StoreAuthOnStop
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.some
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
-import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -48,7 +48,8 @@ class AutosaveActivityViewModel @Inject constructor(
     private val preferenceRepository: UserPreferencesRepository,
     private val internalSettingsRepository: InternalSettingsRepository,
     private val accountManager: AccountManager,
-    private val toastManager: ToastManager
+    private val toastManager: ToastManager,
+    private val storeAuthOnStop: StoreAuthOnStop
 ) : ViewModel() {
 
     private val eventFlow: MutableStateFlow<Option<AutosaveEvent>> = MutableStateFlow(None)
@@ -63,7 +64,7 @@ class AutosaveActivityViewModel @Inject constructor(
     }
 
     fun onStop() = viewModelScope.launch {
-        preferenceRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
+        storeAuthOnStop()
     }
 
     fun signOut() = viewModelScope.launch {

@@ -62,11 +62,11 @@ internal fun SecurityCenterListStickyHeader(
                 ifTrue = { clickable { onClick?.invoke() } }
             )
             .fillMaxWidth()
+            .background(color = PassTheme.colors.backgroundStrong)
             .padding(
                 vertical = Spacing.small,
                 horizontal = Spacing.medium
-            )
-            .background(color = PassTheme.colors.backgroundStrong),
+            ),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {

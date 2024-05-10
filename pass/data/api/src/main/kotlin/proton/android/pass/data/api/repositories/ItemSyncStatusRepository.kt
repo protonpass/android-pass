@@ -45,13 +45,40 @@ sealed interface SyncMode {
     data object Background : SyncMode
 }
 
+data class SyncState(
+    val syncStatus: ItemSyncStatus,
+    val syncMode: SyncMode
+) {
+    val isSyncing: Boolean = when (syncStatus) {
+        ItemSyncStatus.SyncError,
+        ItemSyncStatus.SyncNotStarted,
+        ItemSyncStatus.SyncSuccess -> false
+
+        ItemSyncStatus.SyncStarted,
+        is ItemSyncStatus.Syncing -> true
+    }
+
+    val isVisibleSyncing: Boolean = syncMode == SyncMode.ShownToUser
+}
+
 interface ItemSyncStatusRepository {
+
     suspend fun emit(status: ItemSyncStatus)
+
     fun tryEmit(status: ItemSyncStatus)
+
     suspend fun setMode(mode: SyncMode)
+
     fun trySetMode(mode: SyncMode)
+
     suspend fun clear()
+
     fun observeMode(): Flow<SyncMode>
+
     fun observeSyncStatus(): Flow<ItemSyncStatus>
+
     fun observeAccSyncStatus(): Flow<Map<ShareId, ItemSyncStatusPayload>>
+
+    fun observeSyncState(): Flow<SyncState>
+
 }

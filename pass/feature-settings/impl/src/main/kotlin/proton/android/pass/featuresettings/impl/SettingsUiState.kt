@@ -19,48 +19,69 @@
 package proton.android.pass.featuresettings.impl
 
 import androidx.compose.runtime.Stable
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.data.api.repositories.SyncState
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.preferences.AllowScreenshotsPreference
 import proton.android.pass.preferences.CopyTotpToClipboard
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UseFaviconsPreference
 
-sealed interface SettingsEvent {
+internal sealed interface SettingsEvent {
+
     data object Unknown : SettingsEvent
+
     data object RestartApp : SettingsEvent
+
 }
 
-sealed interface TelemetryStatus {
+internal sealed interface TelemetryStatus {
+
     data object Hide : TelemetryStatus
+
     data class Show(
         val shareTelemetry: Boolean,
         val shareCrashes: Boolean
     ) : TelemetryStatus
+
 }
 
 @Stable
-data class SettingsUiState(
+internal data class SettingsUiState(
     val themePreference: ThemePreference,
     val copyTotpToClipboard: CopyTotpToClipboard,
-    val isForceRefreshing: Boolean,
     val useFavicons: UseFaviconsPreference,
     val allowScreenshots: AllowScreenshotsPreference,
     val telemetryStatus: TelemetryStatus,
     val event: SettingsEvent,
-    val defaultVault: Option<VaultWithItemCount>
+    val defaultVault: Option<VaultWithItemCount>,
+    private val syncStateLoadingResult: LoadingResult<SyncState>
 ) {
-    companion object {
-        val Initial = SettingsUiState(
+
+    internal val isForceRefreshing: Boolean = when (syncStateLoadingResult) {
+        is LoadingResult.Error,
+        LoadingResult.Loading -> false
+
+        is LoadingResult.Success -> with(syncStateLoadingResult.data) {
+            isSyncing && isVisibleSyncing
+        }
+    }
+
+    internal companion object {
+
+        internal val Initial = SettingsUiState(
             themePreference = ThemePreference.System,
             copyTotpToClipboard = CopyTotpToClipboard.NotEnabled,
-            isForceRefreshing = false,
+            syncStateLoadingResult = LoadingResult.Loading,
             useFavicons = UseFaviconsPreference.Enabled,
             allowScreenshots = AllowScreenshotsPreference.Disabled,
             telemetryStatus = TelemetryStatus.Hide,
             event = SettingsEvent.Unknown,
             defaultVault = None
         )
+
     }
+
 }

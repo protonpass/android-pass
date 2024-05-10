@@ -184,7 +184,7 @@ class RemoteItemDataSourceImpl @Inject constructor(
                     if (shareId.id ==
                         "S-PrMXHPZMlAoSfdH00kyBpNB4blAum3rF5w3zpsw9W7fUOBobGYNwjupmKagxAZK4aIe5C-nLE6PBjlrCVkiA=="
                     ) {
-                        val foo = sinceToken!!.length //chetos
+//                        val foo = sinceToken!!.length //chetos
                     }
                     errorCount++
                     val response = getItems(

@@ -87,9 +87,6 @@ class ForceSyncItemsImpl @Inject constructor(
     ): ForceSyncResult {
         val (successes, errors) = results.partition { it.isSuccess }
 
-        println("JIBIRI: handleResults -> success -> $successes")
-        println("JIBIRI: handleResults -> error -> $errors")
-
         val itemsToInsert: Map<ShareId, List<ItemRevision>> = successes
             .mapNotNull { it.getOrNull() }
             .toMap()

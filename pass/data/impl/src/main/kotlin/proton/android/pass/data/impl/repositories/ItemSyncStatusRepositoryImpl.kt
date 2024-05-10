@@ -52,10 +52,7 @@ class ItemSyncStatusRepositoryImpl @Inject constructor(
 
     private val mutex: Mutex = Mutex()
 
-    private suspend fun updateSyncStatus(
-        status: ItemSyncStatus,
-        emit: suspend (ItemSyncStatus) -> Unit
-    ) {
+    private suspend fun updateSyncStatus(status: ItemSyncStatus, emit: suspend (ItemSyncStatus) -> Unit) {
         mutex.withLock {
             when (status) {
                 is ItemSyncStatus.Syncing -> {

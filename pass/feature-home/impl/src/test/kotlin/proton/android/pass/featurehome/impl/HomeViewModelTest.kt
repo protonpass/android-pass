@@ -30,7 +30,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.clipboard.fakes.TestClipboardManager
-import proton.android.pass.common.fakes.TestAppDispatchers
 import proton.android.pass.commonui.api.DateFormatUtils
 import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonui.api.GroupingKeys
@@ -265,7 +264,6 @@ internal class HomeViewModelTest {
             observePinnedItems = observePinnedItems,
             preferencesRepository = preferencesRepository,
             getUserPlan = getUserPlan,
-            appDispatchers = TestAppDispatchers(),
             savedState = savedState,
             bulkMoveToVaultRepository = bulkMoveToVaultRepository,
             toastManager = toastManager,

@@ -24,8 +24,10 @@
     <string name="sync_progress_item_count">%1$d of %2$d items</string>
     <string name="sync_dialog_title">Syncing items…</string>
     <string name="sync_dialog_title_error">Sync failed</string>
+    <string name="sync_dialog_title_success">Sync completed</string>
     <string name="sync_dialog_subtitle">We are downloading and decrypting your items. This might take a few minutes.</string>
     <string name="sync_dialog_subtitle_error">There was an error downloading and decrypting your items. Please try again.</string>
+    <string name="sync_dialog_subtitle_success">Your items were successfully downloaded and decrypted.</string>
     <string name="sync_item_not_started">Not started</string>
     <string name="sync_item_failed">Sync failed</string>
 </resources>

@@ -157,7 +157,7 @@ class LauncherViewModel @Inject constructor(
 
                 if (result != null) {
                     itemSyncStatusRepository.setMode(SyncMode.ShownToUser)
-                    itemSyncStatusRepository.emit(ItemSyncStatus.Started)
+                    itemSyncStatusRepository.emit(ItemSyncStatus.SyncStarted)
 
                     refreshOrganizationSettings()
                 }

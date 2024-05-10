@@ -40,7 +40,7 @@ class ItemSyncStatusRepositoryImpl @Inject constructor(
 
     private val syncStatus: MutableSharedFlow<ItemSyncStatus> =
         MutableSharedFlow<ItemSyncStatus>(replay = 1, extraBufferCapacity = 3)
-            .apply { tryEmit(ItemSyncStatus.NotStarted) }
+            .apply { tryEmit(ItemSyncStatus.SyncNotStarted) }
     private val accSyncStatus: MutableSharedFlow<Map<ShareId, ItemSyncStatusPayload>> =
         MutableSharedFlow(replay = 1, extraBufferCapacity = 3)
     private val payloadMutableMap: MutableMap<ShareId, ItemSyncStatusPayload> = mutableMapOf()
@@ -59,7 +59,7 @@ class ItemSyncStatusRepositoryImpl @Inject constructor(
                     accSyncStatus.emit(payloadMutableMap.toMap())
                 }
 
-                ItemSyncStatus.NotStarted -> {
+                ItemSyncStatus.SyncNotStarted -> {
                     payloadMutableMap.clear()
                     accSyncStatus.emit(payloadMutableMap.toMap())
                 }
@@ -92,7 +92,7 @@ class ItemSyncStatusRepositoryImpl @Inject constructor(
     override suspend fun clear() {
         payloadMutableMap.clear()
         accSyncStatus.emit(emptyMap())
-        syncStatus.emit(ItemSyncStatus.NotStarted)
+        syncStatus.emit(ItemSyncStatus.SyncNotStarted)
     }
 
     override fun observeSyncStatus(): Flow<ItemSyncStatus> = syncStatus

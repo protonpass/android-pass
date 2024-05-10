@@ -44,6 +44,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.body3Weak
+import proton.android.pass.commonui.api.defaultTint
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.item.icon.ThreeDotsMenuButton
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -51,7 +52,7 @@ import proton.android.pass.domain.breach.CustomEmailId
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.darkweb.presentation.CustomEmailUiState
 import proton.android.pass.features.security.center.darkweb.presentation.CustomEmailUiStatus
-import me.proton.core.presentation.R as CoreR
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 internal fun CustomEmailItem(
@@ -247,9 +248,9 @@ private fun CustomEmailItemVerified(
         }
 
         Icon(
-            painter = painterResource(id = CoreR.drawable.ic_proton_chevron_right),
+            painter = painterResource(CompR.drawable.ic_chevron_tiny_right),
             contentDescription = null,
-            tint = PassTheme.colors.textWeak
+            tint = defaultTint()
         )
     }
 }

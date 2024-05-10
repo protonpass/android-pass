@@ -44,9 +44,6 @@ fun SecurityCenterReportScreen(
 
     LaunchedEffect(state.event) {
         when (state.event) {
-            SecurityCenterReportEvent.Close -> {
-                onNavigated(SecurityCenterReportDestination.Back)
-            }
 
             SecurityCenterReportEvent.Idle -> {}
 

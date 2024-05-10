@@ -39,9 +39,6 @@ internal sealed interface SecurityCenterReportEvent {
     data object Idle : SecurityCenterReportEvent
 
     @Stable
-    data object Close : SecurityCenterReportEvent
-
-    @Stable
     data object OnEmailBreachesResolved : SecurityCenterReportEvent
 
     @Stable

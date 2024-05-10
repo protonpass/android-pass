@@ -60,6 +60,11 @@ class InlineSuggestionsNoUiActivity : FragmentActivity() {
         }
     }
 
+    override fun onStop() {
+        viewModel.onStop()
+        super.onStop()
+    }
+
     private fun onStateReceived(state: InlineSuggestionAutofillNoUiState) {
         when (state) {
             InlineSuggestionAutofillNoUiState.Close -> onAutofillError()

@@ -44,12 +44,12 @@ import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_EXTRAS_
 import proton.android.pass.autofill.ui.autofill.AutofillUiState.NotValidAutofillUiState
 import proton.android.pass.autofill.ui.autofill.AutofillUiState.UninitialisedAutofillUiState
 import proton.android.pass.biometry.NeedsBiometricAuth
+import proton.android.pass.biometry.StoreAuthOnStop
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.flatMap
 import proton.android.pass.commonui.api.require
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
-import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -63,6 +63,7 @@ class AutofillActivityViewModel @Inject constructor(
     private val internalSettingsRepository: InternalSettingsRepository,
     private val accountManager: AccountManager,
     private val toastManager: ToastManager,
+    private val storeAuthOnStop: StoreAuthOnStop,
     private val savedStateHandle: SavedStateHandle,
     needsBiometricAuth: NeedsBiometricAuth
 ) : ViewModel() {
@@ -113,7 +114,7 @@ class AutofillActivityViewModel @Inject constructor(
     }
 
     fun onStop() = viewModelScope.launch {
-        preferenceRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
+        storeAuthOnStop()
     }
 
     fun signOut() = viewModelScope.launch {

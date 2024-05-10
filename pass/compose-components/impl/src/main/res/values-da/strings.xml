@@ -24,7 +24,7 @@
   <string name="bottomsheet_pin_item">Fastgør</string>
   <string name="bottomsheet_unpin_item">Frigør</string>
   <string name="bottomsheet_view_item_history">Se historik</string>
-  <string name="bottomsheet_monitor_exclude">Undtag fra overvågning</string>
+  <string name="bottomsheet_monitor_exclude">Undtag fra monitorering</string>
   <string name="bottomsheet_monitor_include">Inkluder i monitorering</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Åbn handlingsmenu for element</string>
@@ -33,6 +33,8 @@
   <string name="action_learn_more">Få mere at vide</string>
   <string name="action_enable">Aktivér</string>
   <string name="action_view_details">Se detaljer</string>
+  <string name="action_see_all">Se alle</string>
+  <string name="action_confirm">Bekræft</string>
   <!-- Empty list -->
   <string name="empty_list_title">Tilføj dit første element</string>
   <string name="empty_search_results_title">Intet resultat fundet</string>

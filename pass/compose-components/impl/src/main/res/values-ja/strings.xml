@@ -32,6 +32,8 @@
   <string name="action_learn_more">詳細</string>
   <string name="action_enable">Enable</string>
   <string name="action_view_details">詳細の表示</string>
+  <string name="action_see_all">See all</string>
+  <string name="action_confirm">Confirm</string>
   <!-- Empty list -->
   <string name="empty_list_title">最初の項目を追加</string>
   <string name="empty_search_results_title">結果が見つかりません</string>

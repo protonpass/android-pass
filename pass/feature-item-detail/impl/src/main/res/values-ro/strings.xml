@@ -30,7 +30,7 @@
   <string name="item_pinned_message_error">A apărut o eroare la fixarea acestui articol.</string>
   <string name="item_unpinned_message">Fixarea elementului s-a anulat.</string>
   <string name="item_unpinned_message_error">A apărut o eroare la anularea fixării acestui articol.</string>
-  <string name="item_monitor_exclude_message">Articol exclus din monitorizare.</string>
+  <string name="item_monitor_exclude_message">Articolul a fost exclus din monitorizare.</string>
   <string name="item_monitor_exclude_message_error">A apărut o eroare la excluderea articolului din monitorizare.</string>
   <string name="item_monitor_include_message">Articolul a fost inclus în monitorizare.</string>
   <string name="item_monitor_include_message_error">A apărut o eroare la includerea articolului în monitorizare.</string>
@@ -38,21 +38,14 @@
   <string name="login_item_view_alias_button">Afișare alias</string>
   <string name="login_item_monitor_widget_weak_pass_title">Parolă slabă</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Acest cont este vulnerabil, accesați serviciul și schimbați-vă parola.</string>
-  <string name="login_item_monitor_widget_reused_pass_title">Parolă refolosită</string>
-  <string name="login_item_monitor_widget_reused_pass_subtitle">Vizitași pagina web și generați o parolă unică pentru acesta.</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_compact_leading">
-    <item quantity="one">Încă %d autentificare</item>
-    <item quantity="few">Încă %d autentificări</item>
-    <item quantity="other">Încă %d de autentificări</item>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">Alte autentificări care folosesc aceeași parolă: %d</item>
+    <item quantity="few">Alte autentificări care folosesc aceeași parolă: %d</item>
+    <item quantity="other">Alte autentificări care folosesc aceeași parolă: %d</item>
   </plurals>
-  <string name="login_item_monitor_widget_reused_pass_count_compact_trailing" comment="This is the trailing part of the sentence above. A full example of its usage will be '4 other logins use this password.'">utilizează această parolă.</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_expanded">
-    <item quantity="one">Altă autentificare folosește această parolă:</item>
-    <item quantity="few">%d alte autentificări folosesc această parolă:</item>
-    <item quantity="other">%d de alte autentificări folosesc această parolă:</item>
-  </plurals>
-  <string name="login_item_monitor_widget_missing_two_fa_title">Autentificarea cu doi factori lipsește</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Va fi mult mai sigură setarea A2F pentru acest articol.</string>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Setați A2F pentru mai multă securitate</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">This service offers 2FA. Enable it for added account security.</string>
+  <string name="login_item_reused_passwords_subtitle">Items from your vaults that use this password.</string>
   <string name="field_username">Numele de utilizator sau adresa de e-mail</string>
   <string name="field_password">Parola</string>
   <string name="websites_section_title">Pagini web</string>

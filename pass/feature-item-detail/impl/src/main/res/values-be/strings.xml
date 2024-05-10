@@ -38,23 +38,15 @@
   <string name="login_item_view_alias_button">Паглядзець псеўданім</string>
   <string name="login_item_monitor_widget_weak_pass_title">Ненадзейны пароль</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Гэты ўліковы запіс з\'яўляецца ўразлівым. Наведайце сэрвіс і змяніце пароль.</string>
-  <string name="login_item_monitor_widget_reused_pass_title">Паўторна выкарыстаныя паролі</string>
-  <string name="login_item_monitor_widget_reused_pass_subtitle">Наведайце вэб-сайт і згенерыруйце ўнікальны пароль для гэтага элемента.</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_compact_leading">
-    <item quantity="one">%d іншы запіс уваходу</item>
-    <item quantity="few">%d іншыя запісы ўваходу</item>
-    <item quantity="many">%d іншых запісаў уваходу</item>
-    <item quantity="other">%d іншых запісаў уваходу</item>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d запіс уваходу выкарыстоўвае такі ж самы пароль</item>
+    <item quantity="few">%d запісы ўваходу выкарыстоўваюць такі ж самы пароль</item>
+    <item quantity="many">%d запісаў уваходу выкарыстоўваюць такі ж самы пароль</item>
+    <item quantity="other">%d запісаў уваходу выкарыстоўваюць такі ж самы пароль</item>
   </plurals>
-  <string name="login_item_monitor_widget_reused_pass_count_compact_trailing" comment="This is the trailing part of the sentence above. A full example of its usage will be '4 other logins use this password.'">выкарыстоўваюць гэты пароль.</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_expanded">
-    <item quantity="one">Яшчэ адзін запіс уваходу выкарыстоўвае гэты пароль:</item>
-    <item quantity="few">%d іншыя запісы ўваходу выкарыстоўваюць гэты пароль:</item>
-    <item quantity="many">%d іншых запісаў уваходу выкарыстоўваюць гэты пароль:</item>
-    <item quantity="other">%d іншых запісаў уваходу выкарыстоўваюць гэты пароль:</item>
-  </plurals>
-  <string name="login_item_monitor_widget_missing_two_fa_title">Адсутнічае двухфактарная аўтэнтыфікацыя</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Будзе больш бяспечна наладзіць 2ФА для гэтага элемента.</string>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Наладзьце 2ФА для большай бяспекі</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Гэты сэрвіс прапануе 2ФА. Уключыце гэту функцыю, каб дадаць бяспеку ўліковаму запісу.</string>
+  <string name="login_item_reused_passwords_subtitle">Элементы з вашага сховішча, якія выкарыстоўваць гэты пароль.</string>
   <string name="field_username">Імя карыстальніка або адрас электроннай пошты</string>
   <string name="field_password">Пароль</string>
   <string name="websites_section_title">Вэб-сайты</string>

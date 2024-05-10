@@ -32,6 +32,7 @@
   <string name="app_lock_config_biometric">생체 인식</string>
   <string name="app_lock_config_pin_code">PIN 코드</string>
   <string name="app_lock_config_app_lock_time">자동 잠금</string>
+  <string name="app_lock_config_password">비밀번호</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">생체인증 실패시 시스템 잠금 사용하기</string>
   <string name="configure_pin_set_pin_code">PIN 코드 설정</string>
   <string name="configure_pin_unlock_the_app_with_this_code">이 코드로 앱을 잠금 해제</string>
@@ -52,4 +53,14 @@
   <string name="profile_passkey_support_subtitle_not_supported_android_version">이 안드로이드 버전은 패스키를 지원하지 않습니다</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">이 기기는 패스키를 지원하지 않습니다</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">패스키 지원을 확인할 수 없습니다</string>
+  <plurals name="profile_after_days">
+    <item quantity="other">%d일 뒤</item>
+  </plurals>
+  <plurals name="profile_after_minutes">
+    <item quantity="other">%d분 뒤</item>
+  </plurals>
+  <plurals name="profile_after_hours">
+    <item quantity="other">%d시간 뒤</item>
+  </plurals>
+  <string name="profile_less_than_a_minute">1분 미만</string>
 </resources>

@@ -33,6 +33,8 @@
   <string name="action_learn_more">გაიგეთ მეტი</string>
   <string name="action_enable">ჩართვა</string>
   <string name="action_view_details">დეტალების ხილვა</string>
+  <string name="action_see_all">See all</string>
+  <string name="action_confirm">Confirm</string>
   <!-- Empty list -->
   <string name="empty_list_title">დაამატეთ თქვენი პირველი ელემენტი</string>
   <string name="empty_search_results_title">შედეგების გარეშე</string>

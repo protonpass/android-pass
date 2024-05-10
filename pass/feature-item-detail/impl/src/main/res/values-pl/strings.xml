@@ -38,23 +38,15 @@
   <string name="login_item_view_alias_button">Pokaż alias</string>
   <string name="login_item_monitor_widget_weak_pass_title">Słabe hasło</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Konto jest zagrożone. Przejdź do usługi i zmień hasło.</string>
-  <string name="login_item_monitor_widget_reused_pass_title">Identyczne hasła</string>
-  <string name="login_item_monitor_widget_reused_pass_subtitle">Przejdź do strony i wygeneruj unikalne hasło.</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_compact_leading">
-    <item quantity="one">%d other login</item>
-    <item quantity="few">%d other logins</item>
-    <item quantity="many">%d other logins</item>
-    <item quantity="other">%d other logins</item>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">Tego hasła używa jeszcze %d inne dane logowania</item>
+    <item quantity="few">Tego hasła używają jeszcze %d inne dane logowania</item>
+    <item quantity="many">Tego hasła używa jeszcze %d innych danych logowania</item>
+    <item quantity="other">Tego hasła używa jeszcze %d innych danych logowania</item>
   </plurals>
-  <string name="login_item_monitor_widget_reused_pass_count_compact_trailing" comment="This is the trailing part of the sentence above. A full example of its usage will be '4 other logins use this password.'">use this password.</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_expanded">
-    <item quantity="one">Tego hasła używają jeszcze 1 dane logowania:</item>
-    <item quantity="few">Tego hasła używają jeszcze %d dane logowania:</item>
-    <item quantity="many">Tego hasła używa jeszcze %d danych logowania:</item>
-    <item quantity="other">Tego hasła używa jeszcze %d danych logowań:</item>
-  </plurals>
-  <string name="login_item_monitor_widget_missing_two_fa_title">Brak uwierzytelniania dwustopniowego</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Zalecamy skonfigurowanie uwierzytelniania dwustopniowego.</string>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Skonfiguruj uwierzytelnianie dwustopniowe dla większego bezpieczeństwa</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Usługa oferuje uwierzytelnianie dwustopniowe. Włącz je, aby zwiększyć bezpieczeństwo konta.</string>
+  <string name="login_item_reused_passwords_subtitle">Dane logowania w sejfie, które używają tego hasła.</string>
   <string name="field_username">Nazwa użytkownika lub adres e-mail</string>
   <string name="field_password">Hasło</string>
   <string name="websites_section_title">Strony internetowe</string>

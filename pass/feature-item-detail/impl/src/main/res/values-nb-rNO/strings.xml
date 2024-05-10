@@ -38,19 +38,13 @@
   <string name="login_item_view_alias_button">Vis alias</string>
   <string name="login_item_monitor_widget_weak_pass_title">Svakt passord</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Denne kontoen er sårbar, besøk tjenesten og endre passordet ditt.</string>
-  <string name="login_item_monitor_widget_reused_pass_title">Gjenbrukt passord</string>
-  <string name="login_item_monitor_widget_reused_pass_subtitle">Besøk nettstedet og generer et unikt passord for dette elementet.</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_compact_leading">
-    <item quantity="one">%d annen pålogging</item>
-    <item quantity="other">%d andre pålogginger</item>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d annen pålogging bruker det samme passordet</item>
+    <item quantity="other">%d andre pålogginger bruker det samme passordet</item>
   </plurals>
-  <string name="login_item_monitor_widget_reused_pass_count_compact_trailing" comment="This is the trailing part of the sentence above. A full example of its usage will be '4 other logins use this password.'">bruk dette passordet.</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_expanded">
-    <item quantity="one">En annen pålogging bruker dette passordet:</item>
-    <item quantity="other">%d andre pålogginger bruker dette passordet:</item>
-  </plurals>
-  <string name="login_item_monitor_widget_missing_two_fa_title">Mangler tofaktorautentisering</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Det ville være sikrere å sette opp 2FA for dette elementet.</string>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Sett opp 2FA for ekstra sikkerhet</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Denne tjenesten tilbyr 2FA. Aktiver den for ekstra kontosikkerhet.</string>
+  <string name="login_item_reused_passwords_subtitle">Elementer fra hvelvene dine som bruker dette passordet.</string>
   <string name="field_username">Brukernavn eller e-postadresse</string>
   <string name="field_password">Passord</string>
   <string name="websites_section_title">Nettsteder</string>

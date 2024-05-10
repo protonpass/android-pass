@@ -176,9 +176,9 @@ import proton.android.pass.featuresharing.impl.manage.bottomsheet.InviteTypeValu
 import proton.android.pass.featuresharing.impl.manage.bottomsheet.MemberOptionsBottomSheet
 import proton.android.pass.featuresharing.impl.sharingGraph
 import proton.android.pass.featuresharing.impl.sharingpermissions.bottomsheet.SharingEditPermissions
-import proton.android.pass.featuresync.impl.SyncDialog
-import proton.android.pass.featuresync.impl.SyncNavigation
-import proton.android.pass.featuresync.impl.syncGraph
+import proton.android.pass.featuresync.impl.navigation.SyncNavDestination
+import proton.android.pass.featuresync.impl.navigation.SyncNavItem
+import proton.android.pass.featuresync.impl.navigation.syncNavGraph
 import proton.android.pass.featuretrial.impl.TrialNavigation
 import proton.android.pass.featuretrial.impl.TrialScreen
 import proton.android.pass.featuretrial.impl.trialGraph
@@ -292,7 +292,7 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 HomeNavigation.Finish -> onNavigate(AppNavigation.Finish)
-                HomeNavigation.SyncDialog -> appNavigator.navigate(SyncDialog)
+                HomeNavigation.SyncDialog -> appNavigator.navigate(SyncNavItem)
 
                 HomeNavigation.OnBoarding -> appNavigator.navigate(destination = OnBoarding)
                 HomeNavigation.ConfirmedInvite -> appNavigator.navigate(
@@ -567,7 +567,7 @@ fun NavGraphBuilder.appGraph(
 
                 SettingsNavigation.Restart -> onNavigate(AppNavigation.Restart)
                 SettingsNavigation.DefaultVault -> appNavigator.navigate(DefaultVault)
-                SettingsNavigation.SyncDialog -> appNavigator.navigate(SyncDialog)
+                SettingsNavigation.SyncDialog -> appNavigator.navigate(SyncNavItem)
             }
         }
     )
@@ -1442,9 +1442,10 @@ fun NavGraphBuilder.appGraph(
             )
         }
     }
-    syncGraph {
-        when (it) {
-            SyncNavigation.FinishedFetching -> appNavigator.navigateBack()
+
+    syncNavGraph { destination ->
+        when (destination) {
+            SyncNavDestination.Back -> appNavigator.navigateBack()
         }
     }
 

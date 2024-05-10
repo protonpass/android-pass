@@ -43,7 +43,6 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
@@ -53,7 +52,6 @@ import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import proton.android.pass.clipboard.api.ClipboardManager
-import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -190,7 +188,6 @@ class HomeViewModel @Inject constructor(
     observePinnedItems: ObservePinnedItems,
     preferencesRepository: UserPreferencesRepository,
     observeAppNeedsUpdate: ObserveAppNeedsUpdate,
-    appDispatchers: AppDispatchers,
     getUserPlan: GetUserPlan,
     savedState: SavedStateHandleProvider
 ) : ViewModel() {
@@ -358,7 +355,7 @@ class HomeViewModel @Inject constructor(
         } else {
             result
         }
-    }.flowOn(appDispatchers.default)
+    }
 
     private val resultsFlow = combine(
         filteredSearchEntriesFlow,
@@ -382,7 +379,7 @@ class HomeViewModel @Inject constructor(
                     .toImmutableList()
             }
         }
-    }.flowOn(appDispatchers.default)
+    }
 
     private val pinningUiStateFlow = combine(
         observePinnedItems().asLoadingResult(),
@@ -460,7 +457,7 @@ class HomeViewModel @Inject constructor(
                 groupedItemList.copy(items = mappedItems.toImmutableList())
             }.toImmutableList()
         }
-    }.flowOn(appDispatchers.default)
+    }
 
     private val appNeedsUpdateFlow: Flow<LoadingResult<Boolean>> = observeAppNeedsUpdate()
         .asLoadingResult()
@@ -485,7 +482,6 @@ class HomeViewModel @Inject constructor(
         selection,
         pinningUiState,
         appNeedsUpdate ->
-
         val isLoadingState = IsLoadingState.from(itemsResult is LoadingResult.Loading)
 
         val (items, isLoading) = when (itemsResult) {
@@ -614,42 +610,43 @@ class HomeViewModel @Inject constructor(
         isRefreshing.update { IsRefreshingState.NotRefreshing }
     }
 
-    fun sendItemsToTrash(items: List<ItemUiModel>) = viewModelScope.launch(coroutineExceptionHandler) {
-        if (items.isEmpty()) return@launch
-        actionStateFlow.update { ActionState.Loading }
+    fun sendItemsToTrash(items: List<ItemUiModel>) =
+        viewModelScope.launch(coroutineExceptionHandler) {
+            if (items.isEmpty()) return@launch
+            actionStateFlow.update { ActionState.Loading }
 
-        val mappedItems = items.toShareIdItemId().toPersistentSet()
-        val itemTypes = homeUiState.value.homeListUiState.items
-            .flatMap { it.items }
-            .filter { (itemId: ItemId, shareId: ShareId) -> mappedItems.contains(shareId to itemId) }
+            val mappedItems = items.toShareIdItemId().toPersistentSet()
+            val itemTypes = homeUiState.value.homeListUiState.items
+                .flatMap { it.items }
+                .filter { (itemId: ItemId, shareId: ShareId) -> mappedItems.contains(shareId to itemId) }
 
-        val groupedItems = groupItems(mappedItems)
-        runCatching { trashItems(items = groupedItems) }
-            .onSuccess {
-                clearSelection()
-                if (itemTypes.size == 1) {
-                    when (itemTypes.first().contents) {
-                        is ItemContents.Alias -> snackbarDispatcher(AliasMovedToTrash)
-                        is ItemContents.Login -> snackbarDispatcher(LoginMovedToTrash)
-                        is ItemContents.Note -> snackbarDispatcher(NoteMovedToTrash)
-                        is ItemContents.CreditCard -> snackbarDispatcher(CreditCardMovedToTrash)
-                        is ItemContents.Unknown -> {}
+            val groupedItems = groupItems(mappedItems)
+            runCatching { trashItems(items = groupedItems) }
+                .onSuccess {
+                    clearSelection()
+                    if (itemTypes.size == 1) {
+                        when (itemTypes.first().contents) {
+                            is ItemContents.Alias -> snackbarDispatcher(AliasMovedToTrash)
+                            is ItemContents.Login -> snackbarDispatcher(LoginMovedToTrash)
+                            is ItemContents.Note -> snackbarDispatcher(NoteMovedToTrash)
+                            is ItemContents.CreditCard -> snackbarDispatcher(CreditCardMovedToTrash)
+                            is ItemContents.Unknown -> {}
+                        }
+                    } else {
+                        snackbarDispatcher(ItemsMovedToTrashSuccess)
                     }
-                } else {
-                    snackbarDispatcher(ItemsMovedToTrashSuccess)
                 }
-            }
-            .onFailure {
-                PassLogger.w(TAG, "Trash items failed")
-                PassLogger.w(TAG, it)
-                if (itemTypes.size == 1) {
-                    snackbarDispatcher(MoveToTrashError)
-                } else {
-                    snackbarDispatcher(ItemsMovedToTrashError)
+                .onFailure {
+                    PassLogger.w(TAG, "Trash items failed")
+                    PassLogger.w(TAG, it)
+                    if (itemTypes.size == 1) {
+                        snackbarDispatcher(MoveToTrashError)
+                    } else {
+                        snackbarDispatcher(ItemsMovedToTrashError)
+                    }
                 }
-            }
-        actionStateFlow.update { ActionState.Done }
-    }
+            actionStateFlow.update { ActionState.Done }
+        }
 
     fun copyToClipboard(text: String, homeClipboardType: HomeClipboardType) {
         val sanitizedText = text.take(MAX_CLIPBOARD_LENGTH)
@@ -998,15 +995,16 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun List<ItemUiModel>.filterByType(searchFilterType: SearchFilterType) = filter { item ->
-        when (searchFilterType) {
-            SearchFilterType.All -> true
-            SearchFilterType.Alias -> item.contents is ItemContents.Alias
-            SearchFilterType.Login -> item.contents is ItemContents.Login
-            SearchFilterType.Note -> item.contents is ItemContents.Note
-            SearchFilterType.CreditCard -> item.contents is ItemContents.CreditCard
+    private fun List<ItemUiModel>.filterByType(searchFilterType: SearchFilterType) =
+        filter { item ->
+            when (searchFilterType) {
+                SearchFilterType.All -> true
+                SearchFilterType.Alias -> item.contents is ItemContents.Alias
+                SearchFilterType.Login -> item.contents is ItemContents.Login
+                SearchFilterType.Note -> item.contents is ItemContents.Note
+                SearchFilterType.CreditCard -> item.contents is ItemContents.CreditCard
+            }
         }
-    }
 
     private fun emitDeletedItems(items: List<GroupedItemList>) {
         items.forEach { list ->
@@ -1022,15 +1020,17 @@ class HomeViewModel @Inject constructor(
     private fun groupItems(items: ImmutableSet<Pair<ShareId, ItemId>>): Map<ShareId, List<ItemId>> =
         items.groupBy({ it.first }, { it.second })
 
-    private fun List<ItemUiModel>.toShareIdItemId(): List<Pair<ShareId, ItemId>> = map { it.shareId to it.id }
+    private fun List<ItemUiModel>.toShareIdItemId(): List<Pair<ShareId, ItemId>> =
+        map { it.shareId to it.id }
 
-    private fun List<ItemUiModel>.sortItemLists(sortingOption: SortingOption) = when (sortingOption.searchSortingType) {
-        SearchSortingType.MostRecent -> sortMostRecent()
-        SearchSortingType.TitleAsc -> sortByTitleAsc()
-        SearchSortingType.TitleDesc -> sortByTitleDesc()
-        SearchSortingType.CreationAsc -> sortByCreationAsc()
-        SearchSortingType.CreationDesc -> sortByCreationDesc()
-    }
+    private fun List<ItemUiModel>.sortItemLists(sortingOption: SortingOption) =
+        when (sortingOption.searchSortingType) {
+            SearchSortingType.MostRecent -> sortMostRecent()
+            SearchSortingType.TitleAsc -> sortByTitleAsc()
+            SearchSortingType.TitleDesc -> sortByTitleDesc()
+            SearchSortingType.CreationAsc -> sortByCreationAsc()
+            SearchSortingType.CreationDesc -> sortByCreationDesc()
+        }
 
     private fun List<ItemUiModel>.groupedItemLists(sortingOption: SortingOption, instant: Instant) =
         when (sortingOption.searchSortingType) {

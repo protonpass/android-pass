@@ -118,7 +118,7 @@ class SettingsViewModel @Inject constructor(
         SettingsUiState(
             themePreference = preferences.theme,
             copyTotpToClipboard = preferences.copyTotpToClipboard,
-            isForceRefreshing = sync is ItemSyncStatus.Started || sync is ItemSyncStatus.Syncing,
+            isForceRefreshing = sync is ItemSyncStatus.SyncStarted || sync is ItemSyncStatus.Syncing,
             useFavicons = preferences.useFavicons,
             allowScreenshots = allowScreenshots,
             telemetryStatus = telemetryStatus,

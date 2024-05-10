@@ -96,7 +96,7 @@ class ApplyPendingEventsImpl @Inject constructor(
         PassLogger.i(TAG, "Received an empty list of shares, creating default vault")
         itemSyncStatusRepository.setMode(SyncMode.Background)
         createDefaultVault(userId)
-        itemSyncStatusRepository.emit(ItemSyncStatus.CompletedSyncing(false))
+        itemSyncStatusRepository.emit(ItemSyncStatus.SyncSuccess)
     }
 
     private suspend fun handleExistingShares(

@@ -37,6 +37,13 @@ fun SyncDialog(
     SyncDialogContent(
         modifier = modifier,
         state = state,
-        onNavigate = onNavigate
+        onUiEvent = { uiEvent ->
+            when (uiEvent) {
+                SyncDialogUiEvent.OnCloseSync,
+                SyncDialogUiEvent.OnCompleteSync -> onNavigate(SyncNavDestination.Back)
+
+                SyncDialogUiEvent.OnRetrySync -> viewModel.onRetrySync()
+            }
+        }
     )
 }

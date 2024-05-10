@@ -127,7 +127,7 @@ class ItemRepositoryImpl @Inject constructor(
 
         val body = try {
             createItem.create(shareKey, contents)
-        } catch (e: RuntimeException) {
+        } catch (e: Exception) {
             PassLogger.w(TAG, "Error creating item")
             PassLogger.w(TAG, e)
             throw e
@@ -599,6 +599,8 @@ class ItemRepositoryImpl @Inject constructor(
         val items = mutableListOf<ItemRevision>()
         remoteItemDataSource.observeItems(userId, shareId)
             .catch { error ->
+                PassLogger.w(TAG, "Error refreshing and observing items sync progress")
+                PassLogger.w(TAG, error)
                 throw error
             }
             .collect { itemTotal ->
@@ -731,7 +733,8 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         shareIds: List<ShareId>,
         itemState: ItemState?
-    ): Flow<ItemCountSummary> = localItemDataSource.observeItemCountSummary(userId, shareIds, itemState)
+    ): Flow<ItemCountSummary> =
+        localItemDataSource.observeItemCountSummary(userId, shareIds, itemState)
 
     override suspend fun updateItemLastUsed(shareId: ShareId, itemId: ItemId) {
         val userId = accountManager.getPrimaryUserId().first()

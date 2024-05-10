@@ -87,8 +87,7 @@
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email-alias</string>
   <string name="security_center_dark_web_monitor_proton_addresses_error">Fel vid hämtning av Proton-adresser</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Fel vid hämtning av hide-my-email-alias</string>
-  <string name="security_center_dark_web_monitor_custom_emails_suggestions">Förslag</string>
-  <string name="security_center_dark_web_monitor_monitoring_disabled">Övervakning inaktiverad</string>
+    <string name="security_center_dark_web_monitor_monitoring_disabled">Övervakning inaktiverad</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Det var ett fel när verifieringskoden skickades. Försök igen senare.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Det var ett fel när e-posten skulle tas bort. Försök igen senare.</string>
   <!-- Add custom email monitoring -->

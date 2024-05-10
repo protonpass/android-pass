@@ -87,8 +87,7 @@
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email takma adları</string>
   <string name="security_center_dark_web_monitor_proton_addresses_error">Proton adresleri alınırken sorun çıktı</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Hide-my-email takma adları alınırken sorun çıktı</string>
-  <string name="security_center_dark_web_monitor_custom_emails_suggestions">Öneriler</string>
-  <string name="security_center_dark_web_monitor_monitoring_disabled">İzleme kapalı</string>
+    <string name="security_center_dark_web_monitor_monitoring_disabled">İzleme kapalı</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Doğrulama kodu gönderilirken sorun çıktı. Lütfen bir süre sonra yeniden deneyin.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">E-posta silinirken bir sorun çıktı. Lütfen bir süre sonra yeniden deneyin.</string>
   <!-- Add custom email monitoring -->

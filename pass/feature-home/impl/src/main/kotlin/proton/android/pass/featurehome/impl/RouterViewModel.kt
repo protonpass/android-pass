@@ -82,7 +82,7 @@ class RouterViewModel @Inject constructor(
         else -> RouterEvent.None
     }
 
-    private fun ItemSyncStatus.isSyncing() = this is ItemSyncStatus.Syncing || this is ItemSyncStatus.Started
+    private fun ItemSyncStatus.isSyncing() = this is ItemSyncStatus.Syncing || this is ItemSyncStatus.SyncStarted
 
     private data class SyncState(
         val syncStatus: ItemSyncStatus,

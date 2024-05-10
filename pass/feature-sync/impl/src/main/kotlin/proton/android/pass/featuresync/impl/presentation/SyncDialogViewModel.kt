@@ -25,15 +25,21 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.onError
+import proton.android.pass.common.api.runCatching
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.usecases.ObserveVaults
+import proton.android.pass.data.api.usecases.RefreshContent
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 @HiltViewModel
 class SyncDialogViewModel @Inject constructor(
     syncStatusRepository: ItemSyncStatusRepository,
-    observeVaults: ObserveVaults
+    observeVaults: ObserveVaults,
+    private val refreshContent: RefreshContent
 ) : ViewModel() {
 
     internal val state: StateFlow<SyncDialogState> = combine(
@@ -46,5 +52,19 @@ class SyncDialogViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = SyncDialogState.Initial
     )
+
+    internal fun onRetrySync() = viewModelScope.launch {
+        runCatching { refreshContent() }
+            .onError { error ->
+                PassLogger.w(TAG, "Error retrying items sync")
+                PassLogger.w(TAG, error)
+            }
+    }
+
+    private companion object {
+
+        private const val TAG = "SyncDialogViewModel"
+
+    }
 
 }

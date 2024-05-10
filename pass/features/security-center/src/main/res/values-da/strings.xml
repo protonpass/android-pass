@@ -87,8 +87,7 @@
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email aliasser</string>
   <string name="security_center_dark_web_monitor_proton_addresses_error">Fejl ved hentning af Proton-adresser</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Fejl ved hentning af Hide-my-email-aliasser</string>
-  <string name="security_center_dark_web_monitor_custom_emails_suggestions">Forslag</string>
-  <string name="security_center_dark_web_monitor_monitoring_disabled">Monitorering deaktiveret</string>
+    <string name="security_center_dark_web_monitor_monitoring_disabled">Monitorering deaktiveret</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Der opstod en fejl ved afsendelsen af bekræftelseskoden. Prøv igen senere.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Der opstod en fejl, da e-mailen blev fjernet. Prøv igen senere.</string>
   <!-- Add custom email monitoring -->

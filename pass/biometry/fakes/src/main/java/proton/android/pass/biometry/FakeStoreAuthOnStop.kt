@@ -18,27 +18,8 @@
 
 package proton.android.pass.biometry
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import javax.inject.Inject
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class FakesBiometryModule {
-
-    @Binds
-    abstract fun bindBiometryManager(impl: TestBiometryManager): BiometryManager
-
-    @Binds
-    abstract fun bindAuthTimeHolder(impl: TestBiometryAuthTimeHolder): BiometryAuthTimeHolder
-
-    @Binds
-    abstract fun bindNeedsBiometricAuth(impl: TestNeedsBiometricAuth): NeedsBiometricAuth
-
-    @Binds
-    abstract fun bindStoreAuthSuccessful(impl: TestStoreAuthSuccessful): StoreAuthSuccessful
-
-    @Binds
-    abstract fun bindStoreAuthOnStop(impl: FakeStoreAuthOnStop): StoreAuthOnStop
+class FakeStoreAuthOnStop @Inject constructor() : StoreAuthOnStop {
+    override fun invoke() {}
 }

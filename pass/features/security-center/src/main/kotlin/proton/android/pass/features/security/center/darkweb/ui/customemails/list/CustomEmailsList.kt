@@ -30,7 +30,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
-import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
@@ -76,6 +75,9 @@ internal fun CustomEmailsList(
                 .roundedContainerNorm()
                 .padding(vertical = Spacing.small)
         ) {
+            val totalCustomEmails = state.customEmailState.emails.size
+            val totalSuggestions = state.customEmailState.suggestions.size
+
             repeat(state.customEmailState.emails.size) {
                 val item = state.customEmailState.emails[it]
                 CustomEmailItem(
@@ -100,22 +102,10 @@ internal fun CustomEmailsList(
                         onEvent(event)
                     }
                 )
-                if (it < state.customEmailState.emails.size - 1) {
+
+                if (it < totalCustomEmails - 1 || totalSuggestions > 0) {
                     PassDivider(modifier = Modifier.padding(horizontal = Spacing.medium))
                 }
-            }
-
-            if (state.customEmailState.emails.isNotEmpty() && state.customEmailState.suggestions.isNotEmpty()) {
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(Spacing.medium),
-                    text = stringResource(
-                        id = R.string.security_center_dark_web_monitor_custom_emails_suggestions
-                    ),
-                    color = PassTheme.colors.textWeak,
-                    style = ProtonTheme.typography.body2Regular
-                )
             }
 
             repeat(state.customEmailState.suggestions.size) {
@@ -128,7 +118,7 @@ internal fun CustomEmailsList(
                     onDetailClick = {},
                     onOptionsClick = {}
                 )
-                if (it < state.customEmailState.suggestions.size - 1) {
+                if (it < totalSuggestions - 1) {
                     PassDivider(modifier = Modifier.padding(horizontal = Spacing.medium))
                 }
             }

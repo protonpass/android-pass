@@ -33,6 +33,8 @@
   <string name="action_learn_more">Lær mer</string>
   <string name="action_enable">Aktiver</string>
   <string name="action_view_details">Vis detaljer</string>
+  <string name="action_see_all">Se alle</string>
+  <string name="action_confirm">Bekreft</string>
   <!-- Empty list -->
   <string name="empty_list_title">Legg til ditt første element</string>
   <string name="empty_search_results_title">Ingen resultater funnet</string>

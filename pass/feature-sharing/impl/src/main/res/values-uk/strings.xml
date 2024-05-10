@@ -39,18 +39,18 @@
   <string name="share_with_title">Поділитися з</string>
   <string name="share_with_email_hint">Адреса електронної пошти</string>
   <string name="share_with_email_error">Недійсна адреса електронної пошти</string>
-  <string name="share_with_email_cannot_invite_outside_org">You can\'t invite people outside of your organization, contact admin for more info</string>
+  <string name="share_with_email_cannot_invite_outside_org">Ви не можете запрошувати людей поза вашою організацією, зв\'яжіться з адміністратором для отримання додаткової інформації</string>
   <string name="share_permissions_title">Задати рівень доступу</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s запрошує вас отримати доступ до елементів у</string>
   <string name="sharing_join_shared_vault">Приєднатися та синхронізувати</string>
   <string name="sharing_reject_invitation">Відхилити запрошення</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Congratulations, your access has been confirmed</string>
-  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">See the shared vault</string>
+  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Вітаємо, ваш доступ підтверджено</string>
+  <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Переглянути спільне сховище</string>
   <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Закрити</string>
   <string name="sharing_snackbar_get_invite_error">Не вдалося отримати запрошення</string>
   <string name="sharing_snackbar_invite_accepted">Запрошення прийнято</string>
   <string name="sharing_snackbar_invite_accept_error">Помилка приймання запрошення</string>
-  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Could not accept the invite as you have reached the vault limit</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Не вдалося прийняти запрошення, оскільки ви досягли ліміту сховища</string>
   <string name="sharing_snackbar_invite_rejected">Запрошення відхилено</string>
   <string name="sharing_snackbar_invite_reject_error">Помилка відхилення запрошення</string>
   <string name="sharing_snackbar_vault_not_found">Не вдалося знайти сховище</string>
@@ -67,7 +67,7 @@
   <string name="share_summary_vault_title">Сховище</string>
   <string name="share_manage_vault_share_with_more_people">Поділитися з іншими людьми</string>
   <plurals name="share_manage_vault_invites_remaining" comment="Text that will be shown in the vault member list, showing the user how many invites they have left for this vault">
-    <item quantity="one">%d invite left</item>
+    <item quantity="one">Залишилось %d запрошення</item>
     <item quantity="few">%d invites left</item>
     <item quantity="many">%d invites left</item>
     <item quantity="other">%d invites left</item>
@@ -104,31 +104,31 @@
   <string name="sharing_snackbar_too_many_invites_sent">На цю адресу надіслано забагато запрошень</string>
   <string name="sharing_snackbar_transfer_ownership_success">Право власності передано</string>
   <string name="sharing_snackbar_transfer_ownership_error">Помилка передачі права власності</string>
-  <string name="sharing_invites_info_dialog_title">Member limit</string>
+  <string name="sharing_invites_info_dialog_title">Ліміт учасників</string>
   <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
-    <item quantity="one">This vault can have up to %1$d members. You still have %2$d invite left.</item>
-    <item quantity="few">This vault can have up to %1$d members. You still have %2$d invites left.</item>
-    <item quantity="many">This vault can have up to %1$d members. You still have %2$d invites left.</item>
+    <item quantity="one">Це сховище може мати до %1$d учасника. У вас ще є %2$d запрошення.</item>
+    <item quantity="few">Це сховище може мати до %1$d учасників. У вас ще є %2$d запрошення.</item>
+    <item quantity="many">Це сховище може мати до %1$d учасників. У вас ще є %2$d запрошень.</item>
     <item quantity="other">This vault can have up to %1$d members. You still have %2$d invites left.</item>
   </plurals>
-  <string name="sharing_limit_reached">This vault has reached the member and invites limit.</string>
-  <string name="sharing_invites_info_upgrade_text">Upgrade now to invite more.</string>
+  <string name="sharing_limit_reached">Це сховище досягло ліміту учасників та запрошених.</string>
+  <string name="sharing_invites_info_upgrade_text">Покращте зараз, щоб запросити більше.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Поділитися</string>
-  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Use vaults to share items with others</string>
-  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Share this vault</string>
-  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Move to a shared vault</string>
-  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Create a new vault to share</string>
-  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">This item will be moved to the new vault.</string>
-  <string name="sharing_from_item_vault_limit_reached_upgrade">Upgrade to create more vaults</string>
+  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Використовуйте сховища, щоб ділитися елементами з іншими</string>
+  <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Поділитися цим сховищем</string>
+  <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Перемістити в спільне сховище</string>
+  <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Створити нове сховище, щоби поділитися</string>
+  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Цей елемент буде переміщено до нового сховища.</string>
+  <string name="sharing_from_item_vault_limit_reached_upgrade">Покращте, щоб створити більше сховищ</string>
   <string name="sharing_from_item_vault_limit_reached">Ви досягли ліміту на сховища</string>
-  <string name="share_with_suggestions_title">Suggestions</string>
-  <string name="share_with_recents_title">Recents</string>
-  <string name="share_with_remove_email_content_description">Remove email</string>
-  <string name="sharing_edit_permissions_set_access_level_all_members">Set access level for all members</string>
-  <string name="sharing_edit_permissions_set_access_level_single_member">Set access level for %s</string>
-  <string name="sharing_edit_permissions_remove_user">Remove user</string>
-  <string name="sharing_error_dialog_title">Unknown error</string>
-  <string name="sharing_error_dialog_message">There was an error sending an invite for this vault. If the issue persists, please contact customer support service.</string>
-  <string name="sharing_with_no_addresses_can_be_invited">No addresses can be invited</string>
-  <string name="sharing_with_some_addresses_cannot_be_invited">Some addresses cannot be invited</string>
+  <string name="share_with_suggestions_title">Пропозиції</string>
+  <string name="share_with_recents_title">Нещодавні</string>
+  <string name="share_with_remove_email_content_description">Видалити пошту</string>
+  <string name="sharing_edit_permissions_set_access_level_all_members">Встановити рівень доступу для всіх учасників</string>
+  <string name="sharing_edit_permissions_set_access_level_single_member">Встановити рівень доступу для %s</string>
+  <string name="sharing_edit_permissions_remove_user">Видалити користувача</string>
+  <string name="sharing_error_dialog_title">Невідома помилка</string>
+  <string name="sharing_error_dialog_message">Виникла помилка під час надсилання запрошення до цього сховища. Якщо проблема не зникає, зверніться до служби підтримки клієнтів.</string>
+  <string name="sharing_with_no_addresses_can_be_invited">Немає запрошених адрес</string>
+  <string name="sharing_with_some_addresses_cannot_be_invited">Деякі адреси не можна запросити</string>
 </resources>

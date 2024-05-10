@@ -35,6 +35,8 @@
   <string name="action_learn_more">Více informací</string>
   <string name="action_enable">Povolit</string>
   <string name="action_view_details">Zobrazit podrobnosti</string>
+  <string name="action_see_all">Zobrazit vše</string>
+  <string name="action_confirm">Potvrdit</string>
   <!-- Empty list -->
   <string name="empty_list_title">Přidejte svou první položku</string>
   <string name="empty_search_results_title">Nebyl nalezen žádný výsledek</string>

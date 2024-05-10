@@ -38,19 +38,13 @@
   <string name="login_item_view_alias_button">Ver el alias</string>
   <string name="login_item_monitor_widget_weak_pass_title">Contraseña débil</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Esta cuenta es vulnerable. Visita el servicio y cambia tu contraseña.</string>
-  <string name="login_item_monitor_widget_reused_pass_title">Contraseña reusada</string>
-  <string name="login_item_monitor_widget_reused_pass_subtitle">Visita el sitio web y genera una contraseña única para este elemento.</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_compact_leading">
-    <item quantity="one">%d otro inicio de sesión</item>
-    <item quantity="other">%d otros inicios de sesión</item>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d otro inicio de sesión usa la misma contraseña.</item>
+    <item quantity="other">Otros %d inicios de sesión usan la misma contraseña.</item>
   </plurals>
-  <string name="login_item_monitor_widget_reused_pass_count_compact_trailing" comment="This is the trailing part of the sentence above. A full example of its usage will be '4 other logins use this password.'">usan esta contraseña.</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_expanded">
-    <item quantity="one">Un otro inicio de sesión usa esta contraseña:</item>
-    <item quantity="other">%d otros inicios de sesión usan esta contraseña:</item>
-  </plurals>
-  <string name="login_item_monitor_widget_missing_two_fa_title">Falta la autenticación de dos factores.</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Podría mejorar tu seguridad al configurar 2FA para este elemento.</string>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Configura la 2FA para más seguridad</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Este servicio ofrece la 2FA. Actívala para aumentar la seguridad de la cuenta.</string>
+  <string name="login_item_reused_passwords_subtitle">Elementos de las cajas fuertes que usan esta contraseña.</string>
   <string name="field_username">Nombre de usuario o dirección de correo electrónico</string>
   <string name="field_password">Contraseña</string>
   <string name="websites_section_title">Sitios web</string>

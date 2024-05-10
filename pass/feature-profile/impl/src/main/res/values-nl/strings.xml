@@ -32,6 +32,7 @@
   <string name="app_lock_config_biometric">Biometrie</string>
   <string name="app_lock_config_pin_code">Pincode</string>
   <string name="app_lock_config_app_lock_time">Automatisch slot</string>
+  <string name="app_lock_config_password">Wachtwoord</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Gebruik systeemvergrendeling wanneer biometrische gegevens niet werken</string>
   <string name="configure_pin_set_pin_code">Pincode instellen</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Ontgrendel de app met deze code</string>
@@ -52,4 +53,17 @@
   <string name="profile_passkey_support_subtitle_not_supported_android_version">Uw Android versie ondersteunt geen toegangssleutels.</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Uw apparaat ondersteunt geen passkeys</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Kon de ondersteuning voor passkeys niet controleren</string>
+  <plurals name="profile_after_days">
+    <item quantity="one">Na %d dag</item>
+    <item quantity="other">Na %d dagen</item>
+  </plurals>
+  <plurals name="profile_after_minutes">
+    <item quantity="one">Na %d minuut</item>
+    <item quantity="other">Na %d minuten</item>
+  </plurals>
+  <plurals name="profile_after_hours">
+    <item quantity="one">Na %d uur</item>
+    <item quantity="other">Na %d uren</item>
+  </plurals>
+  <string name="profile_less_than_a_minute">Minder dan een minuut</string>
 </resources>

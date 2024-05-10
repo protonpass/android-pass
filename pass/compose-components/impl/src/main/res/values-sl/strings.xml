@@ -35,6 +35,8 @@
   <string name="action_learn_more">Izvedi več</string>
   <string name="action_enable">Omogoči</string>
   <string name="action_view_details">Prikaži podrobnosti</string>
+  <string name="action_see_all">See all</string>
+  <string name="action_confirm">Confirm</string>
   <!-- Empty list -->
   <string name="empty_list_title">Dodajte svoj prvi predmet</string>
   <string name="empty_search_results_title">Ne najdem rezultatov</string>

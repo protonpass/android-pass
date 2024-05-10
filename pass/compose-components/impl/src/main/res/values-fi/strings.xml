@@ -33,6 +33,8 @@
   <string name="action_learn_more">Lue lisää</string>
   <string name="action_enable">Ota käyttöön</string>
   <string name="action_view_details">Näytä tiedot</string>
+  <string name="action_see_all">Näytä kaikki</string>
+  <string name="action_confirm">Vahvista</string>
   <!-- Empty list -->
   <string name="empty_list_title">Lisää ensimmäinen kohteesi</string>
   <string name="empty_search_results_title">Tuloksia ei löytynyt</string>

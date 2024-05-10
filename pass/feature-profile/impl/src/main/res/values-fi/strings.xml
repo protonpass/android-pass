@@ -32,6 +32,7 @@
   <string name="app_lock_config_biometric">Biometrinen</string>
   <string name="app_lock_config_pin_code">PIN-koodi</string>
   <string name="app_lock_config_app_lock_time">Lukitse automaattisesti</string>
+  <string name="app_lock_config_password">Salasana</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Käytä järjestelmän lukitustapaa biometrisen todennuksen epäonnistuessa</string>
   <string name="configure_pin_set_pin_code">Aseta PIN-koodi</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Avaa sovelluksen lukitus tällä koodilla.</string>
@@ -52,4 +53,17 @@
   <string name="profile_passkey_support_subtitle_not_supported_android_version">Android-versiosi ei tue suojausavaimia</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Laitteesi ei tue suojausavaimia</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Suojausavaintukea ei voitu tarkastaa</string>
+  <plurals name="profile_after_days">
+    <item quantity="one">%d päivän kuluttua</item>
+    <item quantity="other">%d päivän kuluttua</item>
+  </plurals>
+  <plurals name="profile_after_minutes">
+    <item quantity="one">%d minuutin kuluttua</item>
+    <item quantity="other">%d minuutin kuluttua</item>
+  </plurals>
+  <plurals name="profile_after_hours">
+    <item quantity="one">%d tunnin kuluttua</item>
+    <item quantity="other">%d tunnin kuluttua</item>
+  </plurals>
+  <string name="profile_less_than_a_minute">Alle minuutti</string>
 </resources>

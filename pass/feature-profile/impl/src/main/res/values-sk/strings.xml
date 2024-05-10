@@ -32,6 +32,7 @@
   <string name="app_lock_config_biometric">Biometria</string>
   <string name="app_lock_config_pin_code">PIN kód</string>
   <string name="app_lock_config_app_lock_time">Automatické uzamknutie</string>
+  <string name="app_lock_config_password">Heslo</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">V prípade zlyhania biometrie použiť systémové uzamknutie</string>
   <string name="configure_pin_set_pin_code">Nastaviť PIN kód</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Odomknite aplikáciu týmto kódom</string>
@@ -52,4 +53,23 @@
   <string name="profile_passkey_support_subtitle_not_supported_android_version">Vaša android verzia nepodporuje prístupové kľúče</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Vaše zariadenie nepodporuje prístupové kľúče</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Nebolo možné skontrolovať podporu pre prístupové kľúče</string>
+  <plurals name="profile_after_days">
+    <item quantity="one">Po %d dni</item>
+    <item quantity="few">Po %d dňoch</item>
+    <item quantity="many">Po %d dňoch</item>
+    <item quantity="other">Po %d dňoch</item>
+  </plurals>
+  <plurals name="profile_after_minutes">
+    <item quantity="one">Po %d minúte</item>
+    <item quantity="few">Po %d minútach</item>
+    <item quantity="many">Po %d minútach</item>
+    <item quantity="other">Po %d minútach</item>
+  </plurals>
+  <plurals name="profile_after_hours">
+    <item quantity="one">Po %d hodine</item>
+    <item quantity="few">Po %d hodinách</item>
+    <item quantity="many">Po %d hodinách</item>
+    <item quantity="other">Po %d hodinách</item>
+  </plurals>
+  <string name="profile_less_than_a_minute">Menej než minútu</string>
 </resources>

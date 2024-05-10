@@ -38,19 +38,13 @@
   <string name="login_item_view_alias_button">Visualizar alias</string>
   <string name="login_item_monitor_widget_weak_pass_title">Senha Fraca</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Esta conta está vulnerável, visite o serviço e altere sua senha.</string>
-  <string name="login_item_monitor_widget_reused_pass_title">Senha Reutilizada</string>
-  <string name="login_item_monitor_widget_reused_pass_subtitle">Visite o site e gere uma senha exclusiva para este item.</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_compact_leading">
-    <item quantity="one">%d other login</item>
-    <item quantity="other">%d other logins</item>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d outro início de sessão usa a mesma senha</item>
+    <item quantity="other">%d outros inícios de sessão usam a mesma senha</item>
   </plurals>
-  <string name="login_item_monitor_widget_reused_pass_count_compact_trailing" comment="This is the trailing part of the sentence above. A full example of its usage will be '4 other logins use this password.'">use this password.</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_expanded">
-    <item quantity="one">Another login uses this password:</item>
-    <item quantity="other">%d outras sessões usam esta senha:</item>
-  </plurals>
-  <string name="login_item_monitor_widget_missing_two_fa_title">Autenticação de dois fatores em falta</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Seria mais seguro configurar A2F para este item.</string>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Configure A2F para mais segurança</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">This service offers 2FA. Enable it for added account security.</string>
+  <string name="login_item_reused_passwords_subtitle">Items from your vaults that use this password.</string>
   <string name="field_username">Nome de usuário ou endereço de e-mail</string>
   <string name="field_password">Senha</string>
   <string name="websites_section_title">Sites</string>

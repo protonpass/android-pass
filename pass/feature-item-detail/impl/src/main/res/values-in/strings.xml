@@ -38,17 +38,12 @@
   <string name="login_item_view_alias_button">Tampilkan alias</string>
   <string name="login_item_monitor_widget_weak_pass_title">Kata Sandi Lemah</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Akun ini terindikasi rentan. Kunjungi layanan keamanan kami dan ubah kata sandi Anda.</string>
-  <string name="login_item_monitor_widget_reused_pass_title">Kata Sandi Digunakan Ulang</string>
-  <string name="login_item_monitor_widget_reused_pass_subtitle">Kunjungi situs web terkait dan hasilkan kata sandi yang unik untuk item ini.</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_compact_leading">
-    <item quantity="other">%d entri masuk lainnya</item>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="other">%d entri masuk lainnya menggunakan kata sandi yang sama</item>
   </plurals>
-  <string name="login_item_monitor_widget_reused_pass_count_compact_trailing" comment="This is the trailing part of the sentence above. A full example of its usage will be '4 other logins use this password.'">menggunakan kata sandi ini.</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_expanded">
-    <item quantity="other">%d entri masuk lainnya menggunakan kata sandi ini:</item>
-  </plurals>
-  <string name="login_item_monitor_widget_missing_two_fa_title">Autentikasi dua faktor hilang</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Item ini akan lebih aman dengan pengaturan 2FA.</string>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Atur 2FA untuk keamanan yang lebih</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Layanan ini menawarkan 2FA. Aktifkan fitur ini untuk meningkatkan keamanan akun.</string>
+  <string name="login_item_reused_passwords_subtitle">Item pada brankas Anda yang menggunakan kata sandi ini.</string>
   <string name="field_username">Nama pengguna atau alamat email</string>
   <string name="field_password">Kata sandi</string>
   <string name="websites_section_title">Situs web</string>

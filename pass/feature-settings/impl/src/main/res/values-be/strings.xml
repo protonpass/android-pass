@@ -28,8 +28,8 @@
   <string name="settings_allow_screenshots_preference_subtitle">Калі ўключана, вы зможаце рабіць здымкі экрана праграмы.</string>
   <string name="settings_clear_icon_cache_success">Кэш значка ачышчаны</string>
   <string name="settings_clear_icon_cache_error">Немагчыма ачысціць кэш значка</string>
-  <string name="settings_share_telemetry">Абагуляць ананімныя даныя выкарыстання</string>
-  <string name="settings_share_crashes">Абагуляць ананімныя справаздачы пра збоі</string>
+  <string name="settings_share_telemetry">Абагульваць ананімныя звесткі выкарыстання</string>
+  <string name="settings_share_crashes">Абагульваць ананімныя справаздачы аб збоях</string>
   <string name="settings_preference_updated">Вашы параметры былі абноўлены</string>
   <string name="settings_default_vault_updated">Ваша прадвызначанае сховішча было абноўлена.</string>
   <string name="settings_default_vault_update_error">Немагчыма абнавіць прадвызначанае сховішча</string>

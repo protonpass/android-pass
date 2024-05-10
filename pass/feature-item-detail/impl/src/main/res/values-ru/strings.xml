@@ -38,23 +38,15 @@
   <string name="login_item_view_alias_button">Посмотреть псевдоним</string>
   <string name="login_item_monitor_widget_weak_pass_title">Weak Password</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">This account is vulnerable, visit the service and change your password.</string>
-  <string name="login_item_monitor_widget_reused_pass_title">Reused Password</string>
-  <string name="login_item_monitor_widget_reused_pass_subtitle">Visit the website and generate a unique password for this item.</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_compact_leading">
-    <item quantity="one">%d other login</item>
-    <item quantity="few">%d other logins</item>
-    <item quantity="many">%d other logins</item>
-    <item quantity="other">%d other logins</item>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d other login uses the same password</item>
+    <item quantity="few">%d other logins use the same password</item>
+    <item quantity="many">%d other logins use the same password</item>
+    <item quantity="other">%d other logins use the same password</item>
   </plurals>
-  <string name="login_item_monitor_widget_reused_pass_count_compact_trailing" comment="This is the trailing part of the sentence above. A full example of its usage will be '4 other logins use this password.'">use this password.</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_expanded">
-    <item quantity="one">Another login uses this password:</item>
-    <item quantity="few">%d other logins use this password:</item>
-    <item quantity="many">%d other logins use this password:</item>
-    <item quantity="other">%d other logins use this password:</item>
-  </plurals>
-  <string name="login_item_monitor_widget_missing_two_fa_title">Missing two-factor authentication</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">It would be more secure to set up 2FA for this item.</string>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Set up 2FA for more security</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">This service offers 2FA. Enable it for added account security.</string>
+  <string name="login_item_reused_passwords_subtitle">Items from your vaults that use this password.</string>
   <string name="field_username">Имя пользователя или адрес электронной почты</string>
   <string name="field_password">Пароль</string>
   <string name="websites_section_title">Веб-сайты</string>

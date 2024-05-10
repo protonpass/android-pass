@@ -32,6 +32,7 @@
   <string name="app_lock_config_biometric">生体認証</string>
   <string name="app_lock_config_pin_code">PIN コード</string>
   <string name="app_lock_config_app_lock_time">自動ロック</string>
+  <string name="app_lock_config_password">Password</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">生体認証に失敗した場合、システムロックを使用する</string>
   <string name="configure_pin_set_pin_code">PINコードの設定</string>
   <string name="configure_pin_unlock_the_app_with_this_code">このコードでアプリのロックを解除する</string>
@@ -52,4 +53,14 @@
   <string name="profile_passkey_support_subtitle_not_supported_android_version">Your android version does not support passkeys</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Your device does not support passkeys</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Could not check support for passkeys</string>
+  <plurals name="profile_after_days">
+    <item quantity="other">%d 日後</item>
+  </plurals>
+  <plurals name="profile_after_minutes">
+    <item quantity="other">%d 分後</item>
+  </plurals>
+  <plurals name="profile_after_hours">
+    <item quantity="other">%d 時間後</item>
+  </plurals>
+  <string name="profile_less_than_a_minute">Less than a minute</string>
 </resources>

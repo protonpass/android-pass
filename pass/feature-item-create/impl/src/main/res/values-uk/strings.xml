@@ -36,7 +36,7 @@
   <string name="bottomsheet_custom_field_type_text">Текст</string>
   <string name="bottomsheet_custom_field_type_text_content_description">Власне текстове поле</string>
   <string name="bottomsheet_custom_field_type_hidden">Приховано</string>
-  <string name="bottomsheet_custom_field_type_totp">2FA secret key (TOTP)</string>
+  <string name="bottomsheet_custom_field_type_totp">2FA секретний ключ (TOTP)</string>
   <string name="bottomsheet_custom_field_option_edit">Редагувати назву</string>
   <string name="bottomsheet_custom_field_option_remove">Вилучити поле</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Вилучити власне поле</string>
@@ -95,9 +95,9 @@
   <!--  Common create items  -->
   <string name="changes_saved">Зміни збережено</string>
   <!--  TOTP  -->
-  <string name="totp_create_login_field_title">2FA secret key (TOTP)</string>
-  <string name="totp_create_login_field_invalid">Invalid 2FA secret key (TOTP)</string>
-  <string name="totp_create_login_field_placeholder">Add 2FA secret key (TOTP)</string>
+  <string name="totp_create_login_field_title">2FA секретний ключ (TOTP)</string>
+  <string name="totp_create_login_field_invalid">Недійсний секретний ключ 2FA (TOTP)</string>
+  <string name="totp_create_login_field_placeholder">Додати секретний ключ 2FA (TOTP)</string>
   <string name="close_scree_icon_content_description">Кнопка закриття екрана</string>
   <string name="totp_paste_code_action">Вставити код</string>
   <string name="totp_scan_code_action">Сканувати код</string>
@@ -112,6 +112,6 @@
   <string name="select_mailbox_upgrade_for_more_inboxes">Для більшої кількості поштових скриньок передплатіть тарифний план</string>
   <string name="create_alias_content_limit_banner">Ви досягли обмеження створених псевдонімів. Щоб створювати псевдоніми без обмежень, передплатіть тарифний план.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Щоби редагувати цей елемент, потрібно оновити застосунок</string>
-  <string name="remove_passkey_dialog_title">Remove this passkey?</string>
-  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">You are about to remove the passkey for user \'%1$s\' for \'%2$s\'. Are you sure?</string>
+  <string name="remove_passkey_dialog_title">Вилучити цей ключ доступу?</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Ви збираєтеся вилучити ключ доступу користувача \'%1$s\' для \'%2$s\'. Ви впевнені?</string>
 </resources>

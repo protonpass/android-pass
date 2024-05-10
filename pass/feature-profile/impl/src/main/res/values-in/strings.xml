@@ -32,6 +32,7 @@
   <string name="app_lock_config_biometric">Biometrik</string>
   <string name="app_lock_config_pin_code">Kode PIN</string>
   <string name="app_lock_config_app_lock_time">Penguncian otomatis</string>
+  <string name="app_lock_config_password">Kata sandi</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Gunakan kunci sistem ketika verifikasi biometrik gagal</string>
   <string name="configure_pin_set_pin_code">Tetapkan kode PIN</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Buka aplikasi dengan kode ini</string>
@@ -52,4 +53,14 @@
   <string name="profile_passkey_support_subtitle_not_supported_android_version">Versi Android Anda tidak mendukung passkey</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Perangkat Anda tidak mendukung passkey</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Dukungan passkey tidak dapat diperiksa</string>
+  <plurals name="profile_after_days">
+    <item quantity="other">Setelah %d hari</item>
+  </plurals>
+  <plurals name="profile_after_minutes">
+    <item quantity="other">Setelah %d menit</item>
+  </plurals>
+  <plurals name="profile_after_hours">
+    <item quantity="other">Setelah %d jam</item>
+  </plurals>
+  <string name="profile_less_than_a_minute">Kurang dari satu menit</string>
 </resources>

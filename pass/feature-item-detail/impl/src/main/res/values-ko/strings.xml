@@ -38,17 +38,12 @@
   <string name="login_item_view_alias_button">별칭 보기</string>
   <string name="login_item_monitor_widget_weak_pass_title">약한 비밀번호</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">이 계정은 취약합니다. 서비스를 방문하여 비밀번호를 변경하십시오.</string>
-  <string name="login_item_monitor_widget_reused_pass_title">재사용한 비밀번호</string>
-  <string name="login_item_monitor_widget_reused_pass_subtitle">웹사이트를 방문하여 이 항목을 위한 고유한 비밀번호를 생성하십시오.</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_compact_leading">
-    <item quantity="other">다른 로그인 %d개가</item>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="other">%d개의 다른 로그인이 같은 비밀번호를 사용하고 있습니다</item>
   </plurals>
-  <string name="login_item_monitor_widget_reused_pass_count_compact_trailing" comment="This is the trailing part of the sentence above. A full example of its usage will be '4 other logins use this password.'">이 비밀번호를 사용합니다.</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_expanded">
-    <item quantity="other">%d개의 다른 로그인에 이 비밀번호가 쓰이고 있습니다:</item>
-  </plurals>
-  <string name="login_item_monitor_widget_missing_two_fa_title">2단계 인증이 없습니다</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">이 항목은 2단계 인증을 설정하는 것이 더욱 안전합니다.</string>
+  <string name="login_item_monitor_widget_missing_two_fa_title">더 나은 보안을 위해 2단계 인증 설정</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">이 서비스는 이중 인증을 지원합니다. 향상된 계정 보안을 위해 활성화 하십시오.</string>
+  <string name="login_item_reused_passwords_subtitle">이 비밀번호를 사용하는 금고 내 항목의 목록입니다.</string>
   <string name="field_username">아이디 또는 이메일 주소</string>
   <string name="field_password">비밀번호</string>
   <string name="websites_section_title">웹사이트</string>

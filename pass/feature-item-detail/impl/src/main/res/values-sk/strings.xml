@@ -38,23 +38,15 @@
   <string name="login_item_view_alias_button">Zobraziť alias</string>
   <string name="login_item_monitor_widget_weak_pass_title">Slabé heslo</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Tento účet je zraniteľný. Navštívte službu a zmeňte si heslo.</string>
-  <string name="login_item_monitor_widget_reused_pass_title">Viacnásobne použité heslo</string>
-  <string name="login_item_monitor_widget_reused_pass_subtitle">Navštívte webovú stránku a vygenerujte jedinečné heslo pre túto položku.</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_compact_leading">
-    <item quantity="one">%d iné prihlasovanie</item>
-    <item quantity="few">%d iné prihlasovania</item>
-    <item quantity="many">%d iných prihlasovaní</item>
-    <item quantity="other">%d iných prihlasovaní</item>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d iné prihlásenie už používa rovnaké heslo</item>
+    <item quantity="few">%d iné prihlasovania už používajú rovnaké heslo</item>
+    <item quantity="many">%d iných prihlasovaní už používa rovnaké heslo</item>
+    <item quantity="other">%d iných prihlasovaní už používa rovnaké heslo</item>
   </plurals>
-  <string name="login_item_monitor_widget_reused_pass_count_compact_trailing" comment="This is the trailing part of the sentence above. A full example of its usage will be '4 other logins use this password.'">používajú toto heslo</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_expanded">
-    <item quantity="one">Toto heslo používa aj ďalšie prihlásovanie:</item>
-    <item quantity="few">%d iné prihlásovania už používajú toto heslo:</item>
-    <item quantity="many">%d iných prihlasovaní už používa toto heslo:</item>
-    <item quantity="other">%d iných prihlasovaní už používa toto heslo:</item>
-  </plurals>
-  <string name="login_item_monitor_widget_missing_two_fa_title">Chýbajúce dvojstupňové overenie</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Pre túto položku by bolo bezpečnejšie nastaviť 2FA.</string>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Nastavte 2FA na zvýšenie bezpečnosti</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Táto služba ponúka 2FA. Aktiváciou tejto funkcie zvýšite bezpečnosť účtu.</string>
+  <string name="login_item_reused_passwords_subtitle">Položky z vašich trezorov, ktoré používajú toto heslo.</string>
   <string name="field_username">Používateľské meno alebo emailová adresa</string>
   <string name="field_password">Heslo</string>
   <string name="websites_section_title">Webové stránky</string>

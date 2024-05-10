@@ -32,6 +32,7 @@
   <string name="app_lock_config_biometric">Biometrični</string>
   <string name="app_lock_config_pin_code">PIN koda</string>
   <string name="app_lock_config_app_lock_time">Samodejno zaklepanje</string>
+  <string name="app_lock_config_password">Password</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Uporabite zaklepanje sistema, ko biometrija ne deluje</string>
   <string name="configure_pin_set_pin_code">Nastavi kodo PIN</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Odklenite aplikacijo s to kodo</string>
@@ -52,4 +53,23 @@
   <string name="profile_passkey_support_subtitle_not_supported_android_version">Vaša različica Androida ne podpira identifikacijskega ključa</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Vaša naprava ne podpira identifikacijskega ključa</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Ni bilo mogoče preveriti podpore za identifikacijski ključ</string>
+  <plurals name="profile_after_days">
+    <item quantity="one">Po %d dnevu</item>
+    <item quantity="two">Po %d dneh</item>
+    <item quantity="few">Po %d dni</item>
+    <item quantity="other">Po %d dni</item>
+  </plurals>
+  <plurals name="profile_after_minutes">
+    <item quantity="one">Po %d minuti</item>
+    <item quantity="two">Po %d minutah</item>
+    <item quantity="few">Čez %d minute</item>
+    <item quantity="other">Po %d minutah</item>
+  </plurals>
+  <plurals name="profile_after_hours">
+    <item quantity="one">Po %d uri</item>
+    <item quantity="two">Po %d urah</item>
+    <item quantity="few">Čez %d ure</item>
+    <item quantity="other">Čez %d ur</item>
+  </plurals>
+  <string name="profile_less_than_a_minute">Less than a minute</string>
 </resources>

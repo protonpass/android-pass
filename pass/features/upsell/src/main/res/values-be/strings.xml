@@ -25,6 +25,6 @@
   <string name="upsell_paid_feature_sentinel">Proton Sentinel</string>
   <string name="upsell_paid_feature_authenticator">Інтэграваная аўтэнтыфікацыя 2ФА</string>
   <string name="upsell_paid_feature_unlimited_aliases">Неабмежаваная колькасць псеўданімаў Hide-my-email</string>
-  <string name="upsell_paid_feature_vault_sharing">Абагуленне сховішча (да 10 карыстальнікаў)</string>
+  <string name="upsell_paid_feature_vault_sharing">Абагульванне сховішча (да 10 карыстальнікаў)</string>
   <string name="upsell_button_upgrade">Атрымаць Pass Plus</string>
 </resources>

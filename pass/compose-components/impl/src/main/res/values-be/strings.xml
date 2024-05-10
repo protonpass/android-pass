@@ -35,6 +35,8 @@
   <string name="action_learn_more">Даведацца больш</string>
   <string name="action_enable">Уключыць</string>
   <string name="action_view_details">Паглядзець падрабязнасці</string>
+  <string name="action_see_all">Праглядзець усе</string>
+  <string name="action_confirm">Пацвердзіць</string>
   <!-- Empty list -->
   <string name="empty_list_title">Дадайце свой першы элемент</string>
   <string name="empty_search_results_title">Нічога не знойдзена</string>

@@ -32,6 +32,7 @@
   <string name="app_lock_config_biometric">Біяметрыі</string>
   <string name="app_lock_config_pin_code">PIN-кода</string>
   <string name="app_lock_config_app_lock_time">Аўтаматычная блакіроўка</string>
+  <string name="app_lock_config_password">Пароль</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Выкарыстоўваць сістэмную блакіроўку пры збоі біяметрыі</string>
   <string name="configure_pin_set_pin_code">Задаць PIN-код</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Разблакіраваць праграму з дапамогай гэтага кода</string>
@@ -52,4 +53,23 @@
   <string name="profile_passkey_support_subtitle_not_supported_android_version">Ваша версія Android не падтрымлівае ключы доступу</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Ваша прылада не падтрымлівае ключы доступу</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Немагчыма праверыць, ці падтрымліваюцца ключы доступу</string>
+  <plurals name="profile_after_days">
+    <item quantity="one">Праз %d дзень</item>
+    <item quantity="few">Праз %d дні</item>
+    <item quantity="many">Праз %d дзён</item>
+    <item quantity="other">Праз %d дзён</item>
+  </plurals>
+  <plurals name="profile_after_minutes">
+    <item quantity="one">Праз %d хвіліну</item>
+    <item quantity="few">Праз %d хвіліны</item>
+    <item quantity="many">Праз %d хвіліны</item>
+    <item quantity="other">Праз %d хвіліны</item>
+  </plurals>
+  <plurals name="profile_after_hours">
+    <item quantity="one">Праз %d гадзіну</item>
+    <item quantity="few">Праз %d гадзіны</item>
+    <item quantity="many">Праз %d гадзін</item>
+    <item quantity="other">Праз %d гадзін</item>
+  </plurals>
+  <string name="profile_less_than_a_minute">Меньш за хвіліну</string>
 </resources>

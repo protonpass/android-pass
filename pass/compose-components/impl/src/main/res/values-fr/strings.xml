@@ -33,6 +33,8 @@
   <string name="action_learn_more">En savoir plus</string>
   <string name="action_enable">Activer</string>
   <string name="action_view_details">Afficher les informations</string>
+  <string name="action_see_all">Tout afficher</string>
+  <string name="action_confirm">Confirmer</string>
   <!-- Empty list -->
   <string name="empty_list_title">Ajoutez votre premier élément</string>
   <string name="empty_search_results_title">Aucun résultat n\'a été trouvé.</string>

@@ -31,6 +31,7 @@ import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.breach.CustomEmailSuggestion
 import proton.android.pass.data.api.usecases.breach.ObserveCustomEmailSuggestions
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareSelection
 import javax.inject.Inject
@@ -50,14 +51,14 @@ class ObserveCustomEmailSuggestionsImpl @Inject constructor(
                 userId = userId,
                 selection = ShareSelection.AllShares,
                 filter = ItemTypeFilter.Logins,
-                itemState = null
+                itemState = ItemState.Active
             )
 
             val aliasesFlow = observeItems(
                 userId = userId,
                 selection = ShareSelection.AllShares,
                 filter = ItemTypeFilter.Aliases,
-                itemState = null
+                itemState = ItemState.Active
             )
             combine(itemsFlow, aliasesFlow) { logins, aliases ->
                 combineItems(logins, aliases, addressesForUser)

@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.security.center.darkweb.ui
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
@@ -30,8 +31,9 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.darkweb.presentation.DarkWebUiState
 import proton.android.pass.features.security.center.darkweb.ui.customemails.list.CustomEmailsHeader
-import proton.android.pass.features.security.center.darkweb.ui.customemails.list.customEmailsList
-import proton.android.pass.features.security.center.darkweb.ui.summary.DarkWebSummary
+import proton.android.pass.features.security.center.darkweb.ui.customemails.list.CustomEmailsList
+import proton.android.pass.features.security.center.darkweb.ui.summary.DarkWebSummaryType
+import proton.android.pass.features.security.center.darkweb.ui.summary.EmailBreachSection
 import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBar
 
 @Composable
@@ -72,14 +74,22 @@ internal fun DarkWebContent(
             modifier = Modifier
                 .padding(padding)
                 .padding(top = Spacing.medium),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
         ) {
             item {
-                DarkWebSummary(
-                    modifier = Modifier.padding(Spacing.medium),
-                    protonEmailsState = state.protonEmailState,
-                    aliasEmailsState = state.aliasEmailState,
-                    canNavigateToAlias = state.canNavigateToAlias,
+                EmailBreachSection(
+                    state = state.protonEmailState,
+                    summaryType = DarkWebSummaryType.Proton,
+                    isClickable = true,
+                    onEvent = onEvent
+                )
+            }
+            item {
+                EmailBreachSection(
+                    state = state.aliasEmailState,
+                    isClickable = state.canNavigateToAlias,
+                    summaryType = DarkWebSummaryType.Alias,
                     onEvent = onEvent
                 )
             }
@@ -89,6 +99,7 @@ internal fun DarkWebContent(
                         horizontal = Spacing.medium,
                         vertical = Spacing.small
                     ),
+                    count = state.customEmailState.count(),
                     canAddCustomEmails = state.canAddCustomEmails,
                     onAddClick = { onEvent(DarkWebUiEvent.OnNewCustomEmailClick) },
                     onHelpClick = {
@@ -98,9 +109,8 @@ internal fun DarkWebContent(
                         ).also(onEvent)
                     }
                 )
+                CustomEmailsList(state = state, onEvent = onEvent)
             }
-
-            customEmailsList(state, onEvent)
         }
     }
 }

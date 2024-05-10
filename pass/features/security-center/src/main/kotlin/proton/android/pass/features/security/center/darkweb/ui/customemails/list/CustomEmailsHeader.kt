@@ -45,6 +45,7 @@ import proton.android.pass.features.security.center.darkweb.ui.SecurityCenterDar
 internal fun CustomEmailsHeader(
     modifier: Modifier = Modifier,
     canAddCustomEmails: Boolean,
+    count: Int,
     onAddClick: () -> Unit,
     onHelpClick: () -> Unit
 ) {
@@ -58,7 +59,8 @@ internal fun CustomEmailsHeader(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = stringResource(id = R.string.security_center_dark_web_monitor_custom_emails_title),
+                text = stringResource(id = R.string.security_center_dark_web_monitor_custom_emails_title)
+                    .plus(" ($count)"),
                 style = ProtonTheme.typography.body2Regular
             )
 
@@ -100,6 +102,7 @@ fun CustomEmailsHeaderPreview(@PreviewParameter(ThemedBooleanPreviewProvider::cl
         Surface {
             CustomEmailsHeader(
                 canAddCustomEmails = input.second,
+                count = 3,
                 onAddClick = {},
                 onHelpClick = {}
             )

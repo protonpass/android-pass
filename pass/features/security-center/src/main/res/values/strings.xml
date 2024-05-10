@@ -83,7 +83,6 @@
         <item quantity="other">Used in %d logins</item>
     </plurals>
     <plurals name="security_center_dark_web_monitor_custom_emails_breaches_found">
-        <item quantity="zero">No breaches detected</item>
         <item quantity="one">%d breach detected</item>
         <item quantity="other">%d breaches detected</item>
     </plurals>
@@ -93,16 +92,18 @@
     <string name="security_center_dark_web_monitor_custom_email_option_remove">Remove</string>
     <string name="security_center_dark_web_monitor_latest_breach_on">Latest breach on %s</string>
     <plurals name="security_center_dark_web_monitor_found_in_breaches">
-        <item quantity="zero">No breaches detected</item>
         <item quantity="one">Found in %s breach</item>
         <item quantity="other">Found in %s breaches</item>
     </plurals>
+    <string name="security_center_dark_web_monitor_found_in_breaches">No breaches detected</string>
+
     <string name="security_center_dark_web_monitor_proton_addresses">Proton addresses</string>
     <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email aliases</string>
     <string name="security_center_dark_web_monitor_proton_addresses_error">Error retrieving proton addresses</string>
     <string name="security_center_dark_web_monitor_alias_addresses_error">Error retrieving Hide-my-email aliases</string>
     <string name="security_center_dark_web_monitor_custom_emails_suggestions">Suggestions</string>
     <string name="security_center_dark_web_monitor_monitoring_disabled">Monitoring disabled</string>
+    <string name="security_center_dark_web_monitor_see_all">See all</string>
 
     <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">There was an error sending the verification code. Please try again later.</string>
     <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">There was an error removing the email. Please try again later.</string>
@@ -198,6 +199,5 @@
     <!-- Cannot add custom emails -->
     <string name="dark_web_cannot_add_custom_emails_dialog_title">Cannot add custom email</string>
     <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">You have reached the limit of custom emails.</string>
-
 
 </resources>

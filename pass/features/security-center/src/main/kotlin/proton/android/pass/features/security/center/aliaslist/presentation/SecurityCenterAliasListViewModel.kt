@@ -44,15 +44,14 @@ import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAliasEmail
 import proton.android.pass.data.api.usecases.items.ItemIsBreachedFilter
 import proton.android.pass.data.api.usecases.items.ItemSecurityCheckFilter
 import proton.android.pass.domain.Item
-import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ItemType
-import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
 import proton.android.pass.domain.breach.BreachEmail
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachId
 import proton.android.pass.features.security.center.PassMonitorDisplayMonitoringEmailAliases
+import proton.android.pass.features.security.center.shared.presentation.AliasKeyId
 import proton.android.pass.features.security.center.shared.presentation.EmailBreachUiState
 import proton.android.pass.features.security.center.shared.ui.DateUtils
 import proton.android.pass.preferences.InternalSettingsRepository
@@ -228,7 +227,4 @@ class SecurityCenterAliasListViewModel @Inject constructor(
             IsDarkWebAliasMessageDismissedPreference.Dismissed
         )
     }
-
-    private data class AliasKeyId(val shareId: ShareId, val itemId: ItemId, val alias: String)
 }
-

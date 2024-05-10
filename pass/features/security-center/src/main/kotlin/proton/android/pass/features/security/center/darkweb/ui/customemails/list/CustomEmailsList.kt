@@ -18,13 +18,13 @@
 
 package proton.android.pass.features.security.center.darkweb.ui.customemails.list
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -32,6 +32,8 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
+import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.darkweb.presentation.CustomEmailUiStatus
 import proton.android.pass.features.security.center.darkweb.presentation.DarkWebCustomEmailsState
@@ -40,90 +42,95 @@ import proton.android.pass.features.security.center.darkweb.presentation.DarkWeb
 import proton.android.pass.features.security.center.darkweb.ui.DarkWebUiEvent
 
 @Suppress("LongMethod")
-internal fun LazyListScope.customEmailsList(state: DarkWebUiState, onEvent: (DarkWebUiEvent) -> Unit) {
+@Composable
+internal fun CustomEmailsList(
+    modifier: Modifier = Modifier,
+    state: DarkWebUiState,
+    onEvent: (DarkWebUiEvent) -> Unit
+) {
     when (state.customEmailState) {
-        is DarkWebCustomEmailsState.Error -> {
-            item {
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = Spacing.medium),
-                    text = when (state.customEmailState.reason) {
-                        DarkWebEmailsError.CannotLoad -> stringResource(
-                            R.string.security_center_dark_web_monitor_custom_emails_loading_error
-                        )
+        is DarkWebCustomEmailsState.Error ->
+            Text(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = Spacing.medium),
+                text = when (state.customEmailState.reason) {
+                    DarkWebEmailsError.CannotLoad -> stringResource(
+                        R.string.security_center_dark_web_monitor_custom_emails_loading_error
+                    )
 
-                        DarkWebEmailsError.Unknown -> stringResource(
-                            R.string.security_center_dark_web_monitor_custom_emails_unknown_error
-                        )
-                    },
-                    style = ProtonTheme.typography.defaultNorm
-                        .copy(color = ProtonTheme.colors.notificationError)
-                )
-            }
+                    DarkWebEmailsError.Unknown -> stringResource(
+                        R.string.security_center_dark_web_monitor_custom_emails_unknown_error
+                    )
+                },
+                style = ProtonTheme.typography.defaultNorm
+                    .copy(color = ProtonTheme.colors.notificationError)
+            )
 
-        }
+        DarkWebCustomEmailsState.Loading ->
+            CircularProgressIndicator(modifier.size(48.dp))
 
-        DarkWebCustomEmailsState.Loading -> {
-            item { CircularProgressIndicator(Modifier.size(48.dp)) }
-        }
-
-        is DarkWebCustomEmailsState.Success -> {
-            items(
-                items = state.customEmailState.emails,
-                key = { it.key }
-            ) { itemEmail ->
+        is DarkWebCustomEmailsState.Success -> Column(
+            modifier
+                .padding(horizontal = Spacing.medium)
+                .roundedContainerNorm()
+                .padding(vertical = Spacing.small)
+        ) {
+            repeat(state.customEmailState.emails.size) {
+                val item = state.customEmailState.emails[it]
                 CustomEmailItem(
-                    email = itemEmail,
+                    email = item,
                     onAddClick = {},
                     onDetailClick = { id ->
                         onEvent(
                             DarkWebUiEvent.OnCustomEmailReportClick(
                                 id = id,
-                                email = itemEmail.email,
-                                breachCount = (itemEmail.status as? CustomEmailUiStatus.Verified)
+                                email = item.email,
+                                breachCount = (item.status as? CustomEmailUiStatus.Verified)
                                     ?.breachesDetected
                                     ?: 0
                             )
                         )
                     },
-                    onOptionsClick = {
+                    onOptionsClick = { customEmailId ->
                         val event = DarkWebUiEvent.OnUnverifiedEmailOptionsClick(
-                            id = it,
-                            email = itemEmail.email
+                            id = customEmailId,
+                            email = item.email
                         )
                         onEvent(event)
                     }
                 )
-            }
-
-            if (state.customEmailState.emails.isNotEmpty() && state.customEmailState.suggestions.isNotEmpty()) {
-                item {
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(Spacing.medium),
-                        text = stringResource(
-                            id = R.string.security_center_dark_web_monitor_custom_emails_suggestions
-                        ),
-                        color = PassTheme.colors.textWeak,
-                        style = ProtonTheme.typography.body2Regular
-                    )
+                if (it < state.customEmailState.emails.size - 1) {
+                    PassDivider(modifier = Modifier.padding(horizontal = Spacing.medium))
                 }
             }
 
-            items(
-                items = state.customEmailState.suggestions,
-                key = { it.key }
-            ) { itemEmail ->
+            if (state.customEmailState.emails.isNotEmpty() && state.customEmailState.suggestions.isNotEmpty()) {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(Spacing.medium),
+                    text = stringResource(
+                        id = R.string.security_center_dark_web_monitor_custom_emails_suggestions
+                    ),
+                    color = PassTheme.colors.textWeak,
+                    style = ProtonTheme.typography.body2Regular
+                )
+            }
+
+            repeat(state.customEmailState.suggestions.size) {
+                val item = state.customEmailState.suggestions[it]
                 CustomEmailItem(
-                    email = itemEmail,
+                    email = item,
                     onAddClick = {
-                        onEvent(DarkWebUiEvent.OnAddCustomEmailClick(itemEmail.email))
+                        onEvent(DarkWebUiEvent.OnAddCustomEmailClick(item.email))
                     },
                     onDetailClick = {},
                     onOptionsClick = {}
                 )
+                if (it < state.customEmailState.suggestions.size - 1) {
+                    PassDivider(modifier = Modifier.padding(horizontal = Spacing.medium))
+                }
             }
         }
     }

@@ -43,18 +43,19 @@ internal data class SyncDialogState(
         is LoadingResult.Error,
         LoadingResult.Loading -> persistentMapOf()
 
-        is LoadingResult.Success -> vaultsLoadingResult.data
-            .associateBy { vault -> vault.shareId }
-            .mapValues { (shareId, vault) ->
-                itemSyncPayloadMap[shareId].let { itemSyncPayload ->
-                    SyncDialogItem(
-                        vault = vault,
-                        current = itemSyncPayload?.current,
-                        total = itemSyncPayload?.total
-                    )
+        is LoadingResult.Success ->
+            vaultsLoadingResult.data
+                .associateBy { vault -> vault.shareId }
+                .mapValues { (shareId, vault) ->
+                    itemSyncPayloadMap[shareId].let { itemSyncPayload ->
+                        SyncDialogItem(
+                            vault = vault,
+                            current = itemSyncPayload?.current,
+                            total = itemSyncPayload?.total
+                        )
+                    }
                 }
-            }
-            .toPersistentMap()
+                .toPersistentMap()
     }
 
     internal companion object {

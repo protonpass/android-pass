@@ -18,6 +18,7 @@
 
 package proton.android.pass.featuresync.impl.ui
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -46,10 +47,10 @@ internal fun SyncDialogContent(
         modifier = modifier,
         onDismissRequest = {},
         title = {
-            val titlesResId = if (hasSyncFailed) {
-                R.string.sync_dialog_title_error
-            } else {
-                R.string.sync_dialog_title
+            val titlesResId = when {
+                hasSyncFailed -> R.string.sync_dialog_title_error
+                hasSyncSucceeded -> R.string.sync_dialog_title_success
+                else -> R.string.sync_dialog_title
             }
 
             Text(
@@ -61,10 +62,10 @@ internal fun SyncDialogContent(
             Column(
                 verticalArrangement = Arrangement.spacedBy(Spacing.small)
             ) {
-                val subtitleResId = if (hasSyncFailed) {
-                    R.string.sync_dialog_subtitle_error
-                } else {
-                    R.string.sync_dialog_subtitle
+                val subtitleResId = when {
+                    hasSyncFailed -> R.string.sync_dialog_subtitle_error
+                    hasSyncSucceeded -> R.string.sync_dialog_subtitle_success
+                    else -> R.string.sync_dialog_subtitle
                 }
 
                 Text(
@@ -93,24 +94,22 @@ internal fun SyncDialogContent(
             }
         },
         confirmButton = {
-            when {
-                hasSyncFailed -> {
-                    SyncDialogButton(
-                        textResId = CompR.string.action_retry,
-                        onClick = { onUiEvent(SyncDialogUiEvent.OnRetrySync) }
-                    )
-                }
+            AnimatedVisibility(visible = hasSyncFailed) {
+                SyncDialogButton(
+                    textResId = CompR.string.action_retry,
+                    onClick = { onUiEvent(SyncDialogUiEvent.OnRetrySync) }
+                )
+            }
 
-                hasSyncSucceeded -> {
-                    SyncDialogButton(
-                        textResId = CompR.string.action_continue,
-                        onClick = { onUiEvent(SyncDialogUiEvent.OnCompleteSync) }
-                    )
-                }
+            AnimatedVisibility(visible = hasSyncSucceeded) {
+                SyncDialogButton(
+                    textResId = CompR.string.action_continue,
+                    onClick = { onUiEvent(SyncDialogUiEvent.OnCompleteSync) }
+                )
             }
         },
         dismissButton = {
-            if (hasSyncFailed) {
+            AnimatedVisibility(visible = hasSyncFailed) {
                 SyncDialogButton(
                     textResId = CompR.string.action_not_now,
                     onClick = { onUiEvent(SyncDialogUiEvent.OnCloseSync) }

@@ -21,6 +21,7 @@ package proton.android.pass.features.security.center.darkweb.ui.summary
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -32,6 +33,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
+import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachId
 import proton.android.pass.domain.breach.CustomEmailId
@@ -50,7 +52,7 @@ internal fun EmailBreachSection(
     onEvent: (DarkWebUiEvent) -> Unit
 ) {
     Column(
-        modifier = modifier.roundedContainerNorm()
+        modifier = modifier
     ) {
         EmailBreachHeader(
             summaryType = summaryType,
@@ -60,34 +62,44 @@ internal fun EmailBreachSection(
         )
 
         val listSize = state.list().take(10).size
-        repeat(listSize) { index ->
-            EmailBreachRow(
-                emailBreachUiState = state.list()[index],
-                onClick = {
-                    when (it.id) {
-                        is BreachEmailId.Alias -> onEvent(
-                            DarkWebUiEvent.OnShowAliasEmailReportClick(
-                                id = it.id,
-                                email = it.email,
-                                breachCount = it.count
+        Column(
+            modifier = Modifier
+                .padding(horizontal = Spacing.medium)
+                .roundedContainerNorm()
+                .padding(vertical = Spacing.small)
+        ) {
+            repeat(listSize) { index ->
+                EmailBreachRow(
+                    emailBreachUiState = state.list()[index],
+                    onClick = {
+                        when (it.id) {
+                            is BreachEmailId.Alias -> onEvent(
+                                DarkWebUiEvent.OnShowAliasEmailReportClick(
+                                    id = it.id,
+                                    email = it.email,
+                                    breachCount = it.count
+                                )
                             )
-                        )
 
-                        is BreachEmailId.Custom -> {
-                            // It won't reach this point
+                            is BreachEmailId.Custom -> {
+                                // It won't reach this point
+                            }
+
+                            is BreachEmailId.Proton -> onEvent(
+                                DarkWebUiEvent.OnShowProtonEmailReportClick(
+                                    id = it.id,
+                                    email = it.email,
+                                    breachCount = it.count
+                                )
+                            )
                         }
-
-                        is BreachEmailId.Proton -> onEvent(
-                            DarkWebUiEvent.OnShowProtonEmailReportClick(
-                                id = it.id,
-                                email = it.email,
-                                breachCount = it.count
-                            )
-                        )
-                    }
-                },
-                globalMonitorEnabled = state.enabledMonitoring()
-            )
+                    },
+                    globalMonitorEnabled = state.enabledMonitoring()
+                )
+                if (index < listSize - 1) {
+                    PassDivider(modifier = Modifier.padding(horizontal = Spacing.medium))
+                }
+            }
         }
 
         if (listSize > 0) {
@@ -96,17 +108,28 @@ internal fun EmailBreachSection(
     }
 }
 
-internal class DarkWebEmailBreachStatePreviewProvider : PreviewParameterProvider<DarkWebEmailBreachState> {
+internal class DarkWebEmailBreachStatePreviewProvider :
+    PreviewParameterProvider<DarkWebEmailBreachState> {
     override val values: Sequence<DarkWebEmailBreachState>
         get() = sequenceOf(
             DarkWebEmailBreachState.Success(
                 emails = persistentListOf(
                     EmailBreachUiState(
                         id = BreachEmailId.Custom(
-                            id = BreachId("123"),
-                            customEmailId = CustomEmailId("456")
+                            id = BreachId("1"),
+                            customEmailId = CustomEmailId("1")
                         ),
-                        email = "adobe.42nbe@passmail.com",
+                        email = "mail@proton.me",
+                        count = 2,
+                        breachDate = "2024-04-16T15:30:00Z",
+                        isMonitored = true
+                    ),
+                    EmailBreachUiState(
+                        id = BreachEmailId.Custom(
+                            id = BreachId("2"),
+                            customEmailId = CustomEmailId("2")
+                        ),
+                        email = "mail2@proton.me",
                         count = 2,
                         breachDate = "2024-04-16T15:30:00Z",
                         isMonitored = true

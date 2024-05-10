@@ -97,6 +97,7 @@ class TestObserveItems @Inject constructor() : ObserveItems {
             shareId: ShareId = ShareId("share-123"),
             itemId: ItemId = ItemId("item-123"),
             aliasEmail: String? = null,
+            flags: Int = 0,
             itemContents: ItemContents
         ): Item {
             val now = Clock.System.now()
@@ -120,7 +121,7 @@ class TestObserveItems @Inject constructor() : ObserveItems {
                     createTime = now,
                     lastAutofillTime = None,
                     isPinned = false,
-                    flags = 0
+                    flags = flags
                 )
             }
         }
@@ -157,11 +158,13 @@ class TestObserveItems @Inject constructor() : ObserveItems {
             itemId: ItemId = ItemId("item-123"),
             title: String = "alias-item",
             alias: String = "some.alias@domain.test",
-            note: String = "note"
+            note: String = "note",
+            flags: Int = 0
         ) = createItem(
             shareId = shareId,
             itemId = itemId,
             aliasEmail = alias,
+            flags = flags,
             itemContents = ItemContents.Alias(
                 title = title,
                 note = note,

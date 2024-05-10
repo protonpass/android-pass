@@ -21,7 +21,7 @@
   <string name="security_center_home_top_bar_title">Monitorizare Proton Pass</string>
   <string name="security_center_home_dark_web_monitoring_title">Monitorizare pe internetul ascuns</string>
   <string name="security_center_home_widget_breaches_title">Compromitere detectată</string>
-  <string name="security_center_home_widget_breaches_subtitle">Adresele de e-mail v-au fost divulgate în cel puțin o compromitere a datelor.</string>
+  <string name="security_center_home_widget_breaches_subtitle">Your email address was leaked in at least 1 data breach.</string>
   <string name="security_center_home_widget_no_breaches_subtitle">Primiți notificări dacă adresele de e-mail, parolele sau alte date personale au fost divulgate.</string>
   <string name="security_center_home_row_no_data_breaches_subtitle">Nu există divulgări</string>
   <string name="security_center_home_row_data_breaches_title">Alertă din internetul ascuns</string>
@@ -29,13 +29,13 @@
   <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
   <string name="security_center_home_row_sentinel_subtitle">Program avansat de protecție a contului</string>
   <string name="security_center_home_row_insecure_passwords_title">Parole slabe</string>
-  <string name="security_center_home_row_insecure_passwords_subtitle">Creați parole puternice</string>
+  <string name="security_center_home_row_insecure_passwords_subtitle">Schimbați-vă parolele</string>
   <string name="security_center_home_row_reused_passwords_title">Parole refolosite</string>
-  <string name="security_center_home_row_reused_passwords_subtitle">Creați parole unice</string>
-  <string name="security_center_home_row_missing_tfa_title">Autentificarea cu doi factori lipsește</string>
-  <string name="security_center_home_row_missing_tfa_subtitle">Măriți-vă securitatea</string>
-  <string name="security_center_home_row_excludes_items_title">Articole excluse</string>
-  <string name="security_center_home_row_excludes_items_subtitle">Ignorare alerte pentru acest articol</string>
+  <string name="security_center_home_row_reused_passwords_subtitle">Generați parole unice</string>
+  <string name="security_center_home_row_missing_tfa_title">Inactive 2FA</string>
+  <string name="security_center_home_row_missing_tfa_subtitle">Setați A2F pentru mai multă securitate</string>
+  <string name="security_center_home_row_excludes_items_title">Exclusă de la monitorizare</string>
+  <string name="security_center_home_row_excludes_items_subtitle">Aceste articole rămân riscante</string>
   <string name="security_center_get_breaches_error">Nu s-au putut încărca datele divulgate.</string>
   <string name="security_center_home_section_password_health">Stare parolă</string>
   <!-- Sentinel bottom sheet -->
@@ -49,21 +49,20 @@
   <string name="security_center_sentinel_snackbar_message_disable_error">A apărut o eroare la dezactivarea protecției Proton Sentinel. Mai reîncercați.</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Parole slabe</string>
-  <string name="security_center_weak_pass_top_bar_subtitle">Parolele slabe sunt ușor de ghicit. Generați parole puternice pentru a vă păstra contul în siguranță.</string>
+  <string name="security_center_weak_pass_top_bar_subtitle">Parolele slabe sunt ușor de ghicit. Generați parole puternice pentru a vă păstra conturile în siguranță.</string>
   <!-- Reused passwords screen -->
   <string name="security_center_reused_pass_top_bar_title">Parole refolosite</string>
-  <string name="security_center_reused_pass_top_bar_subtitle">Generați parole unice pentru a vă spori securitatea.</string>
+  <string name="security_center_reused_pass_top_bar_subtitle">Generate unique passwords for each account to increase your security.</string>
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Refolosită de %1$d de ori</string>
   <!-- Missing 2FA -->
-  <string name="security_center_missing_tfa_top_bar_title">Autentificarea cu doi factori lipsește</string>
-  <string name="security_center_missing_tfa_top_bar_subtitle">Autentificări în site-uri care au disponibilă autentificarea cu doi factori, dar încă nu ați configurat-o.</string>
+  <string name="security_center_missing_tfa_top_bar_title">Inactive 2FA</string>
+  <string name="security_center_missing_tfa_top_bar_subtitle">For added security, set up two-factor authentication on the following accounts.</string>
   <!-- Excluded items screen -->
   <string name="security_center_excluded_items_top_bar_title">Articole excluse</string>
-  <string name="security_center_excluded_items_top_bar_subtitle">Aceste articole nu vor fi monitorizate așa că vor fi excluse de la verificările serviciilor noastre de securitate.</string>
   <!-- Dark web monitor -->
   <string name="security_center_dark_web_monitor_top_bar_title">Monitorizare pe internetul ascuns</string>
   <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Ultima verificare: %s</string>
-  <string name="security_center_dark_web_monitor_custom_emails_title">Domeniu personal adresă de e-mail</string>
+  <string name="security_center_dark_web_monitor_custom_emails_title">Adrese de e-mail personalizate</string>
   <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">Neverificat</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Adăugare adresă de e-mail cu domeniu personal</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_button">Adăugare</string>
@@ -109,6 +108,7 @@
   <string name="security_center_verify_email_title">Confirmare adresă de e-mail</string>
   <string name="security_center_verify_email_subtitle">Vi s-a trimis un cod de verificare la %s. Introduceți codul primit mai jos:</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">A apărut o eroare la trimiterea codului de verificare. Mai reîncercați.</string>
+  <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Too many invalid verifications. Removing custom email.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Divulgări detectate pentru</string>
   <string name="security_center_verify_report_title_none">Divulgări nedetectate pentru</string>
@@ -134,6 +134,8 @@
   <string name="security_center_report_detail_learn_more">Detalii</string>
   <string name="security_center_report_detail_snackbar_error">Nu s-au putut încărca detaliile divulgării.</string>
   <string name="security_center_report_detail_excluded_from_monitoring">Exclusă de la monitorizare</string>
+  <string name="security_center_report_resolve_confirmation_dialog_title">Resolve all breaches?</string>
+  <string name="security_center_report_resolve_confirmation_dialog_message">All current breaches will be marked as resolved. In case of future data breaches, you will be notified.</string>
   <!-- Proton list -->
   <string name="security_center_proton_list_top_bar_title">Adrese Proton</string>
   <string name="security_center_proton_list_no_breaches_detected">Nu există divulgări</string>
@@ -142,14 +144,14 @@
   <string name="security_center_proton_list_included_in_monitoring">Activați monitorizarea pentru a primi notificări dacă adresele Proton v-au fost divulgate.</string>
   <string name="security_center_proton_list_options_menu">Meniu opțiuni ecran Proton</string>
   <!-- Address Bottomsheet options -->
-  <string name="security_center_address_bottomsheet_disable_monitoring">Dezactivare monitorizare</string>
-  <string name="security_center_address_bottomsheet_enable_monitoring">Activare monitorizare</string>
+  <string name="security_center_address_bottomsheet_disable_monitoring">Suspendare monitorizare</string>
+  <string name="security_center_address_bottomsheet_enable_monitoring">Reluare monitorizare</string>
   <string name="security_center_address_bottomsheet_remove_custom_email">Eliminare e-mail personal</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_enable_error">Nu s-a putut activa monitorizarea.</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_disable_error">Nu s-a putut dezactiva monitorizarea.</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_enable_error">There was an error pausing monitoring</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_error">There was an error resuming monitoring</string>
   <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_error">Nu s-a putut elimina adresa de e-mail personală.</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_enable_success">Monitorizare activată</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_disable_success">Monitorizare dezactivată</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_enable_success">Monitoring successfully resumed</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_success">Monitoring successfully paused</string>
   <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">Adresa de e-mail personală s-a eliminat.</string>
   <!-- Alias list -->
   <string name="security_center_alias_list_top_bar_title">Aliasuri hide-my-email</string>
@@ -159,9 +161,11 @@
   <string name="security_center_alias_list_monitored">Monitorizată</string>
   <string name="security_center_alias_list_custom_email_message">Aliasurile cu domenii personale nu sunt monitorizate. Adăugați-le ca e-mail personal pentru monitorizare.</string>
   <string name="security_center_alias_list_options_menu">Meniu opțiuni ecran alias</string>
-  <!-- Dark web help dialog -->
+  <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">Securitate date</string>
   <string name="dark_web_help_dialog_subtitle">Proton nu vă partajează niciodată informațiile cu terțe părți. Toate datele provin din căutări pentru apariția domeniilor Proton pe internetul ascuns.</string>
+  <string name="dark_web_help_dialog_custom_address_title">Adrese de e-mail personalizate</string>
+  <string name="dark_web_help_dialog_custom_address_subtitle">You can also monitor up to 10 email addresses that aren\'t Proton or email aliases. They will be sent to HIBP for monitoring - no other data will be shared to HIBP.</string>
   <!-- Cannot add custom emails -->
   <string name="dark_web_cannot_add_custom_emails_dialog_title">Nu se poate adăuga un e-mail personal</string>
   <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">Ați atins limita de adrese personale</string>

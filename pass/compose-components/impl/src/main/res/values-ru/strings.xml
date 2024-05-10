@@ -35,6 +35,8 @@
   <string name="action_learn_more">Подробнее</string>
   <string name="action_enable">Включить</string>
   <string name="action_view_details">Просмотреть детали</string>
+  <string name="action_see_all">See all</string>
+  <string name="action_confirm">Confirm</string>
   <!-- Empty list -->
   <string name="empty_list_title">Добавьте свой первый элемент</string>
   <string name="empty_search_results_title">Ничего не найдено</string>
@@ -129,7 +131,7 @@
   <!-- Upgrade -->
   <string name="dialog_upgrade_plan_title">Улучшить план?</string>
   <string name="dialog_upgrade_plan_message">This feature is not available for free tier users. If you want to enjoy this along with other cool features, upgrade your plan and give it a try!</string>
-  <string name="dialog_upgrade_plan_action_confirm">Upgrade</string>
+  <string name="dialog_upgrade_plan_action_confirm">Сменить тариф</string>
   <string name="dialog_upgrade_plan_action_cancel">Не сейчас</string>
   <!-- Words -->
   <string name="email_address">Адрес эл. почты</string>

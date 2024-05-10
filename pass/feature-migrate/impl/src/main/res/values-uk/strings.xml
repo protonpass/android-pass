@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <plurals name="migrate_item_confirm_title_bottom_sheet">
-    <item quantity="one">Move %d item to the following vault?</item>
-    <item quantity="few">Move %d items to the following vault?</item>
-    <item quantity="many">Move %d items to the following vault?</item>
-    <item quantity="other">Move %d items to the following vault?</item>
+    <item quantity="one">Перемістити %d елемент до наступного сховища?</item>
+    <item quantity="few">Перемістити %d елементи до наступних сховищ?</item>
+    <item quantity="many">Перемістити %d елементів до наступних сховищ?</item>
+    <item quantity="other">Перемістити %d елементів до наступних сховищ?</item>
   </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">Перемістити всі елементи до цього сховища?</string>
   <string name="migrate_item_confirm_confirm_button">Перемістити</string>
-  <string name="migrate_item_success_snackbar">Items moved</string>
-  <string name="migrate_item_error_snackbar">Error moving the items</string>
-  <string name="migrate_item_some_not_migrated_error_snackbar">Error moving some of the items</string>
-  <string name="migrate_item_warning_history">When moving items between vaults we will preserve up to the last 50 modifications performed to each item</string>
+  <string name="migrate_item_success_snackbar">Елементи переміщено</string>
+  <string name="migrate_item_error_snackbar">Помилка при переміщенні елементів</string>
+  <string name="migrate_item_some_not_migrated_error_snackbar">Помилка при переміщенні деяких елементів</string>
+  <string name="migrate_item_warning_history">При переміщенні об\'єктів між сховищами ми збережемо до 50 останніх модифікацій, виконаних над кожним об\'єктом</string>
   <string name="migrate_all_items_success_snackbar">Всі елементи переміщено</string>
   <string name="migrate_all_items_error_snackbar">Помилка переміщення всіх елементів сховища</string>
   <string name="migrate_init_error_snackbar">Не вдалося підготувати екран перенесення</string>
-  <string name="migrate_disabled_vault_reason_no_permission">You cannot create items in this vault</string>
-  <string name="migrate_disabled_vault_reason_same_vault">You cannot move an item to the same vault</string>
+  <string name="migrate_disabled_vault_reason_no_permission">Ви не можете створювати предмети в цьому сховищі</string>
+  <string name="migrate_disabled_vault_reason_same_vault">Ви не можете перемістити предмет до того самого сховища</string>
 </resources>

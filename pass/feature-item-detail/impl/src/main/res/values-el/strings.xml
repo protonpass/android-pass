@@ -38,19 +38,13 @@
   <string name="login_item_view_alias_button">Προβολή ψευδωνύμου</string>
   <string name="login_item_monitor_widget_weak_pass_title">Αδύναμος Κωδικός Πρόσβασης</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Αυτός ο λογαριασμός είναι ευάλωτος, επισκεφθείτε την υπηρεσία και αλλάξτε τον κωδικό πρόσβασής σας.</string>
-  <string name="login_item_monitor_widget_reused_pass_title">Επαναχρησιμοποιημένος Κωδικός Πρόσβασης</string>
-  <string name="login_item_monitor_widget_reused_pass_subtitle">Επισκεφθείτε τον ιστότοπο και δημιουργήστε έναν μοναδικό κωδικό πρόσβασης για αυτό το στοιχείο.</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_compact_leading">
-    <item quantity="one">%d άλλη σύνδεση</item>
-    <item quantity="other">%d άλλες συνδέσεις</item>
+  <plurals name="login_item_monitor_widget_reused_pass_title">
+    <item quantity="one">%d άλλη σύνδεση χρησιμοποιεί τον ίδιο κωδικό πρόσβασης</item>
+    <item quantity="other">%d άλλες συνδέσεις χρησιμοποιούν τον ίδιο κωδικό πρόσβασης</item>
   </plurals>
-  <string name="login_item_monitor_widget_reused_pass_count_compact_trailing" comment="This is the trailing part of the sentence above. A full example of its usage will be '4 other logins use this password.'">χρησιμοποιούν αυτόν τον κωδικό πρόσβασης.</string>
-  <plurals name="login_item_monitor_widget_reused_pass_count_expanded">
-    <item quantity="one">Μια άλλη σύνδεση χρησιμοποιεί αυτόν τον κωδικό πρόσβασης:</item>
-    <item quantity="other">%d άλλες συνδέσεις χρησιμοποιούν αυτόν τον κωδικό πρόσβασης:</item>
-  </plurals>
-  <string name="login_item_monitor_widget_missing_two_fa_title">Λείπει ο έλεγχος ταυτότητας δύο παραγόντων</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Θα ήταν πιο ασφαλές να ρυθμίσετε το 2FA για αυτό το στοιχείο.</string>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Ρυθμίστε το 2FA για περισσότερη ασφάλεια</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Αυτή η υπηρεσία προσφέρει 2FA. Ενεργοποιήστε το για πρόσθετη ασφάλεια λογαριασμού.</string>
+  <string name="login_item_reused_passwords_subtitle">Στοιχεία από τις κρύπτες σας που χρησιμοποιούν αυτόν τον κωδικό πρόσβασης.</string>
   <string name="field_username">Όνομα χρήστη ή διεύθυνση email</string>
   <string name="field_password">Κωδικός πρόσβασης</string>
   <string name="websites_section_title">Ιστοσελίδες</string>

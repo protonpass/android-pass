@@ -32,6 +32,7 @@
   <string name="app_lock_config_biometric">Biometria</string>
   <string name="app_lock_config_pin_code">Kod PIN</string>
   <string name="app_lock_config_app_lock_time">Automatyczna blokada</string>
+  <string name="app_lock_config_password">Hasło</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Użyj blokady systemu, kiedy biometria nie działa</string>
   <string name="configure_pin_set_pin_code">Ustaw kod PIN</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Odblokuj aplikację za pomocą tego kodu</string>
@@ -52,4 +53,23 @@
   <string name="profile_passkey_support_subtitle_not_supported_android_version">Ta wersja systemu Android nie obsługuje kluczy dostępu</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Urządzenie nie obsługuje kluczy dostępu</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Nie można sprawdzić obsługi kluczy dostępu</string>
+  <plurals name="profile_after_days">
+    <item quantity="one">Po %d dniu</item>
+    <item quantity="few">Po %d dniach</item>
+    <item quantity="many">Po %d dniach</item>
+    <item quantity="other">Po %d dniach</item>
+  </plurals>
+  <plurals name="profile_after_minutes">
+    <item quantity="one">Po %d minucie</item>
+    <item quantity="few">Po %d minutach</item>
+    <item quantity="many">Po %d minutach</item>
+    <item quantity="other">Po %d minutach</item>
+  </plurals>
+  <plurals name="profile_after_hours">
+    <item quantity="one">Po %d godzinie</item>
+    <item quantity="few">Po %d godzinach</item>
+    <item quantity="many">Po %d godzinach</item>
+    <item quantity="other">Po %d godzinach</item>
+  </plurals>
+  <string name="profile_less_than_a_minute">Mniej niż minutę</string>
 </resources>

@@ -32,8 +32,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.usersettings.domain.repository.DeviceSettingsRepository
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
-import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
@@ -86,7 +86,7 @@ class SettingsViewModel @Inject constructor(
     private val eventState: MutableStateFlow<SettingsEvent> =
         MutableStateFlow(SettingsEvent.Unknown)
 
-    data class PreferencesState(
+    private data class PreferencesState(
         val theme: ThemePreference,
         val copyTotpToClipboard: CopyTotpToClipboard,
         val useFavicons: UseFaviconsPreference
@@ -98,14 +98,14 @@ class SettingsViewModel @Inject constructor(
         useFaviconsState
     ) { theme, totp, favicons -> PreferencesState(theme, totp, favicons) }
 
-    val state: StateFlow<SettingsUiState> = combineN(
+    internal val state: StateFlow<SettingsUiState> = combineN(
         preferencesState,
         deviceSettingsRepository.observeDeviceSettings(),
         allowScreenshotsState,
-        syncStatusRepository.observeSyncStatus(),
+        syncStatusRepository.observeSyncState().asLoadingResult(),
         eventState,
         defaultVaultState
-    ) { preferences, deviceSettings, allowScreenshots, sync, event, defaultVault ->
+    ) { preferences, deviceSettings, allowScreenshots, syncStateLoadingResult, event, defaultVault ->
         val telemetryStatus = if (canConfigureTelemetry()) {
             TelemetryStatus.Show(
                 shareTelemetry = deviceSettings.isTelemetryEnabled,
@@ -118,7 +118,7 @@ class SettingsViewModel @Inject constructor(
         SettingsUiState(
             themePreference = preferences.theme,
             copyTotpToClipboard = preferences.copyTotpToClipboard,
-            isForceRefreshing = sync is ItemSyncStatus.SyncStarted || sync is ItemSyncStatus.Syncing,
+            syncStateLoadingResult = syncStateLoadingResult,
             useFavicons = preferences.useFavicons,
             allowScreenshots = allowScreenshots,
             telemetryStatus = telemetryStatus,
@@ -131,7 +131,7 @@ class SettingsViewModel @Inject constructor(
         initialValue = SettingsUiState.Initial
     )
 
-    fun onUseFaviconsChange(useFavicons: Boolean) = viewModelScope.launch {
+    internal fun onUseFaviconsChange(useFavicons: Boolean) = viewModelScope.launch {
         preferencesRepository.setUseFaviconsPreference(UseFaviconsPreference.from(useFavicons))
 
         if (!useFavicons) {
@@ -147,26 +147,25 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    fun onAllowScreenshotsChange(allowScreenshots: Boolean) = viewModelScope.launch {
+    internal fun onAllowScreenshotsChange(allowScreenshots: Boolean) {
         preferencesRepository.setAllowScreenshotsPreference(
-            AllowScreenshotsPreference.from(
-                allowScreenshots
-            )
+            preference = AllowScreenshotsPreference.from(allowScreenshots)
         )
+
         eventState.update { SettingsEvent.RestartApp }
     }
 
-    fun onTelemetryChange(value: Boolean) = viewModelScope.launch {
+    internal fun onTelemetryChange(value: Boolean) = viewModelScope.launch {
         deviceSettingsRepository.updateIsTelemetryEnabled(value)
         snackbarDispatcher(SettingsSnackbarMessage.PreferenceUpdated)
     }
 
-    fun onCrashReportChange(value: Boolean) = viewModelScope.launch {
+    internal fun onCrashReportChange(value: Boolean) = viewModelScope.launch {
         deviceSettingsRepository.updateIsCrashReportEnabled(value)
         snackbarDispatcher(SettingsSnackbarMessage.PreferenceUpdated)
     }
 
-    fun onForceSync() = viewModelScope.launch {
+    internal fun onForceSync() = viewModelScope.launch {
         runCatching { refreshContent() }
             .onFailure {
                 PassLogger.w(TAG, "Error performing sync")
@@ -174,7 +173,10 @@ class SettingsViewModel @Inject constructor(
             }
     }
 
-    companion object {
+    private companion object {
+
         private const val TAG = "SettingsViewModel"
+
     }
+
 }

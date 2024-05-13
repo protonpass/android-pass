@@ -92,10 +92,7 @@ class SyncManagerImpl @Inject constructor(
         }
     }
 
-    private suspend fun onUserLoggedInPerformSync(
-        userId: UserId,
-        state: AppLifecycleProvider.State
-    ) {
+    private suspend fun onUserLoggedInPerformSync(userId: UserId, state: AppLifecycleProvider.State) {
         when (state) {
             AppLifecycleProvider.State.Background -> {
                 enqueueWorker(eventWorkerManager.getRepeatIntervalBackground())

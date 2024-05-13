@@ -41,8 +41,8 @@ class AcceptInviteImpl @Inject constructor(
     private val inviteRepository: InviteRepository,
     private val workManager: WorkManager,
     private val fetchShareItemsStatusRepository: FetchShareItemsStatusRepository
-
 ) : AcceptInvite {
+
     override fun invoke(invite: InviteToken): Flow<AcceptInviteStatus> = accountManager
         .getPrimaryUserId()
         .filterNotNull()

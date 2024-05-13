@@ -27,12 +27,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionWeak
 import me.proton.core.compose.theme.defaultSmallWeak
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.VaultSelector
 import proton.android.pass.domain.ShareColor
@@ -41,20 +41,24 @@ import proton.android.pass.domain.Vault
 import proton.android.pass.composecomponents.impl.R as PassR
 
 @Composable
-fun DefaultVaultSection(
+internal fun DefaultVaultSection(
     modifier: Modifier = Modifier,
     defaultVault: Option<Vault>,
     onEvent: (SettingsContentEvent) -> Unit
 ) {
-    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
+    ) {
         Text(
             text = stringResource(R.string.settings_default_vault_section_title),
             style = ProtonTheme.typography.defaultSmallWeak
         )
+
         Box(modifier = Modifier.roundedContainerNorm()) {
             VaultSelector(
                 selectorTitle = stringResource(R.string.settings_default_vault_vault_selector_title),
-                vaultName = defaultVault.map { it.name }.value() ?: "",
+                vaultName = defaultVault.map { it.name }.value().orEmpty(),
                 color = defaultVault.map { it.color }.value() ?: ShareColor.Color1,
                 icon = defaultVault.map { it.icon }.value() ?: ShareIcon.Icon1,
                 trailingIcon = {
@@ -67,6 +71,7 @@ fun DefaultVaultSection(
                 onVaultClicked = { onEvent(SettingsContentEvent.DefaultVault) }
             )
         }
+
         Text(
             text = stringResource(R.string.settings_default_vault_section_subtitle),
             style = ProtonTheme.typography.captionWeak.copy(PassTheme.colors.textWeak)

@@ -48,7 +48,7 @@ class SyncManagerImpl @Inject constructor(
     private val accountManager: AccountManager
 ) : SyncManager {
 
-    data class SyncState(
+    private data class SyncState(
         val userId: UserId?,
         val appLifecycle: AppLifecycleProvider.State
     )
@@ -92,7 +92,10 @@ class SyncManagerImpl @Inject constructor(
         }
     }
 
-    private suspend fun onUserLoggedInPerformSync(userId: UserId, state: AppLifecycleProvider.State) {
+    private suspend fun onUserLoggedInPerformSync(
+        userId: UserId,
+        state: AppLifecycleProvider.State
+    ) {
         when (state) {
             AppLifecycleProvider.State.Background -> {
                 enqueueWorker(eventWorkerManager.getRepeatIntervalBackground())
@@ -130,7 +133,10 @@ class SyncManagerImpl @Inject constructor(
         PassLogger.i(TAG, "$WORKER_UNIQUE_NAME cancelled")
     }
 
-    companion object {
+    private companion object {
+
         private const val TAG = "SyncManagerImpl"
+
     }
+
 }

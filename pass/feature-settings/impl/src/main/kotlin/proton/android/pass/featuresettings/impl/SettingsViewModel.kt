@@ -167,9 +167,9 @@ class SettingsViewModel @Inject constructor(
 
     internal fun onForceSync() = viewModelScope.launch {
         runCatching { refreshContent() }
-            .onFailure {
+            .onFailure { error ->
                 PassLogger.w(TAG, "Error performing sync")
-                PassLogger.w(TAG, it)
+                PassLogger.w(TAG, error)
             }
     }
 

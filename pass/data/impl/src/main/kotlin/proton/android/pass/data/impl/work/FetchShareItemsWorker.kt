@@ -35,8 +35,7 @@ import androidx.work.WorkRequest
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.coroutineScope
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.impl.R
@@ -56,13 +55,15 @@ open class FetchShareItemsWorker @AssistedInject constructor(
     override suspend fun doWork(): Result {
         PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
 
-        val userId = inputData.getString(ARG_USER_ID)?.let { UserId(it) } ?: return Result.failure()
-        val shareId = inputData
-            .getString(ARG_SHARE_ID)
-            ?.let { ShareId(it) }
+        val userId = inputData.getString(ARG_USER_ID)
+            ?.let(::UserId)
             ?: return Result.failure()
 
-        val result = withContext(Dispatchers.IO) {
+        val shareId = inputData.getString(ARG_SHARE_ID)
+            ?.let(::ShareId)
+            ?: return Result.failure()
+
+        val result = coroutineScope {
             runCatching {
                 itemRepository.refreshItemsAndObserveProgress(
                     userId = userId,
@@ -119,19 +120,22 @@ open class FetchShareItemsWorker @AssistedInject constructor(
             .build()
     }
 
-    companion object {
+    internal companion object {
+
         private const val TAG = "FetchShareItemsWorker"
+
         private const val ARG_SHARE_ID = "share_id"
         private const val ARG_USER_ID = "user_id"
 
         private const val SYNC_NOTIFICATION_ID = 0
         private const val SYNC_NOTIFICATION_CHANNEL_ID = "SyncNotificationChannel"
 
-        fun getRequestFor(userId: UserId, shareId: ShareId): WorkRequest {
+        internal fun getRequestFor(userId: UserId, shareId: ShareId): WorkRequest {
             val extras = mutableMapOf(
                 ARG_SHARE_ID to shareId.id,
                 ARG_USER_ID to userId.id
             )
+
             val data = Data.Builder()
                 .putAll(extras.toMap())
                 .build()
@@ -146,6 +150,7 @@ open class FetchShareItemsWorker @AssistedInject constructor(
                 .setInputData(data)
                 .build()
         }
+
     }
 
 }

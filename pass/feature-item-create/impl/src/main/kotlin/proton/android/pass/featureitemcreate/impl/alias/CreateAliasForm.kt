@@ -32,7 +32,9 @@ import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.container.InfoBanner
+import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
+import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.featureitemcreate.impl.R
 
 @Composable
@@ -40,6 +42,7 @@ internal fun CreateAliasForm(
     modifier: Modifier = Modifier,
     aliasItemFormState: AliasItemFormState,
     isCreateMode: Boolean,
+    onTitleRequiredError: Boolean,
     onAliasRequiredError: Boolean,
     onInvalidAliasError: Boolean,
     isEditAllowed: Boolean,
@@ -47,9 +50,9 @@ internal fun CreateAliasForm(
     showUpgrade: Boolean,
     onPrefixChange: (String) -> Unit,
     onNoteChange: (String) -> Unit,
+    onTitleChange: (String) -> Unit,
     onSuffixClick: () -> Unit,
-    onMailboxClick: () -> Unit,
-    titleSection: @Composable () -> Unit
+    onMailboxClick: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -64,7 +67,16 @@ internal fun CreateAliasForm(
                 text = stringResource(R.string.create_alias_content_limit_banner)
             )
         }
-        titleSection()
+        TitleSection(
+            modifier = Modifier.roundedContainerNorm()
+                .padding(start = 16.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
+            value = aliasItemFormState.title,
+            requestFocus = true,
+            onTitleRequiredError = onTitleRequiredError,
+            enabled = isEditAllowed,
+            isRounded = true,
+            onChange = { onTitleChange(it) }
+        )
         if (isCreateMode) {
             CreateAliasSection(
                 state = aliasItemFormState,

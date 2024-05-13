@@ -29,8 +29,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.data.fakes.usecases.breach.FakeObserveAllBreachByUserId
-import proton.android.pass.domain.breach.Breach
+import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachProtonEmails
 import proton.android.pass.domain.breach.BreachProtonEmail
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.protonlist.navigation.SecurityCenterProtonListNavDestination
@@ -50,12 +49,12 @@ class SecurityCenterProtonListScreenTest {
     val composeTestRule = createAndroidComposeRule<HiltComponentActivity>()
 
     @Inject
-    lateinit var observeAllBreachByUserId: FakeObserveAllBreachByUserId
+    lateinit var observeBreachProtonEmails: FakeObserveBreachProtonEmails
 
     @Before
     fun setup() {
         hiltRule.inject()
-        observeAllBreachByUserId.emitDefault()
+        observeBreachProtonEmails.emit(emptyList())
     }
 
     @Test
@@ -110,21 +109,15 @@ class SecurityCenterProtonListScreenTest {
         val checker = CallChecker<Unit>()
         val protonEmail = "protonEmail"
 
-        observeAllBreachByUserId.emit(
-            Breach(
-                breachesCount = 0,
-                breachedDomainPeeks = emptyList(),
-                breachedCustomEmails = emptyList(),
-                breachedProtonEmails = listOf(
-                    BreachProtonEmail(
-                        addressId = AddressId(""),
-                        email = protonEmail,
-                        breachCounter = 0,
-                        flags = 0,
-                        lastBreachTime = null
-                    )
-                ),
-                breachedAliases = emptyList()
+        observeBreachProtonEmails.emit(
+            listOf(
+                BreachProtonEmail(
+                    addressId = AddressId(""),
+                    email = protonEmail,
+                    breachCounter = 0,
+                    flags = 0,
+                    lastBreachTime = null
+                )
             )
         )
         composeTestRule.apply {

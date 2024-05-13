@@ -42,17 +42,17 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.form.VaultSelector
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
-import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
+import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareIcon
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.common.ShareError.EmptyShareList
 import proton.android.pass.featureitemcreate.impl.common.ShareError.SharesNotAvailable
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
+import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.note.CNActionAfterHideKeyboard.SelectVault
-import proton.android.pass.domain.ShareColor
-import proton.android.pass.domain.ShareIcon
-import proton.android.pass.domain.ShareId
 
 private enum class CNActionAfterHideKeyboard {
     SelectVault
@@ -112,7 +112,7 @@ fun CreateNoteScreen(
             uiState = uiState.baseNoteUiState,
             noteItemFormState = viewModel.noteItemFormState,
             selectedShareId = selectedVault?.vault?.shareId,
-            topBarActionName = stringResource(R.string.title_create_note),
+            topBarActionName = stringResource(R.string.title_create),
             onUpClick = onExit,
             onSubmit = { shareId -> viewModel.createNote(shareId) },
             onTitleChange = { viewModel.onTitleChange(it) },

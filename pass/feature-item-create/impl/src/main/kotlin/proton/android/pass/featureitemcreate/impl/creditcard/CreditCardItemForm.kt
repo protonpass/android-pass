@@ -20,7 +20,6 @@ package proton.android.pass.featureitemcreate.impl.creditcard
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -29,7 +28,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.PersistentSet
+import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
+import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnCVVChange
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnCVVFocusChange
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnExpirationDateChange
@@ -38,6 +39,7 @@ import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEv
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnNumberChange
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnPinChange
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnPinFocusChange
+import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.OnTitleChange
 
 @Composable
 fun CreditCardItemForm(
@@ -45,7 +47,6 @@ fun CreditCardItemForm(
     creditCardItemFormState: CreditCardItemFormState,
     enabled: Boolean,
     validationErrors: PersistentSet<CreditCardValidationErrors>,
-    titleSection: @Composable (ColumnScope.() -> Unit),
     onEvent: (CreditCardContentEvent) -> Unit
 ) {
     Column(
@@ -55,7 +56,17 @@ fun CreditCardItemForm(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        titleSection()
+        TitleSection(
+            modifier = Modifier.roundedContainerNorm()
+                .padding(start = 16.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
+            value = creditCardItemFormState.title,
+            requestFocus = true,
+            onTitleRequiredError = validationErrors
+                .contains(CreditCardValidationErrors.BlankTitle),
+            enabled = enabled,
+            isRounded = true,
+            onChange = { onEvent(OnTitleChange(it)) }
+        )
         CardDetails(
             creditCardItemFormState = creditCardItemFormState,
             enabled = enabled,

@@ -19,7 +19,6 @@
 package proton.android.pass.featureitemcreate.impl.login
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -32,13 +31,14 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import kotlinx.collections.immutable.toPersistentList
+import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.common.CreateUpdateTopBar
 import proton.android.pass.featureitemcreate.impl.login.LoginItemValidationErrors.InvalidUrl
-import proton.android.pass.domain.ShareId
 
 private enum class ActionAfterHideKeyboard {
     GeneratePassword,
@@ -50,14 +50,14 @@ private enum class ActionAfterHideKeyboard {
 internal fun LoginContent(
     modifier: Modifier = Modifier,
     uiState: BaseLoginUiState,
+    passkeyState: Option<CreatePasskeyState>,
     loginItemFormState: LoginItemFormState,
     selectedShareId: ShareId?,
     topBarActionName: String,
     showCreateAliasButton: Boolean,
     isUpdate: Boolean,
     onEvent: (LoginContentEvent) -> Unit,
-    onNavigate: (BaseLoginNavigation) -> Unit,
-    titleSection: @Composable (ColumnScope.() -> Unit)
+    onNavigate: (BaseLoginNavigation) -> Unit
 ) {
     BackHandler {
         onEvent(LoginContentEvent.Up)
@@ -114,6 +114,7 @@ internal fun LoginContent(
         LoginItemForm(
             modifier = Modifier.padding(padding),
             loginItemFormState = loginItemFormState,
+            passkeyState = passkeyState,
             canUseCustomFields = uiState.canUseCustomFields,
             totpUiState = uiState.totpUiState,
             customFieldValidationErrors = uiState.validationErrors
@@ -126,6 +127,7 @@ internal fun LoginContent(
             isUpdate = isUpdate,
             isEditAllowed = uiState.isLoadingState == IsLoadingState.NotLoading,
             isTotpError = uiState.validationErrors.contains(LoginItemValidationErrors.InvalidTotp),
+            isTitleError = uiState.validationErrors.contains(LoginItemValidationErrors.BlankTitle),
             onEvent = onEvent,
             focusLastWebsite = uiState.focusLastWebsite,
             websitesWithErrors = uiState.validationErrors
@@ -168,8 +170,7 @@ internal fun LoginContent(
                     )
                 )
             },
-            onNavigate = onNavigate,
-            titleSection = titleSection
+            onNavigate = onNavigate
         )
     }
 }

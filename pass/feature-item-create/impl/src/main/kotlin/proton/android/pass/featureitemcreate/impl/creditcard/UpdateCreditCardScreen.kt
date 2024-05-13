@@ -3,7 +3,6 @@ package proton.android.pass.featureitemcreate.impl.creditcard
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -12,18 +11,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
-import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.creditcard.BaseCreditCardNavigation.Close
 import proton.android.pass.featureitemcreate.impl.creditcard.BaseCreditCardNavigation.Upgrade
-import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardValidationErrors.BlankTitle
 import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 
 @Suppress("ComplexMethod")
@@ -58,20 +53,6 @@ fun UpdateCreditCardScreen(
                     state = uiState.baseState,
                     creditCardItemFormState = viewModel.creditCardItemFormState,
                     topBarActionName = stringResource(id = R.string.action_save),
-                    titleSection = {
-                        TitleSection(
-                            modifier = Modifier
-                                .roundedContainerNorm()
-                                .padding(start = 16.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
-                            value = viewModel.creditCardItemFormState.title,
-                            requestFocus = true,
-                            onTitleRequiredError = uiState.baseState.validationErrors
-                                .contains(BlankTitle),
-                            enabled = !uiState.baseState.isLoading,
-                            isRounded = true,
-                            onChange = viewModel::onTitleChange
-                        )
-                    },
                     onEvent = { event ->
                         when (event) {
                             is CreditCardContentEvent.OnCVVChange ->
@@ -99,6 +80,9 @@ fun UpdateCreditCardScreen(
                                 viewModel.onCVVFocusChanged(event.isFocused)
                             is CreditCardContentEvent.OnPinFocusChange ->
                                 viewModel.onPinFocusChanged(event.isFocused)
+
+                            is CreditCardContentEvent.OnTitleChange ->
+                                viewModel.onTitleChange(event.value)
                         }
                     },
                     selectedShareId = uiState.selectedShareId

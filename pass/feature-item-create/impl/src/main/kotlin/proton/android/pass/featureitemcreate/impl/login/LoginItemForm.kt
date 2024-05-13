@@ -24,7 +24,6 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -35,7 +34,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -43,22 +41,27 @@ import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toImmutableSet
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
+import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
+import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
 import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsContentType.AddTotp
 import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsContentType.AliasOptions
 import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsContentType.GeneratePassword
 import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsContentType.None
 import proton.android.pass.featureitemcreate.impl.login.customfields.CustomFieldsContent
+import proton.android.pass.featureitemcreate.impl.login.passkey.PasskeyEditRow
 import proton.android.pass.featureitemcreate.impl.login.passkey.PasskeysSection
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Suppress("UnusedPrivateMember")
 @Composable
 internal fun LoginItemForm(
     modifier: Modifier = Modifier,
     loginItemFormState: LoginItemFormState,
+    passkeyState: Option<CreatePasskeyState>,
     canUseCustomFields: Boolean,
     isEditAllowed: Boolean,
     totpUiState: TotpUiState,
@@ -67,6 +70,7 @@ internal fun LoginItemForm(
     showCreateAliasButton: Boolean,
     primaryEmail: String?,
     isUpdate: Boolean,
+    isTitleError: Boolean,
     isTotpError: Boolean,
     focusLastWebsite: Boolean,
     canUpdateUsername: Boolean,
@@ -75,8 +79,7 @@ internal fun LoginItemForm(
     onGeneratePasswordClick: () -> Unit,
     onCreateAliasClick: () -> Unit,
     onAliasOptionsClick: () -> Unit,
-    onNavigate: (BaseLoginNavigation) -> Unit,
-    titleSection: @Composable (ColumnScope.() -> Unit)
+    onNavigate: (BaseLoginNavigation) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -102,7 +105,25 @@ internal fun LoginItemForm(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            titleSection()
+            TitleSection(
+                modifier = Modifier
+                    .roundedContainerNorm()
+                    .padding(start = 16.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
+                value = loginItemFormState.title,
+                requestFocus = true,
+                onTitleRequiredError = isTitleError,
+                enabled = isEditAllowed,
+                isRounded = true,
+                onChange = { onEvent(LoginContentEvent.OnTitleChange(it)) }
+            )
+            if (passkeyState is Some) {
+                PasskeyEditRow(
+                    domain = passkeyState.value.domain,
+                    username = passkeyState.value.username,
+                    canDelete = false,
+                    onDeleteClick = {}
+                )
+            }
             PasskeysSection(
                 passkeys = loginItemFormState.passkeys.toImmutableList(),
                 onEvent = onEvent

@@ -20,10 +20,7 @@ package proton.android.pass.featureitemcreate.impl.note
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -33,17 +30,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
-import proton.android.pass.composecomponents.impl.form.VaultSelector
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
-import proton.android.pass.domain.ShareColor
-import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
@@ -75,7 +66,6 @@ fun CreateNoteScreen(
 
     val uiState by viewModel.createNoteUiState.collectAsStateWithLifecycle()
     val keyboardState by keyboardAsState()
-    val keyboardController = LocalSoftwareKeyboardController.current
     var actionWhenKeyboardDisappears by remember { mutableStateOf<CNActionAfterHideKeyboard?>(null) }
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
     val onExit = {
@@ -116,24 +106,7 @@ fun CreateNoteScreen(
             onUpClick = onExit,
             onSubmit = { shareId -> viewModel.createNote(shareId) },
             onTitleChange = { viewModel.onTitleChange(it) },
-            onNoteChange = { viewModel.onNoteChange(it) },
-            vaultSelect = {
-                if (showVaultSelector) {
-                    Column { // Column so spacedBy does not affect the spacer
-                        VaultSelector(
-                            modifier = Modifier.roundedContainerNorm(),
-                            vaultName = selectedVault?.vault?.name ?: "",
-                            color = selectedVault?.vault?.color ?: ShareColor.Color1,
-                            icon = selectedVault?.vault?.icon ?: ShareIcon.Icon1,
-                            onVaultClicked = {
-                                actionWhenKeyboardDisappears = SelectVault
-                                keyboardController?.hide()
-                            }
-                        )
-                        Spacer(modifier = Modifier.height(8.dp)) // 16 come from spacedBy + 8 = 24
-                    }
-                }
-            }
+            onNoteChange = { viewModel.onNoteChange(it) }
         )
 
         ConfirmCloseDialog(

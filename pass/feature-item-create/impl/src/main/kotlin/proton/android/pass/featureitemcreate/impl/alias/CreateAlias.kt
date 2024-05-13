@@ -110,7 +110,7 @@ fun CreateAliasScreen(
             uiState = uiState.baseAliasUiState,
             aliasItemFormState = viewModel.aliasItemFormState,
             selectedShareId = selectedVault?.vault?.shareId,
-            topBarActionName = stringResource(id = R.string.title_create_alias),
+            topBarActionName = stringResource(id = R.string.title_create),
             isCreateMode = true,
             isEditAllowed = uiState.baseAliasUiState.isLoadingState == IsLoadingState.NotLoading,
             onUpClick = onExit,

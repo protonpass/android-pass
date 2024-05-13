@@ -63,10 +63,9 @@ class RemoteShareDataSourceImpl @Inject constructor(
             .valueOrThrow
     }
 
-    override suspend fun getShares(userId: UserId): List<ShareResponse> =
-        api.get<PasswordManagerApi>(userId)
-            .invoke { getShares().shares }
-            .valueOrThrow
+    override suspend fun getShares(userId: UserId): List<ShareResponse> = api.get<PasswordManagerApi>(userId)
+        .invoke { getShares().shares }
+        .valueOrThrow
 
     override suspend fun fetchShareById(userId: UserId, shareId: ShareId): ShareResponse? =
         api.get<PasswordManagerApi>(userId)
@@ -80,10 +79,9 @@ class RemoteShareDataSourceImpl @Inject constructor(
             }
             .valueOrThrow
 
-    override suspend fun markAsPrimary(userId: UserId, shareId: ShareId) =
-        api.get<PasswordManagerApi>(userId)
-            .invoke { markAsPrimary(shareId.id) }
-            .valueOrThrow
+    override suspend fun markAsPrimary(userId: UserId, shareId: ShareId) = api.get<PasswordManagerApi>(userId)
+        .invoke { markAsPrimary(shareId.id) }
+        .valueOrThrow
 
     override suspend fun leaveVault(userId: UserId, shareId: ShareId) {
         api.get<PasswordManagerApi>(userId)

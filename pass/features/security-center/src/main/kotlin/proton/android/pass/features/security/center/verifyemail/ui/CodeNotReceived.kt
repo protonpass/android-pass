@@ -49,12 +49,14 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultWeak
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Radius
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.form.ChevronDownIcon
 import proton.android.pass.features.security.center.R
 
 private const val LINK_ANNOTATION_TAG = "link"
-private const val ROTATION = 180f
+private const val ROTATION_INITIAL = 0f
+private const val ROTATION_TOGGLED = 180f
 
 @OptIn(ExperimentalTextApi::class)
 @Composable
@@ -64,7 +66,7 @@ internal fun CodeNotReceived(modifier: Modifier = Modifier, onUiEvent: (Security
         verticalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
         var showRequestCode by remember { mutableStateOf(false) }
-        var rotation by remember { mutableFloatStateOf(0f) }
+        var rotation by remember { mutableFloatStateOf(ROTATION_INITIAL) }
         val displayRotation by animateFloatAsState(
             targetValue = rotation,
             label = "displayRotation"
@@ -72,11 +74,12 @@ internal fun CodeNotReceived(modifier: Modifier = Modifier, onUiEvent: (Security
 
         Row(
             modifier = Modifier
-                .clip(RoundedCornerShape(8.dp))
+                .clip(RoundedCornerShape(Radius.small))
                 .padding(vertical = Spacing.small)
                 .clickable {
                     showRequestCode = !showRequestCode
-                    rotation = if (rotation == 0f) ROTATION else 0f
+                    rotation =
+                        if (rotation == ROTATION_INITIAL) ROTATION_TOGGLED else ROTATION_INITIAL
                 },
             horizontalArrangement = Arrangement.spacedBy(Spacing.small),
             verticalAlignment = Alignment.CenterVertically

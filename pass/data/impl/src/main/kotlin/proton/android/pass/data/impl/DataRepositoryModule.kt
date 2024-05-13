@@ -54,6 +54,8 @@ import proton.android.pass.data.impl.repositories.OnMemoryDraftRepository
 import proton.android.pass.data.impl.repositories.OrganizationSettingsRepositoryImpl
 import proton.android.pass.data.impl.repositories.PlanRepository
 import proton.android.pass.data.impl.repositories.PlanRepositoryImpl
+import proton.android.pass.data.impl.repositories.PublicLinkRepository
+import proton.android.pass.data.impl.repositories.PublicLinkRepositoryImpl
 import proton.android.pass.data.impl.repositories.SearchEntryRepositoryImpl
 import proton.android.pass.data.impl.repositories.ShareKeyRepository
 import proton.android.pass.data.impl.repositories.ShareKeyRepositoryImpl
@@ -126,4 +128,7 @@ abstract class DataRepositoryModule {
 
     @Binds
     abstract fun bindBreachRepository(impl: BreachRepositoryImpl): BreachRepository
+
+    @Binds
+    abstract fun bindPublicLinkRepository(impl: PublicLinkRepositoryImpl): PublicLinkRepository
 }

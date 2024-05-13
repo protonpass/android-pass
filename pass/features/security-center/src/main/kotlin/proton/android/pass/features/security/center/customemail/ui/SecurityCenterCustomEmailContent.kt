@@ -22,22 +22,17 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
-import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultSmallNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.commonui.api.heroWeak
-import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
+import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.features.security.center.R
@@ -56,20 +51,7 @@ internal fun SecurityCenterCustomEmailContent(
         topBar = {
             SecurityCenterTopBar(
                 title = stringResource(R.string.security_center_custom_email_top_bar_title),
-                onUpClick = { onUiEvent(SecurityCenterCustomEmailUiEvent.Back) },
-                actions = {
-                    LoadingCircleButton(
-                        isLoading = state.isLoading,
-                        color = PassTheme.colors.interactionNormMajor2,
-                        text = {
-                            Text(
-                                text = stringResource(R.string.security_center_custom_email_continue),
-                                style = ProtonTheme.typography.defaultSmallNorm
-                            )
-                        },
-                        onClick = { onUiEvent(SecurityCenterCustomEmailUiEvent.AddCustomEmail) }
-                    )
-                }
+                onUpClick = { onUiEvent(SecurityCenterCustomEmailUiEvent.Back) }
             )
         }
     ) { innerPaddingValues ->
@@ -77,9 +59,8 @@ internal fun SecurityCenterCustomEmailContent(
             modifier = Modifier
                 .background(PassTheme.colors.backgroundNorm)
                 .padding(paddingValues = innerPaddingValues)
-                .padding(all = Spacing.medium)
-                .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
+                .padding(all = Spacing.medium),
+            verticalArrangement = Arrangement.spacedBy(space = Spacing.large)
         ) {
             ProtonTextField(
                 value = emailAddress,
@@ -97,6 +78,13 @@ internal fun SecurityCenterCustomEmailContent(
                     keyboardType = KeyboardType.Email
                 ),
                 onDoneClick = { onUiEvent(SecurityCenterCustomEmailUiEvent.AddCustomEmail) }
+            )
+            PassCircleButton(
+                isLoading = state.isLoading,
+                backgroundColor = PassTheme.colors.interactionNormMinor1,
+                text = stringResource(R.string.security_center_custom_email_continue),
+                textColor = PassTheme.colors.interactionNormMajor2,
+                onClick = { onUiEvent(SecurityCenterCustomEmailUiEvent.AddCustomEmail) }
             )
         }
     }

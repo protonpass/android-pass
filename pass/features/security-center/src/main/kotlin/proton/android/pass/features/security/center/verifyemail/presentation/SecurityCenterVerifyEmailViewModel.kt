@@ -43,6 +43,7 @@ import proton.android.pass.domain.breach.CustomEmailId
 import proton.android.pass.features.security.center.shared.navigation.BreachIdArgId
 import proton.android.pass.features.security.center.shared.navigation.EmailArgId
 import proton.android.pass.features.security.center.verifyemail.presentation.SecurityCenterVerifyEmailSnackbarMessage.ResendCodeError
+import proton.android.pass.features.security.center.verifyemail.presentation.SecurityCenterVerifyEmailSnackbarMessage.ResendCodeSuccess
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.NavParamEncoder
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -120,9 +121,11 @@ class SecurityCenterVerifyEmailViewModel @Inject constructor(
                             snackbarDispatcher(SecurityCenterVerifyEmailSnackbarMessage.TooManyVerificationsError)
                             eventFlow.update { SecurityCenterVerifyEmailEvent.GoBackToHome }
                         }
+
                         is InvalidVerificationCodeException -> {
                             codeNotValidStateFlow.update { true }
                         }
+
                         else -> {
                             codeNotValidStateFlow.update { true }
                         }
@@ -139,6 +142,7 @@ class SecurityCenterVerifyEmailViewModel @Inject constructor(
         viewModelScope.launch {
             runCatching {
                 resendVerificationCode(id = id)
+                snackbarDispatcher(ResendCodeSuccess)
             }.onFailure {
                 PassLogger.w(TAG, it)
                 PassLogger.i(TAG, "Failed to resend code")

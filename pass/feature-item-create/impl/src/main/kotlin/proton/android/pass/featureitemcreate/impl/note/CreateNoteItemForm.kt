@@ -20,7 +20,6 @@ package proton.android.pass.featureitemcreate.impl.note
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -36,8 +35,7 @@ internal fun CreateNoteItemForm(
     enabled: Boolean,
     onTitleRequiredError: Boolean,
     onTitleChange: (String) -> Unit,
-    onNoteChange: (String) -> Unit,
-    vaultSelect: @Composable ColumnScope.() -> Unit
+    onNoteChange: (String) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -46,7 +44,6 @@ internal fun CreateNoteItemForm(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        vaultSelect()
         NoteTitle(
             value = noteItemFormState.title,
             requestFocus = true,

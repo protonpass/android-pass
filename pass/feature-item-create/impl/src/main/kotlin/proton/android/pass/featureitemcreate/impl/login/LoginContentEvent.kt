@@ -25,15 +25,34 @@ import proton.android.pass.featureitemcreate.impl.login.customfields.CustomField
 
 sealed interface LoginContentEvent {
     data object Up : LoginContentEvent
-    data class Submit(val shareId: ShareId) : LoginContentEvent
-    data class OnUsernameChange(val username: String) : LoginContentEvent
-    data class OnPasswordChange(val password: String) : LoginContentEvent
-    data class OnWebsiteEvent(val event: WebsiteSectionEvent) : LoginContentEvent
-    data class OnNoteChange(val note: String) : LoginContentEvent
-    data class OnTotpChange(val totp: String) : LoginContentEvent
+
+    @JvmInline
+    value class Submit(val shareId: ShareId) : LoginContentEvent
+
+    @JvmInline
+    value class OnUsernameChange(val username: String) : LoginContentEvent
+
+    @JvmInline
+    value class OnPasswordChange(val password: String) : LoginContentEvent
+
+    @JvmInline
+    value class OnWebsiteEvent(val event: WebsiteSectionEvent) : LoginContentEvent
+
+    @JvmInline
+    value class OnNoteChange(val note: String) : LoginContentEvent
+
+    @JvmInline
+    value class OnTotpChange(val totp: String) : LoginContentEvent
     data object PasteTotp : LoginContentEvent
-    data class OnLinkedAppDelete(val app: PackageInfoUi) : LoginContentEvent
-    data class OnCustomFieldEvent(val event: CustomFieldEvent) : LoginContentEvent
+
+    @JvmInline
+    value class OnLinkedAppDelete(val app: PackageInfoUi) : LoginContentEvent
+
+    @JvmInline
+    value class OnCustomFieldEvent(val event: CustomFieldEvent) : LoginContentEvent
     data class OnFocusChange(val field: LoginField, val isFocused: Boolean) : LoginContentEvent
     data class OnDeletePasskey(val idx: Int, val passkey: UIPasskeyContent) : LoginContentEvent
+
+    @JvmInline
+    value class OnTitleChange(val title: String) : LoginContentEvent
 }

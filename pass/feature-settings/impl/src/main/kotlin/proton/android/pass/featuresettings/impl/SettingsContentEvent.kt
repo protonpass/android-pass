@@ -18,17 +18,30 @@
 
 package proton.android.pass.featuresettings.impl
 
-sealed interface SettingsContentEvent {
+internal sealed interface SettingsContentEvent {
+
     data class UseFaviconsChange(val value: Boolean) : SettingsContentEvent
+
     data class AllowScreenshotsChange(val value: Boolean) : SettingsContentEvent
+
     data class TelemetryChange(val value: Boolean) : SettingsContentEvent
+
     data class CrashReportChange(val value: Boolean) : SettingsContentEvent
+
     data object SelectTheme : SettingsContentEvent
+
     data object Clipboard : SettingsContentEvent
+
     data object ViewLogs : SettingsContentEvent
+
     data object ForceSync : SettingsContentEvent
+
     data object Privacy : SettingsContentEvent
+
     data object Terms : SettingsContentEvent
+
     data object Up : SettingsContentEvent
+
     data object DefaultVault : SettingsContentEvent
+
 }

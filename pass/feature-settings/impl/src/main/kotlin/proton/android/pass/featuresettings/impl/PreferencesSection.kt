@@ -33,7 +33,7 @@ import proton.android.pass.composecomponents.impl.setting.SettingOption
 import proton.android.pass.preferences.ThemePreference
 
 @Composable
-fun PreferencesSection(
+internal fun PreferencesSection(
     modifier: Modifier = Modifier,
     theme: ThemePreference,
     onEvent: (SettingsContentEvent) -> Unit
@@ -48,12 +48,15 @@ fun PreferencesSection(
                 ThemePreference.Light -> R.string.settings_appearance_preference_subtitle_light
             }
         )
+
         SettingOption(
             text = subtitle,
             label = stringResource(R.string.settings_appearance_preference_title),
             onClick = { onEvent(SettingsContentEvent.SelectTheme) }
         )
+
         Divider(color = PassTheme.colors.inputBorderNorm)
+
         SettingOption(
             text = stringResource(R.string.settings_option_clipboard),
             onClick = { onEvent(SettingsContentEvent.Clipboard) }
@@ -63,7 +66,7 @@ fun PreferencesSection(
 
 @Preview
 @Composable
-fun PreferencesSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun PreferencesSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             PreferencesSection(

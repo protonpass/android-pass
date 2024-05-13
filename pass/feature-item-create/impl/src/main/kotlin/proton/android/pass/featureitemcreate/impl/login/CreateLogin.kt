@@ -122,7 +122,7 @@ fun CreateLoginScreen(
             uiState = uiState.baseLoginUiState,
             loginItemFormState = viewModel.loginItemFormState,
             selectedShareId = selectedVault?.vault?.shareId,
-            topBarActionName = stringResource(id = R.string.title_create_login),
+            topBarActionName = stringResource(id = R.string.title_create),
             showCreateAliasButton = showCreateAliasButton,
             isUpdate = false,
             onEvent = {

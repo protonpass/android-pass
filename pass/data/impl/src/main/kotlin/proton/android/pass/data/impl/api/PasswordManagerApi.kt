@@ -31,6 +31,7 @@ import proton.android.pass.data.impl.requests.CreateItemAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemRequest
 import proton.android.pass.data.impl.requests.CreateNewUserInviteRequest
 import proton.android.pass.data.impl.requests.CreateNewUserInvitesRequest
+import proton.android.pass.data.impl.requests.CreatePublicLinkRequest
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.requests.MigrateItemRequest
 import proton.android.pass.data.impl.requests.MigrateItemsRequest
@@ -51,6 +52,7 @@ import proton.android.pass.data.impl.responses.BreachesResponse
 import proton.android.pass.data.impl.responses.CheckAddressesCanBeInvitedResponse
 import proton.android.pass.data.impl.responses.CodeOnlyResponse
 import proton.android.pass.data.impl.responses.CreateItemAliasResponse
+import proton.android.pass.data.impl.responses.CreatePublicLinkResponse
 import proton.android.pass.data.impl.responses.CreateVaultResponse
 import proton.android.pass.data.impl.responses.DeleteVaultResponse
 import proton.android.pass.data.impl.responses.GetAliasOptionsResponse
@@ -383,6 +385,14 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("addressId") addressId: String,
         @Body request: UpdateMonitorAddressStateRequest
     ): CodeOnlyResponse
+
+    // Public link
+    @POST("$PREFIX/share/{shareId}/item/{itemId}/public_link")
+    suspend fun generatePublicLink(
+        @Path("shareId") shareId: String,
+        @Path("itemId") itemId: String,
+        @Body request: CreatePublicLinkRequest
+    ): CreatePublicLinkResponse
 
     // Core
     @GET("core/v4/keys/all")

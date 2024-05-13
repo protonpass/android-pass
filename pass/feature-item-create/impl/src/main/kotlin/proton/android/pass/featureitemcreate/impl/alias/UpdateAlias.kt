@@ -21,7 +21,6 @@ package proton.android.pass.featureitemcreate.impl.alias
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,12 +31,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
-import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
@@ -87,22 +83,8 @@ fun UpdateAlias(
             onMailboxesChanged = { viewModel.onMailboxesChanged(it) },
             onNoteChange = { viewModel.onNoteChange(it) },
             onPrefixChange = {},
-            onUpgrade = { onNavigate(UpdateAliasNavigation.Upgrade) },
-            titleSection = {
-                TitleSection(
-                    modifier = Modifier
-                        .roundedContainerNorm()
-                        .padding(start = 16.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
-                    value = viewModel.aliasItemFormState.title,
-                    requestFocus = true,
-                    onTitleRequiredError = uiState.baseAliasUiState.errorList.contains(
-                        AliasItemValidationErrors.BlankTitle
-                    ),
-                    enabled = uiState.baseAliasUiState.isLoadingState == IsLoadingState.NotLoading,
-                    isRounded = true,
-                    onChange = viewModel::onTitleChange
-                )
-            }
+            onTitleChange = { viewModel.onTitleChange(it) },
+            onUpgrade = { onNavigate(UpdateAliasNavigation.Upgrade) }
         )
 
         ConfirmCloseDialog(

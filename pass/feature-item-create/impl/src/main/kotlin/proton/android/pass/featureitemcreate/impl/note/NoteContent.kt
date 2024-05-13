@@ -18,7 +18,6 @@
 
 package proton.android.pass.featureitemcreate.impl.note
 
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -26,9 +25,9 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.common.CreateUpdateTopBar
 import proton.android.pass.featureitemcreate.impl.note.NoteItemValidationErrors.BlankTitle
-import proton.android.pass.domain.ShareId
 
 @ExperimentalComposeUiApi
 @Composable
@@ -41,8 +40,7 @@ internal fun NoteContent(
     onUpClick: () -> Unit,
     onSubmit: (ShareId) -> Unit,
     onTitleChange: (String) -> Unit,
-    onNoteChange: (String) -> Unit,
-    vaultSelect: @Composable ColumnScope.() -> Unit
+    onNoteChange: (String) -> Unit
 ) {
     Scaffold(
         modifier = modifier,
@@ -68,8 +66,7 @@ internal fun NoteContent(
             onTitleRequiredError = uiState.errorList.contains(BlankTitle),
             onTitleChange = onTitleChange,
             onNoteChange = onNoteChange,
-            enabled = uiState.isLoadingState != IsLoadingState.Loading,
-            vaultSelect = vaultSelect
+            enabled = uiState.isLoadingState != IsLoadingState.Loading
         )
     }
 }

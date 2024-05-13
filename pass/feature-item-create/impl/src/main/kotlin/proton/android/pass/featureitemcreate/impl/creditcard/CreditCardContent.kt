@@ -1,17 +1,16 @@
 package proton.android.pass.featureitemcreate.impl.creditcard
 
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.common.CreateUpdateTopBar
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.Submit
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.Up
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.Upgrade
-import proton.android.pass.domain.ShareId
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -20,7 +19,6 @@ fun CreditCardContent(
     state: BaseCreditCardUiState,
     creditCardItemFormState: CreditCardItemFormState,
     topBarActionName: String,
-    titleSection: @Composable (ColumnScope.() -> Unit),
     onEvent: (CreditCardContentEvent) -> Unit,
     selectedShareId: ShareId?
 ) {
@@ -48,7 +46,6 @@ fun CreditCardContent(
             creditCardItemFormState = creditCardItemFormState,
             enabled = !state.isLoading,
             validationErrors = state.validationErrors,
-            titleSection = titleSection,
             onEvent = onEvent
         )
     }
@@ -84,6 +81,9 @@ sealed interface CreditCardContentEvent {
 
     @JvmInline
     value class OnNoteChange(val value: String) : CreditCardContentEvent
+
+    @JvmInline
+    value class OnTitleChange(val value: String) : CreditCardContentEvent
 }
 
 

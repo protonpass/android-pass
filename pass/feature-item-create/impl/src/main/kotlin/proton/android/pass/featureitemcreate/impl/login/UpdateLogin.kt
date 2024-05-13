@@ -21,7 +21,6 @@ package proton.android.pass.featureitemcreate.impl.login
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -31,13 +30,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
+import proton.android.pass.common.api.None
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
-import proton.android.pass.composecomponents.impl.form.TitleSection
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
@@ -93,6 +89,7 @@ fun UpdateLogin(
     ) {
         LoginContent(
             uiState = uiState.baseLoginUiState,
+            passkeyState = None,
             loginItemFormState = viewModel.loginItemFormState,
             selectedShareId = uiState.selectedShareId,
             showCreateAliasButton = true,
@@ -149,23 +146,12 @@ fun UpdateLogin(
                     is LoginContentEvent.OnDeletePasskey -> {
                         viewModel.onDeletePasskey(it.idx, it.passkey)
                     }
+
+                    is LoginContentEvent.OnTitleChange ->
+                        viewModel.onTitleChange(it.title)
                 }
             },
-            onNavigate = { onNavigate(it) },
-            titleSection = {
-                TitleSection(
-                    modifier = Modifier
-                        .roundedContainerNorm()
-                        .padding(start = 16.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
-                    value = viewModel.loginItemFormState.title,
-                    requestFocus = true,
-                    onTitleRequiredError = uiState.baseLoginUiState.validationErrors
-                        .contains(LoginItemValidationErrors.BlankTitle),
-                    enabled = uiState.baseLoginUiState.isLoadingState == IsLoadingState.NotLoading,
-                    isRounded = true,
-                    onChange = viewModel::onTitleChange
-                )
-            }
+            onNavigate = { onNavigate(it) }
         )
 
         ConfirmCloseDialog(

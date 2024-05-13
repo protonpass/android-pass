@@ -30,7 +30,6 @@ import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.impl.work.FetchItemsWorker
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
-import kotlin.time.measureTimedValue
 
 class RefreshContentImpl @Inject constructor(
     private val accountManager: AccountManager,
@@ -44,18 +43,25 @@ class RefreshContentImpl @Inject constructor(
         syncStatusRepository.clear()
         syncStatusRepository.setMode(SyncMode.ShownToUser)
         syncStatusRepository.emit(ItemSyncStatus.SyncStarted)
-        val userId = accountManager.getPrimaryUserId().firstOrNull()
-            ?: throw UserIdNotAvailableError()
-        val (refreshSharesResult, time) = measureTimedValue {
-            shareRepository.refreshShares(userId)
-        }
-        PassLogger.i(TAG, "Refreshed shares in ${time.inWholeMilliseconds} ms")
 
-        val request = FetchItemsWorker.getRequestFor(
-            source = FetchItemsWorker.FetchSource.ForceSync,
-            shareIds = refreshSharesResult.allShareIds.toList()
-        )
-        workManager.enqueue(request)
+        runCatching {
+            accountManager.getPrimaryUserId()
+                .firstOrNull()
+                ?.let { userId -> shareRepository.refreshShares(userId) }
+                ?: throw UserIdNotAvailableError()
+        }
+            .onFailure { error ->
+                PassLogger.w(TAG, "Error refreshing shares")
+                PassLogger.w(TAG, error)
+                syncStatusRepository.emit(ItemSyncStatus.SyncError)
+                throw error
+            }
+            .onSuccess { refreshSharesResult ->
+                FetchItemsWorker.getRequestFor(
+                    source = FetchItemsWorker.FetchSource.ForceSync,
+                    shareIds = refreshSharesResult.allShareIds.toList()
+                ).also(workManager::enqueue)
+            }
     }
 
     private companion object {

@@ -32,6 +32,7 @@ import javax.inject.Inject
 class RemoteShareDataSourceImpl @Inject constructor(
     private val api: ApiProvider
 ) : RemoteShareDataSource {
+
     override suspend fun createVault(userId: UserId, body: CreateVaultRequest): ShareResponse {
         val res = api.get<PasswordManagerApi>(userId)
             .invoke { createVault(body) }
@@ -56,18 +57,16 @@ class RemoteShareDataSourceImpl @Inject constructor(
         .invoke { updateVault(shareId.id, body).share }
         .valueOrThrow
 
-
     override suspend fun deleteVault(userId: UserId, shareId: ShareId) {
         api.get<PasswordManagerApi>(userId)
             .invoke { deleteVault(shareId.id) }
             .valueOrThrow
     }
 
-    override suspend fun getShares(userId: UserId): List<ShareResponse> = api.get<PasswordManagerApi>(userId)
-        .invoke {
-            getShares().shares
-        }
-        .valueOrThrow
+    override suspend fun getShares(userId: UserId): List<ShareResponse> =
+        api.get<PasswordManagerApi>(userId)
+            .invoke { getShares().shares }
+            .valueOrThrow
 
     override suspend fun fetchShareById(userId: UserId, shareId: ShareId): ShareResponse? =
         api.get<PasswordManagerApi>(userId)
@@ -81,9 +80,10 @@ class RemoteShareDataSourceImpl @Inject constructor(
             }
             .valueOrThrow
 
-    override suspend fun markAsPrimary(userId: UserId, shareId: ShareId) = api.get<PasswordManagerApi>(userId)
-        .invoke { markAsPrimary(shareId.id) }
-        .valueOrThrow
+    override suspend fun markAsPrimary(userId: UserId, shareId: ShareId) =
+        api.get<PasswordManagerApi>(userId)
+            .invoke { markAsPrimary(shareId.id) }
+            .valueOrThrow
 
     override suspend fun leaveVault(userId: UserId, shareId: ShareId) {
         api.get<PasswordManagerApi>(userId)
@@ -91,9 +91,12 @@ class RemoteShareDataSourceImpl @Inject constructor(
             .valueOrThrow
     }
 
-    @Suppress("UnderscoresInNumericLiterals")
-    companion object {
-        private const val PROTON_RESPONSE_OK = 1000
-        private const val CODE_CANNOT_CREATE_MORE_VAULTS = 300007
+    private companion object {
+
+        private const val PROTON_RESPONSE_OK = 1_000
+
+        private const val CODE_CANNOT_CREATE_MORE_VAULTS = 300_007
+
     }
+
 }

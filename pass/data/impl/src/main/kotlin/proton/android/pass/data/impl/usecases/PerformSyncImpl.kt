@@ -79,7 +79,10 @@ class PerformSyncImpl @Inject constructor(
                 onFailure = { Result.failure(it) }
             )
 
-    companion object {
+    private companion object {
+
         private const val TAG = "PerformSyncImpl"
+
     }
+
 }

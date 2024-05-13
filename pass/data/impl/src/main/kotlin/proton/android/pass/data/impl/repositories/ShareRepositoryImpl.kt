@@ -335,8 +335,7 @@ class ShareRepositoryImpl @Inject constructor(
         localShareDataSource.deleteSharesForUser(userId)
     }
 
-    override fun observeVaultCount(userId: UserId): Flow<Int> =
-        localShareDataSource.observeActiveVaultCount(userId)
+    override fun observeVaultCount(userId: UserId): Flow<Int> = localShareDataSource.observeActiveVaultCount(userId)
 
     override suspend fun leaveVault(userId: UserId, shareId: ShareId) {
         remoteShareDataSource.leaveVault(userId, shareId)
@@ -388,10 +387,7 @@ class ShareRepositoryImpl @Inject constructor(
         }
     }
 
-    private suspend fun storeShares(
-        userAddress: UserAddress,
-        shares: List<ShareResponse>
-    ): List<ShareEntity> =
+    private suspend fun storeShares(userAddress: UserAddress, shares: List<ShareResponse>): List<ShareEntity> =
         coroutineScope {
             if (shares.isEmpty()) return@coroutineScope emptyList()
 
@@ -519,10 +515,7 @@ class ShareRepositoryImpl @Inject constructor(
         )
     }
 
-    private fun shareEntityToShare(
-        entity: ShareEntity,
-        encryptionContext: EncryptionContext
-    ): Share {
+    private fun shareEntityToShare(entity: ShareEntity, encryptionContext: EncryptionContext): Share {
         val shareType = ShareType.map[entity.targetType]
         if (shareType == null) {
             val e = IllegalStateException("Unknown ShareType")
@@ -586,10 +579,7 @@ class ShareRepositoryImpl @Inject constructor(
             .build()
     }
 
-    private fun localShareNeedsUpdate(
-        localShare: ShareEntity,
-        remoteShare: ShareResponse
-    ): Boolean = when {
+    private fun localShareNeedsUpdate(localShare: ShareEntity, remoteShare: ShareResponse): Boolean = when {
         localShare.owner != remoteShare.owner -> true
         localShare.shareRoleId != remoteShare.shareRoleId -> true
         localShare.permission != remoteShare.permission -> true
@@ -603,10 +593,7 @@ class ShareRepositoryImpl @Inject constructor(
         else -> false
     }
 
-    private fun updateEntityWithResponse(
-        entity: ShareEntity,
-        response: ShareResponse
-    ): ShareEntity = entity.copy(
+    private fun updateEntityWithResponse(entity: ShareEntity, response: ShareResponse): ShareEntity = entity.copy(
         owner = response.owner,
         shareRoleId = response.shareRoleId,
         targetMembers = response.targetMembers,

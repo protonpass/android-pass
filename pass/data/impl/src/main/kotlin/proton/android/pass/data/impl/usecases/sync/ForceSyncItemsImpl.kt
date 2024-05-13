@@ -43,9 +43,6 @@ class ForceSyncItemsImpl @Inject constructor(
     ): ForceSyncResult {
         if (shareIds.isEmpty()) return ForceSyncResult.Success
 
-        val mode = getSyncMode(isBackground)
-        itemSyncStatusRepository.setMode(mode)
-
         val results: List<Result<Pair<ShareId, List<ItemRevision>>>> = runConcurrently(
             items = shareIds,
             block = { shareId ->
@@ -103,12 +100,6 @@ class ForceSyncItemsImpl @Inject constructor(
 
         itemSyncStatusRepository.setMode(SyncMode.Background)
         return result
-    }
-
-    private fun getSyncMode(isBackground: Boolean) = if (isBackground) {
-        SyncMode.Background
-    } else {
-        SyncMode.ShownToUser
     }
 
     private companion object {

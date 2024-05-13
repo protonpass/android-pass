@@ -19,6 +19,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.form.TitleVaultSelectionSection
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
@@ -30,7 +31,6 @@ import proton.android.pass.featureitemcreate.impl.creditcard.BaseCreditCardNavig
 import proton.android.pass.featureitemcreate.impl.creditcard.CCCActionAfterHideKeyboard.SelectVault
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardValidationErrors.BlankTitle
 import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
-import proton.android.pass.domain.ShareId
 
 private enum class CCCActionAfterHideKeyboard {
     SelectVault
@@ -92,7 +92,7 @@ fun CreateCreditCardScreen(
                     state = uiState.baseState,
                     creditCardItemFormState = viewModel.creditCardItemFormState,
                     selectedShareId = selectedVault?.vault?.shareId,
-                    topBarActionName = stringResource(id = R.string.title_create_credit_card),
+                    topBarActionName = stringResource(id = R.string.title_create),
                     titleSection = {
                         TitleVaultSelectionSection(
                             titleValue = viewModel.creditCardItemFormState.title,

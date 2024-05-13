@@ -29,6 +29,10 @@ internal enum class SecurityCenterVerifyEmailSnackbarMessage(
     override val isClipboard: Boolean = false
 ) : SnackbarMessage {
 
+    ResendCodeSuccess(
+        id = R.string.security_center_verify_email_snackbar_message_resend_code_success,
+        type = SnackbarType.SUCCESS
+    ),
     ResendCodeError(
         id = R.string.security_center_verify_email_snackbar_message_resend_code_error,
         type = SnackbarType.ERROR

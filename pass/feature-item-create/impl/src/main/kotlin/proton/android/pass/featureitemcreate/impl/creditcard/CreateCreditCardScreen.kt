@@ -12,12 +12,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
-import proton.android.pass.composecomponents.impl.form.TitleVaultSelectionSection
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
@@ -29,7 +27,6 @@ import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.featureitemcreate.impl.creditcard.BaseCreditCardNavigation.Close
 import proton.android.pass.featureitemcreate.impl.creditcard.BaseCreditCardNavigation.Upgrade
 import proton.android.pass.featureitemcreate.impl.creditcard.CCCActionAfterHideKeyboard.SelectVault
-import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardValidationErrors.BlankTitle
 import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 
 private enum class CCCActionAfterHideKeyboard {
@@ -52,7 +49,6 @@ fun CreateCreditCardScreen(
     }
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    val keyboardController = LocalSoftwareKeyboardController.current
     var actionWhenKeyboardDisappears by remember { mutableStateOf<CCCActionAfterHideKeyboard?>(null) }
 
     when (val uiState = state) {
@@ -93,23 +89,6 @@ fun CreateCreditCardScreen(
                     creditCardItemFormState = viewModel.creditCardItemFormState,
                     selectedShareId = selectedVault?.vault?.shareId,
                     topBarActionName = stringResource(id = R.string.title_create),
-                    titleSection = {
-                        TitleVaultSelectionSection(
-                            titleValue = viewModel.creditCardItemFormState.title,
-                            showVaultSelector = showVaultSelector,
-                            onTitleChanged = viewModel::onTitleChange,
-                            onTitleRequiredError = uiState.baseState.validationErrors
-                                .contains(BlankTitle),
-                            enabled = !uiState.baseState.isLoading,
-                            vaultName = selectedVault?.vault?.name,
-                            vaultColor = selectedVault?.vault?.color,
-                            vaultIcon = selectedVault?.vault?.icon,
-                            onVaultClicked = {
-                                actionWhenKeyboardDisappears = SelectVault
-                                keyboardController?.hide()
-                            }
-                        )
-                    },
                     onEvent = { event ->
                         when (event) {
                             is CreditCardContentEvent.OnCVVChange ->
@@ -126,6 +105,7 @@ fun CreateCreditCardScreen(
 
                             is CreditCardContentEvent.OnNumberChange ->
                                 viewModel.onNumberChanged(event.value)
+
                             is CreditCardContentEvent.OnPinChange ->
                                 viewModel.onPinChanged(event.value)
 
@@ -134,8 +114,12 @@ fun CreateCreditCardScreen(
                             CreditCardContentEvent.Upgrade -> onNavigate(Upgrade)
                             is CreditCardContentEvent.OnCVVFocusChange ->
                                 viewModel.onCVVFocusChanged(event.isFocused)
+
                             is CreditCardContentEvent.OnPinFocusChange ->
                                 viewModel.onPinFocusChanged(event.isFocused)
+
+                            is CreditCardContentEvent.OnTitleChange ->
+                                viewModel.onTitleChange(event.value)
                         }
                     }
                 )

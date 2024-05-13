@@ -29,19 +29,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
-import proton.android.pass.composecomponents.impl.form.TitleVaultSelectionSection
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
-import proton.android.pass.featureitemcreate.impl.alias.AliasItemValidationErrors.BlankTitle
 import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.common.ShareError.EmptyShareList
 import proton.android.pass.featureitemcreate.impl.common.ShareError.SharesNotAvailable
@@ -67,7 +64,6 @@ fun CreateAliasScreen(
 
     val uiState by viewModel.createAliasUiState.collectAsStateWithLifecycle()
     val keyboardState by keyboardAsState()
-    val keyboardController = LocalSoftwareKeyboardController.current
     var actionWhenKeyboardDisappears by remember { mutableStateOf<CAActionAfterHideKeyboard?>(null) }
 
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
@@ -120,22 +116,7 @@ fun CreateAliasScreen(
             onNoteChange = { viewModel.onNoteChange(it) },
             onPrefixChange = { viewModel.onPrefixChange(it) },
             onUpgrade = { onNavigate(CreateAliasNavigation.Upgrade) },
-            titleSection = {
-                TitleVaultSelectionSection(
-                    titleValue = viewModel.aliasItemFormState.title,
-                    onTitleChanged = { viewModel.onTitleChange(it) },
-                    onTitleRequiredError = uiState.baseAliasUiState.errorList.contains(BlankTitle),
-                    enabled = uiState.baseAliasUiState.isLoadingState == IsLoadingState.NotLoading,
-                    showVaultSelector = showVaultSelector,
-                    vaultName = selectedVault?.vault?.name,
-                    vaultIcon = selectedVault?.vault?.icon,
-                    vaultColor = selectedVault?.vault?.color,
-                    onVaultClicked = {
-                        actionWhenKeyboardDisappears = CAActionAfterHideKeyboard.SelectVault
-                        keyboardController?.hide()
-                    }
-                )
-            }
+            onTitleChange = { viewModel.onTitleChange(it) }
         )
 
         ConfirmCloseDialog(

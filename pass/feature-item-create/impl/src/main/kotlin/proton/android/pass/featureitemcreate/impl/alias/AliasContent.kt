@@ -32,12 +32,13 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemValidationErrors.BlankPrefix
+import proton.android.pass.featureitemcreate.impl.alias.AliasItemValidationErrors.BlankTitle
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemValidationErrors.InvalidAliasContent
 import proton.android.pass.featureitemcreate.impl.alias.mailboxes.SelectMailboxesDialog
 import proton.android.pass.featureitemcreate.impl.alias.suffixes.SelectSuffixDialog
 import proton.android.pass.featureitemcreate.impl.common.CreateUpdateTopBar
-import proton.android.pass.domain.ShareId
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -56,8 +57,8 @@ internal fun AliasContent(
     onMailboxesChanged: (List<SelectedAliasMailboxUiModel>) -> Unit,
     onNoteChange: (String) -> Unit,
     onPrefixChange: (String) -> Unit,
-    onUpgrade: () -> Unit,
-    titleSection: @Composable () -> Unit
+    onTitleChange: (String) -> Unit,
+    onUpgrade: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
 
@@ -87,6 +88,7 @@ internal fun AliasContent(
             isEditAllowed = isEditAllowed,
             isLoading = uiState.isLoadingState.value(),
             showUpgrade = uiState.hasReachedAliasLimit,
+            onTitleRequiredError = uiState.errorList.contains(BlankTitle),
             onAliasRequiredError = uiState.errorList.contains(BlankPrefix),
             onInvalidAliasError = uiState.errorList.contains(InvalidAliasContent),
             onSuffixClick = {
@@ -100,8 +102,8 @@ internal fun AliasContent(
                 }
             },
             onNoteChange = { onNoteChange(it) },
-            onPrefixChange = { onPrefixChange(it) },
-            titleSection = titleSection
+            onTitleChange = { onTitleChange(it) },
+            onPrefixChange = { onPrefixChange(it) }
         )
 
         SelectSuffixDialog(

@@ -21,6 +21,10 @@ package proton.android.pass.featureitemcreate.impl.common
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import proton.android.pass.commonui.api.PassPalette
+import proton.android.pass.domain.ShareColor
+import proton.android.pass.domain.ShareIcon
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 
 class CreateUpdateTopBarPreviewProvider : PreviewParameterProvider<CreateUpdateTopBarPreview> {
     override val values: Sequence<CreateUpdateTopBarPreview>
@@ -29,44 +33,63 @@ class CreateUpdateTopBarPreviewProvider : PreviewParameterProvider<CreateUpdateT
                 isLoading = false,
                 actionColor = PassPalette.Lavender100,
                 closeIconColor = PassPalette.Lavender100,
-                closeBackgroundColor = PassPalette.Lavender8
-            ),
-            CreateUpdateTopBarPreview(
-                isLoading = false,
-                actionColor = PassPalette.GreenSheen100,
-                closeIconColor = PassPalette.GreenSheen100,
-                closeBackgroundColor = PassPalette.GreenSheen8
-            ),
-            CreateUpdateTopBarPreview(
-                isLoading = false,
-                actionColor = PassPalette.MacaroniAndCheese100,
-                closeIconColor = PassPalette.MacaroniAndCheese100,
-                closeBackgroundColor = PassPalette.MacaroniAndCheese8
-            ),
-            CreateUpdateTopBarPreview(
-                isLoading = true,
-                actionColor = PassPalette.Lavender100,
-                closeIconColor = PassPalette.Lavender100,
-                closeBackgroundColor = PassPalette.Lavender8
-            ),
-            CreateUpdateTopBarPreview(
-                isLoading = true,
-                actionColor = PassPalette.GreenSheen100,
-                closeIconColor = PassPalette.GreenSheen100,
-                closeBackgroundColor = PassPalette.GreenSheen8
-            ),
-            CreateUpdateTopBarPreview(
-                isLoading = true,
-                actionColor = PassPalette.MacaroniAndCheese100,
-                closeIconColor = PassPalette.MacaroniAndCheese100,
-                closeBackgroundColor = PassPalette.MacaroniAndCheese8
+                closeBackgroundColor = PassPalette.Lavender8,
+                vault = null
             ),
             CreateUpdateTopBarPreview(
                 isLoading = false,
                 actionColor = PassPalette.GreenSheen100,
                 closeIconColor = PassPalette.GreenSheen100,
                 closeBackgroundColor = PassPalette.GreenSheen8,
-                showUpgrade = true
+                vault = null
+            ),
+            CreateUpdateTopBarPreview(
+                isLoading = false,
+                actionColor = PassPalette.MacaroniAndCheese100,
+                closeIconColor = PassPalette.MacaroniAndCheese100,
+                closeBackgroundColor = PassPalette.MacaroniAndCheese8,
+                vault = null
+            ),
+            CreateUpdateTopBarPreview(
+                isLoading = true,
+                actionColor = PassPalette.Lavender100,
+                closeIconColor = PassPalette.Lavender100,
+                closeBackgroundColor = PassPalette.Lavender8,
+                vault = null
+            ),
+            CreateUpdateTopBarPreview(
+                isLoading = true,
+                actionColor = PassPalette.GreenSheen100,
+                closeIconColor = PassPalette.GreenSheen100,
+                closeBackgroundColor = PassPalette.GreenSheen8,
+                vault = null
+            ),
+            CreateUpdateTopBarPreview(
+                isLoading = true,
+                actionColor = PassPalette.MacaroniAndCheese100,
+                closeIconColor = PassPalette.MacaroniAndCheese100,
+                closeBackgroundColor = PassPalette.MacaroniAndCheese8,
+                vault = null
+            ),
+            CreateUpdateTopBarPreview(
+                isLoading = false,
+                actionColor = PassPalette.GreenSheen100,
+                closeIconColor = PassPalette.GreenSheen100,
+                closeBackgroundColor = PassPalette.GreenSheen8,
+                showUpgrade = true,
+                vault = null
+            ),
+            CreateUpdateTopBarPreview(
+                isLoading = false,
+                actionColor = PassPalette.GreenSheen100,
+                closeIconColor = PassPalette.GreenSheen100,
+                closeBackgroundColor = PassPalette.GreenSheen8,
+                vault = Vault(
+                    shareId = ShareId(id = ""),
+                    name = "Personal",
+                    color = ShareColor.Color2,
+                    icon = ShareIcon.Icon13
+                )
             )
         )
 }
@@ -76,5 +99,6 @@ data class CreateUpdateTopBarPreview(
     val showUpgrade: Boolean = false,
     val actionColor: Color,
     val closeBackgroundColor: Color,
-    val closeIconColor: Color
+    val closeIconColor: Color,
+    val vault: Vault?
 )

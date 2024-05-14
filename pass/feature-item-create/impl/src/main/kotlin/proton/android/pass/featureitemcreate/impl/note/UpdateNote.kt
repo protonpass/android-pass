@@ -62,12 +62,15 @@ fun UpdateNote(
         NoteContent(
             topBarActionName = stringResource(R.string.action_save),
             uiState = noteUiState.baseNoteUiState,
+            selectedVault = null,
+            showVaultSelector = false,
             selectedShareId = noteUiState.selectedShareId,
             onUpClick = onExit,
             onSubmit = { shareId -> viewModel.updateItem(shareId) },
             onTitleChange = { viewModel.onTitleChange(it) },
             onNoteChange = { viewModel.onNoteChange(it) },
-            noteItemFormState = viewModel.noteItemFormState
+            noteItemFormState = viewModel.noteItemFormState,
+            onVaultSelect = {}
         )
 
         ConfirmCloseDialog(

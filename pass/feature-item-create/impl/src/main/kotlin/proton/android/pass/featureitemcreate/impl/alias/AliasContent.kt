@@ -33,6 +33,7 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemValidationErrors.BlankPrefix
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemValidationErrors.BlankTitle
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemValidationErrors.InvalidAliasContent
@@ -47,7 +48,9 @@ internal fun AliasContent(
     modifier: Modifier = Modifier,
     uiState: BaseAliasUiState,
     aliasItemFormState: AliasItemFormState,
+    selectedVault: Vault?,
     selectedShareId: ShareId?,
+    showVaultSelector: Boolean,
     topBarActionName: String,
     isCreateMode: Boolean,
     isEditAllowed: Boolean,
@@ -58,7 +61,8 @@ internal fun AliasContent(
     onNoteChange: (String) -> Unit,
     onPrefixChange: (String) -> Unit,
     onTitleChange: (String) -> Unit,
-    onUpgrade: () -> Unit
+    onUpgrade: () -> Unit,
+    onVaultSelect: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
 
@@ -71,13 +75,16 @@ internal fun AliasContent(
             CreateUpdateTopBar(
                 text = topBarActionName,
                 isLoading = uiState.isLoadingState.value(),
+                showVaultSelector = showVaultSelector,
                 actionColor = PassTheme.colors.aliasInteractionNormMajor1,
                 iconColor = PassTheme.colors.aliasInteractionNormMajor2,
-                iconBackgroundColor = PassTheme.colors.aliasInteractionNormMinor1,
-                onCloseClick = onUpClick,
                 showUpgrade = uiState.hasReachedAliasLimit,
+                iconBackgroundColor = PassTheme.colors.aliasInteractionNormMinor1,
+                selectedVault = selectedVault,
+                onCloseClick = onUpClick,
                 onActionClick = { selectedShareId?.let(onSubmit) },
-                onUpgrade = onUpgrade
+                onUpgrade = onUpgrade,
+                onVaultSelectorClick = onVaultSelect
             )
         }
     ) { padding ->

@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 import proton.android.pass.featureitemcreate.impl.common.CreateUpdateTopBar
 import proton.android.pass.featureitemcreate.impl.note.NoteItemValidationErrors.BlankTitle
 
@@ -36,11 +37,14 @@ internal fun NoteContent(
     topBarActionName: String,
     uiState: BaseNoteUiState,
     noteItemFormState: NoteItemFormState,
+    selectedVault: Vault?,
+    showVaultSelector: Boolean,
     selectedShareId: ShareId?,
     onUpClick: () -> Unit,
     onSubmit: (ShareId) -> Unit,
     onTitleChange: (String) -> Unit,
-    onNoteChange: (String) -> Unit
+    onNoteChange: (String) -> Unit,
+    onVaultSelect: () -> Unit
 ) {
     Scaffold(
         modifier = modifier,
@@ -51,12 +55,15 @@ internal fun NoteContent(
                 actionColor = PassTheme.colors.noteInteractionNormMajor1,
                 iconColor = PassTheme.colors.noteInteractionNormMajor2,
                 iconBackgroundColor = PassTheme.colors.noteInteractionNormMinor1,
+                selectedVault = selectedVault,
+                showVaultSelector = showVaultSelector,
                 onCloseClick = onUpClick,
                 onActionClick = {
                     selectedShareId ?: return@CreateUpdateTopBar
                     onSubmit(selectedShareId)
                 },
-                onUpgrade = {}
+                onUpgrade = {},
+                onVaultSelectorClick = onVaultSelect
             )
         }
     ) { padding ->

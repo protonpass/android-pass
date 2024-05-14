@@ -36,7 +36,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -80,8 +79,6 @@ internal fun LoginItemForm(
     hasReachedAliasLimit: Boolean,
     onEvent: (LoginContentEvent) -> Unit
 ) {
-    val keyboardController = LocalSoftwareKeyboardController.current
-
     Box(modifier = modifier) {
         val currentStickyFormOption = when (focusedField) {
             LoginField.Username -> AliasOptions
@@ -194,11 +191,9 @@ internal fun LoginItemForm(
                                 title = loginItemFormState.title.some()
                             )
                         )
-                        keyboardController?.hide()
                     },
                     onPrefillCurrentEmailClick = {
                         onEvent(LoginContentEvent.OnUsernameChange(it))
-                        keyboardController?.hide()
                     }
                 )
 
@@ -212,12 +207,10 @@ internal fun LoginItemForm(
                         hasCamera = hasCamera,
                         onPasteCode = {
                             onEvent(LoginContentEvent.PasteTotp)
-                            keyboardController?.hide()
                         },
                         onScanCode = {
                             val index = (focusedField as? LoginCustomField)?.index
                             onEvent(LoginContentEvent.OnScanTotp(index.toOption()))
-                            keyboardController?.hide()
                         }
                     )
                 }

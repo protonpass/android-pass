@@ -71,7 +71,7 @@ internal fun EmailBreachRow(
                     emailBreachUiState.hasBreaches && emailBreachUiState.isMonitored -> EmailAndBreachDate(
                         email = emailBreachUiState.email,
                         breachDate = emailBreachUiState.breachDate,
-                        textStyle = ProtonTheme.typography.body1Regular
+                        emailStyle = ProtonTheme.typography.body1Regular
                             .copy(color = PassTheme.colors.passwordInteractionNormMajor1),
                         dateStyle = PassTheme.typography.body3Weak(),
                         hasBreaches = true
@@ -80,7 +80,7 @@ internal fun EmailBreachRow(
                     !emailBreachUiState.hasBreaches && emailBreachUiState.isMonitored -> EmailAndBreachDate(
                         email = emailBreachUiState.email,
                         breachDate = emailBreachUiState.breachDate,
-                        textStyle = ProtonTheme.typography.body1Regular,
+                        emailStyle = ProtonTheme.typography.body1Regular,
                         dateStyle = PassTheme.typography.body3Norm()
                             .copy(color = PassTheme.colors.cardInteractionNormMajor2),
                         hasBreaches = false
@@ -88,9 +88,12 @@ internal fun EmailBreachRow(
 
                     else -> EmailAndBreachDate(
                         email = emailBreachUiState.email,
+                        status = stringResource(R.string.security_center_proton_list_not_monitored),
                         breachDate = emailBreachUiState.breachDate,
-                        textStyle = ProtonTheme.typography.body1Regular,
-                        dateStyle = PassTheme.typography.body3Weak(),
+                        emailStyle = ProtonTheme.typography.body1Regular,
+                        dateStyle = PassTheme.typography.body3Norm()
+                            .copy(color = PassTheme.colors.cardInteractionNormMajor2),
+                        statusStyle = PassTheme.typography.body3Weak(),
                         hasBreaches = false
                     )
                 }
@@ -123,14 +126,17 @@ internal fun EmailBreachRow(
 @Composable
 fun EmailAndBreachDate(
     email: String,
+    status: String = stringResource(R.string.security_center_proton_list_no_breaches_detected),
     breachDate: String?,
-    textStyle: TextStyle,
+    emailStyle: TextStyle,
     dateStyle: TextStyle,
+    statusStyle: TextStyle = PassTheme.typography.body3Norm()
+        .copy(color = PassTheme.colors.cardInteractionNormMajor2),
     hasBreaches: Boolean
 ) {
     Text(
         text = email,
-        style = textStyle
+        style = emailStyle
     )
     if (hasBreaches) {
         breachDate?.let {
@@ -144,9 +150,8 @@ fun EmailAndBreachDate(
         }
     } else {
         Text(
-            text = stringResource(R.string.security_center_proton_list_no_breaches_detected),
-            style = PassTheme.typography.body3Norm()
-                .copy(color = PassTheme.colors.cardInteractionNormMajor2)
+            text = status,
+            style = statusStyle
         )
     }
 }

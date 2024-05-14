@@ -29,13 +29,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.OneTimeLaunchedEffect
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
-import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
@@ -65,17 +63,10 @@ fun CreateLoginScreen(
     val uiState by viewModel.createLoginUiState.collectAsStateWithLifecycle()
 
     var actionAfterKeyboardHide by remember { mutableStateOf<(() -> Unit)?>(null) }
-    val keyboardState by keyboardAsState()
-    val keyboardController = LocalSoftwareKeyboardController.current
-    PerformActionAfterKeyboardHide(keyboardState = keyboardState) {
-        actionAfterKeyboardHide?.invoke()
-        actionAfterKeyboardHide = null
-    }
-    LaunchedEffect(key1 = actionAfterKeyboardHide) {
-        if (actionAfterKeyboardHide != null) {
-            keyboardController?.hide()
-        }
-    }
+    PerformActionAfterKeyboardHide(
+        action = actionAfterKeyboardHide,
+        clearAction = { actionAfterKeyboardHide = null }
+    )
 
     LaunchedEffect(clearAlias) {
         if (clearAlias) {
@@ -253,3 +244,4 @@ fun CreateLoginScreen(
         triggerCondition = uiState.baseLoginUiState.isItemSaved is ItemSavedState.Success
     )
 }
+

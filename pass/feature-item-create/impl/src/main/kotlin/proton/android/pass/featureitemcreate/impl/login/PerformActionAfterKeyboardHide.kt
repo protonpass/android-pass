@@ -20,13 +20,22 @@ package proton.android.pass.featureitemcreate.impl.login
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import proton.android.pass.composecomponents.impl.keyboard.IsKeyboardVisible
+import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
 
 @Composable
-fun PerformActionAfterKeyboardHide(keyboardState: IsKeyboardVisible, action: (() -> Unit)?) {
-    LaunchedEffect(keyboardState) {
-        if (keyboardState == IsKeyboardVisible.GONE) {
-            action?.invoke()
+fun PerformActionAfterKeyboardHide(action: (() -> Unit)?, clearAction: (() -> Unit)? = null) {
+    val keyboardState by keyboardAsState()
+    val keyboardController = LocalSoftwareKeyboardController.current
+    LaunchedEffect(action, keyboardState) {
+        when {
+            action != null && keyboardState == IsKeyboardVisible.VISIBLE -> keyboardController?.hide()
+            keyboardState == IsKeyboardVisible.GONE -> {
+                action?.invoke()
+                clearAction?.invoke()
+            }
         }
     }
 }

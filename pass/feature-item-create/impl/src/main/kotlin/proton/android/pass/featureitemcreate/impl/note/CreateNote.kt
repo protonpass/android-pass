@@ -35,6 +35,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
+import proton.android.pass.composecomponents.impl.keyboard.IsKeyboardVisible
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
@@ -130,7 +131,7 @@ fun CreateNoteScreen(
     }
 
     LaunchedEffect(keyboardState, actionWhenKeyboardDisappears) {
-        if (!keyboardState) {
+        if (keyboardState == IsKeyboardVisible.VISIBLE) {
             when (actionWhenKeyboardDisappears) {
                 SelectVault -> {
                     selectedVault ?: return@LaunchedEffect

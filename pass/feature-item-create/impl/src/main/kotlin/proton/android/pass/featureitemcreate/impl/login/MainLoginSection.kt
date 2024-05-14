@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
+import proton.android.pass.domain.ShareId
 
 @Composable
 fun MainLoginSection(
@@ -33,10 +34,9 @@ fun MainLoginSection(
     isEditAllowed: Boolean,
     isTotpError: Boolean,
     totpUiState: TotpUiState,
-    onEvent: (LoginContentEvent) -> Unit,
-    onFocusChange: (LoginField, Boolean) -> Unit,
-    onAliasOptionsClick: () -> Unit,
-    onUpgrade: () -> Unit
+    selectedShareId: ShareId?,
+    hasReachedAliasLimit: Boolean,
+    onEvent: (LoginContentEvent) -> Unit
 ) {
     Column(
         modifier = modifier.roundedContainerNorm()
@@ -46,8 +46,13 @@ fun MainLoginSection(
             canUpdateUsername = canUpdateUsername,
             isEditAllowed = isEditAllowed,
             onChange = { onEvent(LoginContentEvent.OnUsernameChange(it)) },
-            onAliasOptionsClick = onAliasOptionsClick,
-            onFocus = { onFocusChange(LoginField.Username, it) }
+            onAliasOptionsClick = {
+                selectedShareId ?: return@UsernameInput
+                onEvent(LoginContentEvent.OnAliasOptions(selectedShareId, hasReachedAliasLimit))
+            },
+            onFocus = { isFocused ->
+                onEvent(LoginContentEvent.OnFocusChange(LoginField.Username, isFocused))
+            }
         )
         Divider(color = PassTheme.colors.inputBorderNorm)
         PasswordInput(
@@ -55,7 +60,9 @@ fun MainLoginSection(
             passwordStrength = loginItemFormState.passwordStrength,
             isEditAllowed = isEditAllowed,
             onChange = { onEvent(LoginContentEvent.OnPasswordChange(it)) },
-            onFocus = { onFocusChange(LoginField.Password, it) }
+            onFocus = { isFocused ->
+                onEvent(LoginContentEvent.OnFocusChange(LoginField.Password, isFocused))
+            }
         )
         Divider(color = PassTheme.colors.inputBorderNorm)
         val enabled = when (totpUiState) {
@@ -67,14 +74,16 @@ fun MainLoginSection(
             TotpUiState.Success -> isEditAllowed
         }
         if (totpUiState is TotpUiState.Limited && !totpUiState.isEdit) {
-            TotpLimit(onUpgrade = onUpgrade)
+            TotpLimit(onUpgrade = { onEvent(LoginContentEvent.OnUpgrade) })
         } else {
             TotpInput(
                 value = loginItemFormState.primaryTotp,
                 enabled = enabled,
                 isError = isTotpError,
                 onTotpChanged = { onEvent(LoginContentEvent.OnTotpChange(it)) },
-                onFocus = { onFocusChange(LoginField.PrimaryTotp, it) }
+                onFocus = { isFocused ->
+                    onEvent(LoginContentEvent.OnFocusChange(LoginField.PrimaryTotp, isFocused))
+                }
             )
         }
     }

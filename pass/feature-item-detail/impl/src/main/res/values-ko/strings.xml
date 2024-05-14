@@ -44,7 +44,7 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">더 나은 보안을 위해 2단계 인증 설정</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">이 서비스는 2단계 인증을 지원합니다. 향상된 계정 보안을 위해 활성화 해주세요.</string>
   <string name="login_item_reused_passwords_subtitle">이 비밀번호를 사용하는 금고 내 항목의 목록입니다.</string>
-  <string name="field_username">아이디 또는 이메일 주소</string>
+  <string name="field_username_or_email">아이디 또는 이메일 주소</string>
   <string name="field_password">비밀번호</string>
   <string name="websites_section_title">웹사이트</string>
   <string name="totp_section_title">2단계 인증 토큰 (TOTP)</string>

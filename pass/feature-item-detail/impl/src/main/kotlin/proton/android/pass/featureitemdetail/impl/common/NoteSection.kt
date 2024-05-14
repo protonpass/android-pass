@@ -34,8 +34,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
@@ -44,29 +44,30 @@ import proton.android.pass.featureitemdetail.impl.NoteDetailSectionPreviewProvid
 import proton.android.pass.featureitemdetail.impl.R
 
 @Composable
-fun NoteSection(
+internal fun NoteSection(
     modifier: Modifier = Modifier,
     text: String,
     accentColor: Color
 ) {
-    if (text.isBlank()) return
     RoundedCornersColumn(
         modifier = modifier
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(all = Spacing.medium),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+            horizontalArrangement = Arrangement.spacedBy(space = Spacing.medium)
         ) {
             Icon(
                 painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_note),
                 contentDescription = null,
                 tint = accentColor
             )
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+
+            Column(verticalArrangement = Arrangement.spacedBy(space = Spacing.small)) {
                 SectionTitle(text = stringResource(R.string.field_detail_note_title))
+
                 SelectionContainer {
                     SectionSubtitle(text = text.asAnnotatedString())
                 }
@@ -75,15 +76,19 @@ fun NoteSection(
     }
 }
 
-class ThemedDetailNoteSectionPreviewProvider :
+internal class ThemedDetailNoteSectionPreviewProvider :
     ThemePairPreviewProvider<String>(NoteDetailSectionPreviewProvider())
 
-@Preview
-@Composable
-fun NoteSectionPreview(@PreviewParameter(ThemedDetailNoteSectionPreviewProvider::class) input: Pair<Boolean, String>) {
+@[Preview Composable]
+internal fun NoteSectionPreview(
+    @PreviewParameter(ThemedDetailNoteSectionPreviewProvider::class) input: Pair<Boolean, String>
+) {
     PassTheme(isDark = input.first) {
         Surface {
-            NoteSection(text = input.second, accentColor = PassTheme.colors.loginInteractionNormMajor1)
+            NoteSection(
+                text = input.second,
+                accentColor = PassTheme.colors.loginInteractionNormMajor1
+            )
         }
     }
 }

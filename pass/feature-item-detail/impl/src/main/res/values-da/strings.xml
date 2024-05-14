@@ -45,7 +45,7 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Indstil 2FA for mere sikkerhed</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Denne tjeneste tilbyder 2FA. Aktivér det for at få ekstra kontosikkerhed.</string>
   <string name="login_item_reused_passwords_subtitle">Emner fra dine bokse, der har denne adgangskode.</string>
-  <string name="field_username">Brugernavn eller e-mailadresse</string>
+  <string name="field_username_or_email">Brugernavn eller e-mailadresse</string>
   <string name="field_password">Adgangskode</string>
   <string name="websites_section_title">Websider</string>
   <string name="totp_section_title">2FA-token (TOTP)</string>

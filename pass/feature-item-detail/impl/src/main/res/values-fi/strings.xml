@@ -45,7 +45,7 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Tehosta suojausta määrittämällä 2FA</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Palvelu mahdollistaa kaksivaiheisen tunnistautumisen. Paranna tilin suojausta ottamalla se käyttöön.</string>
   <string name="login_item_reused_passwords_subtitle">Holviesi tätä salasanaa käyttävät kohteet.</string>
-  <string name="field_username">Käyttäjätunnus tai sähköpostiosoite</string>
+  <string name="field_username_or_email">Käyttäjätunnus tai sähköpostiosoite</string>
   <string name="field_password">Salasana</string>
   <string name="websites_section_title">Verkkosivustot</string>
   <string name="totp_section_title">2FA-tunniste (TOTP)</string>

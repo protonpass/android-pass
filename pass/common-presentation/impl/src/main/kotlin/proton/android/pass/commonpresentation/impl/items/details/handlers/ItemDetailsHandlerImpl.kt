@@ -74,6 +74,7 @@ class ItemDetailsHandlerImpl @Inject constructor(
         ItemDetailsFieldType.Plain.Alias -> ItemDetailsSnackbarMessage.AliasCopied
         ItemDetailsFieldType.Plain.CardNumber -> ItemDetailsSnackbarMessage.CardNumberCopied
         ItemDetailsFieldType.Plain.CustomField -> ItemDetailsSnackbarMessage.CustomFieldCopied
+        ItemDetailsFieldType.Plain.Email -> ItemDetailsSnackbarMessage.EmailCopied
         ItemDetailsFieldType.Plain.TotpCode -> ItemDetailsSnackbarMessage.TotpCodeCopied
         ItemDetailsFieldType.Plain.Username -> ItemDetailsSnackbarMessage.UsernameCopied
         ItemDetailsFieldType.Plain.Website -> ItemDetailsSnackbarMessage.WebsiteCopied

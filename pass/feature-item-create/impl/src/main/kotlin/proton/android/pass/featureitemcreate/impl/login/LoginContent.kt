@@ -37,6 +37,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 import proton.android.pass.featureitemcreate.impl.common.CreateUpdateTopBar
 import proton.android.pass.featureitemcreate.impl.login.LoginItemValidationErrors.InvalidUrl
 
@@ -52,6 +53,8 @@ internal fun LoginContent(
     uiState: BaseLoginUiState,
     passkeyState: Option<CreatePasskeyState>,
     loginItemFormState: LoginItemFormState,
+    selectedVault: Vault?,
+    showVaultSelector: Boolean,
     selectedShareId: ShareId?,
     topBarActionName: String,
     showCreateAliasButton: Boolean,
@@ -102,12 +105,15 @@ internal fun LoginContent(
                 actionColor = PassTheme.colors.loginInteractionNormMajor1,
                 iconColor = PassTheme.colors.loginInteractionNormMajor2,
                 iconBackgroundColor = PassTheme.colors.loginInteractionNormMinor1,
+                selectedVault = selectedVault,
+                showVaultSelector = showVaultSelector,
                 onCloseClick = { onEvent(LoginContentEvent.Up) },
                 onActionClick = {
                     selectedShareId ?: return@CreateUpdateTopBar
                     onEvent(LoginContentEvent.Submit(selectedShareId))
                 },
-                onUpgrade = { onNavigate(BaseLoginNavigation.Upgrade) }
+                onUpgrade = { onNavigate(BaseLoginNavigation.Upgrade) },
+                onVaultSelectorClick = { onEvent(LoginContentEvent.OnVaultSelect) }
             )
         }
     ) { padding ->

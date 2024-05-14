@@ -29,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -64,6 +65,7 @@ fun CreateAliasScreen(
 
     val uiState by viewModel.createAliasUiState.collectAsStateWithLifecycle()
     val keyboardState by keyboardAsState()
+    val keyboardController = LocalSoftwareKeyboardController.current
     var actionWhenKeyboardDisappears by remember { mutableStateOf<CAActionAfterHideKeyboard?>(null) }
 
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
@@ -105,6 +107,8 @@ fun CreateAliasScreen(
         AliasContent(
             uiState = uiState.baseAliasUiState,
             aliasItemFormState = viewModel.aliasItemFormState,
+            selectedVault = selectedVault?.vault,
+            showVaultSelector = showVaultSelector,
             selectedShareId = selectedVault?.vault?.shareId,
             topBarActionName = stringResource(id = R.string.title_create),
             isCreateMode = true,
@@ -116,7 +120,11 @@ fun CreateAliasScreen(
             onNoteChange = { viewModel.onNoteChange(it) },
             onPrefixChange = { viewModel.onPrefixChange(it) },
             onUpgrade = { onNavigate(CreateAliasNavigation.Upgrade) },
-            onTitleChange = { viewModel.onTitleChange(it) }
+            onTitleChange = { viewModel.onTitleChange(it) },
+            onVaultSelect = {
+                actionWhenKeyboardDisappears = CAActionAfterHideKeyboard.SelectVault
+                keyboardController?.hide()
+            }
         )
 
         ConfirmCloseDialog(

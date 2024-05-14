@@ -12,6 +12,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -49,6 +50,7 @@ fun CreateCreditCardScreen(
     }
     val state by viewModel.state.collectAsStateWithLifecycle()
 
+    val keyboardController = LocalSoftwareKeyboardController.current
     var actionWhenKeyboardDisappears by remember { mutableStateOf<CCCActionAfterHideKeyboard?>(null) }
 
     when (val uiState = state) {
@@ -87,6 +89,8 @@ fun CreateCreditCardScreen(
                 CreditCardContent(
                     state = uiState.baseState,
                     creditCardItemFormState = viewModel.creditCardItemFormState,
+                    selectedVault = selectedVault?.vault,
+                    showVaultSelector = showVaultSelector,
                     selectedShareId = selectedVault?.vault?.shareId,
                     topBarActionName = stringResource(id = R.string.title_create),
                     onEvent = { event ->
@@ -120,6 +124,11 @@ fun CreateCreditCardScreen(
 
                             is CreditCardContentEvent.OnTitleChange ->
                                 viewModel.onTitleChange(event.value)
+
+                            CreditCardContentEvent.OnVaultSelect -> {
+                                actionWhenKeyboardDisappears = SelectVault
+                                keyboardController?.hide()
+                            }
                         }
                     }
                 )

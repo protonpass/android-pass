@@ -73,6 +73,8 @@ fun UpdateAlias(
         AliasContent(
             uiState = uiState.baseAliasUiState,
             aliasItemFormState = viewModel.aliasItemFormState,
+            selectedVault = null,
+            showVaultSelector = false,
             selectedShareId = uiState.selectedShareId,
             topBarActionName = stringResource(id = R.string.action_save),
             isCreateMode = false,
@@ -84,7 +86,8 @@ fun UpdateAlias(
             onNoteChange = { viewModel.onNoteChange(it) },
             onPrefixChange = {},
             onTitleChange = { viewModel.onTitleChange(it) },
-            onUpgrade = { onNavigate(UpdateAliasNavigation.Upgrade) }
+            onUpgrade = { onNavigate(UpdateAliasNavigation.Upgrade) },
+            onVaultSelect = {}
         )
 
         ConfirmCloseDialog(

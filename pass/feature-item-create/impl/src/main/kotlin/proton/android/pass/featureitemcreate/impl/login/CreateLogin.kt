@@ -33,10 +33,8 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.OneTimeLaunchedEffect
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
-import proton.android.pass.composecomponents.impl.keyboard.IsKeyboardVisible
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
@@ -46,13 +44,8 @@ import proton.android.pass.featureitemcreate.impl.common.ShareError.EmptyShareLi
 import proton.android.pass.featureitemcreate.impl.common.ShareError.SharesNotAvailable
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
+import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation.OnCreateLoginEvent
 import proton.android.pass.featureitemcreate.impl.login.customfields.CustomFieldEvent
-
-private enum class CLActionAfterHideKeyboard {
-    SelectVault,
-    CreatePassword,
-    CreateAlias
-}
 
 @Suppress("ComplexMethod")
 @Composable
@@ -70,8 +63,19 @@ fun CreateLoginScreen(
         viewModel.setInitialContents(initialContents)
     }
     val uiState by viewModel.createLoginUiState.collectAsStateWithLifecycle()
+
+    var actionAfterKeyboardHide by remember { mutableStateOf<(() -> Unit)?>(null) }
+    val keyboardState by keyboardAsState()
     val keyboardController = LocalSoftwareKeyboardController.current
-    var actionWhenKeyboardDisappears by remember { mutableStateOf<CLActionAfterHideKeyboard?>(null) }
+    PerformActionAfterKeyboardHide(keyboardState = keyboardState) {
+        actionAfterKeyboardHide?.invoke()
+        actionAfterKeyboardHide = null
+    }
+    LaunchedEffect(key1 = actionAfterKeyboardHide) {
+        if (actionAfterKeyboardHide != null) {
+            keyboardController?.hide()
+        }
+    }
 
     LaunchedEffect(clearAlias) {
         if (clearAlias) {
@@ -176,26 +180,46 @@ fun CreateLoginScreen(
                     // Cannot delete passkey from Create Login
                     is LoginContentEvent.OnDeletePasskey -> {}
                     is LoginContentEvent.OnTitleChange -> viewModel.onTitleChange(it.title)
-                    LoginContentEvent.OnVaultSelect -> {
-                        actionWhenKeyboardDisappears = CLActionAfterHideKeyboard.SelectVault
-                        keyboardController?.hide()
-                        keyboardController
+                    is LoginContentEvent.OnVaultSelect -> {
+                        actionAfterKeyboardHide = {
+                            onNavigate(
+                                OnCreateLoginEvent(CreateLoginNavigation.SelectVault(it.shareId))
+                            )
+                        }
                     }
 
                     is LoginContentEvent.OnAliasOptions ->
-                        onNavigate(BaseLoginNavigation.AliasOptions(it.shareId, it.hasReachedAliasLimit))
-                    is LoginContentEvent.OnCreateAlias -> {
-                        actionWhenKeyboardDisappears = CLActionAfterHideKeyboard.CreateAlias
-                        keyboardController?.hide()
-                    }
+                        actionAfterKeyboardHide = {
+                            onNavigate(
+                                BaseLoginNavigation.AliasOptions(
+                                    it.shareId,
+                                    it.hasReachedAliasLimit
+                                )
+                            )
+                        }
 
-                    LoginContentEvent.OnCreatePassword -> {
-                        actionWhenKeyboardDisappears = CLActionAfterHideKeyboard.CreatePassword
-                        keyboardController?.hide()
-                    }
+                    is LoginContentEvent.OnCreateAlias ->
+                        actionAfterKeyboardHide = {
+                            onNavigate(
+                                BaseLoginNavigation.CreateAlias(
+                                    shareId = it.shareId,
+                                    showUpgrade = it.hasReachedAliasLimit,
+                                    title = it.title
+                                )
+                            )
+                        }
 
-                    is LoginContentEvent.OnScanTotp -> onNavigate(BaseLoginNavigation.ScanTotp(it.index))
-                    LoginContentEvent.OnUpgrade -> onNavigate(BaseLoginNavigation.Upgrade)
+                    LoginContentEvent.OnCreatePassword ->
+                        actionAfterKeyboardHide =
+                            { onNavigate(BaseLoginNavigation.GeneratePassword) }
+
+                    is LoginContentEvent.OnScanTotp ->
+                        actionAfterKeyboardHide =
+                            { onNavigate(BaseLoginNavigation.ScanTotp(it.index)) }
+
+                    LoginContentEvent.OnUpgrade ->
+                        actionAfterKeyboardHide =
+                            { onNavigate(BaseLoginNavigation.Upgrade) }
                 }
             }
         )
@@ -213,49 +237,16 @@ fun CreateLoginScreen(
         )
     }
 
-    val keyboardState by keyboardAsState()
-    LaunchedEffect(keyboardState, actionWhenKeyboardDisappears) {
-        if (keyboardState == IsKeyboardVisible.VISIBLE) {
-            when (actionWhenKeyboardDisappears) {
-                CLActionAfterHideKeyboard.SelectVault -> {
-                    selectedVault ?: return@LaunchedEffect
-                    onNavigate(
-                        BaseLoginNavigation.OnCreateLoginEvent(
-                            CreateLoginNavigation.SelectVault(selectedVault.vault.shareId)
-                        )
-                    )
-                }
-
-                CLActionAfterHideKeyboard.CreatePassword ->
-                    onNavigate(BaseLoginNavigation.GeneratePassword)
-
-                CLActionAfterHideKeyboard.CreateAlias -> {
-                    selectedVault ?: return@LaunchedEffect
-                    onNavigate(
-                        BaseLoginNavigation.CreateAlias(
-                            selectedVault.vault.shareId,
-                            uiState.baseLoginUiState.hasReachedAliasLimit,
-                            viewModel.loginItemFormState.title.some()
-                        )
-                    )
-                }
-
-                null -> {}
-            }
-            actionWhenKeyboardDisappears = null
-        }
-    }
-
     ItemSavedLaunchedEffect(
         isItemSaved = uiState.baseLoginUiState.isItemSaved,
         selectedShareId = selectedVault?.vault?.shareId,
         onSuccess = { _, _, model ->
             val event = CreateLoginNavigation.LoginCreated(model)
-            onNavigate(BaseLoginNavigation.OnCreateLoginEvent(event))
+            onNavigate(OnCreateLoginEvent(event))
         },
         onPasskeyResponse = { response ->
             val event = CreateLoginNavigation.LoginCreatedWithPasskey(response)
-            onNavigate(BaseLoginNavigation.OnCreateLoginEvent(event))
+            onNavigate(OnCreateLoginEvent(event))
         }
     )
     InAppReviewTriggerLaunchedEffect(

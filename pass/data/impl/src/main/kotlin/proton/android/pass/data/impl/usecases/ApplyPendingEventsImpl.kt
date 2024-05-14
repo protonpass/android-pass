@@ -95,8 +95,6 @@ class ApplyPendingEventsImpl @Inject constructor(
             .onFailure { error ->
                 PassLogger.w(TAG, "Error creating default vault")
                 PassLogger.w(TAG, error)
-                itemSyncStatusRepository.setMode(SyncMode.ShownToUser)
-                itemSyncStatusRepository.emit(ItemSyncStatus.SyncError)
                 throw error
             }
             .onSuccess {

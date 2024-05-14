@@ -97,7 +97,9 @@ class AppViewModel @Inject constructor(
     )
 
     fun onStop() = viewModelScope.launch {
-        storeAuthOnStop()
+        if (preferenceRepository.getHasAuthenticated().first() is HasAuthenticated.Authenticated) {
+            storeAuthOnStop()
+        }
         inAppUpdatesManager.completeUpdate()
     }
 

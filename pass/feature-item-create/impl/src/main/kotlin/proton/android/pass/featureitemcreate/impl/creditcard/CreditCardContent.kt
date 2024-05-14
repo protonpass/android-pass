@@ -7,6 +7,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 import proton.android.pass.featureitemcreate.impl.common.CreateUpdateTopBar
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.Submit
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardContentEvent.Up
@@ -19,8 +20,10 @@ fun CreditCardContent(
     state: BaseCreditCardUiState,
     creditCardItemFormState: CreditCardItemFormState,
     topBarActionName: String,
-    onEvent: (CreditCardContentEvent) -> Unit,
-    selectedShareId: ShareId?
+    selectedShareId: ShareId?,
+    selectedVault: Vault?,
+    showVaultSelector: Boolean,
+    onEvent: (CreditCardContentEvent) -> Unit
 ) {
     Scaffold(
         modifier = modifier,
@@ -30,14 +33,17 @@ fun CreditCardContent(
                 isLoading = state.isLoading,
                 actionColor = PassTheme.colors.cardInteractionNormMajor1,
                 iconColor = PassTheme.colors.cardInteractionNormMajor2,
-                iconBackgroundColor = PassTheme.colors.cardInteractionNormMinor1,
-                onCloseClick = { onEvent(Up) },
                 showUpgrade = state.isDowngradedMode,
+                iconBackgroundColor = PassTheme.colors.cardInteractionNormMinor1,
+                selectedVault = selectedVault,
+                showVaultSelector = showVaultSelector,
+                onCloseClick = { onEvent(Up) },
                 onActionClick = {
                     selectedShareId ?: return@CreateUpdateTopBar
                     onEvent(Submit(selectedShareId))
                 },
-                onUpgrade = { onEvent(Upgrade) }
+                onUpgrade = { onEvent(Upgrade) },
+                onVaultSelectorClick = { onEvent(CreditCardContentEvent.OnVaultSelect) }
             )
         }
     ) { padding ->
@@ -84,6 +90,8 @@ sealed interface CreditCardContentEvent {
 
     @JvmInline
     value class OnTitleChange(val value: String) : CreditCardContentEvent
+
+    data object OnVaultSelect : CreditCardContentEvent
 }
 
 

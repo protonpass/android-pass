@@ -55,4 +55,6 @@ sealed interface LoginContentEvent {
 
     @JvmInline
     value class OnTitleChange(val title: String) : LoginContentEvent
+
+    data object OnVaultSelect : LoginContentEvent
 }

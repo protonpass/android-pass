@@ -120,7 +120,7 @@
   <string name="item_details_credit_card_section_expiration_date_title">Тэрмін дзеяння</string>
   <string name="item_details_credit_card_section_cvv_title">Код бяспекі</string>
   <string name="item_details_credit_card_section_pin_title">PIN-код</string>
-  <string name="item_details_login_section_username_title">Імя карыстальніка або адрас электроннай пошты</string>
+  <string name="item_details_login_section_username_or_username_title">Імя карыстальніка або адрас электроннай пошты</string>
   <string name="item_details_login_section_password_title">Пароль</string>
   <string name="item_details_login_section_primary_totp_title">Токен 2ФА (TOTP)</string>
   <string name="item_details_login_section_websites_title">Вэб-сайты</string>

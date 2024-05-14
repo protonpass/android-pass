@@ -53,6 +53,12 @@ internal enum class ItemDetailsSnackbarMessage(
         isClipboard = true
     ),
 
+    EmailCopied(
+        id = R.string.item_details_snackbar_message_email_copied,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
+
     PasswordCopied(
         id = R.string.item_details_snackbar_message_password_copied,
         type = SnackbarType.NORM,

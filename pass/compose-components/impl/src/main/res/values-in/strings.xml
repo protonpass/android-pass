@@ -114,7 +114,7 @@
   <string name="item_details_credit_card_section_expiration_date_title">Waktu kedaluwarsa</string>
   <string name="item_details_credit_card_section_cvv_title">Kode keamanan</string>
   <string name="item_details_credit_card_section_pin_title">Kode PIN</string>
-  <string name="item_details_login_section_username_title">Nama pengguna atau alamat email</string>
+  <string name="item_details_login_section_username_or_username_title">Nama pengguna atau alamat email</string>
   <string name="item_details_login_section_password_title">Kata sandi</string>
   <string name="item_details_login_section_primary_totp_title">Token 2FA (TOTP)</string>
   <string name="item_details_login_section_websites_title">Situs web</string>

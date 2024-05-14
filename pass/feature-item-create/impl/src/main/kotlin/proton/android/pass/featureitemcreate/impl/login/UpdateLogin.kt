@@ -153,7 +153,7 @@ fun UpdateLogin(
                     is LoginContentEvent.OnTitleChange ->
                         viewModel.onTitleChange(it.title)
 
-                    LoginContentEvent.OnVaultSelect -> {}
+                    is LoginContentEvent.OnVaultSelect -> {}
                     is LoginContentEvent.OnAliasOptions ->
                         onNavigate(BaseLoginNavigation.AliasOptions(it.shareId, it.hasReachedAliasLimit))
                     is LoginContentEvent.OnCreateAlias -> {
@@ -198,7 +198,6 @@ fun UpdateLogin(
             )
         }
     }
-
     ItemSavedLaunchedEffect(
         isItemSaved = uiState.baseLoginUiState.isItemSaved,
         selectedShareId = uiState.selectedShareId,

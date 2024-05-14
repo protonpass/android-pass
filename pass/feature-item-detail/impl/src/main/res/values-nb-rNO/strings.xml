@@ -45,7 +45,7 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Sett opp 2FA for ekstra sikkerhet</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Denne tjenesten tilbyr 2FA. Aktiver den for ekstra kontosikkerhet.</string>
   <string name="login_item_reused_passwords_subtitle">Elementer fra hvelvene dine som bruker dette passordet.</string>
-  <string name="field_username">Brukernavn eller e-postadresse</string>
+  <string name="field_username_or_email">Brukernavn eller e-postadresse</string>
   <string name="field_password">Passord</string>
   <string name="websites_section_title">Nettsteder</string>
   <string name="totp_section_title">2FA-token (TOTP)</string>

@@ -58,8 +58,8 @@ internal fun PassLoginItemDetailMainSection(
 ) {
     val sections = mutableListOf<@Composable () -> Unit>()
 
-    if(isUsernameSplitEnabled) {
-        if(email.isNotBlank()) {
+    if (isUsernameSplitEnabled) {
+        if (email.isNotBlank()) {
             sections.add {
                 PassItemDetailFieldRow(
                     icon = painterResource(CoreR.drawable.ic_proton_envelope),
@@ -78,7 +78,7 @@ internal fun PassLoginItemDetailMainSection(
             }
         }
 
-        if(username.isNotBlank()) {
+        if (username.isNotBlank()) {
             sections.add {
                 PassItemDetailFieldRow(
                     icon = painterResource(CoreR.drawable.ic_proton_user),
@@ -180,5 +180,4 @@ internal fun PassLoginItemDetailMainSection(
         modifier = modifier,
         sections = sections.toPersistentList()
     )
-
 }

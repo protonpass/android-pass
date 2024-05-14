@@ -45,7 +45,7 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Configurez l\'A2F pour plus de sécurité</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Ce service offre l\'A2F. Activez-le pour améliorer votre sécurité.</string>
   <string name="login_item_reused_passwords_subtitle">Éléments de vos coffre-forts qui utilisent ce mot de passe.</string>
-  <string name="field_username">Nom d\'utilisateur ou adresse e-mail</string>
+  <string name="field_username_or_email">Nom d\'utilisateur ou adresse e-mail</string>
   <string name="field_password">Mot de passe</string>
   <string name="websites_section_title">Sites internet</string>
   <string name="totp_section_title">Jeton A2F (TOTP/mot de passe à usage unique basé sur le temps)</string>

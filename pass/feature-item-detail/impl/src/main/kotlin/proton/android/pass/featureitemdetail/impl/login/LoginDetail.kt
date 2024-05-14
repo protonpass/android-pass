@@ -281,6 +281,10 @@ fun LoginDetail(
                                     onNavigate(ItemDetailNavigation.Upgrade())
                                 }
 
+                                is LoginDetailEvent.OnEmailClick -> {
+                                    viewModel.copyEmailToClipboard(it.email)
+                                }
+
                                 LoginDetailEvent.OnUsernameClick -> {
                                     viewModel.copyUsernameToClipboard()
                                 }
@@ -326,7 +330,8 @@ fun LoginDetail(
                                 }
                             }
                         },
-                        isHistoryFeatureEnabled = state.isHistoryFeatureEnabled
+                        isHistoryFeatureEnabled = state.isHistoryFeatureEnabled,
+                        isUsernameSplitEnabled = state.isUsernameSplitEnabled
                     )
                 }
                 ConfirmDeleteItemDialog(

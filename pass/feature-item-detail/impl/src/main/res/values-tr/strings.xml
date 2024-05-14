@@ -45,7 +45,7 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Güvenliği artırmak için iki adımlı doğrulamayı açın</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Bu hizmet iki adımlı doğrulama sağlıyor. Hesap güvenliğini artırmak için bunu kullanın.</string>
   <string name="login_item_reused_passwords_subtitle">Kasalarınızda bu parolayı kullanan ögeler.</string>
-  <string name="field_username">Kullanıcı adı ya da e-posta adresi</string>
+  <string name="field_username_or_email">Kullanıcı adı ya da e-posta adresi</string>
   <string name="field_password">Parola</string>
   <string name="websites_section_title">Siteler</string>
   <string name="totp_section_title">İki adımlı doğrulama kodu (tek kullanımlık)</string>

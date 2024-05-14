@@ -28,7 +28,7 @@
   <string name="item_restored_message_error">Feil ved gjenoppretting av element</string>
   <string name="login_item_generate_totp_error">Feil ved generering av 2FA-kode</string>
   <string name="login_item_view_alias_button">Vis alias</string>
-  <string name="field_username">Brukernavn eller e-postadresse</string>
+  <string name="field_username_or_email">Brukernavn eller e-postadresse</string>
   <string name="field_password">Passord</string>
   <string name="websites_section_title">Nettsteder</string>
   <string name="totp_section_title">2FA-token (TOTP)</string>

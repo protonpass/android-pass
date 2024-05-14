@@ -47,7 +47,7 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Налаштуйте 2ЕП для більшої безпеки</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Цей сервіс пропонує 2ЕП. Увімкніть її для додаткової безпеки облікового запису.</string>
   <string name="login_item_reused_passwords_subtitle">Записи входу з ваших сховищ, які використовують цей пароль.</string>
-  <string name="field_username">Ім\'я користувача або адреса е-пошти</string>
+  <string name="field_username_or_email">Ім\'я користувача або адреса е-пошти</string>
   <string name="field_password">Пароль</string>
   <string name="websites_section_title">Вебсайти</string>
   <string name="totp_section_title">Токен 2FA (TOTP)</string>

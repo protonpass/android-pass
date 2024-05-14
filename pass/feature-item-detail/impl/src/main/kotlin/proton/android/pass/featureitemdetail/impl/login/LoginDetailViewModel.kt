@@ -363,11 +363,11 @@ class LoginDetailViewModel @Inject constructor(
 
     private val itemFeaturesFlow = combine(
         featureFlagsRepository.get<Boolean>(FeatureFlag.SECURITY_CENTER_V1),
-        getUserPlan()
-    ) { isSecurityCenterEnabled, userPlan ->
+        featureFlagsRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT)
+    ) { isSecurityCenterEnabled, isUsernameSplitEnabled ->
         ItemFeatures(
-            isHistoryEnabled = userPlan.isPaidPlan,
-            isSecurityCenterEnabled = isSecurityCenterEnabled
+            isSecurityCenterEnabled = isSecurityCenterEnabled,
+            isUsernameSplitEnabled = isUsernameSplitEnabled
         )
     }
 
@@ -440,6 +440,7 @@ class LoginDetailViewModel @Inject constructor(
                     event = event,
                     isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled,
                     isSecurityCenterEnabled = itemFeatures.isSecurityCenterEnabled,
+                    isUsernameSplitEnabled = itemFeatures.isUsernameSplitEnabled,
                     monitorState = details.securityState
                 )
             }
@@ -464,6 +465,11 @@ class LoginDetailViewModel @Inject constructor(
         }
         clipboardManager.copyToClipboard(text = text, isSecure = true)
         snackbarDispatcher(PasswordCopiedToClipboard)
+    }
+
+    internal fun copyEmailToClipboard(email: String) = viewModelScope.launch {
+        clipboardManager.copyToClipboard(email)
+        snackbarDispatcher(DetailSnackbarMessages.EmailCopiedToClipboard)
     }
 
     fun copyUsernameToClipboard() = viewModelScope.launch {

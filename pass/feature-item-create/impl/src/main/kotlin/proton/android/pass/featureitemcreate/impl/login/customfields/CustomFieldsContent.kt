@@ -27,12 +27,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
@@ -47,7 +45,6 @@ import proton.android.pass.featureitemcreate.impl.login.LoginCustomField
 import proton.android.pass.featureitemcreate.impl.login.LoginItemValidationErrors
 import me.proton.core.presentation.R as CoreR
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CustomFieldsContent(
     modifier: Modifier = Modifier,
@@ -60,7 +57,6 @@ fun CustomFieldsContent(
 ) {
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
-    val keyboardController = LocalSoftwareKeyboardController.current
     var addCustomFieldAction by remember { mutableStateOf(false) }
     val keyboardState by keyboardAsState()
 
@@ -125,7 +121,6 @@ fun CustomFieldsContent(
                 onClick = {
                     focusManager.clearFocus(true)
                     addCustomFieldAction = true
-                    keyboardController?.hide()
                 }
             )
         }

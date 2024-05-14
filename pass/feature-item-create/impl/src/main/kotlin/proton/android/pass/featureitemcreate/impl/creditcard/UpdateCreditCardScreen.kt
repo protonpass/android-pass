@@ -53,6 +53,9 @@ fun UpdateCreditCardScreen(
                     state = uiState.baseState,
                     creditCardItemFormState = viewModel.creditCardItemFormState,
                     topBarActionName = stringResource(id = R.string.action_save),
+                    selectedVault = null,
+                    showVaultSelector = false,
+                    selectedShareId = uiState.selectedShareId,
                     onEvent = { event ->
                         when (event) {
                             is CreditCardContentEvent.OnCVVChange ->
@@ -78,14 +81,16 @@ fun UpdateCreditCardScreen(
                             CreditCardContentEvent.Upgrade -> onNavigate(Upgrade)
                             is CreditCardContentEvent.OnCVVFocusChange ->
                                 viewModel.onCVVFocusChanged(event.isFocused)
+
                             is CreditCardContentEvent.OnPinFocusChange ->
                                 viewModel.onPinFocusChanged(event.isFocused)
 
                             is CreditCardContentEvent.OnTitleChange ->
                                 viewModel.onTitleChange(event.value)
+
+                            CreditCardContentEvent.OnVaultSelect -> {}
                         }
-                    },
-                    selectedShareId = uiState.selectedShareId
+                    }
                 )
                 ConfirmCloseDialog(
                     show = showConfirmDialog,

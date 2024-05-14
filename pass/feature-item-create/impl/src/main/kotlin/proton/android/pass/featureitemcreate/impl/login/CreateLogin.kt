@@ -28,8 +28,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -51,7 +51,6 @@ private enum class CLActionAfterHideKeyboard {
 }
 
 @Suppress("ComplexMethod")
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CreateLoginScreen(
     modifier: Modifier = Modifier,
@@ -68,6 +67,7 @@ fun CreateLoginScreen(
     }
     val uiState by viewModel.createLoginUiState.collectAsStateWithLifecycle()
     val keyboardState by keyboardAsState()
+    val keyboardController = LocalSoftwareKeyboardController.current
     var actionWhenKeyboardDisappears by remember { mutableStateOf<CLActionAfterHideKeyboard?>(null) }
 
     LaunchedEffect(clearAlias) {
@@ -116,6 +116,8 @@ fun CreateLoginScreen(
             uiState = uiState.baseLoginUiState,
             passkeyState = uiState.passkeyState,
             loginItemFormState = viewModel.loginItemFormState,
+            selectedVault = selectedVault?.vault,
+            showVaultSelector = showVaultSelector,
             selectedShareId = selectedVault?.vault?.shareId,
             topBarActionName = stringResource(id = R.string.title_create),
             showCreateAliasButton = showCreateAliasButton,
@@ -171,6 +173,10 @@ fun CreateLoginScreen(
                     // Cannot delete passkey from Create Login
                     is LoginContentEvent.OnDeletePasskey -> {}
                     is LoginContentEvent.OnTitleChange -> viewModel.onTitleChange(it.title)
+                    LoginContentEvent.OnVaultSelect -> {
+                        actionWhenKeyboardDisappears = CLActionAfterHideKeyboard.SelectVault
+                        keyboardController?.hide()
+                    }
                 }
             },
             onNavigate = onNavigate

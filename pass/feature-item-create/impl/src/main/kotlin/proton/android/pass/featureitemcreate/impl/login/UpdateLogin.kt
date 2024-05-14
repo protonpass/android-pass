@@ -91,9 +91,11 @@ fun UpdateLogin(
             uiState = uiState.baseLoginUiState,
             passkeyState = None,
             loginItemFormState = viewModel.loginItemFormState,
+            selectedVault = null,
+            showVaultSelector = false,
             selectedShareId = uiState.selectedShareId,
-            showCreateAliasButton = true,
             topBarActionName = stringResource(id = R.string.action_save),
+            showCreateAliasButton = true,
             isUpdate = true,
             onEvent = {
                 when (it) {
@@ -149,6 +151,8 @@ fun UpdateLogin(
 
                     is LoginContentEvent.OnTitleChange ->
                         viewModel.onTitleChange(it.title)
+
+                    LoginContentEvent.OnVaultSelect -> {}
                 }
             },
             onNavigate = { onNavigate(it) }

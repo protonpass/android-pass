@@ -28,6 +28,7 @@ import proton.android.pass.domain.Vault
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.domain.items.ItemCustomField
 
+@Stable
 sealed class ItemDetailState(
     val itemContents: ItemContents,
     val isItemPinned: Boolean,
@@ -68,6 +69,7 @@ sealed class ItemDetailState(
         val primaryTotp: Totp?,
         val customFields: List<ItemCustomField>,
         val passkeys: List<UIPasskeyContent>,
+        val isUsernameSplitEnabled: Boolean,
         private val isPinned: Boolean,
         private val vault: Vault?
     ) : ItemDetailState(

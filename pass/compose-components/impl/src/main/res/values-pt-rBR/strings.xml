@@ -116,7 +116,7 @@
   <string name="item_details_credit_card_section_expiration_date_title">Data de validade</string>
   <string name="item_details_credit_card_section_cvv_title">Código de segurança</string>
   <string name="item_details_credit_card_section_pin_title">Código PIN</string>
-  <string name="item_details_login_section_username_title">Nome de usuário ou endereço de e-mail</string>
+  <string name="item_details_login_section_username_or_username_title">Nome de usuário ou endereço de e-mail</string>
   <string name="item_details_login_section_password_title">Senha</string>
   <string name="item_details_login_section_primary_totp_title">Token A2F (TOTP)</string>
   <string name="item_details_login_section_websites_title">Sites</string>

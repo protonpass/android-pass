@@ -61,7 +61,8 @@ internal fun PassItemDetailSections(
             customFields = customFields.toImmutableList(),
             passkeys = passkeys.toImmutableList(),
             itemColors = itemColors,
-            onEvent = onEvent
+            onEvent = onEvent,
+            isUsernameSplitEnabled = isUsernameSplitEnabled
         )
 
         is ItemDetailState.Note -> PassNoteItemDetailSections(

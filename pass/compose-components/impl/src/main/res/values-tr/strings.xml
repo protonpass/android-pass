@@ -116,7 +116,7 @@
   <string name="item_details_credit_card_section_expiration_date_title">Geçerlilik tarihi</string>
   <string name="item_details_credit_card_section_cvv_title">Güvenlik kodu</string>
   <string name="item_details_credit_card_section_pin_title">PIN kodu</string>
-  <string name="item_details_login_section_username_title">Kullanıcı adı ya da e-posta adresi</string>
+  <string name="item_details_login_section_username_or_username_title">Kullanıcı adı ya da e-posta adresi</string>
   <string name="item_details_login_section_password_title">Parola</string>
   <string name="item_details_login_section_primary_totp_title">İki adımlı doğrulama kodu (tek kullanımlık)</string>
   <string name="item_details_login_section_websites_title">Siteler</string>

@@ -94,7 +94,8 @@ class SecurityCenterAliasListViewModel @Inject constructor(
                     AliasKeyId(
                         shareId = item.shareId,
                         itemId = item.id,
-                        alias = (item.itemType as ItemType.Alias).aliasEmail
+                        alias = (item.itemType as ItemType.Alias).aliasEmail,
+                        isMonitored = !item.hasSkippedHealthCheck
                     )
                 }
                 .map { aliasKey ->

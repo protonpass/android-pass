@@ -142,7 +142,7 @@ class CreateCreditCardScreenTest {
                 }
             }
 
-            val buttonText = activity.getString(R.string.title_create_credit_card)
+            val buttonText = activity.getString(R.string.title_create)
             waitUntilExists(hasText(buttonText))
 
             val titleText = activity.getString(CompR.string.field_title_title)
@@ -220,7 +220,7 @@ class CreateCreditCardScreenTest {
                 }
             }
 
-            val buttonText = activity.getString(R.string.title_create_credit_card)
+            val buttonText = activity.getString(R.string.title_create)
             waitUntilExists(hasText(buttonText))
 
             onNode(hasText(buttonText)).performClick()
@@ -243,7 +243,7 @@ class CreateCreditCardScreenTest {
                 }
             }
 
-            val buttonText = activity.getString(R.string.title_create_credit_card)
+            val buttonText = activity.getString(R.string.title_create)
             waitUntilExists(hasText(buttonText))
 
             val titleText = activity.getString(CompR.string.field_title_title)
@@ -273,7 +273,7 @@ class CreateCreditCardScreenTest {
                 }
             }
 
-            val buttonText = activity.getString(R.string.title_create_credit_card)
+            val buttonText = activity.getString(R.string.title_create)
             waitUntilExists(hasText(buttonText))
 
             val titleText = activity.getString(CompR.string.field_title_title)
@@ -307,7 +307,7 @@ class CreateCreditCardScreenTest {
                 }
             }
 
-            val buttonText = activity.getString(R.string.title_create_credit_card)
+            val buttonText = activity.getString(R.string.title_create)
             waitUntilExists(hasText(buttonText))
 
             val closeContentDescription = activity.getString(R.string.close_scree_icon_content_description)

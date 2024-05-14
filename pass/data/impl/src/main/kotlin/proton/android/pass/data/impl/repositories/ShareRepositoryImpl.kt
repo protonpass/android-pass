@@ -18,7 +18,6 @@
 
 package proton.android.pass.data.impl.repositories
 
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -150,47 +149,20 @@ class ShareRepositoryImpl @Inject constructor(
     @Suppress("LongMethod")
     override suspend fun refreshShares(userId: UserId): RefreshSharesResult = coroutineScope {
         PassLogger.i(TAG, "Refreshing shares")
-        val userAddress = userAddressRepository.getAddresses(userId).primary()
-            ?: throw IllegalStateException("Could not find PrimaryAddress")
-        PassLogger.i(TAG, "Found primary user address")
 
-        val hadSharesOnStart = localShareDataSource.getAllSharesForUser(userId).first().isNotEmpty()
-
-        // Retrieve remote shares and create a map ShareId->ShareResponse
-        val remoteSharesDeferred: Deferred<List<ShareResponse>> =
-            async { remoteShareDataSource.getShares(userAddress.userId) }
-        remoteSharesDeferred.invokeOnCompletion {
-            if (it != null) {
-                PassLogger.w(TAG, it)
-            } else {
-                PassLogger.i(TAG, "Fetched remote shares")
-            }
+        val localShares = localShareDataSource.getAllSharesForUser(userId).first()
+        val localSharesMap = localShares.associateBy { localShareEntity ->
+            ShareId(localShareEntity.id)
         }
-        // Retrieve local shares and create a map ShareId->ShareEntity
-        val localSharesDeferred: Deferred<List<ShareEntity>> = async {
-            localShareDataSource
-                .getAllSharesForUser(userAddress.userId)
-                .first()
-        }
-        localSharesDeferred.invokeOnCompletion {
-            if (it != null) {
-                PassLogger.w(TAG, it)
-            } else {
-                PassLogger.i(TAG, "Retrieved local shares")
-            }
-        }
+        val hadLocalSharesOnStart = localShares.isNotEmpty()
 
-        val sources = awaitAll(remoteSharesDeferred, localSharesDeferred)
-        val remoteShares = sources[0].filterIsInstance<ShareResponse>()
-        PassLogger.i(TAG, "Fetched ${remoteShares.size} remote shares")
-
-        val localShares = sources[1].filterIsInstance<ShareEntity>()
-        PassLogger.i(TAG, "Retrieved ${localShares.size} local shares")
-        val remoteShareMap = remoteShares.associateBy { ShareId(it.shareId) }
-        val localSharesMap = localShares.associateBy { ShareId(it.id) }
+        val remoteShares = remoteShareDataSource.getShares(userId)
+        val remoteSharesMap = remoteShares.associateBy { remoteShareResponse ->
+            ShareId(remoteShareResponse.shareId)
+        }
 
         // Update local share if needed
-        val sharesToUpdate = remoteShareMap.mapNotNull { (_, remoteShare) ->
+        val sharesToUpdate = remoteSharesMap.mapNotNull { (_, remoteShare) ->
             val localShare = localSharesMap[ShareId(remoteShare.shareId)]
             if (localShare != null && localShareNeedsUpdate(localShare, remoteShare)) {
                 localShare to remoteShare
@@ -200,7 +172,7 @@ class ShareRepositoryImpl @Inject constructor(
         }.map { (localShare, remoteShare) -> updateEntityWithResponse(localShare, remoteShare) }
 
         // Delete from the local data source the shares that are not in remote response
-        val toDelete = localSharesMap.keys.subtract(remoteShareMap.keys)
+        val toDelete = localSharesMap.keys.subtract(remoteSharesMap.keys)
 
         if (sharesToUpdate.isNotEmpty() || toDelete.isNotEmpty()) {
             database.inTransaction("refreshShares") {
@@ -226,17 +198,19 @@ class ShareRepositoryImpl @Inject constructor(
         val remoteSharesToSave = remoteShares.filter {
             sharesNotInLocal.contains(ShareId(it.shareId)) || inactiveShares.contains(ShareId(it.shareId))
         }
-        val storedShares = storeShares(userAddress, remoteSharesToSave)
+
+        val storedShares = storeShares(userId, remoteSharesToSave)
 
         val newShares = storedShares.filter {
             it.isActive && sharesNotInLocal.contains(ShareId(it.id))
         }
 
-        val allShareIds = remoteShareMap.keys.filterNot { inactiveShares.contains(it) }.toSet()
+        val allShareIds = remoteSharesMap.keys.filterNot { inactiveShares.contains(it) }.toSet()
 
-        val wasFirstSync = !hadSharesOnStart && allShareIds.isNotEmpty()
+        val wasFirstSync = !hadLocalSharesOnStart && allShareIds.isNotEmpty()
 
         PassLogger.i(TAG, "Refreshed shares")
+
         RefreshSharesResult(
             allShareIds = allShareIds,
             newShareIds = newShares.map { ShareId(it.id) }.toSet(),
@@ -271,9 +245,8 @@ class ShareRepositoryImpl @Inject constructor(
                 PassLogger.w(TAG, "Error fetching share from remote [shareId=${shareId.id}]")
                 throw ShareNotAvailableError()
             }
-            val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
             val storedShares: List<ShareEntity> = storeShares(
-                userAddress = userAddress,
+                userId = userId,
                 shares = listOf(shareResponse)
             )
             share = storedShares.first()
@@ -348,10 +321,8 @@ class ShareRepositoryImpl @Inject constructor(
         event: UpdateShareEvent
     ) {
         val asResponse = event.toResponse()
-        val userAddress = userAddressRepository.getAddress(userId, AddressId(asResponse.addressId))
-            ?: return
 
-        storeShares(userAddress, listOf(asResponse))
+        storeShares(userId, listOf(asResponse))
     }
 
     override suspend fun applyPendingShareEvent(userId: UserId, event: UpdateShareEvent) {
@@ -379,49 +350,43 @@ class ShareRepositoryImpl @Inject constructor(
         event: UpdateShareEvent,
         block: suspend (ShareResponseEntity) -> Unit
     ) {
-        event.toResponse().let { sharedResponse ->
-            userAddressRepository.getAddress(userId, AddressId(sharedResponse.addressId))
-                ?.let { userAddress ->
-                    block(createShareResponseEntity(sharedResponse, userAddress))
-                }
-        }
+        block(createShareResponseEntity(event.toResponse(), userId))
     }
 
-    private suspend fun storeShares(userAddress: UserAddress, shares: List<ShareResponse>): List<ShareEntity> =
-        coroutineScope {
-            if (shares.isEmpty()) return@coroutineScope emptyList()
+    private suspend fun storeShares(userId: UserId, shares: List<ShareResponse>): List<ShareEntity> = coroutineScope {
+        if (shares.isEmpty()) return@coroutineScope emptyList()
 
-            PassLogger.i(TAG, "Fetching ShareKeys for ${shares.size} shares")
-            val entities: List<ShareResponseEntity> = shares.map { response ->
-                async { createShareResponseEntity(response, userAddress) }
-            }.awaitAll()
+        PassLogger.i(TAG, "Fetching ShareKeys for ${shares.size} shares")
+        val entities: List<ShareResponseEntity> = shares.map { response ->
+            async { createShareResponseEntity(response, userId) }
+        }.awaitAll()
 
-            val shareEntities = entities.map { shareResponseEntity -> shareResponseEntity.entity }
-            val shareKeyEntities = entities.map { shareResponseEntity -> shareResponseEntity.keys }
-                .flatten()
+        val shareEntities = entities.map { shareResponseEntity -> shareResponseEntity.entity }
+        val shareKeyEntities = entities.map { shareResponseEntity -> shareResponseEntity.keys }
+            .flatten()
 
-            if (shareEntities.isNotEmpty() || shareKeyEntities.isNotEmpty()) {
-                database.inTransaction("storeShares") {
-                    // First, store the shares
-                    if (shareEntities.isNotEmpty()) {
-                        PassLogger.i(TAG, "Storing ${shareEntities.size} shares")
-                        localShareDataSource.upsertShares(shareEntities)
-                    }
-                    // Now that we have inserted the shares, we can safely insert the shareKeys
-                    if (shareKeyEntities.isNotEmpty()) {
-                        PassLogger.i(TAG, "Storing ${shareKeyEntities.size} ShareKeys")
-                        shareKeyRepository.saveShareKeys(shareKeyEntities)
-                    }
+        if (shareEntities.isNotEmpty() || shareKeyEntities.isNotEmpty()) {
+            database.inTransaction("storeShares") {
+                // First, store the shares
+                if (shareEntities.isNotEmpty()) {
+                    PassLogger.i(TAG, "Storing ${shareEntities.size} shares")
+                    localShareDataSource.upsertShares(shareEntities)
+                }
+                // Now that we have inserted the shares, we can safely insert the shareKeys
+                if (shareKeyEntities.isNotEmpty()) {
+                    PassLogger.i(TAG, "Storing ${shareKeyEntities.size} ShareKeys")
+                    shareKeyRepository.saveShareKeys(shareKeyEntities)
                 }
             }
-
-            shareEntities
         }
 
-    private suspend fun createShareResponseEntity(
-        shareResponse: ShareResponse,
-        userAddress: UserAddress
-    ): ShareResponseEntity {
+        shareEntities
+    }
+
+    private suspend fun createShareResponseEntity(shareResponse: ShareResponse, userId: UserId): ShareResponseEntity {
+        val userAddress = userAddressRepository.getAddresses(userId).primary()
+            ?: throw IllegalStateException("Could not find PrimaryAddress")
+        PassLogger.i(TAG, "Found primary user address")
         val shareId = ShareId(shareResponse.shareId)
 
         // First we fetch the shareKeys and not save them, in case the share has not been

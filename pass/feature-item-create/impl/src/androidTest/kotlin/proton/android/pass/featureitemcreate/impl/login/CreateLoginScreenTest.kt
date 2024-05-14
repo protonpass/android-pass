@@ -181,7 +181,7 @@ class CreateLoginScreenTest {
                 }
             }
 
-            val buttonText = activity.getString(R.string.title_create_login)
+            val buttonText = activity.getString(R.string.title_create)
             waitUntilExists(hasText(buttonText))
 
             // Title
@@ -307,7 +307,7 @@ class CreateLoginScreenTest {
                 }
             }
 
-            val buttonText = activity.getString(R.string.title_create_login)
+            val buttonText = activity.getString(R.string.title_create)
             waitUntilExists(hasText(buttonText))
 
             val titleText = activity.getString(CompR.string.field_title_title)
@@ -376,7 +376,7 @@ class CreateLoginScreenTest {
                 }
             }
 
-            val buttonText = activity.getString(R.string.title_create_login)
+            val buttonText = activity.getString(R.string.title_create)
             waitUntilExists(hasText(buttonText))
 
             val usernameText = activity.getString(R.string.field_username_title)
@@ -403,7 +403,7 @@ class CreateLoginScreenTest {
                 }
             }
 
-            val buttonText = activity.getString(R.string.title_create_login)
+            val buttonText = activity.getString(R.string.title_create)
             waitUntilExists(hasText(buttonText))
 
             val usernameText = activity.getString(R.string.field_username_title)
@@ -431,7 +431,7 @@ class CreateLoginScreenTest {
                 }
             }
 
-            val buttonText = activity.getString(R.string.title_create_login)
+            val buttonText = activity.getString(R.string.title_create)
             waitUntilExists(hasText(buttonText))
 
             onNode(hasText(buttonText)).performClick()
@@ -460,7 +460,7 @@ class CreateLoginScreenTest {
                 }
             }
 
-            val buttonText = activity.getString(R.string.title_create_login)
+            val buttonText = activity.getString(R.string.title_create)
             waitUntilExists(hasText(buttonText))
 
             val closeContentDescription =
@@ -490,7 +490,7 @@ class CreateLoginScreenTest {
                 }
             }
 
-            val buttonText = activity.getString(R.string.title_create_login)
+            val buttonText = activity.getString(R.string.title_create)
             waitUntilExists(hasText(buttonText))
 
             val upgradeText = activity.getString(R.string.upgrade)
@@ -518,7 +518,7 @@ class CreateLoginScreenTest {
                 }
             }
 
-            val buttonText = activity.getString(R.string.title_create_login)
+            val buttonText = activity.getString(R.string.title_create)
             waitUntilExists(hasText(buttonText))
 
             val addCustomFieldText =
@@ -565,7 +565,7 @@ class CreateLoginScreenTest {
                 }
             }
 
-            val buttonText = activity.getString(R.string.title_create_login)
+            val buttonText = activity.getString(R.string.title_create)
             waitUntilExists(hasText(buttonText))
 
             val titleText = activity.getString(CompR.string.field_title_title)

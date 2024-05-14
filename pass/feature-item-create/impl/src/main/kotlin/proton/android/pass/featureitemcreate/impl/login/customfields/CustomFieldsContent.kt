@@ -39,6 +39,7 @@ import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.composecomponents.impl.buttons.TransparentTextButton
+import proton.android.pass.composecomponents.impl.keyboard.IsKeyboardVisible
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.UICustomFieldContent
@@ -64,7 +65,7 @@ fun CustomFieldsContent(
     val keyboardState by keyboardAsState()
 
     LaunchedEffect(keyboardState, addCustomFieldAction) {
-        if (!keyboardState && addCustomFieldAction) {
+        if (keyboardState == IsKeyboardVisible.VISIBLE && addCustomFieldAction) {
             onEvent(CustomFieldEvent.AddCustomField)
             addCustomFieldAction = false
         }

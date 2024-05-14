@@ -43,11 +43,13 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toImmutableSet
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
 import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsContentType.AddTotp
 import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsContentType.AliasOptions
 import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsContentType.GeneratePassword
@@ -56,7 +58,6 @@ import proton.android.pass.featureitemcreate.impl.login.customfields.CustomField
 import proton.android.pass.featureitemcreate.impl.login.passkey.PasskeyEditRow
 import proton.android.pass.featureitemcreate.impl.login.passkey.PasskeysSection
 
-@Suppress("UnusedPrivateMember")
 @Composable
 internal fun LoginItemForm(
     modifier: Modifier = Modifier,
@@ -75,11 +76,9 @@ internal fun LoginItemForm(
     focusLastWebsite: Boolean,
     canUpdateUsername: Boolean,
     websitesWithErrors: ImmutableList<Int>,
-    onEvent: (LoginContentEvent) -> Unit,
-    onGeneratePasswordClick: () -> Unit,
-    onCreateAliasClick: () -> Unit,
-    onAliasOptionsClick: () -> Unit,
-    onNavigate: (BaseLoginNavigation) -> Unit
+    selectedShareId: ShareId?,
+    hasReachedAliasLimit: Boolean,
+    onEvent: (LoginContentEvent) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -131,15 +130,12 @@ internal fun LoginItemForm(
             MainLoginSection(
                 loginItemFormState = loginItemFormState,
                 canUpdateUsername = canUpdateUsername,
+                selectedShareId = selectedShareId,
                 totpUiState = totpUiState,
                 isEditAllowed = isEditAllowed,
                 isTotpError = isTotpError,
-                onEvent = onEvent,
-                onAliasOptionsClick = onAliasOptionsClick,
-                onFocusChange = { field, isFocused ->
-                    onEvent(LoginContentEvent.OnFocusChange(field, isFocused))
-                },
-                onUpgrade = { onNavigate(BaseLoginNavigation.Upgrade) }
+                hasReachedAliasLimit = hasReachedAliasLimit,
+                onEvent = onEvent
             )
             WebsitesSection(
                 websites = loginItemFormState.urls.toImmutableList(),
@@ -183,17 +179,21 @@ internal fun LoginItemForm(
             when (currentStickyFormOption) {
                 GeneratePassword ->
                     StickyGeneratePassword(
-                        onClick = {
-                            onGeneratePasswordClick()
-                            keyboardController?.hide()
-                        }
+                        onClick = { onEvent(LoginContentEvent.OnCreatePassword) }
                     )
 
                 AliasOptions -> StickyUsernameOptions(
                     showCreateAliasButton = showCreateAliasButton,
                     primaryEmail = primaryEmail,
                     onCreateAliasClick = {
-                        onCreateAliasClick()
+                        selectedShareId ?: return@StickyUsernameOptions
+                        onEvent(
+                            LoginContentEvent.OnCreateAlias(
+                                shareId = selectedShareId,
+                                hasReachedAliasLimit = hasReachedAliasLimit,
+                                title = loginItemFormState.title.some()
+                            )
+                        )
                         keyboardController?.hide()
                     },
                     onPrefillCurrentEmailClick = {
@@ -216,7 +216,7 @@ internal fun LoginItemForm(
                         },
                         onScanCode = {
                             val index = (focusedField as? LoginCustomField)?.index
-                            onNavigate(BaseLoginNavigation.ScanTotp(index.toOption()))
+                            onEvent(LoginContentEvent.OnScanTotp(index.toOption()))
                             keyboardController?.hide()
                         }
                     )

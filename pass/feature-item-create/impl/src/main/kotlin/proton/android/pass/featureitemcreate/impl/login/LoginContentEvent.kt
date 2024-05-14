@@ -18,6 +18,7 @@
 
 package proton.android.pass.featureitemcreate.impl.login
 
+import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.domain.ShareId
@@ -57,4 +58,22 @@ sealed interface LoginContentEvent {
     value class OnTitleChange(val title: String) : LoginContentEvent
 
     data object OnVaultSelect : LoginContentEvent
+
+    data class OnCreateAlias(
+        val shareId: ShareId,
+        val hasReachedAliasLimit: Boolean,
+        val title: Option<String>
+    ) : LoginContentEvent
+
+    data object OnCreatePassword : LoginContentEvent
+
+    data class OnAliasOptions(
+        val shareId: ShareId,
+        val hasReachedAliasLimit: Boolean
+    ) : LoginContentEvent
+
+    data object OnUpgrade : LoginContentEvent
+
+    @JvmInline
+    value class OnScanTotp(val index: Option<Int>) : LoginContentEvent
 }

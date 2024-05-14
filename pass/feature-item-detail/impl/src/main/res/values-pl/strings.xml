@@ -47,7 +47,7 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Skonfiguruj uwierzytelnianie dwustopniowe dla większego bezpieczeństwa</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Usługa oferuje uwierzytelnianie dwustopniowe. Włącz je, aby zwiększyć bezpieczeństwo konta.</string>
   <string name="login_item_reused_passwords_subtitle">Dane logowania w sejfie, które używają tego hasła.</string>
-  <string name="field_username">Nazwa użytkownika lub adres e-mail</string>
+  <string name="field_username_or_email">Nazwa użytkownika lub adres e-mail</string>
   <string name="field_password">Hasło</string>
   <string name="websites_section_title">Strony internetowe</string>
   <string name="totp_section_title">Token TOTP</string>

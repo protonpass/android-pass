@@ -29,6 +29,7 @@ enum class DetailSnackbarMessages(
 ) : SnackbarMessage {
     InitError(R.string.detail_init_error, SnackbarType.ERROR),
     AliasCopiedToClipboard(R.string.alias_copied_to_clipboard, SnackbarType.NORM, true),
+    EmailCopiedToClipboard(R.string.email_copied_to_clipboard, SnackbarType.NORM, true),
     UsernameCopiedToClipboard(R.string.username_copied_to_clipboard, SnackbarType.NORM, true),
     PasswordCopiedToClipboard(R.string.password_copied_to_clipboard, SnackbarType.NORM, true),
     WebsiteCopiedToClipboard(R.string.website_copied_to_clipboard, SnackbarType.NORM, true),

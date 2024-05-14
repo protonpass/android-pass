@@ -45,7 +45,7 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Richte 2FA für mehr Sicherheit ein</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">This service offers 2FA. Enable it for added account security.</string>
   <string name="login_item_reused_passwords_subtitle">Items from your vaults that use this password.</string>
-  <string name="field_username">Benutzername oder E-Mail-Adresse</string>
+  <string name="field_username_or_email">Benutzername oder E-Mail-Adresse</string>
   <string name="field_password">Passwort</string>
   <string name="websites_section_title">Websites</string>
   <string name="totp_section_title">2FA-Token (TOTP)</string>

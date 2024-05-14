@@ -49,7 +49,7 @@ internal fun PassLoginItemDetailSections(
     passkeys: ImmutableList<UIPasskeyContent>,
     itemColors: PassItemColors,
     onEvent: (PassItemDetailsUiEvent) -> Unit,
-    isUsernameSplitEnabled: Boolean,
+    isUsernameSplitEnabled: Boolean
 ) = with(contents) {
     Column(
         modifier = modifier,

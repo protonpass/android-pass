@@ -44,7 +44,7 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Atur 2FA untuk keamanan yang lebih</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Layanan ini menawarkan 2FA. Aktifkan fitur ini untuk meningkatkan keamanan akun.</string>
   <string name="login_item_reused_passwords_subtitle">Item pada brankas Anda yang menggunakan kata sandi ini.</string>
-  <string name="field_username">Nama pengguna atau alamat email</string>
+  <string name="field_username_or_email">Nama pengguna atau alamat email</string>
   <string name="field_password">Kata sandi</string>
   <string name="websites_section_title">Situs web</string>
   <string name="totp_section_title">Token 2FA (TOTP)</string>

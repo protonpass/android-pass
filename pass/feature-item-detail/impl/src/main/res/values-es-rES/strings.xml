@@ -45,7 +45,7 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Configura la 2FA para más seguridad</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Este servicio ofrece la 2FA. Actívala para aumentar la seguridad de la cuenta.</string>
   <string name="login_item_reused_passwords_subtitle">Elementos de las cajas fuertes que usan esta contraseña.</string>
-  <string name="field_username">Nombre de usuario o dirección de correo electrónico</string>
+  <string name="field_username_or_email">Nombre de usuario o dirección de correo electrónico</string>
   <string name="field_password">Contraseña</string>
   <string name="websites_section_title">Sitios web</string>
   <string name="totp_section_title">Token 2FA (TOTP)</string>

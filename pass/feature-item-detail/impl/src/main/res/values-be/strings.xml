@@ -47,7 +47,7 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Наладзьце 2ФА для большай бяспекі</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Гэты сэрвіс прапануе 2ФА. Уключыце гэту функцыю, каб дадаць бяспеку ўліковаму запісу.</string>
   <string name="login_item_reused_passwords_subtitle">Элементы з вашага сховішча, якія выкарыстоўваць гэты пароль.</string>
-  <string name="field_username">Імя карыстальніка або адрас электроннай пошты</string>
+  <string name="field_username_or_email">Імя карыстальніка або адрас электроннай пошты</string>
   <string name="field_password">Пароль</string>
   <string name="websites_section_title">Вэб-сайты</string>
   <string name="totp_section_title">Токен 2ФА (TOTP)</string>

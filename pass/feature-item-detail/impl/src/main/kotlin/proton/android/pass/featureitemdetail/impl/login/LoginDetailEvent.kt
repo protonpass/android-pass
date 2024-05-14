@@ -21,9 +21,12 @@ package proton.android.pass.featureitemdetail.impl.login
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.featureitemdetail.impl.login.customfield.CustomFieldEvent
 
-sealed interface LoginDetailEvent {
+internal sealed interface LoginDetailEvent {
 
     data object OnTogglePasswordClick : LoginDetailEvent
+
+    @JvmInline
+    value class OnEmailClick(val email: String) : LoginDetailEvent
 
     data object OnUsernameClick : LoginDetailEvent
 

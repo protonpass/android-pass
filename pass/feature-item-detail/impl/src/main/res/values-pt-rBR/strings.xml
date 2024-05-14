@@ -46,6 +46,7 @@
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Este serviço oferece autenticação de dois fatores (2FA). Ative-a para aumentar a segurança da sua conta.</string>
   <string name="login_item_reused_passwords_subtitle">Itens dos seus cofres que usam esta senha.</string>
   <string name="field_username">Nome de usuário ou endereço de e-mail</string>
+  <string name="field_username_or_email">Nome de usuário ou endereço de e-mail</string>
   <string name="field_password">Senha</string>
   <string name="websites_section_title">Sites</string>
   <string name="totp_section_title">Token A2F (TOTP)</string>

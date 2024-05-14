@@ -100,15 +100,17 @@ internal fun MainLoginSection(
     }
 
     totpUiState?.let { state ->
-        TotpRow(
-            state = state,
-            onCopyTotpClick = { totpCode ->
-                onEvent(LoginDetailEvent.OnCopyTotpClick(totpCode))
-            },
-            onUpgradeClick = {
-                onEvent(LoginDetailEvent.OnUpgradeClick)
-            }
-        )
+        sections.add {
+            TotpRow(
+                state = state,
+                onCopyTotpClick = { totpCode ->
+                    onEvent(LoginDetailEvent.OnCopyTotpClick(totpCode))
+                },
+                onUpgradeClick = {
+                    onEvent(LoginDetailEvent.OnUpgradeClick)
+                }
+            )
+        }
     }
 
     RoundedCornersColumn(modifier = modifier.fillMaxWidth()) {

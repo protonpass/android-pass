@@ -114,7 +114,7 @@
   <string name="item_details_credit_card_section_expiration_date_title">到期日</string>
   <string name="item_details_credit_card_section_cvv_title">安全碼</string>
   <string name="item_details_credit_card_section_pin_title">PIN 碼</string>
-  <string name="item_details_login_section_username_title">使用者名稱或電子郵件位址</string>
+  <string name="item_details_login_section_username_or_username_title">使用者名稱或電子郵件位址</string>
   <string name="item_details_login_section_password_title">密碼</string>
   <string name="item_details_login_section_primary_totp_title">雙重驗證憑證(TOTP)</string>
   <string name="item_details_login_section_websites_title">網站</string>

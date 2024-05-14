@@ -23,11 +23,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.collections.immutable.toPersistentSet
 import proton.android.pass.common.api.PasswordStrength
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
@@ -48,29 +48,31 @@ internal fun PassLoginItemDetailSections(
     customFields: ImmutableList<ItemCustomField>,
     passkeys: ImmutableList<UIPasskeyContent>,
     itemColors: PassItemColors,
-    onEvent: (PassItemDetailsUiEvent) -> Unit
+    onEvent: (PassItemDetailsUiEvent) -> Unit,
+    isUsernameSplitEnabled: Boolean,
 ) = with(contents) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.medium.minus(Spacing.extraSmall))
     ) {
-
         if (passkeys.isNotEmpty()) {
             PasskeysSection(
                 passkeys = passkeys,
-                onSelected = {
-                    onEvent(PassItemDetailsUiEvent.OnPasskeyClick(it))
+                onSelected = { passkeyContent ->
+                    onEvent(PassItemDetailsUiEvent.OnPasskeyClick(passkeyContent))
                 }
             )
         }
 
         PassLoginItemDetailMainSection(
-            username = itemEmail,
+            email = itemEmail,
+            username = itemUsername,
             password = password,
             passwordStrength = passwordStrength,
             primaryTotp = primaryTotp,
             itemColors = itemColors,
-            onEvent = onEvent
+            onEvent = onEvent,
+            isUsernameSplitEnabled = isUsernameSplitEnabled
         )
 
         if (urls.isNotEmpty()) {

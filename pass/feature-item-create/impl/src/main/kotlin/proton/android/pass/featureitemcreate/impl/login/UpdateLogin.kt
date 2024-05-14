@@ -33,6 +33,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.common.api.None
+import proton.android.pass.common.api.some
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
@@ -153,9 +154,23 @@ fun UpdateLogin(
                         viewModel.onTitleChange(it.title)
 
                     LoginContentEvent.OnVaultSelect -> {}
+                    is LoginContentEvent.OnAliasOptions ->
+                        onNavigate(BaseLoginNavigation.AliasOptions(it.shareId, it.hasReachedAliasLimit))
+                    is LoginContentEvent.OnCreateAlias -> {
+                        val shareId = uiState.selectedShareId ?: return@LoginContent
+                        onNavigate(
+                            BaseLoginNavigation.CreateAlias(
+                                shareId = shareId,
+                                showUpgrade = uiState.baseLoginUiState.hasReachedAliasLimit,
+                                title = viewModel.loginItemFormState.title.some()
+                            )
+                        )
+                    }
+                    LoginContentEvent.OnCreatePassword -> onNavigate(BaseLoginNavigation.GeneratePassword)
+                    is LoginContentEvent.OnScanTotp -> onNavigate(BaseLoginNavigation.ScanTotp(it.index))
+                    LoginContentEvent.OnUpgrade -> onNavigate(BaseLoginNavigation.Upgrade)
                 }
-            },
-            onNavigate = { onNavigate(it) }
+            }
         )
 
         ConfirmCloseDialog(

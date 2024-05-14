@@ -94,7 +94,7 @@ internal sealed interface DarkWebCustomEmailsState {
     ) : DarkWebCustomEmailsState
 
     fun count() = when (this) {
-        is Success -> emails.size + suggestions.size
+        is Success -> emails.size
         else -> 0
     }
 }

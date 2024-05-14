@@ -83,27 +83,30 @@ class ApplyPendingEventsImpl @Inject constructor(
             if (refreshSharesResult.allShareIds.isEmpty()) {
                 handleSharesWhenEmpty(currentUserId)
             } else {
-                val address = requireNotNull(
-                    addressRepository.getAddresses(currentUserId).primary()
-                )
-                PassLogger.i(TAG, "Retrieved user address")
-                handleExistingShares(currentUserId, address.addressId, refreshSharesResult)
+                handleExistingShares(currentUserId, refreshSharesResult)
             }
         }
     }
 
     private suspend fun handleSharesWhenEmpty(userId: UserId) {
         PassLogger.i(TAG, "Received an empty list of shares, creating default vault")
-        itemSyncStatusRepository.setMode(SyncMode.Background)
-        createDefaultVault(userId)
-        itemSyncStatusRepository.emit(ItemSyncStatus.SyncSuccess)
+
+        runCatching { createDefaultVault(userId) }
+            .onFailure { error ->
+                PassLogger.w(TAG, "Error creating default vault")
+                PassLogger.w(TAG, error)
+                itemSyncStatusRepository.setMode(SyncMode.ShownToUser)
+                itemSyncStatusRepository.emit(ItemSyncStatus.SyncError)
+                throw error
+            }
+            .onSuccess {
+                PassLogger.i(TAG, "Default vault created")
+                itemSyncStatusRepository.setMode(SyncMode.Background)
+                itemSyncStatusRepository.emit(ItemSyncStatus.SyncSuccess)
+            }
     }
 
-    private suspend fun handleExistingShares(
-        userId: UserId,
-        addressId: AddressId,
-        refreshSharesResult: RefreshSharesResult
-    ) {
+    private suspend fun handleExistingShares(userId: UserId, refreshSharesResult: RefreshSharesResult) {
         PassLogger.i(TAG, "Received a list of shares, applying pending events")
         enqueueRefreshItems(
             shares = refreshSharesResult.newShareIds,
@@ -113,14 +116,23 @@ class ApplyPendingEventsImpl @Inject constructor(
         val existingShareIds = refreshSharesResult.allShareIds
             .subtract(refreshSharesResult.newShareIds)
 
+        PassLogger.i(TAG, "Retrieved user address")
+        val address = requireNotNull(
+            addressRepository.getAddresses(userId).primary()
+        )
+
         val eventResults = coroutineScope {
             existingShareIds.map { shareId ->
                 async {
                     runCatching {
-                        fetchItemPendingEvent(userId, shareId, addressId)
+                        fetchItemPendingEvent(userId, shareId, address.addressId)
                     }.onFailure { error ->
                         if (error is ShareNotAvailableError) {
                             onShareNotAvailable(userId, shareId)
+                        } else {
+                            PassLogger.w(TAG, "Error fetching pending events")
+                            PassLogger.w(TAG, error)
+                            throw error
                         }
                     }
                 }
@@ -140,9 +152,10 @@ class ApplyPendingEventsImpl @Inject constructor(
             shareRepository.deleteVault(userId, shareId)
         }.onSuccess {
             PassLogger.i(TAG, "Deleted unavailable share id: $shareId")
-        }.onFailure { t ->
+        }.onFailure { error ->
             PassLogger.w(TAG, "Error deleting unavailable share id: $shareId")
-            PassLogger.w(TAG, t)
+            PassLogger.w(TAG, error)
+            throw error
         }
     }
 
@@ -154,14 +167,7 @@ class ApplyPendingEventsImpl @Inject constructor(
                 icon = ShareIcon.Icon1,
                 color = ShareColor.Color1
             )
-        }.let { vault ->
-            runCatching { createVault(userId, vault) }
-                .onFailure { error ->
-                    PassLogger.w(TAG, "Error creating default vault")
-                    PassLogger.w(TAG, error)
-                }
-                .onSuccess { PassLogger.i(TAG, "Default vault created") }
-        }
+        }.also { vault -> createVault(userId, vault) }
     }
 
     private suspend fun fetchItemPendingEvent(
@@ -244,7 +250,10 @@ class ApplyPendingEventsImpl @Inject constructor(
         deletedItemIds = deletedItemIds
     )
 
-    companion object {
+    private companion object {
+
         private const val TAG = "ApplyPendingEventsImpl"
+
     }
+
 }

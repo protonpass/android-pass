@@ -46,7 +46,7 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Setați A2F pentru mai multă securitate</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Acest serviciu oferă A2A. Activați-l pentru securitate suplimentară a contului.</string>
   <string name="login_item_reused_passwords_subtitle">Articole din seifuri care folosesc această parolă.</string>
-  <string name="field_username">Numele de utilizator sau adresa de e-mail</string>
+  <string name="field_username_or_email">Numele de utilizator sau adresa de e-mail</string>
   <string name="field_password">Parola</string>
   <string name="websites_section_title">Pagini web</string>
   <string name="totp_section_title">Cod A2F (TOTP)</string>

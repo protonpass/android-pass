@@ -45,7 +45,7 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Ställ in 2FA för mer säkerhet</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Denna tjänst erbjuder 2FA. Aktivera det för extra kontosäkerhet.</string>
   <string name="login_item_reused_passwords_subtitle">Objekt från dina valv som använder detta lösenord.</string>
-  <string name="field_username">Användarnamn eller e-postadress</string>
+  <string name="field_username_or_email">Användarnamn eller e-postadress</string>
   <string name="field_password">Lösenord</string>
   <string name="websites_section_title">Webbplatser</string>
   <string name="totp_section_title">2FA-token (TOTP)</string>

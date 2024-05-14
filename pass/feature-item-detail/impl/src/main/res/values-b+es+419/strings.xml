@@ -45,7 +45,7 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Configure la 2FA para más seguridad</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Este servicio ofrece 2FA. Actívelo para añadir seguridad a la cuenta.</string>
   <string name="login_item_reused_passwords_subtitle">Elementos de las bóvedas que usan esta contraseña.</string>
-  <string name="field_username">Nombre de usuario o dirección de correo</string>
+  <string name="field_username_or_email">Nombre de usuario o dirección de correo</string>
   <string name="field_password">Contraseña</string>
   <string name="websites_section_title">Sitios web</string>
   <string name="totp_section_title">Token 2FA (TOTP)</string>

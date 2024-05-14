@@ -58,7 +58,8 @@ internal fun LoginContent(
     isHistoryFeatureEnabled: Boolean,
     passkeys: ImmutableList<UIPasskeyContent>,
     monitorState: LoginMonitorState,
-    onEvent: (LoginDetailEvent) -> Unit
+    onEvent: (LoginDetailEvent) -> Unit,
+    isUsernameSplitEnabled: Boolean
 ) {
     val contents = itemUiModel.contents as ItemContents.Login
 
@@ -96,23 +97,29 @@ internal fun LoginContent(
         }
 
         MainLoginSection(
-            username = contents.itemEmail,
+            email = contents.itemEmail,
+            username = contents.itemUsername,
             passwordHiddenState = contents.password,
             passwordScore = passwordScore,
             totpUiState = totpUiState,
             showViewAlias = showViewAlias,
-            onEvent = onEvent
+            onEvent = onEvent,
+            isUsernameSplitEnabled = isUsernameSplitEnabled
         )
 
-        WebsiteSection(
-            websites = contents.urls.toPersistentList(),
-            onEvent = onEvent
-        )
+        if (contents.urls.isNotEmpty()) {
+            WebsiteSection(
+                websites = contents.urls.toPersistentList(),
+                onEvent = onEvent
+            )
+        }
 
-        NoteSection(
-            text = itemUiModel.contents.note,
-            accentColor = PassTheme.colors.loginInteractionNorm
-        )
+        if (contents.note.isNotEmpty()) {
+            NoteSection(
+                text = contents.note,
+                accentColor = PassTheme.colors.loginInteractionNorm
+            )
+        }
 
         if (customFields.isNotEmpty()) {
             CustomFieldDetails(
@@ -139,5 +146,4 @@ internal fun LoginContent(
 
         MoreInfo(moreInfoUiState = moreInfoUiState)
     }
-
 }

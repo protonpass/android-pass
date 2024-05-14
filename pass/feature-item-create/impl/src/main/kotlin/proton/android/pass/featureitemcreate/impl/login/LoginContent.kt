@@ -22,29 +22,16 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.featureitemcreate.impl.common.CreateUpdateTopBar
 import proton.android.pass.featureitemcreate.impl.login.LoginItemValidationErrors.InvalidUrl
-
-private enum class ActionAfterHideKeyboard {
-    GeneratePassword,
-    CreateAlias
-}
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -59,43 +46,9 @@ internal fun LoginContent(
     topBarActionName: String,
     showCreateAliasButton: Boolean,
     isUpdate: Boolean,
-    onEvent: (LoginContentEvent) -> Unit,
-    onNavigate: (BaseLoginNavigation) -> Unit
+    onEvent: (LoginContentEvent) -> Unit
 ) {
-    BackHandler {
-        onEvent(LoginContentEvent.Up)
-    }
-
-    var actionWhenKeyboardDisappears by remember { mutableStateOf<ActionAfterHideKeyboard?>(null) }
-
-    val keyboardState by keyboardAsState()
-
-    LaunchedEffect(keyboardState, actionWhenKeyboardDisappears) {
-        if (!keyboardState) {
-            when (actionWhenKeyboardDisappears) {
-                ActionAfterHideKeyboard.CreateAlias -> {
-                    selectedShareId ?: return@LaunchedEffect
-                    onNavigate(
-                        BaseLoginNavigation.CreateAlias(
-                            selectedShareId,
-                            uiState.hasReachedAliasLimit,
-                            loginItemFormState.title.some()
-                        )
-                    )
-                    actionWhenKeyboardDisappears = null // Clear flag
-                }
-
-                ActionAfterHideKeyboard.GeneratePassword -> {
-                    onNavigate(BaseLoginNavigation.GeneratePassword)
-                    actionWhenKeyboardDisappears = null // Clear flag
-                }
-
-                null -> Unit
-            }
-        }
-    }
-
-    val keyboardController = LocalSoftwareKeyboardController.current
+    BackHandler { onEvent(LoginContentEvent.Up) }
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -112,7 +65,7 @@ internal fun LoginContent(
                     selectedShareId ?: return@CreateUpdateTopBar
                     onEvent(LoginContentEvent.Submit(selectedShareId))
                 },
-                onUpgrade = { onNavigate(BaseLoginNavigation.Upgrade) },
+                onUpgrade = { onEvent(LoginContentEvent.OnUpgrade) },
                 onVaultSelectorClick = { onEvent(LoginContentEvent.OnVaultSelect) }
             )
         }
@@ -134,49 +87,14 @@ internal fun LoginContent(
             isEditAllowed = uiState.isLoadingState == IsLoadingState.NotLoading,
             isTotpError = uiState.validationErrors.contains(LoginItemValidationErrors.InvalidTotp),
             isTitleError = uiState.validationErrors.contains(LoginItemValidationErrors.BlankTitle),
-            onEvent = onEvent,
             focusLastWebsite = uiState.focusLastWebsite,
             websitesWithErrors = uiState.validationErrors
                 .filterIsInstance<InvalidUrl>()
                 .map { it.index }
                 .toPersistentList(),
-            onGeneratePasswordClick = {
-                if (!keyboardState) {
-                    // If keyboard is hidden, call the action directly
-                    onNavigate(BaseLoginNavigation.GeneratePassword)
-                } else {
-                    // If keyboard is present, do it in a deferred way
-                    actionWhenKeyboardDisappears = ActionAfterHideKeyboard.GeneratePassword
-                    keyboardController?.hide()
-                }
-            },
-            onCreateAliasClick = {
-                if (!keyboardState) {
-                    // If keyboard is hidden, call the action directly
-                    selectedShareId ?: return@LoginItemForm
-                    onNavigate(
-                        BaseLoginNavigation.CreateAlias(
-                            selectedShareId,
-                            uiState.hasReachedAliasLimit,
-                            loginItemFormState.title.some()
-                        )
-                    )
-                } else {
-                    // If keyboard is present, do it in a deferred way
-                    actionWhenKeyboardDisappears = ActionAfterHideKeyboard.CreateAlias
-                    keyboardController?.hide()
-                }
-            },
-            onAliasOptionsClick = {
-                selectedShareId ?: return@LoginItemForm
-                onNavigate(
-                    BaseLoginNavigation.AliasOptions(
-                        shareId = selectedShareId,
-                        showUpgrade = uiState.hasReachedAliasLimit
-                    )
-                )
-            },
-            onNavigate = onNavigate
+            selectedShareId = selectedShareId,
+            hasReachedAliasLimit = uiState.hasReachedAliasLimit,
+            onEvent = onEvent
         )
     }
 }

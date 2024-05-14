@@ -25,8 +25,18 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.platform.LocalDensity
 
+enum class IsKeyboardVisible {
+    VISIBLE,
+    GONE;
+
+    companion object {
+        fun from(isVisible: Boolean): IsKeyboardVisible = if (isVisible) VISIBLE else GONE
+    }
+}
+
 @Composable
-fun keyboardAsState(): State<Boolean> {
+fun keyboardAsState(): State<IsKeyboardVisible> {
     val isImeVisible = WindowInsets.ime.getBottom(LocalDensity.current) > 0
-    return rememberUpdatedState(isImeVisible)
+    val isKeyboardVisible = IsKeyboardVisible.from(isImeVisible)
+    return rememberUpdatedState(isKeyboardVisible)
 }

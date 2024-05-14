@@ -66,7 +66,10 @@ internal fun LoginContent(
                     onEvent(LoginContentEvent.Submit(selectedShareId))
                 },
                 onUpgrade = { onEvent(LoginContentEvent.OnUpgrade) },
-                onVaultSelectorClick = { onEvent(LoginContentEvent.OnVaultSelect) }
+                onVaultSelectorClick = {
+                    selectedShareId ?: return@CreateUpdateTopBar
+                    onEvent(LoginContentEvent.OnVaultSelect(selectedShareId))
+                }
             )
         }
     ) { padding ->

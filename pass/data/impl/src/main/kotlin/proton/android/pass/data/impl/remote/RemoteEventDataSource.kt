@@ -24,10 +24,13 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ShareId
 
 interface RemoteEventDataSource {
+
     fun getLatestEventId(userId: UserId, shareId: ShareId): Flow<String>
+
     fun getEvents(
         userId: UserId,
         shareId: ShareId,
         since: String
     ): Flow<EventList>
+
 }

@@ -55,8 +55,12 @@ class RemoteEventDataSourceImpl @Inject constructor(
         emit(apiResult.valueOrThrow.events)
     }
 
-    companion object {
+    private companion object {
+
         private const val TAG = "RemoteEventDataSourceImpl"
+
         private const val DELETED_SHARE_CODE = 300_004
+
     }
+
 }

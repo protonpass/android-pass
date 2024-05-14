@@ -59,7 +59,6 @@ import proton.android.pass.data.api.usecases.breach.ObserveBreachCustomEmails
 import proton.android.pass.data.api.usecases.breach.ObserveBreachProtonEmails
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAliasEmail
 import proton.android.pass.data.api.usecases.breach.ObserveCustomEmailSuggestions
-import proton.android.pass.data.api.usecases.items.ItemSecurityCheckFilter
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareSelection
@@ -114,8 +113,7 @@ internal class DarkWebViewModel @Inject constructor(
     private val aliasEmailFlow = observeItems(
         selection = ShareSelection.AllShares,
         itemState = ItemState.Active,
-        filter = ItemTypeFilter.Aliases,
-        securityCheckFilter = ItemSecurityCheckFilter.Included
+        filter = ItemTypeFilter.Aliases
     )
         .flatMapLatest { list ->
             list
@@ -123,13 +121,14 @@ internal class DarkWebViewModel @Inject constructor(
                     val aliasKey = AliasKeyId(
                         shareId = item.shareId,
                         itemId = item.id,
-                        alias = (item.itemType as ItemType.Alias).aliasEmail
+                        alias = (item.itemType as ItemType.Alias).aliasEmail,
+                        isMonitored = !item.hasSkippedHealthCheck
                     )
                     if (item.isEmailBreached) {
                         observeBreachesForAliasEmail(
                             shareId = aliasKey.shareId,
                             itemId = aliasKey.itemId
-                        ).map { aliasKey to it }
+                        ).map { list -> aliasKey to list }
                     } else {
                         flowOf(aliasKey to emptyList())
                     }
@@ -278,7 +277,7 @@ internal class DarkWebViewModel @Inject constructor(
                     breachDate = it.lastBreachTime?.let(DateUtils::formatDate)?.getOrNull(),
                     isMonitored = !it.isMonitoringDisabled
                 )
-            }.toImmutableList(),
+            }.sortedByDescending { it.isMonitored }.toImmutableList(),
             protonEmailResult.data.second
         )
     }
@@ -304,9 +303,9 @@ internal class DarkWebViewModel @Inject constructor(
                     email = it.key.alias,
                     count = it.value.size,
                     breachDate = it.value.getLatestBreachDate(),
-                    isMonitored = true
+                    isMonitored = it.key.isMonitored
                 )
-            }.toImmutableList(),
+            }.sortedByDescending { it.isMonitored }.toImmutableList(),
             aliasEmailsResult.data.second
         )
     }

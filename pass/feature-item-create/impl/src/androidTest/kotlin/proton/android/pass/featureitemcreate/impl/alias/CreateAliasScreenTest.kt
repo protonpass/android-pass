@@ -144,7 +144,7 @@ class CreateAliasScreenTest {
                 }
             }
 
-            val buttonText = activity.getString(R.string.title_create_alias)
+            val buttonText = activity.getString(R.string.title_create)
             waitUntilExists(hasText(buttonText))
 
             // Title
@@ -198,7 +198,7 @@ class CreateAliasScreenTest {
                 }
             }
 
-            val buttonText = activity.getString(R.string.title_create_alias)
+            val buttonText = activity.getString(R.string.title_create)
             waitUntilExists(hasText(buttonText))
 
             onNode(hasText(buttonText)).performClick()
@@ -226,7 +226,7 @@ class CreateAliasScreenTest {
                 }
             }
 
-            val buttonText = activity.getString(R.string.title_create_alias)
+            val buttonText = activity.getString(R.string.title_create)
             waitUntilExists(hasText(buttonText))
 
             val closeContentDescription =

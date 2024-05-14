@@ -47,7 +47,7 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Nastavte 2FA pro větší bezpečnost</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Tato služba nabízí 2FA. Povolte to pro zvýšení zabezpečení účtu.</string>
   <string name="login_item_reused_passwords_subtitle">Položky z vašich trezorů, které používají toto heslo.</string>
-  <string name="field_username">Uživatelské jméno nebo e-mailová adresa</string>
+  <string name="field_username_or_email">Uživatelské jméno nebo e-mailová adresa</string>
   <string name="field_password">Heslo</string>
   <string name="websites_section_title">Webové stránky</string>
   <string name="totp_section_title">2FA token (TOTP)</string>

@@ -47,7 +47,7 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Настройте двухфакторную идентификацию для повышения безопасности</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Эта служба предлагает двухфакторную аутентификацию. Включите ее, чтобы обеспечить дополнительную безопасность аккаунта.</string>
   <string name="login_item_reused_passwords_subtitle">Элементы из ваших хранилищ, которые используют этот пароль.</string>
-  <string name="field_username">Имя пользователя или адрес электронной почты</string>
+  <string name="field_username_or_email">Имя пользователя или адрес электронной почты</string>
   <string name="field_password">Пароль</string>
   <string name="websites_section_title">Веб-сайты</string>
   <string name="totp_section_title">Токен 2ФА (TOTP)</string>

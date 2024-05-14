@@ -199,7 +199,7 @@ android {
             applicationIdSuffix = ".black"
 
             protonEnvironment {
-                host = "proton.black"
+                host = "landsteiner.proton.black"
 
                 printInfo(name)
             }

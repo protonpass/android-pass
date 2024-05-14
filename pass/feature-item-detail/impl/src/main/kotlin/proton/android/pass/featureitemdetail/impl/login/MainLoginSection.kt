@@ -30,39 +30,62 @@ import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.domain.HiddenState
+import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.login.totp.TotpRow
+import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun MainLoginSection(
+internal fun MainLoginSection(
     modifier: Modifier = Modifier,
+    email: String,
     username: String,
     passwordHiddenState: HiddenState,
     passwordScore: PasswordScore?,
     totpUiState: TotpUiState?,
     showViewAlias: Boolean,
-    onEvent: (LoginDetailEvent) -> Unit
+    onEvent: (LoginDetailEvent) -> Unit,
+    isUsernameSplitEnabled: Boolean
 ) {
-    if (!canShowSection(username, passwordHiddenState, totpUiState)) return
+    val sections = mutableListOf<@Composable () -> Unit>()
 
-    val showPasswordDivider = username.isNotBlank()
-    val showTotpDivider = showPasswordDivider || passwordHiddenState !is HiddenState.Empty
-    RoundedCornersColumn(modifier = modifier.fillMaxWidth()) {
-        if (username.isNotBlank()) {
-            LoginUsernameRow(
-                username = username,
-                showViewAlias = showViewAlias,
-                onUsernameClick = {
-                    onEvent(LoginDetailEvent.OnUsernameClick)
-                },
-                onGoToAliasClick = {
-                    onEvent(LoginDetailEvent.OnGoToAliasClick)
-                }
-            )
-        }
-        if (passwordHiddenState !is HiddenState.Empty) {
-            if (showPasswordDivider) {
-                PassDivider()
+    if (isUsernameSplitEnabled) {
+        if (email.isNotBlank()) {
+            sections.add {
+                LoginEmailRow(
+                    email = email,
+                    showViewAlias = showViewAlias,
+                    onEmailClick = { onEvent(LoginDetailEvent.OnEmailClick(email)) },
+                    onGoToAliasClick = { onEvent(LoginDetailEvent.OnGoToAliasClick) }
+                )
             }
+        }
+
+        if (username.isNotBlank()) {
+            sections.add {
+                LoginUsernameRow(
+                    username = username,
+                    onUsernameClick = { onEvent(LoginDetailEvent.OnUsernameClick) }
+                )
+            }
+        }
+    } else {
+        // Here we're using user email row as username to support proto backwards compatibility
+        if (email.isNotBlank()) {
+            sections.add {
+                LoginEmailRow(
+                    titleResId = R.string.field_username_or_email,
+                    iconResId = CoreR.drawable.ic_proton_user,
+                    email = email,
+                    showViewAlias = showViewAlias,
+                    onEmailClick = { onEvent(LoginDetailEvent.OnUsernameClick) },
+                    onGoToAliasClick = { onEvent(LoginDetailEvent.OnGoToAliasClick) }
+                )
+            }
+        }
+    }
+
+    if (passwordHiddenState !is HiddenState.Empty) {
+        sections.add {
             LoginPasswordRow(
                 passwordHiddenState = passwordHiddenState,
                 passwordScore = passwordScore,
@@ -74,55 +97,51 @@ fun MainLoginSection(
                 }
             )
         }
-        if (totpUiState != null) {
-            if (showTotpDivider) {
+    }
+
+    totpUiState?.let { state ->
+        TotpRow(
+            state = state,
+            onCopyTotpClick = { totpCode ->
+                onEvent(LoginDetailEvent.OnCopyTotpClick(totpCode))
+            },
+            onUpgradeClick = {
+                onEvent(LoginDetailEvent.OnUpgradeClick)
+            }
+        )
+    }
+
+    RoundedCornersColumn(modifier = modifier.fillMaxWidth()) {
+        sections.forEachIndexed { idx, section ->
+            section()
+
+            if (idx < sections.lastIndex) {
                 PassDivider()
             }
-            TotpRow(
-                state = totpUiState,
-                onCopyTotpClick = {
-                    onEvent(LoginDetailEvent.OnCopyTotpClick(it))
-                },
-                onUpgradeClick = {
-                    onEvent(LoginDetailEvent.OnUpgradeClick)
-                }
-            )
         }
     }
 }
 
-@Suppress("ComplexCondition")
-private fun canShowSection(
-    username: String,
-    passwordState: HiddenState,
-    totpUiState: TotpUiState?
-): Boolean {
-    if (username.isBlank() &&
-        passwordState is HiddenState.Empty &&
-        (totpUiState == null || totpUiState is TotpUiState.Hidden)
-    ) return false
-
-    return true
-}
-
-
-class ThemedLoginPasswordRowPreviewProvider :
+internal class ThemedLoginPasswordRowPreviewProvider :
     ThemePairPreviewProvider<MainLoginSectionParams>(MainLoginSectionParamsPreviewProvider())
 
-@Preview
-@Composable
-fun MainLoginSectionPreview(
+@[Preview Composable]
+internal fun MainLoginSectionPreview(
     @PreviewParameter(ThemedLoginPasswordRowPreviewProvider::class) input: Pair<Boolean, MainLoginSectionParams>
 ) {
-    PassTheme(isDark = input.first) {
+    val (isDark, params) = input
+
+    PassTheme(isDark = isDark) {
         Surface {
             MainLoginSection(
-                username = input.second.username,
-                passwordHiddenState = input.second.passwordState,
+                email = params.email,
+                username = params.username,
+                passwordHiddenState = params.passwordState,
                 passwordScore = PasswordScore.STRONG,
-                totpUiState = input.second.totpUiState,
-                showViewAlias = input.second.showViewAlias,
-                onEvent = {}
+                totpUiState = params.totpUiState,
+                showViewAlias = params.showViewAlias,
+                onEvent = {},
+                isUsernameSplitEnabled = params.isUsernameSplitEnabled
             )
         }
     }

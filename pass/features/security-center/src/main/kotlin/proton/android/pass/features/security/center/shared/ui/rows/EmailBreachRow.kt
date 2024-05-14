@@ -115,7 +115,7 @@ internal fun EmailBreachRow(
                     painter = painterResource(CompR.drawable.ic_chevron_tiny_right),
                     contentDescription = null,
                     tint = PassTheme.colors.passwordInteractionNormMajor1
-                        .takeIf { emailBreachUiState.hasBreaches }
+                        .takeIf { emailBreachUiState.hasBreaches && emailBreachUiState.isMonitored }
                         ?: defaultTint()
                 )
             }

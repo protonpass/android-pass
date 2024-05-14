@@ -22,6 +22,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
@@ -115,7 +116,10 @@ internal fun CreateUpdateTopBar(
                         exit = fadeOut()
                     ) {
                         if (selectedVault != null) {
-                            VaultSwitcher(selectedVault = selectedVault)
+                            VaultSwitcher(
+                                selectedVault = selectedVault,
+                                onClick = onVaultSelectorClick
+                            )
                         }
                     }
 
@@ -141,12 +145,17 @@ internal fun CreateUpdateTopBar(
 }
 
 @Composable
-private fun RowScope.VaultSwitcher(modifier: Modifier = Modifier, selectedVault: Vault) {
+private fun RowScope.VaultSwitcher(
+    modifier: Modifier = Modifier,
+    selectedVault: Vault,
+    onClick: () -> Unit
+) {
     Row(
         modifier = modifier
             .weight(weight = 1f, fill = false)
             .clip(CircleShape)
             .background(selectedVault.color.toColor(isBackground = true))
+            .clickable { onClick() }
             .padding(horizontal = Spacing.medium, vertical = 10.dp),
         horizontalArrangement = Arrangement.spacedBy(5.dp),
         verticalAlignment = Alignment.CenterVertically

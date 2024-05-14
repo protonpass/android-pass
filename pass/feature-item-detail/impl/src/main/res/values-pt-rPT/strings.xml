@@ -32,7 +32,7 @@
   <string name="item_unpinned_message_error">There was an error unpinning this item</string>
   <string name="login_item_generate_totp_error">Erro ao gerar o código 2FA</string>
   <string name="login_item_view_alias_button">Visualizar o alias</string>
-  <string name="field_username">Nome de utilizador ou endereço de e-mail</string>
+  <string name="field_username_or_email">Nome de utilizador ou endereço de e-mail</string>
   <string name="field_password">Palavra-passe</string>
   <string name="websites_section_title">Sítios web</string>
   <string name="totp_section_title">Token 2FA (TOTP)</string>

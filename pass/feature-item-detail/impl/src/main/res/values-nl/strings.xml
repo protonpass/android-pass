@@ -45,7 +45,7 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">2FA instellen voor meer beveiliging</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Deze service biedt 2FA aan. Schakel het in voor extra accountveiligheid.</string>
   <string name="login_item_reused_passwords_subtitle">Items van uw kluis die dit wachtwoord gebruiken.</string>
-  <string name="field_username">Gebruikersnaam of e-mailadres</string>
+  <string name="field_username_or_email">Gebruikersnaam of e-mailadres</string>
   <string name="field_password">Wachtwoord</string>
   <string name="websites_section_title">Websites</string>
   <string name="totp_section_title">2FA-token (TOTP)</string>

@@ -45,7 +45,7 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Configuri 2FA per a més seguretat</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Aquest servei ofereix 2FA. Habiliti\'l per augmentar la seguretat del compte.</string>
   <string name="login_item_reused_passwords_subtitle">Elements de les seves caixes fortes que utilitzen aquesta contrasenya.</string>
-  <string name="field_username">Nom d\'usuari o adreça de correu electrònic</string>
+  <string name="field_username_or_email">Nom d\'usuari o adreça de correu electrònic</string>
   <string name="field_password">Contrasenya</string>
   <string name="websites_section_title">Llocs web</string>
   <string name="totp_section_title">Token 2FA (TOTP)</string>

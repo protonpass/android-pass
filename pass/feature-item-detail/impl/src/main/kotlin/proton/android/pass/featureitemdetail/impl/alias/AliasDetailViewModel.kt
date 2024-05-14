@@ -146,11 +146,11 @@ class AliasDetailViewModel @Inject constructor(
 
     private val itemFeaturesFlow = combine(
         featureFlagsRepository.get<Boolean>(FeatureFlag.SECURITY_CENTER_V1),
-        getUserPlan()
-    ) { isSecurityCenterEnabled, userPlan ->
+        featureFlagsRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT)
+    ) { isSecurityCenterEnabled, isUsernameSplitEnabled ->
         ItemFeatures(
-            isHistoryEnabled = userPlan.isPaidPlan,
-            isSecurityCenterEnabled = isSecurityCenterEnabled
+            isSecurityCenterEnabled = isSecurityCenterEnabled,
+            isUsernameSplitEnabled = isUsernameSplitEnabled
         )
     }
 

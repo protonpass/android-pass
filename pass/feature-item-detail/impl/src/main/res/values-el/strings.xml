@@ -45,7 +45,7 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Ρυθμίστε το 2FA για περισσότερη ασφάλεια</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Αυτή η υπηρεσία προσφέρει 2FA. Ενεργοποιήστε το για πρόσθετη ασφάλεια λογαριασμού.</string>
   <string name="login_item_reused_passwords_subtitle">Στοιχεία από τις κρύπτες σας που χρησιμοποιούν αυτόν τον κωδικό πρόσβασης.</string>
-  <string name="field_username">Όνομα χρήστη ή διεύθυνση email</string>
+  <string name="field_username_or_email">Όνομα χρήστη ή διεύθυνση email</string>
   <string name="field_password">Κωδικός πρόσβασης</string>
   <string name="websites_section_title">Ιστοσελίδες</string>
   <string name="totp_section_title">Διακριτικό 2FA (TOTP)</string>

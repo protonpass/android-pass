@@ -22,83 +22,108 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import proton.android.pass.domain.HiddenState
 
 @Suppress("MagicNumber")
-class MainLoginSectionParamsPreviewProvider : PreviewParameterProvider<MainLoginSectionParams> {
-    override val values: Sequence<MainLoginSectionParams>
-        get() = sequenceOf(
-            MainLoginSectionParams(
-                username = "MyUsername",
-                passwordState = HiddenState.Concealed("encrypted"),
-                totpUiState = null,
-                showViewAlias = false
-            ),
-            MainLoginSectionParams(
-                username = "MyUsername",
-                passwordState = HiddenState.Concealed("encrypted"),
-                totpUiState = null,
-                showViewAlias = true
-            ),
-            MainLoginSectionParams(
-                username = "MyUsername",
-                passwordState = HiddenState.Revealed("encrypted", "clearText"),
-                totpUiState = null,
-                showViewAlias = false
-            ),
-            MainLoginSectionParams(
-                username = "MyUsername",
-                passwordState = HiddenState.Revealed("encrypted", "clearText"),
-                totpUiState = TotpUiState.Visible("123456", 12, 20),
-                showViewAlias = false
-            ),
-            MainLoginSectionParams(
-                username = "MyUsername",
-                passwordState = HiddenState.Revealed("encrypted", "clearText"),
-                totpUiState = TotpUiState.Limited,
-                showViewAlias = false
-            ),
+internal class MainLoginSectionParamsPreviewProvider :
+    PreviewParameterProvider<MainLoginSectionParams> {
 
-            // Hidden sections
-            MainLoginSectionParams(
-                username = "",
-                passwordState = HiddenState.Concealed("encrypted"),
-                totpUiState = TotpUiState.Visible("123456", 12, 20),
-                showViewAlias = false
-            ),
-            MainLoginSectionParams(
-                username = "MyUsername",
-                passwordState = HiddenState.Empty(""),
-                totpUiState = TotpUiState.Visible("123456", 12, 20),
-                showViewAlias = false
-            ),
-            MainLoginSectionParams(
-                username = "MyUsername",
-                passwordState = HiddenState.Concealed("encrypted"),
-                totpUiState = TotpUiState.Hidden,
-                showViewAlias = false
-            ),
-            MainLoginSectionParams(
-                username = "",
-                passwordState = HiddenState.Empty(""),
-                totpUiState = TotpUiState.Visible("123456", 12, 20),
-                showViewAlias = false
-            ),
-            MainLoginSectionParams(
-                username = "",
-                passwordState = HiddenState.Concealed("encrypted"),
-                totpUiState = TotpUiState.Hidden,
-                showViewAlias = false
-            ),
-            MainLoginSectionParams(
-                username = "MyUsername",
-                passwordState = HiddenState.Empty(""),
-                totpUiState = TotpUiState.Hidden,
-                showViewAlias = false
-            )
+    override val values: Sequence<MainLoginSectionParams> = sequenceOf(
+        MainLoginSectionParams(
+            email = "",
+            username = "MyUsername",
+            passwordState = HiddenState.Concealed("encrypted"),
+            totpUiState = null,
+            showViewAlias = false,
+            isUsernameSplitEnabled = false
+        ),
+        MainLoginSectionParams(
+            email = "",
+            username = "MyUsername",
+            passwordState = HiddenState.Concealed("encrypted"),
+            totpUiState = null,
+            showViewAlias = true,
+            isUsernameSplitEnabled = false
+        ),
+        MainLoginSectionParams(
+            email = "",
+            username = "MyUsername",
+            passwordState = HiddenState.Revealed("encrypted", "clearText"),
+            totpUiState = null,
+            showViewAlias = false,
+            isUsernameSplitEnabled = false
+        ),
+        MainLoginSectionParams(
+            email = "",
+            username = "MyUsername",
+            passwordState = HiddenState.Revealed("encrypted", "clearText"),
+            totpUiState = TotpUiState.Visible("123456", 12, 20),
+            showViewAlias = false,
+            isUsernameSplitEnabled = false
+        ),
+        MainLoginSectionParams(
+            email = "",
+            username = "MyUsername",
+            passwordState = HiddenState.Revealed("encrypted", "clearText"),
+            totpUiState = TotpUiState.Limited,
+            showViewAlias = false,
+            isUsernameSplitEnabled = false
+        ),
+
+        // Hidden sections
+        MainLoginSectionParams(
+            email = "",
+            username = "",
+            passwordState = HiddenState.Concealed("encrypted"),
+            totpUiState = TotpUiState.Visible("123456", 12, 20),
+            showViewAlias = false,
+            isUsernameSplitEnabled = false
+        ),
+        MainLoginSectionParams(
+            email = "",
+            username = "MyUsername",
+            passwordState = HiddenState.Empty(""),
+            totpUiState = TotpUiState.Visible("123456", 12, 20),
+            showViewAlias = false,
+            isUsernameSplitEnabled = false
+        ),
+        MainLoginSectionParams(
+            email = "",
+            username = "MyUsername",
+            passwordState = HiddenState.Concealed("encrypted"),
+            totpUiState = TotpUiState.Hidden,
+            showViewAlias = false,
+            isUsernameSplitEnabled = false
+        ),
+        MainLoginSectionParams(
+            email = "",
+            username = "",
+            passwordState = HiddenState.Empty(""),
+            totpUiState = TotpUiState.Visible("123456", 12, 20),
+            showViewAlias = false,
+            isUsernameSplitEnabled = false
+        ),
+        MainLoginSectionParams(
+            email = "",
+            username = "",
+            passwordState = HiddenState.Concealed("encrypted"),
+            totpUiState = TotpUiState.Hidden,
+            showViewAlias = false,
+            isUsernameSplitEnabled = false
+        ),
+        MainLoginSectionParams(
+            email = "",
+            username = "MyUsername",
+            passwordState = HiddenState.Empty(""),
+            totpUiState = TotpUiState.Hidden,
+            showViewAlias = false,
+            isUsernameSplitEnabled = false
         )
+    )
 }
 
-data class MainLoginSectionParams(
+internal data class MainLoginSectionParams(
+    val email: String,
     val username: String,
     val passwordState: HiddenState,
     val totpUiState: TotpUiState?,
-    val showViewAlias: Boolean
+    val showViewAlias: Boolean,
+    val isUsernameSplitEnabled: Boolean
 )

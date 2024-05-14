@@ -116,7 +116,7 @@
   <string name="item_details_credit_card_section_expiration_date_title">Λήγει στις</string>
   <string name="item_details_credit_card_section_cvv_title">Αριθμός επαλήθευσης</string>
   <string name="item_details_credit_card_section_pin_title">Κωδικός PIN</string>
-  <string name="item_details_login_section_username_title">Όνομα χρήστη ή διεύθυνση email</string>
+  <string name="item_details_login_section_username_or_username_title">Όνομα χρήστη ή διεύθυνση email</string>
   <string name="item_details_login_section_password_title">Κωδικός</string>
   <string name="item_details_login_section_primary_totp_title">Διακριτικό 2FA (TOTP)</string>
   <string name="item_details_login_section_websites_title">Ιστοσελίδες</string>

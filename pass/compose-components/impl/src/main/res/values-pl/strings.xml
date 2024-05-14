@@ -120,7 +120,7 @@
   <string name="item_details_credit_card_section_expiration_date_title">Data wygaśnięcia</string>
   <string name="item_details_credit_card_section_cvv_title">Kod zabezpieczający</string>
   <string name="item_details_credit_card_section_pin_title">Kod PIN</string>
-  <string name="item_details_login_section_username_title">Nazwa użytkownika lub adres e-mail</string>
+  <string name="item_details_login_section_username_or_username_title">Nazwa użytkownika lub adres e-mail</string>
   <string name="item_details_login_section_password_title">Hasło</string>
   <string name="item_details_login_section_primary_totp_title">Token TOTP</string>
   <string name="item_details_login_section_websites_title">Strony internetowe</string>

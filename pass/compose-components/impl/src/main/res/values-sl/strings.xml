@@ -120,7 +120,7 @@
   <string name="item_details_credit_card_section_expiration_date_title">Datum poteka</string>
   <string name="item_details_credit_card_section_cvv_title">Varnostna koda</string>
   <string name="item_details_credit_card_section_pin_title">PIN koda</string>
-  <string name="item_details_login_section_username_title">Uporabniško ime ali elektronski naslov</string>
+  <string name="item_details_login_section_username_or_username_title">Uporabniško ime ali elektronski naslov</string>
   <string name="item_details_login_section_password_title">Geslo</string>
   <string name="item_details_login_section_primary_totp_title">Žeton 2FA (TOTP)</string>
   <string name="item_details_login_section_websites_title">Spletne strani</string>

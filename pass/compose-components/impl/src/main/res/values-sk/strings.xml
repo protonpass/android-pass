@@ -120,7 +120,7 @@
   <string name="item_details_credit_card_section_expiration_date_title">Dátum skončenia platnosti</string>
   <string name="item_details_credit_card_section_cvv_title">CVC kód</string>
   <string name="item_details_credit_card_section_pin_title">PIN kód</string>
-  <string name="item_details_login_section_username_title">Používateľské meno alebo emailová adresa</string>
+  <string name="item_details_login_section_username_or_username_title">Používateľské meno alebo emailová adresa</string>
   <string name="item_details_login_section_password_title">Heslo</string>
   <string name="item_details_login_section_primary_totp_title">2FA token (TOTP)</string>
   <string name="item_details_login_section_websites_title">Webové stránky</string>

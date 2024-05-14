@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
+import proton.android.pass.common.api.combineN
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
@@ -41,6 +42,8 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Totp
 import proton.android.pass.domain.items.ItemCustomField
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.totp.api.TotpManager
@@ -51,18 +54,20 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val passwordStrengthCalculator: PasswordStrengthCalculator,
-    private val totpManager: TotpManager
+    private val totpManager: TotpManager,
+    private val featureFlagsRepository: FeatureFlagsPreferencesRepository
 ) : ItemDetailsHandlerObserver {
 
     private val loginItemContentsFlow = MutableStateFlow<ItemContents.Login?>(null)
 
-    override fun observe(item: Item): Flow<ItemDetailState> = combine(
+    override fun observe(item: Item): Flow<ItemDetailState> = combineN(
         observeLoginItemContents(item),
         observePrimaryTotp(item),
         observeCustomFields(item),
         getVaultById(shareId = item.shareId),
-        userPreferencesRepository.getUseFaviconsPreference()
-    ) { loginItemContents, primaryTotp, customFields, vault, useFaviconsPreference ->
+        userPreferencesRepository.getUseFaviconsPreference(),
+        featureFlagsRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT)
+    ) { loginItemContents, primaryTotp, customFields, vault, useFaviconsPreference, isUsernameSplitEnabled ->
         ItemDetailState.Login(
             contents = loginItemContents,
             isPinned = item.isPinned,
@@ -74,7 +79,8 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
             },
             primaryTotp = primaryTotp,
             customFields = customFields,
-            passkeys = loginItemContents.passkeys.map { UIPasskeyContent.from(it) }
+            passkeys = loginItemContents.passkeys.map { passkey -> UIPasskeyContent.from(passkey) },
+            isUsernameSplitEnabled = isUsernameSplitEnabled
         )
     }
 

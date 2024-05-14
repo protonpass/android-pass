@@ -61,7 +61,7 @@ interface LocalBreachesDataSource {
 
     suspend fun upsertProtonEmail(userId: UserId, protonEmail: BreachProtonEmail)
 
-    fun observeProtonEmails(): Flow<List<BreachProtonEmail>>
+    fun observeProtonEmails(userId: UserId): Flow<List<BreachProtonEmail>>
 
     suspend fun upsertProtonEmails(userId: UserId, protonEmails: List<BreachProtonEmail>)
 
@@ -204,8 +204,12 @@ class LocalBreachesDataSourceImpl @Inject constructor() : LocalBreachesDataSourc
             .also { emitProtonEmailsChanges() }
     }
 
-    override fun observeProtonEmails(): Flow<List<BreachProtonEmail>> = protonEmailsFlow
-        .map { protonEmailsMap -> protonEmailsMap.values.toList() }
+    override fun observeProtonEmails(userId: UserId): Flow<List<BreachProtonEmail>> = protonEmailsFlow
+        .map { protonEmailsMap ->
+            protonEmailsMap.filter { (key, _) ->
+                key.first == userId
+            }.values.toList()
+        }
 
     override suspend fun upsertProtonEmails(userId: UserId, protonEmails: List<BreachProtonEmail>) {
         protonEmails.toSet()

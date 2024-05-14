@@ -138,6 +138,31 @@ internal class DarkWebEmailBreachStatePreviewProvider :
                 enabledMonitoring = true
             ),
             DarkWebEmailBreachState.Success(
+                emails = persistentListOf(
+                    EmailBreachUiState(
+                        id = BreachEmailId.Custom(
+                            id = BreachId("1"),
+                            customEmailId = CustomEmailId("1")
+                        ),
+                        email = "mail@proton.me",
+                        count = 2,
+                        breachDate = "2024-04-16T15:30:00Z",
+                        isMonitored = true
+                    ),
+                    EmailBreachUiState(
+                        id = BreachEmailId.Custom(
+                            id = BreachId("2"),
+                            customEmailId = CustomEmailId("2")
+                        ),
+                        email = "mail2@proton.me",
+                        count = 2,
+                        breachDate = "2024-04-16T15:30:00Z",
+                        isMonitored = false
+                    )
+                ),
+                enabledMonitoring = true
+            ),
+            DarkWebEmailBreachState.Success(
                 emails = persistentListOf(),
                 enabledMonitoring = true
             ),

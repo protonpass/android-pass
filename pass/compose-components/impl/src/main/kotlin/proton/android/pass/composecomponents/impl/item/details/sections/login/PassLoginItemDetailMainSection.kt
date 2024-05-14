@@ -47,31 +47,74 @@ private const val HIDDEN_PASSWORD_TEXT_LENGTH = 12
 @Composable
 internal fun PassLoginItemDetailMainSection(
     modifier: Modifier = Modifier,
+    email: String,
     username: String,
     password: HiddenState,
     passwordStrength: PasswordStrength,
     primaryTotp: Totp?,
     itemColors: PassItemColors,
-    onEvent: (PassItemDetailsUiEvent) -> Unit
+    onEvent: (PassItemDetailsUiEvent) -> Unit,
+    isUsernameSplitEnabled: Boolean
 ) {
     val sections = mutableListOf<@Composable () -> Unit>()
 
-    if (username.isNotBlank()) {
-        sections.add {
-            PassItemDetailFieldRow(
-                icon = painterResource(CoreR.drawable.ic_proton_user),
-                title = stringResource(R.string.item_details_login_section_username_title),
-                subtitle = username,
-                itemColors = itemColors,
-                onClick = {
-                    onEvent(
-                        PassItemDetailsUiEvent.OnSectionClick(
-                            section = username,
-                            field = ItemDetailsFieldType.Plain.Username
+    if(isUsernameSplitEnabled) {
+        if(email.isNotBlank()) {
+            sections.add {
+                PassItemDetailFieldRow(
+                    icon = painterResource(CoreR.drawable.ic_proton_envelope),
+                    title = stringResource(R.string.item_details_login_section_email_title),
+                    subtitle = email,
+                    itemColors = itemColors,
+                    onClick = {
+                        onEvent(
+                            PassItemDetailsUiEvent.OnSectionClick(
+                                section = email,
+                                field = ItemDetailsFieldType.Plain.Email
+                            )
                         )
-                    )
-                }
-            )
+                    }
+                )
+            }
+        }
+
+        if(username.isNotBlank()) {
+            sections.add {
+                PassItemDetailFieldRow(
+                    icon = painterResource(CoreR.drawable.ic_proton_user),
+                    title = stringResource(R.string.item_details_login_section_username_title),
+                    subtitle = username,
+                    itemColors = itemColors,
+                    onClick = {
+                        onEvent(
+                            PassItemDetailsUiEvent.OnSectionClick(
+                                section = username,
+                                field = ItemDetailsFieldType.Plain.Username
+                            )
+                        )
+                    }
+                )
+            }
+        }
+    } else {
+        // Here we're using email property as username to support proto backwards compatibility
+        if (email.isNotBlank()) {
+            sections.add {
+                PassItemDetailFieldRow(
+                    icon = painterResource(CoreR.drawable.ic_proton_user),
+                    title = stringResource(R.string.item_details_login_section_username_or_username_title),
+                    subtitle = email,
+                    itemColors = itemColors,
+                    onClick = {
+                        onEvent(
+                            PassItemDetailsUiEvent.OnSectionClick(
+                                section = email,
+                                field = ItemDetailsFieldType.Plain.Username
+                            )
+                        )
+                    }
+                )
+            }
         }
     }
 

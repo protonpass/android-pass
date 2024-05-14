@@ -28,6 +28,8 @@ sealed interface ItemDetailsFieldType {
 
         data object CustomField : Plain
 
+        data object Email : Plain
+
         data object TotpCode : Plain
 
         data object Username : Plain

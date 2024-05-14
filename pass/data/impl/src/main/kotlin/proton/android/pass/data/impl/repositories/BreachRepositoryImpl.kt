@@ -57,10 +57,10 @@ import proton.android.pass.domain.breach.BreachId
 import proton.android.pass.domain.breach.BreachProtonEmail
 import proton.android.pass.domain.breach.CustomEmailId
 import proton.android.pass.domain.breach.EmailFlag
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.IsDarkWebAliasMessageDismissedPreference.Dismissed
 import proton.android.pass.preferences.IsDarkWebAliasMessageDismissedPreference.Show
-import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -186,7 +186,7 @@ class BreachRepositoryImpl @Inject constructor(
             }
 
     override fun observeProtonEmails(userId: UserId): Flow<List<BreachProtonEmail>> =
-        localBreachesDataSource.observeProtonEmails()
+        localBreachesDataSource.observeProtonEmails(userId)
             .onStart {
                 observeAllBreaches(userId)
                     .first()

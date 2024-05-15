@@ -15,8 +15,9 @@
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Spara din betalningsinformation säkert</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Generera ett säkert lösenord</string>
   <!-- Create Login -->
-  <string name="field_username_title">Användarnamn eller e-postadress</string>
-  <string name="field_username_hint">Lägg till användarnamn eller e-postadress</string>
+  <string name="title_create_login">Skapa inloggning</string>
+  <string name="field_username_or_email_title">Användarnamn eller e-postadress</string>
+  <string name="field_username_or_email_hint">Lägg till användarnamn eller e-postadress</string>
   <string name="field_password_title">Lösenord</string>
   <string name="field_password_hint">Lägg till lösenord</string>
   <string name="field_website_address_title">Webbplats</string>

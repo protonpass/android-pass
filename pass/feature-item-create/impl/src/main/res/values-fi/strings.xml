@@ -15,8 +15,9 @@
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Säilytä maksutapojesi tiedot turvallisesti.</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Luo turvallinen salasana.</string>
   <!-- Create Login -->
-  <string name="field_username_title">Käyttäjätunnus tai sähköpostiosoite</string>
-  <string name="field_username_hint">Lisää käyttäjätunnus tai sähköpostiosoite</string>
+  <string name="title_create_login">Luo kirjautumistieto</string>
+  <string name="field_username_or_email_title">Käyttäjätunnus tai sähköpostiosoite</string>
+  <string name="field_username_or_email_hint">Lisää käyttäjätunnus tai sähköpostiosoite</string>
   <string name="field_password_title">Salasana</string>
   <string name="field_password_hint">Lisää salasana</string>
   <string name="field_website_address_title">Verkkosivusto</string>

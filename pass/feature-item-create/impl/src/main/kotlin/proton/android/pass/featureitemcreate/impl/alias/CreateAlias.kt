@@ -34,8 +34,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
-import proton.android.pass.composecomponents.impl.keyboard.IsKeyboardVisible
-import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
+import proton.android.pass.commonui.api.keyboard.IsKeyboardVisible
+import proton.android.pass.commonui.api.keyboard.keyboardAsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ShareId

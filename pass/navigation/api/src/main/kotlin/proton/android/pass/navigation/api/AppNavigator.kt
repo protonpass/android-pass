@@ -20,11 +20,15 @@ package proton.android.pass.navigation.api
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
+import proton.android.pass.commonui.api.keyboard.PerformActionAfterKeyboardHide
 import proton.android.pass.log.api.PassLogger
 
 @OptIn(ExperimentalMaterialNavigationApi::class)
@@ -32,13 +36,31 @@ import proton.android.pass.log.api.PassLogger
 fun rememberAppNavigator(
     bottomSheetNavigator: PassBottomSheetNavigator,
     navController: NavHostController = rememberNavController(bottomSheetNavigator)
-): AppNavigator = remember(navController) { AppNavigator(navController, bottomSheetNavigator) }
+): AppNavigator {
+    var actionAfterKeyboardHide by remember { mutableStateOf<(() -> Unit)?>(null) }
+
+    PerformActionAfterKeyboardHide(
+        action = actionAfterKeyboardHide,
+        clearAction = { actionAfterKeyboardHide = null }
+    )
+
+    return remember(navController) {
+        AppNavigator(
+            navController = navController,
+            passBottomSheetNavigator = bottomSheetNavigator,
+            actionDelayer = { cb ->
+                actionAfterKeyboardHide = cb
+            }
+        )
+    }
+}
 
 @OptIn(ExperimentalMaterialNavigationApi::class)
 @Stable
 class AppNavigator(
     val navController: NavHostController,
-    val passBottomSheetNavigator: PassBottomSheetNavigator
+    val passBottomSheetNavigator: PassBottomSheetNavigator,
+    val actionDelayer: (() -> Unit) -> Unit
 ) {
     private val previousRoute: String?
         get() = navController.previousBackStackEntry?.destination?.route
@@ -47,7 +69,7 @@ class AppNavigator(
         destination: NavItem,
         route: String? = null,
         backDestination: NavItem? = null
-    ) {
+    ) = actionDelayer {
         val destinationRoute = route ?: destination.route
         // Discard duplicated nav events
         if (!lifecycleIsResumed() && destination.navItemType == NavItemType.Screen) {
@@ -57,7 +79,7 @@ class AppNavigator(
                     "Current: ${navController.currentBackStackEntry?.destination?.route} | " +
                     "Destination: ${destination.route}"
             )
-            return
+            return@actionDelayer
         }
         PassLogger.i(TAG, "Navigating to $destinationRoute")
 
@@ -164,6 +186,6 @@ class AppNavigator(
         ?: false
 
     companion object {
-        private const val TAG = "AppNavigator"
+        internal const val TAG = "AppNavigator"
     }
 }

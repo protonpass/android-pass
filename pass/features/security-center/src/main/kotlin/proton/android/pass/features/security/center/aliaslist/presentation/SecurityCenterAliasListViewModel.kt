@@ -28,29 +28,27 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flatMapMerge
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.runningFold
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
-import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveGlobalMonitorState
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAliasEmail
-import proton.android.pass.data.api.usecases.items.ItemIsBreachedFilter
-import proton.android.pass.data.api.usecases.items.ItemSecurityCheckFilter
-import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareSelection
-import proton.android.pass.domain.breach.BreachEmail
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachId
 import proton.android.pass.features.security.center.PassMonitorDisplayMonitoringEmailAliases
+import proton.android.pass.features.security.center.shared.presentation.AliasData
 import proton.android.pass.features.security.center.shared.presentation.AliasKeyId
 import proton.android.pass.features.security.center.shared.presentation.EmailBreachUiState
 import proton.android.pass.features.security.center.shared.ui.DateUtils
@@ -73,87 +71,71 @@ class SecurityCenterAliasListViewModel @Inject constructor(
         telemetryManager.sendEvent(PassMonitorDisplayMonitoringEmailAliases)
     }
 
-    private val aliasIncludedWithoutBreachesFlow = observeItems(
+    private val aliasEmailFlow = observeItems(
         selection = ShareSelection.AllShares,
         itemState = ItemState.Active,
-        filter = ItemTypeFilter.Aliases,
-        securityCheckFilter = ItemSecurityCheckFilter.Included,
-        isBreachedFilter = ItemIsBreachedFilter.NotBreached
-    ).asLoadingResult()
-
-    private val aliasIncludedWithBreachesFlow = observeItems(
-        selection = ShareSelection.AllShares,
-        itemState = ItemState.Active,
-        filter = ItemTypeFilter.Aliases,
-        securityCheckFilter = ItemSecurityCheckFilter.Included,
-        isBreachedFilter = ItemIsBreachedFilter.Breached
+        filter = ItemTypeFilter.Aliases
     )
         .flatMapLatest { list ->
             list
                 .map { item ->
-                    AliasKeyId(
+                    val aliasKey = AliasKeyId(
                         shareId = item.shareId,
                         itemId = item.id,
-                        alias = (item.itemType as ItemType.Alias).aliasEmail,
-                        isMonitored = !item.hasSkippedHealthCheck
+                        alias = (item.itemType as ItemType.Alias).aliasEmail
                     )
-                }
-                .map { aliasKey ->
-                    observeBreachesForAliasEmail(
-                        shareId = aliasKey.shareId,
-                        itemId = aliasKey.itemId
-                    ).map { aliasKey to it }
+                    if (item.hasSkippedHealthCheck) {
+                        flowOf(aliasKey to AliasData(emptyList(), false))
+                    } else {
+                        if (item.isEmailBreached) {
+                            observeBreachesForAliasEmail(
+                                shareId = aliasKey.shareId,
+                                itemId = aliasKey.itemId
+                            ).map { list -> aliasKey to AliasData(list, true) }
+                        } else {
+                            flowOf(aliasKey to AliasData(emptyList(), true))
+                        }
+                    }
                 }
                 .asFlow()
         }
         .flatMapMerge { it }
-        .runningFold(mapOf<AliasKeyId, List<BreachEmail>>()) { acc, map -> acc + map }
+        .runningFold(mapOf<AliasKeyId, AliasData>()) { acc, map -> acc + map }
         .asLoadingResult()
-
-    private val aliasExcludedEmailFlow = observeItems(
-        selection = ShareSelection.AllShares,
-        itemState = ItemState.Active,
-        filter = ItemTypeFilter.Aliases,
-        securityCheckFilter = ItemSecurityCheckFilter.Excluded
-    ).asLoadingResult()
 
     private val eventFlow =
         MutableStateFlow<SecurityCenterAliasListEvent>(SecurityCenterAliasListEvent.Idle)
 
-    internal val state: StateFlow<SecurityCenterAliasListState> = combineN(
+    internal val state: StateFlow<SecurityCenterAliasListState> = combine(
         observeGlobalMonitorState().asLoadingResult(),
-        aliasIncludedWithoutBreachesFlow,
-        aliasIncludedWithBreachesFlow,
-        aliasExcludedEmailFlow,
+        aliasEmailFlow,
         internalSettingsRepository.getDarkWebAliasMessageVisibility(),
         eventFlow
     ) { monitorState,
-        aliasIncludedWithoutBreaches,
-        aliasIncludedWithBreaches,
-        aliasExcluded,
+        aliasEmail,
         darkWebAliasMessageVisibility,
         event ->
         val isGlobalAliasMonitorEnabled = monitorState.getOrNull()?.aliasMonitorEnabled ?: true
 
         val isLoading = monitorState is LoadingResult.Loading ||
-            aliasIncludedWithoutBreaches is LoadingResult.Loading ||
-            aliasIncludedWithBreaches is LoadingResult.Loading ||
-            aliasExcluded is LoadingResult.Loading
+            aliasEmail is LoadingResult.Loading
 
-        val aliasIncludedWithoutBreachesList = when (aliasIncludedWithoutBreaches) {
-            is LoadingResult.Error -> emptyList()
-            LoadingResult.Loading -> emptyList()
-            is LoadingResult.Success -> aliasIncludedWithoutBreaches.data
-        }
-        val aliasIncludedWithBreachesList = when (aliasIncludedWithBreaches) {
+        val aliasIncludedWithoutBreachesList = when (aliasEmail) {
             is LoadingResult.Error -> emptyMap()
             LoadingResult.Loading -> emptyMap()
-            is LoadingResult.Success -> aliasIncludedWithBreaches.data
+            is LoadingResult.Success -> aliasEmail.data.filter { it.value.isMonitored && it.value.breaches.isEmpty() }
         }
-        val aliasExcludedEmailsList = when (aliasExcluded) {
-            is LoadingResult.Error -> emptyList()
-            LoadingResult.Loading -> emptyList()
-            is LoadingResult.Success -> aliasExcluded.data
+        val aliasIncludedWithBreachesList = when (aliasEmail) {
+            is LoadingResult.Error -> emptyMap()
+            LoadingResult.Loading -> emptyMap()
+            is LoadingResult.Success -> aliasEmail.data.filter {
+                it.value.isMonitored && it.value.breaches.isNotEmpty()
+            }
+        }
+        val aliasExcludedEmailsList = when (aliasEmail) {
+            is LoadingResult.Error -> emptyMap()
+            LoadingResult.Loading -> emptyMap()
+            is LoadingResult.Success -> aliasEmail.data.filter { !it.value.isMonitored }
         }
         val listState = when {
             isLoading -> AliasListState.Loading
@@ -188,36 +170,23 @@ class SecurityCenterAliasListViewModel @Inject constructor(
         initialValue = SecurityCenterAliasListState.Initial
     )
 
-    private fun List<Item>.toEmailBreachUiState(): ImmutableList<EmailBreachUiState> = map { item ->
+    private fun Map<AliasKeyId, AliasData>.toEmailBreachUiState(): ImmutableList<EmailBreachUiState> = map { entry ->
+        val breachDate = entry.value.breaches.firstOrNull()
+            ?.publishedAt
+            ?.let(DateUtils::formatDate)
+            ?.getOrNull()
         EmailBreachUiState(
             id = BreachEmailId.Alias(
-                id = BreachId(id = ""),
-                shareId = item.shareId,
-                itemId = item.id
+                id = BreachId(""),
+                shareId = entry.key.shareId,
+                itemId = entry.key.itemId
             ),
-            email = (item.itemType as ItemType.Alias).aliasEmail,
-            count = 0,
-            breachDate = null,
-            isMonitored = false
+            email = entry.key.alias,
+            count = entry.value.breaches.count(),
+            breachDate = breachDate,
+            isMonitored = entry.value.isMonitored
         )
     }.toPersistentList()
-
-    private fun Map<AliasKeyId, List<BreachEmail>>.toEmailBreachUiState(): ImmutableList<EmailBreachUiState> =
-        map { entry ->
-            val breachDate =
-                entry.value.firstOrNull()?.publishedAt?.let(DateUtils::formatDate)?.getOrNull()
-            EmailBreachUiState(
-                id = BreachEmailId.Alias(
-                    id = BreachId(""),
-                    shareId = entry.key.shareId,
-                    itemId = entry.key.itemId
-                ),
-                email = entry.key.alias,
-                count = entry.value.count(),
-                breachDate = breachDate,
-                isMonitored = true
-            )
-        }.toPersistentList()
 
     internal fun onEventConsumed(event: SecurityCenterAliasListEvent) {
         eventFlow.compareAndSet(event, SecurityCenterAliasListEvent.Idle)

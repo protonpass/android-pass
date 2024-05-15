@@ -23,5 +23,6 @@ import proton.android.pass.navigation.api.NavItemType
 
 object SyncNavItem : NavItem(
     baseRoute = "sync/dialog",
-    navItemType = NavItemType.Dialog
+    navItemType = NavItemType.Dialog,
+    noHistory = true
 )

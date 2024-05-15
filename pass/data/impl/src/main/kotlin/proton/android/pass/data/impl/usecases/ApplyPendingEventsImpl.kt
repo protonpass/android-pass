@@ -114,7 +114,6 @@ class ApplyPendingEventsImpl @Inject constructor(
         val existingShareIds = refreshSharesResult.allShareIds
             .subtract(refreshSharesResult.newShareIds)
 
-        PassLogger.i(TAG, "Retrieved user address")
         val address = requireNotNull(
             addressRepository.getAddresses(userId).primary()
         )

@@ -75,6 +75,7 @@ dependencies {
     implementation(libs.core.telemetry.data)
     implementation(libs.core.telemetry.domain)
     implementation(libs.core.user)
+    implementation(libs.core.userRecovery)
     implementation(libs.core.userSettings)
     implementation(libs.core.utilKotlin)
     implementation(libs.kotlinx.coroutines.core)

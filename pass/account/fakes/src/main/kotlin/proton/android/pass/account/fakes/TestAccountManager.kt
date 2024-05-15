@@ -59,11 +59,15 @@ class TestAccountManager @Inject constructor() : AccountManager(Product.Pass) {
 
     override fun onSessionStateChanged(initialState: Boolean): Flow<Account> = emptyFlow()
 
-    override suspend fun removeAccount(userId: UserId) {
+    override suspend fun removeAccount(userId: UserId, waitForCompletion: Boolean) {
         // no-op
     }
 
-    override suspend fun disableAccount(userId: UserId, keepSession: Boolean) {
+    override suspend fun disableAccount(
+        userId: UserId,
+        waitForCompletion: Boolean,
+        keepSession: Boolean
+    ) {
         // no-op
     }
 

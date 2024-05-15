@@ -35,8 +35,9 @@ import androidx.work.WorkRequest
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.impl.R
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatus
@@ -49,7 +50,8 @@ open class FetchShareItemsWorker @AssistedInject constructor(
     @Assisted private val context: Context,
     @Assisted workerParameters: WorkerParameters,
     private val fetchShareItemsStatusRepository: FetchShareItemsStatusRepository,
-    private val itemRepository: ItemRepository
+    private val itemRepository: ItemRepository,
+    private val appDispatchers: AppDispatchers
 ) : CoroutineWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
@@ -63,7 +65,7 @@ open class FetchShareItemsWorker @AssistedInject constructor(
             ?.let(::ShareId)
             ?: return Result.failure()
 
-        val result = coroutineScope {
+        val result = withContext(appDispatchers.io) {
             runCatching {
                 itemRepository.refreshItemsAndObserveProgress(
                     userId = userId,

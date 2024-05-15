@@ -15,8 +15,9 @@
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">安全的保存付款資料</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">生成一個安全密碼</string>
   <!-- Create Login -->
-  <string name="field_username_title">使用者名稱或電郵位址</string>
-  <string name="field_username_hint">加入使用者名稱或電郵位址</string>
+  <string name="title_create_login">創建登入</string>
+  <string name="field_username_or_email_title">使用者名稱或電郵位址</string>
+  <string name="field_username_or_email_hint">加入使用者名稱或電郵位址</string>
   <string name="field_password_title">密碼</string>
   <string name="field_password_hint">新增密碼</string>
   <string name="field_website_address_title">網站</string>

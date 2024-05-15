@@ -15,8 +15,9 @@
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Αποθηκεύστε με ασφάλεια τα στοιχεία πληρωμής σας</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Δημιουργήσετε έναν ασφαλή κωδικό πρόσβασης</string>
   <!-- Create Login -->
-  <string name="field_username_title">Όνομα χρήστη ή διεύθυνση email</string>
-  <string name="field_username_hint">Προσθήκη ονόματος χρήστη ή διεύθυνσης email</string>
+  <string name="title_create_login">Δημιουργία σύνδεσης</string>
+  <string name="field_username_or_email_title">Όνομα χρήστη ή διεύθυνση email</string>
+  <string name="field_username_or_email_hint">Προσθήκη ονόματος χρήστη ή διεύθυνσης email</string>
   <string name="field_password_title">Κωδικός πρόσβασης</string>
   <string name="field_password_hint">Προσθήκη κωδικού πρόσβασης</string>
   <string name="field_website_address_title">Ιστοσελίδα</string>

@@ -88,7 +88,7 @@ fun UpdateCreditCardScreen(
                             is CreditCardContentEvent.OnTitleChange ->
                                 viewModel.onTitleChange(event.value)
 
-                            CreditCardContentEvent.OnVaultSelect -> {}
+                            is CreditCardContentEvent.OnVaultSelect -> {}
                         }
                     }
                 )

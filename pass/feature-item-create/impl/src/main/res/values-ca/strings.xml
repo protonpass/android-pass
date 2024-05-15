@@ -15,8 +15,9 @@
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Emmagatzemeu de forma segura la informació de pagament</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Genera una contrasenya segura</string>
   <!-- Create Login -->
-  <string name="field_username_title">Nom d\'usuari o adreça de correu electrònic</string>
-  <string name="field_username_hint">Afegeix un nom d\'usuari o correu electrònic</string>
+  <string name="title_create_login">Crea un inici de sessió</string>
+  <string name="field_username_or_email_title">Nom d\'usuari o adreça de correu electrònic</string>
+  <string name="field_username_or_email_hint">Afegeix un nom d\'usuari o correu electrònic</string>
   <string name="field_password_title">Contrasenya</string>
   <string name="field_password_hint">Afegeix una contrasenya</string>
   <string name="field_website_address_title">Lloc web</string>

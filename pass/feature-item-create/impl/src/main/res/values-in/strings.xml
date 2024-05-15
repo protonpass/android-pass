@@ -15,8 +15,9 @@
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Simpan informasi pembayaran Anda dengan aman</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Hasilkan kata sandi yang aman</string>
   <!-- Create Login -->
-  <string name="field_username_title">Nama pengguna atau alamat email</string>
-  <string name="field_username_hint">Tambahkan nama pengguna atau alamat email</string>
+  <string name="title_create_login">Buat entri masuk</string>
+  <string name="field_username_or_email_title">Nama pengguna atau alamat email</string>
+  <string name="field_username_or_email_hint">Tambahkan nama pengguna atau alamat email</string>
   <string name="field_password_title">Kata sandi</string>
   <string name="field_password_hint">Tambahkan kata sandi</string>
   <string name="field_website_address_title">Situs Web</string>

@@ -18,10 +18,9 @@
 
 package proton.android.pass.composecomponents.impl.topbar
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
@@ -36,6 +35,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.presentation.R
 import proton.android.pass.commonui.api.PassPalette
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
 
@@ -54,10 +54,10 @@ fun SearchTopBar(
     val endPadding = if (actions != null) 4.dp else 16.dp
     Row(
         modifier = modifier.padding(start = 16.dp, top = 16.dp, end = endPadding, bottom = 16.dp),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
         drawerIcon()
-        Spacer(modifier = Modifier.width(8.dp))
         SearchTextField(
             modifier = Modifier.weight(1f),
             searchQuery = searchQuery,

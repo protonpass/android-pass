@@ -44,7 +44,7 @@ commons-codec = "1.15"
 # Compose marker
 compose-stable-marker = "1.0.0"
 # Core
-core = "23.2.0"
+core = "24.0.0"
 # Dagger
 dagger = "2.49"
 # Google
@@ -250,6 +250,8 @@ core-telemetry-domain = { module = "me.proton.core:telemetry-domain", version.re
 core-telemetry-presentation = { module = "me.proton.core:telemetry-presentation", version.ref = "core" }
 core-user = { module = "me.proton.core:user", version.ref = "core" }
 core-user-domain = { module = "me.proton.core:user-domain", version.ref = "core" }
+core-userRecovery = { module = "me.proton.core:user-recovery", version.ref = "core" }
+core-userRecovery-test = { module = "me.proton.core:user-recovery-test", version.ref = "core" }
 core-userSettings = { module = "me.proton.core:user-settings", version.ref = "core" }
 core-userSettings-domain = { module = "me.proton.core:user-settings-domain", version.ref = "core" }
 core-userSettings-presentation-compose = { module = "me.proton.core:user-settings-presentation-compose", version.ref = "core" }
@@ -338,5 +340,5 @@ fusion = { module = "me.proton.test:fusion", version.ref = "fusion" }
 zxing-core = { module = "com.google.zxing:core", version.ref = "zxing" }
 
 [bundles]
-core-test = ["core-test-android-instrumented", "core-accountRecovery-test", "core-auth-test", "core-humanVerification-test", "core-plan-test", "core-userSettings-test"]
+core-test = ["core-test-android-instrumented", "core-accountRecovery-test", "core-auth-test", "core-humanVerification-test", "core-plan-test", "core-userRecovery-test", "core-userSettings-test"]
 test-android = ["fusion", "junit", "coroutines-test", "androidx-test-core-ktx", "androidx-test-runner", "androidx-test-rules", "androidx-compose-ui-test", "androidx-compose-ui-test-junit", "androidx-test-uiautomator", "dagger-hilt-android-testing"]

@@ -43,7 +43,10 @@ fun CreditCardContent(
                     onEvent(Submit(selectedShareId))
                 },
                 onUpgrade = { onEvent(Upgrade) },
-                onVaultSelectorClick = { onEvent(CreditCardContentEvent.OnVaultSelect) }
+                onVaultSelectorClick = {
+                    selectedShareId ?: return@CreateUpdateTopBar
+                    onEvent(CreditCardContentEvent.OnVaultSelect(selectedShareId))
+                }
             )
         }
     ) { padding ->
@@ -91,7 +94,8 @@ sealed interface CreditCardContentEvent {
     @JvmInline
     value class OnTitleChange(val value: String) : CreditCardContentEvent
 
-    data object OnVaultSelect : CreditCardContentEvent
+    @JvmInline
+    value class OnVaultSelect(val shareId: ShareId) : CreditCardContentEvent
 }
 
 

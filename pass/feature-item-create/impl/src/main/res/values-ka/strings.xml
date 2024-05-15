@@ -15,8 +15,9 @@
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">უსაფრთხოდ შეინახეთ თქვენი გადახდის ინფორმაცია</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">უსაფრთხო პაროლის გენერირება</string>
   <!-- Create Login -->
-  <string name="field_username_title">მომხმარებლის სახელი ან ელფოსტის მისამართი</string>
-  <string name="field_username_hint">დაამატეთ მომხმარებლის სახელი ან ელფოსტის მისამართი</string>
+  <string name="title_create_login">შესვლის ჩანაწერის შექმნა</string>
+  <string name="field_username_or_email_title">მომხმარებლის სახელი ან ელფოსტის მისამართი</string>
+  <string name="field_username_or_email_hint">დაამატეთ მომხმარებლის სახელი ან ელფოსტის მისამართი</string>
   <string name="field_password_title">პაროლი</string>
   <string name="field_password_hint">პაროლის დამატება</string>
   <string name="field_website_address_title">საიტი</string>

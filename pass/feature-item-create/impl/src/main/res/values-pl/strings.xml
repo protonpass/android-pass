@@ -15,8 +15,9 @@
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Bezpieczne przechowywanie informacji o płatnościach</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Generuj bezpieczne hasło</string>
   <!-- Create Login -->
-  <string name="field_username_title">Nazwa użytkownika lub adres e-mail</string>
-  <string name="field_username_hint">Dodaj nazwę użytkownika lub adres e-mail</string>
+  <string name="title_create_login">Utwórz dane logowania</string>
+  <string name="field_username_or_email_title">Nazwa użytkownika lub adres e-mail</string>
+  <string name="field_username_or_email_hint">Dodaj nazwę użytkownika lub adres e-mail</string>
   <string name="field_password_title">Hasło</string>
   <string name="field_password_hint">Dodaj hasło</string>
   <string name="field_website_address_title">Strona internetowa</string>

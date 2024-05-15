@@ -15,8 +15,9 @@
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Stockez vos informations de paiement de façon sécurisée.</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Générer un mot de passe sécurisé</string>
   <!-- Create Login -->
-  <string name="field_username_title">Nom d\'utilisateur ou adresse e-mail</string>
-  <string name="field_username_hint">Ajouter un nom d\'utilisateur ou une adresse e-mail</string>
+  <string name="title_create_login">Créer un identifiant</string>
+  <string name="field_username_or_email_title">Nom d\'utilisateur ou adresse e-mail</string>
+  <string name="field_username_or_email_hint">Ajouter un nom d\'utilisateur ou une adresse e-mail</string>
   <string name="field_password_title">Mot de passe</string>
   <string name="field_password_hint">Ajouter un mot de passe</string>
   <string name="field_website_address_title">Site internet</string>

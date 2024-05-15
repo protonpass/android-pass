@@ -204,6 +204,7 @@ core-account-domain = { module = "me.proton.core:account-domain", version.ref = 
 core-accountManager = { module = "me.proton.core:account-manager", version.ref = "core" }
 core-accountManager-domain = { module = "me.proton.core:account-manager-domain", version.ref = "core" }
 core-accountManager-presentation-compose = { module = "me.proton.core:account-manager-presentation-compose", version.ref = "core" }
+core-accountManager-test = { module = "me.proton.core:account-manager-test", version.ref = "core" }
 core-accountRecovery = { module = "me.proton.core:account-recovery", version.ref = "core" }
 core-accountRecovery-presentation-compose = { module = "me.proton.core:account-recovery-presentation-compose", version.ref = "core" }
 core-accountRecovery-test = { module = "me.proton.core:account-recovery-test", version.ref = "core" }
@@ -340,5 +341,5 @@ fusion = { module = "me.proton.test:fusion", version.ref = "fusion" }
 zxing-core = { module = "com.google.zxing:core", version.ref = "zxing" }
 
 [bundles]
-core-test = ["core-test-android-instrumented", "core-accountRecovery-test", "core-auth-test", "core-humanVerification-test", "core-plan-test", "core-userRecovery-test", "core-userSettings-test"]
+core-test = ["core-test-android-instrumented", "core-accountManager-test", "core-accountRecovery-test", "core-auth-test", "core-humanVerification-test", "core-plan-test", "core-userRecovery-test", "core-userSettings-test"]
 test-android = ["fusion", "junit", "coroutines-test", "androidx-test-core-ktx", "androidx-test-runner", "androidx-test-rules", "androidx-compose-ui-test", "androidx-compose-ui-test-junit", "androidx-test-uiautomator", "dagger-hilt-android-testing"]

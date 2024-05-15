@@ -83,7 +83,7 @@ open class BaseTest {
         )
         val quark = Quark.fromJson(
             json = context.assets.open("internal_api.json").bufferedReader().use { it.readText() },
-            host = EnvironmentConfigurationDefaults.host,
+            host = EnvironmentConfigurationDefaults.apiHost,
             proxyToken = EnvironmentConfigurationDefaults.proxyToken
         )
     }

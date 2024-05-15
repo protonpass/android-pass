@@ -24,6 +24,5 @@ import proton.android.pass.domain.ShareId
 data class AliasKeyId(
     val shareId: ShareId,
     val itemId: ItemId,
-    val alias: String,
-    val isMonitored: Boolean
+    val alias: String
 )

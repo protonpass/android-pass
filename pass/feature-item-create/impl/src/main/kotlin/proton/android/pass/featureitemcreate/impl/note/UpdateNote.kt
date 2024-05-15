@@ -65,12 +65,16 @@ fun UpdateNote(
             selectedVault = null,
             showVaultSelector = false,
             selectedShareId = noteUiState.selectedShareId,
-            onUpClick = onExit,
-            onSubmit = { shareId -> viewModel.updateItem(shareId) },
-            onTitleChange = { viewModel.onTitleChange(it) },
-            onNoteChange = { viewModel.onNoteChange(it) },
             noteItemFormState = viewModel.noteItemFormState,
-            onVaultSelect = {}
+            onEvent = { event ->
+                when (event) {
+                    NoteContentUiEvent.Back -> onExit()
+                    is NoteContentUiEvent.OnNoteChange -> viewModel.onNoteChange(event.note)
+                    is NoteContentUiEvent.OnTitleChange -> viewModel.onTitleChange(event.title)
+                    is NoteContentUiEvent.OnVaultSelect -> {}
+                    is NoteContentUiEvent.Submit -> viewModel.updateItem(event.shareId)
+                }
+            }
         )
 
         ConfirmCloseDialog(

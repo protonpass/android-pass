@@ -34,8 +34,7 @@ internal fun CreateNoteItemForm(
     noteItemFormState: NoteItemFormState,
     enabled: Boolean,
     onTitleRequiredError: Boolean,
-    onTitleChange: (String) -> Unit,
-    onNoteChange: (String) -> Unit
+    onEvent: (NoteContentUiEvent) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -49,14 +48,14 @@ internal fun CreateNoteItemForm(
             requestFocus = true,
             onTitleRequiredError = onTitleRequiredError,
             enabled = enabled,
-            onValueChanged = onTitleChange
+            onValueChanged = { onEvent(NoteContentUiEvent.OnTitleChange(it)) }
         )
         FullNoteSection(
             modifier = Modifier.weight(1f),
             textFieldModifier = Modifier.weight(1f),
             enabled = enabled,
             value = noteItemFormState.note,
-            onChange = onNoteChange
+            onChange = { onEvent(NoteContentUiEvent.OnNoteChange(it)) }
         )
     }
 }

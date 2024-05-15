@@ -18,11 +18,9 @@
 
 package proton.android.pass.features.security.center.shared.presentation
 
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.breach.BreachEmail
 
-data class AliasKeyId(
-    val shareId: ShareId,
-    val itemId: ItemId,
-    val alias: String
+data class AliasData(
+    val breaches: List<BreachEmail>,
+    val isMonitored: Boolean
 )

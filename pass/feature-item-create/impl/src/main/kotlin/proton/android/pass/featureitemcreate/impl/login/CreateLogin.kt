@@ -25,7 +25,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -34,7 +33,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.OneTimeLaunchedEffect
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
-import proton.android.pass.commonui.api.keyboard.PerformActionAfterKeyboardHide
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
@@ -62,12 +60,6 @@ fun CreateLoginScreen(
         viewModel.setInitialContents(initialContents)
     }
     val uiState by viewModel.createLoginUiState.collectAsStateWithLifecycle()
-
-    var actionAfterKeyboardHide by remember { mutableStateOf<(() -> Unit)?>(null) }
-    PerformActionAfterKeyboardHide(
-        action = actionAfterKeyboardHide,
-        clearAction = { actionAfterKeyboardHide = null }
-    )
 
     LaunchedEffect(clearAlias) {
         if (clearAlias) {
@@ -172,46 +164,31 @@ fun CreateLoginScreen(
                     // Cannot delete passkey from Create Login
                     is LoginContentEvent.OnDeletePasskey -> {}
                     is LoginContentEvent.OnTitleChange -> viewModel.onTitleChange(it.title)
-                    is LoginContentEvent.OnVaultSelect -> {
-                        actionAfterKeyboardHide = {
-                            onNavigate(
-                                OnCreateLoginEvent(CreateLoginNavigation.SelectVault(it.shareId))
-                            )
-                        }
-                    }
+                    is LoginContentEvent.OnVaultSelect ->
+                        onNavigate(
+                            OnCreateLoginEvent(CreateLoginNavigation.SelectVault(it.shareId))
+                        )
 
                     is LoginContentEvent.OnAliasOptions ->
-                        actionAfterKeyboardHide = {
-                            onNavigate(
-                                BaseLoginNavigation.AliasOptions(
-                                    it.shareId,
-                                    it.hasReachedAliasLimit
-                                )
+                        onNavigate(
+                            BaseLoginNavigation.AliasOptions(
+                                it.shareId,
+                                it.hasReachedAliasLimit
                             )
-                        }
+                        )
 
                     is LoginContentEvent.OnCreateAlias ->
-                        actionAfterKeyboardHide = {
-                            onNavigate(
-                                BaseLoginNavigation.CreateAlias(
-                                    shareId = it.shareId,
-                                    showUpgrade = it.hasReachedAliasLimit,
-                                    title = it.title
-                                )
+                        onNavigate(
+                            BaseLoginNavigation.CreateAlias(
+                                shareId = it.shareId,
+                                showUpgrade = it.hasReachedAliasLimit,
+                                title = it.title
                             )
-                        }
+                        )
 
-                    LoginContentEvent.OnCreatePassword ->
-                        actionAfterKeyboardHide =
-                            { onNavigate(BaseLoginNavigation.GeneratePassword) }
-
-                    is LoginContentEvent.OnScanTotp ->
-                        actionAfterKeyboardHide =
-                            { onNavigate(BaseLoginNavigation.ScanTotp(it.index)) }
-
-                    LoginContentEvent.OnUpgrade ->
-                        actionAfterKeyboardHide =
-                            { onNavigate(BaseLoginNavigation.Upgrade) }
+                    LoginContentEvent.OnCreatePassword -> onNavigate(BaseLoginNavigation.GeneratePassword)
+                    is LoginContentEvent.OnScanTotp -> onNavigate(BaseLoginNavigation.ScanTotp(it.index))
+                    LoginContentEvent.OnUpgrade -> onNavigate(BaseLoginNavigation.Upgrade)
                 }
             }
         )

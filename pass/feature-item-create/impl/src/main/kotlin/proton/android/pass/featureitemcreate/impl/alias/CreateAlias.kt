@@ -33,9 +33,9 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.commonui.api.keyboard.IsKeyboardVisible
 import proton.android.pass.commonui.api.keyboard.keyboardAsState
+import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ShareId
@@ -114,17 +114,20 @@ fun CreateAliasScreen(
             topBarActionName = stringResource(id = R.string.title_create),
             isCreateMode = true,
             isEditAllowed = uiState.baseAliasUiState.isLoadingState == IsLoadingState.NotLoading,
-            onUpClick = onExit,
-            onSubmit = { shareId -> viewModel.createAlias(shareId) },
-            onSuffixChange = { viewModel.onSuffixChange(it) },
-            onMailboxesChanged = { viewModel.onMailboxesChanged(it) },
-            onNoteChange = { viewModel.onNoteChange(it) },
-            onPrefixChange = { viewModel.onPrefixChange(it) },
-            onUpgrade = { onNavigate(CreateAliasNavigation.Upgrade) },
-            onTitleChange = { viewModel.onTitleChange(it) },
-            onVaultSelect = {
-                actionWhenKeyboardDisappears = CAActionAfterHideKeyboard.SelectVault
-                keyboardController?.hide()
+            onEvent = { event ->
+                when (event) {
+                    is AliasContentUiEvent.Back -> onExit()
+                    is AliasContentUiEvent.Submit -> viewModel.createAlias(event.shareId)
+                    is AliasContentUiEvent.OnNoteChange -> viewModel.onNoteChange(event.note)
+                    is AliasContentUiEvent.OnTitleChange -> viewModel.onTitleChange(event.title)
+                    is AliasContentUiEvent.OnVaultSelect ->
+                        onNavigate(CreateAliasNavigation.SelectVault(event.shareId))
+
+                    is AliasContentUiEvent.OnPrefixChange -> viewModel.onPrefixChange(event.prefix)
+                    is AliasContentUiEvent.OnMailBoxChanged -> viewModel.onMailboxesChanged(event.list)
+                    is AliasContentUiEvent.OnSuffixChanged -> viewModel.onSuffixChange(event.suffix)
+                    is AliasContentUiEvent.OnUpgrade -> onNavigate(CreateAliasNavigation.Upgrade)
+                }
             }
         )
 

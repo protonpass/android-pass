@@ -18,19 +18,28 @@
 
 package proton.android.pass.uitest.robot
 
+import me.proton.core.accountmanager.test.robot.AccountSettingsRobot
+import me.proton.core.accountmanager.test.robot.SignOutDialogRobot
 import me.proton.test.fusion.Fusion.node
 import proton.android.pass.featureaccount.impl.AccountContentTestTag
 import proton.android.pass.featureaccount.impl.AccountScreenTestTag
+import proton.android.pass.featureaccount.impl.R as FeatureAccountR
 
 object AccountRobot : Robot {
 
     private val accountScreen get() = node.withTag(AccountScreenTestTag.screen)
-
+    private val signOut = node.withText(FeatureAccountR.string.account_sign_out)
     private val upgrade get() = node.withTag(AccountContentTestTag.upgrade)
     private val subscription get() = node.withTag(AccountContentTestTag.subscription)
 
     fun accountScreenDisplayed(): AccountRobot = apply {
         accountScreen.await { assertIsDisplayed() }
+    }
+
+    fun clickSignOut(): SignOutDialogRobot {
+        signOut.await { assertIsDisplayed() }
+        signOut.scrollTo().click()
+        return SignOutDialogRobot
     }
 
     fun clickUpgrade() {
@@ -42,4 +51,6 @@ object AccountRobot : Robot {
         subscription.await { assertIsDisplayed() }
         subscription.click()
     }
+
+    fun coreAccountSettings(): AccountSettingsRobot = AccountSettingsRobot
 }

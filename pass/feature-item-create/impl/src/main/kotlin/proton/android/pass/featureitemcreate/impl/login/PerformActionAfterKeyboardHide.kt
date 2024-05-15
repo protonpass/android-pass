@@ -26,15 +26,16 @@ import proton.android.pass.composecomponents.impl.keyboard.IsKeyboardVisible
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
 
 @Composable
-fun PerformActionAfterKeyboardHide(action: (() -> Unit)?, clearAction: (() -> Unit)? = null) {
+fun PerformActionAfterKeyboardHide(action: (() -> Unit)?, clearAction: (() -> Unit)) {
     val keyboardState by keyboardAsState()
     val keyboardController = LocalSoftwareKeyboardController.current
+    if (action == null) return
     LaunchedEffect(action, keyboardState) {
-        when {
-            action != null && keyboardState == IsKeyboardVisible.VISIBLE -> keyboardController?.hide()
-            keyboardState == IsKeyboardVisible.GONE -> {
-                action?.invoke()
-                clearAction?.invoke()
+        when (keyboardState) {
+            IsKeyboardVisible.VISIBLE -> keyboardController?.hide()
+            IsKeyboardVisible.GONE -> {
+                action.invoke()
+                clearAction.invoke()
             }
         }
     }

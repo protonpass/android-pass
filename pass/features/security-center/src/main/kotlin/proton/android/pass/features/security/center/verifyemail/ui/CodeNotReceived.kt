@@ -52,6 +52,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Radius
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.form.ChevronDownIcon
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.features.security.center.R
 
 private const val LINK_ANNOTATION_TAG = "link"
@@ -60,7 +61,11 @@ private const val ROTATION_TOGGLED = 180f
 
 @OptIn(ExperimentalTextApi::class)
 @Composable
-internal fun CodeNotReceived(modifier: Modifier = Modifier, onUiEvent: (SecurityCenterVerifyEmailUiEvent) -> Unit) {
+internal fun CodeNotReceived(
+    modifier: Modifier = Modifier,
+    isResendingCodeState: IsLoadingState,
+    onUiEvent: (SecurityCenterVerifyEmailUiEvent) -> Unit
+) {
     Column(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(Spacing.medium)
@@ -135,7 +140,9 @@ internal fun CodeNotReceived(modifier: Modifier = Modifier, onUiEvent: (Security
                     onClick = {
                         text.getStringAnnotations(LINK_ANNOTATION_TAG, it, it).firstOrNull()
                             ?.let { _ ->
-                                onUiEvent(SecurityCenterVerifyEmailUiEvent.ResendCode)
+                                if (isResendingCodeState == IsLoadingState.NotLoading) {
+                                    onUiEvent(SecurityCenterVerifyEmailUiEvent.ResendCode)
+                                }
                             }
                     }
                 )

@@ -26,14 +26,16 @@ internal data class SecurityCenterVerifyEmailState(
     internal val email: String,
     internal val isError: Boolean,
     internal val event: SecurityCenterVerifyEmailEvent,
-    internal val isLoadingState: IsLoadingState
+    internal val isLoadingState: IsLoadingState,
+    internal val isResendingCodeState: IsLoadingState
 ) {
     internal companion object {
         internal fun default(email: String): SecurityCenterVerifyEmailState = SecurityCenterVerifyEmailState(
             email = email,
             isError = false,
             event = SecurityCenterVerifyEmailEvent.Idle,
-            isLoadingState = IsLoadingState.NotLoading
+            isLoadingState = IsLoadingState.NotLoading,
+            isResendingCodeState = IsLoadingState.NotLoading
         )
     }
 }

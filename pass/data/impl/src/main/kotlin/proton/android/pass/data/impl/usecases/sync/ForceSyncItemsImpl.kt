@@ -57,6 +57,8 @@ class ForceSyncItemsImpl @Inject constructor(
                                 total = progress.total
                             )
                         )
+
+                        println("JIBIRI: ForceSyncItemsImpl -> Syncing")
                         PassLogger.d(TAG, "ShareId ${shareId.id} progress: $progress")
                     }
                 )
@@ -99,6 +101,7 @@ class ForceSyncItemsImpl @Inject constructor(
         }
 
         itemSyncStatusRepository.setMode(SyncMode.Background)
+        println("JIBIRI: ForceSyncItemsImpl -> Background")
         return result
     }
 

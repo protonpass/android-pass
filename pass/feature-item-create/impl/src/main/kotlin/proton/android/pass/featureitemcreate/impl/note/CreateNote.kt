@@ -25,18 +25,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
-import proton.android.pass.commonui.api.keyboard.IsKeyboardVisible
-import proton.android.pass.commonui.api.keyboard.keyboardAsState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
@@ -45,11 +41,6 @@ import proton.android.pass.featureitemcreate.impl.common.ShareError.EmptyShareLi
 import proton.android.pass.featureitemcreate.impl.common.ShareError.SharesNotAvailable
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
-import proton.android.pass.featureitemcreate.impl.note.CNActionAfterHideKeyboard.SelectVault
-
-private enum class CNActionAfterHideKeyboard {
-    SelectVault
-}
 
 @Suppress("ComplexMethod")
 @OptIn(ExperimentalComposeUiApi::class)
@@ -67,9 +58,7 @@ fun CreateNoteScreen(
     }
 
     val uiState by viewModel.createNoteUiState.collectAsStateWithLifecycle()
-    val keyboardState by keyboardAsState()
-    val keyboardController = LocalSoftwareKeyboardController.current
-    var actionWhenKeyboardDisappears by remember { mutableStateOf<CNActionAfterHideKeyboard?>(null) }
+
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
     val onExit = {
         if (uiState.baseNoteUiState.hasUserEditedContent) {
@@ -108,13 +97,16 @@ fun CreateNoteScreen(
             showVaultSelector = showVaultSelector,
             selectedShareId = selectedVault?.vault?.shareId,
             topBarActionName = stringResource(R.string.title_create),
-            onUpClick = onExit,
-            onSubmit = { shareId -> viewModel.createNote(shareId) },
-            onTitleChange = { viewModel.onTitleChange(it) },
-            onNoteChange = { viewModel.onNoteChange(it) },
-            onVaultSelect = {
-                actionWhenKeyboardDisappears = SelectVault
-                keyboardController?.hide()
+            onEvent = { event ->
+                when (event) {
+                    is NoteContentUiEvent.Back -> onExit()
+                    is NoteContentUiEvent.Submit -> viewModel.createNote(event.shareId)
+                    is NoteContentUiEvent.OnVaultSelect ->
+                        onNavigate(CreateNoteNavigation.SelectVault(event.shareId))
+
+                    is NoteContentUiEvent.OnNoteChange -> viewModel.onNoteChange(event.note)
+                    is NoteContentUiEvent.OnTitleChange -> viewModel.onTitleChange(event.title)
+                }
             }
         )
 
@@ -128,22 +120,6 @@ fun CreateNoteScreen(
                 onNavigate(CreateNoteNavigation.Back)
             }
         )
-    }
-
-    LaunchedEffect(keyboardState, actionWhenKeyboardDisappears) {
-        if (keyboardState == IsKeyboardVisible.VISIBLE) {
-            when (actionWhenKeyboardDisappears) {
-                SelectVault -> {
-                    selectedVault ?: return@LaunchedEffect
-                    onNavigate(
-                        CreateNoteNavigation.SelectVault(selectedVault.vault.shareId)
-                    )
-                    actionWhenKeyboardDisappears = null // Clear flag
-                }
-
-                null -> {}
-            }
-        }
     }
     ItemSavedLaunchedEffect(
         isItemSaved = uiState.baseNoteUiState.itemSavedState,

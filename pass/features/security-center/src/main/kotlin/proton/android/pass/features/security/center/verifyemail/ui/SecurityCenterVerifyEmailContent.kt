@@ -37,6 +37,8 @@ import proton.android.pass.commonui.api.heroWeak
 import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
+import proton.android.pass.composecomponents.impl.loading.LoadingDialog
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBar
 import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBarBackButton
@@ -95,7 +97,13 @@ internal fun SecurityCenterVerifyEmailContent(
                 textColor = PassTheme.colors.interactionNormMajor2,
                 onClick = { onUiEvent(SecurityCenterVerifyEmailUiEvent.Verify) }
             )
-            CodeNotReceived(onUiEvent = onUiEvent)
+            CodeNotReceived(
+                isResendingCodeState = state.isResendingCodeState,
+                onUiEvent = onUiEvent
+            )
         }
+    }
+    if (state.isResendingCodeState == IsLoadingState.Loading) {
+        LoadingDialog()
     }
 }

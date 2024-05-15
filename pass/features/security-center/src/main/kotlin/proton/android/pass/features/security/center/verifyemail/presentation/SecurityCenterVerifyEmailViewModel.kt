@@ -74,18 +74,22 @@ class SecurityCenterVerifyEmailViewModel @Inject constructor(
 
     private val isLoadingFlow: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
+    private val isResendingCodeFlow: MutableStateFlow<IsLoadingState> =
+        MutableStateFlow(IsLoadingState.NotLoading)
     private val codeNotValidStateFlow = MutableStateFlow(false)
 
     internal val state: StateFlow<SecurityCenterVerifyEmailState> = combine(
         eventFlow,
         codeNotValidStateFlow,
-        isLoadingFlow
-    ) { event, codeNotValid, isLoading ->
+        isLoadingFlow,
+        isResendingCodeFlow
+    ) { event, codeNotValid, isLoading, isResendingCode ->
         SecurityCenterVerifyEmailState(
             email = email,
             isError = codeNotValid,
             event = event,
-            isLoadingState = isLoading
+            isLoadingState = isLoading,
+            isResendingCodeState = isResendingCode
         )
     }.stateIn(
         scope = viewModelScope,
@@ -140,6 +144,7 @@ class SecurityCenterVerifyEmailViewModel @Inject constructor(
 
     internal fun resendCode() {
         viewModelScope.launch {
+            isResendingCodeFlow.update { IsLoadingState.Loading }
             runCatching {
                 resendVerificationCode(id = id)
                 snackbarDispatcher(ResendCodeSuccess)
@@ -148,6 +153,7 @@ class SecurityCenterVerifyEmailViewModel @Inject constructor(
                 PassLogger.i(TAG, "Failed to resend code")
                 snackbarDispatcher(ResendCodeError)
             }
+            isResendingCodeFlow.update { IsLoadingState.NotLoading }
         }
     }
 

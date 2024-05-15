@@ -48,11 +48,9 @@ internal fun CreateAliasForm(
     isEditAllowed: Boolean,
     isLoading: Boolean,
     showUpgrade: Boolean,
-    onPrefixChange: (String) -> Unit,
-    onNoteChange: (String) -> Unit,
-    onTitleChange: (String) -> Unit,
     onSuffixClick: () -> Unit,
-    onMailboxClick: () -> Unit
+    onMailboxClick: () -> Unit,
+    onEvent: (AliasContentUiEvent) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -68,19 +66,20 @@ internal fun CreateAliasForm(
             )
         }
         TitleSection(
-            modifier = Modifier.roundedContainerNorm()
+            modifier = Modifier
+                .roundedContainerNorm()
                 .padding(start = 16.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
             value = aliasItemFormState.title,
             requestFocus = true,
             onTitleRequiredError = onTitleRequiredError,
             enabled = isEditAllowed,
             isRounded = true,
-            onChange = { onTitleChange(it) }
+            onChange = { onEvent(AliasContentUiEvent.OnTitleChange(it)) }
         )
         if (isCreateMode) {
             CreateAliasSection(
                 state = aliasItemFormState,
-                onChange = onPrefixChange,
+                onChange = { onEvent(AliasContentUiEvent.OnPrefixChange(it)) },
                 onSuffixClick = onSuffixClick,
                 canEdit = isEditAllowed,
                 canSelectSuffix = aliasItemFormState.aliasOptions.suffixes.size > 1,
@@ -104,7 +103,7 @@ internal fun CreateAliasForm(
         SimpleNoteSection(
             value = aliasItemFormState.note,
             enabled = isEditAllowed,
-            onChange = onNoteChange
+            onChange = { onEvent(AliasContentUiEvent.OnNoteChange(it)) }
         )
     }
 }

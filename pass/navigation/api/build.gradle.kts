@@ -47,6 +47,7 @@ dependencies {
 
     api(libs.androidx.compose.runtime)
 
+    implementation(projects.pass.commonUi.api)
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.log.api)
 

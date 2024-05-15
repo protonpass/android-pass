@@ -27,13 +27,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.runningFold
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -49,19 +46,16 @@ import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.some
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveGlobalMonitorState
 import proton.android.pass.data.api.usecases.ObserveItemCount
-import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.CustomEmailSuggestion
+import proton.android.pass.data.api.usecases.breach.ObserveBreachAliasEmails
 import proton.android.pass.data.api.usecases.breach.ObserveBreachCustomEmails
 import proton.android.pass.data.api.usecases.breach.ObserveBreachProtonEmails
-import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAliasEmail
 import proton.android.pass.data.api.usecases.breach.ObserveCustomEmailSuggestions
-import proton.android.pass.domain.ItemState
-import proton.android.pass.domain.ItemType
-import proton.android.pass.domain.ShareSelection
+import proton.android.pass.domain.breach.AliasData
+import proton.android.pass.domain.breach.AliasKeyId
 import proton.android.pass.domain.breach.BreachCustomEmail
 import proton.android.pass.domain.breach.BreachEmail
 import proton.android.pass.domain.breach.BreachEmailId
@@ -69,8 +63,6 @@ import proton.android.pass.domain.breach.BreachId
 import proton.android.pass.domain.breach.BreachProtonEmail
 import proton.android.pass.features.security.center.PassMonitorDisplayDarkWebMonitoring
 import proton.android.pass.features.security.center.customemail.presentation.SecurityCenterCustomEmailSnackbarMessage
-import proton.android.pass.features.security.center.shared.presentation.AliasData
-import proton.android.pass.features.security.center.shared.presentation.AliasKeyId
 import proton.android.pass.features.security.center.shared.presentation.EmailBreachUiState
 import proton.android.pass.features.security.center.shared.ui.DateUtils
 import proton.android.pass.log.api.PassLogger
@@ -81,11 +73,10 @@ import javax.inject.Inject
 @Suppress("LongParameterList")
 @HiltViewModel
 internal class DarkWebViewModel @Inject constructor(
-    observeItems: ObserveItems,
     observeItemCount: ObserveItemCount,
     observeBreachProtonEmails: ObserveBreachProtonEmails,
-    observeBreachesForAliasEmail: ObserveBreachesForAliasEmail,
     observeBreachCustomEmails: ObserveBreachCustomEmails,
+    observeBreachAliasEmails: ObserveBreachAliasEmails,
     observeCustomEmailSuggestions: ObserveCustomEmailSuggestions,
     observeGlobalMonitorState: ObserveGlobalMonitorState,
     telemetryManager: TelemetryManager,
@@ -111,43 +102,11 @@ internal class DarkWebViewModel @Inject constructor(
         }
         .asLoadingResult()
 
-    private val aliasEmailFlow: Flow<LoadingResult<Map<AliasKeyId, AliasData>>> = observeItems(
-        selection = ShareSelection.AllShares,
-        itemState = ItemState.Active,
-        filter = ItemTypeFilter.Aliases
-    )
-        .flatMapLatest { list ->
-            list
-                .map { item ->
-                    val aliasKey = AliasKeyId(
-                        shareId = item.shareId,
-                        itemId = item.id,
-                        alias = (item.itemType as ItemType.Alias).aliasEmail
-                    )
-                    if (item.hasSkippedHealthCheck) {
-                        flowOf(aliasKey to AliasData(emptyList(), false))
-                    } else {
-                        if (item.isEmailBreached) {
-                            observeBreachesForAliasEmail(
-                                shareId = aliasKey.shareId,
-                                itemId = aliasKey.itemId
-                            ).map { list -> aliasKey to AliasData(list, true) }
-                        } else {
-                            flowOf(aliasKey to AliasData(emptyList(), true))
-                        }
-                    }
-                }
-                .asFlow()
-        }
-        .flatMapMerge { it }
-        .runningFold(mapOf<AliasKeyId, AliasData>()) { acc, map -> acc + map }
-        .asLoadingResult()
-
-
     private val aliasEmailFlowIfEnabled = observeGlobalMonitorState()
         .flatMapLatest { monitorState ->
             if (monitorState.aliasMonitorEnabled) {
-                aliasEmailFlow.map { result -> result.map { it to true } }
+                observeBreachAliasEmails().asLoadingResult()
+                    .map { result -> result.map { it to true } }
             } else {
                 flowOf(LoadingResult.Success(emptyMap<AliasKeyId, AliasData>() to false))
             }

@@ -16,11 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.shared.presentation
+package proton.android.pass.domain.breach
 
-import proton.android.pass.domain.breach.BreachEmail
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
-data class AliasData(
-    val breaches: List<BreachEmail>,
-    val isMonitored: Boolean
+data class AliasKeyId(
+    val shareId: ShareId,
+    val itemId: ItemId,
+    val alias: String
 )

@@ -69,6 +69,7 @@ import proton.android.pass.domain.breach.BreachId
 import proton.android.pass.domain.breach.BreachProtonEmail
 import proton.android.pass.features.security.center.PassMonitorDisplayDarkWebMonitoring
 import proton.android.pass.features.security.center.customemail.presentation.SecurityCenterCustomEmailSnackbarMessage
+import proton.android.pass.features.security.center.shared.presentation.AliasData
 import proton.android.pass.features.security.center.shared.presentation.AliasKeyId
 import proton.android.pass.features.security.center.shared.presentation.EmailBreachUiState
 import proton.android.pass.features.security.center.shared.ui.DateUtils
@@ -110,7 +111,7 @@ internal class DarkWebViewModel @Inject constructor(
         }
         .asLoadingResult()
 
-    private val aliasEmailFlow = observeItems(
+    private val aliasEmailFlow: Flow<LoadingResult<Map<AliasKeyId, AliasData>>> = observeItems(
         selection = ShareSelection.AllShares,
         itemState = ItemState.Active,
         filter = ItemTypeFilter.Aliases
@@ -121,30 +122,34 @@ internal class DarkWebViewModel @Inject constructor(
                     val aliasKey = AliasKeyId(
                         shareId = item.shareId,
                         itemId = item.id,
-                        alias = (item.itemType as ItemType.Alias).aliasEmail,
-                        isMonitored = !item.hasSkippedHealthCheck
+                        alias = (item.itemType as ItemType.Alias).aliasEmail
                     )
-                    if (item.isEmailBreached) {
-                        observeBreachesForAliasEmail(
-                            shareId = aliasKey.shareId,
-                            itemId = aliasKey.itemId
-                        ).map { list -> aliasKey to list }
+                    if (item.hasSkippedHealthCheck) {
+                        flowOf(aliasKey to AliasData(emptyList(), false))
                     } else {
-                        flowOf(aliasKey to emptyList())
+                        if (item.isEmailBreached) {
+                            observeBreachesForAliasEmail(
+                                shareId = aliasKey.shareId,
+                                itemId = aliasKey.itemId
+                            ).map { list -> aliasKey to AliasData(list, true) }
+                        } else {
+                            flowOf(aliasKey to AliasData(emptyList(), true))
+                        }
                     }
                 }
                 .asFlow()
         }
         .flatMapMerge { it }
-        .runningFold(mapOf<AliasKeyId, List<BreachEmail>>()) { acc, map -> acc + map }
+        .runningFold(mapOf<AliasKeyId, AliasData>()) { acc, map -> acc + map }
         .asLoadingResult()
+
 
     private val aliasEmailFlowIfEnabled = observeGlobalMonitorState()
         .flatMapLatest { monitorState ->
             if (monitorState.aliasMonitorEnabled) {
                 aliasEmailFlow.map { result -> result.map { it to true } }
             } else {
-                flowOf(LoadingResult.Success(emptyMap<AliasKeyId, List<BreachEmail>>() to false))
+                flowOf(LoadingResult.Success(emptyMap<AliasKeyId, AliasData>() to false))
             }
         }
 
@@ -283,7 +288,7 @@ internal class DarkWebViewModel @Inject constructor(
     }
 
     private fun getAliasEmailState(
-        aliasEmailsResult: LoadingResult<Pair<Map<AliasKeyId, List<BreachEmail>>, Boolean>>
+        aliasEmailsResult: LoadingResult<Pair<Map<AliasKeyId, AliasData>, Boolean>>
     ): DarkWebEmailBreachState = when (aliasEmailsResult) {
         is LoadingResult.Error -> {
             PassLogger.w(TAG, "Failed to load alias emails")
@@ -301,9 +306,9 @@ internal class DarkWebViewModel @Inject constructor(
                         it.key.itemId
                     ),
                     email = it.key.alias,
-                    count = it.value.size,
-                    breachDate = it.value.getLatestBreachDate(),
-                    isMonitored = it.key.isMonitored
+                    count = it.value.breaches.size,
+                    breachDate = it.value.breaches.getLatestBreachDate(),
+                    isMonitored = it.value.isMonitored
                 )
             }.sortedByDescending { it.isMonitored }.toImmutableList(),
             aliasEmailsResult.data.second

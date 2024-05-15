@@ -4,6 +4,7 @@
     "JAIL_UNBAN": "/internal/quark/raw::jail:unban",
     "USER_CREATE": "/internal/quark/raw::user:create",
     "USER_CREATE_ADDRESS": "/internal/quark/raw::user:create:address",
+    "USER_RESET_PASSWORD": "/internal/quark/raw::user:reset",
     "PAYMENTS_SEED_PAYMENT_METHOD": "/internal/quark/raw::payments:seed-payment-method",
     "DRIVE_POPULATE_USER_WITH_DATA": "/internal/quark/drive:populate",
     "PAYMENTS_SEED_SUBSCRIBER": "/internal/quark/raw::payments:seed-subscriber"

@@ -22,23 +22,16 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.composecomponents.impl.buttons.TransparentTextButton
-import proton.android.pass.commonui.api.keyboard.IsKeyboardVisible
-import proton.android.pass.commonui.api.keyboard.keyboardAsState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.UICustomFieldContent
 import proton.android.pass.featureitemcreate.impl.login.LoginCustomField
@@ -55,17 +48,7 @@ fun CustomFieldsContent(
     canEdit: Boolean,
     onEvent: (CustomFieldEvent) -> Unit
 ) {
-    val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
-    var addCustomFieldAction by remember { mutableStateOf(false) }
-    val keyboardState by keyboardAsState()
-
-    LaunchedEffect(keyboardState, addCustomFieldAction) {
-        if (keyboardState == IsKeyboardVisible.VISIBLE && addCustomFieldAction) {
-            onEvent(CustomFieldEvent.AddCustomField)
-            addCustomFieldAction = false
-        }
-    }
 
     Column(
         modifier = modifier.fillMaxWidth(),
@@ -118,10 +101,7 @@ fun CustomFieldsContent(
                 icon = CoreR.drawable.ic_proton_plus,
                 iconContentDescription = null,
                 color = PassTheme.colors.loginInteractionNormMajor2,
-                onClick = {
-                    focusManager.clearFocus(true)
-                    addCustomFieldAction = true
-                }
+                onClick = { onEvent(CustomFieldEvent.AddCustomField) }
             )
         }
     }

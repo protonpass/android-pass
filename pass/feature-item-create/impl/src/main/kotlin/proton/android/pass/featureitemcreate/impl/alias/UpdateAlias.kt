@@ -79,15 +79,21 @@ fun UpdateAlias(
             topBarActionName = stringResource(id = R.string.action_save),
             isCreateMode = false,
             isEditAllowed = uiState.baseAliasUiState.isLoadingState == IsLoadingState.NotLoading,
-            onUpClick = onExit,
-            onSubmit = { viewModel.updateAlias() },
-            onSuffixChange = {},
-            onMailboxesChanged = { viewModel.onMailboxesChanged(it) },
-            onNoteChange = { viewModel.onNoteChange(it) },
-            onPrefixChange = {},
-            onTitleChange = { viewModel.onTitleChange(it) },
-            onUpgrade = { onNavigate(UpdateAliasNavigation.Upgrade) },
-            onVaultSelect = {}
+            onEvent = { event ->
+                when (event) {
+                    AliasContentUiEvent.Back -> onExit()
+                    is AliasContentUiEvent.OnMailBoxChanged -> viewModel.onMailboxesChanged(event.list)
+                    is AliasContentUiEvent.OnNoteChange -> viewModel.onNoteChange(event.note)
+                    is AliasContentUiEvent.OnTitleChange -> viewModel.onTitleChange(event.title)
+                    AliasContentUiEvent.OnUpgrade -> onNavigate(UpdateAliasNavigation.Upgrade)
+                    is AliasContentUiEvent.Submit -> viewModel.updateAlias()
+                    is AliasContentUiEvent.OnPrefixChange,
+                    is AliasContentUiEvent.OnSuffixChanged,
+                    is AliasContentUiEvent.OnVaultSelect -> {
+                        // Only on create
+                    }
+                }
+            }
         )
 
         ConfirmCloseDialog(

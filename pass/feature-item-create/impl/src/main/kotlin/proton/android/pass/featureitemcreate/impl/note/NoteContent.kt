@@ -40,11 +40,7 @@ internal fun NoteContent(
     selectedVault: Vault?,
     showVaultSelector: Boolean,
     selectedShareId: ShareId?,
-    onUpClick: () -> Unit,
-    onSubmit: (ShareId) -> Unit,
-    onTitleChange: (String) -> Unit,
-    onNoteChange: (String) -> Unit,
-    onVaultSelect: () -> Unit
+    onEvent: (NoteContentUiEvent) -> Unit
 ) {
     Scaffold(
         modifier = modifier,
@@ -57,13 +53,16 @@ internal fun NoteContent(
                 iconBackgroundColor = PassTheme.colors.noteInteractionNormMinor1,
                 selectedVault = selectedVault,
                 showVaultSelector = showVaultSelector,
-                onCloseClick = onUpClick,
+                onCloseClick = { onEvent(NoteContentUiEvent.Back) },
                 onActionClick = {
                     selectedShareId ?: return@CreateUpdateTopBar
-                    onSubmit(selectedShareId)
+                    onEvent(NoteContentUiEvent.Submit(selectedShareId))
                 },
                 onUpgrade = {},
-                onVaultSelectorClick = onVaultSelect
+                onVaultSelectorClick = {
+                    selectedShareId ?: return@CreateUpdateTopBar
+                    onEvent(NoteContentUiEvent.OnVaultSelect(selectedShareId))
+                }
             )
         }
     ) { padding ->
@@ -71,9 +70,8 @@ internal fun NoteContent(
             modifier = Modifier.padding(padding),
             noteItemFormState = noteItemFormState,
             onTitleRequiredError = uiState.errorList.contains(BlankTitle),
-            onTitleChange = onTitleChange,
-            onNoteChange = onNoteChange,
-            enabled = uiState.isLoadingState != IsLoadingState.Loading
+            enabled = uiState.isLoadingState != IsLoadingState.Loading,
+            onEvent = onEvent
         )
     }
 }

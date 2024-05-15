@@ -116,6 +116,7 @@ import proton.android.pass.data.api.usecases.UserPlanWorkerLauncher
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.MarkEmailBreachAsResolved
 import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
+import proton.android.pass.data.api.usecases.breach.ObserveBreachAliasEmails
 import proton.android.pass.data.api.usecases.breach.ObserveBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.ObserveBreachCustomEmails
 import proton.android.pass.data.api.usecases.breach.ObserveBreachEmailReport
@@ -258,6 +259,7 @@ import proton.android.pass.data.impl.usecases.UserPlanWorkerLauncherImpl
 import proton.android.pass.data.impl.usecases.breach.AddBreachCustomEmailImpl
 import proton.android.pass.data.impl.usecases.breach.MarkEmailBreachAsResolvedImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveAllBreachByUserIdImpl
+import proton.android.pass.data.impl.usecases.breach.ObserveBreachAliasEmailsImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveBreachCustomEmailImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveBreachCustomEmailsImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveBreachEmailReportImpl
@@ -734,5 +736,8 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindGeneratePublicLink(impl: GeneratePublicLinkImpl): GeneratePublicLink
+
+    @Binds
+    abstract fun bindObserveBreachAliasEmails(impl: ObserveBreachAliasEmailsImpl): ObserveBreachAliasEmails
 
 }

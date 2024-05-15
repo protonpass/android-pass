@@ -27,29 +27,18 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flatMapMerge
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.runningFold
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
-import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveGlobalMonitorState
-import proton.android.pass.data.api.usecases.ObserveItems
-import proton.android.pass.data.api.usecases.breach.ObserveBreachesForAliasEmail
-import proton.android.pass.domain.ItemState
-import proton.android.pass.domain.ItemType
-import proton.android.pass.domain.ShareSelection
+import proton.android.pass.data.api.usecases.breach.ObserveBreachAliasEmails
+import proton.android.pass.domain.breach.AliasData
+import proton.android.pass.domain.breach.AliasKeyId
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachId
 import proton.android.pass.features.security.center.PassMonitorDisplayMonitoringEmailAliases
-import proton.android.pass.features.security.center.shared.presentation.AliasData
-import proton.android.pass.features.security.center.shared.presentation.AliasKeyId
 import proton.android.pass.features.security.center.shared.presentation.EmailBreachUiState
 import proton.android.pass.features.security.center.shared.ui.DateUtils
 import proton.android.pass.preferences.InternalSettingsRepository
@@ -60,8 +49,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SecurityCenterAliasListViewModel @Inject constructor(
-    observeItems: ObserveItems,
-    observeBreachesForAliasEmail: ObserveBreachesForAliasEmail,
+    observeBreachAliasEmails: ObserveBreachAliasEmails,
     observeGlobalMonitorState: ObserveGlobalMonitorState,
     telemetryManager: TelemetryManager,
     private val internalSettingsRepository: InternalSettingsRepository
@@ -71,44 +59,12 @@ class SecurityCenterAliasListViewModel @Inject constructor(
         telemetryManager.sendEvent(PassMonitorDisplayMonitoringEmailAliases)
     }
 
-    private val aliasEmailFlow = observeItems(
-        selection = ShareSelection.AllShares,
-        itemState = ItemState.Active,
-        filter = ItemTypeFilter.Aliases
-    )
-        .flatMapLatest { list ->
-            list
-                .map { item ->
-                    val aliasKey = AliasKeyId(
-                        shareId = item.shareId,
-                        itemId = item.id,
-                        alias = (item.itemType as ItemType.Alias).aliasEmail
-                    )
-                    if (item.hasSkippedHealthCheck) {
-                        flowOf(aliasKey to AliasData(emptyList(), false))
-                    } else {
-                        if (item.isEmailBreached) {
-                            observeBreachesForAliasEmail(
-                                shareId = aliasKey.shareId,
-                                itemId = aliasKey.itemId
-                            ).map { list -> aliasKey to AliasData(list, true) }
-                        } else {
-                            flowOf(aliasKey to AliasData(emptyList(), true))
-                        }
-                    }
-                }
-                .asFlow()
-        }
-        .flatMapMerge { it }
-        .runningFold(mapOf<AliasKeyId, AliasData>()) { acc, map -> acc + map }
-        .asLoadingResult()
-
     private val eventFlow =
         MutableStateFlow<SecurityCenterAliasListEvent>(SecurityCenterAliasListEvent.Idle)
 
     internal val state: StateFlow<SecurityCenterAliasListState> = combine(
         observeGlobalMonitorState().asLoadingResult(),
-        aliasEmailFlow,
+        observeBreachAliasEmails().asLoadingResult(),
         internalSettingsRepository.getDarkWebAliasMessageVisibility(),
         eventFlow
     ) { monitorState,
@@ -121,20 +77,23 @@ class SecurityCenterAliasListViewModel @Inject constructor(
             aliasEmail is LoadingResult.Loading
 
         val aliasIncludedWithoutBreachesList = when (aliasEmail) {
-            is LoadingResult.Error -> emptyMap()
+            is LoadingResult.Error,
             LoadingResult.Loading -> emptyMap()
+
             is LoadingResult.Success -> aliasEmail.data.filter { it.value.isMonitored && it.value.breaches.isEmpty() }
         }
         val aliasIncludedWithBreachesList = when (aliasEmail) {
-            is LoadingResult.Error -> emptyMap()
+            is LoadingResult.Error,
             LoadingResult.Loading -> emptyMap()
+
             is LoadingResult.Success -> aliasEmail.data.filter {
                 it.value.isMonitored && it.value.breaches.isNotEmpty()
             }
         }
         val aliasExcludedEmailsList = when (aliasEmail) {
-            is LoadingResult.Error -> emptyMap()
+            is LoadingResult.Error,
             LoadingResult.Loading -> emptyMap()
+
             is LoadingResult.Success -> aliasEmail.data.filter { !it.value.isMonitored }
         }
         val listState = when {

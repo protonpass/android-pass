@@ -28,12 +28,16 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.MonitorState
-import proton.android.pass.data.api.usecases.items.ItemIsBreachedFilter
-import proton.android.pass.data.api.usecases.items.ItemSecurityCheckFilter
-import proton.android.pass.data.fakes.usecases.TestObserveItems
+import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachAliasEmails
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveGlobalMonitorState
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.breach.AliasData
+import proton.android.pass.domain.breach.AliasKeyId
+import proton.android.pass.domain.breach.BreachEmail
+import proton.android.pass.domain.breach.BreachEmailId
+import proton.android.pass.domain.breach.BreachId
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.aliaslist.navigation.SecurityCenterAliasListNavDestination
 import proton.android.pass.features.security.center.aliaslist.ui.SecurityCenterAliasListScreen
@@ -52,7 +56,7 @@ class SecurityCenterAliasListScreenTest {
     val composeTestRule = createAndroidComposeRule<HiltComponentActivity>()
 
     @Inject
-    lateinit var observeItems: TestObserveItems
+    lateinit var observeBreachAliasEmails: FakeObserveBreachAliasEmails
 
     @Inject
     lateinit var observeGlobalMonitorState: FakeObserveGlobalMonitorState
@@ -119,15 +123,30 @@ class SecurityCenterAliasListScreenTest {
     fun onEmailClickCalled() {
         val checker = CallChecker<Unit>()
         val aliasEmail = "aliasEmail"
-        observeItems.emit(
-            params = TestObserveItems.Params(
-                filter = ItemTypeFilter.Aliases,
-                securityCheckFilter = ItemSecurityCheckFilter.Included,
-                isBreachedFilter = ItemIsBreachedFilter.NotBreached
-            ),
-            value = listOf(TestObserveItems.createAlias(alias = aliasEmail))
+        val aliasKeyId =
+            AliasKeyId(shareId = ShareId("shareId"), itemId = ItemId("itemId"), alias = aliasEmail)
+        val aliasData = AliasData(
+            listOf(
+                BreachEmail(
+                    emailId = BreachEmailId.Alias(
+                        id = BreachId(""),
+                        shareId = ShareId("shareId"),
+                        itemId = ItemId("itemId")
+                    ),
+                    email = aliasEmail,
+                    severity = 0.0,
+                    name = "",
+                    createdAt = "",
+                    publishedAt = "",
+                    size = null,
+                    passwordLastChars = null,
+                    exposedData = listOf(),
+                    isResolved = false,
+                    actions = listOf()
+                )
+            ), true
         )
-        observeItems.emitValue(emptyList())
+        observeBreachAliasEmails.emit(mapOf(aliasKeyId to aliasData))
         composeTestRule.apply {
             setContent {
                 PassTheme(isDark = true) {

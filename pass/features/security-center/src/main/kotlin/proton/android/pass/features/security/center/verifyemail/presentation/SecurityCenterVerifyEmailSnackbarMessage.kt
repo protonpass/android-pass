@@ -31,7 +31,7 @@ internal enum class SecurityCenterVerifyEmailSnackbarMessage(
 
     ResendCodeSuccess(
         id = R.string.security_center_verify_email_snackbar_message_resend_code_success,
-        type = SnackbarType.SUCCESS
+        type = SnackbarType.NORM
     ),
     ResendCodeError(
         id = R.string.security_center_verify_email_snackbar_message_resend_code_error,

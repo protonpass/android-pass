@@ -16,13 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.shared.presentation
+package proton.android.pass.data.api.usecases.breach
 
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
+import kotlinx.coroutines.flow.Flow
+import proton.android.pass.domain.breach.AliasData
+import proton.android.pass.domain.breach.AliasKeyId
 
-data class AliasKeyId(
-    val shareId: ShareId,
-    val itemId: ItemId,
-    val alias: String
-)
+interface ObserveBreachAliasEmails {
+    operator fun invoke(): Flow<Map<AliasKeyId, AliasData>>
+}

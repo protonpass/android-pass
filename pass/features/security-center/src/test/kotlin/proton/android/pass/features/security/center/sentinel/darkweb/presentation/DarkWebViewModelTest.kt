@@ -30,17 +30,17 @@ import org.junit.Test
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.breach.CustomEmailSuggestion
 import proton.android.pass.data.fakes.usecases.TestObserveItemCount
-import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.breach.BreachCustomEmailMother
 import proton.android.pass.data.fakes.usecases.breach.FakeAddBreachCustomEmail
+import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachAliasEmails
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachCustomEmails
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachProtonEmails
-import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachesForAliasEmail
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveCustomEmailSuggestions
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveGlobalMonitorState
-import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.breach.AliasData
+import proton.android.pass.domain.breach.AliasKeyId
 import proton.android.pass.domain.breach.BreachEmail
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.domain.breach.BreachId
@@ -63,28 +63,25 @@ class DarkWebViewModelTest {
 
     private lateinit var instance: DarkWebViewModel
 
-    private lateinit var observeItems: TestObserveItems
     private lateinit var observeItemCount: TestObserveItemCount
     private lateinit var observeBreachProtonEmails: FakeObserveBreachProtonEmails
-    private lateinit var observeBreachesForAliasEmail: FakeObserveBreachesForAliasEmail
     private lateinit var observeBreachCustomEmails: FakeObserveBreachCustomEmails
     private lateinit var observeCustomEmailSuggestions: FakeObserveCustomEmailSuggestions
     private lateinit var observeGlobalMonitorState: FakeObserveGlobalMonitorState
+    private lateinit var observeBreachAliasEmails: FakeObserveBreachAliasEmails
 
     @Before
     fun setUp() {
-        observeItems = TestObserveItems()
         observeItemCount = TestObserveItemCount()
         observeBreachProtonEmails = FakeObserveBreachProtonEmails()
-        observeBreachesForAliasEmail = FakeObserveBreachesForAliasEmail()
         observeBreachCustomEmails = FakeObserveBreachCustomEmails()
         observeCustomEmailSuggestions = FakeObserveCustomEmailSuggestions()
         observeGlobalMonitorState = FakeObserveGlobalMonitorState()
+        observeBreachAliasEmails = FakeObserveBreachAliasEmails()
         instance = DarkWebViewModel(
-            observeItems = observeItems,
             observeItemCount = observeItemCount,
             observeBreachProtonEmails = observeBreachProtonEmails,
-            observeBreachesForAliasEmail = observeBreachesForAliasEmail,
+            observeBreachAliasEmails = observeBreachAliasEmails,
             observeBreachCustomEmails = observeBreachCustomEmails,
             observeCustomEmailSuggestions = observeCustomEmailSuggestions,
             observeGlobalMonitorState = observeGlobalMonitorState,
@@ -120,7 +117,6 @@ class DarkWebViewModelTest {
         }
 
         observeBreachProtonEmails.emit(emails)
-        observeItems.emitValue(TestObserveItems.defaultValues.asList())
 
         instance.state.test {
             val state = awaitItem()
@@ -161,24 +157,57 @@ class DarkWebViewModelTest {
                 isMonitored = true
             )
         }
-
-        observeBreachesForAliasEmail.emit(emails)
-        observeItems.emitValue(
-            listOf(
-                TestObserveItems.createAlias(
-                    shareId = ShareId(email1),
-                    itemId = ItemId(email1),
-                    alias = email1,
-                    flags = ItemFlag.EmailBreached.value
+        val aliasKey1 = AliasKeyId(
+            shareId = ShareId(email1),
+            itemId = ItemId(email1),
+            alias = email1
+        )
+        val aliasKey2 = AliasKeyId(
+            shareId = ShareId(email2),
+            itemId = ItemId(email2),
+            alias = email2
+        )
+        val list = listOf(
+            BreachEmail(
+                emailId = BreachEmailId.Alias(
+                    BreachId(""),
+                    ShareId(email1),
+                    ItemId(email1)
                 ),
-                TestObserveItems.createAlias(
-                    shareId = ShareId(email2),
-                    itemId = ItemId(email2),
-                    alias = email2,
-                    flags = ItemFlag.EmailBreached.value
-                )
+                email = email1,
+                severity = 1.0,
+                name = email1,
+                createdAt = Clock.System.now().toString(),
+                publishedAt = Clock.System.now().toString(),
+                size = 2,
+                passwordLastChars = null,
+                exposedData = emptyList(),
+                isResolved = false,
+                actions = emptyList()
+            ),
+            BreachEmail(
+                emailId = BreachEmailId.Alias(
+                    BreachId(""),
+                    ShareId(email2),
+                    ItemId(email2)
+                ),
+                email = email2,
+                severity = 1.0,
+                name = email2,
+                createdAt = Clock.System.now().toString(),
+                publishedAt = Clock.System.now().toString(),
+                size = 2,
+                passwordLastChars = null,
+                exposedData = emptyList(),
+                isResolved = false,
+                actions = emptyList()
             )
         )
+        val map = mapOf(
+            aliasKey1 to AliasData(list, true),
+            aliasKey2 to AliasData(list, true)
+        )
+        observeBreachAliasEmails.emit(map)
 
         instance.state.test {
             val state = awaitItem()
@@ -232,7 +261,6 @@ class DarkWebViewModelTest {
 
         observeBreachCustomEmails.emit(alreadyAdded)
         observeCustomEmailSuggestions.emitResult(emails)
-        observeItems.emitValue(TestObserveItems.defaultValues.asList())
 
         instance.state.test {
             val state = awaitItem()
@@ -264,22 +292,57 @@ class DarkWebViewModelTest {
         val suggestion1 = "some@suggestion.test1"
         val suggestion2 = "some@suggestion.test2"
 
-        observeItems.emitValue(
-            listOf(
-                TestObserveItems.createAlias(
-                    shareId = ShareId(aliasEmail1),
-                    itemId = ItemId(aliasEmail1),
-                    alias = aliasEmail1,
-                    flags = ItemFlag.EmailBreached.value
+        val aliasKey1 = AliasKeyId(
+            shareId = ShareId(aliasEmail1),
+            itemId = ItemId(aliasEmail1),
+            alias = aliasEmail1
+        )
+        val aliasKey2 = AliasKeyId(
+            shareId = ShareId(aliasEmail2),
+            itemId = ItemId(aliasEmail2),
+            alias = aliasEmail2
+        )
+        val list = listOf(
+            BreachEmail(
+                emailId = BreachEmailId.Alias(
+                    BreachId(""),
+                    ShareId(aliasEmail1),
+                    ItemId(aliasEmail1)
                 ),
-                TestObserveItems.createAlias(
-                    shareId = ShareId(aliasEmail2),
-                    itemId = ItemId(aliasEmail2),
-                    alias = aliasEmail2,
-                    flags = ItemFlag.EmailBreached.value
-                )
+                email = aliasEmail1,
+                severity = 1.0,
+                name = aliasEmail1,
+                createdAt = Clock.System.now().toString(),
+                publishedAt = Clock.System.now().toString(),
+                size = 2,
+                passwordLastChars = null,
+                exposedData = emptyList(),
+                isResolved = false,
+                actions = emptyList()
+            ),
+            BreachEmail(
+                emailId = BreachEmailId.Alias(
+                    BreachId(""),
+                    ShareId(aliasEmail2),
+                    ItemId(aliasEmail2)
+                ),
+                email = aliasEmail2,
+                severity = 1.0,
+                name = aliasEmail2,
+                createdAt = Clock.System.now().toString(),
+                publishedAt = Clock.System.now().toString(),
+                size = 2,
+                passwordLastChars = null,
+                exposedData = emptyList(),
+                isResolved = false,
+                actions = emptyList()
             )
         )
+        val map = mapOf(
+            aliasKey1 to AliasData(list, true),
+            aliasKey2 to AliasData(list, true)
+        )
+        observeBreachAliasEmails.emit(map)
 
         // Setup proton addresses
         val protonAddressEmails = protonAddressesData.map {
@@ -332,7 +395,6 @@ class DarkWebViewModelTest {
                 isMonitored = true
             )
         }
-        observeBreachesForAliasEmail.emit(aliasEmails)
 
         // Setup added custom emails
         val customEmailBreaches = customEmailsData.map {

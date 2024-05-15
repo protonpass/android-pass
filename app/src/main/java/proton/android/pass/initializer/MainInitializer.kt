@@ -44,6 +44,7 @@ import me.proton.core.crypto.validator.presentation.init.CryptoValidatorInitiali
 import me.proton.core.humanverification.presentation.HumanVerificationInitializer
 import me.proton.core.network.presentation.init.UnAuthSessionFetcherInitializer
 import me.proton.core.plan.presentation.UnredeemedPurchaseInitializer
+import me.proton.core.userrecovery.presentation.compose.DeviceRecoveryInitializer
 import proton.android.pass.data.impl.migration.DataMigrationInitializer
 import proton.android.pass.data.impl.sync.SyncInitializer
 import proton.android.pass.log.impl.LoggerInitializer
@@ -72,7 +73,8 @@ class MainInitializer : Initializer<Unit> {
         DataMigrationInitializer::class.java,
         UnAuthSessionFetcherInitializer::class.java,
         UnredeemedPurchaseInitializer::class.java,
-        AccountListenerInitializer::class.java
+        AccountListenerInitializer::class.java,
+        DeviceRecoveryInitializer::class.java
     )
 
     companion object {

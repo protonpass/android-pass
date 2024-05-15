@@ -15,8 +15,9 @@
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Бяспечна захоўвайце сваю плацежную інфармацыю</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Згенерыруйце надзейны пароль</string>
   <!-- Create Login -->
-  <string name="field_username_title">Імя карыстальніка або адрас электроннай пошты</string>
-  <string name="field_username_hint">Дадаць імя карыстальніка або адрас электроннай пошты</string>
+  <string name="title_create_login">Стварыць запіс уваходу</string>
+  <string name="field_username_or_email_title">Імя карыстальніка або адрас электроннай пошты</string>
+  <string name="field_username_or_email_hint">Дадаць імя карыстальніка або адрас электроннай пошты</string>
   <string name="field_password_title">Пароль</string>
   <string name="field_password_hint">Дадаць пароль</string>
   <string name="field_website_address_title">Вэб-сайт</string>

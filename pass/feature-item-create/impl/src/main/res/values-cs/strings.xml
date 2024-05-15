@@ -15,8 +15,9 @@
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Bezpečné ukládání vašich platebních údajů</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Vygenerovat bezpečné heslo</string>
   <!-- Create Login -->
-  <string name="field_username_title">Uživatelské jméno nebo e-mailová adresa</string>
-  <string name="field_username_hint">Přidat uživatelské jméno nebo e-mailovou adresu</string>
+  <string name="title_create_login">Vytvořit přihlášení</string>
+  <string name="field_username_or_email_title">Uživatelské jméno nebo e-mailová adresa</string>
+  <string name="field_username_or_email_hint">Přidat uživatelské jméno nebo e-mailovou adresu</string>
   <string name="field_password_title">Heslo</string>
   <string name="field_password_hint">Přidat heslo</string>
   <string name="field_website_address_title">Webová stránka</string>

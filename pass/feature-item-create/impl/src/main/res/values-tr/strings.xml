@@ -15,8 +15,9 @@
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Ödeme bilgilerinizi güvenle kaydedin</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Güvenli bir parola oluşturun</string>
   <!-- Create Login -->
-  <string name="field_username_title">Kullanıcı adı ya da e-posta adresi</string>
-  <string name="field_username_hint">Kullanıcı adı ya da e-posta adresi ekle</string>
+  <string name="title_create_login">Oturum açma kaydı oluştur</string>
+  <string name="field_username_or_email_title">Kullanıcı adı ya da e-posta adresi</string>
+  <string name="field_username_or_email_hint">Kullanıcı adı ya da e-posta adresi ekle</string>
   <string name="field_password_title">Parola</string>
   <string name="field_password_hint">Parola ekle</string>
   <string name="field_website_address_title">Site</string>

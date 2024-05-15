@@ -23,6 +23,7 @@ import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toPersistentMap
 import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusPayload
 import proton.android.pass.domain.ShareId
@@ -50,8 +51,8 @@ internal data class SyncDialogState(
                     itemSyncPayloadMap[shareId].let { itemSyncPayload ->
                         SyncDialogItem(
                             vault = vault,
-                            current = itemSyncPayload?.current,
-                            total = itemSyncPayload?.total
+                            currentItemsCountOption = Option.fromNullable(itemSyncPayload?.current),
+                            totalItemsCountOption = Option.fromNullable(itemSyncPayload?.total)
                         )
                     }
                 }

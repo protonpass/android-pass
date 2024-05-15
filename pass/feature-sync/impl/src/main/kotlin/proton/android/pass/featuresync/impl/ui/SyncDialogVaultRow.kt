@@ -56,8 +56,8 @@ import me.proton.core.presentation.compose.R as CoreR
 internal fun SyncDialogVaultRow(
     modifier: Modifier = Modifier,
     name: String,
-    itemCurrent: Int,
-    itemTotal: Int,
+    itemCurrent: Int?,
+    itemTotal: Int?,
     color: ShareColor,
     icon: ShareIcon,
     hasSyncFailed: Boolean
@@ -82,12 +82,12 @@ internal fun SyncDialogVaultRow(
             )
 
             val subtitle = when {
-                itemCurrent == itemTotal && itemTotal != -1 ->
+                itemTotal != null && itemCurrent == itemTotal ->
                     pluralStringResource(R.plurals.sync_item_count, itemTotal, itemTotal)
 
                 hasSyncFailed -> stringResource(id = R.string.sync_item_failed)
 
-                itemCurrent != -1 && itemTotal != -1 ->
+                itemCurrent != null && itemTotal != null ->
                     stringResource(R.string.sync_progress_item_count, itemCurrent, itemTotal)
 
                 else -> stringResource(R.string.sync_item_not_started)
@@ -104,7 +104,7 @@ internal fun SyncDialogVaultRow(
             contentAlignment = Alignment.Center
         ) {
             when {
-                itemCurrent != -1 && itemCurrent == itemTotal -> {
+                itemCurrent != null && itemCurrent == itemTotal -> {
                     Icon(
                         painter = painterResource(id = CoreR.drawable.ic_proton_checkmark),
                         tint = PassTheme.colors.interactionNormMajor1,

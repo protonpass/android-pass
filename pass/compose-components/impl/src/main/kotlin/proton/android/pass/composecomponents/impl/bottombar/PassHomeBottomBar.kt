@@ -25,6 +25,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -119,7 +120,8 @@ fun HomeBottomBarContent(
             onClick = { onEvent(HomeBottomBarEvent.OnProfileSelected) },
             icon = {
                 ProfileBottomBarIcon(planType = planType)
-            }
+            },
+            modifier = Modifier.testTag(BottomBarTestTag.PROFILE_TEST_TAG)
         )
     }
 }

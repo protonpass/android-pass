@@ -43,7 +43,6 @@ import proton.android.pass.featureitemcreate.impl.common.CreateUpdateTopBar
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-@Suppress("LongParameterList", "LongMethod")
 internal fun AliasContent(
     modifier: Modifier = Modifier,
     uiState: BaseAliasUiState,
@@ -54,15 +53,7 @@ internal fun AliasContent(
     topBarActionName: String,
     isCreateMode: Boolean,
     isEditAllowed: Boolean,
-    onUpClick: () -> Unit,
-    onSubmit: (ShareId) -> Unit,
-    onSuffixChange: (AliasSuffixUiModel) -> Unit,
-    onMailboxesChanged: (List<SelectedAliasMailboxUiModel>) -> Unit,
-    onNoteChange: (String) -> Unit,
-    onPrefixChange: (String) -> Unit,
-    onTitleChange: (String) -> Unit,
-    onUpgrade: () -> Unit,
-    onVaultSelect: () -> Unit
+    onEvent: (AliasContentUiEvent) -> Unit
 ) {
     val scope = rememberCoroutineScope()
 
@@ -81,10 +72,16 @@ internal fun AliasContent(
                 showUpgrade = uiState.hasReachedAliasLimit,
                 iconBackgroundColor = PassTheme.colors.aliasInteractionNormMinor1,
                 selectedVault = selectedVault,
-                onCloseClick = onUpClick,
-                onActionClick = { selectedShareId?.let(onSubmit) },
-                onUpgrade = onUpgrade,
-                onVaultSelectorClick = onVaultSelect
+                onCloseClick = { onEvent(AliasContentUiEvent.Back) },
+                onActionClick = {
+                    selectedShareId ?: return@CreateUpdateTopBar
+                    onEvent(AliasContentUiEvent.Submit(selectedShareId))
+                },
+                onUpgrade = { onEvent(AliasContentUiEvent.OnUpgrade) },
+                onVaultSelectorClick = {
+                    selectedShareId ?: return@CreateUpdateTopBar
+                    onEvent(AliasContentUiEvent.OnVaultSelect(selectedShareId))
+                }
             )
         }
     ) { padding ->
@@ -108,9 +105,7 @@ internal fun AliasContent(
                     showMailboxDialog = true
                 }
             },
-            onNoteChange = { onNoteChange(it) },
-            onTitleChange = { onTitleChange(it) },
-            onPrefixChange = { onPrefixChange(it) }
+            onEvent = onEvent
         )
 
         SelectSuffixDialog(
@@ -122,7 +117,7 @@ internal fun AliasContent(
             onSuffixChanged = { suffix ->
                 scope.launch {
                     showSuffixDialog = false
-                    onSuffixChange(suffix)
+                    onEvent(AliasContentUiEvent.OnSuffixChanged(suffix))
                 }
             },
             onDismiss = {
@@ -130,7 +125,7 @@ internal fun AliasContent(
                     showSuffixDialog = false
                 }
             },
-            onUpgrade = onUpgrade
+            onUpgrade = { onEvent(AliasContentUiEvent.OnUpgrade) }
         )
 
         if (showMailboxDialog && aliasItemFormState.mailboxes.isNotEmpty()) {
@@ -140,10 +135,10 @@ internal fun AliasContent(
                 canUpgrade = uiState.canUpgrade,
                 onMailboxesChanged = {
                     showMailboxDialog = false
-                    onMailboxesChanged(it)
+                    onEvent(AliasContentUiEvent.OnMailBoxChanged(it))
                 },
                 onDismiss = { showMailboxDialog = false },
-                onUpgrade = onUpgrade
+                onUpgrade = { onEvent(AliasContentUiEvent.OnUpgrade) }
             )
         }
     }

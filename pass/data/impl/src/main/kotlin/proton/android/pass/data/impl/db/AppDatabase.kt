@@ -71,6 +71,8 @@ import me.proton.core.user.data.entity.AddressEntity
 import me.proton.core.user.data.entity.AddressKeyEntity
 import me.proton.core.user.data.entity.UserEntity
 import me.proton.core.user.data.entity.UserKeyEntity
+import me.proton.core.userrecovery.data.db.DeviceRecoveryDatabase
+import me.proton.core.userrecovery.data.entity.RecoveryFileEntity
 import me.proton.core.usersettings.data.db.OrganizationDatabase
 import me.proton.core.usersettings.data.db.UserSettingsConverters
 import me.proton.core.usersettings.data.db.UserSettingsDatabase
@@ -119,6 +121,7 @@ import proton.android.pass.data.impl.db.entities.UserAccessDataEntity
         NotificationEntity::class,
         PushEntity::class,
         TelemetryEventEntity::class,
+        RecoveryFileEntity::class,
         // Pass
         ItemEntity::class,
         ShareEntity::class,
@@ -198,10 +201,11 @@ abstract class AppDatabase :
     UserSettingsDatabase,
     NotificationDatabase,
     PushDatabase,
-    TelemetryDatabase {
+    TelemetryDatabase,
+    DeviceRecoveryDatabase {
 
     companion object {
-        const val VERSION = 48
+        const val VERSION = 49
 
         const val DB_NAME = "db-passkey"
 
@@ -224,7 +228,8 @@ abstract class AppDatabase :
             AppDatabaseMigrations.MIGRATION_42_43,
             AppDatabaseMigrations.MIGRATION_43_44,
             AppDatabaseMigrations.MIGRATION_44_45,
-            AppDatabaseMigrations.MIGRATION_46_47
+            AppDatabaseMigrations.MIGRATION_46_47,
+            AppDatabaseMigrations.MIGRATION_48_49
         )
 
         fun buildDatabase(context: Context): AppDatabase = databaseBuilder<AppDatabase>(context, DB_NAME)

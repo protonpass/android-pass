@@ -7,18 +7,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
-import proton.android.pass.commonui.api.keyboard.IsKeyboardVisible
-import proton.android.pass.commonui.api.keyboard.keyboardAsState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
@@ -28,15 +23,8 @@ import proton.android.pass.featureitemcreate.impl.common.ShareError.SharesNotAva
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.featureitemcreate.impl.creditcard.BaseCreditCardNavigation.Close
 import proton.android.pass.featureitemcreate.impl.creditcard.BaseCreditCardNavigation.Upgrade
-import proton.android.pass.featureitemcreate.impl.creditcard.CCCActionAfterHideKeyboard.SelectVault
 import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 
-private enum class CCCActionAfterHideKeyboard {
-    SelectVault
-}
-
-@Suppress("ComplexMethod")
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CreateCreditCardScreen(
     modifier: Modifier = Modifier,
@@ -50,9 +38,6 @@ fun CreateCreditCardScreen(
         }
     }
     val state by viewModel.state.collectAsStateWithLifecycle()
-
-    val keyboardController = LocalSoftwareKeyboardController.current
-    var actionWhenKeyboardDisappears by remember { mutableStateOf<CCCActionAfterHideKeyboard?>(null) }
 
     when (val uiState = state) {
         CreateCreditCardUiState.Error -> LaunchedEffect(Unit) { onNavigate(Close) }
@@ -126,10 +111,9 @@ fun CreateCreditCardScreen(
                             is CreditCardContentEvent.OnTitleChange ->
                                 viewModel.onTitleChange(event.value)
 
-                            CreditCardContentEvent.OnVaultSelect -> {
-                                actionWhenKeyboardDisappears = SelectVault
-                                keyboardController?.hide()
-                            }
+                            is CreditCardContentEvent.OnVaultSelect ->
+                                onNavigate(CreateCreditCardNavigation.SelectVault(event.shareId))
+
                         }
                     }
                 )
@@ -144,18 +128,6 @@ fun CreateCreditCardScreen(
                     }
                 )
             }
-            AfterKeyboardDisappearsLaunchedEffect(
-                actionWhenKeyboardDisappears = actionWhenKeyboardDisappears,
-                onDisappear = {
-                    when (it) {
-                        SelectVault -> {
-                            selectedVault ?: return@AfterKeyboardDisappearsLaunchedEffect
-                            onNavigate(CreateCreditCardNavigation.SelectVault(selectedVault.vault.shareId))
-                            actionWhenKeyboardDisappears = null // Clear flag
-                        }
-                    }
-                }
-            )
             ItemSavedLaunchedEffect(
                 isItemSaved = uiState.baseState.isItemSaved,
                 selectedShareId = selectedVault?.vault?.shareId,
@@ -166,22 +138,6 @@ fun CreateCreditCardScreen(
             InAppReviewTriggerLaunchedEffect(
                 triggerCondition = uiState.baseState.isItemSaved is ItemSavedState.Success
             )
-        }
-    }
-}
-
-@Composable
-private fun AfterKeyboardDisappearsLaunchedEffect(
-    actionWhenKeyboardDisappears: CCCActionAfterHideKeyboard?,
-    onDisappear: (CCCActionAfterHideKeyboard) -> Unit
-) {
-    val keyboardState by keyboardAsState()
-    LaunchedEffect(keyboardState, actionWhenKeyboardDisappears) {
-        if (keyboardState == IsKeyboardVisible.VISIBLE) {
-            when (actionWhenKeyboardDisappears) {
-                SelectVault -> onDisappear(SelectVault)
-                null -> {}
-            }
         }
     }
 }

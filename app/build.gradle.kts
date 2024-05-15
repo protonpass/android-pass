@@ -358,6 +358,7 @@ dependencies {
     implementation(libs.core.network)
     implementation(libs.core.notification)
     implementation(libs.core.observability)
+    implementation(libs.core.userRecovery)
 
     addFdroidSpecialLib(
         default = libs.core.payment,

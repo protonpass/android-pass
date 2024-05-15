@@ -32,7 +32,6 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -40,6 +39,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -57,6 +57,7 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.bottombar.PassHomeBottomBar
+import proton.android.pass.composecomponents.impl.buttons.CircleIconButton
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.AllVaultsIcon
@@ -72,6 +73,7 @@ import proton.android.pass.composecomponents.impl.topbar.iconbutton.ArrowBackIco
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featurehome.impl.HomeContentTestTag.DRAWER_ICON_TEST_TAG
+import proton.android.pass.featuresearchoptions.api.SearchFilterType
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import me.proton.core.presentation.R as CoreR
 
@@ -145,11 +147,20 @@ internal fun HomeContent(
                         )
                     },
                     actions = {
-                        IconButton(onClick = { onEvent(HomeUiEvent.ActionsClick) }) {
+                        val (backgroundColor, iconColor) =
+                            if (uiState.homeListUiState.searchFilterType != SearchFilterType.All) {
+                                PassTheme.colors.interactionNormMajor2 to PassTheme.colors.textInvert
+                            } else {
+                                Color.Transparent to PassTheme.colors.textWeak
+                            }
+                        CircleIconButton(
+                            backgroundColor = backgroundColor,
+                            onClick = { onEvent(HomeUiEvent.ActionsClick) }
+                        ) {
                             Icon(
                                 painter = painterResource(CoreR.drawable.ic_proton_three_dots_vertical),
                                 contentDescription = null,
-                                tint = PassTheme.colors.textWeak
+                                tint = iconColor
                             )
                         }
                     }

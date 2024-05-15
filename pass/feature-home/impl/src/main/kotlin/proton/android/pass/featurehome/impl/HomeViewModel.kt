@@ -43,6 +43,7 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
@@ -52,6 +53,7 @@ import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -188,6 +190,7 @@ class HomeViewModel @Inject constructor(
     observePinnedItems: ObservePinnedItems,
     preferencesRepository: UserPreferencesRepository,
     observeAppNeedsUpdate: ObserveAppNeedsUpdate,
+    appDispatchers: AppDispatchers,
     getUserPlan: GetUserPlan,
     savedState: SavedStateHandleProvider
 ) : ViewModel() {
@@ -355,7 +358,7 @@ class HomeViewModel @Inject constructor(
         } else {
             result
         }
-    }
+    }.flowOn(appDispatchers.default)
 
     private val resultsFlow = combine(
         filteredSearchEntriesFlow,
@@ -457,7 +460,7 @@ class HomeViewModel @Inject constructor(
                 groupedItemList.copy(items = mappedItems.toImmutableList())
             }.toImmutableList()
         }
-    }
+    }.flowOn(appDispatchers.default)
 
     private val appNeedsUpdateFlow: Flow<LoadingResult<Boolean>> = observeAppNeedsUpdate()
         .asLoadingResult()

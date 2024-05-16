@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -41,6 +42,7 @@ import proton.android.pass.featureitemcreate.impl.common.ShareError.EmptyShareLi
 import proton.android.pass.featureitemcreate.impl.common.ShareError.SharesNotAvailable
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
+import proton.android.pass.featureitemcreate.impl.login.PerformActionAfterKeyboardHide
 
 @Suppress("ComplexMethod")
 @OptIn(ExperimentalComposeUiApi::class)
@@ -56,6 +58,12 @@ fun CreateNoteScreen(
             viewModel.changeVault(selectVault)
         }
     }
+    var actionAfterKeyboardHide by remember { mutableStateOf<(() -> Unit)?>(null) }
+
+    PerformActionAfterKeyboardHide(
+        action = actionAfterKeyboardHide,
+        clearAction = { actionAfterKeyboardHide = null }
+    )
 
     val uiState by viewModel.createNoteUiState.collectAsStateWithLifecycle()
 
@@ -64,7 +72,7 @@ fun CreateNoteScreen(
         if (uiState.baseNoteUiState.hasUserEditedContent) {
             showConfirmDialog = !showConfirmDialog
         } else {
-            onNavigate(CreateNoteNavigation.Back)
+            actionAfterKeyboardHide = { onNavigate(CreateNoteNavigation.Back) }
         }
     }
     BackHandler {
@@ -102,7 +110,8 @@ fun CreateNoteScreen(
                     is NoteContentUiEvent.Back -> onExit()
                     is NoteContentUiEvent.Submit -> viewModel.createNote(event.shareId)
                     is NoteContentUiEvent.OnVaultSelect ->
-                        onNavigate(CreateNoteNavigation.SelectVault(event.shareId))
+                        actionAfterKeyboardHide =
+                            { onNavigate(CreateNoteNavigation.SelectVault(event.shareId)) }
 
                     is NoteContentUiEvent.OnNoteChange -> viewModel.onNoteChange(event.note)
                     is NoteContentUiEvent.OnTitleChange -> viewModel.onTitleChange(event.title)
@@ -117,7 +126,7 @@ fun CreateNoteScreen(
             },
             onConfirm = {
                 showConfirmDialog = false
-                onNavigate(CreateNoteNavigation.Back)
+                actionAfterKeyboardHide = { onNavigate(CreateNoteNavigation.Back) }
             }
         )
     }
@@ -125,7 +134,7 @@ fun CreateNoteScreen(
         isItemSaved = uiState.baseNoteUiState.itemSavedState,
         selectedShareId = selectedVault?.vault?.shareId,
         onSuccess = { _, _, _ ->
-            onNavigate(CreateNoteNavigation.NoteCreated)
+            actionAfterKeyboardHide = { onNavigate(CreateNoteNavigation.NoteCreated) }
         }
     )
     InAppReviewTriggerLaunchedEffect(

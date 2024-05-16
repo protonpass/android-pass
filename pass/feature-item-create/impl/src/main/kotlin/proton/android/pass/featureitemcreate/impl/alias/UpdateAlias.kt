@@ -26,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -39,6 +40,7 @@ import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
+import proton.android.pass.featureitemcreate.impl.login.PerformActionAfterKeyboardHide
 
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
@@ -48,13 +50,19 @@ fun UpdateAlias(
     onNavigate: (UpdateAliasNavigation) -> Unit,
     viewModel: UpdateAliasViewModel = hiltViewModel()
 ) {
+    var actionAfterKeyboardHide by remember { mutableStateOf<(() -> Unit)?>(null) }
+
+    PerformActionAfterKeyboardHide(
+        action = actionAfterKeyboardHide,
+        clearAction = { actionAfterKeyboardHide = null }
+    )
     val uiState by viewModel.updateAliasUiState.collectAsStateWithLifecycle()
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
     val onExit = {
         if (uiState.baseAliasUiState.hasUserEditedContent) {
             showConfirmDialog = !showConfirmDialog
         } else {
-            onNavigate(UpdateAliasNavigation.Close)
+            actionAfterKeyboardHide = { onNavigate(UpdateAliasNavigation.Close) }
         }
     }
     BackHandler {
@@ -63,7 +71,7 @@ fun UpdateAlias(
 
     LaunchedEffect(uiState.baseAliasUiState.closeScreenEvent) {
         if (uiState.baseAliasUiState.closeScreenEvent is CloseScreenEvent.Close) {
-            onNavigate(UpdateAliasNavigation.Close)
+            actionAfterKeyboardHide = { onNavigate(UpdateAliasNavigation.Close) }
         }
     }
 
@@ -85,7 +93,9 @@ fun UpdateAlias(
                     is AliasContentUiEvent.OnMailBoxChanged -> viewModel.onMailboxesChanged(event.list)
                     is AliasContentUiEvent.OnNoteChange -> viewModel.onNoteChange(event.note)
                     is AliasContentUiEvent.OnTitleChange -> viewModel.onTitleChange(event.title)
-                    AliasContentUiEvent.OnUpgrade -> onNavigate(UpdateAliasNavigation.Upgrade)
+                    AliasContentUiEvent.OnUpgrade ->
+                        actionAfterKeyboardHide = { onNavigate(UpdateAliasNavigation.Upgrade) }
+
                     is AliasContentUiEvent.Submit -> viewModel.updateAlias()
                     is AliasContentUiEvent.OnPrefixChange,
                     is AliasContentUiEvent.OnSuffixChanged,
@@ -103,7 +113,7 @@ fun UpdateAlias(
             },
             onConfirm = {
                 showConfirmDialog = false
-                onNavigate(UpdateAliasNavigation.Close)
+                actionAfterKeyboardHide = { onNavigate(UpdateAliasNavigation.Close) }
             }
         )
     }
@@ -111,7 +121,7 @@ fun UpdateAlias(
         isItemSaved = uiState.baseAliasUiState.itemSavedState,
         selectedShareId = uiState.selectedShareId,
         onSuccess = { shareId, itemId, _ ->
-            onNavigate(UpdateAliasNavigation.Updated(shareId, itemId))
+            actionAfterKeyboardHide = { onNavigate(UpdateAliasNavigation.Updated(shareId, itemId)) }
         }
     )
     InAppReviewTriggerLaunchedEffect(

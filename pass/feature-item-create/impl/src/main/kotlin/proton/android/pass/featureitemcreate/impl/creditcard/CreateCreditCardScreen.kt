@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -24,6 +25,7 @@ import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.featureitemcreate.impl.creditcard.BaseCreditCardNavigation.Close
 import proton.android.pass.featureitemcreate.impl.creditcard.BaseCreditCardNavigation.Upgrade
 import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
+import proton.android.pass.featureitemcreate.impl.login.PerformActionAfterKeyboardHide
 
 @Composable
 fun CreateCreditCardScreen(
@@ -37,10 +39,18 @@ fun CreateCreditCardScreen(
             viewModel.changeVault(selectVault)
         }
     }
+
+    var actionAfterKeyboardHide by remember { mutableStateOf<(() -> Unit)?>(null) }
+    PerformActionAfterKeyboardHide(
+        action = actionAfterKeyboardHide,
+        clearAction = { actionAfterKeyboardHide = null }
+    )
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     when (val uiState = state) {
-        CreateCreditCardUiState.Error -> LaunchedEffect(Unit) { onNavigate(Close) }
+        CreateCreditCardUiState.Error -> LaunchedEffect(Unit) {
+            actionAfterKeyboardHide = { onNavigate(Close) }
+        }
 
         CreateCreditCardUiState.Loading,
         CreateCreditCardUiState.NotInitialised -> {
@@ -52,7 +62,7 @@ fun CreateCreditCardScreen(
                 if (uiState.baseState.hasUserEditedContent) {
                     showConfirmDialog = !showConfirmDialog
                 } else {
-                    onNavigate(Close)
+                    actionAfterKeyboardHide = { onNavigate(Close) }
                 }
             }
             BackHandler(onBack = onExit)
@@ -63,7 +73,7 @@ fun CreateCreditCardScreen(
                 is ShareUiState.Error -> {
                     if (shares.shareError == EmptyShareList || shares.shareError == SharesNotAvailable) {
                         LaunchedEffect(Unit) {
-                            onNavigate(Close)
+                            actionAfterKeyboardHide = { onNavigate(Close) }
                         }
                     }
                     false to null
@@ -112,7 +122,8 @@ fun CreateCreditCardScreen(
                                 viewModel.onTitleChange(event.value)
 
                             is CreditCardContentEvent.OnVaultSelect ->
-                                onNavigate(CreateCreditCardNavigation.SelectVault(event.shareId))
+                                actionAfterKeyboardHide =
+                                    { onNavigate(CreateCreditCardNavigation.SelectVault(event.shareId)) }
 
                         }
                     }
@@ -124,7 +135,7 @@ fun CreateCreditCardScreen(
                     },
                     onConfirm = {
                         showConfirmDialog = false
-                        onNavigate(Close)
+                        actionAfterKeyboardHide = { onNavigate(Close) }
                     }
                 )
             }
@@ -132,7 +143,8 @@ fun CreateCreditCardScreen(
                 isItemSaved = uiState.baseState.isItemSaved,
                 selectedShareId = selectedVault?.vault?.shareId,
                 onSuccess = { _, _, model ->
-                    onNavigate(CreateCreditCardNavigation.ItemCreated(model))
+                    actionAfterKeyboardHide =
+                        { onNavigate(CreateCreditCardNavigation.ItemCreated(model)) }
                 }
             )
             InAppReviewTriggerLaunchedEffect(

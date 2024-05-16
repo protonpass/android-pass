@@ -53,6 +53,12 @@ fun UpdateLogin(
     onNavigate: (BaseLoginNavigation) -> Unit,
     viewModel: UpdateLoginViewModel = hiltViewModel()
 ) {
+    var actionAfterKeyboardHide by remember { mutableStateOf<(() -> Unit)?>(null) }
+
+    PerformActionAfterKeyboardHide(
+        action = actionAfterKeyboardHide,
+        clearAction = { actionAfterKeyboardHide = null }
+    )
     val uiState by viewModel.updateLoginUiState.collectAsStateWithLifecycle()
 
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
@@ -62,7 +68,7 @@ fun UpdateLogin(
             showConfirmDialog = !showConfirmDialog
         } else {
             viewModel.onClose()
-            onNavigate(BaseLoginNavigation.Close)
+            actionAfterKeyboardHide = { onNavigate(BaseLoginNavigation.Close) }
         }
     }
     BackHandler { onExit() }
@@ -121,16 +127,19 @@ fun UpdateLogin(
                     is LoginContentEvent.OnCustomFieldEvent -> {
                         when (val event = it.event) {
                             CustomFieldEvent.AddCustomField -> {
-                                onNavigate(BaseLoginNavigation.AddCustomField)
+                                actionAfterKeyboardHide =
+                                    { onNavigate(BaseLoginNavigation.AddCustomField) }
                             }
 
                             is CustomFieldEvent.OnCustomFieldOptions -> {
-                                onNavigate(
-                                    BaseLoginNavigation.CustomFieldOptions(
-                                        currentValue = event.currentLabel,
-                                        index = event.index
+                                actionAfterKeyboardHide = {
+                                    onNavigate(
+                                        BaseLoginNavigation.CustomFieldOptions(
+                                            currentValue = event.currentLabel,
+                                            index = event.index
+                                        )
                                     )
-                                )
+                                }
                             }
 
                             is CustomFieldEvent.OnValueChange -> {
@@ -138,7 +147,8 @@ fun UpdateLogin(
                             }
 
                             CustomFieldEvent.Upgrade -> {
-                                onNavigate(BaseLoginNavigation.Upgrade)
+                                actionAfterKeyboardHide =
+                                    { onNavigate(BaseLoginNavigation.Upgrade) }
                             }
 
                             is CustomFieldEvent.FocusRequested ->
@@ -155,20 +165,39 @@ fun UpdateLogin(
 
                     is LoginContentEvent.OnVaultSelect -> {}
                     is LoginContentEvent.OnAliasOptions ->
-                        onNavigate(BaseLoginNavigation.AliasOptions(it.shareId, it.hasReachedAliasLimit))
+                        actionAfterKeyboardHide = {
+                            onNavigate(
+                                BaseLoginNavigation.AliasOptions(
+                                    it.shareId,
+                                    it.hasReachedAliasLimit
+                                )
+                            )
+                        }
+
                     is LoginContentEvent.OnCreateAlias -> {
                         val shareId = uiState.selectedShareId ?: return@LoginContent
-                        onNavigate(
-                            BaseLoginNavigation.CreateAlias(
-                                shareId = shareId,
-                                showUpgrade = uiState.baseLoginUiState.hasReachedAliasLimit,
-                                title = viewModel.loginItemFormState.title.some()
+                        actionAfterKeyboardHide = {
+                            onNavigate(
+                                BaseLoginNavigation.CreateAlias(
+                                    shareId = shareId,
+                                    showUpgrade = uiState.baseLoginUiState.hasReachedAliasLimit,
+                                    title = viewModel.loginItemFormState.title.some()
+                                )
                             )
-                        )
+                        }
                     }
-                    LoginContentEvent.OnCreatePassword -> onNavigate(BaseLoginNavigation.GeneratePassword)
-                    is LoginContentEvent.OnScanTotp -> onNavigate(BaseLoginNavigation.ScanTotp(it.index))
-                    LoginContentEvent.OnUpgrade -> onNavigate(BaseLoginNavigation.Upgrade)
+
+                    LoginContentEvent.OnCreatePassword ->
+                        actionAfterKeyboardHide =
+                            { onNavigate(BaseLoginNavigation.GeneratePassword) }
+
+                    is LoginContentEvent.OnScanTotp ->
+                        actionAfterKeyboardHide =
+                            { onNavigate(BaseLoginNavigation.ScanTotp(it.index)) }
+
+                    LoginContentEvent.OnUpgrade ->
+                        actionAfterKeyboardHide =
+                            { onNavigate(BaseLoginNavigation.Upgrade) }
                 }
             }
         )
@@ -181,7 +210,7 @@ fun UpdateLogin(
             onConfirm = {
                 showConfirmDialog = false
                 viewModel.onClose()
-                onNavigate(BaseLoginNavigation.Close)
+                actionAfterKeyboardHide = { onNavigate(BaseLoginNavigation.Close) }
             }
         )
 
@@ -203,7 +232,7 @@ fun UpdateLogin(
         selectedShareId = uiState.selectedShareId,
         onSuccess = { shareId, itemId, _ ->
             val event = UpdateLoginNavigation.LoginUpdated(shareId, itemId)
-            onNavigate(BaseLoginNavigation.OnUpdateLoginEvent(event))
+            actionAfterKeyboardHide = { onNavigate(BaseLoginNavigation.OnUpdateLoginEvent(event)) }
         }
     )
     InAppReviewTriggerLaunchedEffect(

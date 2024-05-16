@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -61,6 +62,11 @@ fun CreateLoginScreen(
     }
     val uiState by viewModel.createLoginUiState.collectAsStateWithLifecycle()
 
+    var actionAfterKeyboardHide by remember { mutableStateOf<(() -> Unit)?>(null) }
+    PerformActionAfterKeyboardHide(
+        action = actionAfterKeyboardHide,
+        clearAction = { actionAfterKeyboardHide = null }
+    )
     LaunchedEffect(clearAlias) {
         if (clearAlias) {
             viewModel.onRemoveAlias()
@@ -79,7 +85,7 @@ fun CreateLoginScreen(
             showConfirmDialog = !showConfirmDialog
         } else {
             viewModel.onClose()
-            onNavigate(BaseLoginNavigation.Close)
+            actionAfterKeyboardHide = { onNavigate(BaseLoginNavigation.Close) }
         }
     }
     BackHandler {
@@ -94,7 +100,7 @@ fun CreateLoginScreen(
             if (shares.shareError == EmptyShareList || shares.shareError == SharesNotAvailable) {
                 viewModel.onEmitSnackbarMessage(LoginSnackbarMessages.InitError)
                 LaunchedEffect(Unit) {
-                    onNavigate(BaseLoginNavigation.Close)
+                    actionAfterKeyboardHide = { onNavigate(BaseLoginNavigation.Close) }
                 }
             }
             false to null
@@ -136,16 +142,19 @@ fun CreateLoginScreen(
                     is LoginContentEvent.OnCustomFieldEvent -> {
                         when (val event = it.event) {
                             CustomFieldEvent.AddCustomField -> {
-                                onNavigate(BaseLoginNavigation.AddCustomField)
+                                actionAfterKeyboardHide =
+                                    { onNavigate(BaseLoginNavigation.AddCustomField) }
                             }
 
                             is CustomFieldEvent.OnCustomFieldOptions -> {
-                                onNavigate(
-                                    BaseLoginNavigation.CustomFieldOptions(
-                                        currentValue = event.currentLabel,
-                                        index = event.index
+                                actionAfterKeyboardHide = {
+                                    onNavigate(
+                                        BaseLoginNavigation.CustomFieldOptions(
+                                            currentValue = event.currentLabel,
+                                            index = event.index
+                                        )
                                     )
-                                )
+                                }
                             }
 
                             is CustomFieldEvent.OnValueChange -> {
@@ -153,7 +162,8 @@ fun CreateLoginScreen(
                             }
 
                             CustomFieldEvent.Upgrade -> {
-                                onNavigate(BaseLoginNavigation.Upgrade)
+                                actionAfterKeyboardHide =
+                                    { onNavigate(BaseLoginNavigation.Upgrade) }
                             }
 
                             is CustomFieldEvent.FocusRequested ->
@@ -165,30 +175,44 @@ fun CreateLoginScreen(
                     is LoginContentEvent.OnDeletePasskey -> {}
                     is LoginContentEvent.OnTitleChange -> viewModel.onTitleChange(it.title)
                     is LoginContentEvent.OnVaultSelect ->
-                        onNavigate(
-                            OnCreateLoginEvent(CreateLoginNavigation.SelectVault(it.shareId))
-                        )
+                        actionAfterKeyboardHide = {
+                            onNavigate(
+                                OnCreateLoginEvent(CreateLoginNavigation.SelectVault(it.shareId))
+                            )
+                        }
 
                     is LoginContentEvent.OnAliasOptions ->
-                        onNavigate(
-                            BaseLoginNavigation.AliasOptions(
-                                it.shareId,
-                                it.hasReachedAliasLimit
+                        actionAfterKeyboardHide = {
+                            onNavigate(
+                                BaseLoginNavigation.AliasOptions(
+                                    it.shareId,
+                                    it.hasReachedAliasLimit
+                                )
                             )
-                        )
+                        }
 
                     is LoginContentEvent.OnCreateAlias ->
-                        onNavigate(
-                            BaseLoginNavigation.CreateAlias(
-                                shareId = it.shareId,
-                                showUpgrade = it.hasReachedAliasLimit,
-                                title = it.title
+                        actionAfterKeyboardHide = {
+                            onNavigate(
+                                BaseLoginNavigation.CreateAlias(
+                                    shareId = it.shareId,
+                                    showUpgrade = it.hasReachedAliasLimit,
+                                    title = it.title
+                                )
                             )
-                        )
+                        }
 
-                    LoginContentEvent.OnCreatePassword -> onNavigate(BaseLoginNavigation.GeneratePassword)
-                    is LoginContentEvent.OnScanTotp -> onNavigate(BaseLoginNavigation.ScanTotp(it.index))
-                    LoginContentEvent.OnUpgrade -> onNavigate(BaseLoginNavigation.Upgrade)
+                    LoginContentEvent.OnCreatePassword ->
+                        actionAfterKeyboardHide =
+                            { onNavigate(BaseLoginNavigation.GeneratePassword) }
+
+                    is LoginContentEvent.OnScanTotp ->
+                        actionAfterKeyboardHide =
+                            { onNavigate(BaseLoginNavigation.ScanTotp(it.index)) }
+
+                    LoginContentEvent.OnUpgrade ->
+                        actionAfterKeyboardHide =
+                            { onNavigate(BaseLoginNavigation.Upgrade) }
                 }
             }
         )
@@ -201,7 +225,7 @@ fun CreateLoginScreen(
             onConfirm = {
                 showConfirmDialog = false
                 viewModel.onClose()
-                onNavigate(BaseLoginNavigation.Close)
+                actionAfterKeyboardHide = { onNavigate(BaseLoginNavigation.Close) }
             }
         )
     }
@@ -211,11 +235,11 @@ fun CreateLoginScreen(
         selectedShareId = selectedVault?.vault?.shareId,
         onSuccess = { _, _, model ->
             val event = CreateLoginNavigation.LoginCreated(model)
-            onNavigate(OnCreateLoginEvent(event))
+            actionAfterKeyboardHide = { onNavigate(OnCreateLoginEvent(event)) }
         },
         onPasskeyResponse = { response ->
             val event = CreateLoginNavigation.LoginCreatedWithPasskey(response)
-            onNavigate(OnCreateLoginEvent(event))
+            actionAfterKeyboardHide = { onNavigate(OnCreateLoginEvent(event)) }
         }
     )
     InAppReviewTriggerLaunchedEffect(

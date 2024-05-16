@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -36,6 +37,7 @@ import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
+import proton.android.pass.featureitemcreate.impl.login.PerformActionAfterKeyboardHide
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -44,6 +46,12 @@ fun UpdateNote(
     onNavigate: (UpdateNoteNavigation) -> Unit,
     viewModel: UpdateNoteViewModel = hiltViewModel()
 ) {
+    var actionAfterKeyboardHide by remember { mutableStateOf<(() -> Unit)?>(null) }
+    PerformActionAfterKeyboardHide(
+        action = actionAfterKeyboardHide,
+        clearAction = { actionAfterKeyboardHide = null }
+    )
+
     val noteUiState by viewModel.updateNoteUiState.collectAsStateWithLifecycle()
 
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
@@ -51,7 +59,7 @@ fun UpdateNote(
         if (noteUiState.baseNoteUiState.hasUserEditedContent) {
             showConfirmDialog = !showConfirmDialog
         } else {
-            onNavigate(UpdateNoteNavigation.Back)
+            actionAfterKeyboardHide = { onNavigate(UpdateNoteNavigation.Back) }
         }
     }
     BackHandler {
@@ -84,7 +92,7 @@ fun UpdateNote(
             },
             onConfirm = {
                 showConfirmDialog = false
-                onNavigate(UpdateNoteNavigation.Back)
+                actionAfterKeyboardHide = { onNavigate(UpdateNoteNavigation.Back) }
             }
         )
     }
@@ -92,7 +100,8 @@ fun UpdateNote(
         isItemSaved = noteUiState.baseNoteUiState.itemSavedState,
         selectedShareId = noteUiState.selectedShareId,
         onSuccess = { shareId, itemId, _ ->
-            onNavigate(UpdateNoteNavigation.NoteUpdated(shareId, itemId))
+            actionAfterKeyboardHide =
+                { onNavigate(UpdateNoteNavigation.NoteUpdated(shareId, itemId)) }
         }
     )
     InAppReviewTriggerLaunchedEffect(

@@ -40,7 +40,6 @@ internal fun MainLoginSection(
     onEvent: (LoginContentEvent) -> Unit,
     onFocusChange: (LoginField, Boolean) -> Unit,
     onAliasOptionsClick: () -> Unit,
-    onUpgrade: () -> Unit,
     isUsernameSplitEnabled: Boolean
 ) {
     Column(

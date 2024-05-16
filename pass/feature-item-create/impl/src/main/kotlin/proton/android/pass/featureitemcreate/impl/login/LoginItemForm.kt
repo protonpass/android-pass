@@ -79,10 +79,7 @@ internal fun LoginItemForm(
     selectedShareId: ShareId?,
     hasReachedAliasLimit: Boolean,
     onEvent: (LoginContentEvent) -> Unit,
-    onGeneratePasswordClick: () -> Unit,
-    onCreateAliasClick: () -> Unit,
     onAliasOptionsClick: () -> Unit,
-    onNavigate: (BaseLoginNavigation) -> Unit,
     isUsernameSplitEnabled: Boolean
 ) {
     Box(modifier = modifier) {
@@ -111,7 +108,12 @@ internal fun LoginItemForm(
             TitleSection(
                 modifier = Modifier
                     .roundedContainerNorm()
-                    .padding(start = 16.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
+                    .padding(
+                        start = Spacing.medium,
+                        top = Spacing.medium,
+                        end = Spacing.extraSmall,
+                        bottom = Spacing.medium
+                    ),
                 value = loginItemFormState.title,
                 requestFocus = true,
                 onTitleRequiredError = isTitleError,
@@ -149,7 +151,6 @@ internal fun LoginItemForm(
                 onFocusChange = { field, isFocused ->
                     onEvent(LoginContentEvent.OnFocusChange(field, isFocused))
                 },
-                onUpgrade = { onNavigate(BaseLoginNavigation.Upgrade) },
                 isUsernameSplitEnabled = isUsernameSplitEnabled
             )
 

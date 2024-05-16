@@ -68,7 +68,7 @@ internal fun MainLoginSection(
                 onChange = { newEmail ->
                     onEvent(LoginContentEvent.OnEmailChanged(newEmail))
                 },
-                onAliasOptionsClick =  {
+                onAliasOptionsClick = {
                     selectedShareId ?: return@UsernameInput
                     onEvent(LoginContentEvent.OnAliasOptions(selectedShareId, hasReachedAliasLimit))
                 },

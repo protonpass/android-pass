@@ -16,17 +16,15 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.core.repositories
+package proton.android.pass.securitycenter.impl.sentinel
 
 import kotlinx.coroutines.flow.Flow
+import proton.android.pass.data.api.core.repositories.SentinelRepository
+import proton.android.pass.securitycenter.api.sentinel.ObserveCanEnableSentinel
+import javax.inject.Inject
 
-interface SentinelRepository {
-
-    suspend fun disableSentinel()
-
-    suspend fun enableSentinel()
-
-    fun observeIsSentinelEnabled(): Flow<Boolean>
-
-    fun observeCanEnableSentinel(): Flow<Boolean>
+class ObserveCanEnableSentinelImpl @Inject constructor(
+    private val sentinelRepository: SentinelRepository
+) : ObserveCanEnableSentinel {
+    override fun invoke(): Flow<Boolean> = sentinelRepository.observeCanEnableSentinel()
 }

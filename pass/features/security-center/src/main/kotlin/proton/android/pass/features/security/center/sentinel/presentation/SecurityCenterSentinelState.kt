@@ -27,7 +27,8 @@ internal data class SecurityCenterSentinelState(
     internal val isSentinelEnabled: Boolean,
     internal val event: SecurityCenterSentinelEvent,
     internal val isLoadingState: IsLoadingState,
-    private val planType: PlanType
+    private val planType: PlanType,
+    internal val canEnableSentinel: Boolean?
 ) {
 
     internal val isFreeUser: Boolean = when (planType) {
@@ -44,7 +45,8 @@ internal data class SecurityCenterSentinelState(
             isSentinelEnabled = false,
             event = SecurityCenterSentinelEvent.Idle,
             isLoadingState = IsLoadingState.NotLoading,
-            planType = PlanType.Unknown()
+            planType = PlanType.Unknown(),
+            canEnableSentinel = null
         )
 
     }

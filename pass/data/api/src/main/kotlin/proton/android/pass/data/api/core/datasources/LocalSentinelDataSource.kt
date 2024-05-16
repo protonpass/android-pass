@@ -26,6 +26,10 @@ interface LocalSentinelDataSource {
 
     fun enableSentinel()
 
+    fun observeCanEnableSentinel(): Flow<Boolean?>
+
+    fun updateCanEnableSentinel(value: Boolean)
+
     fun observeIsSentinelEnabled(): Flow<Boolean>
 
 }

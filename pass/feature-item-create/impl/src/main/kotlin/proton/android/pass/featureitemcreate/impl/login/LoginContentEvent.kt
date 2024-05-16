@@ -85,6 +85,4 @@ internal sealed interface LoginContentEvent {
     @JvmInline
     value class OnScanTotp(val index: Option<Int>) : LoginContentEvent
 
-    data object OnEmailUsernameExpanded : LoginContentEvent
-
 }

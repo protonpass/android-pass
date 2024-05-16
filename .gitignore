@@ -70,10 +70,12 @@ sentry.properties
 .idea/androidTestResultsUserPreferences.xml
 .idea/assetWizardSettings.xml
 .idea/deploymentTargetDropDown.xml
+.idea/deploymentTargetSelector.xml
 .idea/vcs.xml
 .idea/**/shelf
 .idea/runConfigurations.xml
 .idea/misc.xml
+.idea/appInsightsSettings.xml
 
 # Generated files
 .idea/**/contentModel.xml

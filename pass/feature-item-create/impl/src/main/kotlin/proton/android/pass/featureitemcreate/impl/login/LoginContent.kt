@@ -26,6 +26,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.ShareId
@@ -100,14 +101,15 @@ internal fun LoginContent(
             onEvent = onEvent,
             onAliasOptionsClick = {
                 selectedShareId ?: return@LoginItemForm
-                onNavigate(
-                    BaseLoginNavigation.AliasOptions(
+
+                onEvent(
+                    LoginContentEvent.OnCreateAlias(
                         shareId = selectedShareId,
-                        showUpgrade = uiState.hasReachedAliasLimit
+                        hasReachedAliasLimit = uiState.hasReachedAliasLimit,
+                        title = loginItemFormState.title.some()
                     )
                 )
             },
-            onNavigate = onNavigate,
             isUsernameSplitEnabled = uiState.isUsernameSplitEnabled
         )
     }

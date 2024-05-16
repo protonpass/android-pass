@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -42,6 +43,7 @@ import proton.android.pass.featureitemcreate.impl.common.ShareError.EmptyShareLi
 import proton.android.pass.featureitemcreate.impl.common.ShareError.SharesNotAvailable
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
+import proton.android.pass.featureitemcreate.impl.login.PerformActionAfterKeyboardHide
 
 @Composable
 fun CreateAliasScreen(
@@ -56,13 +58,20 @@ fun CreateAliasScreen(
         }
     }
 
+    var actionAfterKeyboardHide by remember { mutableStateOf<(() -> Unit)?>(null) }
+
+    PerformActionAfterKeyboardHide(
+        action = actionAfterKeyboardHide,
+        clearAction = { actionAfterKeyboardHide = null }
+    )
+
     val uiState by viewModel.createAliasUiState.collectAsStateWithLifecycle()
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
     val onExit = {
         if (uiState.baseAliasUiState.hasUserEditedContent) {
             showConfirmDialog = !showConfirmDialog
         } else {
-            onNavigate(CreateAliasNavigation.Close)
+            actionAfterKeyboardHide = { onNavigate(CreateAliasNavigation.Close) }
         }
     }
     BackHandler {
@@ -71,7 +80,7 @@ fun CreateAliasScreen(
 
     LaunchedEffect(uiState.baseAliasUiState.closeScreenEvent) {
         if (uiState.baseAliasUiState.closeScreenEvent is CloseScreenEvent.Close) {
-            onNavigate(CreateAliasNavigation.Close)
+            actionAfterKeyboardHide = { onNavigate(CreateAliasNavigation.Close) }
         }
     }
     val (showVaultSelector, selectedVault) = when (val shares = uiState.shareUiState) {
@@ -82,7 +91,7 @@ fun CreateAliasScreen(
             if (shares.shareError == EmptyShareList || shares.shareError == SharesNotAvailable) {
                 viewModel.onEmitSnackbarMessage(AliasSnackbarMessage.InitError)
                 LaunchedEffect(Unit) {
-                    onNavigate(CreateAliasNavigation.Close)
+                    actionAfterKeyboardHide = { onNavigate(CreateAliasNavigation.Close) }
                 }
             }
             false to null
@@ -109,12 +118,14 @@ fun CreateAliasScreen(
                     is AliasContentUiEvent.OnNoteChange -> viewModel.onNoteChange(event.note)
                     is AliasContentUiEvent.OnTitleChange -> viewModel.onTitleChange(event.title)
                     is AliasContentUiEvent.OnVaultSelect ->
-                        onNavigate(CreateAliasNavigation.SelectVault(event.shareId))
+                        actionAfterKeyboardHide =
+                            { onNavigate(CreateAliasNavigation.SelectVault(event.shareId)) }
 
                     is AliasContentUiEvent.OnPrefixChange -> viewModel.onPrefixChange(event.prefix)
                     is AliasContentUiEvent.OnMailBoxChanged -> viewModel.onMailboxesChanged(event.list)
                     is AliasContentUiEvent.OnSuffixChanged -> viewModel.onSuffixChange(event.suffix)
-                    is AliasContentUiEvent.OnUpgrade -> onNavigate(CreateAliasNavigation.Upgrade)
+                    is AliasContentUiEvent.OnUpgrade ->
+                        actionAfterKeyboardHide = { onNavigate(CreateAliasNavigation.Upgrade) }
                 }
             }
         )
@@ -126,7 +137,7 @@ fun CreateAliasScreen(
             },
             onConfirm = {
                 showConfirmDialog = false
-                onNavigate(CreateAliasNavigation.Close)
+                actionAfterKeyboardHide = { onNavigate(CreateAliasNavigation.Close) }
             }
         )
     }
@@ -137,7 +148,7 @@ fun CreateAliasScreen(
         onSuccess = { shareId, itemId, model ->
             val aliasEmail = (model.contents as ItemContents.Alias).aliasEmail
             val event = CreateAliasNavigation.Created(shareId, itemId, aliasEmail)
-            onNavigate(event)
+            actionAfterKeyboardHide = { onNavigate(event) }
         }
     )
     InAppReviewTriggerLaunchedEffect(

@@ -28,4 +28,5 @@ interface SentinelRepository {
 
     fun observeIsSentinelEnabled(): Flow<Boolean>
 
+    fun observeCanEnableSentinel(): Flow<Boolean>
 }

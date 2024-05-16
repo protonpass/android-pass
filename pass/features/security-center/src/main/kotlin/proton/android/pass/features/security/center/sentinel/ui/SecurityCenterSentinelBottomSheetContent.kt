@@ -82,14 +82,16 @@ internal fun SecurityCenterSentinelBottomSheetContent(
                     R.string.security_center_sentinel_button_enable
                 }.let { textResId -> stringResource(id = textResId) },
                 onClick = {
-                    if (isFreeUser) {
-                        onUiEvent(SecurityCenterSentinelUiEvent.OnUpsell)
-                    } else {
-                        if (isSentinelEnabled) {
-                            SecurityCenterSentinelUiEvent.OnDisableSentinel
+                    when {
+                        isFreeUser -> onUiEvent(SecurityCenterSentinelUiEvent.OnUpsell)
+                        canEnableSentinel == true -> if (isSentinelEnabled) {
+                            onUiEvent(SecurityCenterSentinelUiEvent.OnDisableSentinel)
                         } else {
-                            SecurityCenterSentinelUiEvent.OnEnableSentinel
-                        }.also(onUiEvent)
+                            onUiEvent(SecurityCenterSentinelUiEvent.OnEnableSentinel)
+                        }
+
+                        canEnableSentinel == false -> onUiEvent(SecurityCenterSentinelUiEvent.OnUpsell)
+                        else -> {}
                     }
                 },
                 isLoading = isLoadingState.value()

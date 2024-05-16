@@ -26,6 +26,11 @@ import javax.inject.Inject
 class FakeSentinelRepository @Inject constructor() : SentinelRepository {
 
     private val isSentinelEnabledFlow = MutableStateFlow(false)
+    private val canEnableSentinelFlow = MutableStateFlow(false)
+
+    fun setCanEnableSentinel(canEnable: Boolean) {
+        canEnableSentinelFlow.tryEmit(canEnable)
+    }
 
     override suspend fun disableSentinel() {
         isSentinelEnabledFlow.tryEmit(false)
@@ -36,5 +41,7 @@ class FakeSentinelRepository @Inject constructor() : SentinelRepository {
     }
 
     override fun observeIsSentinelEnabled(): Flow<Boolean> = isSentinelEnabledFlow
+
+    override fun observeCanEnableSentinel(): Flow<Boolean> = canEnableSentinelFlow
 
 }

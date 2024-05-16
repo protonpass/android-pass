@@ -43,6 +43,14 @@ class RemoteSentinelDataSourceImpl @Inject constructor(
             .valueOrThrow
     }
 
+    override suspend fun canEnableSentinel(): Boolean = getCoreApi()
+        .invoke { getSettings() }
+        .valueOrThrow
+        .userSettings
+        .highSecurity
+        .eligible
+        .toBoolean()
+
     override suspend fun isSentinelEnabled(): Boolean = getCoreApi()
         .invoke { getSettings() }
         .valueOrThrow

@@ -34,5 +34,6 @@ data class CoreUserSettings(
 
 @Serializable
 data class CoreHighSecurity(
+    @SerialName("Eligible") val eligible: Int,
     @SerialName("Value") val value: Int
 )

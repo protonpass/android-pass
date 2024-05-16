@@ -24,6 +24,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -38,6 +39,7 @@ import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.some
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
+import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -64,7 +66,9 @@ class AutosaveActivityViewModel @Inject constructor(
     }
 
     fun onStop() = viewModelScope.launch {
-        storeAuthOnStop()
+        if (preferenceRepository.getHasAuthenticated().first() is HasAuthenticated.Authenticated) {
+            storeAuthOnStop()
+        }
     }
 
     fun signOut() = viewModelScope.launch {

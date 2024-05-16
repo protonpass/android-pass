@@ -30,6 +30,8 @@ sealed interface IsLoadingState {
         NotLoading -> false
     }
 
+    operator fun plus(other: IsLoadingState): IsLoadingState = from(value() && other.value())
+
     companion object {
         fun from(value: Boolean): IsLoadingState = if (value) Loading else NotLoading
     }

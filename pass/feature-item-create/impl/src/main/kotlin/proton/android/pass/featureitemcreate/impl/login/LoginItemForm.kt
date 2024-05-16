@@ -79,7 +79,6 @@ internal fun LoginItemForm(
     selectedShareId: ShareId?,
     hasReachedAliasLimit: Boolean,
     onEvent: (LoginContentEvent) -> Unit,
-    onAliasOptionsClick: () -> Unit,
     isUsernameSplitEnabled: Boolean
 ) {
     Box(modifier = modifier) {
@@ -147,7 +146,6 @@ internal fun LoginItemForm(
                 isTotpError = isTotpError,
                 hasReachedAliasLimit = hasReachedAliasLimit,
                 onEvent = onEvent,
-                onAliasOptionsClick = onAliasOptionsClick,
                 onFocusChange = { field, isFocused ->
                     onEvent(LoginContentEvent.OnFocusChange(field, isFocused))
                 },

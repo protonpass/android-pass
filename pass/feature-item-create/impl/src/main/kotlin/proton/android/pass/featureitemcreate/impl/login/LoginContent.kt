@@ -26,7 +26,6 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.ShareId
@@ -99,17 +98,6 @@ internal fun LoginContent(
             selectedShareId = selectedShareId,
             hasReachedAliasLimit = uiState.hasReachedAliasLimit,
             onEvent = onEvent,
-            onAliasOptionsClick = {
-                selectedShareId ?: return@LoginItemForm
-
-                onEvent(
-                    LoginContentEvent.OnCreateAlias(
-                        shareId = selectedShareId,
-                        hasReachedAliasLimit = uiState.hasReachedAliasLimit,
-                        title = loginItemFormState.title.some()
-                    )
-                )
-            },
             isUsernameSplitEnabled = uiState.isUsernameSplitEnabled
         )
     }

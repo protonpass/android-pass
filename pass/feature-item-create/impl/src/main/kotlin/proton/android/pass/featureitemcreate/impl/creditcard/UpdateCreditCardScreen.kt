@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -20,6 +21,7 @@ import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.creditcard.BaseCreditCardNavigation.Close
 import proton.android.pass.featureitemcreate.impl.creditcard.BaseCreditCardNavigation.Upgrade
 import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
+import proton.android.pass.featureitemcreate.impl.login.PerformActionAfterKeyboardHide
 
 @Suppress("ComplexMethod")
 @Composable
@@ -28,10 +30,18 @@ fun UpdateCreditCardScreen(
     viewModel: UpdateCreditCardViewModel = hiltViewModel(),
     onNavigate: (BaseCreditCardNavigation) -> Unit
 ) {
+    var actionAfterKeyboardHide by remember { mutableStateOf<(() -> Unit)?>(null) }
+    PerformActionAfterKeyboardHide(
+        action = actionAfterKeyboardHide,
+        clearAction = { actionAfterKeyboardHide = null }
+    )
+
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     when (val uiState = state) {
-        UpdateCreditCardUiState.Error -> LaunchedEffect(Unit) { onNavigate(Close) }
+        UpdateCreditCardUiState.Error -> LaunchedEffect(Unit) {
+            actionAfterKeyboardHide = { onNavigate(Close) }
+        }
 
         UpdateCreditCardUiState.Loading,
         UpdateCreditCardUiState.NotInitialised -> {
@@ -43,7 +53,7 @@ fun UpdateCreditCardScreen(
                 if (uiState.baseState.hasUserEditedContent) {
                     showConfirmDialog = !showConfirmDialog
                 } else {
-                    onNavigate(Close)
+                    actionAfterKeyboardHide = { onNavigate(Close) }
                 }
             }
             BackHandler(onBack = onExit)
@@ -78,7 +88,9 @@ fun UpdateCreditCardScreen(
 
                             is CreditCardContentEvent.Submit -> viewModel.update()
                             CreditCardContentEvent.Up -> onExit()
-                            CreditCardContentEvent.Upgrade -> onNavigate(Upgrade)
+                            CreditCardContentEvent.Upgrade ->
+                                actionAfterKeyboardHide = { onNavigate(Upgrade) }
+
                             is CreditCardContentEvent.OnCVVFocusChange ->
                                 viewModel.onCVVFocusChanged(event.isFocused)
 
@@ -99,7 +111,7 @@ fun UpdateCreditCardScreen(
                     },
                     onConfirm = {
                         showConfirmDialog = false
-                        onNavigate(Close)
+                        actionAfterKeyboardHide = { onNavigate(Close) }
                     }
                 )
             }
@@ -107,7 +119,8 @@ fun UpdateCreditCardScreen(
                 isItemSaved = uiState.baseState.isItemSaved,
                 selectedShareId = uiState.selectedShareId,
                 onSuccess = { shareId, itemId, _ ->
-                    onNavigate(UpdateCreditCardNavigation.ItemUpdated(shareId, itemId))
+                    actionAfterKeyboardHide =
+                        { onNavigate(UpdateCreditCardNavigation.ItemUpdated(shareId, itemId)) }
                 }
             )
             InAppReviewTriggerLaunchedEffect(

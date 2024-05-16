@@ -16,12 +16,14 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.commonui.api.keyboard
+package proton.android.pass.featureitemcreate.impl.login
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import proton.android.pass.composecomponents.impl.keyboard.IsKeyboardVisible
+import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
 
 @Composable
 fun PerformActionAfterKeyboardHide(action: (() -> Unit)?, clearAction: (() -> Unit)) {

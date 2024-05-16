@@ -24,6 +24,8 @@ interface RemoteSentinelDataSource {
 
     suspend fun enableSentinel()
 
+    suspend fun canEnableSentinel(): Boolean
+
     suspend fun isSentinelEnabled(): Boolean
 
 }

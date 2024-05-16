@@ -29,17 +29,22 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.getOrNull
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.securitycenter.api.sentinel.DisableSentinel
 import proton.android.pass.securitycenter.api.sentinel.EnableSentinel
+import proton.android.pass.securitycenter.api.sentinel.ObserveCanEnableSentinel
 import proton.android.pass.securitycenter.api.sentinel.ObserveIsSentinelEnabled
 import javax.inject.Inject
 
 @HiltViewModel
 class SecurityCenterSentinelViewModel @Inject constructor(
     observeIsSentinelEnabled: ObserveIsSentinelEnabled,
+    observeCanEnableSentinel: ObserveCanEnableSentinel,
     observeUserPlan: GetUserPlan,
     private val enableSentinel: EnableSentinel,
     private val disableSentinel: DisableSentinel,
@@ -54,15 +59,17 @@ class SecurityCenterSentinelViewModel @Inject constructor(
 
     internal val state: StateFlow<SecurityCenterSentinelState> = combine(
         observeIsSentinelEnabled(),
+        observeCanEnableSentinel().asLoadingResult(),
         eventFlow,
         isLoadingFlow,
         observeUserPlan()
-    ) { isSentinelEnabled, event, isLoading, userPlan ->
+    ) { isSentinelEnabled, canEnableSentinelResult, event, isLoading, userPlan ->
         SecurityCenterSentinelState(
             isSentinelEnabled = isSentinelEnabled,
             event = event,
-            isLoadingState = isLoading,
-            planType = userPlan.planType
+            isLoadingState = isLoading + IsLoadingState.from(canEnableSentinelResult is LoadingResult.Loading),
+            planType = userPlan.planType,
+            canEnableSentinel = canEnableSentinelResult.getOrNull()
         )
     }.stateIn(
         scope = viewModelScope,

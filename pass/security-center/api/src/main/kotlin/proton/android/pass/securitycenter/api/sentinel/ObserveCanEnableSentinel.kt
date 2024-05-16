@@ -16,17 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.core.repositories
+package proton.android.pass.securitycenter.api.sentinel
 
 import kotlinx.coroutines.flow.Flow
 
-interface SentinelRepository {
+interface ObserveCanEnableSentinel {
 
-    suspend fun disableSentinel()
+    operator fun invoke(): Flow<Boolean>
 
-    suspend fun enableSentinel()
-
-    fun observeIsSentinelEnabled(): Flow<Boolean>
-
-    fun observeCanEnableSentinel(): Flow<Boolean>
 }

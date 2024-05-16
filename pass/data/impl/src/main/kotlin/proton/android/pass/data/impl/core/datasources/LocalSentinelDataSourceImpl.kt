@@ -19,6 +19,8 @@
 package proton.android.pass.data.impl.core.datasources
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import proton.android.pass.data.api.core.datasources.LocalSentinelDataSource
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -29,6 +31,12 @@ class LocalSentinelDataSourceImpl @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository
 ) : LocalSentinelDataSource {
 
+    private val _canEnableSentinel = MutableStateFlow<Boolean?>(null)
+
+    override fun updateCanEnableSentinel(value: Boolean) {
+        _canEnableSentinel.value = value
+    }
+
     override fun disableSentinel() {
         userPreferencesRepository.setSentinelStatusPreference(SentinelStatusPreference.Disabled)
     }
@@ -36,6 +44,8 @@ class LocalSentinelDataSourceImpl @Inject constructor(
     override fun enableSentinel() {
         userPreferencesRepository.setSentinelStatusPreference(SentinelStatusPreference.Enabled)
     }
+
+    override fun observeCanEnableSentinel(): Flow<Boolean?> = _canEnableSentinel.asStateFlow()
 
     override fun observeIsSentinelEnabled(): Flow<Boolean> = userPreferencesRepository
         .observeSentinelStatusPreference()

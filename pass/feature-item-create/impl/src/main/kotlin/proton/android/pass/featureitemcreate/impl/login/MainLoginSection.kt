@@ -39,7 +39,6 @@ internal fun MainLoginSection(
     hasReachedAliasLimit: Boolean,
     onEvent: (LoginContentEvent) -> Unit,
     onFocusChange: (LoginField, Boolean) -> Unit,
-    onAliasOptionsClick: () -> Unit,
     isUsernameSplitEnabled: Boolean
 ) {
     Column(
@@ -69,7 +68,10 @@ internal fun MainLoginSection(
                 onChange = { newEmail ->
                     onEvent(LoginContentEvent.OnEmailChanged(newEmail))
                 },
-                onAliasOptionsClick = onAliasOptionsClick,
+                onAliasOptionsClick =  {
+                    selectedShareId ?: return@UsernameInput
+                    onEvent(LoginContentEvent.OnAliasOptions(selectedShareId, hasReachedAliasLimit))
+                },
                 onFocus = { isFocused ->
                     onFocusChange(LoginField.Email, isFocused)
                 }

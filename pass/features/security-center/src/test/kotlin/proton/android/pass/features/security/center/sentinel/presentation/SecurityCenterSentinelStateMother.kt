@@ -32,7 +32,8 @@ internal object SecurityCenterSentinelStateMother {
         isSentinelEnabled = isSentinelEnabled,
         event = event,
         isLoadingState = isLoadingState,
-        planType = planType
+        planType = planType,
+        canEnableSentinel = canEnableSentinelResult.getOrNull()
     )
 
 }

@@ -28,8 +28,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
-import proton.android.pass.data.api.repositories.SyncState
 import proton.android.pass.data.api.usecases.ObserveHasConfirmedInvite
 import proton.android.pass.preferences.HasCompletedOnBoarding
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -38,7 +36,6 @@ import javax.inject.Inject
 @HiltViewModel
 class RouterViewModel @Inject constructor(
     userPreferencesRepository: UserPreferencesRepository,
-    itemSyncStatusRepository: ItemSyncStatusRepository,
     observeHasConfirmedInvite: ObserveHasConfirmedInvite
 ) : ViewModel() {
 
@@ -53,7 +50,6 @@ class RouterViewModel @Inject constructor(
 
     internal val eventStateFlow: StateFlow<RouterEvent> = combine(
         userPreferencesRepository.getHasCompletedOnBoarding(),
-        itemSyncStatusRepository.observeSyncState(),
         confirmedInviteFlow,
         ::routerEvent
     )
@@ -64,22 +60,20 @@ class RouterViewModel @Inject constructor(
             initialValue = RouterEvent.None
         )
 
-    private fun routerEvent(
-        hasCompletedOnBoarding: HasCompletedOnBoarding,
-        syncState: SyncState,
-        hasConfirmedInvite: Boolean
-    ) = when {
+    private fun routerEvent(hasCompletedOnBoarding: HasCompletedOnBoarding, hasConfirmedInvite: Boolean) = when {
         hasConfirmedInvite -> RouterEvent.ConfirmedInvite
         hasCompletedOnBoarding == HasCompletedOnBoarding.NotCompleted -> RouterEvent.OnBoarding
-        syncState.isVisibleSyncing -> RouterEvent.SyncDialog
         else -> RouterEvent.None
     }
 
 }
 
-sealed interface RouterEvent {
+internal sealed interface RouterEvent {
+
     data object OnBoarding : RouterEvent
-    data object SyncDialog : RouterEvent
+
     data object ConfirmedInvite : RouterEvent
+
     data object None : RouterEvent
+
 }

@@ -163,9 +163,9 @@ class LauncherViewModel @Inject constructor(
                             when (itemSyncStatus) {
                                 ItemSyncStatus.SyncError,
                                 ItemSyncStatus.SyncStarted,
+                                ItemSyncStatus.SyncNotStarted,
                                 is ItemSyncStatus.Syncing -> SyncMode.ShownToUser
 
-                                ItemSyncStatus.SyncNotStarted,
                                 ItemSyncStatus.SyncSuccess -> SyncMode.Background
                             }
                         }

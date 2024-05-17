@@ -18,6 +18,8 @@
 
 package proton.android.pass.features.security.center.sentinel.ui
 
+import proton.android.pass.domain.features.PaidFeature
+
 internal sealed interface SecurityCenterSentinelUiEvent {
 
     data object OnEnableSentinel : SecurityCenterSentinelUiEvent
@@ -26,5 +28,6 @@ internal sealed interface SecurityCenterSentinelUiEvent {
 
     data object OnLearnMore : SecurityCenterSentinelUiEvent
 
-    data object OnUpsell : SecurityCenterSentinelUiEvent
+    @JvmInline
+    value class OnUpsell(internal val paidFeature: PaidFeature) : SecurityCenterSentinelUiEvent
 }

@@ -81,7 +81,7 @@ class PublicLinkRepositoryImpl @Inject constructor(
             request = request
         )
 
-        val encodedLinkKey = Base64.encodeBase64String(linkKey.value())
+        val encodedLinkKey = Base64.encodeBase64String(linkKey.value(), Base64.Mode.UrlSafe)
         val concatenated = "${response.url}#$encodedLinkKey"
 
         return concatenated

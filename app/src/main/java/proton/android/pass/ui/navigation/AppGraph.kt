@@ -214,7 +214,8 @@ fun NavGraphBuilder.appGraph(
                                 mode = GeneratePasswordBottomsheetModeValue.CopyAndClose
                             )
 
-                        ItemTypeUiState.CreditCard -> throw NotImplementedError()
+                        ItemTypeUiState.CreditCard ->
+                            CreateCreditCard to CreateCreditCard.createNavRoute(it.shareId)
                     }
 
                     appNavigator.navigate(destination, route)

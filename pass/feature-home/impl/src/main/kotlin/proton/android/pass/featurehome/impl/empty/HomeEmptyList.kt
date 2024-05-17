@@ -41,7 +41,8 @@ fun HomeEmptyList(
     modifier: Modifier = Modifier,
     onCreateLoginClick: () -> Unit,
     onCreateAliasClick: () -> Unit,
-    onCreateNoteClick: () -> Unit
+    onCreateNoteClick: () -> Unit,
+    onCreateCreditCardClick: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -77,6 +78,14 @@ fun HomeEmptyList(
                 icon = CoreR.drawable.ic_proton_notepad_checklist,
                 onClick = onCreateNoteClick
             )
+            HomeEmptyButton(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(R.string.home_empty_vault_create_credit_card),
+                backgroundColor = PassTheme.colors.cardInteractionNormMinor1,
+                textColor = PassTheme.colors.cardInteractionNormMajor2,
+                icon = CoreR.drawable.ic_proton_credit_card,
+                onClick = onCreateCreditCardClick
+            )
         }
     }
 }
@@ -89,7 +98,8 @@ fun HomeEmptyListPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: 
             HomeEmptyList(
                 onCreateLoginClick = {},
                 onCreateAliasClick = {},
-                onCreateNoteClick = {}
+                onCreateNoteClick = {},
+                onCreateCreditCardClick = {}
             )
         }
     }

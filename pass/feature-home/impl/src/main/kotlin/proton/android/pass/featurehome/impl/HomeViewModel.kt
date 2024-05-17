@@ -38,6 +38,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -92,7 +93,9 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.SearchEntry
 import proton.android.pass.data.api.repositories.BulkMoveToVaultEvent
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
+import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.PinItemsResult
+import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.usecases.ClearTrash
 import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.GetUserPlan
@@ -192,7 +195,8 @@ class HomeViewModel @Inject constructor(
     observeAppNeedsUpdate: ObserveAppNeedsUpdate,
     appDispatchers: AppDispatchers,
     getUserPlan: GetUserPlan,
-    savedState: SavedStateHandleProvider
+    savedState: SavedStateHandleProvider,
+    itemSyncStatusRepository: ItemSyncStatusRepository
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -212,8 +216,25 @@ class HomeViewModel @Inject constructor(
     private val selectionState: MutableStateFlow<SelectionState> =
         MutableStateFlow(SelectionState.Initial)
     private val isInSeeAllPinsModeState: MutableStateFlow<Boolean> = MutableStateFlow(false)
+
     private val navEventState: MutableStateFlow<HomeNavEvent> =
         MutableStateFlow(HomeNavEvent.Unknown)
+
+    init {
+        viewModelScope.launch {
+            itemSyncStatusRepository.observeMode()
+                .distinctUntilChanged()
+                .collectLatest { syncMode ->
+                    if (syncMode is SyncMode.ShownToUser) {
+                        HomeNavEvent.SyncDialog
+                    } else {
+                        HomeNavEvent.Unknown
+                    }.also { navHomeEvent ->
+                        navEventState.update { navHomeEvent }
+                    }
+                }
+        }
+    }
 
     @OptIn(FlowPreview::class)
     private val debouncedSearchQueryState = searchQueryState
@@ -521,7 +542,7 @@ class HomeViewModel @Inject constructor(
     private val bottomSheetItemActionFlow: MutableStateFlow<BottomSheetItemAction> =
         MutableStateFlow(BottomSheetItemAction.None)
 
-    val homeUiState: StateFlow<HomeUiState> = combineN(
+    internal val homeUiState: StateFlow<HomeUiState> = combineN(
         homeListUiStateFlow,
         searchUiStateFlow,
         getUserPlan().asLoadingResult(),

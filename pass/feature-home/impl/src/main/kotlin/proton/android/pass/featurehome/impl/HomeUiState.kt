@@ -41,7 +41,7 @@ import proton.android.pass.featuresearchoptions.api.SearchFilterType
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 
-sealed interface ActionState {
+internal sealed interface ActionState {
 
     data object Done : ActionState
 
@@ -51,7 +51,7 @@ sealed interface ActionState {
 
 }
 
-sealed interface HomeNavEvent {
+internal sealed interface HomeNavEvent {
 
     data class ItemHistory(val shareId: ShareId, val itemId: ItemId) : HomeNavEvent
 
@@ -61,10 +61,12 @@ sealed interface HomeNavEvent {
 
     data object UpgradeDialog : HomeNavEvent
 
+    data object SyncDialog : HomeNavEvent
+
 }
 
 @Immutable
-data class HomeUiState(
+internal data class HomeUiState(
     val homeListUiState: HomeListUiState,
     val searchUiState: SearchUiState,
     val pinningUiState: PinningUiState,
@@ -73,16 +75,16 @@ data class HomeUiState(
     val action: BottomSheetItemAction,
     val isFreePlan: Boolean
 ) {
-    fun shouldShowRecentSearchHeader() =
+    internal fun shouldShowRecentSearchHeader() =
         homeListUiState.items.isNotEmpty() && searchUiState.inSearchMode && searchUiState.isInSuggestionsMode
 
-    fun shouldShowItemListHeader() = homeListUiState.items.isNotEmpty() &&
+    internal fun shouldShowItemListHeader() = homeListUiState.items.isNotEmpty() &&
         homeListUiState.isLoading == IsLoadingState.NotLoading &&
         !searchUiState.isInSuggestionsMode &&
         !searchUiState.isProcessingSearch.value() &&
         (searchUiState.inSearchMode || pinningUiState.inPinningMode)
 
-    fun isSelectedVaultReadOnly() = when (val selection = homeListUiState.homeVaultSelection) {
+    internal fun isSelectedVaultReadOnly() = when (val selection = homeListUiState.homeVaultSelection) {
         is VaultSelectionOption.AllVaults -> false
         is VaultSelectionOption.Vault ->
             homeListUiState.shares[selection.shareId]?.role == ShareRole.Read
@@ -90,8 +92,9 @@ data class HomeUiState(
         is VaultSelectionOption.Trash -> false
     }
 
-    companion object {
-        val Loading = HomeUiState(
+    internal companion object {
+
+        internal val Loading = HomeUiState(
             homeListUiState = HomeListUiState.Loading,
             searchUiState = SearchUiState.Initial,
             pinningUiState = PinningUiState.Initial,
@@ -100,45 +103,55 @@ data class HomeUiState(
             action = BottomSheetItemAction.None,
             isFreePlan = true
         )
+
     }
+
 }
 
 @Immutable
-data class SelectionTopBarState(
+internal data class SelectionTopBarState(
     val isTrash: Boolean,
     val selectedItemCount: Int,
     val areAllSelectedPinned: Boolean,
     val pinningLoadingState: IsLoadingState,
     val actionsEnabled: Boolean
 ) {
-    companion object {
-        val Initial = SelectionTopBarState(
+
+    internal companion object {
+
+        internal val Initial = SelectionTopBarState(
             isTrash = false,
             selectedItemCount = 0,
             areAllSelectedPinned = false,
             pinningLoadingState = IsLoadingState.NotLoading,
             actionsEnabled = true
         )
+
     }
+
 }
 
 @Immutable
-data class HomeSelectionState(
+internal data class HomeSelectionState(
     val selectedItems: ImmutableList<ItemUiModel>,
     val isInSelectMode: Boolean,
     val topBarState: SelectionTopBarState
 ) {
-    companion object {
-        val Initial = HomeSelectionState(
+
+    internal companion object {
+
+        internal val Initial = HomeSelectionState(
             selectedItems = persistentListOf(),
             isInSelectMode = false,
             topBarState = SelectionTopBarState.Initial
         )
+
     }
+
 }
 
 @Immutable
-data class HomeListUiState(
+internal data class HomeListUiState(
     val isLoading: IsLoadingState,
     val isRefreshing: IsRefreshingState,
     val shouldScrollToTop: Boolean,
@@ -153,8 +166,10 @@ data class HomeListUiState(
     val selectionState: HomeSelectionState,
     val showNeedsUpdate: Boolean
 ) {
-    companion object {
-        val Loading = HomeListUiState(
+
+    internal companion object {
+
+        internal val Loading = HomeListUiState(
             isLoading = IsLoadingState.Loading,
             isRefreshing = IsRefreshingState.NotRefreshing,
             shouldScrollToTop = false,
@@ -164,41 +179,51 @@ data class HomeListUiState(
             selectionState = HomeSelectionState.Initial,
             showNeedsUpdate = false
         )
+
     }
+
 }
 
 @Immutable
-data class SearchUiState(
+internal data class SearchUiState(
     val searchQuery: String,
     val isProcessingSearch: IsProcessingSearchState,
     val inSearchMode: Boolean,
     val isInSuggestionsMode: Boolean,
     val itemTypeCount: ItemTypeCount
 ) {
-    companion object {
-        val Initial = SearchUiState(
+
+    internal companion object {
+
+        internal val Initial = SearchUiState(
             searchQuery = "",
             isProcessingSearch = IsProcessingSearchState.NotLoading,
             inSearchMode = false,
             isInSuggestionsMode = false,
             itemTypeCount = ItemTypeCount(0, 0, 0, 0)
         )
+
     }
+
 }
 
 @Immutable
-data class PinningUiState(
+internal data class PinningUiState(
     val inPinningMode: Boolean,
     val filteredItems: ImmutableList<GroupedItemList>,
     val itemTypeCount: ItemTypeCount,
     val unFilteredItems: PersistentList<ItemUiModel>
 ) {
-    companion object {
-        val Initial = PinningUiState(
+
+    internal companion object {
+
+        internal val Initial = PinningUiState(
             inPinningMode = false,
             filteredItems = persistentListOf(),
             unFilteredItems = persistentListOf(),
             itemTypeCount = ItemTypeCount(0, 0, 0, 0)
         )
+
     }
+
 }

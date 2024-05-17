@@ -22,7 +22,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import me.proton.core.compose.navigation.requireArguments
 import proton.android.pass.domain.breach.BreachEmailId
-import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.features.security.center.addressoptions.navigation.SecurityCenterAddressOptionsNavDestination
 import proton.android.pass.features.security.center.addressoptions.navigation.SecurityCenterAliasAddressOptionsNavItem
 import proton.android.pass.features.security.center.addressoptions.navigation.SecurityCenterCustomAddressOptionsNavItem
@@ -116,9 +115,8 @@ fun NavGraphBuilder.securityCenterNavGraph(onNavigated: (SecurityCenterNavDestin
                         comesFromBottomSheet = true
                     )
 
-                    SecurityCenterSentinelDestination.Upsell -> SecurityCenterNavDestination.Upsell(
-                        paidFeature = PaidFeature.Sentinel
-                    )
+                    is SecurityCenterSentinelDestination.OnUpsell ->
+                        SecurityCenterNavDestination.Upsell(destination.paidFeature)
                 }.also(onNavigated)
             }
         )

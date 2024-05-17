@@ -20,6 +20,7 @@ package proton.android.pass.domain.features
 
 enum class PaidFeature {
     DarkWebMonitoring,
-    Sentinel,
+    SentinelFree,
+    SentinelEssential,
     ViewMissing2fa
 }

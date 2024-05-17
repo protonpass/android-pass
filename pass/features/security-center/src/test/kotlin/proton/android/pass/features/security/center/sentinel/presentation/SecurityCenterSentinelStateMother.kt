@@ -27,13 +27,14 @@ internal object SecurityCenterSentinelStateMother {
         isSentinelEnabled: Boolean = false,
         event: SecurityCenterSentinelEvent = SecurityCenterSentinelEvent.Idle,
         isLoadingState: IsLoadingState = IsLoadingState.NotLoading,
-        planType: PlanType = PlanType.Unknown()
+        planType: PlanType = PlanType.Unknown(),
+        canEnableSentinel: Boolean = false
     ): SecurityCenterSentinelState = SecurityCenterSentinelState(
         isSentinelEnabled = isSentinelEnabled,
         event = event,
         isLoadingState = isLoadingState,
         planType = planType,
-        canEnableSentinel = canEnableSentinelResult.getOrNull()
+        canEnableSentinel = canEnableSentinel
     )
 
 }

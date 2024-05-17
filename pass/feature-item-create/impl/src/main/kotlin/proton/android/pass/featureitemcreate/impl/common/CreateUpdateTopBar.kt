@@ -111,7 +111,8 @@ internal fun CreateUpdateTopBar(
                     horizontalArrangement = Arrangement.spacedBy(Spacing.small)
                 ) {
                     AnimatedVisibility(
-                        showVaultSelector && selectedVault != null,
+                        modifier = Modifier.weight(weight = 1f, fill = false),
+                        visible = showVaultSelector && selectedVault != null,
                         enter = fadeIn(),
                         exit = fadeOut()
                     ) {

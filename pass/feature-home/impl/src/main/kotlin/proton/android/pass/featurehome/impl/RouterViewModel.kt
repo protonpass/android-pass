@@ -71,7 +71,7 @@ class RouterViewModel @Inject constructor(
     ) = when {
         hasConfirmedInvite -> RouterEvent.ConfirmedInvite
         hasCompletedOnBoarding == HasCompletedOnBoarding.NotCompleted -> RouterEvent.OnBoarding
-        syncState.isSyncing && syncState.isVisibleSyncing -> RouterEvent.SyncDialog
+        syncState.isVisibleSyncing -> RouterEvent.SyncDialog
         else -> RouterEvent.None
     }
 

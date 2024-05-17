@@ -37,7 +37,7 @@
   <string name="security_center_home_row_excludes_items_title">Esclusi dal monitoraggio</string>
   <string name="security_center_home_row_excludes_items_subtitle">Questi elementi rimangono a rischio</string>
   <string name="security_center_get_breaches_error">Caricamento delle violazioni non riuscito</string>
-  <string name="security_center_home_section_password_health">Stato della password</string>
+  <string name="security_center_home_section_password_health">Stato di integrità della password</string>
   <!-- Sentinel bottom sheet -->
   <string name="security_center_sentinel_title">Proton Sentinel</string>
   <string name="security_center_sentinel_subtitle">Proton Sentinel è un programma avanzato di protezione dell\'account basato su sofisticati sistemi di intelligenza artificiale e specialisti che lavorano 24 ore su 24 per proteggerti da malintenzionati e minacce alla sicurezza.</string>
@@ -83,11 +83,13 @@
     <item quantity="one">Trovato in %s violazione di dati</item>
     <item quantity="other">Trovato in %s violazioni di dati</item>
   </plurals>
+  <string name="security_center_dark_web_monitor_found_in_breaches">Nessuna violazione di dati rilevata</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Indirizzi Proton</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Alias Hide-my-email</string>
   <string name="security_center_dark_web_monitor_proton_addresses_error">Caricamento degli indirizzi Proton non riuscito</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Caricamento degli alias Hide-my-email non riuscito</string>
-    <string name="security_center_dark_web_monitor_monitoring_disabled">Monitoraggio disabilitato</string>
+  <string name="security_center_dark_web_monitor_monitoring_disabled">Non monitorato</string>
+  <string name="security_center_dark_web_monitor_see_all">Mostra tutto</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Si è verificato un errore nell\'invio del codice di verifica. Riprova più tardi.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Si è verificato un errore nella rimozione dell\'email. Riprova più tardi.</string>
   <!-- Add custom email monitoring -->
@@ -100,16 +102,18 @@
   <!-- Verify email monitoring -->
   <string name="security_center_verify_email_code_placeholder">Codice</string>
   <string name="security_center_verify_email_code_error">Codice non valido</string>
-  <string name="security_center_verify_email_continue">Continua</string>
   <string name="security_center_verify_email_title">Conferma l\'email</string>
   <string name="security_center_verify_email_subtitle">Abbiamo inviato un codice di verifica a %s. Inseriscilo qui sotto:</string>
+  <string name="security_center_verify_email_code_resend_header">Non hai ricevuto il codice?</string>
+  <string name="security_center_verify_email_code_resend_body">Controlla se nella cartella spam è presente un\'email denominata \"Conferma l\'indirizzo email per Proton Pass\"</string>
+  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">Se non riesci a trovarla, puoi </string>
+  <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">richiedere un nuovo codice.</string>
+  <string name="security_center_verify_email_snackbar_message_resend_code_success">È stata inviata una nuova email di verifica, controlla la tua casella di posta.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">Si è verificato un errore nell\'invio del codice di verifica. Riprova più tardi.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Troppe verifiche non valide. Rimozione dell\'email personalizzata in corso.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Violazioni di dati rilevate per</string>
   <string name="security_center_verify_report_title_none">Nessuna violazione di dati rilevata per</string>
-  <string name="security_center_verify_resend_code">Reinvia il codice</string>
-  <string name="security_center_verify_resend_code_in_00">Reinvia il codice tra 00:%s</string>
   <!-- Email breach report -->
   <string name="security_center_email_report_used_in_header">Usato in</string>
   <string name="security_center_email_report_breaches_header">Violazioni di dati</string>
@@ -139,6 +143,7 @@
   <string name="security_center_proton_list_error">Caricamento degli indirizzi non riuscito</string>
   <string name="security_center_proton_list_included_in_monitoring">Abilita il monitoraggio per ricevere una notifica qualora i tuoi indirizzi Proton vengano resi pubblici.</string>
   <string name="security_center_proton_list_options_menu">Menu delle opzioni dello schermata Proton</string>
+  <string name="security_center_proton_list_not_monitored">Non monitorato</string>
   <!-- Address Bottomsheet options -->
   <string name="security_center_address_bottomsheet_disable_monitoring">Sospendi il monitoraggio</string>
   <string name="security_center_address_bottomsheet_enable_monitoring">Riprendi il monitoraggio</string>

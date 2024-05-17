@@ -32,7 +32,7 @@
   <string name="app_lock_config_biometric">Биометрический</string>
   <string name="app_lock_config_pin_code">PIN-код</string>
   <string name="app_lock_config_app_lock_time">Автоблокировка</string>
-  <string name="app_lock_config_password">Password</string>
+  <string name="app_lock_config_password">Пароль</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Используйте системную блокировку, если биометрия не работает</string>
   <string name="configure_pin_set_pin_code">Установите PIN-код</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Разблокируйте приложение с помощью этого кода</string>
@@ -71,5 +71,5 @@
     <item quantity="many">Через %d часа</item>
     <item quantity="other">Через %d часов</item>
   </plurals>
-  <string name="profile_less_than_a_minute">Less than a minute</string>
+  <string name="profile_less_than_a_minute">Меньше минуты</string>
 </resources>

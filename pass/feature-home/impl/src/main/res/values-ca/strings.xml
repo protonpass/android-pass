@@ -107,8 +107,8 @@
     <item quantity="other">Are you sure you want to move %d items to the trash?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
-    <item quantity="one">Delete permanently %d item?</item>
-    <item quantity="other">Delete permanently %d items?</item>
+    <item quantity="one">Voleu suprimir permanentment %d element?</item>
+    <item quantity="other">Voleu suprimir permanentment %d elements?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_message">
     <item quantity="one">Are you sure you want to delete the item? This action is irreversible</item>
@@ -126,7 +126,7 @@
   <string name="home_snackbar_items_pinned_success">S\'ha ancorat l\'element.</string>
   <string name="home_snackbar_items_pinned_partial_success">Error pinning some of the items</string>
   <string name="home_snackbar_items_pinned_error">S\'ha produït un error en ancorar els elements.</string>
-  <string name="home_snackbar_items_unpinned_success">Items unpinned successfully</string>
+  <string name="home_snackbar_items_unpinned_success">Els elements no fixats s\'han fixat correctament</string>
   <string name="home_snackbar_items_unpinned_partial_success">Error unpinning some of the items</string>
   <string name="home_snackbar_items_unpinned_error">S\'ha produït un error en desancorar els elements.</string>
 </resources>

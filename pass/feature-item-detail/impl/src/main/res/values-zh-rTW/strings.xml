@@ -36,7 +36,7 @@
   <string name="item_monitor_include_message_error">There was an error including item in monitoring</string>
   <string name="login_item_generate_totp_error">雙重驗證生成條碼錯誤</string>
   <string name="login_item_view_alias_button">檢視別名</string>
-  <string name="login_item_monitor_widget_weak_pass_title">Weak Password</string>
+  <string name="login_item_monitor_widget_weak_pass_title">弱密碼</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">This account is vulnerable, visit the service and change your password.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="other">%d other logins use the same password</item>

@@ -15,7 +15,6 @@
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Безопасно сохранить платежную информацию</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Сгенерировать надежный пароль</string>
   <!-- Create Login -->
-  <string name="title_create_login">Создать логин</string>
   <string name="field_username_title">Имя пользователя или адрес электронной почты</string>
   <string name="field_username_hint">Добавить имя пользователя или адрес электронной почты</string>
   <string name="field_password_title">Пароль</string>
@@ -49,13 +48,11 @@
   <string name="custom_field_dialog_placeholder">Например, Идентификатор пользователя или PIN</string>
   <string name="custom_field_options_content_description">Варианты для настраиваемого поля</string>
   <!-- Create Note -->
-  <string name="title_create_note">Создать заметку</string>
   <string name="create_note_item_creation_error">Не удалось создать заметку</string>
   <string name="create_note_item_update_error">Не удалось обновить заметку</string>
   <string name="create_note_init_error">Проблема с извлечением сведений о заметке</string>
   <string name="note_created">Заметка создана</string>
   <!-- Create Alias -->
-  <string name="title_create_alias">Создать псевдоним</string>
   <string name="field_alias_title">Адрес псевдонима</string>
   <string name="field_mailboxes_creation_title">Переслать на</string>
   <string name="field_mailboxes_edit_title">Пересылка на</string>
@@ -76,7 +73,6 @@
   <!-- Create note -->
   <string name="note_hint">Заметка</string>
   <!-- Create Credit Card -->
-  <string name="title_create_credit_card">Создать кредитную карту</string>
   <string name="field_cardholder_name_title">Имя на карте</string>
   <string name="field_cardholder_name_hint">Полное имя</string>
   <string name="field_card_number_title">Номер карты</string>
@@ -93,6 +89,7 @@
   <string name="credit_card_init_error">Проблема с получением данных о кредитной карте</string>
   <string name="credit_card_item_update_error">Не могу обновить кредитную карту</string>
   <!--  Common create items  -->
+  <string name="title_create">Create</string>
   <string name="changes_saved">Изменения сохранены</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">Секретный ключ двухфакторной аутентификации (TOTP)</string>

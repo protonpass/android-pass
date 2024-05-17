@@ -21,7 +21,7 @@
   <string name="security_center_home_top_bar_title">Pass Monitor</string>
   <string name="security_center_home_dark_web_monitoring_title">Dark Web Monitoring</string>
   <string name="security_center_home_widget_breaches_title">Inbreuk gedetecteerd</string>
-  <string name="security_center_home_widget_breaches_subtitle">Your email address was leaked in at least 1 data breach.</string>
+  <string name="security_center_home_widget_breaches_subtitle">Uw e-mailadres is gelekt in ten minste 1 datalek.</string>
   <string name="security_center_home_widget_no_breaches_subtitle">Ontvang een melding als je e-mail, wachtwoord of andere persoonlijke gegevens zijn gelekt.</string>
   <string name="security_center_home_row_no_data_breaches_subtitle">Geen inbreuken gedetecteerd</string>
   <string name="security_center_home_row_data_breaches_title">Dark Web waarschuwing</string>
@@ -29,11 +29,11 @@
   <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
   <string name="security_center_home_row_sentinel_subtitle">Geavanceerd account beveiligingsprogramma</string>
   <string name="security_center_home_row_insecure_passwords_title">Zwakke wachtwoorden</string>
-  <string name="security_center_home_row_insecure_passwords_subtitle">Change your passwords</string>
+  <string name="security_center_home_row_insecure_passwords_subtitle">Uw wachtwoorden wijzigen</string>
   <string name="security_center_home_row_reused_passwords_title">Hergebruikte wachtwoorden</string>
-  <string name="security_center_home_row_reused_passwords_subtitle">Generate unique passwords</string>
-  <string name="security_center_home_row_missing_tfa_title">Inactive 2FA</string>
-  <string name="security_center_home_row_missing_tfa_subtitle">Set up 2FA for more security</string>
+  <string name="security_center_home_row_reused_passwords_subtitle">Genereer unieke wachtwoorden</string>
+  <string name="security_center_home_row_missing_tfa_title">Inactieve 2FA</string>
+  <string name="security_center_home_row_missing_tfa_subtitle">2FA instellen voor meer beveiliging</string>
   <string name="security_center_home_row_excludes_items_title">Uitgesloten van monitoring</string>
   <string name="security_center_home_row_excludes_items_subtitle">Deze items blijven in gevaar</string>
   <string name="security_center_get_breaches_error">Kon inbreuken niet laden</string>
@@ -45,18 +45,18 @@
   <string name="security_center_sentinel_button_disable">Schakel Proton Sentinel uit</string>
   <string name="security_center_sentinel_snackbar_message_enable_canceled">Proton Sentinel bescherming activatie is geannuleerd</string>
   <string name="security_center_sentinel_snackbar_message_enable_error">Er is een fout opgetreden bij het inschakelen van Proton Sentinel bescherming. Probeer het opnieuw.</string>
-  <string name="security_center_sentinel_snackbar_message_disable_canceled">Proton Sentinel protection deactivation has been canceled</string>
+  <string name="security_center_sentinel_snackbar_message_disable_canceled">Proton Sentinel bescherming deactivatie is geannuleerd</string>
   <string name="security_center_sentinel_snackbar_message_disable_error">Er is een fout opgetreden bij het uitschakelen van Proton Sentinel bescherming. Probeer het opnieuw.</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Zwakke wachtwoorden</string>
   <string name="security_center_weak_pass_top_bar_subtitle">Zwakke wachtwoorden zijn makkelijker te raden. Genereer sterke wachtwoorden om uw accounts veilig te houden.</string>
   <!-- Reused passwords screen -->
   <string name="security_center_reused_pass_top_bar_title">Hergebruikte wachtwoorden</string>
-  <string name="security_center_reused_pass_top_bar_subtitle">Generate unique passwords for each account to increase your security.</string>
+  <string name="security_center_reused_pass_top_bar_subtitle">Genereer unieke wachtwoorden voor iedere account om uw veiligheid te verhogen.</string>
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">%1$d keer hergebruikt</string>
   <!-- Missing 2FA -->
-  <string name="security_center_missing_tfa_top_bar_title">Inactive 2FA</string>
-  <string name="security_center_missing_tfa_top_bar_subtitle">For added security, set up two-factor authentication on the following accounts.</string>
+  <string name="security_center_missing_tfa_top_bar_title">Inactieve 2FA</string>
+  <string name="security_center_missing_tfa_top_bar_subtitle">Voor extra beveiliging, stel tweestapsverificatie in op de volgende accounts.</string>
   <!-- Excluded items screen -->
   <string name="security_center_excluded_items_top_bar_title">Uitgesloten items</string>
   <!-- Dark web monitor -->
@@ -83,11 +83,13 @@
     <item quantity="one">Gevonden in %s inbreuk</item>
     <item quantity="other">Gevonden in %s inbreuken</item>
   </plurals>
+  <string name="security_center_dark_web_monitor_found_in_breaches">Geen inbreuken gedetecteerd</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Proton adressen</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email-aliassen</string>
   <string name="security_center_dark_web_monitor_proton_addresses_error">Fout bij het ophalen van Proton adressen</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Fout bij ophalen van Hide-my-email aliassen</string>
-    <string name="security_center_dark_web_monitor_monitoring_disabled">Monitoring uitgeschakeld</string>
+  <string name="security_center_dark_web_monitor_monitoring_disabled">Not monitored</string>
+  <string name="security_center_dark_web_monitor_see_all">See all</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Er is een fout opgetreden bij het verzenden van de verificatiecode. Probeer het later nog eens.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Er is een fout opgetreden bij het verwijderen van de e-mail. Probeer het later opnieuw.</string>
   <!-- Add custom email monitoring -->
@@ -100,16 +102,18 @@
   <!-- Verify email monitoring -->
   <string name="security_center_verify_email_code_placeholder">Code</string>
   <string name="security_center_verify_email_code_error">Ongeldige code</string>
-  <string name="security_center_verify_email_continue">Ga verder</string>
   <string name="security_center_verify_email_title">Bevestig je e-mailadres</string>
   <string name="security_center_verify_email_subtitle">We hebben een verificatiecode gestuurd naar %s. Voer deze hieronder in:</string>
+  <string name="security_center_verify_email_code_resend_header">Haven’t received the code?</string>
+  <string name="security_center_verify_email_code_resend_body">Please check in your Spam for an email called “Please confirm your email address for Proton Pass“</string>
+  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">If you can’t find such email, you can </string>
+  <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">request a new code.</string>
+  <string name="security_center_verify_email_snackbar_message_resend_code_success">A new verification has been sent, please check your inbox.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">Er is een fout opgetreden bij het verzenden van de verificatiecode. Probeer het later nog eens.</string>
-  <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Too many invalid verifications. Removing custom email.</string>
+  <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Te veel ongeldige verificaties. Aangepaste e-mail wordt verwijderd.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Inbreuken gedetecteerd voor</string>
   <string name="security_center_verify_report_title_none">Geen inbreuken gedetecteerd voor</string>
-  <string name="security_center_verify_resend_code">Verstuur code opnieuw</string>
-  <string name="security_center_verify_resend_code_in_00">Code opnieuw verzenden in 00:%s</string>
   <!-- Email breach report -->
   <string name="security_center_email_report_used_in_header">Gebruikt in</string>
   <string name="security_center_email_report_breaches_header">Inbreuken</string>
@@ -118,7 +122,7 @@
   <string name="security_center_email_report_snackbar_marked_as_resolved_success">Schending is gemarkeerd als opgelost</string>
   <string name="security_center_email_report_snackbar_marked_as_resolved_error">Kon niet markeren als opgelost</string>
   <string name="security_center_email_report_snackbar_get_breaches_error">Kon inbreuken niet laden</string>
-  <string name="security_center_email_report_options_menu">Breach report options menu</string>
+  <string name="security_center_email_report_options_menu">Inbreuk rapport opties menu</string>
   <!-- Breach report detail-->
   <string name="security_center_report_detail_your_exposed_information">Uw blootgestelde informatie</string>
   <string name="security_center_report_detail_subtitle">Je informatie zat in een datalek en gevonden op __DATE__</string>
@@ -130,24 +134,25 @@
   <string name="security_center_report_detail_learn_more">Meer informatie</string>
   <string name="security_center_report_detail_snackbar_error">Kon inbreuk details niet laden</string>
   <string name="security_center_report_detail_excluded_from_monitoring">Uitgesloten van monitoring</string>
-  <string name="security_center_report_resolve_confirmation_dialog_title">Resolve all breaches?</string>
-  <string name="security_center_report_resolve_confirmation_dialog_message">All current breaches will be marked as resolved. In case of future data breaches, you will be notified.</string>
+  <string name="security_center_report_resolve_confirmation_dialog_title">Alle inbreuken oplossen?</string>
+  <string name="security_center_report_resolve_confirmation_dialog_message">Alle huidige inbreuken worden gemarkeerd als opgelost. In het geval van toekomstige datalekken, wordt u op de hoogte gebracht.</string>
   <!-- Proton list -->
   <string name="security_center_proton_list_top_bar_title">Proton-adressen</string>
   <string name="security_center_proton_list_no_breaches_detected">Geen inbreuken gedetecteerd</string>
   <string name="security_center_proton_list_excluded_from_monitoring">Uitgesloten van monitoring</string>
   <string name="security_center_proton_list_error">Kon adressen niet laden</string>
   <string name="security_center_proton_list_included_in_monitoring">Schakel monitoring in om een melding te krijgen als uw Proton adressen zijn gelekt.</string>
-  <string name="security_center_proton_list_options_menu">Proton screen options menu</string>
+  <string name="security_center_proton_list_options_menu">Proton scherm opties menu</string>
+  <string name="security_center_proton_list_not_monitored">Not monitored</string>
   <!-- Address Bottomsheet options -->
-  <string name="security_center_address_bottomsheet_disable_monitoring">Pause monitoring</string>
-  <string name="security_center_address_bottomsheet_enable_monitoring">Resume monitoring</string>
+  <string name="security_center_address_bottomsheet_disable_monitoring">Monitoring pauzeren</string>
+  <string name="security_center_address_bottomsheet_enable_monitoring">Monitoren hervatten</string>
   <string name="security_center_address_bottomsheet_remove_custom_email">Verwijder persoonlijk e-mailadres</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_enable_error">There was an error pausing monitoring</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_disable_error">There was an error resuming monitoring</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_enable_error">Er is een fout opgetreden bij het pauzeren van de monitoring</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_error">Er is een fout opgetreden bij het hervatten van de monitoring</string>
   <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_error">Aangepaste e-mail kon niet verwijderd worden</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_enable_success">Monitoring successfully resumed</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_disable_success">Monitoring successfully paused</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_enable_success">Monitoring met succes hervat</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_success">Monitoring succesvol gepauzeerd</string>
   <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">Aangepaste e-mail verwijderd</string>
   <!-- Alias list -->
   <string name="security_center_alias_list_top_bar_title">Hide-my-email-aliassen</string>
@@ -156,13 +161,13 @@
   <string name="security_center_alias_list_included_in_monitoring">Schakel monitoring in om een melding te krijgen als uw Hide-my-email-aliassen zijn gelekt.</string>
   <string name="security_center_alias_list_monitored">Gemonitord</string>
   <string name="security_center_alias_list_custom_email_message">Aliassen met aangepaste domeinen worden niet gecontroleerd, voeg ze toe als een aangepaste e-mail voor controle.</string>
-  <string name="security_center_alias_list_options_menu">Alias screen options menu</string>
+  <string name="security_center_alias_list_options_menu">Alias scherm opties menu</string>
   <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">Dataveiligheid</string>
   <string name="dark_web_help_dialog_subtitle">Proton deelt nooit uw gegevens met derden. Alle gegevens zijn afkomstig van zoekopdrachten naar Proton domeinen op het dark web.</string>
   <string name="dark_web_help_dialog_custom_address_title">Aangepaste e-mailadressen</string>
-  <string name="dark_web_help_dialog_custom_address_subtitle">You can also monitor up to 10 email addresses that aren\'t Proton or email aliases. They will be sent to HIBP for monitoring - no other data will be shared to HIBP.</string>
+  <string name="dark_web_help_dialog_custom_address_subtitle">U kunt ook maximaal 10 e-mailadressen monitoren die geen Proton of e-mail aliassen zijn. Ze worden naar HIBP gestuurd voor monitoring - er worden geen andere gegevens met HIBP gedeeld.</string>
   <!-- Cannot add custom emails -->
-  <string name="dark_web_cannot_add_custom_emails_dialog_title">Cannot add custom email</string>
-  <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">You have reached the limit of custom emails.</string>
+  <string name="dark_web_cannot_add_custom_emails_dialog_title">Kan aangepaste e-mail niet toevoegen</string>
+  <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">U heeft de limiet van aangepaste e-mails bereikt.</string>
 </resources>

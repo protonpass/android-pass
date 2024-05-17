@@ -21,7 +21,7 @@
   <string name="security_center_home_top_bar_title">Pass Monitor</string>
   <string name="security_center_home_dark_web_monitoring_title">Dark Web Monitoring</string>
   <string name="security_center_home_widget_breaches_title">Breach detected</string>
-  <string name="security_center_home_widget_breaches_subtitle">Your email address was leaked in at least 1 data breach.</string>
+  <string name="security_center_home_widget_breaches_subtitle">Ваш адрес электронной почты стал известен как минимум в одном случае утечки данных.</string>
   <string name="security_center_home_widget_no_breaches_subtitle">Get notified if your email, password or other personal data was leaked.</string>
   <string name="security_center_home_row_no_data_breaches_subtitle">No breaches detected</string>
   <string name="security_center_home_row_data_breaches_title">Dark Web Alert</string>
@@ -29,34 +29,34 @@
   <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
   <string name="security_center_home_row_sentinel_subtitle">Advanced account protection program</string>
   <string name="security_center_home_row_insecure_passwords_title">Weak passwords</string>
-  <string name="security_center_home_row_insecure_passwords_subtitle">Change your passwords</string>
+  <string name="security_center_home_row_insecure_passwords_subtitle">Измените свои пароли</string>
   <string name="security_center_home_row_reused_passwords_title">Reused passwords</string>
-  <string name="security_center_home_row_reused_passwords_subtitle">Generate unique passwords</string>
-  <string name="security_center_home_row_missing_tfa_title">Inactive 2FA</string>
-  <string name="security_center_home_row_missing_tfa_subtitle">Set up 2FA for more security</string>
-  <string name="security_center_home_row_excludes_items_title">Excluded from monitoring</string>
-  <string name="security_center_home_row_excludes_items_subtitle">These items remain at risk</string>
-  <string name="security_center_get_breaches_error">Could not load breaches</string>
+  <string name="security_center_home_row_reused_passwords_subtitle">Сгенерировать уникальные пароли</string>
+  <string name="security_center_home_row_missing_tfa_title">Неактивная двухфакторная аутентификация</string>
+  <string name="security_center_home_row_missing_tfa_subtitle">Настройте двухфакторную идентификацию для повышения безопасности</string>
+  <string name="security_center_home_row_excludes_items_title">Исключено из мониторинга</string>
+  <string name="security_center_home_row_excludes_items_subtitle">Эти предметы находятся под угрозой исчезновения.</string>
+  <string name="security_center_get_breaches_error">Не удалось загрузить утечки</string>
   <string name="security_center_home_section_password_health">Password Health</string>
   <!-- Sentinel bottom sheet -->
   <string name="security_center_sentinel_title">Proton Sentinel</string>
   <string name="security_center_sentinel_subtitle">Proton Sentinel is an advanced account protection program powered by sophisticated AI systems and specialists working around the clock to protect you from bad actors and security threats.</string>
   <string name="security_center_sentinel_button_enable">Enable Proton Sentinel</string>
-  <string name="security_center_sentinel_button_disable">Disable Proton Sentinel</string>
+  <string name="security_center_sentinel_button_disable">Отключить Proton Sentinel</string>
   <string name="security_center_sentinel_snackbar_message_enable_canceled">Proton Sentinel protection activation has been canceled</string>
   <string name="security_center_sentinel_snackbar_message_enable_error">There was an error enabling Proton Sentinel protection. Please try again.</string>
-  <string name="security_center_sentinel_snackbar_message_disable_canceled">Proton Sentinel protection deactivation has been canceled</string>
-  <string name="security_center_sentinel_snackbar_message_disable_error">There was an error disabling Proton Sentinel protection. Please try again.</string>
+  <string name="security_center_sentinel_snackbar_message_disable_canceled">Отключение защиты Proton Sentinel отменено</string>
+  <string name="security_center_sentinel_snackbar_message_disable_error">Произошла ошибка при отключении защиты Proton Sentinel. Попробуйте еще раз.</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Weak passwords</string>
-  <string name="security_center_weak_pass_top_bar_subtitle">Weak passwords are easier to guess. Generate strong passwords to keep your accounts safe.</string>
+  <string name="security_center_weak_pass_top_bar_subtitle">Простые пароли легче угадать. Создавайте сложные пароли, чтобы обезопасить свои аккаунты.</string>
   <!-- Reused passwords screen -->
   <string name="security_center_reused_pass_top_bar_title">Reused passwords</string>
-  <string name="security_center_reused_pass_top_bar_subtitle">Generate unique passwords for each account to increase your security.</string>
+  <string name="security_center_reused_pass_top_bar_subtitle">Создайте уникальные пароли для каждого аккаунта, чтобы повысить безопасность.</string>
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Reused %1$d times</string>
   <!-- Missing 2FA -->
-  <string name="security_center_missing_tfa_top_bar_title">Inactive 2FA</string>
-  <string name="security_center_missing_tfa_top_bar_subtitle">For added security, set up two-factor authentication on the following accounts.</string>
+  <string name="security_center_missing_tfa_top_bar_title">Неактивная двухфакторная аутентификация</string>
+  <string name="security_center_missing_tfa_top_bar_subtitle">Для дополнительной безопасности установите двухфакторную аутентификацию для следующих аккаунтов.</string>
   <!-- Excluded items screen -->
   <string name="security_center_excluded_items_top_bar_title">Excluded items</string>
   <!-- Dark web monitor -->
@@ -89,11 +89,13 @@
     <item quantity="many">Found in %s breaches</item>
     <item quantity="other">Found in %s breaches</item>
   </plurals>
+  <string name="security_center_dark_web_monitor_found_in_breaches">Утечки не обнаружены</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Proton addresses</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Псевдонимы hide-my-email</string>
   <string name="security_center_dark_web_monitor_proton_addresses_error">Error retrieving proton addresses</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Error retrieving Hide-my-email aliases</string>
-    <string name="security_center_dark_web_monitor_monitoring_disabled">Monitoring disabled</string>
+  <string name="security_center_dark_web_monitor_monitoring_disabled">Not monitored</string>
+  <string name="security_center_dark_web_monitor_see_all">See all</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">There was an error sending the verification code. Please try again later.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">There was an error removing the email. Please try again later.</string>
   <!-- Add custom email monitoring -->
@@ -106,25 +108,27 @@
   <!-- Verify email monitoring -->
   <string name="security_center_verify_email_code_placeholder">Код</string>
   <string name="security_center_verify_email_code_error">Недействительный код</string>
-  <string name="security_center_verify_email_continue">Продолжить</string>
   <string name="security_center_verify_email_title">Confirm your email</string>
   <string name="security_center_verify_email_subtitle">We\'ve sent a verification code to %s. Please enter it below:</string>
+  <string name="security_center_verify_email_code_resend_header">Haven’t received the code?</string>
+  <string name="security_center_verify_email_code_resend_body">Please check in your Spam for an email called “Please confirm your email address for Proton Pass“</string>
+  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">If you can’t find such email, you can </string>
+  <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">request a new code.</string>
+  <string name="security_center_verify_email_snackbar_message_resend_code_success">A new verification has been sent, please check your inbox.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">There was an error sending the verification code. Please try again later.</string>
-  <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Too many invalid verifications. Removing custom email.</string>
+  <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Повысьте узнаваемость бренда вашей организации и создайте более целостный образ в Интернете для ваших пользователей.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Breaches detected for</string>
   <string name="security_center_verify_report_title_none">No breaches detected for</string>
-  <string name="security_center_verify_resend_code">Повторно отправить код</string>
-  <string name="security_center_verify_resend_code_in_00">Resend code in 00:%s</string>
   <!-- Email breach report -->
   <string name="security_center_email_report_used_in_header">Used in</string>
   <string name="security_center_email_report_breaches_header">Breaches</string>
-  <string name="security_center_email_report_resolved_breaches_header">Resolved breaches</string>
+  <string name="security_center_email_report_resolved_breaches_header">Устраненные утечки</string>
   <string name="security_center_email_report_mark_as_resolved">Mark as resolved</string>
   <string name="security_center_email_report_snackbar_marked_as_resolved_success">Breach has been marked as resolved</string>
   <string name="security_center_email_report_snackbar_marked_as_resolved_error">Could not mark as resolved</string>
-  <string name="security_center_email_report_snackbar_get_breaches_error">Could not load breaches</string>
-  <string name="security_center_email_report_options_menu">Breach report options menu</string>
+  <string name="security_center_email_report_snackbar_get_breaches_error">Не удалось загрузить утечки</string>
+  <string name="security_center_email_report_options_menu">Меню параметров отчета об утечке</string>
   <!-- Breach report detail-->
   <string name="security_center_report_detail_your_exposed_information">Your exposed information</string>
   <string name="security_center_report_detail_subtitle">Your info was in a data breach and found on __DATE__</string>
@@ -132,43 +136,44 @@
   <string name="security_center_report_detail_email_address">Адрес электронной почты</string>
   <string name="security_center_report_detail_password">Пароль</string>
   <string name="security_center_report_detail_recommended_actions">Рекомендуемые действия</string>
-  <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">The exposed information was leaked from %s. Your Proton Account information remains secure and encrypted.</string>
-  <string name="security_center_report_detail_learn_more">Learn more</string>
-  <string name="security_center_report_detail_snackbar_error">Could not load breach details</string>
-  <string name="security_center_report_detail_excluded_from_monitoring">Excluded from monitoring</string>
-  <string name="security_center_report_resolve_confirmation_dialog_title">Resolve all breaches?</string>
+  <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">Произошла утечка раскрытой информации %s. Информация вашего аккаунта Proton остается защищенной и зашифрованной.</string>
+  <string name="security_center_report_detail_learn_more">Подробнее</string>
+  <string name="security_center_report_detail_snackbar_error">Не удалось загрузить информацию об утечке</string>
+  <string name="security_center_report_detail_excluded_from_monitoring">Исключено из мониторинга</string>
+  <string name="security_center_report_resolve_confirmation_dialog_title">Устраненить все утечки?</string>
   <string name="security_center_report_resolve_confirmation_dialog_message">All current breaches will be marked as resolved. In case of future data breaches, you will be notified.</string>
   <!-- Proton list -->
-  <string name="security_center_proton_list_top_bar_title">Proton addresses</string>
-  <string name="security_center_proton_list_no_breaches_detected">No breaches detected</string>
-  <string name="security_center_proton_list_excluded_from_monitoring">Excluded from monitoring</string>
-  <string name="security_center_proton_list_error">Could not load addresses</string>
-  <string name="security_center_proton_list_included_in_monitoring">Enable monitoring to get notified if your Proton addresses were leaked.</string>
-  <string name="security_center_proton_list_options_menu">Proton screen options menu</string>
+  <string name="security_center_proton_list_top_bar_title">Адреса Proton</string>
+  <string name="security_center_proton_list_no_breaches_detected">Утечки не обнаружены</string>
+  <string name="security_center_proton_list_excluded_from_monitoring">Исключено из мониторинга</string>
+  <string name="security_center_proton_list_error">Не удалось загрузить адреса</string>
+  <string name="security_center_proton_list_included_in_monitoring">Включите мониторинг, чтобы получать уведомления при утечках ваших адресов Proton.</string>
+  <string name="security_center_proton_list_options_menu">Меню параметров экрана Proton</string>
+  <string name="security_center_proton_list_not_monitored">Not monitored</string>
   <!-- Address Bottomsheet options -->
-  <string name="security_center_address_bottomsheet_disable_monitoring">Pause monitoring</string>
-  <string name="security_center_address_bottomsheet_enable_monitoring">Resume monitoring</string>
-  <string name="security_center_address_bottomsheet_remove_custom_email">Remove custom email</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_enable_error">There was an error pausing monitoring</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_disable_error">There was an error resuming monitoring</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_error">Could not remove custom email</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_enable_success">Monitoring successfully resumed</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_disable_success">Monitoring successfully paused</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">Custom email removed</string>
+  <string name="security_center_address_bottomsheet_disable_monitoring">Приостановить мониторинг</string>
+  <string name="security_center_address_bottomsheet_enable_monitoring">Возобновить мониторинг</string>
+  <string name="security_center_address_bottomsheet_remove_custom_email">Удалить пользовательскую электронную почту</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_enable_error">Возникла ошибка при приостановке мониторинга</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_error">Произошла ошибка при возобновлении мониторинга</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_error">Не удалось удалить пользовательскую электронную почту</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_enable_success">Мониторинг успешно возобновлен</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_success">Мониторинг успешно приостановлен</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">Пользовательская электронная почта удалена</string>
   <!-- Alias list -->
   <string name="security_center_alias_list_top_bar_title">Псевдонимы hide-my-email</string>
-  <string name="security_center_alias_list_excluded_from_monitoring">Excluded from monitoring</string>
-  <string name="security_center_alias_list_error">Could not load addresses</string>
-  <string name="security_center_alias_list_included_in_monitoring">Enable monitoring to get notified if your Hide-my-email aliases were leaked.</string>
-  <string name="security_center_alias_list_monitored">Monitored</string>
-  <string name="security_center_alias_list_custom_email_message">Aliases with custom domains are not monitored, please add them as a custom email for monitoring.</string>
-  <string name="security_center_alias_list_options_menu">Alias screen options menu</string>
+  <string name="security_center_alias_list_excluded_from_monitoring">Исключено из мониторинга</string>
+  <string name="security_center_alias_list_error">Не удалось загрузить адреса</string>
+  <string name="security_center_alias_list_included_in_monitoring">Включите мониторинг, чтобы получать уведомления об утечке ваших псевдонимов Hide-my-email.</string>
+  <string name="security_center_alias_list_monitored">Мониторинг</string>
+  <string name="security_center_alias_list_custom_email_message">Псевдонимы с пользовательскими доменами не отслеживаются, пожалуйста, добавьте их в качестве пользовательского электронного адреса для мониторинга.</string>
+  <string name="security_center_alias_list_options_menu">Меню параметров экрана псевдонима</string>
   <!-- Dark web help dialogs -->
-  <string name="dark_web_help_dialog_title">Data Security</string>
-  <string name="dark_web_help_dialog_subtitle">Proton never shares your information with third parties. All data comes from searches for the appearance of Proton domains on the dark web.</string>
+  <string name="dark_web_help_dialog_title">Безопасность данных</string>
+  <string name="dark_web_help_dialog_subtitle">Proton никогда не передает вашу информацию третьим лицам. Все данные получены в результате поиска появления доменов Proton в темной паутине.</string>
   <string name="dark_web_help_dialog_custom_address_title">Пользовательские адреса электронной почты</string>
-  <string name="dark_web_help_dialog_custom_address_subtitle">You can also monitor up to 10 email addresses that aren\'t Proton or email aliases. They will be sent to HIBP for monitoring - no other data will be shared to HIBP.</string>
+  <string name="dark_web_help_dialog_custom_address_subtitle">Вы также можете отслеживать до 10 адресов электронной почты, которые не являются адресами Proton или почтовыми псевдонимами. Они будут отправлены в HIBP для мониторинга - никакие другие данные не будут переданы в HIBP.</string>
   <!-- Cannot add custom emails -->
-  <string name="dark_web_cannot_add_custom_emails_dialog_title">Cannot add custom email</string>
-  <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">You have reached the limit of custom emails.</string>
+  <string name="dark_web_cannot_add_custom_emails_dialog_title">Не удается добавить пользовательскую электронную почту</string>
+  <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">Вы достигли предела пользовательских адресов электронной почты.</string>
 </resources>

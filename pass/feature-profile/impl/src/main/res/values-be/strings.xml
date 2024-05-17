@@ -62,8 +62,8 @@
   <plurals name="profile_after_minutes">
     <item quantity="one">Праз %d хвіліну</item>
     <item quantity="few">Праз %d хвіліны</item>
-    <item quantity="many">Праз %d хвіліны</item>
-    <item quantity="other">Праз %d хвіліны</item>
+    <item quantity="many">Праз %d хвілін</item>
+    <item quantity="other">Праз %d хвілін</item>
   </plurals>
   <plurals name="profile_after_hours">
     <item quantity="one">Праз %d гадзіну</item>
@@ -71,5 +71,5 @@
     <item quantity="many">Праз %d гадзін</item>
     <item quantity="other">Праз %d гадзін</item>
   </plurals>
-  <string name="profile_less_than_a_minute">Меньш за хвіліну</string>
+  <string name="profile_less_than_a_minute">Менш за хвіліну</string>
 </resources>

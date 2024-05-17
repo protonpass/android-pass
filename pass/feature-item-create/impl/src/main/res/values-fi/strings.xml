@@ -15,7 +15,6 @@
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Säilytä maksutapojesi tiedot turvallisesti.</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Luo turvallinen salasana.</string>
   <!-- Create Login -->
-  <string name="title_create_login">Luo kirjautumistieto</string>
   <string name="field_username_title">Käyttäjätunnus tai sähköpostiosoite</string>
   <string name="field_username_hint">Lisää käyttäjätunnus tai sähköpostiosoite</string>
   <string name="field_password_title">Salasana</string>
@@ -46,16 +45,14 @@
   <string name="custom_field_text_placeholder">Lisää teksti</string>
   <string name="custom_field_dialog_title">Mukautetun kentän nimi</string>
   <string name="custom_field_dialog_body">Nimeä mukautettu kenttä</string>
-  <string name="custom_field_dialog_placeholder">Esim. käyttäjän ID, PIN</string>
+  <string name="custom_field_dialog_placeholder">Esim. käyttäjätunnus, PIN</string>
   <string name="custom_field_options_content_description">Mukautetun kentän valinnat</string>
   <!-- Create Note -->
-  <string name="title_create_note">Luo muistiinpano</string>
   <string name="create_note_item_creation_error">Muistiinpanoa ei voitu luoda</string>
   <string name="create_note_item_update_error">Muistiinpanoa ei voitu päivittää</string>
   <string name="create_note_init_error">Ongelma muistiinpanon tietojen noudossa</string>
   <string name="note_created">Muistiinpano luotiin</string>
   <!-- Create Alias -->
-  <string name="title_create_alias">Luo alias</string>
   <string name="field_alias_title">Aliaksen osoite</string>
   <string name="field_mailboxes_creation_title">Ohjaa osoitteeseen</string>
   <string name="field_mailboxes_edit_title">Ohjaa osoitteeseen</string>
@@ -76,7 +73,6 @@
   <!-- Create note -->
   <string name="note_hint">Muistiinpano</string>
   <!-- Create Credit Card -->
-  <string name="title_create_credit_card">Luo maksukortti</string>
   <string name="field_cardholder_name_title">Kortinhaltijan nimi</string>
   <string name="field_cardholder_name_hint">Koko nimi</string>
   <string name="field_card_number_title">Kortin numero</string>
@@ -93,6 +89,7 @@
   <string name="credit_card_init_error">Ongelma noudettaessa maksukortin tietoja</string>
   <string name="credit_card_item_update_error">Maksukorttia ei voitu päivittää</string>
   <!--  Common create items  -->
+  <string name="title_create">Luo</string>
   <string name="changes_saved">Muutokset tallennettiin</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">Salainen 2FA-avain (TOTP)</string>

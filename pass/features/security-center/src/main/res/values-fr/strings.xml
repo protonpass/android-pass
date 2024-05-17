@@ -18,7 +18,7 @@
   -->
 <resources>
   <!-- Home screen -->
-  <string name="security_center_home_top_bar_title">Surveillance de Pass</string>
+  <string name="security_center_home_top_bar_title">Pass Monitor</string>
   <string name="security_center_home_dark_web_monitoring_title">Surveillance du dark web</string>
   <string name="security_center_home_widget_breaches_title">Une fuite de données a été détectée.</string>
   <string name="security_center_home_widget_breaches_subtitle">Vos adresses e-mail ont été divulguées dans au moins 1 fuite de données.</string>
@@ -37,7 +37,7 @@
   <string name="security_center_home_row_excludes_items_title">Exclus de la surveillance</string>
   <string name="security_center_home_row_excludes_items_subtitle">Ces éléments sont toujours menacés.</string>
   <string name="security_center_get_breaches_error">Les fuites de données n\'ont pas pu être chargées.</string>
-  <string name="security_center_home_section_password_health">État du mot de passe</string>
+  <string name="security_center_home_section_password_health">Sécurité des mots de passe</string>
   <!-- Sentinel bottom sheet -->
   <string name="security_center_sentinel_title">Proton Sentinel</string>
   <string name="security_center_sentinel_subtitle">Proton Sentinel est un programme de protection de compte avancée qui s\'appuie sur des systèmes d\'IA sophistiqués et des spécialistes qui travaillent en permanence pour vous protéger des acteurs malveillants et des menaces de sécurité.</string>
@@ -83,11 +83,13 @@
     <item quantity="one">Trouvé dans %s fuite de données</item>
     <item quantity="other">Trouvé dans %s fuites de données</item>
   </plurals>
+  <string name="security_center_dark_web_monitor_found_in_breaches">Aucune fuite de données n\'a été détectée.</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Adresses Proton</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Alias « hide-my-email »</string>
   <string name="security_center_dark_web_monitor_proton_addresses_error">Les adresses Proton n\'ont pu être récupérées.</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Une erreur s\'est produite lors de la récupération des alias « hide-my-email ».</string>
-    <string name="security_center_dark_web_monitor_monitoring_disabled">La surveillance a été désactivée.</string>
+  <string name="security_center_dark_web_monitor_monitoring_disabled">Sans surveillance</string>
+  <string name="security_center_dark_web_monitor_see_all">Tout afficher</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Une erreur est survenue lors de l\'envoi du code de vérification. Veuillez réessayer plus tard.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Une erreur est survenue lors du retrait de l\'e-mail. Veuillez réessayer plus tard.</string>
   <!-- Add custom email monitoring -->
@@ -100,16 +102,18 @@
   <!-- Verify email monitoring -->
   <string name="security_center_verify_email_code_placeholder">Code</string>
   <string name="security_center_verify_email_code_error">Le code n’est pas valide.</string>
-  <string name="security_center_verify_email_continue">Continuer</string>
   <string name="security_center_verify_email_title">Confirmez votre email</string>
   <string name="security_center_verify_email_subtitle">Nous avons envoyé un code de vérification à %s. Veuillez le saisir ci-dessous :</string>
+  <string name="security_center_verify_email_code_resend_header">Vous n\'avez pas reçu le code ?</string>
+  <string name="security_center_verify_email_code_resend_body">Vérifiez le dossier Indésirables/spam la présence d\'un message intitulé « Confirmez votre adresse e-mail pour Proton Pass ».</string>
+  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">Si vous ne trouvez pas ce message, vous pouvez </string>
+  <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">demander un nouveau code.</string>
+  <string name="security_center_verify_email_snackbar_message_resend_code_success">Une nouvelle vérification a été envoyée. Vérifiez votre boite de réception.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">Une erreur est survenue lors de l\'envoi du code de vérification. Veuillez réessayer plus tard.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Trop de vérifications ne sont pas valides. Retrait de l\'e-mail personnalisé.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Des fuites de données ont été détectées pour</string>
   <string name="security_center_verify_report_title_none">Aucune fuite de données n\'a été détectée pour</string>
-  <string name="security_center_verify_resend_code">Renvoyer le code</string>
-  <string name="security_center_verify_resend_code_in_00">Renvoyer le code dans 00:%s</string>
   <!-- Email breach report -->
   <string name="security_center_email_report_used_in_header">Utilisé dans</string>
   <string name="security_center_email_report_breaches_header">Fuites de données</string>
@@ -139,6 +143,7 @@
   <string name="security_center_proton_list_error">Les adresses n\'ont pas pu être chargées.</string>
   <string name="security_center_proton_list_included_in_monitoring">Activez la surveillance pour savoir si vos adresses Proton ont été divulguées.</string>
   <string name="security_center_proton_list_options_menu">Menu d\'options de l\'écran Proton</string>
+  <string name="security_center_proton_list_not_monitored">Sans surveillance</string>
   <!-- Address Bottomsheet options -->
   <string name="security_center_address_bottomsheet_disable_monitoring">Suspendre la surveillance</string>
   <string name="security_center_address_bottomsheet_enable_monitoring">Reprendre la surveillance</string>

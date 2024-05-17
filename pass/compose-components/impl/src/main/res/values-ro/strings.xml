@@ -34,8 +34,8 @@
   <string name="action_learn_more">Detalii</string>
   <string name="action_enable">Activare</string>
   <string name="action_view_details">Afișare detalii</string>
-  <string name="action_see_all">See all</string>
-  <string name="action_confirm">Confirm</string>
+  <string name="action_see_all">Afișare toate</string>
+  <string name="action_confirm">Confirmare</string>
   <!-- Empty list -->
   <string name="empty_list_title">Adăugați primul articol</string>
   <string name="empty_search_results_title">Nu s-au găsit rezultate</string>

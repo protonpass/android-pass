@@ -6,7 +6,7 @@
   <string name="home_empty_read_only_vault_title">Bu kasa boş</string>
   <string name="home_empty_read_only_vault_subtitle">Salt okunur bir kasaya ögeler ekleyemezsiniz.</string>
   <string name="home_empty_vault_create_login">Oturum açma kaydı oluştur</string>
-  <string name="home_empty_vault_create_alias">Bir Hide-my-email takma adı oluştur</string>
+  <string name="home_empty_vault_create_alias">Bir hide-my-email takma adı oluştur</string>
   <string name="home_empty_vault_create_note">Not oluştur</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Ögeler yüklenirken sorun çıktı</string>
   <string name="error_refreshing">Yenileme sırasında sorun çıktı</string>

@@ -21,7 +21,7 @@
   <string name="security_center_home_top_bar_title">Pass izleyicisi</string>
   <string name="security_center_home_dark_web_monitoring_title">Karanlık ağ izleme</string>
   <string name="security_center_home_widget_breaches_title">Veriler ele geçirilmiş</string>
-  <string name="security_center_home_widget_breaches_subtitle">Your email address was leaked in at least 1 data breach.</string>
+  <string name="security_center_home_widget_breaches_subtitle">E-posta adresiniz en az 1 verilerin ele geçirilmesi olayında açığa çıkmış.</string>
   <string name="security_center_home_widget_no_breaches_subtitle">E-posta adresiniz, parolanız veya diğer kişisel verileriniz açığa çıktığında bildirim alın.</string>
   <string name="security_center_home_row_no_data_breaches_subtitle">Herhangi bir veri ele geçirilmemiş</string>
   <string name="security_center_home_row_data_breaches_title">Karanlık ağ uyarısı</string>
@@ -32,7 +32,7 @@
   <string name="security_center_home_row_insecure_passwords_subtitle">Parolalarınızı değiştirin</string>
   <string name="security_center_home_row_reused_passwords_title">Yeniden kullanılmış parolalar</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Benzersiz parolalar oluşturun</string>
-  <string name="security_center_home_row_missing_tfa_title">Inactive 2FA</string>
+  <string name="security_center_home_row_missing_tfa_title">Kullanılmayan iki adımlı doğrulama</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Güvenliği artırmak için iki adımlı doğrulamayı açın</string>
   <string name="security_center_home_row_excludes_items_title">İzlemeye katılmamış</string>
   <string name="security_center_home_row_excludes_items_subtitle">Bu ögeler risk altında</string>
@@ -52,13 +52,13 @@
   <string name="security_center_weak_pass_top_bar_subtitle">Zayıf parolaların öngörülmesi daha kolaydır. Hesaplarınızı güvende tutmak için güçlü parolalar oluşturun.</string>
   <!-- Reused passwords screen -->
   <string name="security_center_reused_pass_top_bar_title">Yeniden kullanılmış parolalar</string>
-  <string name="security_center_reused_pass_top_bar_subtitle">Generate unique passwords for each account to increase your security.</string>
+  <string name="security_center_reused_pass_top_bar_subtitle">Güvenliğinizi artırmak için her hesapta ayrı benzersiz parolalar oluşturun.</string>
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">%1$d kez yeniden kullanılmış</string>
   <!-- Missing 2FA -->
-  <string name="security_center_missing_tfa_top_bar_title">Inactive 2FA</string>
-  <string name="security_center_missing_tfa_top_bar_subtitle">For added security, set up two-factor authentication on the following accounts.</string>
+  <string name="security_center_missing_tfa_top_bar_title">Kullanılmayan iki adımlı doğrulama</string>
+  <string name="security_center_missing_tfa_top_bar_subtitle">Daha fazla güvenlik sağlamak için şu hesaplarda iki adımlı doğrulamayı ayarlayın.</string>
   <!-- Excluded items screen -->
-  <string name="security_center_excluded_items_top_bar_title">Katılmayacak ögeler</string>
+  <string name="security_center_excluded_items_top_bar_title">Katılmayan ögeler</string>
   <!-- Dark web monitor -->
   <string name="security_center_dark_web_monitor_top_bar_title">Karanlık ağ izleme</string>
   <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Son denetim: %s</string>
@@ -83,11 +83,13 @@
     <item quantity="one">%s verilerin ele geçirilmesi olayında bulundu</item>
     <item quantity="other">%s verilerin ele geçirilmesi olayında bulundu</item>
   </plurals>
+  <string name="security_center_dark_web_monitor_found_in_breaches">Herhangi bir verilerin ele geçirilmesi olayı yok</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Proton adresleri</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email takma adları</string>
   <string name="security_center_dark_web_monitor_proton_addresses_error">Proton adresleri alınırken sorun çıktı</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Hide-my-email takma adları alınırken sorun çıktı</string>
-    <string name="security_center_dark_web_monitor_monitoring_disabled">İzleme kapalı</string>
+  <string name="security_center_dark_web_monitor_monitoring_disabled">İzlenmiyor</string>
+  <string name="security_center_dark_web_monitor_see_all">Tümünü görüntüle</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Doğrulama kodu gönderilirken sorun çıktı. Lütfen bir süre sonra yeniden deneyin.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">E-posta silinirken bir sorun çıktı. Lütfen bir süre sonra yeniden deneyin.</string>
   <!-- Add custom email monitoring -->
@@ -100,23 +102,25 @@
   <!-- Verify email monitoring -->
   <string name="security_center_verify_email_code_placeholder">Kod</string>
   <string name="security_center_verify_email_code_error">Kod geçersiz</string>
-  <string name="security_center_verify_email_continue">İlerle</string>
   <string name="security_center_verify_email_title">E-posta adresinizi onaylayın</string>
   <string name="security_center_verify_email_subtitle">%s adresine gönderdiğimiz doğrulama kodunu lütfen aşağıya yazın:</string>
+  <string name="security_center_verify_email_code_resend_header">Kodu almadınız mı?</string>
+  <string name="security_center_verify_email_code_resend_body">İstenmeyen kutusunda \"Lütfen Proton Pass için e-posta adresinizi doğrulayın\" konulu bir e-posta olup olmadığına bakın.</string>
+  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">Böyle bir e-posta bulamadıysanız, </string>
+  <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">yeni bir kod isteyin.</string>
+  <string name="security_center_verify_email_snackbar_message_resend_code_success">Yeni bir doğrulama kodu gönderildi. Lütfen gelen kutunuza bakın.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">Doğrulama kodu gönderilirken sorun çıktı. Lütfen bir süre sonra yeniden deneyin.</string>
-  <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Too many invalid verifications. Removing custom email.</string>
+  <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Çok fazla geçersiz doğrulama yapıldı. Özel e-posta kaldırılıyor.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Şunun verileri ele geçirilmiş</string>
   <string name="security_center_verify_report_title_none">Şunun için herhangi bir verilerin ele geçirilme olayı yok</string>
-  <string name="security_center_verify_resend_code">Kodu yeniden gönder</string>
-  <string name="security_center_verify_resend_code_in_00">00.%s sonra yeni kod gönderebilirsiniz</string>
   <!-- Email breach report -->
   <string name="security_center_email_report_used_in_header">Şurada kullanılmış</string>
   <string name="security_center_email_report_breaches_header">Verilerin ele geçirilmesi</string>
-  <string name="security_center_email_report_resolved_breaches_header">Çözümlenmiş verilerin ele geçirilmeleri</string>
-  <string name="security_center_email_report_mark_as_resolved">Çözülmüş olarak işaretle</string>
-  <string name="security_center_email_report_snackbar_marked_as_resolved_success">Verilerin ele geçirilmesi çözümlenmiş olarak işaretlendi</string>
-  <string name="security_center_email_report_snackbar_marked_as_resolved_error">Çözüldü olarak işaretlenemedi</string>
+  <string name="security_center_email_report_resolved_breaches_header">Çözümlenmiş verileri ele geçirme olayları</string>
+  <string name="security_center_email_report_mark_as_resolved">Çözümlenmiş olarak işaretle</string>
+  <string name="security_center_email_report_snackbar_marked_as_resolved_success">Verileri ele geçirme olayı çözümlenmiş olarak işaretlendi</string>
+  <string name="security_center_email_report_snackbar_marked_as_resolved_error">Çözümlenmiş olarak işaretlenemedi</string>
   <string name="security_center_email_report_snackbar_get_breaches_error">Verilerin ele geçirilmesi olayları yüklenemedi</string>
   <string name="security_center_email_report_options_menu">Verilerin ele geçirilmesi raporu ayarları menüsü</string>
   <!-- Breach report detail-->
@@ -130,8 +134,8 @@
   <string name="security_center_report_detail_learn_more">Ayrıntılı bilgi alın</string>
   <string name="security_center_report_detail_snackbar_error">Verilerin ele geçirilmesi olayı ayrıntıları yüklenemedi</string>
   <string name="security_center_report_detail_excluded_from_monitoring">İzlemeye katılmamış</string>
-  <string name="security_center_report_resolve_confirmation_dialog_title">Resolve all breaches?</string>
-  <string name="security_center_report_resolve_confirmation_dialog_message">All current breaches will be marked as resolved. In case of future data breaches, you will be notified.</string>
+  <string name="security_center_report_resolve_confirmation_dialog_title">Tüm verilerin ele geçirilmesi olayları çözümlenmiş olarak işaretlensin mi?</string>
+  <string name="security_center_report_resolve_confirmation_dialog_message">Tüm verilerin ele geçirilmesi olayları çözümlenmiş olarak işaretlenecek. Gelecekte ortaya çıkabilecek verilerin ele geçirilmesi olayları size bildirilecek.</string>
   <!-- Proton list -->
   <string name="security_center_proton_list_top_bar_title">Proton adresleri</string>
   <string name="security_center_proton_list_no_breaches_detected">Herhangi bir veri ele geçirilmemiş</string>
@@ -139,15 +143,16 @@
   <string name="security_center_proton_list_error">Adresler yüklenemedi</string>
   <string name="security_center_proton_list_included_in_monitoring">Proton adreslerinizin sızdırılması durumunda bildirim almak için izlemeyi açın.</string>
   <string name="security_center_proton_list_options_menu">Proton ekran ayarları menüsü</string>
+  <string name="security_center_proton_list_not_monitored">İzlenmiyor</string>
   <!-- Address Bottomsheet options -->
   <string name="security_center_address_bottomsheet_disable_monitoring">İzlemeyi duraklat</string>
   <string name="security_center_address_bottomsheet_enable_monitoring">İzlemeyi sürdür</string>
   <string name="security_center_address_bottomsheet_remove_custom_email">Özel e-postayı kaldır</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_enable_error">There was an error pausing monitoring</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_disable_error">There was an error resuming monitoring</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_enable_error">İzleme duraklatılırken bir sorun çıktı</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_error">İzleme sürdürülürken bir sorun çıktı</string>
   <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_error">Özel e-posta kaldırılamadı</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_enable_success">Monitoring successfully resumed</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_disable_success">Monitoring successfully paused</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_enable_success">İzleme sürdürülüyor</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_success">İzleme duraklatıldı</string>
   <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">Özel e-posta kaldırıldı</string>
   <!-- Alias list -->
   <string name="security_center_alias_list_top_bar_title">Hide-my-email takma adları</string>
@@ -161,7 +166,7 @@
   <string name="dark_web_help_dialog_title">Veri güvenliği</string>
   <string name="dark_web_help_dialog_subtitle">Proton bilgilerinizi asla üçüncü taraflarla paylaşmaz. Tüm veriler, karanlık ağda Proton etki alanlarının görülmesine yönelik aramalardan geliyor.</string>
   <string name="dark_web_help_dialog_custom_address_title">Özel e-posta adresleri</string>
-  <string name="dark_web_help_dialog_custom_address_subtitle">You can also monitor up to 10 email addresses that aren\'t Proton or email aliases. They will be sent to HIBP for monitoring - no other data will be shared to HIBP.</string>
+  <string name="dark_web_help_dialog_custom_address_subtitle">Ayrıca Proton veya e-posta takma adı olmayan en fazla 10 e-posta adresini de izleyebilirsiniz. İzleme için HIBP üzerine gönderilirler. HIBP ile başka herhangi bir veri paylaşılmaz.</string>
   <!-- Cannot add custom emails -->
   <string name="dark_web_cannot_add_custom_emails_dialog_title">Özel e-posta adresi eklenemedi</string>
   <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">Özel e-posta adresi sayısı sınırına ulaştınız.</string>

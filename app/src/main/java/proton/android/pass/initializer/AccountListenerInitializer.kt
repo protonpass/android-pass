@@ -54,23 +54,14 @@ class AccountListenerInitializer : Initializer<Unit> {
             minActiveState = Lifecycle.State.CREATED
         ).onAccountDisabled {
             PassLogger.i(TAG, "Account disabled")
-            onAccountDisabled(it, entryPoint)
+            performCleanup(it, entryPoint)
         }.onAccountRemoved {
             PassLogger.i(TAG, "Account removed")
-            onAccountRemoved(it, entryPoint)
+            performCleanup(it, entryPoint)
         }
     }
 
     override fun dependencies(): List<Class<out Initializer<*>?>> = emptyList()
-
-
-    private suspend fun onAccountDisabled(account: Account, entryPoint: AccountListenerInitializerEntryPoint) {
-        performCleanup(account, entryPoint)
-    }
-
-    private suspend fun onAccountRemoved(account: Account, entryPoint: AccountListenerInitializerEntryPoint) {
-        performCleanup(account, entryPoint)
-    }
 
     private suspend fun performCleanup(account: Account, entryPoint: AccountListenerInitializerEntryPoint) {
         val clearUserData = entryPoint.clearUserData()

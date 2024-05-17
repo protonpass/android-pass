@@ -18,8 +18,6 @@
 
 package proton.android.pass.data.impl.usecases
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import proton.android.pass.data.api.usecases.ClearPin
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.log.api.PassLogger
@@ -32,7 +30,7 @@ class ResetAppToDefaultsImpl @Inject constructor(
     private val internalSettingsRepository: InternalSettingsRepository,
     private val clearPin: ClearPin
 ) : ResetAppToDefaults {
-    override suspend fun invoke() = withContext(Dispatchers.IO) {
+    override suspend fun invoke() {
         PassLogger.i(TAG, "Clearing preferences")
         preferencesRepository.clearPreferences()
             .onSuccess { PassLogger.i(TAG, "Preferences cleared") }

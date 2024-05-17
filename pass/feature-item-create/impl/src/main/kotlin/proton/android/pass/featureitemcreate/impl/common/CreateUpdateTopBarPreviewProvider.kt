@@ -90,6 +90,18 @@ class CreateUpdateTopBarPreviewProvider : PreviewParameterProvider<CreateUpdateT
                     color = ShareColor.Color2,
                     icon = ShareIcon.Icon13
                 )
+            ),
+            CreateUpdateTopBarPreview(
+                isLoading = false,
+                actionColor = PassPalette.GreenSheen100,
+                closeIconColor = PassPalette.GreenSheen100,
+                closeBackgroundColor = PassPalette.GreenSheen8,
+                vault = Vault(
+                    shareId = ShareId(id = ""),
+                    name = "Vault with a long title that should be truncated",
+                    color = ShareColor.Color2,
+                    icon = ShareIcon.Icon13
+                )
             )
         )
 }

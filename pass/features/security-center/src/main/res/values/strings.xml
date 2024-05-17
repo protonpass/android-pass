@@ -195,8 +195,6 @@
     <!-- Dark web help dialogs -->
     <string name="dark_web_help_dialog_title">Data Security</string>
     <string name="dark_web_help_dialog_subtitle">Proton never shares your information with third parties. All data comes from searches for the appearance of Proton domains on the dark web.</string>
-    <string name="dark_web_help_dialog_custom_address_title">Custom email addresses</string>
-    <string name="dark_web_help_dialog_custom_address_subtitle">You can also monitor up to 10 email addresses that aren\'t Proton or email aliases. They will be sent to HIBP for monitoring - no other data will be shared to HIBP.</string>
 
     <!-- Cannot add custom emails -->
     <string name="dark_web_cannot_add_custom_emails_dialog_title">Cannot add custom email</string>

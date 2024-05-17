@@ -101,13 +101,7 @@ internal fun DarkWebContent(
                     ),
                     count = state.customEmailState.count(),
                     canAddCustomEmails = state.canAddCustomEmails,
-                    onAddClick = { onEvent(DarkWebUiEvent.OnNewCustomEmailClick) },
-                    onHelpClick = {
-                        DarkWebUiEvent.HelpClick(
-                            titleResId = R.string.dark_web_help_dialog_custom_address_title,
-                            textResId = R.string.dark_web_help_dialog_custom_address_subtitle
-                        ).also(onEvent)
-                    }
+                    onAddClick = { onEvent(DarkWebUiEvent.OnNewCustomEmailClick) }
                 )
                 CustomEmailsList(state = state, onEvent = onEvent)
             }

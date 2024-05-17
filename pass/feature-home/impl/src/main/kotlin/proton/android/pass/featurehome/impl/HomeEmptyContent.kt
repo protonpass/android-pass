@@ -59,7 +59,10 @@ fun HomeEmptyContent(
                     )
                 )
             },
-            onCreateNoteClick = { onEvent(HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.Note)) }
+            onCreateNoteClick = { onEvent(HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.Note)) },
+            onCreateCreditCardClick = {
+                onEvent(HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.CreditCard))
+            }
         )
     }
 }

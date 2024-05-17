@@ -30,6 +30,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.features.upsell.navigation.UpsellNavDestination
@@ -49,6 +50,7 @@ internal fun UpsellContent(
                     horizontal = Spacing.large,
                     vertical = Spacing.medium
                 ),
+                submitText = stringResource(id = state.submitText),
                 onUpgradeClick = { onNavigated(UpsellNavDestination.Upgrade) },
                 onNotNowClick = { onNavigated(UpsellNavDestination.Back) }
             )

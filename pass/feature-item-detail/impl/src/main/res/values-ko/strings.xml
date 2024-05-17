@@ -42,7 +42,7 @@
     <item quantity="other">%d개의 다른 로그인이 같은 비밀번호를 사용하고 있습니다</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">더 나은 보안을 위해 2단계 인증 설정</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">이 서비스는 이중 인증을 지원합니다. 향상된 계정 보안을 위해 활성화 하십시오.</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">이 서비스는 2단계 인증을 지원합니다. 향상된 계정 보안을 위해 활성화 해주세요.</string>
   <string name="login_item_reused_passwords_subtitle">이 비밀번호를 사용하는 금고 내 항목의 목록입니다.</string>
   <string name="field_username">아이디 또는 이메일 주소</string>
   <string name="field_password">비밀번호</string>

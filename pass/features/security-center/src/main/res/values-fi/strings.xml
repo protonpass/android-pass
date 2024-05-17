@@ -83,11 +83,13 @@
     <item quantity="one">Löytyi %s murrosta</item>
     <item quantity="other">Löytyi %s murrosta</item>
   </plurals>
+  <string name="security_center_dark_web_monitor_found_in_breaches">Tietomurtoja ei havaittu</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Proton-osoitteet</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email-aliakset</string>
   <string name="security_center_dark_web_monitor_proton_addresses_error">Virhe Proton-osoitteiden hakemisessa</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Virhe Hide-my-email-aliasten hakemisessa</string>
-    <string name="security_center_dark_web_monitor_monitoring_disabled">Valvonta poistettu käytöstä</string>
+  <string name="security_center_dark_web_monitor_monitoring_disabled">Ei valvottu</string>
+  <string name="security_center_dark_web_monitor_see_all">Näytä kaikki</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Virhe lähetettässä vahvistuskoodia. Yritä myöhemmin uudelleen.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Virhe poistettaessa viestiä. Yritä myöhemmin uudelleen.</string>
   <!-- Add custom email monitoring -->
@@ -100,16 +102,18 @@
   <!-- Verify email monitoring -->
   <string name="security_center_verify_email_code_placeholder">Koodi</string>
   <string name="security_center_verify_email_code_error">Virheellinen koodi</string>
-  <string name="security_center_verify_email_continue">Jatka</string>
   <string name="security_center_verify_email_title">Vahvista sähköpostiosoitteesi</string>
   <string name="security_center_verify_email_subtitle">Olemme lähettäneet vahvistuskoodin osoitteeseen %s. Syötä se alle:</string>
+  <string name="security_center_verify_email_code_resend_header">Etkö saanut koodia?</string>
+  <string name="security_center_verify_email_code_resend_body">Varmista, ettei roskapostistasi löydy viestiä otsikolla “Vahvista sähköpostiosoitteen lisäys Proton Passiin“.</string>
+  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">Jos et löydä sellaista viestiä, voit </string>
+  <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">pyytää uuden koodin.</string>
+  <string name="security_center_verify_email_snackbar_message_resend_code_success">Uusi vahvistusviesti on lähetetty. Tarkista postilaatikkosi.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">Virhe lähetettässä vahvistuskoodia. Yritä myöhemmin uudelleen.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Liian monta virheellista vahvistusta. Mukautettu sähköpostiosoite poistetaan.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Tietomurtoja havaittu:</string>
   <string name="security_center_verify_report_title_none">Tietomurtoja ei havaittu:</string>
-  <string name="security_center_verify_resend_code">Lähetä koodi uudelleen</string>
-  <string name="security_center_verify_resend_code_in_00">Koodi lähetetään uudelleen 00.%s kuluttua</string>
   <!-- Email breach report -->
   <string name="security_center_email_report_used_in_header">Käytössä:</string>
   <string name="security_center_email_report_breaches_header">Murrot</string>
@@ -139,6 +143,7 @@
   <string name="security_center_proton_list_error">Osoitteita ei voitu ladata</string>
   <string name="security_center_proton_list_included_in_monitoring">Käytä valvontaa saadaksesi ilmoituksen, jos Proton-osoitteitasi on vuotanut.</string>
   <string name="security_center_proton_list_options_menu">Proton-näytön asetusvalikko</string>
+  <string name="security_center_proton_list_not_monitored">Ei valvottu</string>
   <!-- Address Bottomsheet options -->
   <string name="security_center_address_bottomsheet_disable_monitoring">Keskeytä valvonta</string>
   <string name="security_center_address_bottomsheet_enable_monitoring">Palauta valvonta</string>

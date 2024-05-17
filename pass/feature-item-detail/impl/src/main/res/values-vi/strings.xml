@@ -111,6 +111,6 @@
   <string name="passkey_detail_bottomsheet_title">Passkey</string>
   <string name="passkey_detail_bottomsheet_username">Username</string>
   <string name="passkey_detail_bottomsheet_domain">Domain</string>
-  <string name="passkey_detail_bottomsheet_key">Key</string>
+  <string name="passkey_detail_bottomsheet_key">Chìa khóa</string>
   <string name="passkey_detail_bottomsheet_created">Created</string>
 </resources>

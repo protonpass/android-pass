@@ -32,7 +32,7 @@
   <string name="app_lock_config_biometric">Biomètric</string>
   <string name="app_lock_config_pin_code">Codi PIN</string>
   <string name="app_lock_config_app_lock_time">Bloqueig automàtic</string>
-  <string name="app_lock_config_password">Password</string>
+  <string name="app_lock_config_password">Contrasenya</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Utilitzeu el bloqueig del sistema quan la característica biomètrica no funcioni.</string>
   <string name="configure_pin_set_pin_code">Establiu el codi PIN</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Desbloqueja l\'aplicació amb aquest codi</string>
@@ -54,8 +54,8 @@
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">El seu dispositiu no suporta claus d\'accés.</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">No s\'ha pogut comprovar el suport per a les claus d\'accés</string>
   <plurals name="profile_after_days">
-    <item quantity="one">After %d day</item>
-    <item quantity="other">After %d days</item>
+    <item quantity="one">Després de %d dia</item>
+    <item quantity="other">Després de %d dies</item>
   </plurals>
   <plurals name="profile_after_minutes">
     <item quantity="one">Després d\'%d minut</item>
@@ -65,5 +65,5 @@
     <item quantity="one">Després d\'%d hora</item>
     <item quantity="other">Després de %d hores</item>
   </plurals>
-  <string name="profile_less_than_a_minute">Less than a minute</string>
+  <string name="profile_less_than_a_minute">Menys d\'un minut</string>
 </resources>

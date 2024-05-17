@@ -47,13 +47,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.account.domain.entity.isDisabled
 import me.proton.core.account.domain.entity.isReady
@@ -62,8 +60,6 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.presentation.observe
 import me.proton.core.accountmanager.presentation.onAccountCreateAddressFailed
 import me.proton.core.accountmanager.presentation.onAccountCreateAddressNeeded
-import me.proton.core.accountmanager.presentation.onAccountDisabled
-import me.proton.core.accountmanager.presentation.onAccountRemoved
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeFailed
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeNeeded
 import me.proton.core.accountmanager.presentation.onSessionForceLogout
@@ -78,19 +74,15 @@ import me.proton.core.report.presentation.ReportOrchestrator
 import me.proton.core.user.domain.UserManager
 import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
 import proton.android.pass.biometry.StoreAuthSuccessful
-import proton.android.pass.common.api.flatMap
 import proton.android.pass.commonrust.api.CommonLibraryVersionChecker
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.SyncMode
-import proton.android.pass.data.api.usecases.ClearUserData
 import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.data.api.usecases.UserPlanWorkerLauncher
 import proton.android.pass.data.api.usecases.organization.RefreshOrganizationSettings
 import proton.android.pass.inappupdates.api.InAppUpdatesManager
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.preferences.InternalSettingsRepository
-import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
@@ -104,11 +96,8 @@ class LauncherViewModel @Inject constructor(
     private val plansOrchestrator: PlansOrchestrator,
     private val reportOrchestrator: ReportOrchestrator,
     private val userSettingsOrchestrator: UserSettingsOrchestrator,
-    private val userPreferencesRepository: UserPreferencesRepository,
-    private val internalSettingsRepository: InternalSettingsRepository,
     private val userPlanWorkerLauncher: UserPlanWorkerLauncher,
     private val itemSyncStatusRepository: ItemSyncStatusRepository,
-    private val clearUserData: ClearUserData,
     private val refreshPlan: RefreshPlan,
     private val inAppUpdatesManager: InAppUpdatesManager,
     private val refreshOrganizationSettings: RefreshOrganizationSettings,
@@ -133,7 +122,6 @@ class LauncherViewModel @Inject constructor(
         .map { accounts ->
             when {
                 accounts.isEmpty() || accounts.all { it.isDisabled() } -> {
-                    clearPassUserData(accounts)
                     State.AccountNeeded
                 }
 
@@ -183,8 +171,6 @@ class LauncherViewModel @Inject constructor(
             .onSessionSecondFactorNeeded { authOrchestrator.startSecondFactorWorkflow(it) }
             .onAccountTwoPassModeNeeded { authOrchestrator.startTwoPassModeWorkflow(it) }
             .onAccountCreateAddressNeeded { authOrchestrator.startChooseAddressWorkflow(it) }
-            .onAccountDisabled { clearPreferencesIfNeeded() }
-            .onAccountRemoved { clearPreferencesIfNeeded() }
     }
 
     fun onUserStateChanced(state: State) = viewModelScope.launch {
@@ -231,19 +217,6 @@ class LauncherViewModel @Inject constructor(
         }
     }
 
-    private suspend fun clearPreferencesIfNeeded() {
-        val accounts = accountManager.getAccounts().first()
-        if (accounts.isEmpty()) {
-            userPreferencesRepository.clearPreferences()
-                .flatMap { internalSettingsRepository.clearSettings() }
-                .onSuccess { PassLogger.d(TAG, "Clearing preferences success") }
-                .onFailure {
-                    PassLogger.w(TAG, "Error clearing preferences")
-                    PassLogger.w(TAG, it)
-                }
-        }
-    }
-
     fun subscription() = viewModelScope.launch {
         getPrimaryUserIdOrNull()?.let {
             plansOrchestrator.showCurrentPlanWorkflow(it)
@@ -281,28 +254,6 @@ class LauncherViewModel @Inject constructor(
     fun recoveryEmail() = viewModelScope.launch {
         getPrimaryUserIdOrNull()?.let {
             userSettingsOrchestrator.startUpdateRecoveryEmailWorkflow(it)
-        }
-    }
-
-    private suspend fun clearPassUserData(accounts: List<Account>) {
-        val disabledAccounts = accounts.filter { it.isDisabled() }
-        disabledAccounts.forEach { account ->
-            PassLogger.i(TAG, "Clearing user data")
-            runCatching { clearUserData(account.userId) }
-                .onSuccess { PassLogger.i(TAG, "Cleared user data") }
-                .onFailure { PassLogger.i(TAG, it, "Error clearing user data") }
-        }
-
-        // If there are no accounts left, disable autofill and clear preferences
-        val allDisabled = accounts.all { it.isDisabled() }
-        if (accounts.isEmpty() || allDisabled) {
-            userPreferencesRepository.clearPreferences()
-                .flatMap { internalSettingsRepository.clearSettings() }
-                .onSuccess { PassLogger.d(TAG, "Clearing preferences success") }
-                .onFailure {
-                    PassLogger.w(TAG, "Error clearing preferences")
-                    PassLogger.w(TAG, it)
-                }
         }
     }
 

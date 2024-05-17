@@ -42,7 +42,6 @@ import proton.android.pass.biometry.StoreAuthOnStop
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.some
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PasskeyId
@@ -50,7 +49,6 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.featurepasskeys.R
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
-import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -127,12 +125,11 @@ sealed interface SelectPasskeyAppState {
 
 @HiltViewModel
 class SelectPasskeyActivityViewModel @Inject constructor(
-    private val preferenceRepository: UserPreferencesRepository,
     private val accountOrchestrators: AccountOrchestrators,
     private val accountManager: AccountManager,
     private val toastManager: ToastManager,
-    private val internalSettingsRepository: InternalSettingsRepository,
     private val storeAuthOnStop: StoreAuthOnStop,
+    preferenceRepository: UserPreferencesRepository,
     needsBiometricAuth: NeedsBiometricAuth
 ) : ViewModel() {
 
@@ -214,18 +211,12 @@ class SelectPasskeyActivityViewModel @Inject constructor(
     }
 
     fun signOut() = viewModelScope.launch {
+        PassLogger.i(TAG, "Signing user out")
         val primaryUserId = accountManager.getPrimaryUserId().firstOrNull()
         if (primaryUserId != null) {
             accountManager.disableAccount(primaryUserId)
             toastManager.showToast(R.string.passkeys_user_logged_out)
         }
-        preferenceRepository.clearPreferences()
-            .flatMap { internalSettingsRepository.clearSettings() }
-            .onSuccess { PassLogger.d(TAG, "Clearing preferences success") }
-            .onFailure {
-                PassLogger.w(TAG, "Error clearing preferences")
-                PassLogger.w(TAG, it)
-            }
 
         closeScreenFlow.update { true }
     }

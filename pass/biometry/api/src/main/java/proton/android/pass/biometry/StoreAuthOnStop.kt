@@ -19,5 +19,5 @@
 package proton.android.pass.biometry
 
 interface StoreAuthOnStop {
-    operator fun invoke()
+    suspend operator fun invoke()
 }

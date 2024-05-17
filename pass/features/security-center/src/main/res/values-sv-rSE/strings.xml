@@ -83,11 +83,13 @@
     <item quantity="one">Hittades i %s intrång</item>
     <item quantity="other">Hittades i %s intrång</item>
   </plurals>
+  <string name="security_center_dark_web_monitor_found_in_breaches">Inga intrång upptäckta</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Proton-adresser</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email-alias</string>
   <string name="security_center_dark_web_monitor_proton_addresses_error">Fel vid hämtning av Proton-adresser</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Fel vid hämtning av hide-my-email-alias</string>
-    <string name="security_center_dark_web_monitor_monitoring_disabled">Övervakning inaktiverad</string>
+  <string name="security_center_dark_web_monitor_monitoring_disabled">Inte övervakad</string>
+  <string name="security_center_dark_web_monitor_see_all">Se alla</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Det var ett fel när verifieringskoden skickades. Försök igen senare.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Det var ett fel när e-posten skulle tas bort. Försök igen senare.</string>
   <!-- Add custom email monitoring -->
@@ -100,16 +102,18 @@
   <!-- Verify email monitoring -->
   <string name="security_center_verify_email_code_placeholder">Kod</string>
   <string name="security_center_verify_email_code_error">Ogiltig kod</string>
-  <string name="security_center_verify_email_continue">Fortsätt</string>
   <string name="security_center_verify_email_title">Bekräfta din e-post</string>
   <string name="security_center_verify_email_subtitle">Vi har skickat en verifieringskod till %s. Ange den nedan:</string>
+  <string name="security_center_verify_email_code_resend_header">Har du inte fått koden?</string>
+  <string name="security_center_verify_email_code_resend_body">Please check in your Spam for an email called “Please confirm your email address for Proton Pass“</string>
+  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">Om du inte kan hitta ett sådant e-postmeddelande kan du </string>
+  <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">begär en ny kod.</string>
+  <string name="security_center_verify_email_snackbar_message_resend_code_success">En ny verifiering har skickats, kontrollera din inkorg.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">Det var ett fel när verifieringskoden skickades. Försök igen senare.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">För många ogiltiga verifieringar. Tar bort anpassad e-post.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Intrång upptäckta för</string>
   <string name="security_center_verify_report_title_none">Inga intrång upptäckta för</string>
-  <string name="security_center_verify_resend_code">Skicka kod igen</string>
-  <string name="security_center_verify_resend_code_in_00">Skicka kod igen om 00:%s</string>
   <!-- Email breach report -->
   <string name="security_center_email_report_used_in_header">Används i</string>
   <string name="security_center_email_report_breaches_header">Intrång</string>
@@ -139,12 +143,13 @@
   <string name="security_center_proton_list_error">Kunde inte ladda adresser</string>
   <string name="security_center_proton_list_included_in_monitoring">Aktivera övervakning för att bli aviserad om dina Proton-adresser läckt.</string>
   <string name="security_center_proton_list_options_menu">Proton screen options menu</string>
+  <string name="security_center_proton_list_not_monitored">Inte övervakad</string>
   <!-- Address Bottomsheet options -->
   <string name="security_center_address_bottomsheet_disable_monitoring">Pausa övervakning</string>
   <string name="security_center_address_bottomsheet_enable_monitoring">Återuppta övervakning</string>
   <string name="security_center_address_bottomsheet_remove_custom_email">Ta bort anpassad e-post</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_enable_error">There was an error pausing monitoring</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_disable_error">There was an error resuming monitoring</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_enable_error">Det var ett fel när övervakning skulle pausas</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_error">Det var ett fel när övervakning skulle återupptas</string>
   <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_error">Kunde inte ta bort anpassad e-post</string>
   <string name="security_center_address_bottomsheet_snackbar_message_enable_success">Övervakning återupptagen</string>
   <string name="security_center_address_bottomsheet_snackbar_message_disable_success">Övervakning pausad</string>

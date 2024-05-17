@@ -30,9 +30,9 @@
   <string name="item_pinned_message_error">Terdapat kesalahan dalam menyematkan item ini</string>
   <string name="item_unpinned_message">Sematan item berhasil dilepas</string>
   <string name="item_unpinned_message_error">Terdapat kesalahan dalam melepas sematan item ini</string>
-  <string name="item_monitor_exclude_message">Item berhasil dikeluarkan dari pemantauan</string>
-  <string name="item_monitor_exclude_message_error">Ada kesalahan mengeluarkan item dari pemantauan</string>
-  <string name="item_monitor_include_message">Item berhasil dimasukkan dalam pemantauan</string>
+  <string name="item_monitor_exclude_message">Item berhasil dikecualikan dari pemantauan</string>
+  <string name="item_monitor_exclude_message_error">Terdapat kesalahan dalam mengecualikan item dari pemantauan</string>
+  <string name="item_monitor_include_message">Item berhasil disertakan dalam pemantauan</string>
   <string name="item_monitor_include_message_error">Ada kesalahan memasukkan item dalam pemantauan</string>
   <string name="login_item_generate_totp_error">Terdapat kesalahan dalam menghasilkan kode 2FA</string>
   <string name="login_item_view_alias_button">Tampilkan alias</string>

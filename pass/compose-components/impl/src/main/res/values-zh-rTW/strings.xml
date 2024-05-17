@@ -32,8 +32,8 @@
   <string name="action_learn_more">了解更多</string>
   <string name="action_enable">啟用</string>
   <string name="action_view_details">詳情查看</string>
-  <string name="action_see_all">See all</string>
-  <string name="action_confirm">Confirm</string>
+  <string name="action_see_all">查看全部</string>
+  <string name="action_confirm">確認</string>
   <!-- Empty list -->
   <string name="empty_list_title">加入您的第一個項目</string>
   <string name="empty_search_results_title">查無結果</string>

@@ -83,11 +83,13 @@
     <item quantity="one">Εντοπίστηκε σε %s παραβίαση</item>
     <item quantity="other">Εντοπίστηκε σε %s παραβιάσεις</item>
   </plurals>
+  <string name="security_center_dark_web_monitor_found_in_breaches">Δεν εντοπίστηκαν παραβιάσεις</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Διευθύνσεις Proton</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email ψευδώνυμα</string>
   <string name="security_center_dark_web_monitor_proton_addresses_error">Σφάλμα κατά την ανάκτηση διευθύνσεων Proton</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Σφάλμα κατά την ανάκτηση ψευδωνύμων Hide-my-email</string>
-    <string name="security_center_dark_web_monitor_monitoring_disabled">Η παρακολούθηση είναι απενεργοποιημένη</string>
+  <string name="security_center_dark_web_monitor_monitoring_disabled">Δεν παρακολουθείται</string>
+  <string name="security_center_dark_web_monitor_see_all">Προβολή όλων</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Παρουσιάστηκε σφάλμα κατά την αποστολή του κωδικού επαλήθευσης. Παρακαλούμε προσπαθήστε ξανά αργότερα.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Παρουσιάστηκε σφάλμα κατά την κατάργηση του μηνύματος ηλεκτρονικού ταχυδρομείου. Παρακαλούμε προσπαθήστε ξανά αργότερα.</string>
   <!-- Add custom email monitoring -->
@@ -100,16 +102,18 @@
   <!-- Verify email monitoring -->
   <string name="security_center_verify_email_code_placeholder">Κωδικός</string>
   <string name="security_center_verify_email_code_error">Μη έγκυρος κωδικός</string>
-  <string name="security_center_verify_email_continue">Συνέχεια</string>
   <string name="security_center_verify_email_title">Επιβεβαιώστε τη διεύθυνση email σας</string>
   <string name="security_center_verify_email_subtitle">Στείλαμε έναν κωδικό επαλήθευσης στη διεύθυνση %s. Παρακαλούμε εισάγετε τον παρακάτω:</string>
+  <string name="security_center_verify_email_code_resend_header">Δεν έχετε λάβει τον κωδικό;</string>
+  <string name="security_center_verify_email_code_resend_body">Ελέγξτε τα ανεπιθύμητα μηνύματα για ένα μήνυμα που ονομάζεται \"Επιβεβαιώστε τη διεύθυνση email σας για το Proton Pass\"</string>
+  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">Εάν δεν μπορείτε να βρείτε τέτοια μηνύματα ηλεκτρονικού ταχυδρομείου, μπορείτε να </string>
+  <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">ζητήστε ένα νέο κωδικό.</string>
+  <string name="security_center_verify_email_snackbar_message_resend_code_success">Σας έχει σταλεί ένα νέο μήνυμα επαλήθευσης. Παρακαλούμε ελέγξτε το μηνύματά σας.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">Παρουσιάστηκε σφάλμα κατά την αποστολή του κωδικού επαλήθευσης. Παρακαλούμε προσπαθήστε ξανά αργότερα.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Πάρα πολλές μη έγκυρες επαληθεύσεις. Κατάργηση προσαρμοσμένου ηλεκτρονικού ταχυδρομείου.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Εντοπίστηκαν παραβιάσεις για</string>
   <string name="security_center_verify_report_title_none">Δεν εντοπίστηκαν παραβιάσεις για</string>
-  <string name="security_center_verify_resend_code">Επαναποστολή κωδικού</string>
-  <string name="security_center_verify_resend_code_in_00">Επανάληψη αποστολής κώδικα σε 00:%s</string>
   <!-- Email breach report -->
   <string name="security_center_email_report_used_in_header">Χρησιμοποιείται σε</string>
   <string name="security_center_email_report_breaches_header">Παραβιάσεις</string>
@@ -139,6 +143,7 @@
   <string name="security_center_proton_list_error">Δεν ήταν δυνατή η φόρτωση διευθύνσεων</string>
   <string name="security_center_proton_list_included_in_monitoring">Ενεργοποιήστε την παρακολούθηση για να ειδοποιηθείτε εάν οι διευθύνσεις Proton σας διέρρευσαν.</string>
   <string name="security_center_proton_list_options_menu">Μενού επιλογών οθόνης Proton</string>
+  <string name="security_center_proton_list_not_monitored">Δεν παρακολουθείται</string>
   <!-- Address Bottomsheet options -->
   <string name="security_center_address_bottomsheet_disable_monitoring">Παύση παρακολούθησης</string>
   <string name="security_center_address_bottomsheet_enable_monitoring">Συνέχιση παρακολούθησης</string>

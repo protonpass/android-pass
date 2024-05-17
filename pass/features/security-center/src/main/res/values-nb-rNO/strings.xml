@@ -19,7 +19,7 @@
 <resources>
   <!-- Home screen -->
   <string name="security_center_home_top_bar_title">Pass Monitor</string>
-  <string name="security_center_home_dark_web_monitoring_title">Mørk webovervåking</string>
+  <string name="security_center_home_dark_web_monitoring_title">Overvåking av mørkt nett</string>
   <string name="security_center_home_widget_breaches_title">Sikkerhetsbrudd oppdaget</string>
   <string name="security_center_home_widget_breaches_subtitle">E-postadressen din ble lekket i minst 1 datainnbrudd.</string>
   <string name="security_center_home_widget_no_breaches_subtitle">Bli varslet hvis e-posten, passordet eller andre personlige data ble lekket.</string>
@@ -60,7 +60,7 @@
   <!-- Excluded items screen -->
   <string name="security_center_excluded_items_top_bar_title">Ekskluderte elementer</string>
   <!-- Dark web monitor -->
-  <string name="security_center_dark_web_monitor_top_bar_title">Mørk webovervåking</string>
+  <string name="security_center_dark_web_monitor_top_bar_title">Overvåking av mørkt nett</string>
   <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Siste sjekk:%s</string>
   <string name="security_center_dark_web_monitor_custom_emails_title">Tilpassede e-postadresser</string>
   <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">Ikke verifisert</string>
@@ -83,11 +83,13 @@
     <item quantity="one">Funnet i %s brudd</item>
     <item quantity="other">Funnet i %s brudd</item>
   </plurals>
+  <string name="security_center_dark_web_monitor_found_in_breaches">Ingen brudd oppdaget</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Proton-adresser</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email-aliaser</string>
   <string name="security_center_dark_web_monitor_proton_addresses_error">Feil ved henting av Proton-adresser</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Feil ved henting av Hide-my-email-aliaser</string>
-    <string name="security_center_dark_web_monitor_monitoring_disabled">Overvåking deaktivert</string>
+  <string name="security_center_dark_web_monitor_monitoring_disabled">Ikke overvåket</string>
+  <string name="security_center_dark_web_monitor_see_all">Se alle</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Det oppstod en feil ved sending av verifiseringskoden. Vennligst prøv igjen senere.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Det oppstod en feil ved fjerning av e-posten. Vennligst prøv igjen senere.</string>
   <!-- Add custom email monitoring -->
@@ -100,16 +102,18 @@
   <!-- Verify email monitoring -->
   <string name="security_center_verify_email_code_placeholder">Kode</string>
   <string name="security_center_verify_email_code_error">Ugyldig kode</string>
-  <string name="security_center_verify_email_continue">Fortsett</string>
   <string name="security_center_verify_email_title">Bekreft e-posten din</string>
   <string name="security_center_verify_email_subtitle">Vi har sendt en verifiseringskode til %s. Vennligst angi den nedenfor:</string>
+  <string name="security_center_verify_email_code_resend_header">Fikk du ikke koden?</string>
+  <string name="security_center_verify_email_code_resend_body">Vennligst sjekk i søppelposten for en e-post som heter \"Bekreft e-postadressen din for Proton Pass\"</string>
+  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">Hvis du ikke finner en slik e-post, kan du </string>
+  <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">be om en ny kode.</string>
+  <string name="security_center_verify_email_snackbar_message_resend_code_success">En ny verifisering er sendt, vennligst sjekk innboksen din.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">Det oppstod en feil ved sending av verifiseringskoden. Vennligst prøv igjen senere.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">For mange ugyldige verifikasjoner. Fjerner tilpasset e-post.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Brudd oppdaget for</string>
   <string name="security_center_verify_report_title_none">Ingen brudd oppdaget for</string>
-  <string name="security_center_verify_resend_code">Send kode på nytt</string>
-  <string name="security_center_verify_resend_code_in_00">Send kode på nytt om 00:%s</string>
   <!-- Email breach report -->
   <string name="security_center_email_report_used_in_header">Brukt i</string>
   <string name="security_center_email_report_breaches_header">Brudd</string>
@@ -139,6 +143,7 @@
   <string name="security_center_proton_list_error">Klarte ikke å laste inn adresser</string>
   <string name="security_center_proton_list_included_in_monitoring">Aktiver overvåking for å bli varslet om Proton-adressene dine ble lekket.</string>
   <string name="security_center_proton_list_options_menu">Alternativmeny for Proton-skjerm</string>
+  <string name="security_center_proton_list_not_monitored">Ikke overvåket</string>
   <!-- Address Bottomsheet options -->
   <string name="security_center_address_bottomsheet_disable_monitoring">Sett overvåking på vent</string>
   <string name="security_center_address_bottomsheet_enable_monitoring">Gjenoppta overvåking</string>

@@ -15,7 +15,6 @@
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">უსაფრთხოდ შეინახეთ თქვენი გადახდის ინფორმაცია</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">უსაფრთხო პაროლის გენერირება</string>
   <!-- Create Login -->
-  <string name="title_create_login">შესვლის ჩანაწერის შექმნა</string>
   <string name="field_username_title">მომხმარებლის სახელი ან ელფოსტის მისამართი</string>
   <string name="field_username_hint">დაამატეთ მომხმარებლის სახელი ან ელფოსტის მისამართი</string>
   <string name="field_password_title">პაროლი</string>
@@ -49,13 +48,11 @@
   <string name="custom_field_dialog_placeholder">მაგ: მომხმარებლის ID, PIN-კოდი</string>
   <string name="custom_field_options_content_description">ხელით მითითებული ველის მორგება</string>
   <!-- Create Note -->
-  <string name="title_create_note">შენიშვნის შექმნა</string>
   <string name="create_note_item_creation_error">შენიშვნის შექმნის შეცდომა</string>
   <string name="create_note_item_update_error">შენიშვნის განახლების შეცდომა</string>
   <string name="create_note_init_error">შეცდომა შენიშვნის დეტალების მიღებისას</string>
   <string name="note_created">შენიშვნა შეიქმნა</string>
   <!-- Create Alias -->
-  <string name="title_create_alias">ფსევდონიმის შექმნა</string>
   <string name="field_alias_title">ფსევდონიმის მისამართი</string>
   <string name="field_mailboxes_creation_title">გადაგზავნა</string>
   <string name="field_mailboxes_edit_title">გადამისამართება</string>
@@ -76,7 +73,6 @@
   <!-- Create note -->
   <string name="note_hint">შენიშვნა</string>
   <!-- Create Credit Card -->
-  <string name="title_create_credit_card">საკრედიტო ბარათის შექმნა</string>
   <string name="field_cardholder_name_title">სახელი ბარათზე</string>
   <string name="field_cardholder_name_hint">სრული სახელი</string>
   <string name="field_card_number_title">ბარათის ნომერი</string>
@@ -93,6 +89,7 @@
   <string name="credit_card_init_error">შეცდომა საკრედიტო ბარათის დეტალების მიღებისას</string>
   <string name="credit_card_item_update_error">საკრედიტო ბარათის განახლების შეცდომა</string>
   <!--  Common create items  -->
+  <string name="title_create">Create</string>
   <string name="changes_saved">ცვლილებები შენახულია</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">2FA საიდუმლო გასაღები (TOTP)</string>

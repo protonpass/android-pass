@@ -40,7 +40,10 @@ fun SyncDialog(
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 SyncDialogUiEvent.OnCloseSync,
-                SyncDialogUiEvent.OnCompleteSync -> onNavigate(SyncNavDestination.Back)
+                SyncDialogUiEvent.OnCompleteSync -> {
+                    viewModel.onDismissSync()
+                    onNavigate(SyncNavDestination.Back)
+                }
 
                 SyncDialogUiEvent.OnRetrySync -> viewModel.onRetrySync()
             }

@@ -27,7 +27,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
@@ -55,7 +54,6 @@ import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
 import proton.android.pass.preferences.CopyTotpToClipboard
-import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.LastItemAutofillPreference
 import proton.android.pass.preferences.ThemePreference
@@ -75,7 +73,7 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val internalSettingsRepository: InternalSettingsRepository,
     private val storeAuthOnStop: StoreAuthOnStop,
-    private val preferenceRepository: UserPreferencesRepository,
+    preferenceRepository: UserPreferencesRepository,
     inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     clock: Clock,
     savedStateHandle: SavedStateHandle
@@ -205,11 +203,7 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
     }
 
     fun onStop() = viewModelScope.launch {
-        if (
-            preferenceRepository.getHasAuthenticated().first() is HasAuthenticated.Authenticated
-        ) {
-            storeAuthOnStop()
-        }
+        storeAuthOnStop()
     }
 
     companion object {

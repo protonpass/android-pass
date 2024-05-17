@@ -47,6 +47,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -118,7 +119,7 @@ class LauncherViewModel @Inject constructor(
         viewModelScope.launch { refreshOrganizationSettings() }
     }
 
-    val state: StateFlow<State> = accountManager.getAccounts()
+    internal val state: StateFlow<State> = accountManager.getAccounts()
         .map { accounts ->
             when {
                 accounts.isEmpty() || accounts.all { it.isDisabled() } -> {
@@ -142,7 +143,7 @@ class LauncherViewModel @Inject constructor(
             initialValue = State.Processing
         )
 
-    fun register(context: ComponentActivity) {
+    internal fun register(context: ComponentActivity) {
         authOrchestrator.register(context as ActivityResultCaller)
         plansOrchestrator.register(context)
         reportOrchestrator.register(context)
@@ -156,8 +157,19 @@ class LauncherViewModel @Inject constructor(
                 }
 
                 if (result != null) {
-                    itemSyncStatusRepository.setMode(SyncMode.ShownToUser)
-                    itemSyncStatusRepository.emit(ItemSyncStatus.SyncStarted)
+                    itemSyncStatusRepository.observeSyncStatus()
+                        .first()
+                        .let { itemSyncStatus ->
+                            when (itemSyncStatus) {
+                                ItemSyncStatus.SyncError,
+                                ItemSyncStatus.SyncStarted,
+                                is ItemSyncStatus.Syncing -> SyncMode.ShownToUser
+
+                                ItemSyncStatus.SyncNotStarted,
+                                ItemSyncStatus.SyncSuccess -> SyncMode.Background
+                            }
+                        }
+                        .also { syncMode -> itemSyncStatusRepository.setMode(syncMode) }
 
                     refreshOrganizationSettings()
                 }
@@ -173,22 +185,20 @@ class LauncherViewModel @Inject constructor(
             .onAccountCreateAddressNeeded { authOrchestrator.startChooseAddressWorkflow(it) }
     }
 
-    fun onUserStateChanced(state: State) = viewModelScope.launch {
-        when (state) {
-            State.AccountNeeded -> {
-                storeAuthSuccessful(resetAttempts = false)
-                userPlanWorkerLauncher.cancel()
-            }
+    internal fun onUserStateChanced(state: State) = when (state) {
+        State.AccountNeeded -> {
+            storeAuthSuccessful(resetAttempts = false)
+            userPlanWorkerLauncher.cancel()
+        }
 
-            State.PrimaryExist -> userPlanWorkerLauncher.start()
-            State.Processing,
-            State.StepNeeded -> {
-                // no-op
-            }
+        State.PrimaryExist -> userPlanWorkerLauncher.start()
+        State.Processing,
+        State.StepNeeded -> {
+            // no-op
         }
     }
 
-    fun addAccount() = viewModelScope.launch {
+    internal fun addAccount() = viewModelScope.launch {
         authOrchestrator.startAddAccountWorkflow(
             requiredAccountType = requiredAccountType,
             creatableAccountType = requiredAccountType,
@@ -196,20 +206,20 @@ class LauncherViewModel @Inject constructor(
         )
     }
 
-    fun signIn(userId: UserId? = null) = viewModelScope.launch {
+    private fun signIn(userId: UserId? = null) = viewModelScope.launch {
         val account = userId?.let { getAccountOrNull(it) }
         authOrchestrator.startLoginWorkflow(requiredAccountType, username = account?.username)
     }
 
-    fun disable(userId: UserId? = null) = viewModelScope.launch {
+    internal fun disable(userId: UserId? = null) = viewModelScope.launch {
         accountManager.disableAccount(requireNotNull(userId ?: getPrimaryUserIdOrNull()))
     }
 
-    fun remove(userId: UserId? = null) = viewModelScope.launch {
+    internal fun remove(userId: UserId? = null) = viewModelScope.launch {
         accountManager.removeAccount(requireNotNull(userId ?: getPrimaryUserIdOrNull()))
     }
 
-    fun switch(userId: UserId) = viewModelScope.launch {
+    internal fun switch(userId: UserId) = viewModelScope.launch {
         val account = getAccountOrNull(userId) ?: return@launch
         when {
             account.isDisabled() -> signIn(userId)
@@ -217,13 +227,13 @@ class LauncherViewModel @Inject constructor(
         }
     }
 
-    fun subscription() = viewModelScope.launch {
+    internal fun subscription() = viewModelScope.launch {
         getPrimaryUserIdOrNull()?.let {
             plansOrchestrator.showCurrentPlanWorkflow(it)
         }
     }
 
-    fun upgrade() = viewModelScope.launch {
+    internal fun upgrade() = viewModelScope.launch {
         getPrimaryUserIdOrNull()?.let {
             plansOrchestrator
                 .onUpgradeResult { result ->
@@ -241,40 +251,49 @@ class LauncherViewModel @Inject constructor(
         }
     }
 
-    fun report() = viewModelScope.launch {
+    internal fun report() = viewModelScope.launch {
         reportOrchestrator.startBugReport()
     }
 
-    fun passwordManagement() = viewModelScope.launch {
+    internal fun passwordManagement() = viewModelScope.launch {
         getPrimaryUserIdOrNull()?.let {
             userSettingsOrchestrator.startPasswordManagementWorkflow(it)
         }
     }
 
-    fun recoveryEmail() = viewModelScope.launch {
+    internal fun recoveryEmail() = viewModelScope.launch {
         getPrimaryUserIdOrNull()?.let {
             userSettingsOrchestrator.startUpdateRecoveryEmailWorkflow(it)
         }
     }
 
     private suspend fun getAccountOrNull(it: UserId) = accountManager.getAccount(it).firstOrNull()
+
     private suspend fun getPrimaryUserIdOrNull() = accountManager.getPrimaryUserId().firstOrNull()
 
-    fun checkForUpdates(updateResultLauncher: ActivityResultLauncher<IntentSenderRequest>) {
+    internal fun checkForUpdates(updateResultLauncher: ActivityResultLauncher<IntentSenderRequest>) {
         inAppUpdatesManager.checkForUpdates(updateResultLauncher)
     }
 
-    fun cancelUpdateListener() {
+    internal fun cancelUpdateListener() {
         inAppUpdatesManager.tearDown()
     }
 
-    fun declineUpdate() {
+    internal fun declineUpdate() {
         inAppUpdatesManager.declineUpdate()
     }
 
-    enum class State { Processing, AccountNeeded, PrimaryExist, StepNeeded }
-
-    companion object {
-        private const val TAG = "LauncherViewModel"
+    internal enum class State {
+        Processing,
+        AccountNeeded,
+        PrimaryExist,
+        StepNeeded
     }
+
+    private companion object {
+
+        private const val TAG = "LauncherViewModel"
+
+    }
+
 }

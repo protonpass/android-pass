@@ -25,11 +25,16 @@ import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.flow.firstOrNull
+import me.proton.core.account.domain.entity.Account
+import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.accountmanager.presentation.observe
 import me.proton.core.accountmanager.presentation.onAccountDisabled
 import me.proton.core.accountmanager.presentation.onAccountRemoved
 import proton.android.pass.commonui.api.PassAppLifecycleProvider
+import proton.android.pass.data.api.usecases.ClearUserData
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.log.api.PassLogger
 
@@ -43,21 +48,46 @@ class AccountListenerInitializer : Initializer<Unit> {
 
         val lifecycleProvider = entryPoint.passAppLifecycleProvider()
         val accountManager = entryPoint.accountManager()
-        val resetAppToDefaults = entryPoint.resetAppToDefaults()
 
         accountManager.observe(
             lifecycle = lifecycleProvider.lifecycle,
             minActiveState = Lifecycle.State.CREATED
         ).onAccountDisabled {
             PassLogger.i(TAG, "Account disabled")
+            onAccountDisabled(it, entryPoint)
         }.onAccountRemoved {
             PassLogger.i(TAG, "Account removed")
-            resetAppToDefaults()
+            onAccountRemoved(it, entryPoint)
         }
     }
 
     override fun dependencies(): List<Class<out Initializer<*>?>> = emptyList()
 
+
+    private suspend fun onAccountDisabled(account: Account, entryPoint: AccountListenerInitializerEntryPoint) {
+        performCleanup(account, entryPoint)
+    }
+
+    private suspend fun onAccountRemoved(account: Account, entryPoint: AccountListenerInitializerEntryPoint) {
+        performCleanup(account, entryPoint)
+    }
+
+    private suspend fun performCleanup(account: Account, entryPoint: AccountListenerInitializerEntryPoint) {
+        val clearUserData = entryPoint.clearUserData()
+        val resetApp = entryPoint.resetAppToDefaults()
+        val accountManager = entryPoint.accountManager()
+
+        runCatching { clearUserData(account.userId) }
+            .onSuccess { PassLogger.i(TAG, "Cleared user data") }
+            .onFailure { PassLogger.i(TAG, it, "Error clearing user data") }
+
+        val activeAccounts = accountManager.getAccounts(AccountState.Ready).firstOrNull()
+
+        // If there are no more active accounts, reset the app to defaults
+        if (activeAccounts?.isEmpty() == true) {
+            resetApp()
+        }
+    }
 
     @EntryPoint
     @InstallIn(SingletonComponent::class)
@@ -65,6 +95,7 @@ class AccountListenerInitializer : Initializer<Unit> {
         fun passAppLifecycleProvider(): PassAppLifecycleProvider
         fun accountManager(): AccountManager
         fun resetAppToDefaults(): ResetAppToDefaults
+        fun clearUserData(): ClearUserData
     }
 
     companion object {

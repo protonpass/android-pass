@@ -19,11 +19,13 @@
 package proton.android.pass.preferences
 
 import androidx.datastore.core.DataStore
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -227,8 +229,10 @@ class UserPreferencesRepositoryImpl @Inject constructor(
     private suspend fun setPreferenceSuspend(
         mapper: suspend (UserPreferences.Builder) -> UserPreferences.Builder
     ): Result<Unit> = runCatching {
-        dataStore.updateData {
-            mapper(it.toBuilder()).build()
+        withContext(Dispatchers.IO) {
+            dataStore.updateData {
+                mapper(it.toBuilder()).build()
+            }
         }
     }
 

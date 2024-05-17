@@ -43,7 +43,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
-fun SelectionModeTopBar(
+internal fun SelectionModeTopBar(
     modifier: Modifier = Modifier,
     selectionState: SelectionTopBarState,
     onEvent: (HomeUiEvent) -> Unit

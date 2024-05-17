@@ -29,6 +29,7 @@ import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.securitycenter.fakes.sentinel.FakeDisableSentinel
 import proton.android.pass.securitycenter.fakes.sentinel.FakeEnableSentinel
+import proton.android.pass.securitycenter.fakes.sentinel.FakeObserveCanEnableSentinel
 import proton.android.pass.securitycenter.fakes.sentinel.FakeObserveIsSentinelEnabled
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.plans.PlanMother
@@ -40,6 +41,7 @@ internal class SecurityCenterSentinelViewModelTest {
     internal val dispatcherRule = MainDispatcherRule()
 
     private lateinit var observeIsSentinelEnabled: FakeObserveIsSentinelEnabled
+    private lateinit var observeCanEnableSentinel: FakeObserveCanEnableSentinel
     private lateinit var getUserPlan: TestGetUserPlan
     private lateinit var sentinelRepository: FakeSentinelRepository
     private lateinit var enableSentinel: FakeEnableSentinel
@@ -53,6 +55,7 @@ internal class SecurityCenterSentinelViewModelTest {
         enableSentinel = FakeEnableSentinel(sentinelRepository)
         disableSentinel = FakeDisableSentinel(sentinelRepository)
         getUserPlan = TestGetUserPlan()
+        observeCanEnableSentinel = FakeObserveCanEnableSentinel(sentinelRepository)
         snackbarDispatcher = TestSnackbarDispatcher()
     }
 
@@ -133,7 +136,8 @@ internal class SecurityCenterSentinelViewModelTest {
         enableSentinel = enableSentinel,
         disableSentinel = disableSentinel,
         snackbarDispatcher = snackbarDispatcher,
-        observeUserPlan = getUserPlan
+        observeUserPlan = getUserPlan,
+        observeCanEnableSentinel = observeCanEnableSentinel
     )
 
 }

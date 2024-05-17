@@ -20,6 +20,7 @@ package proton.android.pass.preferences
 
 import androidx.datastore.core.DataStore
 import com.google.protobuf.Timestamp
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
@@ -203,13 +204,14 @@ class InternalSettingsRepositoryImpl @Inject constructor(
 
     private fun setPreference(mapper: (InternalSettings.Builder) -> InternalSettings.Builder): Result<Unit> =
         runCatching {
-            runBlocking {
+            runBlocking(Dispatchers.IO) {
                 dataStore.updateData {
                     mapper(it.toBuilder()).build()
                 }
             }
             return@runCatching
         }
+
 
     private fun <T> getPreference(mapper: (InternalSettings) -> T): Flow<T> = dataStore.data
         .catch { exception -> handleExceptions(exception) }

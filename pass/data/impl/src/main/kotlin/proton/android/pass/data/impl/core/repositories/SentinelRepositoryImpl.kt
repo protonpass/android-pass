@@ -23,6 +23,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.core.datasources.LocalSentinelDataSource
 import proton.android.pass.data.api.core.datasources.RemoteSentinelDataSource
 import proton.android.pass.data.api.core.repositories.SentinelRepository
@@ -72,10 +74,13 @@ class SentinelRepositoryImpl @Inject constructor(
 
     override fun observeCanEnableSentinel(): Flow<Boolean> = localSentinelDataSource.observeCanEnableSentinel()
         .map { localValue ->
-            localValue ?: run {
-                val canEnable = remoteSentinelDataSource.canEnableSentinel()
-                localSentinelDataSource.updateCanEnableSentinel(canEnable)
-                canEnable
+            when (localValue) {
+                is Some -> localValue.value
+                is None -> {
+                    val canEnable = remoteSentinelDataSource.canEnableSentinel()
+                    localSentinelDataSource.updateCanEnableSentinel(canEnable)
+                    canEnable
+                }
             }
         }
 

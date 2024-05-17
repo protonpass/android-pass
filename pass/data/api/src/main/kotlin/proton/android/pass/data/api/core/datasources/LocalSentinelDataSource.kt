@@ -19,6 +19,7 @@
 package proton.android.pass.data.api.core.datasources
 
 import kotlinx.coroutines.flow.Flow
+import proton.android.pass.common.api.Option
 
 interface LocalSentinelDataSource {
 
@@ -26,7 +27,7 @@ interface LocalSentinelDataSource {
 
     fun enableSentinel()
 
-    fun observeCanEnableSentinel(): Flow<Boolean?>
+    fun observeCanEnableSentinel(): Flow<Option<Boolean>>
 
     fun updateCanEnableSentinel(value: Boolean)
 

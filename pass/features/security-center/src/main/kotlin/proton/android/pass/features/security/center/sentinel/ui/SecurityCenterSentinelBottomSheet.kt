@@ -67,7 +67,8 @@ fun SecurityCenterSentinelBottomSheet(
                 SecurityCenterSentinelUiEvent.OnEnableSentinel -> onEnableSentinel()
                 SecurityCenterSentinelUiEvent.OnDisableSentinel -> onDisableSentinel()
                 SecurityCenterSentinelUiEvent.OnLearnMore -> onLearnMore()
-                SecurityCenterSentinelUiEvent.OnUpsell -> onNavigated(SecurityCenterSentinelDestination.Upsell)
+                is SecurityCenterSentinelUiEvent.OnUpsell ->
+                    onNavigated(SecurityCenterSentinelDestination.OnUpsell(uiEvent.paidFeature))
             }
         }
     )

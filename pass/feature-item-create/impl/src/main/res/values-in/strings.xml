@@ -15,7 +15,6 @@
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Simpan informasi pembayaran Anda dengan aman</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Hasilkan kata sandi yang aman</string>
   <!-- Create Login -->
-  <string name="title_create_login">Buat entri masuk</string>
   <string name="field_username_title">Nama pengguna atau alamat email</string>
   <string name="field_username_hint">Tambahkan nama pengguna atau alamat email</string>
   <string name="field_password_title">Kata sandi</string>
@@ -49,13 +48,11 @@
   <string name="custom_field_dialog_placeholder">Misalnya, ID Pengguna, PIN</string>
   <string name="custom_field_options_content_description">Opsi kolom khusus</string>
   <!-- Create Note -->
-  <string name="title_create_note">Buat catatan</string>
   <string name="create_note_item_creation_error">Catatan tidak dapat dibuat</string>
   <string name="create_note_item_update_error">Catatan tidak dapat diperbarui</string>
   <string name="create_note_init_error">Terdapat masalah dalam memperoleh rincian catatan</string>
   <string name="note_created">Catatan dibuat</string>
   <!-- Create Alias -->
-  <string name="title_create_alias">Buat alias</string>
   <string name="field_alias_title">Alamat alias</string>
   <string name="field_mailboxes_creation_title">Teruskan ke</string>
   <string name="field_mailboxes_edit_title">Meneruskan ke</string>
@@ -76,7 +73,6 @@
   <!-- Create note -->
   <string name="note_hint">Catatan</string>
   <!-- Create Credit Card -->
-  <string name="title_create_credit_card">Buat kartu kredit</string>
   <string name="field_cardholder_name_title">Nama pada kartu</string>
   <string name="field_cardholder_name_hint">Nama lengkap</string>
   <string name="field_card_number_title">Nomor kartu</string>
@@ -93,6 +89,7 @@
   <string name="credit_card_init_error">Terdapat masalah dalam memperoleh rincian kartu kredit</string>
   <string name="credit_card_item_update_error">Tidak dapat memperbarui kartu kredit</string>
   <!--  Common create items  -->
+  <string name="title_create">Buat</string>
   <string name="changes_saved">Perubahan disimpan</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">Kunci rahasia 2FA (TOTP)</string>

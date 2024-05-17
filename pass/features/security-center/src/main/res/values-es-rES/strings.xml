@@ -83,11 +83,13 @@
     <item quantity="one">Encontrado en %s vulneración</item>
     <item quantity="other">Encontrado en %s vulneraciones</item>
   </plurals>
+  <string name="security_center_dark_web_monitor_found_in_breaches">No se han detectado vulneraciones.</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Direcciones de Proton</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Alias de hide-my-email</string>
   <string name="security_center_dark_web_monitor_proton_addresses_error">Error al recuperar las direcciones de Proton</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Error al recuperar los alias de hide-my-email</string>
-    <string name="security_center_dark_web_monitor_monitoring_disabled">El monitoreo ha sido desactivado.</string>
+  <string name="security_center_dark_web_monitor_monitoring_disabled">Sin monitoreo</string>
+  <string name="security_center_dark_web_monitor_see_all">Ver todo</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Se ha producido un error al enviar el código de verificación. Intenta de nuevo más tarde.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Se ha producido un error al borrar el correo. Intenta de nuevo más tarde.</string>
   <!-- Add custom email monitoring -->
@@ -100,16 +102,18 @@
   <!-- Verify email monitoring -->
   <string name="security_center_verify_email_code_placeholder">Código</string>
   <string name="security_center_verify_email_code_error">El código no es válido.</string>
-  <string name="security_center_verify_email_continue">Continuar</string>
   <string name="security_center_verify_email_title">Confirma tu correo electrónico</string>
   <string name="security_center_verify_email_subtitle">Hemos enviado un código de verificación a %s. Ingresa el código abajo:</string>
+  <string name="security_center_verify_email_code_resend_header">¿No has recibido el código?</string>
+  <string name="security_center_verify_email_code_resend_body">Busca en la carpeta Spam un correo electrónico que diga «Confirma tu dirección de correo electrónico para Proton Pass».</string>
+  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">Si no encuentras dicho correo electrónico, puedes </string>
+  <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">solicitar un código nuevo.</string>
+  <string name="security_center_verify_email_snackbar_message_resend_code_success">Se ha enviado una nueva verificación, comprueba tu bandeja de entrada.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">Se ha producido un error al enviar el código de verificación. Intenta de nuevo más tarde.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Hay demasiadas verificaciones no válidas. Borrando el correo electrónico personalizado.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Se han detectado vulneraciones para</string>
   <string name="security_center_verify_report_title_none">No se han detectado vulneraciones para</string>
-  <string name="security_center_verify_resend_code">Reenviar el código</string>
-  <string name="security_center_verify_resend_code_in_00">Reenviar el código en 00:%s</string>
   <!-- Email breach report -->
   <string name="security_center_email_report_used_in_header">Usado en</string>
   <string name="security_center_email_report_breaches_header">Vulneraciones</string>
@@ -139,6 +143,7 @@
   <string name="security_center_proton_list_error">No se ha podido cargar las direcciones.</string>
   <string name="security_center_proton_list_included_in_monitoring">Activa el monitoreo para recibir notificaciones si tus direcciones de Proton fueron filtradas.</string>
   <string name="security_center_proton_list_options_menu">Menú de opciones de pantalla de Proton</string>
+  <string name="security_center_proton_list_not_monitored">Sin monitoreo</string>
   <!-- Address Bottomsheet options -->
   <string name="security_center_address_bottomsheet_disable_monitoring">Pausar el monitoreo</string>
   <string name="security_center_address_bottomsheet_enable_monitoring">Reanudar el monitoreo</string>

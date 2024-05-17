@@ -36,12 +36,12 @@
   <string name="item_monitor_include_message_error">There was an error including item in monitoring</string>
   <string name="login_item_generate_totp_error">2要素認証コードの生成中エラー</string>
   <string name="login_item_view_alias_button">エイリアスを表示</string>
-  <string name="login_item_monitor_widget_weak_pass_title">Weak Password</string>
+  <string name="login_item_monitor_widget_weak_pass_title">弱いパスワード</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">This account is vulnerable, visit the service and change your password.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="other">%d other logins use the same password</item>
   </plurals>
-  <string name="login_item_monitor_widget_missing_two_fa_title">Set up 2FA for more security</string>
+  <string name="login_item_monitor_widget_missing_two_fa_title">2要素認証を設定するとより安全になります</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">This service offers 2FA. Enable it for added account security.</string>
   <string name="login_item_reused_passwords_subtitle">Items from your vaults that use this password.</string>
   <string name="field_username">ユーザー名またはメールアドレス</string>

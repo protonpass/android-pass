@@ -43,8 +43,8 @@
     <item quantity="other">%d outros inícios de sessão usam a mesma senha</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Configure A2F para mais segurança</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">This service offers 2FA. Enable it for added account security.</string>
-  <string name="login_item_reused_passwords_subtitle">Items from your vaults that use this password.</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Este serviço oferece autenticação de dois fatores (2FA). Ative-a para aumentar a segurança da sua conta.</string>
+  <string name="login_item_reused_passwords_subtitle">Itens dos seus cofres que usam esta senha.</string>
   <string name="field_username">Nome de usuário ou endereço de e-mail</string>
   <string name="field_password">Senha</string>
   <string name="websites_section_title">Sites</string>

@@ -26,8 +26,8 @@
   <string name="bottomsheet_pin_item">Закрепить</string>
   <string name="bottomsheet_unpin_item">Открепить</string>
   <string name="bottomsheet_view_item_history">View history</string>
-  <string name="bottomsheet_monitor_exclude">Exclude from monitoring</string>
-  <string name="bottomsheet_monitor_include">Include in monitoring</string>
+  <string name="bottomsheet_monitor_exclude">Исключить из мониторинга</string>
+  <string name="bottomsheet_monitor_include">Включить в мониторинг</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Открыть меню действий с элементом</string>
   <string name="action_upgrade_now">Улучшить сейчас</string>
@@ -35,8 +35,8 @@
   <string name="action_learn_more">Подробнее</string>
   <string name="action_enable">Включить</string>
   <string name="action_view_details">Просмотреть детали</string>
-  <string name="action_see_all">See all</string>
-  <string name="action_confirm">Confirm</string>
+  <string name="action_see_all">Посмотреть все</string>
+  <string name="action_confirm">Подтвердить</string>
   <!-- Empty list -->
   <string name="empty_list_title">Добавьте свой первый элемент</string>
   <string name="empty_search_results_title">Ничего не найдено</string>

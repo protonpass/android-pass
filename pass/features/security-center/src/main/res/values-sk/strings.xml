@@ -89,11 +89,13 @@
     <item quantity="many">Nájdené v %s únikoch údajov</item>
     <item quantity="other">Nájdené v %s únikoch údajov</item>
   </plurals>
+  <string name="security_center_dark_web_monitor_found_in_breaches">Nebol zistený únik</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Proton adresy</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email aliasy</string>
   <string name="security_center_dark_web_monitor_proton_addresses_error">Chyba pri načítavaní Proton adries</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Chyba pri načítavaní Hide-my-email aliasov</string>
-    <string name="security_center_dark_web_monitor_monitoring_disabled">Monitorovanie vypnuté</string>
+  <string name="security_center_dark_web_monitor_monitoring_disabled">Nemonitorované</string>
+  <string name="security_center_dark_web_monitor_see_all">Zobraziť všetko</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Pri odosielaní overovacieho kódu došlo k chybe. Skúste to neskôr, prosím.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Pri odstraňovaní emailu došlo k chybe. Skúste to neskôr, prosím.</string>
   <!-- Add custom email monitoring -->
@@ -106,16 +108,18 @@
   <!-- Verify email monitoring -->
   <string name="security_center_verify_email_code_placeholder">Kód</string>
   <string name="security_center_verify_email_code_error">Neplatný kód</string>
-  <string name="security_center_verify_email_continue">Pokračovať</string>
   <string name="security_center_verify_email_title">Potvrdte svoj email</string>
   <string name="security_center_verify_email_subtitle">Odoslali sme overovací kód na adresu %s. Zadajte ho, prosím, nižšie:</string>
+  <string name="security_center_verify_email_code_resend_header">Nedostali ste kód?</string>
+  <string name="security_center_verify_email_code_resend_body">Skontrolujte, prosím, či sa vo vašom spame nenachádza email s názvom \"Potvrďte, prosím, svoju emailovú adresu pre Proton Pass\".</string>
+  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">Ak takýto email nemôžete nájsť, môžete </string>
+  <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">požiadať o nový kód.</string>
+  <string name="security_center_verify_email_snackbar_message_resend_code_success">Nový overovací kód bol odoslaný, skontrolujte schránku doručenej pošty, prosím.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">Pri odosielaní overovacieho kódu došlo k chybe. Skúste to neskôr, prosím.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Príliš veľa neplatných overení. Odstraňujeme vlastný email.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Bol zistený únik</string>
   <string name="security_center_verify_report_title_none">Nebol zistený únik</string>
-  <string name="security_center_verify_resend_code">Znovu odoslať kód</string>
-  <string name="security_center_verify_resend_code_in_00">Znovu odoslať kód o 00:%s</string>
   <!-- Email breach report -->
   <string name="security_center_email_report_used_in_header">Použité v</string>
   <string name="security_center_email_report_breaches_header">Úniky údajov</string>
@@ -145,6 +149,7 @@
   <string name="security_center_proton_list_error">Nepodarilo sa načítať adresy</string>
   <string name="security_center_proton_list_included_in_monitoring">Zapnite monitorovanie, ktoré vás upozorní, keď dôjde k úniku vašich Proton adries.</string>
   <string name="security_center_proton_list_options_menu">Menu nastavení na obrazovke Proton</string>
+  <string name="security_center_proton_list_not_monitored">Nemonitorované</string>
   <!-- Address Bottomsheet options -->
   <string name="security_center_address_bottomsheet_disable_monitoring">Pozastaviť monitorovanie</string>
   <string name="security_center_address_bottomsheet_enable_monitoring">Pokračovať v monitorovaní</string>

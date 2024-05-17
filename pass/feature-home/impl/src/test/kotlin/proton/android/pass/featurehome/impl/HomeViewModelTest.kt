@@ -48,6 +48,7 @@ import proton.android.pass.data.fakes.usecases.TestDeleteAllSearchEntry
 import proton.android.pass.data.fakes.usecases.TestDeleteItems
 import proton.android.pass.data.fakes.usecases.TestDeleteSearchEntry
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
+import proton.android.pass.data.fakes.usecases.TestItemSyncStatusRepository
 import proton.android.pass.data.fakes.usecases.TestObserveAppNeedsUpdate
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObservePinnedItems
@@ -273,7 +274,8 @@ internal class HomeViewModelTest {
             pinItems = TestPinItems(),
             unpinItems = TestUnpinItems(),
             observeAppNeedsUpdate = TestObserveAppNeedsUpdate(),
-            appDispatchers = TestAppDispatchers()
+            appDispatchers = TestAppDispatchers(),
+            itemSyncStatusRepository = TestItemSyncStatusRepository()
         )
     }
 

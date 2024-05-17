@@ -126,6 +126,10 @@ fun HomeScreen(
                 onNavigateEvent(HomeNavigation.UpgradeDialog)
             }
 
+            HomeNavEvent.SyncDialog -> {
+                onNavigateEvent(HomeNavigation.SyncDialog)
+            }
+
             HomeNavEvent.Unknown -> {}
         }
 
@@ -175,7 +179,6 @@ fun HomeScreen(
     LaunchedEffect(routerEvent) {
         when (routerEvent) {
             RouterEvent.OnBoarding -> onNavigateEvent(HomeNavigation.OnBoarding)
-            RouterEvent.SyncDialog -> onNavigateEvent(HomeNavigation.SyncDialog)
             RouterEvent.ConfirmedInvite -> onNavigateEvent(HomeNavigation.ConfirmedInvite)
             RouterEvent.None -> {}
         }

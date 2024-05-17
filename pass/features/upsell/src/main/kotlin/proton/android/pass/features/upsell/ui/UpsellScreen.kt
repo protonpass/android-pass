@@ -19,13 +19,19 @@
 package proton.android.pass.features.upsell.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import proton.android.pass.features.upsell.navigation.UpsellNavDestination
 import proton.android.pass.features.upsell.presentation.UpsellViewModel
 
 @Composable
-fun UpsellScreen(onNavigated: (UpsellNavDestination) -> Unit, viewModel: UpsellViewModel = hiltViewModel()) {
+fun UpsellScreen(
+    modifier: Modifier = Modifier,
+    onNavigated: (UpsellNavDestination) -> Unit,
+    viewModel: UpsellViewModel = hiltViewModel()
+) {
     UpsellContent(
+        modifier = modifier,
         onNavigated = onNavigated,
         state = viewModel.state
     )

@@ -114,7 +114,6 @@ class PlanRepositoryImpl @Inject constructor(
     }
 
     private fun PlanEntity.toPlan(): Plan {
-        PassLogger.i(TAG, "Plan entity: $this")
         val plan = if (trialEnd != null) {
             when (val trial = getTrialStatus(trialEnd)) {
                 TrialStatus.NotTrial -> toPlanType(false)
@@ -169,7 +168,7 @@ class PlanRepositoryImpl @Inject constructor(
             name = internalName,
             displayName = displayName
         )
-    }.also { PassLogger.i(TAG, "Plan type: $it") }
+    }
 
     private fun toPlanLimit(value: Int): PlanLimit = if (value == -1) {
         PlanLimit.Unlimited

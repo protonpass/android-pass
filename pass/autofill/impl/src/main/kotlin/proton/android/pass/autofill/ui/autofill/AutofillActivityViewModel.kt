@@ -29,7 +29,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -51,7 +50,6 @@ import proton.android.pass.common.api.flatMap
 import proton.android.pass.commonui.api.require
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
-import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -116,9 +114,7 @@ class AutofillActivityViewModel @Inject constructor(
     }
 
     fun onStop() = viewModelScope.launch {
-        if (preferenceRepository.getHasAuthenticated().first() is HasAuthenticated.Authenticated) {
-            storeAuthOnStop()
-        }
+        storeAuthOnStop()
     }
 
     fun signOut() = viewModelScope.launch {

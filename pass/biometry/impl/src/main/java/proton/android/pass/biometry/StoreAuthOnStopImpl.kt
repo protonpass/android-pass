@@ -18,6 +18,7 @@
 
 package proton.android.pass.biometry
 
+import kotlinx.coroutines.flow.first
 import proton.android.pass.common.api.some
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -29,13 +30,17 @@ class StoreAuthOnStopImpl @Inject constructor(
     private val elapsedTimeProvider: ElapsedTimeProvider,
     private val userPreferencesRepository: UserPreferencesRepository
 ) : StoreAuthOnStop {
-    override fun invoke() {
-        userPreferencesRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
-        biometryAuthTimeHolder.storeBiometryAuthData(
-            AuthData(
-                authTime = elapsedTimeProvider.getElapsedTime().some(),
-                bootCount = bootCountRetriever.get().some()
+    override suspend fun invoke() {
+        val isAuthenticated = userPreferencesRepository.getHasAuthenticated()
+            .first() is HasAuthenticated.Authenticated
+        if (isAuthenticated) {
+            userPreferencesRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
+            biometryAuthTimeHolder.storeBiometryAuthData(
+                AuthData(
+                    authTime = elapsedTimeProvider.getElapsedTime().some(),
+                    bootCount = bootCountRetriever.get().some()
+                )
             )
-        )
+        }
     }
 }

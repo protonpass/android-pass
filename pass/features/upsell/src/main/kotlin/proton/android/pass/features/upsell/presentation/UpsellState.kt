@@ -56,6 +56,14 @@ internal data class UpsellState(private val paidFeature: PaidFeature) {
         PaidFeature.ViewMissing2fa -> R.string.upsell_missing_2fa_subtitle
     }
 
+    @StringRes
+    internal val submitText: Int = when (paidFeature) {
+        PaidFeature.SentinelEssential -> R.string.upsell_button_upgrade_essentials
+        PaidFeature.DarkWebMonitoring,
+        PaidFeature.SentinelFree,
+        PaidFeature.ViewMissing2fa -> R.string.upsell_button_upgrade
+    }
+
     internal val features: ImmutableList<Pair<Int, Int>> = when (paidFeature) {
         PaidFeature.SentinelEssential -> persistentListOf(
             CoreR.drawable.ic_proton_user to R.string.upsell_paid_feature_sentinel,

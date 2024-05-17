@@ -47,6 +47,7 @@ import proton.android.pass.composecomponents.impl.R as CompR
 @Composable
 internal fun UpsellFooter(
     modifier: Modifier = Modifier,
+    submitText: String,
     onUpgradeClick: () -> Unit,
     onNotNowClick: () -> Unit
 ) {
@@ -65,7 +66,7 @@ internal fun UpsellFooter(
         ) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = stringResource(id = R.string.upsell_button_upgrade),
+                text = submitText,
                 color = PassTheme.colors.textInvert,
                 style = ProtonTheme.typography.defaultNorm,
                 textAlign = TextAlign.Center
@@ -88,6 +89,7 @@ fun UpsellFooterPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: B
     PassTheme(isDark = isDark) {
         Surface {
             UpsellFooter(
+                submitText = stringResource(id = R.string.upsell_button_upgrade),
                 onUpgradeClick = {},
                 onNotNowClick = {}
             )

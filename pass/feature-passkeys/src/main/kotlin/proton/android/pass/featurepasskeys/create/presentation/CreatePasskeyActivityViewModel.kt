@@ -43,7 +43,6 @@ import proton.android.pass.biometry.StoreAuthOnStop
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.some
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.featurepasskeys.R
@@ -52,7 +51,6 @@ import proton.android.pass.featurepasskeys.telemetry.CreateDone
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.ToastManager
 import proton.android.pass.passkeys.api.ParseCreatePasskeyRequest
-import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -68,11 +66,10 @@ class CreatePasskeyActivityViewModel @Inject constructor(
     private val accountOrchestrators: AccountOrchestrators,
     private val accountManager: AccountManager,
     private val parseCreatePasskeyRequest: ParseCreatePasskeyRequest,
-    private val preferenceRepository: UserPreferencesRepository,
-    private val internalSettingsRepository: InternalSettingsRepository,
     private val toastManager: ToastManager,
     private val telemetryManager: TelemetryManager,
     private val storeAuthOnStop: StoreAuthOnStop,
+    preferenceRepository: UserPreferencesRepository,
     needsBiometricAuth: NeedsBiometricAuth
 ) : ViewModel() {
 
@@ -163,13 +160,6 @@ class CreatePasskeyActivityViewModel @Inject constructor(
             accountManager.disableAccount(primaryUserId)
             toastManager.showToast(R.string.passkeys_user_logged_out)
         }
-        preferenceRepository.clearPreferences()
-            .flatMap { internalSettingsRepository.clearSettings() }
-            .onSuccess { PassLogger.d(TAG, "Clearing preferences success") }
-            .onFailure {
-                PassLogger.w(TAG, "Error clearing preferences")
-                PassLogger.w(TAG, it)
-            }
 
         closeScreenFlow.update { true }
     }

@@ -18,6 +18,8 @@
 
 package proton.android.pass.data.impl.usecases
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import proton.android.pass.data.api.usecases.ClearPin
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
 import proton.android.pass.log.api.PassLogger
@@ -30,23 +32,27 @@ class ResetAppToDefaultsImpl @Inject constructor(
     private val internalSettingsRepository: InternalSettingsRepository,
     private val clearPin: ClearPin
 ) : ResetAppToDefaults {
-    override suspend fun invoke() {
+    override suspend fun invoke() = withContext(Dispatchers.IO) {
+        PassLogger.i(TAG, "Clearing preferences")
         preferencesRepository.clearPreferences()
-            .onSuccess { PassLogger.d(TAG, "Preferences cleared") }
+            .onSuccess { PassLogger.i(TAG, "Preferences cleared") }
             .onFailure {
                 PassLogger.w(TAG, "Error clearing preferences")
                 PassLogger.w(TAG, it)
             }
+
+        PassLogger.i(TAG, "Clearing internal settings")
         internalSettingsRepository.clearSettings()
             .onSuccess { PassLogger.d(TAG, "Internal settings cleared") }
             .onFailure {
                 PassLogger.w(TAG, "Error clearing internal settings")
                 PassLogger.w(TAG, it)
             }
+
         clearPin()
     }
 
     companion object {
-        private const val TAG = "ClearAppDataImpl"
+        private const val TAG = "ResetAppToDefaultsImpl"
     }
 }

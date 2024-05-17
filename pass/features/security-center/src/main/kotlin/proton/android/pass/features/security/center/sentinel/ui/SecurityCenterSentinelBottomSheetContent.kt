@@ -36,6 +36,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
+import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.sentinel.presentation.SecurityCenterSentinelState
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -83,14 +84,20 @@ internal fun SecurityCenterSentinelBottomSheetContent(
                 }.let { textResId -> stringResource(id = textResId) },
                 onClick = {
                     when {
-                        isFreeUser -> onUiEvent(SecurityCenterSentinelUiEvent.OnUpsell)
+                        isFreeUser -> onUiEvent(
+                            SecurityCenterSentinelUiEvent.OnUpsell(PaidFeature.SentinelFree)
+                        )
+
                         canEnableSentinel == true -> if (isSentinelEnabled) {
                             onUiEvent(SecurityCenterSentinelUiEvent.OnDisableSentinel)
                         } else {
                             onUiEvent(SecurityCenterSentinelUiEvent.OnEnableSentinel)
                         }
 
-                        canEnableSentinel == false -> onUiEvent(SecurityCenterSentinelUiEvent.OnUpsell)
+                        canEnableSentinel == false -> onUiEvent(
+                            SecurityCenterSentinelUiEvent.OnUpsell(PaidFeature.SentinelEssential)
+                        )
+
                         else -> {}
                     }
                 },

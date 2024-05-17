@@ -18,10 +18,13 @@
 
 package proton.android.pass.features.security.center.sentinel.navigation
 
+import proton.android.pass.domain.features.PaidFeature
+
 sealed interface SecurityCenterSentinelDestination {
 
     data object Dismiss : SecurityCenterSentinelDestination
 
-    data object Upsell : SecurityCenterSentinelDestination
+    @JvmInline
+    value class OnUpsell(internal val paidFeature: PaidFeature) : SecurityCenterSentinelDestination
 
 }

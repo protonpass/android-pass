@@ -157,15 +157,8 @@ class LauncherViewModel @Inject constructor(
                 }
 
                 if (result != null) {
-                    accountManager.getAccounts()
+                    itemSyncStatusRepository.observeSyncStatus()
                         .first()
-                        .size
-                        .let { accountCount ->
-                            if (accountCount > 1) {
-                                itemSyncStatusRepository.tryEmit(ItemSyncStatus.SyncStarted)
-                            }
-                            itemSyncStatusRepository.observeSyncStatus().first()
-                        }
                         .let { itemSyncStatus ->
                             when (itemSyncStatus) {
                                 ItemSyncStatus.SyncError,
@@ -176,9 +169,7 @@ class LauncherViewModel @Inject constructor(
                                 ItemSyncStatus.SyncSuccess -> SyncMode.Background
                             }
                         }
-                        .also { syncMode ->
-                            itemSyncStatusRepository.setMode(syncMode)
-                        }
+                        .also { syncMode -> itemSyncStatusRepository.setMode(syncMode) }
 
                     refreshOrganizationSettings()
                 }

@@ -201,9 +201,6 @@ internal fun UpdateLogin(
                         actionAfterKeyboardHide =
                             { onNavigate(BaseLoginNavigation.Upgrade) }
 
-                    LoginContentEvent.OnCreatePassword -> onNavigate(BaseLoginNavigation.GeneratePassword)
-                    is LoginContentEvent.OnScanTotp -> onNavigate(BaseLoginNavigation.ScanTotp(it.index))
-                    LoginContentEvent.OnUpgrade -> onNavigate(BaseLoginNavigation.Upgrade)
                 }
             }
         )

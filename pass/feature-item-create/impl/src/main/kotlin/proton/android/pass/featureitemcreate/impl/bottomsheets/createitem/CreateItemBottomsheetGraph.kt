@@ -22,12 +22,12 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.toPath
-import proton.android.pass.domain.ShareId
 
 object CreateItemBottomsheet : NavItem(
     baseRoute = "item/create/bottomsheet",
@@ -50,6 +50,7 @@ sealed interface CreateItemBottomsheetNavigation {
     data class CreateAlias(val shareId: Option<ShareId>) : CreateItemBottomsheetNavigation
     data class CreateNote(val shareId: Option<ShareId>) : CreateItemBottomsheetNavigation
     data class CreateCreditCard(val shareId: Option<ShareId>) : CreateItemBottomsheetNavigation
+    data class CreateIdentity(val shareId: Option<ShareId>) : CreateItemBottomsheetNavigation
     data object CreatePassword : CreateItemBottomsheetNavigation
 }
 

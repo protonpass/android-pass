@@ -20,6 +20,5 @@ package proton.android.pass.featureitemdetail.impl.common
 
 internal data class ItemFeatures(
     internal val isHistoryEnabled: Boolean,
-    internal val isPinningEnabled: Boolean,
     internal val isSecurityCenterEnabled: Boolean
 )

@@ -71,8 +71,6 @@ data class HomeUiState(
     val accountType: AccountType,
     val navEvent: HomeNavEvent,
     val action: BottomSheetItemAction,
-    val isPinningFeatureEnabled: Boolean,
-    val isHistoryFeatureEnabled: Boolean,
     val isFreePlan: Boolean
 ) {
     fun shouldShowRecentSearchHeader() =
@@ -100,8 +98,6 @@ data class HomeUiState(
             accountType = AccountType.Free,
             navEvent = HomeNavEvent.Unknown,
             action = BottomSheetItemAction.None,
-            isPinningFeatureEnabled = true,
-            isHistoryFeatureEnabled = false,
             isFreePlan = true
         )
     }
@@ -112,7 +108,6 @@ data class SelectionTopBarState(
     val isTrash: Boolean,
     val selectedItemCount: Int,
     val areAllSelectedPinned: Boolean,
-    val isPinningEnabled: Boolean,
     val pinningLoadingState: IsLoadingState,
     val actionsEnabled: Boolean
 ) {
@@ -121,7 +116,6 @@ data class SelectionTopBarState(
             isTrash = false,
             selectedItemCount = 0,
             areAllSelectedPinned = false,
-            isPinningEnabled = false,
             pinningLoadingState = IsLoadingState.NotLoading,
             actionsEnabled = true
         )
@@ -195,7 +189,6 @@ data class SearchUiState(
 @Immutable
 data class PinningUiState(
     val inPinningMode: Boolean,
-    val isPinningEnabled: Boolean,
     val filteredItems: ImmutableList<GroupedItemList>,
     val itemTypeCount: ItemTypeCount,
     val unFilteredItems: PersistentList<ItemUiModel>
@@ -203,7 +196,6 @@ data class PinningUiState(
     companion object {
         val Initial = PinningUiState(
             inPinningMode = false,
-            isPinningEnabled = false,
             filteredItems = persistentListOf(),
             unFilteredItems = persistentListOf(),
             itemTypeCount = ItemTypeCount(0, 0, 0, 0)

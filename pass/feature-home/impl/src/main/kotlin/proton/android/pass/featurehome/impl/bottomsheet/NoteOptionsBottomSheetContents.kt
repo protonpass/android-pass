@@ -63,8 +63,6 @@ fun NoteOptionsBottomSheetContents(
     onEdit: (ShareId, ItemId) -> Unit,
     onMoveToTrash: (ItemUiModel) -> Unit,
     onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit,
-    isPinningFeatureEnabled: Boolean,
-    isHistoryFeatureEnabled: Boolean,
     isFreePlan: Boolean
 ) {
     val contents = itemUiModel.contents as ItemContents.Note
@@ -85,17 +83,13 @@ fun NoteOptionsBottomSheetContents(
         )
 
         val bottomSheetItems = mutableListOf(copyNote(contents.note, onCopyNote)).apply {
-            if (isPinningFeatureEnabled) {
-                if (itemUiModel.isPinned) {
-                    add(unpin(action) { onUnpinned(itemUiModel.shareId, itemUiModel.id) })
-                } else {
-                    add(pin(action) { onPinned(itemUiModel.shareId, itemUiModel.id) })
-                }
+            if (itemUiModel.isPinned) {
+                add(unpin(action) { onUnpinned(itemUiModel.shareId, itemUiModel.id) })
+            } else {
+                add(pin(action) { onPinned(itemUiModel.shareId, itemUiModel.id) })
             }
 
-            if (isHistoryFeatureEnabled) {
-                add(viewHistory(isFreePlan) { onViewHistory(itemUiModel.shareId, itemUiModel.id) })
-            }
+            add(viewHistory(isFreePlan) { onViewHistory(itemUiModel.shareId, itemUiModel.id) })
 
             if (itemUiModel.canModify) {
                 add(edit(itemUiModel, onEdit))
@@ -158,8 +152,6 @@ fun NoteOptionsBottomSheetContentsPreview(
                 onEdit = { _, _ -> },
                 onMoveToTrash = {},
                 onRemoveFromRecentSearch = { _, _ -> },
-                isPinningFeatureEnabled = true,
-                isHistoryFeatureEnabled = true,
                 isFreePlan = input.second
             )
         }

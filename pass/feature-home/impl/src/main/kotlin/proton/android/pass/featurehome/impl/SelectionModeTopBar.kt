@@ -77,50 +77,49 @@ fun SelectionModeTopBar(
 
 @Composable
 private fun RowScope.NonTrashSelectionModeTopBar(selectionState: SelectionTopBarState, onEvent: (HomeUiEvent) -> Unit) {
-    if (selectionState.isPinningEnabled) {
-        when (selectionState.pinningLoadingState) {
-            IsLoadingState.NotLoading -> {
-                IconButton(
-                    enabled = selectionState.actionsEnabled,
-                    onClick = {
-                        val event = if (selectionState.areAllSelectedPinned) {
-                            HomeUiEvent.UnpinItemsActionClick
-                        } else {
-                            HomeUiEvent.PinItemsActionClick
-                        }
-                        onEvent(event)
-                    }
-                ) {
-                    val iconRes = if (selectionState.areAllSelectedPinned) {
-                        CompR.drawable.ic_unpin_angled
+    when (selectionState.pinningLoadingState) {
+        IsLoadingState.NotLoading -> {
+            IconButton(
+                enabled = selectionState.actionsEnabled,
+                onClick = {
+                    val event = if (selectionState.areAllSelectedPinned) {
+                        HomeUiEvent.UnpinItemsActionClick
                     } else {
-                        CompR.drawable.ic_pin_angled
+                        HomeUiEvent.PinItemsActionClick
                     }
-                    Icon(
-                        painter = painterResource(iconRes),
-                        contentDescription = null,
-                        tint = if (selectionState.actionsEnabled) {
-                            PassTheme.colors.textNorm
-                        } else {
-                            PassTheme.colors.textDisabled
-                        }
-                    )
+                    onEvent(event)
                 }
+            ) {
+                val iconRes = if (selectionState.areAllSelectedPinned) {
+                    CompR.drawable.ic_unpin_angled
+                } else {
+                    CompR.drawable.ic_pin_angled
+                }
+                Icon(
+                    painter = painterResource(iconRes),
+                    contentDescription = null,
+                    tint = if (selectionState.actionsEnabled) {
+                        PassTheme.colors.textNorm
+                    } else {
+                        PassTheme.colors.textDisabled
+                    }
+                )
             }
+        }
 
-            IsLoadingState.Loading -> {
-                Box(
-                    modifier = Modifier.minimumInteractiveComponentSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(24.dp),
-                        strokeWidth = 2.dp
-                    )
-                }
+        IsLoadingState.Loading -> {
+            Box(
+                modifier = Modifier.minimumInteractiveComponentSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(24.dp),
+                    strokeWidth = 2.dp
+                )
             }
         }
     }
+
     IconButton(
         enabled = selectionState.actionsEnabled,
         onClick = { onEvent(HomeUiEvent.MoveItemsActionClick) }
@@ -193,7 +192,6 @@ fun SelectionModeTopBarPreview(@PreviewParameter(ThemedBooleanPreviewProvider::c
                     isTrash = input.second,
                     selectedItemCount = 2,
                     areAllSelectedPinned = false,
-                    isPinningEnabled = true,
                     pinningLoadingState = IsLoadingState.NotLoading,
                     actionsEnabled = true
                 ),

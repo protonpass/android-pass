@@ -32,8 +32,7 @@ import me.proton.core.featureflag.domain.entity.FeatureId
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
-import proton.android.pass.preferences.FeatureFlag.HISTORY_V1
-import proton.android.pass.preferences.FeatureFlag.PINNING_V1
+import proton.android.pass.preferences.FeatureFlag.IDENTITY_V1
 import proton.android.pass.preferences.FeatureFlag.SECURITY_CENTER_V1
 import java.io.IOException
 import javax.inject.Inject
@@ -53,20 +52,15 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             defaultValue = featureFlag.isEnabledDefault
         ) { autofillDebugModeEnabled.value }
 
-        PINNING_V1 -> getFeatureFlag(
-            key = featureFlag.key,
-            defaultValue = featureFlag.isEnabledDefault
-        ) { pinningV1Enabled.value }
-
-        HISTORY_V1 -> getFeatureFlag(
-            key = featureFlag.key,
-            defaultValue = featureFlag.isEnabledDefault
-        ) { historyV1Enabled.value }
-
         SECURITY_CENTER_V1 -> getFeatureFlag(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
         ) { securityCenterV1Enabled.value }
+
+        IDENTITY_V1 -> getFeatureFlag(
+            key = featureFlag.key,
+            defaultValue = featureFlag.isEnabledDefault
+        ) { identityItemTypeEnabled.value }
     }
 
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> = when (featureFlag) {
@@ -74,16 +68,12 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             autofillDebugModeEnabled = boolFlagPrefProto(value)
         }
 
-        PINNING_V1 -> setFeatureFlag {
-            pinningV1Enabled = boolFlagPrefProto(value)
-        }
-
-        HISTORY_V1 -> setFeatureFlag {
-            historyV1Enabled = boolFlagPrefProto(value)
-        }
-
         SECURITY_CENTER_V1 -> setFeatureFlag {
             securityCenterV1Enabled = boolFlagPrefProto(value)
+        }
+
+        IDENTITY_V1 -> setFeatureFlag {
+            identityItemTypeEnabled = boolFlagPrefProto(value)
         }
     }
 

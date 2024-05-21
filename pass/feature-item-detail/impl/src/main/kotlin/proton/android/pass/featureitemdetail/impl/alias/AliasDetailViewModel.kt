@@ -145,14 +145,11 @@ class AliasDetailViewModel @Inject constructor(
         .asLoadingResult()
 
     private val itemFeaturesFlow = combine(
-        featureFlagsRepository.get<Boolean>(FeatureFlag.PINNING_V1),
-        featureFlagsRepository.get<Boolean>(FeatureFlag.HISTORY_V1),
         featureFlagsRepository.get<Boolean>(FeatureFlag.SECURITY_CENTER_V1),
         getUserPlan()
-    ) { isPinningFeatureEnabled, isHistoryFeatureFlagEnabled, isSecurityCenterEnabled, userPlan ->
+    ) { isSecurityCenterEnabled, userPlan ->
         ItemFeatures(
-            isHistoryEnabled = isHistoryFeatureFlagEnabled && userPlan.isPaidPlan,
-            isPinningEnabled = isPinningFeatureEnabled,
+            isHistoryEnabled = userPlan.isPaidPlan,
             isSecurityCenterEnabled = isSecurityCenterEnabled
         )
     }
@@ -212,7 +209,6 @@ class AliasDetailViewModel @Inject constructor(
                     shareClickAction = shareAction,
                     itemActions = actions,
                     event = event,
-                    isPinningFeatureEnabled = itemFeatures.isPinningEnabled,
                     isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled
                 )
             }

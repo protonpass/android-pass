@@ -103,7 +103,6 @@ import proton.android.pass.featureselectitem.ui.SelectItemSnackbarMessage
 import proton.android.pass.featureselectitem.ui.SelectItemUiState
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
@@ -306,18 +305,13 @@ class SelectItemViewModel @Inject constructor(
         pinnedItemsFlow,
         sortingOptionFlow,
         debouncedSearchQueryState,
-        isInSeeAllPinsModeState,
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PINNING_V1)
-    ) { pinnedItemsResult, sortingOption, searchQuery, isInSeeAllPinsMode, isPinningEnabled ->
-        val pinnedItems = if (isPinningEnabled) {
-            pinnedItemsResult.getOrNull()?.let { list ->
-                encryptionContextProvider.withEncryptionContext {
-                    list.map { it.toUiModel(this@withEncryptionContext) }
-                }
-            } ?: emptyList()
-        } else {
-            emptyList()
-        }
+        isInSeeAllPinsModeState
+    ) { pinnedItemsResult, sortingOption, searchQuery, isInSeeAllPinsMode ->
+        val pinnedItems = pinnedItemsResult.getOrNull()?.let { list ->
+            encryptionContextProvider.withEncryptionContext {
+                list.map { it.toUiModel(this@withEncryptionContext) }
+            }
+        } ?: emptyList()
         val unfilteredItems = pinnedItems
             .sortItemLists(sortingOption)
             .toPersistentList()
@@ -327,7 +321,6 @@ class SelectItemViewModel @Inject constructor(
             .toPersistentList()
         PinningUiState(
             inPinningMode = isInSeeAllPinsMode,
-            isPinningEnabled = isPinningEnabled,
             filteredItems = filteredItems,
             unFilteredItems = unfilteredItems
         )

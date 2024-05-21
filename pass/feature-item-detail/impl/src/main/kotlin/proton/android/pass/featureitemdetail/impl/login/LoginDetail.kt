@@ -160,7 +160,6 @@ fun LoginDetail(
                                     scope.launch { bottomSheetState.hide() }
                                     viewModel.onIncludeItemInMonitoring()
                                 },
-                                isPinningFeatureEnabled = state.isPinningFeatureEnabled,
                                 isSecurityCenterEnabled = state.isSecurityCenterEnabled,
                                 isExcludedFromMonitor = state.monitorState.isExcludedFromMonitor
                             )
@@ -213,8 +212,7 @@ fun LoginDetail(
                             },
                             onShareClick = {
                                 onShareClick(state.itemActions, onNavigate, state.itemUiModel)
-                            },
-                            shouldShowMenu = state.itemActions.canMoveToTrash || state.isPinningFeatureEnabled
+                            }
                         )
                     }
                 ) { padding ->

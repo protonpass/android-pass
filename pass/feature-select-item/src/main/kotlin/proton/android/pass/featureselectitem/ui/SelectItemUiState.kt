@@ -128,7 +128,6 @@ data class SearchUiState(
 @Immutable
 data class PinningUiState(
     val inPinningMode: Boolean,
-    val isPinningEnabled: Boolean,
     val filteredItems: ImmutableList<GroupedItemList>,
     val unFilteredItems: PersistentList<ItemUiModel>
 ) {
@@ -138,7 +137,6 @@ data class PinningUiState(
     companion object {
         val Initial = PinningUiState(
             inPinningMode = false,
-            isPinningEnabled = false,
             filteredItems = persistentListOf(),
             unFilteredItems = persistentListOf()
         )

@@ -63,8 +63,6 @@ fun AliasOptionsBottomSheetContents(
     onEdit: (ShareId, ItemId) -> Unit,
     onMoveToTrash: (ItemUiModel) -> Unit,
     onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit,
-    isPinningFeatureEnabled: Boolean,
-    isHistoryFeatureEnabled: Boolean,
     isFreePlan: Boolean
 ) {
     val contents = itemUiModel.contents as ItemContents.Alias
@@ -81,17 +79,13 @@ fun AliasOptionsBottomSheetContents(
         )
 
         val bottomSheetItems = mutableListOf(copyAlias(contents.aliasEmail, onCopyAlias)).apply {
-            if (isPinningFeatureEnabled) {
-                if (itemUiModel.isPinned) {
-                    add(unpin(action) { onUnpinned(itemUiModel.shareId, itemUiModel.id) })
-                } else {
-                    add(pin(action) { onPinned(itemUiModel.shareId, itemUiModel.id) })
-                }
+            if (itemUiModel.isPinned) {
+                add(unpin(action) { onUnpinned(itemUiModel.shareId, itemUiModel.id) })
+            } else {
+                add(pin(action) { onPinned(itemUiModel.shareId, itemUiModel.id) })
             }
 
-            if (isHistoryFeatureEnabled) {
-                add(viewHistory(isFreePlan) { onViewHistory(itemUiModel.shareId, itemUiModel.id) })
-            }
+            add(viewHistory(isFreePlan) { onViewHistory(itemUiModel.shareId, itemUiModel.id) })
 
             if (itemUiModel.canModify) {
                 add(edit(itemUiModel, onEdit))
@@ -155,8 +149,6 @@ fun AliasOptionsBottomSheetContentsPreview(
                 onEdit = { _, _ -> },
                 onMoveToTrash = {},
                 onRemoveFromRecentSearch = { _, _ -> },
-                isPinningFeatureEnabled = true,
-                isHistoryFeatureEnabled = true,
                 isFreePlan = input.second
             )
         }

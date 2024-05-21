@@ -31,6 +31,13 @@ import proton.android.pass.composecomponents.impl.R as CompR
 @Stable
 internal data class UpsellState(private val paidFeature: PaidFeature) {
 
+    internal val canUpgrade: Boolean = when (paidFeature) {
+        PaidFeature.SentinelEssential -> false
+        PaidFeature.DarkWebMonitoring,
+        PaidFeature.SentinelFree,
+        PaidFeature.ViewMissing2fa -> true
+    }
+
     @DrawableRes
     internal val logo: Int = when (paidFeature) {
         PaidFeature.SentinelEssential,

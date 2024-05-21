@@ -24,4 +24,6 @@ sealed interface UpsellNavDestination {
 
     data object Upgrade : UpsellNavDestination
 
+    data object Subscription : UpsellNavDestination
+
 }

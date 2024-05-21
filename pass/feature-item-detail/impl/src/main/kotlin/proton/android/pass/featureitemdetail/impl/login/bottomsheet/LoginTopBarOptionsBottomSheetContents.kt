@@ -45,7 +45,6 @@ fun LoginTopBarOptionsBottomSheetContents(
     onUnpinned: () -> Unit,
     onExcludeFromMonitoring: () -> Unit,
     onIncludeInMonitoring: () -> Unit,
-    isPinningFeatureEnabled: Boolean,
     isSecurityCenterEnabled: Boolean,
     isExcludedFromMonitor: Boolean
 ) {
@@ -54,12 +53,10 @@ fun LoginTopBarOptionsBottomSheetContents(
             add(migrate(onClick = onMigrate))
         }
 
-        if (isPinningFeatureEnabled) {
-            if (isPinned) {
-                add(unpin(BottomSheetItemAction.None) { onUnpinned() })
-            } else {
-                add(pin(BottomSheetItemAction.None) { onPinned() })
-            }
+        if (isPinned) {
+            add(unpin(BottomSheetItemAction.None) { onUnpinned() })
+        } else {
+            add(pin(BottomSheetItemAction.None) { onPinned() })
         }
 
         if (isSecurityCenterEnabled) {

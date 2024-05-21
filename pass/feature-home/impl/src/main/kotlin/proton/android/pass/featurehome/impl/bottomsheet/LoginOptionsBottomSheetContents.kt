@@ -67,8 +67,6 @@ fun LoginOptionsBottomSheetContents(
     onEdit: (ShareId, ItemId) -> Unit,
     onMoveToTrash: (ItemUiModel) -> Unit,
     onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit,
-    isPinningFeatureEnabled: Boolean,
-    isHistoryFeatureEnabled: Boolean,
     isFreePlan: Boolean
 ) {
     val contents = itemUiModel.contents as ItemContents.Login
@@ -98,17 +96,13 @@ fun LoginOptionsBottomSheetContents(
             copyUsername(contents.itemEmail, onCopyUsername),
             copyPassword(contents.password.encrypted, onCopyPassword)
         ).apply {
-            if (isPinningFeatureEnabled) {
-                if (itemUiModel.isPinned) {
-                    add(unpin(action) { onUnpinned(itemUiModel.shareId, itemUiModel.id) })
-                } else {
-                    add(pin(action) { onPinned(itemUiModel.shareId, itemUiModel.id) })
-                }
+            if (itemUiModel.isPinned) {
+                add(unpin(action) { onUnpinned(itemUiModel.shareId, itemUiModel.id) })
+            } else {
+                add(pin(action) { onPinned(itemUiModel.shareId, itemUiModel.id) })
             }
 
-            if (isHistoryFeatureEnabled) {
-                add(viewHistory(isFreePlan) { onViewHistory(itemUiModel.shareId, itemUiModel.id) })
-            }
+            add(viewHistory(isFreePlan) { onViewHistory(itemUiModel.shareId, itemUiModel.id) })
 
             if (itemUiModel.canModify) {
                 add(edit(itemUiModel, onEdit))
@@ -196,8 +190,6 @@ fun LoginOptionsBottomSheetContentsPreview(
                 onMoveToTrash = {},
                 onRemoveFromRecentSearch = { _, _ -> },
                 canLoadExternalImages = false,
-                isPinningFeatureEnabled = true,
-                isHistoryFeatureEnabled = true,
                 isFreePlan = input.second
             )
         }

@@ -125,8 +125,7 @@ fun AliasDetail(
                                     shareId = state.itemUiModel.shareId,
                                     itemId = state.itemUiModel.id
                                 )
-                            },
-                            isPinningFeatureEnabled = state.isPinningFeatureEnabled
+                            }
                         )
 
                         ItemState.Trashed.value -> TrashItemBottomSheetContents(
@@ -164,8 +163,7 @@ fun AliasDetail(
                             },
                             onShareClick = {
                                 onShareClick(state.itemActions, onNavigate, state.itemUiModel)
-                            },
-                            shouldShowMenu = state.itemActions.canMoveToTrash || state.isPinningFeatureEnabled
+                            }
                         )
                     }
                 ) { padding ->

@@ -299,8 +299,6 @@ fun HomeScreen(
                             }
                         }
                     },
-                    isPinningFeatureEnabled = homeUiState.isPinningFeatureEnabled,
-                    isHistoryFeatureEnabled = homeUiState.isHistoryFeatureEnabled,
                     isFreePlan = homeUiState.isFreePlan
                 )
 
@@ -352,8 +350,6 @@ fun HomeScreen(
                             }
                         }
                     },
-                    isPinningFeatureEnabled = homeUiState.isPinningFeatureEnabled,
-                    isHistoryFeatureEnabled = homeUiState.isHistoryFeatureEnabled,
                     isFreePlan = homeUiState.isFreePlan
                 )
 
@@ -405,8 +401,6 @@ fun HomeScreen(
                             }
                         }
                     },
-                    isPinningFeatureEnabled = homeUiState.isPinningFeatureEnabled,
-                    isHistoryFeatureEnabled = homeUiState.isHistoryFeatureEnabled,
                     isFreePlan = homeUiState.isFreePlan
                 )
 
@@ -464,8 +458,6 @@ fun HomeScreen(
                             }
                         }
                     },
-                    isPinningFeatureEnabled = homeUiState.isPinningFeatureEnabled,
-                    isHistoryFeatureEnabled = homeUiState.isHistoryFeatureEnabled,
                     isFreePlan = homeUiState.isFreePlan
                 )
 

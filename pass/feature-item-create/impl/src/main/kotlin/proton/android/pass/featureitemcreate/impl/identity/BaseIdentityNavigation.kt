@@ -19,6 +19,5 @@
 package proton.android.pass.featureitemcreate.impl.identity
 
 sealed interface BaseIdentityNavigation {
-    data object Upgrade : BaseIdentityNavigation
     data object Close : BaseIdentityNavigation
 }

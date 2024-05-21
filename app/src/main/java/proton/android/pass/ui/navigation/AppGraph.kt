@@ -805,7 +805,6 @@ fun NavGraphBuilder.appGraph(
                     destination = SelectVaultBottomsheet,
                     route = SelectVaultBottomsheet.createNavRoute(it.shareId)
                 )
-                BaseIdentityNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
             }
         }
     )

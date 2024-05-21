@@ -1431,6 +1431,7 @@ fun NavGraphBuilder.appGraph(
             when (upsellNavDestination) {
                 UpsellNavDestination.Back -> appNavigator.navigateBack(comesFromBottomsheet = false)
                 UpsellNavDestination.Upgrade -> onNavigate(AppNavigation.Upgrade)
+                UpsellNavDestination.Subscription -> onNavigate(AppNavigation.Subscription)
             }
         }
     )

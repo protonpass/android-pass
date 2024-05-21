@@ -46,6 +46,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTit
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
+import proton.android.pass.composecomponents.impl.item.icon.IdentityIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 import proton.android.pass.composecomponents.impl.item.icon.PasswordIcon
@@ -53,6 +54,7 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation.CreateAlias
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation.CreateCreditCard
+import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation.CreateIdentity
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation.CreateLogin
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation.CreateNote
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation.CreatePassword
@@ -60,7 +62,8 @@ import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.Create
 enum class CreateItemBottomSheetMode {
     Full,
     AutofillLogin,
-    AutofillCreditCard
+    AutofillCreditCard,
+    AutofillIdentity
 }
 
 @ExperimentalMaterialApi
@@ -73,7 +76,7 @@ fun CreateItemBottomSheetContents(
 ) {
 
     val items = when (mode) {
-        CreateItemBottomSheetMode.Full -> listOf(
+        CreateItemBottomSheetMode.Full -> listOfNotNull(
             createLogin(state.shareId) { onNavigate(CreateLogin(it)) },
             createAlias(
                 shareId = state.shareId,
@@ -83,7 +86,12 @@ fun CreateItemBottomSheetContents(
                 onNavigate(CreateCreditCard(it))
             },
             createNote(state.shareId) { onNavigate(CreateNote(it)) },
-            createPassword { onNavigate(CreatePassword) }
+            createPassword { onNavigate(CreatePassword) },
+            if (state.isIdentityV1Enabled) {
+                createIdentity(state.shareId) { onNavigate(CreateIdentity(it)) }
+            } else {
+                null
+            }
         )
 
         CreateItemBottomSheetMode.AutofillLogin -> listOf(
@@ -93,6 +101,10 @@ fun CreateItemBottomSheetContents(
 
         CreateItemBottomSheetMode.AutofillCreditCard -> listOf(
             createCreditCard(state.shareId) { onNavigate(CreateCreditCard(it)) }
+        )
+
+        CreateItemBottomSheetMode.AutofillIdentity -> listOf(
+            createIdentity(state.shareId) { onNavigate(CreateIdentity(it)) }
         )
     }
 
@@ -233,6 +245,27 @@ private fun createPassword(onCreatePassword: () -> Unit): BottomSheetItem = obje
     override val isDivider = false
 }
 
+private fun createIdentity(shareId: ShareId?, onCreateIdentity: (Option<ShareId>) -> Unit): BottomSheetItem =
+    object : BottomSheetItem {
+        override val title: @Composable () -> Unit
+            get() = { BottomSheetItemTitle(text = stringResource(id = R.string.action_identity)) }
+        override val subtitle: (@Composable () -> Unit)
+            get() = {
+                Text(
+                    text = stringResource(R.string.item_type_identity_description),
+                    style = ProtonTheme.typography.defaultSmallNorm,
+                    color = ProtonTheme.colors.textWeak
+                )
+            }
+        override val leftIcon: (@Composable () -> Unit)
+            get() = { IdentityIcon() }
+        override val endIcon: (@Composable () -> Unit)?
+            get() = null
+        override val onClick: () -> Unit
+            get() = { onCreateIdentity(shareId.toOption()) }
+        override val isDivider = false
+    }
+
 
 class ThemeCreateItemBSPreviewProvider : ThemePairPreviewProvider<CreateItemBottomSheetUIState>(
     CreateItemBottomSheetUIStatePreviewProvider()
@@ -258,7 +291,7 @@ fun CreateItemBottomSheetLimitPreview(
 class CreateItemBottomSheetModePreviewProvider :
     PreviewParameterProvider<CreateItemBottomSheetMode> {
     override val values: Sequence<CreateItemBottomSheetMode>
-        get() = CreateItemBottomSheetMode.values().asSequence()
+        get() = CreateItemBottomSheetMode.entries.asSequence()
 }
 
 class ThemedCreateItemModePreviewProvider :

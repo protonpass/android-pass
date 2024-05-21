@@ -25,42 +25,45 @@ import proton.android.pass.domain.HiddenState
 internal class MainLoginSectionParamsPreviewProvider :
     PreviewParameterProvider<MainLoginSectionParams> {
 
+    private val email = "user@email.com"
+    private val username = "MyUsername"
+
     override val values: Sequence<MainLoginSectionParams> = sequenceOf(
         MainLoginSectionParams(
-            email = "",
-            username = "MyUsername",
+            email = email,
+            username = username,
             passwordState = HiddenState.Concealed("encrypted"),
             totpUiState = null,
             showViewAlias = false,
             isUsernameSplitEnabled = false
         ),
         MainLoginSectionParams(
-            email = "",
-            username = "MyUsername",
+            email = email,
+            username = username,
             passwordState = HiddenState.Concealed("encrypted"),
             totpUiState = null,
             showViewAlias = true,
             isUsernameSplitEnabled = false
         ),
         MainLoginSectionParams(
-            email = "",
-            username = "MyUsername",
+            email = email,
+            username = username,
             passwordState = HiddenState.Revealed("encrypted", "clearText"),
             totpUiState = null,
             showViewAlias = false,
             isUsernameSplitEnabled = false
         ),
         MainLoginSectionParams(
-            email = "",
-            username = "MyUsername",
+            email = email,
+            username = username,
             passwordState = HiddenState.Revealed("encrypted", "clearText"),
             totpUiState = TotpUiState.Visible("123456", 12, 20),
             showViewAlias = false,
             isUsernameSplitEnabled = false
         ),
         MainLoginSectionParams(
-            email = "",
-            username = "MyUsername",
+            email = email,
+            username = username,
             passwordState = HiddenState.Revealed("encrypted", "clearText"),
             totpUiState = TotpUiState.Limited,
             showViewAlias = false,
@@ -77,16 +80,16 @@ internal class MainLoginSectionParamsPreviewProvider :
             isUsernameSplitEnabled = false
         ),
         MainLoginSectionParams(
-            email = "",
-            username = "MyUsername",
+            email = email,
+            username = username,
             passwordState = HiddenState.Empty(""),
             totpUiState = TotpUiState.Visible("123456", 12, 20),
             showViewAlias = false,
             isUsernameSplitEnabled = false
         ),
         MainLoginSectionParams(
-            email = "",
-            username = "MyUsername",
+            email = email,
+            username = username,
             passwordState = HiddenState.Concealed("encrypted"),
             totpUiState = TotpUiState.Hidden,
             showViewAlias = false,
@@ -109,8 +112,8 @@ internal class MainLoginSectionParamsPreviewProvider :
             isUsernameSplitEnabled = false
         ),
         MainLoginSectionParams(
-            email = "",
-            username = "MyUsername",
+            email = email,
+            username = username,
             passwordState = HiddenState.Empty(""),
             totpUiState = TotpUiState.Hidden,
             showViewAlias = false,

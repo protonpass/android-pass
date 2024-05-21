@@ -51,7 +51,13 @@ internal fun UpsellContent(
                     vertical = Spacing.medium
                 ),
                 submitText = stringResource(id = state.submitText),
-                onUpgradeClick = { onNavigated(UpsellNavDestination.Upgrade) },
+                onUpgradeClick = {
+                    if (state.canUpgrade) {
+                        onNavigated(UpsellNavDestination.Upgrade)
+                    } else {
+                        onNavigated(UpsellNavDestination.Subscription)
+                    }
+                },
                 onNotNowClick = { onNavigated(UpsellNavDestination.Back) }
             )
         }

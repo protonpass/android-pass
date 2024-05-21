@@ -54,7 +54,7 @@ import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.totp.fakes.TestTotpManager
 
-class CreateIdentityViewModelTest {
+class CreateCreditCardViewModelTest {
 
     @get:Rule
     val dispatcherRule = MainDispatcherRule()

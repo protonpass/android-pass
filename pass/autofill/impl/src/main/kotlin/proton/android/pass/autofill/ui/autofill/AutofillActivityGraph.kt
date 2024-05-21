@@ -373,7 +373,6 @@ fun NavGraphBuilder.autofillActivityGraph(
                     destination = SelectVaultBottomsheet,
                     route = SelectVaultBottomsheet.createNavRoute(it.shareId)
                 )
-                BaseIdentityNavigation.Upgrade -> onNavigate(AutofillNavigation.Upgrade)
             }
         }
     )

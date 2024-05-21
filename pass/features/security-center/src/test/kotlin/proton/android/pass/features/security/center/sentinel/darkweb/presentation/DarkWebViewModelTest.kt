@@ -29,7 +29,6 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.breach.CustomEmailSuggestion
-import proton.android.pass.data.fakes.usecases.TestObserveItemCount
 import proton.android.pass.data.fakes.usecases.breach.BreachCustomEmailMother
 import proton.android.pass.data.fakes.usecases.breach.FakeAddBreachCustomEmail
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachAliasEmails
@@ -63,7 +62,6 @@ class DarkWebViewModelTest {
 
     private lateinit var instance: DarkWebViewModel
 
-    private lateinit var observeItemCount: TestObserveItemCount
     private lateinit var observeBreachProtonEmails: FakeObserveBreachProtonEmails
     private lateinit var observeBreachCustomEmails: FakeObserveBreachCustomEmails
     private lateinit var observeCustomEmailSuggestions: FakeObserveCustomEmailSuggestions
@@ -72,14 +70,12 @@ class DarkWebViewModelTest {
 
     @Before
     fun setUp() {
-        observeItemCount = TestObserveItemCount()
         observeBreachProtonEmails = FakeObserveBreachProtonEmails()
         observeBreachCustomEmails = FakeObserveBreachCustomEmails()
         observeCustomEmailSuggestions = FakeObserveCustomEmailSuggestions()
         observeGlobalMonitorState = FakeObserveGlobalMonitorState()
         observeBreachAliasEmails = FakeObserveBreachAliasEmails()
         instance = DarkWebViewModel(
-            observeItemCount = observeItemCount,
             observeBreachProtonEmails = observeBreachProtonEmails,
             observeBreachAliasEmails = observeBreachAliasEmails,
             observeBreachCustomEmails = observeBreachCustomEmails,

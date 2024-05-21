@@ -81,14 +81,12 @@ internal fun DarkWebContent(
                 EmailBreachSection(
                     state = state.protonEmailState,
                     summaryType = DarkWebSummaryType.Proton,
-                    isClickable = true,
                     onEvent = onEvent
                 )
             }
             item {
                 EmailBreachSection(
                     state = state.aliasEmailState,
-                    isClickable = state.canNavigateToAlias,
                     summaryType = DarkWebSummaryType.Alias,
                     onEvent = onEvent
                 )

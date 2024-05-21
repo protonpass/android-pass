@@ -32,10 +32,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.applyIf
-import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.composecomponents.impl.buttons.TransparentTextButton
-import proton.android.pass.composecomponents.impl.item.placeholder
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.darkweb.presentation.DarkWebEmailBreachState
 import proton.android.pass.features.security.center.darkweb.ui.DarkWebUiEvent
@@ -55,61 +52,26 @@ internal fun EmailBreachHeader(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
-        val accentColor = when {
-            state.enabledMonitoring() && state.list().isEmpty() -> PassTheme.colors.cardInteractionNormMajor1
-            state is DarkWebEmailBreachState.Error -> PassTheme.colors.passwordInteractionNormMajor1
-            !state.enabledMonitoring() -> PassTheme.colors.textWeak
-            else -> PassTheme.colors.passwordInteractionNormMajor1
-        }
         Column(
             modifier = Modifier.weight(weight = 1f),
             verticalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
         ) {
-            val (title, subtitle) = when (summaryType) {
-                DarkWebSummaryType.Proton -> {
-                    val title =
-                        stringResource(R.string.security_center_dark_web_monitor_proton_addresses)
-                    val subtitle = when {
-                        state is DarkWebEmailBreachState.Error ->
-                            stringResource(R.string.security_center_dark_web_monitor_proton_addresses_error)
-
-                        !state.enabledMonitoring() ->
-                            stringResource(R.string.security_center_dark_web_monitor_monitoring_disabled)
-
-                        else -> null
-                    }
-                    title to subtitle
-                }
-
-                DarkWebSummaryType.Alias -> {
-                    val title =
-                        stringResource(R.string.security_center_dark_web_monitor_hide_my_email_aliases)
-                    val subtitle = when {
-                        state is DarkWebEmailBreachState.Error ->
-                            stringResource(R.string.security_center_dark_web_monitor_alias_addresses_error)
-
-                        !state.enabledMonitoring() ->
-                            stringResource(R.string.security_center_dark_web_monitor_monitoring_disabled)
-
-                        else -> null
-                    }
-                    title to subtitle
-                }
+            val title = when (summaryType) {
+                DarkWebSummaryType.Proton ->
+                    stringResource(R.string.security_center_dark_web_monitor_proton_addresses)
+                DarkWebSummaryType.Alias ->
+                    stringResource(R.string.security_center_dark_web_monitor_hide_my_email_aliases)
+            }
+            val titleWithCount = if (state.list().isNotEmpty()) {
+                title.plus(" (${state.list().size})")
+            } else {
+                title
             }
             Text(
-                text = title.plus(" (${state.list().size})"),
+                modifier = Modifier.padding(vertical = Spacing.medium),
+                text = titleWithCount,
                 style = ProtonTheme.typography.defaultSmallNorm
             )
-            subtitle?.let {
-                Text(
-                    modifier = Modifier.applyIf(
-                        condition = state is DarkWebEmailBreachState.Loading,
-                        ifTrue = { placeholder() }
-                    ),
-                    text = subtitle,
-                    style = PassTheme.typography.body3Weak().copy(color = accentColor)
-                )
-            }
         }
 
         if (isClickable) {

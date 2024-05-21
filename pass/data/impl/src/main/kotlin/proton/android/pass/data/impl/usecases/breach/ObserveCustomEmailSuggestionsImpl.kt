@@ -20,55 +20,55 @@ package proton.android.pass.data.impl.usecases.breach
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.user.domain.entity.UserAddress
-import me.proton.core.user.domain.repository.UserAddressRepository
 import proton.android.pass.common.api.CommonRegex.EMAIL_VALIDATION_REGEX
 import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.breach.CustomEmailSuggestion
+import proton.android.pass.data.api.usecases.breach.ObserveBreachProtonEmails
 import proton.android.pass.data.api.usecases.breach.ObserveCustomEmailSuggestions
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareSelection
+import proton.android.pass.domain.breach.BreachProtonEmail
 import javax.inject.Inject
 
 class ObserveCustomEmailSuggestionsImpl @Inject constructor(
-    private val accountManager: AccountManager,
-    private val addressRepository: UserAddressRepository,
-    private val observeItems: ObserveItems
+    private val observeCurrentUser: ObserveCurrentUser,
+    private val observeItems: ObserveItems,
+    private val observeBreachProtonEmails: ObserveBreachProtonEmails
 ) : ObserveCustomEmailSuggestions {
-    override fun invoke(): Flow<List<CustomEmailSuggestion>> = accountManager.getPrimaryUserId()
-        .filterNotNull()
-        .flatMapLatest { userId ->
-
-            val addressesForUser = addressRepository.getAddresses(userId)
+    override fun invoke(): Flow<List<CustomEmailSuggestion>> = observeCurrentUser()
+        .flatMapLatest { user ->
 
             val itemsFlow = observeItems(
-                userId = userId,
+                userId = user.userId,
                 selection = ShareSelection.AllShares,
                 filter = ItemTypeFilter.Logins,
                 itemState = ItemState.Active
             )
 
             val aliasesFlow = observeItems(
-                userId = userId,
+                userId = user.userId,
                 selection = ShareSelection.AllShares,
                 filter = ItemTypeFilter.Aliases,
                 itemState = ItemState.Active
             )
-            combine(itemsFlow, aliasesFlow) { logins, aliases ->
-                combineItems(logins, aliases, addressesForUser)
+            combine(
+                itemsFlow,
+                aliasesFlow,
+                observeBreachProtonEmails()
+            ) { logins, aliases, proton ->
+                combineItems(logins, aliases, proton)
             }
         }
 
     private fun combineItems(
         loginItems: List<Item>,
         aliasItems: List<Item>,
-        addressesForUser: List<UserAddress>
+        addressesForUser: List<BreachProtonEmail>
     ): List<CustomEmailSuggestion> {
 
         val userAddresses = addressesForUser.map { it.email }.toSet()

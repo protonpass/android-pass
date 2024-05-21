@@ -43,20 +43,17 @@ fun TopBarOptionsBottomSheetContents(
     onMoveToTrash: () -> Unit,
     isPinned: Boolean,
     onPinned: () -> Unit,
-    onUnpinned: () -> Unit,
-    isPinningFeatureEnabled: Boolean
+    onUnpinned: () -> Unit
 ) {
     val items = mutableListOf<BottomSheetItem>().apply {
         if (canMigrate) {
             add(migrate(onClick = onMigrate))
         }
 
-        if (isPinningFeatureEnabled) {
-            if (isPinned) {
-                add(unpin(BottomSheetItemAction.None) { onUnpinned() })
-            } else {
-                add(pin(BottomSheetItemAction.None) { onPinned() })
-            }
+        if (isPinned) {
+            add(unpin(BottomSheetItemAction.None) { onUnpinned() })
+        } else {
+            add(pin(BottomSheetItemAction.None) { onPinned() })
         }
 
         if (canMoveToTrash) {
@@ -90,8 +87,7 @@ fun TopBarOptionsBottomSheetContentsPreview(
                     onMigrate = {},
                     onMoveToTrash = {},
                     onPinned = {},
-                    onUnpinned = {},
-                    isPinningFeatureEnabled = true
+                    onUnpinned = {}
                 )
             }
         }

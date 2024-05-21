@@ -154,8 +154,6 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.notifications.api.ToastManager
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.telemetry.api.EventItemType
@@ -194,7 +192,6 @@ class HomeViewModel @Inject constructor(
     observeAppNeedsUpdate: ObserveAppNeedsUpdate,
     appDispatchers: AppDispatchers,
     getUserPlan: GetUserPlan,
-    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     savedState: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -391,18 +388,13 @@ class HomeViewModel @Inject constructor(
         observePinnedItems().asLoadingResult(),
         searchOptionsFlow,
         isInSeeAllPinsModeState,
-        debouncedSearchQueryState,
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.PINNING_V1)
-    ) { pinnedItemsResult, searchOptions, isInSeeAllPinsMode, searchQuery, isPinningEnabled ->
-        val pinnedItems = if (isPinningEnabled) {
-            pinnedItemsResult.getOrNull()?.let { list ->
-                encryptionContextProvider.withEncryptionContext {
-                    list.map { it.toUiModel(this@withEncryptionContext) }
-                }
-            } ?: emptyList()
-        } else {
-            emptyList()
-        }
+        debouncedSearchQueryState
+    ) { pinnedItemsResult, searchOptions, isInSeeAllPinsMode, searchQuery ->
+        val pinnedItems = pinnedItemsResult.getOrNull()?.let { list ->
+            encryptionContextProvider.withEncryptionContext {
+                list.map { it.toUiModel(this@withEncryptionContext) }
+            }
+        } ?: emptyList()
         val sortedPinnedItems = pinnedItems.sortItemLists(searchOptions.sortingOption)
             .toPersistentList()
         val filteredPinnedItems = pinnedItems
@@ -413,7 +405,6 @@ class HomeViewModel @Inject constructor(
             .toPersistentList()
         PinningUiState(
             inPinningMode = isInSeeAllPinsMode,
-            isPinningEnabled = isPinningEnabled,
             filteredItems = groupedItems,
             unFilteredItems = sortedPinnedItems,
             itemTypeCount = ItemTypeCount(
@@ -522,8 +513,7 @@ class HomeViewModel @Inject constructor(
             sortingType = searchOptions.sortingOption.searchSortingType,
             canLoadExternalImages = useFavicons.value(),
             selectionState = selection.toState(
-                isTrash = searchOptions.vaultSelectionOption == VaultSelectionOption.Trash,
-                isPinningEnabled = pinningUiState.isPinningEnabled
+                isTrash = searchOptions.vaultSelectionOption == VaultSelectionOption.Trash
             ),
             showNeedsUpdate = appNeedsUpdate.getOrNull() ?: false
         )
@@ -538,15 +528,13 @@ class HomeViewModel @Inject constructor(
         getUserPlan().asLoadingResult(),
         navEventState,
         pinningUiStateFlow,
-        bottomSheetItemActionFlow,
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.HISTORY_V1)
+        bottomSheetItemActionFlow
     ) { homeListUiState,
         searchUiState,
         userPlan,
         navEvent,
         pinningUiState,
-        bottomSheetItemAction,
-        isHistoryFeatureEnabled ->
+        bottomSheetItemAction ->
         HomeUiState(
             homeListUiState = homeListUiState,
             searchUiState = searchUiState,
@@ -554,8 +542,6 @@ class HomeViewModel @Inject constructor(
             accountType = AccountType.fromPlan(userPlan),
             navEvent = navEvent,
             action = bottomSheetItemAction,
-            isPinningFeatureEnabled = pinningUiState.isPinningEnabled,
-            isHistoryFeatureEnabled = isHistoryFeatureEnabled,
             isFreePlan = userPlan.map { plan -> plan.isFreePlan }.getOrNull() ?: true
         )
     }
@@ -1060,14 +1046,13 @@ class HomeViewModel @Inject constructor(
         val isInSelectMode: Boolean,
         val pinningLoadingState: IsLoadingState
     ) {
-        fun toState(isTrash: Boolean, isPinningEnabled: Boolean) = HomeSelectionState(
+        fun toState(isTrash: Boolean) = HomeSelectionState(
             selectedItems = selectedItems.toPersistentList(),
             isInSelectMode = isInSelectMode,
             topBarState = SelectionTopBarState(
                 isTrash = isTrash,
                 selectedItemCount = selectedItems.size,
                 areAllSelectedPinned = selectedItems.all { it.isPinned },
-                isPinningEnabled = isPinningEnabled,
                 pinningLoadingState = pinningLoadingState,
 
                 // Actions are only enabled if there are selected items and the pinning operation

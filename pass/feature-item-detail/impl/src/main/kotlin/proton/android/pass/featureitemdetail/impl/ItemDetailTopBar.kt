@@ -60,8 +60,7 @@ internal fun ItemDetailTopBar(
     onUpClick: () -> Unit,
     onEditClick: () -> Unit,
     onOptionsClick: () -> Unit,
-    onShareClick: () -> Unit,
-    shouldShowMenu: Boolean
+    onShareClick: () -> Unit
 ) {
     ProtonTopAppBar(
         modifier = modifier,
@@ -84,8 +83,7 @@ internal fun ItemDetailTopBar(
                 iconBackgroundColor = iconBackgroundColor,
                 onEditClick = onEditClick,
                 onOptionsClick = onOptionsClick,
-                onShareClick = onShareClick,
-                shouldShowMenu = shouldShowMenu
+                onShareClick = onShareClick
             )
         }
     )
@@ -101,8 +99,7 @@ private fun ItemTopBarActions(
     iconBackgroundColor: Color,
     onEditClick: () -> Unit,
     onOptionsClick: () -> Unit,
-    onShareClick: () -> Unit,
-    shouldShowMenu: Boolean
+    onShareClick: () -> Unit
 ) {
     Row(
         modifier = modifier
@@ -126,7 +123,7 @@ private fun ItemTopBarActions(
         )
 
         ItemDetailOptionsButton(
-            isVisible = !isLoading && shouldShowMenu,
+            isVisible = !isLoading,
             iconBackgroundColor = iconBackgroundColor,
             iconColor = iconColor,
             onOptionsClick = onOptionsClick
@@ -241,8 +238,7 @@ fun ItemDetailTopBarPreview(
                 onEditClick = {},
                 onOptionsClick = {},
                 onShareClick = {},
-                actions = input.second.actions,
-                shouldShowMenu = true
+                actions = input.second.actions
             )
         }
     }

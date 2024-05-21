@@ -30,23 +30,16 @@ enum class FeatureFlag(
         key = null, // Cannot be activated server-side,
         isEnabledDefault = false
     ),
-    PINNING_V1(
-        title = "Pinning (v1)",
-        description = "Enable pinning",
-        key = "PassPinningV1",
-        isEnabledDefault = true
-    ),
-    HISTORY_V1(
-        title = "Item history (v1)",
-        description = "Enable item history",
-        key = "PassItemHistoryV1",
-        isEnabledDefault = false
-    ),
     SECURITY_CENTER_V1(
         title = "Security center (v1)",
         description = "Enable security center",
         key = "PassSentinelV1",
         isEnabledDefault = false
+    ),
+    IDENTITY_V1(
+        title = "Identity (v1)",
+        description = "Enable identity type",
+        key = "PassIdentityV1",
+        isEnabledDefault = false
     )
-
 }

@@ -62,6 +62,10 @@ import proton.android.pass.featureitemcreate.impl.creditcard.createCreditCardGra
 import proton.android.pass.featureitemcreate.impl.creditcard.updateCreditCardGraph
 import proton.android.pass.featureitemcreate.impl.dialogs.CustomFieldNameDialog
 import proton.android.pass.featureitemcreate.impl.dialogs.EditCustomFieldNameDialog
+import proton.android.pass.featureitemcreate.impl.identity.BaseIdentityNavigation
+import proton.android.pass.featureitemcreate.impl.identity.CreateIdentity
+import proton.android.pass.featureitemcreate.impl.identity.CreateIdentityNavigation
+import proton.android.pass.featureitemcreate.impl.identity.createIdentityGraph
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
 import proton.android.pass.featureitemcreate.impl.login.CreateLoginNavigation
@@ -402,6 +406,12 @@ fun NavGraphBuilder.appGraph(
                         appNavigator.navigate(
                             CreateCreditCard,
                             CreateCreditCard.createNavRoute(it.shareId)
+                        )
+
+                    is CreateItemBottomsheetNavigation.CreateIdentity ->
+                        appNavigator.navigate(
+                            CreateIdentity,
+                            CreateIdentity.createNavRoute(it.shareId)
                         )
                 }
             }
@@ -783,6 +793,19 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 UpdateAliasNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
+            }
+        }
+    )
+    createIdentityGraph(
+        onNavigate = {
+            when (it) {
+                BaseIdentityNavigation.Close -> appNavigator.navigateBack()
+                is CreateIdentityNavigation.ItemCreated -> appNavigator.navigateBack()
+                is CreateIdentityNavigation.SelectVault -> appNavigator.navigate(
+                    destination = SelectVaultBottomsheet,
+                    route = SelectVaultBottomsheet.createNavRoute(it.shareId)
+                )
+                BaseIdentityNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
             }
         }
     )

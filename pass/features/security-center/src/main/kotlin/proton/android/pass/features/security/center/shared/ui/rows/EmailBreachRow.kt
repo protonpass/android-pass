@@ -72,7 +72,7 @@ internal fun EmailBreachRow(
                         email = emailBreachUiState.email,
                         breachDate = emailBreachUiState.breachDate,
                         emailStyle = ProtonTheme.typography.body1Regular
-                            .copy(color = PassTheme.colors.passwordInteractionNormMajor1),
+                            .copy(color = PassTheme.colors.passwordInteractionNormMajor2),
                         dateStyle = PassTheme.typography.body3Weak(),
                         hasBreaches = true
                     )
@@ -104,7 +104,7 @@ internal fun EmailBreachRow(
                 ) {
                     Text(
                         text = emailBreachUiState.count.toString(),
-                        color = PassTheme.colors.passwordInteractionNormMajor1,
+                        color = PassTheme.colors.passwordInteractionNormMajor2,
                         style = ProtonTheme.typography.body1Regular
                     )
                 }
@@ -114,7 +114,7 @@ internal fun EmailBreachRow(
                 Icon(
                     painter = painterResource(CompR.drawable.ic_chevron_tiny_right),
                     contentDescription = null,
-                    tint = PassTheme.colors.passwordInteractionNormMajor1
+                    tint = PassTheme.colors.passwordInteractionNormMajor2
                         .takeIf { emailBreachUiState.hasBreaches && emailBreachUiState.isMonitored }
                         ?: defaultTint()
                 )

@@ -56,7 +56,7 @@ import kotlin.test.assertEquals
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @HiltAndroidTest
-class CreateCreditCardScreenTest {
+class CreateIdentityScreenTest {
 
     @get:Rule(order = 0)
     val hiltRule = HiltAndroidRule(this)

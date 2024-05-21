@@ -42,12 +42,10 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
-import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.some
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.ObserveGlobalMonitorState
-import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.CustomEmailSuggestion
 import proton.android.pass.data.api.usecases.breach.ObserveBreachAliasEmails
@@ -73,7 +71,6 @@ import javax.inject.Inject
 @Suppress("LongParameterList")
 @HiltViewModel
 internal class DarkWebViewModel @Inject constructor(
-    observeItemCount: ObserveItemCount,
     observeBreachProtonEmails: ObserveBreachProtonEmails,
     observeBreachCustomEmails: ObserveBreachCustomEmails,
     observeBreachAliasEmails: ObserveBreachAliasEmails,
@@ -127,13 +124,10 @@ internal class DarkWebViewModel @Inject constructor(
         aliasEmailFlowIfEnabled,
         customEmailsFlow,
         customEmailSuggestionsFlow,
-        observeItemCount().asLoadingResult(),
         eventFlow,
         loadingSuggestionFlow
-    ) { protonEmailResult, aliasEmailsResult, customEmailsResult, suggestionsResult, itemCount,
+    ) { protonEmailResult, aliasEmailsResult, customEmailsResult, suggestionsResult,
         event, loadingSuggestion ->
-        val aliasCount = itemCount.getOrNull()?.alias ?: 0
-        val canNavigateToAlias = aliasCount > 0
         val protonEmail = getProtonEmailState(protonEmailResult)
         val aliasEmail = getAliasEmailState(aliasEmailsResult)
         val customEmails = getCustomEmailsState(
@@ -152,7 +146,6 @@ internal class DarkWebViewModel @Inject constructor(
             darkWebStatus = darkWebStatus,
             lastCheckTime = None,
             canAddCustomEmails = customEmails.canAddCustomEmails,
-            canNavigateToAlias = canNavigateToAlias,
             event = event
         )
     }.stateIn(

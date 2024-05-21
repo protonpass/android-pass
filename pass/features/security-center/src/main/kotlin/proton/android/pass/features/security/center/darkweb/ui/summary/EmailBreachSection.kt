@@ -76,7 +76,7 @@ internal fun EmailBreachSection(
                         stringResource(R.string.security_center_dark_web_monitor_alias_addresses_error)
                 },
                 style = PassTheme.typography.body3Weak()
-                    .copy(color = PassTheme.colors.passwordInteractionNormMajor1)
+                    .copy(color = PassTheme.colors.passwordInteractionNormMajor2)
             )
 
             else -> EmailBreachEmptyList(

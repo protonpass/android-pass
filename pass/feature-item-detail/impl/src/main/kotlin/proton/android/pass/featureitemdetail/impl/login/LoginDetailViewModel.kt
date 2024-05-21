@@ -362,14 +362,11 @@ class LoginDetailViewModel @Inject constructor(
     )
 
     private val itemFeaturesFlow = combine(
-        featureFlagsRepository.get<Boolean>(FeatureFlag.PINNING_V1),
-        featureFlagsRepository.get<Boolean>(FeatureFlag.HISTORY_V1),
         featureFlagsRepository.get<Boolean>(FeatureFlag.SECURITY_CENTER_V1),
         getUserPlan()
-    ) { isPinningFeatureEnabled, isHistoryFeatureFlagEnabled, isSecurityCenterEnabled, userPlan ->
+    ) { isSecurityCenterEnabled, userPlan ->
         ItemFeatures(
-            isHistoryEnabled = isHistoryFeatureFlagEnabled && userPlan.isPaidPlan,
-            isPinningEnabled = isPinningFeatureEnabled,
+            isHistoryEnabled = userPlan.isPaidPlan,
             isSecurityCenterEnabled = isSecurityCenterEnabled
         )
     }
@@ -441,7 +438,6 @@ class LoginDetailViewModel @Inject constructor(
                     shareClickAction = details.shareClickAction,
                     itemActions = actions,
                     event = event,
-                    isPinningFeatureEnabled = itemFeatures.isPinningEnabled,
                     isHistoryFeatureEnabled = itemFeatures.isHistoryEnabled,
                     isSecurityCenterEnabled = itemFeatures.isSecurityCenterEnabled,
                     monitorState = details.securityState

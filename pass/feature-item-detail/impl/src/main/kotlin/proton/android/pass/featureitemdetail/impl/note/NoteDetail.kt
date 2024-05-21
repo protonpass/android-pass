@@ -129,8 +129,7 @@ fun NoteDetail(
                                     shareId = state.itemUiModel.shareId,
                                     itemId = state.itemUiModel.id
                                 )
-                            },
-                            isPinningFeatureEnabled = state.isPinningFeatureEnabled
+                            }
                         )
 
                         ItemState.Trashed.value -> TrashItemBottomSheetContents(
@@ -166,8 +165,7 @@ fun NoteDetail(
                             },
                             onShareClick = {
                                 onShareClick(state.itemActions, onNavigate, state.itemUiModel)
-                            },
-                            shouldShowMenu = true
+                            }
                         )
                     }
                 ) { padding ->

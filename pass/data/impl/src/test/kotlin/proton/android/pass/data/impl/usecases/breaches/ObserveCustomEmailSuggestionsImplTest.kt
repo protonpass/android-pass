@@ -22,36 +22,36 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.entity.AddressId
 import org.junit.Before
 import org.junit.Test
-import proton.android.pass.account.fakes.TestAccountManager
-import proton.android.pass.account.fakes.TestUserAddressRepository
 import proton.android.pass.data.api.usecases.breach.CustomEmailSuggestion
+import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveItems
+import proton.android.pass.data.fakes.usecases.breach.FakeObserveBreachProtonEmails
 import proton.android.pass.data.impl.usecases.breach.ObserveCustomEmailSuggestionsImpl
+import proton.android.pass.domain.breach.BreachProtonEmail
+import proton.android.pass.test.domain.TestUser
 
 class ObserveCustomEmailSuggestionsImplTest {
 
     private lateinit var instance: ObserveCustomEmailSuggestionsImpl
 
+    private lateinit var observeCurrentUser: TestObserveCurrentUser
     private lateinit var observeItems: TestObserveItems
+    private lateinit var observeBreachProtonEmails: FakeObserveBreachProtonEmails
 
     @Before
     fun setup() {
         observeItems = TestObserveItems()
+        observeCurrentUser = TestObserveCurrentUser()
+        observeBreachProtonEmails = FakeObserveBreachProtonEmails()
         instance = ObserveCustomEmailSuggestionsImpl(
-            accountManager = TestAccountManager().apply {
-                sendPrimaryUserId(UserId("test-user-id"))
-            },
+            observeCurrentUser = observeCurrentUser,
             observeItems = observeItems,
-            addressRepository = TestUserAddressRepository().apply {
-                val address = generateAddress(
-                    displayName = "testaddress",
-                    email = USER_PROTON_ADDRESS
-                )
-                setAddresses(listOf(address))
-            }
+            observeBreachProtonEmails = observeBreachProtonEmails
         )
+        observeCurrentUser.sendUser(TestUser.create(userId = UserId("test-user-id")))
     }
 
     @Test
@@ -124,7 +124,17 @@ class ObserveCustomEmailSuggestionsImplTest {
             TestObserveItems.createLogin(username = USER_PROTON_ADDRESS)
         )
         observeItems.emitValue(logins)
-
+        observeBreachProtonEmails.emit(
+            listOf(
+                BreachProtonEmail(
+                    addressId = AddressId("testaddress"),
+                    email = USER_PROTON_ADDRESS,
+                    breachCounter = 0,
+                    flags = 0,
+                    lastBreachTime = null
+                )
+            )
+        )
         val res = instance().first()
 
         val expected = listOf(CustomEmailSuggestion(email, 2))

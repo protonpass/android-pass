@@ -132,7 +132,6 @@ internal data class DarkWebUiState(
     internal val darkWebStatus: DarkWebStatus,
     internal val lastCheckTime: Option<String>,
     internal val canAddCustomEmails: Boolean,
-    internal val canNavigateToAlias: Boolean,
     internal val event: DarkWebEvent
 ) {
 
@@ -145,7 +144,6 @@ internal data class DarkWebUiState(
             darkWebStatus = DarkWebStatus.Loading,
             lastCheckTime = None,
             canAddCustomEmails = false,
-            canNavigateToAlias = false,
             event = DarkWebEvent.Idle
         )
 

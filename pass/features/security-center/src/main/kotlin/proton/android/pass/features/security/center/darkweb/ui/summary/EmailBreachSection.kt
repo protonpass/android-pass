@@ -19,36 +19,29 @@
 package proton.android.pass.features.security.center.darkweb.ui.summary
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
-import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
-import proton.android.pass.composecomponents.impl.form.PassDivider
-import proton.android.pass.domain.breach.BreachEmailId
-import proton.android.pass.domain.breach.BreachId
-import proton.android.pass.domain.breach.CustomEmailId
+import proton.android.pass.commonui.api.applyIf
+import proton.android.pass.commonui.api.body3Weak
+import proton.android.pass.composecomponents.impl.item.placeholder
+import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.darkweb.presentation.DarkWebEmailBreachState
-import proton.android.pass.features.security.center.darkweb.presentation.DarkWebEmailsError
 import proton.android.pass.features.security.center.darkweb.ui.DarkWebUiEvent
-import proton.android.pass.features.security.center.shared.presentation.EmailBreachUiState
-import proton.android.pass.features.security.center.shared.ui.rows.EmailBreachRow
 
 @Composable
 internal fun EmailBreachSection(
     modifier: Modifier = Modifier,
     state: DarkWebEmailBreachState,
     summaryType: DarkWebSummaryType,
-    isClickable: Boolean,
     onEvent: (DarkWebUiEvent) -> Unit
 ) {
     Column(
@@ -56,140 +49,61 @@ internal fun EmailBreachSection(
     ) {
         EmailBreachHeader(
             summaryType = summaryType,
-            isClickable = isClickable,
+            isClickable = state.list().isNotEmpty(),
             onEvent = onEvent,
             state = state
         )
 
         val listSize = state.list().take(10).size
-        Column(
-            modifier = Modifier
-                .padding(horizontal = Spacing.medium)
-                .roundedContainerNorm()
-                .padding(vertical = Spacing.small)
-        ) {
-            repeat(listSize) { index ->
-                EmailBreachRow(
-                    emailBreachUiState = state.list()[index],
-                    onClick = {
-                        when (it.id) {
-                            is BreachEmailId.Alias -> onEvent(
-                                DarkWebUiEvent.OnShowAliasEmailReportClick(
-                                    id = it.id,
-                                    email = it.email,
-                                    breachCount = it.count
-                                )
-                            )
+        when {
+            listSize > 0 -> EmailBreachEmptyList(
+                listSize = listSize,
+                state = state,
+                onEvent = onEvent
+            )
 
-                            is BreachEmailId.Custom -> {
-                                // It won't reach this point
-                            }
+            state !is DarkWebEmailBreachState.Success -> Text(
+                modifier = Modifier
+                    .padding(horizontal = Spacing.medium)
+                    .applyIf(
+                        condition = state is DarkWebEmailBreachState.Loading,
+                        ifTrue = { placeholder() }
+                    ),
+                text = when (summaryType) {
+                    DarkWebSummaryType.Proton ->
+                        stringResource(R.string.security_center_dark_web_monitor_proton_addresses_error)
+                    DarkWebSummaryType.Alias ->
+                        stringResource(R.string.security_center_dark_web_monitor_alias_addresses_error)
+                },
+                style = PassTheme.typography.body3Weak()
+                    .copy(color = PassTheme.colors.passwordInteractionNormMajor1)
+            )
 
-                            is BreachEmailId.Proton -> onEvent(
-                                DarkWebUiEvent.OnShowProtonEmailReportClick(
-                                    id = it.id,
-                                    email = it.email,
-                                    breachCount = it.count
-                                )
-                            )
-                        }
-                    },
-                    globalMonitorEnabled = state.enabledMonitoring()
-                )
-                if (index < listSize - 1) {
-                    PassDivider(modifier = Modifier.padding(horizontal = Spacing.medium))
-                }
-            }
-        }
-
-        if (listSize > 0) {
-            Spacer(modifier = Modifier.height(Spacing.small))
+            else -> EmailBreachEmptyList(
+                state = state,
+                summaryType = summaryType,
+                isClickable = !state.enabledMonitoring(),
+                onEvent = onEvent
+            )
         }
     }
 }
 
-internal class DarkWebEmailBreachStatePreviewProvider :
-    PreviewParameterProvider<DarkWebEmailBreachState> {
-    override val values: Sequence<DarkWebEmailBreachState>
-        get() = sequenceOf(
-            DarkWebEmailBreachState.Success(
-                emails = persistentListOf(
-                    EmailBreachUiState(
-                        id = BreachEmailId.Custom(
-                            id = BreachId("1"),
-                            customEmailId = CustomEmailId("1")
-                        ),
-                        email = "mail@proton.me",
-                        count = 2,
-                        breachDate = "2024-04-16T15:30:00Z",
-                        isMonitored = true
-                    ),
-                    EmailBreachUiState(
-                        id = BreachEmailId.Custom(
-                            id = BreachId("2"),
-                            customEmailId = CustomEmailId("2")
-                        ),
-                        email = "mail2@proton.me",
-                        count = 2,
-                        breachDate = "2024-04-16T15:30:00Z",
-                        isMonitored = true
-                    )
-                ),
-                enabledMonitoring = true
-            ),
-            DarkWebEmailBreachState.Success(
-                emails = persistentListOf(
-                    EmailBreachUiState(
-                        id = BreachEmailId.Custom(
-                            id = BreachId("1"),
-                            customEmailId = CustomEmailId("1")
-                        ),
-                        email = "mail@proton.me",
-                        count = 2,
-                        breachDate = "2024-04-16T15:30:00Z",
-                        isMonitored = true
-                    ),
-                    EmailBreachUiState(
-                        id = BreachEmailId.Custom(
-                            id = BreachId("2"),
-                            customEmailId = CustomEmailId("2")
-                        ),
-                        email = "mail2@proton.me",
-                        count = 2,
-                        breachDate = "2024-04-16T15:30:00Z",
-                        isMonitored = false
-                    )
-                ),
-                enabledMonitoring = true
-            ),
-            DarkWebEmailBreachState.Success(
-                emails = persistentListOf(),
-                enabledMonitoring = true
-            ),
-            DarkWebEmailBreachState.Success(
-                emails = persistentListOf(),
-                enabledMonitoring = false
-            ),
-            DarkWebEmailBreachState.Loading,
-            DarkWebEmailBreachState.Error(DarkWebEmailsError.CannotLoad)
-        )
-}
-
 internal class ThemedDarkWebEmailBreachStatePreviewProvider :
-    ThemePairPreviewProvider<DarkWebEmailBreachState>(DarkWebEmailBreachStatePreviewProvider())
+    ThemePairPreviewProvider<DarkWebEmailBreachStatePreview>(DarkWebEmailBreachStateProvider())
 
 @Preview
 @Composable
 internal fun EmailBreachSectionPreview(
-    @PreviewParameter(ThemedDarkWebEmailBreachStatePreviewProvider::class) input: Pair<Boolean, DarkWebEmailBreachState>
+    @PreviewParameter(ThemedDarkWebEmailBreachStatePreviewProvider::class)
+    input: Pair<Boolean, DarkWebEmailBreachStatePreview>
 ) {
     PassTheme(isDark = input.first) {
         Surface {
             EmailBreachSection(
-                state = input.second,
-                summaryType = DarkWebSummaryType.Proton,
-                onEvent = {},
-                isClickable = true
+                state = input.second.state,
+                summaryType = input.second.summaryType,
+                onEvent = {}
             )
         }
     }

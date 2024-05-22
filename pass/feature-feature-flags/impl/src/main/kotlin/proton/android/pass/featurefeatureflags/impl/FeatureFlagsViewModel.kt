@@ -37,12 +37,14 @@ class FeatureFlagsViewModel @Inject constructor(
 
     val state: StateFlow<Map<FeatureFlag, Boolean>> =
         combine(
+            ffRepository.get<Boolean>(FeatureFlag.SECURITY_CENTER_V1),
             ffRepository.get<Boolean>(FeatureFlag.IDENTITY_V1),
-            ffRepository.get<Boolean>(FeatureFlag.SECURITY_CENTER_V1)
-        ) { isIdentityEnabled, isSecurityCenterEnabled ->
+            ffRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT)
+        ) { isSecurityCenterEnabled, isIdentityEnabled, isUsernameSplitEnabled ->
             mapOf(
+                FeatureFlag.SECURITY_CENTER_V1 to isSecurityCenterEnabled,
                 FeatureFlag.IDENTITY_V1 to isIdentityEnabled,
-                FeatureFlag.SECURITY_CENTER_V1 to isSecurityCenterEnabled
+                FeatureFlag.USERNAME_SPLIT to isUsernameSplitEnabled
             )
         }.stateIn(
             scope = viewModelScope,

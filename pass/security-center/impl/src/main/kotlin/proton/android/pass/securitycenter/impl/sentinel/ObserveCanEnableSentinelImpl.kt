@@ -19,12 +19,16 @@
 package proton.android.pass.securitycenter.impl.sentinel
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
 import proton.android.pass.data.api.core.repositories.SentinelRepository
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.securitycenter.api.sentinel.ObserveCanEnableSentinel
 import javax.inject.Inject
 
 class ObserveCanEnableSentinelImpl @Inject constructor(
-    private val sentinelRepository: SentinelRepository
+    private val sentinelRepository: SentinelRepository,
+    private val observeCurrentUser: ObserveCurrentUser
 ) : ObserveCanEnableSentinel {
-    override fun invoke(): Flow<Boolean> = sentinelRepository.observeCanEnableSentinel()
+    override fun invoke(): Flow<Boolean> = observeCurrentUser()
+        .flatMapLatest { sentinelRepository.observeCanEnableSentinel(it.userId) }
 }

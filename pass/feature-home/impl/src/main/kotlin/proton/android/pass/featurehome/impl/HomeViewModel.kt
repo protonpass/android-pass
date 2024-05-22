@@ -495,7 +495,6 @@ class HomeViewModel @Inject constructor(
         shareListWrapperFlow,
         preferencesRepository.getUseFaviconsPreference(),
         selectionState,
-        pinningUiStateFlow,
         appNeedsUpdateFlow
     ) { itemsResult,
         refreshingLoading,
@@ -504,7 +503,6 @@ class HomeViewModel @Inject constructor(
         shareListWrapper,
         useFavicons,
         selection,
-        pinningUiState,
         appNeedsUpdate ->
         val isLoadingState = IsLoadingState.from(itemsResult is LoadingResult.Loading)
 

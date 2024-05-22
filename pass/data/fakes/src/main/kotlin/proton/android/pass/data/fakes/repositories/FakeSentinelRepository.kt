@@ -20,6 +20,7 @@ package proton.android.pass.data.fakes.repositories
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.core.repositories.SentinelRepository
 import javax.inject.Inject
 
@@ -42,6 +43,6 @@ class FakeSentinelRepository @Inject constructor() : SentinelRepository {
 
     override fun observeIsSentinelEnabled(): Flow<Boolean> = isSentinelEnabledFlow
 
-    override fun observeCanEnableSentinel(): Flow<Boolean> = canEnableSentinelFlow
+    override fun observeCanEnableSentinel(userId: UserId): Flow<Boolean> = canEnableSentinelFlow
 
 }

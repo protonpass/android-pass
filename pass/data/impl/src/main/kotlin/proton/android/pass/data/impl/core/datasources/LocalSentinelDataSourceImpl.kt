@@ -22,6 +22,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.update
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
@@ -34,10 +36,12 @@ class LocalSentinelDataSourceImpl @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository
 ) : LocalSentinelDataSource {
 
-    private val _canEnableSentinel = MutableStateFlow<Option<Boolean>>(None)
+    private val _canEnableSentinel = MutableStateFlow<Map<UserId, Option<Boolean>>>(emptyMap())
 
-    override fun updateCanEnableSentinel(value: Boolean) {
-        _canEnableSentinel.value = value.some()
+    override fun updateCanEnableSentinel(userId: UserId, value: Boolean) {
+        _canEnableSentinel.update { canEnableSentinel ->
+            canEnableSentinel + (userId to value.some())
+        }
     }
 
     override fun disableSentinel() {
@@ -48,7 +52,8 @@ class LocalSentinelDataSourceImpl @Inject constructor(
         userPreferencesRepository.setSentinelStatusPreference(SentinelStatusPreference.Enabled)
     }
 
-    override fun observeCanEnableSentinel(): Flow<Option<Boolean>> = _canEnableSentinel.asStateFlow()
+    override fun observeCanEnableSentinel(userId: UserId): Flow<Option<Boolean>> = _canEnableSentinel.asStateFlow()
+        .map { canEnableSentinel -> canEnableSentinel[userId] ?: None }
 
     override fun observeIsSentinelEnabled(): Flow<Boolean> = userPreferencesRepository
         .observeSentinelStatusPreference()

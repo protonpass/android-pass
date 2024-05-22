@@ -6,6 +6,22 @@
 
 ### Other
 
+## 1.21.4 (2024-05-22)
+
+### Fixes :bug:
+
+- Logout crashes.
+- Pass monitor fixes and improvements.
+- Autofill multistep improvements.
+- Sync improvements.
+
+### Other
+
+- Vault switcher redesign.
+- Create credit card shortcut on empty vault.
+- Extend lock period if user is active.
+- Updated translations.
+
 ## 1.21.3 (2024-05-06)
 
 ### Features :tada:

@@ -19,6 +19,7 @@
 package proton.android.pass.data.api.core.repositories
 
 import kotlinx.coroutines.flow.Flow
+import me.proton.core.domain.entity.UserId
 
 interface SentinelRepository {
 
@@ -28,5 +29,5 @@ interface SentinelRepository {
 
     fun observeIsSentinelEnabled(): Flow<Boolean>
 
-    fun observeCanEnableSentinel(): Flow<Boolean>
+    fun observeCanEnableSentinel(userId: UserId): Flow<Boolean>
 }

@@ -31,6 +31,7 @@ androidComponents.beforeVariants { variant ->
 dependencies {
     api(projects.pass.securityCenter.api)
 
+    implementation(libs.core.user.domain)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.pass.common)
 

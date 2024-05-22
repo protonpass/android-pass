@@ -91,7 +91,7 @@ abstract class DataLocalDataSourceModule {
         impl: LocalOrganizationSettingsDataSourceImpl
     ): LocalOrganizationSettingsDataSource
 
-    @Binds
+    @[Binds Singleton]
     abstract fun bindLocalSentinelDataSource(impl: LocalSentinelDataSourceImpl): LocalSentinelDataSource
 
     @[Binds Singleton]

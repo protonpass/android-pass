@@ -144,11 +144,13 @@ class NoteDetailViewModel @Inject constructor(
 
     private val itemFeaturesFlow = combine(
         featureFlagsRepository.get<Boolean>(FeatureFlag.SECURITY_CENTER_V1),
-        featureFlagsRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT)
-    ) { isSecurityCenterEnabled, isUsernameSplitEnabled ->
+        featureFlagsRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT),
+        getUserPlan()
+    ) { isSecurityCenterEnabled, isUsernameSplitEnabled, userPlan ->
         ItemFeatures(
             isSecurityCenterEnabled = isSecurityCenterEnabled,
-            isUsernameSplitEnabled = isUsernameSplitEnabled
+            isUsernameSplitEnabled = isUsernameSplitEnabled,
+            isHistoryEnabled = userPlan.isPaidPlan
         )
     }
 

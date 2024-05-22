@@ -403,7 +403,7 @@ class HomeViewModel @Inject constructor(
                     .toImmutableList()
             }
         }
-    }
+    }.flowOn(appDispatchers.default)
 
     private val pinningUiStateFlow = combine(
         observePinnedItems().asLoadingResult(),

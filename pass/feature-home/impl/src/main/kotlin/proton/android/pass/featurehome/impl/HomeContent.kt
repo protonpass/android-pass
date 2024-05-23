@@ -330,6 +330,7 @@ internal fun HomeContent(
                     HomeEmptyContent(
                         isTrashMode = isTrashMode,
                         inSearchMode = isPinningOrSearch,
+                        isIdentityEnabled = uiState.homeListUiState.isIdentityEnabled,
                         readOnly = uiState.isSelectedVaultReadOnly(),
                         shareId = uiState.homeListUiState.selectedShare.map { it.id },
                         onEvent = onEvent

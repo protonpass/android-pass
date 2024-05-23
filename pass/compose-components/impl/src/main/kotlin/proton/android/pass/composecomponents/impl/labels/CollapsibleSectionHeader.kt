@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.shared.ui.headers
+package proton.android.pass.composecomponents.impl.labels
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
@@ -37,14 +37,15 @@ import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.applyIf
+import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
-internal fun SecurityCenterListStickyHeader(
+fun CollapsibleSectionHeader(
     modifier: Modifier = Modifier,
     isCollapsed: Boolean = false,
-    onClick: (() -> Unit)? = null,
-    label: @Composable () -> Unit
+    sectionTitle: String,
+    onClick: (() -> Unit)? = null
 ) {
     val isClickable = remember(onClick) {
         onClick != null
@@ -79,6 +80,8 @@ internal fun SecurityCenterListStickyHeader(
             )
         }
 
-        label()
+        SectionTitle(
+            text = sectionTitle
+        )
     }
 }

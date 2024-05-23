@@ -11,6 +11,7 @@
     <string name="home_empty_vault_create_alias">Create a Hide-my-email alias</string>
     <string name="home_empty_vault_create_note">Create a note</string>
     <string name="home_empty_vault_create_credit_card">Create a credit card</string>
+    <string name="home_empty_vault_create_identity">Create an Identity</string>
 
     <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Error loading items</string>
     <string name="error_refreshing">Error performing refresh</string>

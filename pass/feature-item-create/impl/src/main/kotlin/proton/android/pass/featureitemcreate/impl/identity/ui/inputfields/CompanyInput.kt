@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2023-2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemcreate.impl.login
+package proton.android.pass.featureitemcreate.impl.identity.ui.inputfields
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -28,36 +28,34 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
+import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.featureitemcreate.impl.R
 
 @Composable
-internal fun EmailInput(
+internal fun CompanyInput(
     modifier: Modifier = Modifier,
-    email: String,
-    onEmailChange: (String) -> Unit,
-    onFocusChange: (Boolean) -> Unit,
-    leadingIcon: @Composable () -> Unit,
-    trailingIcon: @Composable () -> Unit,
-    isEditable: Boolean
+    value: String,
+    enabled: Boolean,
+    onChange: (String) -> Unit
 ) {
     ProtonTextField(
         modifier = modifier.padding(
-            start = Spacing.none,
+            start = Spacing.medium,
             top = Spacing.medium,
-            end = Spacing.extraSmall,
+            end = Spacing.small,
             bottom = Spacing.medium
         ),
-        value = email,
-        onChange = onEmailChange,
-        onFocusChange = onFocusChange,
-        textStyle = ProtonTheme.typography.defaultNorm(isEditable),
-        leadingIcon = leadingIcon,
-        label = {
-            ProtonTextFieldLabel(text = stringResource(id = R.string.identity_field_email_title))
-        },
-        placeholder = {
-            ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.identity_field_email_hint))
-        },
-        trailingIcon = trailingIcon
+        value = value,
+        onChange = onChange,
+        moveToNextOnEnter = true,
+        textStyle = ProtonTheme.typography.defaultNorm(enabled),
+        editable = enabled,
+        label = { ProtonTextFieldLabel(text = stringResource(id = R.string.identity_field_company_title)) },
+        placeholder = { ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.identity_field_company_hint)) },
+        trailingIcon = {
+            if (value.isNotEmpty()) {
+                SmallCrossIconButton(enabled = true) { onChange("") }
+            }
+        }
     )
 }

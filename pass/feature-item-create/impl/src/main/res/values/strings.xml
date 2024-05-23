@@ -108,6 +108,46 @@
     <string name="credit_card_init_error">Problem retrieving credit card details</string>
     <string name="credit_card_item_update_error">Could not update credit card</string>
 
+    <!-- Create Identity -->
+    <string name="identity_field_full_name_title">Full name</string>
+    <string name="identity_field_full_name_hint" translatable="false">@string/identity_field_full_name_title</string>
+    <string name="identity_field_email_title">Email</string>
+    <string name="identity_field_email_hint" translatable="false">@string/identity_field_email_title</string>
+    <string name="identity_field_phone_number_title">Phone number</string>
+    <string name="identity_field_phone_number_hint" translatable="false">@string/identity_field_phone_number_title</string>
+    <string name="identity_field_organization_title">Organization</string>
+    <string name="identity_field_organization_hint" translatable="false">@string/identity_field_organization_title</string>
+    <string name="identity_field_street_address_title">Street address, P.O. box</string>
+    <string name="identity_field_street_address_hint" translatable="false">@string/identity_field_street_address_title</string>
+    <string name="identity_field_zip_or_postal_code_title">Zip or Postal code</string>
+    <string name="identity_field_zip_or_postal_code_hint" translatable="false">@string/identity_field_zip_or_postal_code_title</string>
+    <string name="identity_field_city_title">City</string>
+    <string name="identity_field_city_hint" translatable="false">@string/identity_field_city_title</string>
+    <string name="identity_field_state_or_province_title">State or province</string>
+    <string name="identity_field_state_or_province_hint" translatable="false">@string/identity_field_state_or_province_title</string>
+    <string name="identity_field_country_or_region_title">Country or Region</string>
+    <string name="identity_field_country_or_region_hint" translatable="false">@string/identity_field_country_or_region_title</string>
+    <string name="identity_field_social_security_number_title">Social security number</string>
+    <string name="identity_field_social_security_number_hint" translatable="false">@string/identity_field_social_security_number_title</string>
+    <string name="identity_field_passport_number_title">Passport number</string>
+    <string name="identity_field_passport_number_hint" translatable="false">@string/identity_field_passport_number_title</string>
+    <string name="identity_field_license_number_title">License number</string>
+    <string name="identity_field_license_number_hint" translatable="false">@string/identity_field_license_number_title</string>
+    <string name="identity_field_website_title">Website</string>
+    <string name="identity_field_website_hint" translatable="false">http://example.com</string>
+    <string name="identity_field_xhandle_title">X handle</string>
+    <string name="identity_field_xhandle_hint" translatable="false">\@username</string>
+    <string name="identity_field_company_title">Company</string>
+    <string name="identity_field_company_hint" translatable="false">@string/identity_field_company_title</string>
+    <string name="identity_field_job_title_title">Job title</string>
+    <string name="identity_field_job_title_hint" translatable="false">@string/identity_field_job_title_title</string>
+
+    <string name="identity_section_personal_details">Personal details</string>
+    <string name="identity_section_address_details">Address details</string>
+    <string name="identity_section_contact_details">Contact details</string>
+    <string name="identity_section_work_details">Work details</string>
+
+
     <!--  Common create items  -->
     <string name="title_create">Create</string>
     <string name="changes_saved">Changes saved</string>

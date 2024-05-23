@@ -164,7 +164,8 @@ internal data class HomeListUiState(
     val searchFilterType: SearchFilterType = SearchFilterType.All,
     val sortingType: SearchSortingType = SearchSortingType.MostRecent,
     val selectionState: HomeSelectionState,
-    val showNeedsUpdate: Boolean
+    val showNeedsUpdate: Boolean,
+    val isIdentityEnabled: Boolean
 ) {
 
     internal companion object {
@@ -177,7 +178,8 @@ internal data class HomeListUiState(
             items = persistentListOf(),
             shares = persistentMapOf(),
             selectionState = HomeSelectionState.Initial,
-            showNeedsUpdate = false
+            showNeedsUpdate = false,
+            isIdentityEnabled = false
         )
 
     }

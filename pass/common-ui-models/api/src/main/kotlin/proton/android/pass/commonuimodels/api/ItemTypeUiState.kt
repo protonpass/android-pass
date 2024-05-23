@@ -24,5 +24,6 @@ enum class ItemTypeUiState {
     Alias,
     Password,
     CreditCard,
+    Identity,
     Unknown
 }

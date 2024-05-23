@@ -57,10 +57,10 @@ import proton.android.pass.featureitemcreate.impl.creditcard.UpdateCreditCardNav
 import proton.android.pass.featureitemcreate.impl.creditcard.createCreditCardGraph
 import proton.android.pass.featureitemcreate.impl.dialogs.CustomFieldNameDialog
 import proton.android.pass.featureitemcreate.impl.dialogs.EditCustomFieldNameDialog
-import proton.android.pass.featureitemcreate.impl.identity.BaseIdentityNavigation
-import proton.android.pass.featureitemcreate.impl.identity.CreateIdentity
-import proton.android.pass.featureitemcreate.impl.identity.CreateIdentityNavigation
-import proton.android.pass.featureitemcreate.impl.identity.createIdentityGraph
+import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdentityNavigation
+import proton.android.pass.featureitemcreate.impl.identity.navigation.CreateIdentity
+import proton.android.pass.featureitemcreate.impl.identity.navigation.CreateIdentityNavigation
+import proton.android.pass.featureitemcreate.impl.identity.navigation.createIdentityGraph
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
 import proton.android.pass.featureitemcreate.impl.login.CreateLoginNavigation

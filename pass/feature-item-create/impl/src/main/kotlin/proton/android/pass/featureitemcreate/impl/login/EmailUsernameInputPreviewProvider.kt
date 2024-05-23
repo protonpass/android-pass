@@ -36,7 +36,8 @@ internal class EmailUsernameInputPreviewProvider :
                             email = email,
                             username = username,
                             isEditAllowed = boolean,
-                            canUpdateUsername = boolean
+                            canUpdateUsername = boolean,
+                            isInvalidEmail = boolean
                         )
                     )
                 }
@@ -49,5 +50,6 @@ internal data class EmailUsernameInputPreviewParams(
     internal val email: String,
     internal val username: String,
     internal val isEditAllowed: Boolean,
-    internal val canUpdateUsername: Boolean
+    internal val canUpdateUsername: Boolean,
+    internal val isInvalidEmail: Boolean
 )

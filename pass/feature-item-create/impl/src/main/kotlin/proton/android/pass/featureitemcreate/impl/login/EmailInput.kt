@@ -38,7 +38,8 @@ internal fun EmailInput(
     onFocusChange: (Boolean) -> Unit,
     leadingIcon: @Composable () -> Unit,
     trailingIcon: @Composable () -> Unit,
-    isEditable: Boolean
+    isEditable: Boolean,
+    isInvalid: Boolean
 ) {
     ProtonTextField(
         modifier = modifier.padding(
@@ -48,12 +49,17 @@ internal fun EmailInput(
             bottom = Spacing.medium
         ),
         value = email,
+        isError = isInvalid,
+        errorMessage = stringResource(id = R.string.field_email_error),
         onChange = onEmailChange,
         onFocusChange = onFocusChange,
         textStyle = ProtonTheme.typography.defaultNorm(isEditable),
         leadingIcon = leadingIcon,
         label = {
-            ProtonTextFieldLabel(text = stringResource(id = R.string.field_email_title))
+            ProtonTextFieldLabel(
+                text = stringResource(id = R.string.field_email_title),
+                isError = isInvalid
+            )
         },
         placeholder = {
             ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.field_email_hint))

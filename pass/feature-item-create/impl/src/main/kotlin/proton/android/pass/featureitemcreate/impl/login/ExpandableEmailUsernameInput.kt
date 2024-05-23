@@ -55,15 +55,22 @@ internal fun ExpandableEmailUsernameInput(
     onFocusChange: (LoginField, Boolean) -> Unit,
     onAliasOptionsClick: () -> Unit,
     canUpdateUsername: Boolean,
-    isEditAllowed: Boolean
+    isEditAllowed: Boolean,
+    isInvalidEmail: Boolean
 ) {
     val isExpanded = rememberSaveable(username) { mutableStateOf(username.isNotEmpty()) }
+    val emailIconTint = if (isInvalidEmail) {
+        PassTheme.colors.signalDanger
+    } else {
+        ProtonTheme.colors.iconWeak
+    }
 
     Column(
         modifier = modifier
     ) {
         EmailInput(
             email = email,
+            isInvalid = isInvalidEmail,
             isEditable = canUpdateUsername && isEditAllowed,
             onEmailChange = { newEmail ->
                 onEvent(LoginContentEvent.OnEmailChanged(newEmail))
@@ -76,7 +83,7 @@ internal fun ExpandableEmailUsernameInput(
                     Icon(
                         painter = painterResource(CoreR.drawable.ic_proton_envelope),
                         contentDescription = null,
-                        tint = ProtonTheme.colors.iconWeak
+                        tint = emailIconTint
                     )
                 } else {
                     Box(
@@ -86,7 +93,7 @@ internal fun ExpandableEmailUsernameInput(
                             modifier = Modifier.padding(horizontal = 2.dp),
                             painter = painterResource(id = CoreR.drawable.ic_proton_envelope),
                             contentDescription = null,
-                            tint = ProtonTheme.colors.iconWeak
+                            tint = emailIconTint
                         )
 
                         Icon(
@@ -166,7 +173,8 @@ internal fun ExpandableEmailUsernameInputPreview(
                 onFocusChange = { _, _ -> },
                 onAliasOptionsClick = {},
                 canUpdateUsername = params.canUpdateUsername,
-                isEditAllowed = params.isEditAllowed
+                isEditAllowed = params.isEditAllowed,
+                isInvalidEmail = params.isInvalidEmail
             )
         }
     }

@@ -53,10 +53,10 @@ internal fun EmailInput(
         textStyle = ProtonTheme.typography.defaultNorm(isEditable),
         leadingIcon = leadingIcon,
         label = {
-            ProtonTextFieldLabel(text = stringResource(id = R.string.identity_field_email_title))
+            ProtonTextFieldLabel(text = stringResource(id = R.string.field_email_title))
         },
         placeholder = {
-            ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.identity_field_email_hint))
+            ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.field_email_hint))
         },
         trailingIcon = trailingIcon
     )

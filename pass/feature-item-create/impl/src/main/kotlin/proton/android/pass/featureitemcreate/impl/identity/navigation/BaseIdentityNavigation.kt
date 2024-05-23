@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2023-2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,13 +16,8 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemcreate.impl.identity
+package proton.android.pass.featureitemcreate.impl.identity.navigation
 
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-
-@Composable
-fun CreateIdentityContent(modifier: Modifier = Modifier) {
-    Text(text = "Create Identity")
+sealed interface BaseIdentityNavigation {
+    data object Close : BaseIdentityNavigation
 }

@@ -41,6 +41,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
@@ -85,7 +86,7 @@ import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
 
-@HiltViewModel
+@[HiltViewModel Suppress("LongParameterList")]
 class UpdateLoginViewModel @Inject constructor(
     private val getItemById: ObserveItemById,
     private val updateItem: UpdateItem,
@@ -101,7 +102,8 @@ class UpdateLoginViewModel @Inject constructor(
     observeUpgradeInfo: ObserveUpgradeInfo,
     savedStateHandleProvider: SavedStateHandleProvider,
     draftRepository: DraftRepository,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository
+    featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    emailValidator: EmailValidator
 ) : BaseLoginViewModel(
     accountManager = accountManager,
     snackbarDispatcher = snackbarDispatcher,
@@ -113,7 +115,8 @@ class UpdateLoginViewModel @Inject constructor(
     encryptionContextProvider = encryptionContextProvider,
     passwordStrengthCalculator = passwordStrengthCalculator,
     savedStateHandleProvider = savedStateHandleProvider,
-    featureFlagsRepository = featureFlagsRepository
+    featureFlagsRepository = featureFlagsRepository,
+    emailValidator = emailValidator
 ) {
     private val navShareId: ShareId = savedStateHandleProvider.get()
         .require<String>(CommonNavArgId.ShareId.key)

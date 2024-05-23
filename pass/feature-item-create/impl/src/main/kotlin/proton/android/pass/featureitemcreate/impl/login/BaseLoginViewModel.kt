@@ -52,6 +52,7 @@ import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonuimodels.api.PackageInfoUi
@@ -93,6 +94,7 @@ abstract class BaseLoginViewModel(
     private val draftRepository: DraftRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val passwordStrengthCalculator: PasswordStrengthCalculator,
+    private val emailValidator: EmailValidator,
     observeCurrentUser: ObserveCurrentUser,
     observeUpgradeInfo: ObserveUpgradeInfo,
     savedStateHandleProvider: SavedStateHandleProvider,
@@ -383,7 +385,10 @@ abstract class BaseLoginViewModel(
             customFields = customFields
         )
 
-        val loginItemValidationErrors = loginItemFormState.validate()
+        val loginItemValidationErrors = loginItemFormState.validate(
+            emailValidator = emailValidator,
+            isUsernameSplitEnabled = baseLoginUiState.value.isUsernameSplitEnabled
+        )
         if (loginItemValidationErrors.isNotEmpty()) {
             loginItemValidationErrorsState.update { loginItemValidationErrors }
             return false

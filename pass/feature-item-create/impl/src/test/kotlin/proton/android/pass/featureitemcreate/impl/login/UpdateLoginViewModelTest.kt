@@ -28,6 +28,7 @@ import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.common.api.some
+import proton.android.pass.commonrust.fakes.TestEmailValidator
 import proton.android.pass.commonrust.fakes.passwords.strengths.TestPasswordStrengthCalculator
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
@@ -93,7 +94,8 @@ class UpdateLoginViewModelTest {
             observeUpgradeInfo = TestObserveUpgradeInfo(),
             updateItem = updateItem,
             createAlias = TestCreateAlias(),
-            featureFlagsRepository = TestFeatureFlagsPreferenceRepository()
+            featureFlagsRepository = TestFeatureFlagsPreferenceRepository(),
+            emailValidator = TestEmailValidator()
         )
     }
 

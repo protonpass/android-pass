@@ -220,6 +220,9 @@ fun NavGraphBuilder.appGraph(
 
                         ItemTypeUiState.CreditCard ->
                             CreateCreditCard to CreateCreditCard.createNavRoute(it.shareId)
+
+                        ItemTypeUiState.Identity ->
+                            CreateIdentity to CreateIdentity.createNavRoute(it.shareId)
                     }
 
                     appNavigator.navigate(destination, route)

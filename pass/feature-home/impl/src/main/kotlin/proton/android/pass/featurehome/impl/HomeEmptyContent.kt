@@ -33,6 +33,7 @@ import proton.android.pass.featurehome.impl.trash.EmptyTrashContent
 fun HomeEmptyContent(
     isTrashMode: Boolean,
     inSearchMode: Boolean,
+    isIdentityEnabled: Boolean,
     shareId: Option<ShareId>,
     onEvent: (HomeUiEvent) -> Unit,
     readOnly: Boolean
@@ -43,6 +44,7 @@ fun HomeEmptyContent(
         readOnly -> EmptyReadOnly()
         else -> HomeEmptyList(
             modifier = Modifier.fillMaxHeight(),
+            isIdentityEnabled = isIdentityEnabled,
             onCreateLoginClick = {
                 onEvent(
                     HomeUiEvent.AddItemClick(
@@ -62,6 +64,9 @@ fun HomeEmptyContent(
             onCreateNoteClick = { onEvent(HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.Note)) },
             onCreateCreditCardClick = {
                 onEvent(HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.CreditCard))
+            },
+            onCreateIdentityClick = {
+                onEvent(HomeUiEvent.AddItemClick(shareId, ItemTypeUiState.Identity))
             }
         )
     }

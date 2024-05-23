@@ -117,6 +117,7 @@ class ItemDetailViewModel @Inject constructor(
             ItemTypeUiState.Alias -> EventItemType.Alias
             ItemTypeUiState.Password -> EventItemType.Password
             ItemTypeUiState.CreditCard -> EventItemType.CreditCard
+            ItemTypeUiState.Identity -> EventItemType.Identity
             ItemTypeUiState.Unknown -> null
         }
         eventItemType?.let {

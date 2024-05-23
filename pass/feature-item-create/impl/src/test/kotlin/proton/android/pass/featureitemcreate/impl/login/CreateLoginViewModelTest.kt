@@ -29,6 +29,7 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.clipboard.fakes.TestClipboardManager
+import proton.android.pass.commonrust.fakes.TestEmailValidator
 import proton.android.pass.commonrust.fakes.passwords.strengths.TestPasswordStrengthCalculator
 import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
@@ -115,7 +116,8 @@ internal class CreateLoginViewModelTest {
             inAppReviewTriggerMetrics = TestInAppReviewTriggerMetrics(),
             observeDefaultVault = TestObserveDefaultVault(),
             generatePasskey = TestGeneratePasskey(),
-            featureFlagsRepository = TestFeatureFlagsPreferenceRepository()
+            featureFlagsRepository = TestFeatureFlagsPreferenceRepository(),
+            emailValidator = TestEmailValidator()
         )
     }
 

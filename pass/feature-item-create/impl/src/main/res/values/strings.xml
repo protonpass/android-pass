@@ -23,6 +23,7 @@
     <!-- Create Login -->
     <string name="field_email_title">Email address</string>
     <string name="field_email_hint">Add email address</string>
+    <string name="field_email_error">Invalid email address</string>
     <string name="field_username_title">Username</string>
     <string name="field_username_hint">Add username</string>
     <string name="field_username_or_email_title">Username or email address</string>

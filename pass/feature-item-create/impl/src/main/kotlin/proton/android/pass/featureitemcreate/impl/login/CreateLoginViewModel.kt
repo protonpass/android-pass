@@ -47,6 +47,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.toUiModel
@@ -114,7 +115,8 @@ class CreateLoginViewModel @Inject constructor(
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandleProvider: SavedStateHandleProvider,
     observeDefaultVault: ObserveDefaultVault,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository
+    featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    emailValidator: EmailValidator
 ) : BaseLoginViewModel(
     accountManager = accountManager,
     snackbarDispatcher = snackbarDispatcher,
@@ -126,7 +128,8 @@ class CreateLoginViewModel @Inject constructor(
     encryptionContextProvider = encryptionContextProvider,
     passwordStrengthCalculator = passwordStrengthCalculator,
     savedStateHandleProvider = savedStateHandleProvider,
-    featureFlagsRepository = featureFlagsRepository
+    featureFlagsRepository = featureFlagsRepository,
+    emailValidator = emailValidator
 ) {
     private val navShareId: Option<ShareId> = savedStateHandleProvider.get()
         .get<String>(CommonOptionalNavArgId.ShareId.key)

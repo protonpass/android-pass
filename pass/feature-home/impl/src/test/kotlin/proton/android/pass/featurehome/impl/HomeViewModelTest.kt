@@ -70,6 +70,7 @@ import proton.android.pass.featuresearchoptions.fakes.TestHomeSearchOptionsRepos
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.notifications.fakes.TestToastManager
+import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
@@ -275,7 +276,8 @@ internal class HomeViewModelTest {
             unpinItems = TestUnpinItems(),
             observeAppNeedsUpdate = TestObserveAppNeedsUpdate(),
             appDispatchers = TestAppDispatchers(),
-            itemSyncStatusRepository = TestItemSyncStatusRepository()
+            itemSyncStatusRepository = TestItemSyncStatusRepository(),
+            featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository()
         )
     }
 

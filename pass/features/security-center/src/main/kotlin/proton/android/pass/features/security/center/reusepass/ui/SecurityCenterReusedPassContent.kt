@@ -26,19 +26,17 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.composecomponents.impl.item.SectionTitle
+import proton.android.pass.commonui.api.isCollapsedSaver
+import proton.android.pass.composecomponents.impl.labels.CollapsibleSectionHeader
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.reusepass.navigation.SecurityCenterReusedPassDestination
 import proton.android.pass.features.security.center.reusepass.presentation.SecurityCenterReusedPassState
 import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBar
-import proton.android.pass.features.security.center.shared.ui.headers.SecurityCenterListStickyHeader
 import proton.android.pass.features.security.center.shared.ui.rows.SecurityCenterLoginItemRow
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -49,7 +47,7 @@ internal fun SecurityCenterReusedPassContent(
     state: SecurityCenterReusedPassState
 ) = with(state) {
 
-    val isGroupCollapsed = rememberSaveable(saver = isCollapsedSaver()) { mutableStateListOf() }
+    val isGroupCollapsed = rememberSaveable(saver = isCollapsedSaver<String>()) { mutableStateListOf() }
 
     Scaffold(
         modifier = modifier,
@@ -71,7 +69,7 @@ internal fun SecurityCenterReusedPassContent(
         ) {
             reusedPasswords.forEach { reusedPassGroup ->
                 stickyHeader {
-                    SecurityCenterListStickyHeader(
+                    CollapsibleSectionHeader(
                         onClick = {
                             if (isGroupCollapsed.contains(reusedPassGroup.key)) {
                                 isGroupCollapsed.remove(reusedPassGroup.key)
@@ -79,15 +77,11 @@ internal fun SecurityCenterReusedPassContent(
                                 isGroupCollapsed.add(reusedPassGroup.key)
                             }
                         },
-                        isCollapsed = isGroupCollapsed.contains(reusedPassGroup.key),
-                        label = {
-                            SectionTitle(
-                                text = stringResource(
-                                    id = R.string.security_center_reused_pass_list_sticky_header_label,
-                                    reusedPassGroup.reusedPasswordsCount
-                                )
-                            )
-                        }
+                        sectionTitle = stringResource(
+                            id = R.string.security_center_reused_pass_list_sticky_header_label,
+                            reusedPassGroup.reusedPasswordsCount
+                        ),
+                        isCollapsed = isGroupCollapsed.contains(reusedPassGroup.key)
                     )
                 }
 
@@ -114,16 +108,3 @@ internal fun SecurityCenterReusedPassContent(
     }
 }
 
-@Composable
-private fun isCollapsedSaver() = listSaver<MutableList<String>, String>(
-    save = {
-        if (it.isNotEmpty()) {
-            it.toList()
-        } else {
-            emptyList()
-        }
-    },
-    restore = {
-        it.toMutableStateList()
-    }
-)

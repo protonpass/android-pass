@@ -19,12 +19,17 @@
 package proton.android.pass.featureitemcreate.impl.identity.ui
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
-import proton.android.pass.featureitemcreate.impl.identity.presentation.ContactDetails
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent
+import proton.android.pass.featureitemcreate.impl.identity.presentation.ContactDetails
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.LicenseNumberInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.PassportNumberInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.SocialSecurityNumberInput
@@ -69,5 +74,18 @@ internal fun ContactDetails(
             enabled = true,
             onChange = { onEvent(IdentityContentEvent.OnEmailChange(it)) }
         )
+    }
+}
+
+@Preview
+@Composable
+fun ContactDetailsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            ContactDetails(
+                contactDetails = ContactDetails.EMPTY,
+                onEvent = {}
+            )
+        }
     }
 }

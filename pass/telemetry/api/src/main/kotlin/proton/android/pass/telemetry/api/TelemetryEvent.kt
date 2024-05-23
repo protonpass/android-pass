@@ -27,6 +27,7 @@ enum class EventItemType(val itemTypeName: String) {
     Alias("alias"),
     Password("password"),
     CreditCard("credit_card"),
+    Identity("identity"),
     Unknown("unknown");
 
     companion object {

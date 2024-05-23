@@ -90,6 +90,7 @@ internal fun LoginContent(
             isEditAllowed = uiState.isLoadingState == IsLoadingState.NotLoading,
             isTotpError = uiState.validationErrors.contains(LoginItemValidationErrors.InvalidTotp),
             isTitleError = uiState.validationErrors.contains(LoginItemValidationErrors.BlankTitle),
+            isInvalidEmail = uiState.validationErrors.contains(LoginItemValidationErrors.InvalidEmail),
             focusLastWebsite = uiState.focusLastWebsite,
             websitesWithErrors = uiState.validationErrors
                 .filterIsInstance<InvalidUrl>()

@@ -23,6 +23,7 @@ import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import proton.android.pass.common.api.PasswordStrength
+import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.crypto.api.context.EncryptionContext
@@ -52,19 +53,26 @@ data class LoginItemFormState(
     @IgnoredOnParcel
     internal val hasPasskeys: Boolean = passkeys.isNotEmpty()
 
-    internal fun validate(): Set<LoginItemValidationErrors> {
-        val mutableSet = mutableSetOf<LoginItemValidationErrors>()
-        if (title.isBlank()) mutableSet.add(LoginItemValidationErrors.BlankTitle)
+    internal fun validate(
+        emailValidator: EmailValidator,
+        isUsernameSplitEnabled: Boolean
+    ): Set<LoginItemValidationErrors> = mutableSetOf<LoginItemValidationErrors>().apply {
+        if (title.isBlank()) {
+            add(LoginItemValidationErrors.BlankTitle)
+        }
+
+        if (isUsernameSplitEnabled && email.isNotBlank() && !emailValidator.isValid(email)) {
+            add(LoginItemValidationErrors.InvalidEmail)
+        }
+
         urls.forEachIndexed { idx, url ->
             if (url.isNotBlank()) {
                 val validation = UrlSanitizer.sanitize(url)
                 if (validation.isFailure) {
-                    mutableSet.add(LoginItemValidationErrors.InvalidUrl(idx))
+                    add(LoginItemValidationErrors.InvalidUrl(idx))
                 }
             }
         }
-
-        return mutableSet.toSet()
     }
 
     internal fun toItemContents(): ItemContents.Login = ItemContents.Login(
@@ -120,12 +128,24 @@ data class LoginItemFormState(
 }
 
 internal sealed interface LoginItemValidationErrors {
+
     data object BlankTitle : LoginItemValidationErrors
-    data class InvalidUrl(val index: Int) : LoginItemValidationErrors
+
+    data object InvalidEmail : LoginItemValidationErrors
+
+    @JvmInline
+    value class InvalidUrl(val index: Int) : LoginItemValidationErrors
+
     data object InvalidTotp : LoginItemValidationErrors
 
     sealed interface CustomFieldValidationError : LoginItemValidationErrors {
-        data class EmptyField(val index: Int) : CustomFieldValidationError
-        data class InvalidTotp(val index: Int) : CustomFieldValidationError
+
+        @JvmInline
+        value class EmptyField(val index: Int) : CustomFieldValidationError
+
+        @JvmInline
+        value class InvalidTotp(val index: Int) : CustomFieldValidationError
+
     }
+
 }

@@ -39,10 +39,12 @@ import me.proton.core.presentation.R as CoreR
 @Composable
 fun HomeEmptyList(
     modifier: Modifier = Modifier,
+    isIdentityEnabled: Boolean,
     onCreateLoginClick: () -> Unit,
     onCreateAliasClick: () -> Unit,
     onCreateNoteClick: () -> Unit,
-    onCreateCreditCardClick: () -> Unit
+    onCreateCreditCardClick: () -> Unit,
+    onCreateIdentityClick: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -86,6 +88,16 @@ fun HomeEmptyList(
                 icon = CoreR.drawable.ic_proton_credit_card,
                 onClick = onCreateCreditCardClick
             )
+            if (isIdentityEnabled) {
+                HomeEmptyButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = stringResource(R.string.home_empty_vault_create_identity),
+                    backgroundColor = PassTheme.colors.interactionNormMinor1,
+                    textColor = PassTheme.colors.interactionNormMajor2,
+                    icon = CoreR.drawable.ic_proton_card_identity,
+                    onClick = onCreateIdentityClick
+                )
+            }
         }
     }
 }
@@ -96,10 +108,12 @@ fun HomeEmptyListPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: 
     PassTheme(isDark = isDark) {
         Surface {
             HomeEmptyList(
+                isIdentityEnabled = true,
                 onCreateLoginClick = {},
                 onCreateAliasClick = {},
                 onCreateNoteClick = {},
-                onCreateCreditCardClick = {}
+                onCreateCreditCardClick = {},
+                onCreateIdentityClick = {}
             )
         }
     }

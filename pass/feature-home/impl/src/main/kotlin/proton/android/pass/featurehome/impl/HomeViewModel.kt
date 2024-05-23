@@ -157,6 +157,8 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.notifications.api.ToastManager
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.telemetry.api.EventItemType
@@ -196,7 +198,8 @@ class HomeViewModel @Inject constructor(
     appDispatchers: AppDispatchers,
     getUserPlan: GetUserPlan,
     savedState: SavedStateHandleProvider,
-    itemSyncStatusRepository: ItemSyncStatusRepository
+    itemSyncStatusRepository: ItemSyncStatusRepository,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -495,7 +498,8 @@ class HomeViewModel @Inject constructor(
         shareListWrapperFlow,
         preferencesRepository.getUseFaviconsPreference(),
         selectionState,
-        appNeedsUpdateFlow
+        appNeedsUpdateFlow,
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.IDENTITY_V1)
     ) { itemsResult,
         refreshingLoading,
         shouldScrollToTop,
@@ -503,7 +507,8 @@ class HomeViewModel @Inject constructor(
         shareListWrapper,
         useFavicons,
         selection,
-        appNeedsUpdate ->
+        appNeedsUpdate,
+        isIdentityEnabled ->
         val isLoadingState = IsLoadingState.from(itemsResult is LoadingResult.Loading)
 
         val (items, isLoading) = when (itemsResult) {
@@ -533,7 +538,8 @@ class HomeViewModel @Inject constructor(
             selectionState = selection.toState(
                 isTrash = searchOptions.vaultSelectionOption == VaultSelectionOption.Trash
             ),
-            showNeedsUpdate = appNeedsUpdate.getOrNull() ?: false
+            showNeedsUpdate = appNeedsUpdate.getOrNull() ?: false,
+            isIdentityEnabled = isIdentityEnabled
         )
     }
 

@@ -20,12 +20,16 @@ package proton.android.pass.datamodels.api
 
 import kotlinx.datetime.Instant
 import proton.android.pass.crypto.api.context.EncryptionContext
+import proton.android.pass.domain.AddressDetails
+import proton.android.pass.domain.ContactDetails
 import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.CustomField
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.PasskeyCreationData
 import proton.android.pass.domain.PasskeyId
+import proton.android.pass.domain.PersonalDetails
+import proton.android.pass.domain.WorkDetails
 import proton.android.pass.domain.entity.AppName
 import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.domain.entity.PackageName
@@ -36,65 +40,116 @@ fun ItemType.Companion.fromParsed(
     context: EncryptionContext,
     parsed: ItemV1.Item,
     aliasEmail: String? = null
-): ItemType {
-    return when (parsed.content.contentCase) {
-        ItemV1.Content.ContentCase.LOGIN -> ItemType.Login(
-            itemEmail = parsed.content.login.itemEmail,
-            itemUsername = parsed.content.login.itemUsername,
-            password = context.encrypt(parsed.content.login.password),
-            websites = parsed.content.login.urlsList,
-            packageInfoSet = parsed.platformSpecific.android.allowedAppsList.map {
-                PackageInfo(PackageName(it.packageName), AppName(it.appName))
-            }.toSet(),
-            primaryTotp = context.encrypt(parsed.content.login.totpUri),
-            customFields = parsed.extraFieldsList.map { field ->
-                field.toDomain(context)
-            },
-            passkeys = parsed.content.login.passkeysList.map {
-                Passkey(
-                    id = PasskeyId(it.keyId),
-                    domain = it.domain,
-                    rpId = it.rpId,
-                    rpName = it.rpName,
-                    userName = it.userName,
-                    userDisplayName = it.userDisplayName,
-                    userId = it.userId.toByteArray(),
-                    contents = it.content.toByteArray(),
-                    note = it.note,
-                    createTime = Instant.fromEpochSeconds(it.createTime.toLong()),
-                    credentialId = it.credentialId.toByteArray(),
-                    userHandle = it.userHandle.toByteArray(),
-                    creationData = it.creationDataOrNull?.let { creationData ->
-                        PasskeyCreationData(
-                            osName = creationData.osName,
-                            osVersion = creationData.osVersion,
-                            deviceName = creationData.deviceName,
-                            appVersion = creationData.appVersion
-                        )
-                    }
+): ItemType = when (parsed.content.contentCase) {
+    ItemV1.Content.ContentCase.LOGIN -> createLoginItemType(parsed, context)
+    ItemV1.Content.ContentCase.NOTE -> ItemType.Note(parsed.metadata.note)
+    ItemV1.Content.ContentCase.ALIAS -> createAliasItemType(aliasEmail)
+    ItemV1.Content.ContentCase.CREDIT_CARD -> createCreditCardItemType(parsed, context)
+    ItemV1.Content.ContentCase.IDENTITY -> createIdentityItemType(parsed)
+    ItemV1.Content.ContentCase.CONTENT_NOT_SET,
+    null -> ItemType.Unknown
+}
+
+private fun createAliasItemType(aliasEmail: String?): ItemType.Alias {
+    requireNotNull(aliasEmail)
+    return ItemType.Alias(aliasEmail = aliasEmail)
+}
+
+private fun createIdentityItemType(parsed: ItemV1.Item): ItemType.Identity {
+    val content = parsed.content.identity
+    return ItemType.Identity(
+        personalDetails = PersonalDetails(
+            firstName = content.firstName,
+            middleName = content.middleName,
+            lastName = content.lastName,
+            fullName = content.fullName,
+            birthdate = content.birthdate,
+            gender = content.gender,
+            email = content.email,
+            phoneNumber = content.phoneNumber
+        ),
+        addressDetails = AddressDetails(
+            organization = content.organization,
+            streetAddress = content.streetAddress,
+            zipOrPostalCode = content.zipOrPostalCode,
+            city = content.city,
+            stateOrProvince = content.stateOrProvince,
+            countryOrRegion = content.countryOrRegion,
+            floor = content.floor,
+            county = content.county
+        ),
+        contactDetails = ContactDetails(
+            socialSecurityNumber = content.socialSecurityNumber,
+            passportNumber = content.passportNumber,
+            licenseNumber = content.licenseNumber,
+            website = content.website,
+            xHandle = content.xHandle,
+            secondPhoneNumber = content.secondPhoneNumber,
+            linkedin = content.linkedin,
+            reddit = content.reddit,
+            facebook = content.facebook,
+            yahoo = content.yahoo,
+            instagram = content.instagram
+        ),
+        workDetails = WorkDetails(
+            company = content.company,
+            jobTitle = content.jobTitle,
+            personalWebsite = content.personalWebsite,
+            workPhoneNumber = content.workPhoneNumber,
+            workEmail = content.workEmail
+        )
+    )
+}
+
+private fun createCreditCardItemType(parsed: ItemV1.Item, context: EncryptionContext): ItemType.CreditCard {
+    val content = parsed.content.creditCard
+    return ItemType.CreditCard(
+        cardHolder = content.cardholderName,
+        number = context.encrypt(content.number),
+        cvv = context.encrypt(content.verificationNumber),
+        pin = context.encrypt(content.pin),
+        creditCardType = content.cardType.toDomain(),
+        expirationDate = content.expirationDate
+    )
+}
+
+private fun createLoginItemType(parsed: ItemV1.Item, context: EncryptionContext) = ItemType.Login(
+    itemEmail = parsed.content.login.itemEmail,
+    itemUsername = parsed.content.login.itemUsername,
+    password = context.encrypt(parsed.content.login.password),
+    websites = parsed.content.login.urlsList,
+    packageInfoSet = parsed.platformSpecific.android.allowedAppsList.map {
+        PackageInfo(PackageName(it.packageName), AppName(it.appName))
+    }.toSet(),
+    primaryTotp = context.encrypt(parsed.content.login.totpUri),
+    customFields = parsed.extraFieldsList.map { field ->
+        field.toDomain(context)
+    },
+    passkeys = parsed.content.login.passkeysList.map {
+        Passkey(
+            id = PasskeyId(it.keyId),
+            domain = it.domain,
+            rpId = it.rpId,
+            rpName = it.rpName,
+            userName = it.userName,
+            userDisplayName = it.userDisplayName,
+            userId = it.userId.toByteArray(),
+            contents = it.content.toByteArray(),
+            note = it.note,
+            createTime = Instant.fromEpochSeconds(it.createTime.toLong()),
+            credentialId = it.credentialId.toByteArray(),
+            userHandle = it.userHandle.toByteArray(),
+            creationData = it.creationDataOrNull?.let { creationData ->
+                PasskeyCreationData(
+                    osName = creationData.osName,
+                    osVersion = creationData.osVersion,
+                    deviceName = creationData.deviceName,
+                    appVersion = creationData.appVersion
                 )
             }
         )
-        ItemV1.Content.ContentCase.NOTE -> ItemType.Note(parsed.metadata.note)
-        ItemV1.Content.ContentCase.ALIAS -> {
-            requireNotNull(aliasEmail)
-            ItemType.Alias(aliasEmail = aliasEmail)
-        }
-        ItemV1.Content.ContentCase.CREDIT_CARD -> {
-            val content = parsed.content.creditCard
-            ItemType.CreditCard(
-                cardHolder = content.cardholderName,
-                number = context.encrypt(content.number),
-                cvv = context.encrypt(content.verificationNumber),
-                pin = context.encrypt(content.pin),
-                creditCardType = content.cardType.toDomain(),
-                expirationDate = content.expirationDate
-            )
-        }
-        else -> ItemType.Unknown
-
     }
-}
+)
 
 fun ItemV1.ExtraField.toDomain(context: EncryptionContext): CustomField {
     return when (this.contentCase) {
@@ -102,14 +157,17 @@ fun ItemV1.ExtraField.toDomain(context: EncryptionContext): CustomField {
             label = this.fieldName,
             value = this.text.content
         )
+
         ItemV1.ExtraField.ContentCase.HIDDEN -> CustomField.Hidden(
             label = this.fieldName,
             value = context.encrypt(this.hidden.content)
         )
+
         ItemV1.ExtraField.ContentCase.TOTP -> CustomField.Totp(
             label = this.fieldName,
             value = context.encrypt(this.totp.totpUri)
         )
+
         else -> CustomField.Unknown
     }
 }

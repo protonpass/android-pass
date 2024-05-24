@@ -88,8 +88,10 @@
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Hide-my-email-aliassen</string>
   <string name="security_center_dark_web_monitor_proton_addresses_error">Fout bij het ophalen van Proton adressen</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Fout bij ophalen van Hide-my-email aliassen</string>
-  <string name="security_center_dark_web_monitor_monitoring_disabled">Not monitored</string>
-  <string name="security_center_dark_web_monitor_see_all">See all</string>
+  <string name="security_center_dark_web_monitor_monitoring_disabled">Niet gemonitord</string>
+  <string name="security_center_dark_web_monitor_see_all">Alles weergeven</string>
+  <string name="security_center_dark_web_monitor_no_proton_addresses">No Proton addresses</string>
+  <string name="security_center_dark_web_monitor_no_aliases">No aliases</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Er is een fout opgetreden bij het verzenden van de verificatiecode. Probeer het later nog eens.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Er is een fout opgetreden bij het verwijderen van de e-mail. Probeer het later opnieuw.</string>
   <!-- Add custom email monitoring -->
@@ -104,11 +106,11 @@
   <string name="security_center_verify_email_code_error">Ongeldige code</string>
   <string name="security_center_verify_email_title">Bevestig je e-mailadres</string>
   <string name="security_center_verify_email_subtitle">We hebben een verificatiecode gestuurd naar %s. Voer deze hieronder in:</string>
-  <string name="security_center_verify_email_code_resend_header">Haven’t received the code?</string>
-  <string name="security_center_verify_email_code_resend_body">Please check in your Spam for an email called “Please confirm your email address for Proton Pass“</string>
-  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">If you can’t find such email, you can </string>
-  <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">request a new code.</string>
-  <string name="security_center_verify_email_snackbar_message_resend_code_success">A new verification has been sent, please check your inbox.</string>
+  <string name="security_center_verify_email_code_resend_header">Heeft u de code niet ontvangen?</string>
+  <string name="security_center_verify_email_code_resend_body">Controleer uw spam op een e-mail genaamd \"Bevestig uw e-mailadres voor Proton Pass\"</string>
+  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">Wanneer u deze mail niet kunt vinden kunt u </string>
+  <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">nieuwe code aanvragen.</string>
+  <string name="security_center_verify_email_snackbar_message_resend_code_success">Een nieuwe verificatie is verstuurd, controleer uw inbox.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">Er is een fout opgetreden bij het verzenden van de verificatiecode. Probeer het later nog eens.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Te veel ongeldige verificaties. Aangepaste e-mail wordt verwijderd.</string>
   <!-- Verify email monitoring -->
@@ -143,7 +145,7 @@
   <string name="security_center_proton_list_error">Kon adressen niet laden</string>
   <string name="security_center_proton_list_included_in_monitoring">Schakel monitoring in om een melding te krijgen als uw Proton adressen zijn gelekt.</string>
   <string name="security_center_proton_list_options_menu">Proton scherm opties menu</string>
-  <string name="security_center_proton_list_not_monitored">Not monitored</string>
+  <string name="security_center_proton_list_not_monitored">Niet gemonitord</string>
   <!-- Address Bottomsheet options -->
   <string name="security_center_address_bottomsheet_disable_monitoring">Monitoring pauzeren</string>
   <string name="security_center_address_bottomsheet_enable_monitoring">Monitoren hervatten</string>
@@ -165,8 +167,6 @@
   <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">Dataveiligheid</string>
   <string name="dark_web_help_dialog_subtitle">Proton deelt nooit uw gegevens met derden. Alle gegevens zijn afkomstig van zoekopdrachten naar Proton domeinen op het dark web.</string>
-  <string name="dark_web_help_dialog_custom_address_title">Aangepaste e-mailadressen</string>
-  <string name="dark_web_help_dialog_custom_address_subtitle">U kunt ook maximaal 10 e-mailadressen monitoren die geen Proton of e-mail aliassen zijn. Ze worden naar HIBP gestuurd voor monitoring - er worden geen andere gegevens met HIBP gedeeld.</string>
   <!-- Cannot add custom emails -->
   <string name="dark_web_cannot_add_custom_emails_dialog_title">Kan aangepaste e-mail niet toevoegen</string>
   <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">U heeft de limiet van aangepaste e-mails bereikt.</string>

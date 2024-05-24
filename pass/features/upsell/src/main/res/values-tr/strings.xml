@@ -26,5 +26,8 @@
   <string name="upsell_paid_feature_authenticator">Bütünleşik iki adımlı doğrulayıcı</string>
   <string name="upsell_paid_feature_unlimited_aliases">Sınırsız sayıda hide-my-email takma adı</string>
   <string name="upsell_paid_feature_vault_sharing">Kasa paylaşımı (10 kişiye kadar)</string>
+  <string name="upsell_paid_feature_authenticator_essential">Require 2FA for organization</string>
+  <string name="upsell_paid_feature_sso_essential">SSO integration (coming soon)</string>
   <string name="upsell_button_upgrade">Pass Plus edinin</string>
+  <string name="upsell_button_upgrade_essentials">Get Pass Business</string>
 </resources>

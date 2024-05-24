@@ -32,7 +32,7 @@
   <string name="app_lock_config_biometric">Biometrični</string>
   <string name="app_lock_config_pin_code">PIN koda</string>
   <string name="app_lock_config_app_lock_time">Samodejno zaklepanje</string>
-  <string name="app_lock_config_password">Password</string>
+  <string name="app_lock_config_password">Geslo</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">Uporabite zaklepanje sistema, ko biometrija ne deluje</string>
   <string name="configure_pin_set_pin_code">Nastavi kodo PIN</string>
   <string name="configure_pin_unlock_the_app_with_this_code">Odklenite aplikacijo s to kodo</string>
@@ -71,5 +71,5 @@
     <item quantity="few">Čez %d ure</item>
     <item quantity="other">Čez %d ur</item>
   </plurals>
-  <string name="profile_less_than_a_minute">Less than a minute</string>
+  <string name="profile_less_than_a_minute">Manj kot minuto</string>
 </resources>

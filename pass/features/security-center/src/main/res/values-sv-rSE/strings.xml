@@ -35,7 +35,7 @@
   <string name="security_center_home_row_missing_tfa_title">Inaktiv 2FA</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Ställ in 2FA för mer säkerhet</string>
   <string name="security_center_home_row_excludes_items_title">Exkluderad från övervakning</string>
-  <string name="security_center_home_row_excludes_items_subtitle">These items remain at risk</string>
+  <string name="security_center_home_row_excludes_items_subtitle">Dessa objekt är fortfarande i fara</string>
   <string name="security_center_get_breaches_error">Kunde inte ladda intrång</string>
   <string name="security_center_home_section_password_health">Lösenordshälsa</string>
   <!-- Sentinel bottom sheet -->
@@ -90,6 +90,8 @@
   <string name="security_center_dark_web_monitor_alias_addresses_error">Fel vid hämtning av hide-my-email-alias</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">Inte övervakad</string>
   <string name="security_center_dark_web_monitor_see_all">Se alla</string>
+  <string name="security_center_dark_web_monitor_no_proton_addresses">Inga Proton-adresser</string>
+  <string name="security_center_dark_web_monitor_no_aliases">Inga alias</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Det var ett fel när verifieringskoden skickades. Försök igen senare.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Det var ett fel när e-posten skulle tas bort. Försök igen senare.</string>
   <!-- Add custom email monitoring -->
@@ -105,7 +107,7 @@
   <string name="security_center_verify_email_title">Bekräfta din e-post</string>
   <string name="security_center_verify_email_subtitle">Vi har skickat en verifieringskod till %s. Ange den nedan:</string>
   <string name="security_center_verify_email_code_resend_header">Har du inte fått koden?</string>
-  <string name="security_center_verify_email_code_resend_body">Please check in your Spam for an email called “Please confirm your email address for Proton Pass“</string>
+  <string name="security_center_verify_email_code_resend_body">Kolla i din skräppost för ett e-postmeddelande som heter ”Bekräfta din e-postadress för Proton Pass”</string>
   <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">Om du inte kan hitta ett sådant e-postmeddelande kan du </string>
   <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">begär en ny kod.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_success">En ny verifiering har skickats, kontrollera din inkorg.</string>
@@ -165,8 +167,6 @@
   <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">Datasäkerhet</string>
   <string name="dark_web_help_dialog_subtitle">Proton never shares your information with third parties. All data comes from searches for the appearance of Proton domains on the dark web.</string>
-  <string name="dark_web_help_dialog_custom_address_title">Anpassade e-postadresser</string>
-  <string name="dark_web_help_dialog_custom_address_subtitle">Du kan också övervaka upp till 10 e-postadresser som inte är Proton eller e-postalias. De kommer att skickas till HIBP för övervakning - inga andra data kommer att delas till HIBP.</string>
   <!-- Cannot add custom emails -->
   <string name="dark_web_cannot_add_custom_emails_dialog_title">Kan inte lägga till anpassad e-post</string>
   <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">Du har nått gränsen för anpassad e-post.</string>

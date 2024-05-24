@@ -25,7 +25,11 @@
   </plurals>
   <string name="sync_progress_item_count">%1$d з %2$d элементаў</string>
   <string name="sync_dialog_title">Сінхранізацыя элементаў…</string>
+  <string name="sync_dialog_title_error">Збой сінхранізацыі</string>
+  <string name="sync_dialog_title_success">Сінхранізацыя завершана</string>
   <string name="sync_dialog_subtitle">Мы спампоўваем і расшыфроўваем вашы элементы. Гэта можа заняць некалькі хвілін.</string>
-  <string name="sync_dialog_confirm_button">Працягнуць</string>
+  <string name="sync_dialog_subtitle_error">Адбылася памылка падчас спампоўвання і расшыфроўкі вашых элементаў. Паспрабуйце яшчэ раз.</string>
+  <string name="sync_dialog_subtitle_success">Вашы элементы былі паспяхова спампаваны і расшыфраваны.</string>
   <string name="sync_item_not_started">Не запушчана</string>
+  <string name="sync_item_failed">Збой сінхранізацыі</string>
 </resources>

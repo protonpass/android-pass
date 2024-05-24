@@ -96,6 +96,8 @@
   <string name="security_center_dark_web_monitor_alias_addresses_error">Error retrieving Hide-my-email aliases</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">Not monitored</string>
   <string name="security_center_dark_web_monitor_see_all">See all</string>
+  <string name="security_center_dark_web_monitor_no_proton_addresses">No Proton addresses</string>
+  <string name="security_center_dark_web_monitor_no_aliases">No aliases</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">There was an error sending the verification code. Please try again later.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">There was an error removing the email. Please try again later.</string>
   <!-- Add custom email monitoring -->
@@ -171,8 +173,6 @@
   <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">Безопасность данных</string>
   <string name="dark_web_help_dialog_subtitle">Proton никогда не передает вашу информацию третьим лицам. Все данные получены в результате поиска появления доменов Proton в темной паутине.</string>
-  <string name="dark_web_help_dialog_custom_address_title">Пользовательские адреса электронной почты</string>
-  <string name="dark_web_help_dialog_custom_address_subtitle">Вы также можете отслеживать до 10 адресов электронной почты, которые не являются адресами Proton или почтовыми псевдонимами. Они будут отправлены в HIBP для мониторинга - никакие другие данные не будут переданы в HIBP.</string>
   <!-- Cannot add custom emails -->
   <string name="dark_web_cannot_add_custom_emails_dialog_title">Не удается добавить пользовательскую электронную почту</string>
   <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">Вы достигли предела пользовательских адресов электронной почты.</string>

@@ -94,8 +94,10 @@
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Aliasy Hide-my-email</string>
   <string name="security_center_dark_web_monitor_proton_addresses_error">Chyba při načítání adres Proton</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Chyba při načítání aliasů Hide-my-email</string>
-  <string name="security_center_dark_web_monitor_monitoring_disabled">Not monitored</string>
-  <string name="security_center_dark_web_monitor_see_all">See all</string>
+  <string name="security_center_dark_web_monitor_monitoring_disabled">Nesledováno</string>
+  <string name="security_center_dark_web_monitor_see_all">Zobrazit vše</string>
+  <string name="security_center_dark_web_monitor_no_proton_addresses">No Proton addresses</string>
+  <string name="security_center_dark_web_monitor_no_aliases">No aliases</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Při odesílání ověřovacího kódu došlo k chybě. Zkuste to prosím později.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Při odebírání e-mailu došlo k chybě. Zkuste to prosím později.</string>
   <!-- Add custom email monitoring -->
@@ -110,11 +112,11 @@
   <string name="security_center_verify_email_code_error">Neplatný kód</string>
   <string name="security_center_verify_email_title">Potvrďte svůj e-mail</string>
   <string name="security_center_verify_email_subtitle">Ověřovací kód jsme poslali na %s. Zadejte jej prosím níže:</string>
-  <string name="security_center_verify_email_code_resend_header">Haven’t received the code?</string>
-  <string name="security_center_verify_email_code_resend_body">Please check in your Spam for an email called “Please confirm your email address for Proton Pass“</string>
-  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">If you can’t find such email, you can </string>
-  <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">request a new code.</string>
-  <string name="security_center_verify_email_snackbar_message_resend_code_success">A new verification has been sent, please check your inbox.</string>
+  <string name="security_center_verify_email_code_resend_header">Neobdrželi jste kód?</string>
+  <string name="security_center_verify_email_code_resend_body">Prosím, podívejte se do spamu, jestli v něm není e-mail nazvaný \"Prosím potvrďte svoji e-mailovou adresu pro Proton Pass\"</string>
+  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">Pokud takový e-mail nelze najít, tak můžete </string>
+  <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">požádat o nový kód.</string>
+  <string name="security_center_verify_email_snackbar_message_resend_code_success">Nový ověřovací kód byl odeslaný. Prosím, zkontrolujte doručenou poštu.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">Při odesílání ověřovacího kódu došlo k chybě. Zkuste to prosím později.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Příliš mnoho neplatných ověření. Odebírání vlastního e-mailu.</string>
   <!-- Verify email monitoring -->
@@ -149,7 +151,7 @@
   <string name="security_center_proton_list_error">Nelze načíst adresy</string>
   <string name="security_center_proton_list_included_in_monitoring">Povolte sledování, abyste byli informováni, pokud došlo k úniku vašich adres Proton.</string>
   <string name="security_center_proton_list_options_menu">Nabídka možností obrazovky Proton</string>
-  <string name="security_center_proton_list_not_monitored">Not monitored</string>
+  <string name="security_center_proton_list_not_monitored">Nesledováno</string>
   <!-- Address Bottomsheet options -->
   <string name="security_center_address_bottomsheet_disable_monitoring">Pozastavit sledování</string>
   <string name="security_center_address_bottomsheet_enable_monitoring">Obnovit sledování</string>
@@ -171,8 +173,6 @@
   <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">Zabezpečení dat</string>
   <string name="dark_web_help_dialog_subtitle">Proton nikdy nesdílí vaše informace s třetími stranami. Všechny údaje pocházejí z vyhledávání výskytu domén Proton na dark webu.</string>
-  <string name="dark_web_help_dialog_custom_address_title">Vlastní e-mailové adresy</string>
-  <string name="dark_web_help_dialog_custom_address_subtitle">Můžete také sledovat až 10 e-mailových adres, které nejsou adresami Proton nebo e-mailovými aliasy. Budou zaslány do HIBP ke sledování - žádné další údaje nebudou HIBP poskytnuty.</string>
   <!-- Cannot add custom emails -->
   <string name="dark_web_cannot_add_custom_emails_dialog_title">Nelze přidat vlastní e-mail</string>
   <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">Dosáhli jste limitu počtu vlastních e-mailů.</string>

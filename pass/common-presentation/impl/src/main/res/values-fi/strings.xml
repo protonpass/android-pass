@@ -21,6 +21,7 @@
   <string name="item_details_snackbar_message_card_number_copied">Kortin numero kopioitiin</string>
   <string name="item_details_snackbar_message_custom_field_copied">Mukautettu kenttä kopioitiin</string>
   <string name="item_details_snackbar_message_cvv_copied">Turvakoodi kopioitiin</string>
+  <string name="item_details_snackbar_message_email_copied">Email address copied</string>
   <string name="item_details_snackbar_message_password_copied">Salasana kopioitiin</string>
   <string name="item_details_snackbar_message_pin_copied">PIN-koodi kopioitiin</string>
   <string name="item_details_snackbar_message_totp_copied">TOTP-koodi kopioitiin</string>

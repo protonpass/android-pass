@@ -34,6 +34,8 @@
   <string name="action_view_details">자세히 보기</string>
   <string name="action_see_all">모두 보기</string>
   <string name="action_confirm">확인</string>
+  <string name="action_continue">계속하기</string>
+  <string name="action_retry">다시 시도하기</string>
   <!-- Empty list -->
   <string name="empty_list_title">첫 번째 항목 추가</string>
   <string name="empty_search_results_title">결과가 없습니다</string>
@@ -114,7 +116,9 @@
   <string name="item_details_credit_card_section_expiration_date_title">유효기간 일자</string>
   <string name="item_details_credit_card_section_cvv_title">보안 코드</string>
   <string name="item_details_credit_card_section_pin_title">PIN 코드</string>
-  <string name="item_details_login_section_username_or_username_title">사용자 이름 또는 이메일 주소</string>
+  <string name="item_details_login_section_email_title">Email address</string>
+  <string name="item_details_login_section_username_title">Username</string>
+  <string name="item_details_login_section_username_or_username_title">Username or email address</string>
   <string name="item_details_login_section_password_title">비밀번호</string>
   <string name="item_details_login_section_primary_totp_title">2단계 인증 토큰 (TOTP)</string>
   <string name="item_details_login_section_websites_title">웹사이트</string>

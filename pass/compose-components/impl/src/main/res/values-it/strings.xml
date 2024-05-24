@@ -35,6 +35,8 @@
   <string name="action_view_details">Visualizza i dettagli</string>
   <string name="action_see_all">Mostra tutto</string>
   <string name="action_confirm">Conferma</string>
+  <string name="action_continue">Continue</string>
+  <string name="action_retry">Retry</string>
   <!-- Empty list -->
   <string name="empty_list_title">Aggiungi il tuo primo elemento</string>
   <string name="empty_search_results_title">Nessun risultato trovato</string>
@@ -116,7 +118,9 @@
   <string name="item_details_credit_card_section_expiration_date_title">Data di scadenza</string>
   <string name="item_details_credit_card_section_cvv_title">Codice di sicurezza</string>
   <string name="item_details_credit_card_section_pin_title">Codice PIN</string>
-  <string name="item_details_login_section_username_or_username_title">Nome utente o indirizzo email</string>
+  <string name="item_details_login_section_email_title">Email address</string>
+  <string name="item_details_login_section_username_title">Username</string>
+  <string name="item_details_login_section_username_or_username_title">Username or email address</string>
   <string name="item_details_login_section_password_title">Password</string>
   <string name="item_details_login_section_primary_totp_title">Token 2FA (TOTP)</string>
   <string name="item_details_login_section_websites_title">Siti web</string>

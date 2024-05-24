@@ -35,6 +35,8 @@
   <string name="action_view_details">დეტალების ხილვა</string>
   <string name="action_see_all">See all</string>
   <string name="action_confirm">Confirm</string>
+  <string name="action_continue">Continue</string>
+  <string name="action_retry">Retry</string>
   <!-- Empty list -->
   <string name="empty_list_title">დაამატეთ თქვენი პირველი ელემენტი</string>
   <string name="empty_search_results_title">შედეგების გარეშე</string>
@@ -116,7 +118,9 @@
   <string name="item_details_credit_card_section_expiration_date_title">ვადა იწურება</string>
   <string name="item_details_credit_card_section_cvv_title">უსაფრთხოების კოდი</string>
   <string name="item_details_credit_card_section_pin_title">PIN კოდი</string>
-  <string name="item_details_login_section_username_or_username_title">მომხმარებლის სახელი ან ელფოსტის მისამართი</string>
+  <string name="item_details_login_section_email_title">Email address</string>
+  <string name="item_details_login_section_username_title">Username</string>
+  <string name="item_details_login_section_username_or_username_title">Username or email address</string>
   <string name="item_details_login_section_password_title">პაროლი</string>
   <string name="item_details_login_section_primary_totp_title">2FA კოდი (TOTP)</string>
   <string name="item_details_login_section_websites_title">ვებსაიტები</string>

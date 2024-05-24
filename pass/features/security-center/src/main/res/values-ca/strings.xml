@@ -90,6 +90,8 @@
   <string name="security_center_dark_web_monitor_alias_addresses_error">S\'ha produït un error en recuperar els àlies de Hide-my-email</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">No supervisat</string>
   <string name="security_center_dark_web_monitor_see_all">Veure-ho tot</string>
+  <string name="security_center_dark_web_monitor_no_proton_addresses">No Proton addresses</string>
+  <string name="security_center_dark_web_monitor_no_aliases">No aliases</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">S\'ha produït un error en enviar el codi de verificació. Si us plau, torni-ho a intentar més tard.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">S\'ha produït un error en esborrar el correu electrònic. Si us plau, torni-ho a intentar més tard.</string>
   <!-- Add custom email monitoring -->
@@ -165,8 +167,6 @@
   <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">Seguretat de les dades</string>
   <string name="dark_web_help_dialog_subtitle">Proton no comparteix mai la vostra informació amb tercers. Totes les dades provenen de cerques de l\'aparició de dominis de Proton al web fosc.</string>
-  <string name="dark_web_help_dialog_custom_address_title">Adreces de correu electrònic personalitzades</string>
-  <string name="dark_web_help_dialog_custom_address_subtitle">També pot fer seguiment de fins a 10 adreces de correu electrònic que no siguin àlies de Proton ni de correu electrònic. S\'enviaran a HIBP per al seguiment; no es compartiran altres dades amb HIBP.</string>
   <!-- Cannot add custom emails -->
   <string name="dark_web_cannot_add_custom_emails_dialog_title">No es pot afegir correu electrònic personalitzat</string>
   <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">Ha arribat al límit de correus electrònics personalitzats.</string>

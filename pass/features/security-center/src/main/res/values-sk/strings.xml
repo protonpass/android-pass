@@ -96,6 +96,8 @@
   <string name="security_center_dark_web_monitor_alias_addresses_error">Chyba pri načítavaní Hide-my-email aliasov</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">Nemonitorované</string>
   <string name="security_center_dark_web_monitor_see_all">Zobraziť všetko</string>
+  <string name="security_center_dark_web_monitor_no_proton_addresses">No Proton addresses</string>
+  <string name="security_center_dark_web_monitor_no_aliases">No aliases</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Pri odosielaní overovacieho kódu došlo k chybe. Skúste to neskôr, prosím.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Pri odstraňovaní emailu došlo k chybe. Skúste to neskôr, prosím.</string>
   <!-- Add custom email monitoring -->
@@ -171,8 +173,6 @@
   <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">Zabezpečenie údajov</string>
   <string name="dark_web_help_dialog_subtitle">Spoločnosť Proton nikdy nezdieľa vaše informácie s tretími stranami. Všetky údaje pochádzajú z vyhľadávania výskytu Proton domén na dark webe.</string>
-  <string name="dark_web_help_dialog_custom_address_title">Vlastné emailové adresy</string>
-  <string name="dark_web_help_dialog_custom_address_subtitle">Môžete tiež monitorovať až 10 emailových adries, ktoré nie sú súčasťou služby Proton alebo emailových aliasov. Budú odoslané do HIBP na monitorovanie - žiadne iné údaje nebudú zdieľané s HIBP.</string>
   <!-- Cannot add custom emails -->
   <string name="dark_web_cannot_add_custom_emails_dialog_title">Nie je možné pridať vlastný email</string>
   <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">Dosiahli ste limit vlastných emailov.</string>

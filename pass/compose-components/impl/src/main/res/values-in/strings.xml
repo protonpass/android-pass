@@ -34,6 +34,8 @@
   <string name="action_view_details">Lihat rincian</string>
   <string name="action_see_all">Lihat semua</string>
   <string name="action_confirm">Konfirmasi</string>
+  <string name="action_continue">Continue</string>
+  <string name="action_retry">Retry</string>
   <!-- Empty list -->
   <string name="empty_list_title">Tambahkan item pertama Anda</string>
   <string name="empty_search_results_title">Hasil tidak ditemukan</string>
@@ -114,6 +116,8 @@
   <string name="item_details_credit_card_section_expiration_date_title">Waktu kedaluwarsa</string>
   <string name="item_details_credit_card_section_cvv_title">Kode keamanan</string>
   <string name="item_details_credit_card_section_pin_title">Kode PIN</string>
+  <string name="item_details_login_section_email_title">Alamat email</string>
+  <string name="item_details_login_section_username_title">Nama pengguna</string>
   <string name="item_details_login_section_username_or_username_title">Nama pengguna atau alamat email</string>
   <string name="item_details_login_section_password_title">Kata sandi</string>
   <string name="item_details_login_section_primary_totp_title">Token 2FA (TOTP)</string>

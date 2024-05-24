@@ -21,6 +21,7 @@
   <string name="item_details_snackbar_message_card_number_copied">Kortnummer kopierat</string>
   <string name="item_details_snackbar_message_custom_field_copied">Anpassat fält kopierat</string>
   <string name="item_details_snackbar_message_cvv_copied">Säkerhetskod kopierad</string>
+  <string name="item_details_snackbar_message_email_copied">E-postadress kopierad</string>
   <string name="item_details_snackbar_message_password_copied">Lösenord kopierat</string>
   <string name="item_details_snackbar_message_pin_copied">PIN-kod kopierad</string>
   <string name="item_details_snackbar_message_totp_copied">TOTP kopierat</string>

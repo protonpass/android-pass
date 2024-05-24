@@ -15,6 +15,7 @@
   <string name="note_detail_copy_note_to_clipboard">Kopiraj opombo</string>
   <string name="note_copied_to_clipboard">Opomba kopirana v odložišče</string>
   <!-- Login details -->
+  <string name="email_copied_to_clipboard">Email address copied</string>
   <string name="username_copied_to_clipboard">Uporabniško ime je kopirano</string>
   <string name="password_copied_to_clipboard">Geslo je bilo kopirano</string>
   <string name="website_copied_to_clipboard">Spletna stran kopirana</string>
@@ -39,15 +40,17 @@
   <string name="login_item_monitor_widget_weak_pass_title">Šibko geslo.</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">Vaš račun je ranljiv, pojdite v nastavitve in spremenite geslo.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
-    <item quantity="one">%d other login uses the same password</item>
-    <item quantity="two">%d other logins use the same password</item>
-    <item quantity="few">%d other logins use the same password</item>
-    <item quantity="other">%d other logins use the same password</item>
+    <item quantity="one">%d druga prijava uporablja isto geslo</item>
+    <item quantity="two">%d drugi prijavi uporabljata isto geslo</item>
+    <item quantity="few">%d druge prijave uporabljajo isto geslo</item>
+    <item quantity="other">%d druge prijave uporabljajo isto geslo</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Nastavite 2FA za večjo varnost</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">This service offers 2FA. Enable it for added account security.</string>
-  <string name="login_item_reused_passwords_subtitle">Items from your vaults that use this password.</string>
-  <string name="field_username_or_email">Uporabniško ime ali elektronski naslov</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Ta storitev ponuja 2FA. Omogočite ga za dodatno varnost računa.</string>
+  <string name="login_item_reused_passwords_subtitle">Predmeti iz vaših trezorjev, ki uporabljajo to geslo.</string>
+  <string name="field_email">Email address</string>
+  <string name="field_username">Username</string>
+  <string name="field_username_or_email">Username or email address</string>
   <string name="field_password">Geslo</string>
   <string name="websites_section_title">Spletne strani</string>
   <string name="totp_section_title">Žeton 2FA (TOTP)</string>

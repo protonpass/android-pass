@@ -37,6 +37,8 @@
   <string name="action_view_details">Паглядзець падрабязнасці</string>
   <string name="action_see_all">Прагледзець усе</string>
   <string name="action_confirm">Пацвердзіць</string>
+  <string name="action_continue">Працягнуць</string>
+  <string name="action_retry">Паўтарыць</string>
   <!-- Empty list -->
   <string name="empty_list_title">Дадайце свой першы элемент</string>
   <string name="empty_search_results_title">Нічога не знойдзена</string>
@@ -120,6 +122,8 @@
   <string name="item_details_credit_card_section_expiration_date_title">Тэрмін дзеяння</string>
   <string name="item_details_credit_card_section_cvv_title">Код бяспекі</string>
   <string name="item_details_credit_card_section_pin_title">PIN-код</string>
+  <string name="item_details_login_section_email_title">Адрас электроннай пошты</string>
+  <string name="item_details_login_section_username_title">Імя карыстальніка</string>
   <string name="item_details_login_section_username_or_username_title">Імя карыстальніка або адрас электроннай пошты</string>
   <string name="item_details_login_section_password_title">Пароль</string>
   <string name="item_details_login_section_primary_totp_title">Токен 2ФА (TOTP)</string>

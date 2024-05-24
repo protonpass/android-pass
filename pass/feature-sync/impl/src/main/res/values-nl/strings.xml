@@ -23,7 +23,11 @@
   </plurals>
   <string name="sync_progress_item_count">%1$d van %2$d items</string>
   <string name="sync_dialog_title">Aan het synchroniseren...</string>
+  <string name="sync_dialog_title_error">Sync failed</string>
+  <string name="sync_dialog_title_success">Sync completed</string>
   <string name="sync_dialog_subtitle">We downloaden en decrypten uw items. Dit kan een paar minuten duren.</string>
-  <string name="sync_dialog_confirm_button">Ga verder</string>
+  <string name="sync_dialog_subtitle_error">There was an error downloading and decrypting your items. Please try again.</string>
+  <string name="sync_dialog_subtitle_success">Your items were successfully downloaded and decrypted.</string>
   <string name="sync_item_not_started">Niet begonnen</string>
+  <string name="sync_item_failed">Sync failed</string>
 </resources>

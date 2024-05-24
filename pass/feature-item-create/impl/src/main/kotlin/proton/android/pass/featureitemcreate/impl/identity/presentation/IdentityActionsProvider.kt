@@ -18,8 +18,15 @@
 
 package proton.android.pass.featureitemcreate.impl.identity.presentation
 
+import kotlinx.collections.immutable.PersistentSet
+import kotlinx.collections.immutable.persistentSetOf
+import kotlinx.coroutines.flow.Flow
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.Item
+import proton.android.pass.featureitemcreate.impl.ItemSavedState
+
 @Suppress("ComplexInterface", "TooManyFunctions")
-interface IdentityActionsProvider {
+interface IdentityFormActions {
     fun onTitleChanged(title: String)
     fun onFullNameChanged(fullName: String)
     fun onFirstNameChanged(firstName: String)
@@ -43,4 +50,27 @@ interface IdentityActionsProvider {
     fun onCompanyChanged(company: String)
     fun onJobTitleChanged(jobTitle: String)
     fun getFormState(): IdentityItemFormState
+    fun isFormStateValid(): Boolean
+}
+
+interface IdentityActionsProvider : IdentityFormActions {
+    fun observeSharedState(): Flow<IdentitySharedUiState>
+    fun updateLoadingState(loadingState: IsLoadingState)
+    fun onItemSavedState(item: Item)
+}
+
+data class IdentitySharedUiState(
+    val isLoadingState: IsLoadingState,
+    val hasUserEditedContent: Boolean,
+    val validationErrors: PersistentSet<IdentityValidationErrors>,
+    val isItemSaved: ItemSavedState
+) {
+    companion object {
+        val Initial = IdentitySharedUiState(
+            isLoadingState = IsLoadingState.NotLoading,
+            hasUserEditedContent = false,
+            validationErrors = persistentSetOf(),
+            isItemSaved = ItemSavedState.Unknown
+        )
+    }
 }

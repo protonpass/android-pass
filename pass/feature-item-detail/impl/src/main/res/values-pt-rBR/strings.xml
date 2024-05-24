@@ -15,6 +15,7 @@
   <string name="note_detail_copy_note_to_clipboard">Copiar nota</string>
   <string name="note_copied_to_clipboard">Nota copiada para a área de transferência</string>
   <!-- Login details -->
+  <string name="email_copied_to_clipboard">Endereço de e-mail copiado</string>
   <string name="username_copied_to_clipboard">Nome de usuário copiado</string>
   <string name="password_copied_to_clipboard">Senha copiada</string>
   <string name="website_copied_to_clipboard">Site copiado</string>
@@ -45,7 +46,8 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Configure A2F para mais segurança</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Este serviço oferece autenticação de dois fatores (2FA). Ative-a para aumentar a segurança da sua conta.</string>
   <string name="login_item_reused_passwords_subtitle">Itens dos seus cofres que usam esta senha.</string>
-  <string name="field_username">Nome de usuário ou endereço de e-mail</string>
+  <string name="field_email">Endereço de e-mail</string>
+  <string name="field_username">Nome de usuário</string>
   <string name="field_username_or_email">Nome de usuário ou endereço de e-mail</string>
   <string name="field_password">Senha</string>
   <string name="websites_section_title">Sites</string>

@@ -87,6 +87,8 @@
   <string name="security_center_dark_web_monitor_alias_addresses_error">Terdapat kesalahan dalam mengambil alias Hide-my-email</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">Tidak dipantau</string>
   <string name="security_center_dark_web_monitor_see_all">Lihat semua</string>
+  <string name="security_center_dark_web_monitor_no_proton_addresses">No Proton addresses</string>
+  <string name="security_center_dark_web_monitor_no_aliases">No aliases</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Terjadi kesalahan saat mengirim kode verifikasi. Silakan coba lagi nanti.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Terjadi kesalahan saat menghapus email. Silakan coba lagi nanti.</string>
   <!-- Add custom email monitoring -->
@@ -162,8 +164,6 @@
   <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">Keamanan Data</string>
   <string name="dark_web_help_dialog_subtitle">Proton tidak pernah membagikan informasi Anda dengan pihak ketiga. Seluruh data yang tersedia berasal dari hasil kemunculan domain Proton pada pencarian di dark web.</string>
-  <string name="dark_web_help_dialog_custom_address_title">Alamat email khusus</string>
-  <string name="dark_web_help_dialog_custom_address_subtitle">Anda juga dapat memantau hingga 10 alamat email yang bukan merupakan alamat atau alias email Proton. Rangkaian alamat ini akan dikirim ke HIBP untuk dipantau - tidak ada data lain yang akan dibagikan kepada HIBP.</string>
   <!-- Cannot add custom emails -->
   <string name="dark_web_cannot_add_custom_emails_dialog_title">Tidak dapat menambahkan surel kustom.</string>
   <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">Anda telah mencapai batas jumlah email khusus yang dapat dibuat.</string>

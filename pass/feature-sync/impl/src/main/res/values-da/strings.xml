@@ -23,7 +23,11 @@
   </plurals>
   <string name="sync_progress_item_count">%1$d af %2$d elementer</string>
   <string name="sync_dialog_title">Synkroniserer elementer...</string>
+  <string name="sync_dialog_title_error">Synkronisering fejlede</string>
+  <string name="sync_dialog_title_success">Synkronisering gennemført</string>
   <string name="sync_dialog_subtitle">Vi downloader og dekrypterer dine ting. Dette kan tage et par minutter.</string>
-  <string name="sync_dialog_confirm_button">Fortsæt</string>
+  <string name="sync_dialog_subtitle_error">Der opstod en fejl ved download og dekryptering af dine elementer. Prøv venligst igen.</string>
+  <string name="sync_dialog_subtitle_success">Dine elementer blev downloadet og dekrypteret.</string>
   <string name="sync_item_not_started">Ikke startet</string>
+  <string name="sync_item_failed">Synkronisering mislykkedes</string>
 </resources>

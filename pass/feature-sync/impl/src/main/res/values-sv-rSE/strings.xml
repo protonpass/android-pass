@@ -23,7 +23,11 @@
   </plurals>
   <string name="sync_progress_item_count">%1$d av %2$d objekt</string>
   <string name="sync_dialog_title">Synkroniserar objekt…</string>
+  <string name="sync_dialog_title_error">Synkronisering misslyckades</string>
+  <string name="sync_dialog_title_success">Synkronisering slutförd</string>
   <string name="sync_dialog_subtitle">Vi laddar ner och dekrypterar dina objekt. Detta kan ta några minuter.</string>
-  <string name="sync_dialog_confirm_button">Fortsätt</string>
+  <string name="sync_dialog_subtitle_error">Det uppstod ett fel vid nedladdning och dekryptering av dina objekt. Försök igen.</string>
+  <string name="sync_dialog_subtitle_success">Dina objekt har laddats ner och dekrypterats.</string>
   <string name="sync_item_not_started">Inte startad</string>
+  <string name="sync_item_failed">Synkronisering misslyckades</string>
 </resources>

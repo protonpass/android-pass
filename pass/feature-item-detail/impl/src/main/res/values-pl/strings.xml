@@ -15,6 +15,7 @@
   <string name="note_detail_copy_note_to_clipboard">Kopiuj notatkę</string>
   <string name="note_copied_to_clipboard">Notatka została skopiowana do schowka</string>
   <!-- Login details -->
+  <string name="email_copied_to_clipboard">Adres e-mail został skopiowany</string>
   <string name="username_copied_to_clipboard">Nazwa użytkownika została skopiowana</string>
   <string name="password_copied_to_clipboard">Hasło zostało skopiowane</string>
   <string name="website_copied_to_clipboard">Strona internetowa została skopiowana</string>
@@ -47,6 +48,8 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Skonfiguruj uwierzytelnianie dwustopniowe dla większego bezpieczeństwa</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Usługa oferuje uwierzytelnianie dwustopniowe. Włącz je, aby zwiększyć bezpieczeństwo konta.</string>
   <string name="login_item_reused_passwords_subtitle">Dane logowania w sejfie, które używają tego hasła.</string>
+  <string name="field_email">Adres e-mail</string>
+  <string name="field_username">Nazwa użytkownika</string>
   <string name="field_username_or_email">Nazwa użytkownika lub adres e-mail</string>
   <string name="field_password">Hasło</string>
   <string name="websites_section_title">Strony internetowe</string>

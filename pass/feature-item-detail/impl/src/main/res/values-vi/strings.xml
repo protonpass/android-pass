@@ -15,6 +15,7 @@
   <string name="note_detail_copy_note_to_clipboard">Sao chép ghi chú</string>
   <string name="note_copied_to_clipboard">Đã sao chép ghi chú vào bộ nhớ tạm</string>
   <!-- Login details -->
+  <string name="email_copied_to_clipboard">Email address copied</string>
   <string name="username_copied_to_clipboard">Đã sao chép tên đăng nhập</string>
   <string name="password_copied_to_clipboard">Đã sao chép mật khẩu</string>
   <string name="website_copied_to_clipboard">Đã sao chép trang web</string>
@@ -44,7 +45,9 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Set up 2FA for more security</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">This service offers 2FA. Enable it for added account security.</string>
   <string name="login_item_reused_passwords_subtitle">Items from your vaults that use this password.</string>
-  <string name="field_username_or_email">Tên đăng nhập hoặc Email</string>
+  <string name="field_email">Email address</string>
+  <string name="field_username">Username</string>
+  <string name="field_username_or_email">Username or email address</string>
   <string name="field_password">Mật khẩu</string>
   <string name="websites_section_title">Trang web</string>
   <string name="totp_section_title">Mã bảo mật 2FA (TOTP)</string>

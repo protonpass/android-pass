@@ -15,6 +15,7 @@
   <string name="note_detail_copy_note_to_clipboard">Kopiér note</string>
   <string name="note_copied_to_clipboard">Note kopieret til udklipsholder</string>
   <!-- Login details -->
+  <string name="email_copied_to_clipboard">E-mailadresse kopieret</string>
   <string name="username_copied_to_clipboard">Brugernavn kopieret</string>
   <string name="password_copied_to_clipboard">Adgangskode kopieret</string>
   <string name="website_copied_to_clipboard">Websted kopieret</string>
@@ -45,6 +46,8 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Indstil 2FA for mere sikkerhed</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Denne tjeneste tilbyder 2FA. Aktivér det for at få ekstra kontosikkerhed.</string>
   <string name="login_item_reused_passwords_subtitle">Emner fra dine bokse, der har denne adgangskode.</string>
+  <string name="field_email">E-mailadresse</string>
+  <string name="field_username">Brugernavn</string>
   <string name="field_username_or_email">Brugernavn eller e-mailadresse</string>
   <string name="field_password">Adgangskode</string>
   <string name="websites_section_title">Websider</string>

@@ -21,6 +21,7 @@
   <string name="item_details_snackbar_message_card_number_copied">Đã sao chép số thẻ</string>
   <string name="item_details_snackbar_message_custom_field_copied">Custom field copied</string>
   <string name="item_details_snackbar_message_cvv_copied">Đã sao chép số CVV</string>
+  <string name="item_details_snackbar_message_email_copied">Email address copied</string>
   <string name="item_details_snackbar_message_password_copied">Đã sao chép mật khẩu</string>
   <string name="item_details_snackbar_message_pin_copied">PIN code copied</string>
   <string name="item_details_snackbar_message_totp_copied">TOTP copied</string>

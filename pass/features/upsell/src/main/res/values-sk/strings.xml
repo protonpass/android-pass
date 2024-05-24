@@ -26,5 +26,8 @@
   <string name="upsell_paid_feature_authenticator">Integrovaný 2FA autentifikátor</string>
   <string name="upsell_paid_feature_unlimited_aliases">Neobmedzený počet hide-my-email aliasov</string>
   <string name="upsell_paid_feature_vault_sharing">Zdieľanie trezora (až s 10 osobami)</string>
+  <string name="upsell_paid_feature_authenticator_essential">Require 2FA for organization</string>
+  <string name="upsell_paid_feature_sso_essential">SSO integration (coming soon)</string>
   <string name="upsell_button_upgrade">Získajte Pass Plus</string>
+  <string name="upsell_button_upgrade_essentials">Get Pass Business</string>
 </resources>

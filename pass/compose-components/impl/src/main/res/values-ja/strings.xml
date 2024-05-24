@@ -22,7 +22,7 @@
   <string name="bottomsheet_move_to_trash">ごみ箱に移動</string>
   <string name="bottomsheet_pin_item">ピン留めする</string>
   <string name="bottomsheet_unpin_item">ピン留めを解除</string>
-  <string name="bottomsheet_view_item_history">View history</string>
+  <string name="bottomsheet_view_item_history">履歴を表示</string>
   <string name="bottomsheet_monitor_exclude">Exclude from monitoring</string>
   <string name="bottomsheet_monitor_include">Include in monitoring</string>
   <!-- Actions -->
@@ -34,6 +34,8 @@
   <string name="action_view_details">詳細の表示</string>
   <string name="action_see_all">See all</string>
   <string name="action_confirm">Confirm</string>
+  <string name="action_continue">Continue</string>
+  <string name="action_retry">Retry</string>
   <!-- Empty list -->
   <string name="empty_list_title">最初の項目を追加</string>
   <string name="empty_search_results_title">結果が見つかりません</string>
@@ -114,7 +116,9 @@
   <string name="item_details_credit_card_section_expiration_date_title">有効期限</string>
   <string name="item_details_credit_card_section_cvv_title">セキュリティコード</string>
   <string name="item_details_credit_card_section_pin_title">PIN コード</string>
-  <string name="item_details_login_section_username_or_username_title">ユーザー名またはメールアドレス</string>
+  <string name="item_details_login_section_email_title">Email address</string>
+  <string name="item_details_login_section_username_title">Username</string>
+  <string name="item_details_login_section_username_or_username_title">Username or email address</string>
   <string name="item_details_login_section_password_title">パスワード</string>
   <string name="item_details_login_section_primary_totp_title">2 要素認証トークン (TOTP)</string>
   <string name="item_details_login_section_websites_title">ウェブサイト</string>

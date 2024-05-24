@@ -73,6 +73,14 @@ sealed interface ItemType {
     ) : ItemType
 
     @Serializable
+    data class Identity(
+        val personalDetails: PersonalDetails,
+        val addressDetails: AddressDetails,
+        val contactDetails: ContactDetails,
+        val workDetails: WorkDetails
+    ) : ItemType
+
+    @Serializable
     data object Password : ItemType
 
     @Serializable
@@ -85,6 +93,7 @@ sealed interface ItemType {
             is Login -> ItemCategory.Login
             is Note -> ItemCategory.Note
             Password -> ItemCategory.Password
+            is Identity -> ItemCategory.Identity
             Unknown -> ItemCategory.Unknown
         }
 

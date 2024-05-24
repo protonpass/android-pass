@@ -23,5 +23,6 @@ enum class SearchFilterType {
     Login,
     Alias,
     Note,
-    CreditCard
+    CreditCard,
+    Identity
 }

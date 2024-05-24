@@ -235,6 +235,7 @@ internal fun HomeContent(
                 ItemTypeFilterList(
                     selected = uiState.homeListUiState.searchFilterType,
                     itemTypeCount = itemTypeCount,
+                    isIdentityEnabled = uiState.homeListUiState.isIdentityEnabled,
                     onItemTypeClick = { onEvent(HomeUiEvent.ItemTypeSelected(it)) }
                 )
             }

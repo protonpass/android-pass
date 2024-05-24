@@ -54,9 +54,48 @@ object ItemUiFilter {
     private fun isAliasMatch(content: ItemContents.Alias, query: String): Boolean =
         content.aliasEmail.preprocess().contains(query)
 
-    @Suppress("NotImplementedDeclaration")
     private fun isIdentityMatch(content: ItemContents.Identity, query: String): Boolean {
-        TODO()
+        val identityProperties = listOf(
+            content.personalDetails.fullName,
+            content.personalDetails.firstName,
+            content.personalDetails.middleName,
+            content.personalDetails.lastName,
+            content.personalDetails.birthdate,
+            content.personalDetails.gender,
+            content.personalDetails.email,
+            content.personalDetails.phoneNumber,
+            content.addressDetails.organization,
+            content.addressDetails.streetAddress,
+            content.addressDetails.zipOrPostalCode,
+            content.addressDetails.city,
+            content.addressDetails.stateOrProvince,
+            content.addressDetails.countryOrRegion,
+            content.addressDetails.floor,
+            content.addressDetails.county,
+            content.contactDetails.socialSecurityNumber,
+            content.contactDetails.passportNumber,
+            content.contactDetails.licenseNumber,
+            content.contactDetails.website,
+            content.contactDetails.xHandle,
+            content.contactDetails.secondPhoneNumber,
+            content.contactDetails.linkedin,
+            content.contactDetails.reddit,
+            content.contactDetails.facebook,
+            content.contactDetails.yahoo,
+            content.contactDetails.instagram,
+            content.workDetails.company,
+            content.workDetails.jobTitle,
+            content.workDetails.personalWebsite,
+            content.workDetails.workPhoneNumber,
+            content.workDetails.workEmail
+        )
+        identityProperties.forEach { fieldValue ->
+            if (fieldValue.preprocess().contains(query)) {
+                return true
+            }
+        }
+
+        return false
     }
 
     @Suppress("ReturnCount")

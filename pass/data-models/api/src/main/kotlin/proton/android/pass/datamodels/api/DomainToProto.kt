@@ -156,7 +156,7 @@ fun ItemContents.serializeToProto(
 
         is ItemContents.CreditCard -> {
             builder.content.toBuilder().setCreditCard(
-                ItemV1.ItemCreditCard.newBuilder()
+                builder.content.creditCard.toBuilder()
                     .setCardholderName(cardHolder)
                     .setNumber(number)
                     .setCardType(
@@ -175,7 +175,7 @@ fun ItemContents.serializeToProto(
         }
         is ItemContents.Identity -> {
             builder.content.toBuilder().setIdentity(
-                ItemV1.ItemIdentity.newBuilder()
+                builder.content.identity.toBuilder()
                     // Personal Details
                     .setFullName(personalDetails.fullName)
                     .setEmail(personalDetails.email)

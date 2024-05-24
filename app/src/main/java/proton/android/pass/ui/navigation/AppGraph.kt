@@ -839,6 +839,7 @@ fun NavGraphBuilder.appGraph(
                         is ItemContents.Note -> EditNote
                         is ItemContents.Alias -> EditAlias
                         is ItemContents.CreditCard -> EditCreditCard
+                        is ItemContents.Identity -> TODO()
                         is ItemContents.Unknown -> null
                     }
                     val route = when (it.itemUiModel.contents) {
@@ -861,6 +862,7 @@ fun NavGraphBuilder.appGraph(
                             it.itemUiModel.shareId,
                             it.itemUiModel.id
                         )
+                        is ItemContents.Identity -> TODO()
 
                         is ItemContents.Unknown -> null
                     }

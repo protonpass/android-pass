@@ -38,11 +38,14 @@ import proton.android.pass.composecomponents.impl.labels.CollapsibleSectionHeade
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent
 import proton.android.pass.featureitemcreate.impl.identity.presentation.IdentityItemFormState
+import proton.android.pass.featureitemcreate.impl.identity.presentation.IdentityValidationErrors
 
 @Composable
 fun IdentityItemForm(
     modifier: Modifier,
     identityItemFormState: IdentityItemFormState,
+    validationErrors: Set<IdentityValidationErrors>,
+    enabled: Boolean,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
     val isGroupCollapsed = rememberSaveable(saver = isCollapsedSaver()) {
@@ -66,8 +69,8 @@ fun IdentityItemForm(
                 ),
             value = identityItemFormState.title,
             requestFocus = true,
-            onTitleRequiredError = false,
-            enabled = true,
+            onTitleRequiredError = validationErrors.contains(IdentityValidationErrors.BlankTitle),
+            enabled = enabled,
             isRounded = true,
             onChange = { onEvent(IdentityContentEvent.OnTitleChange(it)) }
         )
@@ -85,7 +88,8 @@ fun IdentityItemForm(
         AnimatedVisibility(visible = !isGroupCollapsed.contains(Section.PERSONAL_DETAILS)) {
             PersonalDetails(
                 modifier = Modifier.padding(horizontal = Spacing.medium),
-                personalDetails = identityItemFormState.personalDetails,
+                enabled = enabled,
+                uiPersonalDetails = identityItemFormState.uiPersonalDetails,
                 onEvent = onEvent
             )
         }
@@ -103,7 +107,8 @@ fun IdentityItemForm(
         AnimatedVisibility(visible = !isGroupCollapsed.contains(Section.ADDRESS_DETAILS)) {
             AddressDetails(
                 modifier = Modifier.padding(horizontal = Spacing.medium),
-                addressDetails = identityItemFormState.addressDetails,
+                enabled = enabled,
+                uiAddressDetails = identityItemFormState.uiAddressDetails,
                 onEvent = onEvent
             )
         }
@@ -121,7 +126,8 @@ fun IdentityItemForm(
         AnimatedVisibility(visible = !isGroupCollapsed.contains(Section.CONTACT_DETAILS)) {
             ContactDetails(
                 modifier = Modifier.padding(horizontal = Spacing.medium),
-                contactDetails = identityItemFormState.contactDetails,
+                enabled = enabled,
+                uiContactDetails = identityItemFormState.uiContactDetails,
                 onEvent = onEvent
             )
         }
@@ -139,7 +145,8 @@ fun IdentityItemForm(
         AnimatedVisibility(visible = !isGroupCollapsed.contains(Section.WORK_DETAILS)) {
             WorkDetails(
                 modifier = Modifier.padding(horizontal = Spacing.medium),
-                workDetails = identityItemFormState.workDetails,
+                enabled = enabled,
+                uiWorkDetails = identityItemFormState.uiWorkDetails,
                 onEvent = onEvent
             )
         }

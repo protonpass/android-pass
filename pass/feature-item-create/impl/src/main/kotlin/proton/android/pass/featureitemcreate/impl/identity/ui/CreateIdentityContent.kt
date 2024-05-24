@@ -23,20 +23,27 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.Vault
 import proton.android.pass.featureitemcreate.impl.common.CreateUpdateTopBar
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent
 import proton.android.pass.featureitemcreate.impl.identity.presentation.IdentityItemFormState
+import proton.android.pass.featureitemcreate.impl.identity.presentation.IdentityValidationErrors
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CreateIdentityContent(
     modifier: Modifier = Modifier,
     identityItemFormState: IdentityItemFormState,
+    isLoadingState: IsLoadingState,
     topBarActionName: String,
-    selectedVault: Vault?,
+    selectedVault: Option<Vault>,
     shouldShowVaultSelector: Boolean,
+    validationErrors: Set<IdentityValidationErrors>,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
     Scaffold(
@@ -44,24 +51,25 @@ fun CreateIdentityContent(
         topBar = {
             CreateUpdateTopBar(
                 text = topBarActionName,
-                isLoading = false,
+                isLoading = isLoadingState.value(),
                 actionColor = PassTheme.colors.interactionNormMajor1,
                 iconColor = PassTheme.colors.interactionNormMajor2,
                 iconBackgroundColor = PassTheme.colors.interactionNormMinor1,
-                selectedVault = selectedVault,
+                selectedVault = selectedVault.value(),
                 showVaultSelector = shouldShowVaultSelector,
                 onCloseClick = { onEvent(IdentityContentEvent.Up) },
                 onActionClick = {
-                    selectedVault?.shareId?.let {
-                        onEvent(IdentityContentEvent.Submit(it))
-                    } ?: return@CreateUpdateTopBar
-
+                    when (selectedVault) {
+                        None -> return@CreateUpdateTopBar
+                        is Some -> onEvent(IdentityContentEvent.Submit(selectedVault.value.shareId))
+                    }
                 },
                 onUpgrade = { },
                 onVaultSelectorClick = {
-                    selectedVault?.shareId?.let {
-                        onEvent(IdentityContentEvent.OnVaultSelect(it))
-                    } ?: return@CreateUpdateTopBar
+                    when (selectedVault) {
+                        None -> return@CreateUpdateTopBar
+                        is Some -> onEvent(IdentityContentEvent.OnVaultSelect(selectedVault.value.shareId))
+                    }
                 }
             )
         }
@@ -69,6 +77,8 @@ fun CreateIdentityContent(
         IdentityItemForm(
             modifier = Modifier.padding(padding),
             identityItemFormState = identityItemFormState,
+            enabled = !isLoadingState.value(),
+            validationErrors = validationErrors,
             onEvent = onEvent
         )
     }

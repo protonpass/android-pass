@@ -18,27 +18,31 @@
 
 package proton.android.pass.data.impl.usecases
 
+import kotlinx.coroutines.flow.first
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.CreateItem
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
 class CreateItemImpl @Inject constructor(
+    private val observeCurrentUser: ObserveCurrentUser,
     private val shareRepository: ShareRepository,
     private val itemRepository: ItemRepository
 ) : CreateItem {
 
     override suspend operator fun invoke(
-        userId: UserId,
+        userId: UserId?,
         shareId: ShareId,
         itemContents: ItemContents
     ): Item {
-        val share = shareRepository.getById(userId, shareId)
-        return itemRepository.createItem(userId, share, itemContents)
+        val actualUserId = userId ?: observeCurrentUser().first().userId
+        val share = shareRepository.getById(actualUserId, shareId)
+        return itemRepository.createItem(actualUserId, share, itemContents)
     }
 }
 

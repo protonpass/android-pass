@@ -98,6 +98,7 @@ fun ProfileContent(
                     horizontal = Spacing.none,
                     vertical = Spacing.medium
                 ),
+                isIdentityEnabled = state.isIdentityEnabled,
                 itemSummaryUiState = state.itemSummaryUiState
             )
             Column(

@@ -39,7 +39,6 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.clipboard.api.ClipboardManager
@@ -332,9 +331,13 @@ abstract class BaseLoginViewModel(
     internal fun onAliasCreated(aliasItemFormState: AliasItemFormState) {
         onUserEditedContent()
         aliasLocalItemState.update { aliasItemFormState.toOption() }
-        val alias = aliasItemFormState.aliasToBeCreated
-        if (alias != null) {
-            loginItemFormMutableState = loginItemFormMutableState.copy(email = alias)
+
+        aliasItemFormState.aliasToBeCreated?.let { alias ->
+            loginItemFormMutableState = loginItemFormMutableState.copy(
+                email = alias,
+                username = ""
+            )
+
             canUpdateUsernameState.update { false }
         }
     }
@@ -358,11 +361,11 @@ abstract class BaseLoginViewModel(
 
         val sanitisedUri = totpManager.sanitiseToSave(originalTotpUri, editedTotpUri)
             .getOrElse { return showInvalidTOTP() }
+
         if (editedTotpUri.isNotBlank()) {
-            val code = kotlin.runCatching {
-                runBlocking { totpManager.observeCode(sanitisedUri).firstOrNull() }
-            }
-            if (code.isFailure) {
+            val topCodeResult = runCatching { totpManager.observeCode(sanitisedUri).firstOrNull() }
+
+            if (topCodeResult.isFailure) {
                 return showInvalidTOTP()
             }
         }
@@ -402,7 +405,7 @@ abstract class BaseLoginViewModel(
         return false
     }
 
-    private fun validateCustomFields(
+    private suspend fun validateCustomFields(
         editedCustomFields: List<UICustomFieldContent>,
         originalTotpCustomFields: List<UICustomFieldContent.Totp>
     ): Pair<List<UICustomFieldContent>, Boolean> {
@@ -430,7 +433,7 @@ abstract class BaseLoginViewModel(
     }
 
     @Suppress("ReturnCount", "LongMethod")
-    private fun validateTotpField(
+    private suspend fun validateTotpField(
         field: UICustomFieldContent.Totp,
         index: Int,
         originalCustomFields: List<UICustomFieldContent.Totp>
@@ -470,10 +473,8 @@ abstract class BaseLoginViewModel(
                 return field to true
             }
 
-            val code = kotlin.runCatching {
-                runBlocking { totpManager.observeCode(sanitisedUri).firstOrNull() }
-            }
-            if (code.isFailure) {
+            val totpCodeResult = runCatching { totpManager.observeCode(sanitisedUri).firstOrNull() }
+            if (totpCodeResult.isFailure) {
                 addValidationError(CustomFieldValidationError.InvalidTotp(index))
                 return field to true
             }

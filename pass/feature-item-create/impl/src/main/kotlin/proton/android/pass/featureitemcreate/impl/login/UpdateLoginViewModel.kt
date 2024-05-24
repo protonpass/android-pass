@@ -39,7 +39,6 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
-import proton.android.pass.common.api.toOption
 import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -166,15 +165,6 @@ class UpdateLoginViewModel @Inject constructor(
         initialValue = UpdateLoginUiState.Initial
     )
 
-    internal fun setAliasItem(aliasItemFormState: AliasItemFormState) {
-        val currentState = loginItemFormState
-        canUpdateUsernameState.update { false }
-        aliasLocalItemState.update { aliasItemFormState.toOption() }
-        loginItemFormMutableState = currentState.copy(
-            email = aliasItemFormState.aliasToBeCreated ?: currentState.email
-        )
-    }
-
     internal fun setTotp(navTotpUri: String?, navTotpIndex: Int?) {
         onUserEditedContent()
         val currentState = loginItemFormState
@@ -254,7 +244,8 @@ class UpdateLoginViewModel @Inject constructor(
                     customFieldContent.toUICustomFieldContent(this@withEncryptionContext)
                 }.toImmutableList()
 
-                originalTotpCustomFields = uiCustomFieldList.filterIsInstance<UICustomFieldContent.Totp>()
+                originalTotpCustomFields =
+                    uiCustomFieldList.filterIsInstance<UICustomFieldContent.Totp>()
                 val sanitisedToEditCustomField = uiCustomFieldList.map { uiCustomFieldContent ->
                     if (uiCustomFieldContent is UICustomFieldContent.Totp) {
                         val uri = when (val totp = uiCustomFieldContent.value) {

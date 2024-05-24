@@ -87,6 +87,7 @@ private fun filtering(
                     SearchFilterType.Alias -> stringResource(id = R.string.item_type_filter_alias)
                     SearchFilterType.Note -> stringResource(id = R.string.item_type_filter_note)
                     SearchFilterType.CreditCard -> stringResource(id = R.string.item_type_filter_credit_card)
+                    SearchFilterType.Identity -> stringResource(id = R.string.item_type_filter_identity)
                 }
                 BottomSheetItemSubtitle(text = "$title (${it.count})")
             }

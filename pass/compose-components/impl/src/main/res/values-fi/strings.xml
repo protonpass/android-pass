@@ -35,6 +35,8 @@
   <string name="action_view_details">Näytä tiedot</string>
   <string name="action_see_all">Näytä kaikki</string>
   <string name="action_confirm">Vahvista</string>
+  <string name="action_continue">Continue</string>
+  <string name="action_retry">Retry</string>
   <!-- Empty list -->
   <string name="empty_list_title">Lisää ensimmäinen kohteesi</string>
   <string name="empty_search_results_title">Tuloksia ei löytynyt</string>
@@ -116,7 +118,9 @@
   <string name="item_details_credit_card_section_expiration_date_title">Voimassaolo päättyy</string>
   <string name="item_details_credit_card_section_cvv_title">Turvakoodi</string>
   <string name="item_details_credit_card_section_pin_title">PIN-koodi</string>
-  <string name="item_details_login_section_username_or_username_title">Käyttäjätunnus tai sähköpostiosoite</string>
+  <string name="item_details_login_section_email_title">Email address</string>
+  <string name="item_details_login_section_username_title">Username</string>
+  <string name="item_details_login_section_username_or_username_title">Username or email address</string>
   <string name="item_details_login_section_password_title">Salasana</string>
   <string name="item_details_login_section_primary_totp_title">2FA-tunniste (TOTP)</string>
   <string name="item_details_login_section_websites_title">Verkkosivustot</string>

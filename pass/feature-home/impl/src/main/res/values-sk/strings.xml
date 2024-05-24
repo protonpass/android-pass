@@ -8,6 +8,8 @@
   <string name="home_empty_vault_create_login">Vytvoriť prihlásenie</string>
   <string name="home_empty_vault_create_alias">Vytvoriť Hide-my-email alias</string>
   <string name="home_empty_vault_create_note">Vytvoriť poznámku</string>
+  <string name="home_empty_vault_create_credit_card">Create a credit card</string>
+  <string name="home_empty_vault_create_identity">Create an Identity</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Chyba pri načítaní položiek</string>
   <string name="error_refreshing">Chyba pri obnovení</string>
   <string name="home_snackbar_login_moved_to_trash">Prihlásenie presunuté do koša</string>

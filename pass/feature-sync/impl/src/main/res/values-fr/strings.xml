@@ -23,7 +23,11 @@
   </plurals>
   <string name="sync_progress_item_count">%1$d élément(s) sur %2$d</string>
   <string name="sync_dialog_title">Synchronisation des éléments en cours</string>
+  <string name="sync_dialog_title_error">La synchronisation n\'a pas abouti.</string>
+  <string name="sync_dialog_title_success">La synchronisation est terminée.</string>
   <string name="sync_dialog_subtitle">Nous téléchargeons et déchiffrons vos éléments. Cela peut prendre quelques minutes.</string>
-  <string name="sync_dialog_confirm_button">Continuer</string>
+  <string name="sync_dialog_subtitle_error">Une erreur est survenue lors du téléchargement et du déchiffrement de vos éléments. Réessayez.</string>
+  <string name="sync_dialog_subtitle_success">Vos éléments ont été téléchargés et déchiffrés.</string>
   <string name="sync_item_not_started">Non commencée</string>
+  <string name="sync_item_failed">La synchronisation n\'a pas abouti.</string>
 </resources>

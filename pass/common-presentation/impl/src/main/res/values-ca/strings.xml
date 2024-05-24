@@ -21,6 +21,7 @@
   <string name="item_details_snackbar_message_card_number_copied">S\'ha copiat el número de la targeta.</string>
   <string name="item_details_snackbar_message_custom_field_copied">S\'ha copiat el camp personalitzat</string>
   <string name="item_details_snackbar_message_cvv_copied">S\'ha copiat el codi de seguretat.</string>
+  <string name="item_details_snackbar_message_email_copied">Email address copied</string>
   <string name="item_details_snackbar_message_password_copied">S\'ha copiat la contrasenya.</string>
   <string name="item_details_snackbar_message_pin_copied">S\'ha copiat el codi PIN</string>
   <string name="item_details_snackbar_message_totp_copied">TOTP copiat</string>

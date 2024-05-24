@@ -22,7 +22,11 @@
   </plurals>
   <string name="sync_progress_item_count">%1$d dari %2$d item</string>
   <string name="sync_dialog_title">Menyinkronkan item…</string>
+  <string name="sync_dialog_title_error">Sinkronisasi gagal</string>
+  <string name="sync_dialog_title_success">Sinkronisasi selesai</string>
   <string name="sync_dialog_subtitle">Kami sedang mengunduh dan mendekripsi item Anda. Proses ini dapat memakan waktu sejenak.</string>
-  <string name="sync_dialog_confirm_button">Lanjutkan</string>
+  <string name="sync_dialog_subtitle_error">Terdapat masalah dalam mengunduh dan mendekripsi item Anda. Silakan coba lagi.</string>
+  <string name="sync_dialog_subtitle_success">Item Anda berhasil diunduh dan didekripsi.</string>
   <string name="sync_item_not_started">Belum dimulai</string>
+  <string name="sync_item_failed">Sinkronisasi gagal</string>
 </resources>

@@ -35,6 +35,8 @@
   <string name="action_view_details">Vis detaljer</string>
   <string name="action_see_all">Se alle</string>
   <string name="action_confirm">Bekreft</string>
+  <string name="action_continue">Fortsett</string>
+  <string name="action_retry">Prøv igjen</string>
   <!-- Empty list -->
   <string name="empty_list_title">Legg til ditt første element</string>
   <string name="empty_search_results_title">Ingen resultater funnet</string>
@@ -116,7 +118,9 @@
   <string name="item_details_credit_card_section_expiration_date_title">Utløpsdato</string>
   <string name="item_details_credit_card_section_cvv_title">Sikkerhetskode</string>
   <string name="item_details_credit_card_section_pin_title">PIN-kode</string>
-  <string name="item_details_login_section_username_or_username_title">Brukernavn eller e-postadresse</string>
+  <string name="item_details_login_section_email_title">Email address</string>
+  <string name="item_details_login_section_username_title">Username</string>
+  <string name="item_details_login_section_username_or_username_title">Username or email address</string>
   <string name="item_details_login_section_password_title">Passord</string>
   <string name="item_details_login_section_primary_totp_title">2FA-token (TOTP)</string>
   <string name="item_details_login_section_websites_title">Nettsteder</string>

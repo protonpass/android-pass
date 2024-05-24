@@ -90,6 +90,8 @@
   <string name="security_center_dark_web_monitor_alias_addresses_error">Virhe Hide-my-email-aliasten hakemisessa</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">Ei valvottu</string>
   <string name="security_center_dark_web_monitor_see_all">Näytä kaikki</string>
+  <string name="security_center_dark_web_monitor_no_proton_addresses">No Proton addresses</string>
+  <string name="security_center_dark_web_monitor_no_aliases">No aliases</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Virhe lähetettässä vahvistuskoodia. Yritä myöhemmin uudelleen.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Virhe poistettaessa viestiä. Yritä myöhemmin uudelleen.</string>
   <!-- Add custom email monitoring -->
@@ -165,8 +167,6 @@
   <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">Tietoturva</string>
   <string name="dark_web_help_dialog_subtitle">Proton ei koskaan jaa tietojasi ulkopuolisille tahoille. Kaikki tiedot ovat peräisin pimeässä verkossa suoritettavasta Proton-verkkotunnusten valvonnasta.</string>
-  <string name="dark_web_help_dialog_custom_address_title">Mukautetut sähköpostiosoitteet</string>
-  <string name="dark_web_help_dialog_custom_address_subtitle">Voit lisätä valvontaan myös 10 sähköpostiosoitetta, jotka eivät ole Proton-osoitteita tai -sähköpostialiaksia. Ne lähetetään valvottavaksi HIBP-palveluun – HIBP-palvelulle ei jaeta muita tietoja.</string>
   <!-- Cannot add custom emails -->
   <string name="dark_web_cannot_add_custom_emails_dialog_title">Mukautettua sähköpostiosoitetta ei voida lisätä</string>
   <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">Olet saavuttanut mukautettujen sähköpostiosoitteiden enimmäismäärän.</string>

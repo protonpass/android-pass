@@ -21,6 +21,7 @@
   <string name="item_details_snackbar_message_card_number_copied">Številka kartice je kopirana</string>
   <string name="item_details_snackbar_message_custom_field_copied">Polje po meri je kopirano</string>
   <string name="item_details_snackbar_message_cvv_copied">Varnostna koda je kopirana</string>
+  <string name="item_details_snackbar_message_email_copied">Email address copied</string>
   <string name="item_details_snackbar_message_password_copied">Geslo je bilo kopirano</string>
   <string name="item_details_snackbar_message_pin_copied">PIN koda je kopirana</string>
   <string name="item_details_snackbar_message_totp_copied">TOTP je kopiran</string>

@@ -21,6 +21,7 @@
   <string name="item_details_snackbar_message_card_number_copied">Номер карты скопирован</string>
   <string name="item_details_snackbar_message_custom_field_copied">Настраиваемое поле скопировано</string>
   <string name="item_details_snackbar_message_cvv_copied">Код безопасности скопирован</string>
+  <string name="item_details_snackbar_message_email_copied">Email address copied</string>
   <string name="item_details_snackbar_message_password_copied">Пароль скопирован</string>
   <string name="item_details_snackbar_message_pin_copied">PIN скопирован</string>
   <string name="item_details_snackbar_message_totp_copied">TOTP скопирован</string>

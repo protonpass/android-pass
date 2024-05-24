@@ -25,7 +25,11 @@
   </plurals>
   <string name="sync_progress_item_count">%1$d из %2$d элементов</string>
   <string name="sync_dialog_title">Синхронизируем элементы…</string>
+  <string name="sync_dialog_title_error">Sync failed</string>
+  <string name="sync_dialog_title_success">Sync completed</string>
   <string name="sync_dialog_subtitle">Идёт загрузка и расшифровка данных. Это может занять несколько минут.</string>
-  <string name="sync_dialog_confirm_button">Продолжить</string>
+  <string name="sync_dialog_subtitle_error">There was an error downloading and decrypting your items. Please try again.</string>
+  <string name="sync_dialog_subtitle_success">Your items were successfully downloaded and decrypted.</string>
   <string name="sync_item_not_started">Не начата</string>
+  <string name="sync_item_failed">Sync failed</string>
 </resources>

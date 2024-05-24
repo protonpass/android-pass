@@ -8,6 +8,8 @@
   <string name="home_empty_vault_create_login">Oturum açma kaydı oluştur</string>
   <string name="home_empty_vault_create_alias">Bir hide-my-email takma adı oluştur</string>
   <string name="home_empty_vault_create_note">Not oluştur</string>
+  <string name="home_empty_vault_create_credit_card">Create a credit card</string>
+  <string name="home_empty_vault_create_identity">Create an Identity</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Ögeler yüklenirken sorun çıktı</string>
   <string name="error_refreshing">Yenileme sırasında sorun çıktı</string>
   <string name="home_snackbar_login_moved_to_trash">Oturum açma kaydı çöpe atıldı</string>

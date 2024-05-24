@@ -80,6 +80,7 @@ import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.Up
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -102,7 +103,7 @@ class UpdateLoginViewModel @Inject constructor(
     observeUpgradeInfo: ObserveUpgradeInfo,
     savedStateHandleProvider: SavedStateHandleProvider,
     draftRepository: DraftRepository,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val emailValidator: EmailValidator
 ) : BaseLoginViewModel(
     accountManager = accountManager,
@@ -219,13 +220,14 @@ class UpdateLoginViewModel @Inject constructor(
     }
 
     @Suppress("LongMethod")
-    private fun onItemReceived(item: Item) {
+    private suspend fun onItemReceived(item: Item) {
+        val isUsernameSplitEnabled = featureFlagsRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT).first()
         encryptionContextProvider.withEncryptionContext {
             val default = LoginItemFormState.default(this)
             if (loginItemFormState.compare(default, this)) {
                 val itemContents = item.toItemContents(
                     encryptionContext = this@withEncryptionContext,
-                    isUsernameSplitEnabled = true,
+                    isUsernameSplitEnabled = isUsernameSplitEnabled,
                     emailValidator = emailValidator
                 ) as ItemContents.Login
 

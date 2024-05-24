@@ -21,11 +21,15 @@ package proton.android.pass.composecomponents.impl.pinning
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.datetime.Clock
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.domain.AddressDetails
+import proton.android.pass.domain.ContactDetails
 import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.PersonalDetails
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.WorkDetails
 
 internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
 
@@ -90,6 +94,23 @@ internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
                 cvv = HiddenState.Empty(""),
                 pin = HiddenState.Empty(""),
                 expirationDate = ""
+            ),
+            state = 0,
+            createTime = Clock.System.now(),
+            modificationTime = Clock.System.now(),
+            lastAutofillTime = Clock.System.now(),
+            isPinned = true
+        ),
+        ItemUiModel(
+            id = ItemId("123"),
+            shareId = ShareId("345"),
+            contents = ItemContents.Identity(
+                title = "Identity title",
+                note = "",
+                personalDetails = PersonalDetails.EMPTY,
+                addressDetails = AddressDetails.EMPTY,
+                contactDetails = ContactDetails.EMPTY,
+                workDetails = WorkDetails.EMPTY
             ),
             state = 0,
             createTime = Clock.System.now(),

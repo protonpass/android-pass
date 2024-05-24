@@ -76,6 +76,14 @@ fun Item.toItemContents(encryptionContext: EncryptionContext): ItemContents = wh
         pin = concealedOrEmpty(type.pin, encryptionContext),
         expirationDate = type.expirationDate
     )
+    is ItemType.Identity -> ItemContents.Identity(
+        title = encryptionContext.decrypt(title),
+        note = encryptionContext.decrypt(note),
+        personalDetails = type.personalDetails,
+        addressDetails = type.addressDetails,
+        contactDetails = type.contactDetails,
+        workDetails = type.workDetails
+    )
 
     ItemType.Password,
     ItemType.Unknown -> ItemContents.Unknown(

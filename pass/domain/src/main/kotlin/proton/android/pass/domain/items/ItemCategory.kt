@@ -24,6 +24,7 @@ private const val ITEM_CATEGORY_ALIAS = 1
 private const val ITEM_CATEGORY_NOTE = 2
 private const val ITEM_CATEGORY_PASSWORD = 3
 private const val ITEM_CATEGORY_CREDIT_CARD = 4
+private const val ITEM_CATEGORY_IDENTITY = 5
 
 enum class ItemCategory(val value: Int) {
     Unknown(ITEM_CATEGORY_UNKNOWN),
@@ -31,5 +32,6 @@ enum class ItemCategory(val value: Int) {
     Alias(ITEM_CATEGORY_ALIAS),
     Note(ITEM_CATEGORY_NOTE),
     Password(ITEM_CATEGORY_PASSWORD),
-    CreditCard(ITEM_CATEGORY_CREDIT_CARD)
+    CreditCard(ITEM_CATEGORY_CREDIT_CARD),
+    Identity(ITEM_CATEGORY_IDENTITY)
 }

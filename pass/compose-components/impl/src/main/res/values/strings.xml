@@ -18,6 +18,7 @@
         <item quantity="one">result</item>
         <item quantity="other">results</item>
     </plurals>
+    <string name="item_list_header_identities_type">Identities</string>
 
     <!-- Bottomsheets -->
     <string name="bottomsheet_confirm_button">Confirm</string>

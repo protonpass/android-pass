@@ -24,9 +24,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.zip
 import proton.android.pass.data.api.ItemCountSummary
@@ -36,16 +36,19 @@ import proton.android.pass.featuresearchoptions.api.FilterOption
 import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.SearchFilterType
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class FilterBottomSheetViewModel @Inject constructor(
     private val homeSearchOptionsRepository: HomeSearchOptionsRepository,
+    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     observeItemCount: ObserveItemCount
 ) : ViewModel() {
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val state: StateFlow<FilterOptionsUIState> = homeSearchOptionsRepository.observeSearchOptions()
+    private val summaryAndOptionsFlow = homeSearchOptionsRepository.observeSearchOptions()
         .flatMapLatest {
             when (val vault = it.vaultSelectionOption) {
                 VaultSelectionOption.AllVaults -> observeItemCount()
@@ -60,13 +63,21 @@ class FilterBottomSheetViewModel @Inject constructor(
                 itemCount to searchOptions
             }
         }
-        .map { (summary, options) ->
-            SuccessFilterOptionsUIState(
-                filterType = options.filterOption.searchFilterType,
-                summary = summary
-            )
-        }
-        .stateIn(viewModelScope, SharingStarted.Eagerly, EmptyFilterOptionsUIState)
+
+    val state: StateFlow<FilterOptionsUIState> = combine(
+        summaryAndOptionsFlow,
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.IDENTITY_V1)
+    ) { (summary, options), isIdentityEnabled ->
+        SuccessFilterOptionsUIState(
+            filterType = options.filterOption.searchFilterType,
+            isIdentityEnabled = isIdentityEnabled,
+            summary = summary
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Eagerly,
+        initialValue = EmptyFilterOptionsUIState
+    )
 
     fun onFilterTypeChanged(searchFilterType: SearchFilterType) {
         val value = FilterOption(searchFilterType)
@@ -75,8 +86,9 @@ class FilterBottomSheetViewModel @Inject constructor(
 }
 
 sealed interface FilterOptionsUIState
-object EmptyFilterOptionsUIState : FilterOptionsUIState
+data object EmptyFilterOptionsUIState : FilterOptionsUIState
 data class SuccessFilterOptionsUIState(
     val filterType: SearchFilterType,
+    val isIdentityEnabled: Boolean,
     val summary: ItemCountSummary
 ) : FilterOptionsUIState

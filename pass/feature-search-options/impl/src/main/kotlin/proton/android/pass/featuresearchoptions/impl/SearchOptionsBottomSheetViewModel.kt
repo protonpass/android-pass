@@ -75,6 +75,7 @@ class SearchOptionsBottomSheetViewModel @Inject constructor(
                     SearchFilterType.Alias -> summary.alias
                     SearchFilterType.Note -> summary.note
                     SearchFilterType.CreditCard -> summary.creditCard
+                    SearchFilterType.Identity -> summary.identities
                 }.toInt(),
                 showBulkActionsOption = bulkActionsEnabled
             )

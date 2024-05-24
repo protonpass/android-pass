@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.update
 import proton.android.pass.common.api.combineN
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
+import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
 import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
@@ -55,7 +56,8 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val passwordStrengthCalculator: PasswordStrengthCalculator,
     private val totpManager: TotpManager,
-    private val featureFlagsRepository: FeatureFlagsPreferencesRepository
+    private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    private val emailValidator: EmailValidator
 ) : ItemDetailsHandlerObserver {
 
     private val loginItemContentsFlow = MutableStateFlow<ItemContents.Login?>(null)
@@ -84,16 +86,22 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
         )
     }
 
-    private fun observeLoginItemContents(item: Item): Flow<ItemContents.Login> =
-        loginItemContentsFlow.map { loginItemContents ->
-            loginItemContents ?: encryptionContextProvider.withEncryptionContext {
-                item.toItemContents(this@withEncryptionContext) as ItemContents.Login
-            }
+    private fun observeLoginItemContents(item: Item): Flow<ItemContents.Login> = combine(
+        loginItemContentsFlow,
+        featureFlagsRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT)
+    ) { loginItemContents, isUsernameSplitEnabled ->
+        loginItemContents ?: encryptionContextProvider.withEncryptionContext {
+            item.toItemContents(
+                encryptionContext = this@withEncryptionContext,
+                isUsernameSplitEnabled = isUsernameSplitEnabled,
+                emailValidator = emailValidator
+            ) as ItemContents.Login
         }
-            .distinctUntilChanged()
-            .onEach { loginItemContents ->
-                loginItemContentsFlow.update { loginItemContents }
-            }
+    }
+        .distinctUntilChanged()
+        .onEach { loginItemContents ->
+            loginItemContentsFlow.update { loginItemContents }
+        }
 
     private fun observePrimaryTotp(item: Item): Flow<Totp?> = observeLoginItemContents(item)
         .flatMapLatest { loginItemContents ->

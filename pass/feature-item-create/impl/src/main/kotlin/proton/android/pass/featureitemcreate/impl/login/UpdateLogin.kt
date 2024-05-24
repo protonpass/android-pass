@@ -76,8 +76,9 @@ internal fun UpdateLogin(
 
     LaunchedEffect(draftAlias) {
         draftAlias ?: return@LaunchedEffect
-        viewModel.setAliasItem(draftAlias)
+        viewModel.onAliasCreated(draftAlias)
     }
+
     LaunchedEffect(navTotpUri) {
         navTotpUri ?: return@LaunchedEffect
         viewModel.setTotp(navTotpUri, navTotpIndex)

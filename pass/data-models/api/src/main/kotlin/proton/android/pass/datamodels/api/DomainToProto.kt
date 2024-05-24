@@ -156,7 +156,7 @@ fun ItemContents.serializeToProto(
 
         is ItemContents.CreditCard -> {
             builder.content.toBuilder().setCreditCard(
-                builder.content.creditCard.toBuilder()
+                ItemV1.ItemCreditCard.newBuilder()
                     .setCardholderName(cardHolder)
                     .setNumber(number)
                     .setCardType(
@@ -173,7 +173,49 @@ fun ItemContents.serializeToProto(
                     .build()
             )
         }
+        is ItemContents.Identity -> {
+            builder.content.toBuilder().setIdentity(
+                ItemV1.ItemIdentity.newBuilder()
+                    // Personal Details
+                    .setFullName(personalDetails.fullName)
+                    .setEmail(personalDetails.email)
+                    .setPhoneNumber(personalDetails.phoneNumber)
+                    .setFirstName(personalDetails.firstName)
+                    .setMiddleName(personalDetails.middleName)
+                    .setLastName(personalDetails.lastName)
+                    .setBirthdate(personalDetails.birthdate)
+                    .setGender(personalDetails.gender)
+                    // Address details
+                    .setOrganization(addressDetails.organization)
+                    .setStreetAddress(addressDetails.streetAddress)
+                    .setZipOrPostalCode(addressDetails.zipOrPostalCode)
+                    .setCity(addressDetails.city)
+                    .setStateOrProvince(addressDetails.stateOrProvince)
+                    .setCountryOrRegion(addressDetails.countryOrRegion)
+                    .setFloor(addressDetails.floor)
+                    .setCounty(addressDetails.county)
+                    // Contact details
+                    .setSocialSecurityNumber(contactDetails.socialSecurityNumber)
+                    .setPassportNumber(contactDetails.passportNumber)
+                    .setLicenseNumber(contactDetails.licenseNumber)
+                    .setWebsite(contactDetails.website)
+                    .setXHandle(contactDetails.xHandle)
+                    .setSecondPhoneNumber(contactDetails.secondPhoneNumber)
+                    .setLinkedin(contactDetails.linkedin)
+                    .setReddit(contactDetails.reddit)
+                    .setFacebook(contactDetails.facebook)
+                    .setYahoo(contactDetails.yahoo)
+                    .setInstagram(contactDetails.instagram)
+                    // Work details
+                    .setJobTitle(workDetails.jobTitle)
+                    .setCompany(workDetails.company)
+                    .setPersonalWebsite(workDetails.personalWebsite)
+                    .setWorkPhoneNumber(workDetails.workPhoneNumber)
+                    .setWorkEmail(workDetails.workEmail)
+                    .build()
+            )
 
+        }
         is ItemContents.Unknown -> throw IllegalStateException("Cannot be unknown")
     }.build()
 

@@ -29,28 +29,29 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent
-import proton.android.pass.featureitemcreate.impl.identity.presentation.WorkDetails
+import proton.android.pass.featureitemcreate.impl.identity.presentation.UIWorkDetails
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.CompanyInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.EmailInput
 
 @Composable
 internal fun WorkDetails(
     modifier: Modifier = Modifier,
-    workDetails: WorkDetails,
+    uiWorkDetails: UIWorkDetails,
+    enabled: Boolean,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
     Column(
         modifier = modifier.roundedContainerNorm()
     ) {
         CompanyInput(
-            value = workDetails.company,
-            enabled = true,
+            value = uiWorkDetails.company,
+            enabled = enabled,
             onChange = { onEvent(IdentityContentEvent.OnFullNameChange(it)) }
         )
         PassDivider()
         EmailInput(
-            value = workDetails.jobTitle,
-            enabled = true,
+            value = uiWorkDetails.jobTitle,
+            enabled = enabled,
             onChange = { onEvent(IdentityContentEvent.OnEmailChange(it)) }
         )
     }
@@ -62,7 +63,8 @@ fun WorkDetailsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
     PassTheme(isDark = isDark) {
         Surface {
             WorkDetails(
-                workDetails = WorkDetails.EMPTY,
+                uiWorkDetails = UIWorkDetails.EMPTY,
+                enabled = true,
                 onEvent = {}
             )
         }

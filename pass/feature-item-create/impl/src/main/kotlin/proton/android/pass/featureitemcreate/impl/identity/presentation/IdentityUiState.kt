@@ -19,7 +19,13 @@
 package proton.android.pass.featureitemcreate.impl.identity.presentation
 
 import androidx.compose.runtime.Immutable
-import proton.android.pass.domain.VaultWithItemCount
+import kotlinx.collections.immutable.persistentSetOf
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.some
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.Vault
+import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 
 sealed interface IdentityUiState {
@@ -34,12 +40,27 @@ sealed interface IdentityUiState {
 
     @Immutable
     data class Success(
-        val shareUiState: ShareUiState
+        val shareUiState: ShareUiState,
+        val sharedState: IdentitySharedUiState
     ) : IdentityUiState
+
+    val hasUserEdited: Boolean
+        get() = if (this is Success) sharedState.hasUserEditedContent else false
 
     fun shouldShowVaultSelector(): Boolean =
         if (this is Success && shareUiState is ShareUiState.Success) shareUiState.vaultList.size > 1 else false
 
-    fun getSelectedVault(): VaultWithItemCount? =
-        if (this is Success && shareUiState is ShareUiState.Success) shareUiState.currentVault else null
+    fun getSelectedVault(): Option<Vault> =
+        if (this is Success && shareUiState is ShareUiState.Success) shareUiState.currentVault.vault.some() else None
+
+    fun getItemSavedState(): ItemSavedState = if (this is Success) sharedState.isItemSaved else ItemSavedState.Unknown
+
+    fun getSubmitLoadingState(): IsLoadingState = when (this) {
+        is Loading -> IsLoadingState.Loading
+        is Success -> sharedState.isLoadingState
+        else -> IsLoadingState.NotLoading
+    }
+
+    fun getValidationErrors(): Set<IdentityValidationErrors> =
+        if (this is Success) sharedState.validationErrors else persistentSetOf()
 }

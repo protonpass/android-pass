@@ -42,6 +42,7 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
+import proton.android.pass.composecomponents.impl.item.icon.IdentityIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 import proton.android.pass.domain.ItemContents
@@ -61,6 +62,7 @@ fun PinItem(
         is ItemContents.Login -> PassTheme.colors.loginInteractionNormMinor1
         is ItemContents.Alias -> PassTheme.colors.aliasInteractionNormMinor1
         is ItemContents.CreditCard -> PassTheme.colors.cardInteractionNormMinor1
+        is ItemContents.Identity -> PassTheme.colors.interactionNormMinor1
         is ItemContents.Unknown -> Color.Transparent
     }
     Row(
@@ -100,6 +102,11 @@ fun PinItem(
             )
 
             is ItemContents.CreditCard -> CreditCardIcon(
+                modifier = Modifier.size(ICON_SIZE.dp),
+                shape = PassTheme.shapes.squircleSmallShape,
+                backgroundColor = PassTheme.colors.cardInteractionNormMinor2
+            )
+            is ItemContents.Identity -> IdentityIcon(
                 modifier = Modifier.size(ICON_SIZE.dp),
                 shape = PassTheme.shapes.squircleSmallShape,
                 backgroundColor = PassTheme.colors.cardInteractionNormMinor2

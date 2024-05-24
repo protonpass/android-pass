@@ -29,7 +29,7 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent
-import proton.android.pass.featureitemcreate.impl.identity.presentation.ContactDetails
+import proton.android.pass.featureitemcreate.impl.identity.presentation.UIContactDetails
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.LicenseNumberInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.PassportNumberInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.SocialSecurityNumberInput
@@ -39,39 +39,40 @@ import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.XHandl
 @Composable
 internal fun ContactDetails(
     modifier: Modifier = Modifier,
-    contactDetails: ContactDetails,
+    uiContactDetails: UIContactDetails,
+    enabled: Boolean,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
     Column(
         modifier = modifier.roundedContainerNorm()
     ) {
         SocialSecurityNumberInput(
-            value = contactDetails.socialSecurityNumber,
-            enabled = true,
+            value = uiContactDetails.socialSecurityNumber,
+            enabled = enabled,
             onChange = { onEvent(IdentityContentEvent.OnFullNameChange(it)) }
         )
         PassDivider()
         PassportNumberInput(
-            value = contactDetails.passportNumber,
-            enabled = true,
+            value = uiContactDetails.passportNumber,
+            enabled = enabled,
             onChange = { onEvent(IdentityContentEvent.OnEmailChange(it)) }
         )
         PassDivider()
         LicenseNumberInput(
-            value = contactDetails.licenseNumber,
-            enabled = true,
+            value = uiContactDetails.licenseNumber,
+            enabled = enabled,
             onChange = { onEvent(IdentityContentEvent.OnEmailChange(it)) }
         )
         PassDivider()
         WebsiteInput(
-            value = contactDetails.website,
-            enabled = true,
+            value = uiContactDetails.website,
+            enabled = enabled,
             onChange = { onEvent(IdentityContentEvent.OnEmailChange(it)) }
         )
         PassDivider()
         XHandleInput(
-            value = contactDetails.xHandle,
-            enabled = true,
+            value = uiContactDetails.xHandle,
+            enabled = enabled,
             onChange = { onEvent(IdentityContentEvent.OnEmailChange(it)) }
         )
     }
@@ -83,7 +84,8 @@ fun ContactDetailsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark:
     PassTheme(isDark = isDark) {
         Surface {
             ContactDetails(
-                contactDetails = ContactDetails.EMPTY,
+                uiContactDetails = UIContactDetails.EMPTY,
+                enabled = true,
                 onEvent = {}
             )
         }

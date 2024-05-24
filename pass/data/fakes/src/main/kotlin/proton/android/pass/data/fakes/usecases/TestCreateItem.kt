@@ -37,11 +37,11 @@ class TestCreateItem @Inject constructor() : CreateItem {
     fun memory(): List<Payload> = memory
 
     override suspend fun invoke(
-        userId: UserId,
+        userId: UserId?,
         shareId: ShareId,
         itemContents: ItemContents
     ): Item {
-        memory.add(Payload(userId, shareId, itemContents))
+        memory.add(Payload(userId ?: UserId(USER_ID), shareId, itemContents))
         return item.getOrThrow()
     }
 
@@ -54,4 +54,8 @@ class TestCreateItem @Inject constructor() : CreateItem {
         val shareId: ShareId,
         val itemContents: ItemContents
     )
+
+    companion object {
+        const val USER_ID = "user_id"
+    }
 }

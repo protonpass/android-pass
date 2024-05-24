@@ -25,7 +25,7 @@ import proton.android.pass.domain.ShareId
 
 interface CreateItem {
     suspend operator fun invoke(
-        userId: UserId,
+        userId: UserId? = null,
         shareId: ShareId,
         itemContents: ItemContents
     ): Item

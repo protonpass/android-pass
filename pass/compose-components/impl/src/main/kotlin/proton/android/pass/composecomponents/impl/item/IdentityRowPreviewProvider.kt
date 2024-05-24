@@ -32,7 +32,9 @@ import proton.android.pass.domain.WorkDetails
 class IdentityRowPreviewProvider : PreviewParameterProvider<IdentityRowParameter> {
     override val values: Sequence<IdentityRowParameter>
         get() = sequenceOf(
-            with(title = "Empty identity")
+            with(title = "Empty identity"),
+            with(title = "Empty identity", highlight = "Doe"),
+            with(title = "Empty identity", highlight = "John")
         )
 
     companion object {
@@ -43,7 +45,16 @@ class IdentityRowPreviewProvider : PreviewParameterProvider<IdentityRowParameter
                 contents = ItemContents.Identity(
                     title = title,
                     note = "",
-                    personalDetails = PersonalDetails.EMPTY,
+                    personalDetails = PersonalDetails(
+                        fullName = "John Doe",
+                        firstName = "John",
+                        lastName = "",
+                        middleName = "",
+                        email = "john.doe@proton.me",
+                        birthdate = "",
+                        gender = "",
+                        phoneNumber = ""
+                    ),
                     addressDetails = AddressDetails.EMPTY,
                     contactDetails = ContactDetails.EMPTY,
                     workDetails = WorkDetails.EMPTY

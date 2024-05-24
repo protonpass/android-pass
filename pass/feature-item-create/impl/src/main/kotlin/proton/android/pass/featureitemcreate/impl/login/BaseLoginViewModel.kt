@@ -317,10 +317,9 @@ abstract class BaseLoginViewModel(
         loginItemFormMutableState = loginItemFormMutableState.copy(note = value)
     }
 
-    internal fun onEmitSnackbarMessage(snackbarMessage: LoginSnackbarMessages) =
-        viewModelScope.launch {
-            snackbarDispatcher(snackbarMessage)
-        }
+    internal fun onEmitSnackbarMessage(snackbarMessage: LoginSnackbarMessages) = viewModelScope.launch {
+        snackbarDispatcher(snackbarMessage)
+    }
 
     internal fun onAliasCreated(aliasItemFormState: AliasItemFormState) {
         onUserEditedContent()
@@ -710,10 +709,7 @@ abstract class BaseLoginViewModel(
         }
     }
 
-    private fun updateCustomFieldHiddenOnFocusChange(
-        field: LoginCustomField.CustomFieldHidden,
-        isFocused: Boolean
-    ) {
+    private fun updateCustomFieldHiddenOnFocusChange(field: LoginCustomField.CustomFieldHidden, isFocused: Boolean) {
         val customFields = loginItemFormState.customFields.toMutableList()
         val customFieldContent: UICustomFieldContent.Hidden? = customFields.getOrNull(field.index)
             as? UICustomFieldContent.Hidden

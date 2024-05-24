@@ -79,7 +79,7 @@ internal fun ExpandableEmailUsernameInput(
                 onFocusChange(LoginField.Email, isFocused)
             },
             leadingIcon = {
-                if (isExpanded.value) {
+                if (isExpanded.value || !canUpdateUsername) {
                     Icon(
                         painter = painterResource(CoreR.drawable.ic_proton_envelope),
                         contentDescription = null,

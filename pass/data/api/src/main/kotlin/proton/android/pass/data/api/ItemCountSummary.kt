@@ -23,7 +23,8 @@ data class ItemCountSummary(
     val login: Long,
     val note: Long,
     val alias: Long,
-    val creditCard: Long
+    val creditCard: Long,
+    val identities: Long
 ) {
     companion object {
         val Initial = ItemCountSummary(
@@ -31,7 +32,8 @@ data class ItemCountSummary(
             login = 0,
             note = 0,
             alias = 0,
-            creditCard = 0
+            creditCard = 0,
+            identities = 0
         )
     }
 }

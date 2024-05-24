@@ -41,8 +41,10 @@ import proton.android.pass.featuresearchoptions.api.SearchFilterType
 import proton.android.pass.featuresearchoptions.api.SearchFilterType.Alias
 import proton.android.pass.featuresearchoptions.api.SearchFilterType.All
 import proton.android.pass.featuresearchoptions.api.SearchFilterType.CreditCard
+import proton.android.pass.featuresearchoptions.api.SearchFilterType.Identity
 import proton.android.pass.featuresearchoptions.api.SearchFilterType.Login
 import proton.android.pass.featuresearchoptions.api.SearchFilterType.Note
+import me.proton.core.presentation.R as CoreR
 
 @ExperimentalMaterialApi
 @Composable
@@ -51,81 +53,94 @@ fun FilterBottomSheetContents(
     state: FilterOptionsUIState,
     onSortingTypeSelected: (SearchFilterType) -> Unit
 ) {
+    val list: MutableList<SearchFilterType> = mutableListOf(
+        All,
+        Login,
+        Alias,
+        Note,
+        CreditCard
+    )
+    if (state is SuccessFilterOptionsUIState && state.isIdentityEnabled) {
+        list.add(Identity)
+    }
     BottomSheetItemList(
         modifier = modifier.bottomSheet(),
-        items = filterItemList(state, onSortingTypeSelected)
+        items = list.mapToBottomSheetItem(state, onSortingTypeSelected)
             .withDividers()
             .toPersistentList()
     )
 }
 
 @Suppress("LongMethod", "ComplexMethod")
-private fun filterItemList(
+private fun List<SearchFilterType>.mapToBottomSheetItem(
     state: FilterOptionsUIState,
     onSortingTypeSelected: (SearchFilterType) -> Unit
-): ImmutableList<BottomSheetItem> = listOf(All, Login, Alias, Note, CreditCard)
-    .map { item ->
-        object : BottomSheetItem {
-            override val title: @Composable () -> Unit
-                get() = {
-                    val successState = state as? SuccessFilterOptionsUIState
-                    val color = if (item == successState?.filterType) {
+): ImmutableList<BottomSheetItem> = map { item ->
+    object : BottomSheetItem {
+        override val title: @Composable () -> Unit
+            get() = {
+                val successState = state as? SuccessFilterOptionsUIState
+                val color = if (item == successState?.filterType) {
+                    PassTheme.colors.interactionNorm
+                } else {
+                    PassTheme.colors.textNorm
+                }
+                val title = when (item) {
+                    All -> stringResource(id = R.string.item_type_filter_all) +
+                        successState?.summary?.total?.let { " ($it)" }
+
+                    Login -> stringResource(id = R.string.item_type_filter_login) +
+                        successState?.summary?.login?.let { " ($it)" }
+
+                    Alias -> stringResource(id = R.string.item_type_filter_alias) +
+                        successState?.summary?.alias?.let { " ($it)" }
+
+                    Note -> stringResource(id = R.string.item_type_filter_note) +
+                        successState?.summary?.note?.let { " ($it)" }
+
+                    CreditCard -> stringResource(id = R.string.item_type_filter_credit_card) +
+                        successState?.summary?.creditCard?.let { " ($it)" }
+
+                    Identity -> stringResource(id = R.string.item_type_filter_identity) +
+                        successState?.summary?.identities?.let { " ($it)" }
+                }
+                BottomSheetItemTitle(text = title, color = color)
+            }
+        override val subtitle: @Composable (() -> Unit)?
+            get() = null
+        override val leftIcon: @Composable (() -> Unit)
+            get() = {
+                val successState = state as? SuccessFilterOptionsUIState
+                BottomSheetItemIcon(
+                    iconId = when (item) {
+                        All -> CoreR.drawable.ic_proton_list_bullets
+                        Login -> CoreR.drawable.ic_proton_user
+                        Alias -> CoreR.drawable.ic_proton_alias
+                        Note -> CoreR.drawable.ic_proton_file_lines
+                        CreditCard -> CoreR.drawable.ic_proton_credit_card
+                        Identity -> CoreR.drawable.ic_proton_card_identity
+                    },
+                    tint = if (item == successState?.filterType) {
                         PassTheme.colors.interactionNorm
                     } else {
                         PassTheme.colors.textNorm
                     }
-                    val title = when (item) {
-                        All -> stringResource(id = R.string.item_type_filter_all) +
-                            successState?.summary?.total?.let { " ($it)" }
-
-                        Login -> stringResource(id = R.string.item_type_filter_login) +
-                            successState?.summary?.login?.let { " ($it)" }
-
-                        Alias -> stringResource(id = R.string.item_type_filter_alias) +
-                            successState?.summary?.alias?.let { " ($it)" }
-
-                        Note -> stringResource(id = R.string.item_type_filter_note) +
-                            successState?.summary?.note?.let { " ($it)" }
-
-                        CreditCard -> stringResource(id = R.string.item_type_filter_credit_card) +
-                            successState?.summary?.creditCard?.let { " ($it)" }
-                    }
-                    BottomSheetItemTitle(text = title, color = color)
-                }
-            override val subtitle: @Composable (() -> Unit)?
-                get() = null
-            override val leftIcon: @Composable (() -> Unit)
-                get() = {
-                    val successState = state as? SuccessFilterOptionsUIState
+                )
+            }
+        override val endIcon: @Composable (() -> Unit)?
+            get() = if (item == (state as? SuccessFilterOptionsUIState)?.filterType) {
+                {
                     BottomSheetItemIcon(
-                        iconId = when (item) {
-                            All -> me.proton.core.presentation.R.drawable.ic_proton_list_bullets
-                            Login -> me.proton.core.presentation.R.drawable.ic_proton_user
-                            Alias -> me.proton.core.presentation.R.drawable.ic_proton_alias
-                            Note -> me.proton.core.presentation.R.drawable.ic_proton_file_lines
-                            CreditCard -> me.proton.core.presentation.R.drawable.ic_proton_credit_card
-                        },
-                        tint = if (item == successState?.filterType) {
-                            PassTheme.colors.interactionNorm
-                        } else {
-                            PassTheme.colors.textNorm
-                        }
+                        iconId = CoreR.drawable.ic_proton_checkmark,
+                        tint = PassTheme.colors.interactionNormMajor1
                     )
                 }
-            override val endIcon: @Composable (() -> Unit)?
-                get() = if (item == (state as? SuccessFilterOptionsUIState)?.filterType) {
-                    {
-                        BottomSheetItemIcon(
-                            iconId = me.proton.core.presentation.R.drawable.ic_proton_checkmark,
-                            tint = PassTheme.colors.interactionNormMajor1
-                        )
-                    }
-                } else null
-            override val onClick: () -> Unit
-                get() = { onSortingTypeSelected(item) }
-            override val isDivider = false
-        }
+            } else null
+        override val onClick: () -> Unit
+            get() = { onSortingTypeSelected(item) }
+        override val isDivider = false
     }
+}
     .toImmutableList()
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -137,12 +152,14 @@ fun FilterBottomSheetContentsPreview(@PreviewParameter(ThemePreviewProvider::cla
             FilterBottomSheetContents(
                 state = SuccessFilterOptionsUIState(
                     filterType = All,
+                    isIdentityEnabled = true,
                     summary = ItemCountSummary(
                         total = 0,
                         login = 0,
                         note = 0,
                         alias = 0,
-                        creditCard = 0
+                        creditCard = 0,
+                        identities = 0
                     )
                 ),
                 onSortingTypeSelected = {}

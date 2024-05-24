@@ -159,12 +159,16 @@ class LocalItemDataSourceImpl @Inject constructor(
             val creditCards =
                 values.firstOrNull { it.itemKind == ItemCategory.CreditCard.value }?.itemCount
                     ?: 0
+            val identities =
+                values.firstOrNull { it.itemKind == ItemCategory.Identity.value }?.itemCount
+                    ?: 0
             ItemCountSummary(
                 total = logins + aliases + notes + creditCards,
                 login = logins,
                 alias = aliases,
                 note = notes,
-                creditCard = creditCards
+                creditCard = creditCards,
+                identities = identities
             )
         }
 
@@ -230,6 +234,7 @@ class LocalItemDataSourceImpl @Inject constructor(
         ItemTypeFilter.Aliases -> ItemCategory.Alias.value
         ItemTypeFilter.Notes -> ItemCategory.Note.value
         ItemTypeFilter.CreditCards -> ItemCategory.CreditCard.value
+        ItemTypeFilter.Identity -> ItemCategory.Identity.value
         ItemTypeFilter.All -> throw IllegalStateException("Cannot call value to ItemTypeFilter.All")
     }
 

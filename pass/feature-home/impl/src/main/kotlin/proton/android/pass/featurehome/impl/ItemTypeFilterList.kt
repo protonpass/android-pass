@@ -47,6 +47,7 @@ import proton.android.pass.featuresearchoptions.api.SearchFilterType
 import proton.android.pass.featuresearchoptions.api.SearchFilterType.Alias
 import proton.android.pass.featuresearchoptions.api.SearchFilterType.All
 import proton.android.pass.featuresearchoptions.api.SearchFilterType.CreditCard
+import proton.android.pass.featuresearchoptions.api.SearchFilterType.Identity
 import proton.android.pass.featuresearchoptions.api.SearchFilterType.Login
 import proton.android.pass.featuresearchoptions.api.SearchFilterType.Note
 import me.proton.core.presentation.R as CoreR
@@ -56,6 +57,7 @@ fun ItemTypeFilterList(
     modifier: Modifier = Modifier,
     selected: SearchFilterType,
     itemTypeCount: ItemTypeCount,
+    isIdentityEnabled: Boolean,
     onItemTypeClick: (SearchFilterType) -> Unit
 ) {
     Row(
@@ -73,6 +75,14 @@ fun ItemTypeFilterList(
         ItemTypeButton(Alias, selected == Alias, itemTypeCount.aliasCount, onItemTypeClick)
         ItemTypeButton(Note, selected == Note, itemTypeCount.noteCount, onItemTypeClick)
         ItemTypeButton(CreditCard, selected == CreditCard, itemTypeCount.creditCardCount, onItemTypeClick)
+        if (isIdentityEnabled) {
+            ItemTypeButton(
+                Identity,
+                selected == Identity,
+                itemTypeCount.identityCount,
+                onItemTypeClick
+            )
+        }
     }
 }
 
@@ -104,6 +114,7 @@ private fun ItemTypeButton(
                     Alias -> painterResource(CoreR.drawable.ic_proton_alias)
                     Note -> painterResource(CoreR.drawable.ic_proton_file_lines)
                     CreditCard -> painterResource(CoreR.drawable.ic_proton_credit_card)
+                    Identity -> painterResource(CoreR.drawable.ic_proton_card_identity)
                 },
                 contentDescription = stringResource(R.string.item_type_filter_list_icon_content_description),
                 tint = if (isSelected) {
@@ -119,6 +130,7 @@ private fun ItemTypeButton(
                     Alias -> stringResource(R.string.item_type_filter_alias)
                     Note -> stringResource(R.string.item_type_filter_note)
                     CreditCard -> stringResource(R.string.item_type_filter_credit_card)
+                    Identity -> stringResource(R.string.item_type_filter_identity)
                 },
                 style = ProtonTheme.typography.defaultSmallNorm,
                 color = PassTheme.colors.textNorm
@@ -143,8 +155,10 @@ fun ItemTypeFilterListPreview(@PreviewParameter(ThemePreviewProvider::class) isD
                     loginCount = 2,
                     aliasCount = 4,
                     noteCount = 1,
-                    creditCardCount = 3
+                    creditCardCount = 3,
+                    identityCount = 2
                 ),
+                isIdentityEnabled = true,
                 onItemTypeClick = {}
             )
         }

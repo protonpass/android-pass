@@ -91,6 +91,7 @@ fun getTitleCountRes(itemType: SearchFilterType, isPinnedMode: Boolean): Int = w
     SearchFilterType.Alias -> R.string.item_list_header_aliases_type
     SearchFilterType.Note -> R.string.item_list_header_notes_type
     SearchFilterType.CreditCard -> R.string.item_list_header_credit_cards_type
+    SearchFilterType.Identity -> R.string.item_list_header_identities_type
 }
 
 class ItemCountPreviewProvider : PreviewParameterProvider<ItemCountParameter> {

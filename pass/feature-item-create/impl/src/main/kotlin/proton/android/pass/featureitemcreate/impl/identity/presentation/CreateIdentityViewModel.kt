@@ -28,31 +28,46 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.domain.ShareId
+import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.common.OptionShareIdSaver
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.featureitemcreate.impl.common.getShareUiStateFlow
+import proton.android.pass.featureitemcreate.impl.identity.presentation.IdentitySnackbarMessage.ItemCreated
+import proton.android.pass.featureitemcreate.impl.identity.presentation.IdentitySnackbarMessage.ItemCreationError
+import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
+import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.telemetry.api.EventItemType
+import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
 @HiltViewModel
-class CreateProviderIdentityViewModel @Inject constructor(
+class CreateIdentityViewModel @Inject constructor(
+    private val createItem: CreateItem,
+    private val identityActionsProvider: IdentityActionsProvider,
+    private val telemetryManager: TelemetryManager,
+    private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
+    private val snackbarDispatcher: SnackbarDispatcher,
     observeVaults: ObserveVaultsWithItemCount,
     observeDefaultVault: ObserveDefaultVault,
-    savedStateHandleProvider: SavedStateHandleProvider,
-    identityActionsProvider: IdentityActionsProvider
+    savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel(), IdentityActionsProvider by identityActionsProvider {
 
     private val navShareId: Option<ShareId> =
@@ -81,19 +96,45 @@ class CreateProviderIdentityViewModel @Inject constructor(
         tag = TAG
     )
 
-    val state: StateFlow<IdentityUiState> = shareUiState.map(IdentityUiState::Success)
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = IdentityUiState.NotInitialised
-        )
+    val state: StateFlow<IdentityUiState> = combine(
+        shareUiState,
+        identityActionsProvider.observeSharedState()
+    ) { shareUiState, sharedState ->
+        when (shareUiState) {
+            is ShareUiState.Error -> IdentityUiState.Error
+            is ShareUiState.Loading -> IdentityUiState.Loading
+            is ShareUiState.Success -> IdentityUiState.Success(shareUiState, sharedState)
+            ShareUiState.NotInitialised -> IdentityUiState.NotInitialised
+        }
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = IdentityUiState.NotInitialised
+    )
 
     fun onVaultSelect(shareId: ShareId) {
         selectedShareIdMutableState = Some(shareId)
     }
 
-    fun onSubmit(shareId: ShareId) {
-        // Implement
+    fun onSubmit(shareId: ShareId) = viewModelScope.launch {
+        if (!identityActionsProvider.isFormStateValid()) return@launch
+        identityActionsProvider.updateLoadingState(IsLoadingState.Loading)
+        runCatching {
+            createItem(
+                shareId = shareId,
+                itemContents = identityActionsProvider.getFormState().toItemContents()
+            )
+        }.onSuccess { item ->
+            inAppReviewTriggerMetrics.incrementItemCreatedCount()
+            identityActionsProvider.onItemSavedState(item)
+            telemetryManager.sendEvent(ItemCreate(EventItemType.Identity))
+            snackbarDispatcher(ItemCreated)
+        }.onFailure {
+            PassLogger.w(TAG, "Could not create item")
+            PassLogger.w(TAG, it)
+            snackbarDispatcher(ItemCreationError)
+        }
+        identityActionsProvider.updateLoadingState(IsLoadingState.NotLoading)
     }
 
     companion object {

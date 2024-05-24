@@ -29,7 +29,7 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent
-import proton.android.pass.featureitemcreate.impl.identity.presentation.AddressDetails
+import proton.android.pass.featureitemcreate.impl.identity.presentation.UIAddressDetails
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.CityInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.CountryOrRegionInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.OrganizationInput
@@ -40,45 +40,46 @@ import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.ZipOrP
 @Composable
 internal fun AddressDetails(
     modifier: Modifier = Modifier,
-    addressDetails: AddressDetails,
+    uiAddressDetails: UIAddressDetails,
+    enabled: Boolean,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
     Column(
         modifier = modifier.roundedContainerNorm()
     ) {
         OrganizationInput(
-            value = addressDetails.organization,
-            enabled = true,
+            value = uiAddressDetails.organization,
+            enabled = enabled,
             onChange = { onEvent(IdentityContentEvent.OnFullNameChange(it)) }
         )
         PassDivider()
         StreetAddressInput(
-            value = addressDetails.streetAddress,
-            enabled = true,
+            value = uiAddressDetails.streetAddress,
+            enabled = enabled,
             onChange = { onEvent(IdentityContentEvent.OnEmailChange(it)) }
         )
         PassDivider()
         ZipOrPostalCodeInput(
-            value = addressDetails.zipOrPostalCode,
-            enabled = true,
+            value = uiAddressDetails.zipOrPostalCode,
+            enabled = enabled,
             onChange = { onEvent(IdentityContentEvent.OnEmailChange(it)) }
         )
         PassDivider()
         CityInput(
-            value = addressDetails.city,
-            enabled = true,
+            value = uiAddressDetails.city,
+            enabled = enabled,
             onChange = { onEvent(IdentityContentEvent.OnEmailChange(it)) }
         )
         PassDivider()
         StateOrProvinceInput(
-            value = addressDetails.stateOrProvince,
-            enabled = true,
+            value = uiAddressDetails.stateOrProvince,
+            enabled = enabled,
             onChange = { onEvent(IdentityContentEvent.OnEmailChange(it)) }
         )
         PassDivider()
         CountryOrRegionInput(
-            value = addressDetails.countryOrRegion,
-            enabled = true,
+            value = uiAddressDetails.countryOrRegion,
+            enabled = enabled,
             onChange = { onEvent(IdentityContentEvent.OnEmailChange(it)) }
         )
     }
@@ -90,7 +91,8 @@ fun AddressDetailsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark:
     PassTheme(isDark = isDark) {
         Surface {
             AddressDetails(
-                addressDetails = AddressDetails.EMPTY,
+                uiAddressDetails = UIAddressDetails.EMPTY,
+                enabled = true,
                 onEvent = {}
             )
         }

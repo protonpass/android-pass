@@ -46,12 +46,18 @@ object ItemUiFilter {
             is ItemContents.Login -> isLoginMatch(contents, query)
             is ItemContents.Note -> isNoteMatch(contents, query)
             is ItemContents.CreditCard -> isCreditCardMatch(contents, query)
+            is ItemContents.Identity -> isIdentityMatch(contents, query)
             is ItemContents.Unknown -> return false
         }
     }
 
     private fun isAliasMatch(content: ItemContents.Alias, query: String): Boolean =
         content.aliasEmail.preprocess().contains(query)
+
+    @Suppress("NotImplementedDeclaration")
+    private fun isIdentityMatch(content: ItemContents.Identity, query: String): Boolean {
+        TODO()
+    }
 
     @Suppress("ReturnCount")
     private fun isLoginMatch(content: ItemContents.Login, query: String): Boolean {

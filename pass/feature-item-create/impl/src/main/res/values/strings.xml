@@ -147,6 +147,8 @@
     <string name="identity_section_contact_details">Contact details</string>
     <string name="identity_section_work_details">Work details</string>
 
+    <string name="create_identity_item_creation_error">Could not create identity</string>
+    <string name="create_identity_item_creation_success">Identity created</string>
 
     <!--  Common create items  -->
     <string name="title_create">Create</string>

@@ -29,7 +29,7 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent
-import proton.android.pass.featureitemcreate.impl.identity.presentation.PersonalDetails
+import proton.android.pass.featureitemcreate.impl.identity.presentation.UIPersonalDetails
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.EmailInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.FullNameInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.PhoneNumberInput
@@ -37,27 +37,28 @@ import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.PhoneN
 @Composable
 internal fun PersonalDetails(
     modifier: Modifier = Modifier,
-    personalDetails: PersonalDetails,
+    uiPersonalDetails: UIPersonalDetails,
+    enabled: Boolean,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
     Column(
         modifier = modifier.roundedContainerNorm()
     ) {
         FullNameInput(
-            value = personalDetails.fullName,
-            enabled = true,
+            value = uiPersonalDetails.fullName,
+            enabled = enabled,
             onChange = { onEvent(IdentityContentEvent.OnFullNameChange(it)) }
         )
         PassDivider()
         EmailInput(
-            value = personalDetails.email,
-            enabled = true,
+            value = uiPersonalDetails.email,
+            enabled = enabled,
             onChange = { onEvent(IdentityContentEvent.OnEmailChange(it)) }
         )
         PassDivider()
         PhoneNumberInput(
-            value = personalDetails.phoneNumber,
-            enabled = true,
+            value = uiPersonalDetails.phoneNumber,
+            enabled = enabled,
             onChange = { onEvent(IdentityContentEvent.OnPhoneNumberChange(it)) }
         )
     }
@@ -69,7 +70,8 @@ fun PersonalDetailsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark
     PassTheme(isDark = isDark) {
         Surface {
             PersonalDetails(
-                personalDetails = PersonalDetails.EMPTY,
+                uiPersonalDetails = UIPersonalDetails.EMPTY,
+                enabled = true,
                 onEvent = { }
             )
         }

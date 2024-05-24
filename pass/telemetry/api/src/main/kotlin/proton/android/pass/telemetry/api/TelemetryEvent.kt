@@ -45,6 +45,7 @@ enum class EventItemType(val itemTypeName: String) {
             is ItemContents.Login -> Login
             is ItemContents.Note -> Note
             is ItemContents.CreditCard -> CreditCard
+            is ItemContents.Identity -> Identity
             is ItemContents.Unknown -> Unknown
         }
     }

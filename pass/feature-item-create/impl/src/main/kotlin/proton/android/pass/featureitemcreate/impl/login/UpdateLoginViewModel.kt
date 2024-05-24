@@ -20,7 +20,6 @@ package proton.android.pass.featureitemcreate.impl.login
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -45,6 +44,7 @@ import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonrust.api.passwords.strengths.PasswordStrengthCalculator
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
@@ -58,8 +58,9 @@ import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.UpdateItem
-import proton.android.pass.datamodels.api.toContent
 import proton.android.pass.domain.CustomField
+import proton.android.pass.domain.CustomFieldContent
+import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
@@ -103,7 +104,7 @@ class UpdateLoginViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     draftRepository: DraftRepository,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
-    emailValidator: EmailValidator
+    private val emailValidator: EmailValidator
 ) : BaseLoginViewModel(
     accountManager = accountManager,
     snackbarDispatcher = snackbarDispatcher,
@@ -232,59 +233,59 @@ class UpdateLoginViewModel @Inject constructor(
         encryptionContextProvider.withEncryptionContext {
             val default = LoginItemFormState.default(this)
             if (loginItemFormState.compare(default, this)) {
-                val itemContents = item.itemType as ItemType.Login
+                val itemContents = item.toItemContents(
+                    encryptionContext = this@withEncryptionContext,
+                    isUsernameSplitEnabled = true,
+                    emailValidator = emailValidator
+                ) as ItemContents.Login
 
-                val websites = if (itemContents.websites.isEmpty()) {
-                    persistentListOf("")
-                } else {
-                    itemContents.websites.toImmutableList()
-                }
                 val decryptedTotp = handleTotp(
                     encryptionContext = this@withEncryptionContext,
-                    primaryTotp = itemContents.primaryTotp
+                    primaryTotp = itemContents.primaryTotp.encrypted
                 )
 
-                val password = decrypt(itemContents.password)
-                val passwordHiddenState = if (password.isEmpty()) {
-                    UIHiddenState.Empty(itemContents.password)
-                } else {
-                    UIHiddenState.Concealed(itemContents.password)
+                val passwordHiddenState = when (val hiddenState = itemContents.password) {
+                    is HiddenState.Empty -> UIHiddenState.Empty(hiddenState.encrypted)
+                    is HiddenState.Concealed,
+                    is HiddenState.Revealed -> UIHiddenState.Concealed(hiddenState.encrypted)
                 }
 
-                val uiCustomFieldList = itemContents.customFields.mapNotNull {
-                    convertCustomField(it, this@withEncryptionContext)
+                val uiCustomFieldList = itemContents.customFields.map { customFieldContent ->
+                    customFieldContent.toUICustomFieldContent(this@withEncryptionContext)
                 }.toImmutableList()
-                originalTotpCustomFields =
-                    uiCustomFieldList.filterIsInstance<UICustomFieldContent.Totp>()
-                val sanitisedToEditCustomField = uiCustomFieldList.map {
-                    if (it is UICustomFieldContent.Totp) {
-                        val uri = when (val value = it.value) {
-                            is UIHiddenState.Concealed -> decrypt(value.encrypted)
+
+                originalTotpCustomFields = uiCustomFieldList.filterIsInstance<UICustomFieldContent.Totp>()
+                val sanitisedToEditCustomField = uiCustomFieldList.map { uiCustomFieldContent ->
+                    if (uiCustomFieldContent is UICustomFieldContent.Totp) {
+                        val uri = when (val totp = uiCustomFieldContent.value) {
+                            is UIHiddenState.Concealed -> decrypt(totp.encrypted)
                             is UIHiddenState.Empty -> ""
-                            is UIHiddenState.Revealed -> value.clearText
+                            is UIHiddenState.Revealed -> totp.clearText
                         }
                         val sanitisedUri = getDisplayTotp(uri)
                         UICustomFieldContent.Totp(
-                            label = it.label,
+                            label = uiCustomFieldContent.label,
                             value = UIHiddenState.Revealed(
                                 encrypted = encrypt(sanitisedUri),
                                 clearText = sanitisedUri
                             ),
-                            id = it.id
+                            id = uiCustomFieldContent.id
                         )
                     } else {
-                        it
+                        uiCustomFieldContent
                     }
                 }
 
                 loginItemFormMutableState = loginItemFormState.copy(
-                    title = decrypt(item.title),
+                    title = itemContents.title,
                     email = itemContents.itemEmail,
                     username = itemContents.itemUsername,
                     password = passwordHiddenState,
-                    passwordStrength = passwordStrengthCalculator.calculateStrength(password),
-                    urls = websites,
-                    note = decrypt(item.note),
+                    passwordStrength = passwordStrengthCalculator.calculateStrength(
+                        password = decrypt(itemContents.password.encrypted)
+                    ),
+                    urls = itemContents.urls.ifEmpty { listOf("") },
+                    note = itemContents.note,
                     packageInfoSet = item.packageInfoSet.map(::PackageInfoUi).toSet(),
                     primaryTotp = UIHiddenState.Revealed(encrypt(decryptedTotp), decryptedTotp),
                     customFields = sanitisedToEditCustomField,
@@ -378,17 +379,8 @@ class UpdateLoginViewModel @Inject constructor(
         }
     }
 
-    private fun convertCustomField(
-        customField: CustomField,
-        encryptionContext: EncryptionContext
-    ): UICustomFieldContent? {
-        val isConcealed = when (customField) {
-            is CustomField.Hidden -> true
-            else -> false
-        }
-        val customFieldContent = customField.toContent(encryptionContext, isConcealed = isConcealed)
-        customFieldContent ?: return null
-        val uiCustomFieldContent = UICustomFieldContent.from(customFieldContent)
+    private fun CustomFieldContent.toUICustomFieldContent(encryptionContext: EncryptionContext): UICustomFieldContent {
+        val uiCustomFieldContent = UICustomFieldContent.from(this)
         return if (uiCustomFieldContent is UICustomFieldContent.Totp) {
             val uri = when (val value = uiCustomFieldContent.value) {
                 is UIHiddenState.Concealed -> encryptionContext.decrypt(value.encrypted)
@@ -396,7 +388,7 @@ class UpdateLoginViewModel @Inject constructor(
                 is UIHiddenState.Revealed -> value.clearText
             }
             UICustomFieldContent.Totp(
-                label = customFieldContent.label,
+                label = label,
                 value = UIHiddenState.Revealed(
                     encrypted = encryptionContext.encrypt(uri),
                     clearText = uri

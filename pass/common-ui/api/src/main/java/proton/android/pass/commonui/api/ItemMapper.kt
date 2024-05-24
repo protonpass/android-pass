@@ -121,6 +121,7 @@ fun Item.toItemContents(
     is ItemType.Alias,
     is ItemType.CreditCard,
     is ItemType.Note,
+    is ItemType.Identity,
     ItemType.Password,
     ItemType.Unknown -> toItemContents(encryptionContext)
 

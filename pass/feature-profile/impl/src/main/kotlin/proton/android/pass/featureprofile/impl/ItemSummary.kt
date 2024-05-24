@@ -45,12 +45,17 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
+import proton.android.pass.composecomponents.impl.item.icon.IdentityIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.item.icon.MFAIcon
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 
 @Composable
-fun ItemSummary(modifier: Modifier = Modifier, itemSummaryUiState: ItemSummaryUiState) {
+fun ItemSummary(
+    modifier: Modifier = Modifier,
+    itemSummaryUiState: ItemSummaryUiState,
+    isIdentityEnabled: Boolean
+) {
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -69,6 +74,9 @@ fun ItemSummary(modifier: Modifier = Modifier, itemSummaryUiState: ItemSummaryUi
             count = itemSummaryUiState.creditCardsCount
         )
         ItemTypeBox(type = SummaryItemType.Notes, count = itemSummaryUiState.notesCount)
+        if (isIdentityEnabled) {
+            ItemTypeBox(type = SummaryItemType.Identity, count = itemSummaryUiState.identityCount)
+        }
         ItemTypeBox(
             type = SummaryItemType.MFA,
             count = itemSummaryUiState.mfaCount,
@@ -99,6 +107,7 @@ fun RowScope.ItemTypeBox(
             SummaryItemType.CreditCards -> CreditCardIcon(shape = CircleShape)
             SummaryItemType.Alias -> AliasIcon(shape = CircleShape)
             SummaryItemType.MFA -> MFAIcon(shape = CircleShape)
+            SummaryItemType.Identity -> IdentityIcon(shape = CircleShape)
         }
         Spacer(modifier = Modifier.width(10.dp))
         Text(
@@ -116,7 +125,7 @@ fun RowScope.ItemTypeBox(
 }
 
 enum class SummaryItemType {
-    Logins, Notes, CreditCards, Alias, MFA
+    Logins, Notes, CreditCards, Alias, MFA, Identity
 }
 
 @Preview
@@ -125,7 +134,8 @@ fun ItemSummaryPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
     PassTheme(isDark = isDark) {
         Surface {
             ItemSummary(
-                itemSummaryUiState = ItemSummaryUiState(aliasLimit = 1)
+                itemSummaryUiState = ItemSummaryUiState(aliasLimit = 1),
+                isIdentityEnabled = true
             )
         }
     }

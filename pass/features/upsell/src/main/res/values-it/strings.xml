@@ -26,5 +26,8 @@
   <string name="upsell_paid_feature_authenticator">Autenticatore 2FA integrato</string>
   <string name="upsell_paid_feature_unlimited_aliases">Alias Hide-my-email illimitati</string>
   <string name="upsell_paid_feature_vault_sharing">Condivisione della cassaforte (fino a 10 persone)</string>
+  <string name="upsell_paid_feature_authenticator_essential">Richiedi 2FA per l\'organizzazione</string>
+  <string name="upsell_paid_feature_sso_essential">Integrazione SSO (in arrivo)</string>
   <string name="upsell_button_upgrade">Ottieni Pass Plus</string>
+  <string name="upsell_button_upgrade_essentials">Ottieni Pass Business</string>
 </resources>

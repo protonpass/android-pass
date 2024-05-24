@@ -8,6 +8,8 @@
   <string name="home_empty_vault_create_login">Créer un identifiant</string>
   <string name="home_empty_vault_create_alias">Créer un alias « hide-my-email »</string>
   <string name="home_empty_vault_create_note">Créer une note</string>
+  <string name="home_empty_vault_create_credit_card">Créer une carte de paiement</string>
+  <string name="home_empty_vault_create_identity">Create an Identity</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Une erreur s\'est produite pendant le chargement des éléments.</string>
   <string name="error_refreshing">Une erreur s\'est produite pendant l\'actualisation.</string>
   <string name="home_snackbar_login_moved_to_trash">L\'identifiant a été déplacé dans la corbeille.</string>
@@ -120,13 +122,13 @@
   <string name="recent_search_remove_item">Retirer des recherches récentes</string>
   <!-- Pinning -->
   <string name="home_snackbar_item_pinned_success">L\'élément a été épinglé.</string>
-  <string name="home_snackbar_item_pinned_error">Une erreur est survenue lors de l\'épinglage de cet élément</string>
-  <string name="home_snackbar_item_unpinned_success">L\'élément a été désépinglé.</string>
+  <string name="home_snackbar_item_pinned_error">Une erreur est survenue lors de l\'épinglage de cet élément.</string>
+  <string name="home_snackbar_item_unpinned_success">L\'élément n\'est plus épinglé.</string>
   <string name="home_snackbar_item_unpinned_error">Une erreur est survenue lors du retrait de l\'épinglage de cet élément.</string>
   <string name="home_snackbar_items_pinned_success">L\'élément a été épinglé.</string>
-  <string name="home_snackbar_items_pinned_partial_success">Une erreur s\'est produite lors de l\'épinglage des éléments.</string>
-  <string name="home_snackbar_items_pinned_error">Une erreur s\'est produite pendant l\'épinglage des éléments.</string>
-  <string name="home_snackbar_items_unpinned_success">L\'épingle a été retirée de l\'élément.</string>
+  <string name="home_snackbar_items_pinned_partial_success">Une erreur s\'est produite lors de l\'épinglage de certains éléments.</string>
+  <string name="home_snackbar_items_pinned_error">Une erreur s\'est produite lors de l\'épinglage des éléments.</string>
+  <string name="home_snackbar_items_unpinned_success">Les éléments ne sont plus épinglés.</string>
   <string name="home_snackbar_items_unpinned_partial_success">Une erreur s\'est produite lors du retrait de l\'épinglage de certains éléments.</string>
   <string name="home_snackbar_items_unpinned_error">Une erreur s\'est produite lors du retrait de l\'épingle des éléments.</string>
 </resources>

@@ -90,6 +90,8 @@
   <string name="security_center_dark_web_monitor_alias_addresses_error">Hide-my-email-ის ფსევდონიმების მიღების შეცდომა</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">Not monitored</string>
   <string name="security_center_dark_web_monitor_see_all">See all</string>
+  <string name="security_center_dark_web_monitor_no_proton_addresses">No Proton addresses</string>
+  <string name="security_center_dark_web_monitor_no_aliases">No aliases</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">There was an error sending the verification code. Please try again later.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">There was an error removing the email. Please try again later.</string>
   <!-- Add custom email monitoring -->
@@ -165,8 +167,6 @@
   <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">მონაცემების უსაფრთხოება</string>
   <string name="dark_web_help_dialog_subtitle">Proton never shares your information with third parties. All data comes from searches for the appearance of Proton domains on the dark web.</string>
-  <string name="dark_web_help_dialog_custom_address_title">მორგებული ელ-ფოსტის მისამართები</string>
-  <string name="dark_web_help_dialog_custom_address_subtitle">You can also monitor up to 10 email addresses that aren\'t Proton or email aliases. They will be sent to HIBP for monitoring - no other data will be shared to HIBP.</string>
   <!-- Cannot add custom emails -->
   <string name="dark_web_cannot_add_custom_emails_dialog_title">Cannot add custom email</string>
   <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">You have reached the limit of custom emails.</string>

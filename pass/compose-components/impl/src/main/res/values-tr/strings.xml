@@ -35,6 +35,8 @@
   <string name="action_view_details">Ayrıntıları görüntüle</string>
   <string name="action_see_all">Tümünü görüntüle</string>
   <string name="action_confirm">Onayla</string>
+  <string name="action_continue">Continue</string>
+  <string name="action_retry">Retry</string>
   <!-- Empty list -->
   <string name="empty_list_title">İlk ögenizi ekleyin</string>
   <string name="empty_search_results_title">Herhangi bir sonuç bulunamadı</string>
@@ -116,7 +118,9 @@
   <string name="item_details_credit_card_section_expiration_date_title">Geçerlilik tarihi</string>
   <string name="item_details_credit_card_section_cvv_title">Güvenlik kodu</string>
   <string name="item_details_credit_card_section_pin_title">PIN kodu</string>
-  <string name="item_details_login_section_username_or_username_title">Kullanıcı adı ya da e-posta adresi</string>
+  <string name="item_details_login_section_email_title">Email address</string>
+  <string name="item_details_login_section_username_title">Username</string>
+  <string name="item_details_login_section_username_or_username_title">Username or email address</string>
   <string name="item_details_login_section_password_title">Parola</string>
   <string name="item_details_login_section_primary_totp_title">İki adımlı doğrulama kodu (tek kullanımlık)</string>
   <string name="item_details_login_section_websites_title">Siteler</string>

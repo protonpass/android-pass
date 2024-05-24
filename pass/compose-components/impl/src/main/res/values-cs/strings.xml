@@ -37,6 +37,8 @@
   <string name="action_view_details">Zobrazit podrobnosti</string>
   <string name="action_see_all">Zobrazit vše</string>
   <string name="action_confirm">Potvrdit</string>
+  <string name="action_continue">Continue</string>
+  <string name="action_retry">Retry</string>
   <!-- Empty list -->
   <string name="empty_list_title">Přidejte svou první položku</string>
   <string name="empty_search_results_title">Nebyl nalezen žádný výsledek</string>
@@ -120,7 +122,9 @@
   <string name="item_details_credit_card_section_expiration_date_title">Datum vypršení</string>
   <string name="item_details_credit_card_section_cvv_title">Bezpečnostní kód</string>
   <string name="item_details_credit_card_section_pin_title">PIN kód</string>
-  <string name="item_details_login_section_username_or_username_title">Uživatelské jméno nebo e-mailová adresa</string>
+  <string name="item_details_login_section_email_title">Email address</string>
+  <string name="item_details_login_section_username_title">Username</string>
+  <string name="item_details_login_section_username_or_username_title">Username or email address</string>
   <string name="item_details_login_section_password_title">Heslo</string>
   <string name="item_details_login_section_primary_totp_title">2FA token (TOTP)</string>
   <string name="item_details_login_section_websites_title">Webové stránky</string>

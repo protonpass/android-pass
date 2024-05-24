@@ -41,6 +41,7 @@ dependencies {
     implementation(libs.androidx.compose.uiToolingPreview)
 
     implementation(projects.pass.common.api)
+    implementation(projects.pass.commonRust.api)
     implementation(projects.pass.commonUiModels.api)
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.data.api)

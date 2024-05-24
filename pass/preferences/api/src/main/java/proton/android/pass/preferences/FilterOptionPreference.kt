@@ -23,6 +23,7 @@ const val FILTER_LOGIN = 2
 const val FILTER_ALIAS = 3
 const val FILTER_NOTE = 4
 const val FILTER_CREDIT_CARD = 5
+const val FILTER_IDENTITY = 6
 
 enum class FilterOptionPreference(private val internalValue: Int) {
 
@@ -30,7 +31,8 @@ enum class FilterOptionPreference(private val internalValue: Int) {
     Login(FILTER_LOGIN),
     Alias(FILTER_ALIAS),
     Note(FILTER_NOTE),
-    CreditCard(FILTER_CREDIT_CARD);
+    CreditCard(FILTER_CREDIT_CARD),
+    Identity(FILTER_IDENTITY);
 
     fun value() = internalValue
 
@@ -42,6 +44,7 @@ enum class FilterOptionPreference(private val internalValue: Int) {
                 FILTER_ALIAS -> Alias
                 FILTER_NOTE -> Note
                 FILTER_CREDIT_CARD -> CreditCard
+                FILTER_IDENTITY -> Identity
                 else -> All
             }
         }

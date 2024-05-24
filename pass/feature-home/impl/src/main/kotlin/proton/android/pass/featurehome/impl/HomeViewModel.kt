@@ -436,7 +436,8 @@ class HomeViewModel @Inject constructor(
                 loginCount = filteredPinnedItems.count { it.contents is ItemContents.Login },
                 aliasCount = filteredPinnedItems.count { it.contents is ItemContents.Alias },
                 noteCount = filteredPinnedItems.count { it.contents is ItemContents.Note },
-                creditCardCount = filteredPinnedItems.count { it.contents is ItemContents.CreditCard }
+                creditCardCount = filteredPinnedItems.count { it.contents is ItemContents.CreditCard },
+                identityCount = filteredPinnedItems.count { it.contents is ItemContents.Identity }
             )
         )
     }
@@ -457,7 +458,8 @@ class HomeViewModel @Inject constructor(
                         loginCount = list.count { it.contents is ItemContents.Login },
                         aliasCount = list.count { it.contents is ItemContents.Alias },
                         noteCount = list.count { it.contents is ItemContents.Note },
-                        creditCardCount = list.count { it.contents is ItemContents.CreditCard }
+                        creditCardCount = list.count { it.contents is ItemContents.CreditCard },
+                        identityCount = list.count { it.contents is ItemContents.Identity }
                     )
                 }
             }
@@ -1031,6 +1033,7 @@ class HomeViewModel @Inject constructor(
             SearchFilterType.Login -> item.contents is ItemContents.Login
             SearchFilterType.Note -> item.contents is ItemContents.Note
             SearchFilterType.CreditCard -> item.contents is ItemContents.CreditCard
+            SearchFilterType.Identity -> item.contents is ItemContents.Identity
         }
     }
 

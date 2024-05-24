@@ -26,5 +26,8 @@
   <string name="upsell_paid_feature_authenticator">Integrert 2FA-autentisering</string>
   <string name="upsell_paid_feature_unlimited_aliases">Ubegrenset antall hide-my-email-aliaser</string>
   <string name="upsell_paid_feature_vault_sharing">Deling av hvelv (opptil 10 personer)</string>
+  <string name="upsell_paid_feature_authenticator_essential">Krev 2FA for organisasjonen</string>
+  <string name="upsell_paid_feature_sso_essential">SSO-integrasjon (kommer snart)</string>
   <string name="upsell_button_upgrade">Få Pass Plus</string>
+  <string name="upsell_button_upgrade_essentials">Få Pass Business</string>
 </resources>

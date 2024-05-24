@@ -35,6 +35,8 @@
   <string name="action_view_details">Veure detalls</string>
   <string name="action_see_all">Veure-ho tot</string>
   <string name="action_confirm">Confirmar</string>
+  <string name="action_continue">Continue</string>
+  <string name="action_retry">Retry</string>
   <!-- Empty list -->
   <string name="empty_list_title">Afegeix el primer element</string>
   <string name="empty_search_results_title">No s\'han trobat resultats</string>
@@ -116,7 +118,9 @@
   <string name="item_details_credit_card_section_expiration_date_title">Data de caducitat</string>
   <string name="item_details_credit_card_section_cvv_title">Codi de seguretat</string>
   <string name="item_details_credit_card_section_pin_title">Codi PIN</string>
-  <string name="item_details_login_section_username_or_username_title">Nom d\'usuari o adreça de correu electrònic</string>
+  <string name="item_details_login_section_email_title">Email address</string>
+  <string name="item_details_login_section_username_title">Username</string>
+  <string name="item_details_login_section_username_or_username_title">Username or email address</string>
   <string name="item_details_login_section_password_title">Contrasenya</string>
   <string name="item_details_login_section_primary_totp_title">Token 2FA (TOTP)</string>
   <string name="item_details_login_section_websites_title">Llocs web</string>

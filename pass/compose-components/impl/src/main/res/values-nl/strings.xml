@@ -35,6 +35,8 @@
   <string name="action_view_details">Details weergeven</string>
   <string name="action_see_all">Alles weergeven</string>
   <string name="action_confirm">Bevestigen</string>
+  <string name="action_continue">Continue</string>
+  <string name="action_retry">Retry</string>
   <!-- Empty list -->
   <string name="empty_list_title">Voeg uw eerste item toe</string>
   <string name="empty_search_results_title">Geen resultaten gevonden</string>
@@ -116,7 +118,9 @@
   <string name="item_details_credit_card_section_expiration_date_title">Verloopdatum</string>
   <string name="item_details_credit_card_section_cvv_title">Beveiligingscode</string>
   <string name="item_details_credit_card_section_pin_title">Pincode</string>
-  <string name="item_details_login_section_username_or_username_title">Gebruikersnaam of e-mailadres</string>
+  <string name="item_details_login_section_email_title">Email address</string>
+  <string name="item_details_login_section_username_title">Username</string>
+  <string name="item_details_login_section_username_or_username_title">Username or email address</string>
   <string name="item_details_login_section_password_title">Wachtwoord</string>
   <string name="item_details_login_section_primary_totp_title">2FA-token (TOTP)</string>
   <string name="item_details_login_section_websites_title">Websites</string>

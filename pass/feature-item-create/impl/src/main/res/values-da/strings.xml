@@ -9,13 +9,18 @@
   <string name="action_note">Note</string>
   <string name="action_credit_card">Betalingskort</string>
   <string name="action_password">Adgangskode</string>
+  <string name="action_identity">Identitet</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Tilføj loginoplysninger for en app eller et websted</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Få et e-mail-alias til brug i nye apps</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Notér en pinkode, kode eller bemærkning til dig selv</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Opbevar dine betalingsoplysninger sikkert</string>
+  <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Udfyld dine personlige data</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Generér en sikker adgangskode</string>
   <!-- Create Login -->
-  <string name="title_create_login">Opret login</string>
+  <string name="field_email_title">E-mailadresse</string>
+  <string name="field_email_hint">Tilføj e-mailadresse</string>
+  <string name="field_username_title">Brugernavn</string>
+  <string name="field_username_hint">Tilføj brugernavn</string>
   <string name="field_username_or_email_title">Brugernavn eller e-mailadresse</string>
   <string name="field_username_or_email_hint">Tilføj brugernavn eller e-mailadresse</string>
   <string name="field_password_title">Adgangskode</string>
@@ -89,6 +94,27 @@
   <string name="create_credit_card_item_creation_success">Betalingskort oprettet</string>
   <string name="credit_card_init_error">Problem med at hente betalingskortoplysninger</string>
   <string name="credit_card_item_update_error">Kunne ikke opdatere betalingskort</string>
+  <!-- Create Identity -->
+  <string name="identity_field_full_name_title">Fulde navn</string>
+  <string name="identity_field_email_title">E-mail</string>
+  <string name="identity_field_phone_number_title">Telefonnummer</string>
+  <string name="identity_field_organization_title">Organisation</string>
+  <string name="identity_field_street_address_title">Gadeadresse, postboks</string>
+  <string name="identity_field_zip_or_postal_code_title">Postnummer</string>
+  <string name="identity_field_city_title">By</string>
+  <string name="identity_field_state_or_province_title">Landsdel eller provins</string>
+  <string name="identity_field_country_or_region_title">Land eller region</string>
+  <string name="identity_field_social_security_number_title">CPR-nummer</string>
+  <string name="identity_field_passport_number_title">Pasnummer</string>
+  <string name="identity_field_license_number_title">Licensnummer</string>
+  <string name="identity_field_website_title">Websted</string>
+  <string name="identity_field_xhandle_title">X handle</string>
+  <string name="identity_field_company_title">Firma</string>
+  <string name="identity_field_job_title_title">Jobtitel</string>
+  <string name="identity_section_personal_details">Personlige oplysninger</string>
+  <string name="identity_section_address_details">Adresseoplysninger</string>
+  <string name="identity_section_contact_details">Kontaktoplysninger</string>
+  <string name="identity_section_work_details">Arbejdsoplysninger</string>
   <!--  Common create items  -->
   <string name="title_create">Opret</string>
   <string name="changes_saved">Ændringer gemt</string>
@@ -104,7 +130,7 @@
   <string name="camera_permission_open_settings">Åbn Indstillinger</string>
   <!--  TOTP limit  -->
   <string name="mfa_limit_reached">2FA-grænse nået</string>
-  <string name="upgrade">Opgradér</string>
+  <string name="upgrade">Opgrader</string>
   <string name="mfa_icon_content_description">2FA-ikon</string>
   <string name="select_suffix_upgrade_for_custom_domains">Opgrader for brugerdomæner</string>
   <string name="select_mailbox_upgrade_for_more_inboxes">Opgrader for flere indbakker</string>

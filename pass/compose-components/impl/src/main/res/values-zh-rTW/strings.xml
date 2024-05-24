@@ -24,7 +24,7 @@
   <string name="bottomsheet_unpin_item">取消釘選</string>
   <string name="bottomsheet_view_item_history">查看歷史</string>
   <string name="bottomsheet_monitor_exclude">Exclude from monitoring</string>
-  <string name="bottomsheet_monitor_include">Include in monitoring</string>
+  <string name="bottomsheet_monitor_include">於監控名當中</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">開啟項目行為清單</string>
   <string name="action_upgrade_now">立即升級</string>
@@ -34,6 +34,8 @@
   <string name="action_view_details">詳情查看</string>
   <string name="action_see_all">查看全部</string>
   <string name="action_confirm">確認</string>
+  <string name="action_continue">Continue</string>
+  <string name="action_retry">Retry</string>
   <!-- Empty list -->
   <string name="empty_list_title">加入您的第一個項目</string>
   <string name="empty_search_results_title">查無結果</string>
@@ -114,7 +116,9 @@
   <string name="item_details_credit_card_section_expiration_date_title">到期日</string>
   <string name="item_details_credit_card_section_cvv_title">安全碼</string>
   <string name="item_details_credit_card_section_pin_title">PIN 碼</string>
-  <string name="item_details_login_section_username_or_username_title">使用者名稱或電子郵件位址</string>
+  <string name="item_details_login_section_email_title">Email address</string>
+  <string name="item_details_login_section_username_title">Username</string>
+  <string name="item_details_login_section_username_or_username_title">Username or email address</string>
   <string name="item_details_login_section_password_title">密碼</string>
   <string name="item_details_login_section_primary_totp_title">雙重驗證憑證(TOTP)</string>
   <string name="item_details_login_section_websites_title">網站</string>

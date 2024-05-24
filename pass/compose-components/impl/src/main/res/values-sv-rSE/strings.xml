@@ -35,6 +35,8 @@
   <string name="action_view_details">Visa detaljer</string>
   <string name="action_see_all">Se alla</string>
   <string name="action_confirm">Bekräfta</string>
+  <string name="action_continue">Fortsätt</string>
+  <string name="action_retry">Försök igen</string>
   <!-- Empty list -->
   <string name="empty_list_title">Lägg till ditt första objekt</string>
   <string name="empty_search_results_title">Inga resultat hittades</string>
@@ -116,6 +118,8 @@
   <string name="item_details_credit_card_section_expiration_date_title">Utgångsdatum</string>
   <string name="item_details_credit_card_section_cvv_title">Säkerhetskod</string>
   <string name="item_details_credit_card_section_pin_title">PIN-kod</string>
+  <string name="item_details_login_section_email_title">E-postadress</string>
+  <string name="item_details_login_section_username_title">Användarnamn</string>
   <string name="item_details_login_section_username_or_username_title">Användarnamn eller e-postadress</string>
   <string name="item_details_login_section_password_title">Lösenord</string>
   <string name="item_details_login_section_primary_totp_title">2FA-token (TOTP)</string>

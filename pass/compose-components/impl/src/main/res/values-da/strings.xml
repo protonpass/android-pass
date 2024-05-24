@@ -35,6 +35,8 @@
   <string name="action_view_details">Se detaljer</string>
   <string name="action_see_all">Se alle</string>
   <string name="action_confirm">Bekræft</string>
+  <string name="action_continue">Fortsæt</string>
+  <string name="action_retry">Prøv igen</string>
   <!-- Empty list -->
   <string name="empty_list_title">Tilføj dit første element</string>
   <string name="empty_search_results_title">Intet resultat fundet</string>
@@ -83,7 +85,7 @@
   <string name="confirm_close_dialog_message">Du har ikke-gemte ændringer, er du sikker på, at du vil kassere dem?</string>
   <string name="confirm_close_dialog_close_button">Kassér</string>
   <!-- Upgrade -->
-  <string name="upgrade">Opgradér</string>
+  <string name="upgrade">Opgrader</string>
   <!-- Advanced options -->
   <string name="show_advanced_options">Avancerede indstillinger</string>
   <string name="hide_advanced_options">Skjul avancerede indstillinger</string>
@@ -116,6 +118,8 @@
   <string name="item_details_credit_card_section_expiration_date_title">Udløbsdato</string>
   <string name="item_details_credit_card_section_cvv_title">Sikkerhedskode</string>
   <string name="item_details_credit_card_section_pin_title">Pinkode</string>
+  <string name="item_details_login_section_email_title">E-mailadresse</string>
+  <string name="item_details_login_section_username_title">Brugernavn</string>
   <string name="item_details_login_section_username_or_username_title">Brugernavn eller e-mailadresse</string>
   <string name="item_details_login_section_password_title">Adgangskode</string>
   <string name="item_details_login_section_primary_totp_title">2FA-token (TOTP)</string>

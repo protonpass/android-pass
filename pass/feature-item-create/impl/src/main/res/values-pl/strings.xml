@@ -9,13 +9,18 @@
   <string name="action_note">Notatka</string>
   <string name="action_credit_card">Karta płatnicza</string>
   <string name="action_password">Hasło</string>
+  <string name="action_identity">Tożsamość</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Dodaj dane logowania do aplikacji i stron</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Uzyskaj alias do użycia w nowych aplikacjach</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Zapisz kod PIN lub notatkę</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Bezpieczne przechowywanie informacji o płatnościach</string>
+  <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Uzupełnij dane osobowe</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Generuj bezpieczne hasło</string>
   <!-- Create Login -->
-  <string name="title_create_login">Utwórz dane logowania</string>
+  <string name="field_email_title">Adres e-mail</string>
+  <string name="field_email_hint">Dodaj adres e-mail</string>
+  <string name="field_username_title">Nazwa użytkownika</string>
+  <string name="field_username_hint">Dodaj nazwę użytkownika</string>
   <string name="field_username_or_email_title">Nazwa użytkownika lub adres e-mail</string>
   <string name="field_username_or_email_hint">Dodaj nazwę użytkownika lub adres e-mail</string>
   <string name="field_password_title">Hasło</string>
@@ -89,6 +94,27 @@
   <string name="create_credit_card_item_creation_success">Karta płatnicza została utworzona</string>
   <string name="credit_card_init_error">Wystąpił problem podczas pobierania szczegółów karty płatniczej</string>
   <string name="credit_card_item_update_error">Nie można zaktualizować karty płatniczej</string>
+  <!-- Create Identity -->
+  <string name="identity_field_full_name_title">Imię i nazwisko</string>
+  <string name="identity_field_email_title">Adres e-mail</string>
+  <string name="identity_field_phone_number_title">Numer telefonu</string>
+  <string name="identity_field_organization_title">Organizacja</string>
+  <string name="identity_field_street_address_title">Ulica</string>
+  <string name="identity_field_zip_or_postal_code_title">Kod pocztowy</string>
+  <string name="identity_field_city_title">Miasto</string>
+  <string name="identity_field_state_or_province_title">Stan lub województwo</string>
+  <string name="identity_field_country_or_region_title">Kraj lub region</string>
+  <string name="identity_field_social_security_number_title">Social security number</string>
+  <string name="identity_field_passport_number_title">Numer paszportu</string>
+  <string name="identity_field_license_number_title">License number</string>
+  <string name="identity_field_website_title">Strona internetowa</string>
+  <string name="identity_field_xhandle_title">Profil X</string>
+  <string name="identity_field_company_title">Firma</string>
+  <string name="identity_field_job_title_title">Stanowisko</string>
+  <string name="identity_section_personal_details">Szczegóły osobiste</string>
+  <string name="identity_section_address_details">Szczegóły adresu</string>
+  <string name="identity_section_contact_details">Szczegóły kontaktu</string>
+  <string name="identity_section_work_details">Szczegóły służbowe</string>
   <!--  Common create items  -->
   <string name="title_create">Utwórz</string>
   <string name="changes_saved">Zmiany zostały zapisane</string>

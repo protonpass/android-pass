@@ -44,7 +44,7 @@
   <string name="security_center_sentinel_button_enable">Ativar Proton Sentinel</string>
   <string name="security_center_sentinel_button_disable">Desativar Proton Sentinel</string>
   <string name="security_center_sentinel_snackbar_message_enable_canceled">A proteção do Proton Sentinel foi cancelada</string>
-  <string name="security_center_sentinel_snackbar_message_enable_error">There was an error enabling Proton Sentinel protection. Please try again.</string>
+  <string name="security_center_sentinel_snackbar_message_enable_error">Houve um erro ao ativar a proteção da Proton Sentinel. Tente novamente.</string>
   <string name="security_center_sentinel_snackbar_message_disable_canceled">Proton Sentinel protection deactivation has been canceled</string>
   <string name="security_center_sentinel_snackbar_message_disable_error">There was an error disabling Proton Sentinel protection. Please try again.</string>
   <!-- Weak passwords screen -->
@@ -75,7 +75,7 @@
     <item quantity="other">%d violações detectadas</item>
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Error loading custom email addresses</string>
-  <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Could not get email addresses</string>
+  <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Não foi possível obter os endereços de e-mail</string>
   <string name="security_center_dark_web_monitor_custom_email_option_verify">Verificar</string>
   <string name="security_center_dark_web_monitor_custom_email_option_remove">Remover</string>
   <string name="security_center_dark_web_monitor_latest_breach_on">Última violação em %s</string>
@@ -90,6 +90,8 @@
   <string name="security_center_dark_web_monitor_alias_addresses_error">Error retrieving Hide-my-email aliases</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">Não monitorado</string>
   <string name="security_center_dark_web_monitor_see_all">Ver tudo</string>
+  <string name="security_center_dark_web_monitor_no_proton_addresses">Sem endereços da Proton</string>
+  <string name="security_center_dark_web_monitor_no_aliases">Nenhum alias</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Ocorreu um erro ao enviar o código de verificação. Tente novamente mais tarde.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">There was an error removing the email. Please try again later.</string>
   <!-- Add custom email monitoring -->
@@ -104,7 +106,7 @@
   <string name="security_center_verify_email_code_error">O código não é válido.</string>
   <string name="security_center_verify_email_title">Confirmar seu e-mail</string>
   <string name="security_center_verify_email_subtitle">We\'ve sent a verification code to %s. Please enter it below:</string>
-  <string name="security_center_verify_email_code_resend_header">Haven’t received the code?</string>
+  <string name="security_center_verify_email_code_resend_header">Não recebeu o código?</string>
   <string name="security_center_verify_email_code_resend_body">Please check in your Spam for an email called “Please confirm your email address for Proton Pass“</string>
   <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">If you can’t find such email, you can </string>
   <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">solicitar um novo código.</string>
@@ -165,8 +167,6 @@
   <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">Segurança de dados</string>
   <string name="dark_web_help_dialog_subtitle">A Proton nunca compartilha suas informações com terceiros. Todos os dados vêm de pesquisas sobre o aparecimento de domínios Proton na dark web.</string>
-  <string name="dark_web_help_dialog_custom_address_title">Endereços de e-mail personalizados</string>
-  <string name="dark_web_help_dialog_custom_address_subtitle">Você também pode monitorar até 10 endereços de e-mail que não sejam da Proton ou aliases de e-mail. Serão enviados ao HIBP para monitoramento e nenhum outro dado será compartilhado com o HIBP.</string>
   <!-- Cannot add custom emails -->
   <string name="dark_web_cannot_add_custom_emails_dialog_title">Não foi possível adicionar e-mail personalizado</string>
   <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">Você atingiu o limite de e-mails personalizados</string>

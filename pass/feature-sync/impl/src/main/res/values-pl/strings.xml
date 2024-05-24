@@ -25,7 +25,11 @@
   </plurals>
   <string name="sync_progress_item_count">%1$d z %2$d elementów</string>
   <string name="sync_dialog_title">Synchronizacja elementów…</string>
+  <string name="sync_dialog_title_error">Synchronizacja nie powiodła się</string>
+  <string name="sync_dialog_title_success">Synchronizacja została zakończona</string>
   <string name="sync_dialog_subtitle">Pobieramy i odszyfrowujemy elementy. Proces może potrwać kilka minut.</string>
-  <string name="sync_dialog_confirm_button">Kontynuuj</string>
+  <string name="sync_dialog_subtitle_error">Wystąpił błąd podczas pobierania i odszyfrowywania elementów. Spróbuj ponownie.</string>
+  <string name="sync_dialog_subtitle_success">Elementy zostały pobrane i odszyfrowane.</string>
   <string name="sync_item_not_started">Nie rozpoczęto</string>
+  <string name="sync_item_failed">Synchronizacja nie powiodła się</string>
 </resources>

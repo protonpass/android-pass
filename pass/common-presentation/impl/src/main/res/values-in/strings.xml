@@ -21,6 +21,7 @@
   <string name="item_details_snackbar_message_card_number_copied">Nomor kartu disalin</string>
   <string name="item_details_snackbar_message_custom_field_copied">Kolom khusus disalin</string>
   <string name="item_details_snackbar_message_cvv_copied">Kode keamanan disalin</string>
+  <string name="item_details_snackbar_message_email_copied">Alamat email disalin</string>
   <string name="item_details_snackbar_message_password_copied">Kata sandi disalin</string>
   <string name="item_details_snackbar_message_pin_copied">Kode PIN disalin</string>
   <string name="item_details_snackbar_message_totp_copied">TOTP disalin</string>

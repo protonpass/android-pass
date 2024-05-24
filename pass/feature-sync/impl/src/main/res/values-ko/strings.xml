@@ -22,7 +22,11 @@
   </plurals>
   <string name="sync_progress_item_count">항목 %2$d개 중 %1$d개</string>
   <string name="sync_dialog_title">항목 동기화 중…</string>
+  <string name="sync_dialog_title_error">동기화에 실패했습니다</string>
+  <string name="sync_dialog_title_success">동기화를 완료했습니다</string>
   <string name="sync_dialog_subtitle">항목을 다운로드하고 복호화하는 중입니다. 몇 분 정도 걸릴 수 있습니다.</string>
-  <string name="sync_dialog_confirm_button">계속</string>
+  <string name="sync_dialog_subtitle_error">항목을 다운로드하고 복호화하는 중 오류가 발생했습니다. 다시 시도해 주세요.</string>
+  <string name="sync_dialog_subtitle_success">항목을 성공적으로 다운로드하고 복호화했습니다.</string>
   <string name="sync_item_not_started">시작하지 않음</string>
+  <string name="sync_item_failed">동기화에 실패했습니다</string>
 </resources>

@@ -90,6 +90,8 @@
   <string name="security_center_dark_web_monitor_alias_addresses_error">Une erreur s\'est produite lors de la récupération des alias « hide-my-email ».</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">Sans surveillance</string>
   <string name="security_center_dark_web_monitor_see_all">Tout afficher</string>
+  <string name="security_center_dark_web_monitor_no_proton_addresses">Aucune adresse Proton</string>
+  <string name="security_center_dark_web_monitor_no_aliases">Aucun alias</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Une erreur est survenue lors de l\'envoi du code de vérification. Veuillez réessayer plus tard.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Une erreur est survenue lors du retrait de l\'e-mail. Veuillez réessayer plus tard.</string>
   <!-- Add custom email monitoring -->
@@ -165,8 +167,6 @@
   <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">Sécurité des données</string>
   <string name="dark_web_help_dialog_subtitle">Proton ne partage jamais vos informations avec des tiers. Toutes les données proviennent de recherches de la présence de domaines Proton sur le dark web.</string>
-  <string name="dark_web_help_dialog_custom_address_title">Adresses e-mail personnalisées</string>
-  <string name="dark_web_help_dialog_custom_address_subtitle">Vous pouvez également surveiller jusqu\'à 10 adresses e-mail qui ne sont pas des alias ou des adresses Proton. Ces adresses seront envoyées à HIBP pour être surveillées - aucune autre information n\'est partagée avec HIBP.</string>
   <!-- Cannot add custom emails -->
   <string name="dark_web_cannot_add_custom_emails_dialog_title">L\'adresse e-mail personnalisée n\'a pas pu être ajoutée.</string>
   <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">Vous avez atteint la limite d\'adresses e-mail personnalisées.</string>

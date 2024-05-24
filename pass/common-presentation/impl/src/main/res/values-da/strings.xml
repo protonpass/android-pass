@@ -21,6 +21,7 @@
   <string name="item_details_snackbar_message_card_number_copied">Kortnummer kopieret</string>
   <string name="item_details_snackbar_message_custom_field_copied">Brugerdefineret felt kopieret</string>
   <string name="item_details_snackbar_message_cvv_copied">Sikkerhedskode kopieret</string>
+  <string name="item_details_snackbar_message_email_copied">E-mailadresse kopieret</string>
   <string name="item_details_snackbar_message_password_copied">Adgangskode kopieret</string>
   <string name="item_details_snackbar_message_pin_copied">Pinkode kopieret</string>
   <string name="item_details_snackbar_message_totp_copied">TOTP kopieret</string>

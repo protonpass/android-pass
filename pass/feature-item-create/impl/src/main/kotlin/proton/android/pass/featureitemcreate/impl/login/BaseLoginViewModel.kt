@@ -237,9 +237,7 @@ abstract class BaseLoginViewModel(
     internal fun onTitleChange(value: String) {
         onUserEditedContent()
         loginItemFormMutableState = loginItemFormMutableState.copy(title = value)
-        loginItemValidationErrorsState.update {
-            it.toMutableSet().apply { remove(LoginItemValidationErrors.BlankTitle) }
-        }
+        removeValidationErrors(LoginItemValidationErrors.BlankTitle)
 
         val aliasItem = aliasLocalItemState.value
         if (aliasItem is Some) {
@@ -249,6 +247,7 @@ abstract class BaseLoginViewModel(
 
     internal fun onEmailChanged(newEmail: String) {
         onUserEditedContent()
+        removeValidationErrors(LoginItemValidationErrors.InvalidEmail)
         loginItemFormMutableState = loginItemFormMutableState.copy(email = newEmail)
     }
 
@@ -278,9 +277,7 @@ abstract class BaseLoginViewModel(
                 primaryTotp = UIHiddenState.Revealed(encrypt(newValue), newValue)
             )
         }
-        loginItemValidationErrorsState.update {
-            it.toMutableSet().apply { remove(LoginItemValidationErrors.InvalidTotp) }
-        }
+        removeValidationErrors(LoginItemValidationErrors.InvalidTotp)
     }
 
     internal fun onWebsiteChange(value: String, index: Int) {
@@ -294,9 +291,7 @@ abstract class BaseLoginViewModel(
                     }
                 }
         )
-        loginItemValidationErrorsState.update {
-            it.toMutableSet().apply { remove(LoginItemValidationErrors.InvalidUrl(index)) }
-        }
+        removeValidationErrors(LoginItemValidationErrors.InvalidUrl(index))
         focusLastWebsiteState.update { false }
     }
 
@@ -313,9 +308,7 @@ abstract class BaseLoginViewModel(
             urls = loginItemFormState.urls.toMutableList()
                 .apply { removeAt(index) }
         )
-        loginItemValidationErrorsState.update {
-            it.toMutableSet().apply { remove(LoginItemValidationErrors.InvalidUrl(index)) }
-        }
+        removeValidationErrors(LoginItemValidationErrors.InvalidUrl(index))
         focusLastWebsiteState.update { false }
     }
 
@@ -324,9 +317,10 @@ abstract class BaseLoginViewModel(
         loginItemFormMutableState = loginItemFormMutableState.copy(note = value)
     }
 
-    internal fun onEmitSnackbarMessage(snackbarMessage: LoginSnackbarMessages) = viewModelScope.launch {
-        snackbarDispatcher(snackbarMessage)
-    }
+    internal fun onEmitSnackbarMessage(snackbarMessage: LoginSnackbarMessages) =
+        viewModelScope.launch {
+            snackbarDispatcher(snackbarMessage)
+        }
 
     internal fun onAliasCreated(aliasItemFormState: AliasItemFormState) {
         onUserEditedContent()
@@ -397,6 +391,14 @@ abstract class BaseLoginViewModel(
             return false
         }
         return true
+    }
+
+    private fun removeValidationErrors(vararg errors: LoginItemValidationErrors) {
+        loginItemValidationErrorsState.update { currentLoginValidationErrors ->
+            currentLoginValidationErrors.toMutableSet().apply {
+                errors.forEach { error -> remove(error) }
+            }
+        }
     }
 
     private suspend fun showInvalidTOTP(): Boolean {
@@ -586,12 +588,10 @@ abstract class BaseLoginViewModel(
     fun onCustomFieldChange(index: Int, value: String) = viewModelScope.launch {
         if (index >= loginItemFormState.customFields.size) return@launch
 
-        loginItemValidationErrorsState.update {
-            it.toMutableSet().apply {
-                remove(CustomFieldValidationError.EmptyField(index))
-                remove(CustomFieldValidationError.InvalidTotp(index))
-            }
-        }
+        removeValidationErrors(
+            CustomFieldValidationError.EmptyField(index),
+            CustomFieldValidationError.InvalidTotp(index)
+        )
 
         val customFields = loginItemFormState.customFields.toMutableList()
 
@@ -710,7 +710,10 @@ abstract class BaseLoginViewModel(
         }
     }
 
-    private fun updateCustomFieldHiddenOnFocusChange(field: LoginCustomField.CustomFieldHidden, isFocused: Boolean) {
+    private fun updateCustomFieldHiddenOnFocusChange(
+        field: LoginCustomField.CustomFieldHidden,
+        isFocused: Boolean
+    ) {
         val customFields = loginItemFormState.customFields.toMutableList()
         val customFieldContent: UICustomFieldContent.Hidden? = customFields.getOrNull(field.index)
             as? UICustomFieldContent.Hidden

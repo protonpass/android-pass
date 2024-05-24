@@ -51,7 +51,8 @@ data class ProfileUiState(
     val event: ProfileEvent,
     val showUpgradeButton: Boolean,
     val userBrowser: DefaultBrowser,
-    val passkeySupport: ProfilePasskeySupportSection
+    val passkeySupport: ProfilePasskeySupportSection,
+    val isIdentityEnabled: Boolean
 ) {
     companion object {
         fun getInitialState(appVersion: String) = ProfileUiState(
@@ -63,7 +64,8 @@ data class ProfileUiState(
             event = ProfileEvent.Unknown,
             showUpgradeButton = false,
             userBrowser = DefaultBrowser.Other,
-            passkeySupport = ProfilePasskeySupportSection.Hide
+            passkeySupport = ProfilePasskeySupportSection.Hide,
+            isIdentityEnabled = false
         )
     }
 }
@@ -136,6 +138,7 @@ data class ItemSummaryUiState(
     val notesCount: Int = 0,
     val aliasCount: Int = 0,
     val creditCardsCount: Int = 0,
+    val identityCount: Int = 0,
     val mfaCount: Int = 0,
     val aliasLimit: Int? = null,
     val mfaLimit: Int? = null

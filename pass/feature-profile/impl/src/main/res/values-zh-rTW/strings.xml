@@ -32,7 +32,7 @@
   <string name="app_lock_config_biometric">生物特徵辨識</string>
   <string name="app_lock_config_pin_code">PIN 碼</string>
   <string name="app_lock_config_app_lock_time">自動鎖定</string>
-  <string name="app_lock_config_password">Password</string>
+  <string name="app_lock_config_password">密碼</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">當生物特徵辨失敗使用系統鎖</string>
   <string name="configure_pin_set_pin_code">設定 PIN 碼</string>
   <string name="configure_pin_unlock_the_app_with_this_code">透過代碼解鎖應用程式</string>
@@ -51,7 +51,7 @@
   <string name="profile_passkey_support_section_title">密碼金鑰</string>
   <string name="profile_passkey_support_subtitle_supported">密碼金鑰是支援服務</string>
   <string name="profile_passkey_support_subtitle_not_supported_android_version">Your android version does not support passkeys</string>
-  <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Your device does not support passkeys</string>
+  <string name="profile_passkey_support_subtitle_not_supported_credential_manager">你的設備不支持密碼金鑰</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">Could not check support for passkeys</string>
   <plurals name="profile_after_days">
     <item quantity="other">%d天後</item>
@@ -62,5 +62,5 @@
   <plurals name="profile_after_hours">
     <item quantity="other">%d小時後</item>
   </plurals>
-  <string name="profile_less_than_a_minute">Less than a minute</string>
+  <string name="profile_less_than_a_minute">少於一分鐘</string>
 </resources>

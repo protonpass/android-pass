@@ -90,6 +90,8 @@
   <string name="security_center_dark_web_monitor_alias_addresses_error">Feil ved henting av Hide-my-email-aliaser</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">Ikke overvåket</string>
   <string name="security_center_dark_web_monitor_see_all">Se alle</string>
+  <string name="security_center_dark_web_monitor_no_proton_addresses">Ingen Proton-adresser</string>
+  <string name="security_center_dark_web_monitor_no_aliases">Ingen aliaser</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Det oppstod en feil ved sending av verifiseringskoden. Vennligst prøv igjen senere.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Det oppstod en feil ved fjerning av e-posten. Vennligst prøv igjen senere.</string>
   <!-- Add custom email monitoring -->
@@ -165,8 +167,6 @@
   <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">Datasikkerhet</string>
   <string name="dark_web_help_dialog_subtitle">Proton deler aldri informasjonen din med tredjeparter. Alle data kommer fra søk etter opptredener til Proton-domener på det mørke nettet.</string>
-  <string name="dark_web_help_dialog_custom_address_title">Tilpassede e-postadresser</string>
-  <string name="dark_web_help_dialog_custom_address_subtitle">Du kan også overvåke opptil 10 e-postadresser som ikke er Proton eller e-postaliaser. De vil bli sendt til HIBP for overvåking - ingen andre data vil bli delt med HIBP.</string>
   <!-- Cannot add custom emails -->
   <string name="dark_web_cannot_add_custom_emails_dialog_title">Kan ikke legge til tilpasset e-post</string>
   <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">Du har nådd grensen for tilpassede e-poster.</string>

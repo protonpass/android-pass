@@ -15,6 +15,7 @@
   <string name="note_detail_copy_note_to_clipboard">Copia la nota</string>
   <string name="note_copied_to_clipboard">S\'ha copiat la nota al porta-retalls</string>
   <!-- Login details -->
+  <string name="email_copied_to_clipboard">Email address copied</string>
   <string name="username_copied_to_clipboard">S\'ha copiat el nom d\'usuari</string>
   <string name="password_copied_to_clipboard">S\'ha copiat la contrasenya</string>
   <string name="website_copied_to_clipboard">S\'ha copiat el lloc web</string>
@@ -45,7 +46,9 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Configuri 2FA per a més seguretat</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Aquest servei ofereix 2FA. Habiliti\'l per augmentar la seguretat del compte.</string>
   <string name="login_item_reused_passwords_subtitle">Elements de les seves caixes fortes que utilitzen aquesta contrasenya.</string>
-  <string name="field_username_or_email">Nom d\'usuari o adreça de correu electrònic</string>
+  <string name="field_email">Email address</string>
+  <string name="field_username">Username</string>
+  <string name="field_username_or_email">Username or email address</string>
   <string name="field_password">Contrasenya</string>
   <string name="websites_section_title">Llocs web</string>
   <string name="totp_section_title">Token 2FA (TOTP)</string>

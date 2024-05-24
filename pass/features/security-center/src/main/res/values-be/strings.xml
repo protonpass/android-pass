@@ -96,6 +96,8 @@
   <string name="security_center_dark_web_monitor_alias_addresses_error">Памылка атрымання псеўданімаў Hide-my-email</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">Не назіраецца</string>
   <string name="security_center_dark_web_monitor_see_all">Праглядзець усе</string>
+  <string name="security_center_dark_web_monitor_no_proton_addresses">Няма адрасоў Proton</string>
+  <string name="security_center_dark_web_monitor_no_aliases">Няма псеўданімаў</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Адбылася памылка падчас адпраўкі праверачнага кода. Паспрабуйце яшчэ раз пазней.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Адбылася памылка падчас адпраўкі праверачнага кода. Паспрабуйце яшчэ раз пазней.</string>
   <!-- Add custom email monitoring -->
@@ -171,8 +173,6 @@
   <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">Бяспека даных</string>
   <string name="dark_web_help_dialog_subtitle">Proton ніколі не абагульвае звесткі са староннімі асобамі. Усе даныя паступаюць з пошукавых даменаў Proton у цёмнай сетцы.</string>
-  <string name="dark_web_help_dialog_custom_address_title">Карыстальніцкія адрасы электроннай пошты</string>
-  <string name="dark_web_help_dialog_custom_address_subtitle">Вы можаце назіраць за максімум 10 адрасамі электроннай пошты, якія не належаць Proton або псеўданімамі электроннай пошты. Яны будуць адпраўлены ў HIBP для назірання. Звяртаем увагу, што ніякія іншыя даныя з гэтым сэрвісам абагуляцца не будуць.</string>
   <!-- Cannot add custom emails -->
   <string name="dark_web_cannot_add_custom_emails_dialog_title">Немагчыма дадаць карыстальніцкі адрас электроннай пошты</string>
   <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">Вы дасягнулі максімальнай колькасці карыстальніцкіх адрасоў электроннай пошты.</string>

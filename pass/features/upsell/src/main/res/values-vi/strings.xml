@@ -26,5 +26,8 @@
   <string name="upsell_paid_feature_authenticator">Trình xác thực 2 bước được tích hợp</string>
   <string name="upsell_paid_feature_unlimited_aliases">Unlimited hide-my-email aliases</string>
   <string name="upsell_paid_feature_vault_sharing">Vault sharing (up to 10 people)</string>
+  <string name="upsell_paid_feature_authenticator_essential">Require 2FA for organization</string>
+  <string name="upsell_paid_feature_sso_essential">SSO integration (coming soon)</string>
   <string name="upsell_button_upgrade">Get Pass Plus</string>
+  <string name="upsell_button_upgrade_essentials">Get Pass Business</string>
 </resources>

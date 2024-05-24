@@ -37,6 +37,8 @@
   <string name="action_view_details">Переглянути подробиці</string>
   <string name="action_see_all">Переглянути все</string>
   <string name="action_confirm">Підтвердити</string>
+  <string name="action_continue">Continue</string>
+  <string name="action_retry">Retry</string>
   <!-- Empty list -->
   <string name="empty_list_title">Додайте свій перший елемент</string>
   <string name="empty_search_results_title">Нічого не знайдено</string>
@@ -120,7 +122,9 @@
   <string name="item_details_credit_card_section_expiration_date_title">Термін дії</string>
   <string name="item_details_credit_card_section_cvv_title">Код безпеки</string>
   <string name="item_details_credit_card_section_pin_title">PIN-код</string>
-  <string name="item_details_login_section_username_or_username_title">Ім\'я користувача або адреса е-пошти</string>
+  <string name="item_details_login_section_email_title">Email address</string>
+  <string name="item_details_login_section_username_title">Username</string>
+  <string name="item_details_login_section_username_or_username_title">Username or email address</string>
   <string name="item_details_login_section_password_title">Пароль</string>
   <string name="item_details_login_section_primary_totp_title">Токен 2FA (TOTP)</string>
   <string name="item_details_login_section_websites_title">Вебсайти</string>
@@ -134,6 +138,6 @@
   <string name="dialog_upgrade_plan_action_confirm">Покращити</string>
   <string name="dialog_upgrade_plan_action_cancel">Не зараз</string>
   <!-- Words -->
-  <string name="email_address">Адреса пошти</string>
+  <string name="email_address">Адреса е-пошти</string>
   <string name="password">Пароль</string>
 </resources>

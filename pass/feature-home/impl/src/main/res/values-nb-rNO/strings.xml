@@ -8,6 +8,8 @@
   <string name="home_empty_vault_create_login">Opprett en pålogging</string>
   <string name="home_empty_vault_create_alias">Opprett et Hide-my-email-alias</string>
   <string name="home_empty_vault_create_note">Opprett et notat</string>
+  <string name="home_empty_vault_create_credit_card">Opprett et kredittkort</string>
+  <string name="home_empty_vault_create_identity">Create an Identity</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Feil ved lasting av elementer</string>
   <string name="error_refreshing">Feil under utførelse av oppdatering</string>
   <string name="home_snackbar_login_moved_to_trash">Pålogging flyttet til papirkurven</string>

@@ -91,8 +91,10 @@
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Aliasuri hide-my-email</string>
   <string name="security_center_dark_web_monitor_proton_addresses_error">Eroare preluare adrese Proton</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Eroare preluare aliasuri hide-my-email</string>
-  <string name="security_center_dark_web_monitor_monitoring_disabled">Not monitored</string>
-  <string name="security_center_dark_web_monitor_see_all">See all</string>
+  <string name="security_center_dark_web_monitor_monitoring_disabled">Nemonitorizată</string>
+  <string name="security_center_dark_web_monitor_see_all">Afișare toate</string>
+  <string name="security_center_dark_web_monitor_no_proton_addresses">No Proton addresses</string>
+  <string name="security_center_dark_web_monitor_no_aliases">No aliases</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">A apărut o eroare la trimiterea codului de verificare. Mai reîncercați.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">A apărut o eroare la eliminarea adresei de e-mail. Mai reîncercați.</string>
   <!-- Add custom email monitoring -->
@@ -107,11 +109,11 @@
   <string name="security_center_verify_email_code_error">Cod nevalid</string>
   <string name="security_center_verify_email_title">Confirmare adresă de e-mail</string>
   <string name="security_center_verify_email_subtitle">Vi s-a trimis un cod de verificare la %s. Introduceți codul primit mai jos:</string>
-  <string name="security_center_verify_email_code_resend_header">Haven’t received the code?</string>
-  <string name="security_center_verify_email_code_resend_body">Please check in your Spam for an email called “Please confirm your email address for Proton Pass“</string>
-  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">If you can’t find such email, you can </string>
-  <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">request a new code.</string>
-  <string name="security_center_verify_email_snackbar_message_resend_code_success">A new verification has been sent, please check your inbox.</string>
+  <string name="security_center_verify_email_code_resend_header">Nu ați primit codul?</string>
+  <string name="security_center_verify_email_code_resend_body">Verificați în folderul de mesaje nedorite sosirea unui e-mail cu subiectul „Confirmare adresă de e-mail pentru Proton Pass”</string>
+  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">Dacă nu găsiți un astfel de e-mail, puteți </string>
+  <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">solicita un cod nou.</string>
+  <string name="security_center_verify_email_snackbar_message_resend_code_success">A fost trimis un e-mail nou de verificare. Verificați-vă contul de e-mail.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">A apărut o eroare la trimiterea codului de verificare. Mai reîncercați.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Prea multe verificări nevalide. Se elimină adresa de e-mail personal.</string>
   <!-- Verify email monitoring -->
@@ -146,7 +148,7 @@
   <string name="security_center_proton_list_error">Nu s-au putut încărca adresele.</string>
   <string name="security_center_proton_list_included_in_monitoring">Activați monitorizarea pentru a primi notificări dacă adresele Proton v-au fost divulgate.</string>
   <string name="security_center_proton_list_options_menu">Meniu opțiuni ecran Proton</string>
-  <string name="security_center_proton_list_not_monitored">Not monitored</string>
+  <string name="security_center_proton_list_not_monitored">Nemonitorizate</string>
   <!-- Address Bottomsheet options -->
   <string name="security_center_address_bottomsheet_disable_monitoring">Suspendare monitorizare</string>
   <string name="security_center_address_bottomsheet_enable_monitoring">Reluare monitorizare</string>
@@ -168,8 +170,6 @@
   <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">Securitate date</string>
   <string name="dark_web_help_dialog_subtitle">Proton nu vă partajează niciodată informațiile cu terțe părți. Toate datele provin din căutări pentru apariția domeniilor Proton pe internetul ascuns.</string>
-  <string name="dark_web_help_dialog_custom_address_title">Adrese de e-mail personale</string>
-  <string name="dark_web_help_dialog_custom_address_subtitle">Puteți monitoriza și până la 10 adrese de e-mail care nu sunt adrese Proton sau aliasuri de e-mail. Acestea vor fi trimise către HIBP pentru monitorizare - nu vor fi partajate alte date către HIBP.</string>
   <!-- Cannot add custom emails -->
   <string name="dark_web_cannot_add_custom_emails_dialog_title">Nu se poate adăuga un e-mail personal</string>
   <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">Ați atins limita de adrese personale</string>

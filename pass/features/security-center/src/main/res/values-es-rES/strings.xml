@@ -90,6 +90,8 @@
   <string name="security_center_dark_web_monitor_alias_addresses_error">Error al recuperar los alias de hide-my-email</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">Sin monitoreo</string>
   <string name="security_center_dark_web_monitor_see_all">Ver todo</string>
+  <string name="security_center_dark_web_monitor_no_proton_addresses">Sin direcciones de Proton</string>
+  <string name="security_center_dark_web_monitor_no_aliases">Sin alias</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Se ha producido un error al enviar el código de verificación. Intenta de nuevo más tarde.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Se ha producido un error al borrar el correo. Intenta de nuevo más tarde.</string>
   <!-- Add custom email monitoring -->
@@ -165,8 +167,6 @@
   <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">Seguridad de datos</string>
   <string name="dark_web_help_dialog_subtitle">Proton nunca comparte tus datos con terceros. Todos los datos provienen de búsquedas de la presencia de dominios de Proton en la dark web.</string>
-  <string name="dark_web_help_dialog_custom_address_title">Direcciones de correo personalizadas</string>
-  <string name="dark_web_help_dialog_custom_address_subtitle">Puedes monitorear hasta 10 direcciones de correo que no son de Proton o alias de correo electrónico. Se enviarán a HIBP para el monitoreo y ningún otro dato se compartirá con HIBP.</string>
   <!-- Cannot add custom emails -->
   <string name="dark_web_cannot_add_custom_emails_dialog_title">No se puede añadir un correo electrónico personalizado.</string>
   <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">Has alcanzado el límite de correos electrónicos personalizados.</string>

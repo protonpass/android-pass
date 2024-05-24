@@ -34,6 +34,8 @@
   <string name="action_view_details">View details</string>
   <string name="action_see_all">See all</string>
   <string name="action_confirm">Confirm</string>
+  <string name="action_continue">Continue</string>
+  <string name="action_retry">Retry</string>
   <!-- Empty list -->
   <string name="empty_list_title">Thêm nội dung đầu tiên của bạn</string>
   <string name="empty_search_results_title">Không có kết quả được tìm thấy</string>
@@ -114,7 +116,9 @@
   <string name="item_details_credit_card_section_expiration_date_title">Hết hạn vào</string>
   <string name="item_details_credit_card_section_cvv_title">Security code</string>
   <string name="item_details_credit_card_section_pin_title">PIN code</string>
-  <string name="item_details_login_section_username_or_username_title">Tên đăng nhập hoặc Email</string>
+  <string name="item_details_login_section_email_title">Email address</string>
+  <string name="item_details_login_section_username_title">Username</string>
+  <string name="item_details_login_section_username_or_username_title">Username or email address</string>
   <string name="item_details_login_section_password_title">Password</string>
   <string name="item_details_login_section_primary_totp_title">Mã bảo mật 2FA (TOTP)</string>
   <string name="item_details_login_section_websites_title">Websites</string>

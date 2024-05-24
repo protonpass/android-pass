@@ -15,6 +15,7 @@
   <string name="note_detail_copy_note_to_clipboard">Notu kopyala</string>
   <string name="note_copied_to_clipboard">Not panoya kopyalandı</string>
   <!-- Login details -->
+  <string name="email_copied_to_clipboard">Email address copied</string>
   <string name="username_copied_to_clipboard">Kullanıcı adı kopyalandı</string>
   <string name="password_copied_to_clipboard">Parola kopyalandı</string>
   <string name="website_copied_to_clipboard">Site kopyalandı</string>
@@ -45,7 +46,9 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Güvenliği artırmak için iki adımlı doğrulamayı açın</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Bu hizmet iki adımlı doğrulama sağlıyor. Hesap güvenliğini artırmak için bunu kullanın.</string>
   <string name="login_item_reused_passwords_subtitle">Kasalarınızda bu parolayı kullanan ögeler.</string>
-  <string name="field_username_or_email">Kullanıcı adı ya da e-posta adresi</string>
+  <string name="field_email">Email address</string>
+  <string name="field_username">Username</string>
+  <string name="field_username_or_email">Username or email address</string>
   <string name="field_password">Parola</string>
   <string name="websites_section_title">Siteler</string>
   <string name="totp_section_title">İki adımlı doğrulama kodu (tek kullanımlık)</string>

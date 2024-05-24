@@ -21,6 +21,7 @@
   <string name="item_details_snackbar_message_card_number_copied">Номер картки скопійовано</string>
   <string name="item_details_snackbar_message_custom_field_copied">Власне поле скопійовано</string>
   <string name="item_details_snackbar_message_cvv_copied">Код безпеки скопійовано</string>
+  <string name="item_details_snackbar_message_email_copied">Email address copied</string>
   <string name="item_details_snackbar_message_password_copied">Пароль скопійовано</string>
   <string name="item_details_snackbar_message_pin_copied">PIN-код скопійовано</string>
   <string name="item_details_snackbar_message_totp_copied">TOTP скопійовано</string>

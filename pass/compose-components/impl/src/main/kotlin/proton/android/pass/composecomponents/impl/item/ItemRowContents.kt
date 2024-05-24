@@ -66,7 +66,12 @@ internal fun ItemRowContents(
             selection = selection
         )
 
+        is ItemContents.Identity -> {
+            // to be implemented
+        }
+
         is ItemContents.Unknown -> {
         }
+
     }
 }

@@ -180,9 +180,84 @@ sealed class ItemContents {
     }
 
     @Serializable
+    data class Identity(
+        override val title: String,
+        override val note: String,
+        val personalDetails: PersonalDetails,
+        val addressDetails: AddressDetails,
+        val contactDetails: ContactDetails,
+        val workDetails: WorkDetails
+    ) : ItemContents()
+
+    @Serializable
     data class Unknown(
         override val title: String,
         override val note: String
     ) : ItemContents()
 
+}
+
+@Serializable
+data class PersonalDetails(
+    val fullName: String,
+    val firstName: String,
+    val middleName: String,
+    val lastName: String,
+    val birthdate: String,
+    val gender: String,
+    val email: String,
+    val phoneNumber: String
+) {
+    companion object {
+        val EMPTY = PersonalDetails("", "", "", "", "", "", "", "")
+    }
+}
+
+@Serializable
+data class AddressDetails(
+    val organization: String,
+    val streetAddress: String,
+    val zipOrPostalCode: String,
+    val city: String,
+    val stateOrProvince: String,
+    val countryOrRegion: String,
+    val floor: String,
+    val county: String
+) {
+    companion object {
+        val EMPTY = AddressDetails("", "", "", "", "", "", "", "")
+    }
+}
+
+@Serializable
+data class ContactDetails(
+    val socialSecurityNumber: String,
+    val passportNumber: String,
+    val licenseNumber: String,
+    val website: String,
+    val xHandle: String,
+    val secondPhoneNumber: String,
+    val linkedin: String,
+    val reddit: String,
+    val facebook: String,
+    val yahoo: String,
+    val instagram: String
+) {
+    companion object {
+        val EMPTY = ContactDetails("", "", "", "", "", "", "", "", "", "", "")
+    }
+
+}
+
+@Serializable
+data class WorkDetails(
+    val company: String,
+    val jobTitle: String,
+    val personalWebsite: String,
+    val workPhoneNumber: String,
+    val workEmail: String
+) {
+    companion object {
+        val EMPTY = WorkDetails("", "", "", "", "")
+    }
 }

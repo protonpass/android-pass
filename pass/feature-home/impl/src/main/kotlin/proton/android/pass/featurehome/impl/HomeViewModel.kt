@@ -132,6 +132,7 @@ import proton.android.pass.featurehome.impl.HomeSnackbarMessage.DeleteItemError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.DeleteItemSuccess
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.DeleteItemsError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.DeleteItemsSuccess
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.IdentityMovedToTrash
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ItemsMovedToTrashError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ItemsMovedToTrashSuccess
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ItemsPinnedError
@@ -657,6 +658,7 @@ class HomeViewModel @Inject constructor(
                         is ItemContents.Login -> snackbarDispatcher(LoginMovedToTrash)
                         is ItemContents.Note -> snackbarDispatcher(NoteMovedToTrash)
                         is ItemContents.CreditCard -> snackbarDispatcher(CreditCardMovedToTrash)
+                        is ItemContents.Identity -> snackbarDispatcher(IdentityMovedToTrash)
                         is ItemContents.Unknown -> {}
                     }
                 } else {

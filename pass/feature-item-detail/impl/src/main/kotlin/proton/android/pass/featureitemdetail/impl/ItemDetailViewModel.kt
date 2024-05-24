@@ -96,6 +96,7 @@ class ItemDetailViewModel @Inject constructor(
                     is ItemType.Alias -> ItemTypeUiState.Alias
                     ItemType.Password -> ItemTypeUiState.Password
                     is ItemType.CreditCard -> ItemTypeUiState.CreditCard
+                    is ItemType.Identity -> ItemTypeUiState.Identity
                     ItemType.Unknown -> ItemTypeUiState.Unknown
                 },
                 moreInfoUiState = getMoreInfoUiState(result.data),

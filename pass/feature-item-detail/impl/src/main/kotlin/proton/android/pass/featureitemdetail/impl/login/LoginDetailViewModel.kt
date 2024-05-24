@@ -50,6 +50,7 @@ import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonrust.api.EmailValidator
 import proton.android.pass.commonrust.api.PasswordScore
 import proton.android.pass.commonrust.api.PasswordScorer
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -152,7 +153,8 @@ class LoginDetailViewModel @Inject constructor(
     getUserPlan: GetUserPlan,
     insecurePasswordChecker: InsecurePasswordChecker,
     duplicatedPasswordChecker: DuplicatedPasswordChecker,
-    missingTfaChecker: MissingTfaChecker
+    missingTfaChecker: MissingTfaChecker,
+    emailValidator: EmailValidator
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandle.get()
@@ -214,17 +216,34 @@ class LoginDetailViewModel @Inject constructor(
         .onEach { hasItemBeenFetchedAtLeastOnce = true }
         .asLoadingResult()
 
+    private val itemFeaturesFlow = combine(
+        featureFlagsRepository.get<Boolean>(FeatureFlag.SECURITY_CENTER_V1),
+        featureFlagsRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT),
+        getUserPlan()
+    ) { isSecurityCenterEnabled, isUsernameSplitEnabled, userPlan ->
+        ItemFeatures(
+            isSecurityCenterEnabled = isSecurityCenterEnabled,
+            isUsernameSplitEnabled = isUsernameSplitEnabled,
+            isHistoryEnabled = userPlan.isPaidPlan
+        )
+    }
+
     private val loginItemInfoFlow: Flow<LoadingResult<LoginItemInfo>> = combine(
         loginItemDetailsResultFlow,
-        canPerformPaidActionFlow
-    ) { detailsResult, paidActionResult ->
+        canPerformPaidActionFlow,
+        itemFeaturesFlow
+    ) { detailsResult, paidActionResult, itemFeatures ->
         paidActionResult.flatMap { isPaid ->
             detailsResult.map { details ->
                 val itemType = details.item.itemType as ItemType.Login
                 val alias = getAliasForItem(itemType)
 
                 val (itemUiModel, passwordScore) = encryptionContextProvider.withEncryptionContext {
-                    val model = details.item.toUiModel(this)
+                    val model = details.item.toUiModel(
+                        encryptionContext = this@withEncryptionContext,
+                        isUsernameSplitEnabled = itemFeatures.isUsernameSplitEnabled,
+                        emailValidator = emailValidator
+                    )
                     val contents = model.contents as ItemContents.Login
 
                     val isPasswordEmpty =
@@ -360,18 +379,6 @@ class LoginDetailViewModel @Inject constructor(
         val passwordScore: PasswordScore?,
         val securityState: LoginMonitorState
     )
-
-    private val itemFeaturesFlow = combine(
-        featureFlagsRepository.get<Boolean>(FeatureFlag.SECURITY_CENTER_V1),
-        featureFlagsRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT),
-        getUserPlan()
-    ) { isSecurityCenterEnabled, isUsernameSplitEnabled, userPlan ->
-        ItemFeatures(
-            isSecurityCenterEnabled = isSecurityCenterEnabled,
-            isUsernameSplitEnabled = isUsernameSplitEnabled,
-            isHistoryEnabled = userPlan.isPaidPlan
-        )
-    }
 
     internal val uiState: StateFlow<LoginDetailUiState> = combineN(
         revealedLoginItemInfoFlow,

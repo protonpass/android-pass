@@ -352,7 +352,7 @@ abstract class BaseLoginViewModel(
         val websites = sanitizeWebsites(loginItemFormState.urls)
         val itemType = oldItem.map { it.itemType as ItemType.Login }
         val (originalTotpUri, editedTotpUri) = encryptionContextProvider.withEncryptionContext {
-            (itemType.map { decrypt(it.primaryTotp) }.value() ?: "") to
+            itemType.map { decrypt(it.primaryTotp) }.value().orEmpty() to
                 decrypt(loginItemFormState.primaryTotp.encrypted)
         }
 

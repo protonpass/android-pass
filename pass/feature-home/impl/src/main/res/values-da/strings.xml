@@ -8,6 +8,8 @@
   <string name="home_empty_vault_create_login">Opret et login</string>
   <string name="home_empty_vault_create_alias">Opret et Hide-my-email alias</string>
   <string name="home_empty_vault_create_note">Opret en note</string>
+  <string name="home_empty_vault_create_credit_card">Opret et betalingskort</string>
+  <string name="home_empty_vault_create_identity">Opret en identitet</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Fejl ved indlæsning af elementer</string>
   <string name="error_refreshing">Fejl ved genindlæsning</string>
   <string name="home_snackbar_login_moved_to_trash">Login flyttet til papirkurv</string>

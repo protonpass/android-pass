@@ -18,7 +18,7 @@
   -->
 <resources>
   <!-- Home screen -->
-  <string name="security_center_home_top_bar_title">Monitoring Proton Pass</string>
+  <string name="security_center_home_top_bar_title">Pass Monitor</string>
   <string name="security_center_home_dark_web_monitoring_title">Monitoring dark web</string>
   <string name="security_center_home_widget_breaches_title">Wykryto wyciek</string>
   <string name="security_center_home_widget_breaches_subtitle">Twój adres e-mail został ujawniony w co najmniej 1 wycieku danych.</string>
@@ -96,6 +96,8 @@
   <string name="security_center_dark_web_monitor_alias_addresses_error">Wystąpił problem podczas pobierania aliasów hide-my-email</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">Niemonitorowany</string>
   <string name="security_center_dark_web_monitor_see_all">Zobacz wszystko</string>
+  <string name="security_center_dark_web_monitor_no_proton_addresses">Brak adresów Proton</string>
+  <string name="security_center_dark_web_monitor_no_aliases">Brak aliasów</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Wystąpił błąd podczas wysyłania kodu weryfikacyjnego. Spróbuj ponownie później.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Wystąpił błąd podczas usuwania adresu e-mail. Spróbuj ponownie później.</string>
   <!-- Add custom email monitoring -->
@@ -121,7 +123,7 @@
   <string name="security_center_verify_report_title_detected">Wykryto wycieki dla</string>
   <string name="security_center_verify_report_title_none">Brak wykrytych wycieków dla</string>
   <!-- Email breach report -->
-  <string name="security_center_email_report_used_in_header">Użyty w</string>
+  <string name="security_center_email_report_used_in_header">Użyte</string>
   <string name="security_center_email_report_breaches_header">Wycieki</string>
   <string name="security_center_email_report_resolved_breaches_header">Rozwiązane wycieki</string>
   <string name="security_center_email_report_mark_as_resolved">Oznacz jako rozwiązane</string>
@@ -171,8 +173,6 @@
   <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">Bezpieczeństwo danych</string>
   <string name="dark_web_help_dialog_subtitle">Proton nigdy nie udostępnia informacji o użytkowniku stronom trzecim. Wszystkie dane zostały znalezione w sieci dark web.</string>
-  <string name="dark_web_help_dialog_custom_address_title">Niestandardowe adresy e-mail</string>
-  <string name="dark_web_help_dialog_custom_address_subtitle">Możesz dodać do monitoringu 10 adresów e-mail, które nie są aliasami lub adresami Proton. Adresy zostaną wysłane do usługi Have I Been Pwned w celu ich monitorowania. Żadne inne dane nie zostaną udostępnione.</string>
   <!-- Cannot add custom emails -->
   <string name="dark_web_cannot_add_custom_emails_dialog_title">Nie można dodać niestandardowego adresu e-mail</string>
   <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">Osiągnięto maksymalną liczbę niestandardowych adresów e-mail.</string>

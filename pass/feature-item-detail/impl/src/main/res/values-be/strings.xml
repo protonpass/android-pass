@@ -15,6 +15,7 @@
   <string name="note_detail_copy_note_to_clipboard">Скапіяваць нататку</string>
   <string name="note_copied_to_clipboard">Нататка скапіявана ў буфер абмену</string>
   <!-- Login details -->
+  <string name="email_copied_to_clipboard">Адрас электроннай пошты скапіяваны</string>
   <string name="username_copied_to_clipboard">Імя карыстальніка скапіявана</string>
   <string name="password_copied_to_clipboard">Пароль скапіяваны</string>
   <string name="website_copied_to_clipboard">Вэб-сайт скапіяваны</string>
@@ -47,6 +48,8 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Наладзьце 2ФА для большай бяспекі</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Гэты сэрвіс прапануе 2ФА. Уключыце гэту функцыю, каб дадаць бяспеку ўліковаму запісу.</string>
   <string name="login_item_reused_passwords_subtitle">Элементы з вашага сховішча, якія выкарыстоўваць гэты пароль.</string>
+  <string name="field_email">Адрас электроннай пошты</string>
+  <string name="field_username">Імя карыстальніка</string>
   <string name="field_username_or_email">Імя карыстальніка або адрас электроннай пошты</string>
   <string name="field_password">Пароль</string>
   <string name="websites_section_title">Вэб-сайты</string>

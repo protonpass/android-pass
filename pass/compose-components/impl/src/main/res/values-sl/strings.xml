@@ -35,8 +35,10 @@
   <string name="action_learn_more">Izvedi več</string>
   <string name="action_enable">Omogoči</string>
   <string name="action_view_details">Prikaži podrobnosti</string>
-  <string name="action_see_all">See all</string>
-  <string name="action_confirm">Confirm</string>
+  <string name="action_see_all">Poglejte vse</string>
+  <string name="action_confirm">Potrdi</string>
+  <string name="action_continue">Continue</string>
+  <string name="action_retry">Retry</string>
   <!-- Empty list -->
   <string name="empty_list_title">Dodajte svoj prvi predmet</string>
   <string name="empty_search_results_title">Ne najdem rezultatov</string>
@@ -120,7 +122,9 @@
   <string name="item_details_credit_card_section_expiration_date_title">Datum poteka</string>
   <string name="item_details_credit_card_section_cvv_title">Varnostna koda</string>
   <string name="item_details_credit_card_section_pin_title">PIN koda</string>
-  <string name="item_details_login_section_username_or_username_title">Uporabniško ime ali elektronski naslov</string>
+  <string name="item_details_login_section_email_title">Email address</string>
+  <string name="item_details_login_section_username_title">Username</string>
+  <string name="item_details_login_section_username_or_username_title">Username or email address</string>
   <string name="item_details_login_section_password_title">Geslo</string>
   <string name="item_details_login_section_primary_totp_title">Žeton 2FA (TOTP)</string>
   <string name="item_details_login_section_websites_title">Spletne strani</string>

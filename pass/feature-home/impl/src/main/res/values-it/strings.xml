@@ -8,6 +8,8 @@
   <string name="home_empty_vault_create_login">Crea un login</string>
   <string name="home_empty_vault_create_alias">Crea un alias Hide-my-email</string>
   <string name="home_empty_vault_create_note">Crea una nota</string>
+  <string name="home_empty_vault_create_credit_card">Crea una carta</string>
+  <string name="home_empty_vault_create_identity">Create an Identity</string>
   <string name="error_observing_items" comment="Error message shown whenever there is an error loading the items">Errore nel caricamento degli elementi</string>
   <string name="error_refreshing">Errore nell\'aggiornamento</string>
   <string name="home_snackbar_login_moved_to_trash">Login spostato nel cestino</string>

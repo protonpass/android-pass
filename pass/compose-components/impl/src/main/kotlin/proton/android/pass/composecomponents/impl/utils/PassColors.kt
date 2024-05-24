@@ -72,6 +72,14 @@ fun passItemColors(itemCategory: ItemCategory): PassItemColors = when (itemCateg
         minorPrimary = PassTheme.colors.cardInteractionNormMinor1,
         minorSecondary = PassTheme.colors.cardInteractionNormMinor2
     )
+
+    ItemCategory.Identity -> PassItemColors(
+        norm = PassTheme.colors.interactionNorm,
+        majorPrimary = PassTheme.colors.interactionNormMajor1,
+        majorSecondary = PassTheme.colors.interactionNormMajor2,
+        minorPrimary = PassTheme.colors.interactionNormMinor1,
+        minorSecondary = PassTheme.colors.interactionNormMinor2
+    )
 }
 
 data class PassItemColors(

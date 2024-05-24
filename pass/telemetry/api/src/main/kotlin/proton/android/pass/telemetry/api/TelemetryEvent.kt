@@ -38,6 +38,7 @@ enum class EventItemType(val itemTypeName: String) {
             is ItemType.Note -> Note
             is ItemType.Login -> Login
             is ItemType.CreditCard -> CreditCard
+            is ItemType.Identity -> Identity
         }
 
         fun from(itemContents: ItemContents): EventItemType = when (itemContents) {

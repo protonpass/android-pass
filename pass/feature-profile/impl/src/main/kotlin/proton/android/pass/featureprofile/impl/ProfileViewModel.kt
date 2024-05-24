@@ -57,6 +57,8 @@ import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.passkeys.api.CheckPasskeySupport
 import proton.android.pass.preferences.AppLockTypePreference
 import proton.android.pass.preferences.BiometricSystemLockPreference
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 
@@ -68,6 +70,7 @@ class ProfileViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val appConfig: AppConfig,
     private val checkPasskeySupport: CheckPasskeySupport,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     observeItemCount: ObserveItemCount,
     observeMFACount: ObserveMFACount,
     observeUpgradeInfo: ObserveUpgradeInfo,
@@ -143,6 +146,7 @@ class ProfileViewModel @Inject constructor(
             notesCount = itemCount?.note?.toInt() ?: 0,
             aliasCount = itemCount?.alias?.toInt() ?: 0,
             creditCardsCount = itemCount?.creditCard?.toInt() ?: 0,
+            identityCount = itemCount?.identities?.toInt() ?: 0,
             mfaCount = mfaCount,
             aliasLimit = aliasLimit,
             mfaLimit = mfaLimit
@@ -164,9 +168,10 @@ class ProfileViewModel @Inject constructor(
         upgradeInfoFlow,
         eventFlow,
         oneShot { getDefaultBrowser() }.asLoadingResult(),
-        passkeySupportFlow
+        passkeySupportFlow,
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.IDENTITY_V1)
     ) { appLockSectionState, autofillStatus, itemSummaryUiState, upgradeInfo, event, browser,
-        passkey ->
+        passkey, isIdentityEnabled ->
         val (accountType, showUpgradeButton) = when (upgradeInfo) {
             LoadingResult.Loading -> PlanInfo.Hide to false
             is LoadingResult.Error -> {
@@ -200,7 +205,8 @@ class ProfileViewModel @Inject constructor(
             event = event,
             showUpgradeButton = showUpgradeButton,
             userBrowser = defaultBrowser,
-            passkeySupport = passkey
+            passkeySupport = passkey,
+            isIdentityEnabled = isIdentityEnabled
         )
     }.stateIn(
         scope = viewModelScope,

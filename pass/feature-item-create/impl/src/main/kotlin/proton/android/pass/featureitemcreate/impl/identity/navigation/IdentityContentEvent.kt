@@ -72,6 +72,12 @@ sealed interface IdentityContentEvent {
     value class OnCountryOrRegionChange(val countryOrRegion: String) : IdentityContentEvent
 
     @JvmInline
+    value class OnFloorChange(val floor: String) : IdentityContentEvent
+
+    @JvmInline
+    value class OnCountyChange(val county: String) : IdentityContentEvent
+
+    @JvmInline
     value class OnSocialSecurityNumberChange(val socialSecurityNumber: String) :
         IdentityContentEvent
 
@@ -91,10 +97,34 @@ sealed interface IdentityContentEvent {
     value class OnSecondPhoneNumberChange(val phoneNumber: String) : IdentityContentEvent
 
     @JvmInline
+    value class OnLinkedinChange(val linkedin: String) : IdentityContentEvent
+
+    @JvmInline
+    value class OnRedditChange(val reddit: String) : IdentityContentEvent
+
+    @JvmInline
+    value class OnFacebookChange(val facebook: String) : IdentityContentEvent
+
+    @JvmInline
+    value class OnYahooChange(val yahoo: String) : IdentityContentEvent
+
+    @JvmInline
+    value class OnInstagramChange(val instagram: String) : IdentityContentEvent
+
+    @JvmInline
     value class OnCompanyChange(val company: String) : IdentityContentEvent
 
     @JvmInline
     value class OnJobTitleChange(val jobTitle: String) : IdentityContentEvent
+
+    @JvmInline
+    value class OnPersonalWebsiteChange(val personalWebsite: String) : IdentityContentEvent
+
+    @JvmInline
+    value class OnWorkPhoneNumberChange(val phoneNumber: String) : IdentityContentEvent
+
+    @JvmInline
+    value class OnWorkEmailChange(val email: String) : IdentityContentEvent
 
     @JvmInline
     value class OnVaultSelect(val shareId: ShareId) : IdentityContentEvent

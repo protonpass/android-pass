@@ -31,7 +31,7 @@ import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent
 import proton.android.pass.featureitemcreate.impl.identity.presentation.UIWorkDetails
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.CompanyInput
-import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.EmailInput
+import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.JobTitleInput
 
 @Composable
 internal fun WorkDetails(
@@ -46,13 +46,13 @@ internal fun WorkDetails(
         CompanyInput(
             value = uiWorkDetails.company,
             enabled = enabled,
-            onChange = { onEvent(IdentityContentEvent.OnFullNameChange(it)) }
+            onChange = { onEvent(IdentityContentEvent.OnCompanyChange(it)) }
         )
         PassDivider()
-        EmailInput(
+        JobTitleInput(
             value = uiWorkDetails.jobTitle,
             enabled = enabled,
-            onChange = { onEvent(IdentityContentEvent.OnEmailChange(it)) }
+            onChange = { onEvent(IdentityContentEvent.OnJobTitleChange(it)) }
         )
     }
 }

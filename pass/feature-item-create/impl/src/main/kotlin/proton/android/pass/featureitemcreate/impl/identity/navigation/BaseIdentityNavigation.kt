@@ -18,6 +18,11 @@
 
 package proton.android.pass.featureitemcreate.impl.identity.navigation
 
+import proton.android.pass.featureitemcreate.impl.identity.navigation.bottomsheets.AddIdentityFieldType
+
 sealed interface BaseIdentityNavigation {
     data object Close : BaseIdentityNavigation
+
+    @JvmInline
+    value class AddField(val addIdentityFieldType: AddIdentityFieldType) : BaseIdentityNavigation
 }

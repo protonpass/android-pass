@@ -94,7 +94,13 @@ fun PhotoPickerTotpScreen(
     }
 
     LaunchedEffect(Unit) {
-        pickMedia.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
+        runCatching {
+            pickMedia.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
+        }.onFailure {
+            PassLogger.w(TAG, it)
+            PassLogger.w(TAG, "Error launching photo picker")
+            onPhotoPickerDismissed()
+        }
     }
 }
 

@@ -88,6 +88,9 @@ sealed interface IdentityContentEvent {
     value class OnXHandleChange(val xHandle: String) : IdentityContentEvent
 
     @JvmInline
+    value class OnSecondPhoneNumberChange(val phoneNumber: String) : IdentityContentEvent
+
+    @JvmInline
     value class OnCompanyChange(val company: String) : IdentityContentEvent
 
     @JvmInline

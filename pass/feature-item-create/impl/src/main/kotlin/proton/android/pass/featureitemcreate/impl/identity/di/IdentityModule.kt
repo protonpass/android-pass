@@ -22,13 +22,24 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.components.SingletonComponent
 import proton.android.pass.featureitemcreate.impl.identity.presentation.IdentityActionsProvider
 import proton.android.pass.featureitemcreate.impl.identity.presentation.IdentityActionsProviderImpl
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.IdentityFieldDraftRepository
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.IdentityFieldDraftRepositoryImpl
 
 @Module
 @InstallIn(ViewModelComponent::class)
 abstract class IdentityModule {
 
     @Binds
-    abstract fun bindIdentityActions(impl: IdentityActionsProviderImpl): IdentityActionsProvider
+    abstract fun bindIdentityActionsProvider(impl: IdentityActionsProviderImpl): IdentityActionsProvider
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class IdentityModuleSingleton {
+
+    @Binds
+    abstract fun bindIdentityFieldDraftRepository(impl: IdentityFieldDraftRepositoryImpl): IdentityFieldDraftRepository
 }

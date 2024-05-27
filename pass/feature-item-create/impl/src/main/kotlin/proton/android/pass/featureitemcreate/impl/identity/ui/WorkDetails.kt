@@ -21,6 +21,7 @@ package proton.android.pass.featureitemcreate.impl.identity.ui
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -41,19 +42,25 @@ internal fun WorkDetails(
     onEvent: (IdentityContentEvent) -> Unit
 ) {
     Column(
-        modifier = modifier.roundedContainerNorm()
+        modifier = modifier,
+        horizontalAlignment = Alignment.Start
     ) {
-        CompanyInput(
-            value = uiWorkDetails.company,
-            enabled = enabled,
-            onChange = { onEvent(IdentityContentEvent.OnCompanyChange(it)) }
-        )
-        PassDivider()
-        JobTitleInput(
-            value = uiWorkDetails.jobTitle,
-            enabled = enabled,
-            onChange = { onEvent(IdentityContentEvent.OnJobTitleChange(it)) }
-        )
+        Column(
+            modifier = Modifier.roundedContainerNorm()
+        ) {
+            CompanyInput(
+                value = uiWorkDetails.company,
+                enabled = enabled,
+                onChange = { onEvent(IdentityContentEvent.OnCompanyChange(it)) }
+            )
+            PassDivider()
+            JobTitleInput(
+                value = uiWorkDetails.jobTitle,
+                enabled = enabled,
+                onChange = { onEvent(IdentityContentEvent.OnJobTitleChange(it)) }
+            )
+        }
+        AddMoreButton(onClick = { onEvent(IdentityContentEvent.OnAddWorkField) })
     }
 }
 

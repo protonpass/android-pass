@@ -21,6 +21,7 @@ package proton.android.pass.featureitemcreate.impl.identity.ui
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -45,43 +46,49 @@ internal fun ContactDetails(
     onEvent: (IdentityContentEvent) -> Unit
 ) {
     Column(
-        modifier = modifier.roundedContainerNorm()
+        modifier = modifier,
+        horizontalAlignment = Alignment.Start
     ) {
-        SocialSecurityNumberInput(
-            value = uiContactDetails.socialSecurityNumber,
-            enabled = enabled,
-            onChange = { onEvent(IdentityContentEvent.OnSocialSecurityNumberChange(it)) }
-        )
-        PassDivider()
-        PassportNumberInput(
-            value = uiContactDetails.passportNumber,
-            enabled = enabled,
-            onChange = { onEvent(IdentityContentEvent.OnPassportNumberChange(it)) }
-        )
-        PassDivider()
-        LicenseNumberInput(
-            value = uiContactDetails.licenseNumber,
-            enabled = enabled,
-            onChange = { onEvent(IdentityContentEvent.OnLicenseNumberChange(it)) }
-        )
-        PassDivider()
-        WebsiteInput(
-            value = uiContactDetails.website,
-            enabled = enabled,
-            onChange = { onEvent(IdentityContentEvent.OnWebsiteChange(it)) }
-        )
-        PassDivider()
-        XHandleInput(
-            value = uiContactDetails.xHandle,
-            enabled = enabled,
-            onChange = { onEvent(IdentityContentEvent.OnXHandleChange(it)) }
-        )
-        PassDivider()
-        SecondPhoneNumberInput(
-            value = uiContactDetails.secondPhoneNumber,
-            enabled = enabled,
-            onChange = { onEvent(IdentityContentEvent.OnSecondPhoneNumberChange(it)) }
-        )
+        Column(
+            modifier = Modifier.roundedContainerNorm()
+        ) {
+            SocialSecurityNumberInput(
+                value = uiContactDetails.socialSecurityNumber,
+                enabled = enabled,
+                onChange = { onEvent(IdentityContentEvent.OnSocialSecurityNumberChange(it)) }
+            )
+            PassDivider()
+            PassportNumberInput(
+                value = uiContactDetails.passportNumber,
+                enabled = enabled,
+                onChange = { onEvent(IdentityContentEvent.OnPassportNumberChange(it)) }
+            )
+            PassDivider()
+            LicenseNumberInput(
+                value = uiContactDetails.licenseNumber,
+                enabled = enabled,
+                onChange = { onEvent(IdentityContentEvent.OnLicenseNumberChange(it)) }
+            )
+            PassDivider()
+            WebsiteInput(
+                value = uiContactDetails.website,
+                enabled = enabled,
+                onChange = { onEvent(IdentityContentEvent.OnWebsiteChange(it)) }
+            )
+            PassDivider()
+            XHandleInput(
+                value = uiContactDetails.xHandle,
+                enabled = enabled,
+                onChange = { onEvent(IdentityContentEvent.OnXHandleChange(it)) }
+            )
+            PassDivider()
+            SecondPhoneNumberInput(
+                value = uiContactDetails.secondPhoneNumber,
+                enabled = enabled,
+                onChange = { onEvent(IdentityContentEvent.OnSecondPhoneNumberChange(it)) }
+            )
+        }
+        AddMoreButton(onClick = { onEvent(IdentityContentEvent.OnAddContactDetailField) })
     }
 }
 

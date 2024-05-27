@@ -30,6 +30,8 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import kotlinx.collections.immutable.PersistentSet
+import kotlinx.collections.immutable.toPersistentSet
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.isCollapsedSaver
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
@@ -39,12 +41,18 @@ import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent
 import proton.android.pass.featureitemcreate.impl.identity.presentation.IdentityItemFormState
 import proton.android.pass.featureitemcreate.impl.identity.presentation.IdentityValidationErrors
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.AddressDetailsField
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.ContactDetailsField
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.ExtraField
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.PersonalDetailsField
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.WorkDetailsField
 
 @Composable
 fun IdentityItemForm(
     modifier: Modifier,
     identityItemFormState: IdentityItemFormState,
-    validationErrors: Set<IdentityValidationErrors>,
+    validationErrors: PersistentSet<IdentityValidationErrors>,
+    extraFields: PersistentSet<ExtraField>,
     enabled: Boolean,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
@@ -90,6 +98,7 @@ fun IdentityItemForm(
                 modifier = Modifier.padding(horizontal = Spacing.medium),
                 enabled = enabled,
                 uiPersonalDetails = identityItemFormState.uiPersonalDetails,
+                extraFields = extraFields.filterIsInstance<PersonalDetailsField>().toPersistentSet(),
                 onEvent = onEvent
             )
         }
@@ -109,6 +118,7 @@ fun IdentityItemForm(
                 modifier = Modifier.padding(horizontal = Spacing.medium),
                 enabled = enabled,
                 uiAddressDetails = identityItemFormState.uiAddressDetails,
+                extraFields = extraFields.filterIsInstance<AddressDetailsField>().toPersistentSet(),
                 onEvent = onEvent
             )
         }
@@ -128,6 +138,7 @@ fun IdentityItemForm(
                 modifier = Modifier.padding(horizontal = Spacing.medium),
                 enabled = enabled,
                 uiContactDetails = identityItemFormState.uiContactDetails,
+                extraFields = extraFields.filterIsInstance<ContactDetailsField>().toPersistentSet(),
                 onEvent = onEvent
             )
         }
@@ -147,6 +158,7 @@ fun IdentityItemForm(
                 modifier = Modifier.padding(horizontal = Spacing.medium),
                 enabled = enabled,
                 uiWorkDetails = identityItemFormState.uiWorkDetails,
+                extraFields = extraFields.filterIsInstance<WorkDetailsField>().toPersistentSet(),
                 onEvent = onEvent
             )
         }

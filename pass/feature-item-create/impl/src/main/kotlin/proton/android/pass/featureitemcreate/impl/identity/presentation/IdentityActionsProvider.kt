@@ -47,6 +47,7 @@ interface IdentityFormActions {
     fun onLicenseNumberChanged(licenseNumber: String)
     fun onWebsiteChanged(website: String)
     fun onXHandleChanged(xHandle: String)
+    fun onSecondPhoneNumberChanged(phoneNumber: String)
     fun onCompanyChanged(company: String)
     fun onJobTitleChanged(jobTitle: String)
     fun getFormState(): IdentityItemFormState

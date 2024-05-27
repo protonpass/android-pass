@@ -50,37 +50,37 @@ internal fun AddressDetails(
         OrganizationInput(
             value = uiAddressDetails.organization,
             enabled = enabled,
-            onChange = { onEvent(IdentityContentEvent.OnFullNameChange(it)) }
+            onChange = { onEvent(IdentityContentEvent.OnOrganizationChange(it)) }
         )
         PassDivider()
         StreetAddressInput(
             value = uiAddressDetails.streetAddress,
             enabled = enabled,
-            onChange = { onEvent(IdentityContentEvent.OnEmailChange(it)) }
+            onChange = { onEvent(IdentityContentEvent.OnStreetAddressChange(it)) }
         )
         PassDivider()
         ZipOrPostalCodeInput(
             value = uiAddressDetails.zipOrPostalCode,
             enabled = enabled,
-            onChange = { onEvent(IdentityContentEvent.OnEmailChange(it)) }
+            onChange = { onEvent(IdentityContentEvent.OnZipOrPostalCodeChange(it)) }
         )
         PassDivider()
         CityInput(
             value = uiAddressDetails.city,
             enabled = enabled,
-            onChange = { onEvent(IdentityContentEvent.OnEmailChange(it)) }
+            onChange = { onEvent(IdentityContentEvent.OnCityChange(it)) }
         )
         PassDivider()
         StateOrProvinceInput(
             value = uiAddressDetails.stateOrProvince,
             enabled = enabled,
-            onChange = { onEvent(IdentityContentEvent.OnEmailChange(it)) }
+            onChange = { onEvent(IdentityContentEvent.OnStateOrProvinceChange(it)) }
         )
         PassDivider()
         CountryOrRegionInput(
             value = uiAddressDetails.countryOrRegion,
             enabled = enabled,
-            onChange = { onEvent(IdentityContentEvent.OnEmailChange(it)) }
+            onChange = { onEvent(IdentityContentEvent.OnCountryOrRegionChange(it)) }
         )
     }
 }

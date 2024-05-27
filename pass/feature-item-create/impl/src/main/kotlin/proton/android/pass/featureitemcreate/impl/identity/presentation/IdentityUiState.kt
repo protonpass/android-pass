@@ -19,6 +19,7 @@
 package proton.android.pass.featureitemcreate.impl.identity.presentation
 
 import androidx.compose.runtime.Immutable
+import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.persistentSetOf
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -27,6 +28,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.Vault
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.ExtraField
 
 sealed interface IdentityUiState {
     @Immutable
@@ -61,6 +63,9 @@ sealed interface IdentityUiState {
         else -> IsLoadingState.NotLoading
     }
 
-    fun getValidationErrors(): Set<IdentityValidationErrors> =
+    fun getValidationErrors(): PersistentSet<IdentityValidationErrors> =
         if (this is Success) sharedState.validationErrors else persistentSetOf()
+
+    fun getExtraFields(): PersistentSet<ExtraField> =
+        if (this is Success) sharedState.extraFields else persistentSetOf()
 }

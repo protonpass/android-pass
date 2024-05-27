@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.Flow
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.Item
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.ExtraField
 
 @Suppress("ComplexInterface", "TooManyFunctions")
 interface IdentityFormActions {
@@ -50,8 +51,19 @@ interface IdentityFormActions {
     fun onSecondPhoneNumberChanged(phoneNumber: String)
     fun onCompanyChanged(company: String)
     fun onJobTitleChanged(jobTitle: String)
+    fun onCountyChanged(county: String)
+    fun onFacebookChanged(facebook: String)
+    fun onFloorChanged(floor: String)
+    fun onInstagramChanged(instagram: String)
+    fun onLinkedinChanged(linkedin: String)
+    fun onPersonalWebsiteChanged(personalWebsite: String)
+    fun onRedditChanged(reddit: String)
+    fun onWorkEmailChanged(email: String)
+    fun onWorkPhoneNumberChanged(phoneNumber: String)
+    fun onYahooChanged(yahoo: String)
     fun getFormState(): IdentityItemFormState
     fun isFormStateValid(): Boolean
+    fun clearState()
 }
 
 interface IdentityActionsProvider : IdentityFormActions {
@@ -64,14 +76,16 @@ data class IdentitySharedUiState(
     val isLoadingState: IsLoadingState,
     val hasUserEditedContent: Boolean,
     val validationErrors: PersistentSet<IdentityValidationErrors>,
-    val isItemSaved: ItemSavedState
+    val isItemSaved: ItemSavedState,
+    val extraFields: PersistentSet<ExtraField>
 ) {
     companion object {
         val Initial = IdentitySharedUiState(
             isLoadingState = IsLoadingState.NotLoading,
             hasUserEditedContent = false,
             validationErrors = persistentSetOf(),
-            isItemSaved = ItemSavedState.Unknown
+            isItemSaved = ItemSavedState.Unknown,
+            extraFields = persistentSetOf()
         )
     }
 }

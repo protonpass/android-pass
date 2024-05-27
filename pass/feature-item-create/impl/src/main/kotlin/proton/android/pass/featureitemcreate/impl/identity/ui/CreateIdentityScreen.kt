@@ -81,6 +81,7 @@ fun CreateIdentityScreen(
             isLoadingState = state.getSubmitLoadingState(),
             shouldShowVaultSelector = state.shouldShowVaultSelector(),
             validationErrors = state.getValidationErrors(),
+            extraFields = state.getExtraFields(),
             topBarActionName = stringResource(id = R.string.title_create),
             onEvent = { event ->
                 when (event) {
@@ -138,12 +139,31 @@ fun CreateIdentityScreen(
                     is IdentityContentEvent.OnSecondPhoneNumberChange ->
                         viewModel.onSecondPhoneNumberChanged(event.phoneNumber)
 
+                    is IdentityContentEvent.OnCountyChange -> viewModel.onCountyChanged(event.county)
+                    is IdentityContentEvent.OnFacebookChange -> viewModel.onFacebookChanged(event.facebook)
+                    is IdentityContentEvent.OnFloorChange -> viewModel.onFloorChanged(event.floor)
+                    is IdentityContentEvent.OnInstagramChange -> viewModel.onInstagramChanged(event.instagram)
+                    is IdentityContentEvent.OnLinkedinChange -> viewModel.onLinkedinChanged(event.linkedin)
+                    is IdentityContentEvent.OnPersonalWebsiteChange ->
+                        viewModel.onPersonalWebsiteChanged(event.personalWebsite)
+
+                    is IdentityContentEvent.OnRedditChange -> viewModel.onRedditChanged(event.reddit)
+                    is IdentityContentEvent.OnWorkEmailChange -> viewModel.onWorkEmailChanged(event.email)
+                    is IdentityContentEvent.OnWorkPhoneNumberChange ->
+                        viewModel.onWorkPhoneNumberChanged(event.phoneNumber)
+
+                    is IdentityContentEvent.OnYahooChange ->
+                        viewModel.onYahooChanged(event.yahoo)
+
                     IdentityContentEvent.OnAddAddressDetailField ->
                         onNavigate(BaseIdentityNavigation.AddField(AddIdentityFieldType.Address))
+
                     IdentityContentEvent.OnAddContactDetailField ->
                         onNavigate(BaseIdentityNavigation.AddField(AddIdentityFieldType.Contact))
+
                     IdentityContentEvent.OnAddPersonalDetailField ->
                         onNavigate(BaseIdentityNavigation.AddField(AddIdentityFieldType.Personal))
+
                     IdentityContentEvent.OnAddWorkField ->
                         onNavigate(BaseIdentityNavigation.AddField(AddIdentityFieldType.Work))
                 }

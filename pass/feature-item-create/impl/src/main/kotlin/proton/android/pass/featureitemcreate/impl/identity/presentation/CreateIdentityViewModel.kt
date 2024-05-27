@@ -137,6 +137,11 @@ class CreateIdentityViewModel @Inject constructor(
         identityActionsProvider.updateLoadingState(IsLoadingState.NotLoading)
     }
 
+    override fun onCleared() {
+        identityActionsProvider.clearState()
+        super.onCleared()
+    }
+
     companion object {
         private const val TAG = "CreateIdentityViewModel"
     }

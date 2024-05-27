@@ -32,6 +32,7 @@ import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityCo
 import proton.android.pass.featureitemcreate.impl.identity.presentation.UIContactDetails
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.LicenseNumberInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.PassportNumberInput
+import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.SecondPhoneNumberInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.SocialSecurityNumberInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.WebsiteInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.XHandleInput
@@ -49,31 +50,37 @@ internal fun ContactDetails(
         SocialSecurityNumberInput(
             value = uiContactDetails.socialSecurityNumber,
             enabled = enabled,
-            onChange = { onEvent(IdentityContentEvent.OnFullNameChange(it)) }
+            onChange = { onEvent(IdentityContentEvent.OnSocialSecurityNumberChange(it)) }
         )
         PassDivider()
         PassportNumberInput(
             value = uiContactDetails.passportNumber,
             enabled = enabled,
-            onChange = { onEvent(IdentityContentEvent.OnEmailChange(it)) }
+            onChange = { onEvent(IdentityContentEvent.OnPassportNumberChange(it)) }
         )
         PassDivider()
         LicenseNumberInput(
             value = uiContactDetails.licenseNumber,
             enabled = enabled,
-            onChange = { onEvent(IdentityContentEvent.OnEmailChange(it)) }
+            onChange = { onEvent(IdentityContentEvent.OnLicenseNumberChange(it)) }
         )
         PassDivider()
         WebsiteInput(
             value = uiContactDetails.website,
             enabled = enabled,
-            onChange = { onEvent(IdentityContentEvent.OnEmailChange(it)) }
+            onChange = { onEvent(IdentityContentEvent.OnWebsiteChange(it)) }
         )
         PassDivider()
         XHandleInput(
             value = uiContactDetails.xHandle,
             enabled = enabled,
-            onChange = { onEvent(IdentityContentEvent.OnEmailChange(it)) }
+            onChange = { onEvent(IdentityContentEvent.OnXHandleChange(it)) }
+        )
+        PassDivider()
+        SecondPhoneNumberInput(
+            value = uiContactDetails.secondPhoneNumber,
+            enabled = enabled,
+            onChange = { onEvent(IdentityContentEvent.OnSecondPhoneNumberChange(it)) }
         )
     }
 }

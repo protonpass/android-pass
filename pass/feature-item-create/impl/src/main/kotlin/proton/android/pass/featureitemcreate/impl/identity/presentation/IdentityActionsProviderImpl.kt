@@ -204,6 +204,13 @@ class IdentityActionsProviderImpl @Inject constructor(
         )
     }
 
+    override fun onSecondPhoneNumberChanged(phoneNumber: String) {
+        hasUserEditedContentState.update { true }
+        identityItemFormMutableState = identityItemFormMutableState.copy(
+            uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(secondPhoneNumber = phoneNumber)
+        )
+    }
+
     // Work Details
     override fun onCompanyChanged(company: String) {
         hasUserEditedContentState.update { true }

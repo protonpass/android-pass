@@ -133,6 +133,9 @@ fun CreateIdentityScreen(
                     is IdentityContentEvent.OnXHandleChange -> viewModel.onXHandleChanged(event.xHandle)
                     is IdentityContentEvent.OnZipOrPostalCodeChange ->
                         viewModel.onZipOrPostalCodeChanged(event.zipOrPostalCode)
+
+                    is IdentityContentEvent.OnSecondPhoneNumberChange ->
+                        viewModel.onSecondPhoneNumberChanged(event.phoneNumber)
                 }
             }
         )

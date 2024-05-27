@@ -18,6 +18,9 @@
 
 package proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -31,16 +34,21 @@ class IdentityFieldDraftRepositoryImpl @Inject constructor() : IdentityFieldDraf
         WorkDetailsField::class.java to WorkDetailsField.entries.toSet()
     )
 
-    private val selectedFieldsMap: MutableMap<Class<out ExtraField>, MutableSet<ExtraField>> =
-        mutableMapOf()
+    private val extraFieldsStateFlow = MutableStateFlow<Set<ExtraField>>(emptySet())
 
     override fun <T : ExtraField> getSectionFields(clazz: Class<T>): Set<T> {
         @Suppress("UNCHECKED_CAST")
         return (availableFieldsMap[clazz] as? Set<T> ?: emptySet()) -
-            (selectedFieldsMap[clazz] as? Set<T> ?: emptySet()).toSet()
+            extraFieldsStateFlow.value.filterIsInstance(clazz).toSet()
     }
 
+    override fun observeExtraFields(): Flow<Set<ExtraField>> = extraFieldsStateFlow.asStateFlow()
+
     override fun addField(extraField: ExtraField) {
-        selectedFieldsMap.getOrPut(extraField::class.java) { mutableSetOf() }.add(extraField)
+        extraFieldsStateFlow.value += extraField
+    }
+
+    override fun clearAddedFields() {
+        extraFieldsStateFlow.value = emptySet()
     }
 }

@@ -143,6 +143,37 @@
     <string name="identity_field_job_title_title">Job title</string>
     <string name="identity_field_job_title_hint" translatable="false">@string/identity_field_job_title_title</string>
 
+    <string name="identity_field_first_name_title">First name</string>
+    <string name="identity_field_first_name_hint" translatable="false">@string/identity_field_first_name_title</string>
+    <string name="identity_field_last_name_title">Last name</string>
+    <string name="identity_field_last_name_hint" translatable="false">@string/identity_field_last_name_title</string>
+    <string name="identity_field_middle_name_title">Middle name</string>
+    <string name="identity_field_middle_name_hint" translatable="false">@string/identity_field_last_name_title</string>
+    <string name="identity_field_birthdate_title">Birthdate</string>
+    <string name="identity_field_birthdate_hint" translatable="false">@string/identity_field_birthdate_title</string>
+    <string name="identity_field_gender_title">Gender</string>
+    <string name="identity_field_gender_hint" translatable="false">@string/identity_field_gender_title</string>
+    <string name="identity_field_floor_title">Floor</string>
+    <string name="identity_field_floor_hint" translatable="false">@string/identity_field_floor_title</string>
+    <string name="identity_field_county_title">County</string>
+    <string name="identity_field_county_hint" translatable="false">@string/identity_field_county_title</string>
+    <string name="identity_field_linkedin_title">Linkedin</string>
+    <string name="identity_field_linkedin_hint" translatable="false">@string/identity_field_linkedin_title</string>
+    <string name="identity_field_reddit_title">Reddit username</string>
+    <string name="identity_field_reddit_hint" translatable="false">@string/identity_field_reddit_title</string>
+    <string name="identity_field_facebook_title">Facebook URL</string>
+    <string name="identity_field_facebook_hint" translatable="false">@string/identity_field_facebook_title</string>
+    <string name="identity_field_yahoo_title">Yahoo username</string>
+    <string name="identity_field_yahoo_hint" translatable="false">@string/identity_field_yahoo_title</string>
+    <string name="identity_field_instagram_title">Instagram handle</string>
+    <string name="identity_field_instagram_hint" translatable="false">@string/identity_field_instagram_title</string>
+    <string name="identity_field_personal_website_title">Personal website URL</string>
+    <string name="identity_field_personal_website_hint" translatable="false">@string/identity_field_personal_website_title</string>
+    <string name="identity_field_work_phone_number_title">Work phone number</string>
+    <string name="identity_field_work_phone_number_hint" translatable="false">@string/identity_field_work_phone_number_title</string>
+    <string name="identity_field_work_email_title">Work email address</string>
+    <string name="identity_field_work_email_hint" translatable="false">@string/identity_field_work_email_title</string>
+
     <string name="identity_add_field_first_name">First name</string>
     <string name="identity_add_field_middle_name">Middle name</string>
     <string name="identity_add_field_last_name">Last name</string>

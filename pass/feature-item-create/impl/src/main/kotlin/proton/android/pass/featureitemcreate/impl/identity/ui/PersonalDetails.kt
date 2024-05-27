@@ -25,14 +25,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import kotlinx.collections.immutable.PersistentSet
+import kotlinx.collections.immutable.persistentSetOf
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent
 import proton.android.pass.featureitemcreate.impl.identity.presentation.UIPersonalDetails
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.PersonalDetailsField
+import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.BirthdateInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.EmailInput
+import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.FirstNameInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.FullNameInput
+import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.GenderInput
+import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.LastNameInput
+import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.MiddleNameInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.PhoneNumberInput
 
 @Composable
@@ -40,6 +48,7 @@ internal fun PersonalDetails(
     modifier: Modifier = Modifier,
     uiPersonalDetails: UIPersonalDetails,
     enabled: Boolean,
+    extraFields: PersistentSet<PersonalDetailsField>,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
     Column(
@@ -66,6 +75,47 @@ internal fun PersonalDetails(
                 enabled = enabled,
                 onChange = { onEvent(IdentityContentEvent.OnPhoneNumberChange(it)) }
             )
+
+            if (extraFields.contains(PersonalDetailsField.FirstName)) {
+                PassDivider()
+                FirstNameInput(
+                    value = uiPersonalDetails.firstName,
+                    enabled = enabled,
+                    onChange = { onEvent(IdentityContentEvent.OnFirstNameChange(it)) }
+                )
+            }
+            if (extraFields.contains(PersonalDetailsField.MiddleName)) {
+                PassDivider()
+                MiddleNameInput(
+                    value = uiPersonalDetails.middleName,
+                    enabled = enabled,
+                    onChange = { onEvent(IdentityContentEvent.OnMiddleNameChange(it)) }
+                )
+            }
+            if (extraFields.contains(PersonalDetailsField.LastName)) {
+                PassDivider()
+                LastNameInput(
+                    value = uiPersonalDetails.lastName,
+                    enabled = enabled,
+                    onChange = { onEvent(IdentityContentEvent.OnLastNameChange(it)) }
+                )
+            }
+            if (extraFields.contains(PersonalDetailsField.Birthdate)) {
+                PassDivider()
+                BirthdateInput(
+                    value = uiPersonalDetails.birthdate,
+                    enabled = enabled,
+                    onChange = { onEvent(IdentityContentEvent.OnBirthdateChange(it)) }
+                )
+            }
+            if (extraFields.contains(PersonalDetailsField.Gender)) {
+                PassDivider()
+                GenderInput(
+                    value = uiPersonalDetails.gender,
+                    enabled = enabled,
+                    onChange = { onEvent(IdentityContentEvent.OnGenderChange(it)) }
+                )
+            }
         }
         AddMoreButton(onClick = { onEvent(IdentityContentEvent.OnAddPersonalDetailField) })
     }
@@ -79,6 +129,7 @@ fun PersonalDetailsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark
             PersonalDetails(
                 uiPersonalDetails = UIPersonalDetails.EMPTY,
                 enabled = true,
+                extraFields = persistentSetOf(),
                 onEvent = { }
             )
         }

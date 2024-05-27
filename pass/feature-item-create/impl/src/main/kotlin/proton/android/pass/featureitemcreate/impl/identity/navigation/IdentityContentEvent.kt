@@ -98,4 +98,9 @@ sealed interface IdentityContentEvent {
 
     @JvmInline
     value class OnVaultSelect(val shareId: ShareId) : IdentityContentEvent
+
+    data object OnAddPersonalDetailField : IdentityContentEvent
+    data object OnAddAddressDetailField : IdentityContentEvent
+    data object OnAddContactDetailField : IdentityContentEvent
+    data object OnAddWorkField : IdentityContentEvent
 }

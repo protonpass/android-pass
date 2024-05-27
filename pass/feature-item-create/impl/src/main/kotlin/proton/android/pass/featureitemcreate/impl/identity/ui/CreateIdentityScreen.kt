@@ -40,6 +40,7 @@ import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdentityNavigation
 import proton.android.pass.featureitemcreate.impl.identity.navigation.CreateIdentityNavigation
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent
+import proton.android.pass.featureitemcreate.impl.identity.navigation.bottomsheets.AddIdentityFieldType
 import proton.android.pass.featureitemcreate.impl.identity.presentation.CreateIdentityViewModel
 import proton.android.pass.featureitemcreate.impl.launchedeffects.InAppReviewTriggerLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.login.PerformActionAfterKeyboardHide
@@ -136,6 +137,15 @@ fun CreateIdentityScreen(
 
                     is IdentityContentEvent.OnSecondPhoneNumberChange ->
                         viewModel.onSecondPhoneNumberChanged(event.phoneNumber)
+
+                    IdentityContentEvent.OnAddAddressDetailField ->
+                        onNavigate(BaseIdentityNavigation.AddField(AddIdentityFieldType.Address))
+                    IdentityContentEvent.OnAddContactDetailField ->
+                        onNavigate(BaseIdentityNavigation.AddField(AddIdentityFieldType.Contact))
+                    IdentityContentEvent.OnAddPersonalDetailField ->
+                        onNavigate(BaseIdentityNavigation.AddField(AddIdentityFieldType.Personal))
+                    IdentityContentEvent.OnAddWorkField ->
+                        onNavigate(BaseIdentityNavigation.AddField(AddIdentityFieldType.Work))
                 }
             }
         )

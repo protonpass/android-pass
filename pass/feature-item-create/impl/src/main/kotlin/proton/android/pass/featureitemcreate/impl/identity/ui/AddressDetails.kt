@@ -25,14 +25,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import kotlinx.collections.immutable.PersistentSet
+import kotlinx.collections.immutable.persistentSetOf
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent
 import proton.android.pass.featureitemcreate.impl.identity.presentation.UIAddressDetails
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.AddressDetailsField
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.CityInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.CountryOrRegionInput
+import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.CountyInput
+import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.FloorInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.OrganizationInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.StateOrProvinceInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.StreetAddressInput
@@ -43,6 +48,7 @@ internal fun AddressDetails(
     modifier: Modifier = Modifier,
     uiAddressDetails: UIAddressDetails,
     enabled: Boolean,
+    extraFields: PersistentSet<AddressDetailsField>,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
     Column(
@@ -87,6 +93,22 @@ internal fun AddressDetails(
                 enabled = enabled,
                 onChange = { onEvent(IdentityContentEvent.OnCountryOrRegionChange(it)) }
             )
+            if (extraFields.contains(AddressDetailsField.Floor)) {
+                PassDivider()
+                FloorInput(
+                    value = uiAddressDetails.floor,
+                    enabled = enabled,
+                    onChange = { onEvent(IdentityContentEvent.OnFloorChange(it)) }
+                )
+            }
+            if (extraFields.contains(AddressDetailsField.County)) {
+                PassDivider()
+                CountyInput(
+                    value = uiAddressDetails.county,
+                    enabled = enabled,
+                    onChange = { onEvent(IdentityContentEvent.OnCountyChange(it)) }
+                )
+            }
         }
         AddMoreButton(onClick = { onEvent(IdentityContentEvent.OnAddAddressDetailField) })
     }
@@ -100,6 +122,7 @@ fun AddressDetailsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark:
             AddressDetails(
                 uiAddressDetails = UIAddressDetails.EMPTY,
                 enabled = true,
+                extraFields = persistentSetOf(),
                 onEvent = {}
             )
         }

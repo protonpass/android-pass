@@ -34,12 +34,14 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.domain.Item
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.IdentityFieldDraftRepository
 import javax.inject.Inject
 
 @Suppress("TooManyFunctions")
 @ViewModelScoped
 class IdentityActionsProviderImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
+    private val identityFieldDraftRepository: IdentityFieldDraftRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : IdentityActionsProvider {
 
@@ -58,6 +60,7 @@ class IdentityActionsProviderImpl @Inject constructor(
         hasUserEditedContentState,
         validationErrorsState.map { it.toPersistentSet() },
         isItemSavedState,
+        identityFieldDraftRepository.observeExtraFields().map { it.toPersistentSet() },
         ::IdentitySharedUiState
     )
 
@@ -226,6 +229,76 @@ class IdentityActionsProviderImpl @Inject constructor(
         )
     }
 
+    override fun onCountyChanged(county: String) {
+        hasUserEditedContentState.update { true }
+        identityItemFormMutableState = identityItemFormMutableState.copy(
+            uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(county = county)
+        )
+    }
+
+    override fun onFacebookChanged(facebook: String) {
+        hasUserEditedContentState.update { true }
+        identityItemFormMutableState = identityItemFormMutableState.copy(
+            uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(facebook = facebook)
+        )
+    }
+
+    override fun onFloorChanged(floor: String) {
+        hasUserEditedContentState.update { true }
+        identityItemFormMutableState = identityItemFormMutableState.copy(
+            uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(floor = floor)
+        )
+    }
+
+    override fun onInstagramChanged(instagram: String) {
+        hasUserEditedContentState.update { true }
+        identityItemFormMutableState = identityItemFormMutableState.copy(
+            uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(instagram = instagram)
+        )
+    }
+
+    override fun onLinkedinChanged(linkedin: String) {
+        hasUserEditedContentState.update { true }
+        identityItemFormMutableState = identityItemFormMutableState.copy(
+            uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(linkedin = linkedin)
+        )
+    }
+
+    override fun onPersonalWebsiteChanged(personalWebsite: String) {
+        hasUserEditedContentState.update { true }
+        identityItemFormMutableState = identityItemFormMutableState.copy(
+            uiWorkDetails = identityItemFormMutableState.uiWorkDetails.copy(personalWebsite = personalWebsite)
+        )
+    }
+
+    override fun onRedditChanged(reddit: String) {
+        hasUserEditedContentState.update { true }
+        identityItemFormMutableState = identityItemFormMutableState.copy(
+            uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(reddit = reddit)
+        )
+    }
+
+    override fun onWorkEmailChanged(email: String) {
+        hasUserEditedContentState.update { true }
+        identityItemFormMutableState = identityItemFormMutableState.copy(
+            uiWorkDetails = identityItemFormMutableState.uiWorkDetails.copy(workEmail = email)
+        )
+    }
+
+    override fun onWorkPhoneNumberChanged(phoneNumber: String) {
+        hasUserEditedContentState.update { true }
+        identityItemFormMutableState = identityItemFormMutableState.copy(
+            uiWorkDetails = identityItemFormMutableState.uiWorkDetails.copy(workPhoneNumber = phoneNumber)
+        )
+    }
+
+    override fun onYahooChanged(yahoo: String) {
+        hasUserEditedContentState.update { true }
+        identityItemFormMutableState = identityItemFormMutableState.copy(
+            uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(yahoo = yahoo)
+        )
+    }
+
     override fun getFormState(): IdentityItemFormState = identityItemFormMutableState
 
     override fun isFormStateValid(): Boolean {
@@ -235,6 +308,10 @@ class IdentityActionsProviderImpl @Inject constructor(
             return false
         }
         return true
+    }
+
+    override fun clearState() {
+        identityFieldDraftRepository.clearAddedFields()
     }
 
     override fun observeSharedState(): Flow<IdentitySharedUiState> = state

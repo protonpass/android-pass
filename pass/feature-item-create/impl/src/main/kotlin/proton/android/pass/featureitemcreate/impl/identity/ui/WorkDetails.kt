@@ -25,20 +25,27 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import kotlinx.collections.immutable.PersistentSet
+import kotlinx.collections.immutable.persistentSetOf
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent
 import proton.android.pass.featureitemcreate.impl.identity.presentation.UIWorkDetails
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.WorkDetailsField
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.CompanyInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.JobTitleInput
+import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.PersonalWebsiteInput
+import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.WorkEmailInput
+import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.WorkPhoneNumberInput
 
 @Composable
 internal fun WorkDetails(
     modifier: Modifier = Modifier,
     uiWorkDetails: UIWorkDetails,
     enabled: Boolean,
+    extraFields: PersistentSet<WorkDetailsField>,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
     Column(
@@ -59,6 +66,30 @@ internal fun WorkDetails(
                 enabled = enabled,
                 onChange = { onEvent(IdentityContentEvent.OnJobTitleChange(it)) }
             )
+            if (extraFields.contains(WorkDetailsField.PersonalWebsite)) {
+                PassDivider()
+                PersonalWebsiteInput(
+                    value = uiWorkDetails.personalWebsite,
+                    enabled = enabled,
+                    onChange = { onEvent(IdentityContentEvent.OnPersonalWebsiteChange(it)) }
+                )
+            }
+            if (extraFields.contains(WorkDetailsField.WorkPhoneNumber)) {
+                PassDivider()
+                WorkPhoneNumberInput(
+                    value = uiWorkDetails.workPhoneNumber,
+                    enabled = enabled,
+                    onChange = { onEvent(IdentityContentEvent.OnWorkPhoneNumberChange(it)) }
+                )
+            }
+            if (extraFields.contains(WorkDetailsField.WorkEmail)) {
+                PassDivider()
+                WorkEmailInput(
+                    value = uiWorkDetails.workEmail,
+                    enabled = enabled,
+                    onChange = { onEvent(IdentityContentEvent.OnWorkEmailChange(it)) }
+                )
+            }
         }
         AddMoreButton(onClick = { onEvent(IdentityContentEvent.OnAddWorkField) })
     }
@@ -72,6 +103,7 @@ fun WorkDetailsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
             WorkDetails(
                 uiWorkDetails = UIWorkDetails.EMPTY,
                 enabled = true,
+                extraFields = persistentSetOf(),
                 onEvent = {}
             )
         }

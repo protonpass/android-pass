@@ -18,7 +18,11 @@
 
 package proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets
 
+import kotlinx.coroutines.flow.Flow
+
 interface IdentityFieldDraftRepository {
     fun <T : ExtraField> getSectionFields(clazz: Class<T>): Set<T>
+    fun observeExtraFields(): Flow<Set<ExtraField>>
     fun addField(extraField: ExtraField)
+    fun clearAddedFields()
 }

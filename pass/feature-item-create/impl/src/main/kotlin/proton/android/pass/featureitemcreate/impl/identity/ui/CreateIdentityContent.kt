@@ -23,6 +23,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import kotlinx.collections.immutable.PersistentSet
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -33,6 +34,7 @@ import proton.android.pass.featureitemcreate.impl.common.CreateUpdateTopBar
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent
 import proton.android.pass.featureitemcreate.impl.identity.presentation.IdentityItemFormState
 import proton.android.pass.featureitemcreate.impl.identity.presentation.IdentityValidationErrors
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.ExtraField
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -43,7 +45,8 @@ fun CreateIdentityContent(
     topBarActionName: String,
     selectedVault: Option<Vault>,
     shouldShowVaultSelector: Boolean,
-    validationErrors: Set<IdentityValidationErrors>,
+    validationErrors: PersistentSet<IdentityValidationErrors>,
+    extraFields: PersistentSet<ExtraField>,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
     Scaffold(
@@ -79,6 +82,7 @@ fun CreateIdentityContent(
             identityItemFormState = identityItemFormState,
             enabled = !isLoadingState.value(),
             validationErrors = validationErrors,
+            extraFields = extraFields,
             onEvent = onEvent
         )
     }

@@ -21,6 +21,7 @@ package proton.android.pass.featureitemcreate.impl.identity.ui
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -42,25 +43,31 @@ internal fun PersonalDetails(
     onEvent: (IdentityContentEvent) -> Unit
 ) {
     Column(
-        modifier = modifier.roundedContainerNorm()
+        modifier = modifier,
+        horizontalAlignment = Alignment.Start
     ) {
-        FullNameInput(
-            value = uiPersonalDetails.fullName,
-            enabled = enabled,
-            onChange = { onEvent(IdentityContentEvent.OnFullNameChange(it)) }
-        )
-        PassDivider()
-        EmailInput(
-            value = uiPersonalDetails.email,
-            enabled = enabled,
-            onChange = { onEvent(IdentityContentEvent.OnEmailChange(it)) }
-        )
-        PassDivider()
-        PhoneNumberInput(
-            value = uiPersonalDetails.phoneNumber,
-            enabled = enabled,
-            onChange = { onEvent(IdentityContentEvent.OnPhoneNumberChange(it)) }
-        )
+        Column(
+            modifier = Modifier.roundedContainerNorm()
+        ) {
+            FullNameInput(
+                value = uiPersonalDetails.fullName,
+                enabled = enabled,
+                onChange = { onEvent(IdentityContentEvent.OnFullNameChange(it)) }
+            )
+            PassDivider()
+            EmailInput(
+                value = uiPersonalDetails.email,
+                enabled = enabled,
+                onChange = { onEvent(IdentityContentEvent.OnEmailChange(it)) }
+            )
+            PassDivider()
+            PhoneNumberInput(
+                value = uiPersonalDetails.phoneNumber,
+                enabled = enabled,
+                onChange = { onEvent(IdentityContentEvent.OnPhoneNumberChange(it)) }
+            )
+        }
+        AddMoreButton(onClick = { onEvent(IdentityContentEvent.OnAddPersonalDetailField) })
     }
 }
 

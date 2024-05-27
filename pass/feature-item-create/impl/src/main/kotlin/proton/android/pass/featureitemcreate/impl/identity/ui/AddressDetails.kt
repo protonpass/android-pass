@@ -21,6 +21,7 @@ package proton.android.pass.featureitemcreate.impl.identity.ui
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -45,43 +46,49 @@ internal fun AddressDetails(
     onEvent: (IdentityContentEvent) -> Unit
 ) {
     Column(
-        modifier = modifier.roundedContainerNorm()
+        modifier = modifier,
+        horizontalAlignment = Alignment.Start
     ) {
-        OrganizationInput(
-            value = uiAddressDetails.organization,
-            enabled = enabled,
-            onChange = { onEvent(IdentityContentEvent.OnOrganizationChange(it)) }
-        )
-        PassDivider()
-        StreetAddressInput(
-            value = uiAddressDetails.streetAddress,
-            enabled = enabled,
-            onChange = { onEvent(IdentityContentEvent.OnStreetAddressChange(it)) }
-        )
-        PassDivider()
-        ZipOrPostalCodeInput(
-            value = uiAddressDetails.zipOrPostalCode,
-            enabled = enabled,
-            onChange = { onEvent(IdentityContentEvent.OnZipOrPostalCodeChange(it)) }
-        )
-        PassDivider()
-        CityInput(
-            value = uiAddressDetails.city,
-            enabled = enabled,
-            onChange = { onEvent(IdentityContentEvent.OnCityChange(it)) }
-        )
-        PassDivider()
-        StateOrProvinceInput(
-            value = uiAddressDetails.stateOrProvince,
-            enabled = enabled,
-            onChange = { onEvent(IdentityContentEvent.OnStateOrProvinceChange(it)) }
-        )
-        PassDivider()
-        CountryOrRegionInput(
-            value = uiAddressDetails.countryOrRegion,
-            enabled = enabled,
-            onChange = { onEvent(IdentityContentEvent.OnCountryOrRegionChange(it)) }
-        )
+        Column(
+            modifier = Modifier.roundedContainerNorm()
+        ) {
+            OrganizationInput(
+                value = uiAddressDetails.organization,
+                enabled = enabled,
+                onChange = { onEvent(IdentityContentEvent.OnOrganizationChange(it)) }
+            )
+            PassDivider()
+            StreetAddressInput(
+                value = uiAddressDetails.streetAddress,
+                enabled = enabled,
+                onChange = { onEvent(IdentityContentEvent.OnStreetAddressChange(it)) }
+            )
+            PassDivider()
+            ZipOrPostalCodeInput(
+                value = uiAddressDetails.zipOrPostalCode,
+                enabled = enabled,
+                onChange = { onEvent(IdentityContentEvent.OnZipOrPostalCodeChange(it)) }
+            )
+            PassDivider()
+            CityInput(
+                value = uiAddressDetails.city,
+                enabled = enabled,
+                onChange = { onEvent(IdentityContentEvent.OnCityChange(it)) }
+            )
+            PassDivider()
+            StateOrProvinceInput(
+                value = uiAddressDetails.stateOrProvince,
+                enabled = enabled,
+                onChange = { onEvent(IdentityContentEvent.OnStateOrProvinceChange(it)) }
+            )
+            PassDivider()
+            CountryOrRegionInput(
+                value = uiAddressDetails.countryOrRegion,
+                enabled = enabled,
+                onChange = { onEvent(IdentityContentEvent.OnCountryOrRegionChange(it)) }
+            )
+        }
+        AddMoreButton(onClick = { onEvent(IdentityContentEvent.OnAddAddressDetailField) })
     }
 }
 

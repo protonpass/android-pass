@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2024 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,13 +16,11 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemcreate.impl.identity.navigation
+package proton.android.pass.featureitemcreate.impl.identity.navigation.bottomsheets
 
-import proton.android.pass.featureitemcreate.impl.identity.navigation.bottomsheets.AddIdentityFieldType
-
-sealed interface BaseIdentityNavigation {
-    data object Close : BaseIdentityNavigation
-
-    @JvmInline
-    value class AddField(val addIdentityFieldType: AddIdentityFieldType) : BaseIdentityNavigation
+enum class AddIdentityFieldType {
+    Personal,
+    Contact,
+    Address,
+    Work
 }

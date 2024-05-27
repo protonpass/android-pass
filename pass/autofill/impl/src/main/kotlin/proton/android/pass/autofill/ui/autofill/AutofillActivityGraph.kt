@@ -60,6 +60,9 @@ import proton.android.pass.featureitemcreate.impl.dialogs.EditCustomFieldNameDia
 import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdentityNavigation
 import proton.android.pass.featureitemcreate.impl.identity.navigation.CreateIdentity
 import proton.android.pass.featureitemcreate.impl.identity.navigation.CreateIdentityNavigation
+import proton.android.pass.featureitemcreate.impl.identity.navigation.bottomsheets.IdentityFieldsBottomSheet
+import proton.android.pass.featureitemcreate.impl.identity.navigation.bottomsheets.IdentityFieldsNavigation
+import proton.android.pass.featureitemcreate.impl.identity.navigation.bottomsheets.identityFieldsGraph
 import proton.android.pass.featureitemcreate.impl.identity.navigation.createIdentityGraph
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
@@ -367,15 +370,27 @@ fun NavGraphBuilder.autofillActivityGraph(
         onNavigate = {
             when (it) {
                 BaseIdentityNavigation.Close -> appNavigator.navigateBack()
+                is BaseIdentityNavigation.AddField ->
+                    appNavigator.navigate(
+                        destination = IdentityFieldsBottomSheet,
+                        route = IdentityFieldsBottomSheet.createRoute(it.addIdentityFieldType)
+                    )
+
                 is CreateIdentityNavigation.ItemCreated ->
                     onEvent(AutofillEvent.AutofillItemSelected(it.itemUiModel.toAutoFillItem()))
                 is CreateIdentityNavigation.SelectVault -> appNavigator.navigate(
                     destination = SelectVaultBottomsheet,
                     route = SelectVaultBottomsheet.createNavRoute(it.shareId)
                 )
+
             }
         }
     )
+    identityFieldsGraph {
+        when (it) {
+            IdentityFieldsNavigation.Close -> dismissBottomSheet { appNavigator.navigateBack() }
+        }
+    }
     val mode = when (autofillAppState.autofillData.assistInfo.cluster) {
         is NodeCluster.CreditCard -> AutofillCreditCard
         is NodeCluster.Login,

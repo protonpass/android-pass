@@ -59,7 +59,7 @@ fun IdentityItemForm(
     onEvent: (IdentityContentEvent) -> Unit
 ) {
     val isGroupCollapsed = rememberSaveable(saver = isCollapsedSaver()) {
-        mutableStateListOf(Section.CONTACT_DETAILS, Section.WORK_DETAILS)
+        mutableStateListOf(IdentitySectionType.ContactDetails, IdentitySectionType.WorkDetails)
     }
     Column(
         modifier = modifier
@@ -86,16 +86,16 @@ fun IdentityItemForm(
         )
         CollapsibleSectionHeader(
             sectionTitle = stringResource(R.string.identity_section_personal_details),
-            isCollapsed = isGroupCollapsed.contains(Section.PERSONAL_DETAILS),
+            isCollapsed = isGroupCollapsed.contains(IdentitySectionType.PersonalDetails),
             onClick = {
-                if (isGroupCollapsed.contains(Section.PERSONAL_DETAILS)) {
-                    isGroupCollapsed.remove(Section.PERSONAL_DETAILS)
+                if (isGroupCollapsed.contains(IdentitySectionType.PersonalDetails)) {
+                    isGroupCollapsed.remove(IdentitySectionType.PersonalDetails)
                 } else {
-                    isGroupCollapsed.add(Section.PERSONAL_DETAILS)
+                    isGroupCollapsed.add(IdentitySectionType.PersonalDetails)
                 }
             }
         )
-        AnimatedVisibility(visible = !isGroupCollapsed.contains(Section.PERSONAL_DETAILS)) {
+        AnimatedVisibility(visible = !isGroupCollapsed.contains(IdentitySectionType.PersonalDetails)) {
             PersonalDetails(
                 modifier = Modifier.padding(horizontal = Spacing.medium),
                 enabled = enabled,
@@ -107,16 +107,16 @@ fun IdentityItemForm(
         }
         CollapsibleSectionHeader(
             sectionTitle = stringResource(R.string.identity_section_address_details),
-            isCollapsed = isGroupCollapsed.contains(Section.ADDRESS_DETAILS),
+            isCollapsed = isGroupCollapsed.contains(IdentitySectionType.AddressDetails),
             onClick = {
-                if (isGroupCollapsed.contains(Section.ADDRESS_DETAILS)) {
-                    isGroupCollapsed.remove(Section.ADDRESS_DETAILS)
+                if (isGroupCollapsed.contains(IdentitySectionType.AddressDetails)) {
+                    isGroupCollapsed.remove(IdentitySectionType.AddressDetails)
                 } else {
-                    isGroupCollapsed.add(Section.ADDRESS_DETAILS)
+                    isGroupCollapsed.add(IdentitySectionType.AddressDetails)
                 }
             }
         )
-        AnimatedVisibility(visible = !isGroupCollapsed.contains(Section.ADDRESS_DETAILS)) {
+        AnimatedVisibility(visible = !isGroupCollapsed.contains(IdentitySectionType.AddressDetails)) {
             AddressDetails(
                 modifier = Modifier.padding(horizontal = Spacing.medium),
                 enabled = enabled,
@@ -127,16 +127,16 @@ fun IdentityItemForm(
         }
         CollapsibleSectionHeader(
             sectionTitle = stringResource(R.string.identity_section_contact_details),
-            isCollapsed = isGroupCollapsed.contains(Section.CONTACT_DETAILS),
+            isCollapsed = isGroupCollapsed.contains(IdentitySectionType.ContactDetails),
             onClick = {
-                if (isGroupCollapsed.contains(Section.CONTACT_DETAILS)) {
-                    isGroupCollapsed.remove(Section.CONTACT_DETAILS)
+                if (isGroupCollapsed.contains(IdentitySectionType.ContactDetails)) {
+                    isGroupCollapsed.remove(IdentitySectionType.ContactDetails)
                 } else {
-                    isGroupCollapsed.add(Section.CONTACT_DETAILS)
+                    isGroupCollapsed.add(IdentitySectionType.ContactDetails)
                 }
             }
         )
-        AnimatedVisibility(visible = !isGroupCollapsed.contains(Section.CONTACT_DETAILS)) {
+        AnimatedVisibility(visible = !isGroupCollapsed.contains(IdentitySectionType.ContactDetails)) {
             ContactDetails(
                 modifier = Modifier.padding(horizontal = Spacing.medium),
                 enabled = enabled,
@@ -147,16 +147,16 @@ fun IdentityItemForm(
         }
         CollapsibleSectionHeader(
             sectionTitle = stringResource(R.string.identity_section_work_details),
-            isCollapsed = isGroupCollapsed.contains(Section.WORK_DETAILS),
+            isCollapsed = isGroupCollapsed.contains(IdentitySectionType.WorkDetails),
             onClick = {
-                if (isGroupCollapsed.contains(Section.WORK_DETAILS)) {
-                    isGroupCollapsed.remove(Section.WORK_DETAILS)
+                if (isGroupCollapsed.contains(IdentitySectionType.WorkDetails)) {
+                    isGroupCollapsed.remove(IdentitySectionType.WorkDetails)
                 } else {
-                    isGroupCollapsed.add(Section.WORK_DETAILS)
+                    isGroupCollapsed.add(IdentitySectionType.WorkDetails)
                 }
             }
         )
-        AnimatedVisibility(visible = !isGroupCollapsed.contains(Section.WORK_DETAILS)) {
+        AnimatedVisibility(visible = !isGroupCollapsed.contains(IdentitySectionType.WorkDetails)) {
             WorkDetails(
                 modifier = Modifier.padding(horizontal = Spacing.medium),
                 enabled = enabled,
@@ -168,9 +168,3 @@ fun IdentityItemForm(
     }
 }
 
-enum class Section {
-    PERSONAL_DETAILS,
-    ADDRESS_DETAILS,
-    CONTACT_DETAILS,
-    WORK_DETAILS
-}

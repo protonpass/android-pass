@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,23 +16,22 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemcreate.impl.login.customfields
+package proton.android.pass.featureitemcreate.impl.common.customfields
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import proton.android.pass.featureitemcreate.impl.common.UICustomFieldContent
-import proton.android.pass.featureitemcreate.impl.login.LoginCustomField
-import proton.android.pass.featureitemcreate.impl.login.LoginItemValidationErrors
 
 @Composable
 internal fun CustomFieldEntry(
     modifier: Modifier = Modifier,
     entry: UICustomFieldContent,
-    validationError: LoginItemValidationErrors.CustomFieldValidationError?,
+    isError: Boolean,
+    errorMessage: String,
     index: Int,
     canEdit: Boolean,
     onValueChange: (String) -> Unit,
-    onFocusChange: (LoginCustomField, Boolean) -> Unit,
+    onFocusChange: (Int, Boolean) -> Unit,
     onOptionsClick: () -> Unit
 ) {
     when (entry) {
@@ -57,7 +56,8 @@ internal fun CustomFieldEntry(
         is UICustomFieldContent.Totp -> TotpCustomFieldEntry(
             modifier = modifier,
             content = entry,
-            validationError = validationError,
+            isError = isError,
+            errorMessage = errorMessage,
             index = index,
             canEdit = canEdit,
             onChange = onValueChange,

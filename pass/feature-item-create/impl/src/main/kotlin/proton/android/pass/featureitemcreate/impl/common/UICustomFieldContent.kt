@@ -23,6 +23,7 @@ import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.Parcelize
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.domain.CustomFieldContent
+import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldType
 import java.util.UUID
 
 @Immutable
@@ -47,6 +48,12 @@ sealed interface UICustomFieldContent : Parcelable {
         is Text -> CustomFieldContent.Text(label, value)
         is Hidden -> CustomFieldContent.Hidden(label, value.toHiddenState())
         is Totp -> CustomFieldContent.Totp(label, value.toHiddenState())
+    }
+
+    fun toCustomFieldType(): CustomFieldType = when (this) {
+        is Text -> CustomFieldType.Text
+        is Hidden -> CustomFieldType.Hidden
+        is Totp -> CustomFieldType.Totp
     }
 
     fun compare(other: UICustomFieldContent, encryptionContext: EncryptionContext): Boolean = when (this) {

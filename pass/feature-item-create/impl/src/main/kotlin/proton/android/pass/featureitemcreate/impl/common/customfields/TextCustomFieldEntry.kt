@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,18 +16,19 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemcreate.impl.login.customfields
+package proton.android.pass.featureitemcreate.impl.common.customfields
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -41,90 +42,63 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolde
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.UICustomFieldContent
-import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
-import proton.android.pass.featureitemcreate.impl.login.LoginCustomField
-import proton.android.pass.featureitemcreate.impl.login.LoginItemValidationErrors
+import proton.android.pass.featureitemcreate.impl.login.customfields.CustomFieldInput
+import proton.android.pass.featureitemcreate.impl.login.customfields.CustomFieldOptionsButton
+import proton.android.pass.featureitemcreate.impl.login.customfields.ThemeCustomFieldPreviewProvider
+import me.proton.core.presentation.R as CoreR
 
 @Composable
-internal fun TotpCustomFieldEntry(
+internal fun TextCustomFieldEntry(
     modifier: Modifier = Modifier,
-    content: UICustomFieldContent.Totp,
-    validationError: LoginItemValidationErrors.CustomFieldValidationError?,
+    content: UICustomFieldContent.Text,
+    index: Int,
     canEdit: Boolean,
     onChange: (String) -> Unit,
-    onFocusChange: (LoginCustomField, Boolean) -> Unit,
-    onOptionsClick: () -> Unit,
-    index: Int
+    onFocusChange: (Int, Boolean) -> Unit,
+    onOptionsClick: () -> Unit
 ) {
-    val value = when (val state = content.value) {
-        is UIHiddenState.Concealed -> ""
-        is UIHiddenState.Revealed -> state.clearText
-        is UIHiddenState.Empty -> ""
-    }
-
-    val (isError, errorMessage) = when (validationError) {
-        is LoginItemValidationErrors.CustomFieldValidationError.EmptyField ->
-            true to
-                stringResource(R.string.field_cannot_be_empty)
-        is LoginItemValidationErrors.CustomFieldValidationError.InvalidTotp ->
-            true to
-                stringResource(R.string.totp_create_login_field_invalid)
-        null -> false to ""
-    }
-
     ProtonTextField(
         modifier = modifier
             .roundedContainerNorm()
             .padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
-        value = value,
-        onChange = onChange,
+        textStyle = ProtonTheme.typography.defaultNorm(canEdit),
+        label = { ProtonTextFieldLabel(text = content.label) },
+        placeholder = { ProtonTextFieldPlaceHolder(text = stringResource(R.string.custom_field_text_placeholder)) },
         editable = canEdit,
-        isError = isError,
-        errorMessage = errorMessage,
+        value = content.value,
+        onChange = onChange,
+        singleLine = false,
         moveToNextOnEnter = true,
-        textStyle = ProtonTheme.typography.defaultNorm(canEdit).copy(fontFamily = FontFamily.Monospace),
-        onFocusChange = { onFocusChange(LoginCustomField.CustomFieldTOTP(index), it) },
-        label = { ProtonTextFieldLabel(text = content.label, isError = isError) },
-        placeholder = {
-            ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.totp_create_login_field_placeholder))
-        },
         leadingIcon = {
             Icon(
-                painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_lock),
-                contentDescription = stringResource(R.string.mfa_icon_content_description),
-                tint = if (isError) {
-                    PassTheme.colors.signalDanger
-                } else {
-                    ProtonTheme.colors.iconWeak
-                }
+                painter = painterResource(CoreR.drawable.ic_proton_text_align_left),
+                contentDescription = null,
+                tint = PassTheme.colors.textWeak
             )
         },
         trailingIcon = {
             Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                if (value.isNotEmpty()) {
+                if (content.value.isNotEmpty()) {
                     SmallCrossIconButton { onChange("") }
                 }
                 CustomFieldOptionsButton(onClick = onOptionsClick)
             }
-        }
+        },
+        keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
+        onFocusChange = { onFocusChange(index, it) }
     )
 }
 
 @Preview
 @Composable
-internal fun TotpCustomFieldEntryPreview(
-    @PreviewParameter(ThemeTotpCustomFieldInput::class) input: Pair<Boolean, TotpCustomFieldInput>
+internal fun TextCustomFieldEntryPreview(
+    @PreviewParameter(ThemeCustomFieldPreviewProvider::class) input: Pair<Boolean, CustomFieldInput>
 ) {
     PassTheme(isDark = input.first) {
         Surface {
-            TotpCustomFieldEntry(
-                content = UICustomFieldContent.Totp(
-                    label = "label",
-                    value = UIHiddenState.Revealed("", input.second.text),
-                    id = "id"
-                ),
-                validationError = input.second.error,
-                canEdit = input.second.isEnabled,
+            TextCustomFieldEntry(
+                content = UICustomFieldContent.Text(label = "label", value = input.second.text),
+                canEdit = input.second.enabled,
                 index = 0,
                 onChange = {},
                 onFocusChange = { _, _ -> },

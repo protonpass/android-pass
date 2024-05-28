@@ -31,6 +31,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.data.api.repositories.DRAFT_IDENTITY_CUSTOM_FIELD_KEY
+import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.featureitemcreate.impl.identity.navigation.bottomsheets.AddIdentityFieldType
 import proton.android.pass.featureitemcreate.impl.identity.navigation.bottomsheets.IdentityFieldsSectionNavArgId
 import javax.inject.Inject
@@ -38,6 +40,7 @@ import javax.inject.Inject
 @HiltViewModel
 class IdentityFieldsViewModel @Inject constructor(
     private val identityFieldDraftRepository: IdentityFieldDraftRepository,
+    private val draftRepository: DraftRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -59,10 +62,11 @@ class IdentityFieldsViewModel @Inject constructor(
     )
 
     fun onFieldClick(extraField: ExtraField) {
-        if (extraField is CustomField) {
-            eventFlow.update { IdentityFieldsEvent.OnAddCustomField }
+        identityFieldDraftRepository.addField(extraField)
+        if (extraField is CustomExtraField) {
+            draftRepository.save(DRAFT_IDENTITY_CUSTOM_FIELD_KEY, extraField)
+            eventFlow.update { IdentityFieldsEvent.OnAddCustomExtraField }
         } else {
-            identityFieldDraftRepository.addField(extraField)
             eventFlow.update { IdentityFieldsEvent.OnAddExtraField }
         }
     }

@@ -18,6 +18,7 @@
 
 package proton.android.pass.featureitemcreate.impl.identity.ui
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -28,13 +29,16 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.persistentSetOf
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
+import proton.android.pass.featureitemcreate.impl.common.customfields.CustomFieldEntry
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent.OnFieldChange
 import proton.android.pass.featureitemcreate.impl.identity.presentation.FieldChange
 import proton.android.pass.featureitemcreate.impl.identity.presentation.UIAddressDetails
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.AddressCustomField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.AddressDetailsField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.County
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Floor
@@ -57,7 +61,8 @@ internal fun AddressDetails(
 ) {
     Column(
         modifier = modifier,
-        horizontalAlignment = Alignment.Start
+        horizontalAlignment = Alignment.Start,
+        verticalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
         Column(
             modifier = Modifier.roundedContainerNorm()
@@ -111,6 +116,28 @@ internal fun AddressDetails(
                     value = uiAddressDetails.county,
                     enabled = enabled,
                     onChange = { onEvent(OnFieldChange(FieldChange.County(it))) }
+                )
+            }
+        }
+        if (extraFields.contains(AddressCustomField)) {
+            uiAddressDetails.customFields.forEachIndexed { index, value ->
+                CustomFieldEntry(
+                    entry = value,
+                    canEdit = enabled,
+                    isError = false,
+                    errorMessage = "",
+                    index = index,
+                    onValueChange = {
+                        val fieldChange = FieldChange.CustomField(
+                            sectionType = IdentitySectionType.AddressDetails,
+                            customFieldType = value.toCustomFieldType(),
+                            index = index,
+                            value = it
+                        )
+                        onEvent(OnFieldChange(fieldChange))
+                    },
+                    onFocusChange = { _, _ -> },
+                    onOptionsClick = { }
                 )
             }
         }

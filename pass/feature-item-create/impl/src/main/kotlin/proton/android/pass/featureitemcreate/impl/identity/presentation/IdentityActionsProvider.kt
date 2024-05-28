@@ -22,13 +22,16 @@ import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.Item
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.CustomExtraField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.ExtraField
 
 @Suppress("ComplexInterface", "TooManyFunctions")
 interface IdentityFormActions {
     fun onFieldChange(field: FieldChange)
+    fun onAddCustomField(value: CustomFieldContent, extraFieldType: CustomExtraField)
     fun getFormState(): IdentityItemFormState
     fun isFormStateValid(): Boolean
     fun clearState()

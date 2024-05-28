@@ -32,7 +32,7 @@ import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 
 @HiltAndroidTest
-class AddCustomFieldBottomsheetTest {
+class AddCustomExtraFieldBottomsheetTest {
 
     @get:Rule(order = 0)
     val hiltRule = HiltAndroidRule(this)

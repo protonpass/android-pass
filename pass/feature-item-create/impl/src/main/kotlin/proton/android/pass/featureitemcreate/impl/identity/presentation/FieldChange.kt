@@ -18,6 +18,9 @@
 
 package proton.android.pass.featureitemcreate.impl.identity.presentation
 
+import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldType
+import proton.android.pass.featureitemcreate.impl.identity.ui.IdentitySectionType
+
 sealed interface FieldChange {
     @JvmInline
     value class Title(val value: String) : FieldChange
@@ -117,4 +120,13 @@ sealed interface FieldChange {
 
     @JvmInline
     value class Reddit(val value: String) : FieldChange
+
+    data class CustomField(
+        val sectionType: IdentitySectionType,
+        val customFieldType: CustomFieldType,
+        val index: Int,
+        val value: String
+    ) : FieldChange
 }
+
+

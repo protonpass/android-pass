@@ -32,8 +32,15 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent
+import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent.OnFieldChange
+import proton.android.pass.featureitemcreate.impl.identity.presentation.FieldChange
 import proton.android.pass.featureitemcreate.impl.identity.presentation.UIContactDetails
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.ContactDetailsField
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Facebook
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Instagram
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Linkedin
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Reddit
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Yahoo
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.FacebookInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.InstagramInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.LicenseNumberInput
@@ -64,77 +71,77 @@ internal fun ContactDetails(
             SocialSecurityNumberInput(
                 value = uiContactDetails.socialSecurityNumber,
                 enabled = enabled,
-                onChange = { onEvent(IdentityContentEvent.OnSocialSecurityNumberChange(it)) }
+                onChange = { onEvent(OnFieldChange(FieldChange.SocialSecurityNumber(it))) }
             )
             PassDivider()
             PassportNumberInput(
                 value = uiContactDetails.passportNumber,
                 enabled = enabled,
-                onChange = { onEvent(IdentityContentEvent.OnPassportNumberChange(it)) }
+                onChange = { onEvent(OnFieldChange(FieldChange.PassportNumber(it))) }
             )
             PassDivider()
             LicenseNumberInput(
                 value = uiContactDetails.licenseNumber,
                 enabled = enabled,
-                onChange = { onEvent(IdentityContentEvent.OnLicenseNumberChange(it)) }
+                onChange = { onEvent(OnFieldChange(FieldChange.LicenseNumber(it))) }
             )
             PassDivider()
             WebsiteInput(
                 value = uiContactDetails.website,
                 enabled = enabled,
-                onChange = { onEvent(IdentityContentEvent.OnWebsiteChange(it)) }
+                onChange = { onEvent(OnFieldChange(FieldChange.Website(it))) }
             )
             PassDivider()
             XHandleInput(
                 value = uiContactDetails.xHandle,
                 enabled = enabled,
-                onChange = { onEvent(IdentityContentEvent.OnXHandleChange(it)) }
+                onChange = { onEvent(OnFieldChange(FieldChange.XHandle(it))) }
             )
             PassDivider()
             SecondPhoneNumberInput(
                 value = uiContactDetails.secondPhoneNumber,
                 enabled = enabled,
-                onChange = { onEvent(IdentityContentEvent.OnSecondPhoneNumberChange(it)) }
+                onChange = { onEvent(OnFieldChange(FieldChange.SecondPhoneNumber(it))) }
             )
 
-            if (extraFields.contains(ContactDetailsField.Linkedin)) {
+            if (extraFields.contains(Linkedin)) {
                 PassDivider()
                 LinkedinInput(
                     value = uiContactDetails.linkedin,
                     enabled = enabled,
-                    onChange = { onEvent(IdentityContentEvent.OnLinkedinChange(it)) }
+                    onChange = { onEvent(OnFieldChange(FieldChange.Linkedin(it))) }
                 )
             }
-            if (extraFields.contains(ContactDetailsField.Reddit)) {
+            if (extraFields.contains(Reddit)) {
                 PassDivider()
                 RedditInput(
                     value = uiContactDetails.reddit,
                     enabled = enabled,
-                    onChange = { onEvent(IdentityContentEvent.OnRedditChange(it)) }
+                    onChange = { onEvent(OnFieldChange(FieldChange.Reddit(it))) }
                 )
             }
-            if (extraFields.contains(ContactDetailsField.Facebook)) {
+            if (extraFields.contains(Facebook)) {
                 PassDivider()
                 FacebookInput(
                     value = uiContactDetails.facebook,
                     enabled = enabled,
-                    onChange = { onEvent(IdentityContentEvent.OnFacebookChange(it)) }
+                    onChange = { onEvent(OnFieldChange(FieldChange.Facebook(it))) }
                 )
             }
-            if (extraFields.contains(ContactDetailsField.Yahoo)) {
+            if (extraFields.contains(Yahoo)) {
                 PassDivider()
                 YahooInput(
                     value = uiContactDetails.yahoo,
                     enabled = enabled,
-                    onChange = { onEvent(IdentityContentEvent.OnYahooChange(it)) }
+                    onChange = { onEvent(OnFieldChange(FieldChange.Yahoo(it))) }
                 )
             }
-            if (extraFields.contains(ContactDetailsField.Instagram)) {
+            if (extraFields.contains(Instagram)) {
                 PassDivider()
                 InstagramInput(
                     value = uiContactDetails.instagram,
                     enabled = enabled,
-                    onChange = { onEvent(IdentityContentEvent.OnInstagramChange(it)) }
+                    onChange = { onEvent(OnFieldChange(FieldChange.Instagram(it))) }
                 )
             }
         }

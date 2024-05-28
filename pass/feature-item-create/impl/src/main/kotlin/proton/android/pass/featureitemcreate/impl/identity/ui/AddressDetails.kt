@@ -32,8 +32,12 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent
+import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent.OnFieldChange
+import proton.android.pass.featureitemcreate.impl.identity.presentation.FieldChange
 import proton.android.pass.featureitemcreate.impl.identity.presentation.UIAddressDetails
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.AddressDetailsField
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.County
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Floor
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.CityInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.CountryOrRegionInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.CountyInput
@@ -61,52 +65,52 @@ internal fun AddressDetails(
             OrganizationInput(
                 value = uiAddressDetails.organization,
                 enabled = enabled,
-                onChange = { onEvent(IdentityContentEvent.OnOrganizationChange(it)) }
+                onChange = { onEvent(OnFieldChange(FieldChange.Organization(it))) }
             )
             PassDivider()
             StreetAddressInput(
                 value = uiAddressDetails.streetAddress,
                 enabled = enabled,
-                onChange = { onEvent(IdentityContentEvent.OnStreetAddressChange(it)) }
+                onChange = { onEvent(OnFieldChange(FieldChange.StreetAddress(it))) }
             )
             PassDivider()
             ZipOrPostalCodeInput(
                 value = uiAddressDetails.zipOrPostalCode,
                 enabled = enabled,
-                onChange = { onEvent(IdentityContentEvent.OnZipOrPostalCodeChange(it)) }
+                onChange = { onEvent(OnFieldChange(FieldChange.ZipOrPostalCode(it))) }
             )
             PassDivider()
             CityInput(
                 value = uiAddressDetails.city,
                 enabled = enabled,
-                onChange = { onEvent(IdentityContentEvent.OnCityChange(it)) }
+                onChange = { onEvent(OnFieldChange(FieldChange.City(it))) }
             )
             PassDivider()
             StateOrProvinceInput(
                 value = uiAddressDetails.stateOrProvince,
                 enabled = enabled,
-                onChange = { onEvent(IdentityContentEvent.OnStateOrProvinceChange(it)) }
+                onChange = { onEvent(OnFieldChange(FieldChange.StateOrProvince(it))) }
             )
             PassDivider()
             CountryOrRegionInput(
                 value = uiAddressDetails.countryOrRegion,
                 enabled = enabled,
-                onChange = { onEvent(IdentityContentEvent.OnCountryOrRegionChange(it)) }
+                onChange = { onEvent(OnFieldChange(FieldChange.CountryOrRegion(it))) }
             )
-            if (extraFields.contains(AddressDetailsField.Floor)) {
+            if (extraFields.contains(Floor)) {
                 PassDivider()
                 FloorInput(
                     value = uiAddressDetails.floor,
                     enabled = enabled,
-                    onChange = { onEvent(IdentityContentEvent.OnFloorChange(it)) }
+                    onChange = { onEvent(OnFieldChange(FieldChange.Floor(it))) }
                 )
             }
-            if (extraFields.contains(AddressDetailsField.County)) {
+            if (extraFields.contains(County)) {
                 PassDivider()
                 CountyInput(
                     value = uiAddressDetails.county,
                     enabled = enabled,
-                    onChange = { onEvent(IdentityContentEvent.OnCountyChange(it)) }
+                    onChange = { onEvent(OnFieldChange(FieldChange.County(it))) }
                 )
             }
         }

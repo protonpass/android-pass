@@ -58,12 +58,6 @@ object CustomFieldOptionsBottomSheet : NavItem(
     }
 }
 
-enum class CustomFieldType {
-    Text,
-    Hidden,
-    Totp
-}
-
 sealed interface AddCustomFieldNavigation {
     data object AddText : AddCustomFieldNavigation
     data object AddHidden : AddCustomFieldNavigation

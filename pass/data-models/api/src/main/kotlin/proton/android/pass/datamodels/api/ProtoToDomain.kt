@@ -45,7 +45,7 @@ fun ItemType.Companion.fromParsed(
     ItemV1.Content.ContentCase.NOTE -> ItemType.Note(parsed.metadata.note)
     ItemV1.Content.ContentCase.ALIAS -> createAliasItemType(aliasEmail)
     ItemV1.Content.ContentCase.CREDIT_CARD -> createCreditCardItemType(parsed, context)
-    ItemV1.Content.ContentCase.IDENTITY -> createIdentityItemType(parsed)
+    ItemV1.Content.ContentCase.IDENTITY -> createIdentityItemType(parsed, context)
     ItemV1.Content.ContentCase.CONTENT_NOT_SET,
     null -> ItemType.Unknown
 }
@@ -55,7 +55,7 @@ private fun createAliasItemType(aliasEmail: String?): ItemType.Alias {
     return ItemType.Alias(aliasEmail = aliasEmail)
 }
 
-private fun createIdentityItemType(parsed: ItemV1.Item): ItemType.Identity {
+private fun createIdentityItemType(parsed: ItemV1.Item, context: EncryptionContext): ItemType.Identity {
     val content = parsed.content.identity
     return ItemType.Identity(
         personalDetails = PersonalDetails(
@@ -66,7 +66,10 @@ private fun createIdentityItemType(parsed: ItemV1.Item): ItemType.Identity {
             birthdate = content.birthdate,
             gender = content.gender,
             email = content.email,
-            phoneNumber = content.phoneNumber
+            phoneNumber = content.phoneNumber,
+            customFields = content.extraPersonalDetailsList.map { field ->
+                field.toDomain(context)
+            }
         ),
         addressDetails = AddressDetails(
             organization = content.organization,
@@ -76,7 +79,10 @@ private fun createIdentityItemType(parsed: ItemV1.Item): ItemType.Identity {
             stateOrProvince = content.stateOrProvince,
             countryOrRegion = content.countryOrRegion,
             floor = content.floor,
-            county = content.county
+            county = content.county,
+            customFields = content.extraAddressDetailsList.map { field ->
+                field.toDomain(context)
+            }
         ),
         contactDetails = ContactDetails(
             socialSecurityNumber = content.socialSecurityNumber,
@@ -89,14 +95,20 @@ private fun createIdentityItemType(parsed: ItemV1.Item): ItemType.Identity {
             reddit = content.reddit,
             facebook = content.facebook,
             yahoo = content.yahoo,
-            instagram = content.instagram
+            instagram = content.instagram,
+            customFields = content.extraContactDetailsList.map { field ->
+                field.toDomain(context)
+            }
         ),
         workDetails = WorkDetails(
             company = content.company,
             jobTitle = content.jobTitle,
             personalWebsite = content.personalWebsite,
             workPhoneNumber = content.workPhoneNumber,
-            workEmail = content.workEmail
+            workEmail = content.workEmail,
+            customFields = content.extraWorkDetailsList.map { field ->
+                field.toDomain(context)
+            }
         )
     )
 }

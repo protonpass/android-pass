@@ -34,7 +34,7 @@ data class IdentityFieldsUiState(
 
 sealed interface IdentityFieldsEvent {
     data object Idle : IdentityFieldsEvent
-
-    data object OnSelect : IdentityFieldsEvent
+    data object OnAddExtraField : IdentityFieldsEvent
+    data object OnAddCustomField : IdentityFieldsEvent
 }
 

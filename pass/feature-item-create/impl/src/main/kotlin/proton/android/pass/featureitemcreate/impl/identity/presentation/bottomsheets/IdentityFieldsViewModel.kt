@@ -68,7 +68,7 @@ class IdentityFieldsViewModel @Inject constructor(
     }
 
     fun consumeEvent(event: IdentityFieldsEvent) = viewModelScope.launch {
-        eventFlow.compareAndSet(IdentityFieldsEvent.Idle, event)
+        eventFlow.compareAndSet(event, IdentityFieldsEvent.Idle)
     }
 }
 

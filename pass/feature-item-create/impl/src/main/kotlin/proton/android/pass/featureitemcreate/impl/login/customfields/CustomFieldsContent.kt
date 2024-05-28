@@ -34,7 +34,11 @@ import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.composecomponents.impl.buttons.TransparentTextButton
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.UICustomFieldContent
+import proton.android.pass.featureitemcreate.impl.common.customfields.CustomFieldEntry
 import proton.android.pass.featureitemcreate.impl.login.LoginCustomField
+import proton.android.pass.featureitemcreate.impl.login.LoginCustomField.CustomFieldHidden
+import proton.android.pass.featureitemcreate.impl.login.LoginCustomField.CustomFieldTOTP
+import proton.android.pass.featureitemcreate.impl.login.LoginCustomField.CustomFieldText
 import proton.android.pass.featureitemcreate.impl.login.LoginItemValidationErrors
 import me.proton.core.presentation.R as CoreR
 
@@ -71,17 +75,34 @@ internal fun CustomFieldsContent(
                     }
                 }
             }
+            val (isError, errorMessage) = when (validationError) {
+                is LoginItemValidationErrors.CustomFieldValidationError.EmptyField ->
+                    true to
+                        stringResource(R.string.field_cannot_be_empty)
+
+                is LoginItemValidationErrors.CustomFieldValidationError.InvalidTotp ->
+                    true to
+                        stringResource(R.string.totp_create_login_field_invalid)
+
+                null -> false to ""
+            }
 
             CustomFieldEntry(
                 modifier = entryModifier,
                 entry = field,
-                validationError = validationError,
+                isError = isError,
+                errorMessage = errorMessage,
                 index = idx,
                 canEdit = canEdit,
                 onValueChange = { value ->
                     onEvent(CustomFieldEvent.OnValueChange(value, idx))
                 },
-                onFocusChange = { loginCustomField, isFocused ->
+                onFocusChange = { index, isFocused ->
+                    val loginCustomField = when (field) {
+                        is UICustomFieldContent.Hidden -> CustomFieldHidden(index)
+                        is UICustomFieldContent.Text -> CustomFieldText(index)
+                        is UICustomFieldContent.Totp -> CustomFieldTOTP(index)
+                    }
                     onEvent(CustomFieldEvent.FocusRequested(loginCustomField, isFocused))
                 },
                 onOptionsClick = {

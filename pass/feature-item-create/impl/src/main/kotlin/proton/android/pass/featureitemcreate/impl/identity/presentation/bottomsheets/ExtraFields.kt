@@ -18,11 +18,9 @@
 
 package proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets
 
-import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldType
-
 sealed interface ExtraField
 
-sealed interface CustomField
+sealed interface CustomExtraField
 
 sealed interface PersonalDetailsField : ExtraField
 
@@ -36,7 +34,7 @@ data object Birthdate : PersonalDetailsField
 
 data object Gender : PersonalDetailsField
 
-data class PersonalCustomField(val list: List<CustomFieldType>) : PersonalDetailsField, CustomField
+data object PersonalCustomField : PersonalDetailsField, CustomExtraField
 
 sealed interface AddressDetailsField : ExtraField
 
@@ -44,7 +42,7 @@ data object Floor : AddressDetailsField
 
 data object County : AddressDetailsField
 
-data class AddressCustomField(val list: List<CustomFieldType>) : AddressDetailsField, CustomField
+data object AddressCustomField : AddressDetailsField, CustomExtraField
 
 sealed interface ContactDetailsField : ExtraField
 
@@ -58,7 +56,7 @@ data object Yahoo : ContactDetailsField
 
 data object Instagram : ContactDetailsField
 
-data class ContactCustomField(val list: List<CustomFieldType>) : ContactDetailsField, CustomField
+data object ContactCustomField : ContactDetailsField, CustomExtraField
 
 sealed interface WorkDetailsField : ExtraField
 
@@ -68,4 +66,4 @@ data object WorkPhoneNumber : WorkDetailsField
 
 data object WorkEmail : WorkDetailsField
 
-data class WorkCustomField(val list: List<CustomFieldType>) : WorkDetailsField, CustomField
+data object WorkCustomField : WorkDetailsField, CustomExtraField

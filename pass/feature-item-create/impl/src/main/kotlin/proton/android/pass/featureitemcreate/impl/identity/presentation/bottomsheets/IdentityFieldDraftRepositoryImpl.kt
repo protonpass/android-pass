@@ -34,12 +34,12 @@ class IdentityFieldDraftRepositoryImpl @Inject constructor() : IdentityFieldDraf
             LastName,
             Birthdate,
             Gender,
-            PersonalCustomField(emptyList())
+            PersonalCustomField
         ),
         AddressDetailsField::class.java to setOf(
             Floor,
             County,
-            AddressCustomField(emptyList())
+            AddressCustomField
         ),
         ContactDetailsField::class.java to setOf(
             Linkedin,
@@ -47,22 +47,25 @@ class IdentityFieldDraftRepositoryImpl @Inject constructor() : IdentityFieldDraf
             Facebook,
             Yahoo,
             Instagram,
-            ContactCustomField(emptyList())
+            ContactCustomField
         ),
         WorkDetailsField::class.java to setOf(
             PersonalWebsite,
             WorkPhoneNumber,
             WorkEmail,
-            WorkCustomField(emptyList())
+            WorkCustomField
         )
     )
 
     private val extraFieldsStateFlow = MutableStateFlow<Set<ExtraField>>(emptySet())
 
+    @Suppress("UNCHECKED_CAST")
     override fun <T : ExtraField> getSectionFields(clazz: Class<T>): Set<T> {
-        @Suppress("UNCHECKED_CAST")
-        return (availableFieldsMap[clazz] as? Set<T> ?: emptySet()) -
-            extraFieldsStateFlow.value.filterIsInstance(clazz).toSet()
+        val available = availableFieldsMap[clazz] as? Set<T> ?: emptySet()
+        val selected = extraFieldsStateFlow.value.filterIsInstance(clazz).toSet()
+        val selectedWithoutCustomField =
+            selected - available.filter { it is CustomExtraField }.toSet()
+        return available - selectedWithoutCustomField
     }
 
     override fun observeExtraFields(): Flow<Set<ExtraField>> = extraFieldsStateFlow.asStateFlow()

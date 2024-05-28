@@ -35,6 +35,7 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.featureitemcreate.impl.common.customfields.CustomFieldEntry
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent
+import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent.OnCustomFieldOptions
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent.OnFieldChange
 import proton.android.pass.featureitemcreate.impl.identity.presentation.FieldChange
 import proton.android.pass.featureitemcreate.impl.identity.presentation.UIWorkDetails
@@ -43,6 +44,7 @@ import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsh
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.WorkDetailsField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.WorkEmail
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.WorkPhoneNumber
+import proton.android.pass.featureitemcreate.impl.identity.ui.IdentitySectionType.WorkDetails
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.CompanyInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.JobTitleInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.PersonalWebsiteInput
@@ -111,7 +113,7 @@ internal fun WorkDetails(
                     index = index,
                     onValueChange = {
                         val fieldChange = FieldChange.CustomField(
-                            sectionType = IdentitySectionType.WorkDetails,
+                            sectionType = WorkDetails,
                             customFieldType = value.toCustomFieldType(),
                             index = index,
                             value = it
@@ -119,7 +121,7 @@ internal fun WorkDetails(
                         onEvent(OnFieldChange(fieldChange))
                     },
                     onFocusChange = { _, _ -> },
-                    onOptionsClick = { }
+                    onOptionsClick = { onEvent(OnCustomFieldOptions(index, value.label, WorkCustomField)) }
                 )
             }
         }

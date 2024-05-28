@@ -38,7 +38,9 @@ import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdentityNavigation
+import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdentityNavigation.OpenExtraFieldBottomSheet
 import proton.android.pass.featureitemcreate.impl.identity.navigation.CreateIdentityNavigation
+import proton.android.pass.featureitemcreate.impl.identity.navigation.CreateIdentityNavigation.SelectVault
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent
 import proton.android.pass.featureitemcreate.impl.identity.navigation.bottomsheets.AddIdentityFieldType
 import proton.android.pass.featureitemcreate.impl.identity.presentation.CreateIdentityViewModel
@@ -86,26 +88,35 @@ fun CreateIdentityScreen(
             onEvent = { event ->
                 when (event) {
                     is IdentityContentEvent.OnVaultSelect ->
-                        actionAfterKeyboardHide =
-                            { onNavigate(CreateIdentityNavigation.SelectVault(event.shareId)) }
+                        actionAfterKeyboardHide = { onNavigate(SelectVault(event.shareId)) }
 
                     is IdentityContentEvent.Submit -> viewModel.onSubmit(event.shareId)
                     IdentityContentEvent.Up -> onExit()
 
                     is IdentityContentEvent.OnFieldChange -> viewModel.onFieldChange(event.value)
 
-                    IdentityContentEvent.OnAddAddressDetailField ->
-                        onNavigate(BaseIdentityNavigation.OpenExtraFieldBottomSheet(AddIdentityFieldType.Address))
+                    IdentityContentEvent.OnAddAddressDetailField -> actionAfterKeyboardHide = {
+                        onNavigate(OpenExtraFieldBottomSheet(AddIdentityFieldType.Address))
+                    }
 
-                    IdentityContentEvent.OnAddContactDetailField ->
-                        onNavigate(BaseIdentityNavigation.OpenExtraFieldBottomSheet(AddIdentityFieldType.Contact))
+                    IdentityContentEvent.OnAddContactDetailField -> actionAfterKeyboardHide = {
+                        onNavigate(OpenExtraFieldBottomSheet(AddIdentityFieldType.Contact))
+                    }
 
-                    IdentityContentEvent.OnAddPersonalDetailField ->
-                        onNavigate(BaseIdentityNavigation.OpenExtraFieldBottomSheet(AddIdentityFieldType.Personal))
+                    IdentityContentEvent.OnAddPersonalDetailField -> actionAfterKeyboardHide = {
+                        onNavigate(OpenExtraFieldBottomSheet(AddIdentityFieldType.Personal))
+                    }
 
-                    IdentityContentEvent.OnAddWorkField ->
-                        onNavigate(BaseIdentityNavigation.OpenExtraFieldBottomSheet(AddIdentityFieldType.Work))
+                    IdentityContentEvent.OnAddWorkField -> actionAfterKeyboardHide = {
+                        onNavigate(OpenExtraFieldBottomSheet(AddIdentityFieldType.Work))
+                    }
 
+                    is IdentityContentEvent.OnCustomFieldOptions -> {
+                        viewModel.updateSelectedSection(event.customExtraField)
+                        actionAfterKeyboardHide = {
+                            onNavigate(BaseIdentityNavigation.CustomFieldOptions(event.label, event.index))
+                        }
+                    }
                 }
             }
         )

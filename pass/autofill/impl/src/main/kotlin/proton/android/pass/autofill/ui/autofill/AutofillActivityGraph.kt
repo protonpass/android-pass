@@ -391,6 +391,22 @@ fun NavGraphBuilder.autofillActivityGraph(
                         backDestination = CreateIdentity
                     )
                 }
+
+                is BaseIdentityNavigation.EditCustomField -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = EditCustomFieldNameDialog,
+                        route = EditCustomFieldNameDialog.buildRoute(it.index, it.title),
+                        backDestination = CreateIdentity
+                    )
+                }
+
+                is BaseIdentityNavigation.CustomFieldOptions -> appNavigator.navigate(
+                    destination = CustomFieldOptionsBottomSheet,
+                    route = CustomFieldOptionsBottomSheet.buildRoute(it.index, it.title)
+                )
+                BaseIdentityNavigation.RemovedCustomField -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
             }
         }
     )

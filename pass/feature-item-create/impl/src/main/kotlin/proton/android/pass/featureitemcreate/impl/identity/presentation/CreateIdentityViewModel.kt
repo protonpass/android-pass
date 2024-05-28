@@ -41,7 +41,9 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_KEY
+import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_TITLE_KEY
 import proton.android.pass.data.api.repositories.DRAFT_IDENTITY_CUSTOM_FIELD_KEY
+import proton.android.pass.data.api.repositories.DRAFT_REMOVE_CUSTOM_FIELD_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
@@ -49,6 +51,7 @@ import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.ItemCreate
+import proton.android.pass.featureitemcreate.impl.common.CustomFieldIndexTitle
 import proton.android.pass.featureitemcreate.impl.common.OptionShareIdSaver
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.featureitemcreate.impl.common.getShareUiStateFlow
@@ -84,6 +87,8 @@ class CreateIdentityViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             launch { observeNewCustomField() }
+            launch { observeRemoveCustomField() }
+            launch { observeRenameCustomField() }
         }
     }
 
@@ -159,11 +164,37 @@ class CreateIdentityViewModel @Inject constructor(
             .collect {
                 if (it !is Some) return@collect
                 draftRepository.delete<CustomFieldContent>(DRAFT_CUSTOM_FIELD_KEY)
-                val extraFieldType = draftRepository.delete<CustomExtraField>(DRAFT_IDENTITY_CUSTOM_FIELD_KEY)
+                val extraFieldType =
+                    draftRepository.delete<CustomExtraField>(DRAFT_IDENTITY_CUSTOM_FIELD_KEY)
                 if (extraFieldType !is Some) return@collect
                 identityActionsProvider.onAddCustomField(it.value, extraFieldType.value)
             }
     }
+
+    private suspend fun observeRemoveCustomField() {
+        draftRepository.get<Int>(DRAFT_REMOVE_CUSTOM_FIELD_KEY)
+            .collect {
+                if (it !is Some) return@collect
+                draftRepository.delete<Int>(DRAFT_REMOVE_CUSTOM_FIELD_KEY)
+                val extraFieldType =
+                    draftRepository.delete<CustomExtraField>(DRAFT_IDENTITY_CUSTOM_FIELD_KEY)
+                if (extraFieldType !is Some) return@collect
+                identityActionsProvider.onRemoveCustomField(it.value, extraFieldType.value)
+            }
+    }
+
+    private suspend fun observeRenameCustomField() {
+        draftRepository.get<CustomFieldIndexTitle>(DRAFT_CUSTOM_FIELD_TITLE_KEY)
+            .collect {
+                if (it !is Some) return@collect
+                draftRepository.delete<CustomFieldIndexTitle>(DRAFT_CUSTOM_FIELD_TITLE_KEY)
+                val extraFieldType =
+                    draftRepository.delete<CustomExtraField>(DRAFT_IDENTITY_CUSTOM_FIELD_KEY)
+                if (extraFieldType !is Some) return@collect
+                identityActionsProvider.onRenameCustomField(it.value, extraFieldType.value)
+            }
+    }
+
 
     companion object {
         private const val TAG = "CreateIdentityViewModel"

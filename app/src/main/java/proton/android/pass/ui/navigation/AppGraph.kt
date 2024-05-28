@@ -66,8 +66,6 @@ import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdenti
 import proton.android.pass.featureitemcreate.impl.identity.navigation.CreateIdentity
 import proton.android.pass.featureitemcreate.impl.identity.navigation.CreateIdentityNavigation
 import proton.android.pass.featureitemcreate.impl.identity.navigation.bottomsheets.IdentityFieldsBottomSheet
-import proton.android.pass.featureitemcreate.impl.identity.navigation.bottomsheets.IdentityFieldsNavigation
-import proton.android.pass.featureitemcreate.impl.identity.navigation.bottomsheets.identityFieldsGraph
 import proton.android.pass.featureitemcreate.impl.identity.navigation.createIdentityGraph
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
@@ -805,8 +803,8 @@ fun NavGraphBuilder.appGraph(
     createIdentityGraph(
         onNavigate = {
             when (it) {
-                BaseIdentityNavigation.Close -> appNavigator.navigateBack()
-                is BaseIdentityNavigation.AddField -> appNavigator.navigate(
+                BaseIdentityNavigation.Close -> dismissBottomSheet { appNavigator.navigateBack() }
+                is BaseIdentityNavigation.OpenExtraFieldBottomSheet -> appNavigator.navigate(
                     destination = IdentityFieldsBottomSheet,
                     route = IdentityFieldsBottomSheet.createRoute(it.addIdentityFieldType)
                 )
@@ -816,17 +814,12 @@ fun NavGraphBuilder.appGraph(
                     destination = SelectVaultBottomsheet,
                     route = SelectVaultBottomsheet.createNavRoute(it.shareId)
                 )
+
+                BaseIdentityNavigation.OpenCustomFieldBottomSheet ->
+                    dismissBottomSheet { appNavigator.navigate(AddCustomFieldBottomSheet) }
             }
         }
     )
-    identityFieldsGraph {
-        when (it) {
-            IdentityFieldsNavigation.Close -> dismissBottomSheet { appNavigator.navigateBack() }
-            IdentityFieldsNavigation.AddCustomField -> dismissBottomSheet {
-                appNavigator.navigate(AddCustomFieldBottomSheet)
-            }
-        }
-    }
     itemDetailGraph(
         onNavigate = {
             when (it) {

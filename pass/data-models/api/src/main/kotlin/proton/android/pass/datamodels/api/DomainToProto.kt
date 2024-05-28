@@ -186,6 +186,7 @@ fun ItemContents.serializeToProto(
                     .setLastName(personalDetailsContent.lastName)
                     .setBirthdate(personalDetailsContent.birthdate)
                     .setGender(personalDetailsContent.gender)
+                    .clearExtraPersonalDetails()
                     .addAllExtraPersonalDetails(
                         personalDetailsContent.customFields.mapToExtraFields(encryptionContext)
                     )
@@ -198,7 +199,8 @@ fun ItemContents.serializeToProto(
                     .setCountryOrRegion(addressDetailsContent.countryOrRegion)
                     .setFloor(addressDetailsContent.floor)
                     .setCounty(addressDetailsContent.county)
-                    .addAllExtraPersonalDetails(
+                    .clearExtraAddressDetails()
+                    .addAllExtraAddressDetails(
                         addressDetailsContent.customFields.mapToExtraFields(encryptionContext)
                     )
                     // Contact details
@@ -213,7 +215,8 @@ fun ItemContents.serializeToProto(
                     .setFacebook(contactDetailsContent.facebook)
                     .setYahoo(contactDetailsContent.yahoo)
                     .setInstagram(contactDetailsContent.instagram)
-                    .addAllExtraPersonalDetails(
+                    .clearExtraContactDetails()
+                    .addAllExtraContactDetails(
                         contactDetailsContent.customFields.mapToExtraFields(encryptionContext)
                     )
                     // Work details
@@ -222,7 +225,8 @@ fun ItemContents.serializeToProto(
                     .setPersonalWebsite(workDetailsContent.personalWebsite)
                     .setWorkPhoneNumber(workDetailsContent.workPhoneNumber)
                     .setWorkEmail(workDetailsContent.workEmail)
-                    .addAllExtraPersonalDetails(
+                    .clearExtraWorkDetails()
+                    .addAllExtraWorkDetails(
                         workDetailsContent.customFields.mapToExtraFields(encryptionContext)
                     )
                     .build()

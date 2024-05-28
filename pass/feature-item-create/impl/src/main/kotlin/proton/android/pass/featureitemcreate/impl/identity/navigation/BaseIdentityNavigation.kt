@@ -24,5 +24,9 @@ sealed interface BaseIdentityNavigation {
     data object Close : BaseIdentityNavigation
 
     @JvmInline
-    value class AddField(val addIdentityFieldType: AddIdentityFieldType) : BaseIdentityNavigation
+    value class OpenExtraFieldBottomSheet(
+        val addIdentityFieldType: AddIdentityFieldType
+    ) : BaseIdentityNavigation
+
+    data object OpenCustomFieldBottomSheet : BaseIdentityNavigation
 }

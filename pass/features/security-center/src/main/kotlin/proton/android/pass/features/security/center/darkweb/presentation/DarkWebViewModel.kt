@@ -173,7 +173,7 @@ internal class DarkWebViewModel @Inject constructor(
     }
 
     fun consumeEvent(event: DarkWebEvent) = viewModelScope.launch {
-        eventFlow.compareAndSet(DarkWebEvent.Idle, event)
+        eventFlow.compareAndSet(event, DarkWebEvent.Idle)
     }
 
     @Suppress("ComplexMethod", "CyclomaticComplexMethod")

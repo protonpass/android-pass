@@ -28,7 +28,10 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.ShareId
+import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.customFieldBottomSheetGraph
 import proton.android.pass.featureitemcreate.impl.common.KEY_VAULT_SELECTED
+import proton.android.pass.featureitemcreate.impl.dialogs.CustomFieldNameNavigation
+import proton.android.pass.featureitemcreate.impl.dialogs.customFieldNameDialogGraph
 import proton.android.pass.featureitemcreate.impl.identity.navigation.bottomsheets.IdentityFieldsNavigation
 import proton.android.pass.featureitemcreate.impl.identity.navigation.bottomsheets.identityFieldsGraph
 import proton.android.pass.featureitemcreate.impl.identity.ui.CreateIdentityScreen
@@ -82,6 +85,17 @@ fun NavGraphBuilder.createIdentityGraph(onNavigate: (BaseIdentityNavigation) -> 
                 IdentityFieldsNavigation.Close -> onNavigate(BaseIdentityNavigation.Close)
                 IdentityFieldsNavigation.AddCustomField ->
                     onNavigate(BaseIdentityNavigation.OpenCustomFieldBottomSheet)
+            }
+        }
+        customFieldBottomSheetGraph(
+            onAddCustomFieldNavigate = { onNavigate(BaseIdentityNavigation.CustomFieldTypeSelected(it)) },
+            onEditCustomFieldNavigate = { _: String, _: Int -> },
+            onRemoveCustomFieldNavigate = { },
+            onCloseNavigate = { onNavigate(BaseIdentityNavigation.Close) }
+        )
+        customFieldNameDialogGraph {
+            when (it) {
+                is CustomFieldNameNavigation.Close -> onNavigate(BaseIdentityNavigation.Close)
             }
         }
     }

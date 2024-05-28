@@ -18,6 +18,7 @@
 
 package proton.android.pass.featureitemcreate.impl.identity.navigation
 
+import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldType
 import proton.android.pass.featureitemcreate.impl.identity.navigation.bottomsheets.AddIdentityFieldType
 
 sealed interface BaseIdentityNavigation {
@@ -29,4 +30,7 @@ sealed interface BaseIdentityNavigation {
     ) : BaseIdentityNavigation
 
     data object OpenCustomFieldBottomSheet : BaseIdentityNavigation
+
+    @JvmInline
+    value class CustomFieldTypeSelected(val type: CustomFieldType) : BaseIdentityNavigation
 }

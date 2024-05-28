@@ -92,68 +92,7 @@ fun CreateIdentityScreen(
                     is IdentityContentEvent.Submit -> viewModel.onSubmit(event.shareId)
                     IdentityContentEvent.Up -> onExit()
 
-                    is IdentityContentEvent.OnTitleChange -> viewModel.onTitleChanged(event.title)
-                    is IdentityContentEvent.OnBirthdateChange -> viewModel.onBirthdateChanged(event.birthdate)
-                    is IdentityContentEvent.OnCityChange -> viewModel.onCityChanged(event.city)
-                    is IdentityContentEvent.OnCompanyChange -> viewModel.onCompanyChanged(event.company)
-                    is IdentityContentEvent.OnCountryOrRegionChange ->
-                        viewModel.onCountryOrRegionChanged(event.countryOrRegion)
-
-                    is IdentityContentEvent.OnEmailChange -> viewModel.onEmailChanged(event.email)
-                    is IdentityContentEvent.OnFirstNameChange -> viewModel.onFirstNameChanged(event.firstName)
-                    is IdentityContentEvent.OnFullNameChange -> viewModel.onFullNameChanged(event.fullName)
-                    is IdentityContentEvent.OnGenderChange -> viewModel.onGenderChanged(event.gender)
-                    is IdentityContentEvent.OnJobTitleChange -> viewModel.onJobTitleChanged(event.jobTitle)
-                    is IdentityContentEvent.OnLastNameChange -> viewModel.onLastNameChanged(event.lastName)
-                    is IdentityContentEvent.OnLicenseNumberChange ->
-                        viewModel.onLicenseNumberChanged(event.licenseNumber)
-
-                    is IdentityContentEvent.OnMiddleNameChange -> viewModel.onMiddleNameChanged(
-                        event.middleName
-                    )
-
-                    is IdentityContentEvent.OnOrganizationChange ->
-                        viewModel.onOrganizationChanged(event.organization)
-
-                    is IdentityContentEvent.OnPassportNumberChange ->
-                        viewModel.onPassportNumberChanged(event.passportNumber)
-
-                    is IdentityContentEvent.OnPhoneNumberChange -> viewModel.onPhoneNumberChanged(
-                        event.phoneNumber
-                    )
-
-                    is IdentityContentEvent.OnSocialSecurityNumberChange ->
-                        viewModel.onSocialSecurityNumberChanged(event.socialSecurityNumber)
-
-                    is IdentityContentEvent.OnStateOrProvinceChange ->
-                        viewModel.onStateOrProvinceChanged(event.stateOrProvince)
-
-                    is IdentityContentEvent.OnStreetAddressChange ->
-                        viewModel.onStreetAddressChanged(event.streetAddress)
-
-                    is IdentityContentEvent.OnWebsiteChange -> viewModel.onWebsiteChanged(event.website)
-                    is IdentityContentEvent.OnXHandleChange -> viewModel.onXHandleChanged(event.xHandle)
-                    is IdentityContentEvent.OnZipOrPostalCodeChange ->
-                        viewModel.onZipOrPostalCodeChanged(event.zipOrPostalCode)
-
-                    is IdentityContentEvent.OnSecondPhoneNumberChange ->
-                        viewModel.onSecondPhoneNumberChanged(event.phoneNumber)
-
-                    is IdentityContentEvent.OnCountyChange -> viewModel.onCountyChanged(event.county)
-                    is IdentityContentEvent.OnFacebookChange -> viewModel.onFacebookChanged(event.facebook)
-                    is IdentityContentEvent.OnFloorChange -> viewModel.onFloorChanged(event.floor)
-                    is IdentityContentEvent.OnInstagramChange -> viewModel.onInstagramChanged(event.instagram)
-                    is IdentityContentEvent.OnLinkedinChange -> viewModel.onLinkedinChanged(event.linkedin)
-                    is IdentityContentEvent.OnPersonalWebsiteChange ->
-                        viewModel.onPersonalWebsiteChanged(event.personalWebsite)
-
-                    is IdentityContentEvent.OnRedditChange -> viewModel.onRedditChanged(event.reddit)
-                    is IdentityContentEvent.OnWorkEmailChange -> viewModel.onWorkEmailChanged(event.email)
-                    is IdentityContentEvent.OnWorkPhoneNumberChange ->
-                        viewModel.onWorkPhoneNumberChanged(event.phoneNumber)
-
-                    is IdentityContentEvent.OnYahooChange ->
-                        viewModel.onYahooChanged(event.yahoo)
+                    is IdentityContentEvent.OnFieldChange -> viewModel.onFieldChange(event.value)
 
                     IdentityContentEvent.OnAddAddressDetailField ->
                         onNavigate(BaseIdentityNavigation.AddField(AddIdentityFieldType.Address))
@@ -166,6 +105,7 @@ fun CreateIdentityScreen(
 
                     IdentityContentEvent.OnAddWorkField ->
                         onNavigate(BaseIdentityNavigation.AddField(AddIdentityFieldType.Work))
+
                 }
             }
         )

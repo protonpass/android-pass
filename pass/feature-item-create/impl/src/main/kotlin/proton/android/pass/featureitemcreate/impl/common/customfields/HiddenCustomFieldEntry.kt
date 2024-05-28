@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemcreate.impl.login.customfields
+package proton.android.pass.featureitemcreate.impl.common.customfields
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -44,8 +44,10 @@ import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.UICustomFieldContent
 import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
-import proton.android.pass.featureitemcreate.impl.login.LoginCustomField
 import proton.android.pass.featureitemcreate.impl.login.PASSWORD_CONCEALED_LENGTH
+import proton.android.pass.featureitemcreate.impl.login.customfields.CustomFieldInput
+import proton.android.pass.featureitemcreate.impl.login.customfields.CustomFieldOptionsButton
+import proton.android.pass.featureitemcreate.impl.login.customfields.ThemeCustomFieldPreviewProvider
 import me.proton.core.presentation.R as CoreR
 
 @Composable
@@ -54,7 +56,7 @@ internal fun HiddenCustomFieldEntry(
     content: UICustomFieldContent.Hidden,
     canEdit: Boolean,
     onChange: (String) -> Unit,
-    onFocusChange: (LoginCustomField, Boolean) -> Unit,
+    onFocusChange: (Int, Boolean) -> Unit,
     onOptionsClick: () -> Unit,
     index: Int
 ) {
@@ -93,9 +95,7 @@ internal fun HiddenCustomFieldEntry(
                 }
             },
             visualTransformation = visualTransformation,
-            onFocusChange = {
-                onFocusChange(LoginCustomField.CustomFieldHidden(index), it)
-            }
+            onFocusChange = { onFocusChange(index, it) }
         )
     }
 }

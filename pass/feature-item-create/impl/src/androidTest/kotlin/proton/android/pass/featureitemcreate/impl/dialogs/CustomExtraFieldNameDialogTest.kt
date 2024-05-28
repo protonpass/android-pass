@@ -48,7 +48,7 @@ import kotlin.test.assertNotNull
 import me.proton.core.presentation.compose.R as CoreR
 
 @HiltAndroidTest
-class CustomFieldNameDialogTest {
+class CustomExtraFieldNameDialogTest {
 
     @get:Rule(order = 0)
     val hiltRule = HiltAndroidRule(this)

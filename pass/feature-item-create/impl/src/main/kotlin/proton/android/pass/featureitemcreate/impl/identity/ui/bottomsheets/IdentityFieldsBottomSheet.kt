@@ -40,7 +40,7 @@ fun IdentityFieldsBottomSheet(
         when (state.event) {
             IdentityFieldsEvent.OnAddExtraField -> onNavigate(IdentityFieldsNavigation.Close)
             IdentityFieldsEvent.Idle -> {}
-            IdentityFieldsEvent.OnAddCustomField -> onNavigate(IdentityFieldsNavigation.AddCustomField)
+            IdentityFieldsEvent.OnAddCustomExtraField -> onNavigate(IdentityFieldsNavigation.AddCustomField)
         }
         viewModel.consumeEvent(state.event)
     }

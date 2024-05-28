@@ -36,11 +36,11 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.item.icon.IdentityIcon
 import proton.android.pass.composecomponents.impl.pinning.BoxedPin
 import proton.android.pass.composecomponents.impl.pinning.CircledPin
-import proton.android.pass.domain.AddressDetails
-import proton.android.pass.domain.ContactDetails
+import proton.android.pass.domain.AddressDetailsContent
+import proton.android.pass.domain.ContactDetailsContent
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.PersonalDetails
-import proton.android.pass.domain.WorkDetails
+import proton.android.pass.domain.PersonalDetailsContent
+import proton.android.pass.domain.WorkDetailsContent
 
 private const val MAX_PREVIEW_LENGTH = 128
 
@@ -56,18 +56,18 @@ fun IdentityRow(
     val highlightColor = PassTheme.colors.interactionNorm
     val fields = remember(
         content.title,
-        content.personalDetails,
-        content.addressDetails,
-        content.contactDetails,
-        content.workDetails,
+        content.personalDetailsContent,
+        content.addressDetailsContent,
+        content.contactDetailsContent,
+        content.workDetailsContent,
         highlight
     ) {
         getHighlightedFields(
             title = content.title,
-            personalDetails = content.personalDetails,
-            addressDetails = content.addressDetails,
-            contactDetails = content.contactDetails,
-            workDetails = content.workDetails,
+            personalDetailsContent = content.personalDetailsContent,
+            addressDetailsContent = content.addressDetailsContent,
+            contactDetailsContent = content.contactDetailsContent,
+            workDetailsContent = content.workDetailsContent,
             highlight = highlight,
             highlightColor = highlightColor
         )
@@ -118,15 +118,15 @@ fun IdentityRow(
 @Suppress("LongMethod", "LongParameterList")
 private fun getHighlightedFields(
     title: String,
-    personalDetails: PersonalDetails,
-    addressDetails: AddressDetails,
-    contactDetails: ContactDetails,
-    workDetails: WorkDetails,
+    personalDetailsContent: PersonalDetailsContent,
+    addressDetailsContent: AddressDetailsContent,
+    contactDetailsContent: ContactDetailsContent,
+    workDetailsContent: WorkDetailsContent,
     highlight: String,
     highlightColor: Color
 ): IdentityHighlightFields {
     var annotatedTitle = AnnotatedString(title.take(MAX_PREVIEW_LENGTH))
-    val nameAndEmail = personalDetails.fullName + " / " + personalDetails.email
+    val nameAndEmail = personalDetailsContent.fullName + " / " + personalDetailsContent.email
     var annotatedFullNameEmail = AnnotatedString(nameAndEmail.take(MAX_PREVIEW_LENGTH))
 
     val annotatedFields: MutableList<AnnotatedString> = mutableListOf()
@@ -143,12 +143,12 @@ private fun getHighlightedFields(
         annotatedFields.addAll(
             highlightFields(
                 listOf(
-                    personalDetails.firstName,
-                    personalDetails.middleName,
-                    personalDetails.lastName,
-                    personalDetails.birthdate,
-                    personalDetails.gender,
-                    personalDetails.phoneNumber
+                    personalDetailsContent.firstName,
+                    personalDetailsContent.middleName,
+                    personalDetailsContent.lastName,
+                    personalDetailsContent.birthdate,
+                    personalDetailsContent.gender,
+                    personalDetailsContent.phoneNumber
                 ),
                 highlight,
                 highlightColor
@@ -159,14 +159,14 @@ private fun getHighlightedFields(
         annotatedFields.addAll(
             highlightFields(
                 listOf(
-                    addressDetails.organization,
-                    addressDetails.streetAddress,
-                    addressDetails.zipOrPostalCode,
-                    addressDetails.city,
-                    addressDetails.stateOrProvince,
-                    addressDetails.countryOrRegion,
-                    addressDetails.floor,
-                    addressDetails.county
+                    addressDetailsContent.organization,
+                    addressDetailsContent.streetAddress,
+                    addressDetailsContent.zipOrPostalCode,
+                    addressDetailsContent.city,
+                    addressDetailsContent.stateOrProvince,
+                    addressDetailsContent.countryOrRegion,
+                    addressDetailsContent.floor,
+                    addressDetailsContent.county
                 ),
                 highlight,
                 highlightColor
@@ -177,17 +177,17 @@ private fun getHighlightedFields(
         annotatedFields.addAll(
             highlightFields(
                 listOf(
-                    contactDetails.socialSecurityNumber,
-                    contactDetails.passportNumber,
-                    contactDetails.licenseNumber,
-                    contactDetails.website,
-                    contactDetails.xHandle,
-                    contactDetails.secondPhoneNumber,
-                    contactDetails.linkedin,
-                    contactDetails.reddit,
-                    contactDetails.facebook,
-                    contactDetails.yahoo,
-                    contactDetails.instagram
+                    contactDetailsContent.socialSecurityNumber,
+                    contactDetailsContent.passportNumber,
+                    contactDetailsContent.licenseNumber,
+                    contactDetailsContent.website,
+                    contactDetailsContent.xHandle,
+                    contactDetailsContent.secondPhoneNumber,
+                    contactDetailsContent.linkedin,
+                    contactDetailsContent.reddit,
+                    contactDetailsContent.facebook,
+                    contactDetailsContent.yahoo,
+                    contactDetailsContent.instagram
                 ),
                 highlight,
                 highlightColor
@@ -198,11 +198,11 @@ private fun getHighlightedFields(
         annotatedFields.addAll(
             highlightFields(
                 listOf(
-                    workDetails.company,
-                    workDetails.jobTitle,
-                    workDetails.personalWebsite,
-                    workDetails.workPhoneNumber,
-                    workDetails.workEmail
+                    workDetailsContent.company,
+                    workDetailsContent.jobTitle,
+                    workDetailsContent.personalWebsite,
+                    workDetailsContent.workPhoneNumber,
+                    workDetailsContent.workEmail
                 ),
                 highlight,
                 highlightColor

@@ -42,6 +42,117 @@ sealed interface CustomField {
 }
 
 @Serializable
+data class PersonalDetails(
+    val fullName: String,
+    val firstName: String,
+    val middleName: String,
+    val lastName: String,
+    val birthdate: String,
+    val gender: String,
+    val email: String,
+    val phoneNumber: String,
+    val customFields: List<CustomField>
+) {
+
+    companion object {
+        val EMPTY = PersonalDetails(
+            fullName = "",
+            firstName = "",
+            middleName = "",
+            lastName = "",
+            birthdate = "",
+            gender = "",
+            email = "",
+            phoneNumber = "",
+            customFields = emptyList()
+        )
+    }
+}
+
+@Serializable
+data class AddressDetails(
+    val organization: String,
+    val streetAddress: String,
+    val zipOrPostalCode: String,
+    val city: String,
+    val stateOrProvince: String,
+    val countryOrRegion: String,
+    val floor: String,
+    val county: String,
+    val customFields: List<CustomField>
+) {
+    companion object {
+        val EMPTY = AddressDetails(
+            organization = "",
+            streetAddress = "",
+            zipOrPostalCode = "",
+            city = "",
+            stateOrProvince = "",
+            countryOrRegion = "",
+            floor = "",
+            county = "",
+            customFields = emptyList()
+        )
+    }
+}
+
+@Serializable
+data class ContactDetails(
+    val socialSecurityNumber: String,
+    val passportNumber: String,
+    val licenseNumber: String,
+    val website: String,
+    val xHandle: String,
+    val secondPhoneNumber: String,
+    val linkedin: String,
+    val reddit: String,
+    val facebook: String,
+    val yahoo: String,
+    val instagram: String,
+    val customFields: List<CustomField>
+) {
+    companion object {
+        val EMPTY = ContactDetails(
+            socialSecurityNumber = "",
+            passportNumber = "",
+            licenseNumber = "",
+            website = "",
+            xHandle = "",
+            secondPhoneNumber = "",
+            linkedin = "",
+            reddit = "",
+            facebook = "",
+            yahoo = "",
+            instagram = "",
+            customFields = emptyList()
+        )
+    }
+
+}
+
+@Serializable
+data class WorkDetails(
+    val company: String,
+    val jobTitle: String,
+    val personalWebsite: String,
+    val workPhoneNumber: String,
+    val workEmail: String,
+    val customFields: List<CustomField>
+) {
+    companion object {
+        val EMPTY = WorkDetails(
+            company = "",
+            jobTitle = "",
+            personalWebsite = "",
+            workPhoneNumber = "",
+            workEmail = "",
+            customFields = emptyList()
+        )
+    }
+}
+
+
+@Serializable
 sealed interface ItemType {
 
     @Serializable

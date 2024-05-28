@@ -20,4 +20,5 @@ package proton.android.pass.featureitemcreate.impl.identity.navigation.bottomshe
 
 sealed interface IdentityFieldsNavigation {
     data object Close : IdentityFieldsNavigation
+    data object AddCustomField : IdentityFieldsNavigation
 }

@@ -21,15 +21,15 @@ package proton.android.pass.composecomponents.impl.pinning
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.datetime.Clock
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.domain.AddressDetails
-import proton.android.pass.domain.ContactDetails
+import proton.android.pass.domain.AddressDetailsContent
+import proton.android.pass.domain.ContactDetailsContent
 import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.PersonalDetails
+import proton.android.pass.domain.PersonalDetailsContent
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.WorkDetails
+import proton.android.pass.domain.WorkDetailsContent
 
 internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
 
@@ -107,10 +107,10 @@ internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
             contents = ItemContents.Identity(
                 title = "Identity title",
                 note = "",
-                personalDetails = PersonalDetails.EMPTY,
-                addressDetails = AddressDetails.EMPTY,
-                contactDetails = ContactDetails.EMPTY,
-                workDetails = WorkDetails.EMPTY
+                personalDetailsContent = PersonalDetailsContent.EMPTY,
+                addressDetailsContent = AddressDetailsContent.EMPTY,
+                contactDetailsContent = ContactDetailsContent.EMPTY,
+                workDetailsContent = WorkDetailsContent.EMPTY
             ),
             state = 0,
             createTime = Clock.System.now(),

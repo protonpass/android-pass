@@ -32,7 +32,14 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent
+import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent.OnFieldChange
+import proton.android.pass.featureitemcreate.impl.identity.presentation.FieldChange
 import proton.android.pass.featureitemcreate.impl.identity.presentation.UIPersonalDetails
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Birthdate
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.FirstName
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Gender
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.LastName
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.MiddleName
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.PersonalDetailsField
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.BirthdateInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.EmailInput
@@ -61,59 +68,59 @@ internal fun PersonalDetails(
             FullNameInput(
                 value = uiPersonalDetails.fullName,
                 enabled = enabled,
-                onChange = { onEvent(IdentityContentEvent.OnFullNameChange(it)) }
+                onChange = { onEvent(OnFieldChange(FieldChange.FullName(it))) }
             )
             PassDivider()
             EmailInput(
                 value = uiPersonalDetails.email,
                 enabled = enabled,
-                onChange = { onEvent(IdentityContentEvent.OnEmailChange(it)) }
+                onChange = { onEvent(OnFieldChange(FieldChange.Email(it))) }
             )
             PassDivider()
             PhoneNumberInput(
                 value = uiPersonalDetails.phoneNumber,
                 enabled = enabled,
-                onChange = { onEvent(IdentityContentEvent.OnPhoneNumberChange(it)) }
+                onChange = { onEvent(OnFieldChange(FieldChange.PhoneNumber(it))) }
             )
 
-            if (extraFields.contains(PersonalDetailsField.FirstName)) {
+            if (extraFields.contains(FirstName)) {
                 PassDivider()
                 FirstNameInput(
                     value = uiPersonalDetails.firstName,
                     enabled = enabled,
-                    onChange = { onEvent(IdentityContentEvent.OnFirstNameChange(it)) }
+                    onChange = { onEvent(OnFieldChange(FieldChange.FirstName(it))) }
                 )
             }
-            if (extraFields.contains(PersonalDetailsField.MiddleName)) {
+            if (extraFields.contains(MiddleName)) {
                 PassDivider()
                 MiddleNameInput(
                     value = uiPersonalDetails.middleName,
                     enabled = enabled,
-                    onChange = { onEvent(IdentityContentEvent.OnMiddleNameChange(it)) }
+                    onChange = { onEvent(OnFieldChange(FieldChange.MiddleName(it))) }
                 )
             }
-            if (extraFields.contains(PersonalDetailsField.LastName)) {
+            if (extraFields.contains(LastName)) {
                 PassDivider()
                 LastNameInput(
                     value = uiPersonalDetails.lastName,
                     enabled = enabled,
-                    onChange = { onEvent(IdentityContentEvent.OnLastNameChange(it)) }
+                    onChange = { onEvent(OnFieldChange(FieldChange.LastName(it))) }
                 )
             }
-            if (extraFields.contains(PersonalDetailsField.Birthdate)) {
+            if (extraFields.contains(Birthdate)) {
                 PassDivider()
                 BirthdateInput(
                     value = uiPersonalDetails.birthdate,
                     enabled = enabled,
-                    onChange = { onEvent(IdentityContentEvent.OnBirthdateChange(it)) }
+                    onChange = { onEvent(OnFieldChange(FieldChange.Birthdate(it))) }
                 )
             }
-            if (extraFields.contains(PersonalDetailsField.Gender)) {
+            if (extraFields.contains(Gender)) {
                 PassDivider()
                 GenderInput(
                     value = uiPersonalDetails.gender,
                     enabled = enabled,
-                    onChange = { onEvent(IdentityContentEvent.OnGenderChange(it)) }
+                    onChange = { onEvent(OnFieldChange(FieldChange.Gender(it))) }
                 )
             }
         }

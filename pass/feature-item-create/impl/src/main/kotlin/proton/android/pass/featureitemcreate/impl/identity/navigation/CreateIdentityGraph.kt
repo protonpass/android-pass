@@ -89,8 +89,12 @@ fun NavGraphBuilder.createIdentityGraph(onNavigate: (BaseIdentityNavigation) -> 
         }
         customFieldBottomSheetGraph(
             onAddCustomFieldNavigate = { onNavigate(BaseIdentityNavigation.CustomFieldTypeSelected(it)) },
-            onEditCustomFieldNavigate = { _: String, _: Int -> },
-            onRemoveCustomFieldNavigate = { },
+            onEditCustomFieldNavigate = { title: String, index: Int ->
+                onNavigate(BaseIdentityNavigation.EditCustomField(title, index))
+            },
+            onRemoveCustomFieldNavigate = {
+                onNavigate(BaseIdentityNavigation.RemovedCustomField)
+            },
             onCloseNavigate = { onNavigate(BaseIdentityNavigation.Close) }
         )
         customFieldNameDialogGraph {

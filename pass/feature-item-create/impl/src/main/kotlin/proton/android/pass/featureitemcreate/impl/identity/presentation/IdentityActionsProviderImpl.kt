@@ -32,9 +32,18 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.Item
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
+import proton.android.pass.featureitemcreate.impl.common.UICustomFieldContent
+import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.AddressCustomField
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.ContactCustomField
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.CustomExtraField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.IdentityFieldDraftRepository
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.PersonalCustomField
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.WorkCustomField
+import proton.android.pass.featureitemcreate.impl.identity.ui.IdentitySectionType
 import javax.inject.Inject
 
 @Suppress("TooManyFunctions")
@@ -71,101 +80,175 @@ class IdentityActionsProviderImpl @Inject constructor(
             is FieldChange.Birthdate -> identityItemFormMutableState.copy(
                 uiPersonalDetails = identityItemFormMutableState.uiPersonalDetails.copy(birthdate = field.value)
             )
+
             is FieldChange.City -> identityItemFormMutableState.copy(
                 uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(city = field.value)
             )
+
             is FieldChange.Company -> identityItemFormMutableState.copy(
                 uiWorkDetails = identityItemFormMutableState.uiWorkDetails.copy(company = field.value)
             )
+
             is FieldChange.CountryOrRegion -> identityItemFormMutableState.copy(
-                uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(countryOrRegion = field.value)
+                uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(
+                    countryOrRegion = field.value
+                )
             )
+
             is FieldChange.County -> identityItemFormMutableState.copy(
                 uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(county = field.value)
             )
+
             is FieldChange.Email -> identityItemFormMutableState.copy(
                 uiPersonalDetails = identityItemFormMutableState.uiPersonalDetails.copy(email = field.value)
             )
+
             is FieldChange.Facebook -> identityItemFormMutableState.copy(
                 uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(facebook = field.value)
             )
+
             is FieldChange.FirstName -> identityItemFormMutableState.copy(
                 uiPersonalDetails = identityItemFormMutableState.uiPersonalDetails.copy(firstName = field.value)
             )
+
             is FieldChange.Floor -> identityItemFormMutableState.copy(
                 uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(floor = field.value)
             )
+
             is FieldChange.FullName -> identityItemFormMutableState.copy(
                 uiPersonalDetails = identityItemFormMutableState.uiPersonalDetails.copy(fullName = field.value)
             )
+
             is FieldChange.Gender -> identityItemFormMutableState.copy(
                 uiPersonalDetails = identityItemFormMutableState.uiPersonalDetails.copy(gender = field.value)
             )
+
             is FieldChange.Instagram -> identityItemFormMutableState.copy(
                 uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(instagram = field.value)
             )
+
             is FieldChange.JobTitle -> identityItemFormMutableState.copy(
                 uiWorkDetails = identityItemFormMutableState.uiWorkDetails.copy(jobTitle = field.value)
             )
+
             is FieldChange.LastName -> identityItemFormMutableState.copy(
                 uiPersonalDetails = identityItemFormMutableState.uiPersonalDetails.copy(lastName = field.value)
             )
+
             is FieldChange.LicenseNumber -> identityItemFormMutableState.copy(
                 uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(licenseNumber = field.value)
             )
+
             is FieldChange.Linkedin -> identityItemFormMutableState.copy(
                 uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(linkedin = field.value)
             )
+
             is FieldChange.MiddleName -> identityItemFormMutableState.copy(
                 uiPersonalDetails = identityItemFormMutableState.uiPersonalDetails.copy(middleName = field.value)
             )
+
             is FieldChange.Organization -> identityItemFormMutableState.copy(
                 uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(organization = field.value)
             )
+
             is FieldChange.PassportNumber -> identityItemFormMutableState.copy(
                 uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(passportNumber = field.value)
             )
+
             is FieldChange.PersonalWebsite -> identityItemFormMutableState.copy(
                 uiWorkDetails = identityItemFormMutableState.uiWorkDetails.copy(personalWebsite = field.value)
             )
+
             is FieldChange.PhoneNumber -> identityItemFormMutableState.copy(
                 uiPersonalDetails = identityItemFormMutableState.uiPersonalDetails.copy(phoneNumber = field.value)
             )
+
             is FieldChange.Reddit -> identityItemFormMutableState.copy(
                 uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(reddit = field.value)
             )
+
             is FieldChange.SecondPhoneNumber -> identityItemFormMutableState.copy(
-                uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(secondPhoneNumber = field.value)
+                uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(
+                    secondPhoneNumber = field.value
+                )
             )
+
             is FieldChange.SocialSecurityNumber -> identityItemFormMutableState.copy(
                 uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(
                     socialSecurityNumber = field.value
                 )
             )
+
             is FieldChange.StateOrProvince -> identityItemFormMutableState.copy(
-                uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(stateOrProvince = field.value)
+                uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(
+                    stateOrProvince = field.value
+                )
             )
+
             is FieldChange.StreetAddress -> identityItemFormMutableState.copy(
                 uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(streetAddress = field.value)
             )
+
             is FieldChange.Title -> identityItemFormMutableState.copy(title = field.value)
             is FieldChange.Website -> identityItemFormMutableState.copy(
                 uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(website = field.value)
             )
+
             is FieldChange.WorkEmail -> identityItemFormMutableState.copy(
                 uiWorkDetails = identityItemFormMutableState.uiWorkDetails.copy(workEmail = field.value)
             )
+
             is FieldChange.WorkPhoneNumber -> identityItemFormMutableState.copy(
                 uiWorkDetails = identityItemFormMutableState.uiWorkDetails.copy(workPhoneNumber = field.value)
             )
+
             is FieldChange.XHandle -> identityItemFormMutableState.copy(
                 uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(xHandle = field.value)
             )
+
             is FieldChange.Yahoo -> identityItemFormMutableState.copy(
                 uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(yahoo = field.value)
             )
+
             is FieldChange.ZipOrPostalCode -> identityItemFormMutableState.copy(
-                uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(zipOrPostalCode = field.value)
+                uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(
+                    zipOrPostalCode = field.value
+                )
+            )
+
+            is FieldChange.CustomField -> updateCustomFieldState(field, encryptionContextProvider)
+        }
+    }
+
+    override fun onAddCustomField(value: CustomFieldContent, extraFieldType: CustomExtraField) {
+        val uiCustomFieldContent = UICustomFieldContent.from(value)
+        identityItemFormMutableState = when (extraFieldType) {
+            AddressCustomField -> identityItemFormMutableState.copy(
+                uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(
+                    customFields = identityItemFormMutableState.uiAddressDetails.customFields +
+                        listOf(uiCustomFieldContent)
+                )
+            )
+
+            ContactCustomField -> identityItemFormMutableState.copy(
+                uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(
+                    customFields = identityItemFormMutableState.uiContactDetails.customFields +
+                        listOf(uiCustomFieldContent)
+                )
+            )
+
+            PersonalCustomField -> identityItemFormMutableState.copy(
+                uiPersonalDetails = identityItemFormMutableState.uiPersonalDetails.copy(
+                    customFields = identityItemFormMutableState.uiPersonalDetails.customFields +
+                        listOf(uiCustomFieldContent)
+                )
+            )
+
+            WorkCustomField -> identityItemFormMutableState.copy(
+                uiWorkDetails = identityItemFormMutableState.uiWorkDetails.copy(
+                    customFields = identityItemFormMutableState.uiWorkDetails.customFields +
+                        listOf(uiCustomFieldContent)
+                )
             )
         }
     }
@@ -199,5 +282,82 @@ class IdentityActionsProviderImpl @Inject constructor(
             )
         }
         isItemSavedState.update { itemSavedState }
+    }
+
+    @Suppress("LongMethod")
+    private fun updateCustomFieldState(
+        field: FieldChange.CustomField,
+        encryptionContextProvider: EncryptionContextProvider
+    ): IdentityItemFormState {
+        val (content, index) = when (field.sectionType) {
+            IdentitySectionType.PersonalDetails ->
+                identityItemFormMutableState.uiPersonalDetails.customFields[field.index] to field.index
+
+            IdentitySectionType.ContactDetails ->
+                identityItemFormMutableState.uiContactDetails.customFields[field.index] to field.index
+
+            IdentitySectionType.AddressDetails ->
+                identityItemFormMutableState.uiAddressDetails.customFields[field.index] to field.index
+
+            IdentitySectionType.WorkDetails ->
+                identityItemFormMutableState.uiWorkDetails.customFields[field.index] to field.index
+        }
+
+        val updated = encryptionContextProvider.withEncryptionContext {
+            when (content) {
+                is UICustomFieldContent.Hidden -> {
+                    UICustomFieldContent.Hidden(
+                        label = content.label,
+                        value = UIHiddenState.Revealed(
+                            encrypted = encrypt(field.value),
+                            clearText = field.value
+                        )
+                    )
+                }
+
+                is UICustomFieldContent.Text -> UICustomFieldContent.Text(
+                    label = content.label,
+                    value = field.value
+                )
+
+                is UICustomFieldContent.Totp -> UICustomFieldContent.Totp(
+                    label = content.label,
+                    value = UIHiddenState.Revealed(
+                        encrypted = encrypt(field.value),
+                        clearText = field.value
+                    ),
+                    id = content.id
+                )
+            }
+        }
+        return when (field.sectionType) {
+            IdentitySectionType.PersonalDetails -> identityItemFormMutableState.copy(
+                uiPersonalDetails = identityItemFormMutableState.uiPersonalDetails.copy(
+                    customFields = identityItemFormMutableState.uiPersonalDetails.customFields.toMutableList()
+                        .apply { set(index, updated) }
+                )
+            )
+
+            IdentitySectionType.ContactDetails -> identityItemFormMutableState.copy(
+                uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(
+                    customFields = identityItemFormMutableState.uiContactDetails.customFields.toMutableList()
+                        .apply { set(index, updated) }
+                )
+            )
+
+            IdentitySectionType.AddressDetails -> identityItemFormMutableState.copy(
+                uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(
+                    customFields = identityItemFormMutableState.uiAddressDetails.customFields.toMutableList()
+                        .apply { set(index, updated) }
+                )
+            )
+
+            IdentitySectionType.WorkDetails -> identityItemFormMutableState.copy(
+                uiWorkDetails = identityItemFormMutableState.uiWorkDetails.copy(
+                    customFields = identityItemFormMutableState.uiWorkDetails.customFields.toMutableList()
+                        .apply { set(index, updated) }
+                )
+            )
+        }
     }
 }

@@ -73,7 +73,14 @@ fun NavGraphBuilder.updateLoginGraph(onNavigate: (BaseLoginNavigation) -> Unit) 
         }
 
         aliasOptionsBottomSheetGraph(onNavigate)
-        customFieldBottomSheetGraph(onNavigate)
+        customFieldBottomSheetGraph(
+            onAddCustomFieldNavigate = { onNavigate(BaseLoginNavigation.CustomFieldTypeSelected(it)) },
+            onEditCustomFieldNavigate = { title: String, index: Int ->
+                onNavigate(BaseLoginNavigation.EditCustomField(title, index))
+            },
+            onRemoveCustomFieldNavigate = { onNavigate(BaseLoginNavigation.RemovedCustomField) },
+            onCloseNavigate = { onNavigate(BaseLoginNavigation.Close) }
+        )
         customFieldNameDialogGraph {
             when (it) {
                 is CustomFieldNameNavigation.Close -> {

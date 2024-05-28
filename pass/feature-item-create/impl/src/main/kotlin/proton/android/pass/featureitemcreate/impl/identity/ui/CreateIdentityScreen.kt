@@ -95,16 +95,16 @@ fun CreateIdentityScreen(
                     is IdentityContentEvent.OnFieldChange -> viewModel.onFieldChange(event.value)
 
                     IdentityContentEvent.OnAddAddressDetailField ->
-                        onNavigate(BaseIdentityNavigation.AddField(AddIdentityFieldType.Address))
+                        onNavigate(BaseIdentityNavigation.OpenExtraFieldBottomSheet(AddIdentityFieldType.Address))
 
                     IdentityContentEvent.OnAddContactDetailField ->
-                        onNavigate(BaseIdentityNavigation.AddField(AddIdentityFieldType.Contact))
+                        onNavigate(BaseIdentityNavigation.OpenExtraFieldBottomSheet(AddIdentityFieldType.Contact))
 
                     IdentityContentEvent.OnAddPersonalDetailField ->
-                        onNavigate(BaseIdentityNavigation.AddField(AddIdentityFieldType.Personal))
+                        onNavigate(BaseIdentityNavigation.OpenExtraFieldBottomSheet(AddIdentityFieldType.Personal))
 
                     IdentityContentEvent.OnAddWorkField ->
-                        onNavigate(BaseIdentityNavigation.AddField(AddIdentityFieldType.Work))
+                        onNavigate(BaseIdentityNavigation.OpenExtraFieldBottomSheet(AddIdentityFieldType.Work))
 
                 }
             }

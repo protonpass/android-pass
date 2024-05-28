@@ -35,6 +35,7 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.featureitemcreate.impl.common.customfields.CustomFieldEntry
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent
+import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent.OnCustomFieldOptions
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent.OnFieldChange
 import proton.android.pass.featureitemcreate.impl.identity.presentation.FieldChange
 import proton.android.pass.featureitemcreate.impl.identity.presentation.UIPersonalDetails
@@ -45,6 +46,7 @@ import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsh
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.MiddleName
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.PersonalCustomField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.PersonalDetailsField
+import proton.android.pass.featureitemcreate.impl.identity.ui.IdentitySectionType.PersonalDetails
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.BirthdateInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.EmailInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.FirstNameInput
@@ -139,7 +141,7 @@ internal fun PersonalDetails(
                     index = index,
                     onValueChange = {
                         val fieldChange = FieldChange.CustomField(
-                            sectionType = IdentitySectionType.PersonalDetails,
+                            sectionType = PersonalDetails,
                             customFieldType = value.toCustomFieldType(),
                             index = index,
                             value = it
@@ -147,7 +149,7 @@ internal fun PersonalDetails(
                         onEvent(OnFieldChange(fieldChange))
                     },
                     onFocusChange = { _, _ -> },
-                    onOptionsClick = { }
+                    onOptionsClick = { onEvent(OnCustomFieldOptions(index, value.label, PersonalCustomField)) }
                 )
             }
         }

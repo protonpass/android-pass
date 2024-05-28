@@ -802,6 +802,10 @@ fun NavGraphBuilder.appGraph(
     )
     createIdentityGraph(
         onNavigate = {
+            val backDestination = when {
+                appNavigator.hasDestinationInStack(CreateIdentity) -> CreateIdentity
+                else -> null
+            }
             when (it) {
                 BaseIdentityNavigation.Close -> dismissBottomSheet { appNavigator.navigateBack() }
                 is BaseIdentityNavigation.OpenExtraFieldBottomSheet -> appNavigator.navigate(
@@ -824,6 +828,22 @@ fun NavGraphBuilder.appGraph(
                         route = CustomFieldNameDialog.buildRoute(it.type),
                         backDestination = CreateIdentity
                     )
+                }
+
+                is BaseIdentityNavigation.EditCustomField -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = EditCustomFieldNameDialog,
+                        route = EditCustomFieldNameDialog.buildRoute(it.index, it.title),
+                        backDestination = backDestination
+                    )
+                }
+
+                is BaseIdentityNavigation.CustomFieldOptions -> appNavigator.navigate(
+                    destination = CustomFieldOptionsBottomSheet,
+                    route = CustomFieldOptionsBottomSheet.buildRoute(it.index, it.title)
+                )
+                BaseIdentityNavigation.RemovedCustomField -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
                 }
             }
         }

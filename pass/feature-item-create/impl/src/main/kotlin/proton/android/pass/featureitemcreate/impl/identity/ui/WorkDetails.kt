@@ -32,8 +32,13 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent
+import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent.OnFieldChange
+import proton.android.pass.featureitemcreate.impl.identity.presentation.FieldChange
 import proton.android.pass.featureitemcreate.impl.identity.presentation.UIWorkDetails
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.PersonalWebsite
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.WorkDetailsField
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.WorkEmail
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.WorkPhoneNumber
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.CompanyInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.JobTitleInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.PersonalWebsiteInput
@@ -58,36 +63,36 @@ internal fun WorkDetails(
             CompanyInput(
                 value = uiWorkDetails.company,
                 enabled = enabled,
-                onChange = { onEvent(IdentityContentEvent.OnCompanyChange(it)) }
+                onChange = { onEvent(OnFieldChange(FieldChange.Company(it))) }
             )
             PassDivider()
             JobTitleInput(
                 value = uiWorkDetails.jobTitle,
                 enabled = enabled,
-                onChange = { onEvent(IdentityContentEvent.OnJobTitleChange(it)) }
+                onChange = { onEvent(OnFieldChange(FieldChange.JobTitle(it))) }
             )
-            if (extraFields.contains(WorkDetailsField.PersonalWebsite)) {
+            if (extraFields.contains(PersonalWebsite)) {
                 PassDivider()
                 PersonalWebsiteInput(
                     value = uiWorkDetails.personalWebsite,
                     enabled = enabled,
-                    onChange = { onEvent(IdentityContentEvent.OnPersonalWebsiteChange(it)) }
+                    onChange = { onEvent(OnFieldChange(FieldChange.PersonalWebsite(it))) }
                 )
             }
-            if (extraFields.contains(WorkDetailsField.WorkPhoneNumber)) {
+            if (extraFields.contains(WorkPhoneNumber)) {
                 PassDivider()
                 WorkPhoneNumberInput(
                     value = uiWorkDetails.workPhoneNumber,
                     enabled = enabled,
-                    onChange = { onEvent(IdentityContentEvent.OnWorkPhoneNumberChange(it)) }
+                    onChange = { onEvent(OnFieldChange(FieldChange.WorkPhoneNumber(it))) }
                 )
             }
-            if (extraFields.contains(WorkDetailsField.WorkEmail)) {
+            if (extraFields.contains(WorkEmail)) {
                 PassDivider()
                 WorkEmailInput(
                     value = uiWorkDetails.workEmail,
                     enabled = enabled,
-                    onChange = { onEvent(IdentityContentEvent.OnWorkEmailChange(it)) }
+                    onChange = { onEvent(OnFieldChange(FieldChange.WorkEmail(it))) }
                 )
             }
         }

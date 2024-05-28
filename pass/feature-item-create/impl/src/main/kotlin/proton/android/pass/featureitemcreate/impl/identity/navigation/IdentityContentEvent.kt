@@ -19,6 +19,7 @@
 package proton.android.pass.featureitemcreate.impl.identity.navigation
 
 import proton.android.pass.domain.ShareId
+import proton.android.pass.featureitemcreate.impl.identity.presentation.FieldChange
 
 sealed interface IdentityContentEvent {
     data object Up : IdentityContentEvent
@@ -27,104 +28,7 @@ sealed interface IdentityContentEvent {
     value class Submit(val shareId: ShareId) : IdentityContentEvent
 
     @JvmInline
-    value class OnTitleChange(val title: String) : IdentityContentEvent
-
-    @JvmInline
-    value class OnFullNameChange(val fullName: String) : IdentityContentEvent
-
-    @JvmInline
-    value class OnFirstNameChange(val firstName: String) : IdentityContentEvent
-
-    @JvmInline
-    value class OnMiddleNameChange(val middleName: String) : IdentityContentEvent
-
-    @JvmInline
-    value class OnLastNameChange(val lastName: String) : IdentityContentEvent
-
-    @JvmInline
-    value class OnBirthdateChange(val birthdate: String) : IdentityContentEvent
-
-    @JvmInline
-    value class OnGenderChange(val gender: String) : IdentityContentEvent
-
-    @JvmInline
-    value class OnEmailChange(val email: String) : IdentityContentEvent
-
-    @JvmInline
-    value class OnPhoneNumberChange(val phoneNumber: String) : IdentityContentEvent
-
-    @JvmInline
-    value class OnOrganizationChange(val organization: String) : IdentityContentEvent
-
-    @JvmInline
-    value class OnStreetAddressChange(val streetAddress: String) : IdentityContentEvent
-
-    @JvmInline
-    value class OnZipOrPostalCodeChange(val zipOrPostalCode: String) : IdentityContentEvent
-
-    @JvmInline
-    value class OnCityChange(val city: String) : IdentityContentEvent
-
-    @JvmInline
-    value class OnStateOrProvinceChange(val stateOrProvince: String) : IdentityContentEvent
-
-    @JvmInline
-    value class OnCountryOrRegionChange(val countryOrRegion: String) : IdentityContentEvent
-
-    @JvmInline
-    value class OnFloorChange(val floor: String) : IdentityContentEvent
-
-    @JvmInline
-    value class OnCountyChange(val county: String) : IdentityContentEvent
-
-    @JvmInline
-    value class OnSocialSecurityNumberChange(val socialSecurityNumber: String) :
-        IdentityContentEvent
-
-    @JvmInline
-    value class OnPassportNumberChange(val passportNumber: String) : IdentityContentEvent
-
-    @JvmInline
-    value class OnLicenseNumberChange(val licenseNumber: String) : IdentityContentEvent
-
-    @JvmInline
-    value class OnWebsiteChange(val website: String) : IdentityContentEvent
-
-    @JvmInline
-    value class OnXHandleChange(val xHandle: String) : IdentityContentEvent
-
-    @JvmInline
-    value class OnSecondPhoneNumberChange(val phoneNumber: String) : IdentityContentEvent
-
-    @JvmInline
-    value class OnLinkedinChange(val linkedin: String) : IdentityContentEvent
-
-    @JvmInline
-    value class OnRedditChange(val reddit: String) : IdentityContentEvent
-
-    @JvmInline
-    value class OnFacebookChange(val facebook: String) : IdentityContentEvent
-
-    @JvmInline
-    value class OnYahooChange(val yahoo: String) : IdentityContentEvent
-
-    @JvmInline
-    value class OnInstagramChange(val instagram: String) : IdentityContentEvent
-
-    @JvmInline
-    value class OnCompanyChange(val company: String) : IdentityContentEvent
-
-    @JvmInline
-    value class OnJobTitleChange(val jobTitle: String) : IdentityContentEvent
-
-    @JvmInline
-    value class OnPersonalWebsiteChange(val personalWebsite: String) : IdentityContentEvent
-
-    @JvmInline
-    value class OnWorkPhoneNumberChange(val phoneNumber: String) : IdentityContentEvent
-
-    @JvmInline
-    value class OnWorkEmailChange(val email: String) : IdentityContentEvent
+    value class OnFieldChange(val value: FieldChange) : IdentityContentEvent
 
     @JvmInline
     value class OnVaultSelect(val shareId: ShareId) : IdentityContentEvent

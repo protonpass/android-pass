@@ -64,239 +64,110 @@ class IdentityActionsProviderImpl @Inject constructor(
         ::IdentitySharedUiState
     )
 
-    override fun onTitleChanged(title: String) {
+    @Suppress("LongMethod")
+    override fun onFieldChange(field: FieldChange) {
         hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(title = title)
-    }
-
-    // Personal Details
-    override fun onFullNameChanged(fullName: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiPersonalDetails = identityItemFormMutableState.uiPersonalDetails.copy(fullName = fullName)
-        )
-    }
-
-    override fun onFirstNameChanged(firstName: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiPersonalDetails = identityItemFormMutableState.uiPersonalDetails.copy(firstName = firstName)
-        )
-    }
-
-    override fun onMiddleNameChanged(middleName: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiPersonalDetails = identityItemFormMutableState.uiPersonalDetails.copy(middleName = middleName)
-        )
-    }
-
-    override fun onLastNameChanged(lastName: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiPersonalDetails = identityItemFormMutableState.uiPersonalDetails.copy(lastName = lastName)
-        )
-    }
-
-    override fun onBirthdateChanged(birthdate: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiPersonalDetails = identityItemFormMutableState.uiPersonalDetails.copy(birthdate = birthdate)
-        )
-    }
-
-    override fun onGenderChanged(gender: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiPersonalDetails = identityItemFormMutableState.uiPersonalDetails.copy(gender = gender)
-        )
-    }
-
-    override fun onEmailChanged(email: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiPersonalDetails = identityItemFormMutableState.uiPersonalDetails.copy(email = email)
-        )
-    }
-
-    override fun onPhoneNumberChanged(phoneNumber: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiPersonalDetails = identityItemFormMutableState.uiPersonalDetails.copy(phoneNumber = phoneNumber)
-        )
-    }
-
-    // Address Details
-    override fun onOrganizationChanged(organization: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(organization = organization)
-        )
-    }
-
-    override fun onStreetAddressChanged(streetAddress: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(streetAddress = streetAddress)
-        )
-    }
-
-    override fun onZipOrPostalCodeChanged(zipOrPostalCode: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(zipOrPostalCode = zipOrPostalCode)
-        )
-    }
-
-    override fun onCityChanged(city: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(city = city)
-        )
-    }
-
-    override fun onStateOrProvinceChanged(stateOrProvince: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(stateOrProvince = stateOrProvince)
-        )
-    }
-
-    override fun onCountryOrRegionChanged(countryOrRegion: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(countryOrRegion = countryOrRegion)
-        )
-    }
-
-    // Contact Details
-    override fun onSocialSecurityNumberChanged(socialSecurityNumber: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(
-                socialSecurityNumber = socialSecurityNumber
+        identityItemFormMutableState = when (field) {
+            is FieldChange.Birthdate -> identityItemFormMutableState.copy(
+                uiPersonalDetails = identityItemFormMutableState.uiPersonalDetails.copy(birthdate = field.value)
             )
-        )
-    }
-
-    override fun onPassportNumberChanged(passportNumber: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(passportNumber = passportNumber)
-        )
-    }
-
-    override fun onLicenseNumberChanged(licenseNumber: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(licenseNumber = licenseNumber)
-        )
-    }
-
-    override fun onWebsiteChanged(website: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(website = website)
-        )
-    }
-
-    override fun onXHandleChanged(xHandle: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(xHandle = xHandle)
-        )
-    }
-
-    override fun onSecondPhoneNumberChanged(phoneNumber: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(secondPhoneNumber = phoneNumber)
-        )
-    }
-
-    // Work Details
-    override fun onCompanyChanged(company: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiWorkDetails = identityItemFormMutableState.uiWorkDetails.copy(company = company)
-        )
-    }
-
-    override fun onJobTitleChanged(jobTitle: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiWorkDetails = identityItemFormMutableState.uiWorkDetails.copy(jobTitle = jobTitle)
-        )
-    }
-
-    override fun onCountyChanged(county: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(county = county)
-        )
-    }
-
-    override fun onFacebookChanged(facebook: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(facebook = facebook)
-        )
-    }
-
-    override fun onFloorChanged(floor: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(floor = floor)
-        )
-    }
-
-    override fun onInstagramChanged(instagram: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(instagram = instagram)
-        )
-    }
-
-    override fun onLinkedinChanged(linkedin: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(linkedin = linkedin)
-        )
-    }
-
-    override fun onPersonalWebsiteChanged(personalWebsite: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiWorkDetails = identityItemFormMutableState.uiWorkDetails.copy(personalWebsite = personalWebsite)
-        )
-    }
-
-    override fun onRedditChanged(reddit: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(reddit = reddit)
-        )
-    }
-
-    override fun onWorkEmailChanged(email: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiWorkDetails = identityItemFormMutableState.uiWorkDetails.copy(workEmail = email)
-        )
-    }
-
-    override fun onWorkPhoneNumberChanged(phoneNumber: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiWorkDetails = identityItemFormMutableState.uiWorkDetails.copy(workPhoneNumber = phoneNumber)
-        )
-    }
-
-    override fun onYahooChanged(yahoo: String) {
-        hasUserEditedContentState.update { true }
-        identityItemFormMutableState = identityItemFormMutableState.copy(
-            uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(yahoo = yahoo)
-        )
+            is FieldChange.City -> identityItemFormMutableState.copy(
+                uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(city = field.value)
+            )
+            is FieldChange.Company -> identityItemFormMutableState.copy(
+                uiWorkDetails = identityItemFormMutableState.uiWorkDetails.copy(company = field.value)
+            )
+            is FieldChange.CountryOrRegion -> identityItemFormMutableState.copy(
+                uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(countryOrRegion = field.value)
+            )
+            is FieldChange.County -> identityItemFormMutableState.copy(
+                uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(county = field.value)
+            )
+            is FieldChange.Email -> identityItemFormMutableState.copy(
+                uiPersonalDetails = identityItemFormMutableState.uiPersonalDetails.copy(email = field.value)
+            )
+            is FieldChange.Facebook -> identityItemFormMutableState.copy(
+                uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(facebook = field.value)
+            )
+            is FieldChange.FirstName -> identityItemFormMutableState.copy(
+                uiPersonalDetails = identityItemFormMutableState.uiPersonalDetails.copy(firstName = field.value)
+            )
+            is FieldChange.Floor -> identityItemFormMutableState.copy(
+                uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(floor = field.value)
+            )
+            is FieldChange.FullName -> identityItemFormMutableState.copy(
+                uiPersonalDetails = identityItemFormMutableState.uiPersonalDetails.copy(fullName = field.value)
+            )
+            is FieldChange.Gender -> identityItemFormMutableState.copy(
+                uiPersonalDetails = identityItemFormMutableState.uiPersonalDetails.copy(gender = field.value)
+            )
+            is FieldChange.Instagram -> identityItemFormMutableState.copy(
+                uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(instagram = field.value)
+            )
+            is FieldChange.JobTitle -> identityItemFormMutableState.copy(
+                uiWorkDetails = identityItemFormMutableState.uiWorkDetails.copy(jobTitle = field.value)
+            )
+            is FieldChange.LastName -> identityItemFormMutableState.copy(
+                uiPersonalDetails = identityItemFormMutableState.uiPersonalDetails.copy(lastName = field.value)
+            )
+            is FieldChange.LicenseNumber -> identityItemFormMutableState.copy(
+                uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(licenseNumber = field.value)
+            )
+            is FieldChange.Linkedin -> identityItemFormMutableState.copy(
+                uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(linkedin = field.value)
+            )
+            is FieldChange.MiddleName -> identityItemFormMutableState.copy(
+                uiPersonalDetails = identityItemFormMutableState.uiPersonalDetails.copy(middleName = field.value)
+            )
+            is FieldChange.Organization -> identityItemFormMutableState.copy(
+                uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(organization = field.value)
+            )
+            is FieldChange.PassportNumber -> identityItemFormMutableState.copy(
+                uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(passportNumber = field.value)
+            )
+            is FieldChange.PersonalWebsite -> identityItemFormMutableState.copy(
+                uiWorkDetails = identityItemFormMutableState.uiWorkDetails.copy(personalWebsite = field.value)
+            )
+            is FieldChange.PhoneNumber -> identityItemFormMutableState.copy(
+                uiPersonalDetails = identityItemFormMutableState.uiPersonalDetails.copy(phoneNumber = field.value)
+            )
+            is FieldChange.Reddit -> identityItemFormMutableState.copy(
+                uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(reddit = field.value)
+            )
+            is FieldChange.SecondPhoneNumber -> identityItemFormMutableState.copy(
+                uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(secondPhoneNumber = field.value)
+            )
+            is FieldChange.SocialSecurityNumber -> identityItemFormMutableState.copy(
+                uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(
+                    socialSecurityNumber = field.value
+                )
+            )
+            is FieldChange.StateOrProvince -> identityItemFormMutableState.copy(
+                uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(stateOrProvince = field.value)
+            )
+            is FieldChange.StreetAddress -> identityItemFormMutableState.copy(
+                uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(streetAddress = field.value)
+            )
+            is FieldChange.Title -> identityItemFormMutableState.copy(title = field.value)
+            is FieldChange.Website -> identityItemFormMutableState.copy(
+                uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(website = field.value)
+            )
+            is FieldChange.WorkEmail -> identityItemFormMutableState.copy(
+                uiWorkDetails = identityItemFormMutableState.uiWorkDetails.copy(workEmail = field.value)
+            )
+            is FieldChange.WorkPhoneNumber -> identityItemFormMutableState.copy(
+                uiWorkDetails = identityItemFormMutableState.uiWorkDetails.copy(workPhoneNumber = field.value)
+            )
+            is FieldChange.XHandle -> identityItemFormMutableState.copy(
+                uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(xHandle = field.value)
+            )
+            is FieldChange.Yahoo -> identityItemFormMutableState.copy(
+                uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(yahoo = field.value)
+            )
+            is FieldChange.ZipOrPostalCode -> identityItemFormMutableState.copy(
+                uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(zipOrPostalCode = field.value)
+            )
+        }
     }
 
     override fun getFormState(): IdentityItemFormState = identityItemFormMutableState

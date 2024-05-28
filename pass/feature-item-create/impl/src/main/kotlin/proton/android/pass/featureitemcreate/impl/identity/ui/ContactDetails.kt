@@ -35,6 +35,7 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.featureitemcreate.impl.common.customfields.CustomFieldEntry
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent
+import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent.OnCustomFieldOptions
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent.OnFieldChange
 import proton.android.pass.featureitemcreate.impl.identity.presentation.FieldChange
 import proton.android.pass.featureitemcreate.impl.identity.presentation.UIContactDetails
@@ -45,6 +46,7 @@ import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsh
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Linkedin
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Reddit
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Yahoo
+import proton.android.pass.featureitemcreate.impl.identity.ui.IdentitySectionType.ContactDetails
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.FacebookInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.InstagramInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.LicenseNumberInput
@@ -160,7 +162,7 @@ internal fun ContactDetails(
                     index = index,
                     onValueChange = {
                         val fieldChange = FieldChange.CustomField(
-                            sectionType = IdentitySectionType.ContactDetails,
+                            sectionType = ContactDetails,
                             customFieldType = value.toCustomFieldType(),
                             index = index,
                             value = it
@@ -168,7 +170,7 @@ internal fun ContactDetails(
                         onEvent(OnFieldChange(fieldChange))
                     },
                     onFocusChange = { _, _ -> },
-                    onOptionsClick = { }
+                    onOptionsClick = { onEvent(OnCustomFieldOptions(index, value.label, ContactCustomField)) }
                 )
             }
         }

@@ -33,4 +33,10 @@ sealed interface BaseIdentityNavigation {
 
     @JvmInline
     value class CustomFieldTypeSelected(val type: CustomFieldType) : BaseIdentityNavigation
+
+    data class EditCustomField(val title: String, val index: Int) : BaseIdentityNavigation
+
+    data class CustomFieldOptions(val title: String, val index: Int) : BaseIdentityNavigation
+
+    data object RemovedCustomField : BaseIdentityNavigation
 }

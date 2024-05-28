@@ -20,6 +20,7 @@ package proton.android.pass.featureitemcreate.impl.identity.navigation
 
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.identity.presentation.FieldChange
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.CustomExtraField
 
 sealed interface IdentityContentEvent {
     data object Up : IdentityContentEvent
@@ -32,6 +33,12 @@ sealed interface IdentityContentEvent {
 
     @JvmInline
     value class OnVaultSelect(val shareId: ShareId) : IdentityContentEvent
+
+    data class OnCustomFieldOptions(
+        val index: Int,
+        val label: String,
+        val customExtraField: CustomExtraField
+    ) : IdentityContentEvent
 
     data object OnAddPersonalDetailField : IdentityContentEvent
     data object OnAddAddressDetailField : IdentityContentEvent

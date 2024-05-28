@@ -25,13 +25,16 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.Item
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
+import proton.android.pass.featureitemcreate.impl.common.CustomFieldIndexTitle
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.CustomExtraField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.ExtraField
 
 @Suppress("ComplexInterface", "TooManyFunctions")
 interface IdentityFormActions {
     fun onFieldChange(field: FieldChange)
-    fun onAddCustomField(value: CustomFieldContent, extraFieldType: CustomExtraField)
+    fun onAddCustomField(value: CustomFieldContent, customExtraField: CustomExtraField)
+    fun onRemoveCustomField(index: Int, customExtraField: CustomExtraField)
+    fun onRenameCustomField(value: CustomFieldIndexTitle, customExtraField: CustomExtraField)
     fun getFormState(): IdentityItemFormState
     fun isFormStateValid(): Boolean
     fun clearState()
@@ -41,6 +44,7 @@ interface IdentityActionsProvider : IdentityFormActions {
     fun observeSharedState(): Flow<IdentitySharedUiState>
     fun updateLoadingState(loadingState: IsLoadingState)
     fun onItemSavedState(item: Item)
+    fun updateSelectedSection(customExtraField: CustomExtraField)
 }
 
 data class IdentitySharedUiState(

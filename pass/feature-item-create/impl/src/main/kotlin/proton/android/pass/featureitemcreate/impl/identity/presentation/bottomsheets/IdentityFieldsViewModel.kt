@@ -50,7 +50,7 @@ class IdentityFieldsViewModel @Inject constructor(
     val state = combine(
         flowOf(identityFieldDraftRepository.getSectionFields(addIdentityFieldType.toExtraField())),
         eventFlow
-    ) { sectionFields, event ->
+    ) { sectionFields: Set<ExtraField>, event ->
         IdentityFieldsUiState(fieldSet = sectionFields.toPersistentSet(), event = event)
     }.stateIn(
         scope = viewModelScope,
@@ -59,8 +59,12 @@ class IdentityFieldsViewModel @Inject constructor(
     )
 
     fun onFieldClick(extraField: ExtraField) {
-        identityFieldDraftRepository.addField(extraField)
-        eventFlow.update { IdentityFieldsEvent.OnSelect }
+        if (extraField is CustomField) {
+            eventFlow.update { IdentityFieldsEvent.OnAddCustomField }
+        } else {
+            identityFieldDraftRepository.addField(extraField)
+            eventFlow.update { IdentityFieldsEvent.OnAddExtraField }
+        }
     }
 
     fun consumeEvent(event: IdentityFieldsEvent) = viewModelScope.launch {

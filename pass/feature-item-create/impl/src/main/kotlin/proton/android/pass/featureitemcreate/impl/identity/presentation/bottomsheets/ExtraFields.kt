@@ -18,31 +18,54 @@
 
 package proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets
 
+import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldType
+
 sealed interface ExtraField
 
-enum class PersonalDetailsField : ExtraField {
-    FirstName,
-    MiddleName,
-    LastName,
-    Birthdate,
-    Gender
-}
+sealed interface CustomField
 
-enum class AddressDetailsField : ExtraField {
-    Floor,
-    County
-}
+sealed interface PersonalDetailsField : ExtraField
 
-enum class ContactDetailsField : ExtraField {
-    Linkedin,
-    Reddit,
-    Facebook,
-    Yahoo,
-    Instagram
-}
+data object FirstName : PersonalDetailsField
 
-enum class WorkDetailsField : ExtraField {
-    PersonalWebsite,
-    WorkPhoneNumber,
-    WorkEmail
-}
+data object MiddleName : PersonalDetailsField
+
+data object LastName : PersonalDetailsField
+
+data object Birthdate : PersonalDetailsField
+
+data object Gender : PersonalDetailsField
+
+data class PersonalCustomField(val list: List<CustomFieldType>) : PersonalDetailsField, CustomField
+
+sealed interface AddressDetailsField : ExtraField
+
+data object Floor : AddressDetailsField
+
+data object County : AddressDetailsField
+
+data class AddressCustomField(val list: List<CustomFieldType>) : AddressDetailsField, CustomField
+
+sealed interface ContactDetailsField : ExtraField
+
+data object Linkedin : ContactDetailsField
+
+data object Reddit : ContactDetailsField
+
+data object Facebook : ContactDetailsField
+
+data object Yahoo : ContactDetailsField
+
+data object Instagram : ContactDetailsField
+
+data class ContactCustomField(val list: List<CustomFieldType>) : ContactDetailsField, CustomField
+
+sealed interface WorkDetailsField : ExtraField
+
+data object PersonalWebsite : WorkDetailsField
+
+data object WorkPhoneNumber : WorkDetailsField
+
+data object WorkEmail : WorkDetailsField
+
+data class WorkCustomField(val list: List<CustomFieldType>) : WorkDetailsField, CustomField

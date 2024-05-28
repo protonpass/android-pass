@@ -173,49 +173,63 @@ fun ItemContents.serializeToProto(
                     .build()
             )
         }
+
         is ItemContents.Identity -> {
             builder.content.toBuilder().setIdentity(
                 builder.content.identity.toBuilder()
                     // Personal Details
-                    .setFullName(personalDetails.fullName)
-                    .setEmail(personalDetails.email)
-                    .setPhoneNumber(personalDetails.phoneNumber)
-                    .setFirstName(personalDetails.firstName)
-                    .setMiddleName(personalDetails.middleName)
-                    .setLastName(personalDetails.lastName)
-                    .setBirthdate(personalDetails.birthdate)
-                    .setGender(personalDetails.gender)
+                    .setFullName(personalDetailsContent.fullName)
+                    .setEmail(personalDetailsContent.email)
+                    .setPhoneNumber(personalDetailsContent.phoneNumber)
+                    .setFirstName(personalDetailsContent.firstName)
+                    .setMiddleName(personalDetailsContent.middleName)
+                    .setLastName(personalDetailsContent.lastName)
+                    .setBirthdate(personalDetailsContent.birthdate)
+                    .setGender(personalDetailsContent.gender)
+                    .addAllExtraPersonalDetails(
+                        personalDetailsContent.customFields.mapToExtraFields(encryptionContext)
+                    )
                     // Address details
-                    .setOrganization(addressDetails.organization)
-                    .setStreetAddress(addressDetails.streetAddress)
-                    .setZipOrPostalCode(addressDetails.zipOrPostalCode)
-                    .setCity(addressDetails.city)
-                    .setStateOrProvince(addressDetails.stateOrProvince)
-                    .setCountryOrRegion(addressDetails.countryOrRegion)
-                    .setFloor(addressDetails.floor)
-                    .setCounty(addressDetails.county)
+                    .setOrganization(addressDetailsContent.organization)
+                    .setStreetAddress(addressDetailsContent.streetAddress)
+                    .setZipOrPostalCode(addressDetailsContent.zipOrPostalCode)
+                    .setCity(addressDetailsContent.city)
+                    .setStateOrProvince(addressDetailsContent.stateOrProvince)
+                    .setCountryOrRegion(addressDetailsContent.countryOrRegion)
+                    .setFloor(addressDetailsContent.floor)
+                    .setCounty(addressDetailsContent.county)
+                    .addAllExtraPersonalDetails(
+                        addressDetailsContent.customFields.mapToExtraFields(encryptionContext)
+                    )
                     // Contact details
-                    .setSocialSecurityNumber(contactDetails.socialSecurityNumber)
-                    .setPassportNumber(contactDetails.passportNumber)
-                    .setLicenseNumber(contactDetails.licenseNumber)
-                    .setWebsite(contactDetails.website)
-                    .setXHandle(contactDetails.xHandle)
-                    .setSecondPhoneNumber(contactDetails.secondPhoneNumber)
-                    .setLinkedin(contactDetails.linkedin)
-                    .setReddit(contactDetails.reddit)
-                    .setFacebook(contactDetails.facebook)
-                    .setYahoo(contactDetails.yahoo)
-                    .setInstagram(contactDetails.instagram)
+                    .setSocialSecurityNumber(contactDetailsContent.socialSecurityNumber)
+                    .setPassportNumber(contactDetailsContent.passportNumber)
+                    .setLicenseNumber(contactDetailsContent.licenseNumber)
+                    .setWebsite(contactDetailsContent.website)
+                    .setXHandle(contactDetailsContent.xHandle)
+                    .setSecondPhoneNumber(contactDetailsContent.secondPhoneNumber)
+                    .setLinkedin(contactDetailsContent.linkedin)
+                    .setReddit(contactDetailsContent.reddit)
+                    .setFacebook(contactDetailsContent.facebook)
+                    .setYahoo(contactDetailsContent.yahoo)
+                    .setInstagram(contactDetailsContent.instagram)
+                    .addAllExtraPersonalDetails(
+                        contactDetailsContent.customFields.mapToExtraFields(encryptionContext)
+                    )
                     // Work details
-                    .setJobTitle(workDetails.jobTitle)
-                    .setCompany(workDetails.company)
-                    .setPersonalWebsite(workDetails.personalWebsite)
-                    .setWorkPhoneNumber(workDetails.workPhoneNumber)
-                    .setWorkEmail(workDetails.workEmail)
+                    .setJobTitle(workDetailsContent.jobTitle)
+                    .setCompany(workDetailsContent.company)
+                    .setPersonalWebsite(workDetailsContent.personalWebsite)
+                    .setWorkPhoneNumber(workDetailsContent.workPhoneNumber)
+                    .setWorkEmail(workDetailsContent.workEmail)
+                    .addAllExtraPersonalDetails(
+                        workDetailsContent.customFields.mapToExtraFields(encryptionContext)
+                    )
                     .build()
             )
 
         }
+
         is ItemContents.Unknown -> throw IllegalStateException("Cannot be unknown")
     }.build()
 
@@ -224,3 +238,28 @@ fun ItemContents.serializeToProto(
         .build()
 }
 
+private fun List<CustomFieldContent>.mapToExtraFields(encryptionContext: EncryptionContext): List<ItemV1.ExtraField> =
+    mapNotNull { customField ->
+        when (customField) {
+            is CustomFieldContent.Hidden -> extraField {
+                fieldName = customField.label
+                hidden = extraHiddenField {
+                    content = encryptionContext.decrypt(customField.value.encrypted)
+                }
+            }
+
+            is CustomFieldContent.Text -> extraField {
+                fieldName = customField.label
+                text = extraTextField {
+                    content = customField.value
+                }
+            }
+
+            is CustomFieldContent.Totp -> extraField {
+                fieldName = customField.label
+                totp = extraTotp {
+                    totpUri = encryptionContext.decrypt(customField.value.encrypted)
+                }
+            }
+        }
+    }

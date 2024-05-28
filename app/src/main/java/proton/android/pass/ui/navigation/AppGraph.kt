@@ -822,6 +822,9 @@ fun NavGraphBuilder.appGraph(
     identityFieldsGraph {
         when (it) {
             IdentityFieldsNavigation.Close -> dismissBottomSheet { appNavigator.navigateBack() }
+            IdentityFieldsNavigation.AddCustomField -> dismissBottomSheet {
+                appNavigator.navigate(AddCustomFieldBottomSheet)
+            }
         }
     }
     itemDetailGraph(

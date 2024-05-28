@@ -28,10 +28,33 @@ import javax.inject.Singleton
 class IdentityFieldDraftRepositoryImpl @Inject constructor() : IdentityFieldDraftRepository {
 
     private val availableFieldsMap: Map<Class<out ExtraField>, Set<ExtraField>> = mapOf(
-        PersonalDetailsField::class.java to PersonalDetailsField.entries.toSet(),
-        AddressDetailsField::class.java to AddressDetailsField.entries.toSet(),
-        ContactDetailsField::class.java to ContactDetailsField.entries.toSet(),
-        WorkDetailsField::class.java to WorkDetailsField.entries.toSet()
+        PersonalDetailsField::class.java to setOf(
+            FirstName,
+            MiddleName,
+            LastName,
+            Birthdate,
+            Gender,
+            PersonalCustomField(emptyList())
+        ),
+        AddressDetailsField::class.java to setOf(
+            Floor,
+            County,
+            AddressCustomField(emptyList())
+        ),
+        ContactDetailsField::class.java to setOf(
+            Linkedin,
+            Reddit,
+            Facebook,
+            Yahoo,
+            Instagram,
+            ContactCustomField(emptyList())
+        ),
+        WorkDetailsField::class.java to setOf(
+            PersonalWebsite,
+            WorkPhoneNumber,
+            WorkEmail,
+            WorkCustomField(emptyList())
+        )
     )
 
     private val extraFieldsStateFlow = MutableStateFlow<Set<ExtraField>>(emptySet())

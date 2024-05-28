@@ -194,10 +194,10 @@ sealed class ItemContents {
     data class Identity(
         override val title: String,
         override val note: String,
-        val personalDetails: PersonalDetails,
-        val addressDetails: AddressDetails,
-        val contactDetails: ContactDetails,
-        val workDetails: WorkDetails
+        val personalDetailsContent: PersonalDetailsContent,
+        val addressDetailsContent: AddressDetailsContent,
+        val contactDetailsContent: ContactDetailsContent,
+        val workDetailsContent: WorkDetailsContent
     ) : ItemContents()
 
     @Serializable
@@ -209,7 +209,7 @@ sealed class ItemContents {
 }
 
 @Serializable
-data class PersonalDetails(
+data class PersonalDetailsContent(
     val fullName: String,
     val firstName: String,
     val middleName: String,
@@ -217,15 +217,27 @@ data class PersonalDetails(
     val birthdate: String,
     val gender: String,
     val email: String,
-    val phoneNumber: String
+    val phoneNumber: String,
+    val customFields: List<CustomFieldContent>
 ) {
+
     companion object {
-        val EMPTY = PersonalDetails("", "", "", "", "", "", "", "")
+        val EMPTY = PersonalDetailsContent(
+            fullName = "",
+            firstName = "",
+            middleName = "",
+            lastName = "",
+            birthdate = "",
+            gender = "",
+            email = "",
+            phoneNumber = "",
+            customFields = emptyList()
+        )
     }
 }
 
 @Serializable
-data class AddressDetails(
+data class AddressDetailsContent(
     val organization: String,
     val streetAddress: String,
     val zipOrPostalCode: String,
@@ -233,15 +245,26 @@ data class AddressDetails(
     val stateOrProvince: String,
     val countryOrRegion: String,
     val floor: String,
-    val county: String
+    val county: String,
+    val customFields: List<CustomFieldContent>
 ) {
     companion object {
-        val EMPTY = AddressDetails("", "", "", "", "", "", "", "")
+        val EMPTY = AddressDetailsContent(
+            organization = "",
+            streetAddress = "",
+            zipOrPostalCode = "",
+            city = "",
+            stateOrProvince = "",
+            countryOrRegion = "",
+            floor = "",
+            county = "",
+            customFields = emptyList()
+        )
     }
 }
 
 @Serializable
-data class ContactDetails(
+data class ContactDetailsContent(
     val socialSecurityNumber: String,
     val passportNumber: String,
     val licenseNumber: String,
@@ -252,23 +275,45 @@ data class ContactDetails(
     val reddit: String,
     val facebook: String,
     val yahoo: String,
-    val instagram: String
+    val instagram: String,
+    val customFields: List<CustomFieldContent>
 ) {
     companion object {
-        val EMPTY = ContactDetails("", "", "", "", "", "", "", "", "", "", "")
+        val EMPTY = ContactDetailsContent(
+            socialSecurityNumber = "",
+            passportNumber = "",
+            licenseNumber = "",
+            website = "",
+            xHandle = "",
+            secondPhoneNumber = "",
+            linkedin = "",
+            reddit = "",
+            facebook = "",
+            yahoo = "",
+            instagram = "",
+            customFields = emptyList()
+        )
     }
 
 }
 
 @Serializable
-data class WorkDetails(
+data class WorkDetailsContent(
     val company: String,
     val jobTitle: String,
     val personalWebsite: String,
     val workPhoneNumber: String,
-    val workEmail: String
+    val workEmail: String,
+    val customFields: List<CustomFieldContent>
 ) {
     companion object {
-        val EMPTY = WorkDetails("", "", "", "", "")
+        val EMPTY = WorkDetailsContent(
+            company = "",
+            jobTitle = "",
+            personalWebsite = "",
+            workPhoneNumber = "",
+            workEmail = "",
+            customFields = emptyList()
+        )
     }
 }

@@ -389,6 +389,9 @@ fun NavGraphBuilder.autofillActivityGraph(
     identityFieldsGraph {
         when (it) {
             IdentityFieldsNavigation.Close -> dismissBottomSheet { appNavigator.navigateBack() }
+            IdentityFieldsNavigation.AddCustomField -> dismissBottomSheet {
+                appNavigator.navigate(AddCustomFieldBottomSheet)
+            }
         }
     }
     val mode = when (autofillAppState.autofillData.assistInfo.cluster) {

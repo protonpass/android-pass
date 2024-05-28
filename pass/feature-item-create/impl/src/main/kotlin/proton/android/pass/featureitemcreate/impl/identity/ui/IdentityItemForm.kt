@@ -39,6 +39,8 @@ import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.composecomponents.impl.labels.CollapsibleSectionHeader
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent
+import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent.OnFieldChange
+import proton.android.pass.featureitemcreate.impl.identity.presentation.FieldChange
 import proton.android.pass.featureitemcreate.impl.identity.presentation.IdentityItemFormState
 import proton.android.pass.featureitemcreate.impl.identity.presentation.IdentityValidationErrors
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.AddressDetailsField
@@ -80,7 +82,7 @@ fun IdentityItemForm(
             onTitleRequiredError = validationErrors.contains(IdentityValidationErrors.BlankTitle),
             enabled = enabled,
             isRounded = true,
-            onChange = { onEvent(IdentityContentEvent.OnTitleChange(it)) }
+            onChange = { onEvent(OnFieldChange(FieldChange.Title(it))) }
         )
         CollapsibleSectionHeader(
             sectionTitle = stringResource(R.string.identity_section_personal_details),
@@ -98,7 +100,8 @@ fun IdentityItemForm(
                 modifier = Modifier.padding(horizontal = Spacing.medium),
                 enabled = enabled,
                 uiPersonalDetails = identityItemFormState.uiPersonalDetails,
-                extraFields = extraFields.filterIsInstance<PersonalDetailsField>().toPersistentSet(),
+                extraFields = extraFields.filterIsInstance<PersonalDetailsField>()
+                    .toPersistentSet(),
                 onEvent = onEvent
             )
         }

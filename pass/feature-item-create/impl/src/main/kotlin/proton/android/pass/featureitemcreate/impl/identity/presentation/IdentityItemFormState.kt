@@ -21,11 +21,12 @@ package proton.android.pass.featureitemcreate.impl.identity.presentation
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.Parcelize
-import proton.android.pass.domain.AddressDetails
-import proton.android.pass.domain.ContactDetails
+import proton.android.pass.domain.AddressDetailsContent
+import proton.android.pass.domain.ContactDetailsContent
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.PersonalDetails
-import proton.android.pass.domain.WorkDetails
+import proton.android.pass.domain.PersonalDetailsContent
+import proton.android.pass.domain.WorkDetailsContent
+import proton.android.pass.featureitemcreate.impl.common.UICustomFieldContent
 
 @Parcelize
 @Immutable
@@ -39,10 +40,10 @@ data class IdentityItemFormState(
 
     constructor(itemContents: ItemContents.Identity) : this(
         title = itemContents.title,
-        uiPersonalDetails = UIPersonalDetails(itemContents.personalDetails),
-        uiAddressDetails = UIAddressDetails(itemContents.addressDetails),
-        uiContactDetails = UIContactDetails(itemContents.contactDetails),
-        uiWorkDetails = UIWorkDetails(itemContents.workDetails)
+        uiPersonalDetails = UIPersonalDetails(itemContents.personalDetailsContent),
+        uiAddressDetails = UIAddressDetails(itemContents.addressDetailsContent),
+        uiContactDetails = UIContactDetails(itemContents.contactDetailsContent),
+        uiWorkDetails = UIWorkDetails(itemContents.workDetailsContent)
     )
 
     fun validate(): Set<IdentityValidationErrors> {
@@ -54,7 +55,7 @@ data class IdentityItemFormState(
     fun toItemContents(): ItemContents = ItemContents.Identity(
         title = title,
         note = "",
-        personalDetails = PersonalDetails(
+        personalDetailsContent = PersonalDetailsContent(
             fullName = uiPersonalDetails.fullName,
             firstName = uiPersonalDetails.firstName,
             middleName = uiPersonalDetails.middleName,
@@ -62,9 +63,10 @@ data class IdentityItemFormState(
             birthdate = uiPersonalDetails.birthdate,
             gender = uiPersonalDetails.gender,
             email = uiPersonalDetails.email,
-            phoneNumber = uiPersonalDetails.phoneNumber
+            phoneNumber = uiPersonalDetails.phoneNumber,
+            customFields = uiPersonalDetails.customFields.map(UICustomFieldContent::toCustomFieldContent)
         ),
-        addressDetails = AddressDetails(
+        addressDetailsContent = AddressDetailsContent(
             organization = uiAddressDetails.organization,
             streetAddress = uiAddressDetails.streetAddress,
             zipOrPostalCode = uiAddressDetails.zipOrPostalCode,
@@ -72,10 +74,10 @@ data class IdentityItemFormState(
             stateOrProvince = uiAddressDetails.stateOrProvince,
             countryOrRegion = uiAddressDetails.countryOrRegion,
             floor = uiAddressDetails.floor,
-            county = uiAddressDetails.county
-
+            county = uiAddressDetails.county,
+            customFields = uiPersonalDetails.customFields.map(UICustomFieldContent::toCustomFieldContent)
         ),
-        contactDetails = ContactDetails(
+        contactDetailsContent = ContactDetailsContent(
             socialSecurityNumber = uiContactDetails.socialSecurityNumber,
             passportNumber = uiContactDetails.passportNumber,
             licenseNumber = uiContactDetails.licenseNumber,
@@ -86,14 +88,16 @@ data class IdentityItemFormState(
             reddit = uiContactDetails.reddit,
             facebook = uiContactDetails.facebook,
             yahoo = uiContactDetails.yahoo,
-            instagram = uiContactDetails.instagram
+            instagram = uiContactDetails.instagram,
+            customFields = uiPersonalDetails.customFields.map(UICustomFieldContent::toCustomFieldContent)
         ),
-        workDetails = WorkDetails(
+        workDetailsContent = WorkDetailsContent(
             company = uiWorkDetails.company,
             jobTitle = uiWorkDetails.jobTitle,
             personalWebsite = uiWorkDetails.personalWebsite,
             workPhoneNumber = uiWorkDetails.workPhoneNumber,
-            workEmail = uiWorkDetails.workEmail
+            workEmail = uiWorkDetails.workEmail,
+            customFields = uiPersonalDetails.customFields.map(UICustomFieldContent::toCustomFieldContent)
         )
     )
 
@@ -118,18 +122,20 @@ data class UIPersonalDetails(
     val birthdate: String,
     val gender: String,
     val email: String,
-    val phoneNumber: String
+    val phoneNumber: String,
+    val customFields: List<UICustomFieldContent>
 ) : Parcelable {
 
-    constructor(personalDetails: PersonalDetails) : this(
-        fullName = personalDetails.fullName,
-        firstName = personalDetails.firstName,
-        middleName = personalDetails.middleName,
-        lastName = personalDetails.lastName,
-        birthdate = personalDetails.birthdate,
-        gender = personalDetails.gender,
-        email = personalDetails.email,
-        phoneNumber = personalDetails.phoneNumber
+    constructor(personalDetailsContent: PersonalDetailsContent) : this(
+        fullName = personalDetailsContent.fullName,
+        firstName = personalDetailsContent.firstName,
+        middleName = personalDetailsContent.middleName,
+        lastName = personalDetailsContent.lastName,
+        birthdate = personalDetailsContent.birthdate,
+        gender = personalDetailsContent.gender,
+        email = personalDetailsContent.email,
+        phoneNumber = personalDetailsContent.phoneNumber,
+        customFields = personalDetailsContent.customFields.map(UICustomFieldContent.Companion::from)
     )
 
     companion object {
@@ -142,7 +148,8 @@ data class UIPersonalDetails(
             birthdate = "",
             gender = "",
             email = "",
-            phoneNumber = ""
+            phoneNumber = "",
+            customFields = emptyList()
         )
     }
 }
@@ -157,18 +164,20 @@ data class UIAddressDetails(
     val stateOrProvince: String,
     val countryOrRegion: String,
     val floor: String,
-    val county: String
+    val county: String,
+    val customFields: List<UICustomFieldContent>
 ) : Parcelable {
 
-    constructor(addressDetails: AddressDetails) : this(
-        organization = addressDetails.organization,
-        streetAddress = addressDetails.streetAddress,
-        zipOrPostalCode = addressDetails.zipOrPostalCode,
-        city = addressDetails.city,
-        stateOrProvince = addressDetails.stateOrProvince,
-        countryOrRegion = addressDetails.countryOrRegion,
-        floor = addressDetails.floor,
-        county = addressDetails.county
+    constructor(addressDetailsContent: AddressDetailsContent) : this(
+        organization = addressDetailsContent.organization,
+        streetAddress = addressDetailsContent.streetAddress,
+        zipOrPostalCode = addressDetailsContent.zipOrPostalCode,
+        city = addressDetailsContent.city,
+        stateOrProvince = addressDetailsContent.stateOrProvince,
+        countryOrRegion = addressDetailsContent.countryOrRegion,
+        floor = addressDetailsContent.floor,
+        county = addressDetailsContent.county,
+        customFields = addressDetailsContent.customFields.map(UICustomFieldContent.Companion::from)
     )
 
     companion object {
@@ -181,7 +190,8 @@ data class UIAddressDetails(
             stateOrProvince = "",
             countryOrRegion = "",
             floor = "",
-            county = ""
+            county = "",
+            customFields = emptyList()
         )
     }
 }
@@ -199,20 +209,22 @@ data class UIContactDetails(
     val reddit: String,
     val facebook: String,
     val yahoo: String,
-    val instagram: String
+    val instagram: String,
+    val customFields: List<UICustomFieldContent>
 ) : Parcelable {
-    constructor(contactDetails: ContactDetails) : this(
-        socialSecurityNumber = contactDetails.socialSecurityNumber,
-        passportNumber = contactDetails.passportNumber,
-        licenseNumber = contactDetails.licenseNumber,
-        website = contactDetails.website,
-        xHandle = contactDetails.xHandle,
-        secondPhoneNumber = contactDetails.secondPhoneNumber,
-        linkedin = contactDetails.linkedin,
-        reddit = contactDetails.reddit,
-        facebook = contactDetails.facebook,
-        yahoo = contactDetails.yahoo,
-        instagram = contactDetails.instagram
+    constructor(contactDetailsContent: ContactDetailsContent) : this(
+        socialSecurityNumber = contactDetailsContent.socialSecurityNumber,
+        passportNumber = contactDetailsContent.passportNumber,
+        licenseNumber = contactDetailsContent.licenseNumber,
+        website = contactDetailsContent.website,
+        xHandle = contactDetailsContent.xHandle,
+        secondPhoneNumber = contactDetailsContent.secondPhoneNumber,
+        linkedin = contactDetailsContent.linkedin,
+        reddit = contactDetailsContent.reddit,
+        facebook = contactDetailsContent.facebook,
+        yahoo = contactDetailsContent.yahoo,
+        instagram = contactDetailsContent.instagram,
+        customFields = contactDetailsContent.customFields.map(UICustomFieldContent.Companion::from)
     )
 
     companion object {
@@ -227,7 +239,8 @@ data class UIContactDetails(
             reddit = "",
             facebook = "",
             yahoo = "",
-            instagram = ""
+            instagram = "",
+            customFields = emptyList()
         )
     }
 
@@ -240,15 +253,17 @@ data class UIWorkDetails(
     val jobTitle: String,
     val personalWebsite: String,
     val workPhoneNumber: String,
-    val workEmail: String
+    val workEmail: String,
+    val customFields: List<UICustomFieldContent>
 ) : Parcelable {
 
-    constructor(workDetails: WorkDetails) : this(
-        company = workDetails.company,
-        jobTitle = workDetails.jobTitle,
-        personalWebsite = workDetails.personalWebsite,
-        workPhoneNumber = workDetails.workPhoneNumber,
-        workEmail = workDetails.workEmail
+    constructor(workDetailsContent: WorkDetailsContent) : this(
+        company = workDetailsContent.company,
+        jobTitle = workDetailsContent.jobTitle,
+        personalWebsite = workDetailsContent.personalWebsite,
+        workPhoneNumber = workDetailsContent.workPhoneNumber,
+        workEmail = workDetailsContent.workEmail,
+        customFields = workDetailsContent.customFields.map(UICustomFieldContent.Companion::from)
     )
 
     companion object {
@@ -258,7 +273,8 @@ data class UIWorkDetails(
             jobTitle = "",
             personalWebsite = "",
             workPhoneNumber = "",
-            workEmail = ""
+            workEmail = "",
+            customFields = emptyList()
         )
     }
 }

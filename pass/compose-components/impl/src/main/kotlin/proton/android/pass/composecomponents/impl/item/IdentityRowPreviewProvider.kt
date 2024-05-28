@@ -21,13 +21,13 @@ package proton.android.pass.composecomponents.impl.item
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.datetime.Clock
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.domain.AddressDetails
-import proton.android.pass.domain.ContactDetails
+import proton.android.pass.domain.AddressDetailsContent
+import proton.android.pass.domain.ContactDetailsContent
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.PersonalDetails
+import proton.android.pass.domain.PersonalDetailsContent
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.WorkDetails
+import proton.android.pass.domain.WorkDetailsContent
 
 class IdentityRowPreviewProvider : PreviewParameterProvider<IdentityRowParameter> {
     override val values: Sequence<IdentityRowParameter>
@@ -45,7 +45,7 @@ class IdentityRowPreviewProvider : PreviewParameterProvider<IdentityRowParameter
                 contents = ItemContents.Identity(
                     title = title,
                     note = "",
-                    personalDetails = PersonalDetails(
+                    personalDetailsContent = PersonalDetailsContent(
                         fullName = "John Doe",
                         firstName = "John",
                         lastName = "",
@@ -53,11 +53,12 @@ class IdentityRowPreviewProvider : PreviewParameterProvider<IdentityRowParameter
                         email = "john.doe@proton.me",
                         birthdate = "",
                         gender = "",
-                        phoneNumber = ""
+                        phoneNumber = "",
+                        customFields = emptyList()
                     ),
-                    addressDetails = AddressDetails.EMPTY,
-                    contactDetails = ContactDetails.EMPTY,
-                    workDetails = WorkDetails.EMPTY
+                    addressDetailsContent = AddressDetailsContent.EMPTY,
+                    contactDetailsContent = ContactDetailsContent.EMPTY,
+                    workDetailsContent = WorkDetailsContent.EMPTY
                 ),
                 state = 0,
                 createTime = Clock.System.now(),

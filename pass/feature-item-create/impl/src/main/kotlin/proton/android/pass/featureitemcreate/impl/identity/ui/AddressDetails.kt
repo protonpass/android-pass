@@ -35,6 +35,7 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.featureitemcreate.impl.common.customfields.CustomFieldEntry
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent
+import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent.OnCustomFieldOptions
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent.OnFieldChange
 import proton.android.pass.featureitemcreate.impl.identity.presentation.FieldChange
 import proton.android.pass.featureitemcreate.impl.identity.presentation.UIAddressDetails
@@ -42,6 +43,7 @@ import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsh
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.AddressDetailsField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.County
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Floor
+import proton.android.pass.featureitemcreate.impl.identity.ui.IdentitySectionType.AddressDetails
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.CityInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.CountryOrRegionInput
 import proton.android.pass.featureitemcreate.impl.identity.ui.inputfields.CountyInput
@@ -129,7 +131,7 @@ internal fun AddressDetails(
                     index = index,
                     onValueChange = {
                         val fieldChange = FieldChange.CustomField(
-                            sectionType = IdentitySectionType.AddressDetails,
+                            sectionType = AddressDetails,
                             customFieldType = value.toCustomFieldType(),
                             index = index,
                             value = it
@@ -137,7 +139,7 @@ internal fun AddressDetails(
                         onEvent(OnFieldChange(fieldChange))
                     },
                     onFocusChange = { _, _ -> },
-                    onOptionsClick = { }
+                    onOptionsClick = { onEvent(OnCustomFieldOptions(index, value.label, AddressCustomField)) }
                 )
             }
         }

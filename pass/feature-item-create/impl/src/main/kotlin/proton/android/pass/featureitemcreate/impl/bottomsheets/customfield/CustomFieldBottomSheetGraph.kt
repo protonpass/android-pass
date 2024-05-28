@@ -20,7 +20,6 @@ package proton.android.pass.featureitemcreate.impl.bottomsheets.customfield
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
-import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
@@ -70,21 +69,18 @@ sealed interface CustomFieldOptionsNavigation {
     data object RemoveCustomField : CustomFieldOptionsNavigation
 }
 
-fun NavGraphBuilder.customFieldBottomSheetGraph(onNavigate: (BaseLoginNavigation) -> Unit) {
+fun NavGraphBuilder.customFieldBottomSheetGraph(
+    onAddCustomFieldNavigate: (CustomFieldType) -> Unit,
+    onEditCustomFieldNavigate: (String, Int) -> Unit,
+    onRemoveCustomFieldNavigate: () -> Unit,
+    onCloseNavigate: () -> Unit
+) {
     bottomSheet(AddCustomFieldBottomSheet) {
         AddCustomFieldBottomSheet {
             when (it) {
-                is AddCustomFieldNavigation.AddText -> {
-                    onNavigate(BaseLoginNavigation.CustomFieldTypeSelected(CustomFieldType.Text))
-                }
-
-                is AddCustomFieldNavigation.AddHidden -> {
-                    onNavigate(BaseLoginNavigation.CustomFieldTypeSelected(CustomFieldType.Hidden))
-                }
-
-                is AddCustomFieldNavigation.AddTotp -> {
-                    onNavigate(BaseLoginNavigation.CustomFieldTypeSelected(CustomFieldType.Totp))
-                }
+                is AddCustomFieldNavigation.AddText -> onAddCustomFieldNavigate(CustomFieldType.Text)
+                is AddCustomFieldNavigation.AddHidden -> onAddCustomFieldNavigate(CustomFieldType.Hidden)
+                is AddCustomFieldNavigation.AddTotp -> onAddCustomFieldNavigate(CustomFieldType.Totp)
             }
         }
     }
@@ -93,19 +89,13 @@ fun NavGraphBuilder.customFieldBottomSheetGraph(onNavigate: (BaseLoginNavigation
         EditCustomFieldBottomSheet(
             onNavigate = {
                 when (it) {
-                    is CustomFieldOptionsNavigation.EditCustomField -> {
-                        onNavigate(BaseLoginNavigation.EditCustomField(it.title, it.index))
-                    }
-
-                    CustomFieldOptionsNavigation.RemoveCustomField -> {
-                        onNavigate(BaseLoginNavigation.RemovedCustomField)
-                    }
-
-                    CustomFieldOptionsNavigation.Close -> {
-                        onNavigate(BaseLoginNavigation.Close)
-                    }
+                    is CustomFieldOptionsNavigation.EditCustomField ->
+                        onEditCustomFieldNavigate(it.title, it.index)
+                    CustomFieldOptionsNavigation.RemoveCustomField -> onRemoveCustomFieldNavigate()
+                    CustomFieldOptionsNavigation.Close -> onCloseNavigate()
                 }
             }
         )
     }
 }
+

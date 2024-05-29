@@ -33,6 +33,7 @@ import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestUser
 
@@ -57,7 +58,8 @@ internal class AccountViewModelTest {
         instance = AccountViewModel(
             observeCurrentUser = observeCurrentUser,
             observeUpgradeInfo = getUpgradeInfo,
-            observeCurrentUserSettings = observeCurrentUserSettings
+            observeCurrentUserSettings = observeCurrentUserSettings,
+            featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository()
         )
     }
 

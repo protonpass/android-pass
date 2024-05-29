@@ -27,10 +27,10 @@ import proton.android.pass.featureaccount.impl.R as FeatureAccountR
 
 object AccountRobot : Robot {
 
-    private val accountScreen get() = node.withTag(AccountScreenTestTag.screen)
+    private val accountScreen get() = node.withTag(AccountScreenTestTag.SCREEN)
     private val signOut = node.withText(FeatureAccountR.string.account_sign_out)
-    private val upgrade get() = node.withTag(AccountContentTestTag.upgrade)
-    private val subscription get() = node.withTag(AccountContentTestTag.subscription)
+    private val upgrade get() = node.withTag(AccountContentTestTag.UPGRADE)
+    private val subscription get() = node.withTag(AccountContentTestTag.SUBSCRIPTION)
 
     fun accountScreenDisplayed(): AccountRobot = apply {
         accountScreen.await { assertIsDisplayed() }

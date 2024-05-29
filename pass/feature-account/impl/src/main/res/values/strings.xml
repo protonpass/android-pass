@@ -19,4 +19,6 @@
     <string name="account_settings_list_item_recovery_hint_not_set">Not set</string>
     <string name="account_settings_list_item_password_hint_grace">Password reset pending</string>
     <string name="account_settings_list_item_password_hint_insecure">Password reset ready</string>
+
+    <string name="account_settings_list_item_access_key_header" translatable="false">Set Access key</string>
 </resources>

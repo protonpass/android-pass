@@ -24,6 +24,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.core.datasources.RemoteSentinelDataSource
 import proton.android.pass.data.impl.core.datasources.RemoteSentinelDataSourceImpl
+import proton.android.pass.data.impl.remote.RemoteAccessKeyDataSource
+import proton.android.pass.data.impl.remote.RemoteAccessKeyDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteAliasDataSource
 import proton.android.pass.data.impl.remote.RemoteAliasDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteBreachDataSource
@@ -99,5 +101,8 @@ abstract class DataRemoteDataSourceModule {
 
     @Binds
     abstract fun bindRemotePublicLinkDataSource(impl: RemotePublicLinkDataSourceImpl): RemotePublicLinkDataSource
+
+    @Binds
+    abstract fun bindRemoteAccessKeyDataSource(impl: RemoteAccessKeyDataSourceImpl): RemoteAccessKeyDataSource
 }
 

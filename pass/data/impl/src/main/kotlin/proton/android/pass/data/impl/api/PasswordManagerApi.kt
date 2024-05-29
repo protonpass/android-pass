@@ -35,6 +35,7 @@ import proton.android.pass.data.impl.requests.CreatePublicLinkRequest
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.requests.MigrateItemRequest
 import proton.android.pass.data.impl.requests.MigrateItemsRequest
+import proton.android.pass.data.impl.requests.SetupAccessKeyRequest
 import proton.android.pass.data.impl.requests.TelemetryRequest
 import proton.android.pass.data.impl.requests.TransferVaultOwnershipRequest
 import proton.android.pass.data.impl.requests.TrashItemsRequest
@@ -393,6 +394,20 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("itemId") itemId: String,
         @Body request: CreatePublicLinkRequest
     ): CreatePublicLinkResponse
+
+    // Access key
+    @POST("$PREFIX/user/srp")
+    suspend fun setupAccessKey(@Body request: SetupAccessKeyRequest)
+
+    @DELETE("$PREFIX/user/srp")
+    suspend fun removeAccessKey()
+
+    @GET("$PREFIX/user/srp/info")
+    suspend fun getSrpInfo()
+
+    @POST("$PREFIX/user/srp/auth")
+    suspend fun setSrpInfo()
+
 
     // Core
     @GET("core/v4/keys/all")

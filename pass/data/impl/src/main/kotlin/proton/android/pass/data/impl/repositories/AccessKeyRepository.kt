@@ -50,21 +50,24 @@ class AccessKeyRepositoryImpl @Inject constructor(
             file.writeBytes(accessKey.encodeToByteArray())
         }
 
-    override suspend fun checkAccessKeyForUser(userId: UserId, accessKey: EncryptedString): Boolean {
-        val file = getAccessKeyFileForUser(userId)
-        if (!file.exists()) {
-            throw IllegalStateException("Trying to check access key for user but we don't have it user=${userId.id}")
+    override suspend fun checkAccessKeyForUser(userId: UserId, accessKey: EncryptedString): Boolean =
+        withContext(appDispatchers.io) {
+            val file = getAccessKeyFileForUser(userId)
+            if (!file.exists()) {
+                throw IllegalStateException(
+                    "Trying to check access key for user but we don't have it user=${userId.id}"
+                )
+            }
+
+            val contents = file.readBytes()
+            val (decryptedAccessKey, decryptedContents) = encryptionContextProvider.withEncryptionContext {
+                decrypt(accessKey) to decrypt(EncryptedByteArray(contents)).decodeToString()
+            }
+
+            return@withContext decryptedAccessKey == decryptedContents
         }
 
-        val contents = file.readBytes()
-        val (decryptedAccessKey, decryptedContents) = encryptionContextProvider.withEncryptionContext {
-            decrypt(accessKey) to decrypt(EncryptedByteArray(contents)).decodeToString()
-        }
-
-        return decryptedAccessKey == decryptedContents
-    }
-
-    override suspend fun removeAccessKeyForUser(userId: UserId) {
+    override suspend fun removeAccessKeyForUser(userId: UserId) = withContext(appDispatchers.io) {
         val file = getAccessKeyFileForUser(userId)
         if (file.exists()) {
             file.delete()

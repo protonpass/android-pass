@@ -43,8 +43,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 fun AccountAndRecoveryInfo(
     modifier: Modifier = Modifier,
     state: AccountUiState,
-    onPasswordManagementClick: () -> Unit,
-    onRecoveryEmailClick: () -> Unit
+    onEvent: (AccountContentEvent) -> Unit
 ) {
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Text(
@@ -53,8 +52,7 @@ fun AccountAndRecoveryInfo(
         )
         AccountAndRecoveryInfoContent(
             state = state,
-            onPasswordManagementClick = onPasswordManagementClick,
-            onRecoveryEmailClick = onRecoveryEmailClick
+            onEvent = onEvent
         )
     }
 }
@@ -63,8 +61,7 @@ fun AccountAndRecoveryInfo(
 fun AccountAndRecoveryInfoContent(
     modifier: Modifier = Modifier,
     state: AccountUiState,
-    onPasswordManagementClick: () -> Unit,
-    onRecoveryEmailClick: () -> Unit
+    onEvent: (AccountContentEvent) -> Unit
 ) {
     Column(
         modifier = modifier.roundedContainerNorm()
@@ -79,18 +76,13 @@ fun AccountAndRecoveryInfoContent(
 
         AccountPasswordAndRecoveryInfo(
             state = state,
-            onPasswordManagementClick = onPasswordManagementClick,
-            onRecoveryEmailClick = onRecoveryEmailClick
+            onEvent = onEvent
         )
     }
 }
 
 @Composable
-fun AccountPasswordAndRecoveryInfo(
-    state: AccountUiState,
-    onPasswordManagementClick: () -> Unit,
-    onRecoveryEmailClick: () -> Unit
-) {
+fun AccountPasswordAndRecoveryInfo(state: AccountUiState, onEvent: (AccountContentEvent) -> Unit) {
     val recoveryHint = state.recoveryEmail
         ?: stringResource(R.string.account_settings_list_item_recovery_hint_not_set)
 
@@ -106,7 +98,7 @@ fun AccountPasswordAndRecoveryInfo(
     SettingOption(
         text = stringResource(R.string.account_settings_list_item_password_header),
         label = passwordHint,
-        onClick = onPasswordManagementClick
+        onClick = { onEvent(AccountContentEvent.PasswordManagement) }
     )
 
     Divider(color = PassTheme.colors.inputBorderNorm)
@@ -114,8 +106,15 @@ fun AccountPasswordAndRecoveryInfo(
     SettingOption(
         label = stringResource(R.string.account_settings_list_item_recovery_header),
         text = recoveryHint,
-        onClick = onRecoveryEmailClick
+        onClick = { onEvent(AccountContentEvent.RecoveryEmail) }
     )
+    if (state.showAccessKey) {
+        Divider(color = PassTheme.colors.inputBorderNorm)
+        SettingOption(
+            text = stringResource(R.string.account_settings_list_item_access_key_header),
+            onClick = { onEvent(AccountContentEvent.SetAccessKey) }
+        )
+    }
 }
 
 @Preview
@@ -131,10 +130,10 @@ fun AccountInfoPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
                     plan = PlanSection.Data("Free"),
                     isLoadingState = IsLoadingState.NotLoading,
                     showUpgradeButton = true,
-                    showSubscriptionButton = true
+                    showSubscriptionButton = true,
+                    showAccessKey = true
                 ),
-                onPasswordManagementClick = {},
-                onRecoveryEmailClick = {}
+                onEvent = {}
             )
         }
     }

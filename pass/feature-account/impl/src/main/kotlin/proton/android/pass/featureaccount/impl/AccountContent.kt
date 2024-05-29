@@ -29,13 +29,11 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionWeak
-import proton.android.pass.commonui.api.BrowserUtils.openWebsite
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.buttons.UpgradeButton
 import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
@@ -45,8 +43,7 @@ import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
 fun AccountContent(
     modifier: Modifier = Modifier,
     state: AccountUiState,
-    onNavigate: (AccountNavigation) -> Unit,
-    onDeleteAccountClick: () -> Unit
+    onEvent: (AccountContentEvent) -> Unit
 ) {
     Scaffold(
         modifier = modifier,
@@ -57,12 +54,12 @@ fun AccountContent(
                     if (state.showUpgradeButton) {
                         UpgradeButton(
                             modifier = Modifier
-                                .testTag(AccountContentTestTag.upgrade),
-                            onUpgradeClick = { onNavigate(AccountNavigation.Upgrade) }
+                                .testTag(AccountContentTestTag.UPGRADE),
+                            onUpgradeClick = { onEvent(AccountContentEvent.Upgrade) }
                         )
                     }
                 },
-                onUpClick = { onNavigate(AccountNavigation.Back) }
+                onUpClick = { onEvent(AccountContentEvent.Back) }
             )
         }
     ) { contentPadding ->
@@ -78,20 +75,17 @@ fun AccountContent(
             SubscriptionInfo(state = state)
             AccountAndRecoveryInfo(
                 state = state,
-                onPasswordManagementClick = { onNavigate(AccountNavigation.PasswordManagement) },
-                onRecoveryEmailClick = { onNavigate(AccountNavigation.RecoveryEmail) }
+                onEvent = onEvent
             )
             if (state.showSubscriptionButton) {
                 ManageSubscription(
-                    modifier = Modifier.testTag(AccountContentTestTag.subscription),
-                    onSubscriptionClick = { onNavigate(AccountNavigation.Subscription) }
+                    modifier = Modifier.testTag(AccountContentTestTag.SUBSCRIPTION),
+                    onSubscriptionClick = { onEvent(AccountContentEvent.Subscription) }
                 )
             }
-            val context = LocalContext.current
-
-            ManageAccount(onManageAccountClick = { openWebsite(context, PASS_MANAGE_ACCOUNT) })
-            SignOut(onSignOutClick = { onNavigate(AccountNavigation.SignOut) })
-            DeleteAccount(onDeleteAccountClick = onDeleteAccountClick)
+            ManageAccount(onManageAccountClick = { onEvent(AccountContentEvent.ManageAccount) })
+            SignOut(onSignOutClick = { onEvent(AccountContentEvent.SignOut) })
+            DeleteAccount(onDeleteAccountClick = { onEvent(AccountContentEvent.DeleteAccount) })
             Text(
                 text = stringResource(R.string.account_permanently_delete_warning),
                 style = ProtonTheme.typography.captionWeak
@@ -100,9 +94,7 @@ fun AccountContent(
     }
 }
 
-private const val PASS_MANAGE_ACCOUNT = "https://account.proton.me/pass/account-password"
-
 object AccountContentTestTag {
-    const val upgrade = "upgrade"
-    const val subscription = "subscription"
+    const val UPGRADE = "upgrade"
+    const val SUBSCRIPTION = "subscription"
 }

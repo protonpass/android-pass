@@ -37,13 +37,25 @@ fun AccountScreen(
     AccountContent(
         modifier = modifier,
         state = state,
-        onNavigate = onNavigate,
-        onDeleteAccountClick = {
-            openWebsite(context, "https://account.proton.me/u/0/pass/account-password")
+        onEvent = {
+            when (it) {
+                AccountContentEvent.Back -> onNavigate(AccountNavigation.Back)
+                AccountContentEvent.PasswordManagement -> onNavigate(AccountNavigation.PasswordManagement)
+                AccountContentEvent.RecoveryEmail -> onNavigate(AccountNavigation.RecoveryEmail)
+                AccountContentEvent.Upgrade -> onNavigate(AccountNavigation.Upgrade)
+                AccountContentEvent.DeleteAccount -> openWebsite(context, PASS_DELETE_ACCOUNT)
+                AccountContentEvent.ManageAccount -> openWebsite(context, PASS_MANAGE_ACCOUNT)
+                AccountContentEvent.SignOut -> onNavigate(AccountNavigation.SignOut)
+                AccountContentEvent.Subscription -> onNavigate(AccountNavigation.Subscription)
+                AccountContentEvent.SetAccessKey -> onNavigate(AccountNavigation.SetAccessKey)
+            }
         }
     )
 }
 
+private const val PASS_MANAGE_ACCOUNT = "https://account.proton.me/pass/account-password"
+private const val PASS_DELETE_ACCOUNT = "https://account.proton.me/u/0/pass/account-password"
+
 object AccountScreenTestTag {
-    const val screen = "AccountScreenTestTag"
+    const val SCREEN = "AccountScreenTestTag"
 }

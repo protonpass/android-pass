@@ -36,7 +36,7 @@ fun NavGraphBuilder.accountGraph(onNavigate: (AccountNavigation) -> Unit) {
     ) {
         composable(Account) {
             AccountScreen(
-                modifier = Modifier.testTag(AccountScreenTestTag.screen),
+                modifier = Modifier.testTag(AccountScreenTestTag.SCREEN),
                 onNavigate = onNavigate
             )
         }
@@ -50,4 +50,5 @@ sealed interface AccountNavigation {
     data object Back : AccountNavigation
     data object PasswordManagement : AccountNavigation
     data object RecoveryEmail : AccountNavigation
+    data object SetAccessKey : AccountNavigation
 }

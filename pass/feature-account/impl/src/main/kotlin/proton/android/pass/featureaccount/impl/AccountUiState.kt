@@ -49,7 +49,8 @@ data class AccountUiState(
     val plan: PlanSection,
     val isLoadingState: IsLoadingState,
     val showUpgradeButton: Boolean,
-    val showSubscriptionButton: Boolean
+    val showSubscriptionButton: Boolean,
+    val showAccessKey: Boolean
 ) {
     companion object {
         val Initial = AccountUiState(
@@ -59,7 +60,8 @@ data class AccountUiState(
             plan = PlanSection.Hide,
             isLoadingState = IsLoadingState.Loading,
             showUpgradeButton = false,
-            showSubscriptionButton = false
+            showSubscriptionButton = false,
+            showAccessKey = false
         )
     }
 }

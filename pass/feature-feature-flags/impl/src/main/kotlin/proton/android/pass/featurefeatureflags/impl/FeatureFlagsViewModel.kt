@@ -39,12 +39,14 @@ class FeatureFlagsViewModel @Inject constructor(
         combine(
             ffRepository.get<Boolean>(FeatureFlag.SECURITY_CENTER_V1),
             ffRepository.get<Boolean>(FeatureFlag.IDENTITY_V1),
-            ffRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT)
-        ) { isSecurityCenterEnabled, isIdentityEnabled, isUsernameSplitEnabled ->
+            ffRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT),
+            ffRepository.get<Boolean>(FeatureFlag.ACCESS_KEY_V1)
+        ) { isSecurityCenterEnabled, isIdentityEnabled, isUsernameSplitEnabled, isAccessKeyEnabled ->
             mapOf(
                 FeatureFlag.SECURITY_CENTER_V1 to isSecurityCenterEnabled,
                 FeatureFlag.IDENTITY_V1 to isIdentityEnabled,
-                FeatureFlag.USERNAME_SPLIT to isUsernameSplitEnabled
+                FeatureFlag.USERNAME_SPLIT to isUsernameSplitEnabled,
+                FeatureFlag.ACCESS_KEY_V1 to isAccessKeyEnabled
             )
         }.stateIn(
             scope = viewModelScope,

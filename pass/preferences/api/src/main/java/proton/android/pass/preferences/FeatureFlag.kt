@@ -47,5 +47,11 @@ enum class FeatureFlag(
         description = "Enable split email/username",
         key = "PassUsernameSplit",
         isEnabledDefault = false
+    ),
+    ACCESS_KEY_V1(
+        title = "Access key",
+        description = "Enable access key",
+        key = "PassAccessKeyV1",
+        isEnabledDefault = false
     )
 }

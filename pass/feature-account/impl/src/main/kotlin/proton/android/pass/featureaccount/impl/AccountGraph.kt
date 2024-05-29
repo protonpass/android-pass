@@ -22,6 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
+import proton.android.pass.featureaccount.impl.accesskey.navigation.SetAccessKeyNavItem
+import proton.android.pass.featureaccount.impl.accesskey.ui.SetAccessKeyScreen
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
 
@@ -40,15 +42,11 @@ fun NavGraphBuilder.accountGraph(onNavigate: (AccountNavigation) -> Unit) {
                 onNavigate = onNavigate
             )
         }
+        composable(SetAccessKeyNavItem) {
+            SetAccessKeyScreen(
+                onNavigate = onNavigate
+            )
+        }
     }
 }
 
-sealed interface AccountNavigation {
-    data object Subscription : AccountNavigation
-    data object Upgrade : AccountNavigation
-    data object SignOut : AccountNavigation
-    data object Back : AccountNavigation
-    data object PasswordManagement : AccountNavigation
-    data object RecoveryEmail : AccountNavigation
-    data object SetAccessKey : AccountNavigation
-}

@@ -113,6 +113,10 @@ import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.UpdateVault
 import proton.android.pass.data.api.usecases.UserPlanWorkerLauncher
+import proton.android.pass.data.api.usecases.accesskey.AuthWithAccessKey
+import proton.android.pass.data.api.usecases.accesskey.CheckLocalAccessKey
+import proton.android.pass.data.api.usecases.accesskey.RemoveAccessKey
+import proton.android.pass.data.api.usecases.accesskey.SetupAccessKey
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.MarkEmailBreachAsResolved
 import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
@@ -258,6 +262,10 @@ import proton.android.pass.data.impl.usecases.UpdateAutofillItemImpl
 import proton.android.pass.data.impl.usecases.UpdateItemImpl
 import proton.android.pass.data.impl.usecases.UpdateVaultImpl
 import proton.android.pass.data.impl.usecases.UserPlanWorkerLauncherImpl
+import proton.android.pass.data.impl.usecases.accesskey.AuthWithAccessKeyImpl
+import proton.android.pass.data.impl.usecases.accesskey.CheckLocalAccessKeyImpl
+import proton.android.pass.data.impl.usecases.accesskey.RemoveAccessKeyImpl
+import proton.android.pass.data.impl.usecases.accesskey.SetupAccessKeyImpl
 import proton.android.pass.data.impl.usecases.breach.AddBreachCustomEmailImpl
 import proton.android.pass.data.impl.usecases.breach.MarkEmailBreachAsResolvedImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveAllBreachByUserIdImpl
@@ -749,5 +757,17 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindDisableTooltip(impl: DisableTooltipImpl): DisableTooltip
+
+    @Binds
+    abstract fun bindSetupAuthKey(impl: SetupAccessKeyImpl): SetupAccessKey
+
+    @Binds
+    abstract fun bindRemoveAccessKey(impl: RemoveAccessKeyImpl): RemoveAccessKey
+
+    @Binds
+    abstract fun bindCheckLocalAccessKey(impl: CheckLocalAccessKeyImpl): CheckLocalAccessKey
+
+    @Binds
+    abstract fun bindAuthWithAccessKey(impl: AuthWithAccessKeyImpl): AuthWithAccessKey
 
 }

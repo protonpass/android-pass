@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
+import proton.android.pass.preferences.FeatureFlag.ACCESS_KEY_V1
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.IDENTITY_V1
 import proton.android.pass.preferences.FeatureFlag.SECURITY_CENTER_V1
@@ -43,6 +44,7 @@ class TestFeatureFlagsPreferenceRepository @Inject constructor() :
             SECURITY_CENTER_V1 -> it.getOrDefault(SECURITY_CENTER_V1, false) as T
             IDENTITY_V1 -> it.getOrDefault(IDENTITY_V1, false) as T
             USERNAME_SPLIT -> it.getOrDefault(USERNAME_SPLIT, false) as T
+            ACCESS_KEY_V1 -> it.getOrDefault(ACCESS_KEY_V1, false) as T
         }
     }
 

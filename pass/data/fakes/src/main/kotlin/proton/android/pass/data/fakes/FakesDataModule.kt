@@ -113,6 +113,10 @@ import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.UpdateVault
+import proton.android.pass.data.api.usecases.accesskey.AuthWithAccessKey
+import proton.android.pass.data.api.usecases.accesskey.CheckLocalAccessKey
+import proton.android.pass.data.api.usecases.accesskey.RemoveAccessKey
+import proton.android.pass.data.api.usecases.accesskey.SetupAccessKey
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.MarkEmailBreachAsResolved
 import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
@@ -258,6 +262,10 @@ import proton.android.pass.data.fakes.usecases.TestUpdateAlias
 import proton.android.pass.data.fakes.usecases.TestUpdateAutofillItem
 import proton.android.pass.data.fakes.usecases.TestUpdateItem
 import proton.android.pass.data.fakes.usecases.TestUpdateVault
+import proton.android.pass.data.fakes.usecases.accesskey.FakeAuthWithAccessKey
+import proton.android.pass.data.fakes.usecases.accesskey.FakeCheckLocalAccessKey
+import proton.android.pass.data.fakes.usecases.accesskey.FakeRemoveAccessKey
+import proton.android.pass.data.fakes.usecases.accesskey.FakeSetupAccessKey
 import proton.android.pass.data.fakes.usecases.breach.FakeAddBreachCustomEmail
 import proton.android.pass.data.fakes.usecases.breach.FakeMarkEmailBreachAsResolved
 import proton.android.pass.data.fakes.usecases.breach.FakeObserveAllBreachByUserId
@@ -705,5 +713,17 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindDisableTooltip(impl: FakeDisableTooltip): DisableTooltip
+
+    @Binds
+    abstract fun bindAuthWithAccessKey(impl: FakeAuthWithAccessKey): AuthWithAccessKey
+
+    @Binds
+    abstract fun bindCheckLocalAccessKey(impl: FakeCheckLocalAccessKey): CheckLocalAccessKey
+
+    @Binds
+    abstract fun bindRemoveAccessKey(impl: FakeRemoveAccessKey): RemoveAccessKey
+
+    @Binds
+    abstract fun bindSetupAccessKey(impl: FakeSetupAccessKey): SetupAccessKey
 
 }

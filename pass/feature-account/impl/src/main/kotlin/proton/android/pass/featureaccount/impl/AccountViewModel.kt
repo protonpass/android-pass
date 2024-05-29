@@ -34,13 +34,16 @@ import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveCurrentUserSettings
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class AccountViewModel @Inject constructor(
     observeCurrentUser: ObserveCurrentUser,
     observeUpgradeInfo: ObserveUpgradeInfo,
-    observeCurrentUserSettings: ObserveCurrentUserSettings
+    observeCurrentUserSettings: ObserveCurrentUserSettings,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
 
     private val currentUser = observeCurrentUser()
@@ -49,8 +52,9 @@ class AccountViewModel @Inject constructor(
     val state: StateFlow<AccountUiState> = combine(
         currentUser.asLoadingResult(),
         observeUpgradeInfo(forceRefresh = true).asLoadingResult(),
-        observeCurrentUserSettings().asLoadingResult()
-    ) { userResult, upgradeInfoResult, currentUserSettingsResult ->
+        observeCurrentUserSettings().asLoadingResult(),
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.ACCESS_KEY_V1)
+    ) { userResult, upgradeInfoResult, currentUserSettingsResult, isAccessKeyV1Enabled ->
         val plan = when (upgradeInfoResult) {
             is LoadingResult.Error -> {
                 PassLogger.w(TAG, "Error retrieving user plan")
@@ -78,7 +82,8 @@ class AccountViewModel @Inject constructor(
                 plan = PlanSection.Hide,
                 isLoadingState = IsLoadingState.NotLoading,
                 showUpgradeButton = isUpgradeAvailable,
-                showSubscriptionButton = isSubscriptionAvailable
+                showSubscriptionButton = isSubscriptionAvailable,
+                showAccessKey = isAccessKeyV1Enabled
             )
 
             is LoadingResult.Success -> AccountUiState(
@@ -88,7 +93,8 @@ class AccountViewModel @Inject constructor(
                 plan = plan,
                 isLoadingState = IsLoadingState.NotLoading,
                 showUpgradeButton = isUpgradeAvailable,
-                showSubscriptionButton = isSubscriptionAvailable
+                showSubscriptionButton = isSubscriptionAvailable,
+                showAccessKey = isAccessKeyV1Enabled
             )
         }
     }

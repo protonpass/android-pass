@@ -68,11 +68,6 @@ class AutofillActivity : FragmentActivity() {
         }
     }
 
-    override fun onStop() {
-        viewModel.onStop()
-        super.onStop()
-    }
-
     private fun onStateReceived(autofillUiState: AutofillUiState) {
         when (autofillUiState) {
             AutofillUiState.CloseScreen -> {
@@ -110,11 +105,13 @@ class AutofillActivity : FragmentActivity() {
     }
 
     private fun onAutofillCancel() {
+        viewModel.authOnStop()
         setResult(RESULT_CANCELED)
         finishApp()
     }
 
     private fun onAutofillSuccess(autofillMappings: AutofillMappings) {
+        viewModel.authOnStop()
         PassLogger.i(TAG, "Mappings found: ${autofillMappings.mappings.size}")
         val intent = prepareAutofillSuccessIntent(autofillMappings)
         setResult(RESULT_OK, intent)

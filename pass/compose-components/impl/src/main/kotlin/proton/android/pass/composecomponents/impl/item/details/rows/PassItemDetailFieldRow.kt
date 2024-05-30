@@ -18,6 +18,7 @@
 
 package proton.android.pass.composecomponents.impl.item.details.rows
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,7 +32,7 @@ import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.asAnnotatedString
@@ -42,7 +43,7 @@ import proton.android.pass.composecomponents.impl.utils.PassItemColors
 @Composable
 internal fun PassItemDetailFieldRow(
     modifier: Modifier = Modifier,
-    icon: Painter,
+    @DrawableRes icon: Int,
     title: String,
     subtitle: String,
     itemColors: PassItemColors,
@@ -62,7 +63,7 @@ internal fun PassItemDetailFieldRow(
         horizontalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
         Icon(
-            painter = icon,
+            painter = painterResource(id = icon),
             contentDescription = null,
             tint = itemColors.norm
         )

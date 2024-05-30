@@ -20,7 +20,6 @@ package proton.android.pass.composecomponents.impl.item.details.sections.shared
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
@@ -38,7 +37,7 @@ internal fun PassSharedItemDetailNoteSection(
         modifier = modifier
     ) {
         PassItemDetailFieldRow(
-            icon = painterResource(CoreR.drawable.ic_proton_note),
+            icon = CoreR.drawable.ic_proton_note,
             title = stringResource(R.string.item_details_shared_section_note_title),
             subtitle = note,
             itemColors = itemColors,

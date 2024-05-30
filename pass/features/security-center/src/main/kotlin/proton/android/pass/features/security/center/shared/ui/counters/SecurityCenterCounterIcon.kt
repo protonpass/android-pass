@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.security.center.shared.ui.counters
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -28,7 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.Radius
 import proton.android.pass.commonui.api.Spacing
@@ -36,7 +37,7 @@ import proton.android.pass.commonui.api.Spacing
 @Composable
 internal fun SecurityCenterCounterIcon(
     modifier: Modifier = Modifier,
-    iconPainter: Painter,
+    @DrawableRes icon: Int,
     iconColor: Color,
     iconBackgroundColor: Color,
     shape: Shape = RoundedCornerShape(Radius.small)
@@ -47,7 +48,7 @@ internal fun SecurityCenterCounterIcon(
             .clip(shape = shape)
             .background(color = iconBackgroundColor)
             .padding(all = Spacing.extraSmall),
-        painter = iconPainter,
+        painter = painterResource(id = icon),
         contentDescription = null,
         tint = iconColor
     )

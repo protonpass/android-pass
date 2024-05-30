@@ -20,7 +20,6 @@ package proton.android.pass.composecomponents.impl.item.details.sections.cards
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
@@ -55,7 +54,7 @@ internal fun PassCreditCardItemDetailMainSection(
     if (cardholder.isNotBlank()) {
         sections.add {
             PassItemDetailFieldRow(
-                icon = painterResource(CoreR.drawable.ic_proton_user),
+                icon = CoreR.drawable.ic_proton_user,
                 title = stringResource(R.string.item_details_credit_card_section_cardholder_title),
                 subtitle = cardholder,
                 itemColors = itemColors,
@@ -74,7 +73,7 @@ internal fun PassCreditCardItemDetailMainSection(
     if (cardNumber.isNotBlank()) {
         sections.add {
             PassItemDetailMaskedFieldRow(
-                icon = painterResource(CoreR.drawable.ic_proton_credit_card),
+                icon = CoreR.drawable.ic_proton_credit_card,
                 title = stringResource(R.string.item_details_credit_card_section_card_number_title),
                 maskedSubtitle = TextMask.CardNumber(cardNumber),
                 itemColors = itemColors,
@@ -94,7 +93,7 @@ internal fun PassCreditCardItemDetailMainSection(
     if (expirationDate.isNotBlank()) {
         sections.add {
             PassItemDetailMaskedFieldRow(
-                icon = painterResource(CoreR.drawable.ic_proton_calendar_day),
+                icon = CoreR.drawable.ic_proton_calendar_day,
                 title = stringResource(R.string.item_details_credit_card_section_expiration_date_title),
                 maskedSubtitle = TextMask.ExpirationDate(expirationDate),
                 itemColors = itemColors
@@ -105,7 +104,7 @@ internal fun PassCreditCardItemDetailMainSection(
     if (cvv !is HiddenState.Empty) {
         sections.add {
             PassItemDetailsHiddenFieldRow(
-                icon = painterResource(CompR.drawable.ic_verified),
+                icon = CompR.drawable.ic_verified,
                 title = stringResource(R.string.item_details_credit_card_section_cvv_title),
                 hiddenState = cvv,
                 hiddenTextLength = HIDDEN_CVV_TEXT_LENGTH,
@@ -134,7 +133,7 @@ internal fun PassCreditCardItemDetailMainSection(
     if (pin !is HiddenState.Empty) {
         sections.add {
             PassItemDetailsHiddenFieldRow(
-                icon = painterResource(CoreR.drawable.ic_proton_grid_3),
+                icon = CoreR.drawable.ic_proton_grid_3,
                 title = stringResource(R.string.item_details_credit_card_section_pin_title),
                 hiddenState = pin,
                 hiddenTextLength = HIDDEN_PIN_TEXT_LENGTH,

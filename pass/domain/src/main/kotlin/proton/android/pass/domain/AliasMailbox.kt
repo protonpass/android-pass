@@ -18,6 +18,9 @@
 
 package proton.android.pass.domain
 
+import androidx.compose.runtime.Stable
+
+@Stable
 data class AliasMailbox(
     val id: Int,
     val email: String

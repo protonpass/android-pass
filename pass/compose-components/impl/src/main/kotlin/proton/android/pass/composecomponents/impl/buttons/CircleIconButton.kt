@@ -18,6 +18,7 @@
 
 package proton.android.pass.composecomponents.impl.buttons
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -28,7 +29,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -55,7 +55,7 @@ fun CircleIconButton(
 
 @Composable
 fun CircleIconButton(
-    iconPainter: Painter,
+    @DrawableRes drawableRes: Int,
     backgroundColor: Color,
     tintColor: Color,
     onClick: () -> Unit,
@@ -79,7 +79,7 @@ fun CircleIconButton(
         onClick = { if (enabled) onClick() else onDisabledClick?.invoke() }
     ) {
         Icon(
-            painter = iconPainter,
+            painter = painterResource(drawableRes),
             contentDescription = iconContentDescription,
             tint = if (enabled) tintColor else tintColor.copy(alpha = 0.2f)
         )
@@ -92,7 +92,7 @@ fun CircleIconButtonPreview(@PreviewParameter(ThemePreviewProvider::class) isDar
     PassTheme(isDark = isDark) {
         Surface {
             CircleIconButton(
-                iconPainter = painterResource(R.drawable.ic_proton_arrows_rotate),
+                drawableRes = R.drawable.ic_proton_arrows_rotate,
                 backgroundColor = PassTheme.colors.aliasInteractionNormMajor1,
                 tintColor = PassTheme.colors.loginInteractionNormMajor1,
                 onClick = {}

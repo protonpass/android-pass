@@ -18,6 +18,7 @@
 
 package proton.android.pass.composecomponents.impl.item
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,7 +30,7 @@ import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.applyIf
@@ -37,11 +38,11 @@ import proton.android.pass.commonui.api.asAnnotatedString
 
 @Composable
 fun PassHistoryItemRow(
-    leadingIcon: Painter,
+    @DrawableRes leadingIcon: Int,
     title: String,
     subtitle: String,
     modifier: Modifier = Modifier,
-    trailingIcon: Painter? = null,
+    @DrawableRes trailingIcon: Int? = null,
     onClick: (() -> Unit)? = null,
     paddingValues: PaddingValues = PaddingValues(
         start = Spacing.medium,
@@ -62,7 +63,7 @@ fun PassHistoryItemRow(
         horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
         Icon(
-            painter = leadingIcon,
+            painter = painterResource(id = leadingIcon),
             contentDescription = null,
             tint = ProtonTheme.colors.textWeak
         )
@@ -78,7 +79,7 @@ fun PassHistoryItemRow(
 
         trailingIcon?.let { painter ->
             Icon(
-                painter = painter,
+                painter = painterResource(painter),
                 contentDescription = null,
                 tint = ProtonTheme.colors.textWeak
             )

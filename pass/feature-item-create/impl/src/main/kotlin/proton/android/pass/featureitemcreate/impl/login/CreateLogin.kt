@@ -216,6 +216,10 @@ fun CreateLoginScreen(
                     LoginContentEvent.OnUpgrade ->
                         actionAfterKeyboardHide =
                             { onNavigate(BaseLoginNavigation.Upgrade) }
+
+                    is LoginContentEvent.OnTooltipDismissed -> {
+                        viewModel.onTooltipDismissed(it.tooltip)
+                    }
                 }
             }
         )

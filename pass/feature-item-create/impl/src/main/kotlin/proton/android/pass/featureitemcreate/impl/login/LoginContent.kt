@@ -99,7 +99,8 @@ internal fun LoginContent(
             selectedShareId = selectedShareId,
             hasReachedAliasLimit = uiState.hasReachedAliasLimit,
             onEvent = onEvent,
-            isUsernameSplitEnabled = uiState.isUsernameSplitEnabled
+            isUsernameSplitEnabled = uiState.isUsernameSplitEnabled,
+            isUsernameSplitTooltipEnabled = uiState.isUsernameSplitTooltipEnabled
         )
     }
 }

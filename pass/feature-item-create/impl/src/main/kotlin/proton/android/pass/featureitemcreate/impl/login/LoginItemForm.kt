@@ -80,7 +80,8 @@ internal fun LoginItemForm(
     selectedShareId: ShareId?,
     hasReachedAliasLimit: Boolean,
     onEvent: (LoginContentEvent) -> Unit,
-    isUsernameSplitEnabled: Boolean
+    isUsernameSplitEnabled: Boolean,
+    isUsernameSplitTooltipEnabled: Boolean
 ) {
     Box(modifier = modifier) {
         val currentStickyFormOption = when (focusedField) {
@@ -151,7 +152,8 @@ internal fun LoginItemForm(
                 onFocusChange = { field, isFocused ->
                     onEvent(LoginContentEvent.OnFocusChange(field, isFocused))
                 },
-                isUsernameSplitEnabled = isUsernameSplitEnabled
+                isUsernameSplitEnabled = isUsernameSplitEnabled,
+                isUsernameSplitTooltipEnabled = isUsernameSplitTooltipEnabled
             )
 
             WebsitesSection(

@@ -27,20 +27,22 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import proton.android.pass.preferences.tooltips.TooltipPreferencesSerializer
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object PreferencesProviderModule {
+internal object PreferencesProviderModule {
 
     @Provides
     @Singleton
-    fun provideDataStore(@ApplicationContext context: Context): DataStore<UserPreferences> = DataStoreFactory.create(
-        serializer = UserPreferencesSerializer,
-        migrations = listOf(UserPreferenceMigration.MIGRATION_1)
-    ) {
-        context.dataStoreFile("user_preferences.pb")
-    }
+    fun provideDataStore(@ApplicationContext context: Context): DataStore<UserPreferences> =
+        DataStoreFactory.create(
+            serializer = UserPreferencesSerializer,
+            migrations = listOf(UserPreferenceMigration.MIGRATION_1)
+        ) {
+            context.dataStoreFile("user_preferences.pb")
+        }
 
     @Provides
     @Singleton
@@ -60,4 +62,14 @@ object PreferencesProviderModule {
         ) {
             context.dataStoreFile("internal_settings.pb")
         }
+
+    @[Provides Singleton]
+    fun provideTooltipsPreferencesDataStore(
+        @ApplicationContext context: Context
+    ): DataStore<TooltipsPreferences> = DataStoreFactory.create(
+        serializer = TooltipPreferencesSerializer
+    ) {
+        context.dataStoreFile("tooltips_preferences.pb")
+    }
+
 }

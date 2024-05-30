@@ -157,6 +157,8 @@ import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry
 import proton.android.pass.data.api.usecases.sync.ForceSyncItems
+import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
+import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
 import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareId
 import proton.android.pass.data.impl.autofill.SuggestionItemFilterer
 import proton.android.pass.data.impl.autofill.SuggestionItemFiltererImpl
@@ -299,6 +301,8 @@ import proton.android.pass.data.impl.usecases.searchentry.DeleteAllSearchEntryIm
 import proton.android.pass.data.impl.usecases.searchentry.DeleteSearchEntryImpl
 import proton.android.pass.data.impl.usecases.searchentry.ObserveSearchEntryImpl
 import proton.android.pass.data.impl.usecases.sync.ForceSyncItemsImpl
+import proton.android.pass.data.impl.usecases.tooltips.DisableTooltipImpl
+import proton.android.pass.data.impl.usecases.tooltips.ObserveTooltipEnabledImpl
 import proton.android.pass.data.impl.usecases.vaults.ObserveVaultsGroupedByShareIdImpl
 import javax.inject.Singleton
 
@@ -739,5 +743,11 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindObserveBreachAliasEmails(impl: ObserveBreachAliasEmailsImpl): ObserveBreachAliasEmails
+
+    @[Binds Singleton]
+    abstract fun bindObserveTooltipEnabled(impl: ObserveTooltipEnabledImpl): ObserveTooltipEnabled
+
+    @[Binds Singleton]
+    abstract fun bindDisableTooltip(impl: DisableTooltipImpl): DisableTooltip
 
 }

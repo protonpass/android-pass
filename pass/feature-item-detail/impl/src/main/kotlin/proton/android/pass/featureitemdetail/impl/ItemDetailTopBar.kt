@@ -186,7 +186,7 @@ private fun ItemDetailShareButton(
 ) {
     CircleIconButton(
         modifier = modifier,
-        iconPainter = painterResource(CoreR.drawable.ic_proton_users_plus),
+        drawableRes = CoreR.drawable.ic_proton_users_plus,
         size = 40,
         backgroundColor = iconBackgroundColor,
         tintColor = iconColor,
@@ -208,7 +208,7 @@ private fun ItemDetailOptionsButton(
     AnimatedVisibility(visible = isVisible) {
         CircleIconButton(
             modifier = modifier,
-            iconPainter = painterResource(CoreR.drawable.ic_proton_three_dots_vertical),
+            drawableRes = CoreR.drawable.ic_proton_three_dots_vertical,
             size = 40,
             backgroundColor = iconBackgroundColor,
             tintColor = iconColor,

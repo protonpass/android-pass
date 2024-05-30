@@ -29,7 +29,6 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
@@ -60,7 +59,7 @@ internal fun SecurityCenterReportContent(
                 actions = {
                     breachEmailId?.let { id ->
                         CircleIconButton(
-                            iconPainter = painterResource(id = CoreR.drawable.ic_proton_three_dots_vertical),
+                            drawableRes = CoreR.drawable.ic_proton_three_dots_vertical,
                             size = 40,
                             backgroundColor = PassTheme.colors.interactionNormMinor1,
                             tintColor = PassTheme.colors.interactionNormMajor2,

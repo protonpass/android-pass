@@ -24,8 +24,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.datetime.Instant
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
@@ -48,7 +49,7 @@ internal fun ItemHistoryTimelineNodes(
     modifier: Modifier = Modifier,
     shareId: ShareId,
     itemId: ItemId,
-    itemRevisions: List<ItemRevision>,
+    itemRevisions: ImmutableList<ItemRevision>,
     colors: PassItemColors,
     onNavigated: (ItemHistoryNavDestination) -> Unit
 ) {
@@ -69,14 +70,12 @@ internal fun ItemHistoryTimelineNodes(
                 modifier = modifier.padding(start = Spacing.small)
             ) {
                 PassHistoryItemRow(
-                    leadingIcon = painterResource(id = timelineNodeVariant.leadingIconId),
+                    leadingIcon = timelineNodeVariant.leadingIconId,
                     title = stringResource(id = timelineNodeVariant.titleId),
                     subtitle = protonFormattedDateText(
                         endInstant = Instant.fromEpochSeconds(itemRevision.revisionTime)
                     ),
-                    trailingIcon = timelineNodeVariant.trailingIconId?.let { id ->
-                        painterResource(id = id)
-                    },
+                    trailingIcon = timelineNodeVariant.trailingIconId,
                     onClick = {
                         onNavigated(
                             ItemHistoryNavDestination.Restore(
@@ -92,7 +91,7 @@ internal fun ItemHistoryTimelineNodes(
     }.let { nodes ->
         PassTimeline(
             modifier = modifier,
-            nodes = nodes
+            nodes = nodes.toPersistentList()
         )
     }
 }

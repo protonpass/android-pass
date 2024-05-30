@@ -18,13 +18,17 @@
 
 package proton.android.pass.commonuimodels.api.masks
 
+import androidx.compose.runtime.Stable
+
 private const val CREDIT_CARD_CHUNK_SIZE = 4
 
+@Stable
 sealed interface TextMask {
 
     val masked: String
     val unmasked: String
 
+    @Stable
     data class CardNumber(private val input: String) : TextMask {
 
         override val masked: String = run {
@@ -53,6 +57,7 @@ sealed interface TextMask {
 
     }
 
+    @Stable
     data class ExpirationDate(private val input: String) : TextMask {
 
         override val masked: String = if (input.length <= 2) {
@@ -67,6 +72,7 @@ sealed interface TextMask {
 
     }
 
+    @Stable
     data class TotpCode(private val input: String) : TextMask {
 
         override val masked: String = input.length
@@ -77,6 +83,7 @@ sealed interface TextMask {
 
     }
 
+    @Stable
     data class TextBetweenFirstAndLastChar(
         private val input: String,
         private val replacementLength: Int = 10,

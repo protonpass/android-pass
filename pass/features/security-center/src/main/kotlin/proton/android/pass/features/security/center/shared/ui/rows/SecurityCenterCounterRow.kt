@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.security.center.shared.ui.rows
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -25,8 +26,6 @@ import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
@@ -54,7 +53,7 @@ internal fun SecurityCenterCounterRow(
             accentBackgroundColor = model.getAccentBackgroundColor(),
             leadingContent = {
                 SecurityCenterCounterIcon(
-                    iconPainter = model.getCounterIconPainter(),
+                    icon = model.getCounterIcon(),
                     iconColor = model.getCounterIconColor(),
                     iconBackgroundColor = model.getCounterIconBackgroundColor(),
                     shape = model.counterIconShape
@@ -82,7 +81,7 @@ internal fun SecurityCenterCounterRow(
             accentBackgroundColor = model.getAccentBackgroundColor(),
             leadingContent = {
                 SecurityCenterCounterIcon(
-                    iconPainter = model.getCounterIconPainter(),
+                    icon = model.getCounterIcon(),
                     iconColor = model.getCounterIconColor(),
                     iconBackgroundColor = model.getCounterIconBackgroundColor()
                 )
@@ -130,7 +129,7 @@ internal fun SecurityCenterCounterRow(
             onClick = onClick,
             leadingContent = {
                 SecurityCenterCounterIcon(
-                    iconPainter = model.getCounterIconPainter(),
+                    icon = model.getCounterIcon(),
                     iconColor = model.getCounterIconColor(),
                     iconBackgroundColor = model.getCounterIconBackgroundColor()
                 )
@@ -180,7 +179,8 @@ internal sealed interface SecurityCenterCounterRowModel {
         internal fun getAccentBackgroundColor(): Color = PassTheme.colors.passwordInteractionNormMinor2
 
         @Composable
-        internal fun getCounterIconPainter(): Painter = painterResource(id = CompR.drawable.ic_exclamation_mark)
+        @DrawableRes
+        internal fun getCounterIcon(): Int = CompR.drawable.ic_exclamation_mark
 
         @Composable
         internal fun getCounterIconColor(): Color = PassTheme.colors.interactionNormMinor2
@@ -224,11 +224,12 @@ internal sealed interface SecurityCenterCounterRowModel {
         }
 
         @Composable
-        internal fun getCounterIconPainter(): Painter = when (count) {
+        @DrawableRes
+        internal fun getCounterIcon(): Int = when (count) {
             null -> CompR.drawable.ic_checkmark
             0 -> CompR.drawable.ic_checkmark
             else -> CompR.drawable.ic_exclamation_mark
-        }.let { iconResId -> painterResource(id = iconResId) }
+        }
 
         @Composable
         internal fun getCounterIconColor(): Color = PassTheme.colors.interactionNormMinor2
@@ -280,7 +281,8 @@ internal sealed interface SecurityCenterCounterRowModel {
         internal fun getSubtitleColor(): Color = PassTheme.colors.cardInteractionNormMajor2
 
         @Composable
-        internal fun getCounterIconPainter(): Painter = painterResource(id = CompR.drawable.ic_checkmark)
+        @DrawableRes
+        internal fun getCounterIcon(): Int = CompR.drawable.ic_checkmark
 
         @Composable
         internal fun getCounterIconColor(): Color = PassTheme.colors.interactionNormMinor2

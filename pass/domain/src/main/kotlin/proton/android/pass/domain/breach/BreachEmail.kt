@@ -18,6 +18,7 @@
 
 package proton.android.pass.domain.breach
 
+import androidx.compose.runtime.Stable
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -54,6 +55,7 @@ sealed interface BreachEmailId {
     ) : BreachEmailId
 }
 
+@Stable
 data class BreachEmail(
     val emailId: BreachEmailId,
     val email: String,

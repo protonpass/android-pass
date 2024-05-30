@@ -28,7 +28,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -57,7 +56,7 @@ fun HistorySection(
         modifier = modifier
     ) {
         PassHistoryItemRow(
-            leadingIcon = painterResource(CoreR.drawable.ic_proton_pencil),
+            leadingIcon = CoreR.drawable.ic_proton_pencil,
             title = stringResource(id = R.string.item_detail_history_modified_last),
             subtitle = formatMoreInfoInstantText(
                 now = Instant.fromEpochSeconds(0),
@@ -71,7 +70,7 @@ fun HistorySection(
         )
 
         PassHistoryItemRow(
-            leadingIcon = painterResource(CoreR.drawable.ic_proton_bolt),
+            leadingIcon = CoreR.drawable.ic_proton_bolt,
             title = stringResource(id = R.string.item_detail_history_created),
             subtitle = formatMoreInfoInstantText(
                 now = Instant.fromEpochSeconds(0),

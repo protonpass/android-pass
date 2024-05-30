@@ -18,6 +18,8 @@
 
 package proton.android.pass.domain
 
+import androidx.compose.runtime.Stable
+
 data class Plan(
     val planType: PlanType,
     val hideUpgrade: Boolean,
@@ -49,11 +51,13 @@ sealed interface PlanLimit {
 
 }
 
+@Stable
 sealed class PlanType(
     val internalName: String,
     val humanReadableName: String
 ) {
 
+    @Stable
     data class Free(
         private val name: String,
         private val displayName: String
@@ -62,6 +66,7 @@ sealed class PlanType(
         humanReadableName = displayName
     )
 
+    @Stable
     data class Unknown(
         private val name: String = "Unknown",
         private val displayName: String = "Unknown"
@@ -70,6 +75,7 @@ sealed class PlanType(
         humanReadableName = displayName
     )
 
+    @Stable
     data class Trial(
         private val name: String,
         private val displayName: String,
@@ -79,6 +85,7 @@ sealed class PlanType(
         humanReadableName = displayName
     )
 
+    @Stable
     sealed class Paid(
         internalName: String,
         humanReadableName: String
@@ -87,6 +94,7 @@ sealed class PlanType(
         humanReadableName = humanReadableName
     ) {
 
+        @Stable
         data class Business(
             private val name: String,
             private val displayName: String
@@ -95,6 +103,7 @@ sealed class PlanType(
             humanReadableName = displayName
         )
 
+        @Stable
         data class Plus(
             private val name: String,
             private val displayName: String

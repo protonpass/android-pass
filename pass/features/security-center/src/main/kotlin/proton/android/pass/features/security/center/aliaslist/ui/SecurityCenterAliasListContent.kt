@@ -71,7 +71,7 @@ internal fun SecurityCenterAliasListContent(
                 onUpClick = { onUiEvent(SecurityCenterAliasListUiEvent.Back) },
                 actions = {
                     CircleIconButton(
-                        iconPainter = painterResource(CoreR.drawable.ic_proton_three_dots_vertical),
+                        drawableRes = CoreR.drawable.ic_proton_three_dots_vertical,
                         size = 40,
                         backgroundColor = PassTheme.colors.interactionNormMinor1,
                         tintColor = PassTheme.colors.interactionNormMajor2,

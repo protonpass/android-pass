@@ -18,6 +18,7 @@
 
 package proton.android.pass.composecomponents.impl.item.details.rows
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,7 +32,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import me.proton.core.compose.theme.ProtonTheme
@@ -49,7 +50,7 @@ import proton.android.pass.domain.HiddenState
 @Composable
 internal fun PassItemDetailsHiddenFieldRow(
     modifier: Modifier = Modifier,
-    icon: Painter,
+    @DrawableRes icon: Int,
     title: String,
     hiddenState: HiddenState,
     hiddenTextLength: Int,
@@ -86,7 +87,7 @@ internal fun PassItemDetailsHiddenFieldRow(
         horizontalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
         Icon(
-            painter = icon,
+            painter = painterResource(id = icon),
             contentDescription = null,
             tint = itemColors.norm
         )

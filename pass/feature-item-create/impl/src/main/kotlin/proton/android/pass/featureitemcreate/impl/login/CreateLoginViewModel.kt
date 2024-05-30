@@ -64,6 +64,8 @@ import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
+import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
+import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
 import proton.android.pass.domain.CustomField
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
@@ -116,7 +118,9 @@ class CreateLoginViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     observeDefaultVault: ObserveDefaultVault,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
-    emailValidator: EmailValidator
+    emailValidator: EmailValidator,
+    observeTooltipEnabled: ObserveTooltipEnabled,
+    disableTooltip: DisableTooltip
 ) : BaseLoginViewModel(
     accountManager = accountManager,
     snackbarDispatcher = snackbarDispatcher,
@@ -129,7 +133,9 @@ class CreateLoginViewModel @Inject constructor(
     passwordStrengthCalculator = passwordStrengthCalculator,
     savedStateHandleProvider = savedStateHandleProvider,
     featureFlagsRepository = featureFlagsRepository,
-    emailValidator = emailValidator
+    emailValidator = emailValidator,
+    observeTooltipEnabled = observeTooltipEnabled,
+    disableTooltip = disableTooltip
 ) {
     private val navShareId: Option<ShareId> = savedStateHandleProvider.get()
         .get<String>(CommonOptionalNavArgId.ShareId.key)

@@ -67,9 +67,12 @@ import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.UpgradeInfo
+import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
+import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.tooltips.Tooltip
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.OpenScanState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
@@ -94,10 +97,12 @@ abstract class BaseLoginViewModel(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val passwordStrengthCalculator: PasswordStrengthCalculator,
     private val emailValidator: EmailValidator,
+    private val disableTooltip: DisableTooltip,
     observeCurrentUser: ObserveCurrentUser,
     observeUpgradeInfo: ObserveUpgradeInfo,
     savedStateHandleProvider: SavedStateHandleProvider,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository
+    featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    observeTooltipEnabled: ObserveTooltipEnabled
 ) : ViewModel() {
 
     private val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
@@ -207,9 +212,17 @@ abstract class BaseLoginViewModel(
         totpUiStateFlow,
         upgradeInfoFlow.asLoadingResult(),
         userInteractionFlow,
-        featureFlagsRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT)
-    ) { loginItemValidationErrors, primaryEmail, aliasItemFormState, isLoading,
-        totpUiState, upgradeInfoResult, userInteraction, isUsernameSplitEnabled ->
+        featureFlagsRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT),
+        observeTooltipEnabled(Tooltip.UsernameSplit)
+    ) { loginItemValidationErrors,
+        primaryEmail,
+        aliasItemFormState,
+        isLoading,
+        totpUiState,
+        upgradeInfoResult,
+        userInteraction,
+        isUsernameSplitEnabled,
+        isUsernameSplitTooltipEnabled ->
         val userPlan = upgradeInfoResult.getOrNull()?.plan
         BaseLoginUiState(
             validationErrors = loginItemValidationErrors.toPersistentSet(),
@@ -225,7 +238,8 @@ abstract class BaseLoginViewModel(
             hasReachedAliasLimit = upgradeInfoResult.getOrNull()?.hasReachedAliasLimit() ?: false,
             totpUiState = totpUiState,
             focusedField = userInteraction.focusedField.value(),
-            isUsernameSplitEnabled = isUsernameSplitEnabled
+            isUsernameSplitEnabled = isUsernameSplitEnabled,
+            isUsernameSplitTooltipEnabled = isUsernameSplitTooltipEnabled
         )
     }
         .stateIn(
@@ -317,9 +331,10 @@ abstract class BaseLoginViewModel(
         loginItemFormMutableState = loginItemFormMutableState.copy(note = value)
     }
 
-    internal fun onEmitSnackbarMessage(snackbarMessage: LoginSnackbarMessages) = viewModelScope.launch {
-        snackbarDispatcher(snackbarMessage)
-    }
+    internal fun onEmitSnackbarMessage(snackbarMessage: LoginSnackbarMessages) =
+        viewModelScope.launch {
+            snackbarDispatcher(snackbarMessage)
+        }
 
     internal fun onAliasCreated(aliasItemFormState: AliasItemFormState) {
         onUserEditedContent()
@@ -709,7 +724,14 @@ abstract class BaseLoginViewModel(
         }
     }
 
-    private fun updateCustomFieldHiddenOnFocusChange(field: LoginCustomField.CustomFieldHidden, isFocused: Boolean) {
+    internal fun onTooltipDismissed(tooltip: Tooltip) = viewModelScope.launch {
+        disableTooltip(tooltip)
+    }
+
+    private fun updateCustomFieldHiddenOnFocusChange(
+        field: LoginCustomField.CustomFieldHidden,
+        isFocused: Boolean
+    ) {
         val customFields = loginItemFormState.customFields.toMutableList()
         val customFieldContent: UICustomFieldContent.Hidden? = customFields.getOrNull(field.index)
             as? UICustomFieldContent.Hidden
@@ -885,8 +907,11 @@ abstract class BaseLoginViewModel(
         currentValue.customFields
     }
 
-    companion object {
+    private companion object {
+
         private const val TAG = "BaseLoginViewModel"
+
     }
+
 }
 

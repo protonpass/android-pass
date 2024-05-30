@@ -40,7 +40,8 @@ internal fun MainLoginSection(
     hasReachedAliasLimit: Boolean,
     onEvent: (LoginContentEvent) -> Unit,
     onFocusChange: (LoginField, Boolean) -> Unit,
-    isUsernameSplitEnabled: Boolean
+    isUsernameSplitEnabled: Boolean,
+    isUsernameSplitTooltipEnabled: Boolean
 ) {
     Column(
         modifier = modifier.roundedContainerNorm()
@@ -57,7 +58,8 @@ internal fun MainLoginSection(
                 onAliasOptionsClick = {
                     selectedShareId ?: return@ExpandableEmailUsernameInput
                     onEvent(LoginContentEvent.OnAliasOptions(selectedShareId, hasReachedAliasLimit))
-                }
+                },
+                isUsernameSplitTooltipEnabled = isUsernameSplitTooltipEnabled
             )
         } else {
             // Here we're using email field and email callback to support proto backwards compatibility

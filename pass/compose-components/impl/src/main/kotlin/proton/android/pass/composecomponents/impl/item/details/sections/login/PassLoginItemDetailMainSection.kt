@@ -20,7 +20,6 @@ package proton.android.pass.composecomponents.impl.item.details.sections.login
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import kotlinx.collections.immutable.toPersistentList
@@ -62,7 +61,7 @@ internal fun PassLoginItemDetailMainSection(
         if (email.isNotBlank()) {
             sections.add {
                 PassItemDetailFieldRow(
-                    icon = painterResource(CoreR.drawable.ic_proton_envelope),
+                    icon = CoreR.drawable.ic_proton_envelope,
                     title = stringResource(R.string.item_details_login_section_email_title),
                     subtitle = email,
                     itemColors = itemColors,
@@ -81,7 +80,7 @@ internal fun PassLoginItemDetailMainSection(
         if (username.isNotBlank()) {
             sections.add {
                 PassItemDetailFieldRow(
-                    icon = painterResource(CoreR.drawable.ic_proton_user),
+                    icon = CoreR.drawable.ic_proton_user,
                     title = stringResource(R.string.item_details_login_section_username_title),
                     subtitle = username,
                     itemColors = itemColors,
@@ -101,7 +100,7 @@ internal fun PassLoginItemDetailMainSection(
         if (email.isNotBlank()) {
             sections.add {
                 PassItemDetailFieldRow(
-                    icon = painterResource(CoreR.drawable.ic_proton_user),
+                    icon = CoreR.drawable.ic_proton_user,
                     title = stringResource(R.string.item_details_login_section_username_or_username_title),
                     subtitle = email,
                     itemColors = itemColors,
@@ -121,7 +120,7 @@ internal fun PassLoginItemDetailMainSection(
     if (password !is HiddenState.Empty) {
         sections.add {
             PassItemDetailsHiddenFieldRow(
-                icon = painterResource(CoreR.drawable.ic_proton_key),
+                icon = CoreR.drawable.ic_proton_key,
                 title = stringResource(R.string.item_details_login_section_password_title),
                 hiddenState = password,
                 hiddenTextLength = HIDDEN_PASSWORD_TEXT_LENGTH,
@@ -154,7 +153,7 @@ internal fun PassLoginItemDetailMainSection(
     primaryTotp?.let { totp ->
         sections.add {
             PassItemDetailMaskedFieldRow(
-                icon = painterResource(CoreR.drawable.ic_proton_lock),
+                icon = CoreR.drawable.ic_proton_lock,
                 title = stringResource(R.string.item_details_login_section_primary_totp_title),
                 maskedSubtitle = TextMask.TotpCode(totp.code),
                 itemColors = itemColors,

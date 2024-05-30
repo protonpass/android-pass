@@ -18,6 +18,7 @@
 
 package proton.android.pass.domain
 
+import androidx.compose.runtime.Stable
 import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -38,16 +39,20 @@ sealed interface CustomFieldContent {
     data class Totp(override val label: String, val value: HiddenState) : CustomFieldContent
 }
 
+@Stable
 @Serializable
 sealed class HiddenState {
     abstract val encrypted: EncryptedString
 
+    @Stable
     @Serializable
     data class Empty(override val encrypted: EncryptedString) : HiddenState()
 
+    @Stable
     @Serializable
     data class Concealed(override val encrypted: EncryptedString) : HiddenState()
 
+    @Stable
     @Serializable
     data class Revealed(
         override val encrypted: EncryptedString,
@@ -92,12 +97,14 @@ data class Passkey(
     val creationData: PasskeyCreationData?
 )
 
+@Stable
 @Serializable
 sealed class ItemContents {
 
     abstract val title: String
     abstract val note: String
 
+    @Stable
     @Serializable
     data class Login(
         override val title: String,
@@ -140,12 +147,14 @@ sealed class ItemContents {
         }
     }
 
+    @Stable
     @Serializable
     data class Note(
         override val title: String,
         override val note: String
     ) : ItemContents()
 
+    @Stable
     @Serializable
     data class Alias(
         override val title: String,
@@ -153,6 +162,7 @@ sealed class ItemContents {
         val aliasEmail: String
     ) : ItemContents()
 
+    @Stable
     @Serializable
     data class CreditCard(
         override val title: String,
@@ -179,6 +189,7 @@ sealed class ItemContents {
         }
     }
 
+    @Stable
     @Serializable
     data class Identity(
         override val title: String,

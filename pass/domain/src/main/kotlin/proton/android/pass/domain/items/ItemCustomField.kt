@@ -18,22 +18,27 @@
 
 package proton.android.pass.domain.items
 
+import androidx.compose.runtime.Stable
 import proton.android.pass.domain.HiddenState
 
+@Stable
 sealed interface ItemCustomField {
 
     val title: String
 
+    @Stable
     data class Plain(
         override val title: String,
         val content: String
     ) : ItemCustomField
 
+    @Stable
     data class Hidden(
         override val title: String,
         val hiddenState: HiddenState
     ) : ItemCustomField
 
+    @Stable
     data class Totp(
         override val title: String,
         val totp: proton.android.pass.domain.Totp?

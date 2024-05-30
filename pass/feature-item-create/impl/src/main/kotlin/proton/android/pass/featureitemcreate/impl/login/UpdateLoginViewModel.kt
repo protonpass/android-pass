@@ -57,6 +57,8 @@ import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.UpdateItem
+import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
+import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
 import proton.android.pass.domain.CustomField
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.HiddenState
@@ -104,7 +106,9 @@ class UpdateLoginViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     draftRepository: DraftRepository,
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
-    private val emailValidator: EmailValidator
+    private val emailValidator: EmailValidator,
+    observeTooltipEnabled: ObserveTooltipEnabled,
+    disableTooltip: DisableTooltip,
 ) : BaseLoginViewModel(
     accountManager = accountManager,
     snackbarDispatcher = snackbarDispatcher,
@@ -117,7 +121,9 @@ class UpdateLoginViewModel @Inject constructor(
     passwordStrengthCalculator = passwordStrengthCalculator,
     savedStateHandleProvider = savedStateHandleProvider,
     featureFlagsRepository = featureFlagsRepository,
-    emailValidator = emailValidator
+    emailValidator = emailValidator,
+    observeTooltipEnabled = observeTooltipEnabled,
+    disableTooltip = disableTooltip,
 ) {
     private val navShareId: ShareId = savedStateHandleProvider.get()
         .require<String>(CommonNavArgId.ShareId.key)
@@ -221,7 +227,8 @@ class UpdateLoginViewModel @Inject constructor(
 
     @Suppress("LongMethod")
     private suspend fun onItemReceived(item: Item) {
-        val isUsernameSplitEnabled = featureFlagsRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT).first()
+        val isUsernameSplitEnabled =
+            featureFlagsRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT).first()
         encryptionContextProvider.withEncryptionContext {
             val default = LoginItemFormState.default(this)
             if (loginItemFormState.compare(default, this)) {
@@ -393,7 +400,10 @@ class UpdateLoginViewModel @Inject constructor(
         }
     }
 
-    private fun handleTotp(encryptionContext: EncryptionContext, primaryTotp: EncryptedString): String {
+    private fun handleTotp(
+        encryptionContext: EncryptionContext,
+        primaryTotp: EncryptedString
+    ): String {
         val totp = encryptionContext.decrypt(primaryTotp)
         if (totp.isBlank()) return totp
 

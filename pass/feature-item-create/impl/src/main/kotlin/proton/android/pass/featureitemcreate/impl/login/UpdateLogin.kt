@@ -202,6 +202,9 @@ internal fun UpdateLogin(
                         actionAfterKeyboardHide =
                             { onNavigate(BaseLoginNavigation.Upgrade) }
 
+                    is LoginContentEvent.OnTooltipDismissed -> {
+                        viewModel.onTooltipDismissed(it.tooltip)
+                    }
                 }
             }
         )

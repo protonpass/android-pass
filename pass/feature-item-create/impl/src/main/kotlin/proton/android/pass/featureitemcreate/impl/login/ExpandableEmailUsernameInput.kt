@@ -37,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -44,6 +45,9 @@ import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
+import proton.android.pass.composecomponents.impl.tooltips.PassTooltip
+import proton.android.pass.composecomponents.impl.tooltips.TooltipPopup
+import proton.android.pass.featureitemcreate.impl.R
 import me.proton.core.presentation.R as CoreR
 
 @Composable
@@ -56,7 +60,8 @@ internal fun ExpandableEmailUsernameInput(
     onAliasOptionsClick: () -> Unit,
     canUpdateUsername: Boolean,
     isEditAllowed: Boolean,
-    isInvalidEmail: Boolean
+    isInvalidEmail: Boolean,
+    isUsernameSplitTooltipEnabled: Boolean
 ) {
     val isExpanded = rememberSaveable(username) { mutableStateOf(username.isNotEmpty()) }
     val emailIconTint = if (isInvalidEmail) {
@@ -68,72 +73,153 @@ internal fun ExpandableEmailUsernameInput(
     Column(
         modifier = modifier
     ) {
-        EmailInput(
-            email = email,
-            isInvalid = isInvalidEmail,
-            isEditable = canUpdateUsername && isEditAllowed,
-            onEmailChange = { newEmail ->
-                onEvent(LoginContentEvent.OnEmailChanged(newEmail))
-            },
-            onFocusChange = { isFocused ->
-                onFocusChange(LoginField.Email, isFocused)
-            },
-            leadingIcon = {
-                if (isExpanded.value || !canUpdateUsername) {
-                    Icon(
-                        painter = painterResource(CoreR.drawable.ic_proton_envelope),
-                        contentDescription = null,
-                        tint = emailIconTint
-                    )
-                } else {
-                    Box(
-                        modifier = Modifier.clickable { isExpanded.value = true }
-                    ) {
+        Box(modifier = Modifier) {
+            EmailInput(
+                email = email,
+                isInvalid = isInvalidEmail,
+                isEditable = canUpdateUsername && isEditAllowed,
+                onEmailChange = { newEmail ->
+                    onEvent(LoginContentEvent.OnEmailChanged(newEmail))
+                },
+                onFocusChange = { isFocused ->
+                    onFocusChange(LoginField.Email, isFocused)
+                },
+                leadingIcon = {
+                    if (isExpanded.value || !canUpdateUsername) {
                         Icon(
-                            modifier = Modifier.padding(horizontal = 2.dp),
-                            painter = painterResource(id = CoreR.drawable.ic_proton_envelope),
+                            painter = painterResource(CoreR.drawable.ic_proton_envelope),
                             contentDescription = null,
                             tint = emailIconTint
                         )
+                    } else {
+                        TooltipPopup(
+                            isVisible = isUsernameSplitTooltipEnabled,
+                            requesterView = {
+                                Box(
+                                    modifier = Modifier.clickable { isExpanded.value = true }
+                                ) {
+                                    Icon(
+                                        modifier = Modifier.padding(horizontal = 2.dp),
+                                        painter = painterResource(id = CoreR.drawable.ic_proton_envelope),
+                                        contentDescription = null,
+                                        tint = emailIconTint
+                                    )
 
-                        Icon(
-                            modifier = Modifier
-                                .align(alignment = Alignment.TopEnd)
-                                .size(size = 14.dp)
-                                .clip(shape = CircleShape)
-                                .background(color = PassTheme.colors.loginInteractionNormMinor1)
-                                .padding(all = 3.dp),
-                            painter = painterResource(id = CoreR.drawable.ic_proton_plus),
-                            contentDescription = null,
-                            tint = PassTheme.colors.loginInteractionNormMajor1
+                                    Icon(
+                                        modifier = Modifier
+                                            .align(alignment = Alignment.TopEnd)
+                                            .size(size = 14.dp)
+                                            .clip(shape = CircleShape)
+                                            .background(color = PassTheme.colors.loginInteractionNormMinor1)
+                                            .padding(all = 3.dp),
+                                        painter = painterResource(id = CoreR.drawable.ic_proton_plus),
+                                        contentDescription = null,
+                                        tint = PassTheme.colors.loginInteractionNormMajor1
+                                    )
+                                }
+                            },
+                            tooltipContent = {
+                                PassTooltip(
+                                    title = stringResource(id = R.string.field_email_tooltip_title),
+                                    description = stringResource(id = R.string.field_email_tooltip_description),
+                                    onDismiss = { println("JIBIRI: onDismiss") }
+                                )
+                            },
                         )
+
+
+//                        PassTooltipBox(
+//                            title = stringResource(id = R.string.field_email_tooltip_title),
+//                            description = stringResource(id = R.string.field_email_tooltip_description),
+//                            anchor = {
+//                                Box(
+//                                    modifier = Modifier.clickable { isExpanded.value = true }
+//                                ) {
+//                                    Icon(
+//                                        modifier = Modifier.padding(horizontal = 2.dp),
+//                                        painter = painterResource(id = CoreR.drawable.ic_proton_envelope),
+//                                        contentDescription = null,
+//                                        tint = emailIconTint
+//                                    )
+//
+//                                    Icon(
+//                                        modifier = Modifier
+//                                            .align(alignment = Alignment.TopEnd)
+//                                            .size(size = 14.dp)
+//                                            .clip(shape = CircleShape)
+//                                            .background(color = PassTheme.colors.loginInteractionNormMinor1)
+//                                            .padding(all = 3.dp),
+//                                        painter = painterResource(id = CoreR.drawable.ic_proton_plus),
+//                                        contentDescription = null,
+//                                        tint = PassTheme.colors.loginInteractionNormMajor1
+//                                    )
+//                                }
+//                            },
+//                            shouldDisplayTooltip = isUsernameSplitTooltipEnabled,
+//                            onForget = {
+//                                onEvent(LoginContentEvent.OnTooltipDismissed(Tooltip.UsernameSplit))
+//                            }
+//                        )
+
+//                        PassDropdownMenuTooltip(
+//                            title = stringResource(id = R.string.field_email_tooltip_title),
+//                            description = stringResource(id = R.string.field_email_tooltip_description),
+//                            shouldDisplayTooltip = isUsernameSplitTooltipEnabled,
+//                            onForget = {
+//                                onEvent(LoginContentEvent.OnTooltipDismissed(Tooltip.UsernameSplit))
+//                            },
+//                            container = {
+//                                Box(
+//                                    modifier = Modifier.clickable { isExpanded.value = true }
+//                                ) {
+//                                    Icon(
+//                                        modifier = Modifier.padding(horizontal = 2.dp),
+//                                        painter = painterResource(id = CoreR.drawable.ic_proton_envelope),
+//                                        contentDescription = null,
+//                                        tint = emailIconTint
+//                                    )
+//
+//                                    Icon(
+//                                        modifier = Modifier
+//                                            .align(alignment = Alignment.TopEnd)
+//                                            .size(size = 14.dp)
+//                                            .clip(shape = CircleShape)
+//                                            .background(color = PassTheme.colors.loginInteractionNormMinor1)
+//                                            .padding(all = 3.dp),
+//                                        painter = painterResource(id = CoreR.drawable.ic_proton_plus),
+//                                        contentDescription = null,
+//                                        tint = PassTheme.colors.loginInteractionNormMajor1
+//                                    )
+//                                }
+//                            }
+//                        )
                     }
-                }
-            },
-            trailingIcon = {
-                if (canUpdateUsername) {
-                    if (email.isNotEmpty()) {
-                        SmallCrossIconButton(
+                },
+                trailingIcon = {
+                    if (canUpdateUsername) {
+                        if (email.isNotEmpty()) {
+                            SmallCrossIconButton(
+                                enabled = isEditAllowed,
+                                onClick = {
+                                    onEvent(LoginContentEvent.OnEmailChanged(email = ""))
+                                }
+                            )
+                        }
+                    } else {
+                        IconButton(
                             enabled = isEditAllowed,
-                            onClick = {
-                                onEvent(LoginContentEvent.OnEmailChanged(email = ""))
-                            }
-                        )
-                    }
-                } else {
-                    IconButton(
-                        enabled = isEditAllowed,
-                        onClick = { onAliasOptionsClick() }
-                    ) {
-                        Icon(
-                            painter = painterResource(CoreR.drawable.ic_proton_three_dots_vertical),
-                            contentDescription = null,
-                            tint = ProtonTheme.colors.iconWeak
-                        )
+                            onClick = { onAliasOptionsClick() }
+                        ) {
+                            Icon(
+                                painter = painterResource(CoreR.drawable.ic_proton_three_dots_vertical),
+                                contentDescription = null,
+                                tint = ProtonTheme.colors.iconWeak
+                            )
+                        }
                     }
                 }
-            }
-        )
+            )
+        }
 
         AnimatedVisibility(visible = isExpanded.value) {
             Divider(color = PassTheme.colors.inputBorderNorm)
@@ -174,7 +260,8 @@ internal fun ExpandableEmailUsernameInputPreview(
                 onAliasOptionsClick = {},
                 canUpdateUsername = params.canUpdateUsername,
                 isEditAllowed = params.isEditAllowed,
-                isInvalidEmail = params.isInvalidEmail
+                isInvalidEmail = params.isInvalidEmail,
+                isUsernameSplitTooltipEnabled = false
             )
         }
     }

@@ -105,16 +105,16 @@ class AutofillActivityViewModel @Inject constructor(
             initialValue = UninitialisedAutofillUiState
         )
 
+    fun authOnStop() = viewModelScope.launch {
+        storeAuthOnStop()
+    }
+
     fun register(context: ComponentActivity) {
         accountOrchestrators.register(context, listOf(Orchestrator.PlansOrchestrator))
     }
 
     fun upgrade() = viewModelScope.launch {
         accountOrchestrators.start(Orchestrator.PlansOrchestrator)
-    }
-
-    fun onStop() = viewModelScope.launch {
-        storeAuthOnStop()
     }
 
     fun signOut() = viewModelScope.launch {

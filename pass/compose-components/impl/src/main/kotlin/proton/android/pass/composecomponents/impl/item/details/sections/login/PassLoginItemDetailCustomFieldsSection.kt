@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import me.proton.core.compose.theme.ProtonTheme
@@ -56,7 +55,7 @@ internal fun PassLoginItemDetailCustomFieldsSection(
             RoundedCornersColumn {
                 when (customField) {
                     is ItemCustomField.Plain -> PassItemDetailFieldRow(
-                        icon = painterResource(CoreR.drawable.ic_proton_text_align_left),
+                        icon = CoreR.drawable.ic_proton_text_align_left,
                         title = customField.title,
                         subtitle = customField.content,
                         itemColors = itemColors,
@@ -71,7 +70,7 @@ internal fun PassLoginItemDetailCustomFieldsSection(
                     )
 
                     is ItemCustomField.Hidden -> PassItemDetailsHiddenFieldRow(
-                        icon = painterResource(CoreR.drawable.ic_proton_eye_slash),
+                        icon = CoreR.drawable.ic_proton_eye_slash,
                         title = customField.title,
                         hiddenState = customField.hiddenState,
                         hiddenTextLength = HIDDEN_CUSTOM_FIELD_TEXT_LENGTH,
@@ -98,7 +97,7 @@ internal fun PassLoginItemDetailCustomFieldsSection(
 
                     is ItemCustomField.Totp -> customField.totp?.let { customFieldTotp ->
                         PassItemDetailMaskedFieldRow(
-                            icon = painterResource(CoreR.drawable.ic_proton_lock),
+                            icon = CoreR.drawable.ic_proton_lock,
                             title = customField.title,
                             maskedSubtitle = TextMask.TotpCode(customFieldTotp.code),
                             itemColors = itemColors,

@@ -49,21 +49,24 @@ import proton.android.pass.notifications.api.SnackbarType
 fun PassSnackbar(
     modifier: Modifier = Modifier,
     type: ProtonSnackbarType,
-    snackbarData: SnackbarData
+    message: String,
+    actionLabel: String? = null,
+    performAction: () -> Unit = {},
+    dismiss: () -> Unit = {}
 ) {
     Snackbar(
         modifier = modifier.padding(12.dp),
-        content = { Text(snackbarData.message) },
+        content = { Text(message) },
         action = {
             Row {
-                val label = snackbarData.actionLabel
+                val label = actionLabel
                 if (!label.isNullOrBlank()) {
-                    TextButton(onClick = { snackbarData.performAction() }) {
+                    TextButton(onClick = { performAction() }) {
                         Text(text = label)
                     }
                 }
                 IconButton(
-                    onClick = { snackbarData.dismiss() },
+                    onClick = { dismiss() },
                     content = {
                         Icon(
                             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_cross_small),
@@ -93,10 +96,13 @@ fun PassSnackbarHost(modifier: Modifier = Modifier, snackbarHostState: PassSnack
     ProtonSnackbarHost(
         modifier = modifier,
         hostState = snackbarHostState.protonSnackbarHostState,
-        snackbar = {
+        snackbar = { data ->
             PassSnackbar(
                 type = snackbarHostState.protonSnackbarHostState.type,
-                snackbarData = it
+                message = data.message,
+                actionLabel = data.actionLabel,
+                performAction = { data.performAction() },
+                dismiss = { data.dismiss() }
             )
         }
     )
@@ -151,7 +157,10 @@ fun PassSnackbarPreview(
         Surface {
             PassSnackbar(
                 type = input.second,
-                snackbarData = previewSnackbarData
+                message = previewSnackbarData.message,
+                actionLabel = previewSnackbarData.actionLabel,
+                performAction = previewSnackbarData::performAction,
+                dismiss = previewSnackbarData::dismiss
             )
         }
     }

@@ -30,7 +30,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultWeak
@@ -61,7 +60,7 @@ internal fun SecurityCenterProtonListContent(
                 onUpClick = { onUiEvent(SecurityCenterProtonListUiEvent.Back) },
                 actions = {
                     CircleIconButton(
-                        iconPainter = painterResource(CoreR.drawable.ic_proton_three_dots_vertical),
+                        drawableRes = CoreR.drawable.ic_proton_three_dots_vertical,
                         size = 40,
                         backgroundColor = PassTheme.colors.interactionNormMinor1,
                         tintColor = PassTheme.colors.interactionNormMajor2,

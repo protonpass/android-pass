@@ -23,9 +23,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
-fun PassTimeline(modifier: Modifier = Modifier, nodes: List<PassTimelineNode>) {
+fun PassTimeline(modifier: Modifier = Modifier, nodes: ImmutableList<PassTimelineNode>) {
     LazyColumn(
         modifier = modifier.fillMaxSize()
     ) {

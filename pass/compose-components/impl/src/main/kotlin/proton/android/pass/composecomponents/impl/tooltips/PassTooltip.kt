@@ -25,32 +25,44 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Radius
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.body3Weak
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun PassTooltip(
+internal fun PassTooltip(
     modifier: Modifier = Modifier,
     title: String,
     description: String,
-    onDismiss: () -> Unit,
+    onClose: () -> Unit,
+    backgroundColor: Color
 ) {
     Column(
         modifier = modifier
-            .background(color = PassTheme.colors.searchBarBackground)
+            .clip(
+                shape = RoundedCornerShape(
+                    topEnd = Radius.small,
+                    bottomEnd = Radius.small,
+                    bottomStart = Radius.small
+                )
+            )
+            .background(color = backgroundColor)
             .padding(
                 horizontal = Spacing.medium,
                 vertical = Spacing.small
@@ -69,8 +81,7 @@ fun PassTooltip(
             )
 
             Icon(
-                modifier = Modifier
-                    .clickable { onDismiss() },
+                modifier = Modifier.clickable { onClose() },
                 painter = painterResource(id = CoreR.drawable.ic_proton_cross_small),
                 contentDescription = null,
                 tint = PassTheme.colors.textWeak
@@ -92,7 +103,8 @@ internal fun PassTooltipPreview(@PreviewParameter(ThemePreviewProvider::class) i
             PassTooltip(
                 title = "Tooltip title",
                 description = "This is the tooltip description",
-                onDismiss = {}
+                onClose = {},
+                backgroundColor = PassTheme.colors.searchBarBackground
             )
         }
     }

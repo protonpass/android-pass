@@ -16,6 +16,7 @@
   <plurals name="item_list_header_results">
     <item quantity="other">結果</item>
   </plurals>
+  <string name="item_list_header_identities_type">Identities</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">確認</string>
   <string name="bottomsheet_cancel_button">キャンセル</string>
@@ -109,16 +110,16 @@
     -->
   <string name="date_full_date_format_with_year">yyyy LLLL dd HH:mm</string>
   <!-- Items -->
-  <string name="item_details_alias_section_alias_title">Alias address</string>
+  <string name="item_details_alias_section_alias_title">エイリアスアドレス</string>
   <string name="item_details_alias_section_mailboxes_title">転送先</string>
   <string name="item_details_credit_card_section_cardholder_title">カード名義人</string>
   <string name="item_details_credit_card_section_card_number_title">カード番号</string>
   <string name="item_details_credit_card_section_expiration_date_title">有効期限</string>
   <string name="item_details_credit_card_section_cvv_title">セキュリティコード</string>
   <string name="item_details_credit_card_section_pin_title">PIN コード</string>
-  <string name="item_details_login_section_email_title">Email address</string>
-  <string name="item_details_login_section_username_title">Username</string>
-  <string name="item_details_login_section_username_or_username_title">Username or email address</string>
+  <string name="item_details_login_section_email_title">メールアドレス</string>
+  <string name="item_details_login_section_username_title">ユーザー名</string>
+  <string name="item_details_login_section_username_or_username_title">ユーザー名またはメールアドレス</string>
   <string name="item_details_login_section_password_title">パスワード</string>
   <string name="item_details_login_section_primary_totp_title">2 要素認証トークン (TOTP)</string>
   <string name="item_details_login_section_websites_title">ウェブサイト</string>
@@ -133,5 +134,5 @@
   <string name="dialog_upgrade_plan_action_cancel">後で</string>
   <!-- Words -->
   <string name="email_address">メールアドレス</string>
-  <string name="password">Password</string>
+  <string name="password">パスワード</string>
 </resources>

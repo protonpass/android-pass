@@ -91,7 +91,7 @@
   <string name="security_center_dark_web_monitor_monitoring_disabled">Nicht überwacht</string>
   <string name="security_center_dark_web_monitor_see_all">Alle ansehen</string>
   <string name="security_center_dark_web_monitor_no_proton_addresses">No Proton addresses</string>
-  <string name="security_center_dark_web_monitor_no_aliases">No aliases</string>
+  <string name="security_center_dark_web_monitor_no_aliases">Keine Aliasse</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Beim Senden des Verifizierungscodes ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Es ist ein Fehler beim Entfernen der E-Mail aufgetreten. Bitte versuche es später noch einmal.</string>
   <!-- Add custom email monitoring -->

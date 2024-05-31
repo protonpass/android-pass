@@ -26,8 +26,8 @@
   <string name="upsell_paid_feature_authenticator">Интегрированная двухфакторная аутентификация</string>
   <string name="upsell_paid_feature_unlimited_aliases">Неограниченное количество псевдонимов hide-my-email</string>
   <string name="upsell_paid_feature_vault_sharing">Vault sharing (up to 10 people)</string>
-  <string name="upsell_paid_feature_authenticator_essential">Require 2FA for organization</string>
-  <string name="upsell_paid_feature_sso_essential">SSO integration (coming soon)</string>
+  <string name="upsell_paid_feature_authenticator_essential">Требуется двухфакторная идентификация для организации</string>
+  <string name="upsell_paid_feature_sso_essential">Интеграция с SSO (скоро появится)</string>
   <string name="upsell_button_upgrade">Получить Pass Plus</string>
-  <string name="upsell_button_upgrade_essentials">Get Pass Business</string>
+  <string name="upsell_button_upgrade_essentials">Получить Pass Business</string>
 </resources>

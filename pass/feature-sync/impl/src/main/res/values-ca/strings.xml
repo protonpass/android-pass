@@ -23,11 +23,11 @@
   </plurals>
   <string name="sync_progress_item_count">%1$d de %2$d elements</string>
   <string name="sync_dialog_title">S\'estan sincronitzant elements…</string>
-  <string name="sync_dialog_title_error">Sync failed</string>
-  <string name="sync_dialog_title_success">Sync completed</string>
+  <string name="sync_dialog_title_error">La sincronització ha fallat</string>
+  <string name="sync_dialog_title_success">Sincronització completada</string>
   <string name="sync_dialog_subtitle">S\'estan baixant i desxifrant els elements. Això podria durar uns minuts.</string>
-  <string name="sync_dialog_subtitle_error">There was an error downloading and decrypting your items. Please try again.</string>
-  <string name="sync_dialog_subtitle_success">Your items were successfully downloaded and decrypted.</string>
+  <string name="sync_dialog_subtitle_error">S\'ha produït un error en descarregar i desxifrar els seus elements. Si us plau, torni-ho a provar.</string>
+  <string name="sync_dialog_subtitle_success">Els seus elements s\'han descarregat i desxifrat correctament.</string>
   <string name="sync_item_not_started">No s\'ha iniciat.</string>
-  <string name="sync_item_failed">Sync failed</string>
+  <string name="sync_item_failed">La sincronització ha fallat</string>
 </resources>

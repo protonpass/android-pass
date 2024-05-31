@@ -17,6 +17,7 @@
     <item quantity="one">tulos</item>
     <item quantity="other">tulosta</item>
   </plurals>
+  <string name="item_list_header_identities_type">Henkilöllisyydet</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Vahvista</string>
   <string name="bottomsheet_cancel_button">Peruuta</string>
@@ -24,7 +25,7 @@
   <string name="bottomsheet_pin_item">Kiinnitä</string>
   <string name="bottomsheet_unpin_item">Irrota</string>
   <string name="bottomsheet_view_item_history">Näytä historia</string>
-  <string name="bottomsheet_monitor_exclude">Sulje valvonnan ulkopuolelle</string>
+  <string name="bottomsheet_monitor_exclude">Poissulje valvonnasta</string>
   <string name="bottomsheet_monitor_include">Sisällytä valvontaan</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Avaa kohteen toimintovalikko</string>
@@ -35,8 +36,8 @@
   <string name="action_view_details">Näytä tiedot</string>
   <string name="action_see_all">Näytä kaikki</string>
   <string name="action_confirm">Vahvista</string>
-  <string name="action_continue">Continue</string>
-  <string name="action_retry">Retry</string>
+  <string name="action_continue">Jatka</string>
+  <string name="action_retry">Yritä uudelleen</string>
   <!-- Empty list -->
   <string name="empty_list_title">Lisää ensimmäinen kohteesi</string>
   <string name="empty_search_results_title">Tuloksia ei löytynyt</string>
@@ -118,9 +119,9 @@
   <string name="item_details_credit_card_section_expiration_date_title">Voimassaolo päättyy</string>
   <string name="item_details_credit_card_section_cvv_title">Turvakoodi</string>
   <string name="item_details_credit_card_section_pin_title">PIN-koodi</string>
-  <string name="item_details_login_section_email_title">Email address</string>
-  <string name="item_details_login_section_username_title">Username</string>
-  <string name="item_details_login_section_username_or_username_title">Username or email address</string>
+  <string name="item_details_login_section_email_title">Sähköpostiosoite</string>
+  <string name="item_details_login_section_username_title">Käyttäjätunnus</string>
+  <string name="item_details_login_section_username_or_username_title">Käyttäjätunnus tai sähköpostiosoite</string>
   <string name="item_details_login_section_password_title">Salasana</string>
   <string name="item_details_login_section_primary_totp_title">2FA-tunniste (TOTP)</string>
   <string name="item_details_login_section_websites_title">Verkkosivustot</string>

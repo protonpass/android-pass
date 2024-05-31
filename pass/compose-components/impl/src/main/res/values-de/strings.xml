@@ -17,6 +17,7 @@
     <item quantity="one">Ergebnis</item>
     <item quantity="other">Ergebnisse</item>
   </plurals>
+  <string name="item_list_header_identities_type">Identitäten</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Bestätigen</string>
   <string name="bottomsheet_cancel_button">Abbrechen</string>
@@ -35,8 +36,8 @@
   <string name="action_view_details">Details anzeigen</string>
   <string name="action_see_all">Alle ansehen</string>
   <string name="action_confirm">Bestätigen</string>
-  <string name="action_continue">Continue</string>
-  <string name="action_retry">Retry</string>
+  <string name="action_continue">Fortfahren</string>
+  <string name="action_retry">Erneut versuchen</string>
   <!-- Empty list -->
   <string name="empty_list_title">Füge deinen ersten Eintrag hinzu</string>
   <string name="empty_search_results_title">Kein Ergebnis gefunden</string>
@@ -118,9 +119,9 @@
   <string name="item_details_credit_card_section_expiration_date_title">Ablaufdatum</string>
   <string name="item_details_credit_card_section_cvv_title">Kartenprüfnummer</string>
   <string name="item_details_credit_card_section_pin_title">PIN-Code</string>
-  <string name="item_details_login_section_email_title">Email address</string>
-  <string name="item_details_login_section_username_title">Username</string>
-  <string name="item_details_login_section_username_or_username_title">Username or email address</string>
+  <string name="item_details_login_section_email_title">E‐Mail‐Adresse</string>
+  <string name="item_details_login_section_username_title">Benutzername</string>
+  <string name="item_details_login_section_username_or_username_title">Benutzername oder E-Mail-Adresse</string>
   <string name="item_details_login_section_password_title">Passwort</string>
   <string name="item_details_login_section_primary_totp_title">2FA-Token (TOTP)</string>
   <string name="item_details_login_section_websites_title">Websites</string>

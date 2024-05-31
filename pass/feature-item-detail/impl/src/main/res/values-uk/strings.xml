@@ -15,7 +15,7 @@
   <string name="note_detail_copy_note_to_clipboard">Копіювати нотатку</string>
   <string name="note_copied_to_clipboard">Нотатку скопійовано до буфера обміну</string>
   <!-- Login details -->
-  <string name="email_copied_to_clipboard">Email address copied</string>
+  <string name="email_copied_to_clipboard">Адресу електронної пошти скопійовано</string>
   <string name="username_copied_to_clipboard">Ім\'я користувача скопійовано</string>
   <string name="password_copied_to_clipboard">Пароль скопійовано</string>
   <string name="website_copied_to_clipboard">Вебсайт скопійовано</string>
@@ -50,7 +50,7 @@
   <string name="login_item_reused_passwords_subtitle">Записи входу з ваших сховищ, які використовують цей пароль.</string>
   <string name="field_email">Email address</string>
   <string name="field_username">Username</string>
-  <string name="field_username_or_email">Username or email address</string>
+  <string name="field_username_or_email">Ім\'я користувача або адреса е-пошти</string>
   <string name="field_password">Пароль</string>
   <string name="websites_section_title">Вебсайти</string>
   <string name="totp_section_title">Токен 2FA (TOTP)</string>

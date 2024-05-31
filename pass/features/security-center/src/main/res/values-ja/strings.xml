@@ -25,19 +25,19 @@
   <string name="security_center_home_widget_no_breaches_subtitle">Get notified if your email, password or other personal data was leaked.</string>
   <string name="security_center_home_row_no_data_breaches_subtitle">侵害は検出されませんでした</string>
   <string name="security_center_home_row_data_breaches_title">Dark Web Alert</string>
-  <string name="security_center_home_row_data_breaches_subtitle">Breaches detected</string>
+  <string name="security_center_home_row_data_breaches_subtitle">侵害が検出されました</string>
   <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
   <string name="security_center_home_row_sentinel_subtitle">高度なアカウント保護プログラム</string>
   <string name="security_center_home_row_insecure_passwords_title">弱いパスワード</string>
   <string name="security_center_home_row_insecure_passwords_subtitle">パスワードを変更してください</string>
   <string name="security_center_home_row_reused_passwords_title">再利用パスワード</string>
   <string name="security_center_home_row_reused_passwords_subtitle">一意のパスワードを生成してください</string>
-  <string name="security_center_home_row_missing_tfa_title">Inactive 2FA</string>
+  <string name="security_center_home_row_missing_tfa_title">2要素認証が無効</string>
   <string name="security_center_home_row_missing_tfa_subtitle">2要素認証を設定するとより安全になります</string>
   <string name="security_center_home_row_excludes_items_title">Excluded from monitoring</string>
   <string name="security_center_home_row_excludes_items_subtitle">These items remain at risk</string>
   <string name="security_center_get_breaches_error">Could not load breaches</string>
-  <string name="security_center_home_section_password_health">Password Health</string>
+  <string name="security_center_home_section_password_health">パスワードの健全性</string>
   <!-- Sentinel bottom sheet -->
   <string name="security_center_sentinel_title">Proton Sentinel</string>
   <string name="security_center_sentinel_subtitle">Proton Sentinel is an advanced account protection program powered by sophisticated AI systems and specialists working around the clock to protect you from bad actors and security threats.</string>
@@ -55,7 +55,7 @@
   <string name="security_center_reused_pass_top_bar_subtitle">Generate unique passwords for each account to increase your security.</string>
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Reused %1$d times</string>
   <!-- Missing 2FA -->
-  <string name="security_center_missing_tfa_top_bar_title">Inactive 2FA</string>
+  <string name="security_center_missing_tfa_top_bar_title">2要素認証が無効</string>
   <string name="security_center_missing_tfa_top_bar_subtitle">For added security, set up two-factor authentication on the following accounts.</string>
   <!-- Excluded items screen -->
   <string name="security_center_excluded_items_top_bar_title">Excluded items</string>
@@ -162,7 +162,7 @@
   <string name="security_center_alias_list_custom_email_message">Aliases with custom domains are not monitored, please add them as a custom email for monitoring.</string>
   <string name="security_center_alias_list_options_menu">Alias screen options menu</string>
   <!-- Dark web help dialogs -->
-  <string name="dark_web_help_dialog_title">Data Security</string>
+  <string name="dark_web_help_dialog_title">データセキュリティ</string>
   <string name="dark_web_help_dialog_subtitle">Proton はあなたの情報を第三者と共有しません。すべてのデータは、ダークウェブ上に出現する Proton ドメインを捜索することで取得しています。</string>
   <!-- Cannot add custom emails -->
   <string name="dark_web_cannot_add_custom_emails_dialog_title">Cannot add custom email</string>

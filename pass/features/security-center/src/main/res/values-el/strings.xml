@@ -90,8 +90,8 @@
   <string name="security_center_dark_web_monitor_alias_addresses_error">Σφάλμα κατά την ανάκτηση ψευδωνύμων Hide-my-email</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">Δεν παρακολουθείται</string>
   <string name="security_center_dark_web_monitor_see_all">Προβολή όλων</string>
-  <string name="security_center_dark_web_monitor_no_proton_addresses">No Proton addresses</string>
-  <string name="security_center_dark_web_monitor_no_aliases">No aliases</string>
+  <string name="security_center_dark_web_monitor_no_proton_addresses">Δεν υπάρχουν διευθύνσεις Proton</string>
+  <string name="security_center_dark_web_monitor_no_aliases">Δεν υπάρχουν ψευδώνυμα</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Παρουσιάστηκε σφάλμα κατά την αποστολή του κωδικού επαλήθευσης. Παρακαλούμε προσπαθήστε ξανά αργότερα.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Παρουσιάστηκε σφάλμα κατά την κατάργηση του μηνύματος ηλεκτρονικού ταχυδρομείου. Παρακαλούμε προσπαθήστε ξανά αργότερα.</string>
   <!-- Add custom email monitoring -->

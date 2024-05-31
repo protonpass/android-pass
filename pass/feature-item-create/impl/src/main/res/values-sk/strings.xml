@@ -9,20 +9,21 @@
   <string name="action_note">Poznámka</string>
   <string name="action_credit_card">Platobná karta</string>
   <string name="action_password">Heslo</string>
-  <string name="action_identity">Identity</string>
+  <string name="action_identity">Identita</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Pridať prihlasovacie údaje pre aplikáciu alebo stránku</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Získať emailový alias na použitie v nových aplikáciách</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Poznačte si PIN, kód alebo poznámku pre seba</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Bezpečne uložte svoje platobné informácie</string>
-  <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Fill in your personal data</string>
+  <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Vyplňte svoje osobné údaje</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Vygenerovať bezpečné heslo</string>
   <!-- Create Login -->
-  <string name="field_email_title">Email address</string>
-  <string name="field_email_hint">Add email address</string>
-  <string name="field_username_title">Username</string>
-  <string name="field_username_hint">Add username</string>
-  <string name="field_username_or_email_title">Username or email address</string>
-  <string name="field_username_or_email_hint">Add username or email address</string>
+  <string name="field_email_title">Emailová adresa</string>
+  <string name="field_email_hint">Pridať emailovú adresu</string>
+  <string name="field_email_error">Neplatná emailová adresa</string>
+  <string name="field_username_title">Používateľské meno</string>
+  <string name="field_username_hint">Pridať používateľské meno</string>
+  <string name="field_username_or_email_title">Používateľské meno alebo emailová adresa</string>
+  <string name="field_username_or_email_hint">Pridať používateľské meno alebo emailovú adresu</string>
   <string name="field_password_title">Heslo</string>
   <string name="field_password_hint">Pridať heslo</string>
   <string name="field_website_address_title">Webová stránka</string>
@@ -95,26 +96,60 @@
   <string name="credit_card_init_error">Problém s načítaním podrobností o platobnej karte</string>
   <string name="credit_card_item_update_error">Nepodarilo sa aktualizovať platobnú kartu</string>
   <!-- Create Identity -->
-  <string name="identity_field_full_name_title">Full name</string>
+  <string name="identity_field_full_name_title">Celé meno</string>
   <string name="identity_field_email_title">Email</string>
-  <string name="identity_field_phone_number_title">Phone number</string>
-  <string name="identity_field_organization_title">Organization</string>
-  <string name="identity_field_street_address_title">Street address, P.O. box</string>
-  <string name="identity_field_zip_or_postal_code_title">Zip or Postal code</string>
-  <string name="identity_field_city_title">City</string>
-  <string name="identity_field_state_or_province_title">State or province</string>
-  <string name="identity_field_country_or_region_title">Country or Region</string>
-  <string name="identity_field_social_security_number_title">Social security number</string>
-  <string name="identity_field_passport_number_title">Passport number</string>
-  <string name="identity_field_license_number_title">License number</string>
-  <string name="identity_field_website_title">Website</string>
-  <string name="identity_field_xhandle_title">X handle</string>
-  <string name="identity_field_company_title">Company</string>
-  <string name="identity_field_job_title_title">Job title</string>
-  <string name="identity_section_personal_details">Personal details</string>
-  <string name="identity_section_address_details">Address details</string>
-  <string name="identity_section_contact_details">Contact details</string>
-  <string name="identity_section_work_details">Work details</string>
+  <string name="identity_field_phone_number_title">Telefónne číslo</string>
+  <string name="identity_field_organization_title">Organizácia</string>
+  <string name="identity_field_street_address_title">Ulica, P.O. Box</string>
+  <string name="identity_field_zip_or_postal_code_title">PSČ</string>
+  <string name="identity_field_city_title">Mesto</string>
+  <string name="identity_field_state_or_province_title">Kraj alebo región</string>
+  <string name="identity_field_country_or_region_title">Krajina alebo región</string>
+  <string name="identity_field_social_security_number_title">Číslo poistenca sociálnej poisťovne</string>
+  <string name="identity_field_passport_number_title">Číslo pasu</string>
+  <string name="identity_field_license_number_title">Licenčné číslo</string>
+  <string name="identity_field_website_title">Webová stránka</string>
+  <string name="identity_field_xhandle_title">Meno v sieti X</string>
+  <string name="identity_field_company_title">Spoločnosť</string>
+  <string name="identity_field_job_title_title">Názov pracovnej pozície</string>
+  <string name="identity_field_first_name_title">Krstné meno</string>
+  <string name="identity_field_last_name_title">Priezvisko</string>
+  <string name="identity_field_middle_name_title">Stredné meno</string>
+  <string name="identity_field_birthdate_title">Dátum narodenia</string>
+  <string name="identity_field_gender_title">Pohlavie</string>
+  <string name="identity_field_floor_title">Poschodie</string>
+  <string name="identity_field_county_title">Kraj</string>
+  <string name="identity_field_linkedin_title">Linkedin</string>
+  <string name="identity_field_reddit_title">Používateľské meno v Reddit</string>
+  <string name="identity_field_facebook_title">Facebook URL</string>
+  <string name="identity_field_yahoo_title">Používateľské meno v Yahoo</string>
+  <string name="identity_field_instagram_title">Používateľské meno v Instagrame</string>
+  <string name="identity_field_personal_website_title">URL osobnej stránky</string>
+  <string name="identity_field_work_phone_number_title">Pracovné telefónne číslo</string>
+  <string name="identity_field_work_email_title">Pracovná emailová adresa</string>
+  <string name="identity_add_field_first_name">Krstné meno</string>
+  <string name="identity_add_field_middle_name">Stredné meno</string>
+  <string name="identity_add_field_last_name">Priezvisko</string>
+  <string name="identity_add_field_birthdate">Dátum narodenia</string>
+  <string name="identity_add_field_gender">Pohlavie</string>
+  <string name="identity_add_field_floor">Poschodie</string>
+  <string name="identity_add_field_county">Kraj</string>
+  <string name="identity_add_field_linkedin">Linkedin</string>
+  <string name="identity_add_field_reddit">Používateľské meno v Reddit</string>
+  <string name="identity_add_field_facebook">Facebook URL</string>
+  <string name="identity_add_field_yahoo">Používateľské meno v Yahoo</string>
+  <string name="identity_add_field_instagram">Používateľské meno v Instagrame</string>
+  <string name="identity_add_field_personal_website">URL osobnej stránky</string>
+  <string name="identity_add_field_work_phone_number">Pracovné telefónne číslo</string>
+  <string name="identity_add_field_work_email_address">Pracovná emailová adresa</string>
+  <string name="identity_section_personal_details">Osobné údaje</string>
+  <string name="identity_section_address_details">Detaily adresy</string>
+  <string name="identity_section_contact_details">Kontaktné údaje</string>
+  <string name="identity_section_work_details">Podrobnosti o pracovnej činnosti</string>
+  <string name="identity_add_more_fields">Pridať ďalšie</string>
+  <string name="identity_bottomsheet_add_field">Pridať pole</string>
+  <string name="create_identity_item_creation_error">Nepodarilo sa vytvoriť identitu</string>
+  <string name="create_identity_item_creation_success">Identita bola vytvorená</string>
   <!--  Common create items  -->
   <string name="title_create">Vytvoriť</string>
   <string name="changes_saved">Zmeny uložené</string>

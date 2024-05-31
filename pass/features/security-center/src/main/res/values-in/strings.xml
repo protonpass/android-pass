@@ -87,8 +87,8 @@
   <string name="security_center_dark_web_monitor_alias_addresses_error">Terdapat kesalahan dalam mengambil alias Hide-my-email</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">Tidak dipantau</string>
   <string name="security_center_dark_web_monitor_see_all">Lihat semua</string>
-  <string name="security_center_dark_web_monitor_no_proton_addresses">No Proton addresses</string>
-  <string name="security_center_dark_web_monitor_no_aliases">No aliases</string>
+  <string name="security_center_dark_web_monitor_no_proton_addresses">Tidak ada alamat Proton</string>
+  <string name="security_center_dark_web_monitor_no_aliases">Tidak ada alias</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Terjadi kesalahan saat mengirim kode verifikasi. Silakan coba lagi nanti.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Terjadi kesalahan saat menghapus email. Silakan coba lagi nanti.</string>
   <!-- Add custom email monitoring -->

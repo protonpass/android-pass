@@ -31,7 +31,7 @@
   <string name="security_center_home_row_insecure_passwords_title">약한 비밀번호</string>
   <string name="security_center_home_row_insecure_passwords_subtitle">비밀번호 변경</string>
   <string name="security_center_home_row_reused_passwords_title">재사용한 비밀번호</string>
-  <string name="security_center_home_row_reused_passwords_subtitle">독특한 비밀번호 생성</string>
+  <string name="security_center_home_row_reused_passwords_subtitle">고유한 비밀번호 만들기</string>
   <string name="security_center_home_row_missing_tfa_title">2단계 인증 꺼짐</string>
   <string name="security_center_home_row_missing_tfa_subtitle">더 나은 보안을 위해 2단계 인증 설정</string>
   <string name="security_center_home_row_excludes_items_title">모니터링에서 제외됨</string>

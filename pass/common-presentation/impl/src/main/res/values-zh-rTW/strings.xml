@@ -21,7 +21,7 @@
   <string name="item_details_snackbar_message_card_number_copied">已複製信用卡卡號</string>
   <string name="item_details_snackbar_message_custom_field_copied">已複製自訂欄位</string>
   <string name="item_details_snackbar_message_cvv_copied">已複製安全防護代碼</string>
-  <string name="item_details_snackbar_message_email_copied">Email address copied</string>
+  <string name="item_details_snackbar_message_email_copied">電郵地址已複製</string>
   <string name="item_details_snackbar_message_password_copied">已複製密碼</string>
   <string name="item_details_snackbar_message_pin_copied">已複製 PIN 碼</string>
   <string name="item_details_snackbar_message_totp_copied">已複製 TOTP 碼</string>

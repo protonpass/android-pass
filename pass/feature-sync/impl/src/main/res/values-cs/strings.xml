@@ -25,11 +25,11 @@
   </plurals>
   <string name="sync_progress_item_count">%1$d z(e) %2$d položek</string>
   <string name="sync_dialog_title">Synchronizace položek…</string>
-  <string name="sync_dialog_title_error">Sync failed</string>
-  <string name="sync_dialog_title_success">Sync completed</string>
+  <string name="sync_dialog_title_error">Synchronizace selhala</string>
+  <string name="sync_dialog_title_success">Synchronizace dokončena</string>
   <string name="sync_dialog_subtitle">Stahujeme a dešifrujeme vaše položky. Může to trvat několik minut.</string>
-  <string name="sync_dialog_subtitle_error">There was an error downloading and decrypting your items. Please try again.</string>
-  <string name="sync_dialog_subtitle_success">Your items were successfully downloaded and decrypted.</string>
+  <string name="sync_dialog_subtitle_error">Došlo k chybě při stahování a dešifrování vašich položek. Prosím zkuste to znovu.</string>
+  <string name="sync_dialog_subtitle_success">Vaše položky byly úspěšně staženy a dešifrovány.</string>
   <string name="sync_item_not_started">Nezahájeno</string>
-  <string name="sync_item_failed">Sync failed</string>
+  <string name="sync_item_failed">Synchronizace selhala</string>
 </resources>

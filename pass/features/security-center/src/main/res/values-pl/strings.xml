@@ -123,7 +123,7 @@
   <string name="security_center_verify_report_title_detected">Wykryto wycieki dla</string>
   <string name="security_center_verify_report_title_none">Brak wykrytych wycieków dla</string>
   <!-- Email breach report -->
-  <string name="security_center_email_report_used_in_header">Użyte</string>
+  <string name="security_center_email_report_used_in_header">Użyty w</string>
   <string name="security_center_email_report_breaches_header">Wycieki</string>
   <string name="security_center_email_report_resolved_breaches_header">Rozwiązane wycieki</string>
   <string name="security_center_email_report_mark_as_resolved">Oznacz jako rozwiązane</string>

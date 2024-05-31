@@ -15,7 +15,7 @@
   <string name="note_detail_copy_note_to_clipboard">Kopioi muistiinpano</string>
   <string name="note_copied_to_clipboard">Muistiinpano kopioitiin leikepöydälle</string>
   <!-- Login details -->
-  <string name="email_copied_to_clipboard">Email address copied</string>
+  <string name="email_copied_to_clipboard">Sähköpostiosoite kopioitiin</string>
   <string name="username_copied_to_clipboard">Käyttäjätunnus kopioitiin</string>
   <string name="password_copied_to_clipboard">Salasana kopioitiin</string>
   <string name="website_copied_to_clipboard">Verkkosivuston osoite kopioitiin</string>
@@ -31,14 +31,14 @@
   <string name="item_pinned_message_error">Virhe kiinnitettäessä kohdetta</string>
   <string name="item_unpinned_message">Kohde irrotettiin</string>
   <string name="item_unpinned_message_error">Virhe irrotettaessa kohdetta</string>
-  <string name="item_monitor_exclude_message">Kohde poistettiin valvonnasta</string>
-  <string name="item_monitor_exclude_message_error">Virhe kohteen valvonnasta poistamisessa</string>
-  <string name="item_monitor_include_message">Kohde lisättiin valvontaan</string>
+  <string name="item_monitor_exclude_message">Kohde poissuljettiin valvonnasta</string>
+  <string name="item_monitor_exclude_message_error">Virhe poissuljettaessa kohdetta valvonnasta</string>
+  <string name="item_monitor_include_message">Kohde sisällytettiin valvontaan</string>
   <string name="item_monitor_include_message_error">Virhe kohteen valvontaan lisäämisessä</string>
   <string name="login_item_generate_totp_error">Virhe luotaessa 2FA-koodia</string>
   <string name="login_item_view_alias_button">Näytä alias</string>
   <string name="login_item_monitor_widget_weak_pass_title">Heikko salasana</string>
-  <string name="login_item_monitor_widget_weak_pass_subtitle">Tämä tili on vaarassa, käy palvelussa ja vaihda salasanasi.</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Tämä tili on vaarassa. Käy vaihtamassa salasanasi palvelun tiliasetuksista.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="one">%d muu kirjautumistieto käyttää samaa salasanaa</item>
     <item quantity="other">%d muuta kirjautumistietoa käyttää samaa salasanaa</item>
@@ -46,9 +46,9 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Tehosta suojausta määrittämällä 2FA</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Palvelu mahdollistaa kaksivaiheisen tunnistautumisen. Paranna tilin suojausta ottamalla se käyttöön.</string>
   <string name="login_item_reused_passwords_subtitle">Holviesi tätä salasanaa käyttävät kohteet.</string>
-  <string name="field_email">Email address</string>
-  <string name="field_username">Username</string>
-  <string name="field_username_or_email">Username or email address</string>
+  <string name="field_email">Sähköpostiosoite</string>
+  <string name="field_username">Käyttäjätunnus</string>
+  <string name="field_username_or_email">Käyttäjätunnus tai sähköpostiosoite</string>
   <string name="field_password">Salasana</string>
   <string name="websites_section_title">Verkkosivustot</string>
   <string name="totp_section_title">2FA-tunniste (TOTP)</string>

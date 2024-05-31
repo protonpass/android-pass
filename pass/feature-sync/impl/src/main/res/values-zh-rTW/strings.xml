@@ -22,11 +22,11 @@
   </plurals>
   <string name="sync_progress_item_count">%2$d 個項目中的 %1$d 個</string>
   <string name="sync_dialog_title">正在同步項目……</string>
-  <string name="sync_dialog_title_error">Sync failed</string>
-  <string name="sync_dialog_title_success">Sync completed</string>
+  <string name="sync_dialog_title_error">同步處理失敗</string>
+  <string name="sync_dialog_title_success">同步已完成</string>
   <string name="sync_dialog_subtitle">我們正在下載並解密您的項目。這會需要幾分鐘。</string>
   <string name="sync_dialog_subtitle_error">There was an error downloading and decrypting your items. Please try again.</string>
   <string name="sync_dialog_subtitle_success">Your items were successfully downloaded and decrypted.</string>
   <string name="sync_item_not_started">尚未開始</string>
-  <string name="sync_item_failed">Sync failed</string>
+  <string name="sync_item_failed">同步處理失敗</string>
 </resources>

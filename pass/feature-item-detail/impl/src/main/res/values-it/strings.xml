@@ -15,7 +15,7 @@
   <string name="note_detail_copy_note_to_clipboard">Copia la nota</string>
   <string name="note_copied_to_clipboard">Nota copiata negli appunti</string>
   <!-- Login details -->
-  <string name="email_copied_to_clipboard">Email address copied</string>
+  <string name="email_copied_to_clipboard">Indirizzo email copiato</string>
   <string name="username_copied_to_clipboard">Nome utente copiato</string>
   <string name="password_copied_to_clipboard">Password copiata</string>
   <string name="website_copied_to_clipboard">Sito web copiato</string>
@@ -46,9 +46,9 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Configura 2FA per maggiore sicurezza</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Questo servizio offre 2FA. Abilitalo per una maggiore sicurezza dell\'account.</string>
   <string name="login_item_reused_passwords_subtitle">Elementi delle tue casseforti che utilizzano questa password.</string>
-  <string name="field_email">Email address</string>
-  <string name="field_username">Username</string>
-  <string name="field_username_or_email">Username or email address</string>
+  <string name="field_email">Indirizzo email</string>
+  <string name="field_username">Nome utente</string>
+  <string name="field_username_or_email">Nome utente o indirizzo email</string>
   <string name="field_password">Password</string>
   <string name="websites_section_title">Siti web</string>
   <string name="totp_section_title">Token 2FA (TOTP)</string>

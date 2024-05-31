@@ -47,7 +47,7 @@
   <string name="login_item_reused_passwords_subtitle">Items from your vaults that use this password.</string>
   <string name="field_email">Email address</string>
   <string name="field_username">Username</string>
-  <string name="field_username_or_email">Username or email address</string>
+  <string name="field_username_or_email">Tên đăng nhập hoặc Email</string>
   <string name="field_password">Mật khẩu</string>
   <string name="websites_section_title">Trang web</string>
   <string name="totp_section_title">Mã bảo mật 2FA (TOTP)</string>

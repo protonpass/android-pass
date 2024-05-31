@@ -18,6 +18,7 @@
     <item quantity="few">rezultate</item>
     <item quantity="other">de rezultate</item>
   </plurals>
+  <string name="item_list_header_identities_type">Identities</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Confirmare</string>
   <string name="bottomsheet_cancel_button">Anulare</string>
@@ -36,8 +37,8 @@
   <string name="action_view_details">Afișare detalii</string>
   <string name="action_see_all">Afișare toate</string>
   <string name="action_confirm">Confirmare</string>
-  <string name="action_continue">Continue</string>
-  <string name="action_retry">Retry</string>
+  <string name="action_continue">Continuare</string>
+  <string name="action_retry">Reîncercare</string>
   <!-- Empty list -->
   <string name="empty_list_title">Adăugați primul articol</string>
   <string name="empty_search_results_title">Nu s-au găsit rezultate</string>
@@ -120,9 +121,9 @@
   <string name="item_details_credit_card_section_expiration_date_title">Expiră la</string>
   <string name="item_details_credit_card_section_cvv_title">Cod de securitate</string>
   <string name="item_details_credit_card_section_pin_title">Cod PIN</string>
-  <string name="item_details_login_section_email_title">Email address</string>
-  <string name="item_details_login_section_username_title">Username</string>
-  <string name="item_details_login_section_username_or_username_title">Username or email address</string>
+  <string name="item_details_login_section_email_title">Adresa de e-mail</string>
+  <string name="item_details_login_section_username_title">Nume utilizator</string>
+  <string name="item_details_login_section_username_or_username_title">Nume utilizator sau adresă de e-mail</string>
   <string name="item_details_login_section_password_title">Parola</string>
   <string name="item_details_login_section_primary_totp_title">Cod A2F (TOTP)</string>
   <string name="item_details_login_section_websites_title">Pagini web</string>

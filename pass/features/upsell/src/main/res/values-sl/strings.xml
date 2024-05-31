@@ -26,8 +26,8 @@
   <string name="upsell_paid_feature_authenticator">Vgrajen modul za preverjanje pristnosti 2FA</string>
   <string name="upsell_paid_feature_unlimited_aliases">Neomejeno število vzdevkov hide-my-email</string>
   <string name="upsell_paid_feature_vault_sharing">Deljenje trezorjev (do 10 oseb)</string>
-  <string name="upsell_paid_feature_authenticator_essential">Require 2FA for organization</string>
-  <string name="upsell_paid_feature_sso_essential">SSO integration (coming soon)</string>
+  <string name="upsell_paid_feature_authenticator_essential">Za organizacijo zahtevajte 2FA</string>
+  <string name="upsell_paid_feature_sso_essential">Integracija SSO (kmalu na voljo)</string>
   <string name="upsell_button_upgrade">Pridobite Pass Plus</string>
-  <string name="upsell_button_upgrade_essentials">Get Pass Business</string>
+  <string name="upsell_button_upgrade_essentials">Pridobite Pass Business</string>
 </resources>

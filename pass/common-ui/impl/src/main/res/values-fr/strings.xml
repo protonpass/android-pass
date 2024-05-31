@@ -20,7 +20,7 @@
   <string name="bottomsheet_copy_password">Copier le mot de passe</string>
   <string name="bottomsheet_copy_username">Copier le nom d\'utilisateur</string>
   <string name="snackbar_item_move_to_trash_success">L\'élément a été déplacé dans la corbeille.</string>
-  <string name="snackbar_item_move_to_trash_error">Impossible de déplacer l\'élément dans la corbeille.</string>
+  <string name="snackbar_item_move_to_trash_error">L\'élément n\'a pas pu être déplacé dans la corbeille.</string>
   <string name="snackbar_item_copy_username_success">Le nom d\'utilisateur a été copié dans le presse-papiers.</string>
   <string name="snackbar_item_copy_password_success">Le mot de passe a été copié dans le presse-papiers.</string>
   <string name="snackbar_item_copy_clipboard_error">La copie dans le presse-papiers n\'a pas abouti.</string>

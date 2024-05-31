@@ -17,6 +17,7 @@
     <item quantity="one">αποτέλεσμα</item>
     <item quantity="other">αποτελέσματα</item>
   </plurals>
+  <string name="item_list_header_identities_type">Ταυτότητες</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Επιβεβαίωση</string>
   <string name="bottomsheet_cancel_button">Ακύρωση</string>
@@ -35,8 +36,8 @@
   <string name="action_view_details">Προβολή λεπτομερειών</string>
   <string name="action_see_all">Προβολή όλων</string>
   <string name="action_confirm">Επιβεβαίωση</string>
-  <string name="action_continue">Continue</string>
-  <string name="action_retry">Retry</string>
+  <string name="action_continue">Συνέχεια</string>
+  <string name="action_retry">Δοκιμάστε ξανά</string>
   <!-- Empty list -->
   <string name="empty_list_title">Προσθέστε το πρώτο σας στοιχείο</string>
   <string name="empty_search_results_title">Δε βρέθηκε αποτέλεσμα</string>
@@ -118,9 +119,9 @@
   <string name="item_details_credit_card_section_expiration_date_title">Λήγει στις</string>
   <string name="item_details_credit_card_section_cvv_title">Αριθμός επαλήθευσης</string>
   <string name="item_details_credit_card_section_pin_title">Κωδικός PIN</string>
-  <string name="item_details_login_section_email_title">Email address</string>
-  <string name="item_details_login_section_username_title">Username</string>
-  <string name="item_details_login_section_username_or_username_title">Username or email address</string>
+  <string name="item_details_login_section_email_title">Διεύθυνση ηλεκτρονικού ταχυδρομείου</string>
+  <string name="item_details_login_section_username_title">Όνομα Χρήστη</string>
+  <string name="item_details_login_section_username_or_username_title">Όνομα χρήστη ή διεύθυνση email</string>
   <string name="item_details_login_section_password_title">Κωδικός</string>
   <string name="item_details_login_section_primary_totp_title">Διακριτικό 2FA (TOTP)</string>
   <string name="item_details_login_section_websites_title">Ιστοσελίδες</string>

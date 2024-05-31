@@ -19,6 +19,7 @@
     <item quantity="many">результатов</item>
     <item quantity="other">результатов</item>
   </plurals>
+  <string name="item_list_header_identities_type">Identities</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Подтвердить</string>
   <string name="bottomsheet_cancel_button">Отменить</string>
@@ -122,9 +123,9 @@
   <string name="item_details_credit_card_section_expiration_date_title">Срок действия</string>
   <string name="item_details_credit_card_section_cvv_title">Код безопасности</string>
   <string name="item_details_credit_card_section_pin_title">PIN-код</string>
-  <string name="item_details_login_section_email_title">Email address</string>
-  <string name="item_details_login_section_username_title">Username</string>
-  <string name="item_details_login_section_username_or_username_title">Username or email address</string>
+  <string name="item_details_login_section_email_title">Адрес электронной почты</string>
+  <string name="item_details_login_section_username_title">Имя пользователя</string>
+  <string name="item_details_login_section_username_or_username_title">Имя пользователя или адрес электронной почты</string>
   <string name="item_details_login_section_password_title">Пароль</string>
   <string name="item_details_login_section_primary_totp_title">Токен 2ФА (TOTP)</string>
   <string name="item_details_login_section_websites_title">Веб-сайты</string>

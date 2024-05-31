@@ -93,8 +93,8 @@
   <string name="security_center_dark_web_monitor_alias_addresses_error">Eroare preluare aliasuri hide-my-email</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">Nemonitorizată</string>
   <string name="security_center_dark_web_monitor_see_all">Afișare toate</string>
-  <string name="security_center_dark_web_monitor_no_proton_addresses">No Proton addresses</string>
-  <string name="security_center_dark_web_monitor_no_aliases">No aliases</string>
+  <string name="security_center_dark_web_monitor_no_proton_addresses">Nu există adrese Proton</string>
+  <string name="security_center_dark_web_monitor_no_aliases">Nu există aliasuri</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">A apărut o eroare la trimiterea codului de verificare. Mai reîncercați.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">A apărut o eroare la eliminarea adresei de e-mail. Mai reîncercați.</string>
   <!-- Add custom email monitoring -->

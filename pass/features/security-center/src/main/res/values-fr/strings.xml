@@ -25,14 +25,14 @@
   <string name="security_center_home_widget_no_breaches_subtitle">Soyez averti si votre adresse e-mail, mot de passe ou d\'autres données personnelles ont été divulguées.</string>
   <string name="security_center_home_row_no_data_breaches_subtitle">Aucune fuite de données n\'a été détectée.</string>
   <string name="security_center_home_row_data_breaches_title">Alerte provenant du dark web</string>
-  <string name="security_center_home_row_data_breaches_subtitle">Des fuites de données ont été détectées.</string>
+  <string name="security_center_home_row_data_breaches_subtitle">Fuites de données détectées</string>
   <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
   <string name="security_center_home_row_sentinel_subtitle">Programme de protection de compte avancée</string>
   <string name="security_center_home_row_insecure_passwords_title">Mots de passe faible</string>
   <string name="security_center_home_row_insecure_passwords_subtitle">Modifiez vos mots de passe</string>
   <string name="security_center_home_row_reused_passwords_title">Mots de passe réutilisés</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Générez des mots de passe uniques</string>
-  <string name="security_center_home_row_missing_tfa_title">2FA inactive</string>
+  <string name="security_center_home_row_missing_tfa_title">L\'A2F n\'est pas active.</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Configurez l\'A2F pour plus de sécurité</string>
   <string name="security_center_home_row_excludes_items_title">Exclus de la surveillance</string>
   <string name="security_center_home_row_excludes_items_subtitle">Ces éléments sont toujours menacés.</string>
@@ -55,7 +55,7 @@
   <string name="security_center_reused_pass_top_bar_subtitle">Générez un mot de passe unique à chaque compte afin d\'améliorer votre sécurité.</string>
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Réutilisé %1$d fois</string>
   <!-- Missing 2FA -->
-  <string name="security_center_missing_tfa_top_bar_title">2FA inactive</string>
+  <string name="security_center_missing_tfa_top_bar_title">L\'A2F n\'est pas active.</string>
   <string name="security_center_missing_tfa_top_bar_subtitle">Pour une sécurité améliorée, activez l\'authentification à deux facteurs sur les comptes suivants.</string>
   <!-- Excluded items screen -->
   <string name="security_center_excluded_items_top_bar_title">Éléments exclus</string>
@@ -95,7 +95,7 @@
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Une erreur est survenue lors de l\'envoi du code de vérification. Veuillez réessayer plus tard.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">Une erreur est survenue lors du retrait de l\'e-mail. Veuillez réessayer plus tard.</string>
   <!-- Add custom email monitoring -->
-  <string name="security_center_custom_email_top_bar_title">Surveillance de l\'adresse e-mail personnalisée</string>
+  <string name="security_center_custom_email_top_bar_title">Surveillance des adresses e-mail personnalisées</string>
   <string name="security_center_custom_email_email_address_placeholder">Adresse e-mail</string>
   <string name="security_center_custom_email_invalid_address">L\'adresse e-mail n\'est pas valide.</string>
   <string name="security_center_custom_email_continue">Continuer</string>
@@ -117,7 +117,7 @@
   <string name="security_center_verify_report_title_detected">Des fuites de données ont été détectées pour</string>
   <string name="security_center_verify_report_title_none">Aucune fuite de données n\'a été détectée pour</string>
   <!-- Email breach report -->
-  <string name="security_center_email_report_used_in_header">Utilisé dans</string>
+  <string name="security_center_email_report_used_in_header">Utilisation dans</string>
   <string name="security_center_email_report_breaches_header">Fuites de données</string>
   <string name="security_center_email_report_resolved_breaches_header">Fuites de données résolues</string>
   <string name="security_center_email_report_mark_as_resolved">Marquer comme résolue</string>

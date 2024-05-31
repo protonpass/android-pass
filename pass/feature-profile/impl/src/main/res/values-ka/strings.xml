@@ -32,7 +32,7 @@
   <string name="app_lock_config_biometric">ბიომეტრიული</string>
   <string name="app_lock_config_pin_code">PIN კოდი</string>
   <string name="app_lock_config_app_lock_time">ავტომატური დაბლოკვა</string>
-  <string name="app_lock_config_password">Password</string>
+  <string name="app_lock_config_password">პაროლი</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">ბიომეტრიული შესვლის ჩავარდნის შემთხვევაში სისტემური ბლოკის გამოყენება</string>
   <string name="configure_pin_set_pin_code">PIN-კოდის დაყენება</string>
   <string name="configure_pin_unlock_the_app_with_this_code">განბლოკეთ აპი ამ კოდით</string>
@@ -54,8 +54,8 @@
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">თქვენს მოწყობილობას შესვლის გასაღებების მხარდაჭერა არ გააჩნია</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">შესვლის გასაღებების მხარდაჭერის შემოწმება შეუძლებელია</string>
   <plurals name="profile_after_days">
-    <item quantity="one">After %d day</item>
-    <item quantity="other">After %d days</item>
+    <item quantity="one">%d დღეში</item>
+    <item quantity="other">%d დღეში</item>
   </plurals>
   <plurals name="profile_after_minutes">
     <item quantity="one">%d წუთის შემდეგ</item>
@@ -65,5 +65,5 @@
     <item quantity="one">%d საათის შემდეგ</item>
     <item quantity="other">%d საათის შემდეგ</item>
   </plurals>
-  <string name="profile_less_than_a_minute">Less than a minute</string>
+  <string name="profile_less_than_a_minute">წუთზე ნაკლები</string>
 </resources>

@@ -17,6 +17,7 @@
     <item quantity="one">résultat</item>
     <item quantity="other">résultats</item>
   </plurals>
+  <string name="item_list_header_identities_type">Identités</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Confirmer</string>
   <string name="bottomsheet_cancel_button">Annuler</string>
@@ -130,7 +131,7 @@
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Clé d\'accès</string>
   <!-- Upgrade -->
   <string name="dialog_upgrade_plan_title">Changer d\'abonnement ?</string>
-  <string name="dialog_upgrade_plan_message">Cette fonctionnalité n\'est pas disponible pour les utilisateurs utilisant un abonnement gratuit. Si vous souhaitez profiter de cette fonctionnalité ainsi que d\'autres fonctions intéressantes, changez d\'abonnement et essayez-la !</string>
+  <string name="dialog_upgrade_plan_message">Cette fonctionnalité n\'est pas disponible pour les utilisateurs ayant un abonnement gratuit. Si vous voulez en profiter, avec d\'autres fonctionnalités intéressantes, passez à l\'abonnement supérieur.</string>
   <string name="dialog_upgrade_plan_action_confirm">Changer d\'abonnement</string>
   <string name="dialog_upgrade_plan_action_cancel">Pas maintenant</string>
   <!-- Words -->

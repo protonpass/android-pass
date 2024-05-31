@@ -17,8 +17,8 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="upsell_monitor_title">Pysy turvassa verkossa</string>
-  <string name="upsell_dark_web_monitoring_subtitle">Pimeän verkon valvonta sisältyy maksullisiin tilauksiin. Saat sen heti käyttöösi päivitämällä tilauksesi.</string>
+  <string name="upsell_monitor_title">Suojaudu paremmin verkossa</string>
+  <string name="upsell_dark_web_monitoring_subtitle">Pimeän verkon valvonta sisältyy maksullisiin tilauksiin. Hanki se heti käyttöösi päivitämällä tilauksesi.</string>
   <string name="upsell_missing_2fa_subtitle">Näytä luettelo sivustoista, joihin voit lisätä toisen todentamistekijän verkkoläsnäolosi suojaamiseksi. Päivitä tilauksesi, saadaksesi välittömän pääsyn.</string>
   <string name="upsell_sentinel_subtitle">Avaa edistyneet tietoturvaominaisuudet ja yksityiskohtaiset lokit verkkoläsnäolosi suojaamiseksi.</string>
   <string name="upsell_paid_feature_dark_web_monitoring">Pimeän verkon valvonta</string>
@@ -26,8 +26,8 @@
   <string name="upsell_paid_feature_authenticator">Sisäänrakennettu kaksivaiheinen todentaja</string>
   <string name="upsell_paid_feature_unlimited_aliases">Rajattomasti Hide-my-email-aliaksia</string>
   <string name="upsell_paid_feature_vault_sharing">Holvin jakaminen (enintään 10 henkilöä)</string>
-  <string name="upsell_paid_feature_authenticator_essential">Require 2FA for organization</string>
-  <string name="upsell_paid_feature_sso_essential">SSO integration (coming soon)</string>
+  <string name="upsell_paid_feature_authenticator_essential">Vaadi organisaatiolle 2FA</string>
+  <string name="upsell_paid_feature_sso_essential">SSO-integraatio (tulossa pian)</string>
   <string name="upsell_button_upgrade">Hanki Pass Plus</string>
-  <string name="upsell_button_upgrade_essentials">Get Pass Business</string>
+  <string name="upsell_button_upgrade_essentials">Hanki Pass Business</string>
 </resources>

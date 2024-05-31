@@ -90,8 +90,8 @@
   <string name="security_center_dark_web_monitor_alias_addresses_error">Hide-my-email takma adları alınırken sorun çıktı</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">İzlenmiyor</string>
   <string name="security_center_dark_web_monitor_see_all">Tümünü görüntüle</string>
-  <string name="security_center_dark_web_monitor_no_proton_addresses">No Proton addresses</string>
-  <string name="security_center_dark_web_monitor_no_aliases">No aliases</string>
+  <string name="security_center_dark_web_monitor_no_proton_addresses">Herhangi bir Proton adresi yok</string>
+  <string name="security_center_dark_web_monitor_no_aliases">Herhangi bir takma ad yok</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">Doğrulama kodu gönderilirken sorun çıktı. Lütfen bir süre sonra yeniden deneyin.</string>
   <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">E-posta silinirken bir sorun çıktı. Lütfen bir süre sonra yeniden deneyin.</string>
   <!-- Add custom email monitoring -->

@@ -21,7 +21,7 @@
   <string name="item_details_snackbar_message_card_number_copied">Número de cartão copiado</string>
   <string name="item_details_snackbar_message_custom_field_copied">Campo personalizado copiado</string>
   <string name="item_details_snackbar_message_cvv_copied">Código de segurança copiado</string>
-  <string name="item_details_snackbar_message_email_copied">Email address copied</string>
+  <string name="item_details_snackbar_message_email_copied">Endereço de e-mail copiado</string>
   <string name="item_details_snackbar_message_password_copied">Senha copiada</string>
   <string name="item_details_snackbar_message_pin_copied">Código PIN copiado</string>
   <string name="item_details_snackbar_message_totp_copied">TOTP copiado</string>

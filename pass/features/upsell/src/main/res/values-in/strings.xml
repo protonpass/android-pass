@@ -26,8 +26,8 @@
   <string name="upsell_paid_feature_authenticator">Autentikator 2FA terintegrasi</string>
   <string name="upsell_paid_feature_unlimited_aliases">Tanpa batasan jumlah alias hide-my-email</string>
   <string name="upsell_paid_feature_vault_sharing">Pembagian brankas (hingga 10 pengguna)</string>
-  <string name="upsell_paid_feature_authenticator_essential">Require 2FA for organization</string>
-  <string name="upsell_paid_feature_sso_essential">SSO integration (coming soon)</string>
+  <string name="upsell_paid_feature_authenticator_essential">2FA wajib bagi organisasi</string>
+  <string name="upsell_paid_feature_sso_essential">Integrasi SSO (segera hadir)</string>
   <string name="upsell_button_upgrade">Dapatkan Pass Plus</string>
   <string name="upsell_button_upgrade_essentials">Dapatkan Pass Business</string>
 </resources>

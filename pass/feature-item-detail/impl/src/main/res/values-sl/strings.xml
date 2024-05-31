@@ -15,7 +15,7 @@
   <string name="note_detail_copy_note_to_clipboard">Kopiraj opombo</string>
   <string name="note_copied_to_clipboard">Opomba kopirana v odložišče</string>
   <!-- Login details -->
-  <string name="email_copied_to_clipboard">Email address copied</string>
+  <string name="email_copied_to_clipboard">E-poštni naslov je kopiran</string>
   <string name="username_copied_to_clipboard">Uporabniško ime je kopirano</string>
   <string name="password_copied_to_clipboard">Geslo je bilo kopirano</string>
   <string name="website_copied_to_clipboard">Spletna stran kopirana</string>
@@ -48,9 +48,9 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Nastavite 2FA za večjo varnost</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Ta storitev ponuja 2FA. Omogočite ga za dodatno varnost računa.</string>
   <string name="login_item_reused_passwords_subtitle">Predmeti iz vaših trezorjev, ki uporabljajo to geslo.</string>
-  <string name="field_email">Email address</string>
-  <string name="field_username">Username</string>
-  <string name="field_username_or_email">Username or email address</string>
+  <string name="field_email">E-poštni naslov</string>
+  <string name="field_username">Uporabniško ime</string>
+  <string name="field_username_or_email">Uporabniško ime ali elektronski naslov</string>
   <string name="field_password">Geslo</string>
   <string name="websites_section_title">Spletne strani</string>
   <string name="totp_section_title">Žeton 2FA (TOTP)</string>

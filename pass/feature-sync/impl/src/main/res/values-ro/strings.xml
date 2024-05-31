@@ -24,11 +24,11 @@
   </plurals>
   <string name="sync_progress_item_count">%1$d din %2$d articole</string>
   <string name="sync_dialog_title">Se sincronizează articolele…</string>
-  <string name="sync_dialog_title_error">Sync failed</string>
-  <string name="sync_dialog_title_success">Sync completed</string>
+  <string name="sync_dialog_title_error">Sincronizarea nereușită</string>
+  <string name="sync_dialog_title_success">Sincronizare finalizată</string>
   <string name="sync_dialog_subtitle">Se descarcă și se decriptează articolele. Acest lucru poate dura câteva minute.</string>
-  <string name="sync_dialog_subtitle_error">There was an error downloading and decrypting your items. Please try again.</string>
-  <string name="sync_dialog_subtitle_success">Your items were successfully downloaded and decrypted.</string>
+  <string name="sync_dialog_subtitle_error">A apărut o eroare la descărcarea și decriptarea articolelor. Mai încercați.</string>
+  <string name="sync_dialog_subtitle_success">Articolele au fost descărcate și decriptate cu succes.</string>
   <string name="sync_item_not_started">Neefectuată</string>
-  <string name="sync_item_failed">Sync failed</string>
+  <string name="sync_item_failed">Sincronizarea nereușită</string>
 </resources>

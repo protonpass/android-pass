@@ -15,7 +15,7 @@
   <string name="note_detail_copy_note_to_clipboard">Скопировать заметку</string>
   <string name="note_copied_to_clipboard">Заметка скопирована в буфер обмена</string>
   <!-- Login details -->
-  <string name="email_copied_to_clipboard">Email address copied</string>
+  <string name="email_copied_to_clipboard">Адрес электронной почты скопирован</string>
   <string name="username_copied_to_clipboard">Имя пользователя скопировано</string>
   <string name="password_copied_to_clipboard">Пароль скопирован</string>
   <string name="website_copied_to_clipboard">Веб-сайт скопирован</string>
@@ -48,9 +48,9 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Настройте двухфакторную идентификацию для повышения безопасности</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Эта служба предлагает двухфакторную аутентификацию. Включите ее, чтобы обеспечить дополнительную безопасность аккаунта.</string>
   <string name="login_item_reused_passwords_subtitle">Элементы из ваших хранилищ, которые используют этот пароль.</string>
-  <string name="field_email">Email address</string>
-  <string name="field_username">Username</string>
-  <string name="field_username_or_email">Username or email address</string>
+  <string name="field_email">Адрес электронной почты</string>
+  <string name="field_username">Имя пользователя</string>
+  <string name="field_username_or_email">Имя пользователя или адрес электронной почты</string>
   <string name="field_password">Пароль</string>
   <string name="websites_section_title">Веб-сайты</string>
   <string name="totp_section_title">Токен 2ФА (TOTP)</string>

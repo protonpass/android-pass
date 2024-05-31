@@ -17,6 +17,7 @@
     <item quantity="one">შედეგი</item>
     <item quantity="other">შედეგი</item>
   </plurals>
+  <string name="item_list_header_identities_type">Identities</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">დასტური</string>
   <string name="bottomsheet_cancel_button">გაუქმება</string>
@@ -33,10 +34,10 @@
   <string name="action_learn_more">გაიგეთ მეტი</string>
   <string name="action_enable">ჩართვა</string>
   <string name="action_view_details">დეტალების ხილვა</string>
-  <string name="action_see_all">See all</string>
-  <string name="action_confirm">Confirm</string>
-  <string name="action_continue">Continue</string>
-  <string name="action_retry">Retry</string>
+  <string name="action_see_all">ყველას ნახვა</string>
+  <string name="action_confirm">დასტური</string>
+  <string name="action_continue">გაგრძელება</string>
+  <string name="action_retry">თავიდან</string>
   <!-- Empty list -->
   <string name="empty_list_title">დაამატეთ თქვენი პირველი ელემენტი</string>
   <string name="empty_search_results_title">შედეგების გარეშე</string>
@@ -118,9 +119,9 @@
   <string name="item_details_credit_card_section_expiration_date_title">ვადა იწურება</string>
   <string name="item_details_credit_card_section_cvv_title">უსაფრთხოების კოდი</string>
   <string name="item_details_credit_card_section_pin_title">PIN კოდი</string>
-  <string name="item_details_login_section_email_title">Email address</string>
-  <string name="item_details_login_section_username_title">Username</string>
-  <string name="item_details_login_section_username_or_username_title">Username or email address</string>
+  <string name="item_details_login_section_email_title">ელფოსტის მისამართი</string>
+  <string name="item_details_login_section_username_title">მომხმარებლის სახელი</string>
+  <string name="item_details_login_section_username_or_username_title">მომხმარებლის სახელი ან ელფოსტის მისამართი</string>
   <string name="item_details_login_section_password_title">პაროლი</string>
   <string name="item_details_login_section_primary_totp_title">2FA კოდი (TOTP)</string>
   <string name="item_details_login_section_websites_title">ვებსაიტები</string>

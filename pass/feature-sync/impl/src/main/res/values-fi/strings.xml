@@ -23,11 +23,11 @@
   </plurals>
   <string name="sync_progress_item_count">%1$d/%2$d kohdetta</string>
   <string name="sync_dialog_title">Synkronoidaan kohteita…</string>
-  <string name="sync_dialog_title_error">Sync failed</string>
-  <string name="sync_dialog_title_success">Sync completed</string>
+  <string name="sync_dialog_title_error">Synkronointi epäonnistui</string>
+  <string name="sync_dialog_title_success">Synkronointi valmis</string>
   <string name="sync_dialog_subtitle">Kohteitasi ladataan ja niiden salausta puretaan. Tämä saattaa kestää muutaman minuutin.</string>
-  <string name="sync_dialog_subtitle_error">There was an error downloading and decrypting your items. Please try again.</string>
-  <string name="sync_dialog_subtitle_success">Your items were successfully downloaded and decrypted.</string>
+  <string name="sync_dialog_subtitle_error">Kohteidesi lataamisessa ja salauksen purkamisessa tapahtui virhe. Yritä uudelleen.</string>
+  <string name="sync_dialog_subtitle_success">Kohteesi lataaminen ja salauksen purkaminen onnistui.</string>
   <string name="sync_item_not_started">Ei aloitettu</string>
-  <string name="sync_item_failed">Sync failed</string>
+  <string name="sync_item_failed">Synkronointi epäonnistui</string>
 </resources>

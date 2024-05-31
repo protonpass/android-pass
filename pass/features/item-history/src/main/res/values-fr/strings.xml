@@ -17,7 +17,7 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="item_history_restore_action">Restauration</string>
+  <string name="item_history_restore_action">Restaurer</string>
   <string name="item_history_restore_confirmation_dialog_title">Restaurer cette version ?</string>
   <string name="item_history_restore_confirmation_dialog_message" comment="The item will be reverted to a version from an specific date, for instance: Your current item will revert to the version from 19 February 2024 at 09:30">L\'élément actuel reviendra à la version du %1$s.</string>
   <string name="item_history_restore_snackbar_message_error">Une erreur s\'est produite lors de la restauration de la révision de l\'élément.</string>

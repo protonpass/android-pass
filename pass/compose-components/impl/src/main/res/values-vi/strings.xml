@@ -16,6 +16,7 @@
   <plurals name="item_list_header_results">
     <item quantity="other">kết quả</item>
   </plurals>
+  <string name="item_list_header_identities_type">Identities</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Xác nhận</string>
   <string name="bottomsheet_cancel_button">Hủy</string>
@@ -118,7 +119,7 @@
   <string name="item_details_credit_card_section_pin_title">PIN code</string>
   <string name="item_details_login_section_email_title">Email address</string>
   <string name="item_details_login_section_username_title">Username</string>
-  <string name="item_details_login_section_username_or_username_title">Username or email address</string>
+  <string name="item_details_login_section_username_or_username_title">Tên đăng nhập hoặc Email</string>
   <string name="item_details_login_section_password_title">Password</string>
   <string name="item_details_login_section_primary_totp_title">Mã bảo mật 2FA (TOTP)</string>
   <string name="item_details_login_section_websites_title">Websites</string>

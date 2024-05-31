@@ -26,8 +26,8 @@
   <string name="upsell_paid_feature_authenticator">Autentificator A2F integrat</string>
   <string name="upsell_paid_feature_unlimited_aliases">Aliasuri nelimitate hide-my-email</string>
   <string name="upsell_paid_feature_vault_sharing">Partajare seif (maxim 10 persoane)</string>
-  <string name="upsell_paid_feature_authenticator_essential">Require 2FA for organization</string>
-  <string name="upsell_paid_feature_sso_essential">SSO integration (coming soon)</string>
+  <string name="upsell_paid_feature_authenticator_essential">Este necesară A2F pentru organizație</string>
+  <string name="upsell_paid_feature_sso_essential">Integrare SSO (în curând)</string>
   <string name="upsell_button_upgrade">Luați Pass Plus</string>
-  <string name="upsell_button_upgrade_essentials">Get Pass Business</string>
+  <string name="upsell_button_upgrade_essentials">Luați Pass Business</string>
 </resources>

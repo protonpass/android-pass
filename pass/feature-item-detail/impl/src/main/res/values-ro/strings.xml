@@ -15,7 +15,7 @@
   <string name="note_detail_copy_note_to_clipboard">Copiere notă</string>
   <string name="note_copied_to_clipboard">Nota a fost copiată în memorie.</string>
   <!-- Login details -->
-  <string name="email_copied_to_clipboard">Email address copied</string>
+  <string name="email_copied_to_clipboard">Adresa de e-mail a fost copiată</string>
   <string name="username_copied_to_clipboard">Nume de utilizator copiat</string>
   <string name="password_copied_to_clipboard">Parola s-a copiat</string>
   <string name="website_copied_to_clipboard">Site web copiat.</string>
@@ -47,9 +47,9 @@
   <string name="login_item_monitor_widget_missing_two_fa_title">Setați A2F pentru mai multă securitate</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Acest serviciu oferă A2A. Activați-l pentru securitate suplimentară a contului.</string>
   <string name="login_item_reused_passwords_subtitle">Articole din seifuri care folosesc această parolă.</string>
-  <string name="field_email">Email address</string>
-  <string name="field_username">Username</string>
-  <string name="field_username_or_email">Username or email address</string>
+  <string name="field_email">Adresa de e-mail</string>
+  <string name="field_username">Nume de utilizator</string>
+  <string name="field_username_or_email">Nume utilizator sau adresă de e-mail</string>
   <string name="field_password">Parola</string>
   <string name="websites_section_title">Pagini web</string>
   <string name="totp_section_title">Cod A2F (TOTP)</string>

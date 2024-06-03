@@ -724,7 +724,11 @@ abstract class BaseLoginViewModel(
     }
 
     internal fun onTooltipDismissed(tooltip: Tooltip) = viewModelScope.launch {
-        disableTooltip(tooltip)
+        runCatching { disableTooltip(tooltip) }
+            .onFailure { error ->
+                PassLogger.w(TAG, "There was an error disabling tooltip: $tooltip")
+                PassLogger.w(TAG, error)
+            }
     }
 
     private fun updateCustomFieldHiddenOnFocusChange(field: LoginCustomField.CustomFieldHidden, isFocused: Boolean) {

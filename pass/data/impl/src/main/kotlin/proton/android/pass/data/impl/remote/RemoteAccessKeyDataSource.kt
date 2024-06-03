@@ -20,13 +20,20 @@ package proton.android.pass.data.impl.remote
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.domain.ApiResult
+import proton.android.pass.data.api.errors.TooManyExtraPasswordAttemptsException
+import proton.android.pass.data.api.errors.WrongExtraPasswordException
 import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.requests.AuthKeySendSrpDataRequest
 import proton.android.pass.data.impl.requests.SetupAccessKeyRequest
+import proton.android.pass.data.impl.responses.AuthKeyGetSrpData
 import javax.inject.Inject
 
 interface RemoteAccessKeyDataSource {
     suspend fun setupAccessKey(userId: UserId, request: SetupAccessKeyRequest)
     suspend fun removeAccessKey(userId: UserId)
+    suspend fun getAccessKeyAuthData(userId: UserId): AuthKeyGetSrpData
+    suspend fun sendAccessKeyAuthData(userId: UserId, request: AuthKeySendSrpDataRequest)
 }
 
 class RemoteAccessKeyDataSourceImpl @Inject constructor(
@@ -43,4 +50,30 @@ class RemoteAccessKeyDataSourceImpl @Inject constructor(
             removeAccessKey()
         }.valueOrThrow
     }
+
+    override suspend fun getAccessKeyAuthData(userId: UserId) =
+        apiProvider.get<PasswordManagerApi>(userId).invoke {
+            getSrpInfo()
+        }.valueOrThrow.data
+
+    override suspend fun sendAccessKeyAuthData(userId: UserId, request: AuthKeySendSrpDataRequest) {
+        val res = apiProvider.get<PasswordManagerApi>(userId).invoke {
+            sendSrpInfo(request)
+        }
+
+        when (res) {
+            is ApiResult.Error.Http -> when (res.proton?.code) {
+                WRONG_PASSWORD -> throw WrongExtraPasswordException()
+                TOO_MANY_WRONG_ATTEMPTS -> throw TooManyExtraPasswordAttemptsException()
+                else -> res.valueOrThrow
+            }
+            else -> res.valueOrThrow
+        }
+    }
+
+    companion object {
+        private const val WRONG_PASSWORD = 2011
+        private const val TOO_MANY_WRONG_ATTEMPTS = 2026
+    }
+
 }

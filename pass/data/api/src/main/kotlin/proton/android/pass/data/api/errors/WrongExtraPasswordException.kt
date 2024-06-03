@@ -16,17 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.requests
+package proton.android.pass.data.api.errors
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+class WrongExtraPasswordException: Throwable("Wrong extra password")
 
-@Serializable
-data class SetupAccessKeyRequest(
-    @SerialName("SrpParamID")
-    val srpParamId: String,
-    @SerialName("SrpVerifier")
-    val srpVerifier: String,
-    @SerialName("SrpSalt")
-    val srpSalt: String
-)

@@ -68,6 +68,10 @@ internal class TooltipPreferencesRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun clear() = setTooltipPreference {
+        clear()
+    }
+
     private suspend fun setTooltipPreference(tooltipsPreferenceSetter: TooltipsPreferences.Builder.() -> Unit) {
         dataStore.updateData { tooltipsPreferences ->
             tooltipsPreferences

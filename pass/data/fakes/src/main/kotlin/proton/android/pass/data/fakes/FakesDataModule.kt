@@ -151,6 +151,8 @@ import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry
+import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
+import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
 import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareId
 import proton.android.pass.data.fakes.repositories.FakeSentinelRepository
 import proton.android.pass.data.fakes.repositories.TestAliasRepository
@@ -281,6 +283,8 @@ import proton.android.pass.data.fakes.usecases.items.FakeObserveMonitoredItems
 import proton.android.pass.data.fakes.usecases.items.FakeOpenItemRevision
 import proton.android.pass.data.fakes.usecases.items.FakeUpdateItemFlag
 import proton.android.pass.data.fakes.usecases.publiclink.FakeGeneratePublicLink
+import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
+import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
 import proton.android.pass.data.fakes.usecases.vaults.FakeObserveVaultsGroupedByShareId
 import javax.inject.Singleton
 
@@ -695,5 +699,11 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObserveBreachAliasEmails(impl: FakeObserveBreachAliasEmails): ObserveBreachAliasEmails
+
+    @Binds
+    abstract fun bindObserveTooltipEnabled(impl: FakeObserveTooltipEnabled): ObserveTooltipEnabled
+
+    @Binds
+    abstract fun bindDisableTooltip(impl: FakeDisableTooltip): DisableTooltip
 
 }

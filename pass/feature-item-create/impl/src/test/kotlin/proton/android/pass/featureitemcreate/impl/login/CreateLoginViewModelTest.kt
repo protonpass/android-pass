@@ -46,6 +46,8 @@ import proton.android.pass.data.fakes.usecases.TestObserveDefaultVault
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
+import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
+import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
@@ -117,7 +119,9 @@ internal class CreateLoginViewModelTest {
             observeDefaultVault = TestObserveDefaultVault(),
             generatePasskey = TestGeneratePasskey(),
             featureFlagsRepository = TestFeatureFlagsPreferenceRepository(),
-            emailValidator = TestEmailValidator()
+            emailValidator = TestEmailValidator(),
+            observeTooltipEnabled = FakeObserveTooltipEnabled(),
+            disableTooltip = FakeDisableTooltip()
         )
     }
 

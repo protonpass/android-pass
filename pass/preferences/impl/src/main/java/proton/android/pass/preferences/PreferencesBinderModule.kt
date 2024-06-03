@@ -45,8 +45,6 @@ internal abstract class PreferencesBinderModule {
     abstract fun bindInMemoryPreferences(impl: InMemoryPreferencesImpl): InMemoryPreferences
 
     @[Binds Singleton]
-    abstract fun bindTooltipPreferencesRepository(
-        impl: TooltipPreferencesRepositoryImpl
-    ): TooltipPreferencesRepository
+    abstract fun bindTooltipPreferencesRepository(impl: TooltipPreferencesRepositoryImpl): TooltipPreferencesRepository
 
 }

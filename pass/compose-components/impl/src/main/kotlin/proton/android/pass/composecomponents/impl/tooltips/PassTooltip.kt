@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
@@ -43,6 +44,7 @@ import proton.android.pass.commonui.api.Radius
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.body3Weak
+import proton.android.pass.composecomponents.impl.R
 import me.proton.core.presentation.R as CoreR
 
 @Composable
@@ -83,7 +85,7 @@ internal fun PassTooltip(
             Icon(
                 modifier = Modifier.clickable { onClose() },
                 painter = painterResource(id = CoreR.drawable.ic_proton_cross_small),
-                contentDescription = null,
+                contentDescription = stringResource(id = R.string.tooltip_dismiss_button_content_description),
                 tint = PassTheme.colors.textWeak
             )
         }

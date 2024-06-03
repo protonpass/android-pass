@@ -108,7 +108,7 @@ class UpdateLoginViewModel @Inject constructor(
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val emailValidator: EmailValidator,
     observeTooltipEnabled: ObserveTooltipEnabled,
-    disableTooltip: DisableTooltip,
+    disableTooltip: DisableTooltip
 ) : BaseLoginViewModel(
     accountManager = accountManager,
     snackbarDispatcher = snackbarDispatcher,
@@ -123,7 +123,7 @@ class UpdateLoginViewModel @Inject constructor(
     featureFlagsRepository = featureFlagsRepository,
     emailValidator = emailValidator,
     observeTooltipEnabled = observeTooltipEnabled,
-    disableTooltip = disableTooltip,
+    disableTooltip = disableTooltip
 ) {
     private val navShareId: ShareId = savedStateHandleProvider.get()
         .require<String>(CommonNavArgId.ShareId.key)
@@ -400,10 +400,7 @@ class UpdateLoginViewModel @Inject constructor(
         }
     }
 
-    private fun handleTotp(
-        encryptionContext: EncryptionContext,
-        primaryTotp: EncryptedString
-    ): String {
+    private fun handleTotp(encryptionContext: EncryptionContext, primaryTotp: EncryptedString): String {
         val totp = encryptionContext.decrypt(primaryTotp)
         if (totp.isBlank()) return totp
 

@@ -36,13 +36,12 @@ internal object PreferencesProviderModule {
 
     @Provides
     @Singleton
-    fun provideDataStore(@ApplicationContext context: Context): DataStore<UserPreferences> =
-        DataStoreFactory.create(
-            serializer = UserPreferencesSerializer,
-            migrations = listOf(UserPreferenceMigration.MIGRATION_1)
-        ) {
-            context.dataStoreFile("user_preferences.pb")
-        }
+    fun provideDataStore(@ApplicationContext context: Context): DataStore<UserPreferences> = DataStoreFactory.create(
+        serializer = UserPreferencesSerializer,
+        migrations = listOf(UserPreferenceMigration.MIGRATION_1)
+    ) {
+        context.dataStoreFile("user_preferences.pb")
+    }
 
     @Provides
     @Singleton
@@ -64,12 +63,11 @@ internal object PreferencesProviderModule {
         }
 
     @[Provides Singleton]
-    fun provideTooltipsPreferencesDataStore(
-        @ApplicationContext context: Context
-    ): DataStore<TooltipsPreferences> = DataStoreFactory.create(
-        serializer = TooltipPreferencesSerializer
-    ) {
-        context.dataStoreFile("tooltips_preferences.pb")
-    }
+    fun provideTooltipsPreferencesDataStore(@ApplicationContext context: Context): DataStore<TooltipsPreferences> =
+        DataStoreFactory.create(
+            serializer = TooltipPreferencesSerializer
+        ) {
+            context.dataStoreFile("tooltips_preferences.pb")
+        }
 
 }

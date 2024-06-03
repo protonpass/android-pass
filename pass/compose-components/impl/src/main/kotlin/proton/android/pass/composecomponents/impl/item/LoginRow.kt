@@ -140,9 +140,6 @@ private fun getHighlightedFields(
     highlightColor: Color
 ): LoginHighlightFields {
     var annotatedTitle = AnnotatedString(title.take(MAX_PREVIEW_LENGTH))
-//    var annotatedEmail = AnnotatedString(username.take(MAX_PREVIEW_LENGTH))
-//    var annotatedUsername = AnnotatedString(username.take(MAX_PREVIEW_LENGTH))
-
 
     var annotatedEmail: AnnotatedString? = null
     var annotatedUsername: AnnotatedString? = null

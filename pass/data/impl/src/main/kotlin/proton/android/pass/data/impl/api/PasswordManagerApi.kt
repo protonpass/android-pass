@@ -20,6 +20,7 @@ package proton.android.pass.data.impl.api
 
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import proton.android.pass.data.impl.requests.AcceptInviteRequest
+import proton.android.pass.data.impl.requests.AuthKeySendSrpDataRequest
 import proton.android.pass.data.impl.requests.BreachAddEmailRequest
 import proton.android.pass.data.impl.requests.BreachVerifyEmailRequest
 import proton.android.pass.data.impl.requests.CheckAddressesCanBeInvitedRequest
@@ -46,6 +47,7 @@ import proton.android.pass.data.impl.requests.UpdateLastUsedTimeRequest
 import proton.android.pass.data.impl.requests.UpdateMemberShareRequest
 import proton.android.pass.data.impl.requests.UpdateVaultRequest
 import proton.android.pass.data.impl.responses.AliasDetailsResponse
+import proton.android.pass.data.impl.responses.AuthKeyGetSrpDataResponse
 import proton.android.pass.data.impl.responses.BreachCustomEmailResponse
 import proton.android.pass.data.impl.responses.BreachCustomEmailsResponse
 import proton.android.pass.data.impl.responses.BreachEmailsResponse
@@ -403,10 +405,10 @@ interface PasswordManagerApi : BaseRetrofitApi {
     suspend fun removeAccessKey()
 
     @GET("$PREFIX/user/srp/info")
-    suspend fun getSrpInfo()
+    suspend fun getSrpInfo(): AuthKeyGetSrpDataResponse
 
     @POST("$PREFIX/user/srp/auth")
-    suspend fun setSrpInfo()
+    suspend fun sendSrpInfo(@Body authKeySendSrpDataRequest: AuthKeySendSrpDataRequest): CodeOnlyResponse
 
 
     // Core

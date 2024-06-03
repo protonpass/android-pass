@@ -22,11 +22,11 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class SetupAccessKeyRequest(
-    @SerialName("SrpParamID")
-    val srpParamId: String,
-    @SerialName("SrpVerifier")
-    val srpVerifier: String,
-    @SerialName("SrpSalt")
-    val srpSalt: String
+data class AuthKeySendSrpDataRequest(
+    @SerialName("ClientEphemeral")
+    val clientEphemeral: String,
+    @SerialName("ClientProof")
+    val clientProof: String,
+    @SerialName("SrpSessionID")
+    val srpSessionId: String
 )

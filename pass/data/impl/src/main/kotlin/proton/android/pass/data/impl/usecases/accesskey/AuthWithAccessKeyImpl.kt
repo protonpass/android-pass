@@ -18,34 +18,58 @@
 
 package proton.android.pass.data.impl.usecases.accesskey
 
+import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.accesskey.AuthWithAccessKey
+import proton.android.pass.data.api.usecases.accesskey.AuthWithExtraPasswordResult
+import proton.android.pass.data.impl.remote.RemoteAccessKeyDataSource
+import proton.android.pass.data.impl.requests.AuthKeySendSrpDataRequest
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class AuthWithAccessKeyImpl @Inject constructor(
     private val srpCrypto: SrpCrypto,
-    private val encryptionContextProvider: EncryptionContextProvider
+    private val encryptionContextProvider: EncryptionContextProvider,
+    private val remoteAccessKeyDataSource: RemoteAccessKeyDataSource,
+    private val sessionManager: SessionManager,
+    private val authWithExtraPasswordListener: AuthWithExtraPasswordListenerImpl
 ) : AuthWithAccessKey {
-    override suspend fun invoke(userId: UserId, password: EncryptedString): Boolean {
+    override suspend fun invoke(userId: UserId, password: EncryptedString) {
         val decryptedPassword = encryptionContextProvider.withEncryptionContext {
             decrypt(password).encodeToByteArray()
         }
-        srpCrypto.generateSrpProofs(
+
+        val srpData = remoteAccessKeyDataSource.getAccessKeyAuthData(userId)
+
+        val proofs = srpCrypto.generateSrpProofs(
             username = "", // Not used
             password = decryptedPassword,
-            version = VERSION,
-            salt = "",
-            modulus = "",
-            serverEphemeral = ""
+            version = srpData.version,
+            salt = srpData.srpSalt,
+            modulus = srpData.modulus,
+            serverEphemeral = srpData.serverEphemeral
         )
 
-        return true
+        remoteAccessKeyDataSource.sendAccessKeyAuthData(
+            userId = userId,
+            request = AuthKeySendSrpDataRequest(
+                clientEphemeral = proofs.clientEphemeral,
+                clientProof = proofs.clientProof,
+                srpSessionId = srpData.srpSessionId
+            )
+        )
+
+        PassLogger.i(TAG, "Auth with extra password successful. Refreshing session scopes")
+        sessionManager.getSessionId(userId)?.let { session ->
+            sessionManager.refreshScopes(session)
+        }
+        authWithExtraPasswordListener.setState(userId, AuthWithExtraPasswordResult.Success)
     }
 
     companion object {
-        private const val VERSION = 4L
+        private const val TAG = "AuthWithAccessKeyImpl"
     }
 }

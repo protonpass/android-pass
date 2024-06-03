@@ -47,7 +47,7 @@ internal data class BaseLoginUiState(
     val totpUiState: TotpUiState,
     val focusedField: LoginField?,
     val isUsernameSplitEnabled: Boolean,
-    val isUsernameSplitTooltipEnabled: Boolean,
+    val isUsernameSplitTooltipEnabled: Boolean
 ) {
     internal companion object {
 

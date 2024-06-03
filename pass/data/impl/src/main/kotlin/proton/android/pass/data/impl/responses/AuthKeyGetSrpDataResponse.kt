@@ -16,17 +16,29 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.requests
+package proton.android.pass.data.impl.responses
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class SetupAccessKeyRequest(
-    @SerialName("SrpParamID")
-    val srpParamId: String,
-    @SerialName("SrpVerifier")
-    val srpVerifier: String,
+data class AuthKeyGetSrpDataResponse(
+    @SerialName("Code")
+    val code: Int,
+    @SerialName("SRPData")
+    val data: AuthKeyGetSrpData
+)
+
+@Serializable
+data class AuthKeyGetSrpData(
+    @SerialName("Modulus")
+    val modulus: String,
+    @SerialName("ServerEphemeral")
+    val serverEphemeral: String,
+    @SerialName("SrpSessionID")
+    val srpSessionId: String,
+    @SerialName("Version")
+    val version: Long,
     @SerialName("SrpSalt")
     val srpSalt: String
 )

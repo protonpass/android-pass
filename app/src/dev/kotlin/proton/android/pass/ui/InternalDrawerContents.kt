@@ -91,6 +91,25 @@ fun InternalDrawerContents(
         ) {
             Text(text = "Run security check")
         }
+        Button(
+            modifier = Modifier.fillMaxWidth(),
+            onClick = { viewModel.setAccessKey() },
+        ) {
+            Text(text = "Set access key")
+        }
+
+        Button(
+            modifier = Modifier.fillMaxWidth(),
+            onClick = { viewModel.performSrp() },
+        ) {
+            Text(text = "Perform SRP")
+        }
+        Button(
+            modifier = Modifier.fillMaxWidth(),
+            onClick = { viewModel.removeAccessKey() },
+        ) {
+            Text(text = "Remove access key")
+        }
     }
 }
 

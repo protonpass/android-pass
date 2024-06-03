@@ -24,31 +24,48 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemType
 import proton.android.pass.log.api.PassLogger
 
-object ItemDisplayBuilder {
+internal object ItemDisplayBuilder {
 
     private const val TAG = "ItemDisplayBuilder"
 
     private const val SUBTITLE_ON_ERROR = "---"
 
-    fun createTitle(item: Item, encryptionContext: EncryptionContext): String = when (item.itemType) {
-        is ItemType.CreditCard -> item.itemName(encryptionContext)
-        is ItemType.Login -> item.itemName(encryptionContext)
-        else -> {
-            PassLogger.e(TAG, "Unsupported item type for title: ${item.itemType.javaClass.name}")
-            encryptionContext.decrypt(item.title)
+    internal fun createTitle(item: Item, encryptionContext: EncryptionContext): String =
+        when (item.itemType) {
+            is ItemType.CreditCard -> item.itemName(encryptionContext)
+            is ItemType.Login -> item.itemName(encryptionContext)
+            else -> {
+                PassLogger.e(
+                    TAG,
+                    "Unsupported item type for title: ${item.itemType.javaClass.name}"
+                )
+                encryptionContext.decrypt(item.title)
+            }
         }
+
+    internal fun createSubtitle(item: Item, encryptionContext: EncryptionContext): String =
+        when (val itemType = item.itemType) {
+            is ItemType.CreditCard -> createCreditCardSubtitle(encryptionContext, itemType)
+            is ItemType.Login -> createLoginSubtitle(itemType)
+            else -> {
+                PassLogger.e(
+                    TAG,
+                    "Unsupported item type for subtitle: ${item.itemType.javaClass.name}"
+                )
+                SUBTITLE_ON_ERROR
+            }
+        }
+
+    private fun createLoginSubtitle(itemType: ItemType.Login): String = when {
+        itemType.itemUsername.isNotBlank() -> itemType.itemUsername
+        itemType.itemEmail.isNotBlank() -> itemType.itemEmail
+        else -> "---"
     }
 
-    fun createSubtitle(item: Item, encryptionContext: EncryptionContext): String = when (val itemType = item.itemType) {
-        is ItemType.CreditCard -> createCreditCardSubtitle(encryptionContext, itemType)
-        is ItemType.Login -> itemType.itemEmail.takeIf { it.isNotBlank() } ?: "---"
-        else -> {
-            PassLogger.e(TAG, "Unsupported item type for subtitle: ${item.itemType.javaClass.name}")
-            SUBTITLE_ON_ERROR
-        }
-    }
-
-    private fun createCreditCardSubtitle(encryptionContext: EncryptionContext, itemType: ItemType.CreditCard): String {
+    private fun createCreditCardSubtitle(
+        encryptionContext: EncryptionContext,
+        itemType: ItemType.CreditCard
+    ): String {
         val decryptedNumber = encryptionContext.decrypt(itemType.number)
         val cleanNumber = decryptedNumber.replace(" ", "")
         val formattedNumber = when {

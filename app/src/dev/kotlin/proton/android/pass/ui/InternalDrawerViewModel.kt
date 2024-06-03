@@ -28,6 +28,7 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.tooltips.TooltipPreferencesRepository
 import proton.android.pass.securitycenter.api.ObserveSecurityAnalysis
 import proton.android.pass.ui.InternalDrawerSnackbarMessage.PreferencesClearError
 import proton.android.pass.ui.InternalDrawerSnackbarMessage.PreferencesCleared
@@ -39,12 +40,14 @@ class InternalDrawerViewModel @Inject constructor(
     private val internalSettingsRepository: InternalSettingsRepository,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val clearCache: ClearIconCache,
-    private val observeSecurityAnalysis: ObserveSecurityAnalysis
+    private val observeSecurityAnalysis: ObserveSecurityAnalysis,
+    private val tooltipPreferencesRepository: TooltipPreferencesRepository
 ) : ViewModel() {
 
-    fun clearPreferences() = viewModelScope.launch {
+    internal fun clearPreferences() = viewModelScope.launch {
         preferenceRepository.clearPreferences()
             .flatMap { internalSettingsRepository.clearSettings() }
+            .flatMap { runCatching { tooltipPreferencesRepository.clear() } }
             .onSuccess {
                 snackbarDispatcher(PreferencesCleared)
             }
@@ -62,7 +65,10 @@ class InternalDrawerViewModel @Inject constructor(
         observeSecurityAnalysis().collect { analysis ->
             PassLogger.i(TAG, "-----")
             PassLogger.i(TAG, "Security analysis: Breached Data: ${analysis.breachedData}")
-            PassLogger.i(TAG, "Security analysis: Insecure Passwords: ${analysis.insecurePasswords}")
+            PassLogger.i(
+                TAG,
+                "Security analysis: Insecure Passwords: ${analysis.insecurePasswords}"
+            )
             PassLogger.i(TAG, "Security analysis: Missing 2FA: ${analysis.missing2fa}")
             PassLogger.i(TAG, "Security analysis: Reused passwords: ${analysis.reusedPasswords}")
             PassLogger.i(TAG, "-----")

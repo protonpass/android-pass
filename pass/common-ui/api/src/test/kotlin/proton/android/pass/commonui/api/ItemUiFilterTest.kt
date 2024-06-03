@@ -29,7 +29,7 @@ import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 
-class ItemUiFilterTest {
+internal class ItemUiFilterTest {
 
     @Test
     fun `filterByQuery should return the same list when query is empty`() {
@@ -89,11 +89,25 @@ class ItemUiFilterTest {
     }
 
     @Test
-    fun `filterByQuery should match login username `() {
+    fun `GIVEN email query WHEN filterByQuery THEN should match login items with containing email`() {
+        val query = "user@"
         val itemList = createLoginList()
-        val filteredList = itemList.filterByQuery("user")
+        val expectedLoginItemsCount = 2
 
-        assertEquals(2, filteredList.size)
+        val filteredList = itemList.filterByQuery(query)
+
+        assertEquals(expectedLoginItemsCount, filteredList.size)
+    }
+
+    @Test
+    fun `GIVEN username query WHEN filterByQuery THEN should match login items with containing username`() {
+        val query = "usern"
+        val itemList = createLoginList()
+        val expectedLoginItemsCount = 2
+
+        val filteredList = itemList.filterByQuery(query)
+
+        assertEquals(expectedLoginItemsCount, filteredList.size)
     }
 
     @Test

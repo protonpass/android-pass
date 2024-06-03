@@ -68,7 +68,9 @@ fun LoginRow(
     ) {
         getHighlightedFields(
             title = content.title,
-            username = content.displayUsername,
+            email = content.itemEmail,
+            username = content.itemUsername,
+            displayUsername = content.displayUsername,
             note = content.note,
             urls = content.urls,
             customFields = textCustomFields,
@@ -128,7 +130,9 @@ fun LoginRow(
 @Suppress("LongParameterList")
 private fun getHighlightedFields(
     title: String,
+    email: String,
     username: String,
+    displayUsername: String,
     note: String,
     urls: List<String>,
     customFields: List<CustomFieldContent.Text>,
@@ -136,13 +140,22 @@ private fun getHighlightedFields(
     highlightColor: Color
 ): LoginHighlightFields {
     var annotatedTitle = AnnotatedString(title.take(MAX_PREVIEW_LENGTH))
-    var annotatedUsername = AnnotatedString(username.take(MAX_PREVIEW_LENGTH))
+//    var annotatedEmail = AnnotatedString(username.take(MAX_PREVIEW_LENGTH))
+//    var annotatedUsername = AnnotatedString(username.take(MAX_PREVIEW_LENGTH))
+
+
+    var annotatedEmail: AnnotatedString? = null
+    var annotatedUsername: AnnotatedString? = null
+
     var annotatedNote: AnnotatedString? = null
     val annotatedWebsites: MutableList<AnnotatedString> = mutableListOf()
     val annotatedCustomFields: MutableList<AnnotatedString> = mutableListOf()
     if (highlight.isNotBlank()) {
         title.highlight(highlight, highlightColor)?.let {
             annotatedTitle = it
+        }
+        email.highlight(highlight, highlightColor)?.let {
+            annotatedEmail = it
         }
         username.highlight(highlight, highlightColor)?.let {
             annotatedUsername = it
@@ -167,14 +180,23 @@ private fun getHighlightedFields(
         }
     }
 
+    val rowUsername =
+        if (highlight.isBlank() && annotatedEmail == null && annotatedUsername == null) {
+            AnnotatedString(displayUsername.take(MAX_PREVIEW_LENGTH))
+        } else {
+            annotatedUsername ?: annotatedEmail
+        }
+
+
     return LoginHighlightFields(
         title = annotatedTitle,
         note = annotatedNote,
+        email = annotatedEmail,
         username = annotatedUsername,
         websites = annotatedWebsites,
         subtitles = (
             listOfNotNull(
-                annotatedUsername,
+                rowUsername,
                 annotatedNote
             ) + annotatedWebsites + annotatedCustomFields
             ).toPersistentList()
@@ -185,7 +207,8 @@ private fun getHighlightedFields(
 private data class LoginHighlightFields(
     val title: AnnotatedString,
     val note: AnnotatedString?,
-    val username: AnnotatedString,
+    val email: AnnotatedString?,
+    val username: AnnotatedString?,
     val websites: List<AnnotatedString>,
     val subtitles: ImmutableList<AnnotatedString>
 )

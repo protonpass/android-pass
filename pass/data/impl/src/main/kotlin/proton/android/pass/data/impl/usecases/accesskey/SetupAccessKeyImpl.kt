@@ -48,7 +48,6 @@ class SetupAccessKeyImpl @Inject constructor(
         val account = accountManager.getPrimaryAccount().firstOrNull()
             ?: throw IllegalStateException("No primary account found")
         val modulus = authRepository.randomModulus(account.sessionId)
-
         val verifier = srpCrypto.calculatePasswordVerifier(
             username = "", // unused
             password = decryptedPassword,
@@ -62,7 +61,8 @@ class SetupAccessKeyImpl @Inject constructor(
     }
 
     private fun Auth.toRequest() = SetupAccessKeyRequest(
-        modulusId = modulusId,
-        verifier = verifier
+        srpParamId = modulusId,
+        srpVerifier = verifier,
+        srpSalt = salt
     )
 }

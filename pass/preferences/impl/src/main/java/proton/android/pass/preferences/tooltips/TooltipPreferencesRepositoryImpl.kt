@@ -26,7 +26,7 @@ import me.proton.android.pass.preferences.BooleanPrefProto
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.TooltipsPreferences
 import proton.android.pass.preferences.fromBooleanPrefProto
-import proton.android.pass.preferences.toBoolFlagPrefProto
+import proton.android.pass.preferences.toBooleanPrefProto
 import java.io.IOException
 import javax.inject.Inject
 
@@ -35,7 +35,7 @@ internal class TooltipPreferencesRepositoryImpl @Inject constructor(
 ) : TooltipPreferencesRepository {
 
     override fun observeEnabled(preference: TooltipPreference): Flow<Boolean> = when (preference) {
-        TooltipPreference.UsernameSplit -> observeTooltipPreference { usernameSplitEnabled.value }
+        TooltipPreference.UsernameSplit -> observeTooltipPreference { usernameSplitEnabled }
     }
 
     private fun observeTooltipPreference(
@@ -59,7 +59,7 @@ internal class TooltipPreferencesRepositoryImpl @Inject constructor(
         }
 
     override suspend fun setEnabled(preference: TooltipPreference, isEnabled: Boolean) {
-        isEnabled.toBoolFlagPrefProto().also { boolFlagPrefProto ->
+        isEnabled.toBooleanPrefProto().also { boolFlagPrefProto ->
             when (preference) {
                 TooltipPreference.UsernameSplit -> setTooltipPreference {
                     usernameSplitEnabled = boolFlagPrefProto

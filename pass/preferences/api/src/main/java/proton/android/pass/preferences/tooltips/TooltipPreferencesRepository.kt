@@ -26,4 +26,6 @@ interface TooltipPreferencesRepository {
 
     suspend fun setEnabled(preference: TooltipPreference, isEnabled: Boolean)
 
+    suspend fun clear()
+
 }

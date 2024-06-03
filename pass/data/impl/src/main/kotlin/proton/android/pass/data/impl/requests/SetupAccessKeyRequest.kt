@@ -23,8 +23,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class SetupAccessKeyRequest(
-    @SerialName("ModulusID")
-    val modulusId: String,
-    @SerialName("Verifier")
-    val verifier: String
+    @SerialName("SrpParamID")
+    val srpParamId: String,
+    @SerialName("SrpVerifier")
+    val srpVerifier: String,
+    @SerialName("SrpSalt")
+    val srpSalt: String
 )

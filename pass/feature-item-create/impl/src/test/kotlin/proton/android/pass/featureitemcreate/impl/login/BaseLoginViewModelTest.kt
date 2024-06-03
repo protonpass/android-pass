@@ -37,6 +37,8 @@ import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
+import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
+import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
 import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
@@ -78,7 +80,9 @@ internal class BaseLoginViewModelTest {
             passwordStrengthCalculator = passwordStrengthCalculator,
             savedStateHandleProvider = TestSavedStateHandleProvider(),
             featureFlagsRepository = TestFeatureFlagsPreferenceRepository(),
-            emailValidator = TestEmailValidator()
+            emailValidator = TestEmailValidator(),
+            observeTooltipEnabled = FakeObserveTooltipEnabled(),
+            disableTooltip = FakeDisableTooltip()
         ) {}
     }
 

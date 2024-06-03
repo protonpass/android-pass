@@ -227,8 +227,7 @@ class UpdateLoginViewModel @Inject constructor(
 
     @Suppress("LongMethod")
     private suspend fun onItemReceived(item: Item) {
-        val isUsernameSplitEnabled =
-            featureFlagsRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT).first()
+        val isUsernameSplitEnabled = featureFlagsRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT).first()
         encryptionContextProvider.withEncryptionContext {
             val default = LoginItemFormState.default(this)
             if (loginItemFormState.compare(default, this)) {

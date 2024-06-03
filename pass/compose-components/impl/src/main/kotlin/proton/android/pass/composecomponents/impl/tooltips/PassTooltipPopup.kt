@@ -52,7 +52,7 @@ fun PassTooltipPopup(
     arrowHeight: Dp,
     backgroundColor: Color,
     horizontalPadding: Dp = Spacing.large,
-    verticalPadding: Dp = Spacing.large - Spacing.small,
+    verticalPadding: Dp = Spacing.large - Spacing.small
 ) {
     var isTooltipVisible by remember { mutableStateOf(shouldDisplayTooltip) }
 
@@ -105,7 +105,7 @@ fun PassTooltipPopup(
                             .also { trianglePath ->
                                 drawPath(
                                     path = trianglePath,
-                                    color = backgroundColor,
+                                    color = backgroundColor
                                 )
                             }
                     }

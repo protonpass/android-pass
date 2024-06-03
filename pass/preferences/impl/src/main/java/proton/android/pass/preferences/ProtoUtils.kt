@@ -19,7 +19,6 @@
 package proton.android.pass.preferences
 
 import me.proton.android.pass.preferences.AppLockTypePrefProto
-import me.proton.android.pass.preferences.BoolFlagPrefProto
 import me.proton.android.pass.preferences.BooleanPrefProto
 import me.proton.android.pass.preferences.LockAppPrefProto
 import me.proton.android.pass.preferences.MonitorStatusPrefProto
@@ -51,10 +50,6 @@ fun Boolean.toBooleanPrefProto() = if (this) {
 } else {
     BooleanPrefProto.BOOLEAN_PREFERENCE_FALSE
 }
-
-internal fun Boolean.toBoolFlagPrefProto() = BoolFlagPrefProto.newBuilder()
-    .apply { value = this@toBoolFlagPrefProto.toBooleanPrefProto() }
-    .build()
 
 fun fromBooleanPrefProto(pref: BooleanPrefProto, default: Boolean = false) = when (pref) {
     BooleanPrefProto.BOOLEAN_PREFERENCE_TRUE -> true
@@ -95,32 +90,33 @@ fun AppLockTypePrefProto.toValue(default: AppLockTypePreference) = when (this) {
     else -> default
 }
 
-fun PasswordGenerationPreference.toProto(): PasswordGenerationPrefProto = PasswordGenerationPrefProto.newBuilder()
-    .setMode(
-        when (mode) {
-            PasswordGenerationMode.Random -> ProtoPasswordGenerationMode.PASSWORD_GENERATION_MODE_RANDOM
-            PasswordGenerationMode.Words -> ProtoPasswordGenerationMode.PASSWORD_GENERATION_MODE_WORDS
-        }
-    )
-    .setRandomPasswordLength(randomPasswordLength)
-    .setRandomHasSpecialCharacters(randomHasSpecialCharacters.toBooleanPrefProto())
-    .setRandomIncludeCapitalLetters(randomHasCapitalLetters.toBooleanPrefProto())
-    .setRandomIncludeNumbers(randomIncludeNumbers.toBooleanPrefProto())
-    .setWordsCount(wordsCount)
-    .setWordsSeparator(
-        when (wordsSeparator) {
-            WordSeparator.Hyphen -> ProtoWordSeparator.WORD_SEPARATOR_HYPHEN
-            WordSeparator.Space -> ProtoWordSeparator.WORD_SEPARATOR_SPACE
-            WordSeparator.Period -> ProtoWordSeparator.WORD_SEPARATOR_PERIOD
-            WordSeparator.Comma -> ProtoWordSeparator.WORD_SEPARATOR_COMMA
-            WordSeparator.Underscore -> ProtoWordSeparator.WORD_SEPARATOR_UNDERSCORE
-            WordSeparator.Numbers -> ProtoWordSeparator.WORD_SEPARATOR_NUMBERS
-            WordSeparator.NumbersAndSymbols -> ProtoWordSeparator.WORD_SEPARATOR_NUMBERS_AND_SYMBOLS
-        }
-    )
-    .setWordsCapitalise(wordsCapitalise.toBooleanPrefProto())
-    .setWordsIncludeNumbers(wordsIncludeNumbers.toBooleanPrefProto())
-    .build()
+fun PasswordGenerationPreference.toProto(): PasswordGenerationPrefProto =
+    PasswordGenerationPrefProto.newBuilder()
+        .setMode(
+            when (mode) {
+                PasswordGenerationMode.Random -> ProtoPasswordGenerationMode.PASSWORD_GENERATION_MODE_RANDOM
+                PasswordGenerationMode.Words -> ProtoPasswordGenerationMode.PASSWORD_GENERATION_MODE_WORDS
+            }
+        )
+        .setRandomPasswordLength(randomPasswordLength)
+        .setRandomHasSpecialCharacters(randomHasSpecialCharacters.toBooleanPrefProto())
+        .setRandomIncludeCapitalLetters(randomHasCapitalLetters.toBooleanPrefProto())
+        .setRandomIncludeNumbers(randomIncludeNumbers.toBooleanPrefProto())
+        .setWordsCount(wordsCount)
+        .setWordsSeparator(
+            when (wordsSeparator) {
+                WordSeparator.Hyphen -> ProtoWordSeparator.WORD_SEPARATOR_HYPHEN
+                WordSeparator.Space -> ProtoWordSeparator.WORD_SEPARATOR_SPACE
+                WordSeparator.Period -> ProtoWordSeparator.WORD_SEPARATOR_PERIOD
+                WordSeparator.Comma -> ProtoWordSeparator.WORD_SEPARATOR_COMMA
+                WordSeparator.Underscore -> ProtoWordSeparator.WORD_SEPARATOR_UNDERSCORE
+                WordSeparator.Numbers -> ProtoWordSeparator.WORD_SEPARATOR_NUMBERS
+                WordSeparator.NumbersAndSymbols -> ProtoWordSeparator.WORD_SEPARATOR_NUMBERS_AND_SYMBOLS
+            }
+        )
+        .setWordsCapitalise(wordsCapitalise.toBooleanPrefProto())
+        .setWordsIncludeNumbers(wordsIncludeNumbers.toBooleanPrefProto())
+        .build()
 
 @Suppress("MagicNumber")
 fun PasswordGenerationPrefProto.toValue() = PasswordGenerationPreference(

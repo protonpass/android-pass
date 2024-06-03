@@ -89,18 +89,14 @@ class AutofillServiceManager @Inject constructor(
         request: InlineSuggestionsRequest,
         autofillData: AutofillData,
         suggestionType: SuggestionType
-    ): List<Dataset> {
-        val suggestedItemsResult = getSuggestedItems(suggestionType, autofillData)
-
-        return when (suggestedItemsResult) {
-            SuggestedItemsResult.Hide -> emptyList()
-            SuggestedItemsResult.ShowUpgrade -> upgradeSuggestion(request, autofillData)
-            is SuggestedItemsResult.Show -> itemsSuggestions(
-                request = request,
-                autofillData = autofillData,
-                suggestedItems = suggestedItemsResult.items
-            )
-        }
+    ): List<Dataset> = when (val suggestedItemsResult = getSuggestedItems(suggestionType, autofillData)) {
+        SuggestedItemsResult.Hide -> emptyList()
+        SuggestedItemsResult.ShowUpgrade -> upgradeSuggestion(request, autofillData)
+        is SuggestedItemsResult.Show -> itemsSuggestions(
+            request = request,
+            autofillData = autofillData,
+            suggestedItems = suggestedItemsResult.items
+        )
     }
 
     @RequiresApi(Build.VERSION_CODES.R)

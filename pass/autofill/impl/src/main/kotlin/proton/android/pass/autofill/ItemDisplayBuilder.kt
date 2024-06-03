@@ -30,18 +30,17 @@ internal object ItemDisplayBuilder {
 
     private const val SUBTITLE_ON_ERROR = "---"
 
-    internal fun createTitle(item: Item, encryptionContext: EncryptionContext): String =
-        when (item.itemType) {
-            is ItemType.CreditCard -> item.itemName(encryptionContext)
-            is ItemType.Login -> item.itemName(encryptionContext)
-            else -> {
-                PassLogger.e(
-                    TAG,
-                    "Unsupported item type for title: ${item.itemType.javaClass.name}"
-                )
-                encryptionContext.decrypt(item.title)
-            }
+    internal fun createTitle(item: Item, encryptionContext: EncryptionContext): String = when (item.itemType) {
+        is ItemType.CreditCard -> item.itemName(encryptionContext)
+        is ItemType.Login -> item.itemName(encryptionContext)
+        else -> {
+            PassLogger.e(
+                TAG,
+                "Unsupported item type for title: ${item.itemType.javaClass.name}"
+            )
+            encryptionContext.decrypt(item.title)
         }
+    }
 
     internal fun createSubtitle(item: Item, encryptionContext: EncryptionContext): String =
         when (val itemType = item.itemType) {
@@ -62,10 +61,7 @@ internal object ItemDisplayBuilder {
         else -> "---"
     }
 
-    private fun createCreditCardSubtitle(
-        encryptionContext: EncryptionContext,
-        itemType: ItemType.CreditCard
-    ): String {
+    private fun createCreditCardSubtitle(encryptionContext: EncryptionContext, itemType: ItemType.CreditCard): String {
         val decryptedNumber = encryptionContext.decrypt(itemType.number)
         val cleanNumber = decryptedNumber.replace(" ", "")
         val formattedNumber = when {

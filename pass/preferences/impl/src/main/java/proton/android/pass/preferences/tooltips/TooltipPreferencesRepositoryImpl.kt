@@ -68,9 +68,7 @@ internal class TooltipPreferencesRepositoryImpl @Inject constructor(
         }
     }
 
-    private suspend fun setTooltipPreference(
-        tooltipsPreferenceSetter: TooltipsPreferences.Builder.() -> Unit
-    ) {
+    private suspend fun setTooltipPreference(tooltipsPreferenceSetter: TooltipsPreferences.Builder.() -> Unit) {
         dataStore.updateData { tooltipsPreferences ->
             tooltipsPreferences
                 .toBuilder()

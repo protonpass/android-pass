@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.featureitemcreate.impl.R
@@ -48,7 +49,7 @@ import me.proton.core.presentation.compose.R as CoreR
 @Composable
 fun TotpLimit(modifier: Modifier = Modifier, onUpgrade: () -> Unit) {
     Row(
-        modifier = modifier.padding(12.dp),
+        modifier = modifier.padding(Spacing.mediumSmall),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
@@ -58,16 +59,16 @@ fun TotpLimit(modifier: Modifier = Modifier, onUpgrade: () -> Unit) {
         )
         Column {
             ProtonTextFieldLabel(
-                modifier = Modifier.padding(start = 8.dp),
+                modifier = Modifier.padding(start = Spacing.small),
                 text = stringResource(id = proton.android.pass.featureitemcreate.impl.R.string.mfa_limit_reached)
             )
             Row(
                 modifier = Modifier
                     .clip(RoundedCornerShape(8.dp))
                     .clickable(onClick = onUpgrade)
-                    .padding(8.dp),
+                    .padding(Spacing.small),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
             ) {
                 Text(
                     text = stringResource(proton.android.pass.featureitemcreate.impl.R.string.upgrade),

@@ -28,8 +28,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.item.EmptyList
@@ -128,10 +128,10 @@ fun SelectItemList(
                             }
                             ItemCount(
                                 modifier = Modifier.padding(
-                                    start = 16.dp,
-                                    top = 0.dp,
-                                    end = 0.dp,
-                                    bottom = 0.dp
+                                    start = Spacing.medium,
+                                    top = Spacing.none,
+                                    end = Spacing.none,
+                                    bottom = Spacing.none
                                 ),
                                 showSearchResults = uiState.searchUiState.inSearchMode &&
                                     uiState.searchUiState.searchQuery.isNotEmpty(),

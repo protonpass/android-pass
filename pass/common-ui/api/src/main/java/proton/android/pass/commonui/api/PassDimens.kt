@@ -38,8 +38,8 @@ data class PassDimens(
 
 val LocalPassDimens = staticCompositionLocalOf {
     PassDimens(
-        bottomsheetHorizontalPadding = 0.dp,
-        bottomsheetVerticalPadding = 0.dp
+        bottomsheetHorizontalPadding = Spacing.none,
+        bottomsheetVerticalPadding = Spacing.none
     )
 }
 

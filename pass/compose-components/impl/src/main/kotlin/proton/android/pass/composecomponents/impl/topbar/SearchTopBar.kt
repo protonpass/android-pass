@@ -51,7 +51,7 @@ fun SearchTopBar(
     drawerIcon: @Composable () -> Unit,
     actions: (@Composable () -> Unit)? = null
 ) {
-    val endPadding = if (actions != null) 4.dp else 16.dp
+    val endPadding = if (actions != null) Spacing.extraSmall else 16.dp
     Row(
         modifier = modifier.padding(start = 16.dp, top = 16.dp, end = endPadding, bottom = 16.dp),
         verticalAlignment = Alignment.CenterVertically,

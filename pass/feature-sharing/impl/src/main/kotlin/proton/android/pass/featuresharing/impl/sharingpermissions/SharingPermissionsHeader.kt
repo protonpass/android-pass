@@ -41,6 +41,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.featuresharing.impl.R
 
@@ -74,8 +75,8 @@ fun SharingPermissionsHeader(
                     shape = RoundedCornerShape(8.dp)
                 )
                 .clickable { onSetAllClick() }
-                .padding(12.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                .padding(Spacing.mediumSmall),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.small),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(

@@ -250,7 +250,7 @@ internal fun HomeContent(
                             listItemCount
                         }
                         ItemCount(
-                            modifier = Modifier.padding(16.dp, 0.dp, 0.dp, 0.dp),
+                            modifier = Modifier.padding(Spacing.medium, Spacing.none, Spacing.none, Spacing.none),
                             showSearchResults = isPinningOrSearch && uiState.searchUiState.searchQuery.isNotEmpty(),
                             itemType = uiState.homeListUiState.searchFilterType,
                             itemCount = itemCount.takeIf { !uiState.searchUiState.isProcessingSearch.value() },

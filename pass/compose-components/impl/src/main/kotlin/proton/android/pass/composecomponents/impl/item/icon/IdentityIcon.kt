@@ -28,8 +28,8 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.BoxedIcon
 import me.proton.core.presentation.R as CoreR
@@ -58,7 +58,7 @@ fun IdentityIcon(
         shape = shape
     ) {
         Icon(
-            modifier = Modifier.padding(4.dp),
+            modifier = Modifier.padding(Spacing.extraSmall),
             painter = painterResource(CoreR.drawable.ic_proton_card_identity),
             contentDescription = null,
             tint = foregroundColor

@@ -43,6 +43,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassPalette
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.featurehome.impl.R
@@ -64,10 +65,10 @@ fun VaultDrawerRow(
             .fillMaxWidth()
             .clickable(onClick = onClick)
             .padding(
-                vertical = 16.dp,
+                vertical = Spacing.medium,
                 horizontal = PassTheme.dimens.bottomsheetHorizontalPadding
             ),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.medium),
         verticalAlignment = Alignment.CenterVertically
     ) {
         icon()

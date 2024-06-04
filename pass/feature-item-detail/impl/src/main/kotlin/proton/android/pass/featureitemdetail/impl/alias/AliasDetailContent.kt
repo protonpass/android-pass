@@ -23,7 +23,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.PersistentList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
@@ -52,10 +51,10 @@ fun AliasDetailContent(
 ) {
     Column(
         modifier = modifier.padding(horizontal = Spacing.medium),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
     ) {
         AliasTitle(
-            modifier = Modifier.padding(Spacing.none, 12.dp),
+            modifier = Modifier.padding(Spacing.none, Spacing.mediumSmall),
             title = itemUiModel.contents.title,
             vault = vault,
             onVaultClick = onVaultClick,

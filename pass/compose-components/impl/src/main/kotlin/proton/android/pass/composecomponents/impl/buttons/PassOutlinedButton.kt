@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import me.proton.core.compose.component.ProtonButton
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 
 @Composable
@@ -54,7 +55,7 @@ fun PassOutlinedButton(
             contentColor = color
         ),
         elevation = null,
-        contentPadding = PaddingValues(horizontal = 36.dp, vertical = 12.dp),
+        contentPadding = PaddingValues(horizontal = 36.dp, vertical = Spacing.mediumSmall),
         enabled = enabled
     ) {
         Text(

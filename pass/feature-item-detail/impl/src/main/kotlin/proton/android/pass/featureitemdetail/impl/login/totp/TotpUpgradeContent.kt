@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.featureitemdetail.impl.R
@@ -53,7 +54,12 @@ fun TotpUpgradeContent(
     onUpgrade: () -> Unit
 ) {
     Row(
-        modifier = modifier.padding(start = 16.dp, top = 12.dp, end = 12.dp, bottom = 12.dp),
+        modifier = modifier.padding(
+            start = Spacing.medium,
+            top = Spacing.mediumSmall,
+            end = Spacing.mediumSmall,
+            bottom = Spacing.mediumSmall
+        ),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
@@ -61,9 +67,9 @@ fun TotpUpgradeContent(
             contentDescription = stringResource(R.string.mfa_icon_content_description),
             tint = PassTheme.colors.loginInteractionNorm
         )
-        Column(modifier = Modifier.padding(start = 8.dp)) {
+        Column(modifier = Modifier.padding(start = Spacing.small)) {
             SectionTitle(
-                modifier = Modifier.padding(start = 8.dp),
+                modifier = Modifier.padding(start = Spacing.small),
                 text = label
             )
             Row(

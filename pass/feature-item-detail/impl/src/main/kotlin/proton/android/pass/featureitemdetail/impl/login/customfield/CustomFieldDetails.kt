@@ -23,7 +23,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.featureitemdetail.impl.login.CustomFieldUiContent
 
 @Composable
@@ -34,7 +34,7 @@ fun CustomFieldDetails(
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
     ) {
         fields.forEachIndexed { idx, entry ->
             CustomFieldEntry(

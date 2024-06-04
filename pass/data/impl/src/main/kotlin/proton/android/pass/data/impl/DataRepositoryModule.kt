@@ -37,8 +37,8 @@ import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.TelemetryRepository
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.impl.core.repositories.SentinelRepositoryImpl
-import proton.android.pass.data.impl.repositories.AccessKeyRepository
-import proton.android.pass.data.impl.repositories.AccessKeyRepositoryImpl
+import proton.android.pass.data.impl.repositories.ExtraPasswordRepository
+import proton.android.pass.data.impl.repositories.ExtraPasswordRepositoryImpl
 import proton.android.pass.data.impl.repositories.AliasRepositoryImpl
 import proton.android.pass.data.impl.repositories.BreachRepositoryImpl
 import proton.android.pass.data.impl.repositories.BulkInviteRepositoryImpl
@@ -135,5 +135,5 @@ abstract class DataRepositoryModule {
     abstract fun bindPublicLinkRepository(impl: PublicLinkRepositoryImpl): PublicLinkRepository
 
     @Binds
-    abstract fun bindAccessKeyRepository(impl: AccessKeyRepositoryImpl): AccessKeyRepository
+    abstract fun bindAccessKeyRepository(impl: ExtraPasswordRepositoryImpl): ExtraPasswordRepository
 }

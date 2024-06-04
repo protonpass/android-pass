@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemcreate.impl.dialogs.addcustomsection
+package proton.android.pass.featureitemcreate.impl.identity.presentation.customsection
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

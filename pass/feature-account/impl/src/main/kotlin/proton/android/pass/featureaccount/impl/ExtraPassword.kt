@@ -67,7 +67,7 @@ internal fun ExtraPassword(
                 },
                 subtitle = {
                     Text(
-                        text = "Active",
+                        text = stringResource(R.string.account_settings_list_item_extra_password_active),
                         style = PassTheme.typography.body3Norm()
                             .copy(color = PassTheme.colors.cardInteractionNormMajor1)
                     )

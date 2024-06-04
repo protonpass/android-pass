@@ -516,7 +516,7 @@ fun NavGraphBuilder.appGraph(
                 AccountNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
                 AccountNavigation.PasswordManagement -> onNavigate(AppNavigation.PasswordManagement)
                 AccountNavigation.RecoveryEmail -> onNavigate(AppNavigation.RecoveryEmail)
-                AccountNavigation.SetAccessKey -> appNavigator.navigate(SetExtraPasswordNavItem)
+                AccountNavigation.SetExtraPassword -> appNavigator.navigate(SetExtraPasswordNavItem)
             }
         }
     )

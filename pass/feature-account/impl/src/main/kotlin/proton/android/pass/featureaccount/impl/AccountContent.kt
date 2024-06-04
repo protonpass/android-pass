@@ -85,7 +85,7 @@ fun AccountContent(
             }
             ManageAccount(onManageAccountClick = { onEvent(AccountContentEvent.ManageAccount) })
 
-            if (state.showAccessKey) {
+            if (state.showExtraPassword) {
                 ExtraPassword(onEvent = onEvent)
             }
             SignOut(onSignOutClick = { onEvent(AccountContentEvent.SignOut) })

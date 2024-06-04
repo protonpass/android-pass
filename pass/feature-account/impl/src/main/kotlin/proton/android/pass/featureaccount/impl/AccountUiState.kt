@@ -50,7 +50,7 @@ data class AccountUiState(
     val isLoadingState: IsLoadingState,
     val showUpgradeButton: Boolean,
     val showSubscriptionButton: Boolean,
-    val showAccessKey: Boolean
+    val showExtraPassword: Boolean
 ) {
     companion object {
         val Initial = AccountUiState(
@@ -61,7 +61,7 @@ data class AccountUiState(
             isLoadingState = IsLoadingState.Loading,
             showUpgradeButton = false,
             showSubscriptionButton = false,
-            showAccessKey = false
+            showExtraPassword = false
         )
     }
 }

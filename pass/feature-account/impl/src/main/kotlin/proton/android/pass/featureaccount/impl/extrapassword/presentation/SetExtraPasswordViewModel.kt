@@ -31,17 +31,17 @@ class SetExtraPasswordViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
     @OptIn(SavedStateHandleSaveableApi::class)
-    private var mutableAccessKeyState: SetExtraPasswordState by savedStateHandleProvider.get()
+    private var mutableExtraPasswordState: SetExtraPasswordState by savedStateHandleProvider.get()
         .saveable { mutableStateOf(SetExtraPasswordState.EMPTY) }
 
-    fun getAccessKeyState(): SetExtraPasswordState = mutableAccessKeyState
+    fun getExtraPasswordState(): SetExtraPasswordState = mutableExtraPasswordState
 
-    fun onAccessKeyRepeatValueChanged(value: String) {
-        mutableAccessKeyState = mutableAccessKeyState.copy(repeatPassword = value)
+    fun onExtraPasswordRepeatValueChanged(value: String) {
+        mutableExtraPasswordState = mutableExtraPasswordState.copy(repeatPassword = value)
     }
 
-    fun onAccessKeyValueChanged(value: String) {
-        mutableAccessKeyState = mutableAccessKeyState.copy(password = value)
+    fun onExtraPasswordValueChanged(value: String) {
+        mutableExtraPasswordState = mutableExtraPasswordState.copy(password = value)
     }
 
     fun submit() {

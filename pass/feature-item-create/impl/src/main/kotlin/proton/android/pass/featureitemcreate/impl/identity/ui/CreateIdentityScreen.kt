@@ -32,12 +32,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.common.api.some
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdentityNavigation
+import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdentityNavigation.AddExtraSection
+import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdentityNavigation.CustomFieldOptions
 import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdentityNavigation.OpenExtraFieldBottomSheet
 import proton.android.pass.featureitemcreate.impl.identity.navigation.CreateIdentityNavigation
 import proton.android.pass.featureitemcreate.impl.identity.navigation.CreateIdentityNavigation.SelectVault
@@ -114,8 +117,16 @@ fun CreateIdentityScreen(
                     is IdentityContentEvent.OnCustomFieldOptions -> {
                         viewModel.updateSelectedSection(event.customExtraField)
                         actionAfterKeyboardHide = {
-                            onNavigate(BaseIdentityNavigation.CustomFieldOptions(event.label, event.index))
+                            onNavigate(CustomFieldOptions(event.label, event.index))
                         }
+                    }
+
+                    IdentityContentEvent.OnAddExtraSection -> {
+                        actionAfterKeyboardHide = { onNavigate(AddExtraSection) }
+                    }
+
+                    is IdentityContentEvent.OnAddExtraSectionCustomField -> actionAfterKeyboardHide = {
+                        onNavigate(OpenExtraFieldBottomSheet(AddIdentityFieldType.Extra, event.index.some()))
                     }
                 }
             }

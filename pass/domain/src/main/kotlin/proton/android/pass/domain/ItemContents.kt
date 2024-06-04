@@ -197,7 +197,8 @@ sealed class ItemContents {
         val personalDetailsContent: PersonalDetailsContent,
         val addressDetailsContent: AddressDetailsContent,
         val contactDetailsContent: ContactDetailsContent,
-        val workDetailsContent: WorkDetailsContent
+        val workDetailsContent: WorkDetailsContent,
+        val extraSectionContentList: List<ExtraSectionContent>
     ) : ItemContents()
 
     @Serializable
@@ -313,6 +314,19 @@ data class WorkDetailsContent(
             personalWebsite = "",
             workPhoneNumber = "",
             workEmail = "",
+            customFields = emptyList()
+        )
+    }
+}
+
+@Serializable
+data class ExtraSectionContent(
+    val title: String,
+    val customFields: List<CustomFieldContent>
+) {
+    companion object {
+        val EMPTY = ExtraSectionContent(
+            title = "",
             customFields = emptyList()
         )
     }

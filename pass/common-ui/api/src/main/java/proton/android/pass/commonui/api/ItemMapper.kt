@@ -25,6 +25,7 @@ import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.datamodels.api.toContent
 import proton.android.pass.domain.AddressDetailsContent
 import proton.android.pass.domain.ContactDetailsContent
+import proton.android.pass.domain.ExtraSectionContent
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
@@ -116,6 +117,7 @@ private fun Item.createCreditCard(encryptionContext: EncryptionContext, type: It
         expirationDate = type.expirationDate
     )
 
+@Suppress("LongMethod")
 private fun Item.createIdentity(encryptionContext: EncryptionContext, type: ItemType.Identity) = ItemContents.Identity(
     title = encryptionContext.decrypt(title),
     note = encryptionContext.decrypt(note),
@@ -170,7 +172,18 @@ private fun Item.createIdentity(encryptionContext: EncryptionContext, type: Item
         customFields = type.workDetails.customFields.mapNotNull {
             it.toContent(encryptionContext, true)
         }
-    )
+    ),
+    extraSectionContentList = type.extraSections.map {
+        ExtraSectionContent(
+            title = it.sectionName,
+            customFields = it.customFields.mapNotNull { customField ->
+                customField.toContent(
+                    encryptionContext,
+                    true
+                )
+            }
+        )
+    }
 )
 
 fun Item.toItemContents(

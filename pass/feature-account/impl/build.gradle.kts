@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.core.user.domain)
     implementation(libs.core.userSettings.domain)
     implementation(libs.core.payment.domain)
+    implementation(libs.kotlinx.collections)
 
     debugImplementation(libs.androidx.compose.uiTooling)
     implementation(libs.androidx.compose.uiToolingPreview)

@@ -20,6 +20,7 @@ package proton.android.pass.composecomponents.impl.setting
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -40,6 +41,7 @@ fun ColorSettingOption(
     text: String,
     textColor: Color,
     iconBgColor: Color,
+    subtitle: @Composable (() -> Unit)? = null,
     icon: @Composable (() -> Unit)? = null,
     onClick: () -> Unit
 ) {
@@ -52,11 +54,14 @@ fun ColorSettingOption(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(
-            text = text,
-            style = ProtonTheme.typography.defaultNorm,
-            color = textColor
-        )
+        Column(verticalArrangement = Arrangement.spacedBy(Spacing.small)) {
+            Text(
+                text = text,
+                style = ProtonTheme.typography.defaultNorm,
+                color = textColor
+            )
+            subtitle?.let { it() }
+        }
         icon?.let {
             CircleIconButton(
                 backgroundColor = iconBgColor,

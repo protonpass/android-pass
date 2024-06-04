@@ -27,7 +27,7 @@ import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.featureaccount.impl.Account
 import proton.android.pass.featureaccount.impl.AccountNavigation
-import proton.android.pass.featureaccount.impl.accesskey.navigation.SetAccessKeyNavItem
+import proton.android.pass.featureaccount.impl.extrapassword.navigation.SetExtraPasswordNavItem
 import proton.android.pass.featureaccount.impl.accountGraph
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.EnterPin
@@ -516,7 +516,7 @@ fun NavGraphBuilder.appGraph(
                 AccountNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
                 AccountNavigation.PasswordManagement -> onNavigate(AppNavigation.PasswordManagement)
                 AccountNavigation.RecoveryEmail -> onNavigate(AppNavigation.RecoveryEmail)
-                AccountNavigation.SetAccessKey -> appNavigator.navigate(SetAccessKeyNavItem)
+                AccountNavigation.SetAccessKey -> appNavigator.navigate(SetExtraPasswordNavItem)
             }
         }
     )

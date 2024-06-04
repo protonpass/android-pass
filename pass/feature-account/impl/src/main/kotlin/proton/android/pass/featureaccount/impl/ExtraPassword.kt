@@ -32,7 +32,7 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.setting.ColorSettingOption
 
 @Composable
-fun ExtraPassword(modifier: Modifier = Modifier, onEvent: (AccountContentEvent) -> Unit) {
+internal fun ExtraPassword(modifier: Modifier = Modifier, onEvent: (AccountContentEvent) -> Unit) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(Spacing.small)

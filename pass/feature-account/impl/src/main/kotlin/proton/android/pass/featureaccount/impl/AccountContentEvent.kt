@@ -18,7 +18,7 @@
 
 package proton.android.pass.featureaccount.impl
 
-sealed interface AccountContentEvent {
+internal sealed interface AccountContentEvent {
     data object Back : AccountContentEvent
     data object Upgrade : AccountContentEvent
     data object PasswordManagement : AccountContentEvent

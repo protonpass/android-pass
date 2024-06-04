@@ -84,6 +84,10 @@ fun AccountContent(
                 )
             }
             ManageAccount(onManageAccountClick = { onEvent(AccountContentEvent.ManageAccount) })
+
+            if (state.showAccessKey) {
+                ExtraPassword(onEvent = onEvent)
+            }
             SignOut(onSignOutClick = { onEvent(AccountContentEvent.SignOut) })
             DeleteAccount(onDeleteAccountClick = { onEvent(AccountContentEvent.DeleteAccount) })
             Text(

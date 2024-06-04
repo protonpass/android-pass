@@ -27,5 +27,5 @@ sealed interface AccountContentEvent {
     data object SignOut : AccountContentEvent
     data object Subscription : AccountContentEvent
     data object ManageAccount : AccountContentEvent
-    data object SetAccessKey : AccountContentEvent
+    data object SetExtraPassword : AccountContentEvent
 }

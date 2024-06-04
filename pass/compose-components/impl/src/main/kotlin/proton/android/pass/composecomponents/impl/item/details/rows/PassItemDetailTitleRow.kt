@@ -35,6 +35,7 @@ import proton.android.pass.composecomponents.impl.item.details.titles.PassItemDe
 import proton.android.pass.composecomponents.impl.item.details.titles.PassItemDetailTitle
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
+import proton.android.pass.composecomponents.impl.item.icon.IdentityIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.pinning.BoxedPin
 import proton.android.pass.composecomponents.impl.pinning.CircledPin
@@ -72,6 +73,21 @@ internal fun PassItemDetailTitleRow(
                 vault = itemVault
             ) {
                 CreditCardIcon(
+                    size = 60,
+                    shape = PassTheme.shapes.squircleMediumLargeShape
+                )
+            }
+        }
+
+        is ItemDetailState.Identity -> {
+            ItemDetailTitleRow(
+                modifier = modifier,
+                title = contents.title,
+                isPinned = isItemPinned,
+                itemColors = itemColors,
+                vault = itemVault
+            ) {
+                IdentityIcon(
                     size = 60,
                     shape = PassTheme.shapes.squircleMediumLargeShape
                 )

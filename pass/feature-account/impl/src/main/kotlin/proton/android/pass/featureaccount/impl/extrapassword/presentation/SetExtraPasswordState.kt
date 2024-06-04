@@ -24,13 +24,13 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Immutable
-data class SetExtraPasswordState(
+internal data class SetExtraPasswordState(
     val password: String,
     val repeatPassword: String
 ) : Parcelable {
 
     companion object {
-        val EMPTY = SetExtraPasswordState(
+        internal val EMPTY = SetExtraPasswordState(
             password = "",
             repeatPassword = ""
         )

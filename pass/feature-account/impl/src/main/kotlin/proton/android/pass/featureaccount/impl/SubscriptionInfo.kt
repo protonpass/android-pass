@@ -60,7 +60,7 @@ fun SubscriptionInfoPreview(@PreviewParameter(ThemePreviewProvider::class) isDar
                     isLoadingState = IsLoadingState.NotLoading,
                     showUpgradeButton = true,
                     showSubscriptionButton = true,
-                    showAccessKey = true
+                    showExtraPassword = true
                 )
             )
         }

@@ -97,7 +97,7 @@ fun SetExtraPasswordContent(
                         color = PassTheme.colors.interactionNormMajor1,
                         content = {
                             Text(
-                                text = stringResource(R.string.access_key_continue),
+                                text = stringResource(R.string.configure_extra_password_continue),
                                 style = ProtonTheme.typography.defaultSmallNorm,
                                 color = PassTheme.colors.textInvert
                             )
@@ -140,7 +140,7 @@ fun SetExtraPasswordContent(
                 ),
                 placeholder = {
                     ProtonTextFieldPlaceHolder(
-                        text = stringResource(R.string.configure_access_key_enter_access_key),
+                        text = stringResource(R.string.configure_extra_password_enter_extra_password),
                         textStyle = ProtonTheme.typography.subheadlineUnspecified
                             .copy(color = ProtonTheme.colors.textWeak)
                     )

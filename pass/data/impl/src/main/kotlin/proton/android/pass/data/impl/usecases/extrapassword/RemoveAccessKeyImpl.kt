@@ -16,18 +16,18 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.usecases.accesskey
+package proton.android.pass.data.impl.usecases.extrapassword
 
 import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
-import proton.android.pass.data.api.usecases.accesskey.RemoveAccessKey
-import proton.android.pass.data.impl.remote.RemoteAccessKeyDataSource
+import proton.android.pass.data.api.usecases.extrapassword.RemoveAccessKey
+import proton.android.pass.data.impl.remote.RemoteExtraPasswordDataSource
 import proton.android.pass.data.impl.repositories.AccessKeyRepository
 import javax.inject.Inject
 
 class RemoveAccessKeyImpl @Inject constructor(
-    private val remoteAccessKeyDataSource: RemoteAccessKeyDataSource,
+    private val remoteExtraPasswordDataSource: RemoteExtraPasswordDataSource,
     private val accessKeyRepository: AccessKeyRepository,
     private val accountManager: AccountManager
 ) : RemoveAccessKey {
@@ -36,7 +36,7 @@ class RemoveAccessKeyImpl @Inject constructor(
         val primaryAccount = accountManager.getPrimaryAccount().firstOrNull()
             ?: throw IllegalStateException("No primary account found")
 
-        remoteAccessKeyDataSource.removeAccessKey(primaryAccount.userId)
+        remoteExtraPasswordDataSource.removeExtraPassword(primaryAccount.userId)
         accessKeyRepository.removeAccessKeyForUser(primaryAccount.userId)
     }
 

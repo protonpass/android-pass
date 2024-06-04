@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.accesskey
+package proton.android.pass.data.api.usecases.extrapassword
 
 import me.proton.core.crypto.common.keystore.EncryptedString
 

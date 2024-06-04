@@ -16,8 +16,18 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.accesskey
+package proton.android.pass.data.impl.usecases.extrapassword
 
-interface RemoveAccessKey {
-    suspend operator fun invoke()
+import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.usecases.extrapassword.CheckLocalAccessKey
+import proton.android.pass.data.impl.repositories.AccessKeyRepository
+import javax.inject.Inject
+
+class CheckLocalAccessKeyImpl @Inject constructor(
+    private val repository: AccessKeyRepository
+) : CheckLocalAccessKey {
+
+    override suspend fun invoke(userId: UserId, password: EncryptedString): Boolean =
+        repository.checkAccessKeyForUser(userId, password)
 }

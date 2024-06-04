@@ -42,13 +42,20 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.DefaultHelpOptionHandler
 import me.proton.core.auth.presentation.DefaultUserCheck
 import me.proton.core.auth.presentation.HelpOptionHandler
 import me.proton.core.auth.presentation.ui.LoginActivity
 import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.entity.User
+import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordListener
+import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordResult
+import proton.android.pass.features.extrapassword.ui.EnterExtraPasswordActivity
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Singleton
 
 @Module
@@ -60,11 +67,15 @@ object AuthModule {
     fun provideUserCheck(
         @ApplicationContext context: Context,
         accountManager: AccountManager,
-        userManager: UserManager
-    ): PostLoginAccountSetup.UserCheck = DefaultUserCheck(
-        context,
-        accountManager,
-        userManager
+        userManager: UserManager,
+        sessionManager: SessionManager,
+        authWithExtraPasswordListener: AuthWithExtraPasswordListener
+    ): PostLoginAccountSetup.UserCheck = PassScopeUserCheck(
+        context = context,
+        accountManager = accountManager,
+        userManager = userManager,
+        sessionManager = sessionManager,
+        authWithExtraPasswordListener = authWithExtraPasswordListener
     )
 
     @Provides
@@ -74,4 +85,55 @@ object AuthModule {
     @Provides
     @Singleton
     fun provideHelpOptionHandler(): HelpOptionHandler = DefaultHelpOptionHandler()
+}
+
+class PassScopeUserCheck(
+    private val accountManager: AccountManager,
+    private val sessionManager: SessionManager,
+    private val authWithExtraPasswordListener: AuthWithExtraPasswordListener,
+    private val context: Context,
+    userManager: UserManager
+) : DefaultUserCheck(context, accountManager, userManager) {
+    override suspend fun invoke(user: User): PostLoginAccountSetup.UserCheckResult =
+        when (val superResult = super.invoke(user)) {
+            is PostLoginAccountSetup.UserCheckResult.Success -> {
+                checkPassScope(user, authWithExtraPasswordListener)
+            }
+            else -> superResult
+        }
+
+    private suspend fun checkPassScope(
+        user: User,
+        authWithExtraPasswordListener: AuthWithExtraPasswordListener
+    ): PostLoginAccountSetup.UserCheckResult {
+        val account = accountManager.getAccount(user.userId).firstOrNull()
+            ?: return PostLoginAccountSetup.UserCheckResult.Error("No account found")
+        val session = sessionManager.getSession(account.sessionId)
+            ?: return PostLoginAccountSetup.UserCheckResult.Error("No session found")
+
+        return if (session.scopes.contains(PASS_SCOPE)) {
+            PostLoginAccountSetup.UserCheckResult.Success
+        } else {
+            PassLogger.i(TAG, "Waiting for extra password to be ready")
+
+            context.startActivity(EnterExtraPasswordActivity.createIntent(context, user.userId))
+
+            val res = authWithExtraPasswordListener.onAuthWithExtraPassword(user.userId)
+            authWithExtraPasswordListener.clearUserId(user.userId)
+            PassLogger.i(TAG, "Auth with extra password listener: $res")
+            when (res) {
+                AuthWithExtraPasswordResult.Failure -> {
+                    PostLoginAccountSetup.UserCheckResult.Error("Auth with extra password failed")
+                }
+                AuthWithExtraPasswordResult.Success -> {
+                    PostLoginAccountSetup.UserCheckResult.Success
+                }
+            }
+        }
+    }
+
+    companion object {
+        private const val TAG = "PassScopeUserCheck"
+        private const val PASS_SCOPE = "pass"
+    }
 }

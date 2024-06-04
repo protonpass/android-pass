@@ -53,6 +53,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.account.domain.entity.isDisabled
 import me.proton.core.account.domain.entity.isReady
@@ -61,6 +62,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.presentation.observe
 import me.proton.core.accountmanager.presentation.onAccountCreateAddressFailed
 import me.proton.core.accountmanager.presentation.onAccountCreateAddressNeeded
+import me.proton.core.accountmanager.presentation.onAccountReady
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeFailed
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeNeeded
 import me.proton.core.accountmanager.presentation.onSessionSecondFactorNeeded
@@ -117,23 +119,7 @@ class LauncherViewModel @Inject constructor(
     }
 
     internal val state: StateFlow<State> = accountManager.getAccounts()
-        .map { accounts ->
-            when {
-                accounts.isEmpty() || accounts.all { it.isDisabled() } -> {
-                    State.AccountNeeded
-                }
-
-                accounts.any { it.isReady() } -> {
-                    accounts.firstOrNull { it.isReady() }?.let {
-                        PassLogger.i(TAG, "SessionID=${it.sessionId?.id}")
-                    }
-                    State.PrimaryExist
-                }
-
-                accounts.any { it.isStepNeeded() } -> State.StepNeeded
-                else -> State.Processing
-            }
-        }
+        .map { accounts -> getState(accounts) }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.Lazily,
@@ -179,9 +165,12 @@ class LauncherViewModel @Inject constructor(
             .onSessionSecondFactorNeeded { authOrchestrator.startSecondFactorWorkflow(it) }
             .onAccountTwoPassModeNeeded { authOrchestrator.startTwoPassModeWorkflow(it) }
             .onAccountCreateAddressNeeded { authOrchestrator.startChooseAddressWorkflow(it) }
+            .onAccountReady {
+                PassLogger.i(TAG, "ACCOUNT READY: ${it.username}")
+            }
     }
 
-    internal fun onUserStateChanced(state: State) = when (state) {
+    internal fun onUserStateChanged(state: State) = when (state) {
         State.AccountNeeded -> {
             storeAuthSuccessful(resetAttempts = false)
             userPlanWorkerLauncher.cancel()
@@ -263,9 +252,36 @@ class LauncherViewModel @Inject constructor(
         }
     }
 
+    @Suppress("ReturnCount")
+    private fun getState(accounts: List<Account>): State {
+
+        // Check the case where there are either no accounts or all accounts are disabled
+        if (accounts.isEmpty() || accounts.all { it.isDisabled() }) {
+            return State.AccountNeeded
+        }
+
+        // Check the case where at least one account is ready
+        if (accounts.any { it.isReady() }) {
+            accounts.firstOrNull { it.isReady() }?.let {
+                PassLogger.i(TAG, "SessionID=${it.sessionId?.id}")
+            }
+            return State.PrimaryExist
+        }
+
+        // Check if we are in the case where an account needs a step
+        if (accounts.any { it.isStepNeeded() }) {
+            return State.StepNeeded
+        }
+
+        // Base case
+        return State.Processing
+    }
+
     private suspend fun getAccountOrNull(it: UserId) = accountManager.getAccount(it).firstOrNull()
 
     private suspend fun getPrimaryUserIdOrNull() = accountManager.getPrimaryUserId().firstOrNull()
+
+
 
     internal fun checkForUpdates(updateResultLauncher: ActivityResultLauncher<IntentSenderRequest>) {
         inAppUpdatesManager.checkForUpdates(updateResultLauncher)

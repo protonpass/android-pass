@@ -55,8 +55,9 @@ import proton.android.pass.featureitemcreate.impl.creditcard.CreateCreditCard
 import proton.android.pass.featureitemcreate.impl.creditcard.CreateCreditCardNavigation
 import proton.android.pass.featureitemcreate.impl.creditcard.UpdateCreditCardNavigation
 import proton.android.pass.featureitemcreate.impl.creditcard.createCreditCardGraph
-import proton.android.pass.featureitemcreate.impl.dialogs.CustomFieldNameDialog
-import proton.android.pass.featureitemcreate.impl.dialogs.EditCustomFieldNameDialog
+import proton.android.pass.featureitemcreate.impl.dialogs.addcustomfield.CustomFieldNameDialog
+import proton.android.pass.featureitemcreate.impl.dialogs.addcustomfield.CustomSectionNameDialog
+import proton.android.pass.featureitemcreate.impl.dialogs.addcustomfield.EditCustomFieldNameDialog
 import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdentityNavigation
 import proton.android.pass.featureitemcreate.impl.identity.navigation.CreateIdentity
 import proton.android.pass.featureitemcreate.impl.identity.navigation.CreateIdentityNavigation
@@ -371,7 +372,7 @@ fun NavGraphBuilder.autofillActivityGraph(
                 is BaseIdentityNavigation.OpenExtraFieldBottomSheet ->
                     appNavigator.navigate(
                         destination = IdentityFieldsBottomSheet,
-                        route = IdentityFieldsBottomSheet.createRoute(it.addIdentityFieldType)
+                        route = IdentityFieldsBottomSheet.createRoute(it.addIdentityFieldType, it.sectionIndex)
                     )
 
                 is CreateIdentityNavigation.ItemCreated ->
@@ -407,6 +408,8 @@ fun NavGraphBuilder.autofillActivityGraph(
                 BaseIdentityNavigation.RemovedCustomField -> dismissBottomSheet {
                     appNavigator.navigateBack(comesFromBottomsheet = true)
                 }
+                BaseIdentityNavigation.AddExtraSection ->
+                    appNavigator.navigate(CustomSectionNameDialog)
             }
         }
     )

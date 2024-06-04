@@ -23,6 +23,7 @@ import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.Parcelize
 import proton.android.pass.domain.AddressDetailsContent
 import proton.android.pass.domain.ContactDetailsContent
+import proton.android.pass.domain.ExtraSectionContent
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.PersonalDetailsContent
 import proton.android.pass.domain.WorkDetailsContent
@@ -35,7 +36,8 @@ data class IdentityItemFormState(
     val uiPersonalDetails: UIPersonalDetails,
     val uiAddressDetails: UIAddressDetails,
     val uiContactDetails: UIContactDetails,
-    val uiWorkDetails: UIWorkDetails
+    val uiWorkDetails: UIWorkDetails,
+    val uiExtraSections: List<UIExtraSection>
 ) : Parcelable {
 
     constructor(itemContents: ItemContents.Identity) : this(
@@ -43,7 +45,8 @@ data class IdentityItemFormState(
         uiPersonalDetails = UIPersonalDetails(itemContents.personalDetailsContent),
         uiAddressDetails = UIAddressDetails(itemContents.addressDetailsContent),
         uiContactDetails = UIContactDetails(itemContents.contactDetailsContent),
-        uiWorkDetails = UIWorkDetails(itemContents.workDetailsContent)
+        uiWorkDetails = UIWorkDetails(itemContents.workDetailsContent),
+        uiExtraSections = itemContents.extraSectionContentList.map(::UIExtraSection)
     )
 
     fun validate(): Set<IdentityValidationErrors> {
@@ -75,7 +78,7 @@ data class IdentityItemFormState(
             countryOrRegion = uiAddressDetails.countryOrRegion,
             floor = uiAddressDetails.floor,
             county = uiAddressDetails.county,
-            customFields = uiPersonalDetails.customFields.map(UICustomFieldContent::toCustomFieldContent)
+            customFields = uiAddressDetails.customFields.map(UICustomFieldContent::toCustomFieldContent)
         ),
         contactDetailsContent = ContactDetailsContent(
             socialSecurityNumber = uiContactDetails.socialSecurityNumber,
@@ -89,7 +92,7 @@ data class IdentityItemFormState(
             facebook = uiContactDetails.facebook,
             yahoo = uiContactDetails.yahoo,
             instagram = uiContactDetails.instagram,
-            customFields = uiPersonalDetails.customFields.map(UICustomFieldContent::toCustomFieldContent)
+            customFields = uiContactDetails.customFields.map(UICustomFieldContent::toCustomFieldContent)
         ),
         workDetailsContent = WorkDetailsContent(
             company = uiWorkDetails.company,
@@ -97,8 +100,14 @@ data class IdentityItemFormState(
             personalWebsite = uiWorkDetails.personalWebsite,
             workPhoneNumber = uiWorkDetails.workPhoneNumber,
             workEmail = uiWorkDetails.workEmail,
-            customFields = uiPersonalDetails.customFields.map(UICustomFieldContent::toCustomFieldContent)
-        )
+            customFields = uiWorkDetails.customFields.map(UICustomFieldContent::toCustomFieldContent)
+        ),
+        extraSectionContentList = uiExtraSections.map {
+            ExtraSectionContent(
+                title = it.title,
+                customFields = it.customFields.map(UICustomFieldContent::toCustomFieldContent)
+            )
+        }
     )
 
     companion object {
@@ -107,7 +116,8 @@ data class IdentityItemFormState(
             uiPersonalDetails = UIPersonalDetails.EMPTY,
             uiAddressDetails = UIAddressDetails.EMPTY,
             uiContactDetails = UIContactDetails.EMPTY,
-            uiWorkDetails = UIWorkDetails.EMPTY
+            uiWorkDetails = UIWorkDetails.EMPTY,
+            uiExtraSections = emptyList()
         )
     }
 }
@@ -277,6 +287,19 @@ data class UIWorkDetails(
             customFields = emptyList()
         )
     }
+}
+
+@Parcelize
+@Immutable
+data class UIExtraSection(
+    val title: String,
+    val customFields: List<UICustomFieldContent>
+) : Parcelable {
+
+    constructor(extraSectionContent: ExtraSectionContent) : this(
+        title = extraSectionContent.title,
+        customFields = extraSectionContent.customFields.map(UICustomFieldContent.Companion::from)
+    )
 }
 
 sealed interface IdentityValidationErrors {

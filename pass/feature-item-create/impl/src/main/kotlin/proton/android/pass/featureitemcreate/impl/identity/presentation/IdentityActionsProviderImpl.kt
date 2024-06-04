@@ -43,6 +43,7 @@ import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.AddressCustomField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.ContactCustomField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.CustomExtraField
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.ExtraSectionCustomField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.IdentityFieldDraftRepository
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.PersonalCustomField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.WorkCustomField
@@ -224,6 +225,13 @@ class IdentityActionsProviderImpl @Inject constructor(
         }
     }
 
+    override fun onAddExtraSection(value: String) {
+        identityItemFormMutableState = identityItemFormMutableState.copy(
+            uiExtraSections = identityItemFormMutableState.uiExtraSections +
+                listOf(UIExtraSection(value, emptyList()))
+        )
+    }
+
     override fun onAddCustomField(value: CustomFieldContent, customExtraField: CustomExtraField) {
         val uiCustomFieldContent = UICustomFieldContent.from(value)
         identityItemFormMutableState = when (customExtraField) {
@@ -254,6 +262,20 @@ class IdentityActionsProviderImpl @Inject constructor(
                         listOf(uiCustomFieldContent)
                 )
             )
+
+            is ExtraSectionCustomField -> identityItemFormMutableState.copy(
+                uiExtraSections = identityItemFormMutableState.uiExtraSections.toMutableList()
+                    .apply {
+                        set(
+                            customExtraField.index,
+                            identityItemFormMutableState.uiExtraSections[customExtraField.index].copy(
+                                customFields = identityItemFormMutableState.uiExtraSections[customExtraField.index]
+                                    .customFields + listOf(uiCustomFieldContent)
+                            )
+                        )
+                    }
+            )
+
         }
     }
 
@@ -286,59 +308,100 @@ class IdentityActionsProviderImpl @Inject constructor(
                         .apply { removeAt(index) }
                 )
             )
+
+            is ExtraSectionCustomField -> identityItemFormMutableState.copy(
+                uiExtraSections = identityItemFormMutableState.uiExtraSections.toMutableList()
+                    .apply {
+                        set(
+                            customExtraField.index,
+                            identityItemFormMutableState.uiExtraSections[customExtraField.index].copy(
+                                customFields = identityItemFormMutableState.uiExtraSections[customExtraField.index]
+                                    .customFields
+                                    .toMutableList()
+                                    .apply { removeAt(index) }
+                            )
+                        )
+                    }
+            )
         }
     }
 
+    @Suppress("LongMethod")
     override fun onRenameCustomField(value: CustomFieldIndexTitle, customExtraField: CustomExtraField) {
-        val customField = when (customExtraField) {
-            AddressCustomField -> identityItemFormMutableState.uiAddressDetails.customFields[value.index]
-            ContactCustomField -> identityItemFormMutableState.uiContactDetails.customFields[value.index]
-            PersonalCustomField -> identityItemFormMutableState.uiPersonalDetails.customFields[value.index]
-            WorkCustomField -> identityItemFormMutableState.uiWorkDetails.customFields[value.index]
+        val (content, index) = when (customExtraField) {
+            AddressCustomField ->
+                identityItemFormMutableState.uiAddressDetails.customFields[value.index] to value.index
+            ContactCustomField ->
+                identityItemFormMutableState.uiContactDetails.customFields[value.index] to value.index
+            PersonalCustomField ->
+                identityItemFormMutableState.uiPersonalDetails.customFields[value.index] to value.index
+            WorkCustomField ->
+                identityItemFormMutableState.uiWorkDetails.customFields[value.index] to value.index
+            is ExtraSectionCustomField ->
+                identityItemFormMutableState.uiExtraSections[customExtraField.index]
+                    .customFields[value.index] to value.index
         }
-        val updated = when (customField) {
+        val updated = when (content) {
             is UICustomFieldContent.Hidden -> {
                 UICustomFieldContent.Hidden(
                     label = value.title,
-                    value = customField.value
+                    value = content.value
                 )
             }
 
             is UICustomFieldContent.Text -> UICustomFieldContent.Text(
                 label = value.title,
-                value = customField.value
+                value = content.value
             )
 
             is UICustomFieldContent.Totp -> UICustomFieldContent.Totp(
                 label = value.title,
-                value = customField.value,
-                id = customField.id
+                value = content.value,
+                id = content.id
             )
         }
         identityItemFormMutableState = when (customExtraField) {
             AddressCustomField -> identityItemFormMutableState.copy(
                 uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(
                     customFields = identityItemFormMutableState.uiAddressDetails.customFields.toMutableList()
-                        .apply { set(value.index, updated) }
+                        .apply { set(index, updated) }
                 )
             )
+
             ContactCustomField -> identityItemFormMutableState.copy(
                 uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(
                     customFields = identityItemFormMutableState.uiContactDetails.customFields.toMutableList()
-                        .apply { set(value.index, updated) }
+                        .apply { set(index, updated) }
                 )
             )
+
             PersonalCustomField -> identityItemFormMutableState.copy(
                 uiPersonalDetails = identityItemFormMutableState.uiPersonalDetails.copy(
                     customFields = identityItemFormMutableState.uiPersonalDetails.customFields.toMutableList()
-                        .apply { set(value.index, updated) }
+                        .apply { set(index, updated) }
                 )
             )
+
             WorkCustomField -> identityItemFormMutableState.copy(
                 uiWorkDetails = identityItemFormMutableState.uiWorkDetails.copy(
                     customFields = identityItemFormMutableState.uiWorkDetails.customFields.toMutableList()
-                        .apply { set(value.index, updated) }
+                        .apply { set(index, updated) }
                 )
+            )
+
+            is ExtraSectionCustomField -> identityItemFormMutableState.copy(
+                uiExtraSections = identityItemFormMutableState.uiExtraSections.toMutableList()
+                    .apply {
+                        set(
+                            customExtraField.index,
+                            identityItemFormMutableState.uiExtraSections[index].copy(
+                                customFields = identityItemFormMutableState.uiExtraSections[index]
+                                    .customFields
+                                    .toMutableList()
+                                    .apply { set(index, updated) }
+                            )
+                        )
+                    }
             )
         }
     }
@@ -395,6 +458,10 @@ class IdentityActionsProviderImpl @Inject constructor(
 
             IdentitySectionType.WorkDetails ->
                 identityItemFormMutableState.uiWorkDetails.customFields[field.index] to field.index
+
+            is IdentitySectionType.ExtraSection ->
+                identityItemFormMutableState.uiExtraSections[field.sectionType.index]
+                    .customFields[field.index] to field.index
         }
 
         val updated = encryptionContextProvider.withEncryptionContext {
@@ -451,6 +518,21 @@ class IdentityActionsProviderImpl @Inject constructor(
                     customFields = identityItemFormMutableState.uiWorkDetails.customFields.toMutableList()
                         .apply { set(index, updated) }
                 )
+            )
+
+            is IdentitySectionType.ExtraSection -> identityItemFormMutableState.copy(
+                uiExtraSections = identityItemFormMutableState.uiExtraSections.toMutableList()
+                    .apply {
+                        set(
+                            field.sectionType.index,
+                            identityItemFormMutableState.uiExtraSections[field.sectionType.index].copy(
+                                customFields = identityItemFormMutableState.uiExtraSections[field.sectionType.index]
+                                    .customFields
+                                    .toMutableList()
+                                    .apply { set(index, updated) }
+                            )
+                        )
+                    }
             )
         }
     }

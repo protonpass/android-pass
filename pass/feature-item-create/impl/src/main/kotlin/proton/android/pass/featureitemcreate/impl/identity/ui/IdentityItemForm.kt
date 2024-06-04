@@ -22,6 +22,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -35,6 +36,7 @@ import kotlinx.collections.immutable.toPersistentSet
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.isCollapsedSaver
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
+import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.composecomponents.impl.labels.CollapsibleSectionHeader
 import proton.android.pass.featureitemcreate.impl.R
@@ -48,6 +50,11 @@ import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsh
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.ExtraField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.PersonalDetailsField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.WorkDetailsField
+import proton.android.pass.featureitemcreate.impl.identity.ui.IdentitySectionType.AddressDetails
+import proton.android.pass.featureitemcreate.impl.identity.ui.IdentitySectionType.ContactDetails
+import proton.android.pass.featureitemcreate.impl.identity.ui.IdentitySectionType.ExtraSection
+import proton.android.pass.featureitemcreate.impl.identity.ui.IdentitySectionType.PersonalDetails
+import proton.android.pass.featureitemcreate.impl.identity.ui.IdentitySectionType.WorkDetails
 
 @Composable
 fun IdentityItemForm(
@@ -59,7 +66,7 @@ fun IdentityItemForm(
     onEvent: (IdentityContentEvent) -> Unit
 ) {
     val isGroupCollapsed = rememberSaveable(saver = isCollapsedSaver()) {
-        mutableStateListOf(IdentitySectionType.ContactDetails, IdentitySectionType.WorkDetails)
+        mutableStateListOf(ContactDetails, WorkDetails)
     }
     Column(
         modifier = modifier
@@ -86,16 +93,16 @@ fun IdentityItemForm(
         )
         CollapsibleSectionHeader(
             sectionTitle = stringResource(R.string.identity_section_personal_details),
-            isCollapsed = isGroupCollapsed.contains(IdentitySectionType.PersonalDetails),
+            isCollapsed = isGroupCollapsed.contains(PersonalDetails),
             onClick = {
-                if (isGroupCollapsed.contains(IdentitySectionType.PersonalDetails)) {
-                    isGroupCollapsed.remove(IdentitySectionType.PersonalDetails)
+                if (isGroupCollapsed.contains(PersonalDetails)) {
+                    isGroupCollapsed.remove(PersonalDetails)
                 } else {
-                    isGroupCollapsed.add(IdentitySectionType.PersonalDetails)
+                    isGroupCollapsed.add(PersonalDetails)
                 }
             }
         )
-        AnimatedVisibility(visible = !isGroupCollapsed.contains(IdentitySectionType.PersonalDetails)) {
+        AnimatedVisibility(visible = !isGroupCollapsed.contains(PersonalDetails)) {
             PersonalDetails(
                 modifier = Modifier.padding(horizontal = Spacing.medium),
                 enabled = enabled,
@@ -107,16 +114,16 @@ fun IdentityItemForm(
         }
         CollapsibleSectionHeader(
             sectionTitle = stringResource(R.string.identity_section_address_details),
-            isCollapsed = isGroupCollapsed.contains(IdentitySectionType.AddressDetails),
+            isCollapsed = isGroupCollapsed.contains(AddressDetails),
             onClick = {
-                if (isGroupCollapsed.contains(IdentitySectionType.AddressDetails)) {
-                    isGroupCollapsed.remove(IdentitySectionType.AddressDetails)
+                if (isGroupCollapsed.contains(AddressDetails)) {
+                    isGroupCollapsed.remove(AddressDetails)
                 } else {
-                    isGroupCollapsed.add(IdentitySectionType.AddressDetails)
+                    isGroupCollapsed.add(AddressDetails)
                 }
             }
         )
-        AnimatedVisibility(visible = !isGroupCollapsed.contains(IdentitySectionType.AddressDetails)) {
+        AnimatedVisibility(visible = !isGroupCollapsed.contains(AddressDetails)) {
             AddressDetails(
                 modifier = Modifier.padding(horizontal = Spacing.medium),
                 enabled = enabled,
@@ -127,16 +134,16 @@ fun IdentityItemForm(
         }
         CollapsibleSectionHeader(
             sectionTitle = stringResource(R.string.identity_section_contact_details),
-            isCollapsed = isGroupCollapsed.contains(IdentitySectionType.ContactDetails),
+            isCollapsed = isGroupCollapsed.contains(ContactDetails),
             onClick = {
-                if (isGroupCollapsed.contains(IdentitySectionType.ContactDetails)) {
-                    isGroupCollapsed.remove(IdentitySectionType.ContactDetails)
+                if (isGroupCollapsed.contains(ContactDetails)) {
+                    isGroupCollapsed.remove(ContactDetails)
                 } else {
-                    isGroupCollapsed.add(IdentitySectionType.ContactDetails)
+                    isGroupCollapsed.add(ContactDetails)
                 }
             }
         )
-        AnimatedVisibility(visible = !isGroupCollapsed.contains(IdentitySectionType.ContactDetails)) {
+        AnimatedVisibility(visible = !isGroupCollapsed.contains(ContactDetails)) {
             ContactDetails(
                 modifier = Modifier.padding(horizontal = Spacing.medium),
                 enabled = enabled,
@@ -147,16 +154,16 @@ fun IdentityItemForm(
         }
         CollapsibleSectionHeader(
             sectionTitle = stringResource(R.string.identity_section_work_details),
-            isCollapsed = isGroupCollapsed.contains(IdentitySectionType.WorkDetails),
+            isCollapsed = isGroupCollapsed.contains(WorkDetails),
             onClick = {
-                if (isGroupCollapsed.contains(IdentitySectionType.WorkDetails)) {
-                    isGroupCollapsed.remove(IdentitySectionType.WorkDetails)
+                if (isGroupCollapsed.contains(WorkDetails)) {
+                    isGroupCollapsed.remove(WorkDetails)
                 } else {
-                    isGroupCollapsed.add(IdentitySectionType.WorkDetails)
+                    isGroupCollapsed.add(WorkDetails)
                 }
             }
         )
-        AnimatedVisibility(visible = !isGroupCollapsed.contains(IdentitySectionType.WorkDetails)) {
+        AnimatedVisibility(visible = !isGroupCollapsed.contains(WorkDetails)) {
             WorkDetails(
                 modifier = Modifier.padding(horizontal = Spacing.medium),
                 enabled = enabled,
@@ -165,6 +172,34 @@ fun IdentityItemForm(
                 onEvent = onEvent
             )
         }
+        identityItemFormState.uiExtraSections.forEachIndexed { sectionIndex, section ->
+            CollapsibleSectionHeader(
+                sectionTitle = section.title,
+                isCollapsed = isGroupCollapsed.contains(ExtraSection(sectionIndex)),
+                onClick = {
+                    if (isGroupCollapsed.contains(ExtraSection(sectionIndex))) {
+                        isGroupCollapsed.remove(ExtraSection(sectionIndex))
+                    } else {
+                        isGroupCollapsed.add(ExtraSection(sectionIndex))
+                    }
+                }
+            )
+            AnimatedVisibility(visible = !isGroupCollapsed.contains(ExtraSection(sectionIndex))) {
+                ExtraSection(
+                    modifier = Modifier.padding(horizontal = Spacing.medium),
+                    section = section,
+                    enabled = enabled,
+                    sectionIndex = sectionIndex,
+                    onEvent = onEvent
+                )
+            }
+        }
+        PassDivider(modifier = Modifier.padding(Spacing.medium))
+        AddSectionButton(
+            modifier = Modifier
+                .padding(Spacing.medium)
+                .fillMaxWidth(),
+            onClick = { onEvent(IdentityContentEvent.OnAddExtraSection) }
+        )
     }
 }
-

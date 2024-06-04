@@ -67,3 +67,7 @@ data object WorkPhoneNumber : WorkDetailsField
 data object WorkEmail : WorkDetailsField
 
 data object WorkCustomField : WorkDetailsField, CustomExtraField
+
+sealed interface ExtraSectionField : ExtraField
+
+data class ExtraSectionCustomField(val index: Int) : ExtraSectionField, CustomExtraField

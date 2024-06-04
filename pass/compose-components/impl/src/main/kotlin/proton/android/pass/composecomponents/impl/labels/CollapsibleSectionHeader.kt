@@ -38,6 +38,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.composecomponents.impl.item.SectionTitle
+import proton.android.pass.composecomponents.impl.item.icon.ThreeDotsMenuButton
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
@@ -45,7 +46,8 @@ fun CollapsibleSectionHeader(
     modifier: Modifier = Modifier,
     isCollapsed: Boolean = false,
     sectionTitle: String,
-    onClick: (() -> Unit)? = null
+    onClick: (() -> Unit)? = null,
+    onOptionsClick: (() -> Unit)? = null
 ) {
     val isClickable = remember(onClick) {
         onClick != null
@@ -81,7 +83,11 @@ fun CollapsibleSectionHeader(
         }
 
         SectionTitle(
+            modifier = Modifier.weight(1f),
             text = sectionTitle
         )
+        if (onOptionsClick != null) {
+            ThreeDotsMenuButton(onClick = { onOptionsClick() })
+        }
     }
 }

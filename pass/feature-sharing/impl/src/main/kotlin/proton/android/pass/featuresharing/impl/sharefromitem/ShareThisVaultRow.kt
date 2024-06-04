@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallNorm
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.composecomponents.impl.buttons.CircleButton
@@ -49,10 +50,10 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
-import proton.android.pass.featuresharing.impl.R
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultWithItemCount
+import proton.android.pass.featuresharing.impl.R
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -68,9 +69,9 @@ fun ShareThisVaultRow(
     Row(
         modifier = modifier
             .roundedContainerNorm()
-            .padding(16.dp)
+            .padding(Spacing.medium)
             .fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.medium),
         verticalAlignment = Alignment.CenterVertically
     ) {
         VaultIcon(
@@ -100,7 +101,7 @@ fun ShareThisVaultRow(
                 )
             }
             CircleButton(
-                modifier = Modifier.padding(0.dp, 4.dp),
+                modifier = Modifier.padding(Spacing.none, Spacing.extraSmall),
                 color = PassTheme.colors.interactionNormMinor1,
                 elevation = ButtonDefaults.elevation(0.dp),
                 onClick = onShareClick
@@ -108,7 +109,7 @@ fun ShareThisVaultRow(
                 Text(
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
-                        .padding(12.dp),
+                        .padding(Spacing.mediumSmall),
                     text = stringResource(R.string.sharing_from_item_share_this_vault_action),
                     color = PassTheme.colors.interactionNormMajor2,
                     textAlign = TextAlign.Center

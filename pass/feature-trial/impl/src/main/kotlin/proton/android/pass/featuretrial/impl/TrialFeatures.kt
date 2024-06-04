@@ -32,6 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.form.PassDivider
@@ -42,10 +43,15 @@ fun TrialFeatures(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 32.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
         TrialFeatureRow(
-            modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 0.dp),
+            modifier = Modifier.padding(
+                start = Spacing.medium,
+                end = Spacing.medium,
+                top = Spacing.medium,
+                bottom = Spacing.none
+            ),
             feature = stringResource(R.string.trial_feature_1),
             icon = {
                 Icon(
@@ -57,11 +63,11 @@ fun TrialFeatures(modifier: Modifier = Modifier) {
         )
         PassDivider()
         TrialFeatureRow(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            modifier = Modifier.padding(horizontal = Spacing.medium, vertical = 8.dp),
             feature = stringResource(R.string.trial_feature_3),
             icon = {
                 Icon(
-                    modifier = Modifier.padding(start = 4.dp), // Needed to match alignment with 1
+                    modifier = Modifier.padding(start = Spacing.extraSmall), // Needed to match alignment with 1
                     painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_lock),
                     contentDescription = null,
                     tint = PassTheme.colors.loginInteractionNorm
@@ -70,11 +76,11 @@ fun TrialFeatures(modifier: Modifier = Modifier) {
         )
         PassDivider()
         TrialFeatureRow(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            modifier = Modifier.padding(horizontal = Spacing.medium, vertical = 8.dp),
             feature = stringResource(R.string.trial_feature_4),
             icon = {
                 Icon(
-                    modifier = Modifier.padding(start = 4.dp), // Needed to match alignment with 1
+                    modifier = Modifier.padding(start = Spacing.extraSmall), // Needed to match alignment with 1
                     painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_list_bullets),
                     contentDescription = null,
                     tint = PassTheme.colors.aliasInteractionNormMajor2

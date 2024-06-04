@@ -29,7 +29,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
@@ -55,7 +54,7 @@ fun PassItemDetailsContent(
                 .background(color = PassTheme.colors.itemDetailBackground)
                 .padding(paddingValues = innerPaddingValues)
                 .verticalScroll(state = rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
         ) {
             PassItemDetailTitleRow(
                 modifier = Modifier

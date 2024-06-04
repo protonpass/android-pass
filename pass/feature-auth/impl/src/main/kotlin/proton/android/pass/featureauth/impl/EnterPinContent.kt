@@ -46,6 +46,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallNorm
 import me.proton.core.compose.theme.headlineNorm
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -67,7 +68,7 @@ fun EnterPinContent(
         Icon(
             modifier = Modifier
                 .size(96.dp)
-                .padding(bottom = 16.dp),
+                .padding(bottom = Spacing.medium),
             painter = painterResource(proton.android.pass.composecomponents.impl.R.drawable.ic_pass_logo),
             contentDescription = null,
             tint = Color.Unspecified
@@ -105,7 +106,7 @@ fun EnterPinContent(
         LoadingCircleButton(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 16.dp),
+                .padding(bottom = Spacing.medium),
             buttonHeight = 40.dp,
             color = PassTheme.colors.interactionNormMajor1,
             onClick = onPinSubmit,

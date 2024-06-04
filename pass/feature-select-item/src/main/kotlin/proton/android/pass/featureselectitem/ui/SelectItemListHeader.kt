@@ -38,6 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.body3Bold
 import proton.android.pass.commonuimodels.api.ItemUiModel
@@ -78,7 +79,7 @@ fun LazyListScope.SelectItemListHeader(
             }
 
             InfoBanner(
-                modifier = Modifier.padding(horizontal = 16.dp),
+                modifier = Modifier.padding(horizontal = Spacing.medium),
                 backgroundColor = PassTheme.colors.interactionNormMinor1,
                 text = text,
                 onClick = if (canUpgrade) { onUpgradeClick } else null
@@ -92,7 +93,7 @@ fun LazyListScope.SelectItemListHeader(
 
     item {
         Text(
-            modifier = Modifier.padding(start = 16.dp),
+            modifier = Modifier.padding(start = Spacing.medium),
             text = stringResource(
                 R.string.select_item_suggestions_for_placeholder,
                 suggestionsForTitle

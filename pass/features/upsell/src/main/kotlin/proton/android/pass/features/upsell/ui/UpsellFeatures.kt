@@ -26,7 +26,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import me.proton.core.presentation.R
@@ -40,7 +39,7 @@ import proton.android.pass.composecomponents.impl.R as CompR
 internal fun UpsellFeatures(modifier: Modifier = Modifier, features: ImmutableList<Pair<Int, Int>>) {
     RoundedCornersColumn(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(space = 12.dp)
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.mediumSmall)
     ) {
         Spacer(modifier = Modifier.height(height = Spacing.small))
 

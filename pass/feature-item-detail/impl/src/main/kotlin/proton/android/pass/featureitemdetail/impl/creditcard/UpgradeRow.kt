@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.item.SectionTitle
 import me.proton.core.presentation.compose.R as CoreR
@@ -53,7 +54,12 @@ fun UpgradeRow(
     onUpgrade: () -> Unit
 ) {
     Row(
-        modifier = modifier.padding(start = 16.dp, top = 12.dp, end = 12.dp, bottom = 12.dp),
+        modifier = modifier.padding(
+            start = Spacing.medium,
+            top = Spacing.mediumSmall,
+            end = Spacing.mediumSmall,
+            bottom = Spacing.mediumSmall
+        ),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
@@ -61,18 +67,18 @@ fun UpgradeRow(
             contentDescription = null,
             tint = PassTheme.colors.cardInteractionNorm
         )
-        Column(modifier = Modifier.padding(start = 8.dp)) {
+        Column(modifier = Modifier.padding(start = Spacing.small)) {
             SectionTitle(
-                modifier = Modifier.padding(start = 8.dp),
+                modifier = Modifier.padding(start = Spacing.small),
                 text = label
             )
             Row(
                 modifier = Modifier
                     .clip(RoundedCornerShape(8.dp))
                     .clickable(onClick = onUpgrade)
-                    .padding(8.dp),
+                    .padding(Spacing.small),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
             ) {
                 Text(
                     text = stringResource(proton.android.pass.composecomponents.impl.R.string.upgrade),

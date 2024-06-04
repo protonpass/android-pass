@@ -110,7 +110,8 @@ internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
                 personalDetailsContent = PersonalDetailsContent.EMPTY,
                 addressDetailsContent = AddressDetailsContent.EMPTY,
                 contactDetailsContent = ContactDetailsContent.EMPTY,
-                workDetailsContent = WorkDetailsContent.EMPTY
+                workDetailsContent = WorkDetailsContent.EMPTY,
+                extraSectionContentList = emptyList()
             ),
             state = 0,
             createTime = Clock.System.now(),

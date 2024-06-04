@@ -63,17 +63,17 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.CrossBackCircleIconButton
 import proton.android.pass.featureaccount.impl.R
-import proton.android.pass.featureaccount.impl.extrapassword.navigation.SetExtraPasswordContentEvent
-import proton.android.pass.featureaccount.impl.extrapassword.navigation.SetExtraPasswordContentEvent.OnExtraPasswordRepeatValueChanged
-import proton.android.pass.featureaccount.impl.extrapassword.navigation.SetExtraPasswordContentEvent.Submit
+import proton.android.pass.featureaccount.impl.extrapassword.navigation.SetExtraPasswordContentNavEvent
+import proton.android.pass.featureaccount.impl.extrapassword.navigation.SetExtraPasswordContentNavEvent.OnExtraPasswordRepeatValueChangedNav
+import proton.android.pass.featureaccount.impl.extrapassword.navigation.SetExtraPasswordContentNavEvent.Submit
 import proton.android.pass.featureaccount.impl.extrapassword.presentation.SetExtraPasswordState
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun SetExtraPasswordContent(
+internal fun SetExtraPasswordContent(
     modifier: Modifier = Modifier,
     state: SetExtraPasswordState,
-    onEvent: (SetExtraPasswordContentEvent) -> Unit
+    onEvent: (SetExtraPasswordContentNavEvent) -> Unit
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -83,16 +83,15 @@ fun SetExtraPasswordContent(
                 title = {},
                 navigationIcon = {
                     CrossBackCircleIconButton(
-                        modifier = Modifier.padding(12.dp, 4.dp),
-
+                        modifier = Modifier.padding(12.dp, Spacing.extraSmall),
                         color = PassTheme.colors.interactionNorm,
                         backgroundColor = PassTheme.colors.interactionNormMinor1,
-                        onUpClick = { onEvent(SetExtraPasswordContentEvent.Back) }
+                        onUpClick = { onEvent(SetExtraPasswordContentNavEvent.Back) }
                     )
                 },
                 actions = {
                     CircleButton(
-                        modifier = Modifier.padding(horizontal = Spacing.medium, vertical = 0.dp),
+                        modifier = Modifier.padding(horizontal = Spacing.medium, vertical = Spacing.none),
                         contentPadding = PaddingValues(Spacing.medium, Spacing.small),
                         color = PassTheme.colors.interactionNormMajor1,
                         content = {
@@ -162,7 +161,7 @@ fun SetExtraPasswordContent(
                     }
                 },
                 moveToNextOnEnter = true,
-                onChange = { onEvent(SetExtraPasswordContentEvent.OnExtraPasswordValueChanged(it)) }
+                onChange = { onEvent(SetExtraPasswordContentNavEvent.OnExtraPasswordValueChangedNav(it)) }
             )
             ProtonTextField(
                 value = state.repeatPassword,
@@ -200,7 +199,7 @@ fun SetExtraPasswordContent(
                         )
                     }
                 },
-                onChange = { onEvent(OnExtraPasswordRepeatValueChanged(it)) },
+                onChange = { onEvent(OnExtraPasswordRepeatValueChangedNav(it)) },
                 onDoneClick = { onEvent(Submit) }
             )
             PassDivider()

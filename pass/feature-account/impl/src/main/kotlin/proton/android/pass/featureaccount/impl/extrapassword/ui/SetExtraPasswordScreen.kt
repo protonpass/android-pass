@@ -22,7 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import proton.android.pass.featureaccount.impl.AccountNavigation
-import proton.android.pass.featureaccount.impl.extrapassword.navigation.SetExtraPasswordContentEvent
+import proton.android.pass.featureaccount.impl.extrapassword.navigation.SetExtraPasswordContentNavEvent
 import proton.android.pass.featureaccount.impl.extrapassword.presentation.SetExtraPasswordViewModel
 
 @Composable
@@ -36,14 +36,14 @@ fun SetExtraPasswordScreen(
         state = viewModel.getExtraPasswordState(),
         onEvent = {
             when (it) {
-                is SetExtraPasswordContentEvent.Back -> onNavigate(AccountNavigation.Back)
-                is SetExtraPasswordContentEvent.OnExtraPasswordRepeatValueChanged ->
+                is SetExtraPasswordContentNavEvent.Back -> onNavigate(AccountNavigation.Back)
+                is SetExtraPasswordContentNavEvent.OnExtraPasswordRepeatValueChangedNav ->
                     viewModel.onExtraPasswordRepeatValueChanged(it.value)
 
-                is SetExtraPasswordContentEvent.OnExtraPasswordValueChanged ->
+                is SetExtraPasswordContentNavEvent.OnExtraPasswordValueChangedNav ->
                     viewModel.onExtraPasswordValueChanged(it.value)
 
-                SetExtraPasswordContentEvent.Submit -> {
+                SetExtraPasswordContentNavEvent.Submit -> {
                     viewModel.submit()
                 }
             }

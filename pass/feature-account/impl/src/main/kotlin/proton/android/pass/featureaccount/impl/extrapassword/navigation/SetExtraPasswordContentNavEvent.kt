@@ -18,14 +18,14 @@
 
 package proton.android.pass.featureaccount.impl.extrapassword.navigation
 
-sealed interface SetExtraPasswordContentEvent {
-    data object Back : SetExtraPasswordContentEvent
+sealed interface SetExtraPasswordContentNavEvent {
+    data object Back : SetExtraPasswordContentNavEvent
 
     @JvmInline
-    value class OnExtraPasswordValueChanged(val value: String) : SetExtraPasswordContentEvent
+    value class OnExtraPasswordValueChangedNav(val value: String) : SetExtraPasswordContentNavEvent
 
     @JvmInline
-    value class OnExtraPasswordRepeatValueChanged(val value: String) : SetExtraPasswordContentEvent
+    value class OnExtraPasswordRepeatValueChangedNav(val value: String) : SetExtraPasswordContentNavEvent
 
-    data object Submit : SetExtraPasswordContentEvent
+    data object Submit : SetExtraPasswordContentNavEvent
 }

@@ -77,14 +77,22 @@ class AppViewModel @Inject constructor(
         .connectivity
         .distinctUntilChanged()
 
+
     val appUiState: StateFlow<AppUiState> = combine(
         snackbarDispatcher.snackbarMessage,
         themePreference,
         networkStatus,
         needsBiometricAuth(),
-        inAppUpdatesManager.observeInAppUpdateState(),
-        ::AppUiState
-    ).stateIn(
+        inAppUpdatesManager.observeInAppUpdateState()
+    ) { snackbarMessage, theme, networkStatus, needsAuth, inAppUpdateState ->
+        AppUiState(
+            snackbarMessage = snackbarMessage,
+            theme = theme,
+            networkStatus = networkStatus,
+            needsAuth = needsAuth,
+            inAppUpdateState = inAppUpdateState
+        )
+    }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = run {
@@ -111,6 +119,10 @@ class AppViewModel @Inject constructor(
         inAppUpdatesManager.checkUpdateStalled()
     }
 
+    fun onCompleteUpdate() {
+        inAppUpdatesManager.completeUpdate()
+    }
+
     fun onSnackbarMessageDelivered() {
         viewModelScope.launch {
             snackbarDispatcher.snackbarMessageDelivered()
@@ -125,10 +137,6 @@ class AppViewModel @Inject constructor(
             PassLogger.w(TAG, state.exception)
             ThemePreference.System
         }
-    }
-
-    fun onCompleteUpdate() {
-        inAppUpdatesManager.completeUpdate()
     }
 
     companion object {

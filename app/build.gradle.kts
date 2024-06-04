@@ -452,6 +452,7 @@ dependencies {
     implementation(projects.pass.featureSync.impl)
     implementation(projects.pass.featureTrial.impl)
     implementation(projects.pass.featureVault.impl)
+    implementation(projects.pass.features.extrapassword)
     implementation(projects.pass.features.itemHistory)
     implementation(projects.pass.features.securityCenter)
     implementation(projects.pass.features.upsell)

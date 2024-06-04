@@ -115,6 +115,7 @@ import proton.android.pass.featureprofile.impl.PinConfig
 import proton.android.pass.featureprofile.impl.Profile
 import proton.android.pass.featureprofile.impl.ProfileNavigation
 import proton.android.pass.featureprofile.impl.profileGraph
+import proton.android.pass.features.extrapassword.navigation.extraPasswordGraph
 import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestination
 import proton.android.pass.features.item.history.navigation.itemHistoryNavGraph
 import proton.android.pass.features.item.history.restore.navigation.ItemHistoryRestoreNavItem
@@ -1523,5 +1524,10 @@ fun NavGraphBuilder.appGraph(
                 UpsellNavDestination.Subscription -> onNavigate(AppNavigation.Subscription)
             }
         }
+    )
+
+    extraPasswordGraph(
+        onSuccess = { appNavigator.navigate(Home) },
+        onLogout = { onNavigate(AppNavigation.SignOut(it)) }
     )
 }

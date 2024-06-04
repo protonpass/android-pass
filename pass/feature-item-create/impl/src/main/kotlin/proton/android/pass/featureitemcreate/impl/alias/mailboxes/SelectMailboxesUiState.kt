@@ -23,16 +23,20 @@ import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.featureitemcreate.impl.alias.SelectedAliasMailboxUiModel
 
 @Stable
-data class SelectMailboxesUiState(
+internal data class SelectMailboxesUiState(
     val mailboxes: List<SelectedAliasMailboxUiModel>,
     val canApply: IsButtonEnabled,
     val canUpgrade: Boolean
 ) {
-    companion object {
-        val Initial = SelectMailboxesUiState(
+
+    internal companion object {
+
+        internal val Initial = SelectMailboxesUiState(
             mailboxes = emptyList(),
             canApply = IsButtonEnabled.Disabled,
             canUpgrade = false
         )
+
     }
+
 }

@@ -23,8 +23,10 @@
     <string name="account_settings_list_item_extra_password_header">Extra password for Proton Pass</string>
 
     <string name="access_key_continue">Continue</string>
-    <string name="configure_access_code">Set Access key</string>
-    <string name="configure_access_key_enter_access_key">Enter Access key</string>
-    <string name="configure_access_key_repeat_access_key">Repeat Access key\n</string>
+    <string name="configure_extra_password_title">Set extra password</string>
+    <string name="configure_access_key_enter_access_key">Extra password</string>
+    <string name="configure_extra_password_repeat_extra_password">Repeat password</string>
     <string name="account_settings_list_item_extra_password_description">The extra password will be required to use Pass. It acts as an additional password on top of your Proton password.</string>
+    <string name="configure_extra_password_description">You will be asked for this password during login and when switching from another Proton app to Proton Pass on web.</string>
+    <string name="configure_extra_password_warning">Caution: You won’t be able to access your Pass account if you lose this password.</string>
 </resources>

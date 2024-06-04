@@ -24,7 +24,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.collections.immutable.toPersistentSet
@@ -65,7 +64,7 @@ internal fun LoginContent(
 
     Column(
         modifier = modifier.padding(horizontal = Spacing.medium),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
     ) {
         AnimatedVisibility(visible = monitorState.shouldDisplayMonitoring) {
             LoginMonitorSection(
@@ -77,7 +76,7 @@ internal fun LoginContent(
         }
 
         LoginTitle(
-            modifier = Modifier.padding(Spacing.none, 12.dp),
+            modifier = Modifier.padding(Spacing.none, Spacing.mediumSmall),
             title = itemUiModel.contents.title,
             vault = vault,
             website = contents.urls.firstOrNull(),

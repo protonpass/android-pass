@@ -26,8 +26,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.PersistentSet
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
 import proton.android.pass.composecomponents.impl.form.TitleSection
@@ -53,12 +53,17 @@ fun CreditCardItemForm(
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+            .padding(Spacing.medium),
+        verticalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
         TitleSection(
             modifier = Modifier.roundedContainerNorm()
-                .padding(start = 16.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
+                .padding(
+                    start = Spacing.medium,
+                    top = Spacing.medium,
+                    end = Spacing.extraSmall,
+                    bottom = Spacing.medium
+                ),
             value = creditCardItemFormState.title,
             requestFocus = true,
             onTitleRequiredError = validationErrors

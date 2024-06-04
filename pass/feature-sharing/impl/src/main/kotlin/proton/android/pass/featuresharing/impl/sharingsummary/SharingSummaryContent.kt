@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.commonui.api.heroNorm
@@ -72,7 +73,7 @@ fun SharingSummaryContent(
         LazyColumn(
             modifier = Modifier
                 .padding(padding)
-                .padding(16.dp)
+                .padding(Spacing.medium)
         ) {
             item {
                 Column(
@@ -94,7 +95,7 @@ fun SharingSummaryContent(
 
             items(items = state.addresses, key = { it.address }) { address ->
                 AddressRowSection(
-                    modifier = Modifier.padding(vertical = 12.dp),
+                    modifier = Modifier.padding(vertical = Spacing.mediumSmall),
                     address = address
                 )
             }

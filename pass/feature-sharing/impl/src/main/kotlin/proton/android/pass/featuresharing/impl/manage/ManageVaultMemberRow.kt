@@ -46,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionNorm
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.composecomponents.impl.buttons.CircleButton
@@ -95,12 +96,12 @@ fun ManageVaultMemberRow(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 12.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+            .padding(horizontal = Spacing.medium, vertical = Spacing.mediumSmall),
+        verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+            horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
         ) {
             CircleTextIcon(
                 modifier = circleTextModifier,
@@ -149,7 +150,7 @@ private fun UserInfo(modifier: Modifier = Modifier, member: VaultMemberContent) 
 
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(4.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
     ) {
         Text(
             modifier = titleTextModifier,

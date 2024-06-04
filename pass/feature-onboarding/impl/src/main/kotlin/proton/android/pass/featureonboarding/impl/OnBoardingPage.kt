@@ -70,7 +70,7 @@ fun OnBoardingPage(
         ) {
             Spacer(modifier = Modifier.height(18.dp))
             Text(
-                modifier = Modifier.padding(32.dp, 0.dp),
+                modifier = Modifier.padding(32.dp, Spacing.none),
                 color = ProtonTheme.colors.textNorm,
                 style = ProtonTheme.typography.headlineNorm,
                 text = onBoardingPageData.title,
@@ -78,7 +78,7 @@ fun OnBoardingPage(
             )
             Spacer(modifier = Modifier.height(24.dp))
             Text(
-                modifier = Modifier.padding(32.dp, 0.dp),
+                modifier = Modifier.padding(32.dp, Spacing.none),
                 text = onBoardingPageData.subtitle,
                 style = ProtonTheme.typography.defaultWeak,
                 textAlign = TextAlign.Center
@@ -87,7 +87,7 @@ fun OnBoardingPage(
             CircleButton(
                 modifier = Modifier
                     .testTag(OnBoardingPageTestTag.mainButton)
-                    .padding(32.dp, 0.dp)
+                    .padding(32.dp, Spacing.none)
                     .fillMaxWidth()
                     .height(48.dp),
                 color = PassTheme.colors.interactionNormMajor1,
@@ -104,7 +104,7 @@ fun OnBoardingPage(
                 ProtonTextButton(
                     modifier = Modifier
                         .testTag(OnBoardingPageTestTag.skipButton)
-                        .padding(32.dp, 0.dp)
+                        .padding(32.dp, Spacing.none)
                         .fillMaxWidth()
                         .height(48.dp),
                     onClick = { onSkipButtonClick(onBoardingPageData.page) }
@@ -120,7 +120,7 @@ fun OnBoardingPage(
                 val context = LocalContext.current
                 ProtonTextButton(
                     modifier = Modifier
-                        .padding(32.dp, 0.dp)
+                        .padding(32.dp, Spacing.none)
                         .fillMaxWidth(),
                     onClick = { openWebsite(context, PASS_TUTORIAL) }
                 ) {
@@ -144,7 +144,7 @@ fun OnBoardingPage(
             }
             Spacer(
                 modifier = Modifier
-                    .heightIn(0.dp, 50.dp)
+                    .heightIn(Spacing.none, 50.dp)
                     .weight(1f)
             )
         }

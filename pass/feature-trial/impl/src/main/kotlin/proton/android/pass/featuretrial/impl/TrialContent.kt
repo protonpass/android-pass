@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.commonui.api.heroNorm
@@ -85,7 +86,7 @@ fun TrialContent(
         Spacer(modifier = Modifier.height(28.dp))
 
         TrialGradientButton(
-            modifier = Modifier.padding(horizontal = 16.dp),
+            modifier = Modifier.padding(horizontal = Spacing.medium),
             text = stringResource(R.string.trial_button_text),
             onClick = { onNavigate(TrialNavigation.Upgrade) }
         )

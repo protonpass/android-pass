@@ -35,6 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 
 @Composable
@@ -42,7 +43,7 @@ fun PlaceholderItemRow(modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp, vertical = 12.dp),
+            .padding(horizontal = 20.dp, vertical = Spacing.mediumSmall),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
@@ -51,7 +52,7 @@ fun PlaceholderItemRow(modifier: Modifier = Modifier) {
                 .placeholder()
         )
         Column(
-            modifier = Modifier.padding(horizontal = 16.dp),
+            modifier = Modifier.padding(horizontal = Spacing.medium),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Box(

@@ -34,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.body3Inverted
 import proton.android.pass.commonui.api.bottomSheet
@@ -51,7 +52,7 @@ fun GeneratePasswordBottomSheetContent(
         modifier = modifier
             .verticalScroll(rememberScrollState())
             .bottomSheet(horizontalPadding = PassTheme.dimens.bottomsheetHorizontalPadding),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
     ) {
         GeneratePasswordBottomSheetTitle(onRegenerate = {
             onEvent(GeneratePasswordEvent.OnRegeneratePasswordClick)

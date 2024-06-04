@@ -50,6 +50,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.CircleIconButton
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -70,7 +71,7 @@ fun SessionsScreenContent(
                 Button(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 12.dp),
+                        .padding(horizontal = Spacing.medium, vertical = Spacing.mediumSmall),
                     onClick = onClearSessions
                 ) {
                     Text(text = "Clear All")

@@ -27,12 +27,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultHighlightNorm
 import me.proton.core.compose.theme.defaultWeak
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.featuresharing.impl.R
 import me.proton.core.presentation.R as CoreR
 
@@ -47,7 +47,7 @@ fun ShareFromItemContent(
             horizontal = PassTheme.dimens.bottomsheetHorizontalPadding,
             vertical = PassTheme.dimens.bottomsheetVerticalPadding
         ),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
     ) {
         Column {
             Text(

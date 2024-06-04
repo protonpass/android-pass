@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.presentation.R
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -49,7 +50,7 @@ internal fun SelectionModeTopBar(
     onEvent: (HomeUiEvent) -> Unit
 ) {
     ProtonTopAppBar(
-        modifier = modifier.padding(vertical = 12.dp),
+        modifier = modifier.padding(vertical = Spacing.mediumSmall),
         title = {
             Text(
                 text = selectionState.selectedItemCount.toString(),

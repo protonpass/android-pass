@@ -32,6 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.featurehome.impl.R
 import me.proton.core.presentation.R as CoreR
@@ -48,7 +49,7 @@ fun HomeEmptyList(
 ) {
     Column(
         modifier = modifier
-            .padding(16.dp),
+            .padding(Spacing.medium),
         verticalArrangement = Arrangement.Center
     ) {
         Column(

@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultWeak
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 
 @Composable
 fun SettingToggle(
@@ -47,7 +48,7 @@ fun SettingToggle(
             .clickable { onClick(!isChecked) }
             .fillMaxWidth()
             .padding(16.dp, 26.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
     ) {
         Row(horizontalArrangement = Arrangement.SpaceBetween) {
             Text(

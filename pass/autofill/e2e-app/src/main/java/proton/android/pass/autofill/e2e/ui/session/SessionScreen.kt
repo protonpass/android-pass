@@ -58,6 +58,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.autofill.debug.AutofillDebugSaver
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.applyIf
 
 const val SESSION_DETAIL_ROUTE = "e2eapp/session"
@@ -122,7 +123,7 @@ private fun DebugAutofillNodeView(
     level: Int
 ) {
     var showContent by remember { mutableStateOf(content.hasEditTextOrUrl()) }
-    Column(modifier = modifier.padding(start = padding, top = 4.dp, bottom = 4.dp)) {
+    Column(modifier = modifier.padding(start = padding, top = Spacing.extraSmall, bottom = Spacing.extraSmall)) {
         Row(
             modifier = Modifier
                 .height(IntrinsicSize.Min)
@@ -132,7 +133,7 @@ private fun DebugAutofillNodeView(
                         clickable { showContent = !showContent }
                     }
                 ),
-            horizontalArrangement = Arrangement.spacedBy(4.dp)
+            horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
         ) {
             Box(
                 modifier = Modifier

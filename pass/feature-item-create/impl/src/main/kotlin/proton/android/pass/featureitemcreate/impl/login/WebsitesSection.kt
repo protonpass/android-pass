@@ -58,6 +58,7 @@ import kotlinx.collections.immutable.persistentListOf
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
@@ -84,12 +85,12 @@ internal fun WebsitesSection(
     Row(
         modifier = modifier
             .roundedContainerNorm()
-            .padding(0.dp, 16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
+            .padding(Spacing.none, Spacing.medium),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.medium),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            modifier = Modifier.padding(12.dp, 0.dp, 0.dp, 0.dp),
+            modifier = Modifier.padding(Spacing.mediumSmall, Spacing.none, Spacing.none, Spacing.none),
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_earth),
             contentDescription = "",
             tint = if (websitesWithErrors.isNotEmpty()) {

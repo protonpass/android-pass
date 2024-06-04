@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableSet
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.R
 
@@ -41,7 +42,7 @@ fun LinkedAppsListSection(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(8.dp, 12.dp, 0.dp, 12.dp),
+            .padding(Spacing.small, Spacing.mediumSmall, Spacing.none, Spacing.mediumSmall),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         SectionTitle(text = stringResource(R.string.linked_apps_title))

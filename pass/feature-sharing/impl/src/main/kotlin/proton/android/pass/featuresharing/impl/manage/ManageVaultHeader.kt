@@ -30,17 +30,17 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
-import proton.android.pass.featuresharing.impl.R
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultWithItemCount
+import proton.android.pass.featuresharing.impl.R
 
 @Composable
 fun ManageVaultHeader(modifier: Modifier = Modifier, vault: VaultWithItemCount?) {
@@ -48,7 +48,7 @@ fun ManageVaultHeader(modifier: Modifier = Modifier, vault: VaultWithItemCount?)
 
     Column(
         modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(4.dp),
+        verticalArrangement = Arrangement.spacedBy(Spacing.extraSmall),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         VaultIcon(

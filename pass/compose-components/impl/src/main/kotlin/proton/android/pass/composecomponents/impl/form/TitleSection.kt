@@ -33,6 +33,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.heroNorm
@@ -60,7 +61,12 @@ fun TitleSection(
                 condition = !isRounded,
                 ifTrue = {
                     roundedContainerNorm()
-                        .padding(start = 16.dp, top = 10.dp, end = 4.dp, bottom = 10.dp)
+                        .padding(
+                            start = Spacing.medium,
+                            top = 10.dp,
+                            end = Spacing.extraSmall,
+                            bottom = 10.dp
+                        )
                 }
             )
             .focusRequester(focusRequester),

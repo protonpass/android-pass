@@ -31,9 +31,9 @@ import androidx.compose.material.rememberDismissState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.coroutines.launch
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.AUTOFILL
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.INVITE
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.NOTIFICATION_PERMISSION
@@ -54,7 +54,7 @@ fun OnBoardingTipContent(
             enter = expandVertically(),
             exit = shrinkVertically()
         ) {
-            Box(modifier = Modifier.padding(16.dp)) {
+            Box(modifier = Modifier.padding(Spacing.medium)) {
                 val dismissState = rememberDismissState(
                     confirmStateChange = {
                         if (it != DismissValue.Default) {
@@ -82,7 +82,7 @@ fun OnBoardingTipContent(
             enter = expandVertically(),
             exit = shrinkVertically()
         ) {
-            Box(modifier = Modifier.padding(16.dp)) {
+            Box(modifier = Modifier.padding(Spacing.medium)) {
                 val dismissState = rememberDismissState(
                     confirmStateChange = {
                         if (it != DismissValue.Default) {
@@ -110,7 +110,7 @@ fun OnBoardingTipContent(
             enter = expandVertically(),
             exit = shrinkVertically()
         ) {
-            Box(modifier = Modifier.padding(16.dp)) {
+            Box(modifier = Modifier.padding(Spacing.medium)) {
                 InviteCard(
                     onClick = { onClick(INVITE) }
                 )
@@ -122,7 +122,7 @@ fun OnBoardingTipContent(
             enter = expandVertically(),
             exit = shrinkVertically()
         ) {
-            Box(modifier = Modifier.padding(16.dp)) {
+            Box(modifier = Modifier.padding(Spacing.medium)) {
                 val dismissState = rememberDismissState(
                     confirmStateChange = {
                         if (it != DismissValue.Default) {

@@ -31,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.buttons.UpgradeButton
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
@@ -42,7 +43,7 @@ fun ShareFromItemUpgradeRow(modifier: Modifier = Modifier, onClick: () -> Unit) 
     Row(
         modifier = modifier
             .roundedContainerNorm()
-            .padding(16.dp),
+            .padding(Spacing.medium),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {

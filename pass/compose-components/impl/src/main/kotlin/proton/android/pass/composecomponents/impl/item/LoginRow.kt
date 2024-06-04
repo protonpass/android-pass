@@ -127,7 +127,7 @@ fun LoginRow(
     )
 }
 
-@Suppress("LongParameterList")
+@Suppress("ComplexMethod", "CyclomaticComplexMethod", "LongParameterList")
 private fun getHighlightedFields(
     title: String,
     email: String,
@@ -177,18 +177,19 @@ private fun getHighlightedFields(
         }
     }
 
+    val displayUsernameFallback = AnnotatedString(displayUsername.take(MAX_PREVIEW_LENGTH))
     val rowUsername =
         if (highlight.isBlank() && annotatedEmail == null && annotatedUsername == null) {
-            AnnotatedString(displayUsername.take(MAX_PREVIEW_LENGTH))
+            displayUsernameFallback
         } else {
-            annotatedUsername ?: annotatedEmail
+            annotatedUsername ?: annotatedEmail ?: displayUsernameFallback
         }
 
 
     return LoginHighlightFields(
         title = annotatedTitle,
         note = annotatedNote,
-        email = annotatedEmail,
+        email = rowUsername,
         username = annotatedUsername,
         websites = annotatedWebsites,
         subtitles = (

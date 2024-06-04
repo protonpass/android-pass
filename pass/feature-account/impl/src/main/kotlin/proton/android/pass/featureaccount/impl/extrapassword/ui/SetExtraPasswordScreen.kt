@@ -33,15 +33,15 @@ fun SetExtraPasswordScreen(
 ) {
     SetExtraPasswordContent(
         modifier = modifier,
-        state = viewModel.getAccessKeyState(),
+        state = viewModel.getExtraPasswordState(),
         onEvent = {
             when (it) {
                 is SetExtraPasswordContentEvent.Back -> onNavigate(AccountNavigation.Back)
                 is SetExtraPasswordContentEvent.OnExtraPasswordRepeatValueChanged ->
-                    viewModel.onAccessKeyRepeatValueChanged(it.value)
+                    viewModel.onExtraPasswordRepeatValueChanged(it.value)
 
                 is SetExtraPasswordContentEvent.OnExtraPasswordValueChanged ->
-                    viewModel.onAccessKeyValueChanged(it.value)
+                    viewModel.onExtraPasswordValueChanged(it.value)
 
                 SetExtraPasswordContentEvent.Submit -> {
                     viewModel.submit()

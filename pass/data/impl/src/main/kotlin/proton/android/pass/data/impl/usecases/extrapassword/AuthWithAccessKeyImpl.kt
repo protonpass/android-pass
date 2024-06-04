@@ -16,24 +16,24 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.usecases.accesskey
+package proton.android.pass.data.impl.usecases.extrapassword
 
 import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.usecases.accesskey.AuthWithAccessKey
-import proton.android.pass.data.api.usecases.accesskey.AuthWithExtraPasswordResult
-import proton.android.pass.data.impl.remote.RemoteAccessKeyDataSource
-import proton.android.pass.data.impl.requests.AuthKeySendSrpDataRequest
+import proton.android.pass.data.api.usecases.extrapassword.AuthWithAccessKey
+import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordResult
+import proton.android.pass.data.impl.remote.RemoteExtraPasswordDataSource
+import proton.android.pass.data.impl.requests.ExtraPasswordSendSrpDataRequest
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class AuthWithAccessKeyImpl @Inject constructor(
     private val srpCrypto: SrpCrypto,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val remoteAccessKeyDataSource: RemoteAccessKeyDataSource,
+    private val remoteExtraPasswordDataSource: RemoteExtraPasswordDataSource,
     private val sessionManager: SessionManager,
     private val authWithExtraPasswordListener: AuthWithExtraPasswordListenerImpl
 ) : AuthWithAccessKey {
@@ -42,7 +42,7 @@ class AuthWithAccessKeyImpl @Inject constructor(
             decrypt(password).encodeToByteArray()
         }
 
-        val srpData = remoteAccessKeyDataSource.getAccessKeyAuthData(userId)
+        val srpData = remoteExtraPasswordDataSource.getExtraPasswordAuthData(userId)
 
         val proofs = srpCrypto.generateSrpProofs(
             username = "", // Not used
@@ -53,9 +53,9 @@ class AuthWithAccessKeyImpl @Inject constructor(
             serverEphemeral = srpData.serverEphemeral
         )
 
-        remoteAccessKeyDataSource.sendAccessKeyAuthData(
+        remoteExtraPasswordDataSource.sendExtraPasswordAuthData(
             userId = userId,
-            request = AuthKeySendSrpDataRequest(
+            request = ExtraPasswordSendSrpDataRequest(
                 clientEphemeral = proofs.clientEphemeral,
                 clientProof = proofs.clientProof,
                 srpSessionId = srpData.srpSessionId

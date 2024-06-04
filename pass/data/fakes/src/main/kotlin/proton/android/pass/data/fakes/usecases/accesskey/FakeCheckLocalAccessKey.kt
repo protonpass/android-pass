@@ -20,7 +20,7 @@ package proton.android.pass.data.fakes.usecases.accesskey
 
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.api.usecases.accesskey.CheckLocalAccessKey
+import proton.android.pass.data.api.usecases.extrapassword.CheckLocalAccessKey
 import javax.inject.Inject
 import javax.inject.Singleton
 

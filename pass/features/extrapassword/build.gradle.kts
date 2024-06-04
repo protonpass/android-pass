@@ -98,4 +98,19 @@ dependencies {
     implementation(libs.androidx.compose.uiToolingPreview)
     debugImplementation(libs.androidx.compose.uiTooling)
     debugImplementation(libs.androidx.compose.uiTestManifest)
+
+    testImplementation(libs.turbine)
+    testImplementation(libs.truth)
+    testImplementation(libs.kotlinTest)
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.junit)
+
+    testImplementation(projects.pass.commonTest)
+    testImplementation(projects.pass.commonUi.fakes)
+    testImplementation(projects.pass.crypto.fakes)
+    testImplementation(projects.pass.data.fakes)
+    testImplementation(projects.pass.notifications.fakes)
+    testImplementation(projects.pass.preferences.fakes)
+    testImplementation(projects.pass.securityCenter.fakes)
+    testImplementation(projects.pass.telemetry.fakes)
 }

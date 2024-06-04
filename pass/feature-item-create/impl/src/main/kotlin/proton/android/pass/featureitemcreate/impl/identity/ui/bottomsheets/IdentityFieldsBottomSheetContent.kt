@@ -42,6 +42,7 @@ import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsh
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.ContactDetailsField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.County
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.ExtraField
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.ExtraSectionCustomField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Facebook
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.FirstName
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Floor
@@ -72,15 +73,22 @@ fun IdentityFieldsBottomSheetContent(
             style = PassTheme.typography.body3Weak()
         )
         fieldSet.firstOrNull()?.let {
-            val titleId = when (it) {
-                is PersonalDetailsField -> R.string.identity_section_personal_details
-                is AddressDetailsField -> R.string.identity_section_address_details
-                is ContactDetailsField -> R.string.identity_section_contact_details
-                is WorkDetailsField -> R.string.identity_section_work_details
+            val title = when (it) {
+                is PersonalDetailsField ->
+                    stringResource(R.string.identity_section_personal_details)
+                is AddressDetailsField ->
+                    stringResource(R.string.identity_section_address_details)
+                is ContactDetailsField ->
+                    stringResource(R.string.identity_section_contact_details)
+                is WorkDetailsField ->
+                    stringResource(R.string.identity_section_work_details)
+                is ExtraSectionCustomField -> ""
             }
-            BottomSheetTitle(
-                title = stringResource(titleId)
-            )
+            if (title.isNotBlank()) {
+                BottomSheetTitle(
+                    title = title
+                )
+            }
         }
         BottomSheetItemList(
             items = fieldSet.map { extraOption(it, onFieldClick) }.withDividers().toPersistentList()
@@ -111,7 +119,8 @@ internal fun extraOption(extraField: ExtraField, onClick: (ExtraField) -> Unit):
                     is AddressCustomField,
                     is ContactCustomField,
                     is PersonalCustomField,
-                    is WorkCustomField -> R.string.identity_add_field_custom_field
+                    is WorkCustomField,
+                    is ExtraSectionCustomField -> R.string.identity_add_field_custom_field
                 }
                 BottomSheetItemTitle(
                     text = stringResource(titleResId),

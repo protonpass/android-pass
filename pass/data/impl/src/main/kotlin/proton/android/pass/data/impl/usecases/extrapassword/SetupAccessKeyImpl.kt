@@ -28,7 +28,7 @@ import me.proton.core.crypto.common.srp.SrpCrypto
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.extrapassword.SetupAccessKey
 import proton.android.pass.data.impl.remote.RemoteExtraPasswordDataSource
-import proton.android.pass.data.impl.repositories.AccessKeyRepository
+import proton.android.pass.data.impl.repositories.ExtraPasswordRepository
 import proton.android.pass.data.impl.requests.SetupExtraPasswordRequest
 import javax.inject.Inject
 
@@ -38,7 +38,7 @@ class SetupAccessKeyImpl @Inject constructor(
     private val authRepository: AuthRepository,
     private val accountManager: AccountManager,
     private val remoteExtraPasswordDataSource: RemoteExtraPasswordDataSource,
-    private val accessKeyRepository: AccessKeyRepository
+    private val extraPasswordRepository: ExtraPasswordRepository
 ) : SetupAccessKey {
     override suspend fun invoke(password: EncryptedString) {
         val decryptedPassword = encryptionContextProvider.withEncryptionContext {
@@ -57,7 +57,7 @@ class SetupAccessKeyImpl @Inject constructor(
 
         remoteExtraPasswordDataSource.setupExtraPassword(account.userId, verifier.toRequest())
 
-        accessKeyRepository.storeAccessKeyForUser(account.userId, password)
+        extraPasswordRepository.storeAccessKeyForUser(account.userId, password)
     }
 
     private fun Auth.toRequest() = SetupExtraPasswordRequest(

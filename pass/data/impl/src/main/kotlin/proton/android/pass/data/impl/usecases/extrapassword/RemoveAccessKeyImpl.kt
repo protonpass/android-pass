@@ -23,12 +23,12 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
 import proton.android.pass.data.api.usecases.extrapassword.RemoveAccessKey
 import proton.android.pass.data.impl.remote.RemoteExtraPasswordDataSource
-import proton.android.pass.data.impl.repositories.AccessKeyRepository
+import proton.android.pass.data.impl.repositories.ExtraPasswordRepository
 import javax.inject.Inject
 
 class RemoveAccessKeyImpl @Inject constructor(
     private val remoteExtraPasswordDataSource: RemoteExtraPasswordDataSource,
-    private val accessKeyRepository: AccessKeyRepository,
+    private val extraPasswordRepository: ExtraPasswordRepository,
     private val accountManager: AccountManager
 ) : RemoveAccessKey {
 
@@ -37,7 +37,7 @@ class RemoveAccessKeyImpl @Inject constructor(
             ?: throw IllegalStateException("No primary account found")
 
         remoteExtraPasswordDataSource.removeExtraPassword(primaryAccount.userId)
-        accessKeyRepository.removeAccessKeyForUser(primaryAccount.userId)
+        extraPasswordRepository.removeExtraPasswordForUser(primaryAccount.userId)
     }
 
 }

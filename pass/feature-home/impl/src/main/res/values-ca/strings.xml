@@ -131,6 +131,6 @@
   <string name="home_snackbar_items_pinned_partial_success">Error pinning some of the items</string>
   <string name="home_snackbar_items_pinned_error">S\'ha produït un error en ancorar els elements.</string>
   <string name="home_snackbar_items_unpinned_success">Els elements no fixats s\'han fixat correctament</string>
-  <string name="home_snackbar_items_unpinned_partial_success">Error unpinning some of the items</string>
+  <string name="home_snackbar_items_unpinned_partial_success">S\'ha produït un error en desancorar alguns dels elements.</string>
   <string name="home_snackbar_items_unpinned_error">S\'ha produït un error en desancorar els elements.</string>
 </resources>

@@ -20,8 +20,10 @@
   <string name="field_email_title">E‐Mail‐Adresse</string>
   <string name="field_email_hint">E-Mail-Adresse hinzufügen</string>
   <string name="field_email_error">Ungültige E-Mail-Adresse</string>
+  <string name="field_email_tooltip_title">Benutzername-Feld hinzufügen</string>
+  <string name="field_email_tooltip_description">Tippe hier, um ein Feld für einen Benutzernamen hinzuzufügen.</string>
   <string name="field_username_title">Benutzername</string>
-  <string name="field_username_hint">Benutzernamen hinzufügen</string>
+  <string name="field_username_hint">Benutzername hinzufügen</string>
   <string name="field_username_or_email_title">Benutzername oder E-Mail-Adresse</string>
   <string name="field_username_or_email_hint">Benutzername oder E-Mail-Adresse hinzufügen</string>
   <string name="field_password_title">Passwort</string>
@@ -107,7 +109,7 @@
   <string name="identity_field_country_or_region_title">Land oder Region</string>
   <string name="identity_field_social_security_number_title">Sozialversicherungsnummer</string>
   <string name="identity_field_passport_number_title">Reisepassnummer</string>
-  <string name="identity_field_license_number_title">License number</string>
+  <string name="identity_field_license_number_title">Lizenznummer</string>
   <string name="identity_field_website_title">Website</string>
   <string name="identity_field_xhandle_title">X-Benutzername</string>
   <string name="identity_field_company_title">Unternehmen</string>
@@ -142,9 +144,10 @@
   <string name="identity_add_field_personal_website">URL der persönlichen Website</string>
   <string name="identity_add_field_work_phone_number">Geschäftliche Telefonnummer</string>
   <string name="identity_add_field_work_email_address">Geschäftliche E-Mail-Adresse</string>
+  <string name="identity_add_field_custom_field">Custom field</string>
   <string name="identity_section_personal_details">Persönliche Details</string>
   <string name="identity_section_address_details">Adressdetails</string>
-  <string name="identity_section_contact_details">Kontaktinformationen</string>
+  <string name="identity_section_contact_details">Kontaktdetails</string>
   <string name="identity_section_work_details">Geschäftliche Details</string>
   <string name="identity_add_more_fields">Weitere hinzufügen</string>
   <string name="identity_bottomsheet_add_field">Feld hinzufügen</string>
@@ -170,7 +173,7 @@
   <string name="select_suffix_upgrade_for_custom_domains">Upgrade für benutzerdefinierte Domains</string>
   <string name="select_mailbox_upgrade_for_more_inboxes">Upgrade für weitere Postfächer</string>
   <string name="create_alias_content_limit_banner">Du hast das Limit an Aliassen erreicht, die du erstellen kannst. Ein Upgrade deines Abonnements ermöglicht dir das Erstellen von unbegrenzten Aliassen.</string>
-  <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Die App muss aktualisiert werden, um dieses Element zu bearbeiten</string>
+  <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Die App muss aktualisiert werden, damit dieser Eintrag bearbeitet werden kann.</string>
   <string name="remove_passkey_dialog_title">Diesen Passkey entfernen?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Du bist dabei, den Passkey für den Benutzer \'%1$s\' für \'%2$s\' zu entfernen. Bist du sicher?</string>
 </resources>

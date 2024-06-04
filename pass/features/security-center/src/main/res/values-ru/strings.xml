@@ -124,7 +124,7 @@
   <string name="security_center_verify_report_title_none">No breaches detected for</string>
   <!-- Email breach report -->
   <string name="security_center_email_report_used_in_header">Used in</string>
-  <string name="security_center_email_report_breaches_header">Breaches</string>
+  <string name="security_center_email_report_breaches_header">Утечки</string>
   <string name="security_center_email_report_resolved_breaches_header">Устраненные утечки</string>
   <string name="security_center_email_report_mark_as_resolved">Mark as resolved</string>
   <string name="security_center_email_report_snackbar_marked_as_resolved_success">Breach has been marked as resolved</string>

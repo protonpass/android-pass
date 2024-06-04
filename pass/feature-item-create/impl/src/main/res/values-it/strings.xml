@@ -20,6 +20,8 @@
   <string name="field_email_title">Indirizzo email</string>
   <string name="field_email_hint">Aggiungi indirizzo email</string>
   <string name="field_email_error">Indirizzo email non valido</string>
+  <string name="field_email_tooltip_title">Aggiungi il campo nome utente</string>
+  <string name="field_email_tooltip_description">Tocca qui per aggiungere un campo per il nome utente.</string>
   <string name="field_username_title">Nome utente</string>
   <string name="field_username_hint">Aggiungi nome utente</string>
   <string name="field_username_or_email_title">Nome utente o indirizzo email</string>
@@ -142,6 +144,7 @@
   <string name="identity_add_field_personal_website">URL del sito web personale</string>
   <string name="identity_add_field_work_phone_number">Telefono di lavoro</string>
   <string name="identity_add_field_work_email_address">Email di lavoro</string>
+  <string name="identity_add_field_custom_field">Custom field</string>
   <string name="identity_section_personal_details">Informazioni personali</string>
   <string name="identity_section_address_details">Dettagli dell\'indirizzo</string>
   <string name="identity_section_contact_details">Dettagli contatto</string>

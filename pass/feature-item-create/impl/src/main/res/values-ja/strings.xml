@@ -20,6 +20,8 @@
   <string name="field_email_title">メールアドレス</string>
   <string name="field_email_hint">メールアドレスの追加</string>
   <string name="field_email_error">無効なメールアドレスです</string>
+  <string name="field_email_tooltip_title">ユーザー名フィールドを追加</string>
+  <string name="field_email_tooltip_description">ここをタップしてユーザー名のフィールドを追加します。</string>
   <string name="field_username_title">ユーザー名</string>
   <string name="field_username_hint">ユーザー名を追加</string>
   <string name="field_username_or_email_title">ユーザー名またはメールアドレス</string>
@@ -142,6 +144,7 @@
   <string name="identity_add_field_personal_website">Personal website URL</string>
   <string name="identity_add_field_work_phone_number">Work phone number</string>
   <string name="identity_add_field_work_email_address">Work email address</string>
+  <string name="identity_add_field_custom_field">Custom field</string>
   <string name="identity_section_personal_details">Personal details</string>
   <string name="identity_section_address_details">Address details</string>
   <string name="identity_section_contact_details">連絡先の詳細</string>

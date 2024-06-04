@@ -16,7 +16,7 @@
   <string name="home_snackbar_alias_moved_to_trash">Alias dipindahkan ke sampah</string>
   <string name="home_snackbar_note_moved_to_trash">Catatan dipindahkan ke sampah</string>
   <string name="home_snackbar_credit_card_moved_to_trash">Kartu kredit dipindahkan ke tempat sampah</string>
-  <string name="home_snackbar_identity_moved_to_trash">Identity moved to trash</string>
+  <string name="home_snackbar_identity_moved_to_trash">Identitas dipindahkan ke sampah</string>
   <string name="home_snackbar_move_to_trash_error">Item tidak dapat dipindahkan ke sampah</string>
   <string name="home_snackbar_items_move_to_trash_success">Item dipindahkan ke sampah</string>
   <string name="home_snackbar_items_move_to_trash_error">Item tidak dapat dipindahkan ke sampah</string>

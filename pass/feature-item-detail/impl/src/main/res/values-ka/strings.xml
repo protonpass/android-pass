@@ -40,10 +40,10 @@
   <string name="login_item_monitor_widget_weak_pass_title">პაროლი სუსტია</string>
   <string name="login_item_monitor_widget_weak_pass_subtitle">ეს ანგარიში მოწყვლადია. მიმართეთ სერვისს და შეცვალეთ თქვენი პაროლი.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
-    <item quantity="one">%d other login uses the same password</item>
-    <item quantity="other">%d other logins use the same password</item>
+    <item quantity="one">%d სხვა მომხმარებელი იყენებს ამ პაროლს</item>
+    <item quantity="other">%d სხვა მომხმარებელი იყენებს ამ პაროლს</item>
   </plurals>
-  <string name="login_item_monitor_widget_missing_two_fa_title">Set up 2FA for more security</string>
+  <string name="login_item_monitor_widget_missing_two_fa_title">მოირგეთ 2FA მეტი უსაფრთხოებისთვის</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">This service offers 2FA. Enable it for added account security.</string>
   <string name="login_item_reused_passwords_subtitle">Items from your vaults that use this password.</string>
   <string name="field_email">ელფოსტის მისამართი</string>

@@ -41,6 +41,7 @@ import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.composecomponents.impl.labels.CollapsibleSectionHeader
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent
+import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent.OnExtraSectionOptions
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent.OnFieldChange
 import proton.android.pass.featureitemcreate.impl.identity.presentation.FieldChange
 import proton.android.pass.featureitemcreate.impl.identity.presentation.IdentityItemFormState
@@ -182,6 +183,9 @@ fun IdentityItemForm(
                     } else {
                         isGroupCollapsed.add(ExtraSection(sectionIndex))
                     }
+                },
+                onOptionsClick = {
+                    onEvent(OnExtraSectionOptions(sectionIndex, section.title))
                 }
             )
             AnimatedVisibility(visible = !isGroupCollapsed.contains(ExtraSection(sectionIndex))) {

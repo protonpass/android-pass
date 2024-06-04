@@ -21,16 +21,16 @@ package proton.android.pass.data.impl.usecases.extrapassword
 import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
-import proton.android.pass.data.api.usecases.extrapassword.RemoveAccessKey
+import proton.android.pass.data.api.usecases.extrapassword.RemoveExtraPassword
 import proton.android.pass.data.impl.remote.RemoteExtraPasswordDataSource
 import proton.android.pass.data.impl.repositories.ExtraPasswordRepository
 import javax.inject.Inject
 
-class RemoveAccessKeyImpl @Inject constructor(
+class RemoveExtraPasswordImpl @Inject constructor(
     private val remoteExtraPasswordDataSource: RemoteExtraPasswordDataSource,
     private val extraPasswordRepository: ExtraPasswordRepository,
     private val accountManager: AccountManager
-) : RemoveAccessKey {
+) : RemoveExtraPassword {
 
     override suspend operator fun invoke() {
         val primaryAccount = accountManager.getPrimaryAccount().firstOrNull()

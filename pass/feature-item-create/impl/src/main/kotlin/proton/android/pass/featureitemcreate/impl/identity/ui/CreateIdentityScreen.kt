@@ -41,6 +41,7 @@ import proton.android.pass.featureitemcreate.impl.common.ItemSavedLaunchedEffect
 import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdentityNavigation
 import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdentityNavigation.AddExtraSection
 import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdentityNavigation.CustomFieldOptions
+import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdentityNavigation.ExtraSectionOptions
 import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdentityNavigation.OpenExtraFieldBottomSheet
 import proton.android.pass.featureitemcreate.impl.identity.navigation.CreateIdentityNavigation
 import proton.android.pass.featureitemcreate.impl.identity.navigation.CreateIdentityNavigation.SelectVault
@@ -128,6 +129,11 @@ fun CreateIdentityScreen(
                     is IdentityContentEvent.OnAddExtraSectionCustomField -> actionAfterKeyboardHide = {
                         onNavigate(OpenExtraFieldBottomSheet(AddIdentityFieldType.Extra, event.index.some()))
                     }
+
+                    is IdentityContentEvent.OnExtraSectionOptions ->
+                        actionAfterKeyboardHide = {
+                            onNavigate(ExtraSectionOptions(event.label, event.index))
+                        }
                 }
             }
         )

@@ -26,7 +26,9 @@ const val DRAFT_CUSTOM_FIELD_KEY = "customField"
 const val DRAFT_IDENTITY_EXTRA_SECTION_KEY = "identityExtraSection"
 const val DRAFT_IDENTITY_CUSTOM_FIELD_KEY = "identityCustomField"
 const val DRAFT_CUSTOM_FIELD_TITLE_KEY = "customFieldTitle"
+const val DRAFT_CUSTOM_SECTION_TITLE_KEY = "customSectionTitle"
 const val DRAFT_REMOVE_CUSTOM_FIELD_KEY = "removeCustomField"
+const val DRAFT_REMOVE_CUSTOM_SECTION_KEY = "removeCustomSection"
 
 interface DraftRepository {
     fun save(key: String, value: Any)

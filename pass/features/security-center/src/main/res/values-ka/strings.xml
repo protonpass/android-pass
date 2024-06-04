@@ -33,7 +33,7 @@
   <string name="security_center_home_row_reused_passwords_title">განმეორებით გამოყენებული პაროლები</string>
   <string name="security_center_home_row_reused_passwords_subtitle">დააგენერირეთ უნიკალური პაროლები</string>
   <string name="security_center_home_row_missing_tfa_title">არააქტიური 2FA</string>
-  <string name="security_center_home_row_missing_tfa_subtitle">Set up 2FA for more security</string>
+  <string name="security_center_home_row_missing_tfa_subtitle">მოირგეთ 2FA მეტი უსაფრთხოებისთვის</string>
   <string name="security_center_home_row_excludes_items_title">ამოღებულია მონიტორინგიდან</string>
   <string name="security_center_home_row_excludes_items_subtitle">ეს ელემენტები რჩება რისკის ქვეშ</string>
   <string name="security_center_get_breaches_error">გაჟონვების ჩატვირთვა შეუძლებელია</string>
@@ -52,7 +52,7 @@
   <string name="security_center_weak_pass_top_bar_subtitle">სუსტი პაროლების მიხვედრა ადვილია. შექმენით ძლიერი პაროლები, რომ თქვენი ანგარიში უსაფრთხოდ იყოს.</string>
   <!-- Reused passwords screen -->
   <string name="security_center_reused_pass_top_bar_title">განმეორებით გამოყენებული პაროლები</string>
-  <string name="security_center_reused_pass_top_bar_subtitle">Generate unique passwords for each account to increase your security.</string>
+  <string name="security_center_reused_pass_top_bar_subtitle">შექმენით უნიკალური პაროლები თითოეული ანგარიშისთვის თქვენი უსაფრთხოების გასაზრდელად.</string>
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">გამოყენებულია %1$d-ჯერ</string>
   <!-- Missing 2FA -->
   <string name="security_center_missing_tfa_top_bar_title">არააქტიური 2FA</string>
@@ -108,7 +108,7 @@
   <string name="security_center_verify_email_subtitle">გადამოწმების კოდი გაგზავნილია მისამართზე %s. შეიყვანეთ ის ქვემოთ:</string>
   <string name="security_center_verify_email_code_resend_header">კოდი არ მიგიღიათ?</string>
   <string name="security_center_verify_email_code_resend_body">Please check in your Spam for an email called “Please confirm your email address for Proton Pass“</string>
-  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">If you can’t find such email, you can </string>
+  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">თუ ასეთ ელფოსტას ვერ პოულობთ, შეგიძლიათ </string>
   <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">ახალი კოდის გამოთხოვა.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_success">A new verification has been sent, please check your inbox.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">There was an error sending the verification code. Please try again later.</string>
@@ -134,7 +134,7 @@
   <string name="security_center_report_detail_recommended_actions">რეკომენდებული ქმედებები</string>
   <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">The exposed information was leaked from %s. Your Proton Account information remains secure and encrypted.</string>
   <string name="security_center_report_detail_learn_more">გაიგეთ მეტი</string>
-  <string name="security_center_report_detail_snackbar_error">Could not load breach details</string>
+  <string name="security_center_report_detail_snackbar_error">გაჟონვის დეტალების ჩატვირთვა შეუძლებელია</string>
   <string name="security_center_report_detail_excluded_from_monitoring">ამოღებულია მონიტორინგიდან</string>
   <string name="security_center_report_resolve_confirmation_dialog_title">ამოვხსნა ყველა გაჟონვა?</string>
   <string name="security_center_report_resolve_confirmation_dialog_message">All current breaches will be marked as resolved. In case of future data breaches, you will be notified.</string>
@@ -150,11 +150,11 @@
   <string name="security_center_address_bottomsheet_disable_monitoring">მონიტორინგის შეჩერება</string>
   <string name="security_center_address_bottomsheet_enable_monitoring">მონიტორინგის გაგრძელება</string>
   <string name="security_center_address_bottomsheet_remove_custom_email">მომხმარებლის ელფოსტის წაშლა</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_enable_error">There was an error pausing monitoring</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_disable_error">There was an error resuming monitoring</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_error">Could not remove custom email</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_enable_success">Monitoring successfully resumed</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_disable_success">Monitoring successfully paused</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_enable_error">შეცდომა მონიტორინგის შეჩერებისას</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_error">შეცდომა მონიტორინგის გაგრძელებისას</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_error">მომხმარებლის ელფოსტის წაშლა შეუძლებელია</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_enable_success">მონიტორინგი წარმატებით გაგრძელდა</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_disable_success">მონიტორინგი წარმატებით შეჩერდა</string>
   <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">მომხმარებლის ელფოსტა წაიშალა</string>
   <!-- Alias list -->
   <string name="security_center_alias_list_top_bar_title">Hide-my-email-ის ფსევდონიმები</string>

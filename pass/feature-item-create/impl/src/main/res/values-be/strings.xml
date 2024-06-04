@@ -20,6 +20,8 @@
   <string name="field_email_title">Адрас электроннай пошты</string>
   <string name="field_email_hint">Дадаць адрас электроннай пошты</string>
   <string name="field_email_error">Памылковы адрас электроннай пошты</string>
+  <string name="field_email_tooltip_title">Дадаць поле імя карыстальніка</string>
+  <string name="field_email_tooltip_description">Націсніце тут, каб дадаць поле для імя карыстальніка.</string>
   <string name="field_username_title">Імя карыстальніка</string>
   <string name="field_username_hint">Дадаць імя карыстальніка</string>
   <string name="field_username_or_email_title">Імя карыстальніка або адрас электроннай пошты</string>
@@ -142,6 +144,7 @@
   <string name="identity_add_field_personal_website">URL-адрас асабістага вэб-сайта</string>
   <string name="identity_add_field_work_phone_number">Працоўны нумар тэлефона</string>
   <string name="identity_add_field_work_email_address">Працоўны адрас электроннай пошты</string>
+  <string name="identity_add_field_custom_field">Карыстальніцкае поле</string>
   <string name="identity_section_personal_details">Асабістыя даныя</string>
   <string name="identity_section_address_details">Звесткі аб адрасе</string>
   <string name="identity_section_contact_details">Кантактныя звесткі</string>

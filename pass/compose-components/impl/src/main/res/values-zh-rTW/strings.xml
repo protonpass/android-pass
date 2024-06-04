@@ -16,7 +16,7 @@
   <plurals name="item_list_header_results">
     <item quantity="other">結果</item>
   </plurals>
-  <string name="item_list_header_identities_type">Identities</string>
+  <string name="item_list_header_identities_type">身份</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">確認</string>
   <string name="bottomsheet_cancel_button">取消</string>
@@ -24,7 +24,7 @@
   <string name="bottomsheet_pin_item">釘選</string>
   <string name="bottomsheet_unpin_item">取消釘選</string>
   <string name="bottomsheet_view_item_history">查看歷史</string>
-  <string name="bottomsheet_monitor_exclude">Exclude from monitoring</string>
+  <string name="bottomsheet_monitor_exclude">排除監控</string>
   <string name="bottomsheet_monitor_include">於監控名當中</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">開啟項目行為清單</string>
@@ -135,4 +135,6 @@
   <!-- Words -->
   <string name="email_address">電子郵件地址</string>
   <string name="password">密碼</string>
+  <!-- Tooltips -->
+  <string name="tooltip_dismiss_button_content_description">Button to dismiss this tooltip and not show it again</string>
 </resources>

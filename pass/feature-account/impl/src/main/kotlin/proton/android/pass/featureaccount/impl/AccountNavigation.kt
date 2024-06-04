@@ -26,4 +26,5 @@ sealed interface AccountNavigation {
     data object PasswordManagement : AccountNavigation
     data object RecoveryEmail : AccountNavigation
     data object SetExtraPassword : AccountNavigation
+    data object ExtraPasswordOptions : AccountNavigation
 }

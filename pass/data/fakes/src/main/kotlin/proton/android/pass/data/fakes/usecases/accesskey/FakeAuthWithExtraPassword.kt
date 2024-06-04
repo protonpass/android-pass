@@ -20,12 +20,12 @@ package proton.android.pass.data.fakes.usecases.accesskey
 
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.api.usecases.extrapassword.AuthWithAccessKey
+import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPassword
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FakeAuthWithAccessKey @Inject constructor() : AuthWithAccessKey {
+class FakeAuthWithExtraPassword @Inject constructor() : AuthWithExtraPassword {
 
     private var result: Result<Unit> = Result.success(Unit)
 

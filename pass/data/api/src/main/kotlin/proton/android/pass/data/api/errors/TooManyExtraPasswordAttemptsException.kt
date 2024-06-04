@@ -18,4 +18,4 @@
 
 package proton.android.pass.data.api.errors
 
-class TooManyExtraPasswordAttemptsException: Throwable("Too many extra password attempts")
+class TooManyExtraPasswordAttemptsException : Throwable("Too many extra password attempts")

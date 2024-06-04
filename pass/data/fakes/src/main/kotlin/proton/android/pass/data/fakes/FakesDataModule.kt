@@ -113,10 +113,10 @@ import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.UpdateVault
-import proton.android.pass.data.api.usecases.accesskey.AuthWithAccessKey
-import proton.android.pass.data.api.usecases.accesskey.CheckLocalAccessKey
-import proton.android.pass.data.api.usecases.accesskey.RemoveAccessKey
-import proton.android.pass.data.api.usecases.accesskey.SetupAccessKey
+import proton.android.pass.data.api.usecases.extrapassword.AuthWithAccessKey
+import proton.android.pass.data.api.usecases.extrapassword.CheckLocalAccessKey
+import proton.android.pass.data.api.usecases.extrapassword.RemoveAccessKey
+import proton.android.pass.data.api.usecases.extrapassword.SetupAccessKey
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.MarkEmailBreachAsResolved
 import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId

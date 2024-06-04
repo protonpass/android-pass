@@ -18,7 +18,7 @@
 
 package proton.android.pass.data.fakes.usecases.accesskey
 
-import proton.android.pass.data.api.usecases.accesskey.RemoveAccessKey
+import proton.android.pass.data.api.usecases.extrapassword.RemoveAccessKey
 import javax.inject.Inject
 import javax.inject.Singleton
 

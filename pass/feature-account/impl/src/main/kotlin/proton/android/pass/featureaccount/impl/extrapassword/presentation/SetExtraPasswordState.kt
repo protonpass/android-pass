@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureaccount.impl.accesskey.presentation
+package proton.android.pass.featureaccount.impl.extrapassword.presentation
 
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
@@ -24,13 +24,13 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Immutable
-data class SetAccessKeyState(
+data class SetExtraPasswordState(
     val password: String,
     val repeatPassword: String
 ) : Parcelable {
 
     companion object {
-        val EMPTY = SetAccessKeyState(
+        val EMPTY = SetExtraPasswordState(
             password = "",
             repeatPassword = ""
         )

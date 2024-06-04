@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureaccount.impl.accesskey.ui
+package proton.android.pass.featureaccount.impl.extrapassword.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -53,14 +53,14 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
 import proton.android.pass.featureaccount.impl.R
-import proton.android.pass.featureaccount.impl.accesskey.navigation.SetAccessKeyContentEvent
-import proton.android.pass.featureaccount.impl.accesskey.presentation.SetAccessKeyState
+import proton.android.pass.featureaccount.impl.extrapassword.navigation.SetExtraPasswordContentEvent
+import proton.android.pass.featureaccount.impl.extrapassword.presentation.SetExtraPasswordState
 
 @Composable
-fun SetAccessKeyContent(
+fun SetExtraPasswordContent(
     modifier: Modifier = Modifier,
-    state: SetAccessKeyState,
-    onEvent: (SetAccessKeyContentEvent) -> Unit
+    state: SetExtraPasswordState,
+    onEvent: (SetExtraPasswordContentEvent) -> Unit
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -73,7 +73,7 @@ fun SetAccessKeyContent(
                         modifier = Modifier.padding(12.dp, 4.dp),
                         color = PassTheme.colors.interactionNorm,
                         backgroundColor = PassTheme.colors.interactionNormMinor1,
-                        onUpClick = { onEvent(SetAccessKeyContentEvent.Back) }
+                        onUpClick = { onEvent(SetExtraPasswordContentEvent.Back) }
                     )
                 },
                 actions = {
@@ -88,7 +88,7 @@ fun SetAccessKeyContent(
                                 color = PassTheme.colors.textInvert
                             )
                         },
-                        onClick = { onEvent(SetAccessKeyContentEvent.Submit) }
+                        onClick = { onEvent(SetExtraPasswordContentEvent.Submit) }
                     )
                 }
             )
@@ -125,7 +125,7 @@ fun SetAccessKeyContent(
                     )
                 },
                 moveToNextOnEnter = true,
-                onChange = { onEvent(SetAccessKeyContentEvent.OnAccessKeyValueChanged(it)) }
+                onChange = { onEvent(SetExtraPasswordContentEvent.OnExtraPasswordValueChanged(it)) }
             )
             ProtonTextField(
                 value = state.repeatPassword,
@@ -142,8 +142,8 @@ fun SetAccessKeyContent(
                         textStyle = PassTheme.typography.heroWeak()
                     )
                 },
-                onChange = { onEvent(SetAccessKeyContentEvent.OnAccessKeyRepeatValueChanged(it)) },
-                onDoneClick = { onEvent(SetAccessKeyContentEvent.Submit) }
+                onChange = { onEvent(SetExtraPasswordContentEvent.OnExtraPasswordRepeatValueChanged(it)) },
+                onDoneClick = { onEvent(SetExtraPasswordContentEvent.Submit) }
             )
         }
     }

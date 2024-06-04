@@ -18,15 +18,17 @@
 
 package proton.android.pass.featureitemcreate.impl.identity.navigation
 
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldType
 import proton.android.pass.featureitemcreate.impl.identity.navigation.bottomsheets.AddIdentityFieldType
 
 sealed interface BaseIdentityNavigation {
     data object Close : BaseIdentityNavigation
 
-    @JvmInline
-    value class OpenExtraFieldBottomSheet(
-        val addIdentityFieldType: AddIdentityFieldType
+    data class OpenExtraFieldBottomSheet(
+        val addIdentityFieldType: AddIdentityFieldType,
+        val sectionIndex: Option<Int> = None
     ) : BaseIdentityNavigation
 
     data object OpenCustomFieldBottomSheet : BaseIdentityNavigation
@@ -39,4 +41,6 @@ sealed interface BaseIdentityNavigation {
     data class CustomFieldOptions(val title: String, val index: Int) : BaseIdentityNavigation
 
     data object RemovedCustomField : BaseIdentityNavigation
+
+    data object AddExtraSection : BaseIdentityNavigation
 }

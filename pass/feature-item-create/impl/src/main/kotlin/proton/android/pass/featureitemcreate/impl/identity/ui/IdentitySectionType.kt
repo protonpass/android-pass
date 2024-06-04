@@ -18,9 +18,22 @@
 
 package proton.android.pass.featureitemcreate.impl.identity.ui
 
-enum class IdentitySectionType {
-    PersonalDetails,
-    AddressDetails,
-    ContactDetails,
-    WorkDetails
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+sealed interface IdentitySectionType {
+    @Parcelize
+    data object PersonalDetails : IdentitySectionType, Parcelable
+
+    @Parcelize
+    data object AddressDetails : IdentitySectionType, Parcelable
+
+    @Parcelize
+    data object ContactDetails : IdentitySectionType, Parcelable
+
+    @Parcelize
+    data object WorkDetails : IdentitySectionType, Parcelable
+
+    @Parcelize
+    data class ExtraSection(val index: Int) : IdentitySectionType, Parcelable
 }

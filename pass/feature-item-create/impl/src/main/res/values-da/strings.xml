@@ -20,6 +20,8 @@
   <string name="field_email_title">E-mailadresse</string>
   <string name="field_email_hint">Tilføj e-mailadresse</string>
   <string name="field_email_error">Ugyldig e-mailadresse</string>
+  <string name="field_email_tooltip_title">Tilføj felt til brugernavn</string>
+  <string name="field_email_tooltip_description">Tryk her for at tilføje et felt til et brugernavn.</string>
   <string name="field_username_title">Brugernavn</string>
   <string name="field_username_hint">Tilføj brugernavn</string>
   <string name="field_username_or_email_title">Brugernavn eller e-mailadresse</string>
@@ -142,6 +144,7 @@
   <string name="identity_add_field_personal_website">Personlig webstedsadresse</string>
   <string name="identity_add_field_work_phone_number">Arbejdstelefon nr.</string>
   <string name="identity_add_field_work_email_address">Arbejdsmail-adresse</string>
+  <string name="identity_add_field_custom_field">Brugerdefineret felt</string>
   <string name="identity_section_personal_details">Personlige oplysninger</string>
   <string name="identity_section_address_details">Adresseoplysninger</string>
   <string name="identity_section_contact_details">Kontaktoplysninger</string>

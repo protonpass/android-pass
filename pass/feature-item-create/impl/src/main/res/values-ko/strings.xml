@@ -20,6 +20,8 @@
   <string name="field_email_title">이메일 주소</string>
   <string name="field_email_hint">이메일 주소 추가</string>
   <string name="field_email_error">올바르지 않은 이메일 주소</string>
+  <string name="field_email_tooltip_title">사용자 이름 입력란 추가</string>
+  <string name="field_email_tooltip_description">사용자 이름에 대한 입력란을 추가하려면 여기를 탭하세요.</string>
   <string name="field_username_title">사용자 이름</string>
   <string name="field_username_hint">사용자 이름 추가</string>
   <string name="field_username_or_email_title">사용자 이름 또는 이메일 주소</string>
@@ -142,6 +144,7 @@
   <string name="identity_add_field_personal_website">개인 웹사이트 링크</string>
   <string name="identity_add_field_work_phone_number">업무용 휴대폰 번호</string>
   <string name="identity_add_field_work_email_address">업무용 이메일 주소</string>
+  <string name="identity_add_field_custom_field">Custom field</string>
   <string name="identity_section_personal_details">개인 정보</string>
   <string name="identity_section_address_details">주소 상세정보</string>
   <string name="identity_section_contact_details">연락처 정보</string>

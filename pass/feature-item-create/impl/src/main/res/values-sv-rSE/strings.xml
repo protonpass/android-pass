@@ -20,6 +20,8 @@
   <string name="field_email_title">E-postadress</string>
   <string name="field_email_hint">Lägg till e-postadress</string>
   <string name="field_email_error">Ogiltig e-postadress</string>
+  <string name="field_email_tooltip_title">Lägg till fält för användarnamn</string>
+  <string name="field_email_tooltip_description">Tryck här för att lägga till ett fält för ett användarnamn.</string>
   <string name="field_username_title">Användarnamn</string>
   <string name="field_username_hint">Lägg till användarnamn</string>
   <string name="field_username_or_email_title">Användarnamn eller e-postadress</string>
@@ -123,7 +125,7 @@
   <string name="identity_field_reddit_title">Reddit-användarnamn</string>
   <string name="identity_field_facebook_title">Facebook-URL</string>
   <string name="identity_field_yahoo_title">Yahoo-användarnamn</string>
-  <string name="identity_field_instagram_title">Instagram handle</string>
+  <string name="identity_field_instagram_title">Instagram-användarnamn</string>
   <string name="identity_field_personal_website_title">Personlig webbplats-URL</string>
   <string name="identity_field_work_phone_number_title">Telefonnummer arbete</string>
   <string name="identity_field_work_email_title">E-post arbete</string>
@@ -138,10 +140,11 @@
   <string name="identity_add_field_reddit">Reddit-användarnamn</string>
   <string name="identity_add_field_facebook">Facebook-URL</string>
   <string name="identity_add_field_yahoo">Yahoo-användarnamn</string>
-  <string name="identity_add_field_instagram">Instagram handle</string>
+  <string name="identity_add_field_instagram">Instagram-användarnamn</string>
   <string name="identity_add_field_personal_website">Personlig webbplats-URL</string>
   <string name="identity_add_field_work_phone_number">Telefonnummer arbete</string>
   <string name="identity_add_field_work_email_address">E-post arbete</string>
+  <string name="identity_add_field_custom_field">Anpassat fält</string>
   <string name="identity_section_personal_details">Personliga detaljer</string>
   <string name="identity_section_address_details">Adressuppgifter</string>
   <string name="identity_section_contact_details">Kontaktdetaljer</string>

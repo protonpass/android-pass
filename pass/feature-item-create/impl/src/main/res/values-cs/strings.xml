@@ -20,6 +20,8 @@
   <string name="field_email_title">E-mailová adresa</string>
   <string name="field_email_hint">Přidat e-mailovou adresu</string>
   <string name="field_email_error">Neplatná e-mailová adresa</string>
+  <string name="field_email_tooltip_title">Přidat pole uživatelského jména</string>
+  <string name="field_email_tooltip_description">Zde klepněte pro přidání pole pro uživatelské jméno.</string>
   <string name="field_username_title">Uživatelské jméno</string>
   <string name="field_username_hint">Přidat uživatelské jméno</string>
   <string name="field_username_or_email_title">Uživatelské jméno nebo e-mailová adresa</string>
@@ -137,11 +139,12 @@
   <string name="identity_add_field_linkedin">Linkedin</string>
   <string name="identity_add_field_reddit">Uživatelské jméno Reddit</string>
   <string name="identity_add_field_facebook">Facebook URL</string>
-  <string name="identity_add_field_yahoo">Uživatelské jméno na Yahoo</string>
+  <string name="identity_add_field_yahoo">Uživatelské jméno Yahoo</string>
   <string name="identity_add_field_instagram">Uživatelské jméno Instagram</string>
   <string name="identity_add_field_personal_website">Osobní webová stránka</string>
   <string name="identity_add_field_work_phone_number">Pracovní telefonní číslo</string>
   <string name="identity_add_field_work_email_address">Pracovní e‑mailová adresa</string>
+  <string name="identity_add_field_custom_field">Custom field</string>
   <string name="identity_section_personal_details">Osobní údaje</string>
   <string name="identity_section_address_details">Detaily adresy</string>
   <string name="identity_section_contact_details">Detaily kontaktu</string>

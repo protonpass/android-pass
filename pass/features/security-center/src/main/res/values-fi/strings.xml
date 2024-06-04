@@ -56,7 +56,7 @@
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Uudelleenkäytetty %1$d kertaa</string>
   <!-- Missing 2FA -->
   <string name="security_center_missing_tfa_top_bar_title">2FA ei ole käytössä</string>
-  <string name="security_center_missing_tfa_top_bar_subtitle">Paranna suojaustasi määrittämällä kaksivaiheinen tunnistautuminen seuraaville tileille.</string>
+  <string name="security_center_missing_tfa_top_bar_subtitle">Tehosta suojaustasi määrittämällä kaksivaiheinen tunnistautuminen seuraaville tileille.</string>
   <!-- Excluded items screen -->
   <string name="security_center_excluded_items_top_bar_title">Poissuljetut kohteet</string>
   <!-- Dark web monitor -->

@@ -137,4 +137,6 @@
   <!-- Words -->
   <string name="email_address">Dirección de correo</string>
   <string name="password">Contraseña</string>
+  <!-- Tooltips -->
+  <string name="tooltip_dismiss_button_content_description">Botón para descartar este mensaje y no volverlo a mostrar</string>
 </resources>

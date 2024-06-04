@@ -20,6 +20,8 @@
   <string name="field_email_title">Alamat email</string>
   <string name="field_email_hint">Tambah alamat email</string>
   <string name="field_email_error">Alamat email tidak valid</string>
+  <string name="field_email_tooltip_title">Tambahkan kolom nama pengguna</string>
+  <string name="field_email_tooltip_description">Ketuk di sini untuk menambahkan kolom untuk nama pengguna.</string>
   <string name="field_username_title">Nama pengguna</string>
   <string name="field_username_hint">Tambahkan nama pengguna</string>
   <string name="field_username_or_email_title">Nama pengguna atau alamat email</string>
@@ -117,8 +119,8 @@
   <string name="identity_field_middle_name_title">Nama tengah</string>
   <string name="identity_field_birthdate_title">Tanggal lahir</string>
   <string name="identity_field_gender_title">Jenis kelamin</string>
-  <string name="identity_field_floor_title">Floor</string>
-  <string name="identity_field_county_title">County</string>
+  <string name="identity_field_floor_title">Lantai</string>
+  <string name="identity_field_county_title">Daerah</string>
   <string name="identity_field_linkedin_title">Linkedin</string>
   <string name="identity_field_reddit_title">Nama pengguna Reddit</string>
   <string name="identity_field_facebook_title">URL Facebook</string>
@@ -132,8 +134,8 @@
   <string name="identity_add_field_last_name">Nama belakang</string>
   <string name="identity_add_field_birthdate">Tanggal lahir</string>
   <string name="identity_add_field_gender">Jenis kelamin</string>
-  <string name="identity_add_field_floor">Floor</string>
-  <string name="identity_add_field_county">County</string>
+  <string name="identity_add_field_floor">Lantai</string>
+  <string name="identity_add_field_county">Daerah</string>
   <string name="identity_add_field_linkedin">Linkedin</string>
   <string name="identity_add_field_reddit">Nama pengguna Reddit</string>
   <string name="identity_add_field_facebook">URL Facebook</string>
@@ -142,12 +144,13 @@
   <string name="identity_add_field_personal_website">URL situs web pribadi</string>
   <string name="identity_add_field_work_phone_number">Nomor telepon kantor</string>
   <string name="identity_add_field_work_email_address">Alamat email kantor</string>
+  <string name="identity_add_field_custom_field">Kolom khusus</string>
   <string name="identity_section_personal_details">Detail pribadi</string>
   <string name="identity_section_address_details">Detail alamat</string>
   <string name="identity_section_contact_details">Rincian kontak</string>
   <string name="identity_section_work_details">Detail pekerjaan</string>
-  <string name="identity_add_more_fields">Add more</string>
-  <string name="identity_bottomsheet_add_field">Add field</string>
+  <string name="identity_add_more_fields">Tambahkan lagi</string>
+  <string name="identity_bottomsheet_add_field">Tambahkan kolom</string>
   <string name="create_identity_item_creation_error">Identitas tidak dapat dibuat</string>
   <string name="create_identity_item_creation_success">Identitas telah dibuat</string>
   <!--  Common create items  -->

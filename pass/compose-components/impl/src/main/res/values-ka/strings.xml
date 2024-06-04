@@ -17,7 +17,7 @@
     <item quantity="one">შედეგი</item>
     <item quantity="other">შედეგი</item>
   </plurals>
-  <string name="item_list_header_identities_type">Identities</string>
+  <string name="item_list_header_identities_type">იდენტიფიკატორები</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">დასტური</string>
   <string name="bottomsheet_cancel_button">გაუქმება</string>
@@ -137,4 +137,6 @@
   <!-- Words -->
   <string name="email_address">ელფოსტის მისამართი</string>
   <string name="password">პაროლი</string>
+  <!-- Tooltips -->
+  <string name="tooltip_dismiss_button_content_description">Button to dismiss this tooltip and not show it again</string>
 </resources>

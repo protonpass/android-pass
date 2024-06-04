@@ -20,6 +20,8 @@
   <string name="field_email_title">Адрес электронной почты</string>
   <string name="field_email_hint">Добавить адрес эл. почты</string>
   <string name="field_email_error">Недействительный адрес электронной почты</string>
+  <string name="field_email_tooltip_title">Добавить поле имени пользователя</string>
+  <string name="field_email_tooltip_description">Коснитесь здесь, чтобы добавить поле для имени пользователя.</string>
   <string name="field_username_title">Имя пользователя</string>
   <string name="field_username_hint">Добавить имя пользователя</string>
   <string name="field_username_or_email_title">Имя пользователя или адрес электронной почты</string>
@@ -142,6 +144,7 @@
   <string name="identity_add_field_personal_website">URL личного веб-сайта</string>
   <string name="identity_add_field_work_phone_number">Рабочий номер телефона</string>
   <string name="identity_add_field_work_email_address">Рабочий адрес электронной почты</string>
+  <string name="identity_add_field_custom_field">Custom field</string>
   <string name="identity_section_personal_details">Личная информация</string>
   <string name="identity_section_address_details">Информация о адресе</string>
   <string name="identity_section_contact_details">Информация контакта</string>
@@ -151,7 +154,7 @@
   <string name="create_identity_item_creation_error">Could not create identity</string>
   <string name="create_identity_item_creation_success">Identity created</string>
   <!--  Common create items  -->
-  <string name="title_create">Create</string>
+  <string name="title_create">Создать</string>
   <string name="changes_saved">Изменения сохранены</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">Секретный ключ двухфакторной аутентификации (TOTP)</string>

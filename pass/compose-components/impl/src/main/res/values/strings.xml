@@ -42,6 +42,7 @@
     <string name="action_cancel">Cancel</string>
     <string name="action_continue">Continue</string>
     <string name="action_retry">Retry</string>
+    <string name="action_edit">Edit</string>
 
     <!-- Empty list -->
     <string name="empty_list_title">Add your first item</string>

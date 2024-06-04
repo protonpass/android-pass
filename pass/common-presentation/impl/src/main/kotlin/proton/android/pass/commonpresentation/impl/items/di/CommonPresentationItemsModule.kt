@@ -28,6 +28,7 @@ import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDet
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonpresentation.impl.items.details.handlers.AliasItemDetailsHandlerObserverImpl
 import proton.android.pass.commonpresentation.impl.items.details.handlers.CreditCardItemDetailsHandlerObserverImpl
+import proton.android.pass.commonpresentation.impl.items.details.handlers.IdentityItemDetailsHandlerObserverImpl
 import proton.android.pass.commonpresentation.impl.items.details.handlers.ItemDetailsHandlerImpl
 import proton.android.pass.commonpresentation.impl.items.details.handlers.LoginItemDetailsHandlerObserverImpl
 import proton.android.pass.commonpresentation.impl.items.details.handlers.NoteItemDetailsHandlerObserverImpl
@@ -57,6 +58,11 @@ internal abstract class CommonPresentationItemsModule {
     @[Binds ViewModelScoped IntoMap ItemDetailsHandlerObserverKey(ItemCategory.Note)]
     internal abstract fun bindNoteItemDetailsHandlerObserver(
         impl: NoteItemDetailsHandlerObserverImpl
+    ): ItemDetailsHandlerObserver
+
+    @[Binds ViewModelScoped IntoMap ItemDetailsHandlerObserverKey(ItemCategory.Identity)]
+    internal abstract fun bindIdentityItemDetailsHandlerObserver(
+        impl: IdentityItemDetailsHandlerObserverImpl
     ): ItemDetailsHandlerObserver
 
 }

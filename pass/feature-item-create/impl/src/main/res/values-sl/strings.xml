@@ -20,6 +20,8 @@
   <string name="field_email_title">E-poštni naslov</string>
   <string name="field_email_hint">Dodaj e-poštni naslov</string>
   <string name="field_email_error">Neveljaven e-poštni naslov</string>
+  <string name="field_email_tooltip_title">Dodajte polje za uporabniško ime</string>
+  <string name="field_email_tooltip_description">Tapnite tukaj, če želite dodati polje za uporabniško ime.</string>
   <string name="field_username_title">Uporabniško ime</string>
   <string name="field_username_hint">Dodaj uporabniško ime</string>
   <string name="field_username_or_email_title">Uporabniško ime ali elektronski naslov</string>
@@ -142,6 +144,7 @@
   <string name="identity_add_field_personal_website">Osebno spletno mesto</string>
   <string name="identity_add_field_work_phone_number">Službena telefonska številka</string>
   <string name="identity_add_field_work_email_address">Službeni e-poštni naslov</string>
+  <string name="identity_add_field_custom_field">Polje po meri</string>
   <string name="identity_section_personal_details">Osebni podatki</string>
   <string name="identity_section_address_details">Podrobnosti naslova</string>
   <string name="identity_section_contact_details">Podrobnosti stika</string>

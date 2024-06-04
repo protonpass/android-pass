@@ -20,6 +20,8 @@
   <string name="field_email_title">Emailová adresa</string>
   <string name="field_email_hint">Pridať emailovú adresu</string>
   <string name="field_email_error">Neplatná emailová adresa</string>
+  <string name="field_email_tooltip_title">Pridať pole mena používateľa</string>
+  <string name="field_email_tooltip_description">Ťuknite sem pre pridanie poľa s používateľským menom</string>
   <string name="field_username_title">Používateľské meno</string>
   <string name="field_username_hint">Pridať používateľské meno</string>
   <string name="field_username_or_email_title">Používateľské meno alebo emailová adresa</string>
@@ -142,6 +144,7 @@
   <string name="identity_add_field_personal_website">URL osobnej stránky</string>
   <string name="identity_add_field_work_phone_number">Pracovné telefónne číslo</string>
   <string name="identity_add_field_work_email_address">Pracovná emailová adresa</string>
+  <string name="identity_add_field_custom_field">Custom field</string>
   <string name="identity_section_personal_details">Osobné údaje</string>
   <string name="identity_section_address_details">Detaily adresy</string>
   <string name="identity_section_contact_details">Kontaktné údaje</string>

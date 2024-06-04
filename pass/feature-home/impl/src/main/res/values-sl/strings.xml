@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Home -->
-  <string name="home_empty_vault_title">Vaša košarica je prazna</string>
+  <string name="home_empty_vault_title">Vaš trezor je prazen</string>
   <string name="home_empty_vault_subtitle">Začnite tako, da ustvarite svoj prvi predmet.</string>
   <string name="home_empty_read_only_vault_title">Ta trezor je prazen</string>
   <string name="home_empty_read_only_vault_subtitle">Predmetov ne morete dodati v trezor samo za branje.</string>

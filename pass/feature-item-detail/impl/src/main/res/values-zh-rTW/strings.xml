@@ -42,11 +42,11 @@
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="other">%d other logins use the same password</item>
   </plurals>
-  <string name="login_item_monitor_widget_missing_two_fa_title">Set up 2FA for more security</string>
+  <string name="login_item_monitor_widget_missing_two_fa_title">為更好安全設定雙重驗證</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">This service offers 2FA. Enable it for added account security.</string>
   <string name="login_item_reused_passwords_subtitle">Items from your vaults that use this password.</string>
-  <string name="field_email">Email address</string>
-  <string name="field_username">Username</string>
+  <string name="field_email">電子郵件地址</string>
+  <string name="field_username">使用者名稱</string>
   <string name="field_username_or_email">使用者名稱或電子郵件位址</string>
   <string name="field_password">密碼</string>
   <string name="websites_section_title">網站</string>

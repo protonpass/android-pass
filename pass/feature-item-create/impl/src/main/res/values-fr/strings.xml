@@ -20,6 +20,8 @@
   <string name="field_email_title">Adresse e-mail</string>
   <string name="field_email_hint">Ajouter une adresse e-mail</string>
   <string name="field_email_error">L\'adresse e-mail n\'est pas valide.</string>
+  <string name="field_email_tooltip_title">Ajouter un champ Nom d’utilisateur</string>
+  <string name="field_email_tooltip_description">Appuyez ici pour ajouter un champ pour un nom d\'utilisateur.</string>
   <string name="field_username_title">Nom d\'utilisateur</string>
   <string name="field_username_hint">Ajouter un nom d\'utilisateur</string>
   <string name="field_username_or_email_title">Nom d\'utilisateur ou adresse e-mail</string>
@@ -124,7 +126,7 @@
   <string name="identity_field_facebook_title">URL Facebook</string>
   <string name="identity_field_yahoo_title">Nom d’utilisateur Yahoo</string>
   <string name="identity_field_instagram_title">Nom d\'utilisateur Instagram</string>
-  <string name="identity_field_personal_website_title">URL de site web personnel</string>
+  <string name="identity_field_personal_website_title">URL de site internet personnel</string>
   <string name="identity_field_work_phone_number_title">Numéro de téléphone professionnel</string>
   <string name="identity_field_work_email_title">Adresse e-mail professionnelle</string>
   <string name="identity_add_field_first_name">Prénom</string>
@@ -142,11 +144,12 @@
   <string name="identity_add_field_personal_website">URL de site internet personnel</string>
   <string name="identity_add_field_work_phone_number">Numéro de téléphone professionnel</string>
   <string name="identity_add_field_work_email_address">Adresse e-mail professionnelle</string>
+  <string name="identity_add_field_custom_field">Champ personalisé</string>
   <string name="identity_section_personal_details">Informations personnelles</string>
   <string name="identity_section_address_details">Informations sur l\'adresse</string>
   <string name="identity_section_contact_details">Informations du contact</string>
   <string name="identity_section_work_details">Informations sur le poste</string>
-  <string name="identity_add_more_fields">Ajouter d\'autres</string>
+  <string name="identity_add_more_fields">Ajouter d\'autres champs</string>
   <string name="identity_bottomsheet_add_field">Ajouter un champ</string>
   <string name="create_identity_item_creation_error">L\'identité n\'a pas pu être créée.</string>
   <string name="create_identity_item_creation_success">L\'identité a été créée.</string>

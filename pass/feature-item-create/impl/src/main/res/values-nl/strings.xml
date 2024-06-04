@@ -20,6 +20,8 @@
   <string name="field_email_title">E-mailadres</string>
   <string name="field_email_hint">E-mailadres toevoegen</string>
   <string name="field_email_error">Ongeldig e-mailadres</string>
+  <string name="field_email_tooltip_title">Veld gebruikersnaam toevoegen</string>
+  <string name="field_email_tooltip_description">Tik hier om een veld toe te voegen voor een gebruikersnaam.</string>
   <string name="field_username_title">Gebruikersnaam</string>
   <string name="field_username_hint">Voeg gebruikersnaam toe</string>
   <string name="field_username_or_email_title">Gebruikersnaam of e-mailadres</string>
@@ -142,6 +144,7 @@
   <string name="identity_add_field_personal_website">Personal website URL</string>
   <string name="identity_add_field_work_phone_number">Work phone number</string>
   <string name="identity_add_field_work_email_address">Work email address</string>
+  <string name="identity_add_field_custom_field">Custom field</string>
   <string name="identity_section_personal_details">Persoonlijke gegevens</string>
   <string name="identity_section_address_details">Adresgegevens</string>
   <string name="identity_section_contact_details">Contactgegevens</string>

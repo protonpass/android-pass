@@ -20,6 +20,8 @@
   <string name="field_email_title">Adreça de correu electrònic</string>
   <string name="field_email_hint">Afegeix una adreça de correu electrònic</string>
   <string name="field_email_error">L\'adreça de correu electrònic no és vàlida.</string>
+  <string name="field_email_tooltip_title">Afegeixi un camp de nom d\'usuari</string>
+  <string name="field_email_tooltip_description">Toqui aquí per afegir un camp per a un nom d\'usuari.</string>
   <string name="field_username_title">Nom d\'usuari</string>
   <string name="field_username_hint">Afegir nom d\'usuari</string>
   <string name="field_username_or_email_title">Nom d\'usuari o adreça de correu electrònic</string>
@@ -124,7 +126,7 @@
   <string name="identity_field_facebook_title">URL de Facebook</string>
   <string name="identity_field_yahoo_title">Nom d\'usuari de Yahoo</string>
   <string name="identity_field_instagram_title">Nom d\'usuari d\'Instagram</string>
-  <string name="identity_field_personal_website_title">URL de lloc web personal</string>
+  <string name="identity_field_personal_website_title">URL del lloc web personal</string>
   <string name="identity_field_work_phone_number_title">Número de telèfon de la feina</string>
   <string name="identity_field_work_email_title">Adreça de correu electrònic de la feina</string>
   <string name="identity_add_field_first_name">Nom</string>
@@ -139,9 +141,10 @@
   <string name="identity_add_field_facebook">URL de Facebook</string>
   <string name="identity_add_field_yahoo">Nom d\'usuari de Yahoo</string>
   <string name="identity_add_field_instagram">Nom d\'usuari d\'Instagram</string>
-  <string name="identity_add_field_personal_website">URL de lloc web personal</string>
+  <string name="identity_add_field_personal_website">URL del lloc web personal</string>
   <string name="identity_add_field_work_phone_number">Número de telèfon de la feina</string>
   <string name="identity_add_field_work_email_address">Adreça de correu electrònic de la feina</string>
+  <string name="identity_add_field_custom_field">Camp personalitzat</string>
   <string name="identity_section_personal_details">Detalls personals</string>
   <string name="identity_section_address_details">Detalls de l\'adreça</string>
   <string name="identity_section_contact_details">Detalls del contacte</string>
@@ -155,7 +158,7 @@
   <string name="changes_saved">S\'han desat els canvis.</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">Clau secreta A2F (TOTP)</string>
-  <string name="totp_create_login_field_invalid">Invalid 2FA secret key (TOTP)</string>
+  <string name="totp_create_login_field_invalid">La clau secreta A2F (TOTP) no és vàlida.</string>
   <string name="totp_create_login_field_placeholder">Afegeix una clau secreta A2F (TOTP)</string>
   <string name="close_scree_icon_content_description">Botó de tancament de pantalla</string>
   <string name="totp_paste_code_action">Enganxa el codi</string>

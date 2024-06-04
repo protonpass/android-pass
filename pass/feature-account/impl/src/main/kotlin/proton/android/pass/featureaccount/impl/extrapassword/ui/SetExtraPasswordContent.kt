@@ -28,33 +28,46 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallNorm
+import me.proton.core.compose.theme.defaultSmallWeak
+import me.proton.core.compose.theme.subheadlineNorm
+import me.proton.core.compose.theme.subheadlineUnspecified
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.heroNorm
-import proton.android.pass.commonui.api.heroWeak
 import proton.android.pass.composecomponents.impl.buttons.CircleButton
+import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
-import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
+import proton.android.pass.composecomponents.impl.topbar.iconbutton.CrossBackCircleIconButton
 import proton.android.pass.featureaccount.impl.R
 import proton.android.pass.featureaccount.impl.extrapassword.navigation.SetExtraPasswordContentEvent
+import proton.android.pass.featureaccount.impl.extrapassword.navigation.SetExtraPasswordContentEvent.OnExtraPasswordRepeatValueChanged
+import proton.android.pass.featureaccount.impl.extrapassword.navigation.SetExtraPasswordContentEvent.Submit
 import proton.android.pass.featureaccount.impl.extrapassword.presentation.SetExtraPasswordState
+import me.proton.core.presentation.R as CoreR
 
 @Composable
 fun SetExtraPasswordContent(
@@ -69,8 +82,9 @@ fun SetExtraPasswordContent(
                 backgroundColor = PassTheme.colors.backgroundStrong,
                 title = {},
                 navigationIcon = {
-                    BackArrowCircleIconButton(
+                    CrossBackCircleIconButton(
                         modifier = Modifier.padding(12.dp, 4.dp),
+
                         color = PassTheme.colors.interactionNorm,
                         backgroundColor = PassTheme.colors.interactionNormMinor1,
                         onUpClick = { onEvent(SetExtraPasswordContentEvent.Back) }
@@ -88,7 +102,7 @@ fun SetExtraPasswordContent(
                                 color = PassTheme.colors.textInvert
                             )
                         },
-                        onClick = { onEvent(SetExtraPasswordContentEvent.Submit) }
+                        onClick = { onEvent(Submit) }
                     )
                 }
             )
@@ -104,46 +118,100 @@ fun SetExtraPasswordContent(
             verticalArrangement = Arrangement.spacedBy(Spacing.medium)
         ) {
             Text(
-                text = stringResource(R.string.configure_access_code),
+                text = stringResource(R.string.configure_extra_password_title),
                 style = PassTheme.typography.heroNorm()
             )
             Spacer(modifier = Modifier.height(Spacing.medium))
+            var isPasswordConcealed: Boolean by remember { mutableStateOf(true) }
+            var isRepeatPasswordConcealed: Boolean by remember { mutableStateOf(true) }
             ProtonTextField(
                 modifier = Modifier.focusRequester(focusRequester),
                 value = state.password,
-                textStyle = PassTheme.typography.heroNorm(),
-                visualTransformation = PasswordVisualTransformation(),
+                textStyle = ProtonTheme.typography.subheadlineNorm,
+                visualTransformation = if (isPasswordConcealed) {
+                    PasswordVisualTransformation()
+                } else {
+                    VisualTransformation.None
+                },
                 keyboardOptions = KeyboardOptions(
-                    autoCorrect = false,
+                    autoCorrectEnabled = false,
                     keyboardType = KeyboardType.NumberPassword,
                     imeAction = ImeAction.Next
                 ),
                 placeholder = {
                     ProtonTextFieldPlaceHolder(
                         text = stringResource(R.string.configure_access_key_enter_access_key),
-                        textStyle = PassTheme.typography.heroWeak()
+                        textStyle = ProtonTheme.typography.subheadlineUnspecified
+                            .copy(color = ProtonTheme.colors.textWeak)
                     )
+                },
+                trailingIcon = {
+                    IconButton(
+                        onClick = { isPasswordConcealed = !isPasswordConcealed }
+                    ) {
+                        val icon = if (!isPasswordConcealed) {
+                            CoreR.drawable.ic_proton_eye
+                        } else {
+                            CoreR.drawable.ic_proton_eye_slash
+                        }
+                        Icon(
+                            painter = painterResource(id = icon),
+                            contentDescription = null,
+                            tint = PassTheme.colors.loginInteractionNorm
+                        )
+                    }
                 },
                 moveToNextOnEnter = true,
                 onChange = { onEvent(SetExtraPasswordContentEvent.OnExtraPasswordValueChanged(it)) }
             )
             ProtonTextField(
                 value = state.repeatPassword,
-                textStyle = PassTheme.typography.heroNorm(),
+                textStyle = ProtonTheme.typography.subheadlineNorm,
                 keyboardOptions = KeyboardOptions(
-                    autoCorrect = false,
+                    autoCorrectEnabled = false,
                     keyboardType = KeyboardType.NumberPassword,
                     imeAction = ImeAction.Done
                 ),
-                visualTransformation = PasswordVisualTransformation(),
+                visualTransformation = if (isRepeatPasswordConcealed) {
+                    PasswordVisualTransformation()
+                } else {
+                    VisualTransformation.None
+                },
                 placeholder = {
                     ProtonTextFieldPlaceHolder(
-                        text = stringResource(R.string.configure_access_key_repeat_access_key),
-                        textStyle = PassTheme.typography.heroWeak()
+                        text = stringResource(R.string.configure_extra_password_repeat_extra_password),
+                        textStyle = ProtonTheme.typography.subheadlineUnspecified
+                            .copy(color = ProtonTheme.colors.textWeak)
                     )
                 },
-                onChange = { onEvent(SetExtraPasswordContentEvent.OnExtraPasswordRepeatValueChanged(it)) },
-                onDoneClick = { onEvent(SetExtraPasswordContentEvent.Submit) }
+                trailingIcon = {
+                    IconButton(
+                        onClick = { isRepeatPasswordConcealed = !isRepeatPasswordConcealed }
+                    ) {
+                        val icon = if (!isRepeatPasswordConcealed) {
+                            CoreR.drawable.ic_proton_eye
+                        } else {
+                            CoreR.drawable.ic_proton_eye_slash
+                        }
+                        Icon(
+                            painter = painterResource(id = icon),
+                            contentDescription = null,
+                            tint = PassTheme.colors.loginInteractionNorm
+                        )
+                    }
+                },
+                onChange = { onEvent(OnExtraPasswordRepeatValueChanged(it)) },
+                onDoneClick = { onEvent(Submit) }
+            )
+            PassDivider()
+            Text(
+                text = stringResource(R.string.configure_extra_password_description),
+                style = ProtonTheme.typography.defaultSmallWeak
+            )
+            Text(
+                text = stringResource(R.string.configure_extra_password_warning),
+                style = ProtonTheme.typography.defaultSmallNorm
+                    .copy(color = PassTheme.colors.signalDanger)
             )
         }
     }

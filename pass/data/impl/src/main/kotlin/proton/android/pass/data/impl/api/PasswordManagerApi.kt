@@ -20,7 +20,6 @@ package proton.android.pass.data.impl.api
 
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import proton.android.pass.data.impl.requests.AcceptInviteRequest
-import proton.android.pass.data.impl.requests.ExtraPasswordSendSrpDataRequest
 import proton.android.pass.data.impl.requests.BreachAddEmailRequest
 import proton.android.pass.data.impl.requests.BreachVerifyEmailRequest
 import proton.android.pass.data.impl.requests.CheckAddressesCanBeInvitedRequest
@@ -34,6 +33,7 @@ import proton.android.pass.data.impl.requests.CreateNewUserInviteRequest
 import proton.android.pass.data.impl.requests.CreateNewUserInvitesRequest
 import proton.android.pass.data.impl.requests.CreatePublicLinkRequest
 import proton.android.pass.data.impl.requests.CreateVaultRequest
+import proton.android.pass.data.impl.requests.ExtraPasswordSendSrpDataRequest
 import proton.android.pass.data.impl.requests.MigrateItemRequest
 import proton.android.pass.data.impl.requests.MigrateItemsRequest
 import proton.android.pass.data.impl.requests.SetupExtraPasswordRequest
@@ -47,7 +47,6 @@ import proton.android.pass.data.impl.requests.UpdateLastUsedTimeRequest
 import proton.android.pass.data.impl.requests.UpdateMemberShareRequest
 import proton.android.pass.data.impl.requests.UpdateVaultRequest
 import proton.android.pass.data.impl.responses.AliasDetailsResponse
-import proton.android.pass.data.impl.responses.AuthKeyGetSrpDataResponse
 import proton.android.pass.data.impl.responses.BreachCustomEmailResponse
 import proton.android.pass.data.impl.responses.BreachCustomEmailsResponse
 import proton.android.pass.data.impl.responses.BreachEmailsResponse
@@ -58,6 +57,7 @@ import proton.android.pass.data.impl.responses.CreateItemAliasResponse
 import proton.android.pass.data.impl.responses.CreatePublicLinkResponse
 import proton.android.pass.data.impl.responses.CreateVaultResponse
 import proton.android.pass.data.impl.responses.DeleteVaultResponse
+import proton.android.pass.data.impl.responses.ExtraPasswordGetSrpDataResponse
 import proton.android.pass.data.impl.responses.GetAliasOptionsResponse
 import proton.android.pass.data.impl.responses.GetAllKeysByAddressResponse
 import proton.android.pass.data.impl.responses.GetEventsResponse
@@ -397,15 +397,15 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Body request: CreatePublicLinkRequest
     ): CreatePublicLinkResponse
 
-    // Access key
+    // Extra Password
     @POST("$PREFIX/user/srp")
-    suspend fun setupAccessKey(@Body request: SetupExtraPasswordRequest)
+    suspend fun setupExtraPassword(@Body request: SetupExtraPasswordRequest)
 
     @DELETE("$PREFIX/user/srp")
-    suspend fun removeAccessKey()
+    suspend fun removeExtraPassword()
 
     @GET("$PREFIX/user/srp/info")
-    suspend fun getSrpInfo(): AuthKeyGetSrpDataResponse
+    suspend fun getSrpInfo(): ExtraPasswordGetSrpDataResponse
 
     @POST("$PREFIX/user/srp/auth")
     suspend fun sendSrpInfo(@Body extraPasswordSendSrpDataRequest: ExtraPasswordSendSrpDataRequest): CodeOnlyResponse

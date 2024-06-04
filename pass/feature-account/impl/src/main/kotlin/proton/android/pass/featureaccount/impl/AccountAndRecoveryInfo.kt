@@ -108,13 +108,6 @@ fun AccountPasswordAndRecoveryInfo(state: AccountUiState, onEvent: (AccountConte
         text = recoveryHint,
         onClick = { onEvent(AccountContentEvent.RecoveryEmail) }
     )
-    if (state.showAccessKey) {
-        Divider(color = PassTheme.colors.inputBorderNorm)
-        SettingOption(
-            text = stringResource(R.string.account_settings_list_item_access_key_header),
-            onClick = { onEvent(AccountContentEvent.SetAccessKey) }
-        )
-    }
 }
 
 @Preview

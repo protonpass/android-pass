@@ -23,68 +23,69 @@ import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.featureitemcreate.impl.alias.AliasMailboxUiModel
 import proton.android.pass.featureitemcreate.impl.alias.SelectedAliasMailboxUiModel
 
-class SelectMailboxesUiStatePreviewProvider : PreviewParameterProvider<SelectMailboxesUiState> {
-    override val values: Sequence<SelectMailboxesUiState>
-        get() = sequenceOf(
-            SelectMailboxesUiState(
-                mailboxes = listOf(
-                    SelectedAliasMailboxUiModel(
-                        selected = false,
-                        model = AliasMailboxUiModel(
-                            id = 1,
-                            email = "eric.norbert@proton.me"
-                        )
-                    ),
-                    SelectedAliasMailboxUiModel(
-                        selected = false,
-                        model = AliasMailboxUiModel(
-                            id = 2,
-                            email = "eric.work@proton.me"
-                        )
+internal class SelectMailboxesUiStatePreviewProvider :
+    PreviewParameterProvider<SelectMailboxesUiState> {
+
+    override val values: Sequence<SelectMailboxesUiState> = sequenceOf(
+        SelectMailboxesUiState(
+            mailboxes = listOf(
+                SelectedAliasMailboxUiModel(
+                    selected = false,
+                    model = AliasMailboxUiModel(
+                        id = 1,
+                        email = "eric.norbert@proton.me"
                     )
                 ),
-                canApply = IsButtonEnabled.from(false),
-                canUpgrade = false
+                SelectedAliasMailboxUiModel(
+                    selected = false,
+                    model = AliasMailboxUiModel(
+                        id = 2,
+                        email = "eric.work@proton.me"
+                    )
+                )
             ),
-            SelectMailboxesUiState(
-                mailboxes = listOf(
-                    SelectedAliasMailboxUiModel(
-                        selected = true,
-                        model = AliasMailboxUiModel(
-                            id = 1,
-                            email = "eric.norbert@proton.me"
-                        )
-                    ),
-                    SelectedAliasMailboxUiModel(
-                        selected = true,
-                        model = AliasMailboxUiModel(
-                            id = 2,
-                            email = "eric.work@proton.me"
-                        )
+            canApply = IsButtonEnabled.from(false),
+            canUpgrade = false
+        ),
+        SelectMailboxesUiState(
+            mailboxes = listOf(
+                SelectedAliasMailboxUiModel(
+                    selected = true,
+                    model = AliasMailboxUiModel(
+                        id = 1,
+                        email = "eric.norbert@proton.me"
                     )
                 ),
-                canApply = IsButtonEnabled.from(true),
-                canUpgrade = false
+                SelectedAliasMailboxUiModel(
+                    selected = true,
+                    model = AliasMailboxUiModel(
+                        id = 2,
+                        email = "eric.work@proton.me"
+                    )
+                )
             ),
-            SelectMailboxesUiState(
-                mailboxes = listOf(
-                    SelectedAliasMailboxUiModel(
-                        selected = false,
-                        model = AliasMailboxUiModel(
-                            id = 1,
-                            email = "eric.norbert@proton.me"
-                        )
-                    ),
-                    SelectedAliasMailboxUiModel(
-                        selected = false,
-                        model = AliasMailboxUiModel(
-                            id = 2,
-                            email = "eric.work@proton.me"
-                        )
+            canApply = IsButtonEnabled.from(true),
+            canUpgrade = false
+        ),
+        SelectMailboxesUiState(
+            mailboxes = listOf(
+                SelectedAliasMailboxUiModel(
+                    selected = false,
+                    model = AliasMailboxUiModel(
+                        id = 1,
+                        email = "eric.norbert@proton.me"
                     )
                 ),
-                canApply = IsButtonEnabled.from(false),
-                canUpgrade = true
-            )
+                SelectedAliasMailboxUiModel(
+                    selected = false,
+                    model = AliasMailboxUiModel(
+                        id = 2,
+                        email = "eric.work@proton.me"
+                    )
+                )
+            ),
+            canApply = IsButtonEnabled.from(false),
+            canUpgrade = true
         )
+    )
 }

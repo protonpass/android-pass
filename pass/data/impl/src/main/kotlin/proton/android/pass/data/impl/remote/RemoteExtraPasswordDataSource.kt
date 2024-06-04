@@ -24,39 +24,38 @@ import me.proton.core.network.domain.ApiResult
 import proton.android.pass.data.api.errors.TooManyExtraPasswordAttemptsException
 import proton.android.pass.data.api.errors.WrongExtraPasswordException
 import proton.android.pass.data.impl.api.PasswordManagerApi
-import proton.android.pass.data.impl.requests.AuthKeySendSrpDataRequest
-import proton.android.pass.data.impl.requests.SetupAccessKeyRequest
-import proton.android.pass.data.impl.responses.AuthKeyGetSrpData
+import proton.android.pass.data.impl.requests.ExtraPasswordSendSrpDataRequest
+import proton.android.pass.data.impl.requests.SetupExtraPasswordRequest
+import proton.android.pass.data.impl.responses.ExtraPasswordGetSrpData
 import javax.inject.Inject
 
-interface RemoteAccessKeyDataSource {
-    suspend fun setupAccessKey(userId: UserId, request: SetupAccessKeyRequest)
-    suspend fun removeAccessKey(userId: UserId)
-    suspend fun getAccessKeyAuthData(userId: UserId): AuthKeyGetSrpData
-    suspend fun sendAccessKeyAuthData(userId: UserId, request: AuthKeySendSrpDataRequest)
+interface RemoteExtraPasswordDataSource {
+    suspend fun setupExtraPassword(userId: UserId, request: SetupExtraPasswordRequest)
+    suspend fun removeExtraPassword(userId: UserId)
+    suspend fun getExtraPasswordAuthData(userId: UserId): ExtraPasswordGetSrpData
+    suspend fun sendExtraPasswordAuthData(userId: UserId, request: ExtraPasswordSendSrpDataRequest)
 }
 
-class RemoteAccessKeyDataSourceImpl @Inject constructor(
+class RemoteExtraPasswordDataSourceImpl @Inject constructor(
     private val apiProvider: ApiProvider
-) : RemoteAccessKeyDataSource {
-    override suspend fun setupAccessKey(userId: UserId, request: SetupAccessKeyRequest) {
+) : RemoteExtraPasswordDataSource {
+    override suspend fun setupExtraPassword(userId: UserId, request: SetupExtraPasswordRequest) {
         apiProvider.get<PasswordManagerApi>(userId).invoke {
             setupAccessKey(request)
         }.valueOrThrow
     }
 
-    override suspend fun removeAccessKey(userId: UserId) {
+    override suspend fun removeExtraPassword(userId: UserId) {
         apiProvider.get<PasswordManagerApi>(userId).invoke {
             removeAccessKey()
         }.valueOrThrow
     }
 
-    override suspend fun getAccessKeyAuthData(userId: UserId) =
-        apiProvider.get<PasswordManagerApi>(userId).invoke {
-            getSrpInfo()
-        }.valueOrThrow.data
+    override suspend fun getExtraPasswordAuthData(userId: UserId) = apiProvider.get<PasswordManagerApi>(userId).invoke {
+        getSrpInfo()
+    }.valueOrThrow.data
 
-    override suspend fun sendAccessKeyAuthData(userId: UserId, request: AuthKeySendSrpDataRequest) {
+    override suspend fun sendExtraPasswordAuthData(userId: UserId, request: ExtraPasswordSendSrpDataRequest) {
         val res = apiProvider.get<PasswordManagerApi>(userId).invoke {
             sendSrpInfo(request)
         }

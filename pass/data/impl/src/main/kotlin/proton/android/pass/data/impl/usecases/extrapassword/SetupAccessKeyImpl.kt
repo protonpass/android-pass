@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.usecases.accesskey
+package proton.android.pass.data.impl.usecases.extrapassword
 
 import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
@@ -26,10 +26,10 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpCrypto
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.usecases.accesskey.SetupAccessKey
-import proton.android.pass.data.impl.remote.RemoteAccessKeyDataSource
+import proton.android.pass.data.api.usecases.extrapassword.SetupAccessKey
+import proton.android.pass.data.impl.remote.RemoteExtraPasswordDataSource
 import proton.android.pass.data.impl.repositories.AccessKeyRepository
-import proton.android.pass.data.impl.requests.SetupAccessKeyRequest
+import proton.android.pass.data.impl.requests.SetupExtraPasswordRequest
 import javax.inject.Inject
 
 class SetupAccessKeyImpl @Inject constructor(
@@ -37,7 +37,7 @@ class SetupAccessKeyImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val authRepository: AuthRepository,
     private val accountManager: AccountManager,
-    private val remoteAccessKeyDataSource: RemoteAccessKeyDataSource,
+    private val remoteExtraPasswordDataSource: RemoteExtraPasswordDataSource,
     private val accessKeyRepository: AccessKeyRepository
 ) : SetupAccessKey {
     override suspend fun invoke(password: EncryptedString) {
@@ -55,13 +55,13 @@ class SetupAccessKeyImpl @Inject constructor(
             modulusId = modulus.modulusId
         )
 
-        remoteAccessKeyDataSource.setupAccessKey(account.userId, verifier.toRequest())
+        remoteExtraPasswordDataSource.setupExtraPassword(account.userId, verifier.toRequest())
 
         accessKeyRepository.storeAccessKeyForUser(account.userId, password)
     }
 
-    private fun Auth.toRequest() = SetupAccessKeyRequest(
-        srpParamId = modulusId,
+    private fun Auth.toRequest() = SetupExtraPasswordRequest(
+        modulusId = modulusId,
         srpVerifier = verifier,
         srpSalt = salt
     )

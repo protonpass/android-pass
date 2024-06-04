@@ -16,11 +16,11 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.accesskey
+package proton.android.pass.data.api.usecases.extrapassword
 
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 
 interface AuthWithAccessKey {
-    suspend operator fun invoke(userId: UserId, password: EncryptedString): Boolean
+    suspend operator fun invoke(userId: UserId, password: EncryptedString)
 }

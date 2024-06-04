@@ -26,7 +26,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.featureitemcreate.impl.alias.SelectedAliasMailboxUiModel
 
@@ -36,7 +35,7 @@ class SelectMailboxesDialogViewModel : ViewModel() {
     private val mailboxesState: MutableStateFlow<List<SelectedAliasMailboxUiModel>> =
         MutableStateFlow(emptyList())
 
-    val uiState: StateFlow<SelectMailboxesUiState> = combine(
+    internal val uiState: StateFlow<SelectMailboxesUiState> = combine(
         mailboxesState,
         canUpgradeState
     ) { mailboxes, canUpgrade ->
@@ -52,23 +51,24 @@ class SelectMailboxesDialogViewModel : ViewModel() {
         initialValue = SelectMailboxesUiState.Initial
     )
 
-    fun setMailboxes(mailboxes: List<SelectedAliasMailboxUiModel>) {
+    internal fun setMailboxes(mailboxes: List<SelectedAliasMailboxUiModel>) {
         mailboxesState.update { mailboxes }
     }
 
-    fun setCanUpgrade(canUpgrade: Boolean) {
+    internal fun setCanUpgrade(canUpgrade: Boolean) {
         canUpgradeState.update { canUpgrade }
     }
 
-    fun onMailboxChanged(mailbox: SelectedAliasMailboxUiModel) = viewModelScope.launch {
-        val mailboxes = mailboxesState.value.map {
-            if (it.model.id == mailbox.model.id) {
-                it.copy(selected = !mailbox.selected)
+    internal fun onMailboxChanged(newMailbox: SelectedAliasMailboxUiModel) = mailboxesState.value
+        .map { mailbox ->
+            if (mailbox.model.id == newMailbox.model.id) {
+                mailbox.copy(selected = !newMailbox.selected)
             } else {
-                it
+                mailbox
             }
         }
-        mailboxesState.update { mailboxes }
-    }
+        .let { mailboxes ->
+            mailboxesState.update { mailboxes }
+        }
 
 }

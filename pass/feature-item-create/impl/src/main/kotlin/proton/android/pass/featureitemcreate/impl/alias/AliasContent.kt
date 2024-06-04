@@ -137,8 +137,7 @@ internal fun AliasContent(
                     showMailboxDialog = false
                     onEvent(AliasContentUiEvent.OnMailBoxChanged(it))
                 },
-                onDismiss = { showMailboxDialog = false },
-                onUpgrade = { onEvent(AliasContentUiEvent.OnUpgrade) }
+                onDismiss = { showMailboxDialog = false }
             )
         }
     }

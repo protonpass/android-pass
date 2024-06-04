@@ -124,7 +124,7 @@ fun AccountInfoPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
                     isLoadingState = IsLoadingState.NotLoading,
                     showUpgradeButton = true,
                     showSubscriptionButton = true,
-                    showAccessKey = true
+                    showExtraPassword = true
                 ),
                 onEvent = {}
             )

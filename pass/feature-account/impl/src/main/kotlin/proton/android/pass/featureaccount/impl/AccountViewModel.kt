@@ -83,7 +83,7 @@ class AccountViewModel @Inject constructor(
                 isLoadingState = IsLoadingState.NotLoading,
                 showUpgradeButton = isUpgradeAvailable,
                 showSubscriptionButton = isSubscriptionAvailable,
-                showAccessKey = isAccessKeyV1Enabled
+                showExtraPassword = isAccessKeyV1Enabled
             )
 
             is LoadingResult.Success -> AccountUiState(
@@ -94,7 +94,7 @@ class AccountViewModel @Inject constructor(
                 isLoadingState = IsLoadingState.NotLoading,
                 showUpgradeButton = isUpgradeAvailable,
                 showSubscriptionButton = isSubscriptionAvailable,
-                showAccessKey = isAccessKeyV1Enabled
+                showExtraPassword = isAccessKeyV1Enabled
             )
         }
     }

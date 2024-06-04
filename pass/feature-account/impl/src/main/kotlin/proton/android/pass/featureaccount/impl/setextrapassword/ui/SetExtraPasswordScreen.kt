@@ -16,14 +16,14 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureaccount.impl.extrapassword.ui
+package proton.android.pass.featureaccount.impl.setextrapassword.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import proton.android.pass.featureaccount.impl.AccountNavigation
-import proton.android.pass.featureaccount.impl.extrapassword.navigation.SetExtraPasswordContentNavEvent
-import proton.android.pass.featureaccount.impl.extrapassword.presentation.SetExtraPasswordViewModel
+import proton.android.pass.featureaccount.impl.setextrapassword.navigation.SetExtraPasswordContentNavEvent
+import proton.android.pass.featureaccount.impl.setextrapassword.presentation.SetExtraPasswordViewModel
 
 @Composable
 fun SetExtraPasswordScreen(

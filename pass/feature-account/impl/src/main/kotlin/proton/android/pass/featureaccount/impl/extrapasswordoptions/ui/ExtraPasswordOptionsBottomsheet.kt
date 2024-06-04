@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,16 +16,21 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureaccount.impl.extrapassword.navigation
+package proton.android.pass.featureaccount.impl.extrapasswordoptions.ui
 
-sealed interface SetExtraPasswordContentNavEvent {
-    data object Back : SetExtraPasswordContentNavEvent
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
+import proton.android.pass.commonui.api.bottomSheet
+import proton.android.pass.featureaccount.impl.extrapasswordoptions.presentation.ExtraPasswordOptionsViewModel
 
-    @JvmInline
-    value class OnExtraPasswordValueChangedNav(val value: String) : SetExtraPasswordContentNavEvent
-
-    @JvmInline
-    value class OnExtraPasswordRepeatValueChangedNav(val value: String) : SetExtraPasswordContentNavEvent
-
-    data object Submit : SetExtraPasswordContentNavEvent
+@Composable
+internal fun ExtraPasswordOptionsBottomsheet(
+    modifier: Modifier = Modifier,
+    viewModel: ExtraPasswordOptionsViewModel = hiltViewModel()
+) {
+    ExtraPasswordOptionsBottomsheetContent(
+        modifier = modifier.bottomSheet(),
+        onRemove = viewModel::submit
+    )
 }

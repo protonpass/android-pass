@@ -48,6 +48,7 @@ fun AccountScreen(
                 AccountContentEvent.SignOut -> onNavigate(AccountNavigation.SignOut)
                 AccountContentEvent.Subscription -> onNavigate(AccountNavigation.Subscription)
                 AccountContentEvent.SetExtraPassword -> onNavigate(AccountNavigation.SetExtraPassword)
+                AccountContentEvent.RemoveExtraPassword -> onNavigate(AccountNavigation.ExtraPasswordOptions)
             }
         }
     )

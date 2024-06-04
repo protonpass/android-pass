@@ -16,23 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureaccount.impl.extrapassword.presentation
+package proton.android.pass.featureaccount.impl.extrapasswordoptions.presentation
 
-import android.os.Parcelable
-import androidx.compose.runtime.Immutable
-import kotlinx.parcelize.Parcelize
+import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-@Parcelize
-@Immutable
-internal data class SetExtraPasswordState(
-    val password: String,
-    val repeatPassword: String
-) : Parcelable {
+@HiltViewModel
+class ExtraPasswordOptionsViewModel @Inject constructor() : ViewModel() {
 
-    companion object {
-        internal val EMPTY = SetExtraPasswordState(
-            password = "",
-            repeatPassword = ""
-        )
+    internal fun submit() {
+        // Start challenge
     }
 }

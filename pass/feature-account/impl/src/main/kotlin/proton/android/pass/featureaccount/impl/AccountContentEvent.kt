@@ -28,4 +28,5 @@ internal sealed interface AccountContentEvent {
     data object Subscription : AccountContentEvent
     data object ManageAccount : AccountContentEvent
     data object SetExtraPassword : AccountContentEvent
+    data object RemoveExtraPassword : AccountContentEvent
 }

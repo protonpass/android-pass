@@ -22,9 +22,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
-import proton.android.pass.featureaccount.impl.extrapassword.navigation.SetExtraPasswordNavItem
-import proton.android.pass.featureaccount.impl.extrapassword.ui.SetExtraPasswordScreen
+import proton.android.pass.featureaccount.impl.extrapasswordoptions.navigation.ExtraPasswordOptionsNavItem
+import proton.android.pass.featureaccount.impl.extrapasswordoptions.ui.ExtraPasswordOptionsBottomsheet
+import proton.android.pass.featureaccount.impl.setextrapassword.navigation.SetExtraPasswordNavItem
+import proton.android.pass.featureaccount.impl.setextrapassword.ui.SetExtraPasswordScreen
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 
 private const val ACCOUNT_GRAPH = "account_graph"
@@ -46,6 +49,9 @@ fun NavGraphBuilder.accountGraph(onNavigate: (AccountNavigation) -> Unit) {
             SetExtraPasswordScreen(
                 onNavigate = onNavigate
             )
+        }
+        bottomSheet(ExtraPasswordOptionsNavItem) {
+            ExtraPasswordOptionsBottomsheet()
         }
     }
 }

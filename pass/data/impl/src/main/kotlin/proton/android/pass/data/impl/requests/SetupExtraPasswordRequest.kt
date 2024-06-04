@@ -16,11 +16,17 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.accesskey
+package proton.android.pass.data.impl.requests
 
-import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.domain.entity.UserId
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-interface CheckLocalAccessKey {
-    suspend operator fun invoke(userId: UserId, password: EncryptedString): Boolean
-}
+@Serializable
+data class SetupExtraPasswordRequest(
+    @SerialName("SrpModulusID")
+    val modulusId: String,
+    @SerialName("SrpVerifier")
+    val srpVerifier: String,
+    @SerialName("SrpSalt")
+    val srpSalt: String
+)

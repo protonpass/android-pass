@@ -18,5 +18,5 @@
 
 package proton.android.pass.data.api.errors
 
-class WrongExtraPasswordException: Throwable("Wrong extra password")
+class WrongExtraPasswordException : Throwable("Wrong extra password")
 

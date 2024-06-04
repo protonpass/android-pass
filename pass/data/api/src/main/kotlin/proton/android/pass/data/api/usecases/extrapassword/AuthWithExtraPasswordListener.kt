@@ -16,17 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.requests
+package proton.android.pass.data.api.usecases.extrapassword
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import me.proton.core.domain.entity.UserId
 
-@Serializable
-data class AuthKeySendSrpDataRequest(
-    @SerialName("ClientEphemeral")
-    val clientEphemeral: String,
-    @SerialName("ClientProof")
-    val clientProof: String,
-    @SerialName("SrpSessionID")
-    val srpSessionId: String
-)
+sealed interface AuthWithExtraPasswordResult {
+    data object Success : AuthWithExtraPasswordResult
+    data object Failure : AuthWithExtraPasswordResult
+}
+
+interface AuthWithExtraPasswordListener {
+    suspend fun clearUserId(userId: UserId)
+    suspend fun onAuthWithExtraPassword(userId: UserId): AuthWithExtraPasswordResult
+}

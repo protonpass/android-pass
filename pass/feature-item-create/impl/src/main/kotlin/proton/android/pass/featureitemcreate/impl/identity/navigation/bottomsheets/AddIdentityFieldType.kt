@@ -22,5 +22,6 @@ enum class AddIdentityFieldType {
     Personal,
     Contact,
     Address,
-    Work
+    Work,
+    Extra
 }

@@ -35,6 +35,7 @@ import proton.android.pass.data.api.repositories.DRAFT_IDENTITY_CUSTOM_FIELD_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.featureitemcreate.impl.identity.navigation.bottomsheets.AddIdentityFieldType
 import proton.android.pass.featureitemcreate.impl.identity.navigation.bottomsheets.IdentityFieldsSectionNavArgId
+import proton.android.pass.featureitemcreate.impl.identity.navigation.bottomsheets.IdentitySectionIndexNavArgId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -46,12 +47,14 @@ class IdentityFieldsViewModel @Inject constructor(
 
     private val addIdentityFieldType: AddIdentityFieldType =
         savedStateHandleProvider.get().require(IdentityFieldsSectionNavArgId.key)
+    private val sectionIndex: Int =
+        savedStateHandleProvider.get().require(IdentitySectionIndexNavArgId.key)
 
     private val eventFlow: MutableStateFlow<IdentityFieldsEvent> =
         MutableStateFlow(IdentityFieldsEvent.Idle)
 
     val state = combine(
-        flowOf(identityFieldDraftRepository.getSectionFields(addIdentityFieldType.toExtraField())),
+        flowOf(identityFieldDraftRepository.getSectionFields(addIdentityFieldType.toExtraField(), sectionIndex)),
         eventFlow
     ) { sectionFields: Set<ExtraField>, event ->
         IdentityFieldsUiState(fieldSet = sectionFields.toPersistentSet(), event = event)
@@ -81,5 +84,6 @@ fun AddIdentityFieldType.toExtraField(): Class<out ExtraField> = when (this) {
     AddIdentityFieldType.Contact -> ContactDetailsField::class.java
     AddIdentityFieldType.Address -> AddressDetailsField::class.java
     AddIdentityFieldType.Work -> WorkDetailsField::class.java
+    AddIdentityFieldType.Extra -> ExtraSectionField::class.java
 }
 

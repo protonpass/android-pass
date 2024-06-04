@@ -32,6 +32,7 @@ import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsh
 @Suppress("ComplexInterface", "TooManyFunctions")
 interface IdentityFormActions {
     fun onFieldChange(field: FieldChange)
+    fun onAddExtraSection(value: String)
     fun onAddCustomField(value: CustomFieldContent, customExtraField: CustomExtraField)
     fun onRemoveCustomField(index: Int, customExtraField: CustomExtraField)
     fun onRenameCustomField(value: CustomFieldIndexTitle, customExtraField: CustomExtraField)

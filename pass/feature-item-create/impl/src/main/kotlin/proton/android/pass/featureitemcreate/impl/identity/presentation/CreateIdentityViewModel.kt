@@ -43,6 +43,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_KEY
 import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_TITLE_KEY
 import proton.android.pass.data.api.repositories.DRAFT_IDENTITY_CUSTOM_FIELD_KEY
+import proton.android.pass.data.api.repositories.DRAFT_IDENTITY_EXTRA_SECTION_KEY
 import proton.android.pass.data.api.repositories.DRAFT_REMOVE_CUSTOM_FIELD_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.usecases.CreateItem
@@ -89,6 +90,7 @@ class CreateIdentityViewModel @Inject constructor(
             launch { observeNewCustomField() }
             launch { observeRemoveCustomField() }
             launch { observeRenameCustomField() }
+            launch { observeNewExtraSection() }
         }
     }
 
@@ -168,6 +170,15 @@ class CreateIdentityViewModel @Inject constructor(
                     draftRepository.delete<CustomExtraField>(DRAFT_IDENTITY_CUSTOM_FIELD_KEY)
                 if (extraFieldType !is Some) return@collect
                 identityActionsProvider.onAddCustomField(it.value, extraFieldType.value)
+            }
+    }
+
+    private suspend fun observeNewExtraSection() {
+        draftRepository.get<String>(DRAFT_IDENTITY_EXTRA_SECTION_KEY)
+            .collect {
+                if (it !is Some) return@collect
+                draftRepository.delete<String>(DRAFT_IDENTITY_EXTRA_SECTION_KEY)
+                identityActionsProvider.onAddExtraSection(it.value)
             }
     }
 

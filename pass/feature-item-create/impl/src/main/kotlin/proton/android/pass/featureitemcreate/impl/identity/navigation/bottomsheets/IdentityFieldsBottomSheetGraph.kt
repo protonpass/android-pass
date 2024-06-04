@@ -20,6 +20,7 @@ package proton.android.pass.featureitemcreate.impl.identity.navigation.bottomshe
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
+import proton.android.pass.common.api.Option
 import proton.android.pass.featureitemcreate.impl.identity.ui.bottomsheets.IdentityFieldsBottomSheet
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
@@ -31,12 +32,18 @@ object IdentityFieldsSectionNavArgId : NavArgId {
     override val navType: NavType<*> = NavType.EnumType(AddIdentityFieldType::class.java)
 }
 
+object IdentitySectionIndexNavArgId : NavArgId {
+    override val key: String = "identitySectionIndex"
+    override val navType: NavType<*> = NavType.IntType
+}
+
 object IdentityFieldsBottomSheet : NavItem(
     baseRoute = "identity/create/fields/bottomsheet",
-    navArgIds = listOf(IdentityFieldsSectionNavArgId),
+    navArgIds = listOf(IdentityFieldsSectionNavArgId, IdentitySectionIndexNavArgId),
     navItemType = NavItemType.Bottomsheet
 ) {
-    fun createRoute(addIdentityFieldType: AddIdentityFieldType) = "$baseRoute/$addIdentityFieldType"
+    fun createRoute(addIdentityFieldType: AddIdentityFieldType, sectionIndex: Option<Int>): String =
+        "$baseRoute/$addIdentityFieldType/${sectionIndex.value() ?: 0}"
 }
 
 fun NavGraphBuilder.identityFieldsGraph(onNavigate: (IdentityFieldsNavigation) -> Unit) {

@@ -21,11 +21,11 @@ package proton.android.pass.data.impl.usecases.extrapassword
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.extrapassword.CheckLocalAccessKey
-import proton.android.pass.data.impl.repositories.AccessKeyRepository
+import proton.android.pass.data.impl.repositories.ExtraPasswordRepository
 import javax.inject.Inject
 
 class CheckLocalAccessKeyImpl @Inject constructor(
-    private val repository: AccessKeyRepository
+    private val repository: ExtraPasswordRepository
 ) : CheckLocalAccessKey {
 
     override suspend fun invoke(userId: UserId, password: EncryptedString): Boolean =

@@ -19,6 +19,7 @@
 package proton.android.pass.network.fakes
 
 import android.content.Context
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,6 +36,7 @@ import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.network.domain.serverconnection.DohAlternativesListener
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
+import proton.android.pass.network.api.NetworkMonitor
 import javax.inject.Singleton
 
 @Module
@@ -68,4 +70,12 @@ object FakesNetworkModule {
     @Provides
     @Singleton
     fun provideDohAlternativesListener(): DohAlternativesListener? = null
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class FakesBindNetworkModule {
+
+    @Binds
+    abstract fun bindNetworkMonitor(impl: FakeNetworkMonitor): NetworkMonitor
 }

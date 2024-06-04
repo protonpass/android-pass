@@ -20,6 +20,8 @@
   <string name="field_email_title">Sähköpostiosoite</string>
   <string name="field_email_hint">Lisää sähköpostiosoite</string>
   <string name="field_email_error">Virheellinen sähköpostiosoite</string>
+  <string name="field_email_tooltip_title">Lisää käyttäjätunnus-kenttä</string>
+  <string name="field_email_tooltip_description">Lisää kenttä käyttäjätunnukselle napauttamalla tästä.</string>
   <string name="field_username_title">Käyttäjätunnus</string>
   <string name="field_username_hint">Lisää käyttäjätunnus</string>
   <string name="field_username_or_email_title">Käyttäjätunnus tai sähköpostiosoite</string>
@@ -142,6 +144,7 @@
   <string name="identity_add_field_personal_website">Henkilökohtainen verkkosivusto</string>
   <string name="identity_add_field_work_phone_number">Työpuhelinnumero</string>
   <string name="identity_add_field_work_email_address">Työsähköpostiosoite</string>
+  <string name="identity_add_field_custom_field">Custom field</string>
   <string name="identity_section_personal_details">Henkilötiedot</string>
   <string name="identity_section_address_details">Osoitetiedot</string>
   <string name="identity_section_contact_details">Yhteystiedon tiedot</string>

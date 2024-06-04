@@ -19,7 +19,7 @@
     <item quantity="many">результатів</item>
     <item quantity="other">результатів</item>
   </plurals>
-  <string name="item_list_header_identities_type">Identities</string>
+  <string name="item_list_header_identities_type">Особисті дані</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Підтвердити</string>
   <string name="bottomsheet_cancel_button">Скасувати</string>
@@ -38,8 +38,8 @@
   <string name="action_view_details">Переглянути подробиці</string>
   <string name="action_see_all">Переглянути все</string>
   <string name="action_confirm">Підтвердити</string>
-  <string name="action_continue">Continue</string>
-  <string name="action_retry">Retry</string>
+  <string name="action_continue">Продовжити</string>
+  <string name="action_retry">Повторити</string>
   <!-- Empty list -->
   <string name="empty_list_title">Додайте свій перший елемент</string>
   <string name="empty_search_results_title">Нічого не знайдено</string>
@@ -123,8 +123,8 @@
   <string name="item_details_credit_card_section_expiration_date_title">Термін дії</string>
   <string name="item_details_credit_card_section_cvv_title">Код безпеки</string>
   <string name="item_details_credit_card_section_pin_title">PIN-код</string>
-  <string name="item_details_login_section_email_title">Email address</string>
-  <string name="item_details_login_section_username_title">Username</string>
+  <string name="item_details_login_section_email_title">Адреса електронної пошти</string>
+  <string name="item_details_login_section_username_title">Ім\'я користувача</string>
   <string name="item_details_login_section_username_or_username_title">Ім\'я користувача або адреса е-пошти</string>
   <string name="item_details_login_section_password_title">Пароль</string>
   <string name="item_details_login_section_primary_totp_title">Токен 2FA (TOTP)</string>
@@ -141,4 +141,6 @@
   <!-- Words -->
   <string name="email_address">Адреса е-пошти</string>
   <string name="password">Пароль</string>
+  <!-- Tooltips -->
+  <string name="tooltip_dismiss_button_content_description">Button to dismiss this tooltip and not show it again</string>
 </resources>

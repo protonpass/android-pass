@@ -26,9 +26,9 @@ import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.flatMap
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.usecases.accesskey.AuthWithAccessKey
-import proton.android.pass.data.api.usecases.accesskey.RemoveAccessKey
-import proton.android.pass.data.api.usecases.accesskey.SetupAccessKey
+import proton.android.pass.data.api.usecases.extrapassword.AuthWithAccessKey
+import proton.android.pass.data.api.usecases.extrapassword.RemoveAccessKey
+import proton.android.pass.data.api.usecases.extrapassword.SetupAccessKey
 import proton.android.pass.image.api.ClearIconCache
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher

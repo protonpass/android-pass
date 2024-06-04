@@ -40,7 +40,7 @@ import proton.android.pass.composecomponents.impl.setting.SettingOption
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
 @Composable
-fun AccountAndRecoveryInfo(
+internal fun AccountAndRecoveryInfo(
     modifier: Modifier = Modifier,
     state: AccountUiState,
     onEvent: (AccountContentEvent) -> Unit
@@ -58,7 +58,7 @@ fun AccountAndRecoveryInfo(
 }
 
 @Composable
-fun AccountAndRecoveryInfoContent(
+internal fun AccountAndRecoveryInfoContent(
     modifier: Modifier = Modifier,
     state: AccountUiState,
     onEvent: (AccountContentEvent) -> Unit
@@ -82,7 +82,7 @@ fun AccountAndRecoveryInfoContent(
 }
 
 @Composable
-fun AccountPasswordAndRecoveryInfo(state: AccountUiState, onEvent: (AccountContentEvent) -> Unit) {
+internal fun AccountPasswordAndRecoveryInfo(state: AccountUiState, onEvent: (AccountContentEvent) -> Unit) {
     val recoveryHint = state.recoveryEmail
         ?: stringResource(R.string.account_settings_list_item_recovery_hint_not_set)
 

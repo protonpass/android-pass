@@ -24,6 +24,7 @@ import proton.android.pass.domain.AddressDetails
 import proton.android.pass.domain.ContactDetails
 import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.CustomField
+import proton.android.pass.domain.ExtraSection
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.PasskeyCreationData
@@ -55,6 +56,7 @@ private fun createAliasItemType(aliasEmail: String?): ItemType.Alias {
     return ItemType.Alias(aliasEmail = aliasEmail)
 }
 
+@Suppress("LongMethod")
 private fun createIdentityItemType(parsed: ItemV1.Item, context: EncryptionContext): ItemType.Identity {
     val content = parsed.content.identity
     return ItemType.Identity(
@@ -109,7 +111,10 @@ private fun createIdentityItemType(parsed: ItemV1.Item, context: EncryptionConte
             customFields = content.extraWorkDetailsList.map { field ->
                 field.toDomain(context)
             }
-        )
+        ),
+        extraSections = content.extraSectionsList.map { section ->
+            section.toDomain(context)
+        }
     )
 }
 
@@ -193,3 +198,10 @@ fun ItemV1.CardType.toDomain(): CreditCardType = when (this) {
     ItemV1.CardType.Unspecified,
     ItemV1.CardType.UNRECOGNIZED -> CreditCardType.Other
 }
+
+fun ItemV1.ExtraIdentitySection.toDomain(context: EncryptionContext): ExtraSection = ExtraSection(
+    sectionName = this.sectionName,
+    customFields = this.sectionFieldsList.map { field ->
+        field.toDomain(context)
+    }
+)

@@ -16,15 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureaccount.impl
+package proton.android.pass.featureaccount.impl.extrapasswordoptions.navigation
 
-sealed interface AccountNavigation {
-    data object Subscription : AccountNavigation
-    data object Upgrade : AccountNavigation
-    data object SignOut : AccountNavigation
-    data object Back : AccountNavigation
-    data object PasswordManagement : AccountNavigation
-    data object RecoveryEmail : AccountNavigation
-    data object SetExtraPassword : AccountNavigation
-    data object ExtraPasswordOptions : AccountNavigation
-}
+import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
+
+object ExtraPasswordOptionsNavItem : NavItem(
+    baseRoute = "account/extrapasswordoptions",
+    navItemType = NavItemType.Bottomsheet
+)

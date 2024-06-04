@@ -168,8 +168,7 @@ fun CreateAliasBottomSheetContent(
                     onMailboxesChanged(it)
                     showMailboxesDialog = false
                 },
-                onDismiss = { showMailboxesDialog = false },
-                onUpgrade = { onNavigate(CreateAliasNavigation.Upgrade) }
+                onDismiss = { showMailboxesDialog = false }
             )
         }
         SelectSuffixDialog(

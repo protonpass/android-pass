@@ -151,6 +151,11 @@ data class WorkDetails(
     }
 }
 
+@Serializable
+data class ExtraSection(
+    val sectionName: String,
+    val customFields: List<CustomField>
+)
 
 @Serializable
 sealed interface ItemType {
@@ -188,7 +193,8 @@ sealed interface ItemType {
         val personalDetails: PersonalDetails,
         val addressDetails: AddressDetails,
         val contactDetails: ContactDetails,
-        val workDetails: WorkDetails
+        val workDetails: WorkDetails,
+        val extraSections: List<ExtraSection>
     ) : ItemType
 
     @Serializable

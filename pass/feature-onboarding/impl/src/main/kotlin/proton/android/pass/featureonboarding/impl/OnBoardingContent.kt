@@ -48,6 +48,7 @@ import com.google.accompanist.pager.HorizontalPagerIndicator
 import kotlinx.coroutines.flow.collectLatest
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Autofill
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Fingerprint
@@ -104,12 +105,12 @@ fun OnBoardingContent(
                 )
             }
         }
-        Spacer(modifier = Modifier.padding(4.dp))
+        Spacer(modifier = Modifier.padding(Spacing.extraSmall))
         HorizontalPagerIndicator(
             pagerState = pagerState,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .padding(16.dp),
+                .padding(Spacing.medium),
             pageCount = uiState.enabledPages.size
         )
     }
@@ -126,7 +127,7 @@ fun pendingAccessPageUiState(): OnBoardingPageUiState = OnBoardingPageUiState(
                 .fillMaxWidth()
                 .weight(1f)
                 .background(onBoardingBrush())
-                .padding(38.dp, 0.dp),
+                .padding(38.dp, Spacing.none),
             painter = painterResource(id = R.drawable.account_setup),
             contentDescription = ""
         )
@@ -146,7 +147,7 @@ fun autofillPageUiState(): OnBoardingPageUiState = OnBoardingPageUiState(
                 .fillMaxWidth()
                 .weight(1f)
                 .background(onBoardingBrush())
-                .padding(38.dp, 0.dp),
+                .padding(38.dp, Spacing.none),
             painter = painterResource(id = R.drawable.onboarding_autofill),
             contentDescription = ""
         )

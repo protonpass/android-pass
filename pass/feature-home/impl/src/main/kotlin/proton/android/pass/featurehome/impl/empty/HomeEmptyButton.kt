@@ -33,8 +33,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.body3Norm
 
 @Composable
@@ -51,7 +51,7 @@ fun HomeEmptyButton(
             .clip(CircleShape)
             .clickable(onClick = onClick)
             .background(backgroundColor)
-            .padding(16.dp)
+            .padding(Spacing.medium)
     ) {
         Icon(
             modifier = Modifier.align(Alignment.CenterStart),

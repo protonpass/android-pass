@@ -45,6 +45,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.commonui.api.heroWeak
@@ -76,7 +77,7 @@ fun PinConfigContent(
                 title = {},
                 navigationIcon = {
                     BackArrowCircleIconButton(
-                        modifier = Modifier.padding(12.dp, 4.dp),
+                        modifier = Modifier.padding(Spacing.mediumSmall, Spacing.extraSmall),
                         color = PassTheme.colors.interactionNorm,
                         backgroundColor = PassTheme.colors.interactionNormMinor1,
                         onUpClick = { onNavigateEvent(ProfileNavigation.Back) }
@@ -84,8 +85,8 @@ fun PinConfigContent(
                 },
                 actions = {
                     CircleButton(
-                        modifier = Modifier.padding(16.dp, 0.dp),
-                        contentPadding = PaddingValues(16.dp, 10.dp),
+                        modifier = Modifier.padding(Spacing.medium, Spacing.none),
+                        contentPadding = PaddingValues(Spacing.medium, Spacing.none),
                         color = PassTheme.colors.interactionNormMajor1,
                         content = {
                             Text(
@@ -104,8 +105,8 @@ fun PinConfigContent(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
                 .padding(padding)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .padding(Spacing.medium),
+            verticalArrangement = Arrangement.spacedBy(Spacing.medium)
         ) {
             Text(
                 text = stringResource(R.string.configure_pin_set_pin_code),
@@ -132,7 +133,7 @@ fun PinConfigContent(
                 textStyle = PassTheme.typography.heroNorm(),
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(
-                    autoCorrect = false,
+                    autoCorrectEnabled = false,
                     keyboardType = KeyboardType.NumberPassword,
                     imeAction = ImeAction.Next
                 ),
@@ -152,7 +153,7 @@ fun PinConfigContent(
                 value = state.repeatPin,
                 textStyle = PassTheme.typography.heroNorm(),
                 keyboardOptions = KeyboardOptions(
-                    autoCorrect = false,
+                    autoCorrectEnabled = false,
                     keyboardType = KeyboardType.NumberPassword,
                     imeAction = ImeAction.Done
                 ),

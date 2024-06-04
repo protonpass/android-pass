@@ -33,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.R
 
@@ -55,7 +56,7 @@ fun CircledPin(
                 color = backgroundColor,
                 shape = CircleShape
             )
-            .padding(4.dp * ratio),
+            .padding(Spacing.extraSmall * ratio),
         painter = painterResource(R.drawable.ic_pin_filled),
         tint = PassTheme.colors.backgroundNorm,
         contentDescription = null

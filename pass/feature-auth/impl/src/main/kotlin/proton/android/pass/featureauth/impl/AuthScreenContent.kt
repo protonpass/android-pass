@@ -38,6 +38,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import me.proton.core.presentation.R as CoreR
 
@@ -80,13 +81,13 @@ fun AuthScreenContent(
         Column(
             modifier = Modifier
                 .padding(padding)
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = Spacing.medium)
         ) {
             Column(
                 modifier = Modifier
                     .weight(1f)
                     .verticalScroll(rememberScrollState())
-                    .padding(bottom = 16.dp)
+                    .padding(bottom = Spacing.medium)
             ) {
                 AuthScreenHeader(
                     modifier = Modifier.align(Alignment.CenterHorizontally)
@@ -101,7 +102,7 @@ fun AuthScreenContent(
             LoadingCircleButton(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 16.dp),
+                    .padding(bottom = Spacing.medium),
                 buttonHeight = 40.dp,
                 text = {
                     Text(

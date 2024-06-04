@@ -31,10 +31,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionWeak
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.UpgradeButton
 import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
 
@@ -69,8 +69,8 @@ internal fun AccountContent(
                 .background(PassTheme.colors.backgroundStrong)
                 .verticalScroll(rememberScrollState())
                 .padding(contentPadding)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+                .padding(Spacing.medium),
+            verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
         ) {
             SubscriptionInfo(state = state)
             AccountAndRecoveryInfo(

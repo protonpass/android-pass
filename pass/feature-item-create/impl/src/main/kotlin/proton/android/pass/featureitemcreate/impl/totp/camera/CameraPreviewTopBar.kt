@@ -37,6 +37,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.Circle
 import proton.android.pass.featureitemcreate.impl.R
@@ -53,7 +54,7 @@ fun CameraPreviewTopBar(onOpenImagePicker: () -> Unit, onDismiss: () -> Unit) {
     ) {
         Circle(
             modifier = Modifier
-                .padding(12.dp, 4.dp),
+                .padding(Spacing.mediumSmall, Spacing.extraSmall),
             backgroundColor = PassTheme.colors.textHint,
             onClick = onDismiss
         ) {

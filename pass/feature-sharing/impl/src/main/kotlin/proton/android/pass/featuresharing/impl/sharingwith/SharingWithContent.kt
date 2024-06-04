@@ -128,7 +128,7 @@ fun SharingWithContent(
                 .padding(padding)
                 .padding(Spacing.medium)
                 .onSizeChanged { parentHeight = with(density) { it.height.toDp() } },
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(Spacing.medium)
         ) {
             Text(
                 text = stringResource(R.string.share_with_title),

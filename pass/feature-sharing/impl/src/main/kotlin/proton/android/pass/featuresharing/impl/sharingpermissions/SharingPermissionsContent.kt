@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.composecomponents.impl.buttons.CircleButton
@@ -54,8 +55,8 @@ fun SharingPermissionsContent(
                 onUpClick = { onNavigateEvent(SharingNavigation.Back) },
                 actions = {
                     CircleButton(
-                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 0.dp),
-                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 10.dp),
+                        modifier = Modifier.padding(horizontal = Spacing.mediumSmall, vertical = Spacing.none),
+                        contentPadding = PaddingValues(horizontal = Spacing.medium, vertical = 10.dp),
                         color = PassTheme.colors.interactionNormMajor1,
                         onClick = { onEvent(SharingPermissionsUiEvent.OnSubmit) }
                     ) {
@@ -72,8 +73,8 @@ fun SharingPermissionsContent(
         Column(
             modifier = Modifier
                 .padding(it)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .padding(Spacing.medium),
+            verticalArrangement = Arrangement.spacedBy(Spacing.medium)
         ) {
             Text(
                 text = stringResource(R.string.share_permissions_title),

@@ -60,14 +60,16 @@ import proton.android.pass.featureitemcreate.impl.creditcard.EditCreditCard
 import proton.android.pass.featureitemcreate.impl.creditcard.UpdateCreditCardNavigation
 import proton.android.pass.featureitemcreate.impl.creditcard.createCreditCardGraph
 import proton.android.pass.featureitemcreate.impl.creditcard.updateCreditCardGraph
-import proton.android.pass.featureitemcreate.impl.dialogs.addcustomfield.CustomFieldNameDialog
-import proton.android.pass.featureitemcreate.impl.dialogs.addcustomfield.CustomSectionNameDialog
-import proton.android.pass.featureitemcreate.impl.dialogs.addcustomfield.EditCustomFieldNameDialog
+import proton.android.pass.featureitemcreate.impl.dialogs.customfield.CustomFieldNameDialog
+import proton.android.pass.featureitemcreate.impl.dialogs.customfield.EditCustomFieldNameDialog
 import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdentityNavigation
 import proton.android.pass.featureitemcreate.impl.identity.navigation.CreateIdentity
 import proton.android.pass.featureitemcreate.impl.identity.navigation.CreateIdentityNavigation
 import proton.android.pass.featureitemcreate.impl.identity.navigation.bottomsheets.IdentityFieldsBottomSheet
 import proton.android.pass.featureitemcreate.impl.identity.navigation.createIdentityGraph
+import proton.android.pass.featureitemcreate.impl.identity.navigation.customsection.CustomSectionNameDialogNavItem
+import proton.android.pass.featureitemcreate.impl.identity.navigation.customsection.CustomSectionOptionsBottomSheetNavItem
+import proton.android.pass.featureitemcreate.impl.identity.navigation.customsection.EditCustomSectionNameDialogNavItem
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
 import proton.android.pass.featureitemcreate.impl.login.CreateLoginNavigation
@@ -848,7 +850,22 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 BaseIdentityNavigation.AddExtraSection ->
-                    appNavigator.navigate(CustomSectionNameDialog)
+                    appNavigator.navigate(CustomSectionNameDialogNavItem)
+
+                is BaseIdentityNavigation.EditCustomSection -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = EditCustomSectionNameDialogNavItem,
+                        route = EditCustomSectionNameDialogNavItem.buildRoute(it.index, it.title),
+                        backDestination = backDestination
+                    )
+                }
+                is BaseIdentityNavigation.ExtraSectionOptions -> appNavigator.navigate(
+                    destination = CustomSectionOptionsBottomSheetNavItem,
+                    route = CustomSectionOptionsBottomSheetNavItem.buildRoute(it.index, it.title)
+                )
+                BaseIdentityNavigation.RemoveCustomSection -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
             }
         }
     )

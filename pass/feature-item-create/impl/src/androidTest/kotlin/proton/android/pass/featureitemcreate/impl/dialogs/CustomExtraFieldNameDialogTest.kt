@@ -42,9 +42,9 @@ import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.waitUntilExists
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.HiddenState
-import proton.android.pass.featureitemcreate.impl.dialogs.addcustomfield.CustomFieldNameDialog
-import proton.android.pass.featureitemcreate.impl.dialogs.addcustomfield.CustomFieldTypeNavArgId
-import proton.android.pass.featureitemcreate.impl.dialogs.addcustomfield.ExtraFieldNameNavigation
+import proton.android.pass.featureitemcreate.impl.dialogs.customfield.CustomFieldNameDialog
+import proton.android.pass.featureitemcreate.impl.dialogs.customfield.CustomFieldTypeNavArgId
+import proton.android.pass.featureitemcreate.impl.dialogs.customfield.CustomFieldNameNavigation
 import javax.inject.Inject
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -107,7 +107,7 @@ class CustomExtraFieldNameDialogTest {
                 PassTheme {
                     CustomFieldNameDialog(
                         onNavigate = {
-                            if (it == ExtraFieldNameNavigation.Close) {
+                            if (it == CustomFieldNameNavigation.Close) {
                                 checker.call()
                             }
                         }

@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemcreate.impl.dialogs.editcustomfield
+package proton.android.pass.featureitemcreate.impl.identity.ui.customsection
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,25 +27,27 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.dialogs.NoPaddingDialog
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.dialogs.SingleInputDialogContent
-import proton.android.pass.featureitemcreate.impl.dialogs.addcustomfield.CustomFieldEvent
-import proton.android.pass.featureitemcreate.impl.dialogs.addcustomfield.ExtraFieldNameNavigation
+import proton.android.pass.featureitemcreate.impl.identity.navigation.customsection.ExtraSectionNavigation
+import proton.android.pass.featureitemcreate.impl.identity.presentation.customsection.CustomSectionEvent
+import proton.android.pass.featureitemcreate.impl.identity.presentation.customsection.EditCustomSectionNameViewModel
 
 @Composable
-fun EditCustomFieldNameDialog(
+fun EditCustomSectionNameDialog(
     modifier: Modifier = Modifier,
-    onNavigate: (ExtraFieldNameNavigation) -> Unit,
-    viewModel: EditCustomFieldNameViewModel = hiltViewModel()
+    onNavigate: (ExtraSectionNavigation) -> Unit,
+    viewModel: EditCustomSectionNameViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     LaunchedEffect(state.event) {
-        if (state.event == CustomFieldEvent.Close) {
-            onNavigate(ExtraFieldNameNavigation.Close)
+        when (state.event) {
+            CustomSectionEvent.Close -> onNavigate(ExtraSectionNavigation.Close)
+            CustomSectionEvent.Idle -> {}
         }
     }
 
     NoPaddingDialog(
         modifier = modifier,
-        onDismissRequest = { onNavigate(ExtraFieldNameNavigation.Close) }
+        onDismissRequest = { onNavigate(ExtraSectionNavigation.Close) }
     ) {
         SingleInputDialogContent(
             value = state.value,
@@ -55,7 +57,7 @@ fun EditCustomFieldNameDialog(
             placeholderRes = R.string.custom_field_dialog_placeholder,
             onChange = viewModel::onNameChanged,
             onConfirm = viewModel::onSave,
-            onCancel = { onNavigate(ExtraFieldNameNavigation.Close) }
+            onCancel = { onNavigate(ExtraSectionNavigation.Close) }
         )
     }
 }

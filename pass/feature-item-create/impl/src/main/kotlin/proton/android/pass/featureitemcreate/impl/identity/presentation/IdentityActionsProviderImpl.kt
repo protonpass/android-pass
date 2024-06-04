@@ -232,6 +232,25 @@ class IdentityActionsProviderImpl @Inject constructor(
         )
     }
 
+    override fun onRenameCustomSection(value: CustomFieldIndexTitle) {
+        identityItemFormMutableState = identityItemFormMutableState.copy(
+            uiExtraSections = identityItemFormMutableState.uiExtraSections.toMutableList()
+                .apply {
+                    set(
+                        value.index,
+                        identityItemFormMutableState.uiExtraSections[value.index].copy(title = value.title)
+                    )
+                }
+        )
+    }
+
+    override fun onRemoveCustomSection(index: Int) {
+        identityItemFormMutableState = identityItemFormMutableState.copy(
+            uiExtraSections = identityItemFormMutableState.uiExtraSections.toMutableList()
+                .apply { removeAt(index) }
+        )
+    }
+
     override fun onAddCustomField(value: CustomFieldContent, customExtraField: CustomExtraField) {
         val uiCustomFieldContent = UICustomFieldContent.from(value)
         identityItemFormMutableState = when (customExtraField) {

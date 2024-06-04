@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemcreate.impl.dialogs.addcustomfield
+package proton.android.pass.featureitemcreate.impl.dialogs.customfield
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -31,19 +31,19 @@ import proton.android.pass.featureitemcreate.impl.dialogs.SingleInputDialogConte
 @Composable
 fun CustomFieldNameDialog(
     modifier: Modifier = Modifier,
-    onNavigate: (ExtraFieldNameNavigation) -> Unit,
+    onNavigate: (CustomFieldNameNavigation) -> Unit,
     viewModel: CustomFieldNameViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     LaunchedEffect(state.event) {
         if (state.event == CustomFieldEvent.Close) {
-            onNavigate(ExtraFieldNameNavigation.Close)
+            onNavigate(CustomFieldNameNavigation.Close)
         }
     }
 
     NoPaddingDialog(
         modifier = modifier,
-        onDismissRequest = { onNavigate(ExtraFieldNameNavigation.Close) }
+        onDismissRequest = { onNavigate(CustomFieldNameNavigation.Close) }
     ) {
         SingleInputDialogContent(
             value = state.value,
@@ -53,7 +53,7 @@ fun CustomFieldNameDialog(
             placeholderRes = R.string.custom_field_dialog_placeholder,
             onChange = viewModel::onNameChanged,
             onConfirm = viewModel::onSave,
-            onCancel = { onNavigate(ExtraFieldNameNavigation.Close) }
+            onCancel = { onNavigate(CustomFieldNameNavigation.Close) }
         )
     }
 }

@@ -30,14 +30,13 @@ import proton.android.pass.composecomponents.impl.dialogs.NoPaddingDialog
 import proton.android.pass.featureitemcreate.impl.alias.SelectedAliasMailboxUiModel
 
 @Composable
-fun SelectMailboxesDialog(
+internal fun SelectMailboxesDialog(
     modifier: Modifier = Modifier,
     mailboxes: ImmutableList<SelectedAliasMailboxUiModel>,
     canUpgrade: Boolean,
     color: Color,
     onMailboxesChanged: (List<SelectedAliasMailboxUiModel>) -> Unit,
     onDismiss: () -> Unit,
-    onUpgrade: () -> Unit,
     viewModel: SelectMailboxesDialogViewModel = hiltViewModel()
 ) {
     LaunchedEffect(Unit) {
@@ -55,7 +54,6 @@ fun SelectMailboxesDialog(
             color = color,
             onConfirm = { onMailboxesChanged(uiState.mailboxes) },
             onDismiss = onDismiss,
-            onUpgrade = onUpgrade,
             onMailboxToggled = { viewModel.onMailboxChanged(it) }
         )
     }

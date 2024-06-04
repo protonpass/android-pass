@@ -23,20 +23,20 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.usecases.extrapassword.AuthWithAccessKey
+import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordResult
 import proton.android.pass.data.impl.remote.RemoteExtraPasswordDataSource
 import proton.android.pass.data.impl.requests.ExtraPasswordSendSrpDataRequest
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
-class AuthWithAccessKeyImpl @Inject constructor(
+class AuthWithExtraPasswordImpl @Inject constructor(
     private val srpCrypto: SrpCrypto,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val remoteExtraPasswordDataSource: RemoteExtraPasswordDataSource,
     private val sessionManager: SessionManager,
     private val authWithExtraPasswordListener: AuthWithExtraPasswordListenerImpl
-) : AuthWithAccessKey {
+) : AuthWithExtraPassword {
     override suspend fun invoke(userId: UserId, password: EncryptedString) {
         val decryptedPassword = encryptionContextProvider.withEncryptionContext {
             decrypt(password).encodeToByteArray()

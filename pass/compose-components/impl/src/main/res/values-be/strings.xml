@@ -141,4 +141,6 @@
   <!-- Words -->
   <string name="email_address">Адрас электроннай пошты</string>
   <string name="password">Пароль</string>
+  <!-- Tooltips -->
+  <string name="tooltip_dismiss_button_content_description">Кнопка ігнараваць гэту параду і не паказваць яе зноў</string>
 </resources>

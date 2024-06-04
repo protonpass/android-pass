@@ -123,6 +123,9 @@ import proton.android.pass.features.extrapassword.confirm.navigation.ConfirmExtr
 import proton.android.pass.features.extrapassword.extraPasswordGraph
 import proton.android.pass.features.extrapassword.infosheet.navigation.ExtraPasswordInfoNavItem
 import proton.android.pass.features.extrapassword.options.navigation.ExtraPasswordOptionsNavItem
+import proton.android.pass.features.item.details.navigation.ItemDetailsNavDestination
+import proton.android.pass.features.item.details.navigation.ItemDetailsNavItem
+import proton.android.pass.features.item.details.navigation.itemDetailsNavGraph
 import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestination
 import proton.android.pass.features.item.history.navigation.itemHistoryNavGraph
 import proton.android.pass.features.item.history.restore.navigation.ItemHistoryRestoreNavItem
@@ -289,9 +292,17 @@ fun NavGraphBuilder.appGraph(
 
                 is HomeNavigation.ItemDetail -> {
                     appNavigator.navigate(
-                        ViewItem,
-                        ViewItem.createNavRoute(it.shareId, it.itemId)
+                        destination = ItemDetailsNavItem,
+                        route = ItemDetailsNavItem.createNavRoute(
+                            shareId = it.shareId,
+                            itemId = it.itemId
+                        )
                     )
+
+//                    appNavigator.navigate(
+//                        ViewItem,
+//                        ViewItem.createNavRoute(it.shareId, it.itemId)
+//                    )
                 }
 
                 HomeNavigation.Profile -> {
@@ -1095,6 +1106,16 @@ fun NavGraphBuilder.appGraph(
                         shareId = it.shareId,
                         itemId = it.itemId
                     )
+                )
+            }
+        }
+    )
+
+    itemDetailsNavGraph(
+        onNavigated = { itemDetailsNavDestination ->
+            when (itemDetailsNavDestination) {
+                ItemDetailsNavDestination.Back -> appNavigator.navigateBack(
+                    comesFromBottomsheet = false
                 )
             }
         }

@@ -30,10 +30,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
@@ -51,7 +51,12 @@ fun SimpleNoteSection(
     ProtonTextField(
         modifier = modifier
             .roundedContainerNorm()
-            .padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
+            .padding(
+                start = Spacing.none,
+                top = Spacing.medium,
+                end = Spacing.extraSmall,
+                bottom = Spacing.medium
+            ),
         textStyle = ProtonTheme.typography.defaultNorm(enabled),
         label = { ProtonTextFieldLabel(text = label) },
         placeholder = { ProtonTextFieldPlaceHolder(text = placeholder) },

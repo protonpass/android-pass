@@ -42,6 +42,7 @@ import me.proton.core.compose.component.ProtonSnackbarHostState
 import me.proton.core.compose.component.ProtonSnackbarType
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.notifications.api.SnackbarType
 
@@ -55,7 +56,7 @@ fun PassSnackbar(
     dismiss: () -> Unit = {}
 ) {
     Snackbar(
-        modifier = modifier.padding(12.dp),
+        modifier = modifier.padding(Spacing.mediumSmall),
         content = { Text(message) },
         action = {
             Row {

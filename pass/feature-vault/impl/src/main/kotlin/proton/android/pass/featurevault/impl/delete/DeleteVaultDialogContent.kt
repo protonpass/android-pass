@@ -33,11 +33,11 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import me.proton.core.compose.theme.defaultWeak
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmWithLoadingDialog
@@ -80,7 +80,7 @@ fun DeleteVaultDialogContent(
         content = {
             Column(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(Spacing.medium)
             ) {
                 Text(
                     text = bodyText,
@@ -91,7 +91,7 @@ fun DeleteVaultDialogContent(
                     modifier = Modifier
                         .fillMaxWidth()
                         .roundedContainerNorm()
-                        .padding(16.dp)
+                        .padding(Spacing.medium)
                 ) {
                     ProtonTextField(
                         modifier = Modifier.fillMaxWidth(),

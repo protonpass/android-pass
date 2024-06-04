@@ -32,12 +32,13 @@ import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import me.proton.core.compose.theme.ProtonDimens
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.commonuimodels.api.ShareUiModelWithItemCount
 import proton.android.pass.composecomponents.impl.buttons.CircleButton
+import proton.android.pass.domain.ShareId
 import proton.android.pass.featurehome.impl.R
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
-import proton.android.pass.domain.ShareId
 
 @Composable
 fun VaultDrawerContent(
@@ -70,7 +71,7 @@ fun VaultDrawerContent(
             CircleButton(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
+                    .padding(Spacing.medium),
                 contentPadding = PaddingValues(14.dp),
                 color = PassTheme.colors.loginInteractionNormMinor1,
                 elevation = ButtonDefaults.elevation(0.dp),

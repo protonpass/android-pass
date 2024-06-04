@@ -53,6 +53,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.commonui.api.heroNorm
@@ -116,11 +117,11 @@ fun AuthScreenMasterPasswordForm(
             modifier = Modifier
                 .roundedContainerNorm()
                 .fillMaxWidth()
-                .padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
+                .padding(start = Spacing.none, top = Spacing.medium, end = Spacing.extraSmall, bottom = Spacing.medium),
             value = state.password,
             editable = isEditAllowed,
             keyboardOptions = KeyboardOptions(
-                autoCorrect = false,
+                autoCorrectEnabled = false,
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done
             ),

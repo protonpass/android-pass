@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultHighlightNorm
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
@@ -73,13 +74,13 @@ fun SpotlightCard(
             modifier = Modifier.background(backgroundColor)
         ) {
             Row(
-                modifier = Modifier.padding(16.dp, 32.dp),
+                modifier = Modifier.padding(Spacing.medium, Spacing.large),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
+                horizontalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
             ) {
                 Column(
                     modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                    verticalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
                 ) {
                     Text(
                         text = title,

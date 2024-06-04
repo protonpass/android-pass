@@ -26,7 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
@@ -52,7 +51,7 @@ fun ItemHistoryRestoreTopBar(
         title = {},
         navigationIcon = {
             BackArrowCircleIconButton(
-                modifier = Modifier.padding(12.dp, Spacing.small),
+                modifier = Modifier.padding(Spacing.mediumSmall, Spacing.small),
                 color = colors.majorSecondary,
                 backgroundColor = colors.minorPrimary,
                 onUpClick = onUpClick
@@ -60,7 +59,7 @@ fun ItemHistoryRestoreTopBar(
         },
         actions = {
             LoadingCircleButton(
-                modifier = Modifier.padding(12.dp, Spacing.small),
+                modifier = Modifier.padding(Spacing.mediumSmall, Spacing.small),
                 isLoading = false,
                 color = colors.majorPrimary,
                 leadingIcon = {

@@ -95,8 +95,8 @@ fun HistorySection(
             shape = RoundedCornerShape(32.dp),
             colors = ButtonDefaults.buttonColors(buttonBackgroundColor),
             contentPadding = PaddingValues(
-                horizontal = 12.dp,
-                vertical = 12.dp
+                horizontal = Spacing.mediumSmall,
+                vertical = Spacing.mediumSmall
             ),
             elevation = null,
             border = null

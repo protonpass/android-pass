@@ -28,9 +28,9 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.container.InfoBanner
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
@@ -56,8 +56,8 @@ internal fun CreateAliasForm(
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+            .padding(Spacing.medium),
+        verticalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
         AnimatedVisibility(visible = showUpgrade) {
             InfoBanner(
@@ -68,7 +68,12 @@ internal fun CreateAliasForm(
         TitleSection(
             modifier = Modifier
                 .roundedContainerNorm()
-                .padding(start = 16.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
+                .padding(
+                    start = Spacing.medium,
+                    top = Spacing.medium,
+                    end = Spacing.extraSmall,
+                    bottom = Spacing.medium
+                ),
             value = aliasItemFormState.title,
             requestFocus = true,
             onTitleRequiredError = onTitleRequiredError,

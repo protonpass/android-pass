@@ -31,10 +31,10 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
@@ -42,12 +42,12 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetVaultRow
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.composecomponents.impl.container.InfoBanner
-import proton.android.pass.featurevault.impl.R
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultWithItemCount
+import proton.android.pass.featurevault.impl.R
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
@@ -59,11 +59,11 @@ fun SelectVaultBottomsheetContent(
 ) {
     Column(
         modifier = modifier.bottomSheet(),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
     ) {
         if (state.showUpgradeMessage) {
             InfoBanner(
-                modifier = Modifier.padding(16.dp, 0.dp),
+                modifier = Modifier.padding(Spacing.medium, Spacing.none),
                 backgroundColor = PassTheme.colors.interactionNormMinor1,
                 text = buildAnnotatedString {
                     append(stringResource(R.string.bottomsheet_cannot_select_not_primary_vault))

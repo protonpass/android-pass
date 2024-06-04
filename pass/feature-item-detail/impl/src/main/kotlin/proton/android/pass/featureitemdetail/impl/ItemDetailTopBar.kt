@@ -41,6 +41,7 @@ import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallNorm
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.buttons.CircleIconButton
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
@@ -68,7 +69,7 @@ internal fun ItemDetailTopBar(
         title = { },
         navigationIcon = {
             BackArrowCircleIconButton(
-                modifier = Modifier.padding(12.dp, 4.dp),
+                modifier = Modifier.padding(Spacing.mediumSmall, Spacing.extraSmall),
                 backgroundColor = iconBackgroundColor,
                 color = iconColor,
                 onUpClick = onUpClick
@@ -104,8 +105,8 @@ private fun ItemTopBarActions(
     Row(
         modifier = modifier
             .height(48.dp)
-            .padding(horizontal = 12.dp, vertical = 4.dp),
-        horizontalArrangement = Arrangement.spacedBy(4.dp),
+            .padding(horizontal = Spacing.mediumSmall, vertical = Spacing.extraSmall),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall),
         verticalAlignment = Alignment.CenterVertically
     ) {
         ItemDetailEditButton(

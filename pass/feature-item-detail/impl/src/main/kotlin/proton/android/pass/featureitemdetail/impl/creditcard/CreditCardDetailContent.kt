@@ -23,7 +23,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.domain.ItemContents
@@ -48,10 +47,10 @@ fun CreditCardDetailContent(
 
     Column(
         modifier = modifier.padding(horizontal = Spacing.medium),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
     ) {
         CreditCardTitle(
-            modifier = Modifier.padding(Spacing.none, 12.dp),
+            modifier = Modifier.padding(Spacing.none, Spacing.mediumSmall),
             title = model.title,
             vault = vault,
             onVaultClick = { onEvent(CreditCardDetailEvent.OnVaultClick) },

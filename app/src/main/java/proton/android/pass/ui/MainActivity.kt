@@ -69,6 +69,7 @@ class MainActivity : FragmentActivity() {
             }
         }
 
+    @Suppress("CyclomaticComplexMethod", "ComplexMethod")
     override fun onCreate(savedInstanceState: Bundle?) {
         setSecureMode()
         val splashScreen = installSplashScreen()
@@ -93,7 +94,7 @@ class MainActivity : FragmentActivity() {
                 PassLogger.w(TAG, it)
             }
             LaunchedEffect(state) {
-                launcherViewModel.onUserStateChanced(state)
+                launcherViewModel.onUserStateChanged(state)
             }
             when (state) {
                 AccountNeeded -> {

@@ -36,17 +36,19 @@ import proton.android.pass.composecomponents.impl.buttons.CircleIconButton
 @Composable
 fun ColorSettingOption(
     modifier: Modifier = Modifier,
+    innerModifier: Modifier = Modifier,
     text: String,
     textColor: Color,
     iconBgColor: Color,
-    icon: @Composable () -> Unit,
+    icon: @Composable (() -> Unit)? = null,
     onClick: () -> Unit
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .clickable { onClick() }
-            .padding(16.dp, 12.dp),
+            .padding(16.dp, 12.dp)
+            .then(innerModifier),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -55,11 +57,13 @@ fun ColorSettingOption(
             style = ProtonTheme.typography.defaultNorm,
             color = textColor
         )
-        CircleIconButton(
-            backgroundColor = iconBgColor,
-            onClick = onClick
-        ) {
-            icon()
+        icon?.let {
+            CircleIconButton(
+                backgroundColor = iconBgColor,
+                onClick = onClick
+            ) {
+                icon()
+            }
         }
     }
 }

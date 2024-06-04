@@ -46,15 +46,14 @@ import proton.android.pass.R
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.messages.OfflineIndicator
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
-import proton.android.pass.composecomponents.impl.messages.PassSnackbarHostState
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
+import proton.android.pass.composecomponents.impl.snackbar.SnackBarLaunchedEffect
 import proton.android.pass.featurefeatureflags.impl.FeatureFlagRoute
 import proton.android.pass.inappupdates.api.InAppUpdateState
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 import proton.android.pass.network.api.NetworkStatus
-import proton.android.pass.notifications.api.SnackbarMessage
 import proton.android.pass.notifications.api.SnackbarType
 import proton.android.pass.ui.internal.InternalDrawerState
 import proton.android.pass.ui.internal.InternalDrawerValue
@@ -187,23 +186,6 @@ fun PassAppContent(
 }
 
 private const val TAG = "PassAppContent"
-
-@Composable
-private fun SnackBarLaunchedEffect(
-    snackBarMessage: SnackbarMessage?,
-    passSnackBarHostState: PassSnackbarHostState,
-    onSnackBarMessageDelivered: () -> Unit
-) {
-    snackBarMessage ?: return
-    val snackBarMessageLocale = stringResource(id = snackBarMessage.id)
-    LaunchedEffect(snackBarMessage) {
-        passSnackBarHostState.showSnackbar(
-            snackBarMessage.type,
-            snackBarMessageLocale
-        )
-        onSnackBarMessageDelivered()
-    }
-}
 
 @OptIn(ExperimentalMaterialApi::class)
 private fun onBottomSheetDismissed(

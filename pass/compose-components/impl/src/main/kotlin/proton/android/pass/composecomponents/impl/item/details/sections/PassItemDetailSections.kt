@@ -25,6 +25,7 @@ import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.sections.alias.PassAliasItemDetailSections
 import proton.android.pass.composecomponents.impl.item.details.sections.cards.PassCreditCardItemDetailsSections
+import proton.android.pass.composecomponents.impl.item.details.sections.identity.PassIdentityItemDetailsSections
 import proton.android.pass.composecomponents.impl.item.details.sections.login.PassLoginItemDetailSections
 import proton.android.pass.composecomponents.impl.item.details.sections.notes.PassNoteItemDetailSections
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassSharedItemDetailNoteSection
@@ -47,6 +48,13 @@ internal fun PassItemDetailSections(
         )
 
         is ItemDetailState.CreditCard -> PassCreditCardItemDetailsSections(
+            modifier = modifier,
+            contents = contents,
+            itemColors = itemColors,
+            onEvent = onEvent
+        )
+
+        is ItemDetailState.Identity -> PassIdentityItemDetailsSections(
             modifier = modifier,
             contents = contents,
             itemColors = itemColors,

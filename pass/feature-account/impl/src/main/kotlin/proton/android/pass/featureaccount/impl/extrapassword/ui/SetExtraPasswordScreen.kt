@@ -16,34 +16,34 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureaccount.impl.accesskey.ui
+package proton.android.pass.featureaccount.impl.extrapassword.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import proton.android.pass.featureaccount.impl.AccountNavigation
-import proton.android.pass.featureaccount.impl.accesskey.navigation.SetAccessKeyContentEvent
-import proton.android.pass.featureaccount.impl.accesskey.presentation.SetAccessKeyViewModel
+import proton.android.pass.featureaccount.impl.extrapassword.navigation.SetExtraPasswordContentEvent
+import proton.android.pass.featureaccount.impl.extrapassword.presentation.SetExtraPasswordViewModel
 
 @Composable
-fun SetAccessKeyScreen(
+fun SetExtraPasswordScreen(
     modifier: Modifier = Modifier,
-    viewModel: SetAccessKeyViewModel = hiltViewModel(),
+    viewModel: SetExtraPasswordViewModel = hiltViewModel(),
     onNavigate: (AccountNavigation) -> Unit
 ) {
-    SetAccessKeyContent(
+    SetExtraPasswordContent(
         modifier = modifier,
         state = viewModel.getAccessKeyState(),
         onEvent = {
             when (it) {
-                is SetAccessKeyContentEvent.Back -> onNavigate(AccountNavigation.Back)
-                is SetAccessKeyContentEvent.OnAccessKeyRepeatValueChanged ->
+                is SetExtraPasswordContentEvent.Back -> onNavigate(AccountNavigation.Back)
+                is SetExtraPasswordContentEvent.OnExtraPasswordRepeatValueChanged ->
                     viewModel.onAccessKeyRepeatValueChanged(it.value)
 
-                is SetAccessKeyContentEvent.OnAccessKeyValueChanged ->
+                is SetExtraPasswordContentEvent.OnExtraPasswordValueChanged ->
                     viewModel.onAccessKeyValueChanged(it.value)
 
-                SetAccessKeyContentEvent.Submit -> {
+                SetExtraPasswordContentEvent.Submit -> {
                     viewModel.submit()
                 }
             }

@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureaccount.impl.accesskey.presentation
+package proton.android.pass.featureaccount.impl.extrapassword.presentation
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -27,14 +27,14 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import javax.inject.Inject
 
 @HiltViewModel
-class SetAccessKeyViewModel @Inject constructor(
+class SetExtraPasswordViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
     @OptIn(SavedStateHandleSaveableApi::class)
-    private var mutableAccessKeyState: SetAccessKeyState by savedStateHandleProvider.get()
-        .saveable { mutableStateOf(SetAccessKeyState.EMPTY) }
+    private var mutableAccessKeyState: SetExtraPasswordState by savedStateHandleProvider.get()
+        .saveable { mutableStateOf(SetExtraPasswordState.EMPTY) }
 
-    fun getAccessKeyState(): SetAccessKeyState = mutableAccessKeyState
+    fun getAccessKeyState(): SetExtraPasswordState = mutableAccessKeyState
 
     fun onAccessKeyRepeatValueChanged(value: String) {
         mutableAccessKeyState = mutableAccessKeyState.copy(repeatPassword = value)

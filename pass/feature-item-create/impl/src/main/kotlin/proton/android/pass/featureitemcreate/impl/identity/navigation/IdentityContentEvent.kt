@@ -45,5 +45,9 @@ sealed interface IdentityContentEvent {
     data object OnAddContactDetailField : IdentityContentEvent
     data object OnAddWorkField : IdentityContentEvent
     data object OnAddExtraSection : IdentityContentEvent
-    data class OnAddExtraSectionCustomField(val index: Int) : IdentityContentEvent
+
+    @JvmInline
+    value class OnAddExtraSectionCustomField(val index: Int) : IdentityContentEvent
+
+    data class OnExtraSectionOptions(val index: Int, val label: String) : IdentityContentEvent
 }

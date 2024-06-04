@@ -16,15 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemcreate.impl.dialogs.addcustomfield
+package proton.android.pass.featureitemcreate.impl.dialogs.customfield
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldIndexNavArgId
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldTitleNavArgId
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldType
-import proton.android.pass.featureitemcreate.impl.dialogs.addcustomsection.CustomSectionNameDialog
-import proton.android.pass.featureitemcreate.impl.dialogs.editcustomfield.EditCustomFieldNameDialog
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
@@ -44,11 +42,6 @@ object CustomFieldNameDialog : NavItem(
     fun buildRoute(type: CustomFieldType) = "$baseRoute/${type.name}"
 }
 
-object CustomSectionNameDialog : NavItem(
-    baseRoute = "item/create/section/add/dialog",
-    navItemType = NavItemType.Dialog
-)
-
 object EditCustomFieldNameDialog : NavItem(
     baseRoute = "item/create/customfield/edit/dialog",
     navArgIds = listOf(CustomFieldIndexNavArgId, CustomFieldTitleNavArgId),
@@ -57,20 +50,16 @@ object EditCustomFieldNameDialog : NavItem(
     fun buildRoute(index: Int, currentValue: String) = "$baseRoute/$index/${NavParamEncoder.encode(currentValue)}"
 }
 
-sealed interface ExtraFieldNameNavigation {
-    data object Close : ExtraFieldNameNavigation
+sealed interface CustomFieldNameNavigation {
+    data object Close : CustomFieldNameNavigation
 }
 
-fun NavGraphBuilder.customFieldNameDialogGraph(onNavigate: (ExtraFieldNameNavigation) -> Unit) {
+fun NavGraphBuilder.customFieldNameDialogGraph(onNavigate: (CustomFieldNameNavigation) -> Unit) {
     dialog(CustomFieldNameDialog) {
         CustomFieldNameDialog(onNavigate = onNavigate)
     }
 
     dialog(EditCustomFieldNameDialog) {
         EditCustomFieldNameDialog(onNavigate = onNavigate)
-    }
-
-    dialog(CustomSectionNameDialog) {
-        CustomSectionNameDialog(onNavigate = onNavigate)
     }
 }

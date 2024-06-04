@@ -16,26 +16,26 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemcreate.impl.dialogs.addcustomsection
+package proton.android.pass.featureitemcreate.impl.dialogs.customfield
 
 import javax.annotation.concurrent.Immutable
 
-sealed interface CustomSectionEvent {
-    data object Close : CustomSectionEvent
-    data object Idle : CustomSectionEvent
+sealed interface CustomFieldEvent {
+    data object Close : CustomFieldEvent
+    data object Unknown : CustomFieldEvent
 }
 
 @Immutable
-data class CustomSectionNameUiState(
+data class CustomFieldNameUiState(
     val value: String,
     val canConfirm: Boolean,
-    val event: CustomSectionEvent
+    val event: CustomFieldEvent
 ) {
     companion object {
-        val Initial = CustomSectionNameUiState(
+        val Initial = CustomFieldNameUiState(
             value = "",
             canConfirm = false,
-            event = CustomSectionEvent.Idle
+            event = CustomFieldEvent.Unknown
         )
     }
 }

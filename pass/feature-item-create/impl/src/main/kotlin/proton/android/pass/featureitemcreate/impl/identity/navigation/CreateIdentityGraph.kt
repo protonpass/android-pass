@@ -30,10 +30,12 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.customFieldBottomSheetGraph
 import proton.android.pass.featureitemcreate.impl.common.KEY_VAULT_SELECTED
-import proton.android.pass.featureitemcreate.impl.dialogs.addcustomfield.ExtraFieldNameNavigation
-import proton.android.pass.featureitemcreate.impl.dialogs.addcustomfield.customFieldNameDialogGraph
+import proton.android.pass.featureitemcreate.impl.dialogs.customfield.CustomFieldNameNavigation
+import proton.android.pass.featureitemcreate.impl.dialogs.customfield.customFieldNameDialogGraph
 import proton.android.pass.featureitemcreate.impl.identity.navigation.bottomsheets.IdentityFieldsNavigation
 import proton.android.pass.featureitemcreate.impl.identity.navigation.bottomsheets.identityFieldsGraph
+import proton.android.pass.featureitemcreate.impl.identity.navigation.customsection.ExtraSectionNavigation
+import proton.android.pass.featureitemcreate.impl.identity.navigation.customsection.extraSectionGraph
 import proton.android.pass.featureitemcreate.impl.identity.ui.CreateIdentityScreen
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
@@ -88,7 +90,13 @@ fun NavGraphBuilder.createIdentityGraph(onNavigate: (BaseIdentityNavigation) -> 
             }
         }
         customFieldBottomSheetGraph(
-            onAddCustomFieldNavigate = { onNavigate(BaseIdentityNavigation.CustomFieldTypeSelected(it)) },
+            onAddCustomFieldNavigate = {
+                onNavigate(
+                    BaseIdentityNavigation.CustomFieldTypeSelected(
+                        it
+                    )
+                )
+            },
             onEditCustomFieldNavigate = { title: String, index: Int ->
                 onNavigate(BaseIdentityNavigation.EditCustomField(title, index))
             },
@@ -99,7 +107,17 @@ fun NavGraphBuilder.createIdentityGraph(onNavigate: (BaseIdentityNavigation) -> 
         )
         customFieldNameDialogGraph {
             when (it) {
-                is ExtraFieldNameNavigation.Close -> onNavigate(BaseIdentityNavigation.Close)
+                is CustomFieldNameNavigation.Close -> onNavigate(BaseIdentityNavigation.Close)
+            }
+        }
+        extraSectionGraph {
+            when (it) {
+                is ExtraSectionNavigation.Close -> onNavigate(BaseIdentityNavigation.Close)
+                is ExtraSectionNavigation.EditCustomSection ->
+                    onNavigate(BaseIdentityNavigation.EditCustomSection(it.title, it.index))
+
+                ExtraSectionNavigation.RemoveCustomSection ->
+                    onNavigate(BaseIdentityNavigation.RemoveCustomSection)
             }
         }
     }

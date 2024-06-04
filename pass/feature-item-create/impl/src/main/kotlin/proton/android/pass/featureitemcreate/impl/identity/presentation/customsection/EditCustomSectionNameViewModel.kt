@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemcreate.impl.dialogs.editcustomfield
+package proton.android.pass.featureitemcreate.impl.identity.presentation.customsection
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -30,40 +30,38 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_TITLE_KEY
+import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_SECTION_TITLE_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldIndexNavArgId
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldTitleNavArgId
 import proton.android.pass.featureitemcreate.impl.common.CustomFieldIndexTitle
-import proton.android.pass.featureitemcreate.impl.dialogs.addcustomfield.CustomFieldEvent
-import proton.android.pass.featureitemcreate.impl.dialogs.addcustomfield.CustomFieldNameUiState
 import proton.android.pass.navigation.api.NavParamEncoder
 import javax.inject.Inject
 
 @HiltViewModel
-class EditCustomFieldNameViewModel @Inject constructor(
+class EditCustomSectionNameViewModel @Inject constructor(
     private val draftRepository: DraftRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
-    private val customFieldIndex: Int = savedStateHandleProvider
+    private val customSectionIndex: Int = savedStateHandleProvider
         .get()
         .require(CustomFieldIndexNavArgId.key)
 
-    private val customFieldTitle: String = savedStateHandleProvider
+    private val customSectionTitle: String = savedStateHandleProvider
         .get()
         .require<String>(CustomFieldTitleNavArgId.key)
-        .let { NavParamEncoder.decode(it) }
+        .let(NavParamEncoder::decode)
 
-    private val eventFlow: MutableStateFlow<CustomFieldEvent> =
-        MutableStateFlow(CustomFieldEvent.Unknown)
-    private val nameFlow: MutableStateFlow<String> = MutableStateFlow(customFieldTitle)
+    private val eventFlow: MutableStateFlow<CustomSectionEvent> =
+        MutableStateFlow(CustomSectionEvent.Idle)
+    private val nameFlow: MutableStateFlow<String> = MutableStateFlow(customSectionTitle)
 
-    val state: StateFlow<CustomFieldNameUiState> = combine(
+    val state: StateFlow<CustomSectionNameUiState> = combine(
         eventFlow,
         nameFlow
     ) { event, value ->
-        CustomFieldNameUiState(
+        CustomSectionNameUiState(
             value = value,
             canConfirm = value.isNotBlank(),
             event = event
@@ -71,7 +69,7 @@ class EditCustomFieldNameViewModel @Inject constructor(
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
-        initialValue = CustomFieldNameUiState.Initial
+        initialValue = CustomSectionNameUiState.Initial
     )
 
     fun onNameChanged(name: String) {
@@ -81,12 +79,12 @@ class EditCustomFieldNameViewModel @Inject constructor(
 
     fun onSave() = viewModelScope.launch {
         draftRepository.save(
-            key = DRAFT_CUSTOM_FIELD_TITLE_KEY,
+            key = DRAFT_CUSTOM_SECTION_TITLE_KEY,
             value = CustomFieldIndexTitle(
                 title = nameFlow.value.trim(),
-                index = customFieldIndex
+                index = customSectionIndex
             )
         )
-        eventFlow.update { CustomFieldEvent.Close }
+        eventFlow.update { CustomSectionEvent.Close }
     }
 }

@@ -42,9 +42,11 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_KEY
 import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_TITLE_KEY
+import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_SECTION_TITLE_KEY
 import proton.android.pass.data.api.repositories.DRAFT_IDENTITY_CUSTOM_FIELD_KEY
 import proton.android.pass.data.api.repositories.DRAFT_IDENTITY_EXTRA_SECTION_KEY
 import proton.android.pass.data.api.repositories.DRAFT_REMOVE_CUSTOM_FIELD_KEY
+import proton.android.pass.data.api.repositories.DRAFT_REMOVE_CUSTOM_SECTION_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
@@ -91,6 +93,8 @@ class CreateIdentityViewModel @Inject constructor(
             launch { observeRemoveCustomField() }
             launch { observeRenameCustomField() }
             launch { observeNewExtraSection() }
+            launch { observeRemoveExtraSection() }
+            launch { observeRenameExtraSection() }
         }
     }
 
@@ -194,6 +198,15 @@ class CreateIdentityViewModel @Inject constructor(
             }
     }
 
+    private suspend fun observeRemoveExtraSection() {
+        draftRepository.get<Int>(DRAFT_REMOVE_CUSTOM_SECTION_KEY)
+            .collect {
+                if (it !is Some) return@collect
+                draftRepository.delete<Int>(DRAFT_REMOVE_CUSTOM_SECTION_KEY)
+                identityActionsProvider.onRemoveCustomSection(it.value)
+            }
+    }
+
     private suspend fun observeRenameCustomField() {
         draftRepository.get<CustomFieldIndexTitle>(DRAFT_CUSTOM_FIELD_TITLE_KEY)
             .collect {
@@ -206,6 +219,14 @@ class CreateIdentityViewModel @Inject constructor(
             }
     }
 
+    private suspend fun observeRenameExtraSection() {
+        draftRepository.get<CustomFieldIndexTitle>(DRAFT_CUSTOM_SECTION_TITLE_KEY)
+            .collect {
+                if (it !is Some) return@collect
+                draftRepository.delete<CustomFieldIndexTitle>(DRAFT_CUSTOM_SECTION_TITLE_KEY)
+                identityActionsProvider.onRenameCustomSection(it.value)
+            }
+    }
 
     companion object {
         private const val TAG = "CreateIdentityViewModel"

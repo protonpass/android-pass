@@ -96,7 +96,7 @@ fun CannotPerformActionDialog(
         Column(
             modifier = Modifier
                 .padding(horizontal = 24.dp)
-                .padding(top = 24.dp, bottom = 12.dp),
+                .padding(top = 24.dp, bottom = Spacing.mediumSmall),
             verticalArrangement = Arrangement.spacedBy(Spacing.medium)
         ) {
             ProtonDialogTitle(title = stringResource(type.title))

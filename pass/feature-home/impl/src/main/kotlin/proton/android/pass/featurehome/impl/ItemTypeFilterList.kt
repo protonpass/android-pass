@@ -41,6 +41,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallNorm
 import me.proton.core.compose.theme.overlineNorm
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.buttons.CircleButton
 import proton.android.pass.featuresearchoptions.api.SearchFilterType
@@ -62,7 +63,7 @@ fun ItemTypeFilterList(
 ) {
     Row(
         modifier = modifier.horizontalScroll(rememberScrollState()),
-        horizontalArrangement = Arrangement.spacedBy(4.dp)
+        horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
     ) {
         Spacer(modifier = Modifier.width(12.dp))
         ItemTypeButton(
@@ -94,7 +95,7 @@ private fun ItemTypeButton(
     onItemTypeClick: (SearchFilterType) -> Unit
 ) {
     CircleButton(
-        contentPadding = PaddingValues(12.dp, 0.dp),
+        contentPadding = PaddingValues(Spacing.mediumSmall, Spacing.none),
         color = if (isSelected) {
             PassTheme.colors.interactionNormMajor1
         } else {
@@ -104,10 +105,10 @@ private fun ItemTypeButton(
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(4.dp)
+            horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
         ) {
             Icon(
-                modifier = Modifier.height(16.dp),
+                modifier = Modifier.height(Spacing.medium),
                 painter = when (searchFilterType) {
                     All -> painterResource(CoreR.drawable.ic_proton_list_bullets)
                     Login -> painterResource(CoreR.drawable.ic_proton_user)

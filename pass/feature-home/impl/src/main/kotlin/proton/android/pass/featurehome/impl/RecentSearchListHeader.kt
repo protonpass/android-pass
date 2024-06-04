@@ -33,11 +33,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionStrongNorm
 import me.proton.core.compose.theme.captionWeak
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.body3Bold
 
@@ -53,9 +53,9 @@ fun RecentSearchListHeader(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Row(
-            modifier = Modifier.padding(16.dp, 0.dp, 0.dp, 0.dp),
+            modifier = Modifier.padding(Spacing.medium, Spacing.none, Spacing.none, Spacing.none),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(4.dp)
+            horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
         ) {
             Text(
                 text = stringResource(R.string.recent_search_header_count),

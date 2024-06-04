@@ -84,7 +84,7 @@ internal fun CreateUpdateTopBar(
         title = { },
         navigationIcon = {
             Circle(
-                modifier = Modifier.padding(12.dp, 4.dp),
+                modifier = Modifier.padding(Spacing.mediumSmall, Spacing.extraSmall),
                 backgroundColor = iconBackgroundColor,
                 onClick = {
                     keyboardController?.hide()
@@ -101,7 +101,7 @@ internal fun CreateUpdateTopBar(
         actions = {
             if (showUpgrade) {
                 UpgradeButton(
-                    modifier = Modifier.padding(12.dp, 0.dp),
+                    modifier = Modifier.padding(Spacing.mediumSmall, 0.dp),
                     color = actionColor,
                     onUpgradeClick = onUpgrade
                 )

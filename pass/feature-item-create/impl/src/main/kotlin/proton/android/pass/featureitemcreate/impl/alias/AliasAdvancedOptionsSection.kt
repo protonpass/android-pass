@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.applyIf
@@ -74,7 +75,12 @@ fun AliasAdvancedOptionsSection(
             )
     ) {
         ProtonTextField(
-            modifier = modifier.padding(start = 16.dp, top = 16.dp, bottom = 16.dp, end = 4.dp),
+            modifier = modifier.padding(
+                start = Spacing.medium,
+                top = Spacing.medium,
+                bottom = Spacing.medium,
+                end = Spacing.extraSmall
+            ),
             textStyle = ProtonTheme.typography.defaultNorm(enabled),
             label = {
                 ProtonTextFieldLabel(

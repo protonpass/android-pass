@@ -55,6 +55,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionNorm
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -136,7 +137,7 @@ fun ProtonTextField(
                     singleLine = singleLine,
                     enabled = editable,
                     interactionSource = interactionSource,
-                    contentPadding = PaddingValues(0.dp),
+                    contentPadding = PaddingValues(Spacing.none),
                     label = label,
                     trailingIcon = trailingIcon,
                     leadingIcon = leadingIcon,

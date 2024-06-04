@@ -28,9 +28,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
@@ -55,12 +55,17 @@ internal fun HiddenNumberInput(
         is UIHiddenState.Empty -> "" to VisualTransformation.None
     }
     ProtonTextField(
-        modifier = modifier.padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
+        modifier = modifier.padding(
+            start = Spacing.none,
+            top = Spacing.medium,
+            end = Spacing.extraSmall,
+            bottom = Spacing.medium
+        ),
         value = text,
         onChange = onChange,
         moveToNextOnEnter = true,
         textStyle = ProtonTheme.typography.defaultNorm(enabled),
-        keyboardOptions = KeyboardOptions(autoCorrect = false, keyboardType = KeyboardType.Number),
+        keyboardOptions = KeyboardOptions(autoCorrectEnabled = false, keyboardType = KeyboardType.Number),
         editable = enabled,
         label = { ProtonTextFieldLabel(text = label) },
         placeholder = { ProtonTextFieldPlaceHolder(text = placeholder) },

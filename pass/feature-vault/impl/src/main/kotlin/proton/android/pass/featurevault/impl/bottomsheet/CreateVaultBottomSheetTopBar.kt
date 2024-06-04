@@ -31,9 +31,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
@@ -59,7 +59,7 @@ fun CreateVaultBottomSheetTopBar(
         title = {},
         navigationIcon = {
             Circle(
-                modifier = Modifier.padding(12.dp, 4.dp),
+                modifier = Modifier.padding(Spacing.mediumSmall, Spacing.extraSmall),
                 backgroundColor = PassTheme.colors.loginInteractionNormMinor1,
                 onClick = onCloseClick
             ) {
@@ -86,7 +86,7 @@ fun CreateVaultBottomSheetTopBar(
                 )
             } else {
                 LoadingCircleButton(
-                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
+                    modifier = Modifier.padding(horizontal = Spacing.mediumSmall, vertical = Spacing.extraSmall),
                     color = buttonColor,
                     isLoading = isLoading,
                     buttonEnabled = isButtonEnabled,

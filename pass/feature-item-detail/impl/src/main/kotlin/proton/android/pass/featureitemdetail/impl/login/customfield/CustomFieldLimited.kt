@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.featureitemdetail.impl.R
@@ -67,7 +68,12 @@ fun CustomFieldLimited(
 
     RoundedCornersColumn(modifier = modifier.fillMaxWidth()) {
         Row(
-            modifier = Modifier.padding(start = 16.dp, top = 12.dp, end = 12.dp, bottom = 12.dp),
+            modifier = Modifier.padding(
+                start = Spacing.medium,
+                top = Spacing.mediumSmall,
+                end = Spacing.mediumSmall,
+                bottom = Spacing.mediumSmall
+            ),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
@@ -75,18 +81,18 @@ fun CustomFieldLimited(
                 contentDescription = stringResource(description),
                 tint = PassTheme.colors.loginInteractionNorm
             )
-            Column(modifier = Modifier.padding(start = 8.dp)) {
+            Column(modifier = Modifier.padding(start = Spacing.small)) {
                 SectionTitle(
-                    modifier = Modifier.padding(start = 8.dp),
+                    modifier = Modifier.padding(start = Spacing.small),
                     text = entry.label
                 )
                 Row(
                     modifier = Modifier
                         .clip(RoundedCornerShape(8.dp))
                         .clickable(onClick = onUpgrade)
-                        .padding(8.dp),
+                        .padding(Spacing.small),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)
                 ) {
                     Text(
                         text = stringResource(proton.android.pass.composecomponents.impl.R.string.upgrade),

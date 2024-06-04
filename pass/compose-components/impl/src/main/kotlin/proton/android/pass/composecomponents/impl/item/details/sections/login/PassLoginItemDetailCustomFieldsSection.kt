@@ -22,11 +22,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.masks.TextMask
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
@@ -49,7 +49,7 @@ internal fun PassLoginItemDetailCustomFieldsSection(
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
     ) {
         customFields.forEachIndexed { index, customField ->
             RoundedCornersColumn {

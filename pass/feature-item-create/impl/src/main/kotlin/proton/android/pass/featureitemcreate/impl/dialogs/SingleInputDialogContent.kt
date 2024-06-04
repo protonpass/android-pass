@@ -18,6 +18,7 @@
 
 package proton.android.pass.featureitemcreate.impl.dialogs
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,7 +27,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -44,14 +44,15 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.dialogs.DialogCancelConfirmSection
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
-import proton.android.pass.featureitemcreate.impl.R
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun CustomFieldNameDialogContent(
+fun SingleInputDialogContent(
     modifier: Modifier = Modifier,
     canConfirm: Boolean,
     value: String,
+    @StringRes titleRes: Int,
+    @StringRes subtitleRes: Int? = null,
+    @StringRes placeholderRes: Int,
     onChange: (String) -> Unit,
     onConfirm: () -> Unit,
     onCancel: () -> Unit
@@ -66,14 +67,15 @@ fun CustomFieldNameDialogContent(
         ) {
             ProtonDialogTitle(
                 modifier = Modifier.padding(vertical = 16.dp),
-                title = stringResource(R.string.custom_field_dialog_title)
+                title = stringResource(titleRes)
             )
 
-            Text(
-                text = stringResource(R.string.custom_field_dialog_body),
-                style = ProtonTheme.typography.defaultWeak
-            )
-
+            subtitleRes?.let {
+                Text(
+                    text = stringResource(subtitleRes),
+                    style = ProtonTheme.typography.defaultWeak
+                )
+            }
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -86,7 +88,7 @@ fun CustomFieldNameDialogContent(
                     onChange = onChange,
                     placeholder = {
                         ProtonTextFieldPlaceHolder(
-                            text = stringResource(R.string.custom_field_dialog_placeholder)
+                            text = stringResource(placeholderRes)
                         )
                     },
                     textStyle = ProtonTheme.typography.defaultNorm,

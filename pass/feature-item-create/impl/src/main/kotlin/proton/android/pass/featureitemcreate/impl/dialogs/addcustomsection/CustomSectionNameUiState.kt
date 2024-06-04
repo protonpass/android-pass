@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,20 +16,26 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.repositories
+package proton.android.pass.featureitemcreate.impl.dialogs.addcustomsection
 
-import kotlinx.coroutines.flow.Flow
-import proton.android.pass.common.api.Option
+import javax.annotation.concurrent.Immutable
 
-const val DRAFT_PASSWORD_KEY = "draftpassword"
-const val DRAFT_CUSTOM_FIELD_KEY = "customField"
-const val DRAFT_IDENTITY_EXTRA_SECTION_KEY = "identityExtraSection"
-const val DRAFT_IDENTITY_CUSTOM_FIELD_KEY = "identityCustomField"
-const val DRAFT_CUSTOM_FIELD_TITLE_KEY = "customFieldTitle"
-const val DRAFT_REMOVE_CUSTOM_FIELD_KEY = "removeCustomField"
+sealed interface CustomSectionEvent {
+    data object Close : CustomSectionEvent
+    data object Idle : CustomSectionEvent
+}
 
-interface DraftRepository {
-    fun save(key: String, value: Any)
-    fun <T> get(key: String): Flow<Option<T>>
-    fun <T> delete(key: String): Option<T>
+@Immutable
+data class CustomSectionNameUiState(
+    val value: String,
+    val canConfirm: Boolean,
+    val event: CustomSectionEvent
+) {
+    companion object {
+        val Initial = CustomSectionNameUiState(
+            value = "",
+            canConfirm = false,
+            event = CustomSectionEvent.Idle
+        )
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023-2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemcreate.impl.dialogs
+package proton.android.pass.featureitemcreate.impl.dialogs.addcustomfield
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -30,32 +30,30 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_TITLE_KEY
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
-import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldIndexNavArgId
-import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldTitleNavArgId
-import proton.android.pass.featureitemcreate.impl.common.CustomFieldIndexTitle
-import proton.android.pass.navigation.api.NavParamEncoder
+import proton.android.pass.domain.CustomFieldContent
+import proton.android.pass.domain.HiddenState
+import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldType
 import javax.inject.Inject
 
 @HiltViewModel
-class EditCustomFieldNameViewModel @Inject constructor(
+class CustomFieldNameViewModel @Inject constructor(
     private val draftRepository: DraftRepository,
+    private val encryptionContextProvider: EncryptionContextProvider,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
-    private val customFieldIndex: Int = savedStateHandleProvider
-        .get()
-        .require(CustomFieldIndexNavArgId.key)
-
-    private val customFieldTitle: String = savedStateHandleProvider
-        .get()
-        .require<String>(CustomFieldTitleNavArgId.key)
-        .let { NavParamEncoder.decode(it) }
+    private val customFieldType: CustomFieldType = CustomFieldType.valueOf(
+        savedStateHandleProvider
+            .get()
+            .require(CustomFieldTypeNavArgId.key)
+    )
 
     private val eventFlow: MutableStateFlow<CustomFieldEvent> =
         MutableStateFlow(CustomFieldEvent.Unknown)
-    private val nameFlow: MutableStateFlow<String> = MutableStateFlow(customFieldTitle)
+    private val nameFlow: MutableStateFlow<String> = MutableStateFlow("")
 
     val state: StateFlow<CustomFieldNameUiState> = combine(
         eventFlow,
@@ -78,13 +76,27 @@ class EditCustomFieldNameViewModel @Inject constructor(
     }
 
     fun onSave() = viewModelScope.launch {
-        draftRepository.save(
-            key = DRAFT_CUSTOM_FIELD_TITLE_KEY,
-            value = CustomFieldIndexTitle(
-                title = nameFlow.value.trim(),
-                index = customFieldIndex
-            )
-        )
+        val field = when (customFieldType) {
+            CustomFieldType.Text -> CustomFieldContent.Text(label = nameFlow.value, value = "")
+            CustomFieldType.Hidden -> {
+                val value = encryptionContextProvider.withEncryptionContext { encrypt("") }
+                CustomFieldContent.Hidden(
+                    label = nameFlow.value.trim(),
+                    value = HiddenState.Empty(encrypted = value)
+                )
+            }
+
+            CustomFieldType.Totp -> {
+                val value = encryptionContextProvider.withEncryptionContext { encrypt("") }
+                CustomFieldContent.Totp(
+                    label = nameFlow.value,
+                    value = HiddenState.Empty(encrypted = value)
+                )
+            }
+        }
+
+        draftRepository.save(DRAFT_CUSTOM_FIELD_KEY, field)
         eventFlow.update { CustomFieldEvent.Close }
     }
+
 }

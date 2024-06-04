@@ -27,7 +27,9 @@ import javax.inject.Singleton
 @Singleton
 class IdentityFieldDraftRepositoryImpl @Inject constructor() : IdentityFieldDraftRepository {
 
-    private val availableFieldsMap: Map<Class<out ExtraField>, Set<ExtraField>> = mapOf(
+    private val extraFieldsStateFlow = MutableStateFlow<Set<ExtraField>>(emptySet())
+
+    private fun getAvailableFieldsMap(sectionIndex: Int): Map<Class<out ExtraField>, Set<ExtraField>> = mapOf(
         PersonalDetailsField::class.java to setOf(
             FirstName,
             MiddleName,
@@ -54,14 +56,15 @@ class IdentityFieldDraftRepositoryImpl @Inject constructor() : IdentityFieldDraf
             WorkPhoneNumber,
             WorkEmail,
             WorkCustomField
+        ),
+        ExtraSectionField::class.java to setOf(
+            ExtraSectionCustomField(sectionIndex)
         )
     )
 
-    private val extraFieldsStateFlow = MutableStateFlow<Set<ExtraField>>(emptySet())
-
     @Suppress("UNCHECKED_CAST")
-    override fun <T : ExtraField> getSectionFields(clazz: Class<T>): Set<T> {
-        val available = availableFieldsMap[clazz] as? Set<T> ?: emptySet()
+    override fun <T : ExtraField> getSectionFields(clazz: Class<T>, extraSectionIndex: Int): Set<T> {
+        val available = getAvailableFieldsMap(extraSectionIndex)[clazz] as? Set<T> ?: emptySet()
         val selected = extraFieldsStateFlow.value.filterIsInstance(clazz).toSet()
         val selectedWithoutCustomField =
             selected - available.filter { it is CustomExtraField }.toSet()

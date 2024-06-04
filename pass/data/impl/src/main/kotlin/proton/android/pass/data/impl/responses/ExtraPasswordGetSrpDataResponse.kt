@@ -22,7 +22,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class AuthKeyGetSrpDataResponse(
+data class ExtraPasswordGetSrpDataResponse(
     @SerialName("Code")
     val code: Int,
     @SerialName("SRPData")

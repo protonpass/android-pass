@@ -26,11 +26,11 @@ data class AuthKeyGetSrpDataResponse(
     @SerialName("Code")
     val code: Int,
     @SerialName("SRPData")
-    val data: AuthKeyGetSrpData
+    val data: ExtraPasswordGetSrpData
 )
 
 @Serializable
-data class AuthKeyGetSrpData(
+data class ExtraPasswordGetSrpData(
     @SerialName("Modulus")
     val modulus: String,
     @SerialName("ServerEphemeral")

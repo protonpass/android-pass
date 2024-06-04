@@ -19,7 +19,7 @@
 package proton.android.pass.data.fakes.usecases.accesskey
 
 import me.proton.core.crypto.common.keystore.EncryptedString
-import proton.android.pass.data.api.usecases.accesskey.SetupAccessKey
+import proton.android.pass.data.api.usecases.extrapassword.SetupAccessKey
 import javax.inject.Inject
 import javax.inject.Singleton
 

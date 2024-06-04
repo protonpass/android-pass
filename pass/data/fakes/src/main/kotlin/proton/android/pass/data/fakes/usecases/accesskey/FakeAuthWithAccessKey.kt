@@ -20,16 +20,16 @@ package proton.android.pass.data.fakes.usecases.accesskey
 
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.api.usecases.accesskey.AuthWithAccessKey
+import proton.android.pass.data.api.usecases.extrapassword.AuthWithAccessKey
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class FakeAuthWithAccessKey @Inject constructor() : AuthWithAccessKey {
 
-    private var result: Result<Boolean> = Result.success(true)
+    private var result: Result<Unit> = Result.success(Unit)
 
-    fun setResult(value: Result<Boolean>) {
+    fun setResult(value: Result<Unit>) {
         result = value
     }
 

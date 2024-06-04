@@ -38,6 +38,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultUnspecified
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.dialogs.DialogCancelConfirmSection
 import proton.android.pass.composecomponents.impl.dialogs.NoPaddingDialog
 import proton.android.pass.featuresharing.impl.R
@@ -65,7 +66,7 @@ fun InvitesInfoDialog(
                     Box(
                         modifier = Modifier
                             .padding(horizontal = 24.dp)
-                            .padding(top = 24.dp, bottom = 12.dp),
+                            .padding(top = 24.dp, bottom = Spacing.mediumSmall),
                         contentAlignment = Alignment.Center
                     ) {
                         CircularProgressIndicator()
@@ -76,8 +77,8 @@ fun InvitesInfoDialog(
                     Column(
                         modifier = Modifier
                             .padding(horizontal = 24.dp)
-                            .padding(top = 24.dp, bottom = 12.dp),
-                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                            .padding(top = 24.dp, bottom = Spacing.mediumSmall),
+                        verticalArrangement = Arrangement.spacedBy(Spacing.medium)
                     ) {
                         ProtonDialogTitle(
                             title = stringResource(R.string.sharing_invites_info_dialog_title)
@@ -94,7 +95,7 @@ fun InvitesInfoDialog(
                     }
 
                     DialogCancelConfirmSection(
-                        modifier = Modifier.padding(16.dp),
+                        modifier = Modifier.padding(Spacing.medium),
                         color = PassTheme.colors.loginInteractionNormMajor1,
                         cancelText = "",
                         onDismiss = {},

@@ -32,10 +32,10 @@ import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
@@ -52,7 +52,12 @@ internal fun CardExpirationDateInput(
     onChange: (String) -> Unit
 ) {
     ProtonTextField(
-        modifier = modifier.padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
+        modifier = modifier.padding(
+            start = Spacing.none,
+            top = Spacing.medium,
+            end = Spacing.extraSmall,
+            bottom = Spacing.medium
+        ),
         value = convert(value),
         onChange = onChange,
         moveToNextOnEnter = true,

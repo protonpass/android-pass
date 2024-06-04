@@ -32,6 +32,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultUnspecified
 import proton.android.pass.autofill.service.R
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.dialogs.DialogCancelConfirmSection
 import proton.android.pass.composecomponents.impl.dialogs.NoPaddingDialog
 import me.proton.core.presentation.R as CoreR
@@ -49,8 +50,8 @@ fun UpgradeDialog(
             onDismissRequest = onClose
         ) {
             Column(
-                modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                modifier = Modifier.padding(horizontal = 24.dp, vertical = Spacing.medium),
+                verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
             ) {
                 ProtonDialogTitle(
                     title = stringResource(R.string.autofill_cc_upgrade_dialog_title)

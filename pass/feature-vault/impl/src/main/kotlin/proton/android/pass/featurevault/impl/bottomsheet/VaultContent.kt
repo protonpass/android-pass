@@ -31,11 +31,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.container.InfoBanner
 import proton.android.pass.composecomponents.impl.uievents.value
-import proton.android.pass.featurevault.impl.R
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
+import proton.android.pass.featurevault.impl.R
 
 @Composable
 fun VaultContent(
@@ -67,7 +68,7 @@ fun VaultContent(
         Column(
             modifier = Modifier
                 .padding(padding)
-                .padding(16.dp)
+                .padding(Spacing.medium)
                 .verticalScroll(rememberScrollState())
         ) {
             AnimatedVisibility(visible = showUpgradeUi) {

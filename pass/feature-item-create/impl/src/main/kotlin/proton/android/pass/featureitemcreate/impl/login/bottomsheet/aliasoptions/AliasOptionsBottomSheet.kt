@@ -26,10 +26,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.persistentListOf
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
@@ -44,7 +44,7 @@ import proton.android.pass.featureitemcreate.impl.R
 fun AliasOptionsBottomSheet(modifier: Modifier = Modifier, onNavigate: (AliasOptionsNavigation) -> Unit) {
     Column(
         modifier = modifier.bottomSheet(),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
     ) {
         BottomSheetTitle(title = stringResource(id = R.string.alias_bottomsheet_alias_title))
         BottomSheetItemList(

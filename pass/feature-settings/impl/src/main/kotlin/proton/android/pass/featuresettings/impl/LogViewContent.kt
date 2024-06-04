@@ -30,10 +30,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.overlineNorm
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.container.Circle
 import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
 import me.proton.core.presentation.R as CoreR
@@ -53,7 +53,7 @@ fun LogViewContent(
                 onUpClick = onUpClick,
                 actions = {
                     Circle(
-                        modifier = Modifier.padding(12.dp, 4.dp),
+                        modifier = Modifier.padding(Spacing.mediumSmall, Spacing.extraSmall),
                         backgroundColor = PassTheme.colors.interactionNormMinor1,
                         onClick = onShareLogsClick
                     ) {
@@ -72,7 +72,7 @@ fun LogViewContent(
                 .verticalScroll(rememberScrollState())
                 .background(PassTheme.colors.backgroundStrong)
                 .padding(contentPadding)
-                .padding(16.dp)
+                .padding(Spacing.medium)
         ) {
             Text(
                 text = content,

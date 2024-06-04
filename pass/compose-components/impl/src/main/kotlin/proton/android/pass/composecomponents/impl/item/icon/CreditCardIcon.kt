@@ -10,8 +10,8 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.BoxedIcon
 
@@ -39,7 +39,7 @@ fun CreditCardIcon(
         shape = shape
     ) {
         Icon(
-            modifier = Modifier.padding(4.dp),
+            modifier = Modifier.padding(Spacing.extraSmall),
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_credit_card),
             contentDescription = null,
             tint = foregroundColor

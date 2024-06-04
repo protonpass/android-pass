@@ -19,9 +19,19 @@
 package proton.android.pass.features.item.details.presentation
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.stateIn
+import proton.android.pass.common.api.FlowUtils.oneShot
+import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.data.api.usecases.GetItemActions
+import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -29,7 +39,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ItemDetailsViewModel @Inject constructor(
-    savedStateHandleProvider: SavedStateHandleProvider
+    savedStateHandleProvider: SavedStateHandleProvider,
+    observeItemById: ObserveItemById,
+    itemDetailsHandler: ItemDetailsHandler,
+    getItemActions: GetItemActions
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -39,5 +52,25 @@ class ItemDetailsViewModel @Inject constructor(
     private val itemId: ItemId = savedStateHandleProvider.get()
         .require<String>(CommonNavArgId.ItemId.key)
         .let(::ItemId)
+
+    internal val state: StateFlow<ItemDetailsState> = observeItemById(shareId, itemId)
+        .flatMapLatest { item ->
+            combine(
+                itemDetailsHandler.observeItemDetails(item),
+                oneShot { getItemActions(shareId, itemId) }
+            ) { itemDetailsState, itemActions ->
+                ItemDetailsState.Success(
+                    shareId = shareId,
+                    itemId = itemId,
+                    itemDetailState = itemDetailsState,
+                    itemActions = itemActions
+                )
+            }
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000L),
+            initialValue = ItemDetailsState.Loading
+        )
 
 }

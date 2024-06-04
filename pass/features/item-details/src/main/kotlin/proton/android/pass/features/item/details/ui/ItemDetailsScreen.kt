@@ -18,9 +18,10 @@
 
 package proton.android.pass.features.item.details.ui
 
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.item.details.navigation.ItemDetailsNavDestination
 import proton.android.pass.features.item.details.presentation.ItemDetailsViewModel
 
@@ -29,5 +30,14 @@ fun ItemDetailsScreen(
     onNavigated: (ItemDetailsNavDestination) -> Unit,
     viewModel: ItemDetailsViewModel = hiltViewModel()
 ) = with(viewModel) {
-    Text(text = "Item details")
+    val state by state.collectAsStateWithLifecycle()
+
+    ItemDetailsContent(
+        state = state,
+        onEvent = { uiEvent ->
+            when (uiEvent) {
+                ItemDetailsUiEvent.OnNavigateBack -> onNavigated(ItemDetailsNavDestination.Back)
+            }
+        }
+    )
 }

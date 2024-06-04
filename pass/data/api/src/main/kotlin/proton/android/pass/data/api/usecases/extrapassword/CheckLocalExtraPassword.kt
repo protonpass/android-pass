@@ -16,23 +16,11 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.fakes.usecases.accesskey
+package proton.android.pass.data.api.usecases.extrapassword
 
-import proton.android.pass.data.api.usecases.extrapassword.RemoveAccessKey
-import javax.inject.Inject
-import javax.inject.Singleton
+import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.domain.entity.UserId
 
-@Singleton
-class FakeRemoveAccessKey @Inject constructor() : RemoveAccessKey {
-
-    private var result: Result<Unit> = Result.success(Unit)
-
-    fun setResult(value: Result<Unit>) {
-        result = value
-    }
-
-    override suspend fun invoke() {
-        result.getOrThrow()
-    }
+interface CheckLocalExtraPassword {
+    suspend operator fun invoke(userId: UserId, password: EncryptedString): Boolean
 }
-

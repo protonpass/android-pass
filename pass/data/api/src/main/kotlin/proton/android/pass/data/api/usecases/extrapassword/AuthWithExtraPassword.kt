@@ -16,18 +16,11 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.usecases.extrapassword
+package proton.android.pass.data.api.usecases.extrapassword
 
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.api.usecases.extrapassword.CheckLocalAccessKey
-import proton.android.pass.data.impl.repositories.ExtraPasswordRepository
-import javax.inject.Inject
 
-class CheckLocalAccessKeyImpl @Inject constructor(
-    private val repository: ExtraPasswordRepository
-) : CheckLocalAccessKey {
-
-    override suspend fun invoke(userId: UserId, password: EncryptedString): Boolean =
-        repository.checkAccessKeyForUser(userId, password)
+interface AuthWithExtraPassword {
+    suspend operator fun invoke(userId: UserId, password: EncryptedString)
 }

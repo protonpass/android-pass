@@ -41,13 +41,13 @@ class RemoteExtraPasswordDataSourceImpl @Inject constructor(
 ) : RemoteExtraPasswordDataSource {
     override suspend fun setupExtraPassword(userId: UserId, request: SetupExtraPasswordRequest) {
         apiProvider.get<PasswordManagerApi>(userId).invoke {
-            setupAccessKey(request)
+            setupExtraPassword(request)
         }.valueOrThrow
     }
 
     override suspend fun removeExtraPassword(userId: UserId) {
         apiProvider.get<PasswordManagerApi>(userId).invoke {
-            removeAccessKey()
+            removeExtraPassword()
         }.valueOrThrow
     }
 

@@ -62,7 +62,6 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.presentation.observe
 import me.proton.core.accountmanager.presentation.onAccountCreateAddressFailed
 import me.proton.core.accountmanager.presentation.onAccountCreateAddressNeeded
-import me.proton.core.accountmanager.presentation.onAccountReady
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeFailed
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeNeeded
 import me.proton.core.accountmanager.presentation.onSessionSecondFactorNeeded
@@ -165,9 +164,6 @@ class LauncherViewModel @Inject constructor(
             .onSessionSecondFactorNeeded { authOrchestrator.startSecondFactorWorkflow(it) }
             .onAccountTwoPassModeNeeded { authOrchestrator.startTwoPassModeWorkflow(it) }
             .onAccountCreateAddressNeeded { authOrchestrator.startChooseAddressWorkflow(it) }
-            .onAccountReady {
-                PassLogger.i(TAG, "ACCOUNT READY: ${it.username}")
-            }
     }
 
     internal fun onUserStateChanged(state: State) = when (state) {

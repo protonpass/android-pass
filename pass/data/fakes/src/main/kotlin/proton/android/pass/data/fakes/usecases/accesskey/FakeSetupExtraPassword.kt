@@ -16,11 +16,27 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.extrapassword
+package proton.android.pass.data.fakes.usecases.accesskey
 
 import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.usecases.extrapassword.SetupExtraPassword
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface CheckLocalAccessKey {
-    suspend operator fun invoke(userId: UserId, password: EncryptedString): Boolean
+@Singleton
+class FakeSetupExtraPassword @Inject constructor() : SetupExtraPassword {
+
+    private var result: Result<Unit> = Result.success(Unit)
+
+    private var memory: MutableList<EncryptedString> = mutableListOf()
+    fun getMemory(): List<EncryptedString> = memory
+
+    fun setResult(value: Result<Unit>) {
+        result = value
+    }
+
+    override suspend fun invoke(password: EncryptedString) {
+        memory.add(password)
+        result.getOrThrow()
+    }
 }

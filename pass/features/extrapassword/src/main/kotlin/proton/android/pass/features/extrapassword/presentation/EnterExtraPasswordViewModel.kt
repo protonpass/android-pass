@@ -40,7 +40,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.TooManyExtraPasswordAttemptsException
 import proton.android.pass.data.api.errors.WrongExtraPasswordException
-import proton.android.pass.data.api.usecases.extrapassword.AuthWithAccessKey
+import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPassword
 import proton.android.pass.features.extrapassword.navigation.UserIdNavArgId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -48,7 +48,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EnterExtraPasswordViewModel @Inject constructor(
-    private val authWithAccessKey: AuthWithAccessKey,
+    private val authWithExtraPassword: AuthWithExtraPassword,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val snackbarDispatcher: SnackbarDispatcher,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -115,7 +115,7 @@ class EnterExtraPasswordViewModel @Inject constructor(
             return@launch
         }
         runCatching {
-            authWithAccessKey(userId, encryptedPassword)
+            authWithExtraPassword(userId, encryptedPassword)
         }.onSuccess {
             PassLogger.i(TAG, "Extra password success")
             eventFlow.update { EnterExtraPasswordEvent.Success }

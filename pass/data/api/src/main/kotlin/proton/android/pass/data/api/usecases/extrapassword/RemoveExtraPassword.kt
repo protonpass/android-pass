@@ -16,27 +16,8 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.fakes.usecases.accesskey
+package proton.android.pass.data.api.usecases.extrapassword
 
-import me.proton.core.crypto.common.keystore.EncryptedString
-import proton.android.pass.data.api.usecases.extrapassword.SetupAccessKey
-import javax.inject.Inject
-import javax.inject.Singleton
-
-@Singleton
-class FakeSetupAccessKey @Inject constructor() : SetupAccessKey {
-
-    private var result: Result<Unit> = Result.success(Unit)
-
-    private var memory: MutableList<EncryptedString> = mutableListOf()
-    fun getMemory(): List<EncryptedString> = memory
-
-    fun setResult(value: Result<Unit>) {
-        result = value
-    }
-
-    override suspend fun invoke(password: EncryptedString) {
-        memory.add(password)
-        result.getOrThrow()
-    }
+interface RemoveExtraPassword {
+    suspend operator fun invoke()
 }

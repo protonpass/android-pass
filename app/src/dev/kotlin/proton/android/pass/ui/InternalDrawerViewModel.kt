@@ -26,9 +26,9 @@ import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.flatMap
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.usecases.extrapassword.AuthWithAccessKey
-import proton.android.pass.data.api.usecases.extrapassword.RemoveAccessKey
-import proton.android.pass.data.api.usecases.extrapassword.SetupAccessKey
+import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPassword
+import proton.android.pass.data.api.usecases.extrapassword.RemoveExtraPassword
+import proton.android.pass.data.api.usecases.extrapassword.SetupExtraPassword
 import proton.android.pass.image.api.ClearIconCache
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -48,9 +48,9 @@ class InternalDrawerViewModel @Inject constructor(
     private val clearCache: ClearIconCache,
     private val observeSecurityAnalysis: ObserveSecurityAnalysis,
     private val tooltipPreferencesRepository: TooltipPreferencesRepository,
-    private val setupAccessKey: SetupAccessKey,
-    private val authWithAccessKey: AuthWithAccessKey,
-    private val removeAccessKey: RemoveAccessKey,
+    private val setupExtraPassword: SetupExtraPassword,
+    private val authWithExtraPassword: AuthWithExtraPassword,
+    private val removeExtraPassword: RemoveExtraPassword,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val accountManager: AccountManager
 ) : ViewModel() {
@@ -89,7 +89,7 @@ class InternalDrawerViewModel @Inject constructor(
     fun setAccessKey() = viewModelScope.launch {
         val encrypted = encryptionContextProvider.withEncryptionContext { encrypt("MyPassword") }
         runCatching {
-            setupAccessKey(encrypted)
+            setupExtraPassword(encrypted)
         }.onSuccess {
             PassLogger.i(TAG, "Access key set successfully")
         }.onFailure {
@@ -105,7 +105,7 @@ class InternalDrawerViewModel @Inject constructor(
             return@launch
         }
         runCatching {
-            authWithAccessKey(userId, encrypted)
+            authWithExtraPassword(userId, encrypted)
         }.onSuccess {
             PassLogger.i(TAG, "SRP performed successfully. Result: $it")
         }.onFailure {
@@ -116,7 +116,7 @@ class InternalDrawerViewModel @Inject constructor(
 
     fun removeAccessKey() = viewModelScope.launch {
         runCatching {
-            removeAccessKey.invoke()
+            removeExtraPassword.invoke()
         }.onSuccess {
             PassLogger.i(TAG, "Access key removed successfully")
         }.onFailure {

@@ -20,7 +20,7 @@ package proton.android.pass.data.impl.api
 
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import proton.android.pass.data.impl.requests.AcceptInviteRequest
-import proton.android.pass.data.impl.requests.AuthKeySendSrpDataRequest
+import proton.android.pass.data.impl.requests.ExtraPasswordSendSrpDataRequest
 import proton.android.pass.data.impl.requests.BreachAddEmailRequest
 import proton.android.pass.data.impl.requests.BreachVerifyEmailRequest
 import proton.android.pass.data.impl.requests.CheckAddressesCanBeInvitedRequest
@@ -36,7 +36,7 @@ import proton.android.pass.data.impl.requests.CreatePublicLinkRequest
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.requests.MigrateItemRequest
 import proton.android.pass.data.impl.requests.MigrateItemsRequest
-import proton.android.pass.data.impl.requests.SetupAccessKeyRequest
+import proton.android.pass.data.impl.requests.SetupExtraPasswordRequest
 import proton.android.pass.data.impl.requests.TelemetryRequest
 import proton.android.pass.data.impl.requests.TransferVaultOwnershipRequest
 import proton.android.pass.data.impl.requests.TrashItemsRequest
@@ -399,7 +399,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
 
     // Access key
     @POST("$PREFIX/user/srp")
-    suspend fun setupAccessKey(@Body request: SetupAccessKeyRequest)
+    suspend fun setupAccessKey(@Body request: SetupExtraPasswordRequest)
 
     @DELETE("$PREFIX/user/srp")
     suspend fun removeAccessKey()
@@ -408,7 +408,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
     suspend fun getSrpInfo(): AuthKeyGetSrpDataResponse
 
     @POST("$PREFIX/user/srp/auth")
-    suspend fun sendSrpInfo(@Body authKeySendSrpDataRequest: AuthKeySendSrpDataRequest): CodeOnlyResponse
+    suspend fun sendSrpInfo(@Body extraPasswordSendSrpDataRequest: ExtraPasswordSendSrpDataRequest): CodeOnlyResponse
 
 
     // Core

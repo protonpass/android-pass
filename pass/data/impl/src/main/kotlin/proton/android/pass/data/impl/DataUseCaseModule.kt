@@ -113,10 +113,11 @@ import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.UpdateVault
 import proton.android.pass.data.api.usecases.UserPlanWorkerLauncher
-import proton.android.pass.data.api.usecases.accesskey.AuthWithAccessKey
-import proton.android.pass.data.api.usecases.accesskey.CheckLocalAccessKey
-import proton.android.pass.data.api.usecases.accesskey.RemoveAccessKey
-import proton.android.pass.data.api.usecases.accesskey.SetupAccessKey
+import proton.android.pass.data.api.usecases.extrapassword.AuthWithAccessKey
+import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordListener
+import proton.android.pass.data.api.usecases.extrapassword.CheckLocalAccessKey
+import proton.android.pass.data.api.usecases.extrapassword.RemoveAccessKey
+import proton.android.pass.data.api.usecases.extrapassword.SetupAccessKey
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.MarkEmailBreachAsResolved
 import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
@@ -262,10 +263,11 @@ import proton.android.pass.data.impl.usecases.UpdateAutofillItemImpl
 import proton.android.pass.data.impl.usecases.UpdateItemImpl
 import proton.android.pass.data.impl.usecases.UpdateVaultImpl
 import proton.android.pass.data.impl.usecases.UserPlanWorkerLauncherImpl
-import proton.android.pass.data.impl.usecases.accesskey.AuthWithAccessKeyImpl
-import proton.android.pass.data.impl.usecases.accesskey.CheckLocalAccessKeyImpl
-import proton.android.pass.data.impl.usecases.accesskey.RemoveAccessKeyImpl
-import proton.android.pass.data.impl.usecases.accesskey.SetupAccessKeyImpl
+import proton.android.pass.data.impl.usecases.extrapassword.AuthWithAccessKeyImpl
+import proton.android.pass.data.impl.usecases.extrapassword.AuthWithExtraPasswordListenerImpl
+import proton.android.pass.data.impl.usecases.extrapassword.CheckLocalAccessKeyImpl
+import proton.android.pass.data.impl.usecases.extrapassword.RemoveAccessKeyImpl
+import proton.android.pass.data.impl.usecases.extrapassword.SetupAccessKeyImpl
 import proton.android.pass.data.impl.usecases.breach.AddBreachCustomEmailImpl
 import proton.android.pass.data.impl.usecases.breach.MarkEmailBreachAsResolvedImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveAllBreachByUserIdImpl
@@ -769,5 +771,10 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindAuthWithAccessKey(impl: AuthWithAccessKeyImpl): AuthWithAccessKey
+
+    @Binds
+    abstract fun bindAuthWithExtraPasswordListener(
+        impl: AuthWithExtraPasswordListenerImpl
+    ): AuthWithExtraPasswordListener
 
 }

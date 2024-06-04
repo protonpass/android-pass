@@ -18,6 +18,8 @@
 
 package proton.android.pass.data.api.usecases.extrapassword
 
-interface RemoveAccessKey {
-    suspend operator fun invoke()
+import me.proton.core.crypto.common.keystore.EncryptedString
+
+interface SetupExtraPassword {
+    suspend operator fun invoke(password: EncryptedString)
 }

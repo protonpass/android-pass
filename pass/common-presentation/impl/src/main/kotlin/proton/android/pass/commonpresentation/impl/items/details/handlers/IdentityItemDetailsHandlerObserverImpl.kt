@@ -39,7 +39,7 @@ import javax.inject.Inject
 class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
     private val observeVaultById: GetVaultById,
     private val encryptionContextProvider: EncryptionContextProvider
-): ItemDetailsHandlerObserver {
+) : ItemDetailsHandlerObserver {
 
     private val identityItemContentsFlow = MutableStateFlow<ItemContents.Identity?>(null)
 
@@ -69,7 +69,14 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
         hiddenFieldType: ItemDetailsFieldType.Hidden,
         hiddenState: HiddenState
     ) {
-        // to be implemented
+        identityItemContentsFlow.update { identityItemContents ->
+            when (hiddenFieldType) {
+                is ItemDetailsFieldType.Hidden.CustomField,
+                ItemDetailsFieldType.Hidden.Cvv,
+                ItemDetailsFieldType.Hidden.Password,
+                ItemDetailsFieldType.Hidden.Pin -> identityItemContents
+            }
+        }
     }
 
 }

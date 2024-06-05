@@ -284,7 +284,41 @@ data class AddressDetailsContent(
     val county: String,
     val customFields: List<CustomFieldContent>
 ) {
+
+    val hasOrganization: Boolean by lazy { organization.isNotBlank() }
+
+    val hasStreetAddress: Boolean by lazy { streetAddress.isNotBlank() }
+
+    val hasZipOrPostalCode: Boolean by lazy { zipOrPostalCode.isNotBlank() }
+
+    val hasCity: Boolean by lazy { city.isNotBlank() }
+
+    val hasStateOrProvince: Boolean by lazy { stateOrProvince.isNotBlank() }
+
+    val hasCountryOrRegion: Boolean by lazy { countryOrRegion.isNotBlank() }
+
+    val hasFloor: Boolean by lazy { floor.isNotBlank() }
+
+    val hasCounty: Boolean by lazy { county.isNotBlank() }
+
+    private val hasCustomFields: Boolean by lazy { customFields.isNotEmpty() }
+
+    val hasAddressDetails: Boolean by lazy {
+        listOf(
+            hasOrganization,
+            hasStreetAddress,
+            hasZipOrPostalCode,
+            hasCity,
+            hasStateOrProvince,
+            hasCountryOrRegion,
+            hasFloor,
+            hasCounty,
+            hasCustomFields
+        ).any { hasBeenSet -> hasBeenSet }
+    }
+
     companion object {
+
         val EMPTY = AddressDetailsContent(
             organization = "",
             streetAddress = "",
@@ -296,7 +330,9 @@ data class AddressDetailsContent(
             county = "",
             customFields = emptyList()
         )
+
     }
+
 }
 
 @Serializable

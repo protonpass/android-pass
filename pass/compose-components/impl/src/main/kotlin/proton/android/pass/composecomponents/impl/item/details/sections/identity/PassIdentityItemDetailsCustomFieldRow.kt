@@ -23,7 +23,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
-import me.proton.core.presentation.R
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailFieldRow
@@ -43,7 +42,7 @@ internal fun PassIdentityItemDetailsCustomFieldRow(
     @DrawableRes iconResId: Int? = null
 ) = when (customFieldContent) {
     is CustomFieldContent.Hidden -> PassItemDetailsHiddenFieldRow(
-        icon = R.drawable.ic_proton_eye_slash,
+        icon = null,
         title = customFieldContent.label,
         hiddenState = customFieldContent.value,
         hiddenTextLength = HIDDEN_CUSTOM_FIELD_TEXT_LENGTH,

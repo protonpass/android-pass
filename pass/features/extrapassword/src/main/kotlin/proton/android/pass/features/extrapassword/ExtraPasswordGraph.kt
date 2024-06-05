@@ -19,10 +19,12 @@
 package proton.android.pass.features.extrapassword
 
 import androidx.navigation.NavGraphBuilder
-import proton.android.pass.features.extrapassword.options.navigation.ExtraPasswordOptionsNavItem
-import proton.android.pass.features.extrapassword.options.ui.ExtraPasswordOptionsBottomsheet
 import proton.android.pass.features.extrapassword.configure.navigation.SetExtraPasswordNavItem
 import proton.android.pass.features.extrapassword.configure.ui.SetExtraPasswordScreen
+import proton.android.pass.features.extrapassword.infosheet.navigation.ExtraPasswordInfoNavItem
+import proton.android.pass.features.extrapassword.infosheet.ui.ExtraPasswordInfoBottomSheet
+import proton.android.pass.features.extrapassword.options.navigation.ExtraPasswordOptionsNavItem
+import proton.android.pass.features.extrapassword.options.ui.ExtraPasswordOptionsBottomsheet
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 
@@ -34,5 +36,8 @@ fun NavGraphBuilder.extraPasswordGraph(onNavigate: (ExtraPasswordNavigation) -> 
     }
     bottomSheet(ExtraPasswordOptionsNavItem) {
         ExtraPasswordOptionsBottomsheet()
+    }
+    bottomSheet(ExtraPasswordInfoNavItem) {
+        ExtraPasswordInfoBottomSheet(onNavigate = onNavigate)
     }
 }

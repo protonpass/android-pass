@@ -35,4 +35,8 @@
 
     <string name="extra_password_options_remove">Remove</string>
 
+    <string name="info_extra_password_title">Extra password</string>
+    <string name="info_extra_password_body">Protect Proton Pass with an extra password.</string>
+    <string name="info_extra_password_button">Set extra password</string>
+
 </resources>

@@ -48,7 +48,7 @@ fun ExtraPasswordInfoBottomSheet(modifier: Modifier = Modifier, onNavigate: (Ext
 @Composable
 fun ExtraPasswordInfoContent(modifier: Modifier = Modifier, onNavigate: (ExtraPasswordNavigation) -> Unit) {
     Column.Centered(modifier = modifier.padding(horizontal = Spacing.medium)) {
-        Image.NoDesc(R.drawable.pass_plus)
+        Image.NoDesc(R.drawable.extra_password)
         Text.Headline(stringResource(R.string.info_extra_password_title))
         Text.Body1Regular(stringResource(R.string.info_extra_password_body))
         Spacer(modifier = Modifier.height(20.dp))

@@ -72,7 +72,7 @@ class AuthScreenTest {
                     canLogout = true,
                     navigation = {
                         when (it) {
-                            AuthNavigation.Success -> { checker.call() }
+                            is AuthNavigation.Success -> { checker.call() }
                             else -> {}
                         }
                     }
@@ -95,7 +95,7 @@ class AuthScreenTest {
                     canLogout = true,
                     navigation = {
                         when (it) {
-                            AuthNavigation.Success -> { checker.call() }
+                            is AuthNavigation.Success -> { checker.call() }
                             else -> {}
                         }
                     }

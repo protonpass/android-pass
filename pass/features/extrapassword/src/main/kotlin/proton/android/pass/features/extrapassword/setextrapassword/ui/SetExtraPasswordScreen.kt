@@ -16,27 +16,27 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureaccount.impl.setextrapassword.ui
+package proton.android.pass.features.extrapassword.setextrapassword.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import proton.android.pass.featureaccount.impl.AccountNavigation
-import proton.android.pass.featureaccount.impl.setextrapassword.navigation.SetExtraPasswordContentNavEvent
-import proton.android.pass.featureaccount.impl.setextrapassword.presentation.SetExtraPasswordViewModel
+import proton.android.pass.features.extrapassword.ExtraPasswordNavigation
+import proton.android.pass.features.extrapassword.setextrapassword.navigation.SetExtraPasswordContentNavEvent
+import proton.android.pass.features.extrapassword.setextrapassword.presentation.SetExtraPasswordViewModel
 
 @Composable
 fun SetExtraPasswordScreen(
     modifier: Modifier = Modifier,
     viewModel: SetExtraPasswordViewModel = hiltViewModel(),
-    onNavigate: (AccountNavigation) -> Unit
+    onNavigate: (ExtraPasswordNavigation) -> Unit
 ) {
     SetExtraPasswordContent(
         modifier = modifier,
         state = viewModel.getExtraPasswordState(),
         onEvent = {
             when (it) {
-                is SetExtraPasswordContentNavEvent.Back -> onNavigate(AccountNavigation.Back)
+                is SetExtraPasswordContentNavEvent.Back -> onNavigate(ExtraPasswordNavigation.Back)
                 is SetExtraPasswordContentNavEvent.OnExtraPasswordRepeatValueChangedNav ->
                     viewModel.onExtraPasswordRepeatValueChanged(it.value)
 

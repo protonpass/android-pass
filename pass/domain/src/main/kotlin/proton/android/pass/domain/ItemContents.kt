@@ -222,9 +222,40 @@ data class PersonalDetailsContent(
     val customFields: List<CustomFieldContent>
 ) {
 
-    val hasFullName: Boolean = fullName.isNotBlank()
+    val hasFullName: Boolean by lazy { fullName.isNotBlank() }
+
+    val hasFirstName: Boolean by lazy { firstName.isNotBlank() }
+
+    val hasMiddleName: Boolean by lazy { middleName.isNotBlank() }
+
+    val hasLastName: Boolean by lazy { lastName.isNotBlank() }
+
+    val hasBirthdate: Boolean by lazy { birthdate.isNotBlank() }
+
+    val hasGender: Boolean by lazy { gender.isNotBlank() }
+
+    val hasEmail: Boolean by lazy { email.isNotBlank() }
+
+    val hasPhoneNumber: Boolean by lazy { phoneNumber.isNotBlank() }
+
+    private val hasCustomFields: Boolean by lazy { customFields.isNotEmpty() }
+
+    val hasPersonalDetails: Boolean by lazy {
+        listOf(
+            hasFullName,
+            hasFirstName,
+            hasMiddleName,
+            hasLastName,
+            hasBirthdate,
+            hasGender,
+            hasEmail,
+            hasPhoneNumber,
+            hasCustomFields
+        ).any { hasBeenSet -> hasBeenSet }
+    }
 
     companion object {
+
         val EMPTY = PersonalDetailsContent(
             fullName = "",
             firstName = "",
@@ -236,7 +267,9 @@ data class PersonalDetailsContent(
             phoneNumber = "",
             customFields = emptyList()
         )
+
     }
+
 }
 
 @Serializable

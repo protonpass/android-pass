@@ -65,7 +65,7 @@ internal fun ItemDetailsTopBar(
         navigationIcon = {
             BackArrowCircleIconButton(
                 modifier = Modifier.padding(
-                    horizontal = 12.dp,
+                    horizontal = Spacing.mediumSmall,
                     vertical = Spacing.extraSmall
                 ),
                 backgroundColor = itemColors.minorPrimary,
@@ -104,7 +104,7 @@ private fun ItemTopBarActions(
         modifier = modifier
             .height(height = 48.dp)
             .padding(
-                horizontal = 12.dp,
+                horizontal = Spacing.mediumSmall,
                 vertical = Spacing.extraSmall
             ),
         horizontalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall),

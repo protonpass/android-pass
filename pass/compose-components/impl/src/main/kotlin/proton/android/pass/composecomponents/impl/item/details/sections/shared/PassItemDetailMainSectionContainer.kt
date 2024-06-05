@@ -30,12 +30,12 @@ internal fun PassItemDetailMainSectionContainer(
     sections: ImmutableList<@Composable () -> Unit>
 ) {
     RoundedCornersColumn(modifier = modifier) {
-        sections.forEachIndexed { index, block ->
-            if (index > 0) {
+        sections.forEachIndexed { index, content ->
+            content()
+
+            if (index < sections.lastIndex) {
                 PassDivider()
             }
-
-            block()
         }
     }
 }

@@ -16,9 +16,21 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.extrapassword
+package proton.android.pass.composecomponents.impl.image
 
-sealed interface ExtraPasswordNavigation {
-    data object Back : ExtraPasswordNavigation
-    data object Configure : ExtraPasswordNavigation
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+
+object Image {
+    @Composable
+    fun NoDesc(@DrawableRes id: Int, modifier: Modifier = Modifier) {
+        Image(
+            painter = painterResource(id = id),
+            contentDescription = null,
+            modifier = modifier
+        )
+    }
 }

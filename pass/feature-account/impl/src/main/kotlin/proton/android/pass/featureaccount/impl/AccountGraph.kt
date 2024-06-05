@@ -29,10 +29,7 @@ private const val ACCOUNT_GRAPH = "account_graph"
 
 object Account : NavItem(baseRoute = "account/view")
 
-fun NavGraphBuilder.accountGraph(
-    onNavigate: (AccountNavigation) -> Unit,
-    subGraphs: List<NavGraphBuilder.() -> Unit> = emptyList()
-) {
+fun NavGraphBuilder.accountGraph(onNavigate: (AccountNavigation) -> Unit, subGraph: NavGraphBuilder.() -> Unit = {}) {
     navigation(
         route = ACCOUNT_GRAPH,
         startDestination = Account.route
@@ -42,8 +39,8 @@ fun NavGraphBuilder.accountGraph(
                 modifier = Modifier.testTag(AccountScreenTestTag.SCREEN),
                 onNavigate = onNavigate
             )
-            subGraphs.forEach { it() }
         }
+        subGraph()
     }
 }
 

@@ -22,19 +22,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
-import proton.android.pass.featureaccount.impl.extrapasswordoptions.navigation.ExtraPasswordOptionsNavItem
-import proton.android.pass.featureaccount.impl.extrapasswordoptions.ui.ExtraPasswordOptionsBottomsheet
-import proton.android.pass.featureaccount.impl.setextrapassword.navigation.SetExtraPasswordNavItem
-import proton.android.pass.featureaccount.impl.setextrapassword.ui.SetExtraPasswordScreen
 import proton.android.pass.navigation.api.NavItem
-import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 
 private const val ACCOUNT_GRAPH = "account_graph"
 
 object Account : NavItem(baseRoute = "account/view")
 
-fun NavGraphBuilder.accountGraph(onNavigate: (AccountNavigation) -> Unit) {
+fun NavGraphBuilder.accountGraph(
+    onNavigate: (AccountNavigation) -> Unit,
+    subGraphs: List<NavGraphBuilder.() -> Unit> = emptyList()
+) {
     navigation(
         route = ACCOUNT_GRAPH,
         startDestination = Account.route
@@ -44,14 +42,7 @@ fun NavGraphBuilder.accountGraph(onNavigate: (AccountNavigation) -> Unit) {
                 modifier = Modifier.testTag(AccountScreenTestTag.SCREEN),
                 onNavigate = onNavigate
             )
-        }
-        composable(SetExtraPasswordNavItem) {
-            SetExtraPasswordScreen(
-                onNavigate = onNavigate
-            )
-        }
-        bottomSheet(ExtraPasswordOptionsNavItem) {
-            ExtraPasswordOptionsBottomsheet()
+            subGraphs.forEach { it() }
         }
     }
 }

@@ -18,7 +18,13 @@
 
 package proton.android.pass.features.extrapassword
 
+import me.proton.core.crypto.common.keystore.EncryptedString
+
 sealed interface ExtraPasswordNavigation {
     data object Back : ExtraPasswordNavigation
     data object Configure : ExtraPasswordNavigation
+    data object FinishedConfiguring : ExtraPasswordNavigation
+
+    @JvmInline
+    value class Confirm(val password: EncryptedString) : ExtraPasswordNavigation
 }

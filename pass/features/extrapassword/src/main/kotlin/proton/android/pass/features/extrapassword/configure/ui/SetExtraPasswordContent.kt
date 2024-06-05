@@ -53,6 +53,8 @@ import me.proton.core.compose.theme.defaultSmallNorm
 import me.proton.core.compose.theme.defaultSmallWeak
 import me.proton.core.compose.theme.subheadlineNorm
 import me.proton.core.compose.theme.subheadlineUnspecified
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.commonui.api.Spacing
@@ -67,12 +69,16 @@ import proton.android.pass.features.extrapassword.configure.navigation.SetExtraP
 import proton.android.pass.features.extrapassword.configure.navigation.SetExtraPasswordContentNavEvent.OnExtraPasswordRepeatValueChangedNav
 import proton.android.pass.features.extrapassword.configure.navigation.SetExtraPasswordContentNavEvent.Submit
 import proton.android.pass.features.extrapassword.configure.presentation.SetExtraPasswordState
+import proton.android.pass.features.extrapassword.configure.presentation.SetExtraPasswordValidationErrors
+import proton.android.pass.features.extrapassword.configure.presentation.SetExtraPasswordValidationErrors.BlankPassword
+import proton.android.pass.features.extrapassword.configure.presentation.SetExtraPasswordValidationErrors.PasswordMismatch
 import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun SetExtraPasswordContent(
     modifier: Modifier = Modifier,
-    state: SetExtraPasswordState,
+    formState: SetExtraPasswordState,
+    validationError: Option<SetExtraPasswordValidationErrors>,
     onEvent: (SetExtraPasswordContentNavEvent) -> Unit
 ) {
     Scaffold(
@@ -125,8 +131,10 @@ internal fun SetExtraPasswordContent(
             var isRepeatPasswordConcealed: Boolean by remember { mutableStateOf(true) }
             ProtonTextField(
                 modifier = Modifier.focusRequester(focusRequester),
-                value = state.password,
+                value = formState.password,
                 textStyle = ProtonTheme.typography.subheadlineNorm,
+                isError = validationError is Some && validationError.value == BlankPassword,
+                errorMessage = stringResource(R.string.configure_extra_password_cannot_be_blank),
                 visualTransformation = if (isPasswordConcealed) {
                     PasswordVisualTransformation()
                 } else {
@@ -134,7 +142,7 @@ internal fun SetExtraPasswordContent(
                 },
                 keyboardOptions = KeyboardOptions(
                     autoCorrect = false,
-                    keyboardType = KeyboardType.NumberPassword,
+                    keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Next
                 ),
                 placeholder = {
@@ -164,11 +172,13 @@ internal fun SetExtraPasswordContent(
                 onChange = { onEvent(SetExtraPasswordContentNavEvent.OnExtraPasswordValueChangedNav(it)) }
             )
             ProtonTextField(
-                value = state.repeatPassword,
+                value = formState.repeatPassword,
                 textStyle = ProtonTheme.typography.subheadlineNorm,
+                isError = validationError is Some && validationError.value == PasswordMismatch,
+                errorMessage = stringResource(R.string.configure_extra_password_mismatch),
                 keyboardOptions = KeyboardOptions(
                     autoCorrect = false,
-                    keyboardType = KeyboardType.NumberPassword,
+                    keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Done
                 ),
                 visualTransformation = if (isRepeatPasswordConcealed) {

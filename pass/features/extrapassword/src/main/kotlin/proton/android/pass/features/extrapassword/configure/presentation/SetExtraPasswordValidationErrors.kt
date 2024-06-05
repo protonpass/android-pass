@@ -16,15 +16,9 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.extrapassword
+package proton.android.pass.features.extrapassword.configure.presentation
 
-import me.proton.core.crypto.common.keystore.EncryptedString
-
-sealed interface ExtraPasswordNavigation {
-    data object Back : ExtraPasswordNavigation
-    data object Configure : ExtraPasswordNavigation
-    data object FinishedConfiguring : ExtraPasswordNavigation
-
-    @JvmInline
-    value class Confirm(val password: EncryptedString) : ExtraPasswordNavigation
+sealed interface SetExtraPasswordValidationErrors {
+    data object BlankPassword : SetExtraPasswordValidationErrors
+    data object PasswordMismatch : SetExtraPasswordValidationErrors
 }

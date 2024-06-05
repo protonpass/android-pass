@@ -20,8 +20,10 @@ package proton.android.pass.features.item.details.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.features.item.details.navigation.ItemDetailsNavDestination
 import proton.android.pass.features.item.details.presentation.ItemDetailsViewModel
 
@@ -31,12 +33,39 @@ fun ItemDetailsScreen(
     viewModel: ItemDetailsViewModel = hiltViewModel()
 ) = with(viewModel) {
     val state by state.collectAsStateWithLifecycle()
+    val context = LocalContext.current
 
     ItemDetailsContent(
         state = state,
         onEvent = { uiEvent ->
             when (uiEvent) {
-                ItemDetailsUiEvent.OnNavigateBack -> onNavigated(ItemDetailsNavDestination.Back)
+                ItemDetailsUiEvent.OnNavigateBack -> ItemDetailsNavDestination.Back
+                    .also(onNavigated)
+
+                is ItemDetailsUiEvent.OnFieldClicked -> onItemFieldClicked(
+                    text = uiEvent.text,
+                    plainFieldType = uiEvent.field
+                )
+
+                is ItemDetailsUiEvent.OnHiddenFieldClicked -> onItemHiddenFieldClicked(
+                    hiddenState = uiEvent.state,
+                    hiddenFieldType = uiEvent.field
+                )
+
+                is ItemDetailsUiEvent.OnHiddenFieldToggled -> onItemHiddenFieldToggled(
+                    isVisible = uiEvent.isVisible,
+                    hiddenState = uiEvent.state,
+                    hiddenFieldType = uiEvent.field
+                )
+
+                is ItemDetailsUiEvent.OnLinkClicked -> BrowserUtils.openWebsite(
+                    context = context,
+                    website = uiEvent.link
+                )
+
+                is ItemDetailsUiEvent.OnPasskeyClicked -> ItemDetailsNavDestination.PasskeyDetails(
+                    passkeyContent = uiEvent.passkeyContent
+                ).also(onNavigated)
             }
         }
     )

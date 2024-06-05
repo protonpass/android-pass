@@ -152,6 +152,16 @@
     <string name="item_details_login_section_primary_totp_title">2FA token (TOTP)</string>
     <string name="item_details_login_section_websites_title">Websites</string>
 
+    <string name="item_details_identity_section_personal_title">Personal details</string>
+    <string name="item_details_identity_section_personal_first_name_title">First name</string>
+    <string name="item_details_identity_section_personal_middle_name_title">Middle name</string>
+    <string name="item_details_identity_section_personal_last_name_title">Last name</string>
+    <string name="item_details_identity_section_personal_full_name_title">Full name</string>
+    <string name="item_details_identity_section_personal_email_title">Email address</string>
+    <string name="item_details_identity_section_personal_gender_title">Gender</string>
+    <string name="item_details_identity_section_personal_phone_title">Phone number</string>
+    <string name="item_details_identity_section_personal_birthday_title">Birthday</string>
+
     <string name="item_details_shared_section_note_title">Note</string>
     <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">The app version is not supported anymore, please update your app.</string>
     <!-- Passkeys -->

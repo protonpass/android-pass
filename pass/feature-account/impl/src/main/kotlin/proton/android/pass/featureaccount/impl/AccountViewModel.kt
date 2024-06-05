@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.stateIn
+import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
@@ -33,6 +34,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveCurrentUserSettings
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
+import proton.android.pass.data.api.usecases.extrapassword.HasExtraPassword
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
@@ -43,7 +45,8 @@ class AccountViewModel @Inject constructor(
     observeCurrentUser: ObserveCurrentUser,
     observeUpgradeInfo: ObserveUpgradeInfo,
     observeCurrentUserSettings: ObserveCurrentUserSettings,
-    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
+    hasExtraPassword: HasExtraPassword
 ) : ViewModel() {
 
     private val currentUser = observeCurrentUser()
@@ -53,8 +56,9 @@ class AccountViewModel @Inject constructor(
         currentUser.asLoadingResult(),
         observeUpgradeInfo(forceRefresh = true).asLoadingResult(),
         observeCurrentUserSettings().asLoadingResult(),
+        oneShot { hasExtraPassword() }.asLoadingResult(),
         featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.ACCESS_KEY_V1)
-    ) { userResult, upgradeInfoResult, currentUserSettingsResult, isAccessKeyV1Enabled ->
+    ) { userResult, upgradeInfoResult, currentUserSettingsResult, hasExtraPassword, isAccessKeyV1Enabled ->
         val plan = when (upgradeInfoResult) {
             is LoadingResult.Error -> {
                 PassLogger.w(TAG, "Error retrieving user plan")
@@ -84,7 +88,7 @@ class AccountViewModel @Inject constructor(
                 showUpgradeButton = isUpgradeAvailable,
                 showSubscriptionButton = isSubscriptionAvailable,
                 showExtraPassword = isAccessKeyV1Enabled,
-                isExtraPasswordEnabled = false
+                isExtraPasswordEnabled = hasExtraPassword.getOrNull() ?: false
             )
 
             is LoadingResult.Success -> AccountUiState(
@@ -96,7 +100,7 @@ class AccountViewModel @Inject constructor(
                 showUpgradeButton = isUpgradeAvailable,
                 showSubscriptionButton = isSubscriptionAvailable,
                 showExtraPassword = isAccessKeyV1Enabled,
-                isExtraPasswordEnabled = false
+                isExtraPasswordEnabled = hasExtraPassword.getOrNull() ?: false
             )
         }
     }

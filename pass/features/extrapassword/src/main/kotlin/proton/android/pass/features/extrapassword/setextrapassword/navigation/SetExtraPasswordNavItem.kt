@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureaccount.impl.setextrapassword.navigation
+package proton.android.pass.features.extrapassword.setextrapassword.navigation
 
 import proton.android.pass.navigation.api.NavItem
 

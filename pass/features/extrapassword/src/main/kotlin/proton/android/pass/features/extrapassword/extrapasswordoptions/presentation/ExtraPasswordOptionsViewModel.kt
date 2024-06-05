@@ -16,16 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureaccount.impl.setextrapassword.navigation
+package proton.android.pass.features.extrapassword.extrapasswordoptions.presentation
 
-sealed interface SetExtraPasswordContentNavEvent {
-    data object Back : SetExtraPasswordContentNavEvent
+import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-    @JvmInline
-    value class OnExtraPasswordValueChangedNav(val value: String) : SetExtraPasswordContentNavEvent
+@HiltViewModel
+class ExtraPasswordOptionsViewModel @Inject constructor() : ViewModel() {
 
-    @JvmInline
-    value class OnExtraPasswordRepeatValueChangedNav(val value: String) : SetExtraPasswordContentNavEvent
-
-    data object Submit : SetExtraPasswordContentNavEvent
+    internal fun submit() {
+        // Start challenge
+    }
 }

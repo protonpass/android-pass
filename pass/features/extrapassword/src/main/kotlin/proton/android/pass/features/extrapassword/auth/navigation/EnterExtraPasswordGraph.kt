@@ -16,11 +16,11 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.extrapassword.navigation
+package proton.android.pass.features.extrapassword.auth.navigation
 
 import androidx.navigation.NavGraphBuilder
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.features.extrapassword.ui.EnterExtraPasswordScreen
+import proton.android.pass.features.extrapassword.auth.ui.EnterExtraPasswordScreen
 import proton.android.pass.navigation.api.composable
 
 fun NavGraphBuilder.extraPasswordGraph(onSuccess: () -> Unit, onLogout: (UserId) -> Unit) {

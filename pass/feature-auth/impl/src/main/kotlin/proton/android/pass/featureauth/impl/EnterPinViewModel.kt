@@ -35,6 +35,7 @@ import proton.android.pass.common.api.CommonRegex
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
+import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.CheckPin
 import proton.android.pass.featureauth.impl.EnterPinUiState.NotInitialised
@@ -47,8 +48,13 @@ import kotlin.time.Duration.Companion.seconds
 class EnterPinViewModel @Inject constructor(
     private val checkPin: CheckPin,
     private val storeAuthSuccessful: StoreAuthSuccessful,
-    private val internalSettingsRepository: InternalSettingsRepository
+    private val internalSettingsRepository: InternalSettingsRepository,
+    savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
+
+    private val origin = savedStateHandleProvider.get()
+        .get<AuthOrigin>(AuthOriginNavArgId.key)
+        ?: AuthOrigin.AUTO_LOCK
 
     private val isLoading: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
@@ -86,7 +92,7 @@ class EnterPinViewModel @Inject constructor(
             val isMatch = checkPin(pinState.value.encodeToByteArray())
             if (isMatch) {
                 storeAuthSuccessful()
-                eventState.update { EnterPinEvent.Success }
+                eventState.update { EnterPinEvent.Success(origin) }
             } else {
                 isLoading.update { IsLoadingState.Loading }
                 delay(WRONG_PIN_DELAY_SECONDS)
@@ -116,7 +122,8 @@ sealed interface EnterPinEvent {
 
     data object ForceSignOut : EnterPinEvent
 
-    data object Success : EnterPinEvent
+    @JvmInline
+    value class Success(val origin: AuthOrigin) : EnterPinEvent
 
     data object Unknown : EnterPinEvent
 

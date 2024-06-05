@@ -18,9 +18,10 @@
 
 package proton.android.pass.featureauth.impl
 
-import androidx.activity.compose.BackHandler
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavType
 import androidx.navigation.navigation
+import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
 import proton.android.pass.navigation.api.bottomSheet
@@ -28,17 +29,32 @@ import proton.android.pass.navigation.api.composable
 
 const val AUTH_GRAPH = "auth_graph"
 
-object Auth : NavItem(baseRoute = "auth", noHistory = true)
+object AuthOriginNavArgId : NavArgId {
+    override val key: String = "authOrigin"
+    override val navType: NavType<*> = NavType.EnumType(AuthOrigin::class.java)
+}
+
+object Auth : NavItem(
+    baseRoute = "auth",
+    navArgIds = listOf(AuthOriginNavArgId),
+    noHistory = true
+) {
+    fun buildRoute(origin: AuthOrigin): String = "$baseRoute/${origin.name}"
+}
 
 object EnterPin : NavItem(
     baseRoute = "pin/enter/bottomsheet",
     noHistory = true,
+    navArgIds = listOf(AuthOriginNavArgId),
     navItemType = NavItemType.Bottomsheet
-)
+) {
+    fun buildRoute(origin: AuthOrigin): String = "$baseRoute/${origin.name}"
+}
 
 sealed interface AuthNavigation {
 
-    data object Success : AuthNavigation
+    @JvmInline
+    value class Success(val origin: AuthOrigin) : AuthNavigation
 
     data object Failed : AuthNavigation
 
@@ -50,17 +66,17 @@ sealed interface AuthNavigation {
 
     data object EnterPin : AuthNavigation
 
-    data object Back : AuthNavigation
+    @JvmInline
+    value class Back(val origin: AuthOrigin) : AuthNavigation
 
 }
 
 fun NavGraphBuilder.authGraph(canLogout: Boolean, navigation: (AuthNavigation) -> Unit) {
     navigation(
         route = AUTH_GRAPH,
-        startDestination = Auth.route
+        startDestination = Auth.buildRoute(AuthOrigin.AUTO_LOCK)
     ) {
         composable(Auth) {
-            BackHandler { navigation(AuthNavigation.Back) }
             AuthScreen(
                 canLogout = canLogout,
                 navigation = navigation
@@ -71,7 +87,8 @@ fun NavGraphBuilder.authGraph(canLogout: Boolean, navigation: (AuthNavigation) -
             EnterPinBottomsheet(
                 onNavigate = { destination ->
                     when (destination) {
-                        EnterPinNavigation.Success -> navigation(AuthNavigation.Success)
+                        is EnterPinNavigation.Success ->
+                            navigation(AuthNavigation.Success(destination.origin))
                         EnterPinNavigation.ForceSignOut -> navigation(AuthNavigation.ForceSignOut)
                     }
                 }

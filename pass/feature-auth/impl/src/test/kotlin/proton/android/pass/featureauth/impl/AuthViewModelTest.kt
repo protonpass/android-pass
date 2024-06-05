@@ -36,6 +36,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.ClassHolder
+import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.fakes.usecases.TestCheckMasterPassword
 import proton.android.pass.data.fakes.usecases.TestObservePrimaryUserEmail
@@ -73,7 +74,8 @@ internal class AuthViewModelTest {
             },
             observePrimaryUserEmail = TestObservePrimaryUserEmail().apply {
                 emit(USER_EMAIL)
-            }
+            },
+            savedStateHandleProvider = TestSavedStateHandleProvider()
         )
     }
 
@@ -101,7 +103,7 @@ internal class AuthViewModelTest {
             viewModel.onBiometricsRequired(ClassHolder(None))
 
             viewModel.state.test {
-                assertThat(awaitItem().event).isEqualTo(AuthEvent.Success.some())
+                assertThat(awaitItem().event).isEqualTo(AuthEvent.Success(AuthOrigin.AUTO_LOCK).some())
             }
         }
 
@@ -117,7 +119,7 @@ internal class AuthViewModelTest {
             viewModel.onBiometricsRequired(ClassHolder(None))
 
             viewModel.state.test {
-                assertThat(awaitItem().event).isEqualTo(AuthEvent.Success.some())
+                assertThat(awaitItem().event).isEqualTo(AuthEvent.Success(AuthOrigin.AUTO_LOCK).some())
             }
 
             assertThat(biometryManager.hasBeenCalled).isFalse()
@@ -130,7 +132,7 @@ internal class AuthViewModelTest {
         viewModel.onBiometricsRequired(ClassHolder(None))
 
         viewModel.state.test {
-            assertThat(awaitItem().event).isEqualTo(AuthEvent.Success.some())
+            assertThat(awaitItem().event).isEqualTo(AuthEvent.Success(AuthOrigin.AUTO_LOCK).some())
         }
     }
 
@@ -142,7 +144,7 @@ internal class AuthViewModelTest {
         viewModel.onBiometricsRequired(ClassHolder(None))
 
         viewModel.state.test {
-            assertThat(awaitItem().event).isEqualTo(AuthEvent.Success.some())
+            assertThat(awaitItem().event).isEqualTo(AuthEvent.Success(AuthOrigin.AUTO_LOCK).some())
         }
     }
 
@@ -209,7 +211,7 @@ internal class AuthViewModelTest {
         viewModel.onSubmit()
 
         viewModel.state.test {
-            assertThat(awaitItem().event).isEqualTo(AuthEvent.Success.some())
+            assertThat(awaitItem().event).isEqualTo(AuthEvent.Success(AuthOrigin.AUTO_LOCK).some())
         }
     }
 

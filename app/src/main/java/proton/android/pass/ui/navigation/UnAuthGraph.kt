@@ -22,6 +22,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
 import proton.android.pass.featureauth.impl.Auth
 import proton.android.pass.featureauth.impl.AuthNavigation
+import proton.android.pass.featureauth.impl.AuthOrigin
 import proton.android.pass.featureauth.impl.AuthScreen
 import proton.android.pass.featureauth.impl.EnterPin
 import proton.android.pass.featureauth.impl.EnterPinBottomsheet
@@ -45,15 +46,18 @@ fun NavGraphBuilder.unAuthGraph(appNavigator: AppNavigator, onNavigate: (AppNavi
                 navigation = {
                     when (it) {
                         AuthNavigation.Dismissed,
-                        AuthNavigation.Back -> onNavigate(AppNavigation.Finish)
+                        is AuthNavigation.Back -> onNavigate(AppNavigation.Finish)
 
-                        AuthNavigation.Success,
+                        is AuthNavigation.Success,
                         AuthNavigation.Failed -> {
                         }
 
                         AuthNavigation.SignOut -> onNavigate(AppNavigation.SignOut())
                         AuthNavigation.ForceSignOut -> onNavigate(AppNavigation.ForceSignOut)
-                        AuthNavigation.EnterPin -> appNavigator.navigate(EnterPin)
+                        AuthNavigation.EnterPin -> appNavigator.navigate(
+                            EnterPin,
+                            EnterPin.buildRoute(AuthOrigin.AUTO_LOCK)
+                        )
                     }
                 }
             )
@@ -63,7 +67,7 @@ fun NavGraphBuilder.unAuthGraph(appNavigator: AppNavigator, onNavigate: (AppNavi
             EnterPinBottomsheet(
                 onNavigate = {
                     when (it) {
-                        EnterPinNavigation.Success -> appNavigator.navigateBack()
+                        is EnterPinNavigation.Success -> appNavigator.navigateBack()
                         EnterPinNavigation.ForceSignOut -> onNavigate(AppNavigation.ForceSignOut)
                     }
                 }

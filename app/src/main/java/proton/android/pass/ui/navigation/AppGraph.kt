@@ -117,8 +117,8 @@ import proton.android.pass.featureprofile.impl.profileGraph
 import proton.android.pass.features.extrapassword.ExtraPasswordNavigation
 import proton.android.pass.features.extrapassword.auth.navigation.enterExtraPasswordGraph
 import proton.android.pass.features.extrapassword.extraPasswordGraph
+import proton.android.pass.features.extrapassword.infosheet.navigation.ExtraPasswordInfoNavItem
 import proton.android.pass.features.extrapassword.options.navigation.ExtraPasswordOptionsNavItem
-import proton.android.pass.features.extrapassword.configure.navigation.SetExtraPasswordNavItem
 import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestination
 import proton.android.pass.features.item.history.navigation.itemHistoryNavGraph
 import proton.android.pass.features.item.history.restore.navigation.ItemHistoryRestoreNavItem
@@ -524,16 +524,19 @@ fun NavGraphBuilder.appGraph(
                 AccountNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
                 AccountNavigation.PasswordManagement -> onNavigate(AppNavigation.PasswordManagement)
                 AccountNavigation.RecoveryEmail -> onNavigate(AppNavigation.RecoveryEmail)
-                AccountNavigation.SetExtraPassword -> appNavigator.navigate(SetExtraPasswordNavItem)
+                AccountNavigation.SetExtraPassword -> appNavigator.navigate(ExtraPasswordInfoNavItem)
                 AccountNavigation.ExtraPasswordOptions ->
                     appNavigator.navigate(ExtraPasswordOptionsNavItem)
             }
         },
-        subGraphs = listOf {
+        subGraph = {
             extraPasswordGraph(
                 onNavigate = {
                     when (it) {
-                        ExtraPasswordNavigation.Back -> appNavigator.navigateBack()
+                        ExtraPasswordNavigation.Back -> dismissBottomSheet { appNavigator.navigateBack() }
+                        ExtraPasswordNavigation.Configure -> {
+                            // navigate to master
+                        }
                     }
                 }
             )

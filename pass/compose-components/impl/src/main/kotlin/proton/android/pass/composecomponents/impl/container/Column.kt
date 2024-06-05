@@ -16,9 +16,24 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.extrapassword
+package proton.android.pass.composecomponents.impl.container
 
-sealed interface ExtraPasswordNavigation {
-    data object Back : ExtraPasswordNavigation
-    data object Configure : ExtraPasswordNavigation
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import proton.android.pass.commonui.api.Spacing
+
+object Column {
+    @Composable
+    fun Centered(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
+        Column(
+            modifier = modifier,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(Spacing.small)
+        ) {
+            content()
+        }
+    }
 }

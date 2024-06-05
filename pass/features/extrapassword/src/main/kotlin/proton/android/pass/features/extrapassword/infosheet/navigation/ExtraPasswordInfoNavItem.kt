@@ -16,9 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.extrapassword
+package proton.android.pass.features.extrapassword.infosheet.navigation
 
-sealed interface ExtraPasswordNavigation {
-    data object Back : ExtraPasswordNavigation
-    data object Configure : ExtraPasswordNavigation
-}
+import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
+
+object ExtraPasswordInfoNavItem : NavItem(
+    baseRoute = "extrapassword/info/bottomsheet",
+    navItemType = NavItemType.Bottomsheet
+)

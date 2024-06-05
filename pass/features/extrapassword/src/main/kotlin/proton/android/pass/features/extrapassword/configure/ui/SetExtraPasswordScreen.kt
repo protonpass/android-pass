@@ -19,10 +19,14 @@
 package proton.android.pass.features.extrapassword.configure.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.extrapassword.ExtraPasswordNavigation
 import proton.android.pass.features.extrapassword.configure.navigation.SetExtraPasswordContentNavEvent
+import proton.android.pass.features.extrapassword.configure.presentation.SetExtraPasswordEvent
 import proton.android.pass.features.extrapassword.configure.presentation.SetExtraPasswordViewModel
 
 @Composable
@@ -31,9 +35,20 @@ fun SetExtraPasswordScreen(
     viewModel: SetExtraPasswordViewModel = hiltViewModel(),
     onNavigate: (ExtraPasswordNavigation) -> Unit
 ) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(state.event) {
+        when (val event = state.event) {
+            SetExtraPasswordEvent.Idle -> {}
+            is SetExtraPasswordEvent.Success -> onNavigate(ExtraPasswordNavigation.Confirm(event.password))
+        }
+        viewModel.onEventConsumed(state.event)
+    }
+
     SetExtraPasswordContent(
         modifier = modifier,
-        state = viewModel.getExtraPasswordState(),
+        formState = viewModel.getExtraPasswordState(),
+        validationError = state.validationError,
         onEvent = {
             when (it) {
                 is SetExtraPasswordContentNavEvent.Back -> onNavigate(ExtraPasswordNavigation.Back)

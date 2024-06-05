@@ -81,6 +81,7 @@ dependencies {
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.biometry.fakes)
     testImplementation(projects.pass.common.fakes)
+    testImplementation(projects.pass.commonUi.fakes)
     testImplementation(projects.pass.data.fakes)
     testImplementation(projects.pass.preferences.fakes)
 
@@ -96,6 +97,7 @@ dependencies {
     androidTestImplementation(projects.pass.commonTest)
     androidTestImplementation(projects.pass.common.fakes)
     androidTestImplementation(projects.pass.commonUi.api)
+    androidTestImplementation(projects.pass.commonUi.fakes)
     androidTestImplementation(projects.pass.data.fakes)
     androidTestImplementation(projects.pass.notifications.fakes)
     androidTestImplementation(projects.pass.preferences.fakes)

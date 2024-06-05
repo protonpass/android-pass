@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.extrapassword.presentation
+package proton.android.pass.features.extrapassword.auth.presentation
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -41,7 +41,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.TooManyExtraPasswordAttemptsException
 import proton.android.pass.data.api.errors.WrongExtraPasswordException
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPassword
-import proton.android.pass.features.extrapassword.navigation.UserIdNavArgId
+import proton.android.pass.features.extrapassword.auth.navigation.UserIdNavArgId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject

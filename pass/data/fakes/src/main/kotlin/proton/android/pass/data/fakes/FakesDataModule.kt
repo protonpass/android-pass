@@ -113,10 +113,6 @@ import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.UpdateVault
-import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPassword
-import proton.android.pass.data.api.usecases.extrapassword.CheckLocalExtraPassword
-import proton.android.pass.data.api.usecases.extrapassword.RemoveExtraPassword
-import proton.android.pass.data.api.usecases.extrapassword.SetupExtraPassword
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.MarkEmailBreachAsResolved
 import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
@@ -142,6 +138,11 @@ import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
+import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPassword
+import proton.android.pass.data.api.usecases.extrapassword.CheckLocalExtraPassword
+import proton.android.pass.data.api.usecases.extrapassword.HasExtraPassword
+import proton.android.pass.data.api.usecases.extrapassword.RemoveExtraPassword
+import proton.android.pass.data.api.usecases.extrapassword.SetupExtraPassword
 import proton.android.pass.data.api.usecases.items.GetItemCategory
 import proton.android.pass.data.api.usecases.items.ObserveItemRevisions
 import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
@@ -264,6 +265,7 @@ import proton.android.pass.data.fakes.usecases.TestUpdateItem
 import proton.android.pass.data.fakes.usecases.TestUpdateVault
 import proton.android.pass.data.fakes.usecases.accesskey.FakeAuthWithExtraPassword
 import proton.android.pass.data.fakes.usecases.accesskey.FakeCheckLocalExtraPassword
+import proton.android.pass.data.fakes.usecases.accesskey.FakeHasExtraPassword
 import proton.android.pass.data.fakes.usecases.accesskey.FakeRemoveExtraPassword
 import proton.android.pass.data.fakes.usecases.accesskey.FakeSetupExtraPassword
 import proton.android.pass.data.fakes.usecases.breach.FakeAddBreachCustomEmail
@@ -725,5 +727,8 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindSetupAccessKey(impl: FakeSetupExtraPassword): SetupExtraPassword
+
+    @Binds
+    abstract fun bindHasExtraPassword(impl: FakeHasExtraPassword): HasExtraPassword
 
 }

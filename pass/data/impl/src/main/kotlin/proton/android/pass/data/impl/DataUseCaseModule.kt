@@ -113,11 +113,6 @@ import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.UpdateVault
 import proton.android.pass.data.api.usecases.UserPlanWorkerLauncher
-import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPassword
-import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordListener
-import proton.android.pass.data.api.usecases.extrapassword.CheckLocalExtraPassword
-import proton.android.pass.data.api.usecases.extrapassword.RemoveExtraPassword
-import proton.android.pass.data.api.usecases.extrapassword.SetupExtraPassword
 import proton.android.pass.data.api.usecases.breach.AddBreachCustomEmail
 import proton.android.pass.data.api.usecases.breach.MarkEmailBreachAsResolved
 import proton.android.pass.data.api.usecases.breach.ObserveAllBreachByUserId
@@ -144,6 +139,12 @@ import proton.android.pass.data.api.usecases.capabilities.CanMigrateVault
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
+import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPassword
+import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordListener
+import proton.android.pass.data.api.usecases.extrapassword.CheckLocalExtraPassword
+import proton.android.pass.data.api.usecases.extrapassword.HasExtraPassword
+import proton.android.pass.data.api.usecases.extrapassword.RemoveExtraPassword
+import proton.android.pass.data.api.usecases.extrapassword.SetupExtraPassword
 import proton.android.pass.data.api.usecases.items.GetItemCategory
 import proton.android.pass.data.api.usecases.items.ObserveItemRevisions
 import proton.android.pass.data.api.usecases.items.ObserveMonitoredItems
@@ -263,11 +264,6 @@ import proton.android.pass.data.impl.usecases.UpdateAutofillItemImpl
 import proton.android.pass.data.impl.usecases.UpdateItemImpl
 import proton.android.pass.data.impl.usecases.UpdateVaultImpl
 import proton.android.pass.data.impl.usecases.UserPlanWorkerLauncherImpl
-import proton.android.pass.data.impl.usecases.extrapassword.AuthWithExtraPasswordImpl
-import proton.android.pass.data.impl.usecases.extrapassword.AuthWithExtraPasswordListenerImpl
-import proton.android.pass.data.impl.usecases.extrapassword.CheckLocalExtraPasswordImpl
-import proton.android.pass.data.impl.usecases.extrapassword.RemoveExtraPasswordImpl
-import proton.android.pass.data.impl.usecases.extrapassword.SetupExtraPasswordImpl
 import proton.android.pass.data.impl.usecases.breach.AddBreachCustomEmailImpl
 import proton.android.pass.data.impl.usecases.breach.MarkEmailBreachAsResolvedImpl
 import proton.android.pass.data.impl.usecases.breach.ObserveAllBreachByUserIdImpl
@@ -293,6 +289,12 @@ import proton.android.pass.data.impl.usecases.capabilities.CanManageVaultAccessI
 import proton.android.pass.data.impl.usecases.capabilities.CanMigrateVaultImpl
 import proton.android.pass.data.impl.usecases.capabilities.CanShareVaultImpl
 import proton.android.pass.data.impl.usecases.defaultvault.SetDefaultVaultImpl
+import proton.android.pass.data.impl.usecases.extrapassword.AuthWithExtraPasswordImpl
+import proton.android.pass.data.impl.usecases.extrapassword.AuthWithExtraPasswordListenerImpl
+import proton.android.pass.data.impl.usecases.extrapassword.CheckLocalExtraPasswordImpl
+import proton.android.pass.data.impl.usecases.extrapassword.HasExtraPasswordImpl
+import proton.android.pass.data.impl.usecases.extrapassword.RemoveExtraPasswordImpl
+import proton.android.pass.data.impl.usecases.extrapassword.SetupExtraPasswordImpl
 import proton.android.pass.data.impl.usecases.items.GetItemCategoryImpl
 import proton.android.pass.data.impl.usecases.items.ObserveItemRevisionsImpl
 import proton.android.pass.data.impl.usecases.items.ObserveMonitoredItemsImpl
@@ -776,5 +778,8 @@ abstract class DataUseCaseModule {
     abstract fun bindAuthWithExtraPasswordListener(
         impl: AuthWithExtraPasswordListenerImpl
     ): AuthWithExtraPasswordListener
+
+    @Binds
+    abstract fun bindHasExtraPassword(impl: HasExtraPasswordImpl): HasExtraPassword
 
 }

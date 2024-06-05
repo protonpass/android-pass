@@ -30,8 +30,8 @@ sealed interface EnterPinNavigation {
 
     data object ForceSignOut : EnterPinNavigation
 
-    data object Success : EnterPinNavigation
-
+    @JvmInline
+    value class Success(val origin: AuthOrigin) : EnterPinNavigation
 }
 
 @Composable
@@ -63,9 +63,9 @@ private fun EventLaunchedEffect(data: EnterPinUiState.Data?, onNavigate: (EnterP
     }
 
     LaunchedEffect(data.event) {
-        when (data.event) {
+        when (val event = data.event) {
             EnterPinEvent.ForceSignOut -> onNavigate(EnterPinNavigation.ForceSignOut)
-            EnterPinEvent.Success -> onNavigate(EnterPinNavigation.Success)
+            is EnterPinEvent.Success -> onNavigate(EnterPinNavigation.Success(event.origin))
             EnterPinEvent.Unknown -> {}
         }
     }

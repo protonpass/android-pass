@@ -28,7 +28,9 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.featureaccount.impl.Account
 import proton.android.pass.featureaccount.impl.AccountNavigation
 import proton.android.pass.featureaccount.impl.accountGraph
+import proton.android.pass.featureauth.impl.Auth
 import proton.android.pass.featureauth.impl.AuthNavigation
+import proton.android.pass.featureauth.impl.AuthOrigin
 import proton.android.pass.featureauth.impl.EnterPin
 import proton.android.pass.featureauth.impl.authGraph
 import proton.android.pass.featurefeatureflags.impl.FeatureFlagRoute
@@ -116,6 +118,7 @@ import proton.android.pass.featureprofile.impl.ProfileNavigation
 import proton.android.pass.featureprofile.impl.profileGraph
 import proton.android.pass.features.extrapassword.ExtraPasswordNavigation
 import proton.android.pass.features.extrapassword.auth.navigation.enterExtraPasswordGraph
+import proton.android.pass.features.extrapassword.configure.navigation.SetExtraPasswordNavItem
 import proton.android.pass.features.extrapassword.extraPasswordGraph
 import proton.android.pass.features.extrapassword.infosheet.navigation.ExtraPasswordInfoNavItem
 import proton.android.pass.features.extrapassword.options.navigation.ExtraPasswordOptionsNavItem
@@ -534,9 +537,13 @@ fun NavGraphBuilder.appGraph(
                 onNavigate = {
                     when (it) {
                         ExtraPasswordNavigation.Back -> dismissBottomSheet { appNavigator.navigateBack() }
-                        ExtraPasswordNavigation.Configure -> {
-                            // navigate to master
-                        }
+                        ExtraPasswordNavigation.Configure ->
+                            dismissBottomSheet {
+                                appNavigator.navigate(
+                                    destination = Auth,
+                                    route = Auth.buildRoute(AuthOrigin.CONFIGURE_EXTRA_PASSWORD)
+                                )
+                            }
                     }
                 }
             )
@@ -569,7 +576,10 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 ProfileNavigation.EnterPin -> dismissBottomSheet {
-                    appNavigator.navigate(EnterPin)
+                    appNavigator.navigate(
+                        destination = EnterPin,
+                        route = EnterPin.buildRoute(AuthOrigin.CONFIGURE_PIN_OR_BIOMETRY)
+                    )
                 }
 
                 ProfileNavigation.SecurityCenter -> appNavigator.navigate(
@@ -1129,18 +1139,23 @@ fun NavGraphBuilder.appGraph(
         canLogout = true,
         navigation = {
             when (it) {
-                AuthNavigation.Back -> onNavigate(AppNavigation.Finish)
-                AuthNavigation.Success -> {
-                    when {
-                        appNavigator.hasPreviousDestination(AppLockTypeBottomsheet) ||
-                            appNavigator.hasPreviousDestination(Profile) ->
-                            appNavigator.navigateBackWithResult(
-                                key = ENTER_PIN_PARAMETER_KEY,
-                                value = true
-                            )
-
-                        else -> appNavigator.navigateBack()
-                    }
+                is AuthNavigation.Back -> when (it.origin) {
+                    AuthOrigin.CONFIGURE_PIN_OR_BIOMETRY,
+                    AuthOrigin.CONFIGURE_EXTRA_PASSWORD -> appNavigator.navigateBack()
+                    AuthOrigin.AUTO_LOCK -> onNavigate(AppNavigation.Finish)
+                }
+                is AuthNavigation.Success -> when (it.origin) {
+                    AuthOrigin.CONFIGURE_PIN_OR_BIOMETRY ->
+                        appNavigator.navigateBackWithResult(
+                            key = ENTER_PIN_PARAMETER_KEY,
+                            value = true
+                        )
+                    AuthOrigin.CONFIGURE_EXTRA_PASSWORD ->
+                        appNavigator.navigate(
+                            destination = SetExtraPasswordNavItem,
+                            backDestination = Account
+                        )
+                    else -> appNavigator.navigateBack()
                 }
 
                 AuthNavigation.Dismissed -> onNavigate(AppNavigation.Finish)

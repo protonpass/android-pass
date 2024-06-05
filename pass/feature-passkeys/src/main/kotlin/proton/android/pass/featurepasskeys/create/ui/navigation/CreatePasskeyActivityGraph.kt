@@ -23,6 +23,7 @@ import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.ItemOptionsB
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.ItemOptionsNavigation
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.itemOptionsGraph
 import proton.android.pass.featureauth.impl.AuthNavigation
+import proton.android.pass.featureauth.impl.AuthOrigin
 import proton.android.pass.featureauth.impl.EnterPin
 import proton.android.pass.featureauth.impl.authGraph
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasBottomSheet
@@ -74,13 +75,16 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
         canLogout = false,
         navigation = {
             when (it) {
-                AuthNavigation.Back -> onNavigate(CreatePasskeyNavigation.Cancel)
-                AuthNavigation.Success -> appNavigator.navigate(SelectItem)
+                is AuthNavigation.Back -> onNavigate(CreatePasskeyNavigation.Cancel)
+                is AuthNavigation.Success -> appNavigator.navigate(SelectItem)
                 AuthNavigation.Dismissed -> onNavigate(CreatePasskeyNavigation.Cancel)
                 AuthNavigation.Failed -> onNavigate(CreatePasskeyNavigation.Cancel)
                 AuthNavigation.SignOut -> {}
                 AuthNavigation.ForceSignOut -> onNavigate(CreatePasskeyNavigation.ForceSignOut)
-                AuthNavigation.EnterPin -> appNavigator.navigate(EnterPin)
+                AuthNavigation.EnterPin -> appNavigator.navigate(
+                    destination = EnterPin,
+                    route = EnterPin.buildRoute(AuthOrigin.AUTO_LOCK)
+                )
             }
         }
     )

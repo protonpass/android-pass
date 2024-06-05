@@ -18,6 +18,7 @@
 
 package proton.android.pass.featureauth.impl
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -38,12 +39,13 @@ fun AuthScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
     val ctx = LocalContext.current
 
+    BackHandler { navigation(AuthNavigation.Back(viewModel.origin)) }
     LaunchedEffect(state.event) {
         when (val authEventOption = state.event) {
             None -> viewModel.onAuthMethodRequested()
             is Some -> {
-                when (authEventOption.value) {
-                    AuthEvent.Success -> navigation(AuthNavigation.Success)
+                when (val event = authEventOption.value) {
+                    is AuthEvent.Success -> navigation(AuthNavigation.Success(event.origin))
                     AuthEvent.Failed -> navigation(AuthNavigation.Failed)
                     AuthEvent.Canceled -> navigation(AuthNavigation.Dismissed)
                     AuthEvent.SignOut -> navigation(AuthNavigation.SignOut)

@@ -31,7 +31,12 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.errors.TooManyExtraPasswordAttemptsException
 import proton.android.pass.data.api.errors.WrongExtraPasswordException
 import proton.android.pass.data.fakes.usecases.accesskey.FakeAuthWithExtraPassword
-import proton.android.pass.features.extrapassword.navigation.UserIdNavArgId
+import proton.android.pass.features.extrapassword.auth.navigation.UserIdNavArgId
+import proton.android.pass.features.extrapassword.auth.presentation.EnterExtraPasswordEvent
+import proton.android.pass.features.extrapassword.auth.presentation.EnterExtraPasswordSnackbarMessage
+import proton.android.pass.features.extrapassword.auth.presentation.EnterExtraPasswordViewModel
+import proton.android.pass.features.extrapassword.auth.presentation.ExtraPasswordError
+import proton.android.pass.features.extrapassword.auth.presentation.ExtraPasswordState
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 

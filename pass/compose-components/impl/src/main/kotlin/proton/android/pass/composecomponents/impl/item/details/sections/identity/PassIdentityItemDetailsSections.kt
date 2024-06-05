@@ -45,5 +45,14 @@ internal fun PassIdentityItemDetailsSections(
                 onEvent = onEvent
             )
         }
+
+        if (addressDetailsContent.hasAddressDetails) {
+            PassIdentityItemDetailsAddressSection(
+                addressDetailsContent = addressDetailsContent,
+                itemColors = itemColors,
+                onEvent = onEvent
+            )
+        }
     }
 }
+

@@ -16,19 +16,17 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.extrapassword.auth.navigation
+package proton.android.pass.features.extrapassword.setextrapassword.navigation
 
-import androidx.navigation.NavGraphBuilder
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.features.extrapassword.auth.ui.EnterExtraPasswordScreen
-import proton.android.pass.navigation.api.composable
+sealed interface SetExtraPasswordContentNavEvent {
+    data object Back : SetExtraPasswordContentNavEvent
 
-fun NavGraphBuilder.enterExtraPasswordGraph(onSuccess: () -> Unit, onLogout: (UserId) -> Unit) {
-    composable(EnterExtraPassword) {
-        EnterExtraPasswordScreen(
-            userId = null,
-            onSuccess = onSuccess,
-            onLogout = onLogout
-        )
-    }
+    @JvmInline
+    value class OnExtraPasswordValueChangedNav(val value: String) : SetExtraPasswordContentNavEvent
+
+    @JvmInline
+    value class OnExtraPasswordRepeatValueChangedNav(val value: String) :
+        SetExtraPasswordContentNavEvent
+
+    data object Submit : SetExtraPasswordContentNavEvent
 }

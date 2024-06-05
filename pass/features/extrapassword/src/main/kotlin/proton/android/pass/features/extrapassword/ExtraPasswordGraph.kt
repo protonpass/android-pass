@@ -16,34 +16,23 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureaccount.impl
+package proton.android.pass.features.extrapassword
 
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.navigation
-import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.features.extrapassword.extrapasswordoptions.navigation.ExtraPasswordOptionsNavItem
+import proton.android.pass.features.extrapassword.extrapasswordoptions.ui.ExtraPasswordOptionsBottomsheet
+import proton.android.pass.features.extrapassword.setextrapassword.navigation.SetExtraPasswordNavItem
+import proton.android.pass.features.extrapassword.setextrapassword.ui.SetExtraPasswordScreen
+import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 
-private const val ACCOUNT_GRAPH = "account_graph"
-
-object Account : NavItem(baseRoute = "account/view")
-
-fun NavGraphBuilder.accountGraph(
-    onNavigate: (AccountNavigation) -> Unit,
-    subGraphs: List<NavGraphBuilder.() -> Unit> = emptyList()
-) {
-    navigation(
-        route = ACCOUNT_GRAPH,
-        startDestination = Account.route
-    ) {
-        composable(Account) {
-            AccountScreen(
-                modifier = Modifier.testTag(AccountScreenTestTag.SCREEN),
-                onNavigate = onNavigate
-            )
-            subGraphs.forEach { it() }
-        }
+fun NavGraphBuilder.extraPasswordGraph(onNavigate: (ExtraPasswordNavigation) -> Unit) {
+    composable(SetExtraPasswordNavItem) {
+        SetExtraPasswordScreen(
+            onNavigate = onNavigate
+        )
+    }
+    bottomSheet(ExtraPasswordOptionsNavItem) {
+        ExtraPasswordOptionsBottomsheet()
     }
 }
-

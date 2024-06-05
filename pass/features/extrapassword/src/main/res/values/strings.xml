@@ -33,10 +33,15 @@
     <string name="configure_extra_password_description">You will be asked for this password during login and when switching from another Proton app to Proton Pass on web.</string>
     <string name="configure_extra_password_warning">Caution: You won’t be able to access your Pass account if you lose this password.</string>
 
+    <string name="configure_extra_password_mismatch">Passwords do not match</string>
+
     <string name="extra_password_options_remove">Remove</string>
 
     <string name="info_extra_password_title">Extra password</string>
     <string name="info_extra_password_body">Protect Proton Pass with an extra password.</string>
     <string name="info_extra_password_button">Set extra password</string>
+    <string name="configure_extra_password_cannot_be_blank">Password cannot be blank</string>
+    <string name="confirm_extra_password_title">Set extra password</string>
+    <string name="confirm_extra_password_body">You will be logged out and will have to log in again on all of your other devices.</string>
 
 </resources>

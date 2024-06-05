@@ -24,14 +24,18 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import proton.android.pass.common.api.FlowUtils.oneShot
+import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.ObserveItemById
+import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -40,9 +44,9 @@ import javax.inject.Inject
 @HiltViewModel
 class ItemDetailsViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
-    observeItemById: ObserveItemById,
-    itemDetailsHandler: ItemDetailsHandler,
-    getItemActions: GetItemActions
+    getItemActions: GetItemActions,
+    private val observeItemById: ObserveItemById,
+    private val itemDetailsHandler: ItemDetailsHandler,
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -72,5 +76,38 @@ class ItemDetailsViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5_000L),
             initialValue = ItemDetailsState.Loading
         )
+
+    internal fun onItemFieldClicked(text: String, plainFieldType: ItemDetailsFieldType.Plain) {
+        viewModelScope.launch {
+            itemDetailsHandler.onItemDetailsFieldClicked(text, plainFieldType)
+        }
+    }
+
+    internal fun onItemHiddenFieldClicked(
+        hiddenState: HiddenState,
+        hiddenFieldType: ItemDetailsFieldType.Hidden
+    ) {
+        viewModelScope.launch {
+            itemDetailsHandler.onItemDetailsHiddenFieldClicked(hiddenState, hiddenFieldType)
+        }
+    }
+
+    internal fun onItemHiddenFieldToggled(
+        isVisible: Boolean,
+        hiddenState: HiddenState,
+        hiddenFieldType: ItemDetailsFieldType.Hidden
+    ) {
+        viewModelScope.launch {
+            itemDetailsHandler.onItemDetailsHiddenFieldToggled(
+                isVisible = isVisible,
+                hiddenState = hiddenState,
+                hiddenFieldType = hiddenFieldType,
+                itemCategory = observeItemById(shareId, itemId)
+                    .first()
+                    .itemType
+                    .category
+            )
+        }
+    }
 
 }

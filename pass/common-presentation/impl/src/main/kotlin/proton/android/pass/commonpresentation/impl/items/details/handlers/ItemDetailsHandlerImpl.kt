@@ -72,9 +72,16 @@ class ItemDetailsHandlerImpl @Inject constructor(
         ItemDetailsFieldType.Hidden.Password -> ItemDetailsSnackbarMessage.PasswordCopied
         ItemDetailsFieldType.Hidden.Pin -> ItemDetailsSnackbarMessage.PinCopied
         ItemDetailsFieldType.Plain.Alias -> ItemDetailsSnackbarMessage.AliasCopied
+        ItemDetailsFieldType.Plain.BirthDate -> ItemDetailsSnackbarMessage.BirthDate
         ItemDetailsFieldType.Plain.CardNumber -> ItemDetailsSnackbarMessage.CardNumberCopied
         ItemDetailsFieldType.Plain.CustomField -> ItemDetailsSnackbarMessage.CustomFieldCopied
         ItemDetailsFieldType.Plain.Email -> ItemDetailsSnackbarMessage.EmailCopied
+        ItemDetailsFieldType.Plain.FirstName -> ItemDetailsSnackbarMessage.FirstName
+        ItemDetailsFieldType.Plain.FullName -> ItemDetailsSnackbarMessage.FullName
+        ItemDetailsFieldType.Plain.Gender -> ItemDetailsSnackbarMessage.Gender
+        ItemDetailsFieldType.Plain.LastName -> ItemDetailsSnackbarMessage.LastName
+        ItemDetailsFieldType.Plain.MiddleName -> ItemDetailsSnackbarMessage.MiddleName
+        ItemDetailsFieldType.Plain.PhoneNumber -> ItemDetailsSnackbarMessage.PhoneNumber
         ItemDetailsFieldType.Plain.TotpCode -> ItemDetailsSnackbarMessage.TotpCodeCopied
         ItemDetailsFieldType.Plain.Username -> ItemDetailsSnackbarMessage.UsernameCopied
         ItemDetailsFieldType.Plain.Website -> ItemDetailsSnackbarMessage.WebsiteCopied

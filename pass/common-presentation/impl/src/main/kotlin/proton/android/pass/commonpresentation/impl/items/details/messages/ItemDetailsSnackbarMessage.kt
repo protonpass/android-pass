@@ -35,6 +35,12 @@ internal enum class ItemDetailsSnackbarMessage(
         isClipboard = true
     ),
 
+    BirthDate(
+        id = R.string.item_details_snackbar_message_birthdate_copied,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
+
     CardNumberCopied(
         id = R.string.item_details_snackbar_message_card_number_copied,
         type = SnackbarType.NORM,
@@ -55,6 +61,42 @@ internal enum class ItemDetailsSnackbarMessage(
 
     EmailCopied(
         id = R.string.item_details_snackbar_message_email_copied,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
+
+    FirstName(
+        id = R.string.item_details_snackbar_message_first_name_copied,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
+
+    FullName(
+        id = R.string.item_details_snackbar_message_full_name_copied,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
+
+    Gender(
+        id = R.string.item_details_snackbar_message_gender_copied,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
+
+    LastName(
+        id = R.string.item_details_snackbar_message_last_name_copied,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
+
+    MiddleName(
+        id = R.string.item_details_snackbar_message_middle_name_copied,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
+
+    PhoneNumber(
+        id = R.string.item_details_snackbar_message_phone_number_copied,
         type = SnackbarType.NORM,
         isClipboard = true
     ),

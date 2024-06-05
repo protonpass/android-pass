@@ -16,16 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureaccount.impl.extrapasswordoptions.presentation
+package proton.android.pass.features.extrapassword.extrapasswordoptions.navigation
 
-import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
 
-@HiltViewModel
-class ExtraPasswordOptionsViewModel @Inject constructor() : ViewModel() {
-
-    internal fun submit() {
-        // Start challenge
-    }
-}
+object ExtraPasswordOptionsNavItem : NavItem(
+    baseRoute = "account/extrapasswordoptions",
+    navItemType = NavItemType.Bottomsheet
+)

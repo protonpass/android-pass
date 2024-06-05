@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.extrapassword.setextrapassword.ui
+package proton.android.pass.features.extrapassword.configure.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -63,10 +63,10 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.CrossBackCircleIconButton
 import proton.android.pass.features.extrapassword.R
-import proton.android.pass.features.extrapassword.setextrapassword.navigation.SetExtraPasswordContentNavEvent
-import proton.android.pass.features.extrapassword.setextrapassword.navigation.SetExtraPasswordContentNavEvent.OnExtraPasswordRepeatValueChangedNav
-import proton.android.pass.features.extrapassword.setextrapassword.navigation.SetExtraPasswordContentNavEvent.Submit
-import proton.android.pass.features.extrapassword.setextrapassword.presentation.SetExtraPasswordState
+import proton.android.pass.features.extrapassword.configure.navigation.SetExtraPasswordContentNavEvent
+import proton.android.pass.features.extrapassword.configure.navigation.SetExtraPasswordContentNavEvent.OnExtraPasswordRepeatValueChangedNav
+import proton.android.pass.features.extrapassword.configure.navigation.SetExtraPasswordContentNavEvent.Submit
+import proton.android.pass.features.extrapassword.configure.presentation.SetExtraPasswordState
 import me.proton.core.presentation.R as CoreR
 
 @Composable

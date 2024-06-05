@@ -20,4 +20,5 @@ package proton.android.pass.features.extrapassword
 
 sealed interface ExtraPasswordNavigation {
     data object Back : ExtraPasswordNavigation
+    data object Configure : ExtraPasswordNavigation
 }

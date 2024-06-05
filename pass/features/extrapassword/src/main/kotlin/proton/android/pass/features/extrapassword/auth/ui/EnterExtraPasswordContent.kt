@@ -106,7 +106,7 @@ internal fun EnterAccessKeyContent(
                     ),
                 value = content,
                 keyboardOptions = KeyboardOptions(
-                    autoCorrect = false,
+                    autoCorrectEnabled = false,
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Done
                 ),

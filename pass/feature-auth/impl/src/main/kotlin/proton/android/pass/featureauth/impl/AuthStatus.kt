@@ -24,7 +24,9 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
 sealed interface AuthEvent {
-    data object Success : AuthEvent
+
+    @JvmInline
+    value class Success(val origin: AuthOrigin) : AuthEvent
     data object Failed : AuthEvent
     data object Canceled : AuthEvent
     data object SignOut : AuthEvent

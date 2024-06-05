@@ -36,6 +36,7 @@ import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.ItemOptionsN
 import proton.android.pass.commonui.impl.ui.bottomsheet.itemoptions.itemOptionsGraph
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.featureauth.impl.AuthNavigation
+import proton.android.pass.featureauth.impl.AuthOrigin
 import proton.android.pass.featureauth.impl.EnterPin
 import proton.android.pass.featureauth.impl.authGraph
 import proton.android.pass.featureitemcreate.impl.alias.CreateAlias
@@ -117,18 +118,22 @@ fun NavGraphBuilder.autofillActivityGraph(
         canLogout = false,
         navigation = {
             when (it) {
-                AuthNavigation.Back -> onNavigate(AutofillNavigation.Cancel)
-                AuthNavigation.Success -> if (selectedAutofillItem != null) {
-                    onEvent(AutofillEvent.AutofillSuggestionSelected(selectedAutofillItem))
-                } else {
-                    appNavigator.navigate(SelectItem)
+                is AuthNavigation.Back -> onNavigate(AutofillNavigation.Cancel)
+                is AuthNavigation.Success -> when {
+                    selectedAutofillItem != null ->
+                        onEvent(AutofillEvent.AutofillSuggestionSelected(selectedAutofillItem))
+
+                    else -> appNavigator.navigate(SelectItem)
                 }
 
                 AuthNavigation.Dismissed -> onNavigate(AutofillNavigation.Cancel)
                 AuthNavigation.Failed -> onNavigate(AutofillNavigation.Cancel)
                 AuthNavigation.SignOut -> {}
                 AuthNavigation.ForceSignOut -> onNavigate(AutofillNavigation.ForceSignOut)
-                AuthNavigation.EnterPin -> appNavigator.navigate(EnterPin)
+                AuthNavigation.EnterPin -> appNavigator.navigate(
+                    destination = EnterPin,
+                    route = EnterPin.buildRoute(AuthOrigin.AUTO_LOCK)
+                )
             }
         }
     )
@@ -374,11 +379,15 @@ fun NavGraphBuilder.autofillActivityGraph(
                 is BaseIdentityNavigation.OpenExtraFieldBottomSheet ->
                     appNavigator.navigate(
                         destination = IdentityFieldsBottomSheet,
-                        route = IdentityFieldsBottomSheet.createRoute(it.addIdentityFieldType, it.sectionIndex)
+                        route = IdentityFieldsBottomSheet.createRoute(
+                            it.addIdentityFieldType,
+                            it.sectionIndex
+                        )
                     )
 
                 is CreateIdentityNavigation.ItemCreated ->
                     onEvent(AutofillEvent.AutofillItemSelected(it.itemUiModel.toAutoFillItem()))
+
                 is CreateIdentityNavigation.SelectVault -> appNavigator.navigate(
                     destination = SelectVaultBottomsheet,
                     route = SelectVaultBottomsheet.createNavRoute(it.shareId)
@@ -407,9 +416,11 @@ fun NavGraphBuilder.autofillActivityGraph(
                     destination = CustomFieldOptionsBottomSheet,
                     route = CustomFieldOptionsBottomSheet.buildRoute(it.index, it.title)
                 )
+
                 BaseIdentityNavigation.RemovedCustomField -> dismissBottomSheet {
                     appNavigator.navigateBack(comesFromBottomsheet = true)
                 }
+
                 BaseIdentityNavigation.AddExtraSection ->
                     appNavigator.navigate(CustomSectionNameDialogNavItem)
 
@@ -420,10 +431,12 @@ fun NavGraphBuilder.autofillActivityGraph(
                         backDestination = CreateIdentity
                     )
                 }
+
                 is BaseIdentityNavigation.ExtraSectionOptions -> appNavigator.navigate(
                     destination = CustomSectionOptionsBottomSheetNavItem,
                     route = CustomSectionOptionsBottomSheetNavItem.buildRoute(it.index, it.title)
                 )
+
                 BaseIdentityNavigation.RemoveCustomSection -> dismissBottomSheet {
                     appNavigator.navigateBack(comesFromBottomsheet = true)
                 }

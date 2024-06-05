@@ -1117,6 +1117,13 @@ fun NavGraphBuilder.appGraph(
                 ItemDetailsNavDestination.Back -> appNavigator.navigateBack(
                     comesFromBottomsheet = false
                 )
+
+                is ItemDetailsNavDestination.PasskeyDetails -> appNavigator.navigate(
+                    destination = ViewPasskeyDetailsBottomSheet,
+                    route = ViewPasskeyDetailsBottomSheet.buildRoute(
+                        passkey = itemDetailsNavDestination.passkeyContent
+                    )
+                )
             }
         }
     )

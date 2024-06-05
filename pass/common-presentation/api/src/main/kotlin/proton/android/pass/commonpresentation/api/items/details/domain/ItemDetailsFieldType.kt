@@ -24,11 +24,25 @@ sealed interface ItemDetailsFieldType {
 
         data object Alias : Plain
 
+        data object BirthDate : Plain
+
         data object CardNumber : Plain
 
         data object CustomField : Plain
 
         data object Email : Plain
+
+        data object FirstName : Plain
+
+        data object FullName : Plain
+
+        data object Gender : Plain
+
+        data object LastName : Plain
+
+        data object MiddleName : Plain
+
+        data object PhoneNumber : Plain
 
         data object TotpCode : Plain
 

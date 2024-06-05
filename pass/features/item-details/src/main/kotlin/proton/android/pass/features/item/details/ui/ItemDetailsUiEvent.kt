@@ -18,8 +18,34 @@
 
 package proton.android.pass.features.item.details.ui
 
+import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
+import proton.android.pass.commonuimodels.api.UIPasskeyContent
+import proton.android.pass.domain.HiddenState
+
 internal sealed interface ItemDetailsUiEvent {
 
     data object OnNavigateBack : ItemDetailsUiEvent
+
+    data class OnFieldClicked(
+        internal val text: String,
+        internal val field: ItemDetailsFieldType.Plain
+    ) : ItemDetailsUiEvent
+
+    data class OnHiddenFieldClicked(
+        internal val state: HiddenState,
+        internal val field: ItemDetailsFieldType.Hidden
+    ) : ItemDetailsUiEvent
+
+    data class OnHiddenFieldToggled(
+        internal val isVisible: Boolean,
+        internal val state: HiddenState,
+        internal val field: ItemDetailsFieldType.Hidden
+    ) : ItemDetailsUiEvent
+
+    @JvmInline
+    value class OnLinkClicked(internal val link: String) : ItemDetailsUiEvent
+
+    @JvmInline
+    value class OnPasskeyClicked(internal val passkeyContent: UIPasskeyContent) : ItemDetailsUiEvent
 
 }

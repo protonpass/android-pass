@@ -16,26 +16,35 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.composecomponents.impl.item.details.sections.shared
+package proton.android.pass.composecomponents.impl.item.details.sections.identity
 
+import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import kotlinx.collections.immutable.ImmutableList
-import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
-import proton.android.pass.composecomponents.impl.form.PassDivider
+import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.composecomponents.impl.item.SectionTitle
+import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailMainSectionContainer
 
 @Composable
-internal fun PassItemDetailMainSectionContainer(
+internal fun PassIdentityItemDetailsSection(
     modifier: Modifier = Modifier,
+    @StringRes titleResId: Int,
     sections: ImmutableList<@Composable () -> Unit>
 ) {
-    RoundedCornersColumn(modifier = modifier) {
-        sections.forEachIndexed { index, content ->
-            content()
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
+    ) {
+        SectionTitle(
+            text = stringResource(id = titleResId)
+        )
 
-            if (index < sections.lastIndex) {
-                PassDivider()
-            }
-        }
+        PassItemDetailMainSectionContainer(
+            sections = sections
+        )
     }
 }

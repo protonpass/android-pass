@@ -61,12 +61,30 @@ internal fun ItemDetailsContent(
                 },
                 onEvent = { uiEvent ->
                     when (uiEvent) {
-                        is PassItemDetailsUiEvent.OnHiddenSectionClick -> TODO()
-                        is PassItemDetailsUiEvent.OnHiddenSectionToggle -> TODO()
-                        is PassItemDetailsUiEvent.OnLinkClick -> TODO()
-                        is PassItemDetailsUiEvent.OnPasskeyClick -> TODO()
-                        is PassItemDetailsUiEvent.OnSectionClick -> TODO()
-                    }
+                        is PassItemDetailsUiEvent.OnHiddenSectionClick -> ItemDetailsUiEvent.OnHiddenFieldClicked(
+                            state = uiEvent.state,
+                            field = uiEvent.field
+                        )
+
+                        is PassItemDetailsUiEvent.OnHiddenSectionToggle -> ItemDetailsUiEvent.OnHiddenFieldToggled(
+                            isVisible = uiEvent.state,
+                            state = uiEvent.hiddenState,
+                            field = uiEvent.field
+                        )
+
+                        is PassItemDetailsUiEvent.OnLinkClick -> ItemDetailsUiEvent.OnLinkClicked(
+                            link = uiEvent.link
+                        )
+
+                        is PassItemDetailsUiEvent.OnPasskeyClick -> ItemDetailsUiEvent.OnPasskeyClicked(
+                            passkeyContent = uiEvent.passkey
+                        )
+
+                        is PassItemDetailsUiEvent.OnSectionClick -> ItemDetailsUiEvent.OnFieldClicked(
+                            text = uiEvent.section,
+                            field = uiEvent.field
+                        )
+                    }.also(onEvent)
                 }
             )
         }

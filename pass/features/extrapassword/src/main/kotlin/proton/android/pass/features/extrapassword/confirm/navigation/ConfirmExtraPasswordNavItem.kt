@@ -16,15 +16,22 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.extrapassword
+package proton.android.pass.features.extrapassword.confirm.navigation
 
-import me.proton.core.crypto.common.keystore.EncryptedString
+import androidx.navigation.NavType
+import proton.android.pass.navigation.api.NavArgId
+import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
 
-sealed interface ExtraPasswordNavigation {
-    data object Back : ExtraPasswordNavigation
-    data object Configure : ExtraPasswordNavigation
-    data object FinishedConfiguring : ExtraPasswordNavigation
+object EncryptedPasswordNavArgId : NavArgId {
+    override val key: String = "encryptedPassword"
+    override val navType: NavType<*> = NavType.StringType
+}
 
-    @JvmInline
-    value class Confirm(val password: EncryptedString) : ExtraPasswordNavigation
+object ConfirmExtraPasswordNavItem : NavItem(
+    baseRoute = "extrapassword/confirm/dialog",
+    navArgIds = listOf(EncryptedPasswordNavArgId),
+    navItemType = NavItemType.Dialog
+) {
+    fun buildRoute(encryptedPassword: String): String = "$baseRoute/$encryptedPassword"
 }

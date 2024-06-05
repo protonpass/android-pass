@@ -119,6 +119,7 @@ import proton.android.pass.featureprofile.impl.profileGraph
 import proton.android.pass.features.extrapassword.ExtraPasswordNavigation
 import proton.android.pass.features.extrapassword.auth.navigation.enterExtraPasswordGraph
 import proton.android.pass.features.extrapassword.configure.navigation.SetExtraPasswordNavItem
+import proton.android.pass.features.extrapassword.confirm.navigation.ConfirmExtraPasswordNavItem
 import proton.android.pass.features.extrapassword.extraPasswordGraph
 import proton.android.pass.features.extrapassword.infosheet.navigation.ExtraPasswordInfoNavItem
 import proton.android.pass.features.extrapassword.options.navigation.ExtraPasswordOptionsNavItem
@@ -544,6 +545,12 @@ fun NavGraphBuilder.appGraph(
                                     route = Auth.buildRoute(AuthOrigin.CONFIGURE_EXTRA_PASSWORD)
                                 )
                             }
+
+                        is ExtraPasswordNavigation.Confirm -> appNavigator.navigate(
+                            destination = ConfirmExtraPasswordNavItem,
+                            route = ConfirmExtraPasswordNavItem.buildRoute(it.password)
+                        )
+                        ExtraPasswordNavigation.FinishedConfiguring -> appNavigator.popUpTo(Account)
                     }
                 }
             )

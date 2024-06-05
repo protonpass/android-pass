@@ -29,6 +29,7 @@ import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUserSettings
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
+import proton.android.pass.data.fakes.usecases.accesskey.FakeHasExtraPassword
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
 import proton.android.pass.domain.PlanType
@@ -59,6 +60,7 @@ internal class AccountViewModelTest {
             observeCurrentUser = observeCurrentUser,
             observeUpgradeInfo = getUpgradeInfo,
             observeCurrentUserSettings = observeCurrentUserSettings,
+            hasExtraPassword = FakeHasExtraPassword(),
             featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository()
         )
     }

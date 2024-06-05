@@ -28,8 +28,6 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.featureaccount.impl.Account
 import proton.android.pass.featureaccount.impl.AccountNavigation
 import proton.android.pass.featureaccount.impl.accountGraph
-import proton.android.pass.featureaccount.impl.extrapasswordoptions.navigation.ExtraPasswordOptionsNavItem
-import proton.android.pass.featureaccount.impl.setextrapassword.navigation.SetExtraPasswordNavItem
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.EnterPin
 import proton.android.pass.featureauth.impl.authGraph
@@ -116,7 +114,11 @@ import proton.android.pass.featureprofile.impl.PinConfig
 import proton.android.pass.featureprofile.impl.Profile
 import proton.android.pass.featureprofile.impl.ProfileNavigation
 import proton.android.pass.featureprofile.impl.profileGraph
-import proton.android.pass.features.extrapassword.auth.navigation.extraPasswordGraph
+import proton.android.pass.features.extrapassword.ExtraPasswordNavigation
+import proton.android.pass.features.extrapassword.auth.navigation.enterExtraPasswordGraph
+import proton.android.pass.features.extrapassword.extraPasswordGraph
+import proton.android.pass.features.extrapassword.extrapasswordoptions.navigation.ExtraPasswordOptionsNavItem
+import proton.android.pass.features.extrapassword.setextrapassword.navigation.SetExtraPasswordNavItem
 import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestination
 import proton.android.pass.features.item.history.navigation.itemHistoryNavGraph
 import proton.android.pass.features.item.history.restore.navigation.ItemHistoryRestoreNavItem
@@ -526,6 +528,15 @@ fun NavGraphBuilder.appGraph(
                 AccountNavigation.ExtraPasswordOptions ->
                     appNavigator.navigate(ExtraPasswordOptionsNavItem)
             }
+        },
+        subGraphs = listOf {
+            extraPasswordGraph(
+                onNavigate = {
+                    when (it) {
+                        ExtraPasswordNavigation.Back -> appNavigator.navigateBack()
+                    }
+                }
+            )
         }
     )
     profileGraph(
@@ -1547,7 +1558,7 @@ fun NavGraphBuilder.appGraph(
         }
     )
 
-    extraPasswordGraph(
+    enterExtraPasswordGraph(
         onSuccess = { appNavigator.navigate(Home) },
         onLogout = { onNavigate(AppNavigation.SignOut(it)) }
     )

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023-2024 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,21 +16,23 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.extrapassword.extrapasswordoptions.ui
+package proton.android.pass.features.extrapassword.configure.presentation
 
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
-import proton.android.pass.commonui.api.bottomSheet
-import proton.android.pass.features.extrapassword.extrapasswordoptions.presentation.ExtraPasswordOptionsViewModel
+import android.os.Parcelable
+import androidx.compose.runtime.Immutable
+import kotlinx.parcelize.Parcelize
 
-@Composable
-internal fun ExtraPasswordOptionsBottomsheet(
-    modifier: Modifier = Modifier,
-    viewModel: ExtraPasswordOptionsViewModel = hiltViewModel()
-) {
-    ExtraPasswordOptionsBottomsheetContent(
-        modifier = modifier.bottomSheet(),
-        onRemove = viewModel::submit
-    )
+@Parcelize
+@Immutable
+internal data class SetExtraPasswordState(
+    val password: String,
+    val repeatPassword: String
+) : Parcelable {
+
+    companion object {
+        internal val EMPTY = SetExtraPasswordState(
+            password = "",
+            repeatPassword = ""
+        )
+    }
 }

@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.extrapassword.ui
+package proton.android.pass.features.extrapassword.auth.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
@@ -39,7 +39,7 @@ import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarH
 import proton.android.pass.composecomponents.impl.snackbar.SnackBarLaunchedEffect
 import proton.android.pass.composecomponents.impl.theme.SystemUIEffect
 import proton.android.pass.composecomponents.impl.theme.isDark
-import proton.android.pass.features.extrapassword.presentation.EnterExtraPasswordAppViewModel
+import proton.android.pass.features.extrapassword.auth.presentation.EnterExtraPasswordAppViewModel
 import proton.android.pass.network.api.NetworkStatus
 
 @Composable

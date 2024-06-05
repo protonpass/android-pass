@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.extrapassword.presentation
+package proton.android.pass.features.extrapassword.auth.presentation
 
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.runtime.Stable

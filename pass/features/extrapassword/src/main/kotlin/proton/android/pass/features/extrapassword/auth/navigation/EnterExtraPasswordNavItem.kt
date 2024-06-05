@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.extrapassword.navigation
+package proton.android.pass.features.extrapassword.auth.navigation
 
 import androidx.navigation.NavType
 import me.proton.core.domain.entity.UserId

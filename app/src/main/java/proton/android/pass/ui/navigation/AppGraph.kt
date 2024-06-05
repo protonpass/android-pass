@@ -117,8 +117,8 @@ import proton.android.pass.featureprofile.impl.profileGraph
 import proton.android.pass.features.extrapassword.ExtraPasswordNavigation
 import proton.android.pass.features.extrapassword.auth.navigation.enterExtraPasswordGraph
 import proton.android.pass.features.extrapassword.extraPasswordGraph
-import proton.android.pass.features.extrapassword.extrapasswordoptions.navigation.ExtraPasswordOptionsNavItem
-import proton.android.pass.features.extrapassword.setextrapassword.navigation.SetExtraPasswordNavItem
+import proton.android.pass.features.extrapassword.options.navigation.ExtraPasswordOptionsNavItem
+import proton.android.pass.features.extrapassword.configure.navigation.SetExtraPasswordNavItem
 import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestination
 import proton.android.pass.features.item.history.navigation.itemHistoryNavGraph
 import proton.android.pass.features.item.history.restore.navigation.ItemHistoryRestoreNavItem

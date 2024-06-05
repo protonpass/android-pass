@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.extrapassword.extrapasswordoptions.ui
+package proton.android.pass.features.extrapassword.options.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

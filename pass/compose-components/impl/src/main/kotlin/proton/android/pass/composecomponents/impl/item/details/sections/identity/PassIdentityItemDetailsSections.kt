@@ -18,8 +18,11 @@
 
 package proton.android.pass.composecomponents.impl.item.details.sections.identity
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.ItemContents
@@ -30,6 +33,17 @@ internal fun PassIdentityItemDetailsSections(
     contents: ItemContents.Identity,
     itemColors: PassItemColors,
     onEvent: (PassItemDetailsUiEvent) -> Unit
-) {
-    println("JIBIRI: PassIdentityItemDetailsSections")
+) = with(contents) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
+    ) {
+        if (personalDetailsContent.hasPersonalDetails) {
+            PassIdentityItemDetailsPersonalSection(
+                personalDetailsContent = personalDetailsContent,
+                itemColors = itemColors,
+                onEvent = onEvent
+            )
+        }
+    }
 }

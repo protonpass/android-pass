@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.extrapassword.ui
+package proton.android.pass.features.extrapassword.auth.ui
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
@@ -53,8 +53,8 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.features.extrapassword.R
-import proton.android.pass.features.extrapassword.presentation.ExtraPasswordError
-import proton.android.pass.features.extrapassword.presentation.ExtraPasswordState
+import proton.android.pass.features.extrapassword.auth.presentation.ExtraPasswordError
+import proton.android.pass.features.extrapassword.auth.presentation.ExtraPasswordState
 
 @Composable
 internal fun EnterAccessKeyContent(

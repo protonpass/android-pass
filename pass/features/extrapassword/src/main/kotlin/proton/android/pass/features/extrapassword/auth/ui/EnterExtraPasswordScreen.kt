@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.extrapassword.ui
+package proton.android.pass.features.extrapassword.auth.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -25,8 +25,8 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.features.extrapassword.presentation.EnterExtraPasswordEvent
-import proton.android.pass.features.extrapassword.presentation.EnterExtraPasswordViewModel
+import proton.android.pass.features.extrapassword.auth.presentation.EnterExtraPasswordEvent
+import proton.android.pass.features.extrapassword.auth.presentation.EnterExtraPasswordViewModel
 
 @Composable
 fun EnterExtraPasswordScreen(

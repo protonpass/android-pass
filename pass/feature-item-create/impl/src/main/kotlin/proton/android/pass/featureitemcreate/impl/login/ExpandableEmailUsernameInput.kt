@@ -62,7 +62,8 @@ internal fun ExpandableEmailUsernameInput(
     isInvalidEmail: Boolean,
     isUsernameSplitTooltipEnabled: Boolean
 ) {
-    val isExpanded = rememberSaveable(username) { mutableStateOf(username.isNotEmpty()) }
+    val isExpanded = rememberSaveable { mutableStateOf(username.isNotEmpty()) }
+
     val emailIconTint = if (isInvalidEmail) {
         PassTheme.colors.signalDanger
     } else {

@@ -21,10 +21,19 @@ package proton.android.pass.features.item.details.ui
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.domain.HiddenState
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.items.ItemCategory
 
 internal sealed interface ItemDetailsUiEvent {
 
     data object OnNavigateBack : ItemDetailsUiEvent
+
+    data class OnEditClicked(
+        internal val shareId: ShareId,
+        internal val itemId: ItemId,
+        internal val itemCategory: ItemCategory
+    ): ItemDetailsUiEvent
 
     data class OnFieldClicked(
         internal val text: String,

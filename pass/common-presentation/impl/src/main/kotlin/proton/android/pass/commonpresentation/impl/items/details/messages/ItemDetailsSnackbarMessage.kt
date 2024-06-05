@@ -35,7 +35,7 @@ internal enum class ItemDetailsSnackbarMessage(
         isClipboard = true
     ),
 
-    BirthDate(
+    BirthDateCopied(
         id = R.string.item_details_snackbar_message_birthdate_copied,
         type = SnackbarType.NORM,
         isClipboard = true
@@ -43,6 +43,24 @@ internal enum class ItemDetailsSnackbarMessage(
 
     CardNumberCopied(
         id = R.string.item_details_snackbar_message_card_number_copied,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
+
+    CityCopied(
+        id = R.string.item_details_snackbar_message_city_copied,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
+
+    CountryOrRegionCopied(
+        id = R.string.item_details_snackbar_message_country_or_region_copied,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
+
+    CountyCopied(
+        id = R.string.item_details_snackbar_message_county_copied,
         type = SnackbarType.NORM,
         isClipboard = true
     ),
@@ -65,38 +83,56 @@ internal enum class ItemDetailsSnackbarMessage(
         isClipboard = true
     ),
 
-    FirstName(
+    FirstNameCopied(
         id = R.string.item_details_snackbar_message_first_name_copied,
         type = SnackbarType.NORM,
         isClipboard = true
     ),
 
-    FullName(
+    FloorCopied(
+        id = R.string.item_details_snackbar_message_floor_copied,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
+
+    FullNameCopied(
         id = R.string.item_details_snackbar_message_full_name_copied,
         type = SnackbarType.NORM,
         isClipboard = true
     ),
 
-    Gender(
+    GenderCopied(
         id = R.string.item_details_snackbar_message_gender_copied,
         type = SnackbarType.NORM,
         isClipboard = true
     ),
 
-    LastName(
+    LastNameCopied(
         id = R.string.item_details_snackbar_message_last_name_copied,
         type = SnackbarType.NORM,
         isClipboard = true
     ),
 
-    MiddleName(
+    MiddleNameCopied(
         id = R.string.item_details_snackbar_message_middle_name_copied,
         type = SnackbarType.NORM,
         isClipboard = true
     ),
 
-    PhoneNumber(
+    PhoneNumberCopied(
         id = R.string.item_details_snackbar_message_phone_number_copied,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
+
+    StateOrProvinceCopied(
+        id = R.string.item_details_snackbar_message_state_or_province_copied,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
+
+    StreetAddressCopied(
+        id = R.string.item_details_snackbar_message_street_address_copied,
         type = SnackbarType.NORM,
         isClipboard = true
     ),
@@ -127,6 +163,12 @@ internal enum class ItemDetailsSnackbarMessage(
 
     WebsiteCopied(
         id = R.string.item_details_snackbar_message_website_copied,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
+
+    ZipOrPostalCodeCopied(
+        id = R.string.item_details_snackbar_message_zip_or_postal_code_copied,
         type = SnackbarType.NORM,
         isClipboard = true
     )

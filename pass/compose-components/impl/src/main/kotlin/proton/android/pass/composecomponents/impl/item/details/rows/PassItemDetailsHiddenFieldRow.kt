@@ -50,7 +50,7 @@ import proton.android.pass.domain.HiddenState
 @Composable
 internal fun PassItemDetailsHiddenFieldRow(
     modifier: Modifier = Modifier,
-    @DrawableRes icon: Int,
+    @DrawableRes icon: Int?,
     title: String,
     hiddenState: HiddenState,
     hiddenTextLength: Int,
@@ -86,11 +86,13 @@ internal fun PassItemDetailsHiddenFieldRow(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
-        Icon(
-            painter = painterResource(id = icon),
-            contentDescription = null,
-            tint = itemColors.norm
-        )
+        icon?.let { iconResId ->
+            Icon(
+                painter = painterResource(id = iconResId),
+                contentDescription = null,
+                tint = itemColors.norm
+            )
+        }
 
         Column(
             modifier = Modifier.weight(weight = 1f)

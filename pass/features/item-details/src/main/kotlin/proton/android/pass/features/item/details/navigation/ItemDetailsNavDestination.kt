@@ -19,10 +19,19 @@
 package proton.android.pass.features.item.details.navigation
 
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.items.ItemCategory
 
 sealed interface ItemDetailsNavDestination {
 
     data object Back : ItemDetailsNavDestination
+
+    data class EditItem(
+        val shareId: ShareId,
+        val itemId: ItemId,
+        val itemCategory: ItemCategory
+    ) : ItemDetailsNavDestination
 
     @JvmInline
     value class PasskeyDetails(val passkeyContent: UIPasskeyContent) : ItemDetailsNavDestination

@@ -161,6 +161,14 @@
     <string name="item_details_identity_section_personal_gender_title">Gender</string>
     <string name="item_details_identity_section_personal_phone_title">Phone number</string>
     <string name="item_details_identity_section_personal_birthday_title">Birthday</string>
+    <string name="item_details_identity_section_address_title">Address details</string>
+    <string name="item_details_identity_section_address_street_address_title">Street address, P.O. box</string>
+    <string name="item_details_identity_section_address_floor_title">Floor</string>
+    <string name="item_details_identity_section_address_city_title">City</string>
+    <string name="item_details_identity_section_address_zip_or_postal_code_title">ZIP or postal code</string>
+    <string name="item_details_identity_section_address_state_or_province_title">State or province</string>
+    <string name="item_details_identity_section_address_county_title">County</string>
+    <string name="item_details_identity_section_address_country_or_region_title">Country or region</string>
 
     <string name="item_details_shared_section_note_title">Note</string>
     <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">The app version is not supported anymore, please update your app.</string>

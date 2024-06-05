@@ -42,6 +42,16 @@ fun ItemDetailsScreen(
                 ItemDetailsUiEvent.OnNavigateBack -> ItemDetailsNavDestination.Back
                     .also(onNavigated)
 
+                is ItemDetailsUiEvent.OnEditClicked -> ItemDetailsNavDestination.EditItem(
+                    shareId = uiEvent.shareId,
+                    itemId = uiEvent.itemId,
+                    itemCategory = uiEvent.itemCategory
+                ).also(onNavigated)
+
+                is ItemDetailsUiEvent.OnPasskeyClicked -> ItemDetailsNavDestination.PasskeyDetails(
+                    passkeyContent = uiEvent.passkeyContent
+                ).also(onNavigated)
+
                 is ItemDetailsUiEvent.OnFieldClicked -> onItemFieldClicked(
                     text = uiEvent.text,
                     plainFieldType = uiEvent.field
@@ -62,10 +72,6 @@ fun ItemDetailsScreen(
                     context = context,
                     website = uiEvent.link
                 )
-
-                is ItemDetailsUiEvent.OnPasskeyClicked -> ItemDetailsNavDestination.PasskeyDetails(
-                    passkeyContent = uiEvent.passkeyContent
-                ).also(onNavigated)
             }
         }
     )

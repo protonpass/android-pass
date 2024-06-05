@@ -53,8 +53,17 @@ internal fun ItemDetailsContent(
                         isLoading = false,
                         itemColors = itemColors,
                         actions = itemActions,
-                        onUpClick = { onEvent(ItemDetailsUiEvent.OnNavigateBack) },
-                        onEditClick = {},
+                        onUpClick = {
+                            ItemDetailsUiEvent.OnNavigateBack
+                                .also(onEvent)
+                        },
+                        onEditClick = {
+                            ItemDetailsUiEvent.OnEditClicked(
+                                shareId = shareId,
+                                itemId = itemId,
+                                itemCategory = itemDetailState.itemCategory
+                            ).also(onEvent)
+                        },
                         onOptionsClick = {},
                         onShareClick = {}
                     )

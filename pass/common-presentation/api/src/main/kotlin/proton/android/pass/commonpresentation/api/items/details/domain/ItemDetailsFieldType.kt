@@ -28,11 +28,19 @@ sealed interface ItemDetailsFieldType {
 
         data object CardNumber : Plain
 
+        data object City : Plain
+
+        data object CountryOrRegion : Plain
+
+        data object County : Plain
+
         data object CustomField : Plain
 
         data object Email : Plain
 
         data object FirstName : Plain
+
+        data object Floor : Plain
 
         data object FullName : Plain
 
@@ -44,11 +52,17 @@ sealed interface ItemDetailsFieldType {
 
         data object PhoneNumber : Plain
 
+        data object StateOrProvince : Plain
+
+        data object StreetAddress : Plain
+
         data object TotpCode : Plain
 
         data object Username : Plain
 
         data object Website : Plain
+
+        data object ZipOrPostalCode : Plain
 
     }
 

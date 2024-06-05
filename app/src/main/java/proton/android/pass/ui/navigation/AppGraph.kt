@@ -23,6 +23,7 @@ import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureaccount.impl.Account
 import proton.android.pass.featureaccount.impl.AccountNavigation
 import proton.android.pass.featureaccount.impl.accountGraph
@@ -1117,6 +1118,39 @@ fun NavGraphBuilder.appGraph(
                 ItemDetailsNavDestination.Back -> appNavigator.navigateBack(
                     comesFromBottomsheet = false
                 )
+
+                is ItemDetailsNavDestination.EditItem -> when (itemDetailsNavDestination.itemCategory) {
+                    ItemCategory.Alias -> EditAlias to EditAlias.createNavRoute(
+                        shareId = itemDetailsNavDestination.shareId,
+                        itemId = itemDetailsNavDestination.itemId
+                    )
+
+                    ItemCategory.CreditCard -> EditCreditCard to EditCreditCard.createNavRoute(
+                        shareId = itemDetailsNavDestination.shareId,
+                        itemId = itemDetailsNavDestination.itemId
+                    )
+
+                    ItemCategory.Identity -> TODO()
+                    ItemCategory.Login -> EditLogin to EditLogin.createNavRoute(
+                        shareId = itemDetailsNavDestination.shareId,
+                        itemId = itemDetailsNavDestination.itemId
+                    )
+
+                    ItemCategory.Note -> EditNote to EditNote.createNavRoute(
+                        shareId = itemDetailsNavDestination.shareId,
+                        itemId = itemDetailsNavDestination.itemId
+                    )
+
+                    ItemCategory.Password,
+                    ItemCategory.Unknown -> throw IllegalStateException(
+                        "Cannot edit items with category: ${itemDetailsNavDestination.itemCategory}"
+                    )
+                }.also { (editDestination, editRoute) ->
+                    appNavigator.navigate(
+                        destination = editDestination,
+                        route = editRoute
+                    )
+                }
 
                 is ItemDetailsNavDestination.PasskeyDetails -> appNavigator.navigate(
                     destination = ViewPasskeyDetailsBottomSheet,

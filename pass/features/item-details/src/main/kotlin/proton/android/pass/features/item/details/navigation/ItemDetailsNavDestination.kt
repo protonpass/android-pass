@@ -18,8 +18,13 @@
 
 package proton.android.pass.features.item.details.navigation
 
+import proton.android.pass.commonuimodels.api.UIPasskeyContent
+
 sealed interface ItemDetailsNavDestination {
 
     data object Back : ItemDetailsNavDestination
+
+    @JvmInline
+    value class PasskeyDetails(val passkeyContent: UIPasskeyContent) : ItemDetailsNavDestination
 
 }

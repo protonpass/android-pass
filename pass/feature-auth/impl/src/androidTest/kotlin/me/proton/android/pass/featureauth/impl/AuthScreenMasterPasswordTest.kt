@@ -152,7 +152,7 @@ class AuthScreenMasterPasswordTest {
                 PassTheme {
                     AuthScreen(
                         navigation = {
-                            if (it == AuthNavigation.Success) {
+                            if (it is AuthNavigation.Success) {
                                 checker.call()
                             }
                         },

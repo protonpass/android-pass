@@ -49,6 +49,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.ClassHolder
+import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.CheckMasterPassword
 import proton.android.pass.data.api.usecases.ObservePrimaryUserEmail
@@ -67,8 +68,13 @@ class AuthViewModel @Inject constructor(
     private val storeAuthSuccessful: StoreAuthSuccessful,
     private val internalSettingsRepository: InternalSettingsRepository,
     private val appDispatchers: AppDispatchers,
-    observePrimaryUserEmail: ObservePrimaryUserEmail
+    observePrimaryUserEmail: ObservePrimaryUserEmail,
+    savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
+
+    val origin = savedStateHandleProvider.get()
+        .get<AuthOrigin>(AuthOriginNavArgId.key)
+        ?: AuthOrigin.AUTO_LOCK
 
     private val eventFlow: MutableStateFlow<Option<AuthEvent>> = MutableStateFlow(None)
     private val formContentFlow: MutableStateFlow<FormContents> = MutableStateFlow(FormContents())
@@ -156,7 +162,7 @@ class AuthViewModel @Inject constructor(
                 if (isPasswordRight) {
                     storeAuthSuccessful()
                     formContentFlow.update { it.copy(password = "", isPasswordVisible = false) }
-                    updateAuthEventFlow(AuthEvent.Success)
+                    updateAuthEventFlow(AuthEvent.Success(origin))
                 } else {
                     withContext(appDispatchers.default) {
                         delay(WRONG_PASSWORD_DELAY_SECONDS)
@@ -215,7 +221,7 @@ class AuthViewModel @Inject constructor(
     internal fun onBiometricsRequired(contextHolder: ClassHolder<Context>) = viewModelScope.launch {
         val newAuthEvent = when (biometryManager.getBiometryStatus()) {
             BiometryStatus.NotAvailable,
-            BiometryStatus.NotEnrolled -> AuthEvent.Success
+            BiometryStatus.NotEnrolled -> AuthEvent.Success(origin)
 
             BiometryStatus.CanAuthenticate -> {
                 val biometricLockState = preferenceRepository.getAppLockState().first()
@@ -226,7 +232,7 @@ class AuthViewModel @Inject constructor(
                 }
                 // If there is biometry available, but the user does not have it enabled
                 // we should proceed
-                AuthEvent.Success
+                AuthEvent.Success(origin)
             }
         }
 
@@ -241,7 +247,7 @@ class AuthViewModel @Inject constructor(
                 when (result) {
                     BiometryResult.Success -> {
                         formContentFlow.update { it.copy(password = "", isPasswordVisible = false) }
-                        updateAuthEventFlow(AuthEvent.Success)
+                        updateAuthEventFlow(AuthEvent.Success(origin))
                     }
 
                     is BiometryResult.Error -> {

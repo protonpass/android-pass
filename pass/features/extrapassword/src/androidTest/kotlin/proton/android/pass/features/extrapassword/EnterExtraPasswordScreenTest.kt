@@ -31,7 +31,7 @@ import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.data.api.errors.TooManyExtraPasswordAttemptsException
 import proton.android.pass.data.fakes.usecases.accesskey.FakeAuthWithExtraPassword
-import proton.android.pass.features.extrapassword.ui.EnterExtraPasswordScreen
+import proton.android.pass.features.extrapassword.auth.ui.EnterExtraPasswordScreen
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import javax.inject.Inject

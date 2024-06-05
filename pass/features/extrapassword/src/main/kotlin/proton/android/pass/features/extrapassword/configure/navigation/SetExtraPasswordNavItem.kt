@@ -16,17 +16,8 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.extrapassword.setextrapassword.navigation
+package proton.android.pass.features.extrapassword.configure.navigation
 
-sealed interface SetExtraPasswordContentNavEvent {
-    data object Back : SetExtraPasswordContentNavEvent
+import proton.android.pass.navigation.api.NavItem
 
-    @JvmInline
-    value class OnExtraPasswordValueChangedNav(val value: String) : SetExtraPasswordContentNavEvent
-
-    @JvmInline
-    value class OnExtraPasswordRepeatValueChangedNav(val value: String) :
-        SetExtraPasswordContentNavEvent
-
-    data object Submit : SetExtraPasswordContentNavEvent
-}
+object SetExtraPasswordNavItem : NavItem(baseRoute = "account/setextrapassword")

@@ -16,23 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.extrapassword.setextrapassword.presentation
+package proton.android.pass.features.extrapassword.options.navigation
 
-import android.os.Parcelable
-import androidx.compose.runtime.Immutable
-import kotlinx.parcelize.Parcelize
+import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
 
-@Parcelize
-@Immutable
-internal data class SetExtraPasswordState(
-    val password: String,
-    val repeatPassword: String
-) : Parcelable {
-
-    companion object {
-        internal val EMPTY = SetExtraPasswordState(
-            password = "",
-            repeatPassword = ""
-        )
-    }
-}
+object ExtraPasswordOptionsNavItem : NavItem(
+    baseRoute = "account/extrapasswordoptions",
+    navItemType = NavItemType.Bottomsheet
+)

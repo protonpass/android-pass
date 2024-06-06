@@ -21,16 +21,24 @@ package proton.android.pass.data.impl.usecases
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
+import me.proton.core.account.domain.entity.Account
+import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObservePrimaryUserEmail
 import javax.inject.Inject
 
 class ObservePrimaryUserEmailImpl @Inject constructor(
-    private val observeCurrentUser: ObserveCurrentUser
+    private val accountManager: AccountManager
 ) : ObservePrimaryUserEmail {
 
-    override fun invoke(userId: UserId?): Flow<String> = observeCurrentUser()
+    override fun invoke(userId: UserId?): Flow<String> = getAccount(userId)
         .map { it.email }
         .filterNotNull()
+
+    private fun getAccount(userId: UserId?): Flow<Account> = if (userId == null) {
+        accountManager.getPrimaryAccount()
+    } else {
+        accountManager.getAccount(userId)
+    }.filterNotNull()
 }

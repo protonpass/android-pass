@@ -31,6 +31,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.compose.NavHost
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.messages.OfflineIndicator
@@ -39,7 +40,10 @@ import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarH
 import proton.android.pass.composecomponents.impl.snackbar.SnackBarLaunchedEffect
 import proton.android.pass.composecomponents.impl.theme.SystemUIEffect
 import proton.android.pass.composecomponents.impl.theme.isDark
+import proton.android.pass.features.extrapassword.auth.navigation.EnterExtraPassword
+import proton.android.pass.features.extrapassword.auth.navigation.enterExtraPasswordGraph
 import proton.android.pass.features.extrapassword.auth.presentation.EnterExtraPasswordAppViewModel
+import proton.android.pass.navigation.api.rememberNavController
 import proton.android.pass.network.api.NetworkStatus
 
 @Composable
@@ -80,10 +84,16 @@ fun EnterExtraPasswordApp(
                 ) {
                     OfflineIndicator()
                 }
-                EnterExtraPasswordScreen(
-                    userId = userId,
-                    onSuccess = onSuccess,
-                    onLogout = onLogout
+                NavHost(
+                    navController = rememberNavController(),
+                    startDestination = EnterExtraPassword().route,
+                    builder = {
+                        enterExtraPasswordGraph(
+                            userId = userId,
+                            onSuccess = onSuccess,
+                            onLogout = onLogout
+                        )
+                    }
                 )
             }
         }

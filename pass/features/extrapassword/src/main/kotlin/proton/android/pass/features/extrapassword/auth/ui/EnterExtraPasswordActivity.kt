@@ -44,7 +44,10 @@ class EnterExtraPasswordActivity : FragmentActivity() {
         setContent {
             EnterExtraPasswordApp(
                 userId = userId,
-                onSuccess = { finish() },
+                onSuccess = {
+                    setResult(RESULT_OK)
+                    finish()
+                },
                 onLogout = {}
             )
         }

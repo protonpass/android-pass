@@ -18,20 +18,16 @@
 
 package proton.android.pass.features.extrapassword.confirm.navigation
 
-import androidx.navigation.NavType
-import proton.android.pass.navigation.api.NavArgId
+import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
-
-object EncryptedPasswordNavArgId : NavArgId {
-    override val key: String = "encryptedPassword"
-    override val navType: NavType<*> = NavType.StringType
-}
+import proton.android.pass.navigation.api.NavParamEncoder
 
 object ConfirmExtraPasswordNavItem : NavItem(
     baseRoute = "extrapassword/confirm/dialog",
     navArgIds = listOf(EncryptedPasswordNavArgId),
     navItemType = NavItemType.Dialog
 ) {
-    fun buildRoute(encryptedPassword: String): String = "$baseRoute/$encryptedPassword"
+    fun buildRoute(encryptedPassword: EncryptedString): String =
+        "$baseRoute/${NavParamEncoder.encode(encryptedPassword)}"
 }

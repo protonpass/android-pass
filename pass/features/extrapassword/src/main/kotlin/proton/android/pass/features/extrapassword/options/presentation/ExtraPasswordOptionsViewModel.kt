@@ -20,12 +20,18 @@ package proton.android.pass.features.extrapassword.options.presentation
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.commonui.api.require
+import proton.android.pass.navigation.api.UserIdNavArgId
 import javax.inject.Inject
 
 @HiltViewModel
-class ExtraPasswordOptionsViewModel @Inject constructor() : ViewModel() {
+class ExtraPasswordOptionsViewModel @Inject constructor(
+    savedStateHandleProvider: SavedStateHandleProvider
+) : ViewModel() {
 
-    internal fun submit() {
-        // Start challenge
-    }
+    val userId = savedStateHandleProvider.get()
+        .require<String>(UserIdNavArgId.key)
+        .let(::UserId)
 }

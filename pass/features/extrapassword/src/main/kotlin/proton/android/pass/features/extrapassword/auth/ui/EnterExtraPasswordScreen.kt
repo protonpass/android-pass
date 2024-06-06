@@ -24,23 +24,25 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import me.proton.core.domain.entity.UserId
+import proton.android.pass.features.extrapassword.ExtraPasswordNavigation
 import proton.android.pass.features.extrapassword.auth.presentation.EnterExtraPasswordEvent
 import proton.android.pass.features.extrapassword.auth.presentation.EnterExtraPasswordViewModel
 
 @Composable
 fun EnterExtraPasswordScreen(
     modifier: Modifier = Modifier,
-    onSuccess: () -> Unit,
-    onLogout: (UserId) -> Unit,
+    onNavigate: (ExtraPasswordNavigation) -> Unit,
     viewModel: EnterExtraPasswordViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+
     LaunchedEffect(state.event) {
         when (val event = state.event) {
             EnterExtraPasswordEvent.Idle -> {}
-            EnterExtraPasswordEvent.Success -> onSuccess()
-            is EnterExtraPasswordEvent.Logout -> onLogout(event.userId)
+            EnterExtraPasswordEvent.Success ->
+                onNavigate(ExtraPasswordNavigation.EnterPasswordSuccess)
+            is EnterExtraPasswordEvent.Logout ->
+                onNavigate(ExtraPasswordNavigation.Logout(event.userId))
         }
         viewModel.consumeEvent(state.event)
     }

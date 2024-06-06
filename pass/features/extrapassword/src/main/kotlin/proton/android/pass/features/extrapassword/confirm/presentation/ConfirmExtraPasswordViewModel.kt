@@ -40,6 +40,7 @@ import proton.android.pass.features.extrapassword.confirm.navigation.EncryptedPa
 import proton.android.pass.features.extrapassword.confirm.presentation.ConfirmExtraPasswordSnackbarMessage.ConfirmExtraPasswordError
 import proton.android.pass.features.extrapassword.confirm.presentation.ConfirmExtraPasswordSnackbarMessage.ConfirmExtraPasswordSuccess
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.navigation.api.NavParamEncoder
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
@@ -52,6 +53,7 @@ class ConfirmExtraPasswordViewModel @Inject constructor(
 
     private val encryptedPassword = savedStateHandleProvider.get()
         .require<EncryptedString>(EncryptedPasswordNavArgId.key)
+        .let(NavParamEncoder::decode)
 
     private val eventFlow: MutableStateFlow<ConfirmExtraPasswordContentEvent> =
         MutableStateFlow(ConfirmExtraPasswordContentEvent.Idle)

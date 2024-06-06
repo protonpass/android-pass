@@ -18,20 +18,17 @@
 
 package proton.android.pass.features.extrapassword.auth.navigation
 
-import androidx.navigation.NavGraphBuilder
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.features.extrapassword.auth.ui.EnterExtraPasswordScreen
-import proton.android.pass.navigation.api.composable
+import androidx.navigation.NavType
+import proton.android.pass.navigation.api.NavArgId
 
-fun NavGraphBuilder.enterExtraPasswordGraph(
-    userId: UserId? = null,
-    onSuccess: () -> Unit,
-    onLogout: (UserId) -> Unit
-) {
-    composable(EnterExtraPassword(userId)) {
-        EnterExtraPasswordScreen(
-            onSuccess = onSuccess,
-            onLogout = onLogout
-        )
-    }
+private const val KEY_EXTRA_PASSWORD_ORIGIN = "extraPasswordOrigin"
+
+data class ExtraPasswordOriginDefaultNavArgId(override val default: Any? = null) : NavArgId {
+    override val key = KEY_EXTRA_PASSWORD_ORIGIN
+    override val navType = NavType.EnumType(ExtraPasswordOrigin::class.java)
+}
+
+data object ExtraPasswordOriginNavArgId : NavArgId {
+    override val key = KEY_EXTRA_PASSWORD_ORIGIN
+    override val navType = NavType.EnumType(ExtraPasswordOrigin::class.java)
 }

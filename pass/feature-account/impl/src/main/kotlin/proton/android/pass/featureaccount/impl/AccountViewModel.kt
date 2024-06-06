@@ -88,7 +88,8 @@ class AccountViewModel @Inject constructor(
                 showUpgradeButton = isUpgradeAvailable,
                 showSubscriptionButton = isSubscriptionAvailable,
                 showExtraPassword = isAccessKeyV1Enabled,
-                isExtraPasswordEnabled = hasExtraPassword.getOrNull() ?: false
+                isExtraPasswordEnabled = hasExtraPassword.getOrNull() ?: false,
+                userId = null
             )
 
             is LoadingResult.Success -> AccountUiState(
@@ -100,7 +101,8 @@ class AccountViewModel @Inject constructor(
                 showUpgradeButton = isUpgradeAvailable,
                 showSubscriptionButton = isSubscriptionAvailable,
                 showExtraPassword = isAccessKeyV1Enabled,
-                isExtraPasswordEnabled = hasExtraPassword.getOrNull() ?: false
+                isExtraPasswordEnabled = hasExtraPassword.getOrNull() ?: false,
+                userId = userResult.data.userId
             )
         }
     }

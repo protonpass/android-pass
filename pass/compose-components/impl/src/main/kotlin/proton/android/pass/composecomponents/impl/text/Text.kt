@@ -50,4 +50,17 @@ object Text {
             modifier = modifier
         )
     }
+
+    @Composable
+    fun Body3Regular(
+        text: String,
+        modifier: Modifier = Modifier,
+        color: Color = ProtonTheme.typography.body1Regular.color
+    ) {
+        Text(
+            text = text,
+            style = ProtonTheme.typography.body1Regular.copy(color = color),
+            modifier = modifier
+        )
+    }
 }

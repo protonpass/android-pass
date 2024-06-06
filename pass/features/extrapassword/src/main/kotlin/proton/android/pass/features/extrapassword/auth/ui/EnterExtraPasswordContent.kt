@@ -21,8 +21,11 @@ package proton.android.pass.features.extrapassword.auth.ui
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
@@ -44,7 +47,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
-import me.proton.core.compose.theme.headlineNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.CircleIconButton
@@ -52,9 +54,12 @@ import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
+import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.features.extrapassword.R
 import proton.android.pass.features.extrapassword.auth.presentation.ExtraPasswordError
 import proton.android.pass.features.extrapassword.auth.presentation.ExtraPasswordState
+import me.proton.core.presentation.R as CoreR
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 internal fun EnterAccessKeyContent(
@@ -68,13 +73,13 @@ internal fun EnterAccessKeyContent(
     val (visualTransformation, actionIcon, actionContent) = if (passwordVisible) {
         EnterExtraPasswordUiContent(
             visualTransformation = VisualTransformation.None,
-            trailingIcon = me.proton.core.presentation.R.drawable.ic_proton_eye,
+            trailingIcon = CoreR.drawable.ic_proton_eye,
             trailingIconContentDescription = stringResource(R.string.extra_password_conceal_password_action)
         )
     } else {
         EnterExtraPasswordUiContent(
             visualTransformation = PasswordVisualTransformation(),
-            trailingIcon = me.proton.core.presentation.R.drawable.ic_proton_eye_slash,
+            trailingIcon = CoreR.drawable.ic_proton_eye_slash,
             trailingIconContentDescription = stringResource(R.string.extra_password_reveal_password_action)
         )
     }
@@ -89,11 +94,17 @@ internal fun EnterAccessKeyContent(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(Spacing.medium)
         ) {
-            Text(
-                text = stringResource(R.string.extra_password_enter_extra_password),
-                style = ProtonTheme.typography.headlineNorm
+            Spacer(modifier = Modifier.height(50.dp))
+            Icon(
+                modifier = Modifier
+                    .size(96.dp)
+                    .padding(bottom = Spacing.medium),
+                painter = painterResource(CompR.drawable.ic_pass_logo),
+                contentDescription = null,
+                tint = Color.Unspecified
             )
-
+            Text.Headline(stringResource(R.string.extra_password_enter_extra_password))
+            Text.Body3Regular(text = state.email, color = PassTheme.colors.textWeak)
             ProtonTextField(
                 modifier = Modifier
                     .roundedContainerNorm()
@@ -120,7 +131,7 @@ internal fun EnterAccessKeyContent(
                 },
                 leadingIcon = {
                     Icon(
-                        painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_lock),
+                        painter = painterResource(CoreR.drawable.ic_proton_lock),
                         contentDescription = null,
                         tint = ProtonTheme.colors.iconWeak
                     )
@@ -149,6 +160,7 @@ internal fun EnterAccessKeyContent(
                 onDoneClick = onSubmit
             )
 
+            Spacer(modifier = Modifier.weight(1f))
 
             LoadingCircleButton(
                 modifier = Modifier
@@ -157,7 +169,7 @@ internal fun EnterAccessKeyContent(
                 buttonHeight = 40.dp,
                 text = {
                     Text(
-                        text = stringResource(me.proton.core.presentation.compose.R.string.presentation_alert_submit),
+                        text = stringResource(R.string.extra_password_unlock),
                         color = PassTheme.colors.textInvert
                     )
                 },

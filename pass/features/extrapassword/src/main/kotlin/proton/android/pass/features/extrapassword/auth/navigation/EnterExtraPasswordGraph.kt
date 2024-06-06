@@ -23,10 +23,13 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.features.extrapassword.auth.ui.EnterExtraPasswordScreen
 import proton.android.pass.navigation.api.composable
 
-fun NavGraphBuilder.enterExtraPasswordGraph(onSuccess: () -> Unit, onLogout: (UserId) -> Unit) {
-    composable(EnterExtraPassword) {
+fun NavGraphBuilder.enterExtraPasswordGraph(
+    userId: UserId? = null,
+    onSuccess: () -> Unit,
+    onLogout: (UserId) -> Unit
+) {
+    composable(EnterExtraPassword(userId)) {
         EnterExtraPasswordScreen(
-            userId = null,
             onSuccess = onSuccess,
             onLogout = onLogout
         )

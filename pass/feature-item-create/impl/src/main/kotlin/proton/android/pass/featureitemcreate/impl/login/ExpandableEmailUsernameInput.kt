@@ -94,7 +94,7 @@ internal fun ExpandableEmailUsernameInput(
                     PassTooltipPopup(
                         titleResId = R.string.field_email_tooltip_title,
                         descriptionResId = R.string.field_email_tooltip_description,
-                        onClose = { onEvent(LoginContentEvent.OnTooltipDismissed(Tooltip.UsernameSplit)) },
+                        onDismiss = { onEvent(LoginContentEvent.OnTooltipDismissed(Tooltip.UsernameSplit)) },
                         shouldDisplayTooltip = isUsernameSplitTooltipEnabled,
                         arrowHeight = 8.dp,
                         backgroundColor = PassTheme.colors.searchBarBackground,

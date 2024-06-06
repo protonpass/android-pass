@@ -18,13 +18,13 @@
 
 package proton.android.pass.composecomponents.impl.tooltips
 
+import androidx.activity.compose.BackHandler
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -47,18 +47,20 @@ fun PassTooltipPopup(
     @StringRes titleResId: Int,
     @StringRes descriptionResId: Int,
     requesterView: @Composable () -> Unit,
-    onClose: () -> Unit,
+    onDismiss: () -> Unit,
     shouldDisplayTooltip: Boolean,
     arrowHeight: Dp,
     backgroundColor: Color,
     horizontalPadding: Dp = Spacing.large,
     verticalPadding: Dp = Spacing.large - Spacing.small
 ) {
-    var isTooltipVisible by remember { mutableStateOf(shouldDisplayTooltip) }
+    BackHandler(enabled = shouldDisplayTooltip) {
+        onDismiss()
+    }
 
     requesterView()
 
-    if (isTooltipVisible) {
+    if (shouldDisplayTooltip) {
         var arrowPositionX by remember { mutableFloatStateOf(0f) }
 
         val initialOffset = with(LocalDensity.current) {
@@ -76,8 +78,8 @@ fun PassTooltipPopup(
 
         Popup(
             popupPositionProvider = popupPositionProvider,
-            properties = PopupProperties(dismissOnBackPress = false),
-            onDismissRequest = { isTooltipVisible = false }
+            properties = PopupProperties(),
+            onDismissRequest = onDismiss
         ) {
             val arrowHeightPx = with(LocalDensity.current) { arrowHeight.toPx() }
 
@@ -114,10 +116,7 @@ fun PassTooltipPopup(
                     title = stringResource(id = titleResId),
                     description = stringResource(id = descriptionResId),
                     backgroundColor = backgroundColor,
-                    onClose = {
-                        isTooltipVisible = false
-                        onClose()
-                    }
+                    onClose = onDismiss
                 )
             }
         }

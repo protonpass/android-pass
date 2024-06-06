@@ -40,9 +40,11 @@ import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarH
 import proton.android.pass.composecomponents.impl.snackbar.SnackBarLaunchedEffect
 import proton.android.pass.composecomponents.impl.theme.SystemUIEffect
 import proton.android.pass.composecomponents.impl.theme.isDark
-import proton.android.pass.features.extrapassword.auth.navigation.EnterExtraPassword
-import proton.android.pass.features.extrapassword.auth.navigation.enterExtraPasswordGraph
+import proton.android.pass.features.extrapassword.ExtraPasswordNavigation
+import proton.android.pass.features.extrapassword.auth.navigation.EnterExtraPasswordDefaultNavItem
+import proton.android.pass.features.extrapassword.auth.navigation.ExtraPasswordOrigin
 import proton.android.pass.features.extrapassword.auth.presentation.EnterExtraPasswordAppViewModel
+import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.rememberNavController
 import proton.android.pass.network.api.NetworkStatus
 
@@ -84,15 +86,22 @@ fun EnterExtraPasswordApp(
                 ) {
                     OfflineIndicator()
                 }
+                val navItem = EnterExtraPasswordDefaultNavItem(userId, ExtraPasswordOrigin.Login)
                 NavHost(
                     navController = rememberNavController(),
-                    startDestination = EnterExtraPassword().route,
+                    startDestination = navItem.route,
                     builder = {
-                        enterExtraPasswordGraph(
-                            userId = userId,
-                            onSuccess = onSuccess,
-                            onLogout = onLogout
-                        )
+                        composable(navItem) {
+                            EnterExtraPasswordScreen(
+                                onNavigate = { navEvent ->
+                                    when (navEvent) {
+                                        is ExtraPasswordNavigation.EnterPasswordSuccess -> onSuccess()
+                                        is ExtraPasswordNavigation.Logout -> onLogout(navEvent.userId)
+                                        else -> {}
+                                    }
+                                }
+                            )
+                        }
                     }
                 )
             }

@@ -32,16 +32,19 @@ import proton.android.pass.data.api.errors.TooManyExtraPasswordAttemptsException
 import proton.android.pass.data.api.errors.WrongExtraPasswordException
 import proton.android.pass.data.fakes.usecases.TestObservePrimaryUserEmail
 import proton.android.pass.data.fakes.usecases.accesskey.FakeAuthWithExtraPassword
-import proton.android.pass.features.extrapassword.auth.navigation.UserIdNavArgId
+import proton.android.pass.data.fakes.usecases.accesskey.FakeRemoveExtraPassword
+import proton.android.pass.features.extrapassword.auth.navigation.ExtraPasswordOrigin
+import proton.android.pass.features.extrapassword.auth.navigation.ExtraPasswordOriginNavArgId
 import proton.android.pass.features.extrapassword.auth.presentation.EnterExtraPasswordEvent
 import proton.android.pass.features.extrapassword.auth.presentation.EnterExtraPasswordSnackbarMessage
 import proton.android.pass.features.extrapassword.auth.presentation.EnterExtraPasswordViewModel
 import proton.android.pass.features.extrapassword.auth.presentation.ExtraPasswordError
 import proton.android.pass.features.extrapassword.auth.presentation.ExtraPasswordState
+import proton.android.pass.navigation.api.UserIdNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 
-class EnterExtraPasswordViewModelTest {
+class EnterExtraPasswordNavItemViewModelTest {
 
     @get:Rule
     val mainDispatcher = MainDispatcherRule()
@@ -58,9 +61,11 @@ class EnterExtraPasswordViewModelTest {
             authWithExtraPassword = authWithExtraPassword,
             encryptionContextProvider = TestEncryptionContextProvider(),
             snackbarDispatcher = snackbarDispatcher,
+            removeExtraPassword = FakeRemoveExtraPassword(),
             observePrimaryUserEmail = TestObservePrimaryUserEmail().apply { emit("") },
             savedStateHandleProvider = TestSavedStateHandleProvider().apply {
-                get()[UserIdNavArgId().key] = USER_ID
+                get()[UserIdNavArgId.key] = USER_ID
+                get()[ExtraPasswordOriginNavArgId.key] = ExtraPasswordOrigin.Login
             }
         )
     }

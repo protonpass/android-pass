@@ -43,8 +43,11 @@ import proton.android.pass.data.api.errors.TooManyExtraPasswordAttemptsException
 import proton.android.pass.data.api.errors.WrongExtraPasswordException
 import proton.android.pass.data.api.usecases.ObservePrimaryUserEmail
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPassword
-import proton.android.pass.features.extrapassword.auth.navigation.UserIdNavArgId
+import proton.android.pass.data.api.usecases.extrapassword.RemoveExtraPassword
+import proton.android.pass.features.extrapassword.auth.navigation.ExtraPasswordOrigin
+import proton.android.pass.features.extrapassword.auth.navigation.ExtraPasswordOriginNavArgId
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.navigation.api.UserIdNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
@@ -53,13 +56,16 @@ class EnterExtraPasswordViewModel @Inject constructor(
     private val authWithExtraPassword: AuthWithExtraPassword,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val snackbarDispatcher: SnackbarDispatcher,
+    private val removeExtraPassword: RemoveExtraPassword,
     observePrimaryUserEmail: ObservePrimaryUserEmail,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
     private val userId: UserId = savedStateHandleProvider.get()
-        .require<String>(UserIdNavArgId().key)
+        .require<String>(UserIdNavArgId.key)
         .let(::UserId)
+    private val origin: ExtraPasswordOrigin = savedStateHandleProvider.get()
+        .require(ExtraPasswordOriginNavArgId.key)
 
     private val eventFlow: MutableStateFlow<EnterExtraPasswordEvent> =
         MutableStateFlow(EnterExtraPasswordEvent.Idle)
@@ -102,35 +108,48 @@ class EnterExtraPasswordViewModel @Inject constructor(
         val encryptedPassword = encryptionContextProvider.withEncryptionContext {
             encrypt(extraPasswordState)
         }
-        runCatching {
-            authWithExtraPassword(userId, encryptedPassword)
-        }.onSuccess {
-            PassLogger.i(TAG, "Extra password success")
-            eventFlow.update { EnterExtraPasswordEvent.Success }
-        }.onFailure { err ->
-            when (err) {
-                is TooManyExtraPasswordAttemptsException -> {
-                    PassLogger.w(TAG, "Too many attempts")
-                    eventFlow.update { EnterExtraPasswordEvent.Logout(userId) }
-                }
+        runCatching { authWithExtraPassword(userId, encryptedPassword) }
+            .onSuccess {
+                PassLogger.i(TAG, "Extra password success")
+                when (origin) {
+                    ExtraPasswordOrigin.RemoveExtraPassword -> runCatching { removeExtraPassword() }
+                        .onSuccess {
+                            PassLogger.i(TAG, "Removed extra password successfully")
+                            eventFlow.update { EnterExtraPasswordEvent.Success }
+                        }
+                        .onFailure { err ->
+                            PassLogger.w(TAG, "Error removing extra password")
+                            PassLogger.w(TAG, err)
+                            snackbarDispatcher(EnterExtraPasswordSnackbarMessage.ExtraPasswordError)
+                        }
 
-                is WrongExtraPasswordException -> {
-                    PassLogger.w(TAG, "Wrong extra password")
-                    errorFlow.update { ExtraPasswordError.WrongPassword.some() }
-                }
-
-                else -> {
-                    PassLogger.w(TAG, "Error performing authentication")
-                    PassLogger.w(TAG, err)
-                    snackbarDispatcher(EnterExtraPasswordSnackbarMessage.ExtraPasswordError)
+                    ExtraPasswordOrigin.Login -> eventFlow.update { EnterExtraPasswordEvent.Success }
                 }
             }
-        }
+            .onFailure { err ->
+                when (err) {
+                    is TooManyExtraPasswordAttemptsException -> {
+                        PassLogger.w(TAG, "Too many attempts")
+                        eventFlow.update { EnterExtraPasswordEvent.Logout(userId) }
+                    }
+
+                    is WrongExtraPasswordException -> {
+                        PassLogger.w(TAG, "Wrong extra password")
+                        errorFlow.update { ExtraPasswordError.WrongPassword.some() }
+                    }
+
+                    else -> {
+                        PassLogger.w(TAG, "Error performing authentication")
+                        PassLogger.w(TAG, err)
+                        snackbarDispatcher(EnterExtraPasswordSnackbarMessage.ExtraPasswordError)
+                    }
+                }
+            }
         loadingFlow.update { IsLoadingState.NotLoading }
     }
 
     internal fun consumeEvent(event: EnterExtraPasswordEvent) {
-        eventFlow.compareAndSet(EnterExtraPasswordEvent.Idle, event)
+        eventFlow.compareAndSet(event, EnterExtraPasswordEvent.Idle)
     }
 
     companion object {

@@ -16,17 +16,9 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.extrapassword.options.navigation
+package proton.android.pass.features.extrapassword.auth.navigation
 
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.navigation.api.NavItem
-import proton.android.pass.navigation.api.NavItemType
-import proton.android.pass.navigation.api.UserIdNavArgId
-
-object ExtraPasswordOptionsNavItem : NavItem(
-    baseRoute = "account/extrapasswordoptions",
-    navArgIds = listOf(UserIdNavArgId),
-    navItemType = NavItemType.Bottomsheet
-) {
-    fun buildRoute(userId: UserId): String = "$baseRoute/${userId.id}"
+enum class ExtraPasswordOrigin {
+    Login,
+    RemoveExtraPassword
 }

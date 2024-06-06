@@ -30,6 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallWeak
+import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.UserRecovery
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
@@ -125,7 +126,8 @@ fun AccountInfoPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
                     showUpgradeButton = true,
                     showSubscriptionButton = true,
                     showExtraPassword = true,
-                    isExtraPasswordEnabled = false
+                    isExtraPasswordEnabled = false,
+                    userId = UserId("")
                 ),
                 onEvent = {}
             )

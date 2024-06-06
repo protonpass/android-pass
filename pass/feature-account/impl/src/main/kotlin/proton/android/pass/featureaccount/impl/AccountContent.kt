@@ -85,8 +85,12 @@ internal fun AccountContent(
             }
             ManageAccount(onManageAccountClick = { onEvent(AccountContentEvent.ManageAccount) })
 
-            if (state.showExtraPassword) {
-                ExtraPassword(isExtraPasswordEnabled = state.isExtraPasswordEnabled, onEvent = onEvent)
+            if (state.showExtraPassword && state.userId != null) {
+                ExtraPassword(
+                    userId = state.userId,
+                    isExtraPasswordEnabled = state.isExtraPasswordEnabled,
+                    onEvent = onEvent
+                )
             }
             SignOut(onSignOutClick = { onEvent(AccountContentEvent.SignOut) })
             DeleteAccount(onDeleteAccountClick = { onEvent(AccountContentEvent.DeleteAccount) })

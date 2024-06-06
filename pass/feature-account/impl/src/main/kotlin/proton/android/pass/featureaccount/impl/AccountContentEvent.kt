@@ -18,6 +18,8 @@
 
 package proton.android.pass.featureaccount.impl
 
+import me.proton.core.domain.entity.UserId
+
 internal sealed interface AccountContentEvent {
     data object Back : AccountContentEvent
     data object Upgrade : AccountContentEvent
@@ -28,5 +30,7 @@ internal sealed interface AccountContentEvent {
     data object Subscription : AccountContentEvent
     data object ManageAccount : AccountContentEvent
     data object SetExtraPassword : AccountContentEvent
-    data object RemoveExtraPassword : AccountContentEvent
+
+    @JvmInline
+    value class ExtraPasswordOptions(val userId: UserId) : AccountContentEvent
 }

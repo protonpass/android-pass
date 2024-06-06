@@ -18,6 +18,8 @@
 
 package proton.android.pass.featureaccount.impl
 
+import me.proton.core.domain.entity.UserId
+
 sealed interface AccountNavigation {
     data object Subscription : AccountNavigation
     data object Upgrade : AccountNavigation
@@ -26,5 +28,7 @@ sealed interface AccountNavigation {
     data object PasswordManagement : AccountNavigation
     data object RecoveryEmail : AccountNavigation
     data object SetExtraPassword : AccountNavigation
-    data object ExtraPasswordOptions : AccountNavigation
+
+    @JvmInline
+    value class ExtraPasswordOptions(val userId: UserId) : AccountNavigation
 }

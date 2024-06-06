@@ -31,17 +31,10 @@ import proton.android.pass.features.extrapassword.auth.presentation.EnterExtraPa
 @Composable
 fun EnterExtraPasswordScreen(
     modifier: Modifier = Modifier,
-    userId: UserId?,
     onSuccess: () -> Unit,
     onLogout: (UserId) -> Unit,
     viewModel: EnterExtraPasswordViewModel = hiltViewModel()
 ) {
-    LaunchedEffect(userId) {
-        if (userId != null) {
-            viewModel.setUserId(userId)
-        }
-    }
-
     val state by viewModel.state.collectAsStateWithLifecycle()
     LaunchedEffect(state.event) {
         when (val event = state.event) {

@@ -23,6 +23,8 @@ import androidx.navigation.NavType
 interface NavArgId {
     val key: String
     val navType: NavType<*>
+    val default: Any?
+        get() = null
 }
 
 private const val SHARE_ID_KEY = "shareId"
@@ -54,10 +56,7 @@ object ShowUpgradeNavArgId : NavArgId {
     override val navType: NavType<*> = NavType.StringType
 }
 
-interface OptionalNavArgId : NavArgId {
-    val default: Any?
-        get() = null
-}
+interface OptionalNavArgId : NavArgId
 
 enum class CommonOptionalNavArgId : OptionalNavArgId {
     ShareId {

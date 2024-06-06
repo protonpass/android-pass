@@ -48,6 +48,7 @@ internal sealed interface EnterExtraPasswordEvent {
 
 @Stable
 internal data class ExtraPasswordState(
+    val email: String,
     val event: EnterExtraPasswordEvent,
     val loadingState: IsLoadingState,
     val error: Option<ExtraPasswordError>
@@ -57,6 +58,7 @@ internal data class ExtraPasswordState(
 
     companion object {
         val Initial = ExtraPasswordState(
+            email = "",
             event = EnterExtraPasswordEvent.Idle,
             loadingState = IsLoadingState.NotLoading,
             error = None

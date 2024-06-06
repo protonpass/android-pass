@@ -33,6 +33,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
@@ -45,6 +46,7 @@ import proton.android.pass.composecomponents.impl.R as CompR
 @Composable
 internal fun ExtraPassword(
     modifier: Modifier = Modifier,
+    userId: UserId,
     isExtraPasswordEnabled: Boolean,
     onEvent: (AccountContentEvent) -> Unit
 ) {
@@ -72,7 +74,7 @@ internal fun ExtraPassword(
                             .copy(color = PassTheme.colors.cardInteractionNormMajor1)
                     )
                 },
-                onClick = { onEvent(AccountContentEvent.RemoveExtraPassword) }
+                onClick = { onEvent(AccountContentEvent.ExtraPasswordOptions(userId)) }
             )
         } else {
             ColorSettingOption(
@@ -97,7 +99,7 @@ internal fun ExtraPassword(
 fun ExtraPasswordPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
     PassTheme(isDark = input.first) {
         Surface {
-            ExtraPassword(isExtraPasswordEnabled = input.second, onEvent = {})
+            ExtraPassword(isExtraPasswordEnabled = input.second, userId = UserId(""), onEvent = {})
         }
     }
 }

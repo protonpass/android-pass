@@ -19,17 +19,23 @@
 package proton.android.pass.composecomponents.impl.image
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 
 object Image {
     @Composable
-    fun NoDesc(@DrawableRes id: Int, modifier: Modifier = Modifier) {
+    fun Default(
+        @DrawableRes id: Int,
+        modifier: Modifier = Modifier,
+        @StringRes contentDescription: Int? = null
+    ) {
         Image(
             painter = painterResource(id = id),
-            contentDescription = null,
+            contentDescription = contentDescription?.let { stringResource(id = it) },
             modifier = modifier
         )
     }

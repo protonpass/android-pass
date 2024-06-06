@@ -71,6 +71,7 @@ import proton.android.pass.features.extrapassword.configure.navigation.SetExtraP
 import proton.android.pass.features.extrapassword.configure.presentation.SetExtraPasswordState
 import proton.android.pass.features.extrapassword.configure.presentation.SetExtraPasswordValidationErrors
 import proton.android.pass.features.extrapassword.configure.presentation.SetExtraPasswordValidationErrors.BlankPassword
+import proton.android.pass.features.extrapassword.configure.presentation.SetExtraPasswordValidationErrors.MinimumLengthPassword
 import proton.android.pass.features.extrapassword.configure.presentation.SetExtraPasswordValidationErrors.PasswordMismatch
 import me.proton.core.presentation.R as CoreR
 
@@ -129,12 +130,22 @@ internal fun SetExtraPasswordContent(
             Spacer(modifier = Modifier.height(Spacing.medium))
             var isPasswordConcealed: Boolean by remember { mutableStateOf(true) }
             var isRepeatPasswordConcealed: Boolean by remember { mutableStateOf(true) }
+            val (isPasswordError, errorMessage) = when (validationError) {
+                is Some -> when (validationError.value) {
+                    BlankPassword ->
+                        true to stringResource(R.string.configure_extra_password_cannot_be_blank)
+                    MinimumLengthPassword ->
+                        true to stringResource(R.string.configure_extra_password_password_too_short)
+                    else -> false to ""
+                }
+                else -> false to ""
+            }
             ProtonTextField(
                 modifier = Modifier.focusRequester(focusRequester),
                 value = formState.password,
                 textStyle = ProtonTheme.typography.subheadlineNorm,
-                isError = validationError is Some && validationError.value == BlankPassword,
-                errorMessage = stringResource(R.string.configure_extra_password_cannot_be_blank),
+                isError = isPasswordError,
+                errorMessage = errorMessage,
                 visualTransformation = if (isPasswordConcealed) {
                     PasswordVisualTransformation()
                 } else {

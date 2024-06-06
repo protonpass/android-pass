@@ -1162,7 +1162,7 @@ fun NavGraphBuilder.appGraph(
                             destination = SetExtraPasswordNavItem,
                             backDestination = Account
                         )
-                    else -> appNavigator.navigateBack()
+                    AuthOrigin.AUTO_LOCK -> appNavigator.navigateBack()
                 }
 
                 AuthNavigation.Dismissed -> onNavigate(AppNavigation.Finish)

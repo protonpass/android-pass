@@ -53,7 +53,7 @@ class ConfirmExtraPasswordViewModel @Inject constructor(
         MutableStateFlow(ConfirmExtraPasswordContentEvent.Idle)
     private val isLoadingFlow = MutableStateFlow<IsLoadingState>(IsLoadingState.NotLoading)
 
-    val state: StateFlow<ConfirmExtraPasswordNameUiState> = combine(
+    internal val state: StateFlow<ConfirmExtraPasswordNameUiState> = combine(
         eventFlow,
         isLoadingFlow,
         ::ConfirmExtraPasswordNameUiState
@@ -83,7 +83,7 @@ class ConfirmExtraPasswordViewModel @Inject constructor(
         eventFlow.compareAndSet(event, ConfirmExtraPasswordContentEvent.Idle)
     }
 
-    companion object {
+    private companion object {
         private const val TAG = "ConfirmExtraPasswordViewModel"
     }
 }

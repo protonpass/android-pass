@@ -18,10 +18,15 @@
 
 package proton.android.pass.features.extrapassword.options.navigation
 
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
+import proton.android.pass.navigation.api.UserIdNavArgId
 
 object ExtraPasswordOptionsNavItem : NavItem(
     baseRoute = "account/extrapasswordoptions",
+    navArgIds = listOf(UserIdNavArgId),
     navItemType = NavItemType.Bottomsheet
-)
+) {
+    fun buildRoute(userId: UserId): String = "$baseRoute/${userId.id}"
+}

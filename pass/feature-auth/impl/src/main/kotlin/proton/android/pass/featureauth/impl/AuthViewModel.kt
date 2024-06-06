@@ -72,7 +72,7 @@ class AuthViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
-    val origin = savedStateHandleProvider.get()
+    internal val origin = savedStateHandleProvider.get()
         .get<AuthOrigin>(AuthOriginNavArgId.key)
         ?: AuthOrigin.AUTO_LOCK
 

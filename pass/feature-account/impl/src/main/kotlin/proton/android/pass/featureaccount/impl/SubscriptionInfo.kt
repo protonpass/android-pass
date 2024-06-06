@@ -61,7 +61,8 @@ fun SubscriptionInfoPreview(@PreviewParameter(ThemePreviewProvider::class) isDar
                     showUpgradeButton = true,
                     showSubscriptionButton = true,
                     showExtraPassword = true,
-                    isExtraPasswordEnabled = false
+                    isExtraPasswordEnabled = false,
+                    userId = null
                 )
             )
         }

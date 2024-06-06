@@ -33,8 +33,7 @@ class ObservePrimaryUserEmailImpl @Inject constructor(
 ) : ObservePrimaryUserEmail {
 
     override fun invoke(userId: UserId?): Flow<String> = getAccount(userId)
-        .map { it.email }
-        .filterNotNull()
+        .map { it.email ?: "" }
 
     private fun getAccount(userId: UserId?): Flow<Account> = if (userId == null) {
         accountManager.getPrimaryAccount()

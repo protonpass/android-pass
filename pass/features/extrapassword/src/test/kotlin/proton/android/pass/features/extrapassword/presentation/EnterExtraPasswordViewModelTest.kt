@@ -30,6 +30,7 @@ import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.errors.TooManyExtraPasswordAttemptsException
 import proton.android.pass.data.api.errors.WrongExtraPasswordException
+import proton.android.pass.data.fakes.usecases.TestObservePrimaryUserEmail
 import proton.android.pass.data.fakes.usecases.accesskey.FakeAuthWithExtraPassword
 import proton.android.pass.features.extrapassword.auth.navigation.UserIdNavArgId
 import proton.android.pass.features.extrapassword.auth.presentation.EnterExtraPasswordEvent
@@ -57,8 +58,9 @@ class EnterExtraPasswordViewModelTest {
             authWithExtraPassword = authWithExtraPassword,
             encryptionContextProvider = TestEncryptionContextProvider(),
             snackbarDispatcher = snackbarDispatcher,
+            observePrimaryUserEmail = TestObservePrimaryUserEmail().apply { emit("") },
             savedStateHandleProvider = TestSavedStateHandleProvider().apply {
-                get()[UserIdNavArgId.key] = USER_ID
+                get()[UserIdNavArgId().key] = USER_ID
             }
         )
     }

@@ -43,7 +43,14 @@ open class NavItem(
     }
 
     val args: List<NamedNavArgument> =
-        navArgIds.map { navArgument(it.key) { type = it.navType } }
+        navArgIds.map {
+            navArgument(it.key) {
+                type = it.navType
+                if (it.default != null) {
+                    defaultValue = it.default
+                }
+            }
+        }
             .plus(
                 optionalArgIds.map {
                     navArgument(it.key) {

@@ -37,12 +37,16 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.extrapassword.SetupExtraPassword
 import proton.android.pass.features.extrapassword.confirm.navigation.EncryptedPasswordNavArgId
+import proton.android.pass.features.extrapassword.confirm.presentation.ConfirmExtraPasswordSnackbarMessage.ConfirmExtraPasswordError
+import proton.android.pass.features.extrapassword.confirm.presentation.ConfirmExtraPasswordSnackbarMessage.ConfirmExtraPasswordSuccess
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
 @HiltViewModel
 class ConfirmExtraPasswordViewModel @Inject constructor(
     private val setupExtraPassword: SetupExtraPassword,
+    private val snackbarDispatcher: SnackbarDispatcher,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -70,8 +74,10 @@ class ConfirmExtraPasswordViewModel @Inject constructor(
                 setupExtraPassword(encryptedPassword)
             }.onSuccess {
                 PassLogger.i(TAG, "Extra password setup successful")
+                snackbarDispatcher(ConfirmExtraPasswordSuccess)
                 eventFlow.update { ConfirmExtraPasswordContentEvent.Success }
             }.onError {
+                snackbarDispatcher(ConfirmExtraPasswordError)
                 PassLogger.w(TAG, it)
                 PassLogger.w(TAG, "Extra password setup failed")
             }

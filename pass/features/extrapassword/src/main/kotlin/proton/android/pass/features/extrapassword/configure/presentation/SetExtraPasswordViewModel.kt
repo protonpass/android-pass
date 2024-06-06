@@ -65,19 +65,27 @@ class SetExtraPasswordViewModel @Inject constructor(
     internal fun getExtraPasswordState(): SetExtraPasswordState = mutableExtraPasswordState
 
     internal fun onExtraPasswordValueChanged(value: String) {
+        val password = value.clean()
         validationErrorFlow.update { None }
-        mutableExtraPasswordState = mutableExtraPasswordState.copy(password = value)
+        mutableExtraPasswordState = mutableExtraPasswordState.copy(password = password)
     }
 
     internal fun onExtraPasswordRepeatValueChanged(value: String) {
+        val password = value.clean()
         validationErrorFlow.update { None }
-        mutableExtraPasswordState = mutableExtraPasswordState.copy(repeatPassword = value)
+        mutableExtraPasswordState = mutableExtraPasswordState.copy(repeatPassword = password)
     }
+
+    private fun String.clean() = replace("\n", "").replace(" ", "")
 
     internal fun submit() {
         val password = mutableExtraPasswordState.password
         if (password.isBlank()) {
             validationErrorFlow.update { Some(SetExtraPasswordValidationErrors.BlankPassword) }
+            return
+        }
+        if (password.length < MIN_PASSWORD_LENGTH) {
+            validationErrorFlow.update { Some(SetExtraPasswordValidationErrors.MinimumLengthPassword) }
             return
         }
         if (password != mutableExtraPasswordState.repeatPassword) {
@@ -91,6 +99,10 @@ class SetExtraPasswordViewModel @Inject constructor(
 
     internal fun onEventConsumed(event: SetExtraPasswordEvent) {
         eventFlow.compareAndSet(event, SetExtraPasswordEvent.Idle)
+    }
+
+    companion object {
+        private const val MIN_PASSWORD_LENGTH = 8
     }
 }
 

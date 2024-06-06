@@ -24,14 +24,14 @@ import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
 
-object UserIdNavArgId : NavArgId {
+data class UserIdNavArgId(override val default: Any? = null) : NavArgId {
     override val key = "userId"
     override val navType = NavType.StringType
 }
 
-object EnterExtraPassword : NavItem(
+data class EnterExtraPassword(val userId: UserId? = null) : NavItem(
     baseRoute = "extrapassword/enter",
-    navArgIds = listOf(UserIdNavArgId),
+    navArgIds = listOf(UserIdNavArgId(userId?.id)),
     navItemType = NavItemType.Screen
 ) {
     fun buildRoute(userId: UserId): String = "$baseRoute/${userId.id}"

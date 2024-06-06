@@ -36,10 +36,12 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.TooManyExtraPasswordAttemptsException
 import proton.android.pass.data.api.errors.WrongExtraPasswordException
+import proton.android.pass.data.api.usecases.ObservePrimaryUserEmail
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPassword
 import proton.android.pass.features.extrapassword.auth.navigation.UserIdNavArgId
 import proton.android.pass.log.api.PassLogger
@@ -51,14 +53,13 @@ class EnterExtraPasswordViewModel @Inject constructor(
     private val authWithExtraPassword: AuthWithExtraPassword,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val snackbarDispatcher: SnackbarDispatcher,
+    observePrimaryUserEmail: ObservePrimaryUserEmail,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
-    private val navUserId: UserId? = savedStateHandleProvider.get()
-        .get<String>(UserIdNavArgId.key)
-        ?.let(::UserId)
-
-    private var argUserId: UserId? = null
+    private val userId: UserId = savedStateHandleProvider.get()
+        .require<String>(UserIdNavArgId().key)
+        .let(::UserId)
 
     private val eventFlow: MutableStateFlow<EnterExtraPasswordEvent> =
         MutableStateFlow(EnterExtraPasswordEvent.Idle)
@@ -73,24 +74,16 @@ class EnterExtraPasswordViewModel @Inject constructor(
         .saveable { mutableStateOf("") }
 
     internal val state: StateFlow<ExtraPasswordState> = combine(
+        observePrimaryUserEmail(userId),
         eventFlow,
         loadingFlow,
-        errorFlow
-    ) { event, loading, error ->
-        ExtraPasswordState(
-            event = event,
-            loadingState = loading,
-            error = error
-        )
-    }.stateIn(
+        errorFlow,
+        ::ExtraPasswordState
+    ).stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
         initialValue = ExtraPasswordState.Initial
     )
-
-    internal fun setUserId(userId: UserId) {
-        argUserId = userId
-    }
 
     internal fun onExtraPasswordChanged(value: String) {
         extraPasswordState = value
@@ -109,11 +102,6 @@ class EnterExtraPasswordViewModel @Inject constructor(
         val encryptedPassword = encryptionContextProvider.withEncryptionContext {
             encrypt(extraPasswordState)
         }
-
-        val userId = navUserId ?: argUserId ?: run {
-            PassLogger.w(TAG, "Missing user id")
-            return@launch
-        }
         runCatching {
             authWithExtraPassword(userId, encryptedPassword)
         }.onSuccess {
@@ -125,10 +113,12 @@ class EnterExtraPasswordViewModel @Inject constructor(
                     PassLogger.w(TAG, "Too many attempts")
                     eventFlow.update { EnterExtraPasswordEvent.Logout(userId) }
                 }
+
                 is WrongExtraPasswordException -> {
                     PassLogger.w(TAG, "Wrong extra password")
                     errorFlow.update { ExtraPasswordError.WrongPassword.some() }
                 }
+
                 else -> {
                     PassLogger.w(TAG, "Error performing authentication")
                     PassLogger.w(TAG, err)

@@ -76,7 +76,6 @@ dependencies {
     implementation(libs.core.presentation.compose)
     implementation(libs.kotlinx.collections)
 
-
     implementation(projects.pass.commonPresentation.api)
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.commonUiModels.api)

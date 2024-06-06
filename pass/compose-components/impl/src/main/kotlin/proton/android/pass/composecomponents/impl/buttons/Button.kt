@@ -30,7 +30,7 @@ import androidx.compose.ui.graphics.Color
 
 object Button {
     @Composable
-    fun CircleButton(
+    fun Circular(
         modifier: Modifier = Modifier,
         color: Color,
         contentPadding: PaddingValues = ButtonDefaults.ContentPadding,

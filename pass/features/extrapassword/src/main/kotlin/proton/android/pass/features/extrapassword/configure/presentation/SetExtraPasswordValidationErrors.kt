@@ -20,5 +20,6 @@ package proton.android.pass.features.extrapassword.configure.presentation
 
 sealed interface SetExtraPasswordValidationErrors {
     data object BlankPassword : SetExtraPasswordValidationErrors
+    data object MinimumLengthPassword : SetExtraPasswordValidationErrors
     data object PasswordMismatch : SetExtraPasswordValidationErrors
 }

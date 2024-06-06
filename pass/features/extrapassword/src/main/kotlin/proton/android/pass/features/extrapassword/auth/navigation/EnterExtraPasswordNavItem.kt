@@ -18,21 +18,25 @@
 
 package proton.android.pass.features.extrapassword.auth.navigation
 
-import androidx.navigation.NavType
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
+import proton.android.pass.navigation.api.UserIdDefaultNavArgId
+import proton.android.pass.navigation.api.UserIdNavArgId
 
-data class UserIdNavArgId(override val default: Any? = null) : NavArgId {
-    override val key = "userId"
-    override val navType = NavType.StringType
-}
-
-data class EnterExtraPassword(val userId: UserId? = null) : NavItem(
+data class EnterExtraPasswordDefaultNavItem(
+    val userId: UserId,
+    val origin: ExtraPasswordOrigin
+) : NavItem(
     baseRoute = "extrapassword/enter",
-    navArgIds = listOf(UserIdNavArgId(userId?.id)),
+    navArgIds = listOf(UserIdDefaultNavArgId(userId), ExtraPasswordOriginDefaultNavArgId(origin)),
+    navItemType = NavItemType.Screen
+)
+
+data object EnterExtraPasswordNavItem : NavItem(
+    baseRoute = "extrapassword/enter",
+    navArgIds = listOf(UserIdNavArgId, ExtraPasswordOriginNavArgId),
     navItemType = NavItemType.Screen
 ) {
-    fun buildRoute(userId: UserId): String = "$baseRoute/${userId.id}"
+    fun buildRoute(userId: UserId, origin: ExtraPasswordOrigin): String = "$baseRoute/${userId.id}/$origin"
 }

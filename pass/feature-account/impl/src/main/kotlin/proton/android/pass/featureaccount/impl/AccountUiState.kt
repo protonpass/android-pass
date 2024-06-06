@@ -19,6 +19,7 @@
 package proton.android.pass.featureaccount.impl
 
 import androidx.compose.runtime.Stable
+import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.UserRecovery
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
@@ -43,6 +44,7 @@ sealed interface PlanSection {
 
 @Stable
 data class AccountUiState(
+    val userId: UserId?,
     val email: String?,
     val recoveryEmail: String?,
     val recoveryState: UserRecovery.State?,
@@ -55,6 +57,7 @@ data class AccountUiState(
 ) {
     companion object {
         val Initial = AccountUiState(
+            userId = null,
             email = null,
             recoveryEmail = null,
             recoveryState = null,

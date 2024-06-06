@@ -16,17 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.extrapassword.options.navigation
+package proton.android.pass.features.extrapassword.confirm.navigation
 
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.navigation.api.NavItem
-import proton.android.pass.navigation.api.NavItemType
-import proton.android.pass.navigation.api.UserIdNavArgId
+import androidx.navigation.NavType
+import proton.android.pass.navigation.api.NavArgId
 
-object ExtraPasswordOptionsNavItem : NavItem(
-    baseRoute = "account/extrapasswordoptions",
-    navArgIds = listOf(UserIdNavArgId),
-    navItemType = NavItemType.Bottomsheet
-) {
-    fun buildRoute(userId: UserId): String = "$baseRoute/${userId.id}"
+object EncryptedPasswordNavArgId : NavArgId {
+    override val key: String = "encryptedPassword"
+    override val navType: NavType<*> = NavType.StringType
 }

@@ -48,6 +48,7 @@
   <string name="bottomsheet_custom_field_option_edit">Adı düzenle</string>
   <string name="bottomsheet_custom_field_option_remove">Alanı kaldır</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Özel alanı kaldır</string>
+  <string name="bottomsheet_custom_section_option_remove">Remove section</string>
   <string name="create_login_add_custom_field_button">Başka bir alan ekle</string>
   <string name="custom_field_hidden_placeholder">Gizli metin ekle</string>
   <string name="custom_field_hidden_icon_content_description">Gizli özel alan simgesi</string>
@@ -55,6 +56,8 @@
   <string name="custom_field_dialog_title">Özel alan adı</string>
   <string name="custom_field_dialog_body">Özel alanınıza bir ad verin</string>
   <string name="custom_field_dialog_placeholder">Kullanıcı kimliği, PIN kodu gibi</string>
+  <string name="custom_section_dialog_title">Enter a section title</string>
+  <string name="custom_section_dialog_placeholder">Title</string>
   <string name="custom_field_options_content_description">Özel alan seçenekleri</string>
   <!-- Create Note -->
   <string name="create_note_item_creation_error">Not oluşturulamadı</string>
@@ -144,7 +147,7 @@
   <string name="identity_add_field_personal_website">Kişisel site adresi</string>
   <string name="identity_add_field_work_phone_number">İş telefonu</string>
   <string name="identity_add_field_work_email_address">İş e-posta adresi</string>
-  <string name="identity_add_field_custom_field">Custom field</string>
+  <string name="identity_add_field_custom_field">Özel alan</string>
   <string name="identity_section_personal_details">Kişisel bilgiler</string>
   <string name="identity_section_address_details">Adres bilgileri</string>
   <string name="identity_section_contact_details">Kişi bilgileri</string>
@@ -171,9 +174,9 @@
   <string name="upgrade">Yükselt</string>
   <string name="mfa_icon_content_description">İki adımlı doğrulama simgesi</string>
   <string name="select_suffix_upgrade_for_custom_domains">Özel etki alanı kullanmak için tarifenizi yükseltin</string>
-  <string name="select_mailbox_upgrade_for_more_inboxes">Daha fazla gelen kutusu kullanmak için tarifenizi yükseltin</string>
   <string name="create_alias_content_limit_banner">Oluşturabileceğiniz takma ad sayısı sınırına ulaştınız. Abonelik tarifenizi yükselterek sınırsız sayıda takma ad oluşturabilirsiniz.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Bu ögeyi düzenlemek için uygulamanın güncellenmesi gerekli</string>
   <string name="remove_passkey_dialog_title">Bu geçiş anahtarı silinsin mi?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">%1$s kullanıcısı için %2$s geçiş anahtarını silmek üzeresiniz. Emin misiniz?</string>
+  <string name="add_a_custom_section">Add a custom section</string>
 </resources>

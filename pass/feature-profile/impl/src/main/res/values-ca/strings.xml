@@ -50,7 +50,7 @@
   <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Samsung Browser is set as the default browser. It does not support autofill by external password managers.</string>
   <string name="profile_passkey_support_section_title">Claus d\'accés</string>
   <string name="profile_passkey_support_subtitle_supported">Se suporten claus d\'accés</string>
-  <string name="profile_passkey_support_subtitle_not_supported_android_version">La seva versió d\'Android no suporta claus d\'accés</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">La vostra versió d\'Android no suporta claus de pas</string>
   <string name="profile_passkey_support_subtitle_not_supported_credential_manager">El seu dispositiu no suporta claus d\'accés.</string>
   <string name="profile_passkey_support_subtitle_not_supported_unknown">No s\'ha pogut comprovar el suport per a les claus d\'accés</string>
   <plurals name="profile_after_days">

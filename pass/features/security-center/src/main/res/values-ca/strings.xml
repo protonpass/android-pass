@@ -20,7 +20,7 @@
   <!-- Home screen -->
   <string name="security_center_home_top_bar_title">Supervisió de Pass</string>
   <string name="security_center_home_dark_web_monitoring_title">Supervisió del web fosc</string>
-  <string name="security_center_home_widget_breaches_title">Infracció detectada</string>
+  <string name="security_center_home_widget_breaches_title">S\'ha detectat una violació de les dades</string>
   <string name="security_center_home_widget_breaches_subtitle">La seva adreça de correu electrònic s\'ha filtrat en almenys 1 infracció de dades.</string>
   <string name="security_center_home_widget_no_breaches_subtitle">Rebi una notificació si s\'han filtrat el seu correu electrònic, contrasenya o altres dades personals.</string>
   <string name="security_center_home_row_no_data_breaches_subtitle">No s\'han detectat infraccions</string>
@@ -29,15 +29,15 @@
   <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
   <string name="security_center_home_row_sentinel_subtitle">Programa avançat de protecció de comptes</string>
   <string name="security_center_home_row_insecure_passwords_title">Contrasenyes febles</string>
-  <string name="security_center_home_row_insecure_passwords_subtitle">Canviï les seves contrasenyes</string>
+  <string name="security_center_home_row_insecure_passwords_subtitle">Canvieu les vostres contrasenyes</string>
   <string name="security_center_home_row_reused_passwords_title">Contrasenyes reutilitzades</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Generi contrasenyes úniques</string>
   <string name="security_center_home_row_missing_tfa_title">A2F inactiva</string>
-  <string name="security_center_home_row_missing_tfa_subtitle">Configuri 2FA per a més seguretat</string>
+  <string name="security_center_home_row_missing_tfa_subtitle">Configureu A2F per a més seguretat</string>
   <string name="security_center_home_row_excludes_items_title">Exclòs de la supervisió</string>
   <string name="security_center_home_row_excludes_items_subtitle">Aquests elements continuen en risc</string>
   <string name="security_center_get_breaches_error">No s\'han pogut carregar les infraccions</string>
-  <string name="security_center_home_section_password_health">Salut de la contrasenya</string>
+  <string name="security_center_home_section_password_health">Salut de les contrasenyes</string>
   <!-- Sentinel bottom sheet -->
   <string name="security_center_sentinel_title">Proton Sentinel</string>
   <string name="security_center_sentinel_subtitle">Proton Sentinel és un programa avançat de protecció de comptes impulsat per sistemes d\'IA sofisticats i especialistes que treballen les 24 hores del dia per protegir-lo dels mals actors i les amenaces de seguretat.</string>
@@ -56,7 +56,7 @@
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">Reutilitzat %1$d vegades</string>
   <!-- Missing 2FA -->
   <string name="security_center_missing_tfa_top_bar_title">A2F inactiva</string>
-  <string name="security_center_missing_tfa_top_bar_subtitle">Per obtenir més seguretat, configuri l\'autenticació de dos factors als comptes següents.</string>
+  <string name="security_center_missing_tfa_top_bar_subtitle">Per a obtenir una major seguretat, configureu l\'autenticació de doble factor als comptes següents.</string>
   <!-- Excluded items screen -->
   <string name="security_center_excluded_items_top_bar_title">Elements exclosos</string>
   <!-- Dark web monitor -->

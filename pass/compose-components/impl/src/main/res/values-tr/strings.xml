@@ -138,5 +138,5 @@
   <string name="email_address">E-posta adresi</string>
   <string name="password">Parola</string>
   <!-- Tooltips -->
-  <string name="tooltip_dismiss_button_content_description">Button to dismiss this tooltip and not show it again</string>
+  <string name="tooltip_dismiss_button_content_description">Bu ipucunu yok sayıp bir daha görüntülenmemesini sağlayan düğme</string>
 </resources>

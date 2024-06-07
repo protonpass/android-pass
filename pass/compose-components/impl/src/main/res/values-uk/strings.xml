@@ -142,5 +142,5 @@
   <string name="email_address">Адреса е-пошти</string>
   <string name="password">Пароль</string>
   <!-- Tooltips -->
-  <string name="tooltip_dismiss_button_content_description">Button to dismiss this tooltip and not show it again</string>
+  <string name="tooltip_dismiss_button_content_description">Кнопка, щоб відкинути цю підказку і не показувати її більше</string>
 </resources>

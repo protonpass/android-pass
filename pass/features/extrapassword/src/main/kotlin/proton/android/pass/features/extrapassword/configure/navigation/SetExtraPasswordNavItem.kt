@@ -20,4 +20,6 @@ package proton.android.pass.features.extrapassword.configure.navigation
 
 import proton.android.pass.navigation.api.NavItem
 
-object SetExtraPasswordNavItem : NavItem(baseRoute = "account/setextrapassword")
+object SetExtraPasswordNavItem : NavItem(
+    baseRoute = "extrapassword/set"
+)

@@ -30,7 +30,6 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
@@ -42,9 +41,8 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import me.proton.core.presentation.R as CoreR
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun AuthScreenContent(
+fun AuthContent(
     modifier: Modifier = Modifier,
     state: AuthContent,
     canLogout: Boolean,

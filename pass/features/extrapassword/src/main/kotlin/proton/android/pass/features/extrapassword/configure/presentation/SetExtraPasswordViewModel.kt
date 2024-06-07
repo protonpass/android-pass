@@ -76,7 +76,7 @@ class SetExtraPasswordViewModel @Inject constructor(
         mutableExtraPasswordState = mutableExtraPasswordState.copy(repeatPassword = password)
     }
 
-    private fun String.clean() = replace("\n", "").replace(" ", "")
+    private fun String.clean() = replace("\n", "").trim()
 
     internal fun submit() {
         val password = mutableExtraPasswordState.password

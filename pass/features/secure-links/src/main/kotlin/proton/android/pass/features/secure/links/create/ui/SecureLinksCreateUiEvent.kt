@@ -24,14 +24,19 @@ internal sealed interface SecureLinksCreateUiEvent {
 
     data object OnSetExpirationClicked : SecureLinksCreateUiEvent
 
-    data object OnEnableMaxViewsClicked: SecureLinksCreateUiEvent
+    data object OnEnableMaxViewsClicked : SecureLinksCreateUiEvent
 
-    data object OnDisableMaxViewsClicked: SecureLinksCreateUiEvent
+    data object OnDisableMaxViewsClicked : SecureLinksCreateUiEvent
 
-    data object OnIncreaseMaxViewsClicked: SecureLinksCreateUiEvent
+    data object OnIncreaseMaxViewsClicked : SecureLinksCreateUiEvent
 
-    data object OnDecreaseMaxViewsClicked: SecureLinksCreateUiEvent
+    data object OnDecreaseMaxViewsClicked : SecureLinksCreateUiEvent
 
     data object OnGenerateLinkClicked : SecureLinksCreateUiEvent
+
+    data object OnExpirationDialogDismissed : SecureLinksCreateUiEvent
+
+    @JvmInline
+    value class OnExpirationSelected(internal val expirationOrdinal: Int) : SecureLinksCreateUiEvent
 
 }

@@ -82,6 +82,14 @@ class SecureLinksCreateViewModel @Inject constructor(
         }
     }
 
+    internal fun onExpirationSelected(expirationOrdinal: Int) {
+        _state.update { currentState ->
+            currentState.copy(
+                expiration = SecureLinksCreateState.SecureLinkExpiration.entries[expirationOrdinal]
+            )
+        }
+    }
+
     private companion object {
 
         private const val MIN_SECURE_LINK_VIEWS_ALLOWED = 1

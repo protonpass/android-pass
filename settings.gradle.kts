@@ -215,3 +215,4 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+include(":pass:features:secure-links")

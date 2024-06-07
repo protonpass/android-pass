@@ -34,6 +34,7 @@ plugins {
     alias(libs.plugins.gradlePlugin.sentry) apply false
     alias(libs.plugins.gradlePlugin.test.logger) apply false
     id("proton.android.pass.module-gen")
+    alias(libs.plugins.jetbrains.kotlin.android) apply false
 }
 
 val isCI = System.getenv().containsKey("CI")

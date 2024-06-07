@@ -105,10 +105,10 @@ class PassScopeUserCheck(
         when (val superResult = super.invoke(user)) {
             is PostLoginAccountSetup.UserCheckResult.Success -> {
                 val isExtraPasswordEnabled = ffRepo.get<Boolean>(FeatureFlag.ACCESS_KEY_V1).first()
-                if (!isExtraPasswordEnabled) {
-                    superResult
-                } else {
+                if (isExtraPasswordEnabled) {
                     checkPassScope(user, authWithExtraPasswordListener)
+                } else {
+                    superResult
                 }
             }
             else -> superResult

@@ -42,7 +42,7 @@ import javax.inject.Inject
 import kotlin.test.assertEquals
 
 @HiltAndroidTest
-class EnterExtraPasswordNavItemScreenTest {
+class EnterExtraPasswordScreenTest {
 
     @get:Rule(order = 0)
     val hiltRule = HiltAndroidRule(this)

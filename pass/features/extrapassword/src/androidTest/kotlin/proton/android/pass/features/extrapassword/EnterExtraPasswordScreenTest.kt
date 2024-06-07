@@ -32,7 +32,6 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.api.errors.TooManyExtraPasswordAttemptsException
 import proton.android.pass.data.fakes.usecases.accesskey.FakeAuthWithExtraPassword
-import proton.android.pass.features.extrapassword.auth.navigation.ExtraPasswordOrigin
 import proton.android.pass.features.extrapassword.auth.navigation.ExtraPasswordOriginNavArgId
 import proton.android.pass.features.extrapassword.auth.ui.EnterExtraPasswordScreen
 import proton.android.pass.navigation.api.UserIdNavArgId

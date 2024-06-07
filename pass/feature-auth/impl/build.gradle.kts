@@ -64,6 +64,7 @@ dependencies {
 
     implementation(projects.pass.biometry.api)
     implementation(projects.pass.commonUi.api)
+    implementation(projects.pass.crypto.api)
     implementation(projects.pass.composeComponents.impl)
     implementation(projects.pass.data.api)
     implementation(projects.pass.preferences.api)

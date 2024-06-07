@@ -115,8 +115,6 @@ import proton.android.pass.featureprofile.impl.Profile
 import proton.android.pass.featureprofile.impl.ProfileNavigation
 import proton.android.pass.featureprofile.impl.profileGraph
 import proton.android.pass.features.extrapassword.ExtraPasswordNavigation
-import proton.android.pass.features.extrapassword.auth.navigation.EnterExtraPasswordNavItem
-import proton.android.pass.features.extrapassword.auth.navigation.ExtraPasswordOrigin.RemoveExtraPassword
 import proton.android.pass.features.extrapassword.configure.navigation.SetExtraPasswordNavItem
 import proton.android.pass.features.extrapassword.confirm.navigation.ConfirmExtraPasswordNavItem
 import proton.android.pass.features.extrapassword.extraPasswordGraph
@@ -527,10 +525,7 @@ fun NavGraphBuilder.appGraph(
                 AccountNavigation.RecoveryEmail -> onNavigate(AppNavigation.RecoveryEmail)
                 AccountNavigation.SetExtraPassword -> appNavigator.navigate(ExtraPasswordInfoNavItem)
                 is AccountNavigation.ExtraPasswordOptions ->
-                    appNavigator.navigate(
-                        destination = ExtraPasswordOptionsNavItem,
-                        route = ExtraPasswordOptionsNavItem.buildRoute(it.userId)
-                    )
+                    appNavigator.navigate(ExtraPasswordOptionsNavItem)
             }
         },
         subGraph = {
@@ -553,14 +548,9 @@ fun NavGraphBuilder.appGraph(
 
                         ExtraPasswordNavigation.FinishedConfiguring -> appNavigator.popUpTo(Account)
                         is ExtraPasswordNavigation.Remove -> appNavigator.navigate(
-                            destination = EnterExtraPasswordNavItem,
-                            route = EnterExtraPasswordNavItem.buildRoute(
-                                userId = it.userId,
-                                origin = RemoveExtraPassword
-                            )
+                            destination = Auth,
+                            route = Auth.buildRoute(AuthOrigin.EXTRA_PASSWORD_REMOVE)
                         )
-                        ExtraPasswordNavigation.EnterPasswordSuccess -> appNavigator.popUpTo(Account)
-                        is ExtraPasswordNavigation.Logout -> onNavigate(AppNavigation.SignOut(it.userId))
                     }
                 }
             )
@@ -1158,29 +1148,31 @@ fun NavGraphBuilder.appGraph(
             when (it) {
                 is AuthNavigation.Back -> when (it.origin) {
                     AuthOrigin.CONFIGURE_PIN_OR_BIOMETRY,
+                    AuthOrigin.EXTRA_PASSWORD_REMOVE,
                     AuthOrigin.EXTRA_PASSWORD_CONFIGURE -> appNavigator.navigateBack()
 
-                    AuthOrigin.AUTO_LOCK -> onNavigate(AppNavigation.Finish)
-                    AuthOrigin.EXTRA_PASSWORD_LOGIN -> TODO()
-                    AuthOrigin.EXTRA_PASSWORD_REMOVE -> TODO()
+                    AuthOrigin.AUTO_LOCK,
+                    AuthOrigin.EXTRA_PASSWORD_LOGIN -> onNavigate(AppNavigation.Finish)
                 }
 
-                is AuthNavigation.Success -> when (it.origin) {
-                    AuthOrigin.CONFIGURE_PIN_OR_BIOMETRY ->
-                        appNavigator.navigateBackWithResult(
-                            key = ENTER_PIN_PARAMETER_KEY,
-                            value = true
-                        )
+                is AuthNavigation.Success -> dismissBottomSheet {
+                    when (it.origin) {
+                        AuthOrigin.CONFIGURE_PIN_OR_BIOMETRY ->
+                            appNavigator.navigateBackWithResult(
+                                key = ENTER_PIN_PARAMETER_KEY,
+                                value = true
+                            )
 
-                    AuthOrigin.EXTRA_PASSWORD_CONFIGURE ->
-                        appNavigator.navigate(
-                            destination = SetExtraPasswordNavItem,
-                            backDestination = Account
-                        )
+                        AuthOrigin.EXTRA_PASSWORD_CONFIGURE ->
+                            appNavigator.navigate(
+                                destination = SetExtraPasswordNavItem,
+                                backDestination = Account
+                            )
 
-                    AuthOrigin.AUTO_LOCK -> appNavigator.navigateBack()
-                    AuthOrigin.EXTRA_PASSWORD_LOGIN -> TODO()
-                    AuthOrigin.EXTRA_PASSWORD_REMOVE -> TODO()
+                        AuthOrigin.AUTO_LOCK -> appNavigator.navigateBack()
+                        AuthOrigin.EXTRA_PASSWORD_LOGIN -> {}
+                        AuthOrigin.EXTRA_PASSWORD_REMOVE -> appNavigator.popUpTo(Account)
+                    }
                 }
 
                 AuthNavigation.Dismissed -> onNavigate(AppNavigation.Finish)

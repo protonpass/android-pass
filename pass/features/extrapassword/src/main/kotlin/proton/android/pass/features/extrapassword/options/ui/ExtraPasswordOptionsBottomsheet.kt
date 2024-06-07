@@ -20,19 +20,16 @@ package proton.android.pass.features.extrapassword.options.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.features.extrapassword.ExtraPasswordNavigation
-import proton.android.pass.features.extrapassword.options.presentation.ExtraPasswordOptionsViewModel
 
 @Composable
 internal fun ExtraPasswordOptionsBottomsheet(
     modifier: Modifier = Modifier,
-    viewModel: ExtraPasswordOptionsViewModel = hiltViewModel(),
     onNavigate: (ExtraPasswordNavigation) -> Unit
 ) {
     ExtraPasswordOptionsBottomsheetContent(
         modifier = modifier.bottomSheet(),
-        onRemove = { onNavigate(ExtraPasswordNavigation.Remove(viewModel.userId)) }
+        onRemove = { onNavigate(ExtraPasswordNavigation.Remove) }
     )
 }

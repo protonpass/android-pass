@@ -58,7 +58,8 @@ data class AuthContent(
     val isPasswordVisible: Boolean,
     val error: Option<AuthError>,
     val passwordError: Option<PasswordError>,
-    val authMethod: Option<AuthMethod>
+    val authMethod: Option<AuthMethod>,
+    val hasExtraPassword: Option<Boolean>
 ) {
     companion object {
         fun default(address: Option<String>) = AuthContent(
@@ -68,7 +69,8 @@ data class AuthContent(
             isPasswordVisible = false,
             error = None,
             passwordError = None,
-            authMethod = None
+            authMethod = None,
+            hasExtraPassword = None
         )
     }
 }

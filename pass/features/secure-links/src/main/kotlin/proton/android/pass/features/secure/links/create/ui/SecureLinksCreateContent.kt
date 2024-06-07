@@ -26,7 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
-import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
+import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
 import proton.android.pass.features.secure.links.R
 import proton.android.pass.features.secure.links.create.presentation.SecureLinksCreateState
 import proton.android.pass.features.secure.links.create.ui.rows.SecureLinkCreateExpirationRow
@@ -41,7 +41,8 @@ internal fun SecureLinksCreateContent(
     Scaffold(
         modifier = modifier,
         topBar = {
-            BackArrowTopAppBar(
+            PassExtendedTopBar(
+                title = stringResource(id = R.string.secure_links_create_title),
                 onUpClick = { onUiEvent(SecureLinksCreateUiEvent.OnBackArrowClicked) }
             )
         },
@@ -54,7 +55,9 @@ internal fun SecureLinksCreateContent(
         }
     ) { innerPadding ->
         Column(
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier
+                .padding(innerPadding)
+                .padding(top = Spacing.medium)
         ) {
             SecureLinkCreateExpirationRow(
                 onUiEvent = onUiEvent

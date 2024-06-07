@@ -48,6 +48,7 @@
   <string name="bottomsheet_custom_field_option_edit">Рэдагаваць назву</string>
   <string name="bottomsheet_custom_field_option_remove">Выдаліць поле</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Выдаліць карыстальніцкае поле</string>
+  <string name="bottomsheet_custom_section_option_remove">Выдаліць раздзел</string>
   <string name="create_login_add_custom_field_button">Дадаць яшчэ адно поле</string>
   <string name="custom_field_hidden_placeholder">Дадаць схаваны тэкст</string>
   <string name="custom_field_hidden_icon_content_description">Значок схаванага карыстальніцкага поля</string>
@@ -55,6 +56,8 @@
   <string name="custom_field_dialog_title">Карыстальніцкая назва поля</string>
   <string name="custom_field_dialog_body">Дайце назву карыстальніцкаму полю</string>
   <string name="custom_field_dialog_placeholder">Напрыклад, ідэнтыфікатар карыстальніка або PIN</string>
+  <string name="custom_section_dialog_title">Увесці загаловак раздзела</string>
+  <string name="custom_section_dialog_placeholder">Загаловак</string>
   <string name="custom_field_options_content_description">Параметры карыстальніцкага поля</string>
   <!-- Create Note -->
   <string name="create_note_item_creation_error">Не атрымалася стварыць нататку</string>
@@ -105,13 +108,13 @@
   <string name="identity_field_street_address_title">Адрас і паштовая скрыня</string>
   <string name="identity_field_zip_or_postal_code_title">Паштовы індэкс</string>
   <string name="identity_field_city_title">Горад</string>
-  <string name="identity_field_state_or_province_title">Рэгіён або вобласць</string>
+  <string name="identity_field_state_or_province_title">Вобласць або раён</string>
   <string name="identity_field_country_or_region_title">Краіна або рэгіён</string>
   <string name="identity_field_social_security_number_title">Нумар сацыяльнага забеспячэння</string>
   <string name="identity_field_passport_number_title">Нумар пашпарта</string>
   <string name="identity_field_license_number_title">Пасведчанне кіроўцы</string>
   <string name="identity_field_website_title">Вэб-сайт</string>
-  <string name="identity_field_xhandle_title">Імя карыстальніка X</string>
+  <string name="identity_field_xhandle_title">Профіль X</string>
   <string name="identity_field_company_title">Кампанія</string>
   <string name="identity_field_job_title_title">Пасада</string>
   <string name="identity_field_first_name_title">Імя</string>
@@ -125,7 +128,7 @@
   <string name="identity_field_reddit_title">Імя карыстальніка Reddit</string>
   <string name="identity_field_facebook_title">URL-адрас Facebook</string>
   <string name="identity_field_yahoo_title">Імя карыстальніка Yahoo</string>
-  <string name="identity_field_instagram_title">Імя карыстальніка Instagram</string>
+  <string name="identity_field_instagram_title">Профіль Instagram</string>
   <string name="identity_field_personal_website_title">URL-адрас асабістага вэб-сайта</string>
   <string name="identity_field_work_phone_number_title">Працоўны нумар тэлефона</string>
   <string name="identity_field_work_email_title">Працоўны адрас электроннай пошты</string>
@@ -140,7 +143,7 @@
   <string name="identity_add_field_reddit">Імя карыстальніка Reddit</string>
   <string name="identity_add_field_facebook">URL-адрас Facebook</string>
   <string name="identity_add_field_yahoo">Імя карыстальніка Yahoo</string>
-  <string name="identity_add_field_instagram">Імя карыстальніка Instagram</string>
+  <string name="identity_add_field_instagram">Профіль Instagram</string>
   <string name="identity_add_field_personal_website">URL-адрас асабістага вэб-сайта</string>
   <string name="identity_add_field_work_phone_number">Працоўны нумар тэлефона</string>
   <string name="identity_add_field_work_email_address">Працоўны адрас электроннай пошты</string>
@@ -171,9 +174,9 @@
   <string name="upgrade">Палепшыць</string>
   <string name="mfa_icon_content_description">Значок 2ФА</string>
   <string name="select_suffix_upgrade_for_custom_domains">Палепшыце свой тарыфны план, каб выкарыстоўваць карыстальніцкія дамены</string>
-  <string name="select_mailbox_upgrade_for_more_inboxes">Палепшыць тарыфны план, каб выкарыстоўваць больш паштовых скрынь</string>
   <string name="create_alias_content_limit_banner">Вы дасягнулі абмежавання па колькасці псеўданімаў, якія вы можаце стварыць. Неабмежаваная колькасць псеўданімаў стане даступна пасля паляпшэння вашай падпіскі.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Вам неабходна абнавіць праграму, каб адрэдагаваць гэты элемент.</string>
   <string name="remove_passkey_dialog_title">Выдаліць гэты ключ доступу?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Вы збіраецеся выдаліць ключ доступу карыстальніка \'%1$s\' для дамена \'%2$s\'. Вы ўпэўнены?</string>
+  <string name="add_a_custom_section">Дадаць карыстальніцкі раздзел</string>
 </resources>

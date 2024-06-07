@@ -48,6 +48,7 @@
   <string name="bottomsheet_custom_field_option_edit">Editar el nombre</string>
   <string name="bottomsheet_custom_field_option_remove">Borrar el campo</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Borrar el campo personalizado</string>
+  <string name="bottomsheet_custom_section_option_remove">Borrar la sección</string>
   <string name="create_login_add_custom_field_button">Añadir otro campo</string>
   <string name="custom_field_hidden_placeholder">Añadir el texto oculto</string>
   <string name="custom_field_hidden_icon_content_description">Icono de campo personalizado oculto</string>
@@ -55,6 +56,8 @@
   <string name="custom_field_dialog_title">Nombre de campo personalizado</string>
   <string name="custom_field_dialog_body">Da un nombre a tu campo personalizado.</string>
   <string name="custom_field_dialog_placeholder">P. ej., ID de usuario, PIN</string>
+  <string name="custom_section_dialog_title">Ingresa un título de sección</string>
+  <string name="custom_section_dialog_placeholder">Título</string>
   <string name="custom_field_options_content_description">Opciones del campo personalizado</string>
   <!-- Create Note -->
   <string name="create_note_item_creation_error">No se ha podido crear la nota.</string>
@@ -171,9 +174,9 @@
   <string name="upgrade">Mejorar</string>
   <string name="mfa_icon_content_description">Ícono de 2FA</string>
   <string name="select_suffix_upgrade_for_custom_domains">Mejora tu plan para obtener dominios personalizados</string>
-  <string name="select_mailbox_upgrade_for_more_inboxes">Mejora tu plan para obtener más buzones</string>
   <string name="create_alias_content_limit_banner">Has alcanzado el límite de alias que puedes crear. Crea alias ilimitados al actualizar tu suscripción.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">La aplicación necesita actualizarse para editar este elemento.</string>
   <string name="remove_passkey_dialog_title">¿Borrar esta clave de acceso?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Estás a punto de borrar la clave de acceso de «%1$s» para «%2$s». ¿Estás seguro?</string>
+  <string name="add_a_custom_section">Añade una sección personalizada</string>
 </resources>

@@ -48,6 +48,7 @@
   <string name="bottomsheet_custom_field_option_edit">Upraviť názov</string>
   <string name="bottomsheet_custom_field_option_remove">Odstrániť pole</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Odstrániť vlastné pole</string>
+  <string name="bottomsheet_custom_section_option_remove">Odstrániť sekciu</string>
   <string name="create_login_add_custom_field_button">Pridať ďalšie pole</string>
   <string name="custom_field_hidden_placeholder">Pridať skrytý text</string>
   <string name="custom_field_hidden_icon_content_description">Ikona skrytého vlastného poľa</string>
@@ -55,6 +56,8 @@
   <string name="custom_field_dialog_title">Názov vlastného poľa</string>
   <string name="custom_field_dialog_body">Pomenujte svoje vlastné pole</string>
   <string name="custom_field_dialog_placeholder">Napr. ID používateľa, PIN</string>
+  <string name="custom_section_dialog_title">Zadať názov sekcie</string>
+  <string name="custom_section_dialog_placeholder">Názov</string>
   <string name="custom_field_options_content_description">Možnosti vlastného poľa</string>
   <!-- Create Note -->
   <string name="create_note_item_creation_error">Nepodarilo sa vytvoriť poznámku</string>
@@ -144,7 +147,7 @@
   <string name="identity_add_field_personal_website">URL osobnej stránky</string>
   <string name="identity_add_field_work_phone_number">Pracovné telefónne číslo</string>
   <string name="identity_add_field_work_email_address">Pracovná emailová adresa</string>
-  <string name="identity_add_field_custom_field">Custom field</string>
+  <string name="identity_add_field_custom_field">Vlastné pole</string>
   <string name="identity_section_personal_details">Osobné údaje</string>
   <string name="identity_section_address_details">Detaily adresy</string>
   <string name="identity_section_contact_details">Kontaktné údaje</string>
@@ -171,9 +174,9 @@
   <string name="upgrade">Upgradovať</string>
   <string name="mfa_icon_content_description">Ikona 2FA</string>
   <string name="select_suffix_upgrade_for_custom_domains">Navýšte predplatné pre vlastné domény</string>
-  <string name="select_mailbox_upgrade_for_more_inboxes">Navýšte predplatné pre ďalšie schránky</string>
   <string name="create_alias_content_limit_banner">Dosiahli ste limit aliasov, ktoré môžete vytvoriť. Vytvorte neobmedzený počet aliasov po navýšení predplatného.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Na úpravu tejto položky je potrebné aktualizovať aplikáciu</string>
   <string name="remove_passkey_dialog_title">Odstrániť tento prístupový kľúč?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Chystáte sa odstrániť prístupový kľúč používateľa \'%1$s\' pre \'%2$s\'. Ste si istí?</string>
+  <string name="add_a_custom_section">Pridať vlastnú sekciu</string>
 </resources>

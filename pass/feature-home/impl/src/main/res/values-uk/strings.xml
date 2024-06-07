@@ -127,10 +127,10 @@
     <item quantity="other">Delete permanently %d items?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_message">
-    <item quantity="one">Ви впевнені, що хочете видалити позицію? Ця дія є незворотньою.</item>
-    <item quantity="few">Ви впевнені, що хочете видалити %d елементи? Ця дія незворотна</item>
-    <item quantity="many">Ви впевнені, що хочете видалити %d елементів? Ця дія незворотна</item>
-    <item quantity="other">Are you sure you want to delete the %d items? This action is irreversible</item>
+    <item quantity="one">Ви впевнені, що хочете видалити позицію? Не підлягає відновленню.</item>
+    <item quantity="few">Ви впевнені, що хочете видалити дані %d позиції? Ця дія незворотна.</item>
+    <item quantity="many">Ви впевнені, що хочете видалити дані %d позиції? Ця дія незворотна</item>
+    <item quantity="other">Ви впевнені, що хочете видалити дані %d позиції? Не підлягає відновленню</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Останні пошуки</string>

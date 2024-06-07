@@ -48,6 +48,7 @@
   <string name="bottomsheet_custom_field_option_edit">Name bearbeiten</string>
   <string name="bottomsheet_custom_field_option_remove">Feld entfernen</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Benutzerdefiniertes Feld entfernen</string>
+  <string name="bottomsheet_custom_section_option_remove">Abschnitt entfernen</string>
   <string name="create_login_add_custom_field_button">Weiteres Feld hinzufügen</string>
   <string name="custom_field_hidden_placeholder">Versteckten Text hinzufügen</string>
   <string name="custom_field_hidden_icon_content_description">Verstecktes benutzerdefiniertes Feld-Symbol</string>
@@ -55,6 +56,8 @@
   <string name="custom_field_dialog_title">Name des benutzerdefinierten Feldes</string>
   <string name="custom_field_dialog_body">Gib deinem benutzerdefinierten Feld einen Namen</string>
   <string name="custom_field_dialog_placeholder">z.B. Benutzer-ID, PIN</string>
+  <string name="custom_section_dialog_title">Abschnittstitel eingeben</string>
+  <string name="custom_section_dialog_placeholder">Titel</string>
   <string name="custom_field_options_content_description">Optionen für benutzerdefinierte Felder</string>
   <!-- Create Note -->
   <string name="create_note_item_creation_error">Notiz konnte nicht erstellt werden</string>
@@ -144,7 +147,7 @@
   <string name="identity_add_field_personal_website">URL der persönlichen Website</string>
   <string name="identity_add_field_work_phone_number">Geschäftliche Telefonnummer</string>
   <string name="identity_add_field_work_email_address">Geschäftliche E-Mail-Adresse</string>
-  <string name="identity_add_field_custom_field">Custom field</string>
+  <string name="identity_add_field_custom_field">Benutzerdefiniertes Feld</string>
   <string name="identity_section_personal_details">Persönliche Details</string>
   <string name="identity_section_address_details">Adressdetails</string>
   <string name="identity_section_contact_details">Kontaktdetails</string>
@@ -171,9 +174,9 @@
   <string name="upgrade">Upgraden</string>
   <string name="mfa_icon_content_description">2FA-Symbol</string>
   <string name="select_suffix_upgrade_for_custom_domains">Upgrade für benutzerdefinierte Domains</string>
-  <string name="select_mailbox_upgrade_for_more_inboxes">Upgrade für weitere Postfächer</string>
   <string name="create_alias_content_limit_banner">Du hast das Limit an Aliassen erreicht, die du erstellen kannst. Ein Upgrade deines Abonnements ermöglicht dir das Erstellen von unbegrenzten Aliassen.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Die App muss aktualisiert werden, damit dieser Eintrag bearbeitet werden kann.</string>
   <string name="remove_passkey_dialog_title">Diesen Passkey entfernen?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Du bist dabei, den Passkey für den Benutzer \'%1$s\' für \'%2$s\' zu entfernen. Bist du sicher?</string>
+  <string name="add_a_custom_section">Benutzerdefinierten Abschnitt hinzufügen</string>
 </resources>

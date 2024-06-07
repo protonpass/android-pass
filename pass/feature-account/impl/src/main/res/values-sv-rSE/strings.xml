@@ -19,4 +19,14 @@
   <string name="account_settings_list_item_recovery_hint_not_set">Inte inställd</string>
   <string name="account_settings_list_item_password_hint_grace">Lösenordsåterställning väntar</string>
   <string name="account_settings_list_item_password_hint_insecure">Lösenordsåterställning redo</string>
+  <string name="account_settings_list_item_extra_password_header">Extra lösenord för Proton Pass</string>
+  <string name="account_settings_list_item_extra_password_active">Aktiv</string>
+  <string name="account_settings_list_item_extra_password_description">Det extra lösenordet kommer att krävas för att använda Pass. Det fungerar som ett extra lösenord utöver ditt Proton-lösenord.</string>
+  <string name="configure_extra_password_continue">Fortsätt</string>
+  <string name="configure_extra_password_title">Ställ in extra lösenord</string>
+  <string name="configure_extra_password_enter_extra_password">Extra lösenord</string>
+  <string name="configure_extra_password_repeat_extra_password">Upprepa lösenord</string>
+  <string name="configure_extra_password_description">Du kommer att bli tillfrågad om detta lösenord vid inloggning och när du byter från en annan Proton-app till Proton Pass på webben.</string>
+  <string name="configure_extra_password_warning">Varning: Du kommer inte att kunna komma åt ditt Pass-konto om du tappar bort detta lösenord.</string>
+  <string name="extra_password_options_remove">Ta bort</string>
 </resources>

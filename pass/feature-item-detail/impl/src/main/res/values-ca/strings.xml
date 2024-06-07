@@ -38,13 +38,13 @@
   <string name="login_item_generate_totp_error">S\'ha produït un error en generar el codi 2FA</string>
   <string name="login_item_view_alias_button">Mostra l\'àlies</string>
   <string name="login_item_monitor_widget_weak_pass_title">Contrasenya feble</string>
-  <string name="login_item_monitor_widget_weak_pass_subtitle">Aquest compte és vulnerable, visiti el servei i canviï la contrasenya.</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">Aquest compte és vulnerable, visiteu el servei i canvieu la contrasenya.</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
     <item quantity="one">%d other login uses the same password</item>
     <item quantity="other">%d altres inicis de sessió fan servir la mateixa contrasenya</item>
   </plurals>
-  <string name="login_item_monitor_widget_missing_two_fa_title">Configuri 2FA per a més seguretat</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Aquest servei ofereix 2FA. Habiliti\'l per augmentar la seguretat del compte.</string>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Configureu A2F per a més seguretat</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Aquest servei ofereix A2F. Habiliteu-lo per a augmentar la seguretat del compte.</string>
   <string name="login_item_reused_passwords_subtitle">Elements de les seves caixes fortes que utilitzen aquesta contrasenya.</string>
   <string name="field_email">Adreça de correu electrònic</string>
   <string name="field_username">Nom d\'usuari</string>

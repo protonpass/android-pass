@@ -19,4 +19,14 @@
   <string name="account_settings_list_item_recovery_hint_not_set">Nenastaveno</string>
   <string name="account_settings_list_item_password_hint_grace">Čekání na reset hesla</string>
   <string name="account_settings_list_item_password_hint_insecure">Připraveno pro reset hesla</string>
+  <string name="account_settings_list_item_extra_password_header">Dodatečné heslo pro Proton Pass</string>
+  <string name="account_settings_list_item_extra_password_active">Aktivní</string>
+  <string name="account_settings_list_item_extra_password_description">Pro použití Pass bude vyžadováno dodatečné heslo. Slouží jako doplněk k vašemu hlavnímu heslu Proton.</string>
+  <string name="configure_extra_password_continue">Pokračovat</string>
+  <string name="configure_extra_password_title">Nastavte dodatečné heslo</string>
+  <string name="configure_extra_password_enter_extra_password">Dodatečné heslo</string>
+  <string name="configure_extra_password_repeat_extra_password">Zopakujte heslo</string>
+  <string name="configure_extra_password_description">O toto heslo budete požádáni při přihlašování a při přechodu z jiné aplikace Proton do Proton Pass na webu.</string>
+  <string name="configure_extra_password_warning">Upozornění: Pokud toto heslo ztratíte, nebudete mít přístup ke svému účtu Pass.</string>
+  <string name="extra_password_options_remove">Odebrat</string>
 </resources>

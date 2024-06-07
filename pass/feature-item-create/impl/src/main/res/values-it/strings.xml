@@ -21,7 +21,7 @@
   <string name="field_email_hint">Aggiungi indirizzo email</string>
   <string name="field_email_error">Indirizzo email non valido</string>
   <string name="field_email_tooltip_title">Aggiungi il campo nome utente</string>
-  <string name="field_email_tooltip_description">Tocca qui per aggiungere un campo per il nome utente.</string>
+  <string name="field_email_tooltip_description">Tocca qui per aggiungere un campo per il nome utente</string>
   <string name="field_username_title">Nome utente</string>
   <string name="field_username_hint">Aggiungi nome utente</string>
   <string name="field_username_or_email_title">Nome utente o indirizzo email</string>
@@ -48,6 +48,7 @@
   <string name="bottomsheet_custom_field_option_edit">Modifica il nome</string>
   <string name="bottomsheet_custom_field_option_remove">Rimuovi il campo</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Rimuovi il campo personalizzato</string>
+  <string name="bottomsheet_custom_section_option_remove">Rimuovi la sezione</string>
   <string name="create_login_add_custom_field_button">Aggiungi un altro campo</string>
   <string name="custom_field_hidden_placeholder">Aggiungi testo nascosto</string>
   <string name="custom_field_hidden_icon_content_description">Icona campo personalizzato nascosto</string>
@@ -55,6 +56,8 @@
   <string name="custom_field_dialog_title">Nome del campo personalizzato</string>
   <string name="custom_field_dialog_body">Aggiungi un nome al campo personalizzato</string>
   <string name="custom_field_dialog_placeholder">Es. ID utente o PIN</string>
+  <string name="custom_section_dialog_title">Inserisci un nome per la sezione</string>
+  <string name="custom_section_dialog_placeholder">Nome</string>
   <string name="custom_field_options_content_description">Opzioni campo personalizzato</string>
   <!-- Create Note -->
   <string name="create_note_item_creation_error">Impossibile creare la nota</string>
@@ -144,14 +147,14 @@
   <string name="identity_add_field_personal_website">URL del sito web personale</string>
   <string name="identity_add_field_work_phone_number">Telefono di lavoro</string>
   <string name="identity_add_field_work_email_address">Email di lavoro</string>
-  <string name="identity_add_field_custom_field">Custom field</string>
+  <string name="identity_add_field_custom_field">Campo personalizzato</string>
   <string name="identity_section_personal_details">Informazioni personali</string>
   <string name="identity_section_address_details">Dettagli dell\'indirizzo</string>
   <string name="identity_section_contact_details">Dettagli contatto</string>
   <string name="identity_section_work_details">Dettagli dell\'impiego</string>
   <string name="identity_add_more_fields">Aggiungi altro</string>
   <string name="identity_bottomsheet_add_field">Aggiungi un campo</string>
-  <string name="create_identity_item_creation_error">Non è stato possibile creare l\'identità</string>
+  <string name="create_identity_item_creation_error">Creazione dell\'identità non riuscita</string>
   <string name="create_identity_item_creation_success">Identità creata</string>
   <!--  Common create items  -->
   <string name="title_create">Crea</string>
@@ -171,9 +174,9 @@
   <string name="upgrade">Effettua l\'upgrade</string>
   <string name="mfa_icon_content_description">Icona 2FA</string>
   <string name="select_suffix_upgrade_for_custom_domains">Effettua l\'upgrade per usare i domini personalizzati</string>
-  <string name="select_mailbox_upgrade_for_more_inboxes">Effettua l\'upgrade per avere più caselle di posta</string>
   <string name="create_alias_content_limit_banner">Hai raggiunto il limite di alias che puoi creare. Effettua l\'upgrade per creare un numero illimitato di alias.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Aggiorna l\'app per modificare questo elemento</string>
   <string name="remove_passkey_dialog_title">Vuoi rimuovere questa passkey?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Sei sicuro di voler rimuovere la passkey di \'%2$s\' per l\'utente \'%1$s\'?</string>
+  <string name="add_a_custom_section">Aggiungi una sezione personalizzata</string>
 </resources>

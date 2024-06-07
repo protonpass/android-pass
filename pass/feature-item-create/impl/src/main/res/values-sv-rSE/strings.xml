@@ -48,6 +48,7 @@
   <string name="bottomsheet_custom_field_option_edit">Redigera namn</string>
   <string name="bottomsheet_custom_field_option_remove">Ta bort fält</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Ta bort anpassat fält</string>
+  <string name="bottomsheet_custom_section_option_remove">Ta bort sektion</string>
   <string name="create_login_add_custom_field_button">Lägg till ytterligare fält</string>
   <string name="custom_field_hidden_placeholder">Lägg till dold text</string>
   <string name="custom_field_hidden_icon_content_description">Ikon för dolt anpassat fält</string>
@@ -55,6 +56,8 @@
   <string name="custom_field_dialog_title">Anpassat fältnamn</string>
   <string name="custom_field_dialog_body">Ge ditt anpassade fält ett namn</string>
   <string name="custom_field_dialog_placeholder">T.ex. användar-ID, PIN</string>
+  <string name="custom_section_dialog_title">Ange en rubrik för sektion</string>
+  <string name="custom_section_dialog_placeholder">Rubrik</string>
   <string name="custom_field_options_content_description">Alternativ för anpassat fält</string>
   <!-- Create Note -->
   <string name="create_note_item_creation_error">Kunde inte skapa anteckning</string>
@@ -171,9 +174,9 @@
   <string name="upgrade">Uppgradera</string>
   <string name="mfa_icon_content_description">2FA-ikon</string>
   <string name="select_suffix_upgrade_for_custom_domains">Uppgradera för anpassade domäner</string>
-  <string name="select_mailbox_upgrade_for_more_inboxes">Uppgradera för fler inkorgar</string>
   <string name="create_alias_content_limit_banner">Du har nått gränsen för alias du kan skapa. Skapa ett obegränsat antal alias när du uppgraderar din prenumeration.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Appen måste uppdateras för att redigera detta objekt</string>
   <string name="remove_passkey_dialog_title">Ta bort denna passkey?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Du håller på att ta bort passkey för användare \'%1$s\' för \'%2$s\'. Är du säker?</string>
+  <string name="add_a_custom_section">Lägg till en anpassad sektion</string>
 </resources>

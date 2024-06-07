@@ -48,6 +48,7 @@
   <string name="bottomsheet_custom_field_option_edit">Uredi ime</string>
   <string name="bottomsheet_custom_field_option_remove">Odstrani polje</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Odstrani polje po meri</string>
+  <string name="bottomsheet_custom_section_option_remove">Odstrani odsek</string>
   <string name="create_login_add_custom_field_button">Dodajte drugo polje</string>
   <string name="custom_field_hidden_placeholder">Dodajte skrito besedilo</string>
   <string name="custom_field_hidden_icon_content_description">Skrita ikona za polje po meri</string>
@@ -55,6 +56,8 @@
   <string name="custom_field_dialog_title">Ime polja po meri</string>
   <string name="custom_field_dialog_body">Poimenujte svoje polje po meri</string>
   <string name="custom_field_dialog_placeholder">Npr., uporabnikov ID, PIN</string>
+  <string name="custom_section_dialog_title">Vnesite naslov odseka</string>
+  <string name="custom_section_dialog_placeholder">Naslov</string>
   <string name="custom_field_options_content_description">Možnosti polja po meri</string>
   <!-- Create Note -->
   <string name="create_note_item_creation_error">Opombe ni bilo mogoče ustvariti</string>
@@ -171,9 +174,9 @@
   <string name="upgrade">Nadgradi</string>
   <string name="mfa_icon_content_description">Ikona 2FA</string>
   <string name="select_suffix_upgrade_for_custom_domains">Nadgradnja za domene po meri</string>
-  <string name="select_mailbox_upgrade_for_more_inboxes">Nadgradite za več nabiralnikov</string>
   <string name="create_alias_content_limit_banner">Dosegli ste omejitev vzdevkov, ki jih lahko ustvarite. Ko nadgradite svojo naročnino, ustvarite neomejeno število vzdevkov.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Za urejanje tega predmeta je treba aplikacijo posodobiti</string>
   <string name="remove_passkey_dialog_title">Odstrani ta identifikacijski ključ?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Za uporabnika %1$s boste odstranili identifikacijski ključ za %2$s. Ali ste prepričani?</string>
+  <string name="add_a_custom_section">Dodaj odsek po meri</string>
 </resources>

@@ -48,6 +48,7 @@
   <string name="bottomsheet_custom_field_option_edit">Sunting nama</string>
   <string name="bottomsheet_custom_field_option_remove">Hapus kolom</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Hapus kolom khusus</string>
+  <string name="bottomsheet_custom_section_option_remove">Hapus bagian</string>
   <string name="create_login_add_custom_field_button">Tambah kolom lainnya</string>
   <string name="custom_field_hidden_placeholder">Tambahkan teks tersembunyi</string>
   <string name="custom_field_hidden_icon_content_description">Ikon kolom khusus tersembunyi</string>
@@ -55,6 +56,8 @@
   <string name="custom_field_dialog_title">Nama kolom khusus</string>
   <string name="custom_field_dialog_body">Beri nama pada kolom khusus Anda</string>
   <string name="custom_field_dialog_placeholder">Misalnya, ID Pengguna, PIN</string>
+  <string name="custom_section_dialog_title">Masukkan judul bagian</string>
+  <string name="custom_section_dialog_placeholder">Judul</string>
   <string name="custom_field_options_content_description">Opsi kolom khusus</string>
   <!-- Create Note -->
   <string name="create_note_item_creation_error">Catatan tidak dapat dibuat</string>
@@ -171,9 +174,9 @@
   <string name="upgrade">Tingkatkan</string>
   <string name="mfa_icon_content_description">Ikon 2FA</string>
   <string name="select_suffix_upgrade_for_custom_domains">Tingkatkan untuk menggunakan domain khusus</string>
-  <string name="select_mailbox_upgrade_for_more_inboxes">Tingkatkan untuk mendapatkan lebih banyak kotak masuk</string>
   <string name="create_alias_content_limit_banner">Anda telah mencapai batas jumlah alias yang dapat Anda buat. Dapatkan kemampuan untuk membuat alias tanpa batasan jumlah dengan meningkatkan paket langganan Anda.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Aplikasi perlu diperbarui untuk menyunting item ini</string>
   <string name="remove_passkey_dialog_title">Hapus kunci sandi ini?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Anda akan menghapus kunci sandi untuk pengguna \'%1$s\' untuk \'%2$s\'. Apakah Anda yakin?</string>
+  <string name="add_a_custom_section">Tambah sesi custom</string>
 </resources>

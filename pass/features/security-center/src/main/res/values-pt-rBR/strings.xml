@@ -107,12 +107,12 @@
   <string name="security_center_verify_email_title">Confirmar seu e-mail</string>
   <string name="security_center_verify_email_subtitle">Enviamos um código de verificação para %s. Insira-o abaixo:</string>
   <string name="security_center_verify_email_code_resend_header">Não recebeu o código?</string>
-  <string name="security_center_verify_email_code_resend_body">Please check in your Spam for an email called “Please confirm your email address for Proton Pass“</string>
-  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">If you can’t find such email, you can </string>
+  <string name="security_center_verify_email_code_resend_body">Por favor, verifique seu Spam por um e-mail chamado \"Por favor, confirme seu endereço de e-mail para o Proton Pass\"</string>
+  <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">Se você não encontrar o e-mail, você pode </string>
   <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">solicitar um novo código.</string>
-  <string name="security_center_verify_email_snackbar_message_resend_code_success">A new verification has been sent, please check your inbox.</string>
+  <string name="security_center_verify_email_snackbar_message_resend_code_success">Uma nova verificação foi enviada, verifique sua caixa de entrada.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">Ocorreu um erro ao enviar o código de verificação. Tente novamente mais tarde.</string>
-  <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Too many invalid verifications. Removing custom email.</string>
+  <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Muitas verificações inválidas. Removendo o e-mail personalizado.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Violações detectadas para</string>
   <string name="security_center_verify_report_title_none">Nenhuma violação detectada para</string>
@@ -121,7 +121,7 @@
   <string name="security_center_email_report_breaches_header">Vulnerações</string>
   <string name="security_center_email_report_resolved_breaches_header">Violações resolvidas</string>
   <string name="security_center_email_report_mark_as_resolved">Marcar como resolvido</string>
-  <string name="security_center_email_report_snackbar_marked_as_resolved_success">Breach has been marked as resolved</string>
+  <string name="security_center_email_report_snackbar_marked_as_resolved_success">A violação foi marcada como resolvida.</string>
   <string name="security_center_email_report_snackbar_marked_as_resolved_error">Não foi possível marcar como resolvida</string>
   <string name="security_center_email_report_snackbar_get_breaches_error">Não foi possível carregar as violações.</string>
   <string name="security_center_email_report_options_menu">Menu de opções de relatório de violações</string>
@@ -137,7 +137,7 @@
   <string name="security_center_report_detail_snackbar_error">Não foi possível carregar os detalhes das violações.</string>
   <string name="security_center_report_detail_excluded_from_monitoring">Excluído do monitoramento</string>
   <string name="security_center_report_resolve_confirmation_dialog_title">Resolver todas as violações?</string>
-  <string name="security_center_report_resolve_confirmation_dialog_message">All current breaches will be marked as resolved. In case of future data breaches, you will be notified.</string>
+  <string name="security_center_report_resolve_confirmation_dialog_message">Todas as violações atuais serão marcadas como resolvidas. Em caso de futuras violações de dados, você será notificado.</string>
   <!-- Proton list -->
   <string name="security_center_proton_list_top_bar_title">Endereço da Proton</string>
   <string name="security_center_proton_list_no_breaches_detected">Nenhuma violação detectada</string>

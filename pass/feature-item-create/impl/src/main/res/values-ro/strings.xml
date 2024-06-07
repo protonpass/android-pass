@@ -21,7 +21,7 @@
   <string name="field_email_hint">Adăugare e-mail</string>
   <string name="field_email_error">Adresă de e-mail nevalidă.</string>
   <string name="field_email_tooltip_title">Câmp adăugare e-mail</string>
-  <string name="field_email_tooltip_description">Atingeți aici pentru a adăuga un câmp pentru nume utilizator.</string>
+  <string name="field_email_tooltip_description">Atingeți aici pentru a adăuga un câmp pentru nume de utilizator.</string>
   <string name="field_username_title">Nume utilizator</string>
   <string name="field_username_hint">Adăugare utilizator</string>
   <string name="field_username_or_email_title">Nume utilizator sau adresă de e-mail</string>
@@ -48,6 +48,7 @@
   <string name="bottomsheet_custom_field_option_edit">Editare nume</string>
   <string name="bottomsheet_custom_field_option_remove">Eliminare câmp</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Eliminare câmp personal</string>
+  <string name="bottomsheet_custom_section_option_remove">Eliminare secțiune</string>
   <string name="create_login_add_custom_field_button">Adăugare alt câmp</string>
   <string name="custom_field_hidden_placeholder">Adăugare text ascuns</string>
   <string name="custom_field_hidden_icon_content_description">Pictogramă câmp personal ascuns</string>
@@ -55,6 +56,8 @@
   <string name="custom_field_dialog_title">Nume câmp personal</string>
   <string name="custom_field_dialog_body">Dați un nume câmpului</string>
   <string name="custom_field_dialog_placeholder">Ex. ID utilizator, PIN</string>
+  <string name="custom_section_dialog_title">Introduceți titlul secțiunii</string>
+  <string name="custom_section_dialog_placeholder">Titlu</string>
   <string name="custom_field_options_content_description">Opțiuni câmp personal</string>
   <!-- Create Note -->
   <string name="create_note_item_creation_error">Nu s-a putut crea nota.</string>
@@ -144,7 +147,7 @@
   <string name="identity_add_field_personal_website">URL site web personal</string>
   <string name="identity_add_field_work_phone_number">Telefon serviciu</string>
   <string name="identity_add_field_work_email_address">Adresă de e-mail serviciu</string>
-  <string name="identity_add_field_custom_field">Custom field</string>
+  <string name="identity_add_field_custom_field">Câmp personal</string>
   <string name="identity_section_personal_details">Detalii personale</string>
   <string name="identity_section_address_details">Detalii adresă</string>
   <string name="identity_section_contact_details">Detalii contact</string>
@@ -171,9 +174,9 @@
   <string name="upgrade">Modificare</string>
   <string name="mfa_icon_content_description">Pictogramă A2F</string>
   <string name="select_suffix_upgrade_for_custom_domains">Pentru domenii personale modificați planul.</string>
-  <string name="select_mailbox_upgrade_for_more_inboxes">Pentru mai multe adrese modificați planul.</string>
   <string name="create_alias_content_limit_banner">Ați atins limita aliasurilor pe care le puteți crea. Puteți creați un număr nelimitat de aliasuri dacă vă modificați abonamentul.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Aplicația trebuie actualizată pentru a edita acest articol.</string>
   <string name="remove_passkey_dialog_title">Eliminați această cheie de acces?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Sunteți pe cale să eliminați cheia de acces pentru utilizatorul „%1$s” pentru „%2$s”. Confirmați?</string>
+  <string name="add_a_custom_section">Adăugare secțiune proprie</string>
 </resources>

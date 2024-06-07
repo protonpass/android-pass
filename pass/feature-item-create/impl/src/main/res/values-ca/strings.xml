@@ -21,7 +21,7 @@
   <string name="field_email_hint">Afegeix una adreça de correu electrònic</string>
   <string name="field_email_error">L\'adreça de correu electrònic no és vàlida.</string>
   <string name="field_email_tooltip_title">Afegeixi un camp de nom d\'usuari</string>
-  <string name="field_email_tooltip_description">Toqui aquí per afegir un camp per a un nom d\'usuari.</string>
+  <string name="field_email_tooltip_description">Toqueu aquí per a afegir un camp per a un nom d\'usuari.</string>
   <string name="field_username_title">Nom d\'usuari</string>
   <string name="field_username_hint">Afegir nom d\'usuari</string>
   <string name="field_username_or_email_title">Nom d\'usuari o adreça de correu electrònic</string>
@@ -48,6 +48,7 @@
   <string name="bottomsheet_custom_field_option_edit">Edita el nom</string>
   <string name="bottomsheet_custom_field_option_remove">Esborra el camp</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Esborra el camp personalitzat</string>
+  <string name="bottomsheet_custom_section_option_remove">Elimina la secció</string>
   <string name="create_login_add_custom_field_button">Afegeix un altre camp</string>
   <string name="custom_field_hidden_placeholder">Afegeix text ocult</string>
   <string name="custom_field_hidden_icon_content_description">Icona de camp personalitzat amagat</string>
@@ -55,6 +56,8 @@
   <string name="custom_field_dialog_title">Nom del camp personalitzat</string>
   <string name="custom_field_dialog_body">Give your custom field a name</string>
   <string name="custom_field_dialog_placeholder">Per exemple, l\'ID d\'usuari, el PIN</string>
+  <string name="custom_section_dialog_title">Enter a section title</string>
+  <string name="custom_section_dialog_placeholder">Títol</string>
   <string name="custom_field_options_content_description">Opcions del camp personalitzat</string>
   <!-- Create Note -->
   <string name="create_note_item_creation_error">No s\'ha pogut crear la nota</string>
@@ -171,9 +174,9 @@
   <string name="upgrade">Millora</string>
   <string name="mfa_icon_content_description">Icona de 2FA</string>
   <string name="select_suffix_upgrade_for_custom_domains">Milloreu per obtenir dominis personalitzats</string>
-  <string name="select_mailbox_upgrade_for_more_inboxes">Milloreu per obtenir més carpetes d\'entrada</string>
   <string name="create_alias_content_limit_banner">Heu assolit el límit d\'àlies que podeu crear. Creeu un nombre il·limitat d\'àlies en millorar la vostra subscripció.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">The app needs to be updated to edit this item</string>
   <string name="remove_passkey_dialog_title">Voleu suprimir aquesta clau d\'accés?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">You are about to remove the passkey for user \'%1$s\' for \'%2$s\'. Are you sure?</string>
+  <string name="add_a_custom_section">Add a custom section</string>
 </resources>

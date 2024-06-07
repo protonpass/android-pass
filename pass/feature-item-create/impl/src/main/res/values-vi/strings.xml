@@ -48,6 +48,7 @@
   <string name="bottomsheet_custom_field_option_edit">Sửa tên</string>
   <string name="bottomsheet_custom_field_option_remove">Xóa trường</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Xóa trường tùy chỉnh</string>
+  <string name="bottomsheet_custom_section_option_remove">Remove section</string>
   <string name="create_login_add_custom_field_button">Thêm trường khác</string>
   <string name="custom_field_hidden_placeholder">Thêm văn bản ẩn</string>
   <string name="custom_field_hidden_icon_content_description">Biểu tượng trường nội dung tùy chỉnh ẩn</string>
@@ -55,6 +56,8 @@
   <string name="custom_field_dialog_title">Tên trường tùy chọn</string>
   <string name="custom_field_dialog_body">Cho trường tùy chọn của bạn một cái tên</string>
   <string name="custom_field_dialog_placeholder">Vd. ID người dùng, mã PIN</string>
+  <string name="custom_section_dialog_title">Enter a section title</string>
+  <string name="custom_section_dialog_placeholder">Title</string>
   <string name="custom_field_options_content_description">Tùy chọn trường tùy chỉnh</string>
   <!-- Create Note -->
   <string name="create_note_item_creation_error">Không thể tạo ghi chú</string>
@@ -171,9 +174,9 @@
   <string name="upgrade">Nâng cấp</string>
   <string name="mfa_icon_content_description">biểu tượng 2FA</string>
   <string name="select_suffix_upgrade_for_custom_domains">Nâng cấp để dùng tên miền tùy chọn</string>
-  <string name="select_mailbox_upgrade_for_more_inboxes">Nâng cấp để thêm nhiều hộp thư hơn</string>
   <string name="create_alias_content_limit_banner">Bạn đã đạt giới hạn bí danh bạn có thể tạo. Tạo không giới hạn bí danh khi bạn nâng cấp gói đăng ký của mình.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">The app needs to be updated to edit this item</string>
   <string name="remove_passkey_dialog_title">Remove this passkey?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">You are about to remove the passkey for user \'%1$s\' for \'%2$s\'. Are you sure?</string>
+  <string name="add_a_custom_section">Add a custom section</string>
 </resources>

@@ -138,5 +138,5 @@
   <string name="email_address">E‐Mail‐Adresse</string>
   <string name="password">Passwort</string>
   <!-- Tooltips -->
-  <string name="tooltip_dismiss_button_content_description">Button to dismiss this tooltip and not show it again</string>
+  <string name="tooltip_dismiss_button_content_description">Schaltfläche, um diesen Tooltip auszublenden und nicht mehr anzuzeigen</string>
 </resources>

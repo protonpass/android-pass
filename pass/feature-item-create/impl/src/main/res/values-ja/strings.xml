@@ -48,6 +48,7 @@
   <string name="bottomsheet_custom_field_option_edit">名前を編集</string>
   <string name="bottomsheet_custom_field_option_remove">フィールドを削除</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">カスタム フィールドを削除</string>
+  <string name="bottomsheet_custom_section_option_remove">Remove section</string>
   <string name="create_login_add_custom_field_button">別のフィールドを追加</string>
   <string name="custom_field_hidden_placeholder">非表示テキストを追加</string>
   <string name="custom_field_hidden_icon_content_description">非表示のカスタムフィールドアイコン</string>
@@ -55,6 +56,8 @@
   <string name="custom_field_dialog_title">カスタムフィールドの名前</string>
   <string name="custom_field_dialog_body">Give your custom field a name</string>
   <string name="custom_field_dialog_placeholder">例: ユーザーID、PIN</string>
+  <string name="custom_section_dialog_title">Enter a section title</string>
+  <string name="custom_section_dialog_placeholder">Title</string>
   <string name="custom_field_options_content_description">カスタムフィールドのオプション</string>
   <!-- Create Note -->
   <string name="create_note_item_creation_error">ノートを作成できませんでした</string>
@@ -171,9 +174,9 @@
   <string name="upgrade">アップグレード</string>
   <string name="mfa_icon_content_description">2要素認証アイコン</string>
   <string name="select_suffix_upgrade_for_custom_domains">カスタムドメインのアップグレード</string>
-  <string name="select_mailbox_upgrade_for_more_inboxes">アップグレードで受信トレイを増やす</string>
   <string name="create_alias_content_limit_banner">作成できるエイリアスの数に達しました。サブスクリプションをアップグレードすると、エイリアスの作成数が無制限になります。</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">この項目を編集するには、アプリをアップデートする必要があります。</string>
   <string name="remove_passkey_dialog_title">Remove this passkey?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">You are about to remove the passkey for user \'%1$s\' for \'%2$s\'. Are you sure?</string>
+  <string name="add_a_custom_section">Add a custom section</string>
 </resources>

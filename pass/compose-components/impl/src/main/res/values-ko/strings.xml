@@ -136,5 +136,5 @@
   <string name="email_address">이메일 주소</string>
   <string name="password">비밀번호</string>
   <!-- Tooltips -->
-  <string name="tooltip_dismiss_button_content_description">Button to dismiss this tooltip and not show it again</string>
+  <string name="tooltip_dismiss_button_content_description">이 말풍선을 무시하고 더 이상 보지 않기 위한 버튼</string>
 </resources>

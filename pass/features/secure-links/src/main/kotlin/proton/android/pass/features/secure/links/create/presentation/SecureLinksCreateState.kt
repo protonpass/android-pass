@@ -25,11 +25,11 @@ import proton.android.pass.common.api.Some
 
 @Stable
 internal data class SecureLinksCreateState(
-    internal val expiration: LinkExpiration,
+    internal val expiration: SecureLinkExpiration,
     private val maxViewsAllowedOption: Option<Int>
 ) {
 
-    internal enum class LinkExpiration {
+    internal enum class SecureLinkExpiration {
         OneHour,
         OneDay,
         SevenDays,
@@ -46,7 +46,7 @@ internal data class SecureLinksCreateState(
     internal companion object {
 
         internal val Initial = SecureLinksCreateState(
-            expiration = LinkExpiration.SevenDays,
+            expiration = SecureLinkExpiration.SevenDays,
             maxViewsAllowedOption = None
         )
 

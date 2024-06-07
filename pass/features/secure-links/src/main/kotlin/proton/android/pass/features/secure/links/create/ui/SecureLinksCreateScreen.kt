@@ -20,6 +20,9 @@ package proton.android.pass.features.secure.links.create.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.secure.links.create.presentation.SecureLinksCreateViewModel
@@ -32,17 +35,48 @@ fun SecureLinksCreateScreen(
 ) = with(viewModel) {
     val state by state.collectAsStateWithLifecycle()
 
+    var shouldDisplayExpirationDialog by remember { mutableStateOf(false) }
+
     SecureLinksCreateContent(
         state = state,
+        shouldDisplayExpirationDialog = shouldDisplayExpirationDialog,
         onUiEvent = { uiEvent ->
             when (uiEvent) {
-                SecureLinksCreateUiEvent.OnBackArrowClicked -> onNavigated(SecureLinksNavDestination.Back)
-                SecureLinksCreateUiEvent.OnSetExpirationClicked -> {}
-                SecureLinksCreateUiEvent.OnEnableMaxViewsClicked -> onMaxViewsEnabled()
-                SecureLinksCreateUiEvent.OnDisableMaxViewsClicked -> onMaxViewsDisabled()
-                SecureLinksCreateUiEvent.OnDecreaseMaxViewsClicked -> onMaxViewsDecreased()
-                SecureLinksCreateUiEvent.OnIncreaseMaxViewsClicked -> onMaxViewsIncreased()
-                SecureLinksCreateUiEvent.OnGenerateLinkClicked -> {}
+                SecureLinksCreateUiEvent.OnBackArrowClicked -> {
+                    onNavigated(SecureLinksNavDestination.Back)
+                }
+
+                SecureLinksCreateUiEvent.OnSetExpirationClicked -> {
+                    shouldDisplayExpirationDialog = true
+                }
+
+                SecureLinksCreateUiEvent.OnEnableMaxViewsClicked -> {
+                    onMaxViewsEnabled()
+                }
+
+                SecureLinksCreateUiEvent.OnDisableMaxViewsClicked -> {
+                    onMaxViewsDisabled()
+                }
+
+                SecureLinksCreateUiEvent.OnDecreaseMaxViewsClicked -> {
+                    onMaxViewsDecreased()
+                }
+
+                SecureLinksCreateUiEvent.OnIncreaseMaxViewsClicked -> {
+                    onMaxViewsIncreased()
+                }
+
+                SecureLinksCreateUiEvent.OnGenerateLinkClicked -> {
+
+                }
+
+                SecureLinksCreateUiEvent.OnExpirationDialogDismissed -> {
+                    shouldDisplayExpirationDialog = false
+                }
+
+                is SecureLinksCreateUiEvent.OnExpirationSelected -> {
+                    onExpirationSelected(uiEvent.expirationOrdinal)
+                }
             }
         }
     )

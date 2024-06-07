@@ -48,6 +48,7 @@
   <string name="bottomsheet_custom_field_option_edit">Modifier le nom</string>
   <string name="bottomsheet_custom_field_option_remove">Retirer le champ</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Retirer le champ personnalisé</string>
+  <string name="bottomsheet_custom_section_option_remove">Retirer la section</string>
   <string name="create_login_add_custom_field_button">Ajouter un autre champ</string>
   <string name="custom_field_hidden_placeholder">Ajoutez du texte caché.</string>
   <string name="custom_field_hidden_icon_content_description">Icône champ personnalisé masqué</string>
@@ -55,6 +56,8 @@
   <string name="custom_field_dialog_title">Nom du champ personnalisé</string>
   <string name="custom_field_dialog_body">Donnez un nom à votre champ personnalisé.</string>
   <string name="custom_field_dialog_placeholder">ID utilisateur ou code PIN par exemple</string>
+  <string name="custom_section_dialog_title">Saisir un titre de section</string>
+  <string name="custom_section_dialog_placeholder">Titre</string>
   <string name="custom_field_options_content_description">Options du champ personnalisé</string>
   <!-- Create Note -->
   <string name="create_note_item_creation_error">Impossible de créer une note</string>
@@ -171,9 +174,9 @@
   <string name="upgrade">Changer d\'abonnement</string>
   <string name="mfa_icon_content_description">Icône A2F</string>
   <string name="select_suffix_upgrade_for_custom_domains">Changez d\'abonnement pour les domaines personnalisés</string>
-  <string name="select_mailbox_upgrade_for_more_inboxes">Changez d\'abonnement pour plus de boites de réception</string>
   <string name="create_alias_content_limit_banner">Vous avez atteint le nombre maximum d\'alias que vous pouvez créer. Changez d\'abonnement pour créer un nombre illimité d\'alias.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">L\'application doit être mise à jour pour modifier cet élément.</string>
   <string name="remove_passkey_dialog_title">Supprimer cette clé d\'accès ?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Vous êtes sur le point de retirer la clé d\'accès pour l\'utilisateur %1$s pour %2$s. Confirmez-vous ?</string>
+  <string name="add_a_custom_section">Ajouter une section personnalisée</string>
 </resources>

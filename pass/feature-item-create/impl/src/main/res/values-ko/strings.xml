@@ -48,6 +48,7 @@
   <string name="bottomsheet_custom_field_option_edit">이름 편집</string>
   <string name="bottomsheet_custom_field_option_remove">입력란 제거</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">사용자 정의 입력란 제거</string>
+  <string name="bottomsheet_custom_section_option_remove">섹션 제거</string>
   <string name="create_login_add_custom_field_button">기타 항목 추가</string>
   <string name="custom_field_hidden_placeholder">숨겨진 텍스트 추가</string>
   <string name="custom_field_hidden_icon_content_description">숨겨진 사용자 정의 입력란 아이콘</string>
@@ -55,6 +56,8 @@
   <string name="custom_field_dialog_title">사용자 지정 필드 이름</string>
   <string name="custom_field_dialog_body">커스텀 필드의 이름을 지정하십시오.</string>
   <string name="custom_field_dialog_placeholder">예시, 사용자 ID, PIN</string>
+  <string name="custom_section_dialog_title">섹션 제목 입력</string>
+  <string name="custom_section_dialog_placeholder">제목</string>
   <string name="custom_field_options_content_description">사용자 지정 필드 옵션</string>
   <!-- Create Note -->
   <string name="create_note_item_creation_error">메모 생성 오류</string>
@@ -144,7 +147,7 @@
   <string name="identity_add_field_personal_website">개인 웹사이트 링크</string>
   <string name="identity_add_field_work_phone_number">업무용 휴대폰 번호</string>
   <string name="identity_add_field_work_email_address">업무용 이메일 주소</string>
-  <string name="identity_add_field_custom_field">Custom field</string>
+  <string name="identity_add_field_custom_field">사용자 정의 필드</string>
   <string name="identity_section_personal_details">개인 정보</string>
   <string name="identity_section_address_details">주소 상세정보</string>
   <string name="identity_section_contact_details">연락처 정보</string>
@@ -171,9 +174,9 @@
   <string name="upgrade">업그레이드</string>
   <string name="mfa_icon_content_description">2단계 인증 아이콘</string>
   <string name="select_suffix_upgrade_for_custom_domains">사용자 지정 도메인을 위해 업그레이드</string>
-  <string name="select_mailbox_upgrade_for_more_inboxes">더 많은 받은 편지함을 위해 업그레이드</string>
   <string name="create_alias_content_limit_banner">생성하실 수 있는 별칭의 한도에 도달했습니다. 구독을 업그레이드하면 별칭을 제한 없이 생성할 수 있습니다.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">이 항목을 편집하려면 앱 업데이트가 필요합니다.</string>
   <string name="remove_passkey_dialog_title">이 패스키를 삭제하시겠습니까?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">\'%2$s\'에 대한 사용자 \'%1$s\'의 패스키를 삭제하려합니다. 확실한가요?</string>
+  <string name="add_a_custom_section">커스텀 섹션 추가</string>
 </resources>

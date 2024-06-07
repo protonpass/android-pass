@@ -29,9 +29,13 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.api.errors.TooManyExtraPasswordAttemptsException
 import proton.android.pass.data.fakes.usecases.accesskey.FakeAuthWithExtraPassword
+import proton.android.pass.features.extrapassword.auth.navigation.ExtraPasswordOrigin
+import proton.android.pass.features.extrapassword.auth.navigation.ExtraPasswordOriginNavArgId
 import proton.android.pass.features.extrapassword.auth.ui.EnterExtraPasswordScreen
+import proton.android.pass.navigation.api.UserIdNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import javax.inject.Inject
@@ -48,10 +52,14 @@ class EnterExtraPasswordNavItemScreenTest {
 
     @Inject
     lateinit var authWithExtraPassword: FakeAuthWithExtraPassword
+    @Inject
+    lateinit var savedStateHandleProvider: TestSavedStateHandleProvider
 
     @Before
     fun setup() {
         hiltRule.inject()
+        savedStateHandleProvider.get()[UserIdNavArgId.key] = USER_ID.id
+        savedStateHandleProvider.get()[ExtraPasswordOriginNavArgId.key] = ExtraPasswordOrigin.Login
     }
 
     @Test
@@ -60,8 +68,7 @@ class EnterExtraPasswordNavItemScreenTest {
 
         val checker = CallChecker<Unit>()
         runTest(
-            onSuccess = { checker.call() },
-            onLogout = {},
+            onNavigate = { if(it is ExtraPasswordNavigation.EnterPasswordSuccess) checker.call() },
             checker = checker
         )
     }
@@ -72,8 +79,7 @@ class EnterExtraPasswordNavItemScreenTest {
 
         val checker = CallChecker<UserId>()
         runTest(
-            onSuccess = { },
-            onLogout = { checker.call(it) },
+            onNavigate = { if(it is ExtraPasswordNavigation.Logout) checker.call(it.userId) },
             checker = checker
         )
 
@@ -81,17 +87,14 @@ class EnterExtraPasswordNavItemScreenTest {
     }
 
     private fun <T> runTest(
-        onSuccess: () -> Unit,
-        onLogout: (UserId) -> Unit,
+        onNavigate: (ExtraPasswordNavigation) -> Unit,
         checker: CallChecker<T>
     ) {
         composeTestRule.apply {
             setContent {
                 PassTheme(isDark = true) {
                     EnterExtraPasswordScreen(
-                        userId = USER_ID,
-                        onSuccess = onSuccess,
-                        onLogout = onLogout
+                        onNavigate = onNavigate
                     )
                 }
             }
@@ -100,7 +103,7 @@ class EnterExtraPasswordNavItemScreenTest {
                 .performClick()
                 .performTextInput("password")
 
-            onNodeWithText(activity.getString(me.proton.core.presentation.compose.R.string.presentation_alert_submit))
+            onNodeWithText(activity.getString(R.string.extra_password_unlock))
                 .performClick()
 
             waitUntil { checker.isCalled }

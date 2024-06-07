@@ -6,6 +6,19 @@
 
 ### Other
 
+## 1.22.0 (2024-06-07)
+
+### Fixes :bug:
+
+- Alias mailboxes selector.
+- Photo picker crash.
+- React to sync errors on the UI
+
+### Other
+
+- Updated core libraries.
+- Updated translations.
+
 ## 1.21.4 (2024-05-22)
 
 ### Fixes :bug:

@@ -103,10 +103,15 @@ fun AuthScreenMasterPasswordForm(
             style = PassTheme.typography.heroNorm()
         )
         Spacer(modifier = Modifier.height(12.dp))
-        if (state.address is Some) {
+        if (state.address is Some && state.address.value.isNotBlank()) {
+            val text = if (state.hasExtraPassword is Some && state.hasExtraPassword.value) {
+                stringResource(R.string.auth_unlock_app_extra_password_subtitle, state.address.value)
+            } else {
+                stringResource(R.string.auth_unlock_app_subtitle, state.address.value)
+            }
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = stringResource(R.string.auth_unlock_app_subtitle, state.address.value),
+                text = text,
                 textAlign = TextAlign.Center,
                 style = PassTheme.typography.body3Weak()
             )
@@ -117,7 +122,12 @@ fun AuthScreenMasterPasswordForm(
             modifier = Modifier
                 .roundedContainerNorm()
                 .fillMaxWidth()
-                .padding(start = Spacing.none, top = Spacing.medium, end = Spacing.extraSmall, bottom = Spacing.medium),
+                .padding(
+                    start = Spacing.none,
+                    top = Spacing.medium,
+                    end = Spacing.extraSmall,
+                    bottom = Spacing.medium
+                ),
             value = state.password,
             editable = isEditAllowed,
             keyboardOptions = KeyboardOptions(
@@ -128,8 +138,13 @@ fun AuthScreenMasterPasswordForm(
             textStyle = ProtonTheme.typography.defaultNorm(isEditAllowed),
             onChange = { onEvent(AuthUiEvent.OnPasswordUpdate(it)) },
             label = {
+                val text = if (state.hasExtraPassword is Some && state.hasExtraPassword.value) {
+                    stringResource(R.string.auth_extra_password_label)
+                } else {
+                    stringResource(R.string.auth_master_password_label)
+                }
                 ProtonTextFieldLabel(
-                    text = stringResource(R.string.auth_master_password_label),
+                    text = text,
                     isError = state.passwordError.value() == PasswordError.EmptyPassword
                 )
             },
@@ -221,7 +236,8 @@ fun AuthScreenMasterPasswordFormPreview(
                     error = input.second.error,
                     isPasswordVisible = input.second.isPasswordVisible,
                     passwordError = input.second.passwordError,
-                    authMethod = None
+                    authMethod = None,
+                    hasExtraPassword = None
                 ),
                 onEvent = {},
                 onSubmit = {}

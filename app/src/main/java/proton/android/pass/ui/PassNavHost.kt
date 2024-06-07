@@ -18,58 +18,26 @@
 
 package proton.android.pass.ui
 
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import proton.android.pass.featurehome.impl.Home
 import proton.android.pass.navigation.api.AppNavigator
-import proton.android.pass.ui.navigation.UN_AUTH_GRAPH
-import proton.android.pass.ui.navigation.appGraph
-import proton.android.pass.ui.navigation.unAuthGraph
 
-@OptIn(
-    ExperimentalMaterialApi::class,
-    ExperimentalComposeUiApi::class
-)
 @Composable
 fun PassNavHost(
     modifier: Modifier = Modifier,
     appNavigator: AppNavigator,
-    onNavigate: (AppNavigation) -> Unit,
-    dismissBottomSheet: (() -> Unit) -> Unit
+    startDestination: String = Home.route,
+    graph: NavGraphBuilder.() -> Unit
 ) {
     NavHost(
         modifier = modifier,
         navController = appNavigator.navController,
-        startDestination = Home.route
+        startDestination = startDestination
     ) {
-        appGraph(
-            appNavigator = appNavigator,
-            onNavigate = onNavigate,
-            dismissBottomSheet = dismissBottomSheet
-        )
+        graph()
     }
 }
-
-@Composable
-@Suppress("LongParameterList")
-fun PassUnAuthNavHost(
-    modifier: Modifier = Modifier,
-    appNavigator: AppNavigator,
-    onNavigate: (AppNavigation) -> Unit
-) {
-    NavHost(
-        modifier = modifier,
-        navController = appNavigator.navController,
-        startDestination = UN_AUTH_GRAPH
-    ) {
-        unAuthGraph(
-            appNavigator = appNavigator,
-            onNavigate = onNavigate
-        )
-    }
-}
-
 

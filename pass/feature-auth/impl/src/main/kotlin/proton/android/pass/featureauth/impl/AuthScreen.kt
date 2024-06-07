@@ -59,7 +59,7 @@ fun AuthScreen(
         }
     }
 
-    AuthScreenContent(
+    AuthContent(
         state = state.content,
         canLogout = canLogout,
         onEvent = {

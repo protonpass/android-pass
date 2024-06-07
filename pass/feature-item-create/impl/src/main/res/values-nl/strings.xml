@@ -48,6 +48,7 @@
   <string name="bottomsheet_custom_field_option_edit">Naam bewerken</string>
   <string name="bottomsheet_custom_field_option_remove">Verwijder veld</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Aangepast veld verwijderen</string>
+  <string name="bottomsheet_custom_section_option_remove">Remove section</string>
   <string name="create_login_add_custom_field_button">Nog een veld toevoegen</string>
   <string name="custom_field_hidden_placeholder">Verborgen tekst toevoegen</string>
   <string name="custom_field_hidden_icon_content_description">Verborgen aangepast veldpictogram</string>
@@ -55,6 +56,8 @@
   <string name="custom_field_dialog_title">Aangepaste veldnaam</string>
   <string name="custom_field_dialog_body">Geef uw eigen veld een naam</string>
   <string name="custom_field_dialog_placeholder">Bv. Gebruikers-ID, pincode</string>
+  <string name="custom_section_dialog_title">Enter a section title</string>
+  <string name="custom_section_dialog_placeholder">Title</string>
   <string name="custom_field_options_content_description">Aangepaste veldopties</string>
   <!-- Create Note -->
   <string name="create_note_item_creation_error">Kan notitie niet maken</string>
@@ -171,9 +174,9 @@
   <string name="upgrade">Upgraden</string>
   <string name="mfa_icon_content_description">2FA-pictogram</string>
   <string name="select_suffix_upgrade_for_custom_domains">Upgrade voor aangepaste domeinen</string>
-  <string name="select_mailbox_upgrade_for_more_inboxes">Upgrade voor meer inboxen</string>
   <string name="create_alias_content_limit_banner">U heeft de limiet bereikt van aliassen die u kunt maken. Maak een onbeperkt aantal aliassen aan wanneer u uw abonnement upgradet.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">De app moet worden bijgewerkt om dit item te bewerken</string>
   <string name="remove_passkey_dialog_title">Verwijder deze toegangssleutel?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">U staat op het punt om de toegangssleutel te verwijderen van gebruiker \'%1$s\' voor \'%2$s\'. Weet u het zeker?</string>
+  <string name="add_a_custom_section">Add a custom section</string>
 </resources>

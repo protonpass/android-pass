@@ -48,6 +48,7 @@
   <string name="bottomsheet_custom_field_option_edit">Editar nome</string>
   <string name="bottomsheet_custom_field_option_remove">Remover o campo</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Remover o campo personalizado</string>
+  <string name="bottomsheet_custom_section_option_remove">Remover seção</string>
   <string name="create_login_add_custom_field_button">Adicionar outro campo</string>
   <string name="custom_field_hidden_placeholder">Adicionar texto oculto</string>
   <string name="custom_field_hidden_icon_content_description">Ícone de campo personalizado oculto</string>
@@ -55,6 +56,8 @@
   <string name="custom_field_dialog_title">Nome do campo personalizado</string>
   <string name="custom_field_dialog_body">Dê um nome ao seu campo personalizado</string>
   <string name="custom_field_dialog_placeholder">Por exemplo, ID do usuário, PIN</string>
+  <string name="custom_section_dialog_title">Inserir título da seção</string>
+  <string name="custom_section_dialog_placeholder">Título</string>
   <string name="custom_field_options_content_description">Opções de campo personalizado</string>
   <!-- Create Note -->
   <string name="create_note_item_creation_error">Não foi possível criar a nota</string>
@@ -102,7 +105,7 @@
   <string name="identity_field_email_title">E-mail</string>
   <string name="identity_field_phone_number_title">Número do telefone</string>
   <string name="identity_field_organization_title">Organização</string>
-  <string name="identity_field_street_address_title">Street address, P.O. box</string>
+  <string name="identity_field_street_address_title">Endereço da rua, Caixa Postal</string>
   <string name="identity_field_zip_or_postal_code_title">CEP ou código postal</string>
   <string name="identity_field_city_title">Cidade</string>
   <string name="identity_field_state_or_province_title">Estado ou província</string>
@@ -144,7 +147,7 @@
   <string name="identity_add_field_personal_website">URL do site pessoal</string>
   <string name="identity_add_field_work_phone_number">Número de telefone no trabalho</string>
   <string name="identity_add_field_work_email_address">Endereço de e-mail no trabalho</string>
-  <string name="identity_add_field_custom_field">Custom field</string>
+  <string name="identity_add_field_custom_field">Campo customizado</string>
   <string name="identity_section_personal_details">Detalhes pessoais</string>
   <string name="identity_section_address_details">Detalhes do endereço</string>
   <string name="identity_section_contact_details">Detalhes do contato</string>
@@ -171,9 +174,9 @@
   <string name="upgrade">Fazer upgrade</string>
   <string name="mfa_icon_content_description">Ícone de A2F</string>
   <string name="select_suffix_upgrade_for_custom_domains">Faça upgrade para domínios personalizados</string>
-  <string name="select_mailbox_upgrade_for_more_inboxes">Faça upgrade para mais caixas de entrada</string>
   <string name="create_alias_content_limit_banner">Você atingiu o limite de aliases que pode criar. Crie um número ilimitado de aliases quando fizer o upgrade de sua assinatura.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">O aplicativo precisa ser atualizado para editar esse item</string>
   <string name="remove_passkey_dialog_title">Remover essa chave de acesso?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Você está prestes a remover a chave de acesso para o usuário \'%1$s\' em \'%2$s\'. Tem certeza?</string>
+  <string name="add_a_custom_section">Adicionar um campo personalizado</string>
 </resources>

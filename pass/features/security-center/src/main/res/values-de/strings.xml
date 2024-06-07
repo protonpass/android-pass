@@ -114,19 +114,19 @@
   <string name="security_center_verify_email_snackbar_message_resend_code_error">Beim Senden des Verifizierungscodes ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Zu viele ungültige Verifizierungen. Benutzerdefinierte E-Mail-Adresse wird entfernt.</string>
   <!-- Verify email monitoring -->
-  <string name="security_center_verify_report_title_detected">Entdeckte Verstöße für</string>
+  <string name="security_center_verify_report_title_detected">Datenlecks entdeckt für</string>
   <string name="security_center_verify_report_title_none">Keine Datenlecks entdeckt für</string>
   <!-- Email breach report -->
   <string name="security_center_email_report_used_in_header">Verwendet in</string>
   <string name="security_center_email_report_breaches_header">Datenlecks</string>
   <string name="security_center_email_report_resolved_breaches_header">Gelöste Datenlecks</string>
   <string name="security_center_email_report_mark_as_resolved">Als gelöst markieren</string>
-  <string name="security_center_email_report_snackbar_marked_as_resolved_success">Verstoß wurde als behoben markiert</string>
+  <string name="security_center_email_report_snackbar_marked_as_resolved_success">Datenleck wurde als gelöst markiert.</string>
   <string name="security_center_email_report_snackbar_marked_as_resolved_error">Konnte nicht als gelöst markiert werden.</string>
   <string name="security_center_email_report_snackbar_get_breaches_error">Fehler beim Laden der Datenlecks.</string>
   <string name="security_center_email_report_options_menu">Optionsmenü für den Datenleckbericht</string>
   <!-- Breach report detail-->
-  <string name="security_center_report_detail_your_exposed_information">Deine exponierten Informationen</string>
+  <string name="security_center_report_detail_your_exposed_information">Deine offengelegten Informationen</string>
   <string name="security_center_report_detail_subtitle">Deine Daten wurden bei einem Datenleck am __DATE__ gefunden.</string>
   <string name="security_center_report_detail_details">Details</string>
   <string name="security_center_report_detail_email_address">E-Mail-Adresse</string>
@@ -136,8 +136,8 @@
   <string name="security_center_report_detail_learn_more">Mehr erfahren</string>
   <string name="security_center_report_detail_snackbar_error">Fehler beim Laden der Datenleckdetails.</string>
   <string name="security_center_report_detail_excluded_from_monitoring">Von der Überwachung ausgeschlossen</string>
-  <string name="security_center_report_resolve_confirmation_dialog_title">Alle Datenlecks beseitigen?</string>
-  <string name="security_center_report_resolve_confirmation_dialog_message">All current breaches will be marked as resolved. In case of future data breaches, you will be notified.</string>
+  <string name="security_center_report_resolve_confirmation_dialog_title">Alle Datenlecks lösen?</string>
+  <string name="security_center_report_resolve_confirmation_dialog_message">Alle vorhandenen Datenlecks werden als behoben markiert. Im Falle künftiger Datenlecks wirst du benachrichtigt.</string>
   <!-- Proton list -->
   <string name="security_center_proton_list_top_bar_title">Proton-Adressen</string>
   <string name="security_center_proton_list_no_breaches_detected">Keine Datenlecks entdeckt</string>

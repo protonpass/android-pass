@@ -17,10 +17,10 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="select_passkey_action_title" comment="Title of the action to select a passkey. Will appear in the system passkey selector">Select another passkey</string>
-  <string name="select_passkey_action_subtitle" comment="Subtitle of the action to select a passkey. Will appear in the system passkey selector">Select a passkey from Proton Pass</string>
+  <string name="select_passkey_action_title" comment="Title of the action to select a passkey. Will appear in the system passkey selector">Обрати інший ключ доступу</string>
+  <string name="select_passkey_action_subtitle" comment="Subtitle of the action to select a passkey. Will appear in the system passkey selector">Виберіть ключ доступу від Proton Pass</string>
   <string name="passkeys_user_logged_out">Ви вийшли з системи. Увійдіть знову, відкривши програму.</string>
-  <string name="passkey_confirm_item_title" comment="Title of the dialog for confirming the generation of a passkey for an item">Generate passkey</string>
-  <string name="passkey_confirm_item_body" comment="Body of the dialog for confirming the generation of a passkey for an item. The placeholder contains the item title">Are you sure you want to generate a passkey for the item \'%s\'?</string>
-  <string name="passkey_error_generating_passkey">Could not generate passkey</string>
+  <string name="passkey_confirm_item_title" comment="Title of the dialog for confirming the generation of a passkey for an item">Згенерувати ключ доступу</string>
+  <string name="passkey_confirm_item_body" comment="Body of the dialog for confirming the generation of a passkey for an item. The placeholder contains the item title">Ви впевнені, що хочете згенерувати ключ доступу для елемента \'%s\'?</string>
+  <string name="passkey_error_generating_passkey">Не вдалося згенерувати ключ доступу</string>
 </resources>

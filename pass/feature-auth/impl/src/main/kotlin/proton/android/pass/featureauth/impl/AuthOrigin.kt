@@ -20,6 +20,8 @@ package proton.android.pass.featureauth.impl
 
 enum class AuthOrigin {
     CONFIGURE_PIN_OR_BIOMETRY,
-    CONFIGURE_EXTRA_PASSWORD,
-    AUTO_LOCK
+    AUTO_LOCK,
+    EXTRA_PASSWORD_CONFIGURE,
+    EXTRA_PASSWORD_LOGIN,
+    EXTRA_PASSWORD_REMOVE
 }

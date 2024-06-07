@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.extrapassword.auth.ui
+package proton.android.pass.enterextrapassword
 
 import android.content.Context
 import android.content.Intent

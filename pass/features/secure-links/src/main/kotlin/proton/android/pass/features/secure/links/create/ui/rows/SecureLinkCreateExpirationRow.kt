@@ -31,11 +31,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.features.secure.links.R
+import proton.android.pass.features.secure.links.create.presentation.SecureLinksCreateState
 import proton.android.pass.features.secure.links.create.ui.SecureLinksCreateUiEvent
 import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -43,6 +45,7 @@ import proton.android.pass.composecomponents.impl.R as CompR
 @Composable
 internal fun SecureLinkCreateExpirationRow(
     modifier: Modifier = Modifier,
+    expiration: SecureLinksCreateState.SecureLinkExpiration,
     onUiEvent: (SecureLinksCreateUiEvent) -> Unit,
 ) {
     Column(
@@ -95,7 +98,8 @@ internal fun SecureLinkCreateExpirationRow(
             )
 
             Text(
-                text = "7 days",
+                text = stringArrayResource(id = R.array.secure_links_create_row_expiration_options)
+                    .let { expirations -> expirations[expiration.ordinal] },
                 style = ProtonTheme.typography.body2Regular,
                 color = PassTheme.colors.textWeak
             )

@@ -35,7 +35,11 @@ import proton.android.pass.ui.AppNavigation
 internal const val UN_AUTH_GRAPH = "un_auth_graph"
 
 @Suppress("ComplexMethod")
-fun NavGraphBuilder.unAuthGraph(appNavigator: AppNavigator, onNavigate: (AppNavigation) -> Unit) {
+fun NavGraphBuilder.unAuthGraph(
+    appNavigator: AppNavigator,
+    onNavigate: (AppNavigation) -> Unit,
+    dismissBottomSheet: (() -> Unit) -> Unit
+) {
     navigation(
         route = UN_AUTH_GRAPH,
         startDestination = Auth.route
@@ -67,7 +71,7 @@ fun NavGraphBuilder.unAuthGraph(appNavigator: AppNavigator, onNavigate: (AppNavi
             EnterPinBottomsheet(
                 onNavigate = {
                     when (it) {
-                        is EnterPinNavigation.Success -> appNavigator.navigateBack()
+                        is EnterPinNavigation.Success -> dismissBottomSheet { appNavigator.navigateBack() }
                         EnterPinNavigation.ForceSignOut -> onNavigate(AppNavigation.ForceSignOut)
                     }
                 }

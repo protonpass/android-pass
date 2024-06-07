@@ -46,9 +46,6 @@ import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarH
 import proton.android.pass.composecomponents.impl.snackbar.SnackBarLaunchedEffect
 import proton.android.pass.composecomponents.impl.theme.SystemUIEffect
 import proton.android.pass.composecomponents.impl.theme.isDark
-import proton.android.pass.features.extrapassword.auth.navigation.EnterExtraPasswordDefaultNavItem
-import proton.android.pass.features.extrapassword.auth.navigation.ExtraPasswordOrigin
-import proton.android.pass.features.extrapassword.auth.presentation.EnterExtraPasswordAppViewModel
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 import proton.android.pass.network.api.NetworkStatus
@@ -104,7 +101,6 @@ fun EnterExtraPasswordApp(
                 ) {
                     OfflineIndicator()
                 }
-                val navItem = EnterExtraPasswordDefaultNavItem(userId, ExtraPasswordOrigin.Login)
                 PassModalBottomSheetLayout(appNavigator.passBottomSheetNavigator) {
                     PassNavHost(
                         modifier = Modifier.weight(1f),
@@ -113,7 +109,9 @@ fun EnterExtraPasswordApp(
                         graph = {
                             unAuthGraph(
                                 appNavigator = appNavigator,
-                                onNavigate = { },
+                                onNavigate = {
+                                    TODO()
+                                },
                                 dismissBottomSheet = { block ->
                                     onBottomSheetDismissed(
                                         coroutineScope = coroutineScope,

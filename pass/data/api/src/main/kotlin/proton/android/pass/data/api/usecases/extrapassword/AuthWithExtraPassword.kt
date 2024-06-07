@@ -22,5 +22,5 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 
 interface AuthWithExtraPassword {
-    suspend operator fun invoke(userId: UserId, password: EncryptedString)
+    suspend operator fun invoke(userId: UserId? = null, password: EncryptedString)
 }

@@ -45,8 +45,8 @@
     <item quantity="many">%d записів входу використовують той самий пароль</item>
     <item quantity="other">%d other logins use the same password</item>
   </plurals>
-  <string name="login_item_monitor_widget_missing_two_fa_title">Налаштуйте 2ЕП для більшої безпеки</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Цей сервіс пропонує 2ЕП. Увімкніть її для додаткової безпеки облікового запису.</string>
+  <string name="login_item_monitor_widget_missing_two_fa_title">Налаштуйте 2FA для більшої безпеки</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">Цей сервіс пропонує 2FA. Увімкніть це для додаткової безпеки облікового запису.</string>
   <string name="login_item_reused_passwords_subtitle">Записи входу з ваших сховищ, які використовують цей пароль.</string>
   <string name="field_email">Адреса електронної пошти</string>
   <string name="field_username">Ім\'я користувача</string>

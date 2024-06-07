@@ -9,7 +9,7 @@
   <string name="action_note">Muistiinpano</string>
   <string name="action_credit_card">Maksukortti</string>
   <string name="action_password">Salasana</string>
-  <string name="action_identity">Henkilöllisyys</string>
+  <string name="action_identity">Identiteetti</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Lisää sovelluksen tai sivuston kirjautumistiedot.</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Hanki sähköpostialias, jota voit käyttää uusissa sovelluksissa.</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Säilytä PIN- tai muita koodeja, tai muita muistiinpanoja.</string>
@@ -48,6 +48,7 @@
   <string name="bottomsheet_custom_field_option_edit">Muokkaa nimeä</string>
   <string name="bottomsheet_custom_field_option_remove">Poista kenttä</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Poista mukautettu kenttä</string>
+  <string name="bottomsheet_custom_section_option_remove">Poista osio</string>
   <string name="create_login_add_custom_field_button">Lisää kenttä</string>
   <string name="custom_field_hidden_placeholder">Lisää piilotettu teksti</string>
   <string name="custom_field_hidden_icon_content_description">Mukautetun piilotetun kentän kuvake</string>
@@ -55,6 +56,8 @@
   <string name="custom_field_dialog_title">Mukautetun kentän nimi</string>
   <string name="custom_field_dialog_body">Nimeä mukautettu kenttä</string>
   <string name="custom_field_dialog_placeholder">Esim. käyttäjätunnus, PIN</string>
+  <string name="custom_section_dialog_title">Syötä osion nimike</string>
+  <string name="custom_section_dialog_placeholder">Nimike</string>
   <string name="custom_field_options_content_description">Mukautetun kentän valinnat</string>
   <!-- Create Note -->
   <string name="create_note_item_creation_error">Muistiinpanoa ei voitu luoda</string>
@@ -144,15 +147,15 @@
   <string name="identity_add_field_personal_website">Henkilökohtainen verkkosivusto</string>
   <string name="identity_add_field_work_phone_number">Työpuhelinnumero</string>
   <string name="identity_add_field_work_email_address">Työsähköpostiosoite</string>
-  <string name="identity_add_field_custom_field">Custom field</string>
+  <string name="identity_add_field_custom_field">Mukautettu kenttä</string>
   <string name="identity_section_personal_details">Henkilötiedot</string>
   <string name="identity_section_address_details">Osoitetiedot</string>
   <string name="identity_section_contact_details">Yhteystiedon tiedot</string>
   <string name="identity_section_work_details">Työtiedot</string>
   <string name="identity_add_more_fields">Lisää</string>
   <string name="identity_bottomsheet_add_field">Lisää kenttä</string>
-  <string name="create_identity_item_creation_error">Henkilöllisyyttä ei voitu luoda</string>
-  <string name="create_identity_item_creation_success">Henkilöllisyys luotiin</string>
+  <string name="create_identity_item_creation_error">Identiteettiä ei voitu luoda</string>
+  <string name="create_identity_item_creation_success">Identiteetti luotiin</string>
   <!--  Common create items  -->
   <string name="title_create">Luo</string>
   <string name="changes_saved">Muutokset tallennettiin</string>
@@ -171,9 +174,9 @@
   <string name="upgrade">Päivitä</string>
   <string name="mfa_icon_content_description">2FA-kuvake</string>
   <string name="select_suffix_upgrade_for_custom_domains">Käytä omia verkkotunnuksiasi päivittämällä tilauksesi</string>
-  <string name="select_mailbox_upgrade_for_more_inboxes">Hanki lisää postilaatikoita päivittämällä tilauksesi</string>
   <string name="create_alias_content_limit_banner">Luotujen aliasten enimmäismäärä on saavutettu. Luo aliaksia rajattomasti päivittämällä tilauksesi.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Sovellus on päivitettävä tämän kohteen muokkaamiseksi</string>
   <string name="remove_passkey_dialog_title">Poistetaanko tämä suojausavain?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Haluatko varmasti poistaa suojausavaimen osoitteen \"%2$s\" käyttäjältä \"%1$s\"?</string>
+  <string name="add_a_custom_section">Lisää mukautettu osio</string>
 </resources>

@@ -18,6 +18,8 @@
 
 package proton.android.pass.data.impl.usecases.extrapassword
 
+import kotlinx.coroutines.flow.first
+import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.srp.SrpCrypto
@@ -35,14 +37,17 @@ class AuthWithExtraPasswordImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val remoteExtraPasswordDataSource: RemoteExtraPasswordDataSource,
     private val sessionManager: SessionManager,
-    private val authWithExtraPasswordListener: AuthWithExtraPasswordListenerImpl
+    private val authWithExtraPasswordListener: AuthWithExtraPasswordListenerImpl,
+    private val accountManager: AccountManager
 ) : AuthWithExtraPassword {
-    override suspend fun invoke(userId: UserId, password: EncryptedString) {
+    override suspend fun invoke(userId: UserId?, password: EncryptedString) {
+        val actualUserId = userId ?: accountManager.getPrimaryUserId().first()
+            ?: throw IllegalStateException("No user id provided and no primary user found")
         val decryptedPassword = encryptionContextProvider.withEncryptionContext {
             decrypt(password).encodeToByteArray()
         }
 
-        val srpData = remoteExtraPasswordDataSource.getExtraPasswordAuthData(userId)
+        val srpData = remoteExtraPasswordDataSource.getExtraPasswordAuthData(actualUserId)
 
         val proofs = srpCrypto.generateSrpProofs(
             username = "", // Not used
@@ -54,7 +59,7 @@ class AuthWithExtraPasswordImpl @Inject constructor(
         )
 
         remoteExtraPasswordDataSource.sendExtraPasswordAuthData(
-            userId = userId,
+            userId = actualUserId,
             request = ExtraPasswordSendSrpDataRequest(
                 clientEphemeral = proofs.clientEphemeral,
                 clientProof = proofs.clientProof,
@@ -63,10 +68,10 @@ class AuthWithExtraPasswordImpl @Inject constructor(
         )
 
         PassLogger.i(TAG, "Auth with extra password successful. Refreshing session scopes")
-        sessionManager.getSessionId(userId)?.let { session ->
+        sessionManager.getSessionId(actualUserId)?.let { session ->
             sessionManager.refreshScopes(session)
         }
-        authWithExtraPasswordListener.setState(userId, AuthWithExtraPasswordResult.Success)
+        authWithExtraPasswordListener.setState(actualUserId, AuthWithExtraPasswordResult.Success)
     }
 
     companion object {

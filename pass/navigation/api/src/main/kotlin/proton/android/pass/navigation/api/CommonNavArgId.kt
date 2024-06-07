@@ -48,11 +48,6 @@ enum class CommonNavArgId : NavArgId {
 
 private const val KEY_USER_ID = "userId"
 
-data class UserIdDefaultNavArgId(override val default: Any?) : NavArgId {
-    override val key = KEY_USER_ID
-    override val navType = NavType.StringType
-}
-
 data object UserIdNavArgId : NavArgId {
     override val key = KEY_USER_ID
     override val navType = NavType.StringType

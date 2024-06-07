@@ -48,6 +48,7 @@
   <string name="bottomsheet_custom_field_option_edit">Επεξεργασία ονόματος</string>
   <string name="bottomsheet_custom_field_option_remove">Αφαίρεση πεδίου</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Κατάργηση προσαρμοσμένου πεδίου</string>
+  <string name="bottomsheet_custom_section_option_remove">Αφαίρεση τμήματος</string>
   <string name="create_login_add_custom_field_button">Προσθήκη άλλου πεδίου</string>
   <string name="custom_field_hidden_placeholder">Προσθήκη κρυφού κειμένου</string>
   <string name="custom_field_hidden_icon_content_description">Εικονίδιο κρυφού προσαρμοσμένου πεδίου</string>
@@ -55,6 +56,8 @@
   <string name="custom_field_dialog_title">Προσαρμοσμένο πεδίο</string>
   <string name="custom_field_dialog_body">Δώστε ένα όνομα στο προσαρμοσμένο πεδίο σας</string>
   <string name="custom_field_dialog_placeholder">Πχ., User ID, PIN</string>
+  <string name="custom_section_dialog_title">Εισαγάγετε έναν τίτλο ενότητας</string>
+  <string name="custom_section_dialog_placeholder">Τίτλος</string>
   <string name="custom_field_options_content_description">Επιλογές προσαρμοσμένου πεδίου</string>
   <!-- Create Note -->
   <string name="create_note_item_creation_error">Δεν ήταν δυνατή η δημιουργία σημείωσης</string>
@@ -144,7 +147,7 @@
   <string name="identity_add_field_personal_website">Διαδικτυακή διεύθυνση προσωπικού ιστότοπου</string>
   <string name="identity_add_field_work_phone_number">Αριθμός τηλεφώνου εργασίας</string>
   <string name="identity_add_field_work_email_address">Διεύθυνση ηλεκτρονικού ταχυδρομείου εργασίας</string>
-  <string name="identity_add_field_custom_field">Custom field</string>
+  <string name="identity_add_field_custom_field">Προσαρμοσμένο πεδίο</string>
   <string name="identity_section_personal_details">Προσωπικές πληροφορίες</string>
   <string name="identity_section_address_details">Λεπτομέρειες διεύθυνσης</string>
   <string name="identity_section_contact_details">Στοιχεία επαφής</string>
@@ -171,9 +174,9 @@
   <string name="upgrade">Αναβάθμιση</string>
   <string name="mfa_icon_content_description">Εικονίδιο 2FA</string>
   <string name="select_suffix_upgrade_for_custom_domains">Αναβάθμιση για προσαρμοσμένους τομείς</string>
-  <string name="select_mailbox_upgrade_for_more_inboxes">Αναβάθμιση για περισσότερα εισερχόμενα</string>
   <string name="create_alias_content_limit_banner">Έχετε φτάσει στο όριο των ψευδωνύμων που μπορείτε να δημιουργήσετε. Δημιουργήστε απεριόριστο αριθμό ψευδωνύμων κατά την αναβάθμιση της συνδρομής σας.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Η εφαρμογή πρέπει να ενημερωθεί για να επεξεργαστείτε αυτό το στοιχείο</string>
   <string name="remove_passkey_dialog_title">Αφαίρεση αυτού του κλειδιού πρόσβασης;</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Πρόκειται να καταργήσετε το κλειδί πρόσβασης για το χρήστη \'%1$s\' για \'%2$s\'. Είστε σίγουροι;</string>
+  <string name="add_a_custom_section">Add a custom section</string>
 </resources>

@@ -32,7 +32,7 @@
   <string name="item_unpinned_message">ელემენტის მოხსნა წარმატებულია</string>
   <string name="item_unpinned_message_error">ელემენტის მოხსნის შეცდომა</string>
   <string name="item_monitor_exclude_message">ელემენტის მონიტორინგიდან ამოღება წარმატებულია</string>
-  <string name="item_monitor_exclude_message_error">There was an error excluding item from monitoring</string>
+  <string name="item_monitor_exclude_message_error">მონიტორინგიდან ელემენტის ამოღების შეცდომა</string>
   <string name="item_monitor_include_message">ელემენტის მონიტორინგში ჩასმა წარმატებულია</string>
   <string name="item_monitor_include_message_error">ელემენტის მონიტორინგში ჩასმის შეცდომა</string>
   <string name="login_item_generate_totp_error">2FA კოდის გენერაციის შეცდომა</string>
@@ -45,7 +45,7 @@
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">მოირგეთ 2FA მეტი უსაფრთხოებისთვის</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">This service offers 2FA. Enable it for added account security.</string>
-  <string name="login_item_reused_passwords_subtitle">Items from your vaults that use this password.</string>
+  <string name="login_item_reused_passwords_subtitle">ელემენტები თქვენი საცავებიდან, რომლებიც ამ პაროლს იყენებს.</string>
   <string name="field_email">ელფოსტის მისამართი</string>
   <string name="field_username">მომხმარებლის სახელი</string>
   <string name="field_username_or_email">მომხმარებლის სახელი ან ელფოსტის მისამართი</string>

@@ -55,7 +55,7 @@ import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordListener
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordResult
-import proton.android.pass.features.extrapassword.auth.ui.EnterExtraPasswordActivity
+import proton.android.pass.enterextrapassword.EnterExtraPasswordActivity
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository

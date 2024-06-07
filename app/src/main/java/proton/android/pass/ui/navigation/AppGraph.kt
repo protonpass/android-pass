@@ -18,8 +18,6 @@
 
 package proton.android.pass.ui.navigation
 
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
@@ -212,8 +210,6 @@ import proton.android.pass.featurevault.impl.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.ui.AppNavigation
 
-@ExperimentalMaterialApi
-@ExperimentalComposeUiApi
 @Suppress("LongMethod", "ComplexMethod")
 fun NavGraphBuilder.appGraph(
     appNavigator: AppNavigator,
@@ -546,7 +542,7 @@ fun NavGraphBuilder.appGraph(
                             dismissBottomSheet {
                                 appNavigator.navigate(
                                     destination = Auth,
-                                    route = Auth.buildRoute(AuthOrigin.CONFIGURE_EXTRA_PASSWORD)
+                                    route = Auth.buildRoute(AuthOrigin.EXTRA_PASSWORD_CONFIGURE)
                                 )
                             }
 
@@ -1162,9 +1158,11 @@ fun NavGraphBuilder.appGraph(
             when (it) {
                 is AuthNavigation.Back -> when (it.origin) {
                     AuthOrigin.CONFIGURE_PIN_OR_BIOMETRY,
-                    AuthOrigin.CONFIGURE_EXTRA_PASSWORD -> appNavigator.navigateBack()
+                    AuthOrigin.EXTRA_PASSWORD_CONFIGURE -> appNavigator.navigateBack()
 
                     AuthOrigin.AUTO_LOCK -> onNavigate(AppNavigation.Finish)
+                    AuthOrigin.EXTRA_PASSWORD_LOGIN -> TODO()
+                    AuthOrigin.EXTRA_PASSWORD_REMOVE -> TODO()
                 }
 
                 is AuthNavigation.Success -> when (it.origin) {
@@ -1174,13 +1172,15 @@ fun NavGraphBuilder.appGraph(
                             value = true
                         )
 
-                    AuthOrigin.CONFIGURE_EXTRA_PASSWORD ->
+                    AuthOrigin.EXTRA_PASSWORD_CONFIGURE ->
                         appNavigator.navigate(
                             destination = SetExtraPasswordNavItem,
                             backDestination = Account
                         )
 
                     AuthOrigin.AUTO_LOCK -> appNavigator.navigateBack()
+                    AuthOrigin.EXTRA_PASSWORD_LOGIN -> TODO()
+                    AuthOrigin.EXTRA_PASSWORD_REMOVE -> TODO()
                 }
 
                 AuthNavigation.Dismissed -> onNavigate(AppNavigation.Finish)

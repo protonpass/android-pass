@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.extrapassword.auth.ui
+package proton.android.pass.enterextrapassword
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
@@ -24,30 +24,40 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.compose.NavHost
+import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
+import kotlinx.coroutines.CoroutineScope
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.messages.OfflineIndicator
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
 import proton.android.pass.composecomponents.impl.snackbar.SnackBarLaunchedEffect
 import proton.android.pass.composecomponents.impl.theme.SystemUIEffect
 import proton.android.pass.composecomponents.impl.theme.isDark
-import proton.android.pass.features.extrapassword.ExtraPasswordNavigation
 import proton.android.pass.features.extrapassword.auth.navigation.EnterExtraPasswordDefaultNavItem
 import proton.android.pass.features.extrapassword.auth.navigation.ExtraPasswordOrigin
 import proton.android.pass.features.extrapassword.auth.presentation.EnterExtraPasswordAppViewModel
-import proton.android.pass.navigation.api.composable
-import proton.android.pass.navigation.api.rememberNavController
+import proton.android.pass.navigation.api.rememberAppNavigator
+import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 import proton.android.pass.network.api.NetworkStatus
+import proton.android.pass.ui.PassNavHost
+import proton.android.pass.ui.navigation.UN_AUTH_GRAPH
+import proton.android.pass.ui.navigation.unAuthGraph
+import proton.android.pass.ui.onBottomSheetDismissed
 
+@OptIn(ExperimentalMaterialApi::class, ExperimentalMaterialNavigationApi::class)
 @Composable
 fun EnterExtraPasswordApp(
     modifier: Modifier = Modifier,
@@ -59,6 +69,14 @@ fun EnterExtraPasswordApp(
     val appUiState by appViewModel.appUiState.collectAsStateWithLifecycle()
     val isDark = isDark(appUiState.theme)
     SystemUIEffect(isDark = isDark)
+
+    val coroutineScope: CoroutineScope = rememberCoroutineScope()
+    val bottomSheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        skipHalfExpanded = true
+    )
+    val bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState)
+    val appNavigator = rememberAppNavigator(bottomSheetNavigator)
 
     val scaffoldState = rememberScaffoldState()
     val passSnackbarHostState = rememberPassSnackbarHostState(scaffoldState.snackbarHostState)
@@ -87,23 +105,26 @@ fun EnterExtraPasswordApp(
                     OfflineIndicator()
                 }
                 val navItem = EnterExtraPasswordDefaultNavItem(userId, ExtraPasswordOrigin.Login)
-                NavHost(
-                    navController = rememberNavController(),
-                    startDestination = navItem.route,
-                    builder = {
-                        composable(navItem) {
-                            EnterExtraPasswordScreen(
-                                onNavigate = { navEvent ->
-                                    when (navEvent) {
-                                        is ExtraPasswordNavigation.EnterPasswordSuccess -> onSuccess()
-                                        is ExtraPasswordNavigation.Logout -> onLogout(navEvent.userId)
-                                        else -> {}
-                                    }
+                PassModalBottomSheetLayout(appNavigator.passBottomSheetNavigator) {
+                    PassNavHost(
+                        modifier = Modifier.weight(1f),
+                        appNavigator = appNavigator,
+                        startDestination = UN_AUTH_GRAPH,
+                        graph = {
+                            unAuthGraph(
+                                appNavigator = appNavigator,
+                                onNavigate = { },
+                                dismissBottomSheet = { block ->
+                                    onBottomSheetDismissed(
+                                        coroutineScope = coroutineScope,
+                                        modalBottomSheetState = bottomSheetState,
+                                        block = block
+                                    )
                                 }
                             )
                         }
-                    }
-                )
+                    )
+                }
             }
         }
     }

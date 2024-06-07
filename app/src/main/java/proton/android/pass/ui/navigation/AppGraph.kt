@@ -121,6 +121,9 @@ import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestin
 import proton.android.pass.features.item.history.navigation.itemHistoryNavGraph
 import proton.android.pass.features.item.history.restore.navigation.ItemHistoryRestoreNavItem
 import proton.android.pass.features.item.history.timeline.navigation.ItemHistoryTimelineNavItem
+import proton.android.pass.features.secure.links.create.navigation.SecureLinksCreateNavItem
+import proton.android.pass.features.secure.links.shared.navigation.SecureLinksNavDestination
+import proton.android.pass.features.secure.links.shared.navigation.secureLinksNavGraph
 import proton.android.pass.features.security.center.addressoptions.navigation.SecurityCenterAliasAddressOptionsNavItem
 import proton.android.pass.features.security.center.addressoptions.navigation.SecurityCenterCustomAddressOptionsNavItem
 import proton.android.pass.features.security.center.addressoptions.navigation.SecurityCenterGlobalAddressOptionsNavItem
@@ -819,7 +822,10 @@ fun NavGraphBuilder.appGraph(
                 BaseIdentityNavigation.Close -> dismissBottomSheet { appNavigator.navigateBack() }
                 is BaseIdentityNavigation.OpenExtraFieldBottomSheet -> appNavigator.navigate(
                     destination = IdentityFieldsBottomSheet,
-                    route = IdentityFieldsBottomSheet.createRoute(it.addIdentityFieldType, it.sectionIndex)
+                    route = IdentityFieldsBottomSheet.createRoute(
+                        it.addIdentityFieldType,
+                        it.sectionIndex
+                    )
                 )
 
                 is CreateIdentityNavigation.ItemCreated -> appNavigator.navigateBack()
@@ -851,6 +857,7 @@ fun NavGraphBuilder.appGraph(
                     destination = CustomFieldOptionsBottomSheet,
                     route = CustomFieldOptionsBottomSheet.buildRoute(it.index, it.title)
                 )
+
                 BaseIdentityNavigation.RemovedCustomField -> dismissBottomSheet {
                     appNavigator.navigateBack(comesFromBottomsheet = true)
                 }
@@ -865,10 +872,12 @@ fun NavGraphBuilder.appGraph(
                         backDestination = backDestination
                     )
                 }
+
                 is BaseIdentityNavigation.ExtraSectionOptions -> appNavigator.navigate(
                     destination = CustomSectionOptionsBottomSheetNavItem,
                     route = CustomSectionOptionsBottomSheetNavItem.buildRoute(it.index, it.title)
                 )
+
                 BaseIdentityNavigation.RemoveCustomSection -> dismissBottomSheet {
                     appNavigator.navigateBack(comesFromBottomsheet = true)
                 }
@@ -1510,6 +1519,14 @@ fun NavGraphBuilder.appGraph(
             SharingNavigation.InviteError -> appNavigator.navigate(
                 destination = InvitesErrorDialog
             )
+
+            is SharingNavigation.ShareItem -> appNavigator.navigate(
+                destination = SecureLinksCreateNavItem,
+                route = SecureLinksCreateNavItem.createNavRoute(
+                    shareId = it.shareId,
+                    itemId = it.itemId
+                )
+            )
         }
     }
 
@@ -1532,5 +1549,15 @@ fun NavGraphBuilder.appGraph(
     extraPasswordGraph(
         onSuccess = { appNavigator.navigate(Home) },
         onLogout = { onNavigate(AppNavigation.SignOut(it)) }
+    )
+
+    secureLinksNavGraph(
+        onNavigated = { destination ->
+            when (destination) {
+                SecureLinksNavDestination.Back -> appNavigator.navigateBack(
+                    comesFromBottomsheet = false
+                )
+            }
+        }
     )
 }

@@ -42,6 +42,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.SessionManager
@@ -56,6 +57,8 @@ import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordResult
 import proton.android.pass.features.extrapassword.ui.EnterExtraPasswordActivity
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Singleton
 
 @Module
@@ -64,18 +67,21 @@ object AuthModule {
 
     @Provides
     @Singleton
+    @Suppress("LongParameterList")
     fun provideUserCheck(
         @ApplicationContext context: Context,
         accountManager: AccountManager,
         userManager: UserManager,
         sessionManager: SessionManager,
-        authWithExtraPasswordListener: AuthWithExtraPasswordListener
+        authWithExtraPasswordListener: AuthWithExtraPasswordListener,
+        ffRepo: FeatureFlagsPreferencesRepository
     ): PostLoginAccountSetup.UserCheck = PassScopeUserCheck(
         context = context,
         accountManager = accountManager,
         userManager = userManager,
         sessionManager = sessionManager,
-        authWithExtraPasswordListener = authWithExtraPasswordListener
+        authWithExtraPasswordListener = authWithExtraPasswordListener,
+        ffRepo = ffRepo
     )
 
     @Provides
@@ -92,12 +98,18 @@ class PassScopeUserCheck(
     private val sessionManager: SessionManager,
     private val authWithExtraPasswordListener: AuthWithExtraPasswordListener,
     private val context: Context,
+    private val ffRepo: FeatureFlagsPreferencesRepository,
     userManager: UserManager
 ) : DefaultUserCheck(context, accountManager, userManager) {
     override suspend fun invoke(user: User): PostLoginAccountSetup.UserCheckResult =
         when (val superResult = super.invoke(user)) {
             is PostLoginAccountSetup.UserCheckResult.Success -> {
-                checkPassScope(user, authWithExtraPasswordListener)
+                val isExtraPasswordEnabled = ffRepo.get<Boolean>(FeatureFlag.ACCESS_KEY_V1).first()
+                if (!isExtraPasswordEnabled) {
+                    superResult
+                } else {
+                    checkPassScope(user, authWithExtraPasswordListener)
+                }
             }
             else -> superResult
         }

@@ -65,7 +65,7 @@ fun AuthScreen(
         onEvent = {
             when (it) {
                 is AuthUiEvent.OnPasswordUpdate -> viewModel.onPasswordChanged(it.value)
-                AuthUiEvent.OnPasswordSubmit -> viewModel.onSubmit()
+                AuthUiEvent.OnPasswordSubmit -> viewModel.onSubmit(state.content.hasExtraPassword)
                 AuthUiEvent.OnSignOut -> viewModel.onSignOut()
                 is AuthUiEvent.OnTogglePasswordVisibility ->
                     viewModel.onTogglePasswordVisibility(it.value)

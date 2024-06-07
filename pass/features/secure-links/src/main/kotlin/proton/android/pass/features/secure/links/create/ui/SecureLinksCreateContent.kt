@@ -29,14 +29,16 @@ import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
 import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
 import proton.android.pass.features.secure.links.R
 import proton.android.pass.features.secure.links.create.presentation.SecureLinksCreateState
+import proton.android.pass.features.secure.links.create.ui.dialogs.SecureLinkCreateExpirationDialog
 import proton.android.pass.features.secure.links.create.ui.rows.SecureLinkCreateExpirationRow
 import proton.android.pass.features.secure.links.create.ui.rows.SecureLinkCreateMaxViewsRow
 
 @Composable
 internal fun SecureLinksCreateContent(
     modifier: Modifier = Modifier,
-    onUiEvent: (SecureLinksCreateUiEvent) -> Unit,
     state: SecureLinksCreateState,
+    shouldDisplayExpirationDialog: Boolean,
+    onUiEvent: (SecureLinksCreateUiEvent) -> Unit,
 ) = with(state) {
     Scaffold(
         modifier = modifier,
@@ -71,5 +73,12 @@ internal fun SecureLinksCreateContent(
                 onUiEvent = onUiEvent
             )
         }
+    }
+
+    if (shouldDisplayExpirationDialog) {
+        SecureLinkCreateExpirationDialog(
+            selectedExpiration = expiration,
+            onUiEvent = onUiEvent,
+        )
     }
 }

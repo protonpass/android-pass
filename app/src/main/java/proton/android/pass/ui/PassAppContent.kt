@@ -24,7 +24,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.LinearProgressIndicator
-import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarDuration
@@ -39,7 +38,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import proton.android.pass.R
@@ -58,6 +56,9 @@ import proton.android.pass.notifications.api.SnackbarType
 import proton.android.pass.ui.internal.InternalDrawerState
 import proton.android.pass.ui.internal.InternalDrawerValue
 import proton.android.pass.ui.internal.rememberInternalDrawerState
+import proton.android.pass.ui.navigation.UN_AUTH_GRAPH
+import proton.android.pass.ui.navigation.appGraph
+import proton.android.pass.ui.navigation.unAuthGraph
 
 @OptIn(
     ExperimentalMaterialNavigationApi::class,
@@ -158,9 +159,23 @@ fun PassAppContent(
                             rememberBottomSheetNavigator(unAuthBottomSheetState)
                         val unAuthAppNavigator = rememberAppNavigator(unAuthBottomSheetNavigator)
                         PassModalBottomSheetLayout(unAuthAppNavigator.passBottomSheetNavigator) {
-                            PassUnAuthNavHost(
+                            PassNavHost(
+                                modifier = Modifier.weight(1f),
                                 appNavigator = unAuthAppNavigator,
-                                onNavigate = onNavigate
+                                startDestination = UN_AUTH_GRAPH,
+                                graph = {
+                                    unAuthGraph(
+                                        appNavigator = unAuthAppNavigator,
+                                        onNavigate = onNavigate,
+                                        dismissBottomSheet = { block ->
+                                            onBottomSheetDismissed(
+                                                coroutineScope = coroutineScope,
+                                                modalBottomSheetState = unAuthBottomSheetState,
+                                                block = block
+                                            )
+                                        }
+                                    )
+                                }
                             )
                         }
                     } else {
@@ -168,12 +183,17 @@ fun PassAppContent(
                             PassNavHost(
                                 modifier = Modifier.weight(1f),
                                 appNavigator = appNavigator,
-                                onNavigate = onNavigate,
-                                dismissBottomSheet = { block ->
-                                    onBottomSheetDismissed(
-                                        coroutineScope = coroutineScope,
-                                        modalBottomSheetState = bottomSheetState,
-                                        block = block
+                                graph = {
+                                    appGraph(
+                                        appNavigator = appNavigator,
+                                        onNavigate = onNavigate,
+                                        dismissBottomSheet = { block ->
+                                            onBottomSheetDismissed(
+                                                coroutineScope = coroutineScope,
+                                                modalBottomSheetState = bottomSheetState,
+                                                block = block
+                                            )
+                                        }
                                     )
                                 }
                             )
@@ -186,21 +206,3 @@ fun PassAppContent(
 }
 
 private const val TAG = "PassAppContent"
-
-@OptIn(ExperimentalMaterialApi::class)
-private fun onBottomSheetDismissed(
-    coroutineScope: CoroutineScope,
-    modalBottomSheetState: ModalBottomSheetState,
-    block: () -> Unit
-) {
-    coroutineScope.launch {
-        if (modalBottomSheetState.isVisible) {
-            try {
-                modalBottomSheetState.hide()
-            } catch (e: CancellationException) {
-                PassLogger.d(TAG, e, "Bottom sheet hidden animation interrupted")
-            }
-        }
-        block()
-    }
-}

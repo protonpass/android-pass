@@ -23,17 +23,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultNorm
+import me.proton.core.compose.theme.headlineNorm
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.body3Norm
 
 object Text {
     @Composable
     fun Headline(
         text: String,
         modifier: Modifier = Modifier,
-        color: Color = ProtonTheme.typography.headline.color
+        color: Color = ProtonTheme.typography.headlineNorm.color
     ) {
         Text(
             text = text,
-            style = ProtonTheme.typography.headline.copy(color = color),
+            style = ProtonTheme.typography.headlineNorm.copy(color = color),
             modifier = modifier
         )
     }
@@ -42,11 +46,11 @@ object Text {
     fun Body1Regular(
         text: String,
         modifier: Modifier = Modifier,
-        color: Color = ProtonTheme.typography.body1Regular.color
+        color: Color = ProtonTheme.typography.defaultNorm.color
     ) {
         Text(
             text = text,
-            style = ProtonTheme.typography.body1Regular.copy(color = color),
+            style = ProtonTheme.typography.defaultNorm.copy(color = color),
             modifier = modifier
         )
     }
@@ -55,11 +59,11 @@ object Text {
     fun Body3Regular(
         text: String,
         modifier: Modifier = Modifier,
-        color: Color = ProtonTheme.typography.body1Regular.color
+        color: Color = PassTheme.typography.body3Norm().color
     ) {
         Text(
             text = text,
-            style = ProtonTheme.typography.body1Regular.copy(color = color),
+            style = PassTheme.typography.body3Norm().copy(color = color),
             modifier = modifier
         )
     }

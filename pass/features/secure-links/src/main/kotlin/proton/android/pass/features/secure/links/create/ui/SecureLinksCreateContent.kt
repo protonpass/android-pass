@@ -60,6 +60,7 @@ internal fun SecureLinksCreateContent(
                 .padding(top = Spacing.medium)
         ) {
             SecureLinkCreateExpirationRow(
+                expiration = expiration,
                 onUiEvent = onUiEvent
             )
 

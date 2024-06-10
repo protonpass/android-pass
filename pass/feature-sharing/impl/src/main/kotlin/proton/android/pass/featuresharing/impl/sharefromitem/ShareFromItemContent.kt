@@ -33,11 +33,12 @@ import me.proton.core.compose.theme.defaultWeak
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.featuresharing.impl.R
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun ShareFromItemContent(
+internal fun ShareFromItemContent(
     modifier: Modifier = Modifier,
     state: ShareFromItemUiState,
     onEvent: (ShareFromItemEvent) -> Unit
@@ -49,19 +50,38 @@ fun ShareFromItemContent(
         ),
         verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
     ) {
-        Column {
+
+        if (true) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(R.string.sharing_from_item_title),
                 style = ProtonTheme.typography.defaultHighlightNorm,
                 textAlign = TextAlign.Center
             )
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = stringResource(R.string.sharing_from_item_description),
-                style = ProtonTheme.typography.defaultWeak,
-                textAlign = TextAlign.Center
+
+            ShareItemSecureLinkRow(
+                onClick = { onEvent(ShareFromItemEvent.ShareSecureLink) }
             )
+
+            PassDivider(
+                modifier = Modifier.padding(vertical = Spacing.small)
+            )
+        } else {
+            Column {
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = stringResource(R.string.sharing_from_item_title),
+                    style = ProtonTheme.typography.defaultHighlightNorm,
+                    textAlign = TextAlign.Center
+                )
+
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = stringResource(R.string.sharing_from_item_description),
+                    style = ProtonTheme.typography.defaultWeak,
+                    textAlign = TextAlign.Center
+                )
+            }
         }
 
         if (state.vault is Some) {

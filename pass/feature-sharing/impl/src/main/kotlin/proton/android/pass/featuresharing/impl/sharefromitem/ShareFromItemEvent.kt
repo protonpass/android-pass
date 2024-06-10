@@ -18,11 +18,16 @@
 
 package proton.android.pass.featuresharing.impl.sharefromitem
 
-sealed interface ShareFromItemEvent {
+internal sealed interface ShareFromItemEvent {
 
     data object ShareVault : ShareFromItemEvent
+
     data object MoveToSharedVault : ShareFromItemEvent
+
     data object CreateNewVault : ShareFromItemEvent
+
     data object Upgrade : ShareFromItemEvent
+
+    data object ShareSecureLink : ShareFromItemEvent
 
 }

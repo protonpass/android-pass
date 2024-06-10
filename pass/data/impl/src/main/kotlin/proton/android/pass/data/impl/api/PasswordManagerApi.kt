@@ -31,7 +31,7 @@ import proton.android.pass.data.impl.requests.CreateItemAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemRequest
 import proton.android.pass.data.impl.requests.CreateNewUserInviteRequest
 import proton.android.pass.data.impl.requests.CreateNewUserInvitesRequest
-import proton.android.pass.data.impl.requests.CreatePublicLinkRequest
+import proton.android.pass.data.impl.requests.CreateSecureLinkRequest
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.requests.ExtraPasswordSendSrpDataRequest
 import proton.android.pass.data.impl.requests.MigrateItemRequest
@@ -54,7 +54,7 @@ import proton.android.pass.data.impl.responses.BreachesResponse
 import proton.android.pass.data.impl.responses.CheckAddressesCanBeInvitedResponse
 import proton.android.pass.data.impl.responses.CodeOnlyResponse
 import proton.android.pass.data.impl.responses.CreateItemAliasResponse
-import proton.android.pass.data.impl.responses.CreatePublicLinkResponse
+import proton.android.pass.data.impl.responses.CreateSecureLinkResponse
 import proton.android.pass.data.impl.responses.CreateVaultResponse
 import proton.android.pass.data.impl.responses.DeleteVaultResponse
 import proton.android.pass.data.impl.responses.ExtraPasswordGetSrpDataResponse
@@ -394,8 +394,8 @@ interface PasswordManagerApi : BaseRetrofitApi {
     suspend fun generatePublicLink(
         @Path("shareId") shareId: String,
         @Path("itemId") itemId: String,
-        @Body request: CreatePublicLinkRequest
-    ): CreatePublicLinkResponse
+        @Body request: CreateSecureLinkRequest
+    ): CreateSecureLinkResponse
 
     // Extra Password
     @POST("$PREFIX/user/srp")

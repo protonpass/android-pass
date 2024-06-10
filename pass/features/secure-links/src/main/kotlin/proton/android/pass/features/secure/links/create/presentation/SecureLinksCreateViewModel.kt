@@ -33,8 +33,8 @@ import proton.android.pass.common.api.runCatching
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
-import proton.android.pass.data.api.usecases.publiclink.GeneratePublicLink
-import proton.android.pass.data.api.usecases.publiclink.PublicLinkOptions
+import proton.android.pass.data.api.usecases.publiclink.GenerateSecureLink
+import proton.android.pass.data.api.usecases.publiclink.SecureLinkOptions
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
@@ -44,7 +44,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SecureLinksCreateViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
-    private val generatePublicLink: GeneratePublicLink
+    private val generateSecureLink: GenerateSecureLink
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -105,11 +105,11 @@ class SecureLinksCreateViewModel @Inject constructor(
 
         viewModelScope.launch {
             runCatching {
-                generatePublicLink(
+                generateSecureLink(
                     userId = null,
                     shareId = shareId,
                     itemId = itemId,
-                    options = PublicLinkOptions(
+                    options = SecureLinkOptions(
                         expirationTime = state.value.expiration.duration,
                         maxReadCount = state.value.maxViewsAllowedOption.value()
                     )

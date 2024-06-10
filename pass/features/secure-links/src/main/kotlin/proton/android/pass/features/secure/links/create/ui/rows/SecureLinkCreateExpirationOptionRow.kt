@@ -24,15 +24,19 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.RadioButton
 import androidx.compose.material.RadioButtonDefaults
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 
-@Composable
+@[Composable Suppress("FunctionMaxLength")]
 internal fun SecureLinkCreateExpirationOptionRow(
     modifier: Modifier = Modifier,
     text: String,
@@ -59,5 +63,22 @@ internal fun SecureLinkCreateExpirationOptionRow(
             style = ProtonTheme.typography.body2Regular,
             color = PassTheme.colors.textNorm
         )
+    }
+}
+
+@[Preview Composable Suppress("FunctionMaxLength")]
+internal fun SecureLinkCreateExpirationOptionRowPreview(
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+) {
+    val (isDark, isSelected) = input
+
+    PassTheme(isDark = isDark) {
+        Surface {
+            SecureLinkCreateExpirationOptionRow(
+                text = "Expiration option",
+                onSelected = {},
+                isSelected = isSelected
+            )
+        }
     }
 }

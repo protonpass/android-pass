@@ -32,6 +32,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.Surface
 import androidx.compose.material.Switch
 import androidx.compose.material.SwitchDefaults
 import androidx.compose.material.Text
@@ -41,10 +42,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.features.secure.links.R
 import proton.android.pass.features.secure.links.create.ui.SecureLinksCreateUiEvent
 import me.proton.core.presentation.R as CoreR
@@ -150,6 +154,25 @@ internal fun SecureLinkCreateMaxViewsRow(
                     }
                 }
             }
+        }
+    }
+}
+
+@[Preview Composable]
+internal fun SecureLinkCreateMaxViewsRowPreview(
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+) {
+    val (isDark, isEnabled) = input
+
+    PassTheme(isDark = isDark) {
+        Surface {
+            SecureLinkCreateMaxViewsRow(
+                isConfigurationAllowed = true,
+                isMaxViewsEnabled = isEnabled,
+                isMaxViewsDecreaseEnabled = false,
+                maxViewsAllowed = 1,
+                onUiEvent = {}
+            )
         }
     }
 }

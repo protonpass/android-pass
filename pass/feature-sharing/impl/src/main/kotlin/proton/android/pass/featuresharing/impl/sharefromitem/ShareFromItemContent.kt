@@ -50,8 +50,7 @@ internal fun ShareFromItemContent(
         ),
         verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
     ) {
-
-        if (true) {
+        if (state.isSecureLinkEnabled) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(R.string.sharing_from_item_title),

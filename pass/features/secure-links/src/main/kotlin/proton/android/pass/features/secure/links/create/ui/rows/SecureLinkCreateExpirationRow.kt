@@ -52,7 +52,7 @@ internal fun SecureLinkCreateExpirationRow(
     modifier: Modifier = Modifier,
     isConfigurationAllowed: Boolean,
     expiration: SecureLinksCreateState.SecureLinkExpiration,
-    onUiEvent: (SecureLinksCreateUiEvent) -> Unit,
+    onUiEvent: (SecureLinksCreateUiEvent) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -108,9 +108,7 @@ internal fun SecureLinkCreateExpirationRow(
 }
 
 @[Preview Composable]
-internal fun SecureLinkCreateExpirationRowPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+internal fun SecureLinkCreateExpirationRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             SecureLinkCreateExpirationRow(

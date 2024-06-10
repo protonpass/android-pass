@@ -63,7 +63,7 @@ internal fun SecureLinkCreateMaxViewsRow(
     maxViewsAllowed: Int
 ) {
     Column(
-        modifier = modifier.padding(horizontal = Spacing.medium),
+        modifier = modifier.padding(horizontal = Spacing.medium)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -138,7 +138,7 @@ internal fun SecureLinkCreateMaxViewsRow(
                         Text(
                             modifier = Modifier.align(alignment = Alignment.Center),
                             text = maxViewsAllowed.toString(),
-                            style = ProtonTheme.typography.body1Bold,
+                            style = ProtonTheme.typography.body1Bold
                         )
                     }
 

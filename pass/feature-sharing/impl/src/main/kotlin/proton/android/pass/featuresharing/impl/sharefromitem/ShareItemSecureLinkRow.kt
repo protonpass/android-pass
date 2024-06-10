@@ -46,10 +46,7 @@ import proton.android.pass.featuresharing.impl.R
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-internal fun ShareItemSecureLinkRow(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit,
-) {
+internal fun ShareItemSecureLinkRow(modifier: Modifier = Modifier, onClick: () -> Unit) {
     Row(
         modifier = modifier
             .fillMaxWidth()

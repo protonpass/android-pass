@@ -38,7 +38,7 @@ internal fun SecureLinksCreateContent(
     modifier: Modifier = Modifier,
     state: SecureLinksCreateState,
     shouldDisplayExpirationDialog: Boolean,
-    onUiEvent: (SecureLinksCreateUiEvent) -> Unit,
+    onUiEvent: (SecureLinksCreateUiEvent) -> Unit
 ) = with(state) {
     Scaffold(
         modifier = modifier,
@@ -81,7 +81,7 @@ internal fun SecureLinksCreateContent(
     if (shouldDisplayExpirationDialog) {
         SecureLinkCreateExpirationDialog(
             selectedExpiration = expiration,
-            onUiEvent = onUiEvent,
+            onUiEvent = onUiEvent
         )
     }
 }

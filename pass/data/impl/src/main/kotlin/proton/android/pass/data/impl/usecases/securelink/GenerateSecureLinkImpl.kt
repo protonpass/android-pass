@@ -40,7 +40,7 @@ class GenerateSecureLinkImpl @Inject constructor(
         options: SecureLinkOptions
     ): String {
         val id = userId ?: observeCurrentUser().firstOrNull()?.userId
-        ?: throw IllegalStateException("No user logged in")
+            ?: throw IllegalStateException("No user logged in")
 
         return repository.createSecureLink(id, shareId, itemId, options)
     }

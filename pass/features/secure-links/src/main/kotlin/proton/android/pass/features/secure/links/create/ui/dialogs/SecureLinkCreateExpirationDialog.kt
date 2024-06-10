@@ -47,7 +47,7 @@ import proton.android.pass.composecomponents.impl.R as CompR
 internal fun SecureLinkCreateExpirationDialog(
     modifier: Modifier = Modifier,
     selectedExpiration: SecureLinksCreateState.SecureLinkExpiration,
-    onUiEvent: (SecureLinksCreateUiEvent) -> Unit,
+    onUiEvent: (SecureLinksCreateUiEvent) -> Unit
 ) {
     NoPaddingDialog(
         modifier = modifier.padding(horizontal = Spacing.medium),
@@ -95,9 +95,7 @@ internal fun SecureLinkCreateExpirationDialog(
 }
 
 @[Preview Composable]
-internal fun SecureLinkCreateExpirationDialogPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+internal fun SecureLinkCreateExpirationDialogPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             SecureLinkCreateExpirationDialog(

@@ -217,10 +217,7 @@ internal fun SecurityCenterAliasListContent(
 }
 
 @Composable
-internal fun CustomEmailMessage(
-    modifier: Modifier = Modifier,
-    onUiEvent: (SecurityCenterAliasListUiEvent) -> Unit
-) {
+internal fun CustomEmailMessage(modifier: Modifier = Modifier, onUiEvent: (SecurityCenterAliasListUiEvent) -> Unit) {
     Row(
         modifier = modifier.roundedContainerNorm(),
         verticalAlignment = Alignment.Top

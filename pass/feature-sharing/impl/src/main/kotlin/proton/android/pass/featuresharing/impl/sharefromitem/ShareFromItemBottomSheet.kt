@@ -64,13 +64,13 @@ fun ShareFromItemBottomSheet(
                     }
 
                     ShareFromItemEvent.ShareVault -> {
-//                        onNavigateEvent(SharingNavigation.ShareVault(vault.vault.shareId))
-
-                        SharingNavigation.ShareItem(
-                            shareId = vault.vault.shareId,
-                            itemId = state.itemId
-                        ).also(onNavigateEvent)
+                        onNavigateEvent(SharingNavigation.ShareVault(vault.vault.shareId))
                     }
+
+                    ShareFromItemEvent.ShareSecureLink -> SharingNavigation.ShareItem(
+                        shareId = vault.vault.shareId,
+                        itemId = state.itemId
+                    ).also(onNavigateEvent)
 
                     ShareFromItemEvent.Upgrade -> {
                         onNavigateEvent(SharingNavigation.Upgrade)

@@ -28,10 +28,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.missingtfa.navigation.SecurityCenterMissingTFADestination
 import proton.android.pass.features.security.center.missingtfa.presentation.SecurityCenterMissingTFAState
-import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBar
 import proton.android.pass.features.security.center.shared.ui.rows.SecurityCenterLoginItemRow
 
 @Composable
@@ -43,7 +43,7 @@ internal fun SecurityCenterMissingTfaContent(
     Scaffold(
         modifier = modifier,
         topBar = {
-            SecurityCenterTopBar(
+            PassExtendedTopBar(
                 modifier = Modifier
                     .padding(top = Spacing.medium - Spacing.extraSmall),
                 title = stringResource(R.string.security_center_missing_tfa_top_bar_title),

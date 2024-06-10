@@ -133,7 +133,7 @@ internal fun SetExtraPasswordContent(
                     VisualTransformation.None
                 },
                 keyboardOptions = KeyboardOptions(
-                    autoCorrectEnabled = false,
+                    autoCorrect = false,
                     keyboardType = KeyboardType.NumberPassword,
                     imeAction = ImeAction.Next
                 ),
@@ -167,7 +167,7 @@ internal fun SetExtraPasswordContent(
                 value = state.repeatPassword,
                 textStyle = ProtonTheme.typography.subheadlineNorm,
                 keyboardOptions = KeyboardOptions(
-                    autoCorrectEnabled = false,
+                    autoCorrect = false,
                     keyboardType = KeyboardType.NumberPassword,
                     imeAction = ImeAction.Done
                 ),

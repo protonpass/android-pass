@@ -199,7 +199,7 @@ fun SharingWithContent(
                 textStyle = ProtonTheme.typography.subheadlineNorm,
                 keyboardOptions = KeyboardOptions.Default.copy(
                     capitalization = KeyboardCapitalization.None,
-                    autoCorrectEnabled = false,
+                    autoCorrect = false,
                     keyboardType = KeyboardType.Email
                 ),
                 onChange = { onEvent(SharingWithUiEvent.EmailChange(it)) },

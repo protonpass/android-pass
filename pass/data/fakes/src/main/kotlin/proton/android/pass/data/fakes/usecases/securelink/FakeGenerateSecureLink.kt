@@ -16,18 +16,18 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.fakes.usecases.publiclink
+package proton.android.pass.data.fakes.usecases.securelink
 
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.api.usecases.publiclink.GeneratePublicLink
-import proton.android.pass.data.api.usecases.publiclink.PublicLinkOptions
+import proton.android.pass.data.api.usecases.publiclink.GenerateSecureLink
+import proton.android.pass.data.api.usecases.publiclink.SecureLinkOptions
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FakeGeneratePublicLink @Inject constructor() : GeneratePublicLink {
+class FakeGenerateSecureLink @Inject constructor() : GenerateSecureLink {
 
     private var response: Result<String> = Result.success(DEFAULT_URL)
 
@@ -39,7 +39,7 @@ class FakeGeneratePublicLink @Inject constructor() : GeneratePublicLink {
         userId: UserId?,
         shareId: ShareId,
         itemId: ItemId,
-        options: PublicLinkOptions
+        options: SecureLinkOptions
     ): String = response.getOrThrow()
 
     companion object {

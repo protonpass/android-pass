@@ -41,7 +41,8 @@ fun ShareFromItemBottomSheet(
                 onNavigateEvent(SharingNavigation.MoveItemToSharedVault)
             }
         }
-        viewModel.clearEvent()
+
+        viewModel.onEventConsumed(state.event)
     }
 
     ShareFromItemContent(

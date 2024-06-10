@@ -25,16 +25,19 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.VaultWithItemCount
 
 @Stable
-sealed interface ShareFromItemNavEvent {
+internal sealed interface ShareFromItemNavEvent {
+
     @Stable
     data object Unknown : ShareFromItemNavEvent
 
     @Stable
     data object MoveToSharedVault : ShareFromItemNavEvent
+
 }
 
 @Stable
-sealed interface CreateNewVaultState {
+internal sealed interface CreateNewVaultState {
+
     @Stable
     data object Allow : CreateNewVaultState
 
@@ -46,23 +49,30 @@ sealed interface CreateNewVaultState {
 
     @Stable
     data object Hide : CreateNewVaultState
+
 }
 
 @Stable
-data class ShareFromItemUiState(
+internal data class ShareFromItemUiState(
     val vault: Option<VaultWithItemCount>,
     val itemId: ItemId,
     val showMoveToSharedVault: Boolean,
     val showCreateVault: CreateNewVaultState,
-    val event: ShareFromItemNavEvent
+    val event: ShareFromItemNavEvent,
+    val isSecureLinkEnabled: Boolean
 ) {
-    companion object {
-        fun Initial(itemId: ItemId) = ShareFromItemUiState(
+
+    internal companion object {
+
+        fun initial(itemId: ItemId) = ShareFromItemUiState(
             vault = None,
             itemId = itemId,
             showMoveToSharedVault = false,
             showCreateVault = CreateNewVaultState.Hide,
-            event = ShareFromItemNavEvent.Unknown
+            event = ShareFromItemNavEvent.Unknown,
+            isSecureLinkEnabled = false
         )
+
     }
+
 }

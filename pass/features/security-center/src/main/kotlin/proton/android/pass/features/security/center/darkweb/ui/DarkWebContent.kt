@@ -28,13 +28,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.darkweb.presentation.DarkWebUiState
 import proton.android.pass.features.security.center.darkweb.ui.customemails.list.CustomEmailsHeader
 import proton.android.pass.features.security.center.darkweb.ui.customemails.list.CustomEmailsList
 import proton.android.pass.features.security.center.darkweb.ui.summary.DarkWebSummaryType
 import proton.android.pass.features.security.center.darkweb.ui.summary.EmailBreachSection
-import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBar
 
 @Composable
 internal fun DarkWebContent(
@@ -51,7 +51,7 @@ internal fun DarkWebContent(
                     lastCheckTime
                 )
             }
-            SecurityCenterTopBar(
+            PassExtendedTopBar(
                 title = stringResource(R.string.security_center_dark_web_monitor_top_bar_title),
                 subtitle = subtitle,
                 onUpClick = { onEvent(DarkWebUiEvent.OnUpClick) },
@@ -106,4 +106,3 @@ internal fun DarkWebContent(
         }
     }
 }
-

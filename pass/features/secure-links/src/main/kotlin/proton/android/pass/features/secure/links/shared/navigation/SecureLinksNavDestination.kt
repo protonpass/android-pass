@@ -22,4 +22,9 @@ sealed interface SecureLinksNavDestination {
 
     data object Back : SecureLinksNavDestination
 
+    data class SecureLinkOverview(
+        val maxViewsAllowed: Int?,
+        val secureLink: String
+    ) : SecureLinksNavDestination
+
 }

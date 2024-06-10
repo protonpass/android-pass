@@ -54,9 +54,9 @@ enum class FeatureFlag(
         key = "PassAccessKeyV1",
         isEnabledDefault = false
     ),
-    PUBLIC_LINK_V1(
-        title = "Public link (v1)",
-        description = "Enable public links",
+    SECURE_LINK_V1(
+        title = "Secure link (v1)",
+        description = "Enable secure links",
         key = "PassPublicLinkV1",
         isEnabledDefault = false
     )

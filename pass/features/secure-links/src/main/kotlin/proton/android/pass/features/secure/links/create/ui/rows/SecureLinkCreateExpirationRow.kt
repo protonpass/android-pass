@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,9 +34,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.features.secure.links.R
 import proton.android.pass.features.secure.links.create.presentation.SecureLinksCreateState
@@ -100,5 +104,20 @@ internal fun SecureLinkCreateExpirationRow(
             style = ProtonTheme.typography.body2Regular,
             color = PassTheme.colors.textWeak
         )
+    }
+}
+
+@[Preview Composable]
+internal fun SecureLinkCreateExpirationRowPreview(
+    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
+) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            SecureLinkCreateExpirationRow(
+                isConfigurationAllowed = true,
+                expiration = SecureLinksCreateState.SecureLinkExpiration.OneDay,
+                onUiEvent = {}
+            )
+        }
     }
 }

@@ -34,7 +34,7 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag.ACCESS_KEY_V1
 import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.IDENTITY_V1
-import proton.android.pass.preferences.FeatureFlag.PUBLIC_LINK_V1
+import proton.android.pass.preferences.FeatureFlag.SECURE_LINK_V1
 import proton.android.pass.preferences.FeatureFlag.SECURITY_CENTER_V1
 import proton.android.pass.preferences.FeatureFlag.USERNAME_SPLIT
 import java.io.IOException
@@ -75,7 +75,7 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             defaultValue = featureFlag.isEnabledDefault
         ) { accessKeyV1Enabled.value }
 
-        PUBLIC_LINK_V1 -> getFeatureFlag(
+        SECURE_LINK_V1 -> getFeatureFlag(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
         ) { publicLinkV1Enabled.value }
@@ -102,7 +102,7 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             accessKeyV1Enabled = boolFlagPrefProto(value)
         }
 
-        PUBLIC_LINK_V1 -> setFeatureFlag {
+        SECURE_LINK_V1 -> setFeatureFlag {
             publicLinkV1Enabled = boolFlagPrefProto(value)
         }
     }

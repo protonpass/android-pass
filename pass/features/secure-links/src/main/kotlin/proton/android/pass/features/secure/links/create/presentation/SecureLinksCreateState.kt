@@ -19,12 +19,13 @@
 package proton.android.pass.features.secure.links.create.presentation
 
 import androidx.compose.runtime.Stable
+import kotlinx.collections.immutable.ImmutableMap
+import kotlinx.collections.immutable.toPersistentMap
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import kotlin.time.Duration
-import kotlin.time.Duration.Companion.days
-import kotlin.time.Duration.Companion.hours
+import proton.android.pass.domain.securelinks.SecureLinkExpiration
+import proton.android.pass.features.secure.links.R
 
 @Stable
 internal data class SecureLinksCreateState(
@@ -33,14 +34,6 @@ internal data class SecureLinksCreateState(
     internal val isLoading: Boolean
 ) {
 
-    internal enum class SecureLinkExpiration(internal val duration: Duration) {
-        OneHour(1.hours),
-        OneDay(1.days),
-        SevenDays(7.days),
-        FourteenDays(14.days),
-        ThirtyDays(30.days)
-    }
-
     internal val isConfigurationAllowed: Boolean = !isLoading
 
     internal val maxViewsAllowed: Int = maxViewsAllowedOption.value() ?: MIN_MAX_VIEWS_ALLOWED
@@ -48,6 +41,14 @@ internal data class SecureLinksCreateState(
     internal val isMaxViewsEnabled: Boolean = maxViewsAllowedOption is Some
 
     internal val isMaxViewsDecreaseEnabled: Boolean = maxViewsAllowed > MIN_MAX_VIEWS_ALLOWED
+
+    internal val expirationOptionsMap: ImmutableMap<SecureLinkExpiration, Int> = mapOf(
+        SecureLinkExpiration.OneHour to R.string.secure_links_create_row_expiration_options_one_hour,
+        SecureLinkExpiration.OneDay to R.string.secure_links_create_row_expiration_options_one_day,
+        SecureLinkExpiration.SevenDays to R.string.secure_links_create_row_expiration_options_seven_days,
+        SecureLinkExpiration.FourteenDays to R.string.secure_links_create_row_expiration_options_fourteen_days,
+        SecureLinkExpiration.ThirtyDays to R.string.secure_links_create_row_expiration_options_thirty_days
+    ).toPersistentMap()
 
     internal companion object {
 

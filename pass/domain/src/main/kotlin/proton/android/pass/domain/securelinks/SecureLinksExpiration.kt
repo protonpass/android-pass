@@ -16,16 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.secure.links.create.presentation
+package proton.android.pass.domain.securelinks
 
-internal sealed interface SecureLinksCreateEvent {
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.days
+import kotlin.time.Duration.Companion.hours
 
-    data object Idle : SecureLinksCreateEvent
-
-    data class OnSecureLinkGenerated(
-        internal val expiration: SecureLinksCreateState.SecureLinkExpiration,
-        internal val maxViewsAllowed: Int?,
-        internal val secureLink: String
-    ) : SecureLinksCreateEvent
-
+enum class SecureLinkExpiration(val duration: Duration) {
+    OneHour(1.hours),
+    OneDay(1.days),
+    SevenDays(7.days),
+    FourteenDays(14.days),
+    ThirtyDays(30.days)
 }

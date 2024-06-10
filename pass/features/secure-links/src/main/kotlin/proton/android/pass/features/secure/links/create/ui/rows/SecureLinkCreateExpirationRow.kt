@@ -32,7 +32,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -42,7 +41,6 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.features.secure.links.R
-import proton.android.pass.features.secure.links.create.presentation.SecureLinksCreateState
 import proton.android.pass.features.secure.links.create.ui.SecureLinksCreateUiEvent
 import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -51,7 +49,7 @@ import proton.android.pass.composecomponents.impl.R as CompR
 internal fun SecureLinkCreateExpirationRow(
     modifier: Modifier = Modifier,
     isConfigurationAllowed: Boolean,
-    expiration: SecureLinksCreateState.SecureLinkExpiration,
+    expirationText: String,
     onUiEvent: (SecureLinksCreateUiEvent) -> Unit
 ) {
     Column(
@@ -99,8 +97,7 @@ internal fun SecureLinkCreateExpirationRow(
             modifier = Modifier
                 .padding(start = Spacing.large, bottom = Spacing.extraSmall)
                 .offset(y = -Spacing.extraSmall),
-            text = stringArrayResource(id = R.array.secure_links_create_row_expiration_options)
-                .let { expirations -> expirations[expiration.ordinal] },
+            text = expirationText,
             style = ProtonTheme.typography.body2Regular,
             color = PassTheme.colors.textWeak
         )
@@ -113,7 +110,7 @@ internal fun SecureLinkCreateExpirationRowPreview(@PreviewParameter(ThemePreview
         Surface {
             SecureLinkCreateExpirationRow(
                 isConfigurationAllowed = true,
-                expiration = SecureLinksCreateState.SecureLinkExpiration.OneDay,
+                expirationText = "Expiration text",
                 onUiEvent = {}
             )
         }

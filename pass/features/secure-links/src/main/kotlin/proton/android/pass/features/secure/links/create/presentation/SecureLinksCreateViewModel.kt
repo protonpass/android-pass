@@ -19,23 +19,32 @@
 package proton.android.pass.features.secure.links.create.presentation
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import proton.android.pass.common.api.None
+import proton.android.pass.common.api.onError
+import proton.android.pass.common.api.onSuccess
+import proton.android.pass.common.api.runCatching
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.data.api.usecases.publiclink.GeneratePublicLink
+import proton.android.pass.data.api.usecases.publiclink.PublicLinkOptions
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import javax.inject.Inject
 
 @HiltViewModel
 class SecureLinksCreateViewModel @Inject constructor(
-    savedStateHandleProvider: SavedStateHandleProvider
+    savedStateHandleProvider: SavedStateHandleProvider,
+    private val generatePublicLink: GeneratePublicLink
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -82,15 +91,43 @@ class SecureLinksCreateViewModel @Inject constructor(
         }
     }
 
-    internal fun onExpirationSelected(expirationOrdinal: Int) {
+    internal fun onExpirationSelected(newExpirationOrdinal: Int) {
         _state.update { currentState ->
             currentState.copy(
-                expiration = SecureLinksCreateState.SecureLinkExpiration.entries[expirationOrdinal]
+                expiration = SecureLinksCreateState.SecureLinkExpiration
+                    .entries[newExpirationOrdinal]
             )
         }
     }
 
+    internal fun onGenerateSecureLink() {
+        _state.update { currentState -> currentState.copy(isLoading = true) }
+
+        viewModelScope.launch {
+            runCatching {
+                generatePublicLink(
+                    userId = null,
+                    shareId = shareId,
+                    itemId = itemId,
+                    options = PublicLinkOptions(
+                        expirationTime = state.value.expiration.duration,
+                        maxReadCount = state.value.maxViewsAllowedOption.value()
+                    )
+                )
+            }.onError { error ->
+                PassLogger.w(TAG, "There was an error generating a secure link")
+                PassLogger.w(TAG, error)
+            }.onSuccess { secureLink ->
+                println("JIBIRI: onGenerateSecureLink: $secureLink")
+            }
+
+            _state.update { currentState -> currentState.copy(isLoading = false) }
+        }
+    }
+
     private companion object {
+
+        private const val TAG = "SecureLinksCreateViewModel"
 
         private const val MIN_SECURE_LINK_VIEWS_ALLOWED = 1
 

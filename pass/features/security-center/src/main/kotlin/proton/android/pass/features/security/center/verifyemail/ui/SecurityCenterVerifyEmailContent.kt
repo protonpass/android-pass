@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.PassTopBarBackButtonType
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.commonui.api.heroWeak
@@ -38,10 +39,9 @@ import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.loading.LoadingDialog
+import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.features.security.center.R
-import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBar
-import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBarBackButton
 import proton.android.pass.features.security.center.verifyemail.presentation.SecurityCenterVerifyEmailState
 
 @Composable
@@ -54,13 +54,13 @@ internal fun SecurityCenterVerifyEmailContent(
     Scaffold(
         modifier = modifier,
         topBar = {
-            SecurityCenterTopBar(
+            PassExtendedTopBar(
                 title = stringResource(R.string.security_center_verify_email_title),
                 subtitle = stringResource(
                     R.string.security_center_verify_email_subtitle,
                     state.email
                 ),
-                backButton = SecurityCenterTopBarBackButton.Cross,
+                backButton = PassTopBarBackButtonType.Cross,
                 onUpClick = { onUiEvent(SecurityCenterVerifyEmailUiEvent.Back) }
             )
         }

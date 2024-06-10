@@ -37,12 +37,12 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.CircleIconButton
 import proton.android.pass.composecomponents.impl.loading.Loading
+import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.protonlist.presentation.ProtonListState
 import proton.android.pass.features.security.center.protonlist.presentation.SecurityCenterProtonListState
 import proton.android.pass.features.security.center.protonlist.ui.SecurityCenterProtonListUiEvent.EmailBreachClick
-import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBar
 import proton.android.pass.features.security.center.shared.ui.rows.EmailBreachRow
 import me.proton.core.presentation.R as CoreR
 
@@ -55,7 +55,7 @@ internal fun SecurityCenterProtonListContent(
     Scaffold(
         modifier = modifier,
         topBar = {
-            SecurityCenterTopBar(
+            PassExtendedTopBar(
                 title = stringResource(R.string.security_center_proton_list_top_bar_title),
                 onUpClick = { onUiEvent(SecurityCenterProtonListUiEvent.Back) },
                 actions = {

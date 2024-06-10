@@ -35,10 +35,10 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.CircleIconButton
 import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
 import proton.android.pass.composecomponents.impl.loading.Loading
+import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.report.presentation.SecurityCenterReportState
 import proton.android.pass.features.security.center.report.ui.SecurityCenterReportUiEvent.OnMenuClick
-import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBar
 import me.proton.core.presentation.R as CoreR
 
 @Composable
@@ -52,7 +52,7 @@ internal fun SecurityCenterReportContent(
     Scaffold(
         modifier = modifier,
         topBar = {
-            SecurityCenterTopBar(
+            PassExtendedTopBar(
                 modifier = Modifier
                     .padding(top = Spacing.medium - Spacing.extraSmall),
                 onUpClick = { onUiEvent(SecurityCenterReportUiEvent.Back) },

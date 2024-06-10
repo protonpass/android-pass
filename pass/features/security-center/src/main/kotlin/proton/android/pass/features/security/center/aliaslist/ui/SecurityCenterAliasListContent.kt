@@ -47,12 +47,12 @@ import proton.android.pass.composecomponents.impl.buttons.CircleIconButton
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.item.ListHeader
 import proton.android.pass.composecomponents.impl.loading.Loading
+import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
 import proton.android.pass.domain.breach.BreachEmailId
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.aliaslist.presentation.AliasListState
 import proton.android.pass.features.security.center.aliaslist.presentation.SecurityCenterAliasListState
 import proton.android.pass.features.security.center.aliaslist.ui.SecurityCenterAliasListUiEvent.EmailBreachClick
-import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBar
 import proton.android.pass.features.security.center.shared.ui.rows.EmailBreachRow
 import me.proton.core.presentation.R as CoreR
 
@@ -66,7 +66,7 @@ internal fun SecurityCenterAliasListContent(
     Scaffold(
         modifier = modifier,
         topBar = {
-            SecurityCenterTopBar(
+            PassExtendedTopBar(
                 title = stringResource(R.string.security_center_alias_list_top_bar_title),
                 onUpClick = { onUiEvent(SecurityCenterAliasListUiEvent.Back) },
                 actions = {
@@ -217,7 +217,10 @@ internal fun SecurityCenterAliasListContent(
 }
 
 @Composable
-internal fun CustomEmailMessage(modifier: Modifier = Modifier, onUiEvent: (SecurityCenterAliasListUiEvent) -> Unit) {
+internal fun CustomEmailMessage(
+    modifier: Modifier = Modifier,
+    onUiEvent: (SecurityCenterAliasListUiEvent) -> Unit
+) {
     Row(
         modifier = modifier.roundedContainerNorm(),
         verticalAlignment = Alignment.Top

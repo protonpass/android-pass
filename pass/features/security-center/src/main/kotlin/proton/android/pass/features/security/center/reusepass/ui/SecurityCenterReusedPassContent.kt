@@ -33,10 +33,10 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.isCollapsedSaver
 import proton.android.pass.composecomponents.impl.labels.CollapsibleSectionHeader
+import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.reusepass.navigation.SecurityCenterReusedPassDestination
 import proton.android.pass.features.security.center.reusepass.presentation.SecurityCenterReusedPassState
-import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBar
 import proton.android.pass.features.security.center.shared.ui.rows.SecurityCenterLoginItemRow
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -47,12 +47,13 @@ internal fun SecurityCenterReusedPassContent(
     state: SecurityCenterReusedPassState
 ) = with(state) {
 
-    val isGroupCollapsed = rememberSaveable(saver = isCollapsedSaver<String>()) { mutableStateListOf() }
+    val isGroupCollapsed =
+        rememberSaveable(saver = isCollapsedSaver<String>()) { mutableStateListOf() }
 
     Scaffold(
         modifier = modifier,
         topBar = {
-            SecurityCenterTopBar(
+            PassExtendedTopBar(
                 modifier = Modifier
                     .padding(top = Spacing.medium - Spacing.extraSmall),
                 title = stringResource(R.string.security_center_reused_pass_top_bar_title),

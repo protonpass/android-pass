@@ -150,7 +150,7 @@ import proton.android.pass.data.api.usecases.items.UpdateItemFlag
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
 import proton.android.pass.data.api.usecases.passkeys.GetPasskeyById
 import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
-import proton.android.pass.data.api.usecases.publiclink.GeneratePublicLink
+import proton.android.pass.data.api.usecases.publiclink.GenerateSecureLink
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
@@ -290,7 +290,7 @@ import proton.android.pass.data.fakes.usecases.items.FakeObserveItemRevisions
 import proton.android.pass.data.fakes.usecases.items.FakeObserveMonitoredItems
 import proton.android.pass.data.fakes.usecases.items.FakeOpenItemRevision
 import proton.android.pass.data.fakes.usecases.items.FakeUpdateItemFlag
-import proton.android.pass.data.fakes.usecases.publiclink.FakeGeneratePublicLink
+import proton.android.pass.data.fakes.usecases.securelink.FakeGenerateSecureLink
 import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
 import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
 import proton.android.pass.data.fakes.usecases.vaults.FakeObserveVaultsGroupedByShareId
@@ -703,7 +703,7 @@ abstract class FakesDataModule {
     ): ObserveVaultsGroupedByShareId
 
     @Binds
-    abstract fun bindGeneratePublicLink(impl: FakeGeneratePublicLink): GeneratePublicLink
+    abstract fun bindGenerateSecureLink(impl: FakeGenerateSecureLink): GenerateSecureLink
 
     @Binds
     abstract fun bindObserveBreachAliasEmails(impl: FakeObserveBreachAliasEmails): ObserveBreachAliasEmails

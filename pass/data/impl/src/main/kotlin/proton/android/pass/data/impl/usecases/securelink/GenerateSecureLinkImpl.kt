@@ -16,23 +16,33 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.publiclink
+package proton.android.pass.data.impl.usecases.securelink
 
+import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.api.usecases.publiclink.GenerateSecureLink
+import proton.android.pass.data.api.usecases.publiclink.SecureLinkOptions
+import proton.android.pass.data.impl.repositories.SecureLinkRepository
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import kotlin.time.Duration
+import javax.inject.Inject
 
-data class PublicLinkOptions(
-    val expirationTime: Duration,
-    val maxReadCount: Int?
-)
+class GenerateSecureLinkImpl @Inject constructor(
+    private val observeCurrentUser: ObserveCurrentUser,
+    private val repository: SecureLinkRepository
+) : GenerateSecureLink {
 
-interface GeneratePublicLink {
-    suspend operator fun invoke(
-        userId: UserId? = null,
+    override suspend fun invoke(
+        userId: UserId?,
         shareId: ShareId,
         itemId: ItemId,
-        options: PublicLinkOptions
-    ): String
+        options: SecureLinkOptions
+    ): String {
+        val id = userId ?: observeCurrentUser().firstOrNull()?.userId
+        ?: throw IllegalStateException("No user logged in")
+
+        return repository.createSecureLink(id, shareId, itemId, options)
+    }
+
 }

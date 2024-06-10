@@ -22,19 +22,23 @@ import androidx.compose.runtime.Stable
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.days
+import kotlin.time.Duration.Companion.hours
 
 @Stable
 internal data class SecureLinksCreateState(
     internal val expiration: SecureLinkExpiration,
-    private val maxViewsAllowedOption: Option<Int>
+    internal val maxViewsAllowedOption: Option<Int>,
+    internal val isLoading: Boolean
 ) {
 
-    internal enum class SecureLinkExpiration {
-        OneHour,
-        OneDay,
-        SevenDays,
-        FourteenDays,
-        ThirtyDays
+    internal enum class SecureLinkExpiration(internal val duration: Duration) {
+        OneHour(1.hours),
+        OneDay(1.days),
+        SevenDays(7.days),
+        FourteenDays(14.days),
+        ThirtyDays(30.days)
     }
 
     internal val maxViewsAllowed: Int = maxViewsAllowedOption.value() ?: MIN_MAX_VIEWS_ALLOWED
@@ -47,7 +51,8 @@ internal data class SecureLinksCreateState(
 
         internal val Initial = SecureLinksCreateState(
             expiration = SecureLinkExpiration.SevenDays,
-            maxViewsAllowedOption = None
+            maxViewsAllowedOption = None,
+            isLoading = false
         )
 
         private const val MIN_MAX_VIEWS_ALLOWED = 1

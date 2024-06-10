@@ -117,7 +117,7 @@ class SecureLinksCreateViewModel @Inject constructor(
                 PassLogger.w(TAG, "There was an error generating a secure link")
                 PassLogger.w(TAG, error)
             }.onSuccess { secureLink ->
-                println("JIBIRI: onGenerateSecureLink: $secureLink")
+                // Will be implemented in IDTEAM-3431
             }
 
             _state.update { currentState -> currentState.copy(isLoading = false) }

@@ -16,23 +16,19 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.responses
+package proton.android.pass.data.impl.requests
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CreatePublicLinkResponse(
-    @SerialName("Code")
-    val code: Int,
-    @SerialName("PublicLink")
-    val publicLink: CreatedPublicLink
-)
-
-@Serializable
-data class CreatedPublicLink(
-    @SerialName("Url")
-    val url: String,
-    @SerialName("PublicLinkID")
-    val publicLinkId: String
+data class CreateSecureLinkRequest(
+    @SerialName("Revision")
+    val revision: Long,
+    @SerialName("ExpirationTime")
+    val expirationTime: Long,
+    @SerialName("MaxReadCount")
+    val maxReadCount: Int?,
+    @SerialName("EncryptedItemKey")
+    val encryptedItemKey: String
 )

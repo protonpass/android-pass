@@ -23,33 +23,36 @@ import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
-import proton.android.pass.data.api.usecases.publiclink.PublicLinkOptions
+import proton.android.pass.data.api.usecases.publiclink.SecureLinkOptions
 import proton.android.pass.data.impl.local.LocalItemDataSource
-import proton.android.pass.data.impl.remote.RemotePublicLinkDataSource
-import proton.android.pass.data.impl.requests.CreatePublicLinkRequest
+import proton.android.pass.data.impl.remote.RemoteSecureLinkDataSource
+import proton.android.pass.data.impl.requests.CreateSecureLinkRequest
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
-interface PublicLinkRepository {
-    suspend fun generatePublicLink(
+interface SecureLinkRepository {
+
+    suspend fun createSecureLink(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
-        options: PublicLinkOptions
+        options: SecureLinkOptions
     ): String
+
 }
 
-class PublicLinkRepositoryImpl @Inject constructor(
+class SecureLinkRepositoryImpl @Inject constructor(
     private val localItemDataSource: LocalItemDataSource,
-    private val remotePublicLinkDataSource: RemotePublicLinkDataSource,
+    private val remoteSecureLinkDataSource: RemoteSecureLinkDataSource,
     private val encryptionContextProvider: EncryptionContextProvider
-) : PublicLinkRepository {
-    override suspend fun generatePublicLink(
+) : SecureLinkRepository {
+
+    override suspend fun createSecureLink(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
-        options: PublicLinkOptions
+        options: SecureLinkOptions
     ): String {
         val item = localItemDataSource.getById(shareId, itemId) ?: throw IllegalStateException(
             "Item not found [shareId=${shareId.id}] [itemId=${itemId.id}]"
@@ -67,14 +70,14 @@ class PublicLinkRepositoryImpl @Inject constructor(
         }
         val encodedEncryptedItemKey = Base64.encodeBase64String(encryptedItemKey.array)
 
-        val request = CreatePublicLinkRequest(
+        val request = CreateSecureLinkRequest(
             revision = item.revision,
             expirationTime = options.expirationTime.inWholeSeconds,
             maxReadCount = options.maxReadCount,
             encryptedItemKey = encodedEncryptedItemKey
         )
 
-        val response = remotePublicLinkDataSource.generatePublicLink(
+        val response = remoteSecureLinkDataSource.createSecureLink(
             userId = userId,
             shareId = shareId,
             itemId = itemId,

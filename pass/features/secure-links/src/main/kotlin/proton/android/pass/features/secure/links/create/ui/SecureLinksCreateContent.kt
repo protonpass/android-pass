@@ -52,6 +52,7 @@ internal fun SecureLinksCreateContent(
             PassCircleButton(
                 modifier = Modifier.padding(all = Spacing.medium),
                 text = stringResource(id = R.string.secure_links_create_button_generate),
+                isLoading = isLoading,
                 onClick = { onUiEvent(SecureLinksCreateUiEvent.OnGenerateLinkClicked) }
             )
         }
@@ -62,11 +63,13 @@ internal fun SecureLinksCreateContent(
                 .padding(top = Spacing.medium)
         ) {
             SecureLinkCreateExpirationRow(
+                isConfigurationAllowed = isConfigurationAllowed,
                 expiration = expiration,
                 onUiEvent = onUiEvent
             )
 
             SecureLinkCreateMaxViewsRow(
+                isConfigurationAllowed = isConfigurationAllowed,
                 isMaxViewsEnabled = isMaxViewsEnabled,
                 isMaxViewsDecreaseEnabled = isMaxViewsDecreaseEnabled,
                 maxViewsAllowed = maxViewsAllowed,

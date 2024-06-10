@@ -94,8 +94,7 @@ class SecureLinksCreateViewModel @Inject constructor(
     internal fun onExpirationSelected(newExpirationOrdinal: Int) {
         _state.update { currentState ->
             currentState.copy(
-                expiration = SecureLinksCreateState.SecureLinkExpiration
-                    .entries[newExpirationOrdinal]
+                expiration = SecureLinksCreateState.SecureLinkExpiration.entries[newExpirationOrdinal]
             )
         }
     }

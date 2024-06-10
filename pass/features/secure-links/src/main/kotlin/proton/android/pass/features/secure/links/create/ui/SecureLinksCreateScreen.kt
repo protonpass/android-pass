@@ -75,7 +75,7 @@ fun SecureLinksCreateScreen(
                 }
 
                 is SecureLinksCreateUiEvent.OnExpirationSelected -> {
-                    onExpirationSelected(uiEvent.expirationOrdinal)
+                    onExpirationSelected(uiEvent.newExpiration)
                 }
             }
         }

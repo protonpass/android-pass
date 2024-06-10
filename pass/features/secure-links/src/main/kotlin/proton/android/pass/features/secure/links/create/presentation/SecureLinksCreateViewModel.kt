@@ -37,6 +37,7 @@ import proton.android.pass.data.api.usecases.publiclink.GenerateSecureLink
 import proton.android.pass.data.api.usecases.publiclink.SecureLinkOptions
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.securelinks.SecureLinkExpiration
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import javax.inject.Inject
@@ -65,9 +66,7 @@ class SecureLinksCreateViewModel @Inject constructor(
     }
 
     internal fun onMaxViewsDisabled() {
-        _state.update { currentState ->
-            currentState.copy(maxViewsAllowedOption = None)
-        }
+        _state.update { currentState -> currentState.copy(maxViewsAllowedOption = None) }
     }
 
     internal fun onMaxViewsDecreased() {
@@ -91,12 +90,8 @@ class SecureLinksCreateViewModel @Inject constructor(
         }
     }
 
-    internal fun onExpirationSelected(newExpirationOrdinal: Int) {
-        _state.update { currentState ->
-            currentState.copy(
-                expiration = SecureLinksCreateState.SecureLinkExpiration.entries[newExpirationOrdinal]
-            )
-        }
+    internal fun onExpirationSelected(newExpiration: SecureLinkExpiration) {
+        _state.update { currentState -> currentState.copy(expiration = newExpiration) }
     }
 
     internal fun onGenerateSecureLink() {

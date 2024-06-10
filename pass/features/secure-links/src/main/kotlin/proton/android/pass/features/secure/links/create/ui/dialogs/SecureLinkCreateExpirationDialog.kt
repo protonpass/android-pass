@@ -27,18 +27,19 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import kotlinx.collections.immutable.ImmutableMap
+import kotlinx.collections.immutable.toPersistentMap
 import me.proton.core.compose.component.ProtonDialogTitle
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.dialogs.NoPaddingDialog
+import proton.android.pass.domain.securelinks.SecureLinkExpiration
 import proton.android.pass.features.secure.links.R
-import proton.android.pass.features.secure.links.create.presentation.SecureLinksCreateState
 import proton.android.pass.features.secure.links.create.ui.SecureLinksCreateUiEvent
 import proton.android.pass.features.secure.links.create.ui.rows.SecureLinkCreateExpirationOptionRow
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -46,7 +47,8 @@ import proton.android.pass.composecomponents.impl.R as CompR
 @Composable
 internal fun SecureLinkCreateExpirationDialog(
     modifier: Modifier = Modifier,
-    selectedExpiration: SecureLinksCreateState.SecureLinkExpiration,
+    selectedExpiration: SecureLinkExpiration,
+    expirationOptionsMap: ImmutableMap<SecureLinkExpiration, Int>,
     onUiEvent: (SecureLinksCreateUiEvent) -> Unit
 ) {
     NoPaddingDialog(
@@ -66,14 +68,19 @@ internal fun SecureLinkCreateExpirationDialog(
                 title = stringResource(id = R.string.secure_links_create_row_expiration_title)
             )
 
-            stringArrayResource(id = R.array.secure_links_create_row_expiration_options)
-                .forEachIndexed { index, expirationText ->
-                    SecureLinkCreateExpirationOptionRow(
-                        text = expirationText,
-                        isSelected = index == selectedExpiration.ordinal,
-                        onSelected = { onUiEvent(SecureLinksCreateUiEvent.OnExpirationSelected(index)) }
-                    )
-                }
+            expirationOptionsMap.forEach { (expiration, expirationResId) ->
+                SecureLinkCreateExpirationOptionRow(
+                    text = stringResource(id = expirationResId),
+                    isSelected = expiration == selectedExpiration,
+                    onSelected = {
+                        onUiEvent(
+                            SecureLinksCreateUiEvent.OnExpirationSelected(
+                                expiration
+                            )
+                        )
+                    }
+                )
+            }
 
             TextButton(
                 modifier = Modifier
@@ -99,7 +106,12 @@ internal fun SecureLinkCreateExpirationDialogPreview(@PreviewParameter(ThemePrev
     PassTheme(isDark = isDark) {
         Surface {
             SecureLinkCreateExpirationDialog(
-                selectedExpiration = SecureLinksCreateState.SecureLinkExpiration.SevenDays,
+                selectedExpiration = SecureLinkExpiration.OneDay,
+                expirationOptionsMap = mapOf(
+                    SecureLinkExpiration.OneHour to R.string.secure_links_create_row_expiration_options_one_hour,
+                    SecureLinkExpiration.OneDay to R.string.secure_links_create_row_expiration_options_one_day,
+                    SecureLinkExpiration.SevenDays to R.string.secure_links_create_row_expiration_options_seven_days
+                ).toPersistentMap(),
                 onUiEvent = {}
             )
         }

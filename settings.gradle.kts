@@ -160,6 +160,7 @@ include(":pass:feature-trial:impl")
 include(":pass:feature-vault:impl")
 include(":pass:features:extrapassword")
 include(":pass:features:item-history")
+include(":pass:features:secure-links")
 include(":pass:features:security-center")
 include(":pass:features:upsell")
 include(":pass:image:api")
@@ -215,4 +216,3 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-include(":pass:features:secure-links")

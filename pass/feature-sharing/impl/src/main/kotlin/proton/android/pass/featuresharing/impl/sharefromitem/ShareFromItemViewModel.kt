@@ -47,20 +47,28 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.canCreate
 import proton.android.pass.domain.toPermissions
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class ShareFromItemViewModel @Inject constructor(
     private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
-    savedState: SavedStateHandleProvider,
+    savedStateHandleProvider: SavedStateHandleProvider,
     observeVaults: ObserveVaults,
     getVaultWithItemCount: GetVaultWithItemCountById,
     canCreateVault: CanCreateVault,
-    getUserPlan: GetUserPlan
+    getUserPlan: GetUserPlan,
+    featureFlagsRepository: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
 
-    private val shareId: ShareId = ShareId(savedState.get().require(CommonNavArgId.ShareId.key))
-    private val itemId: ItemId = ItemId(savedState.get().require(CommonNavArgId.ItemId.key))
+    private val shareId: ShareId = savedStateHandleProvider.get()
+        .require<String>(CommonNavArgId.ShareId.key)
+        .let(::ShareId)
+
+    private val itemId: ItemId = savedStateHandleProvider.get()
+        .require<String>(CommonNavArgId.ItemId.key)
+        .let(::ItemId)
 
     private val navEventState: MutableStateFlow<ShareFromItemNavEvent> =
         MutableStateFlow(ShareFromItemNavEvent.Unknown)
@@ -88,33 +96,34 @@ class ShareFromItemViewModel @Inject constructor(
         }
     }.asLoadingResult()
 
-    val state: StateFlow<ShareFromItemUiState> = combine(
+    internal val state: StateFlow<ShareFromItemUiState> = combine(
         getVaultWithItemCount(shareId = shareId),
         canMoveToSharedVaultFlow,
         showCreateVaultFlow,
-        navEventState
-    ) { vault, canMoveToSharedVault, createVault, event ->
-        val showCreateVault = createVault.getOrNull() ?: CreateNewVaultState.Hide
-
+        navEventState,
+        featureFlagsRepository.get<Boolean>(FeatureFlag.SECURE_LINK_V1)
+    ) { vault, canMoveToSharedVault, createVault, event, isSecureLinkEnabled ->
         ShareFromItemUiState(
             vault = vault.some(),
             itemId = itemId,
             showMoveToSharedVault = canMoveToSharedVault.getOrNull() ?: false,
-            showCreateVault = showCreateVault,
-            event = event
+            showCreateVault = createVault.getOrNull() ?: CreateNewVaultState.Hide,
+            event = event,
+            isSecureLinkEnabled = isSecureLinkEnabled
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
-        initialValue = ShareFromItemUiState.Initial(itemId)
+        initialValue = ShareFromItemUiState.initial(itemId)
     )
 
-    fun moveItemToSharedVault() = viewModelScope.launch {
+    internal fun moveItemToSharedVault() = viewModelScope.launch {
         bulkMoveToVaultRepository.save(mapOf(shareId to listOf(itemId)))
         navEventState.update { ShareFromItemNavEvent.MoveToSharedVault }
     }
 
-    fun clearEvent() = viewModelScope.launch {
-        navEventState.update { ShareFromItemNavEvent.Unknown }
+    internal fun onEventConsumed(event: ShareFromItemNavEvent) {
+        navEventState.compareAndSet(event, ShareFromItemNavEvent.Unknown)
     }
+
 }

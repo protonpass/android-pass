@@ -1557,6 +1557,10 @@ fun NavGraphBuilder.appGraph(
                 SecureLinksNavDestination.Back -> appNavigator.navigateBack(
                     comesFromBottomsheet = false
                 )
+
+                is SecureLinksNavDestination.SecureLinkOverview -> {
+                    // Will be implemented in another MR
+                }
             }
         }
     )

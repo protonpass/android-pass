@@ -18,6 +18,8 @@
 
 package proton.android.pass.features.secure.links.create.ui
 
+import proton.android.pass.domain.securelinks.SecureLinkExpiration
+
 internal sealed interface SecureLinksCreateUiEvent {
 
     data object OnBackArrowClicked : SecureLinksCreateUiEvent
@@ -37,6 +39,8 @@ internal sealed interface SecureLinksCreateUiEvent {
     data object OnExpirationDialogDismissed : SecureLinksCreateUiEvent
 
     @JvmInline
-    value class OnExpirationSelected(internal val expirationOrdinal: Int) : SecureLinksCreateUiEvent
+    value class OnExpirationSelected(
+        internal val newExpiration: SecureLinkExpiration
+    ) : SecureLinksCreateUiEvent
 
 }

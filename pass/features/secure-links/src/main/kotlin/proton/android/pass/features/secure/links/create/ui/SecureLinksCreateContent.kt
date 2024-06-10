@@ -64,7 +64,9 @@ internal fun SecureLinksCreateContent(
         ) {
             SecureLinkCreateExpirationRow(
                 isConfigurationAllowed = isConfigurationAllowed,
-                expiration = expiration,
+                expirationText = expirationOptionsMap[expiration]
+                    ?.let { expirationResId -> stringResource(id = expirationResId) }
+                    ?: "",
                 onUiEvent = onUiEvent
             )
 
@@ -81,6 +83,7 @@ internal fun SecureLinksCreateContent(
     if (shouldDisplayExpirationDialog) {
         SecureLinkCreateExpirationDialog(
             selectedExpiration = expiration,
+            expirationOptionsMap = expirationOptionsMap,
             onUiEvent = onUiEvent
         )
     }

@@ -36,6 +36,7 @@ import androidx.compose.ui.res.stringResource
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.features.secure.links.R
 import proton.android.pass.features.secure.links.create.presentation.SecureLinksCreateState
 import proton.android.pass.features.secure.links.create.ui.SecureLinksCreateUiEvent
@@ -45,14 +46,18 @@ import proton.android.pass.composecomponents.impl.R as CompR
 @Composable
 internal fun SecureLinkCreateExpirationRow(
     modifier: Modifier = Modifier,
+    isConfigurationAllowed: Boolean,
     expiration: SecureLinksCreateState.SecureLinkExpiration,
     onUiEvent: (SecureLinksCreateUiEvent) -> Unit,
 ) {
     Column(
         modifier = modifier
-            .clickable {
-                onUiEvent(SecureLinksCreateUiEvent.OnSetExpirationClicked)
-            }
+            .applyIf(
+                condition = isConfigurationAllowed,
+                ifTrue = {
+                    clickable { onUiEvent(SecureLinksCreateUiEvent.OnSetExpirationClicked) }
+                }
+            )
             .padding(
                 start = Spacing.medium,
                 top = Spacing.mediumSmall,
@@ -86,23 +91,14 @@ internal fun SecureLinkCreateExpirationRow(
             )
         }
 
-        Row(
-            modifier = Modifier.offset(y = -Spacing.small),
-            horizontalArrangement = Arrangement.spacedBy(space = Spacing.small),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                painter = painterResource(id = CoreR.drawable.ic_proton_clock),
-                contentDescription = null,
-                tint = PassTheme.colors.backgroundStrong
-            )
-
-            Text(
-                text = stringArrayResource(id = R.array.secure_links_create_row_expiration_options)
-                    .let { expirations -> expirations[expiration.ordinal] },
-                style = ProtonTheme.typography.body2Regular,
-                color = PassTheme.colors.textWeak
-            )
-        }
+        Text(
+            modifier = Modifier
+                .padding(start = Spacing.large, bottom = Spacing.extraSmall)
+                .offset(y = -Spacing.extraSmall),
+            text = stringArrayResource(id = R.array.secure_links_create_row_expiration_options)
+                .let { expirations -> expirations[expiration.ordinal] },
+            style = ProtonTheme.typography.body2Regular,
+            color = PassTheme.colors.textWeak
+        )
     }
 }

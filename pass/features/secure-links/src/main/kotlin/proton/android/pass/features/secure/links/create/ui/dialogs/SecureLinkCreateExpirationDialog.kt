@@ -81,7 +81,7 @@ internal fun SecureLinkCreateExpirationDialog(
                 onClick = { onUiEvent(SecureLinksCreateUiEvent.OnExpirationDialogDismissed) }
             ) {
                 Text(
-                    text = stringResource(id = CompR.string.action_close),
+                    text = stringResource(id = CompR.string.action_continue),
                     style = ProtonTheme.typography.body2Regular,
                     color = PassTheme.colors.interactionNormMajor2
                 )

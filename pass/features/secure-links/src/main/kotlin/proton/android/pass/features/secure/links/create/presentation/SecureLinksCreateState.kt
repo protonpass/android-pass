@@ -30,7 +30,7 @@ import kotlin.time.Duration.Companion.hours
 internal data class SecureLinksCreateState(
     internal val expiration: SecureLinkExpiration,
     internal val maxViewsAllowedOption: Option<Int>,
-    internal val isLoading: Boolean
+    internal val isLoading: Boolean,
 ) {
 
     internal enum class SecureLinkExpiration(internal val duration: Duration) {
@@ -40,6 +40,8 @@ internal data class SecureLinksCreateState(
         FourteenDays(14.days),
         ThirtyDays(30.days)
     }
+
+    internal val isConfigurationAllowed: Boolean = !isLoading
 
     internal val maxViewsAllowed: Int = maxViewsAllowedOption.value() ?: MIN_MAX_VIEWS_ALLOWED
 
@@ -52,7 +54,7 @@ internal data class SecureLinksCreateState(
         internal val Initial = SecureLinksCreateState(
             expiration = SecureLinkExpiration.SevenDays,
             maxViewsAllowedOption = None,
-            isLoading = false
+            isLoading = false,
         )
 
         private const val MIN_MAX_VIEWS_ALLOWED = 1

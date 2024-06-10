@@ -16,15 +16,16 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.secure.links.shared.navigation
+package proton.android.pass.features.secure.links.create.presentation
 
-sealed interface SecureLinksNavDestination {
+internal sealed interface SecureLinksCreateEvent {
 
-    data object Back : SecureLinksNavDestination
+    data object Idle : SecureLinksCreateEvent
 
-    data class SecureLinkOverview(
-        val maxViewsAllowed: Int?,
-        val secureLink: String
-    ) : SecureLinksNavDestination
+    data class OnSecureLinkGenerated(
+        internal val expiration: SecureLinksCreateState.SecureLinkExpiration,
+        internal val maxViewsAllowed: Int?,
+        internal val secureLink: String
+    ) : SecureLinksCreateEvent
 
 }

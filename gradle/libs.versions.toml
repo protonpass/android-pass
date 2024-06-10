@@ -94,9 +94,6 @@ truth = "1.1.5"
 fusion = "0.9.52"
 # Zxing
 zxing = "3.5.1"
-kotlinVersion = "1.9.0"
-coreKtx = "1.13.1"
-appcompat = "1.7.0"
 
 [plugins]
 gradlePlugin-android-benchmark = { id = "androidx.benchmark", version.ref = "androidx-benchmark" }
@@ -116,7 +113,6 @@ gradlePlugin-proton-environmentConfig = { id = "me.proton.core.gradle-plugins.en
 gradlePlugin-sentry = { id = "io.sentry.android.gradle", version.ref = "gradlePlugin-sentry" }
 gradlePlugin-test-logger = { id = "com.adarshr.test-logger", version.ref = "gradlePlugin-test-logger" }
 gradlePlugin-test = { id = "com.android.test", version.ref = "gradlePlugin-android" }
-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinVersion" }
 
 [libraries]
 # Accompanist
@@ -343,8 +339,6 @@ fusion = { module = "me.proton.test:fusion", version.ref = "fusion" }
 
 # Zxing
 zxing-core = { module = "com.google.zxing:core", version.ref = "zxing" }
-androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 
 [bundles]
 core-test = ["core-test-android-instrumented", "core-accountManager-test", "core-accountRecovery-test", "core-auth-test", "core-humanVerification-test", "core-plan-test", "core-userRecovery-test", "core-userSettings-test"]

@@ -55,10 +55,10 @@ internal fun SecureLinksCreateContent(
                 onClick = { onUiEvent(SecureLinksCreateUiEvent.OnGenerateLinkClicked) }
             )
         }
-    ) { innerPadding ->
+    ) { innerPaddingValue ->
         Column(
             modifier = Modifier
-                .padding(innerPadding)
+                .padding(paddingValues = innerPaddingValue)
                 .padding(top = Spacing.medium)
         ) {
             SecureLinkCreateExpirationRow(

@@ -67,7 +67,7 @@ fun SecureLinksCreateScreen(
                 }
 
                 SecureLinksCreateUiEvent.OnGenerateLinkClicked -> {
-
+                    onGenerateSecureLink()
                 }
 
                 SecureLinksCreateUiEvent.OnExpirationDialogDismissed -> {

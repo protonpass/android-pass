@@ -16,19 +16,25 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.requests
+package proton.android.pass.data.api.usecases.publiclink
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import kotlin.time.Duration
 
-@Serializable
-data class CreatePublicLinkRequest(
-    @SerialName("Revision")
-    val revision: Long,
-    @SerialName("ExpirationTime")
-    val expirationTime: Long,
-    @SerialName("MaxReadCount")
-    val maxReadCount: Int?,
-    @SerialName("EncryptedItemKey")
-    val encryptedItemKey: String
+data class SecureLinkOptions(
+    val expirationTime: Duration,
+    val maxReadCount: Int?
 )
+
+interface GenerateSecureLink {
+
+    suspend operator fun invoke(
+        userId: UserId? = null,
+        shareId: ShareId,
+        itemId: ItemId,
+        options: SecureLinkOptions
+    ): String
+
+}

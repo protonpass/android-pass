@@ -21,32 +21,35 @@ package proton.android.pass.data.impl.remote
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.impl.api.PasswordManagerApi
-import proton.android.pass.data.impl.requests.CreatePublicLinkRequest
-import proton.android.pass.data.impl.responses.CreatedPublicLink
+import proton.android.pass.data.impl.requests.CreateSecureLinkRequest
+import proton.android.pass.data.impl.responses.CreatedSecureLink
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
 
-interface RemotePublicLinkDataSource {
-    suspend fun generatePublicLink(
+interface RemoteSecureLinkDataSource {
+
+    suspend fun createSecureLink(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
-        request: CreatePublicLinkRequest
-    ): CreatedPublicLink
+        request: CreateSecureLinkRequest
+    ): CreatedSecureLink
+
 }
 
-class RemotePublicLinkDataSourceImpl @Inject constructor(
+class RemoteSecureLinkDataSourceImpl @Inject constructor(
     private val apiProvider: ApiProvider
-) : RemotePublicLinkDataSource {
+) : RemoteSecureLinkDataSource {
 
-    override suspend fun generatePublicLink(
+    override suspend fun createSecureLink(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
-        request: CreatePublicLinkRequest
-    ): CreatedPublicLink = apiProvider.get<PasswordManagerApi>(userId).invoke {
-        generatePublicLink(shareId = shareId.id, itemId = itemId.id, request = request)
-    }.valueOrThrow.publicLink
+        request: CreateSecureLinkRequest
+    ): CreatedSecureLink = apiProvider.get<PasswordManagerApi>(userId)
+        .invoke { generatePublicLink(shareId = shareId.id, itemId = itemId.id, request = request) }
+        .valueOrThrow
+        .secureLink
 
 }

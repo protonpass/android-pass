@@ -121,7 +121,7 @@ fun AuthScreenMasterPasswordForm(
             value = state.password,
             editable = isEditAllowed,
             keyboardOptions = KeyboardOptions(
-                autoCorrectEnabled = false,
+                autoCorrect = false,
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done
             ),

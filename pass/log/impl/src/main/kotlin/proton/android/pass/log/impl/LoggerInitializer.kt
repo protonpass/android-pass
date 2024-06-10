@@ -67,10 +67,11 @@ class LoggerInitializer : Initializer<Unit> {
             Timber.plant(Timber.DebugTree())
         }
         Timber.plant(FileLoggingTree(context))
-        deviceInfo(context, entryPoint.appConfig())
 
         // Forward Core Logs to Timber, using TimberLogger.
         initSentryLogger(CoreLogger)
+
+        deviceInfo(context, entryPoint.appConfig())
     }
 
     override fun dependencies(): List<Class<out Initializer<*>>> = listOf(

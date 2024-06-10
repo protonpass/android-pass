@@ -35,9 +35,9 @@ import proton.android.pass.commonui.api.heroWeak
 import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
+import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.customemail.presentation.SecurityCenterCustomEmailState
-import proton.android.pass.features.security.center.shared.ui.bars.SecurityCenterTopBar
 
 @Composable
 internal fun SecurityCenterCustomEmailContent(
@@ -49,7 +49,7 @@ internal fun SecurityCenterCustomEmailContent(
     Scaffold(
         modifier = modifier,
         topBar = {
-            SecurityCenterTopBar(
+            PassExtendedTopBar(
                 title = stringResource(R.string.security_center_custom_email_top_bar_title),
                 onUpClick = { onUiEvent(SecurityCenterCustomEmailUiEvent.Back) }
             )

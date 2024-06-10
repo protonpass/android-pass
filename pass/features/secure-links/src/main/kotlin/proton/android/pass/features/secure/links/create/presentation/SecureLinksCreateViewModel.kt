@@ -40,12 +40,14 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.securelinks.SecureLinkExpiration
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
 @HiltViewModel
 class SecureLinksCreateViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
-    private val generateSecureLink: GenerateSecureLink
+    private val generateSecureLink: GenerateSecureLink,
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -111,6 +113,7 @@ class SecureLinksCreateViewModel @Inject constructor(
             }.onError { error ->
                 PassLogger.w(TAG, "There was an error generating a secure link")
                 PassLogger.w(TAG, error)
+                snackbarDispatcher(SecureLinksCreateSnackbarMessage.GenerateSecureLinkError)
             }.onSuccess { secureLink ->
                 // Will be implemented in IDTEAM-3431
             }

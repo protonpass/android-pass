@@ -24,10 +24,15 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTopBarBackButtonType
 import proton.android.pass.commonui.api.Spacing
@@ -57,7 +62,8 @@ internal fun SecureLinksOverviewContent(
         bottomBar = {
             Column(
                 modifier = Modifier.padding(all = Spacing.medium),
-                verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
+                verticalArrangement = Arrangement.spacedBy(space = Spacing.small),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 PassCircleButton(
                     text = stringResource(id = R.string.secure_links_overview_button_copy_link),
@@ -70,6 +76,16 @@ internal fun SecureLinksOverviewContent(
                     backgroundColor = PassTheme.colors.interactionNormMinor1,
                     onClick = { onUiEvent(SecureLinksOverviewUiEvent.OnShareLinkClicked) }
                 )
+
+                TextButton(
+                    onClick = { onUiEvent(SecureLinksOverviewUiEvent.OnViewAllLinksClicked) }
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.secure_links_overview_button_view_all_links),
+                        style = ProtonTheme.typography.defaultNorm,
+                        color = PassTheme.colors.interactionNormMajor2
+                    )
+                }
             }
         }
     ) { innerPaddingValue ->
@@ -108,9 +124,7 @@ internal fun SecureLinksOverviewContent(
                 )
             }
 
-            SecureLinksOverviewLinkWidget(
-                secureLink = secureLink
-            )
+            SecureLinksOverviewLinkWidget(secureLink = secureLink)
         }
     }
 }

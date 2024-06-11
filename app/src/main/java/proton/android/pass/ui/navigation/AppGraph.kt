@@ -1569,6 +1569,10 @@ fun NavGraphBuilder.appGraph(
                         secureLink = destination.secureLink
                     )
                 )
+
+                SecureLinksNavDestination.SecureLinksDetails -> {
+                    // Will be implemented in IDTEAM-3362
+                }
             }
         }
     )

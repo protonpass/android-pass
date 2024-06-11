@@ -25,5 +25,5 @@ import proton.android.pass.domain.securelinks.SecureLinkExpiration
 internal data class SecureLinksOverviewState(
     internal val secureLink: String,
     internal val maxViewsAllows: Int?,
-    private val expiration: SecureLinkExpiration
+    internal val expiration: SecureLinkExpiration
 )

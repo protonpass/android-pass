@@ -1171,7 +1171,10 @@ fun NavGraphBuilder.appGraph(
 
                         AuthOrigin.AUTO_LOCK -> appNavigator.navigateBack()
                         AuthOrigin.EXTRA_PASSWORD_LOGIN -> {}
-                        AuthOrigin.EXTRA_PASSWORD_REMOVE -> appNavigator.popUpTo(Account)
+                        AuthOrigin.EXTRA_PASSWORD_REMOVE -> appNavigator.navigateBackWithResult(
+                            key = ENTER_PIN_PARAMETER_KEY,
+                            value = true
+                        )
                     }
                 }
 
@@ -1179,7 +1182,10 @@ fun NavGraphBuilder.appGraph(
                 AuthNavigation.Failed -> appNavigator.navigateBack()
                 AuthNavigation.SignOut -> onNavigate(AppNavigation.SignOut())
                 AuthNavigation.ForceSignOut -> onNavigate(AppNavigation.ForceSignOut)
-                AuthNavigation.EnterPin -> appNavigator.navigate(EnterPin)
+                is AuthNavigation.EnterPin -> appNavigator.navigate(
+                    destination = EnterPin,
+                    route = EnterPin.buildRoute(it.origin)
+                )
             }
         }
     )

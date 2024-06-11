@@ -18,12 +18,15 @@
 
 package proton.android.pass.ui.navigation
 
+import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.featureauth.impl.Auth
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.AuthOrigin
 import proton.android.pass.featureauth.impl.AuthScreen
+import proton.android.pass.featureauth.impl.AuthWithDefault
 import proton.android.pass.featureauth.impl.EnterPin
 import proton.android.pass.featureauth.impl.EnterPinBottomsheet
 import proton.android.pass.featureauth.impl.EnterPinNavigation
@@ -34,39 +37,26 @@ import proton.android.pass.ui.AppNavigation
 
 internal const val UN_AUTH_GRAPH = "un_auth_graph"
 
-@Suppress("ComplexMethod")
 fun NavGraphBuilder.unAuthGraph(
     appNavigator: AppNavigator,
+    origin: AuthOrigin,
+    userId: UserId? = null,
+    startDestination: String = Auth.route,
     onNavigate: (AppNavigation) -> Unit,
     dismissBottomSheet: (() -> Unit) -> Unit
 ) {
     navigation(
         route = UN_AUTH_GRAPH,
-        startDestination = Auth.route
+        startDestination = startDestination
     ) {
         composable(Auth) {
-            AuthScreen(
-                canLogout = true,
-                navigation = {
-                    when (it) {
-                        AuthNavigation.Dismissed,
-                        is AuthNavigation.Back -> onNavigate(AppNavigation.Finish)
-
-                        is AuthNavigation.Success,
-                        AuthNavigation.Failed -> {
-                        }
-
-                        AuthNavigation.SignOut -> onNavigate(AppNavigation.SignOut())
-                        AuthNavigation.ForceSignOut -> onNavigate(AppNavigation.ForceSignOut)
-                        AuthNavigation.EnterPin -> appNavigator.navigate(
-                            EnterPin,
-                            EnterPin.buildRoute(AuthOrigin.AUTO_LOCK)
-                        )
-                    }
-                }
-            )
+            SharedAuthScreen(onNavigate, appNavigator)
         }
-
+        userId?.let {
+            composable(AuthWithDefault(origin, userId)) {
+                SharedAuthScreen(onNavigate, appNavigator)
+            }
+        }
         bottomSheet(EnterPin) {
             EnterPinBottomsheet(
                 onNavigate = {
@@ -78,4 +68,30 @@ fun NavGraphBuilder.unAuthGraph(
             )
         }
     }
+}
+
+@Composable
+private fun SharedAuthScreen(onNavigate: (AppNavigation) -> Unit, appNavigator: AppNavigator) {
+    AuthScreen(
+        canLogout = true,
+        navigation = {
+            when (it) {
+                AuthNavigation.Dismissed,
+                is AuthNavigation.Back -> onNavigate(AppNavigation.Finish)
+
+                is AuthNavigation.Success -> if (it.origin == AuthOrigin.EXTRA_PASSWORD_LOGIN) {
+                    onNavigate(AppNavigation.Finish)
+                }
+                AuthNavigation.Failed -> {
+                }
+
+                AuthNavigation.SignOut -> onNavigate(AppNavigation.SignOut())
+                AuthNavigation.ForceSignOut -> onNavigate(AppNavigation.ForceSignOut)
+                is AuthNavigation.EnterPin -> appNavigator.navigate(
+                    EnterPin,
+                    EnterPin.buildRoute(AuthOrigin.AUTO_LOCK)
+                )
+            }
+        }
+    )
 }

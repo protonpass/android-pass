@@ -20,7 +20,8 @@ package proton.android.pass.data.impl.usecases.extrapassword
 
 import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getPrimaryAccount
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.usecases.extrapassword.HasExtraPassword
 import proton.android.pass.data.impl.repositories.ExtraPasswordRepository
 import javax.inject.Inject
@@ -29,9 +30,8 @@ class HasExtraPasswordImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val extraPasswordRepository: ExtraPasswordRepository
 ) : HasExtraPassword {
-    override suspend fun invoke(): Boolean {
-        val account = accountManager.getPrimaryAccount().firstOrNull()
-            ?: throw IllegalStateException("No primary account found")
-        return extraPasswordRepository.doesUserHaveExtraPassword(account.userId)
+    override suspend fun invoke(userId: UserId?): Boolean {
+        val actualUserId = userId ?: accountManager.getPrimaryUserId().firstOrNull() ?: throw UserIdNotAvailableError()
+        return extraPasswordRepository.doesUserHaveExtraPassword(actualUserId)
     }
 }

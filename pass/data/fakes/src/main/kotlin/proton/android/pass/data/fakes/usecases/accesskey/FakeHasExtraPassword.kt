@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.fakes.usecases.accesskey
 
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.extrapassword.HasExtraPassword
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -31,6 +32,6 @@ class FakeHasExtraPassword @Inject constructor() : HasExtraPassword {
         result = value
     }
 
-    override suspend fun invoke(): Boolean = result.getOrThrow()
+    override suspend fun invoke(userId: UserId?): Boolean = result.getOrThrow()
 }
 

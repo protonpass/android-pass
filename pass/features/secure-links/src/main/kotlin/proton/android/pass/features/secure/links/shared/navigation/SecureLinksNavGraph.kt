@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.secure.links.shared.navigation
 
+import androidx.activity.compose.BackHandler
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.features.secure.links.create.navigation.SecureLinksCreateNavItem
 import proton.android.pass.features.secure.links.create.ui.SecureLinksCreateScreen
@@ -32,6 +33,10 @@ fun NavGraphBuilder.secureLinksNavGraph(onNavigated: (SecureLinksNavDestination)
     }
 
     composable(navItem = SecureLinksOverviewNavItem) {
+        BackHandler {
+            onNavigated(SecureLinksNavDestination.Close)
+        }
+
         SecureLinksOverviewScreen(onNavigated = onNavigated)
     }
 

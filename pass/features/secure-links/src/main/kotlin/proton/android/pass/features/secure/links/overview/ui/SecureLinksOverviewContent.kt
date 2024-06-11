@@ -114,7 +114,7 @@ internal fun SecureLinksOverviewContent(
                     titleResId = R.string.secure_links_overview_widget_expiration_title,
                     infoText = SecureLink.expirationOptionsMap[expiration]
                         ?.let { expirationResId -> stringResource(id = expirationResId) }
-                        ?: "",
+                        ?: ""
                 )
 
                 SecureLinksOverviewInfoWidget(
@@ -129,7 +129,7 @@ internal fun SecureLinksOverviewContent(
                                 maxViews
                             )
                         }
-                        ?: stringResource(id = R.string.secure_links_overview_widget_max_views_unlimited),
+                        ?: stringResource(id = R.string.secure_links_overview_widget_max_views_unlimited)
                 )
             }
 

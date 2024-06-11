@@ -20,8 +20,10 @@ package proton.android.pass.features.secure.links.overview.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.commonui.api.AndroidUtils
 import proton.android.pass.features.secure.links.overview.presentation.SecureLinksOverviewViewModel
 import proton.android.pass.features.secure.links.shared.navigation.SecureLinksNavDestination
 
@@ -31,6 +33,7 @@ fun SecureLinksOverviewScreen(
     viewModel: SecureLinksOverviewViewModel = hiltViewModel()
 ) = with(viewModel) {
     val state by state.collectAsStateWithLifecycle()
+    val context = LocalContext.current
 
     SecureLinksOverviewContent(
         state = state,
@@ -45,7 +48,10 @@ fun SecureLinksOverviewScreen(
                 }
 
                 SecureLinksOverviewUiEvent.OnShareLinkClicked -> {
-                    TODO()
+                    AndroidUtils.shareTextWithThirdParties(
+                        context = context,
+                        text = state.secureLink
+                    )
                 }
             }
         }

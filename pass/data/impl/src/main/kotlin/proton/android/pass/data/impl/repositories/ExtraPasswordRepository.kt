@@ -34,7 +34,7 @@ interface ExtraPasswordRepository {
     suspend fun doesUserHaveExtraPassword(userId: UserId): Boolean
     suspend fun storeAccessKeyForUser(userId: UserId, extraPassword: EncryptedString)
     suspend fun checkAccessKeyForUser(userId: UserId, extraPassword: EncryptedString): Boolean
-    suspend fun removeExtraPasswordForUser(userId: UserId)
+    suspend fun removeLocalExtraPasswordForUser(userId: UserId)
 }
 
 class ExtraPasswordRepositoryImpl @Inject constructor(
@@ -83,7 +83,7 @@ class ExtraPasswordRepositoryImpl @Inject constructor(
             return@withContext hashedUserPassword == decryptedHashedStoredPassword
         }
 
-    override suspend fun removeExtraPasswordForUser(userId: UserId) = withContext(appDispatchers.io) {
+    override suspend fun removeLocalExtraPasswordForUser(userId: UserId) = withContext(appDispatchers.io) {
         val file = getExtraPasswordFileForUser(userId)
         if (file.exists()) {
             file.delete()

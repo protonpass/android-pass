@@ -16,22 +16,14 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.secure.links.shared.navigation
+package proton.android.pass.features.secure.links.overview.ui
 
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.securelinks.SecureLinkExpiration
+internal sealed interface SecureLinksOverviewUiEvent {
 
-sealed interface SecureLinksNavDestination {
+    data object OnCloseClicked: SecureLinksOverviewUiEvent
 
-    data object Back : SecureLinksNavDestination
+    data object OnCopyLinkClicked: SecureLinksOverviewUiEvent
 
-    data class SecureLinkOverview(
-        val shareId: ShareId,
-        val itemId: ItemId,
-        val expiration: SecureLinkExpiration,
-        val maxViewsAllowed: Int?,
-        val secureLink: String
-    ) : SecureLinksNavDestination
+    data object OnShareLinkClicked: SecureLinksOverviewUiEvent
 
 }

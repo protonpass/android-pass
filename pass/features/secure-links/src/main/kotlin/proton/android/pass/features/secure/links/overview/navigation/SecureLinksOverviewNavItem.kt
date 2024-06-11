@@ -16,22 +16,21 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.secure.links.shared.navigation
+package proton.android.pass.features.secure.links.overview.navigation
 
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.securelinks.SecureLinkExpiration
+import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.NavItem
 
-sealed interface SecureLinksNavDestination {
+object SecureLinksOverviewNavItem : NavItem(
+    baseRoute = "secure-links/overview",
+    navArgIds = listOf(
+        CommonNavArgId.ShareId,
+        CommonNavArgId.ItemId
+    )
+) {
 
-    data object Back : SecureLinksNavDestination
-
-    data class SecureLinkOverview(
-        val shareId: ShareId,
-        val itemId: ItemId,
-        val expiration: SecureLinkExpiration,
-        val maxViewsAllowed: Int?,
-        val secureLink: String
-    ) : SecureLinksNavDestination
+    fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
 
 }

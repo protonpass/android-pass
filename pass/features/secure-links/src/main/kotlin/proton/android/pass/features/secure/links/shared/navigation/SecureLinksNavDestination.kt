@@ -36,6 +36,6 @@ sealed interface SecureLinksNavDestination {
         val secureLink: String
     ) : SecureLinksNavDestination
 
-    data object SecureLinksDetails : SecureLinksNavDestination
+    data object SecureLinksList : SecureLinksNavDestination
 
 }

@@ -55,7 +55,7 @@ fun SecureLinksOverviewScreen(
                 }
 
                 SecureLinksOverviewUiEvent.OnViewAllLinksClicked -> {
-                    onNavigated(SecureLinksNavDestination.SecureLinksDetails)
+                    onNavigated(SecureLinksNavDestination.SecureLinksList)
                 }
             }
         }

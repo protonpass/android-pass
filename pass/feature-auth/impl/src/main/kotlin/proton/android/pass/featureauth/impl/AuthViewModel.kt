@@ -61,6 +61,7 @@ import proton.android.pass.data.api.errors.WrongExtraPasswordException
 import proton.android.pass.data.api.usecases.CheckMasterPassword
 import proton.android.pass.data.api.usecases.ObservePrimaryUserEmail
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPassword
+import proton.android.pass.data.api.usecases.extrapassword.CheckLocalExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.HasExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.RemoveExtraPassword
 import proton.android.pass.featureauth.impl.AuthSnackbarMessage.AuthExtraPasswordError
@@ -83,6 +84,7 @@ class AuthViewModel @Inject constructor(
     private val appDispatchers: AppDispatchers,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val authWithExtraPassword: AuthWithExtraPassword,
+    private val checkLocalExtraPassword: CheckLocalExtraPassword,
     private val removeExtraPassword: RemoveExtraPassword,
     private val snackbarDispatcher: SnackbarDispatcher,
     hasExtraPassword: HasExtraPassword,
@@ -204,14 +206,21 @@ class AuthViewModel @Inject constructor(
 
     private fun submitExtraPassword(password: String) {
         viewModelScope.launch {
-            val encryptedPassword = encryptionContextProvider.withEncryptionContext {
-                encrypt(password)
-            }
             runCatching {
-                authWithExtraPassword(
-                    userId = userId.value(),
-                    password = encryptedPassword
-                )
+                val encryptedPassword = encryptionContextProvider.withEncryptionContext {
+                    encrypt(password)
+                }
+                if (origin == AuthOrigin.AUTO_LOCK) {
+                    checkLocalExtraPassword(
+                        userId = userId.value(),
+                        password = encryptedPassword
+                    )
+                } else {
+                    authWithExtraPassword(
+                        userId = userId.value(),
+                        password = encryptedPassword
+                    )
+                }
             }
                 .onSuccess { onAuthenticatedWithExtraPasswordSuccess() }
                 .onFailure { onAuthenticatedWithExtraPasswordFailed(it) }

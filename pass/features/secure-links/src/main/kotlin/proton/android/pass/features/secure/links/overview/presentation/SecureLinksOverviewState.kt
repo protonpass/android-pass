@@ -16,22 +16,14 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.secure.links.shared.navigation
+package proton.android.pass.features.secure.links.overview.presentation
 
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
+import com.google.android.material.bottomsheet.BottomSheetBehavior.State
 import proton.android.pass.domain.securelinks.SecureLinkExpiration
 
-sealed interface SecureLinksNavDestination {
-
-    data object Back : SecureLinksNavDestination
-
-    data class SecureLinkOverview(
-        val shareId: ShareId,
-        val itemId: ItemId,
-        val expiration: SecureLinkExpiration,
-        val maxViewsAllowed: Int?,
-        val secureLink: String
-    ) : SecureLinksNavDestination
-
-}
+@State
+internal data class SecureLinksOverviewState(
+    internal val secureLink: String,
+    internal val maxViewsAllows: Int?,
+    private val expiration: SecureLinkExpiration
+)

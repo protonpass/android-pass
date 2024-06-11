@@ -31,7 +31,8 @@ import proton.android.pass.features.secure.links.R
 internal data class SecureLinksCreateState(
     internal val expiration: SecureLinkExpiration,
     internal val maxViewsAllowedOption: Option<Int>,
-    internal val isLoading: Boolean
+    internal val isLoading: Boolean,
+    internal val event: SecureLinksCreateEvent
 ) {
 
     internal val isConfigurationAllowed: Boolean = !isLoading
@@ -55,7 +56,8 @@ internal data class SecureLinksCreateState(
         internal val Initial = SecureLinksCreateState(
             expiration = SecureLinkExpiration.SevenDays,
             maxViewsAllowedOption = None,
-            isLoading = false
+            isLoading = false,
+            event = SecureLinksCreateEvent.Idle
         )
 
         private const val MIN_MAX_VIEWS_ALLOWED = 1

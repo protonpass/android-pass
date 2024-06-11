@@ -28,6 +28,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordResult
 import proton.android.pass.data.impl.remote.RemoteExtraPasswordDataSource
+import proton.android.pass.data.impl.repositories.ExtraPasswordRepository
 import proton.android.pass.data.impl.requests.ExtraPasswordSendSrpDataRequest
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
@@ -38,7 +39,8 @@ class AuthWithExtraPasswordImpl @Inject constructor(
     private val remoteExtraPasswordDataSource: RemoteExtraPasswordDataSource,
     private val sessionManager: SessionManager,
     private val authWithExtraPasswordListener: AuthWithExtraPasswordListenerImpl,
-    private val accountManager: AccountManager
+    private val accountManager: AccountManager,
+    private val extraPasswordRepository: ExtraPasswordRepository
 ) : AuthWithExtraPassword {
     override suspend fun invoke(userId: UserId?, password: EncryptedString) {
         val actualUserId = userId ?: accountManager.getPrimaryUserId().first()
@@ -66,6 +68,7 @@ class AuthWithExtraPasswordImpl @Inject constructor(
                 srpSessionId = srpData.srpSessionId
             )
         )
+        extraPasswordRepository.storeAccessKeyForUser(actualUserId, password)
 
         PassLogger.i(TAG, "Auth with extra password successful. Refreshing session scopes")
         sessionManager.getSessionId(actualUserId)?.let { session ->

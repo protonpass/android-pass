@@ -1574,7 +1574,7 @@ fun NavGraphBuilder.appGraph(
                     )
                 )
 
-                SecureLinksNavDestination.SecureLinksDetails -> {
+                SecureLinksNavDestination.SecureLinksList -> {
                     // Will be implemented in IDTEAM-3362
                 }
             }

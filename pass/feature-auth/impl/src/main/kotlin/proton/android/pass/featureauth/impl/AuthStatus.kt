@@ -19,6 +19,7 @@
 package proton.android.pass.featureauth.impl
 
 import androidx.compose.runtime.Stable
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -31,7 +32,9 @@ sealed interface AuthEvent {
     data object Canceled : AuthEvent
     data object SignOut : AuthEvent
     data object ForceSignOut : AuthEvent
-    data object EnterPin : AuthEvent
+
+    @JvmInline
+    value class EnterPin(val origin: AuthOrigin) : AuthEvent
     data object EnterBiometrics : AuthEvent
     data object Unknown : AuthEvent
 }
@@ -59,7 +62,7 @@ data class AuthContent(
     val error: Option<AuthError>,
     val passwordError: Option<PasswordError>,
     val authMethod: Option<AuthMethod>,
-    val hasExtraPassword: Option<Boolean>
+    val showExtraPassword: LoadingResult<Boolean>
 ) {
     companion object {
         fun default(address: Option<String>) = AuthContent(
@@ -70,7 +73,7 @@ data class AuthContent(
             error = None,
             passwordError = None,
             authMethod = None,
-            hasExtraPassword = None
+            showExtraPassword = LoadingResult.Loading
         )
     }
 }

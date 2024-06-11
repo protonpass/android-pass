@@ -21,6 +21,7 @@ package proton.android.pass.featureauth.impl
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.navigation
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
@@ -28,19 +29,39 @@ import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 
 const val AUTH_GRAPH = "auth_graph"
+private const val AUTH_ORIGIN_ARG = "authOrigin"
+private const val AUTH_BASE_ROUTE = "auth"
 
 object AuthOriginNavArgId : NavArgId {
-    override val key: String = "authOrigin"
+    override val key: String = AUTH_ORIGIN_ARG
     override val navType: NavType<*> = NavType.EnumType(AuthOrigin::class.java)
 }
 
+data class AuthOriginWithDefaultNavArgId(override val default: AuthOrigin) : NavArgId {
+    override val key: String = AUTH_ORIGIN_ARG
+    override val navType: NavType<*> = NavType.EnumType(AuthOrigin::class.java)
+}
+
+private const val USER_ID_ARG = "userId"
+
+data class UserIdWithDefaultNavArgId(override val default: String) : NavArgId {
+    override val key: String = USER_ID_ARG
+    override val navType: NavType<*> = NavType.StringType
+}
+
 object Auth : NavItem(
-    baseRoute = "auth",
+    baseRoute = AUTH_BASE_ROUTE,
     navArgIds = listOf(AuthOriginNavArgId),
     noHistory = true
 ) {
     fun buildRoute(origin: AuthOrigin): String = "$baseRoute/${origin.name}"
 }
+
+data class AuthWithDefault(val origin: AuthOrigin, val userId: UserId) : NavItem(
+    baseRoute = AUTH_BASE_ROUTE,
+    navArgIds = listOf(AuthOriginWithDefaultNavArgId(origin), UserIdWithDefaultNavArgId(userId.id)),
+    noHistory = true
+)
 
 object EnterPin : NavItem(
     baseRoute = "pin/enter/bottomsheet",
@@ -64,7 +85,8 @@ sealed interface AuthNavigation {
 
     data object ForceSignOut : AuthNavigation
 
-    data object EnterPin : AuthNavigation
+    @JvmInline
+    value class EnterPin(val origin: AuthOrigin) : AuthNavigation
 
     @JvmInline
     value class Back(val origin: AuthOrigin) : AuthNavigation

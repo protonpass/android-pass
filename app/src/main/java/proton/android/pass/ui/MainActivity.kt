@@ -112,7 +112,8 @@ class MainActivity : FragmentActivity() {
                         onNavigate = {
                             when (it) {
                                 is AppNavigation.Finish -> finish()
-                                is AppNavigation.SignOut -> SignOutDialogActivity.start(this)
+                                is AppNavigation.SignOut ->
+                                    SignOutDialogActivity.start(this, it.userId)
                                 is AppNavigation.ForceSignOut -> launcherViewModel.disable()
                                 is AppNavigation.Report -> launcherViewModel.report()
                                 is AppNavigation.Subscription -> launcherViewModel.subscription()

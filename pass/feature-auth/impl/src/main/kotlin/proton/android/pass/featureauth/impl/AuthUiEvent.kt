@@ -26,6 +26,8 @@ sealed interface AuthUiEvent {
     value class OnTogglePasswordVisibility(val value: Boolean) : AuthUiEvent
 
     data object OnAuthAgainClick : AuthUiEvent
-    data object OnPasswordSubmit : AuthUiEvent
+
+    @JvmInline
+    value class OnPasswordSubmit(val value: Boolean) : AuthUiEvent
     data object OnSignOut : AuthUiEvent
 }

@@ -53,10 +53,9 @@ class ExtraPasswordRepositoryImpl @Inject constructor(
             val encryptedHashedPassword = encryptionContextProvider.withEncryptionContext {
                 val decryptedPassword = decrypt(extraPassword)
                 val hashedPassword = HashUtils.sha256(decryptedPassword)
-                encrypt(hashedPassword)
+                encrypt(hashedPassword.encodeToByteArray())
             }
-
-            file.writeBytes(encryptedHashedPassword.encodeToByteArray())
+            file.writeBytes(encryptedHashedPassword.array)
         }
 
     override suspend fun checkAccessKeyForUser(userId: UserId, extraPassword: EncryptedString): Boolean =

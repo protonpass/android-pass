@@ -262,7 +262,7 @@ internal class AuthViewModelTest {
             assertThat(state2.content.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
             assertThat(state2.content.error.value()).isEqualTo(
                 AuthError.WrongPassword(
-                    remainingAttempts = 4
+                    remainingAttempts = 4.some()
                 )
             )
             assertThat(state2.content.password).isEqualTo(password)
@@ -290,7 +290,7 @@ internal class AuthViewModelTest {
                 val stateError = awaitItem()
                 assertThat(stateError.content.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
 
-                val expected = AuthError.WrongPassword(remainingAttempts = 4 - attempt)
+                val expected = AuthError.WrongPassword(remainingAttempts = (4 - attempt).some())
                 assertThat(stateError.content.error.value()).isEqualTo(expected)
             }
 

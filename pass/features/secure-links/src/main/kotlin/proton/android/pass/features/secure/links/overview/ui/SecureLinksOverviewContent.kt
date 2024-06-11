@@ -36,14 +36,11 @@ import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTopBarBackButtonType
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
-import proton.android.pass.composecomponents.impl.extension.toSmallResource
-import proton.android.pass.composecomponents.impl.item.LoginRow
 import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
-import proton.android.pass.domain.ShareIcon
 import proton.android.pass.features.secure.links.R
 import proton.android.pass.features.secure.links.overview.presentation.SecureLinksOverviewState
+import proton.android.pass.features.secure.links.overview.ui.headers.SecureLinksOverviewHeader
 import proton.android.pass.features.secure.links.overview.ui.widgets.SecureLinksOverviewInfoWidget
 import proton.android.pass.features.secure.links.overview.ui.widgets.SecureLinksOverviewLinkWidget
 import proton.android.pass.features.secure.links.shared.presentation.SecureLink
@@ -139,17 +136,4 @@ internal fun SecureLinksOverviewContent(
             SecureLinksOverviewLinkWidget(secureLink = secureLink)
         }
     }
-}
-
-@Composable
-internal fun SecureLinksOverviewHeader(
-    item: ItemUiModel,
-    shareIcon: ShareIcon?,
-    canLoadExternalImages: Boolean
-) {
-    LoginRow(
-        item = item,
-        vaultIcon = shareIcon?.toSmallResource(),
-        canLoadExternalImages = canLoadExternalImages
-    )
 }

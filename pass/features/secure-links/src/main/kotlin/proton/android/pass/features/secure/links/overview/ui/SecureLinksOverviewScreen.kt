@@ -40,7 +40,7 @@ fun SecureLinksOverviewScreen(
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 SecureLinksOverviewUiEvent.OnCloseClicked -> {
-                    TODO()
+                    onNavigated(SecureLinksNavDestination.Close)
                 }
 
                 SecureLinksOverviewUiEvent.OnCopyLinkClicked -> {

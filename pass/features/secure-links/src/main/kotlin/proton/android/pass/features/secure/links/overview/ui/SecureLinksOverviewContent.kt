@@ -96,7 +96,7 @@ internal fun SecureLinksOverviewContent(
         Column(
             modifier = Modifier
                 .padding(paddingValues = innerPaddingValue)
-                .padding(all = Spacing.medium),
+                .padding(horizontal = Spacing.medium),
             verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
         ) {
             itemUiModel?.let { item ->

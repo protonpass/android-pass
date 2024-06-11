@@ -47,7 +47,7 @@ fun SecureLinksCreateScreen(
                 itemId = event.itemId,
                 expiration = event.expiration,
                 secureLink = event.secureLink,
-                maxViewsAllowed = event.maxViewsAllowed,
+                maxViewsAllowed = event.maxViewsAllowed
             ).also(onNavigated)
         }
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -18,16 +18,14 @@
 
 package proton.android.pass.featureauth.impl
 
-sealed interface AuthUiEvent {
-    @JvmInline
-    value class OnPasswordUpdate(val value: String) : AuthUiEvent
+import androidx.annotation.StringRes
+import proton.android.pass.notifications.api.SnackbarMessage
+import proton.android.pass.notifications.api.SnackbarType
 
-    @JvmInline
-    value class OnTogglePasswordVisibility(val value: Boolean) : AuthUiEvent
-
-    data object OnAuthAgainClick : AuthUiEvent
-
-    @JvmInline
-    value class OnPasswordSubmit(val value: Boolean) : AuthUiEvent
-    data object OnSignOut : AuthUiEvent
+enum class AuthSnackbarMessage(
+    @StringRes override val id: Int,
+    override val type: SnackbarType,
+    override val isClipboard: Boolean = false
+) : SnackbarMessage {
+    AuthExtraPasswordError(R.string.auth_extra_password_error, SnackbarType.ERROR)
 }

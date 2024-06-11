@@ -25,8 +25,10 @@ import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentActivity
 import dagger.hilt.android.AndroidEntryPoint
+import me.proton.core.accountmanager.presentation.compose.SignOutDialogActivity
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.ui.AppNavigation
 
 @AndroidEntryPoint
 class EnterExtraPasswordActivity : FragmentActivity() {
@@ -37,6 +39,7 @@ class EnterExtraPasswordActivity : FragmentActivity() {
 
         val userId = intent.getStringExtra(EXTRA_USER_ID)?.let { UserId(it) } ?: run {
             PassLogger.w(TAG, "Missing user id")
+            setResult(RESULT_CANCELED)
             finish()
             return
         }
@@ -44,11 +47,20 @@ class EnterExtraPasswordActivity : FragmentActivity() {
         setContent {
             EnterExtraPasswordApp(
                 userId = userId,
-                onSuccess = {
-                    setResult(RESULT_OK)
-                    finish()
-                },
-                onLogout = {}
+                onNavigate = {
+                    when (it) {
+                        AppNavigation.Finish -> {
+                            setResult(RESULT_OK)
+                            finish()
+                        }
+                        is AppNavigation.SignOut -> SignOutDialogActivity.start(this, it.userId)
+                        is AppNavigation.ForceSignOut -> {
+                            setResult(RESULT_CANCELED)
+                            finish()
+                        }
+                        else -> {}
+                    }
+                }
             )
         }
     }

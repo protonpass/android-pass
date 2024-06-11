@@ -36,6 +36,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
+import proton.android.pass.common.api.getOrNull
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
@@ -52,7 +53,8 @@ fun AuthContent(
 
     val onSubmit = {
         keyboardController?.hide()
-        onEvent(AuthUiEvent.OnPasswordSubmit)
+        val hasExtraPassword = state.showExtraPassword.getOrNull() ?: false
+        onEvent(AuthUiEvent.OnPasswordSubmit(hasExtraPassword))
     }
 
     Scaffold(

@@ -50,7 +50,7 @@ fun AuthScreen(
                     AuthEvent.Canceled -> navigation(AuthNavigation.Dismissed)
                     AuthEvent.SignOut -> navigation(AuthNavigation.SignOut)
                     AuthEvent.ForceSignOut -> navigation(AuthNavigation.ForceSignOut)
-                    AuthEvent.EnterPin -> navigation(AuthNavigation.EnterPin)
+                    is AuthEvent.EnterPin -> navigation(AuthNavigation.EnterPin(event.origin))
                     AuthEvent.EnterBiometrics -> viewModel.onBiometricsRequired(ctx.toClassHolder())
                     AuthEvent.Unknown -> return@LaunchedEffect
                 }
@@ -65,7 +65,7 @@ fun AuthScreen(
         onEvent = {
             when (it) {
                 is AuthUiEvent.OnPasswordUpdate -> viewModel.onPasswordChanged(it.value)
-                AuthUiEvent.OnPasswordSubmit -> viewModel.onSubmit(state.content.hasExtraPassword)
+                is AuthUiEvent.OnPasswordSubmit -> viewModel.onSubmit(it.value)
                 AuthUiEvent.OnSignOut -> viewModel.onSignOut()
                 is AuthUiEvent.OnTogglePasswordVisibility ->
                     viewModel.onTogglePasswordVisibility(it.value)

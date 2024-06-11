@@ -22,5 +22,5 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 
 interface CheckLocalExtraPassword {
-    suspend operator fun invoke(userId: UserId, password: EncryptedString): Boolean
+    suspend operator fun invoke(userId: UserId?, password: EncryptedString): Boolean
 }

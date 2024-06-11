@@ -49,11 +49,12 @@ fun NavGraphBuilder.unAuthGraph(
         route = UN_AUTH_GRAPH,
         startDestination = startDestination
     ) {
-        composable(Auth) {
-            SharedAuthScreen(onNavigate, appNavigator)
-        }
-        userId?.let {
+        if (userId != null) {
             composable(AuthWithDefault(origin, userId)) {
+                SharedAuthScreen(onNavigate, appNavigator)
+            }
+        } else {
+            composable(Auth) {
                 SharedAuthScreen(onNavigate, appNavigator)
             }
         }

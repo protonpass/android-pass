@@ -132,7 +132,7 @@ class AuthViewModel @Inject constructor(
 
         AuthState(
             event = event,
-            content = AuthContent(
+            content = AuthStateContent(
                 password = formContent.password,
                 isLoadingState = formContent.isLoadingState,
                 isPasswordVisible = formContent.isPasswordVisible,
@@ -140,7 +140,8 @@ class AuthViewModel @Inject constructor(
                 passwordError = formContent.passwordError,
                 address = address,
                 authMethod = authMethod,
-                showExtraPassword = shouldShowExtraPassword(hasExtraPassword)
+                showExtraPassword = shouldShowExtraPassword(hasExtraPassword),
+                showPinOrBiometry = origin == AuthOrigin.AUTO_LOCK
             )
         )
     }
@@ -339,6 +340,7 @@ class AuthViewModel @Inject constructor(
     }
 
     internal fun onAuthMethodRequested() = viewModelScope.launch {
+        if (origin != AuthOrigin.AUTO_LOCK) return@launch
         val newAuthEvent = when (preferenceRepository.getAppLockTypePreference().first()) {
             AppLockTypePreference.None -> AuthEvent.Unknown
             AppLockTypePreference.Biometrics -> AuthEvent.EnterBiometrics

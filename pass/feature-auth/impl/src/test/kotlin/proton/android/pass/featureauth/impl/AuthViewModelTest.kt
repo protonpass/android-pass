@@ -94,9 +94,10 @@ internal class AuthViewModelTest {
     internal fun `WHEN view model is initialized THEN emits initial state`() = runTest {
         val expectedState = AuthState.Initial.copy(
             event = None,
-            content = AuthContent.default(USER_EMAIL.some()).copy(
+            content = AuthStateContent.default(USER_EMAIL.some()).copy(
                 authMethod = Some(AuthMethod.Fingerprint),
-                showExtraPassword = LoadingResult.Success(false)
+                showExtraPassword = LoadingResult.Success(false),
+                showPinOrBiometry = true
             )
         )
 
@@ -172,9 +173,10 @@ internal class AuthViewModelTest {
             assertThat(awaitItem()).isEqualTo(
                 AuthState(
                     event = None,
-                    content = AuthContent.default(USER_EMAIL.some()).copy(
+                    content = AuthStateContent.default(USER_EMAIL.some()).copy(
                         authMethod = Some(AuthMethod.Fingerprint),
-                        showExtraPassword = LoadingResult.Success(false)
+                        showExtraPassword = LoadingResult.Success(false),
+                        showPinOrBiometry = true
                     )
                 )
             )

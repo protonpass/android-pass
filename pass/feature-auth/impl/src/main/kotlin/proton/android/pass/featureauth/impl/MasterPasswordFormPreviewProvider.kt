@@ -30,7 +30,7 @@ class MasterPasswordFormPreviewProvider : PreviewParameterProvider<MasterPasswor
             MasterPasswordInput(),
             MasterPasswordInput("password", isPasswordVisible = true),
             MasterPasswordInput("password", isPasswordVisible = false),
-            MasterPasswordInput(error = AuthError.WrongPassword(2).some()),
+            MasterPasswordInput(error = AuthError.WrongPassword(2.some()).some()),
             MasterPasswordInput(passwordError = PasswordError.EmptyPassword.some()),
             MasterPasswordInput(hasExtraPassword = true)
         )

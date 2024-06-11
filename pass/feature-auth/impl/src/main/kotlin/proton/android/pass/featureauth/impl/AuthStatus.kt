@@ -46,7 +46,7 @@ enum class AuthMethod {
 
 sealed interface AuthError {
     @JvmInline
-    value class WrongPassword(val remainingAttempts: Int) : AuthError
+    value class WrongPassword(val remainingAttempts: Option<Int>) : AuthError
     data object UnknownError : AuthError
 }
 

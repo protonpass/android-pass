@@ -88,7 +88,7 @@ class SecureLinksOverviewViewModel @Inject constructor(
                 secureLink = secureLink,
                 expiration = expiration,
                 maxViewsAllows = maxViewsAllowed,
-                itemUiModel = itemUiModel,
+                itemUiModel = itemUiModel.copy(isPinned = false),
                 canLoadExternalImages = useFavIconsPreference.value(),
                 shareIcon = vault.icon,
             )

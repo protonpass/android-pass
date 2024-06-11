@@ -53,6 +53,10 @@ fun SecureLinksOverviewScreen(
                         text = state.secureLink
                     )
                 }
+
+                SecureLinksOverviewUiEvent.OnViewAllLinksClicked -> {
+                    onNavigated(SecureLinksNavDestination.SecureLinksDetails)
+                }
             }
         }
     )

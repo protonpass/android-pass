@@ -19,6 +19,7 @@
 package proton.android.pass.commonui.api
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.os.Build
@@ -53,6 +54,18 @@ object AndroidUtils {
     } catch (e: PackageManager.NameNotFoundException) {
         PassLogger.d(TAG, e, "Package name not found")
         None
+    }
+
+    fun shareTextWithThirdParties(context: Context, text: String, title: String? = null) {
+        Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, text)
+            type = "text/plain"
+        }.let { sendIntent ->
+            Intent.createChooser(sendIntent, title)
+        }.also { shareIntent ->
+            context.startActivity(shareIntent)
+        }
     }
 
 }

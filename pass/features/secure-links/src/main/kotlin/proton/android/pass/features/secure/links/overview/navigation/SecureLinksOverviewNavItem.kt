@@ -20,17 +20,35 @@ package proton.android.pass.features.secure.links.overview.navigation
 
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.securelinks.SecureLinkExpiration
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavParamEncoder
+import proton.android.pass.navigation.api.toPath
 
 object SecureLinksOverviewNavItem : NavItem(
     baseRoute = "secure-links/overview",
     navArgIds = listOf(
         CommonNavArgId.ShareId,
-        CommonNavArgId.ItemId
-    )
+        CommonNavArgId.ItemId,
+        SecureLinksOverviewExpirationNavArgId,
+        SecureLinksOverviewLinkNavArgId
+    ),
+    optionalArgIds = listOf(SecureLinksOverviewMaxViewsNavArgId)
 ) {
 
-    fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
+    fun createNavRoute(
+        shareId: ShareId,
+        itemId: ItemId,
+        expiration: SecureLinkExpiration,
+        maxViewsAllowed: Int?,
+        secureLink: String
+    ) = buildString {
+        append("$baseRoute/${shareId.id}/${itemId.id}/$expiration/${NavParamEncoder.encode(secureLink)}")
+
+        mutableMapOf<String, Any>().apply {
+            maxViewsAllowed?.let { put(SecureLinksOverviewMaxViewsNavArgId.key, it) }
+        }.also { optionalArgs -> append(optionalArgs.toPath()) }
+    }
 
 }

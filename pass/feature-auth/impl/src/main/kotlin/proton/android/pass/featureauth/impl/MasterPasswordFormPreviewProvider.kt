@@ -31,7 +31,8 @@ class MasterPasswordFormPreviewProvider : PreviewParameterProvider<MasterPasswor
             MasterPasswordInput("password", isPasswordVisible = true),
             MasterPasswordInput("password", isPasswordVisible = false),
             MasterPasswordInput(error = AuthError.WrongPassword(2).some()),
-            MasterPasswordInput(passwordError = PasswordError.EmptyPassword.some())
+            MasterPasswordInput(passwordError = PasswordError.EmptyPassword.some()),
+            MasterPasswordInput(hasExtraPassword = true)
         )
 }
 
@@ -39,7 +40,8 @@ data class MasterPasswordInput(
     val password: String = "",
     val isPasswordVisible: Boolean = false,
     val error: Option<AuthError> = None,
-    val passwordError: Option<PasswordError> = None
+    val passwordError: Option<PasswordError> = None,
+    val hasExtraPassword: Boolean = false
 )
 
 class ThemeMasterPasswordPreviewProvider : ThemePairPreviewProvider<MasterPasswordInput>(

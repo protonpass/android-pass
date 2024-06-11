@@ -205,11 +205,15 @@ fun AuthScreenMasterPasswordForm(
         if (state.error is Some) {
             val errorText = when (val error = state.error.value) {
                 AuthError.UnknownError -> stringResource(R.string.auth_error_verifying_password)
-                is AuthError.WrongPassword -> pluralStringResource(
-                    R.plurals.auth_error_wrong_password,
-                    error.remainingAttempts,
-                    error.remainingAttempts
-                )
+                is AuthError.WrongPassword -> when (error.remainingAttempts) {
+                    is Some -> pluralStringResource(
+                        R.plurals.auth_error_wrong_password,
+                        error.remainingAttempts.value,
+                        error.remainingAttempts.value
+                    )
+
+                    is None -> stringResource(id = R.string.auth_error_wrong_password_no_attempts)
+                }
             }
 
             Spacer(modifier = Modifier.height(40.dp))

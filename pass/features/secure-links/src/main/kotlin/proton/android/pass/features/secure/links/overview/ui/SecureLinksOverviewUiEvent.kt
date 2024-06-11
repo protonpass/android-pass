@@ -26,4 +26,6 @@ internal sealed interface SecureLinksOverviewUiEvent {
 
     data object OnShareLinkClicked: SecureLinksOverviewUiEvent
 
+    data object OnViewAllLinksClicked: SecureLinksOverviewUiEvent
+
 }

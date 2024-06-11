@@ -143,7 +143,8 @@ class AuthViewModel @Inject constructor(
                 address = address,
                 authMethod = authMethod,
                 showExtraPassword = shouldShowExtraPassword(hasExtraPassword),
-                showPinOrBiometry = origin == AuthOrigin.AUTO_LOCK
+                showPinOrBiometry = origin == AuthOrigin.AUTO_LOCK,
+                showLogout = origin != AuthOrigin.EXTRA_PASSWORD_LOGIN
             )
         )
     }

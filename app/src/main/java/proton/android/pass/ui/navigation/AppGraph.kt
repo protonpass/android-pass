@@ -122,6 +122,7 @@ import proton.android.pass.features.item.history.navigation.itemHistoryNavGraph
 import proton.android.pass.features.item.history.restore.navigation.ItemHistoryRestoreNavItem
 import proton.android.pass.features.item.history.timeline.navigation.ItemHistoryTimelineNavItem
 import proton.android.pass.features.secure.links.create.navigation.SecureLinksCreateNavItem
+import proton.android.pass.features.secure.links.overview.navigation.SecureLinksOverviewNavItem
 import proton.android.pass.features.secure.links.shared.navigation.SecureLinksNavDestination
 import proton.android.pass.features.secure.links.shared.navigation.secureLinksNavGraph
 import proton.android.pass.features.security.center.addressoptions.navigation.SecurityCenterAliasAddressOptionsNavItem
@@ -1558,9 +1559,13 @@ fun NavGraphBuilder.appGraph(
                     comesFromBottomsheet = false
                 )
 
-                is SecureLinksNavDestination.SecureLinkOverview -> {
-                    // Will be implemented in IDTEAM-3431
-                }
+                is SecureLinksNavDestination.SecureLinkOverview -> appNavigator.navigate(
+                    destination = SecureLinksOverviewNavItem,
+                    route = SecureLinksOverviewNavItem.createNavRoute(
+                        shareId = destination.shareId,
+                        itemId = destination.itemId
+                    )
+                )
             }
         }
     )

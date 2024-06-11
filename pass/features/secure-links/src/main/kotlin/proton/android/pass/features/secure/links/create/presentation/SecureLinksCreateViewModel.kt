@@ -115,7 +115,17 @@ class SecureLinksCreateViewModel @Inject constructor(
                 PassLogger.w(TAG, error)
                 snackbarDispatcher(SecureLinksCreateSnackbarMessage.GenerateSecureLinkError)
             }.onSuccess { secureLink ->
-                // Will be implemented in IDTEAM-3431
+                _state.update { currentState ->
+                    currentState.copy(
+                        event = SecureLinksCreateEvent.OnLinkGenerated(
+                            shareId = shareId,
+                            itemId = itemId,
+                            expiration = state.value.expiration,
+                            maxViewsAllowed = state.value.maxViewsAllowedOption.value(),
+                            secureLink = secureLink
+                        )
+                    )
+                }
             }
 
             _state.update { currentState -> currentState.copy(isLoading = false) }

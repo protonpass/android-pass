@@ -212,10 +212,11 @@ class AuthViewModel @Inject constructor(
                     encrypt(password)
                 }
                 if (origin == AuthOrigin.AUTO_LOCK) {
-                    checkLocalExtraPassword(
+                    val isPasswordRight = checkLocalExtraPassword(
                         userId = userId.value(),
                         password = encryptedPassword
                     )
+                    if (!isPasswordRight) throw WrongLocalCheckExtraPasswordException()
                 } else {
                     authWithExtraPassword(
                         userId = userId.value(),
@@ -263,10 +264,19 @@ class AuthViewModel @Inject constructor(
 
             is WrongExtraPasswordException -> {
                 PassLogger.w(TAG, "Wrong extra password")
-                viewModelScope.launch {
-                    val remainingAttempts = incrementAttemptAndReturnRemaining()
+                formContentFlow.update {
+                    it.copy(error = AuthError.WrongPassword(None).some())
+                }
+            }
+
+            is WrongLocalCheckExtraPasswordException -> {
+                PassLogger.w(TAG, "Wrong local extra password")
+                val remainingAttempts = incrementAttemptAndReturnRemaining()
+                if (remainingAttempts <= 0) {
+                    updateAuthEventFlow(AuthEvent.ForceSignOut)
+                } else {
                     formContentFlow.update {
-                        it.copy(error = AuthError.WrongPassword(remainingAttempts).some())
+                        it.copy(error = AuthError.WrongPassword(remainingAttempts.some()).some())
                     }
                 }
             }
@@ -310,7 +320,9 @@ class AuthViewModel @Inject constructor(
                                 "Wrong password. Remaining attempts: $remainingAttempts"
                             )
                             formContentFlow.update {
-                                it.copy(error = AuthError.WrongPassword(remainingAttempts).some())
+                                it.copy(
+                                    error = AuthError.WrongPassword(remainingAttempts.some()).some()
+                                )
                             }
                         }
                     }

@@ -90,7 +90,7 @@ class SecureLinksOverviewViewModel @Inject constructor(
                 maxViewsAllows = maxViewsAllowed,
                 itemUiModel = itemUiModel.copy(isPinned = false),
                 canLoadExternalImages = useFavIconsPreference.value(),
-                shareIcon = vault.icon,
+                shareIcon = vault.icon
             )
         }
     }.stateIn(

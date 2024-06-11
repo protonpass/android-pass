@@ -20,12 +20,12 @@ package proton.android.pass.features.secure.links.overview.ui
 
 internal sealed interface SecureLinksOverviewUiEvent {
 
-    data object OnCloseClicked: SecureLinksOverviewUiEvent
+    data object OnCloseClicked : SecureLinksOverviewUiEvent
 
-    data object OnCopyLinkClicked: SecureLinksOverviewUiEvent
+    data object OnCopyLinkClicked : SecureLinksOverviewUiEvent
 
-    data object OnShareLinkClicked: SecureLinksOverviewUiEvent
+    data object OnShareLinkClicked : SecureLinksOverviewUiEvent
 
-    data object OnViewAllLinksClicked: SecureLinksOverviewUiEvent
+    data object OnViewAllLinksClicked : SecureLinksOverviewUiEvent
 
 }

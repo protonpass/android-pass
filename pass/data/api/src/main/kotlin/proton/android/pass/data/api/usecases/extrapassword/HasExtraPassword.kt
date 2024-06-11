@@ -18,6 +18,8 @@
 
 package proton.android.pass.data.api.usecases.extrapassword
 
+import me.proton.core.domain.entity.UserId
+
 interface HasExtraPassword {
-    suspend operator fun invoke(): Boolean
+    suspend operator fun invoke(userId: UserId? = null): Boolean
 }

@@ -33,5 +33,5 @@ class FakeAuthWithExtraPassword @Inject constructor() : AuthWithExtraPassword {
         result = value
     }
 
-    override suspend fun invoke(userId: UserId, password: EncryptedString) = result.getOrThrow()
+    override suspend fun invoke(userId: UserId?, password: EncryptedString) = result.getOrThrow()
 }

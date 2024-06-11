@@ -1536,7 +1536,7 @@ fun NavGraphBuilder.appGraph(
             SyncNavDestination.Back -> appNavigator.navigateBack()
         }
     }
-/**/
+    /**/
     upsellNavGraph(
         onNavigated = { upsellNavDestination ->
             when (upsellNavDestination) {
@@ -1557,6 +1557,10 @@ fun NavGraphBuilder.appGraph(
             when (destination) {
                 SecureLinksNavDestination.Back -> appNavigator.navigateBack(
                     comesFromBottomsheet = false
+                )
+
+                SecureLinksNavDestination.Close -> appNavigator.popUpTo(
+                    destination = ViewItem
                 )
 
                 is SecureLinksNavDestination.SecureLinkOverview -> appNavigator.navigate(

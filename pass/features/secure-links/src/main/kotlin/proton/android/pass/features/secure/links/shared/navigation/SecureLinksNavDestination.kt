@@ -26,6 +26,8 @@ sealed interface SecureLinksNavDestination {
 
     data object Back : SecureLinksNavDestination
 
+    data object Close : SecureLinksNavDestination
+
     data class SecureLinkOverview(
         val shareId: ShareId,
         val itemId: ItemId,

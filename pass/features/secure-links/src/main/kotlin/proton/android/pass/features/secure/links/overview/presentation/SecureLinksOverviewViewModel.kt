@@ -19,9 +19,12 @@
 package proton.android.pass.features.secure.links.overview.presentation
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.domain.ItemId
@@ -32,11 +35,14 @@ import proton.android.pass.features.secure.links.overview.navigation.SecureLinks
 import proton.android.pass.features.secure.links.overview.navigation.SecureLinksOverviewMaxViewsNavArgId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavParamEncoder
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
 @HiltViewModel
 class SecureLinksOverviewViewModel @Inject constructor(
-    savedStateHandleProvider: SavedStateHandleProvider
+    savedStateHandleProvider: SavedStateHandleProvider,
+    private val clipboardManager: ClipboardManager,
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -65,5 +71,13 @@ class SecureLinksOverviewViewModel @Inject constructor(
             maxViewsAllows = maxViewsAllowed
         )
     )
+
+    internal fun onLinkCopied() {
+        clipboardManager.copyToClipboard(text = secureLink, isSecure = false)
+
+        viewModelScope.launch {
+            snackbarDispatcher(SecureLinksOverviewSnackbarMessage.LinkCopied)
+        }
+    }
 
 }

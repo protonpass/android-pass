@@ -37,6 +37,7 @@ import proton.android.pass.features.secure.links.R
 import proton.android.pass.features.secure.links.overview.presentation.SecureLinksOverviewState
 import proton.android.pass.features.secure.links.overview.ui.widgets.SecureLinksOverviewInfoWidget
 import proton.android.pass.features.secure.links.overview.ui.widgets.SecureLinksOverviewLinkWidget
+import proton.android.pass.features.secure.links.shared.presentation.SecureLink
 import me.proton.core.presentation.R as CoreR
 
 @Composable
@@ -86,7 +87,9 @@ internal fun SecureLinksOverviewContent(
                     modifier = Modifier.weight(weight = 1f),
                     iconResId = CoreR.drawable.ic_proton_clock,
                     titleResId = R.string.secure_links_overview_widget_expiration_title,
-                    infoText = "14 days",
+                    infoText = SecureLink.expirationOptionsMap[expiration]
+                        ?.let { expirationResId -> stringResource(id = expirationResId) }
+                        ?: "",
                 )
 
                 SecureLinksOverviewInfoWidget(

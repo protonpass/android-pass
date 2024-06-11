@@ -32,6 +32,7 @@ import proton.android.pass.features.secure.links.create.presentation.SecureLinks
 import proton.android.pass.features.secure.links.create.ui.dialogs.SecureLinkCreateExpirationDialog
 import proton.android.pass.features.secure.links.create.ui.rows.SecureLinkCreateExpirationRow
 import proton.android.pass.features.secure.links.create.ui.rows.SecureLinkCreateMaxViewsRow
+import proton.android.pass.features.secure.links.shared.presentation.SecureLink
 
 @Composable
 internal fun SecureLinksCreateContent(
@@ -64,7 +65,7 @@ internal fun SecureLinksCreateContent(
         ) {
             SecureLinkCreateExpirationRow(
                 isConfigurationAllowed = isConfigurationAllowed,
-                expirationText = expirationOptionsMap[expiration]
+                expirationText = SecureLink.expirationOptionsMap[expiration]
                     ?.let { expirationResId -> stringResource(id = expirationResId) }
                     ?: "",
                 onUiEvent = onUiEvent
@@ -83,7 +84,7 @@ internal fun SecureLinksCreateContent(
     if (shouldDisplayExpirationDialog) {
         SecureLinkCreateExpirationDialog(
             selectedExpiration = expiration,
-            expirationOptionsMap = expirationOptionsMap,
+            expirationOptionsMap = SecureLink.expirationOptionsMap,
             onUiEvent = onUiEvent
         )
     }

@@ -48,6 +48,7 @@ class ExtraPasswordRepositoryImpl @Inject constructor(
             if (file.exists()) {
                 file.delete()
             }
+            file.createNewFile()
 
             val encryptedHashedPassword = encryptionContextProvider.withEncryptionContext {
                 val decryptedPassword = decrypt(extraPassword)

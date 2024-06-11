@@ -68,7 +68,7 @@ import me.proton.core.presentation.R as CoreR
 @Composable
 fun AuthScreenMasterPasswordForm(
     modifier: Modifier = Modifier,
-    state: AuthContent,
+    state: AuthStateContent,
     onEvent: (AuthUiEvent) -> Unit,
     onSubmit: () -> Unit
 ) {
@@ -184,7 +184,7 @@ fun AuthScreenMasterPasswordForm(
             onDoneClick = onSubmit
         )
 
-        if (state.authMethod is Some) {
+        if (state.authMethod is Some && state.showPinOrBiometry) {
             val text = when (state.authMethod.value) {
                 AuthMethod.Pin -> stringResource(R.string.auth_action_enter_pin_instead)
                 AuthMethod.Fingerprint -> stringResource(R.string.auth_action_enter_fingerprint_instead)
@@ -238,15 +238,16 @@ fun AuthScreenMasterPasswordFormPreview(
     PassTheme(isDark = input.first) {
         Surface {
             AuthScreenMasterPasswordForm(
-                state = AuthContent(
+                state = AuthStateContent(
                     password = input.second.password,
                     address = "some@address.test".some(),
                     isLoadingState = IsLoadingState.NotLoading,
-                    error = input.second.error,
                     isPasswordVisible = input.second.isPasswordVisible,
+                    error = input.second.error,
                     passwordError = input.second.passwordError,
                     authMethod = None,
-                    showExtraPassword = LoadingResult.Success(true)
+                    showExtraPassword = LoadingResult.Success(true),
+                    showPinOrBiometry = true
                 ),
                 onEvent = {},
                 onSubmit = {}

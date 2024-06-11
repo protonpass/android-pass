@@ -83,7 +83,9 @@ dependencies {
     testImplementation(projects.pass.biometry.fakes)
     testImplementation(projects.pass.common.fakes)
     testImplementation(projects.pass.commonUi.fakes)
+    testImplementation(projects.pass.crypto.fakes)
     testImplementation(projects.pass.data.fakes)
+    testImplementation(projects.pass.notifications.fakes)
     testImplementation(projects.pass.preferences.fakes)
 
     testImplementation(libs.coroutines.test)

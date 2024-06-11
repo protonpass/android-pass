@@ -114,6 +114,7 @@ dependencies {
 
     androidTestImplementation(files("../../../../proton-libs/gopenpgp/gopenpgp.aar"))
     androidTestImplementation(projects.pass.commonTest)
+    androidTestImplementation(projects.pass.common.fakes)
     androidTestImplementation(projects.pass.crypto.fakes)
     androidTestImplementation(projects.pass.data.fakes)
 

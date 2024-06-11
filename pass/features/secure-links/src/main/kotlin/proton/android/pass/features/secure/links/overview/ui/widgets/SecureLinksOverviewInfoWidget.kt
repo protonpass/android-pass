@@ -89,15 +89,13 @@ internal fun SecureLinksOverviewInfoWidget(
 }
 
 @[Preview Composable]
-internal fun SecureLinksOverviewInfoWidgetPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+internal fun SecureLinksOverviewInfoWidgetPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             SecureLinksOverviewInfoWidget(
                 iconResId = CoreR.drawable.ic_proton_clock,
                 titleResId = R.string.secure_links_overview_widget_expiration_title,
-                infoText = "14 days",
+                infoText = "14 days"
             )
         }
     }

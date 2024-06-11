@@ -65,6 +65,7 @@ android {
 }
 
 dependencies {
+    implementation(projects.pass.clipboard.api)
     implementation(projects.pass.commonPresentation.api)
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.commonUiModels.api)

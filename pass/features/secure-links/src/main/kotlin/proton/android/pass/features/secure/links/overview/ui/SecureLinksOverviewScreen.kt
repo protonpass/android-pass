@@ -36,9 +36,17 @@ fun SecureLinksOverviewScreen(
         state = state,
         onUiEvent = { uiEvent ->
             when (uiEvent) {
-                SecureLinksOverviewUiEvent.OnCloseClicked -> TODO()
-                SecureLinksOverviewUiEvent.OnCopyLinkClicked -> TODO()
-                SecureLinksOverviewUiEvent.OnShareLinkClicked -> TODO()
+                SecureLinksOverviewUiEvent.OnCloseClicked -> {
+                    TODO()
+                }
+
+                SecureLinksOverviewUiEvent.OnCopyLinkClicked -> {
+                    onLinkCopied()
+                }
+
+                SecureLinksOverviewUiEvent.OnShareLinkClicked -> {
+                    TODO()
+                }
             }
         }
     )

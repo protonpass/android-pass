@@ -38,7 +38,7 @@ class RemoveExtraPasswordImpl @Inject constructor(
             ?: throw IllegalStateException("No primary account found")
 
         remoteExtraPasswordDataSource.removeExtraPassword(actualUserId)
-        extraPasswordRepository.removeExtraPasswordForUser(actualUserId)
+        extraPasswordRepository.removeLocalExtraPasswordForUser(actualUserId)
     }
 
 }

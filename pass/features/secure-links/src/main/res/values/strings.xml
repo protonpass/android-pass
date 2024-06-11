@@ -31,6 +31,13 @@
     <string name="secure_links_create_snackbar_message_error">There was an error generating secure link</string>
 
     <!--Overview screen-->
+    <string name="secure_links_overview_widget_expiration_title">Expires in:</string>
+    <string name="secure_links_overview_widget_max_views_title">Can be viewed:</string>
+    <plurals name="secure_links_overview_widget_max_views_limited">
+        <item quantity="one">%d time</item>
+        <item quantity="other">%d times</item>
+    </plurals>
+    <string name="secure_links_overview_widget_max_views_unlimited">Unlimited</string>
     <string name="secure_links_overview_button_copy_link">Copy link</string>
     <string name="secure_links_overview_button_share_link">Share link</string>
 </resources>

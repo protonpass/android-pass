@@ -27,7 +27,11 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.securelinks.SecureLinkExpiration
+import proton.android.pass.features.secure.links.overview.navigation.SecureLinksOverviewExpirationNavArgId
+import proton.android.pass.features.secure.links.overview.navigation.SecureLinksOverviewLinkNavArgId
+import proton.android.pass.features.secure.links.overview.navigation.SecureLinksOverviewMaxViewsNavArgId
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.NavParamEncoder
 import javax.inject.Inject
 
 @HiltViewModel
@@ -43,11 +47,22 @@ class SecureLinksOverviewViewModel @Inject constructor(
         .require<String>(CommonNavArgId.ItemId.key)
         .let(::ItemId)
 
+    private val expiration = savedStateHandleProvider.get()
+        .require<SecureLinkExpiration>(SecureLinksOverviewExpirationNavArgId.key)
+
+    private val maxViewsAllowed: Int? = savedStateHandleProvider.get()
+        .get<String>(SecureLinksOverviewMaxViewsNavArgId.key)
+        ?.toIntOrNull()
+
+    private val secureLink = savedStateHandleProvider.get()
+        .require<String>(SecureLinksOverviewLinkNavArgId.key)
+        .let(NavParamEncoder::decode)
+
     internal val state: StateFlow<SecureLinksOverviewState> = MutableStateFlow(
         SecureLinksOverviewState(
-            secureLink = "https://www.google.com",
-            expiration = SecureLinkExpiration.OneDay,
-            maxViewsAllows = 10
+            secureLink = secureLink,
+            expiration = expiration,
+            maxViewsAllows = maxViewsAllowed
         )
     )
 

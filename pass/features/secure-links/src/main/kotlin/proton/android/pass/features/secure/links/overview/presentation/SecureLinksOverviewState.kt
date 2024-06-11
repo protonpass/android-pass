@@ -19,11 +19,35 @@
 package proton.android.pass.features.secure.links.overview.presentation
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior.State
+import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.securelinks.SecureLinkExpiration
 
 @State
 internal data class SecureLinksOverviewState(
     internal val secureLink: String,
     internal val maxViewsAllows: Int?,
-    internal val expiration: SecureLinkExpiration
-)
+    internal val expiration: SecureLinkExpiration,
+    internal val itemUiModel: ItemUiModel?,
+    internal val canLoadExternalImages: Boolean,
+    internal val shareIcon: ShareIcon?
+) {
+
+    internal companion object {
+
+        internal fun initial(
+            secureLink: String,
+            maxViewsAllows: Int?,
+            expiration: SecureLinkExpiration
+        ): SecureLinksOverviewState = SecureLinksOverviewState(
+            secureLink = secureLink,
+            maxViewsAllows = maxViewsAllows,
+            expiration = expiration,
+            itemUiModel = null,
+            canLoadExternalImages = false,
+            shareIcon = null
+        )
+
+    }
+
+}

@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -35,6 +36,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.biometry.BiometryAuthError
 import proton.android.pass.biometry.BiometryManager
 import proton.android.pass.biometry.BiometryResult
@@ -47,24 +49,26 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.asLoadingResult
-import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.TooManyExtraPasswordAttemptsException
+import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.errors.WrongExtraPasswordException
 import proton.android.pass.data.api.usecases.CheckMasterPassword
 import proton.android.pass.data.api.usecases.ObservePrimaryUserEmail
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.HasExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.RemoveExtraPassword
+import proton.android.pass.featureauth.impl.AuthSnackbarMessage.AuthExtraPasswordError
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.navigation.api.UserIdNavArgId
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.AppLockTypePreference
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -80,8 +84,8 @@ class AuthViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val authWithExtraPassword: AuthWithExtraPassword,
     private val removeExtraPassword: RemoveExtraPassword,
+    private val snackbarDispatcher: SnackbarDispatcher,
     hasExtraPassword: HasExtraPassword,
-    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     observePrimaryUserEmail: ObservePrimaryUserEmail,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
@@ -89,9 +93,14 @@ class AuthViewModel @Inject constructor(
     internal val origin = savedStateHandleProvider.get()
         .get<AuthOrigin>(AuthOriginNavArgId.key)
         ?: AuthOrigin.AUTO_LOCK
+    internal val userId: Option<UserId> = savedStateHandleProvider.get()
+        .get<String>(UserIdNavArgId.key)
+        ?.let(::UserId)
+        .let(UserId?::toOption)
 
     private val eventFlow: MutableStateFlow<Option<AuthEvent>> = MutableStateFlow(None)
     private val formContentFlow: MutableStateFlow<FormContents> = MutableStateFlow(FormContents())
+
     private val authMethodFlow: Flow<Option<AuthMethod>> = preferenceRepository
         .getAppLockTypePreference()
         .map {
@@ -103,15 +112,13 @@ class AuthViewModel @Inject constructor(
         }
         .distinctUntilChanged()
 
-    val state: StateFlow<AuthState> = combineN(
+    val state: StateFlow<AuthState> = combine(
         eventFlow,
         formContentFlow,
         observePrimaryUserEmail().asLoadingResult(),
         authMethodFlow,
-        oneShot { hasExtraPassword() },
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.ACCESS_KEY_V1)
-    ) { event, formContent, userEmail, authMethod, hasExtraPassword, hasExtraPasswordEnabled ->
-
+        oneShot { hasExtraPassword(userId.value()) }.asLoadingResult()
+    ) { event, formContent, userEmail, authMethod, hasExtraPassword ->
         val address = when (userEmail) {
             LoadingResult.Loading -> None
             is LoadingResult.Error -> {
@@ -122,6 +129,7 @@ class AuthViewModel @Inject constructor(
 
             is LoadingResult.Success -> userEmail.data.some()
         }
+
         AuthState(
             event = event,
             content = AuthContent(
@@ -132,7 +140,7 @@ class AuthViewModel @Inject constructor(
                 passwordError = formContent.passwordError,
                 address = address,
                 authMethod = authMethod,
-                hasExtraPassword = (hasExtraPassword && hasExtraPasswordEnabled).some()
+                showExtraPassword = shouldShowExtraPassword(hasExtraPassword)
             )
         )
     }
@@ -141,6 +149,25 @@ class AuthViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5_000L),
             initialValue = AuthState.Initial
         )
+
+    private fun shouldShowExtraPassword(hasExtraPassword: LoadingResult<Boolean>) = when (hasExtraPassword) {
+        is LoadingResult.Error ->
+            if (hasExtraPassword.exception is UserIdNotAvailableError && origin == AuthOrigin.EXTRA_PASSWORD_LOGIN) {
+                LoadingResult.Success(true)
+            } else {
+                hasExtraPassword
+            }
+
+        LoadingResult.Loading -> LoadingResult.Loading
+        is LoadingResult.Success -> when (origin) {
+            AuthOrigin.CONFIGURE_PIN_OR_BIOMETRY,
+            AuthOrigin.AUTO_LOCK -> hasExtraPassword
+
+            AuthOrigin.EXTRA_PASSWORD_CONFIGURE -> LoadingResult.Success(false)
+            AuthOrigin.EXTRA_PASSWORD_LOGIN,
+            AuthOrigin.EXTRA_PASSWORD_REMOVE -> LoadingResult.Success(true)
+        }
+    }
 
     fun onPasswordChanged(value: String) = viewModelScope.launch {
         formContentFlow.update {
@@ -154,7 +181,7 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun onSubmit(hasExtraPassword: Option<Boolean>) {
+    fun onSubmit(hasExtraPassword: Boolean) {
         val password = formContentFlow.value.password
         if (!isPasswordValid(password)) return
         formContentFlow.update {
@@ -167,7 +194,7 @@ class AuthViewModel @Inject constructor(
                 passwordError = None
             )
         }
-        if (hasExtraPassword.value() == true) {
+        if (hasExtraPassword) {
             submitExtraPassword(password)
         } else {
             submitMasterPassword(password)
@@ -179,33 +206,44 @@ class AuthViewModel @Inject constructor(
             val encryptedPassword = encryptionContextProvider.withEncryptionContext {
                 encrypt(password)
             }
-            runCatching { authWithExtraPassword(password = encryptedPassword) }
+            runCatching {
+                authWithExtraPassword(
+                    userId = userId.value(),
+                    password = encryptedPassword
+                )
+            }
                 .onSuccess { onAuthenticatedWithExtraPasswordSuccess() }
-                .onFailure(::onAuthenticatedWithExtraPasswordFailed)
+                .onFailure { onAuthenticatedWithExtraPasswordFailed(it) }
+            formContentFlow.update { it.copy(isLoadingState = IsLoadingState.NotLoading) }
         }
     }
 
-    private suspend fun AuthViewModel.onAuthenticatedWithExtraPasswordSuccess() {
+    private suspend fun onAuthenticatedWithExtraPasswordSuccess() {
         PassLogger.i(TAG, "Extra password success")
-        when (origin) {
-            AuthOrigin.EXTRA_PASSWORD_REMOVE -> runCatching { removeExtraPassword() }
-                .onSuccess {
-                    PassLogger.i(TAG, "Removed extra password successfully")
-                    storeAuthSuccessful()
-                    updateAuthEventFlow(AuthEvent.Success(origin))
-                }
-                .onFailure { err ->
-                    PassLogger.w(TAG, "Error removing extra password")
-                    PassLogger.w(TAG, err)
-                    // snackbarDispatcher(EnterExtraPasswordSnackbarMessage.ExtraPasswordError)
-                }
-
-            AuthOrigin.EXTRA_PASSWORD_LOGIN -> updateAuthEventFlow(AuthEvent.Success(origin))
-            else -> {}
+        if (origin == AuthOrigin.EXTRA_PASSWORD_REMOVE) {
+            removeExtraPasswordOnAuthenticated()
+        } else {
+            storeAuthSuccessful()
+            updateAuthEventFlow(AuthEvent.Success(origin))
         }
     }
 
-    private fun onAuthenticatedWithExtraPasswordFailed(err: Throwable) {
+
+    private suspend fun removeExtraPasswordOnAuthenticated() {
+        runCatching { removeExtraPassword(userId.value()) }
+            .onSuccess {
+                PassLogger.i(TAG, "Removed extra password successfully")
+                storeAuthSuccessful()
+                updateAuthEventFlow(AuthEvent.Success(origin))
+            }
+            .onFailure { err ->
+                PassLogger.w(TAG, "Error removing extra password")
+                PassLogger.w(TAG, err)
+                snackbarDispatcher(AuthExtraPasswordError)
+            }
+    }
+
+    private suspend fun onAuthenticatedWithExtraPasswordFailed(err: Throwable) {
         when (err) {
             is TooManyExtraPasswordAttemptsException -> {
                 PassLogger.w(TAG, "Too many attempts")
@@ -225,7 +263,7 @@ class AuthViewModel @Inject constructor(
             else -> {
                 PassLogger.w(TAG, "Error performing authentication")
                 PassLogger.w(TAG, err)
-                // snackbarDispatcher(EnterExtraPasswordSnackbarMessage.ExtraPasswordError)
+                snackbarDispatcher(AuthExtraPasswordError)
             }
         }
     }
@@ -244,9 +282,7 @@ class AuthViewModel @Inject constructor(
             runCatching { checkMasterPassword(password = password.encodeToByteArray()) }
                 .onSuccess { isPasswordRight ->
                     if (isPasswordRight) {
-                        storeAuthSuccessful()
-                        formContentFlow.update { it.copy(password = "", isPasswordVisible = false) }
-                        updateAuthEventFlow(AuthEvent.Success(origin))
+                        onAuthenticatedWithMasterPassword()
                     } else {
                         withContext(appDispatchers.default) {
                             delay(WRONG_PASSWORD_DELAY_SECONDS)
@@ -273,9 +309,14 @@ class AuthViewModel @Inject constructor(
                     PassLogger.w(TAG, err)
                     formContentFlow.update { it.copy(error = AuthError.UnknownError.some()) }
                 }
-
             formContentFlow.update { it.copy(isLoadingState = IsLoadingState.NotLoading) }
         }
+    }
+
+    private fun onAuthenticatedWithMasterPassword() {
+        storeAuthSuccessful()
+        formContentFlow.update { it.copy(password = "", isPasswordVisible = false) }
+        updateAuthEventFlow(AuthEvent.Success(origin))
     }
 
     private suspend fun incrementAttemptAndReturnRemaining(): Int {
@@ -301,7 +342,7 @@ class AuthViewModel @Inject constructor(
         val newAuthEvent = when (preferenceRepository.getAppLockTypePreference().first()) {
             AppLockTypePreference.None -> AuthEvent.Unknown
             AppLockTypePreference.Biometrics -> AuthEvent.EnterBiometrics
-            AppLockTypePreference.Pin -> AuthEvent.EnterPin
+            AppLockTypePreference.Pin -> AuthEvent.EnterPin(origin)
         }
 
         updateAuthEventFlow(newAuthEvent)

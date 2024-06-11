@@ -19,12 +19,14 @@
 package proton.android.pass.features.secure.links.create.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.features.secure.links.create.presentation.SecureLinksCreateEvent
 import proton.android.pass.features.secure.links.create.presentation.SecureLinksCreateViewModel
 import proton.android.pass.features.secure.links.shared.navigation.SecureLinksNavDestination
 
@@ -36,6 +38,19 @@ fun SecureLinksCreateScreen(
     val state by state.collectAsStateWithLifecycle()
 
     var shouldDisplayExpirationDialog by remember { mutableStateOf(false) }
+
+    LaunchedEffect(key1 = state.event) {
+        when (val event = state.event) {
+            SecureLinksCreateEvent.Idle -> {}
+            is SecureLinksCreateEvent.OnLinkGenerated -> SecureLinksNavDestination.SecureLinkOverview(
+                shareId = event.shareId,
+                itemId = event.itemId,
+                expiration = event.expiration,
+                secureLink = event.secureLink,
+                maxViewsAllowed = event.maxViewsAllowed,
+            ).also(onNavigated)
+        }
+    }
 
     SecureLinksCreateContent(
         state = state,

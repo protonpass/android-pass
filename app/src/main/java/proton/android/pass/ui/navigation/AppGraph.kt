@@ -1536,7 +1536,7 @@ fun NavGraphBuilder.appGraph(
             SyncNavDestination.Back -> appNavigator.navigateBack()
         }
     }
-
+/**/
     upsellNavGraph(
         onNavigated = { upsellNavDestination ->
             when (upsellNavDestination) {
@@ -1563,7 +1563,10 @@ fun NavGraphBuilder.appGraph(
                     destination = SecureLinksOverviewNavItem,
                     route = SecureLinksOverviewNavItem.createNavRoute(
                         shareId = destination.shareId,
-                        itemId = destination.itemId
+                        itemId = destination.itemId,
+                        expiration = destination.expiration,
+                        maxViewsAllowed = destination.maxViewsAllowed,
+                        secureLink = destination.secureLink
                     )
                 )
             }

@@ -33,6 +33,6 @@ class FakeCheckLocalExtraPassword @Inject constructor() : CheckLocalExtraPasswor
         result = value
     }
 
-    override suspend fun invoke(userId: UserId, password: EncryptedString) = result.getOrThrow()
+    override suspend fun invoke(userId: UserId?, password: EncryptedString): Boolean = result.getOrThrow()
 }
 

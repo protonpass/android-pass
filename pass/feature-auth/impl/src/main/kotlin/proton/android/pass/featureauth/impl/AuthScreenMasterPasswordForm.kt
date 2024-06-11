@@ -49,6 +49,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
@@ -104,10 +105,14 @@ fun AuthScreenMasterPasswordForm(
         )
         Spacer(modifier = Modifier.height(12.dp))
         if (state.address is Some && state.address.value.isNotBlank()) {
-            val text = if (state.hasExtraPassword is Some && state.hasExtraPassword.value) {
-                stringResource(R.string.auth_unlock_app_extra_password_subtitle, state.address.value)
-            } else {
-                stringResource(R.string.auth_unlock_app_subtitle, state.address.value)
+            val text = when (state.showExtraPassword) {
+                is LoadingResult.Error,
+                LoadingResult.Loading -> ""
+                is LoadingResult.Success -> if (state.showExtraPassword.data) {
+                    stringResource(R.string.auth_unlock_app_extra_password_subtitle, state.address.value)
+                } else {
+                    stringResource(R.string.auth_unlock_app_subtitle, state.address.value)
+                }
             }
             Text(
                 modifier = Modifier.fillMaxWidth(),
@@ -138,10 +143,14 @@ fun AuthScreenMasterPasswordForm(
             textStyle = ProtonTheme.typography.defaultNorm(isEditAllowed),
             onChange = { onEvent(AuthUiEvent.OnPasswordUpdate(it)) },
             label = {
-                val text = if (state.hasExtraPassword is Some && state.hasExtraPassword.value) {
-                    stringResource(R.string.auth_extra_password_label)
-                } else {
-                    stringResource(R.string.auth_master_password_label)
+                val text = when (state.showExtraPassword) {
+                    is LoadingResult.Error,
+                    LoadingResult.Loading -> ""
+                    is LoadingResult.Success -> if (state.showExtraPassword.data) {
+                        stringResource(R.string.auth_extra_password_label)
+                    } else {
+                        stringResource(R.string.auth_master_password_label)
+                    }
                 }
                 ProtonTextFieldLabel(
                     text = text,
@@ -237,7 +246,7 @@ fun AuthScreenMasterPasswordFormPreview(
                     isPasswordVisible = input.second.isPasswordVisible,
                     passwordError = input.second.passwordError,
                     authMethod = None,
-                    hasExtraPassword = None
+                    showExtraPassword = LoadingResult.Success(true)
                 ),
                 onEvent = {},
                 onSubmit = {}

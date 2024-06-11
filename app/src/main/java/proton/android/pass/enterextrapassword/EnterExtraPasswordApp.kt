@@ -46,9 +46,12 @@ import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarH
 import proton.android.pass.composecomponents.impl.snackbar.SnackBarLaunchedEffect
 import proton.android.pass.composecomponents.impl.theme.SystemUIEffect
 import proton.android.pass.composecomponents.impl.theme.isDark
+import proton.android.pass.featureauth.impl.AuthOrigin
+import proton.android.pass.featureauth.impl.AuthWithDefault
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 import proton.android.pass.network.api.NetworkStatus
+import proton.android.pass.ui.AppNavigation
 import proton.android.pass.ui.PassNavHost
 import proton.android.pass.ui.navigation.UN_AUTH_GRAPH
 import proton.android.pass.ui.navigation.unAuthGraph
@@ -59,8 +62,7 @@ import proton.android.pass.ui.onBottomSheetDismissed
 fun EnterExtraPasswordApp(
     modifier: Modifier = Modifier,
     userId: UserId,
-    onSuccess: () -> Unit,
-    onLogout: (UserId) -> Unit,
+    onNavigate: (AppNavigation) -> Unit,
     appViewModel: EnterExtraPasswordAppViewModel = hiltViewModel()
 ) {
     val appUiState by appViewModel.appUiState.collectAsStateWithLifecycle()
@@ -109,9 +111,13 @@ fun EnterExtraPasswordApp(
                         graph = {
                             unAuthGraph(
                                 appNavigator = appNavigator,
-                                onNavigate = {
-                                    TODO()
-                                },
+                                onNavigate = onNavigate,
+                                startDestination = AuthWithDefault(
+                                    origin = AuthOrigin.EXTRA_PASSWORD_LOGIN,
+                                    userId = userId
+                                ).route,
+                                userId = userId,
+                                origin = AuthOrigin.EXTRA_PASSWORD_LOGIN,
                                 dismissBottomSheet = { block ->
                                     onBottomSheetDismissed(
                                         coroutineScope = coroutineScope,

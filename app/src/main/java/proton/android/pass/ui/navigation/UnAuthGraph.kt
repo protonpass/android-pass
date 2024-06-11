@@ -83,9 +83,7 @@ private fun SharedAuthScreen(onNavigate: (AppNavigation) -> Unit, appNavigator: 
                 is AuthNavigation.Success -> if (it.origin == AuthOrigin.EXTRA_PASSWORD_LOGIN) {
                     onNavigate(AppNavigation.Finish)
                 }
-                AuthNavigation.Failed -> {
-                }
-
+                AuthNavigation.Failed -> appNavigator.navigateBack()
                 AuthNavigation.SignOut -> onNavigate(AppNavigation.SignOut())
                 AuthNavigation.ForceSignOut -> onNavigate(AppNavigation.ForceSignOut)
                 is AuthNavigation.EnterPin -> appNavigator.navigate(

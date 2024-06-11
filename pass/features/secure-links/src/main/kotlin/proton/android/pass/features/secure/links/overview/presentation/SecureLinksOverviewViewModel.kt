@@ -21,12 +21,18 @@ package proton.android.pass.features.secure.links.overview.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.commonui.api.toUiModel
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.usecases.GetVaultById
+import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.securelinks.SecureLinkExpiration
@@ -36,11 +42,17 @@ import proton.android.pass.features.secure.links.overview.navigation.SecureLinks
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavParamEncoder
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.value
 import javax.inject.Inject
 
 @HiltViewModel
 class SecureLinksOverviewViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
+    observeItemById: ObserveItemById,
+    observeVaultById: GetVaultById,
+    userPreferencesRepository: UserPreferencesRepository,
+    encryptionContextProvider: EncryptionContextProvider,
     private val clipboardManager: ClipboardManager,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
@@ -64,8 +76,27 @@ class SecureLinksOverviewViewModel @Inject constructor(
         .require<String>(SecureLinksOverviewLinkNavArgId.key)
         .let(NavParamEncoder::decode)
 
-    internal val state: StateFlow<SecureLinksOverviewState> = MutableStateFlow(
-        SecureLinksOverviewState(
+    internal val state: StateFlow<SecureLinksOverviewState> = combine(
+        observeItemById(shareId = shareId, itemId = itemId),
+        observeVaultById(shareId = shareId),
+        userPreferencesRepository.getUseFaviconsPreference()
+    ) { item, vault, useFavIconsPreference ->
+        encryptionContextProvider.withEncryptionContext {
+            item.toUiModel(this@withEncryptionContext)
+        }.let { itemUiModel ->
+            SecureLinksOverviewState(
+                secureLink = secureLink,
+                expiration = expiration,
+                maxViewsAllows = maxViewsAllowed,
+                itemUiModel = itemUiModel,
+                canLoadExternalImages = useFavIconsPreference.value(),
+                shareIcon = vault.icon,
+            )
+        }
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = SecureLinksOverviewState.initial(
             secureLink = secureLink,
             expiration = expiration,
             maxViewsAllows = maxViewsAllowed

@@ -43,6 +43,7 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.fakes.usecases.TestCheckMasterPassword
 import proton.android.pass.data.fakes.usecases.TestObservePrimaryUserEmail
 import proton.android.pass.data.fakes.usecases.accesskey.FakeAuthWithExtraPassword
+import proton.android.pass.data.fakes.usecases.accesskey.FakeCheckLocalExtraPassword
 import proton.android.pass.data.fakes.usecases.accesskey.FakeHasExtraPassword
 import proton.android.pass.data.fakes.usecases.accesskey.FakeRemoveExtraPassword
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
@@ -86,7 +87,8 @@ internal class AuthViewModelTest {
             authWithExtraPassword = FakeAuthWithExtraPassword(),
             removeExtraPassword = FakeRemoveExtraPassword(),
             snackbarDispatcher = TestSnackbarDispatcher(),
-            hasExtraPassword = FakeHasExtraPassword()
+            hasExtraPassword = FakeHasExtraPassword(),
+            checkLocalExtraPassword = FakeCheckLocalExtraPassword()
         )
     }
 

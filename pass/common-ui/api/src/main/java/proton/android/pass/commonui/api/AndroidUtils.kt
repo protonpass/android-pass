@@ -56,7 +56,11 @@ object AndroidUtils {
         None
     }
 
-    fun shareTextWithThirdParties(context: Context, text: String, title: String? = null) {
+    fun shareTextWithThirdParties(
+        context: Context,
+        text: String,
+        title: String? = null
+    ) {
         Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT, text)

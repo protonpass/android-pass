@@ -64,7 +64,7 @@ fun AuthContent(
                 modifier = Modifier.fillMaxWidth(),
                 title = {},
                 actions = {
-                    if (canLogout) {
+                    if (canLogout && state.showLogout) {
                         IconButton(
                             onClick = { onEvent(AuthUiEvent.OnSignOut) }
                         ) {

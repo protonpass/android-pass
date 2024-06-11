@@ -23,6 +23,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -65,93 +66,129 @@ internal fun SecureLinkCreateMaxViewsRow(
     Column(
         modifier = modifier.padding(horizontal = Spacing.medium)
     ) {
-        Row(
+        SecureLinkCreateMaxViewsRowHeader(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(space = Spacing.small),
-            verticalAlignment = Alignment.CenterVertically
+            isConfigurationAllowed = isConfigurationAllowed,
+            isMaxViewsEnabled = isMaxViewsEnabled,
+            onUiEvent = onUiEvent
+        )
+
+        SecureLinkCreateMaxViewsRowCounter(
+            modifier = Modifier
+                .padding(start = Spacing.large)
+                .offset(y = -Spacing.small),
+            scope = this,
+            isConfigurationAllowed = isConfigurationAllowed,
+            isMaxViewsEnabled = isMaxViewsEnabled,
+            isMaxViewsDecreaseEnabled = isMaxViewsDecreaseEnabled,
+            maxViewsAllowed = maxViewsAllowed,
+            onUiEvent = onUiEvent
+        )
+    }
+}
+
+@Composable
+private fun SecureLinkCreateMaxViewsRowHeader(
+    modifier: Modifier = Modifier,
+    isConfigurationAllowed: Boolean,
+    isMaxViewsEnabled: Boolean,
+    onUiEvent: (SecureLinksCreateUiEvent) -> Unit
+) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(space = Spacing.small),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            painter = painterResource(id = CoreR.drawable.ic_proton_eye),
+            contentDescription = null,
+            tint = PassTheme.colors.textNorm
+        )
+
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(weight = 1f, fill = false),
+            text = stringResource(id = R.string.secure_links_create_row_max_views_title),
+            style = ProtonTheme.typography.body1Regular
+        )
+
+        Switch(
+            enabled = isConfigurationAllowed,
+            checked = isMaxViewsEnabled,
+            colors = SwitchDefaults.colors(
+                checkedThumbColor = PassTheme.colors.interactionNormMajor1
+            ),
+            onCheckedChange = { newIsChecked ->
+                if (newIsChecked) {
+                    SecureLinksCreateUiEvent.OnEnableMaxViewsClicked
+                } else {
+                    SecureLinksCreateUiEvent.OnDisableMaxViewsClicked
+                }.also(onUiEvent)
+            }
+        )
+    }
+}
+
+@Composable
+private fun SecureLinkCreateMaxViewsRowCounter(
+    modifier: Modifier = Modifier,
+    scope: ColumnScope,
+    isConfigurationAllowed: Boolean,
+    isMaxViewsEnabled: Boolean,
+    isMaxViewsDecreaseEnabled: Boolean,
+    maxViewsAllowed: Int,
+    onUiEvent: (SecureLinksCreateUiEvent) -> Unit
+) {
+    scope.AnimatedVisibility(visible = isMaxViewsEnabled) {
+        Column(
+            modifier = modifier,
+            verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
         ) {
-            Icon(
-                painter = painterResource(id = CoreR.drawable.ic_proton_eye),
-                contentDescription = null,
-                tint = PassTheme.colors.textNorm
-            )
-
             Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(weight = 1f, fill = false),
-                text = stringResource(id = R.string.secure_links_create_row_max_views_title),
-                style = ProtonTheme.typography.body1Regular
-            )
-
-            Switch(
-                enabled = isConfigurationAllowed,
-                checked = isMaxViewsEnabled,
-                colors = SwitchDefaults.colors(
-                    checkedThumbColor = PassTheme.colors.interactionNormMajor1
+                text = stringResource(
+                    id = R.string.secure_links_create_row_max_views_subtitle,
+                    maxViewsAllowed
                 ),
-                onCheckedChange = { newIsChecked ->
-                    if (newIsChecked) {
-                        SecureLinksCreateUiEvent.OnEnableMaxViewsClicked
-                    } else {
-                        SecureLinksCreateUiEvent.OnDisableMaxViewsClicked
-                    }.also(onUiEvent)
-                }
+                style = ProtonTheme.typography.body2Regular,
+                color = PassTheme.colors.textWeak
             )
-        }
 
-        AnimatedVisibility(visible = isMaxViewsEnabled) {
-            Column(
+            Row(
                 modifier = Modifier
-                    .padding(start = Spacing.large)
-                    .offset(y = -Spacing.small),
-                verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
+                    .clip(CircleShape)
+                    .background(color = PassTheme.colors.interactionNormMinor1),
+                horizontalArrangement = Arrangement.spacedBy(space = Spacing.medium),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = stringResource(
-                        id = R.string.secure_links_create_row_max_views_subtitle,
-                        maxViewsAllowed
-                    ),
-                    style = ProtonTheme.typography.body2Regular,
-                    color = PassTheme.colors.textWeak
-                )
-
-                Row(
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .background(color = PassTheme.colors.interactionNormMinor1),
-                    horizontalArrangement = Arrangement.spacedBy(space = Spacing.medium),
-                    verticalAlignment = Alignment.CenterVertically
+                IconButton(
+                    enabled = isConfigurationAllowed && isMaxViewsDecreaseEnabled,
+                    onClick = { onUiEvent(SecureLinksCreateUiEvent.OnDecreaseMaxViewsClicked) }
                 ) {
-                    IconButton(
-                        enabled = isConfigurationAllowed && isMaxViewsDecreaseEnabled,
-                        onClick = { onUiEvent(SecureLinksCreateUiEvent.OnDecreaseMaxViewsClicked) }
-                    ) {
-                        Icon(
-                            modifier = Modifier.size(size = Spacing.medium),
-                            painter = painterResource(CoreR.drawable.ic_proton_minus),
-                            contentDescription = null
-                        )
-                    }
+                    Icon(
+                        modifier = Modifier.size(size = Spacing.medium),
+                        painter = painterResource(CoreR.drawable.ic_proton_minus),
+                        contentDescription = null
+                    )
+                }
 
-                    Box(modifier = Modifier.defaultMinSize(minWidth = 20.dp)) {
-                        Text(
-                            modifier = Modifier.align(alignment = Alignment.Center),
-                            text = maxViewsAllowed.toString(),
-                            style = ProtonTheme.typography.body1Bold
-                        )
-                    }
+                Box(modifier = Modifier.defaultMinSize(minWidth = 20.dp)) {
+                    Text(
+                        modifier = Modifier.align(alignment = Alignment.Center),
+                        text = maxViewsAllowed.toString(),
+                        style = ProtonTheme.typography.body1Bold
+                    )
+                }
 
-                    IconButton(
-                        enabled = isConfigurationAllowed,
-                        onClick = { onUiEvent(SecureLinksCreateUiEvent.OnIncreaseMaxViewsClicked) }
-                    ) {
-                        Icon(
-                            modifier = Modifier.size(size = Spacing.medium),
-                            painter = painterResource(CoreR.drawable.ic_proton_plus),
-                            contentDescription = null
-                        )
-                    }
+                IconButton(
+                    enabled = isConfigurationAllowed,
+                    onClick = { onUiEvent(SecureLinksCreateUiEvent.OnIncreaseMaxViewsClicked) }
+                ) {
+                    Icon(
+                        modifier = Modifier.size(size = Spacing.medium),
+                        painter = painterResource(CoreR.drawable.ic_proton_plus),
+                        contentDescription = null
+                    )
                 }
             }
         }

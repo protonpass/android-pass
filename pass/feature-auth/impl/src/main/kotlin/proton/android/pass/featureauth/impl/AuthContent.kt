@@ -45,7 +45,7 @@ import me.proton.core.presentation.R as CoreR
 @Composable
 fun AuthContent(
     modifier: Modifier = Modifier,
-    state: AuthContent,
+    state: AuthStateContent,
     canLogout: Boolean,
     onEvent: (AuthUiEvent) -> Unit
 ) {

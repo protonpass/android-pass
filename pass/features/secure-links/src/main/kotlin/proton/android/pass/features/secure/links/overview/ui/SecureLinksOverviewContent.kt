@@ -20,10 +20,13 @@ package proton.android.pass.features.secure.links.overview.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTopBarBackButtonType
@@ -32,6 +35,9 @@ import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
 import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
 import proton.android.pass.features.secure.links.R
 import proton.android.pass.features.secure.links.overview.presentation.SecureLinksOverviewState
+import proton.android.pass.features.secure.links.overview.ui.widgets.SecureLinksOverviewInfoWidget
+import proton.android.pass.features.secure.links.overview.ui.widgets.SecureLinksOverviewLinkWidget
+import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun SecureLinksOverviewContent(
@@ -66,6 +72,42 @@ internal fun SecureLinksOverviewContent(
             }
         }
     ) { innerPaddingValue ->
+        Column(
+            modifier = Modifier
+                .padding(paddingValues = innerPaddingValue)
+                .padding(all = Spacing.medium),
+            verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(space = Spacing.small)
+            ) {
+                SecureLinksOverviewInfoWidget(
+                    modifier = Modifier.weight(weight = 1f),
+                    iconResId = CoreR.drawable.ic_proton_clock,
+                    titleResId = R.string.secure_links_overview_widget_expiration_title,
+                    infoText = "14 days",
+                )
 
+                SecureLinksOverviewInfoWidget(
+                    modifier = Modifier.weight(weight = 1f),
+                    iconResId = CoreR.drawable.ic_proton_eye,
+                    titleResId = R.string.secure_links_overview_widget_max_views_title,
+                    infoText = maxViewsAllows
+                        ?.let { maxViews ->
+                            pluralStringResource(
+                                id = R.plurals.secure_links_overview_widget_max_views_limited,
+                                count = maxViews,
+                                maxViews
+                            )
+                        }
+                        ?: stringResource(id = R.string.secure_links_overview_widget_max_views_unlimited),
+                )
+            }
+
+            SecureLinksOverviewLinkWidget(
+                secureLink = secureLink
+            )
+        }
     }
 }

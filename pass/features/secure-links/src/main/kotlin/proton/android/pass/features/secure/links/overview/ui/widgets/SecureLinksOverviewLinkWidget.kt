@@ -36,10 +36,7 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.body3Weak
 
 @Composable
-internal fun SecureLinksOverviewLinkWidget(
-    modifier: Modifier = Modifier,
-    secureLink: String
-) {
+internal fun SecureLinksOverviewLinkWidget(modifier: Modifier = Modifier, secureLink: String) {
     Text(
         modifier = modifier
             .background(
@@ -57,9 +54,7 @@ internal fun SecureLinksOverviewLinkWidget(
 }
 
 @[Preview Composable]
-internal fun SecureLinksOverviewLinkWidgetPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+internal fun SecureLinksOverviewLinkWidgetPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             SecureLinksOverviewLinkWidget(

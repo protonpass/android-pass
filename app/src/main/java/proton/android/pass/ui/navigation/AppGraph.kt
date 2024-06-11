@@ -547,10 +547,12 @@ fun NavGraphBuilder.appGraph(
                         )
 
                         ExtraPasswordNavigation.FinishedConfiguring -> appNavigator.popUpTo(Account)
-                        is ExtraPasswordNavigation.Remove -> appNavigator.navigate(
-                            destination = Auth,
-                            route = Auth.buildRoute(AuthOrigin.EXTRA_PASSWORD_REMOVE)
-                        )
+                        is ExtraPasswordNavigation.Remove -> dismissBottomSheet {
+                            appNavigator.navigate(
+                                destination = Auth,
+                                route = Auth.buildRoute(AuthOrigin.EXTRA_PASSWORD_REMOVE)
+                            )
+                        }
                     }
                 }
             )

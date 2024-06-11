@@ -22,7 +22,6 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.pass.autofill.entities.usernamePassword
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.featureauth.impl.AuthNavigation
-import proton.android.pass.featureauth.impl.AuthOrigin
 import proton.android.pass.featureauth.impl.EnterPin
 import proton.android.pass.featureauth.impl.authGraph
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasBottomSheet
@@ -66,9 +65,9 @@ fun NavGraphBuilder.autosaveActivityGraph(
                 AuthNavigation.Failed -> onNavigate(AutosaveNavigation.Cancel)
                 AuthNavigation.SignOut -> {}
                 AuthNavigation.ForceSignOut -> onNavigate(AutosaveNavigation.ForceSignOut)
-                AuthNavigation.EnterPin -> appNavigator.navigate(
+                is AuthNavigation.EnterPin -> appNavigator.navigate(
                     destination = EnterPin,
-                    route = EnterPin.buildRoute(AuthOrigin.AUTO_LOCK)
+                    route = EnterPin.buildRoute(it.origin)
                 )
             }
         }

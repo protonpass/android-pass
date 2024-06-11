@@ -32,14 +32,20 @@ import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.TestBiometryManager
 import proton.android.pass.biometry.TestStoreAuthSuccessful
 import proton.android.pass.common.api.AppDispatchers
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.fakes.usecases.TestCheckMasterPassword
 import proton.android.pass.data.fakes.usecases.TestObservePrimaryUserEmail
+import proton.android.pass.data.fakes.usecases.accesskey.FakeAuthWithExtraPassword
+import proton.android.pass.data.fakes.usecases.accesskey.FakeHasExtraPassword
+import proton.android.pass.data.fakes.usecases.accesskey.FakeRemoveExtraPassword
+import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.AppLockTypePreference
 import proton.android.pass.preferences.TestInternalSettingsRepository
@@ -75,7 +81,12 @@ internal class AuthViewModelTest {
             observePrimaryUserEmail = TestObservePrimaryUserEmail().apply {
                 emit(USER_EMAIL)
             },
-            savedStateHandleProvider = TestSavedStateHandleProvider()
+            savedStateHandleProvider = TestSavedStateHandleProvider(),
+            encryptionContextProvider = TestEncryptionContextProvider(),
+            authWithExtraPassword = FakeAuthWithExtraPassword(),
+            removeExtraPassword = FakeRemoveExtraPassword(),
+            snackbarDispatcher = TestSnackbarDispatcher(),
+            hasExtraPassword = FakeHasExtraPassword()
         )
     }
 
@@ -84,7 +95,8 @@ internal class AuthViewModelTest {
         val expectedState = AuthState.Initial.copy(
             event = None,
             content = AuthContent.default(USER_EMAIL.some()).copy(
-                authMethod = Some(AuthMethod.Fingerprint)
+                authMethod = Some(AuthMethod.Fingerprint),
+                showExtraPassword = LoadingResult.Success(false)
             )
         )
 
@@ -161,7 +173,8 @@ internal class AuthViewModelTest {
                 AuthState(
                     event = None,
                     content = AuthContent.default(USER_EMAIL.some()).copy(
-                        authMethod = Some(AuthMethod.Fingerprint)
+                        authMethod = Some(AuthMethod.Fingerprint),
+                        showExtraPassword = LoadingResult.Success(false)
                     )
                 )
             )
@@ -208,7 +221,7 @@ internal class AuthViewModelTest {
     internal fun `GIVEN correct password WHEN password is submitted THEN emits success event`() = runTest {
         viewModel.onPasswordChanged("password")
 
-        viewModel.onSubmit()
+        viewModel.onSubmit(false)
 
         viewModel.state.test {
             assertThat(awaitItem().event).isEqualTo(AuthEvent.Success(AuthOrigin.AUTO_LOCK).some())
@@ -220,7 +233,7 @@ internal class AuthViewModelTest {
         setBiometryCanceled()
 
         viewModel.onPasswordChanged("")
-        viewModel.onSubmit()
+        viewModel.onSubmit(false)
         viewModel.state.test {
             val state = awaitItem()
             assertThat(state.content.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
@@ -236,7 +249,7 @@ internal class AuthViewModelTest {
         val password = "test"
 
         viewModel.onPasswordChanged(password)
-        viewModel.onSubmit()
+        viewModel.onSubmit(false)
         viewModel.state.test {
             val state1 = awaitItem()
             assertThat(state1.content.isLoadingState).isEqualTo(IsLoadingState.Loading)
@@ -266,7 +279,7 @@ internal class AuthViewModelTest {
 
             // Fail 4 times
             for (attempt in 0 until 4) {
-                viewModel.onSubmit()
+                viewModel.onSubmit(false)
                 val stateLoading = awaitItem()
                 assertThat(stateLoading.content.isLoadingState).isEqualTo(IsLoadingState.Loading)
 
@@ -278,7 +291,7 @@ internal class AuthViewModelTest {
             }
 
             // Fail one more time
-            viewModel.onSubmit()
+            viewModel.onSubmit(false)
             val stateLoading = awaitItem()
             assertThat(stateLoading.content.isLoadingState).isEqualTo(IsLoadingState.Loading)
 
@@ -318,7 +331,7 @@ internal class AuthViewModelTest {
     @Test
     internal fun `GIVEN lock type is Pin WHEN requesting auth method THEN emit EnterPin event`() = runTest {
         val appLockTypePreference = AppLockTypePreference.Pin
-        val expectedAuthEvent = AuthEvent.EnterPin.some()
+        val expectedAuthEvent = AuthEvent.EnterPin(AuthOrigin.AUTO_LOCK).some()
         preferenceRepository.setAppLockTypePreference(appLockTypePreference)
 
         viewModel.onAuthMethodRequested()

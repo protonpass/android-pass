@@ -19,13 +19,10 @@
 package proton.android.pass.features.secure.links.create.presentation
 
 import androidx.compose.runtime.Stable
-import kotlinx.collections.immutable.ImmutableMap
-import kotlinx.collections.immutable.toPersistentMap
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.domain.securelinks.SecureLinkExpiration
-import proton.android.pass.features.secure.links.R
 
 @Stable
 internal data class SecureLinksCreateState(
@@ -42,14 +39,6 @@ internal data class SecureLinksCreateState(
     internal val isMaxViewsEnabled: Boolean = maxViewsAllowedOption is Some
 
     internal val isMaxViewsDecreaseEnabled: Boolean = maxViewsAllowed > MIN_MAX_VIEWS_ALLOWED
-
-    internal val expirationOptionsMap: ImmutableMap<SecureLinkExpiration, Int> = mapOf(
-        SecureLinkExpiration.OneHour to R.string.secure_links_create_row_expiration_options_one_hour,
-        SecureLinkExpiration.OneDay to R.string.secure_links_create_row_expiration_options_one_day,
-        SecureLinkExpiration.SevenDays to R.string.secure_links_create_row_expiration_options_seven_days,
-        SecureLinkExpiration.FourteenDays to R.string.secure_links_create_row_expiration_options_fourteen_days,
-        SecureLinkExpiration.ThirtyDays to R.string.secure_links_create_row_expiration_options_thirty_days
-    ).toPersistentMap()
 
     internal companion object {
 

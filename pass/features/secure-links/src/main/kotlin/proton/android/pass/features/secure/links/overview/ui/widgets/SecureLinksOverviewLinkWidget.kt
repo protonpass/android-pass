@@ -58,7 +58,7 @@ internal fun SecureLinksOverviewLinkWidgetPreview(@PreviewParameter(ThemePreview
     PassTheme(isDark = isDark) {
         Surface {
             SecureLinksOverviewLinkWidget(
-                secureLink = "https://pass.proton.black/public/PNHEXJT1SAME13XDS70YEAYJKW#zq1Ax1m"
+                secureLink = "https://secure/link/PNHEXJT1SAME13XDS70YEAYJKW#zq1Ax1m"
             )
         }
     }

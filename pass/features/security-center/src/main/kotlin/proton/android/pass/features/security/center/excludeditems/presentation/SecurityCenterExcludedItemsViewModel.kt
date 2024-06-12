@@ -63,7 +63,7 @@ class SecurityCenterExcludedItemsViewModel @Inject constructor(
     ).map { excludedLoginItems ->
         encryptionContextProvider.withEncryptionContext {
             excludedLoginItems.map { excludedLoginItem ->
-                excludedLoginItem.toUiModel(this@withEncryptionContext)
+                excludedLoginItem.toUiModel(this@withEncryptionContext).copy(isPinned = false)
             }
         }
     }

@@ -1601,11 +1601,6 @@ fun NavGraphBuilder.appGraph(
         }
     )
 
-    enterExtraPasswordGraph(
-        onSuccess = { appNavigator.navigate(Home) },
-        onLogout = { onNavigate(AppNavigation.SignOut(it)) }
-    )
-
     secureLinksNavGraph(
         onNavigated = { destination ->
             when (destination) {

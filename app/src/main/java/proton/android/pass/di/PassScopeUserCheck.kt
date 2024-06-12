@@ -70,7 +70,7 @@ class PassScopeUserCheck(
         } else {
             PassLogger.i(TAG, "Waiting for extra password to be ready")
 
-            (context as App).getCurrentActivity()?.let {
+            (context as App).currentActivity?.let {
                 it.startActivity(EnterExtraPasswordActivity.createIntent(it, user.userId))
             }
 

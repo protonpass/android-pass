@@ -18,6 +18,7 @@
 
 package proton.android.pass.commonui.api
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -30,7 +31,7 @@ import proton.android.pass.log.api.PassLogger
 
 object AndroidUtils {
 
-    const val TAG = "AndroidUtils"
+    private const val TAG = "AndroidUtils"
 
     @Suppress("DEPRECATION")
     fun getApplicationName(context: Context, packageName: String): Option<String> = try {
@@ -61,14 +62,19 @@ object AndroidUtils {
         text: String,
         title: String? = null
     ) {
-        Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, text)
-            type = "text/plain"
-        }.let { sendIntent ->
-            Intent.createChooser(sendIntent, title)
-        }.also { shareIntent ->
-            context.startActivity(shareIntent)
+        try {
+            Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, text)
+                type = "text/plain"
+            }.let { sendIntent ->
+                Intent.createChooser(sendIntent, title)
+            }.also { shareIntent ->
+                context.startActivity(shareIntent)
+            }
+        } catch (exception: ActivityNotFoundException) {
+            PassLogger.w(TAG, "Error sharing text with third parties")
+            PassLogger.w(TAG, exception)
         }
     }
 

@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.impl.repositories
 
+import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
@@ -25,6 +26,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.data.api.usecases.publiclink.SecureLinkOptions
 import proton.android.pass.data.impl.local.LocalItemDataSource
+import proton.android.pass.data.impl.local.LocalShareKeyDataSource
 import proton.android.pass.data.impl.remote.RemoteSecureLinkDataSource
 import proton.android.pass.data.impl.requests.CreateSecureLinkRequest
 import proton.android.pass.domain.ItemId
@@ -44,6 +46,7 @@ interface SecureLinkRepository {
 
 class SecureLinkRepositoryImpl @Inject constructor(
     private val localItemDataSource: LocalItemDataSource,
+    private val localShareKeyDataSource: LocalShareKeyDataSource,
     private val remoteSecureLinkDataSource: RemoteSecureLinkDataSource,
     private val encryptionContextProvider: EncryptionContextProvider
 ) : SecureLinkRepository {
@@ -70,11 +73,26 @@ class SecureLinkRepositoryImpl @Inject constructor(
         }
         val encodedEncryptedItemKey = Base64.encodeBase64String(encryptedItemKey.array)
 
+        val shareKeyInstance = localShareKeyDataSource.getLatestKeyForShare(shareId).firstOrNull()
+            ?: throw IllegalStateException("No share key found for share [shareId=${shareId.id}]")
+
+        val shareKey = encryptionContextProvider.withEncryptionContext {
+            EncryptionKey(decrypt(shareKeyInstance.symmetricallyEncryptedKey))
+        }
+
+        val encryptedLinkKey = encryptionContextProvider.withEncryptionContext(shareKey) {
+            encrypt(linkKey.value(), EncryptionTag.LinkKey)
+        }
+
+        val encodedEncryptedLinkKey = Base64.encodeBase64String(encryptedLinkKey.array)
+
         val request = CreateSecureLinkRequest(
             revision = item.revision,
             expirationTime = options.expirationTime.inWholeSeconds,
             maxReadCount = options.maxReadCount,
-            encryptedItemKey = encodedEncryptedItemKey
+            encryptedItemKey = encodedEncryptedItemKey,
+            encryptedLinkKey = encodedEncryptedLinkKey,
+            linkKeyShareKeyRotation = shareKeyInstance.rotation
         )
 
         val response = remoteSecureLinkDataSource.createSecureLink(

@@ -47,6 +47,10 @@ class App : Application(), ImageLoaderFactory {
     @Inject
     lateinit var inAppReviewTriggerMetrics: InAppReviewTriggerMetrics
 
+    val currentActivity: Activity?
+        @MainThread
+        get() = currentActivityReference?.get()
+
     private var currentActivityReference: WeakReference<Activity>? = null
 
     override fun newImageLoader(): ImageLoader = imageLoader.get()
@@ -121,9 +125,6 @@ class App : Application(), ImageLoaderFactory {
             onActivityDestroyed(activity)
         }
     }
-
-    @MainThread
-    fun getCurrentActivity(): Activity? = currentActivityReference?.get()
 
     companion object {
         private const val TAG = "App"

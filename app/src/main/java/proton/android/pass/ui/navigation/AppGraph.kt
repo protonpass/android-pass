@@ -596,6 +596,10 @@ fun NavGraphBuilder.appGraph(
                 ProfileNavigation.SecurityCenter -> appNavigator.navigate(
                     destination = SecurityCenterHomeNavItem
                 )
+
+                ProfileNavigation.SecureLinks -> appNavigator.navigate(
+                    destination = SecureLinksListNavItem
+                )
             }
         }
     )

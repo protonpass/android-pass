@@ -27,6 +27,7 @@ import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.DefaultUserCheck
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
+import proton.android.pass.App
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordListener
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordResult
 import proton.android.pass.enterextrapassword.EnterExtraPasswordActivity
@@ -69,7 +70,9 @@ class PassScopeUserCheck(
         } else {
             PassLogger.i(TAG, "Waiting for extra password to be ready")
 
-            context.startActivity(EnterExtraPasswordActivity.createIntent(context, user.userId))
+            (context as App).getCurrentActivity()?.let {
+                it.startActivity(EnterExtraPasswordActivity.createIntent(it, user.userId))
+            }
 
             val res = authWithExtraPasswordListener.onAuthWithExtraPassword(user.userId)
             authWithExtraPasswordListener.clearUserId(user.userId)

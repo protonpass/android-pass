@@ -30,5 +30,9 @@ data class CreateSecureLinkRequest(
     @SerialName("MaxReadCount")
     val maxReadCount: Int?,
     @SerialName("EncryptedItemKey")
-    val encryptedItemKey: String
+    val encryptedItemKey: String,
+    @SerialName("EncryptedLinkKey")
+    val encryptedLinkKey: String,
+    @SerialName("LinkKeyShareKeyRotation")
+    val linkKeyShareKeyRotation: Long
 )

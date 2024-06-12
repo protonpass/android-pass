@@ -18,13 +18,17 @@
 
 package proton.android.pass.features.secure.links.list.ui
 
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
 import proton.android.pass.features.secure.links.R
 import proton.android.pass.features.secure.links.list.presentation.SecureLinksListState
+import proton.android.pass.features.secure.links.list.ui.grid.SecureLinksListGrid
 
 @Composable
 internal fun SecureLinksListContent(
@@ -41,6 +45,12 @@ internal fun SecureLinksListContent(
             )
         },
     ) { innerPadding ->
-
+        SecureLinksListGrid(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(paddingValues = innerPadding)
+                .padding(all = Spacing.medium),
+            onUiEvent = onUiEvent
+        )
     }
 }

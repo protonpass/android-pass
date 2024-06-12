@@ -123,6 +123,10 @@ fun ProfileContent(
                     )
                 }
 
+                ProfileSecureLinksSection(
+                    onClick = { onEvent(ProfileUiEvent.OnSecureLinksClicked) }
+                )
+
                 AccountProfileSection(
                     planInfo = state.accountType,
                     onAccountClick = { onEvent(ProfileUiEvent.OnAccountClick) },

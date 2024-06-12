@@ -43,7 +43,7 @@ import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
-fun AccountSetting(
+internal fun AccountSetting(
     modifier: Modifier = Modifier,
     planInfo: PlanInfo,
     onClick: () -> Unit
@@ -76,7 +76,9 @@ fun AccountSetting(
 
 @Preview
 @Composable
-fun AccountSettingPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
+internal fun AccountSettingPreview(
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+) {
     val info = if (input.second) {
         PlanInfo.Trial
     } else {
@@ -92,4 +94,3 @@ fun AccountSettingPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class)
         }
     }
 }
-

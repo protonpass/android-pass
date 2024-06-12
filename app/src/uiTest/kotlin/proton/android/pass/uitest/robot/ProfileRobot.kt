@@ -26,7 +26,7 @@ object ProfileRobot : Robot {
 
     private val profileScreen get() = node.withTag(ProfileScreenTestTag.SCREEN)
 
-    private val accountSetting get() = node.withTag(AccountProfileSectionTestTag.accountSetting)
+    private val accountSetting get() = node.withTag(AccountProfileSectionTestTag.ACCOUNT_SETTINGS)
 
     fun profileScreenDisplayed(): ProfileRobot = apply {
         profileScreen.await { assertIsDisplayed() }

@@ -1536,7 +1536,7 @@ fun NavGraphBuilder.appGraph(
             SyncNavDestination.Back -> appNavigator.navigateBack()
         }
     }
-    /**/
+
     upsellNavGraph(
         onNavigated = { upsellNavDestination ->
             when (upsellNavDestination) {

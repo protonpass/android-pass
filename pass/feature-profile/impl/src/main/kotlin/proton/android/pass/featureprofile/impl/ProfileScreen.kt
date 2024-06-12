@@ -87,6 +87,7 @@ fun ProfileScreen(
                 ProfileUiEvent.OnChangePinClick -> onNavigateEvent(ProfileNavigation.EnterPin)
                 ProfileUiEvent.OnTutorialClick -> openWebsite(context, PASS_TUTORIAL)
                 ProfileUiEvent.OnSecurityCenterClick -> onNavigateEvent(ProfileNavigation.SecurityCenter)
+                ProfileUiEvent.OnSecureLinksClicked -> onNavigateEvent(ProfileNavigation.SecureLinks)
             }
         }
     )

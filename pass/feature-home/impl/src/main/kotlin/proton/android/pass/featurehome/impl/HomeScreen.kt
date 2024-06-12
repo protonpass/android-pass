@@ -32,6 +32,7 @@ import androidx.compose.material.ModalDrawer
 import androidx.compose.material.rememberDrawerState
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -106,7 +107,7 @@ fun HomeScreen(
     vaultDrawerViewModel: VaultDrawerViewModel = hiltViewModel(),
     onBoardingTipsViewModel: OnBoardingTipsViewModel = hiltViewModel()
 ) {
-    val routerEvent by routerViewModel.eventStateFlow.collectAsStateWithLifecycle()
+    val routerEvent by routerViewModel.routerEventState.collectAsStateWithLifecycle()
     val homeUiState by homeViewModel.homeUiState.collectAsStateWithLifecycle()
     val drawerUiState by vaultDrawerViewModel.drawerUiState.collectAsStateWithLifecycle()
     val onBoardingTipsUiState by onBoardingTipsViewModel.state.collectAsStateWithLifecycle()
@@ -177,12 +178,13 @@ fun HomeScreen(
         }
     }
 
-    LaunchedEffect(routerEvent) {
+    DisposableEffect(routerEvent) {
         when (routerEvent) {
             RouterEvent.OnBoarding -> onNavigateEvent(HomeNavigation.OnBoarding)
             RouterEvent.ConfirmedInvite -> onNavigateEvent(HomeNavigation.ConfirmedInvite)
             RouterEvent.None -> {}
         }
+        onDispose { routerViewModel.consumeEvent(routerEvent) }
     }
 
     LaunchedEffect(onBoardingTipsUiState.tipsToShow.hashCode()) {

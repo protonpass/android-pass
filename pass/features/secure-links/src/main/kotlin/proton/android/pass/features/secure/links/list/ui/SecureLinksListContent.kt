@@ -18,28 +18,29 @@
 
 package proton.android.pass.features.secure.links.list.ui
 
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.features.secure.links.list.presentation.SecureLinksListViewModel
-import proton.android.pass.features.secure.links.shared.navigation.SecureLinksNavDestination
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
+import proton.android.pass.features.secure.links.R
+import proton.android.pass.features.secure.links.list.presentation.SecureLinksListState
 
 @Composable
-fun SecureLinksListScreen(
-    onNavigated: (SecureLinksNavDestination) -> Unit,
-    viewModel: SecureLinksListViewModel = hiltViewModel()
-) = with(viewModel) {
-    val state by state.collectAsStateWithLifecycle()
+internal fun SecureLinksListContent(
+    modifier: Modifier = Modifier,
+    onUiEvent: (SecureLinksListUiEvent) -> Unit,
+    state: SecureLinksListState
+) = with(state) {
+    Scaffold(
+        modifier = modifier,
+        topBar = {
+            BackArrowTopAppBar(
+                title = stringResource(id = R.string.secure_links_list_title),
+                onUpClick = { onUiEvent(SecureLinksListUiEvent.OnBackClicked) }
+            )
+        },
+    ) { innerPadding ->
 
-    SecureLinksListContent(
-        state = state,
-        onUiEvent = { uiEvent ->
-            when (uiEvent) {
-                SecureLinksListUiEvent.OnBackClicked -> {
-                    onNavigated(SecureLinksNavDestination.Back)
-                }
-            }
-        }
-    )
+    }
 }

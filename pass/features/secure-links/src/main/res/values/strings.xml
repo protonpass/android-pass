@@ -42,4 +42,7 @@
     <string name="secure_links_overview_button_share_link">Share link</string>
     <string name="secure_links_overview_button_view_all_links">View all your shared links</string>
     <string name="secure_links_overview_snackbar_message_link_copied">Secure link copied</string>
+
+    <!--List screen-->
+    <string name="secure_links_list_title">Secure links</string>
 </resources>

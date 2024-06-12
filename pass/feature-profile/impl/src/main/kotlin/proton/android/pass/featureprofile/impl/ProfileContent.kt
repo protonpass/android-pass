@@ -68,7 +68,10 @@ fun ProfileContent(
                 },
                 actions = {
                     if (state.showUpgradeButton) {
-                        UpgradeButton(onUpgradeClick = { onEvent(ProfileUiEvent.OnUpgradeClick) })
+                        UpgradeButton(
+                            modifier = Modifier.padding(horizontal = Spacing.mediumSmall),
+                            onUpgradeClick = { onEvent(ProfileUiEvent.OnUpgradeClick) }
+                        )
                     }
                 }
             )

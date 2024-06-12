@@ -39,6 +39,14 @@ fun SecureLinksListScreen(
                 SecureLinksListUiEvent.OnBackClicked -> {
                     onNavigated(SecureLinksNavDestination.Back)
                 }
+
+                SecureLinksListUiEvent.OnCellClicked -> {
+                    println("JIBIRI: OnCellClicked")
+                }
+
+                SecureLinksListUiEvent.OnCellOptionsClicked -> {
+                    println("JIBIRI: OnCellOptionsClicked")
+                }
             }
         }
     )

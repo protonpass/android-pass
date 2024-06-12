@@ -16,17 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.secure.links.list.presentation
+package proton.android.pass.features.secure.links.list.ui
 
-import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import javax.inject.Inject
+internal interface SecureLinksListUiEvent {
 
-@HiltViewModel
-class SecureLinksListViewModel @Inject constructor() : ViewModel() {
-
-    internal val state: StateFlow<SecureLinksListState> = MutableStateFlow(SecureLinksListState.Initial)
+    data object OnBackClicked : SecureLinksListUiEvent
 
 }

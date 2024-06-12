@@ -47,7 +47,10 @@ import proton.android.pass.passkeys.api.PasskeySupport
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
-fun PasskeyProfileSection(modifier: Modifier = Modifier, support: ProfilePasskeySupportSection.Show) {
+internal fun PasskeyProfileSection(
+    modifier: Modifier = Modifier,
+    support: ProfilePasskeySupportSection.Show
+) {
     val status = support.toStatus()
 
     Row(
@@ -114,7 +117,9 @@ private data class PasskeyStatus(
 
 @Preview
 @Composable
-fun PasskeyProfileSectionPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
+internal fun PasskeyProfileSectionPreview(
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+) {
     val support = if (input.second) {
         ProfilePasskeySupportSection.Show(PasskeySupport.Supported)
     } else {

@@ -50,7 +50,7 @@ import proton.android.pass.composecomponents.impl.buttons.UpgradeButton
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ProfileContent(
+internal fun ProfileContent(
     modifier: Modifier = Modifier,
     state: ProfileUiState,
     onEvent: (ProfileUiEvent) -> Unit
@@ -126,10 +126,12 @@ fun ProfileContent(
                     )
                 }
 
-                ProfileSecureLinksSection(
-                    shouldShowPlusIcon = state.showUpgradeButton,
-                    onClick = { onEvent(ProfileUiEvent.OnSecureLinksClicked) }
-                )
+                if (state.isSecureLinksEnabled) {
+                    ProfileSecureLinksSection(
+                        shouldShowPlusIcon = state.showUpgradeButton,
+                        onClick = { onEvent(ProfileUiEvent.OnSecureLinksClicked) }
+                    )
+                }
 
                 AccountProfileSection(
                     planInfo = state.accountType,

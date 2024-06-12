@@ -51,16 +51,16 @@ fun ProfileScreen(
         when (state.event) {
             ProfileEvent.OpenFeatureFlags -> {
                 onNavigateEvent(ProfileNavigation.FeatureFlags)
-                viewModel.clearEvent()
             }
 
             ProfileEvent.ConfigurePin -> {
                 onNavigateEvent(ProfileNavigation.ConfigurePin)
-                viewModel.clearEvent()
             }
 
             ProfileEvent.Unknown -> {}
         }
+
+        viewModel.onEventConsumed(state.event)
     }
 
     ProfileContent(

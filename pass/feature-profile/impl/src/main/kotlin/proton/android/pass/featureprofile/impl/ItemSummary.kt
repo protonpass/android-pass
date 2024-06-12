@@ -22,7 +22,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -51,7 +50,7 @@ import proton.android.pass.composecomponents.impl.item.icon.MFAIcon
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 
 @Composable
-fun ItemSummary(
+internal fun ItemSummary(
     modifier: Modifier = Modifier,
     itemSummaryUiState: ItemSummaryUiState,
     isIdentityEnabled: Boolean
@@ -86,9 +85,8 @@ fun ItemSummary(
     }
 }
 
-
 @Composable
-fun RowScope.ItemTypeBox(
+private fun ItemTypeBox(
     modifier: Modifier = Modifier,
     type: SummaryItemType,
     count: Int,
@@ -124,13 +122,18 @@ fun RowScope.ItemTypeBox(
     }
 }
 
-enum class SummaryItemType {
-    Logins, Notes, CreditCards, Alias, MFA, Identity
+private enum class SummaryItemType {
+    Alias,
+    CreditCards,
+    Identity,
+    Logins,
+    MFA,
+    Notes
 }
 
 @Preview
 @Composable
-fun ItemSummaryPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun ItemSummaryPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             ItemSummary(

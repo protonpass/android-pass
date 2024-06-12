@@ -24,22 +24,23 @@ import proton.android.pass.preferences.BiometricSystemLockPreference
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.minutes
 
-class AppLockSectionStatePreviewProvider : PreviewParameterProvider<AppLockSectionState> {
-    override val values: Sequence<AppLockSectionState>
-        get() = sequenceOf(
-            UserAppLockSectionState.None,
-            UserAppLockSectionState.Pin(
-                appLockTimePreference = AppLockTimePreference.InOneMinute
-            ),
-            UserAppLockSectionState.Biometric(
-                appLockTimePreference = AppLockTimePreference.InOneMinute,
-                biometricSystemLockPreference = BiometricSystemLockPreference.Enabled
-            ),
-            EnforcedAppLockSectionState.Pin(seconds = 1.minutes.inWholeSeconds.toInt()),
-            EnforcedAppLockSectionState.Biometric(
-                seconds = 1.hours.inWholeSeconds.toInt(),
-                biometricSystemLockPreference = BiometricSystemLockPreference.Enabled
-            ),
-            EnforcedAppLockSectionState.Password(seconds = 10.hours.inWholeSeconds.toInt())
-        )
+internal class AppLockSectionStatePreviewProvider : PreviewParameterProvider<AppLockSectionState> {
+
+    override val values: Sequence<AppLockSectionState> = sequenceOf(
+        UserAppLockSectionState.None,
+        UserAppLockSectionState.Pin(
+            appLockTimePreference = AppLockTimePreference.InOneMinute
+        ),
+        UserAppLockSectionState.Biometric(
+            appLockTimePreference = AppLockTimePreference.InOneMinute,
+            biometricSystemLockPreference = BiometricSystemLockPreference.Enabled
+        ),
+        EnforcedAppLockSectionState.Pin(seconds = 1.minutes.inWholeSeconds.toInt()),
+        EnforcedAppLockSectionState.Biometric(
+            seconds = 1.hours.inWholeSeconds.toInt(),
+            biometricSystemLockPreference = BiometricSystemLockPreference.Enabled
+        ),
+        EnforcedAppLockSectionState.Password(seconds = 10.hours.inWholeSeconds.toInt())
+    )
+
 }

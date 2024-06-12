@@ -29,6 +29,7 @@ import me.proton.core.accountmanager.presentation.compose.SignOutDialogActivity
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.ui.AppNavigation
+import proton.android.pass.ui.MainActivity
 
 @AndroidEntryPoint
 class EnterExtraPasswordActivity : FragmentActivity() {
@@ -39,7 +40,6 @@ class EnterExtraPasswordActivity : FragmentActivity() {
 
         val userId = intent.getStringExtra(EXTRA_USER_ID)?.let { UserId(it) } ?: run {
             PassLogger.w(TAG, "Missing user id")
-            setResult(RESULT_CANCELED)
             finish()
             return
         }
@@ -49,20 +49,21 @@ class EnterExtraPasswordActivity : FragmentActivity() {
                 userId = userId,
                 onNavigate = {
                     when (it) {
-                        AppNavigation.Finish -> {
-                            setResult(RESULT_OK)
-                            finish()
-                        }
+                        AppNavigation.Finish -> finishAndGoBackToMain()
                         is AppNavigation.SignOut -> SignOutDialogActivity.start(this, it.userId)
-                        is AppNavigation.ForceSignOut -> {
-                            setResult(RESULT_CANCELED)
-                            finish()
-                        }
+                        is AppNavigation.ForceSignOut -> finish()
                         else -> {}
                     }
                 }
             )
         }
+    }
+
+    private fun finishAndGoBackToMain() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
     }
 
     @Deprecated("Deprecated in Java")
@@ -79,7 +80,6 @@ class EnterExtraPasswordActivity : FragmentActivity() {
             EnterExtraPasswordActivity::class.java
         ).apply {
             putExtra(EXTRA_USER_ID, userId.id)
-            setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
     }
 

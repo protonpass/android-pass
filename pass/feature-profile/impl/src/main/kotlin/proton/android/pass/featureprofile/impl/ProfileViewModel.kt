@@ -32,7 +32,6 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor
 import proton.android.pass.autofill.api.AutofillManager
@@ -161,7 +160,7 @@ class ProfileViewModel @Inject constructor(
             emit(ProfilePasskeySupportSection.Hide)
         }.distinctUntilChanged()
 
-    val state: StateFlow<ProfileUiState> = combineN(
+    internal val state: StateFlow<ProfileUiState> = combineN(
         appLockSectionStateFlow,
         autofillStatusFlow,
         itemSummaryUiStateFlow,
@@ -169,9 +168,10 @@ class ProfileViewModel @Inject constructor(
         eventFlow,
         oneShot { getDefaultBrowser() }.asLoadingResult(),
         passkeySupportFlow,
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.IDENTITY_V1)
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.IDENTITY_V1),
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.SECURE_LINK_V1)
     ) { appLockSectionState, autofillStatus, itemSummaryUiState, upgradeInfo, event, browser,
-        passkey, isIdentityEnabled ->
+        passkey, isIdentityEnabled, isSecureLinksEnabled ->
         val (accountType, showUpgradeButton) = when (upgradeInfo) {
             LoadingResult.Loading -> PlanInfo.Hide to false
             is LoadingResult.Error -> {
@@ -206,17 +206,18 @@ class ProfileViewModel @Inject constructor(
             showUpgradeButton = showUpgradeButton,
             userBrowser = defaultBrowser,
             passkeySupport = passkey,
-            isIdentityEnabled = isIdentityEnabled
+            isIdentityEnabled = isIdentityEnabled,
+            isSecureLinksEnabled = isSecureLinksEnabled
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
-        initialValue = runBlocking {
-            ProfileUiState.getInitialState(appConfig.versionName)
-        }
+        initialValue = ProfileUiState.initial(
+            appVersion = appConfig.versionName
+        )
     )
 
-    fun onToggleAutofill(value: Boolean) {
+    internal fun onToggleAutofill(value: Boolean) {
         if (!value) {
             autofillManager.openAutofillSelector()
         } else {
@@ -224,36 +225,39 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun copyAppVersion(appVersion: String) = viewModelScope.launch {
+    internal fun copyAppVersion(appVersion: String) {
         clipboardManager.copyToClipboard(appVersion)
-        snackbarDispatcher(AppVersionCopied)
+
+        viewModelScope.launch {
+            snackbarDispatcher(AppVersionCopied)
+        }
     }
 
-    fun onAppVersionLongClick() = viewModelScope.launch {
+    internal fun onAppVersionLongClick() {
         if (appConfig.flavor is BuildFlavor.Alpha) {
-            eventFlow.emit(ProfileEvent.OpenFeatureFlags)
+            viewModelScope.launch {
+                eventFlow.emit(ProfileEvent.OpenFeatureFlags)
+            }
         }
     }
 
-    fun clearEvent() = viewModelScope.launch {
-        eventFlow.emit(ProfileEvent.Unknown)
+    internal fun onEventConsumed(event: ProfileEvent) {
+        eventFlow.compareAndSet(event, ProfileEvent.Unknown)
     }
 
-    fun onToggleBiometricSystemLock(value: Boolean) {
-        viewModelScope.launch {
-            userPreferencesRepository.setBiometricSystemLockPreference(
-                BiometricSystemLockPreference.from(value)
-            )
-        }
+    internal fun onToggleBiometricSystemLock(value: Boolean) {
+        BiometricSystemLockPreference.from(value)
+            .also(userPreferencesRepository::setBiometricSystemLockPreference)
     }
 
-    fun onPinSuccessfullyEntered() {
-        viewModelScope.launch {
-            eventFlow.update { ProfileEvent.ConfigurePin }
-        }
+    internal fun onPinSuccessfullyEntered() {
+        eventFlow.update { ProfileEvent.ConfigurePin }
     }
 
-    companion object {
+    private companion object {
+
         private const val TAG = "ProfileViewModel"
+
     }
+
 }

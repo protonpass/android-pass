@@ -24,23 +24,30 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultWeak
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
+import proton.android.pass.composecomponents.impl.icon.PassPlusIcon
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 internal fun ProfileSecureLinksSection(
     modifier: Modifier = Modifier,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    shouldShowPlusIcon: Boolean
 ) {
     Row(
         modifier = modifier
@@ -60,10 +67,30 @@ internal fun ProfileSecureLinksSection(
             color = PassTheme.colors.textNorm
         )
 
-        Icon(
-            painter = painterResource(proton.android.pass.composecomponents.impl.R.drawable.ic_chevron_tiny_right),
-            contentDescription = null,
-            tint = PassTheme.colors.textHint
-        )
+        if (shouldShowPlusIcon) {
+            PassPlusIcon()
+        } else {
+            Icon(
+                painter = painterResource(CompR.drawable.ic_chevron_tiny_right),
+                contentDescription = null,
+                tint = PassTheme.colors.textHint
+            )
+        }
+    }
+}
+
+@[Preview Composable]
+internal fun ProfileSecureLinksSectionPreview(
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+) {
+    val (isDark, showPlusIcon) = input
+
+    PassTheme(isDark = isDark) {
+        Surface {
+            ProfileSecureLinksSection(
+                onClick = {},
+                shouldShowPlusIcon = showPlusIcon
+            )
+        }
     }
 }

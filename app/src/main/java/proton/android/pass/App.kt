@@ -21,6 +21,7 @@ package proton.android.pass
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
+import androidx.annotation.MainThread
 import coil.ImageLoader
 import coil.ImageLoaderFactory
 import dagger.hilt.android.HiltAndroidApp
@@ -31,6 +32,7 @@ import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.initializer.MainInitializer
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.UserPreferencesRepository
+import java.lang.ref.WeakReference
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -45,6 +47,8 @@ class App : Application(), ImageLoaderFactory {
     @Inject
     lateinit var inAppReviewTriggerMetrics: InAppReviewTriggerMetrics
 
+    private var currentActivityReference: WeakReference<Activity>? = null
+
     override fun newImageLoader(): ImageLoader = imageLoader.get()
 
     override fun onCreate() {
@@ -53,13 +57,28 @@ class App : Application(), ImageLoaderFactory {
         registerActivityLifecycleCallbacks(
             activityLifecycleCallbacks(
                 onActivityCreated = { activity, _ ->
+                    currentActivityReference = WeakReference(activity)
                     CoroutineScope(Dispatchers.IO).launch {
                         inAppReviewTriggerMetrics.incrementAppLaunchStreakCount()
                     }
                     PassLogger.i(TAG, "Created activity ${activity::class.java.simpleName}")
                 },
+                onActivityStarted = { activity ->
+                    currentActivityReference = WeakReference(activity)
+                },
+                onActivityResumed = { activity ->
+                    currentActivityReference = WeakReference(activity)
+                },
                 onActivityStopped = { activity ->
+                    if (currentActivityReference?.get() == activity) {
+                        currentActivityReference = null
+                    }
                     PassLogger.i(TAG, "Stopped activity ${activity::class.java.simpleName}")
+                },
+                onActivityDestroyed = { activity ->
+                    if (currentActivityReference?.get() == activity) {
+                        currentActivityReference = null
+                    }
                 }
             )
         )
@@ -102,6 +121,9 @@ class App : Application(), ImageLoaderFactory {
             onActivityDestroyed(activity)
         }
     }
+
+    @MainThread
+    fun getCurrentActivity(): Activity? = currentActivityReference?.get()
 
     companion object {
         private const val TAG = "App"

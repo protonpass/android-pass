@@ -21,6 +21,8 @@ package proton.android.pass.features.secure.links.shared.navigation
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.features.secure.links.create.navigation.SecureLinksCreateNavItem
 import proton.android.pass.features.secure.links.create.ui.SecureLinksCreateScreen
+import proton.android.pass.features.secure.links.list.navigation.SecureLinksListNavItem
+import proton.android.pass.features.secure.links.list.ui.SecureLinksListScreen
 import proton.android.pass.features.secure.links.overview.navigation.SecureLinksOverviewNavItem
 import proton.android.pass.features.secure.links.overview.ui.SecureLinksOverviewScreen
 import proton.android.pass.navigation.api.composable
@@ -33,6 +35,10 @@ fun NavGraphBuilder.secureLinksNavGraph(onNavigated: (SecureLinksNavDestination)
 
     composable(navItem = SecureLinksOverviewNavItem) {
         SecureLinksOverviewScreen(onNavigated = onNavigated)
+    }
+
+    composable(navItem = SecureLinksListNavItem) {
+        SecureLinksListScreen(onNavigated = onNavigated)
     }
 
 }

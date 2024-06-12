@@ -23,6 +23,7 @@ import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.CreateSecureLinkRequest
 import proton.android.pass.data.impl.responses.CreatedSecureLink
+import proton.android.pass.data.impl.responses.GetSecureLinkResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import javax.inject.Inject
@@ -36,6 +37,8 @@ interface RemoteSecureLinkDataSource {
         request: CreateSecureLinkRequest
     ): CreatedSecureLink
 
+    suspend fun getAllSecureLinks(userId: UserId): List<GetSecureLinkResponse>
+
 }
 
 class RemoteSecureLinkDataSourceImpl @Inject constructor(
@@ -48,8 +51,14 @@ class RemoteSecureLinkDataSourceImpl @Inject constructor(
         itemId: ItemId,
         request: CreateSecureLinkRequest
     ): CreatedSecureLink = apiProvider.get<PasswordManagerApi>(userId)
-        .invoke { generatePublicLink(shareId = shareId.id, itemId = itemId.id, request = request) }
+        .invoke { generateSecureLink(shareId = shareId.id, itemId = itemId.id, request = request) }
         .valueOrThrow
         .secureLink
+
+    override suspend fun getAllSecureLinks(userId: UserId): List<GetSecureLinkResponse> =
+        apiProvider.get<PasswordManagerApi>(userId)
+            .invoke { getAllSecureLinks() }
+            .valueOrThrow
+            .links
 
 }

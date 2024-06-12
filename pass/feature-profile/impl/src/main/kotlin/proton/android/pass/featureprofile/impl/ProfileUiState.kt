@@ -28,21 +28,25 @@ import proton.android.pass.preferences.AppLockTimePreference
 import proton.android.pass.preferences.BiometricSystemLockPreference
 
 @Stable
-sealed interface ProfilePasskeySupportSection {
+internal sealed interface ProfilePasskeySupportSection {
     data object Hide : ProfilePasskeySupportSection
 
     @JvmInline
     value class Show(val support: PasskeySupport) : ProfilePasskeySupportSection
 }
 
-sealed interface ProfileEvent {
+internal sealed interface ProfileEvent {
+
     data object Unknown : ProfileEvent
+
     data object OpenFeatureFlags : ProfileEvent
+
     data object ConfigurePin : ProfileEvent
+
 }
 
 @Stable
-data class ProfileUiState(
+internal data class ProfileUiState(
     val appLockSectionState: AppLockSectionState,
     val autofillStatus: AutofillSupportedStatus,
     val itemSummaryUiState: ItemSummaryUiState,
@@ -52,10 +56,13 @@ data class ProfileUiState(
     val showUpgradeButton: Boolean,
     val userBrowser: DefaultBrowser,
     val passkeySupport: ProfilePasskeySupportSection,
-    val isIdentityEnabled: Boolean
+    val isIdentityEnabled: Boolean,
+    val isSecureLinksEnabled: Boolean
 ) {
-    companion object {
-        fun getInitialState(appVersion: String) = ProfileUiState(
+
+    internal companion object {
+
+        internal fun initial(appVersion: String) = ProfileUiState(
             appLockSectionState = AppLockSectionState.Loading,
             autofillStatus = AutofillSupportedStatus.Supported(AutofillStatus.Disabled),
             itemSummaryUiState = ItemSummaryUiState(),
@@ -65,13 +72,15 @@ data class ProfileUiState(
             showUpgradeButton = false,
             userBrowser = DefaultBrowser.Other,
             passkeySupport = ProfilePasskeySupportSection.Hide,
-            isIdentityEnabled = false
+            isIdentityEnabled = false,
+            isSecureLinksEnabled = false
         )
+
     }
 }
 
 @Stable
-sealed interface PlanInfo {
+internal sealed interface PlanInfo {
 
     val accountType: AccountType
 
@@ -92,14 +101,18 @@ sealed interface PlanInfo {
     ) : PlanInfo
 }
 
-sealed interface AppLockSectionState {
+internal sealed interface AppLockSectionState {
     data object Loading : AppLockSectionState
 }
-sealed interface BiometricSection : AppLockSectionState {
+
+internal sealed interface BiometricSection : AppLockSectionState {
     val biometricSystemLockPreference: BiometricSystemLockPreference
 }
-sealed interface PinSection : AppLockSectionState
-sealed interface UserAppLockSectionState {
+
+internal sealed interface PinSection : AppLockSectionState
+
+internal sealed interface UserAppLockSectionState {
+
     @Stable
     data class Biometric(
         val appLockTimePreference: AppLockTimePreference,
@@ -113,9 +126,10 @@ sealed interface UserAppLockSectionState {
     ) : UserAppLockSectionState, PinSection
 
     data object None : UserAppLockSectionState, AppLockSectionState
+
 }
 
-sealed interface EnforcedAppLockSectionState {
+internal sealed interface EnforcedAppLockSectionState {
 
     @Stable
     data class Biometric(
@@ -133,7 +147,7 @@ sealed interface EnforcedAppLockSectionState {
 
 }
 
-data class ItemSummaryUiState(
+internal data class ItemSummaryUiState(
     val loginCount: Int = 0,
     val notesCount: Int = 0,
     val aliasCount: Int = 0,

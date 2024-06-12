@@ -26,11 +26,13 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 private const val VAULT_CONTENT_TAG = "vaultcontent"
 private const val ITEM_KEY_TAG = "itemkey"
 private const val ITEM_CONTENT_TAG = "itemcontent"
+private const val LINK_KEY_TAG = "linkkey"
 
 enum class EncryptionTag(val value: ByteArray) {
     VaultContent(VAULT_CONTENT_TAG.encodeToByteArray()),
     ItemKey(ITEM_KEY_TAG.encodeToByteArray()),
-    ItemContent(ITEM_CONTENT_TAG.encodeToByteArray())
+    ItemContent(ITEM_CONTENT_TAG.encodeToByteArray()),
+    LinkKey(LINK_KEY_TAG.encodeToByteArray())
 }
 
 interface EncryptionContext {

@@ -1571,7 +1571,8 @@ fun NavGraphBuilder.appGraph(
                         expiration = destination.expiration,
                         maxViewsAllowed = destination.maxViewsAllowed,
                         secureLink = destination.secureLink
-                    )
+                    ),
+                    backDestination = ViewItem
                 )
 
                 SecureLinksNavDestination.SecureLinksList -> {

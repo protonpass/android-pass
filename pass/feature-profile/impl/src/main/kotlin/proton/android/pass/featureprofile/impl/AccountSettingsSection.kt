@@ -33,7 +33,7 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.setting.SettingOption
 
 @Composable
-fun AccountProfileSection(
+internal fun AccountProfileSection(
     modifier: Modifier = Modifier,
     planInfo: PlanInfo,
     onAccountClick: () -> Unit,
@@ -43,7 +43,7 @@ fun AccountProfileSection(
         modifier = modifier.roundedContainerNorm()
     ) {
         AccountSetting(
-            modifier = Modifier.testTag(AccountProfileSectionTestTag.accountSetting),
+            modifier = Modifier.testTag(AccountProfileSectionTestTag.ACCOUNT_SETTINGS),
             planInfo = planInfo,
             onClick = onAccountClick
         )
@@ -56,12 +56,14 @@ fun AccountProfileSection(
 }
 
 object AccountProfileSectionTestTag {
-    const val accountSetting = "accountSetting"
+
+    const val ACCOUNT_SETTINGS = "accountSetting"
+
 }
 
 @Preview
 @Composable
-fun AccountSettingsSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun AccountSettingsSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             AccountProfileSection(

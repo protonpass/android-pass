@@ -47,7 +47,7 @@ import proton.android.pass.preferences.value
 import me.proton.core.presentation.compose.R as CoreR
 
 @Composable
-fun AppLockSection(
+internal fun AppLockSection(
     modifier: Modifier = Modifier,
     appLockSectionState: AppLockSectionState,
     onEvent: (ProfileUiEvent) -> Unit
@@ -176,7 +176,7 @@ fun AppLockSection(
 }
 
 @Composable
-fun secondsToText(seconds: Int): String {
+private fun secondsToText(seconds: Int): String {
     val minutes = seconds / 60
     val hours = minutes / 60
     val days = hours / 24
@@ -201,12 +201,12 @@ private fun getAppLockTimePreferenceText(appLockTimePreference: AppLockTimePrefe
 }
 
 
-class ThemeAndAppLockSectionPreviewProvider :
+internal class ThemeAndAppLockSectionPreviewProvider :
     ThemePairPreviewProvider<AppLockSectionState>(AppLockSectionStatePreviewProvider())
 
 @Preview
 @Composable
-fun AppLockSectionPreview(
+internal fun AppLockSectionPreview(
     @PreviewParameter(ThemeAndAppLockSectionPreviewProvider::class) input: Pair<Boolean, AppLockSectionState>
 ) {
     PassTheme(isDark = input.first) {

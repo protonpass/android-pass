@@ -22,4 +22,8 @@ internal interface SecureLinksListUiEvent {
 
     data object OnBackClicked : SecureLinksListUiEvent
 
+    data object OnCellClicked : SecureLinksListUiEvent
+
+    data object OnCellOptionsClicked : SecureLinksListUiEvent
+
 }

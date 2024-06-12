@@ -88,6 +88,8 @@ sealed interface ProfileNavigation {
 
     data object Upgrade : ProfileNavigation
 
+    data object SecureLinks : ProfileNavigation
+
 }
 
 fun NavGraphBuilder.profileGraph(onNavigateEvent: (ProfileNavigation) -> Unit) {

@@ -21,8 +21,8 @@ package proton.android.pass.data.impl.usecases.securelink
 import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
-import proton.android.pass.data.api.usecases.publiclink.GenerateSecureLink
-import proton.android.pass.data.api.usecases.publiclink.SecureLinkOptions
+import proton.android.pass.data.api.usecases.securelink.GenerateSecureLink
+import proton.android.pass.data.api.usecases.securelink.SecureLinkOptions
 import proton.android.pass.data.impl.repositories.SecureLinkRepository
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId

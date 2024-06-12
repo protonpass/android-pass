@@ -19,7 +19,9 @@
 package proton.android.pass.features.secure.links.list.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.secure.links.list.presentation.SecureLinksListViewModel
 import proton.android.pass.features.secure.links.shared.navigation.SecureLinksNavDestination
 
@@ -27,6 +29,17 @@ import proton.android.pass.features.secure.links.shared.navigation.SecureLinksNa
 fun SecureLinksListScreen(
     onNavigated: (SecureLinksNavDestination) -> Unit,
     viewModel: SecureLinksListViewModel = hiltViewModel()
-) {
-// jibiri
+) = with(viewModel) {
+    val state by state.collectAsStateWithLifecycle()
+
+    SecureLinksListContent(
+        state = state,
+        onUiEvent = { uiEvent ->
+            when (uiEvent) {
+                SecureLinksListUiEvent.OnBackClicked -> {
+                    onNavigated(SecureLinksNavDestination.Back)
+                }
+            }
+        }
+    )
 }

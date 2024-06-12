@@ -18,8 +18,15 @@
 
 package proton.android.pass.data.impl.repositories
 
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.datetime.Instant
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -29,8 +36,11 @@ import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.data.impl.local.LocalShareKeyDataSource
 import proton.android.pass.data.impl.remote.RemoteSecureLinkDataSource
 import proton.android.pass.data.impl.requests.CreateSecureLinkRequest
+import proton.android.pass.data.impl.responses.GetSecureLinkResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.securelinks.SecureLink
+import proton.android.pass.domain.securelinks.SecureLinkId
 import javax.inject.Inject
 
 interface SecureLinkRepository {
@@ -41,6 +51,8 @@ interface SecureLinkRepository {
         itemId: ItemId,
         options: SecureLinkOptions
     ): String
+
+    fun observeSecureLinks(userId: UserId): Flow<List<SecureLink>>
 
 }
 
@@ -108,4 +120,85 @@ class SecureLinkRepositoryImpl @Inject constructor(
         return concatenated
     }
 
+    override fun observeSecureLinks(userId: UserId): Flow<List<SecureLink>> = oneShot {
+        // To be changed to observing the local database when we implement the local data source
+        fetchSecureLinksFromRemote(userId)
+    }
+
+    private suspend fun fetchSecureLinksFromRemote(userId: UserId): List<SecureLink> {
+        val remoteLinks = remoteSecureLinkDataSource.getAllSecureLinks(userId)
+
+        // Retrieve all the ShareKeys we'll need to decrypt the SecureLinks
+        val shareKeys = getAllShareKeysForShares(userId, remoteLinks)
+
+        val mapped = remoteLinks.mapNotNull { link ->
+            val shareKey = shareKeys[ShareId(link.shareId)]
+                ?: return@mapNotNull null
+
+            val linkKey = encryptionContextProvider.withEncryptionContext(shareKey.clone()) {
+                val encryptedLinkKey = Base64.decodeBase64(link.encryptedLinkKey)
+                decrypt(EncryptedByteArray(encryptedLinkKey), EncryptionTag.LinkKey)
+            }
+
+            val encodedLinkKey = Base64.encodeBase64String(linkKey, Base64.Mode.UrlSafe)
+            val fullUrl = "${link.linkUrl}#$encodedLinkKey"
+
+            SecureLink(
+                id = SecureLinkId(link.linkId),
+                shareId = ShareId(link.shareId),
+                itemId = ItemId(link.itemId),
+                expiration = Instant.fromEpochSeconds(link.expirationTime),
+                maxReadCount = link.maxReadCount,
+                readCount = link.readCount,
+                url = fullUrl
+            )
+        }
+
+        // Clear all encryption keys from memory
+        shareKeys.values.forEach { it.clear() }
+
+        return mapped
+    }
+
+    private suspend fun getAllShareKeysForShares(
+        userId: UserId,
+        secureLinks: List<GetSecureLinkResponse>
+    ): Map<ShareId, EncryptionKey> {
+        val shareKeyRequests = secureLinks.map { ShareKeyForLink.fromResponse(it) }.distinct()
+
+        val res: Map<ShareId, EncryptionKey?> = encryptionContextProvider
+            .withEncryptionContextSuspendable {
+                coroutineScope {
+                    shareKeyRequests.map { request ->
+                        async {
+                            val shareKey = localShareKeyDataSource
+                                .getForShareAndRotation(
+                                    userId = userId,
+                                    shareId = request.shareId,
+                                    rotation = request.rotation
+                                )
+                                .firstOrNull()
+                                ?.let { shareKeyEntity ->
+                                    EncryptionKey(decrypt(shareKeyEntity.symmetricallyEncryptedKey))
+                                }
+                            request.shareId to shareKey
+                        }
+                    }.awaitAll().toMap()
+                }
+            }
+
+        return res.filterValues { it != null }.mapValues { it.value!! }
+    }
+
+    private data class ShareKeyForLink(
+        val shareId: ShareId,
+        val rotation: Long
+    ) {
+        companion object {
+            fun fromResponse(response: GetSecureLinkResponse) = ShareKeyForLink(
+                ShareId(response.shareId),
+                response.linkKeyShareKeyRotation
+            )
+        }
+    }
 }

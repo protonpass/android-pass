@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.api.usecases.publiclink
+package proton.android.pass.data.api.usecases.securelink
 
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ItemId

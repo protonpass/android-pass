@@ -235,9 +235,7 @@ class ProfileViewModel @Inject constructor(
 
     internal fun onAppVersionLongClick() {
         if (appConfig.flavor is BuildFlavor.Alpha) {
-            viewModelScope.launch {
-                eventFlow.emit(ProfileEvent.OpenFeatureFlags)
-            }
+            eventFlow.update { ProfileEvent.OpenFeatureFlags }
         }
     }
 

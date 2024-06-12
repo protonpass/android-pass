@@ -21,13 +21,13 @@ package proton.android.pass.featurehome.impl
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import proton.android.pass.data.api.usecases.ObserveHasConfirmedInvite
 import proton.android.pass.preferences.HasCompletedOnBoarding
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -39,41 +39,41 @@ class RouterViewModel @Inject constructor(
     observeHasConfirmedInvite: ObserveHasConfirmedInvite
 ) : ViewModel() {
 
-    private val confirmedInviteFlow: Flow<Boolean> = observeHasConfirmedInvite()
-        .map { hasConfirmedInvite ->
-            if (hasConfirmedInvite) {
-                observeHasConfirmedInvite.clear()
-            }
-            hasConfirmedInvite
+    init {
+        viewModelScope.launch {
+            combine(
+                userPreferencesRepository.getHasCompletedOnBoarding(),
+                observeHasConfirmedInvite()
+                    .map { hasConfirmedInvite ->
+                        if (hasConfirmedInvite) {
+                            observeHasConfirmedInvite.clear()
+                        }
+                        hasConfirmedInvite
+                    }
+                    .distinctUntilChanged(),
+                ::routerEvent
+            )
+                .distinctUntilChanged()
+                .collectLatest { routerEventState.update { it } }
         }
-        .distinctUntilChanged()
+    }
 
-    internal val eventStateFlow: StateFlow<RouterEvent> = combine(
-        userPreferencesRepository.getHasCompletedOnBoarding(),
-        confirmedInviteFlow,
-        ::routerEvent
-    )
-        .distinctUntilChanged()
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = RouterEvent.None
-        )
+    internal val routerEventState = MutableStateFlow(RouterEvent.None)
+
+    internal fun consumeEvent(routerEvent: RouterEvent) {
+        routerEventState.compareAndSet(routerEvent, RouterEvent.None)
+    }
 
     private fun routerEvent(hasCompletedOnBoarding: HasCompletedOnBoarding, hasConfirmedInvite: Boolean) = when {
         hasConfirmedInvite -> RouterEvent.ConfirmedInvite
         hasCompletedOnBoarding == HasCompletedOnBoarding.NotCompleted -> RouterEvent.OnBoarding
         else -> RouterEvent.None
     }
-
 }
 
-internal sealed interface RouterEvent {
-
-    data object OnBoarding : RouterEvent
-
-    data object ConfirmedInvite : RouterEvent
-
-    data object None : RouterEvent
-
+enum class RouterEvent {
+    OnBoarding,
+    ConfirmedInvite,
+    None
 }
+

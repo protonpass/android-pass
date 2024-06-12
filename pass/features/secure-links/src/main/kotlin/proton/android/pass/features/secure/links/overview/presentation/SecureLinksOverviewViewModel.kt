@@ -24,6 +24,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import proton.android.pass.clipboard.api.ClipboardManager
@@ -76,23 +77,26 @@ class SecureLinksOverviewViewModel @Inject constructor(
         .require<String>(SecureLinksOverviewLinkNavArgId.key)
         .let(NavParamEncoder::decode)
 
+    private val itemUiModelFlow = observeItemById(shareId = shareId, itemId = itemId)
+        .map { item ->
+            encryptionContextProvider.withEncryptionContext {
+                item.toUiModel(this@withEncryptionContext).copy(isPinned = false)
+            }
+        }
+
     internal val state: StateFlow<SecureLinksOverviewState> = combine(
-        observeItemById(shareId = shareId, itemId = itemId),
+        itemUiModelFlow,
         observeVaultById(shareId = shareId),
         userPreferencesRepository.getUseFaviconsPreference()
-    ) { item, vault, useFavIconsPreference ->
-        encryptionContextProvider.withEncryptionContext {
-            item.toUiModel(this@withEncryptionContext)
-        }.let { itemUiModel ->
-            SecureLinksOverviewState(
-                secureLink = secureLink,
-                expiration = expiration,
-                maxViewsAllows = maxViewsAllowed,
-                itemUiModel = itemUiModel.copy(isPinned = false),
-                canLoadExternalImages = useFavIconsPreference.value(),
-                shareIcon = vault.icon
-            )
-        }
+    ) { itemUiModel, vault, useFavIconsPreference ->
+        SecureLinksOverviewState(
+            secureLink = secureLink,
+            expiration = expiration,
+            maxViewsAllows = maxViewsAllowed,
+            itemUiModel = itemUiModel,
+            canLoadExternalImages = useFavIconsPreference.value(),
+            shareIcon = vault.icon
+        )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),

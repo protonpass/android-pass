@@ -60,6 +60,7 @@ import proton.android.pass.data.impl.responses.DeleteVaultResponse
 import proton.android.pass.data.impl.responses.ExtraPasswordGetSrpDataResponse
 import proton.android.pass.data.impl.responses.GetAliasOptionsResponse
 import proton.android.pass.data.impl.responses.GetAllKeysByAddressResponse
+import proton.android.pass.data.impl.responses.GetAllSecureLinksResponse
 import proton.android.pass.data.impl.responses.GetEventsResponse
 import proton.android.pass.data.impl.responses.GetItemLatestKeyResponse
 import proton.android.pass.data.impl.responses.GetItemRevisionsResponse
@@ -391,11 +392,14 @@ interface PasswordManagerApi : BaseRetrofitApi {
 
     // Public link
     @POST("$PREFIX/share/{shareId}/item/{itemId}/public_link")
-    suspend fun generatePublicLink(
+    suspend fun generateSecureLink(
         @Path("shareId") shareId: String,
         @Path("itemId") itemId: String,
         @Body request: CreateSecureLinkRequest
     ): CreateSecureLinkResponse
+
+    @GET("$PREFIX/public_link")
+    suspend fun getAllSecureLinks(): GetAllSecureLinksResponse
 
     // Extra Password
     @POST("$PREFIX/user/srp")

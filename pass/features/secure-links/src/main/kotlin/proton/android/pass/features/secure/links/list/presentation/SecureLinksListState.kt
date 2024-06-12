@@ -18,15 +18,19 @@
 
 package proton.android.pass.features.secure.links.list.presentation
 
-import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import javax.inject.Inject
+import androidx.compose.runtime.Stable
 
-@HiltViewModel
-class SecureLinksListViewModel @Inject constructor() : ViewModel() {
+@Stable
+internal data class SecureLinksListState(
+    internal val secureLinks: List<String>
+) {
 
-    internal val state: StateFlow<SecureLinksListState> = MutableStateFlow(SecureLinksListState.Initial)
+    internal companion object {
+
+        internal val Initial: SecureLinksListState = SecureLinksListState(
+            secureLinks = emptyList()
+        )
+
+    }
 
 }

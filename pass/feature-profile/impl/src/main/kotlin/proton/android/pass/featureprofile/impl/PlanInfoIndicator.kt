@@ -39,7 +39,7 @@ import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
-fun PlanInfoIndicator(modifier: Modifier = Modifier, planInfo: PlanInfo) {
+internal fun PlanInfoIndicator(modifier: Modifier = Modifier, planInfo: PlanInfo) {
     val resources = when (planInfo) {
         PlanInfo.Hide -> null
         is PlanInfo.Trial -> {
@@ -80,7 +80,7 @@ fun PlanInfoIndicator(modifier: Modifier = Modifier, planInfo: PlanInfo) {
     }
 }
 
-internal data class PlanResources(
+private data class PlanResources(
     @DrawableRes val icon: Int,
     val color: Color,
     val text: String
@@ -88,7 +88,9 @@ internal data class PlanResources(
 
 @Preview
 @Composable
-fun PlanInfoIndicatorPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
+internal fun PlanInfoIndicatorPreview(
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+) {
     val info = if (input.second) {
         PlanInfo.Trial
     } else {

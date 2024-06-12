@@ -77,7 +77,6 @@ internal fun SecureLinkCreateMaxViewsRow(
             modifier = Modifier
                 .padding(start = Spacing.large)
                 .offset(y = -Spacing.small),
-            scope = this,
             isConfigurationAllowed = isConfigurationAllowed,
             isMaxViewsEnabled = isMaxViewsEnabled,
             isMaxViewsDecreaseEnabled = isMaxViewsDecreaseEnabled,
@@ -131,16 +130,15 @@ private fun SecureLinkCreateMaxViewsRowHeader(
 }
 
 @Composable
-private fun SecureLinkCreateMaxViewsRowCounter(
+private fun ColumnScope.SecureLinkCreateMaxViewsRowCounter(
     modifier: Modifier = Modifier,
-    scope: ColumnScope,
     isConfigurationAllowed: Boolean,
     isMaxViewsEnabled: Boolean,
     isMaxViewsDecreaseEnabled: Boolean,
     maxViewsAllowed: Int,
     onUiEvent: (SecureLinksCreateUiEvent) -> Unit
 ) {
-    scope.AnimatedVisibility(visible = isMaxViewsEnabled) {
+    AnimatedVisibility(visible = isMaxViewsEnabled) {
         Column(
             modifier = modifier,
             verticalArrangement = Arrangement.spacedBy(space = Spacing.small)

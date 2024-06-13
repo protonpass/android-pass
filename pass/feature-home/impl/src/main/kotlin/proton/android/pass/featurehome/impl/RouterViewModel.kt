@@ -21,13 +21,14 @@ package proton.android.pass.featurehome.impl
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
+import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.usecases.ObserveHasConfirmedInvite
 import proton.android.pass.preferences.HasCompletedOnBoarding
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -36,8 +37,11 @@ import javax.inject.Inject
 @HiltViewModel
 class RouterViewModel @Inject constructor(
     userPreferencesRepository: UserPreferencesRepository,
-    observeHasConfirmedInvite: ObserveHasConfirmedInvite
+    observeHasConfirmedInvite: ObserveHasConfirmedInvite,
+    itemSyncStatusRepository: ItemSyncStatusRepository
 ) : ViewModel() {
+
+    internal val routerEventState = MutableSharedFlow<RouterEvent>(replay = 1)
 
     init {
         viewModelScope.launch {
@@ -51,28 +55,35 @@ class RouterViewModel @Inject constructor(
                         hasConfirmedInvite
                     }
                     .distinctUntilChanged(),
+                itemSyncStatusRepository.observeMode().distinctUntilChanged(),
                 ::routerEvent
             )
                 .distinctUntilChanged()
-                .collectLatest { routerEventState.update { it } }
+                .collectLatest { routerEventState.emit(it) }
         }
     }
 
-    internal val routerEventState = MutableStateFlow(RouterEvent.None)
-
-    internal fun consumeEvent(routerEvent: RouterEvent) {
-        routerEventState.compareAndSet(routerEvent, RouterEvent.None)
+    internal fun clearEvent() {
+        viewModelScope.launch {
+            routerEventState.emit(RouterEvent.None)
+        }
     }
 
-    private fun routerEvent(hasCompletedOnBoarding: HasCompletedOnBoarding, hasConfirmedInvite: Boolean) = when {
+    private fun routerEvent(
+        hasCompletedOnBoarding: HasCompletedOnBoarding,
+        hasConfirmedInvite: Boolean,
+        syncMode: SyncMode
+    ): RouterEvent = when {
         hasConfirmedInvite -> RouterEvent.ConfirmedInvite
         hasCompletedOnBoarding == HasCompletedOnBoarding.NotCompleted -> RouterEvent.OnBoarding
+        syncMode == SyncMode.ShownToUser -> RouterEvent.SyncDialog
         else -> RouterEvent.None
     }
 }
 
 enum class RouterEvent {
     OnBoarding,
+    SyncDialog,
     ConfirmedInvite,
     None
 }

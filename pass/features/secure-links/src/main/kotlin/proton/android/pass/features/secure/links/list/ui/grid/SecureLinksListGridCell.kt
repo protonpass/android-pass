@@ -35,6 +35,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
@@ -42,38 +43,58 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Radius
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
+import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
+import proton.android.pass.composecomponents.impl.item.icon.IdentityIcon
+import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
+import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
+import proton.android.pass.domain.items.ItemCategory
+import proton.android.pass.features.secure.links.R
 import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun SecureLinksListGridCell(
     modifier: Modifier = Modifier,
+    itemCategory: ItemCategory,
+    title: String,
+    website: String?,
+    packageName: String?,
+    canLoadExternalImages: Boolean,
+    expiration: String,
+    views: Int,
     onCellClick: () -> Unit,
-    onCellOptionsClick: () -> Unit,
-    index: Int
+    onCellOptionsClick: () -> Unit
 ) {
     Box(
         modifier = modifier
             .fillMaxWidth()
             .background(
                 color = PassTheme.colors.interactionNormMinor2,
-                shape = RoundedCornerShape(size = Radius.small)
+                shape = RoundedCornerShape(size = Radius.medium)
             )
             .clickable { onCellClick() }
     ) {
         Column(
             modifier = Modifier
-                .padding(all = Spacing.medium)
+                .padding(
+                    horizontal = Spacing.medium,
+                    vertical = Spacing.medium.plus(Spacing.small)
+                )
                 .align(alignment = Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
         ) {
-            SecureLinksListGridCellIcon()
+            SecureLinksListGridCellIcon(
+                itemCategory = itemCategory,
+                itemTitle = title,
+                itemWebsite = website,
+                itemPackageName = packageName,
+                canLoadExternalImages = canLoadExternalImages
+            )
 
             SecureLinksListGridCellInfo(
-                title = "Title $index",
-                expiration = "Expiration $index",
-                views = "Views $index"
+                title = title,
+                expiration = expiration,
+                views = views
             )
         }
 
@@ -85,9 +106,28 @@ internal fun SecureLinksListGridCell(
 
 @Composable
 private fun SecureLinksListGridCellIcon(
-    modifier: Modifier = Modifier
-) {
-    AliasIcon(modifier = modifier)
+    modifier: Modifier = Modifier,
+    itemCategory: ItemCategory,
+    itemTitle: String,
+    itemWebsite: String?,
+    itemPackageName: String?,
+    canLoadExternalImages: Boolean
+) = when (itemCategory) {
+    ItemCategory.CreditCard -> CreditCardIcon(modifier = modifier)
+    ItemCategory.Identity -> IdentityIcon(modifier = modifier)
+    ItemCategory.Note -> NoteIcon(modifier = modifier)
+    ItemCategory.Login -> LoginIcon(
+        modifier = modifier,
+        text = itemTitle,
+        canLoadExternalImages = canLoadExternalImages,
+        website = itemWebsite,
+        packageName = itemPackageName,
+    )
+
+    ItemCategory.Alias,
+    ItemCategory.Password,
+    ItemCategory.Unknown -> {
+    }
 }
 
 @Composable
@@ -95,7 +135,7 @@ private fun SecureLinksListGridCellInfo(
     modifier: Modifier = Modifier,
     title: String,
     expiration: String,
-    views: String
+    views: Int
 ) {
     Column(
         modifier = modifier,
@@ -115,7 +155,11 @@ private fun SecureLinksListGridCellInfo(
         )
 
         Text(
-            text = views,
+            text = pluralStringResource(
+                id = R.plurals.secure_links_list_viewed_times,
+                count = views,
+                views
+            ),
             style = ProtonTheme.typography.captionRegular,
             color = PassTheme.colors.textWeak
         )
@@ -146,7 +190,13 @@ internal fun SecureLinksListGridCellPreview(
     PassTheme(isDark = isDark) {
         Surface {
             SecureLinksListGridCell(
-                index = 1,
+                itemCategory = ItemCategory.Login,
+                canLoadExternalImages = false,
+                title = "Link title",
+                website = null,
+                packageName = null,
+                expiration = "Expires in 30 days",
+                views = 2,
                 onCellClick = {},
                 onCellOptionsClick = {}
             )

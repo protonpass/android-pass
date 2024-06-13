@@ -54,6 +54,7 @@ class PassScopeUserCheck(
                     superResult
                 }
             }
+
             else -> superResult
         }
 
@@ -77,7 +78,9 @@ class PassScopeUserCheck(
 
             (context as App).currentActivity?.let {
                 it.startActivity(EnterExtraPasswordActivity.createIntent(it, user.userId))
-            }
+            } ?: PostLoginAccountSetup.UserCheckResult.Error(
+                context.getString(R.string.error_login_in_user)
+            )
 
             val res = authWithExtraPasswordListener.onAuthWithExtraPassword(user.userId)
             authWithExtraPasswordListener.clearUserId(user.userId)
@@ -88,6 +91,7 @@ class PassScopeUserCheck(
                         context.getString(R.string.auth_with_extra_password_failed)
                     )
                 }
+
                 AuthWithExtraPasswordResult.Success -> {
                     PostLoginAccountSetup.UserCheckResult.Success
                 }

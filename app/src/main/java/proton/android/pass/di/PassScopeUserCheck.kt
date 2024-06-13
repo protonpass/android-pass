@@ -28,6 +28,7 @@ import me.proton.core.auth.presentation.DefaultUserCheck
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
 import proton.android.pass.App
+import proton.android.pass.R
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordListener
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordResult
 import proton.android.pass.enterextrapassword.EnterExtraPasswordActivity
@@ -61,9 +62,13 @@ class PassScopeUserCheck(
         authWithExtraPasswordListener: AuthWithExtraPasswordListener
     ): PostLoginAccountSetup.UserCheckResult {
         val account = accountManager.getAccount(user.userId).firstOrNull()
-            ?: return PostLoginAccountSetup.UserCheckResult.Error("No account found")
+            ?: return PostLoginAccountSetup.UserCheckResult.Error(
+                context.getString(R.string.no_account_found)
+            )
         val session = sessionManager.getSession(account.sessionId)
-            ?: return PostLoginAccountSetup.UserCheckResult.Error("No session found")
+            ?: return PostLoginAccountSetup.UserCheckResult.Error(
+                context.getString(R.string.no_session_found)
+            )
 
         return if (session.scopes.contains(PASS_SCOPE)) {
             PostLoginAccountSetup.UserCheckResult.Success
@@ -79,7 +84,9 @@ class PassScopeUserCheck(
             PassLogger.i(TAG, "Auth with extra password listener: $res")
             when (res) {
                 AuthWithExtraPasswordResult.Failure -> {
-                    PostLoginAccountSetup.UserCheckResult.Error("Auth with extra password failed")
+                    PostLoginAccountSetup.UserCheckResult.Error(
+                        context.getString(R.string.auth_with_extra_password_failed)
+                    )
                 }
                 AuthWithExtraPasswordResult.Success -> {
                     PostLoginAccountSetup.UserCheckResult.Success

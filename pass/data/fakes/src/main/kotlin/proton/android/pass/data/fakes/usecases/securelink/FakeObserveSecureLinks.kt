@@ -35,6 +35,6 @@ class FakeObserveSecureLinks @Inject constructor() : ObserveSecureLinks {
         secureLinksFlow.update { newSecureLinks }
     }
 
-    override fun observeSecureLinks(): Flow<List<SecureLink>> = secureLinksFlow
+    override fun invoke(): Flow<List<SecureLink>> = secureLinksFlow
 
 }

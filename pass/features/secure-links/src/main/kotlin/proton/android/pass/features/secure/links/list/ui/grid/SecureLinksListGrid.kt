@@ -21,9 +21,11 @@ package proton.android.pass.features.secure.links.list.ui.grid
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.features.secure.links.list.presentation.SecureLinkModel
 import proton.android.pass.features.secure.links.list.ui.SecureLinksListUiEvent
 
 private const val SECURE_LINKS_GRID_COLUMN_COUNT = 2
@@ -32,6 +34,8 @@ private const val SECURE_LINKS_GRID_COLUMN_COUNT = 2
 internal fun SecureLinksListGrid(
     modifier: Modifier = Modifier,
     onUiEvent: (SecureLinksListUiEvent) -> Unit,
+    secureLinksModels: List<SecureLinkModel>,
+    canLoadExternalImages: Boolean
 ) {
     LazyVerticalGrid(
         modifier = modifier,
@@ -39,9 +43,15 @@ internal fun SecureLinksListGrid(
         horizontalArrangement = Arrangement.spacedBy(space = Spacing.medium),
         verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
     ) {
-        items(count = 5) { index ->
+        items(items = secureLinksModels) { secureLinksModel ->
             SecureLinksListGridCell(
-                index = index,
+                itemCategory = secureLinksModel.itemCategory,
+                title = secureLinksModel.itemTitle,
+                website = secureLinksModel.itemWebsite,
+                packageName = secureLinksModel.itemPackageName,
+                expiration = "Expire is 30 days",
+                views = secureLinksModel.views,
+                canLoadExternalImages = canLoadExternalImages,
                 onCellClick = { onUiEvent(SecureLinksListUiEvent.OnCellClicked) },
                 onCellOptionsClick = { onUiEvent(SecureLinksListUiEvent.OnCellOptionsClicked) }
             )

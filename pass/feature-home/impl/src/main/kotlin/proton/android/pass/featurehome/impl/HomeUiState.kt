@@ -61,8 +61,6 @@ internal sealed interface HomeNavEvent {
 
     data object UpgradeDialog : HomeNavEvent
 
-    data object SyncDialog : HomeNavEvent
-
 }
 
 @Immutable

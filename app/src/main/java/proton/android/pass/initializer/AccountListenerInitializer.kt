@@ -25,6 +25,7 @@ import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
@@ -32,10 +33,14 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.accountmanager.presentation.observe
 import me.proton.core.accountmanager.presentation.onAccountDisabled
+import me.proton.core.accountmanager.presentation.onAccountReady
 import me.proton.core.accountmanager.presentation.onAccountRemoved
 import proton.android.pass.commonui.api.PassAppLifecycleProvider
+import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
+import proton.android.pass.data.api.repositories.toSyncMode
 import proton.android.pass.data.api.usecases.ClearUserData
 import proton.android.pass.data.api.usecases.ResetAppToDefaults
+import proton.android.pass.data.api.usecases.organization.RefreshOrganizationSettings
 import proton.android.pass.log.api.PassLogger
 
 class AccountListenerInitializer : Initializer<Unit> {
@@ -48,6 +53,8 @@ class AccountListenerInitializer : Initializer<Unit> {
 
         val lifecycleProvider = entryPoint.passAppLifecycleProvider()
         val accountManager = entryPoint.accountManager()
+        val itemSyncStatusRepository = entryPoint.itemSyncStatusRepository()
+        val refreshOrganizationSettings = entryPoint.refreshOrganizationSettings()
 
         accountManager.observe(
             lifecycle = lifecycleProvider.lifecycle,
@@ -58,7 +65,13 @@ class AccountListenerInitializer : Initializer<Unit> {
         }.onAccountRemoved {
             PassLogger.i(TAG, "Account removed")
             performCleanup(it, entryPoint)
+        }.onAccountReady(false) { // this flag is set to false to listen for new accounts only
+            PassLogger.i(TAG, "New Account ready")
+            val itemSyncStatus = itemSyncStatusRepository.observeSyncStatus().first()
+            itemSyncStatusRepository.setMode(itemSyncStatus.toSyncMode())
+            refreshOrganizationSettings()
         }
+
     }
 
     override fun dependencies(): List<Class<out Initializer<*>?>> = emptyList()
@@ -83,6 +96,8 @@ class AccountListenerInitializer : Initializer<Unit> {
     @EntryPoint
     @InstallIn(SingletonComponent::class)
     interface AccountListenerInitializerEntryPoint {
+        fun itemSyncStatusRepository(): ItemSyncStatusRepository
+        fun refreshOrganizationSettings(): RefreshOrganizationSettings
         fun passAppLifecycleProvider(): PassAppLifecycleProvider
         fun accountManager(): AccountManager
         fun resetAppToDefaults(): ResetAppToDefaults

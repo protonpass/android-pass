@@ -47,7 +47,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -75,9 +74,6 @@ import me.proton.core.report.presentation.ReportOrchestrator
 import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
 import proton.android.pass.biometry.StoreAuthSuccessful
 import proton.android.pass.commonrust.api.CommonLibraryVersionChecker
-import proton.android.pass.data.api.repositories.ItemSyncStatus
-import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
-import proton.android.pass.data.api.repositories.SyncMode
 import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.data.api.usecases.UserPlanWorkerLauncher
 import proton.android.pass.data.api.usecases.organization.RefreshOrganizationSettings
@@ -96,7 +92,6 @@ class LauncherViewModel @Inject constructor(
     private val reportOrchestrator: ReportOrchestrator,
     private val userSettingsOrchestrator: UserSettingsOrchestrator,
     private val userPlanWorkerLauncher: UserPlanWorkerLauncher,
-    private val itemSyncStatusRepository: ItemSyncStatusRepository,
     private val refreshPlan: RefreshPlan,
     private val inAppUpdatesManager: InAppUpdatesManager,
     private val refreshOrganizationSettings: RefreshOrganizationSettings,
@@ -136,24 +131,6 @@ class LauncherViewModel @Inject constructor(
                 if (result == null && getPrimaryUserIdOrNull() == null) {
                     context.finish()
                     return@launch
-                }
-
-                if (result != null) {
-                    itemSyncStatusRepository.observeSyncStatus()
-                        .first()
-                        .let { itemSyncStatus ->
-                            when (itemSyncStatus) {
-                                ItemSyncStatus.SyncError,
-                                ItemSyncStatus.SyncStarted,
-                                ItemSyncStatus.SyncNotStarted,
-                                is ItemSyncStatus.Syncing -> SyncMode.ShownToUser
-
-                                ItemSyncStatus.SyncSuccess -> SyncMode.Background
-                            }
-                        }
-                        .also { syncMode -> itemSyncStatusRepository.setMode(syncMode) }
-
-                    refreshOrganizationSettings()
                 }
             }
         }

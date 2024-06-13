@@ -32,6 +32,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallWeak
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.UserRecovery
+import me.proton.core.util.kotlin.orEmpty
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -97,8 +98,8 @@ internal fun AccountPasswordAndRecoveryInfo(state: AccountUiState, onEvent: (Acc
     }
 
     SettingOption(
-        text = stringResource(R.string.account_settings_list_item_password_header),
-        label = passwordHint,
+        label = stringResource(R.string.account_settings_list_item_password_header),
+        text = passwordHint.orEmpty(),
         onClick = { onEvent(AccountContentEvent.PasswordManagement) }
     )
 

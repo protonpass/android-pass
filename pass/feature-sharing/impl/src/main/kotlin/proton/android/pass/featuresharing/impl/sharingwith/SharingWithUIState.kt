@@ -37,6 +37,7 @@ enum class ErrorMessage {
     SomeAddressesCannotBeInvited,
     EmailNotValid,
     CannotInviteOutsideOrg,
+    EmailAlreadyAdded,
     None
 }
 

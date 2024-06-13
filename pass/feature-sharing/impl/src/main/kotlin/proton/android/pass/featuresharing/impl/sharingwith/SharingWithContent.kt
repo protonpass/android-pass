@@ -180,6 +180,9 @@ fun SharingWithContent(
                 ErrorMessage.CannotInviteOutsideOrg -> {
                     true to stringResource(R.string.share_with_email_cannot_invite_outside_org)
                 }
+                ErrorMessage.EmailAlreadyAdded -> {
+                    true to stringResource(R.string.share_with_email_email_already_added)
+                }
                 else -> false to ""
             }
 

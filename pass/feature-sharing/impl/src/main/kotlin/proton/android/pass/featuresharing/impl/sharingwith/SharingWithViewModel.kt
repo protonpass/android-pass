@@ -299,21 +299,20 @@ class SharingWithViewModel @Inject constructor(
     }
 
     private fun addCurrentEmailToListIfPossible(): Boolean {
-        if (editingEmailState.isNotBlank()) {
-            if (checkValidEmail()) {
-                if (enteredEmailsState.value.contains(editingEmailState)) {
-                    errorMessageFlow.update { ErrorMessage.EmailAlreadyAdded }
-                    return false
-                }
-
-                enteredEmailsState.update { it + EnteredEmailState(editingEmailState, false) }
-                editingEmailState = ""
-                editingEmailStateFlow.update { "" }
-                return true
-            } else {
-                errorMessageFlow.update { ErrorMessage.EmailNotValid }
+        if (checkValidEmail()) {
+            if (enteredEmailsState.value.contains(editingEmailState)) {
+                errorMessageFlow.update { ErrorMessage.EmailAlreadyAdded }
+                return false
             }
+
+            enteredEmailsState.update { it + EnteredEmailState(editingEmailState, false) }
+            editingEmailState = ""
+            editingEmailStateFlow.update { "" }
+            return true
+        } else {
+            errorMessageFlow.update { ErrorMessage.EmailNotValid }
         }
+    
         return false
     }
 

@@ -25,7 +25,6 @@ import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentActivity
 import dagger.hilt.android.AndroidEntryPoint
-import me.proton.core.accountmanager.presentation.compose.SignOutDialogActivity
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.ui.AppNavigation
@@ -50,7 +49,6 @@ class EnterExtraPasswordActivity : FragmentActivity() {
                 onNavigate = {
                     when (it) {
                         AppNavigation.Finish -> finishAndGoBackToMain()
-                        is AppNavigation.SignOut -> SignOutDialogActivity.start(this, it.userId)
                         is AppNavigation.ForceSignOut -> finish()
                         else -> {}
                     }
@@ -61,7 +59,7 @@ class EnterExtraPasswordActivity : FragmentActivity() {
 
     private fun finishAndGoBackToMain() {
         val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
         finish()
     }

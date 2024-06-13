@@ -107,7 +107,7 @@ fun HomeScreen(
     vaultDrawerViewModel: VaultDrawerViewModel = hiltViewModel(),
     onBoardingTipsViewModel: OnBoardingTipsViewModel = hiltViewModel()
 ) {
-    val routerEvent by routerViewModel.routerEventState.collectAsStateWithLifecycle()
+    val routerEvent by routerViewModel.routerEventState.collectAsStateWithLifecycle(RouterEvent.None)
     val homeUiState by homeViewModel.homeUiState.collectAsStateWithLifecycle()
     val drawerUiState by vaultDrawerViewModel.drawerUiState.collectAsStateWithLifecycle()
     val onBoardingTipsUiState by onBoardingTipsViewModel.state.collectAsStateWithLifecycle()
@@ -126,10 +126,6 @@ fun HomeScreen(
 
             HomeNavEvent.UpgradeDialog -> {
                 onNavigateEvent(HomeNavigation.UpgradeDialog)
-            }
-
-            HomeNavEvent.SyncDialog -> {
-                onNavigateEvent(HomeNavigation.SyncDialog)
             }
 
             HomeNavEvent.Unknown -> {}
@@ -182,9 +178,10 @@ fun HomeScreen(
         when (routerEvent) {
             RouterEvent.OnBoarding -> onNavigateEvent(HomeNavigation.OnBoarding)
             RouterEvent.ConfirmedInvite -> onNavigateEvent(HomeNavigation.ConfirmedInvite)
+            RouterEvent.SyncDialog -> onNavigateEvent(HomeNavigation.SyncDialog)
             RouterEvent.None -> {}
         }
-        onDispose { routerViewModel.consumeEvent(routerEvent) }
+        onDispose { routerViewModel.clearEvent() }
     }
 
     LaunchedEffect(onBoardingTipsUiState.tipsToShow.hashCode()) {

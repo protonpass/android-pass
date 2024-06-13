@@ -32,7 +32,6 @@ sealed interface ItemSyncStatus {
     data object SyncSuccess : ItemSyncStatus
 
     data object SyncError : ItemSyncStatus
-
 }
 
 data class ItemSyncStatusPayload(
@@ -40,9 +39,18 @@ data class ItemSyncStatusPayload(
     val total: Int
 )
 
-sealed interface SyncMode {
-    data object ShownToUser : SyncMode
-    data object Background : SyncMode
+enum class SyncMode {
+    ShownToUser,
+    Background
+}
+
+fun ItemSyncStatus.toSyncMode(): SyncMode = when (this) {
+    ItemSyncStatus.SyncError,
+    ItemSyncStatus.SyncStarted,
+    ItemSyncStatus.SyncNotStarted,
+    is ItemSyncStatus.Syncing -> SyncMode.ShownToUser
+
+    ItemSyncStatus.SyncSuccess -> SyncMode.Background
 }
 
 data class SyncState(

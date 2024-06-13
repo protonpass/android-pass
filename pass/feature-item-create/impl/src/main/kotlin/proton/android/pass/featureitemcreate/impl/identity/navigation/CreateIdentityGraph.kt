@@ -29,6 +29,7 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.customFieldBottomSheetGraph
+import proton.android.pass.featureitemcreate.impl.common.CustomFieldPrefix
 import proton.android.pass.featureitemcreate.impl.common.KEY_VAULT_SELECTED
 import proton.android.pass.featureitemcreate.impl.dialogs.customfield.CustomFieldNameNavigation
 import proton.android.pass.featureitemcreate.impl.dialogs.customfield.customFieldNameDialogGraph
@@ -90,6 +91,7 @@ fun NavGraphBuilder.createIdentityGraph(onNavigate: (BaseIdentityNavigation) -> 
             }
         }
         customFieldBottomSheetGraph(
+            prefix = CustomFieldPrefix.CreateIdentity,
             onAddCustomFieldNavigate = {
                 onNavigate(
                     BaseIdentityNavigation.CustomFieldTypeSelected(
@@ -105,7 +107,7 @@ fun NavGraphBuilder.createIdentityGraph(onNavigate: (BaseIdentityNavigation) -> 
             },
             onCloseNavigate = { onNavigate(BaseIdentityNavigation.Close) }
         )
-        customFieldNameDialogGraph {
+        customFieldNameDialogGraph(CustomFieldPrefix.CreateIdentity) {
             when (it) {
                 is CustomFieldNameNavigation.Close -> onNavigate(BaseIdentityNavigation.Close)
             }

@@ -23,6 +23,7 @@ import androidx.navigation.NavType
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldIndexNavArgId
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldTitleNavArgId
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldType
+import proton.android.pass.featureitemcreate.impl.common.CustomFieldPrefix
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
@@ -34,32 +35,47 @@ object CustomFieldTypeNavArgId : NavArgId {
     override val navType = NavType.StringType
 }
 
-object CustomFieldNameDialog : NavItem(
-    baseRoute = "item/create/customfield/add/dialog",
+class CustomFieldNameDialogNavItem(prefix: CustomFieldPrefix) : NavItem(
+    baseRoute = "${prefix.name}/item/create/customfield/add/dialog",
     navArgIds = listOf(CustomFieldTypeNavArgId),
     navItemType = NavItemType.Dialog
 ) {
     fun buildRoute(type: CustomFieldType) = "$baseRoute/${type.name}"
+
+    companion object {
+        val CreateLogin = CustomFieldNameDialogNavItem(CustomFieldPrefix.CreateLogin)
+        val UpdateLogin = CustomFieldNameDialogNavItem(CustomFieldPrefix.UpdateLogin)
+        val CreateIdentity = CustomFieldNameDialogNavItem(CustomFieldPrefix.CreateIdentity)
+    }
 }
 
-object EditCustomFieldNameDialog : NavItem(
-    baseRoute = "item/create/customfield/edit/dialog",
+class EditCustomFieldNameDialogNavItem(val prefix: CustomFieldPrefix) : NavItem(
+    baseRoute = "${prefix.name}/item/create/customfield/edit/dialog",
     navArgIds = listOf(CustomFieldIndexNavArgId, CustomFieldTitleNavArgId),
     navItemType = NavItemType.Dialog
 ) {
     fun buildRoute(index: Int, currentValue: String) = "$baseRoute/$index/${NavParamEncoder.encode(currentValue)}"
+
+    companion object {
+        val CreateLogin = EditCustomFieldNameDialogNavItem(CustomFieldPrefix.CreateLogin)
+        val UpdateLogin = EditCustomFieldNameDialogNavItem(CustomFieldPrefix.UpdateLogin)
+        val CreateIdentity = EditCustomFieldNameDialogNavItem(CustomFieldPrefix.CreateIdentity)
+    }
 }
 
 sealed interface CustomFieldNameNavigation {
     data object Close : CustomFieldNameNavigation
 }
 
-fun NavGraphBuilder.customFieldNameDialogGraph(onNavigate: (CustomFieldNameNavigation) -> Unit) {
-    dialog(CustomFieldNameDialog) {
+fun NavGraphBuilder.customFieldNameDialogGraph(
+    prefix: CustomFieldPrefix,
+    onNavigate: (CustomFieldNameNavigation) -> Unit
+) {
+    dialog(CustomFieldNameDialogNavItem(prefix)) {
         CustomFieldNameDialog(onNavigate = onNavigate)
     }
 
-    dialog(EditCustomFieldNameDialog) {
+    dialog(EditCustomFieldNameDialogNavItem(prefix)) {
         EditCustomFieldNameDialog(onNavigate = onNavigate)
     }
 }

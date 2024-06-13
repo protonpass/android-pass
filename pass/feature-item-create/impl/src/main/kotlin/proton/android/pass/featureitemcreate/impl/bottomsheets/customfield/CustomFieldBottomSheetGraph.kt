@@ -20,6 +20,7 @@ package proton.android.pass.featureitemcreate.impl.bottomsheets.customfield
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
+import proton.android.pass.featureitemcreate.impl.common.CustomFieldPrefix
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
@@ -36,13 +37,19 @@ object CustomFieldTitleNavArgId : NavArgId {
     override val navType = NavType.StringType
 }
 
-object AddCustomFieldBottomSheet : NavItem(
-    baseRoute = "item/create/customfield/add/bottomsheet",
+class AddCustomFieldBottomSheetNavItem(val prefix: CustomFieldPrefix) : NavItem(
+    baseRoute = "${prefix.name}/item/create/customfield/add/bottomsheet",
     navItemType = NavItemType.Bottomsheet
-)
+) {
+    companion object {
+        val CreateLogin = AddCustomFieldBottomSheetNavItem(CustomFieldPrefix.CreateLogin)
+        val UpdateLogin = AddCustomFieldBottomSheetNavItem(CustomFieldPrefix.UpdateLogin)
+        val CreateIdentity = AddCustomFieldBottomSheetNavItem(CustomFieldPrefix.CreateIdentity)
+    }
+}
 
-object CustomFieldOptionsBottomSheet : NavItem(
-    baseRoute = "item/create/customfield/options/bottomsheet",
+class CustomFieldOptionsBottomSheetNavItem(val prefix: CustomFieldPrefix) : NavItem(
+    baseRoute = "${prefix.name}/item/create/customfield/options/bottomsheet",
     navArgIds = listOf(CustomFieldIndexNavArgId, CustomFieldTitleNavArgId),
     navItemType = NavItemType.Bottomsheet
 ) {
@@ -54,6 +61,13 @@ object CustomFieldOptionsBottomSheet : NavItem(
         } else {
             append("Unknown")
         }
+    }
+
+    companion object {
+        val CreateLogin = CustomFieldOptionsBottomSheetNavItem(CustomFieldPrefix.CreateLogin)
+        val UpdateLogin = CustomFieldOptionsBottomSheetNavItem(CustomFieldPrefix.UpdateLogin)
+        val CreateIdentity = CustomFieldOptionsBottomSheetNavItem(CustomFieldPrefix.CreateIdentity)
+
     }
 }
 
@@ -70,12 +84,13 @@ sealed interface CustomFieldOptionsNavigation {
 }
 
 fun NavGraphBuilder.customFieldBottomSheetGraph(
+    prefix: CustomFieldPrefix,
     onAddCustomFieldNavigate: (CustomFieldType) -> Unit,
     onEditCustomFieldNavigate: (String, Int) -> Unit,
     onRemoveCustomFieldNavigate: () -> Unit,
     onCloseNavigate: () -> Unit
 ) {
-    bottomSheet(AddCustomFieldBottomSheet) {
+    bottomSheet(AddCustomFieldBottomSheetNavItem(prefix)) {
         AddCustomFieldBottomSheet {
             when (it) {
                 is AddCustomFieldNavigation.AddText -> onAddCustomFieldNavigate(CustomFieldType.Text)
@@ -85,7 +100,7 @@ fun NavGraphBuilder.customFieldBottomSheetGraph(
         }
     }
 
-    bottomSheet(CustomFieldOptionsBottomSheet) {
+    bottomSheet(CustomFieldOptionsBottomSheetNavItem(prefix)) {
         EditCustomFieldBottomSheet(
             onNavigate = {
                 when (it) {

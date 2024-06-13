@@ -28,11 +28,11 @@ import proton.android.pass.featureauth.impl.authGraph
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasBottomSheet
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasNavigation
 import proton.android.pass.featureitemcreate.impl.alias.createAliasGraph
-import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.AddCustomFieldBottomSheet
-import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldOptionsBottomSheet
+import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.AddCustomFieldBottomSheetNavItem
+import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldOptionsBottomSheetNavItem
 import proton.android.pass.featureitemcreate.impl.common.KEY_VAULT_SELECTED
-import proton.android.pass.featureitemcreate.impl.dialogs.customfield.CustomFieldNameDialog
-import proton.android.pass.featureitemcreate.impl.dialogs.customfield.EditCustomFieldNameDialog
+import proton.android.pass.featureitemcreate.impl.dialogs.customfield.CustomFieldNameDialogNavItem
+import proton.android.pass.featureitemcreate.impl.dialogs.customfield.EditCustomFieldNameDialogNavItem
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
 import proton.android.pass.featureitemcreate.impl.login.CreateLoginNavigation
@@ -200,26 +200,26 @@ fun NavGraphBuilder.createPasskeyActivityGraph(
                 }
 
                 BaseLoginNavigation.AddCustomField -> appNavigator.navigate(
-                    destination = AddCustomFieldBottomSheet
+                    destination = AddCustomFieldBottomSheetNavItem.CreateLogin
                 )
 
                 is BaseLoginNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
                     appNavigator.navigate(
-                        destination = CustomFieldNameDialog,
-                        route = CustomFieldNameDialog.buildRoute(it.type),
+                        destination = CustomFieldNameDialogNavItem.CreateLogin,
+                        route = CustomFieldNameDialogNavItem.CreateLogin.buildRoute(it.type),
                         backDestination = CreateLogin
                     )
                 }
 
                 is BaseLoginNavigation.CustomFieldOptions -> appNavigator.navigate(
-                    destination = CustomFieldOptionsBottomSheet,
-                    route = CustomFieldOptionsBottomSheet.buildRoute(it.index, it.currentValue)
+                    destination = CustomFieldOptionsBottomSheetNavItem.CreateLogin,
+                    route = CustomFieldOptionsBottomSheetNavItem.CreateLogin.buildRoute(it.index, it.currentValue)
                 )
 
                 is BaseLoginNavigation.EditCustomField -> dismissBottomSheet {
                     appNavigator.navigate(
-                        destination = EditCustomFieldNameDialog,
-                        route = EditCustomFieldNameDialog.buildRoute(it.index, it.currentValue),
+                        destination = EditCustomFieldNameDialogNavItem.CreateLogin,
+                        route = EditCustomFieldNameDialogNavItem.CreateLogin.buildRoute(it.index, it.currentValue),
                         backDestination = CreateLogin
                     )
                 }

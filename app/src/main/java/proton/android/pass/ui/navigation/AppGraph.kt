@@ -50,8 +50,9 @@ import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.Create
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheet
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.bottomsheetCreateItemGraph
-import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.AddCustomFieldBottomSheet
-import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldOptionsBottomSheet
+import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.AddCustomFieldBottomSheetNavItem
+import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldOptionsBottomSheetNavItem
+import proton.android.pass.featureitemcreate.impl.common.CustomFieldPrefix
 import proton.android.pass.featureitemcreate.impl.common.KEY_VAULT_SELECTED
 import proton.android.pass.featureitemcreate.impl.creditcard.BaseCreditCardNavigation
 import proton.android.pass.featureitemcreate.impl.creditcard.CreateCreditCard
@@ -60,8 +61,8 @@ import proton.android.pass.featureitemcreate.impl.creditcard.EditCreditCard
 import proton.android.pass.featureitemcreate.impl.creditcard.UpdateCreditCardNavigation
 import proton.android.pass.featureitemcreate.impl.creditcard.createCreditCardGraph
 import proton.android.pass.featureitemcreate.impl.creditcard.updateCreditCardGraph
-import proton.android.pass.featureitemcreate.impl.dialogs.customfield.CustomFieldNameDialog
-import proton.android.pass.featureitemcreate.impl.dialogs.customfield.EditCustomFieldNameDialog
+import proton.android.pass.featureitemcreate.impl.dialogs.customfield.CustomFieldNameDialogNavItem
+import proton.android.pass.featureitemcreate.impl.dialogs.customfield.EditCustomFieldNameDialogNavItem
 import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdentityNavigation
 import proton.android.pass.featureitemcreate.impl.identity.navigation.CreateIdentity
 import proton.android.pass.featureitemcreate.impl.identity.navigation.CreateIdentityNavigation
@@ -208,7 +209,7 @@ import proton.android.pass.featurevault.impl.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.ui.AppNavigation
 
-@Suppress("LongMethod", "ComplexMethod")
+@Suppress("LongMethod", "ComplexMethod", "ThrowsCount")
 fun NavGraphBuilder.appGraph(
     appNavigator: AppNavigator,
     onNavigate: (AppNavigation) -> Unit,
@@ -706,27 +707,57 @@ fun NavGraphBuilder.appGraph(
                     )
                 }
 
-                BaseLoginNavigation.AddCustomField -> appNavigator.navigate(
-                    destination = AddCustomFieldBottomSheet
-                )
+                BaseLoginNavigation.AddCustomField -> {
+                    val prefix = when (backDestination) {
+                        CreateLogin -> CustomFieldPrefix.CreateLogin
+                        EditLogin -> CustomFieldPrefix.UpdateLogin
+                        else -> throw IllegalStateException("Missing backdestination")
+                    }
+
+                    appNavigator.navigate(
+                        destination = AddCustomFieldBottomSheetNavItem(prefix)
+                    )
+                }
 
                 is BaseLoginNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
+                    val prefix = when (backDestination) {
+                        CreateLogin -> CustomFieldPrefix.CreateLogin
+                        EditLogin -> CustomFieldPrefix.UpdateLogin
+                        else -> throw IllegalStateException("Missing backdestination")
+                    }
+
                     appNavigator.navigate(
-                        destination = CustomFieldNameDialog,
-                        route = CustomFieldNameDialog.buildRoute(it.type),
+                        destination = CustomFieldNameDialogNavItem(prefix),
+                        route = CustomFieldNameDialogNavItem(prefix).buildRoute(it.type),
                         backDestination = backDestination
                     )
                 }
 
-                is BaseLoginNavigation.CustomFieldOptions -> appNavigator.navigate(
-                    destination = CustomFieldOptionsBottomSheet,
-                    route = CustomFieldOptionsBottomSheet.buildRoute(it.index, it.currentValue)
-                )
+                is BaseLoginNavigation.CustomFieldOptions -> {
+                    val prefix = when (backDestination) {
+                        CreateLogin -> CustomFieldPrefix.CreateLogin
+                        EditLogin -> CustomFieldPrefix.UpdateLogin
+                        else -> throw IllegalStateException("Missing backdestination")
+                    }
+                    appNavigator.navigate(
+                        destination = CustomFieldOptionsBottomSheetNavItem(prefix),
+                        route = CustomFieldOptionsBottomSheetNavItem(prefix).buildRoute(
+                            it.index,
+                            it.currentValue
+                        )
+                    )
+                }
 
                 is BaseLoginNavigation.EditCustomField -> dismissBottomSheet {
+                    val prefix = when (backDestination) {
+                        CreateLogin -> CustomFieldPrefix.CreateLogin
+                        EditLogin -> CustomFieldPrefix.UpdateLogin
+                        else -> throw IllegalStateException("Missing backdestination")
+                    }
+
                     appNavigator.navigate(
-                        destination = EditCustomFieldNameDialog,
-                        route = EditCustomFieldNameDialog.buildRoute(it.index, it.currentValue),
+                        destination = EditCustomFieldNameDialogNavItem(prefix),
+                        route = EditCustomFieldNameDialogNavItem(prefix).buildRoute(it.index, it.currentValue),
                         backDestination = backDestination
                     )
                 }
@@ -869,27 +900,27 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 BaseIdentityNavigation.OpenCustomFieldBottomSheet ->
-                    dismissBottomSheet { appNavigator.navigate(AddCustomFieldBottomSheet) }
+                    dismissBottomSheet { appNavigator.navigate(AddCustomFieldBottomSheetNavItem.CreateIdentity) }
 
                 is BaseIdentityNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
                     appNavigator.navigate(
-                        destination = CustomFieldNameDialog,
-                        route = CustomFieldNameDialog.buildRoute(it.type),
+                        destination = CustomFieldNameDialogNavItem.CreateIdentity,
+                        route = CustomFieldNameDialogNavItem.CreateIdentity.buildRoute(it.type),
                         backDestination = CreateIdentity
                     )
                 }
 
                 is BaseIdentityNavigation.EditCustomField -> dismissBottomSheet {
                     appNavigator.navigate(
-                        destination = EditCustomFieldNameDialog,
-                        route = EditCustomFieldNameDialog.buildRoute(it.index, it.title),
+                        destination = EditCustomFieldNameDialogNavItem.CreateIdentity,
+                        route = EditCustomFieldNameDialogNavItem.CreateIdentity.buildRoute(it.index, it.title),
                         backDestination = backDestination
                     )
                 }
 
                 is BaseIdentityNavigation.CustomFieldOptions -> appNavigator.navigate(
-                    destination = CustomFieldOptionsBottomSheet,
-                    route = CustomFieldOptionsBottomSheet.buildRoute(it.index, it.title)
+                    destination = CustomFieldOptionsBottomSheetNavItem.CreateIdentity,
+                    route = CustomFieldOptionsBottomSheetNavItem.CreateIdentity.buildRoute(it.index, it.title)
                 )
 
                 BaseIdentityNavigation.RemovedCustomField -> dismissBottomSheet {

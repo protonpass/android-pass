@@ -248,6 +248,41 @@ class SharingWithViewModelTest {
         assertThat(addresses).isEmpty()
     }
 
+    @Test
+    fun `shows error if the current address has already been added`() = runTest {
+        val email = "test1@email.test"
+        viewModel.onEmailChange(email)
+        viewModel.onEmailSubmit()
+        viewModel.onEmailChange(email)
+        viewModel.onEmailSubmit()
+
+        viewModel.state.test {
+            val item = awaitItem()
+            assertThat(item.errorMessage).isEqualTo(ErrorMessage.EmailAlreadyAdded)
+
+            // Assert that it does not clean the current state
+            assertThat(viewModel.editingEmail).isEqualTo(email)
+        }
+    }
+
+    @Test
+    fun `does not continue if the current address has already been added`() = runTest {
+        val email = "test1@email.test"
+        viewModel.onEmailChange(email)
+        viewModel.onEmailSubmit()
+        viewModel.onEmailChange(email)
+        viewModel.onContinueClick()
+
+        viewModel.state.test {
+            val item = awaitItem()
+            assertThat(item.errorMessage).isEqualTo(ErrorMessage.EmailAlreadyAdded)
+            assertThat(item.event).isInstanceOf(SharingWithEvents.Unknown::class.java)
+
+            // Assert that it does not clean the current state
+            assertThat(viewModel.editingEmail).isEqualTo(email)
+        }
+    }
+
     companion object {
         private const val SHARE_ID = "SharingWithViewModelTest-ShareID"
     }

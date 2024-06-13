@@ -47,16 +47,16 @@ import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.Create
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheet
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.bottomsheetCreateItemGraph
-import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.AddCustomFieldBottomSheet
-import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldOptionsBottomSheet
+import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.AddCustomFieldBottomSheetNavItem
+import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldOptionsBottomSheetNavItem
 import proton.android.pass.featureitemcreate.impl.common.KEY_VAULT_SELECTED
 import proton.android.pass.featureitemcreate.impl.creditcard.BaseCreditCardNavigation
 import proton.android.pass.featureitemcreate.impl.creditcard.CreateCreditCard
 import proton.android.pass.featureitemcreate.impl.creditcard.CreateCreditCardNavigation
 import proton.android.pass.featureitemcreate.impl.creditcard.UpdateCreditCardNavigation
 import proton.android.pass.featureitemcreate.impl.creditcard.createCreditCardGraph
-import proton.android.pass.featureitemcreate.impl.dialogs.customfield.CustomFieldNameDialog
-import proton.android.pass.featureitemcreate.impl.dialogs.customfield.EditCustomFieldNameDialog
+import proton.android.pass.featureitemcreate.impl.dialogs.customfield.CustomFieldNameDialogNavItem
+import proton.android.pass.featureitemcreate.impl.dialogs.customfield.EditCustomFieldNameDialogNavItem
 import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdentityNavigation
 import proton.android.pass.featureitemcreate.impl.identity.navigation.CreateIdentity
 import proton.android.pass.featureitemcreate.impl.identity.navigation.CreateIdentityNavigation
@@ -265,26 +265,26 @@ fun NavGraphBuilder.autofillActivityGraph(
                 }
 
                 BaseLoginNavigation.AddCustomField -> appNavigator.navigate(
-                    destination = AddCustomFieldBottomSheet
+                    destination = AddCustomFieldBottomSheetNavItem.CreateLogin
                 )
 
                 is BaseLoginNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
                     appNavigator.navigate(
-                        destination = CustomFieldNameDialog,
-                        route = CustomFieldNameDialog.buildRoute(it.type),
+                        destination = CustomFieldNameDialogNavItem.CreateLogin,
+                        route = CustomFieldNameDialogNavItem.CreateLogin.buildRoute(it.type),
                         backDestination = CreateLogin
                     )
                 }
 
                 is BaseLoginNavigation.CustomFieldOptions -> appNavigator.navigate(
-                    destination = CustomFieldOptionsBottomSheet,
-                    route = CustomFieldOptionsBottomSheet.buildRoute(it.index, it.currentValue)
+                    destination = CustomFieldOptionsBottomSheetNavItem.CreateLogin,
+                    route = CustomFieldOptionsBottomSheetNavItem.CreateLogin.buildRoute(it.index, it.currentValue)
                 )
 
                 is BaseLoginNavigation.EditCustomField -> dismissBottomSheet {
                     appNavigator.navigate(
-                        destination = EditCustomFieldNameDialog,
-                        route = EditCustomFieldNameDialog.buildRoute(it.index, it.currentValue),
+                        destination = EditCustomFieldNameDialogNavItem.CreateLogin,
+                        route = EditCustomFieldNameDialogNavItem.CreateLogin.buildRoute(it.index, it.currentValue),
                         backDestination = CreateLogin
                     )
                 }
@@ -393,27 +393,27 @@ fun NavGraphBuilder.autofillActivityGraph(
                 )
 
                 BaseIdentityNavigation.OpenCustomFieldBottomSheet ->
-                    dismissBottomSheet { appNavigator.navigate(AddCustomFieldBottomSheet) }
+                    dismissBottomSheet { appNavigator.navigate(AddCustomFieldBottomSheetNavItem.CreateIdentity) }
 
                 is BaseIdentityNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
                     appNavigator.navigate(
-                        destination = CustomFieldNameDialog,
-                        route = CustomFieldNameDialog.buildRoute(it.type),
+                        destination = CustomFieldNameDialogNavItem.CreateIdentity,
+                        route = CustomFieldNameDialogNavItem.CreateIdentity.buildRoute(it.type),
                         backDestination = CreateIdentity
                     )
                 }
 
                 is BaseIdentityNavigation.EditCustomField -> dismissBottomSheet {
                     appNavigator.navigate(
-                        destination = EditCustomFieldNameDialog,
-                        route = EditCustomFieldNameDialog.buildRoute(it.index, it.title),
+                        destination = EditCustomFieldNameDialogNavItem.CreateIdentity,
+                        route = EditCustomFieldNameDialogNavItem.CreateIdentity.buildRoute(it.index, it.title),
                         backDestination = CreateIdentity
                     )
                 }
 
                 is BaseIdentityNavigation.CustomFieldOptions -> appNavigator.navigate(
-                    destination = CustomFieldOptionsBottomSheet,
-                    route = CustomFieldOptionsBottomSheet.buildRoute(it.index, it.title)
+                    destination = CustomFieldOptionsBottomSheetNavItem.CreateIdentity,
+                    route = CustomFieldOptionsBottomSheetNavItem.CreateIdentity.buildRoute(it.index, it.title)
                 )
 
                 BaseIdentityNavigation.RemovedCustomField -> dismissBottomSheet {

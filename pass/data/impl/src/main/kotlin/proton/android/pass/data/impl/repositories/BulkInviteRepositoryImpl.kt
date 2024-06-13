@@ -34,8 +34,9 @@ class BulkInviteRepositoryImpl @Inject constructor() : BulkInviteRepository {
         MutableStateFlow(emptyList())
 
     override suspend fun storeAddresses(addresses: List<String>) {
+        val uniqueAddresses = addresses.distinct()
         addressesFlow.update {
-            addresses.map { AddressPermission(it, ShareRole.Read) }
+            uniqueAddresses.map { AddressPermission(it, ShareRole.Read) }
         }
     }
 

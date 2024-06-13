@@ -81,6 +81,7 @@ class AccountListenerInitializer : Initializer<Unit> {
         val resetApp = entryPoint.resetAppToDefaults()
         val accountManager = entryPoint.accountManager()
 
+        entryPoint.itemSyncStatusRepository().clear()
         runCatching { clearUserData(account.userId) }
             .onSuccess { PassLogger.i(TAG, "Cleared user data") }
             .onFailure { PassLogger.i(TAG, it, "Error clearing user data") }

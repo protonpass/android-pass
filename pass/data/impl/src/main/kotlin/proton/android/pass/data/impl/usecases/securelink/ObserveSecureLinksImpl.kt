@@ -31,7 +31,7 @@ class ObserveSecureLinksImpl @Inject constructor(
     private val repository: SecureLinkRepository
 ) : ObserveSecureLinks {
 
-    override fun observeSecureLinks(): Flow<List<SecureLink>> = observeCurrentUser()
+    override fun invoke(): Flow<List<SecureLink>> = observeCurrentUser()
         .flatMapLatest { user ->
             repository.observeSecureLinks(user.userId)
         }

@@ -69,10 +69,10 @@ fun SharingPermissionsContent(
                 }
             )
         }
-    ) {
+    ) { padding ->
         Column(
             modifier = Modifier
-                .padding(it)
+                .padding(padding)
                 .padding(Spacing.medium),
             verticalArrangement = Arrangement.spacedBy(Spacing.medium)
         ) {

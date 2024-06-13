@@ -9,4 +9,8 @@
     <string name="action_restart">Restart</string>
 
     <string name="shortcut_share_logs_title">Share logs</string>
+
+    <string name="no_account_found">No account found</string>
+    <string name="no_session_found">No session found</string>
+    <string name="auth_with_extra_password_failed">Auth with extra password failed</string>
 </resources>

@@ -36,9 +36,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Radius
 import proton.android.pass.commonui.api.Spacing
@@ -47,7 +51,9 @@ import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
 import proton.android.pass.composecomponents.impl.item.icon.IdentityIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
+import proton.android.pass.composecomponents.impl.utils.passRemainingTimeText
 import proton.android.pass.domain.items.ItemCategory
+import proton.android.pass.domain.time.RemainingTime
 import proton.android.pass.features.secure.links.R
 import me.proton.core.presentation.R as CoreR
 
@@ -59,7 +65,7 @@ internal fun SecureLinksListGridCell(
     website: String?,
     packageName: String?,
     canLoadExternalImages: Boolean,
-    expiration: String,
+    expiration: Option<RemainingTime>,
     views: Int,
     onCellClick: () -> Unit,
     onCellOptionsClick: () -> Unit
@@ -134,7 +140,7 @@ private fun SecureLinksListGridCellIcon(
 private fun SecureLinksListGridCellInfo(
     modifier: Modifier = Modifier,
     title: String,
-    expiration: String,
+    expiration: Option<RemainingTime>,
     views: Int
 ) {
     Column(
@@ -149,14 +155,26 @@ private fun SecureLinksListGridCellInfo(
         )
 
         Text(
-            text = expiration,
+            text = when (expiration) {
+                None -> {
+                    stringResource(id = R.string.secure_links_list_unknown_expiration_description)
+                }
+
+                is Some -> {
+                    stringResource(
+                        id = R.string.secure_links_list_expiration_description,
+                        passRemainingTimeText(remainingTime = expiration.value)
+                            ?: stringResource(id = R.string.secure_links_list_unknown_expiration_description)
+                    )
+                }
+            },
             style = ProtonTheme.typography.captionRegular,
             color = PassTheme.colors.textWeak
         )
 
         Text(
             text = pluralStringResource(
-                id = R.plurals.secure_links_list_viewed_times,
+                id = R.plurals.secure_links_list_viewed_times_description,
                 count = views,
                 views
             ),
@@ -165,6 +183,7 @@ private fun SecureLinksListGridCellInfo(
         )
     }
 }
+
 
 @Composable
 private fun BoxScope.SecureLinksGridCellMenu(
@@ -195,7 +214,7 @@ internal fun SecureLinksListGridCellPreview(
                 title = "Link title",
                 website = null,
                 packageName = null,
-                expiration = "Expires in 30 days",
+                expiration = None,
                 views = 2,
                 onCellClick = {},
                 onCellOptionsClick = {}

@@ -45,7 +45,9 @@
 
     <!--List screen-->
     <string name="secure_links_list_title">Secure links</string>
-    <plurals name="secure_links_list_viewed_times">
+    <string name="secure_links_list_expiration_description">Expires in %s</string>
+    <string name="secure_links_list_unknown_expiration_description">Unknown expiration</string>
+    <plurals name="secure_links_list_viewed_times_description">
         <item quantity="one">%d view</item>
         <item quantity="other">%d views</item>
     </plurals>

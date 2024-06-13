@@ -18,9 +18,13 @@
 
 package proton.android.pass.features.secure.links.list.presentation
 
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.toOption
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.domain.securelinks.SecureLink
+import proton.android.pass.domain.time.RemainingTime
 
 internal data class SecureLinkModel(
     internal val itemTitle: String,
@@ -51,5 +55,9 @@ internal data class SecureLinkModel(
     }
 
     internal val views: Int = secureLink.readCount
+
+    internal val remainingTime: Option<RemainingTime> = secureLink.expiration
+        ?.let { expirationInstant -> RemainingTime(endInstant = expirationInstant).toOption() }
+        ?: None
 
 }

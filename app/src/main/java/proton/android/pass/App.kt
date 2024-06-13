@@ -61,28 +61,20 @@ class App : Application(), ImageLoaderFactory {
         registerActivityLifecycleCallbacks(
             activityLifecycleCallbacks(
                 onActivityCreated = { activity, _ ->
-                    currentActivityReference = WeakReference(activity)
                     CoroutineScope(Dispatchers.IO).launch {
                         inAppReviewTriggerMetrics.incrementAppLaunchStreakCount()
                     }
                     PassLogger.i(TAG, "Created activity ${activity::class.java.simpleName}")
                 },
-                onActivityStarted = { activity ->
-                    currentActivityReference = WeakReference(activity)
-                },
                 onActivityResumed = { activity ->
                     currentActivityReference = WeakReference(activity)
+                    PassLogger.i(TAG, "Resumed activity ${activity::class.java.simpleName}")
                 },
-                onActivityStopped = { activity ->
+                onActivityPaused = { activity ->
                     if (currentActivityReference?.get() == activity) {
                         currentActivityReference = null
                     }
-                    PassLogger.i(TAG, "Stopped activity ${activity::class.java.simpleName}")
-                },
-                onActivityDestroyed = { activity ->
-                    if (currentActivityReference?.get() == activity) {
-                        currentActivityReference = null
-                    }
+                    PassLogger.i(TAG, "Paused activity ${activity::class.java.simpleName}")
                 }
             )
         )

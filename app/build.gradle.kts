@@ -201,7 +201,7 @@ android {
             dimension = "env"
             applicationIdSuffix = ".black"
 
-            val protonHost = "proton.black"
+            val protonHost = "arber.proton.black"
             protonEnvironment {
                 host = protonHost
 

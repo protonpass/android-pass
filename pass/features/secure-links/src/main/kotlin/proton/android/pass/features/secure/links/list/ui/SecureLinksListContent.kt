@@ -18,14 +18,19 @@
 
 package proton.android.pass.features.secure.links.list.ui
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.features.secure.links.R
 import proton.android.pass.features.secure.links.list.presentation.SecureLinksListState
 import proton.android.pass.features.secure.links.list.ui.grid.SecureLinksListGrid
@@ -45,12 +50,27 @@ internal fun SecureLinksListContent(
             )
         },
     ) { innerPadding ->
-        SecureLinksListGrid(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(paddingValues = innerPadding)
-                .padding(all = Spacing.medium),
-            onUiEvent = onUiEvent
-        )
+        when (isLoadingState) {
+            IsLoadingState.Loading -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
+
+            IsLoadingState.NotLoading -> {
+                SecureLinksListGrid(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(paddingValues = innerPadding)
+                        .padding(all = Spacing.medium),
+                    secureLinksModels = secureLinksModels,
+                    canLoadExternalImages = canLoadExternalImages,
+                    onUiEvent = onUiEvent
+                )
+            }
+        }
     }
 }

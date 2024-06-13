@@ -23,6 +23,6 @@ import proton.android.pass.domain.securelinks.SecureLink
 
 interface ObserveSecureLinks {
 
-    fun observeSecureLinks(): Flow<List<SecureLink>>
+    operator fun invoke(): Flow<List<SecureLink>>
 
 }

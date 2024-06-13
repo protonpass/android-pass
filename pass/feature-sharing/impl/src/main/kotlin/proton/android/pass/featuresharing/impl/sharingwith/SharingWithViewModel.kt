@@ -203,14 +203,19 @@ class SharingWithViewModel @Inject constructor(
             enteredEmailsState.update {
                 if (!it.contains(editingEmailState)) {
                     scrollToBottomFlow.update { true }
-                    it + EnteredEmailState(editingEmailState, false)
+                    val newValue = it + EnteredEmailState(editingEmailState, false)
+                    editingEmailState = ""
+                    editingEmailStateFlow.update { "" }
+                    newValue
                 } else {
+                    errorMessageFlow.update { ErrorMessage.EmailAlreadyAdded }
                     it
                 }
             }
-            editingEmailState = ""
-            editingEmailStateFlow.update { "" }
+
             onChange()
+        } else {
+            errorMessageFlow.update { ErrorMessage.EmailNotValid }
         }
     }
 
@@ -239,14 +244,10 @@ class SharingWithViewModel @Inject constructor(
 
     fun onContinueClick() = viewModelScope.launch {
         errorMessageFlow.update { ErrorMessage.None }
-        if (editingEmailState.isNotBlank()) {
-            if (checkValidEmail()) {
-                enteredEmailsState.update { it + EnteredEmailState(editingEmailState, false) }
-                editingEmailState = ""
-                editingEmailStateFlow.update { "" }
-            } else {
-                return@launch
-            }
+
+        // If the user is still editing an email, try to add it to the list before continuing
+        if (editingEmailState.isNotBlank() && !addCurrentEmailToListIfPossible()) {
+            return@launch
         }
 
         isLoadingState.update { IsLoadingState.Loading }
@@ -295,6 +296,25 @@ class SharingWithViewModel @Inject constructor(
 
     fun onScrolledToBottom() = viewModelScope.launch {
         scrollToBottomFlow.update { false }
+    }
+
+    private fun addCurrentEmailToListIfPossible(): Boolean {
+        if (editingEmailState.isNotBlank()) {
+            if (checkValidEmail()) {
+                if (enteredEmailsState.value.contains(editingEmailState)) {
+                    errorMessageFlow.update { ErrorMessage.EmailAlreadyAdded }
+                    return false
+                }
+
+                enteredEmailsState.update { it + EnteredEmailState(editingEmailState, false) }
+                editingEmailState = ""
+                editingEmailStateFlow.update { "" }
+                return true
+            } else {
+                errorMessageFlow.update { ErrorMessage.EmailNotValid }
+            }
+        }
+        return false
     }
 
     private suspend fun handleCanInviteResult(canInviteResult: CanAddressesBeInvitedResult) {

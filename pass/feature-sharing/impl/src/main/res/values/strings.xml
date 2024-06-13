@@ -37,6 +37,7 @@
     <string name="share_with_email_hint">Email address</string>
     <string name="share_with_email_error">Invalid email address</string>
     <string name="share_with_email_cannot_invite_outside_org">You can\'t invite people outside of your organization, contact admin for more info</string>
+    <string name="share_with_email_email_already_added">You have already added this email address</string>
 
     <string name="share_permissions_title">Set access level</string>
 

@@ -32,8 +32,11 @@ class LocalShareDataSourceImpl @Inject constructor(
     private val database: PassDatabase
 ) : LocalShareDataSource {
 
-    override suspend fun upsertShares(shares: List<ShareEntity>) =
-        database.sharesDao().insertOrUpdate(*shares.toTypedArray())
+    override suspend fun upsertShares(shares: List<ShareEntity>) {
+        val (active, inactive) = shares.partition { it.isActive }
+        database.sharesDao().insertOrUpdate(*active.toTypedArray())
+        database.sharesDao().delete(*inactive.toTypedArray())
+    }
 
     override suspend fun getById(userId: UserId, shareId: ShareId): ShareEntity? =
         database.sharesDao().observeById(userId.id, shareId.id).firstOrNull()

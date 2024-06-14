@@ -41,11 +41,11 @@ fun SecureLinksListScreen(
                 }
 
                 SecureLinksListUiEvent.OnCellClicked -> {
-                    println("JIBIRI: OnCellClicked")
+                   // Will be implemented in IDTEAM-3453
                 }
 
                 SecureLinksListUiEvent.OnCellOptionsClicked -> {
-                    println("JIBIRI: OnCellOptionsClicked")
+                    // Will be implemented in IDTEAM-3453
                 }
             }
         }

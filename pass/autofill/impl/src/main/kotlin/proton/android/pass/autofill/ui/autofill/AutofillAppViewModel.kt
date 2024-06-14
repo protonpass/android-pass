@@ -126,10 +126,15 @@ class AutofillAppViewModel @Inject constructor(
         autofillItem: AutofillItem,
         isSuggestion: Boolean
     ) = viewModelScope.launch {
-        val item = getItemById(autofillItem.shareId(), autofillItem.itemId())
+        val item = runCatching { getItemById(autofillItem.shareId(), autofillItem.itemId()) }
+            .getOrNull()
+            ?: return@launch run {
+                PassLogger.d(TAG, "Could not get item isSuggestion = $isSuggestion")
+            }
         val itemUiModel = encryptionContextProvider.withEncryptionContext {
             item.toUiModel(this@withEncryptionContext)
         }
+
 
         when {
             state.autofillData.isDangerousAutofill -> _eventFlow.update {

@@ -27,24 +27,24 @@
   <string name="item_permanently_deleted_message_error">項目の削除エラー</string>
   <string name="item_restored_message">項目を復旧</string>
   <string name="item_restored_message_error">項目の復元中エラー</string>
-  <string name="item_pinned_message">Item successfully pinned</string>
-  <string name="item_pinned_message_error">There was an error pinning this item</string>
-  <string name="item_unpinned_message">Item successfully unpinned</string>
-  <string name="item_unpinned_message_error">There was an error unpinning this item</string>
-  <string name="item_monitor_exclude_message">Item successfully excluded from monitoring</string>
-  <string name="item_monitor_exclude_message_error">There was an error excluding item from monitoring</string>
-  <string name="item_monitor_include_message">Item successfully included in monitoring</string>
-  <string name="item_monitor_include_message_error">There was an error including item in monitoring</string>
+  <string name="item_pinned_message">アイテムが正常にピン留めされました</string>
+  <string name="item_pinned_message_error">このアイテムをピン留めする際にエラーが発生しました</string>
+  <string name="item_unpinned_message">アイテムのピン留めが解除されました</string>
+  <string name="item_unpinned_message_error">このアイテムのピン留めを解除する際にエラーが発生しました</string>
+  <string name="item_monitor_exclude_message">アイテムは監視から正常に除外されました</string>
+  <string name="item_monitor_exclude_message_error">監視からアイテムを除外する際にエラーが発生しました</string>
+  <string name="item_monitor_include_message">アイテムが監視対象に正常に追加されました</string>
+  <string name="item_monitor_include_message_error">監視中のアイテムにエラーが発生しました</string>
   <string name="login_item_generate_totp_error">2要素認証コードの生成中エラー</string>
   <string name="login_item_view_alias_button">エイリアスを表示</string>
   <string name="login_item_monitor_widget_weak_pass_title">弱いパスワード</string>
-  <string name="login_item_monitor_widget_weak_pass_subtitle">This account is vulnerable, visit the service and change your password.</string>
+  <string name="login_item_monitor_widget_weak_pass_subtitle">このアカウントは脆弱です。サービスにアクセスしてパスワードを変更してください。</string>
   <plurals name="login_item_monitor_widget_reused_pass_title">
-    <item quantity="other">%d other logins use the same password</item>
+    <item quantity="other">%d 件の他のログインで同じパスワードが使用されています</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">2要素認証を設定するとより安全になります</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">This service offers 2FA. Enable it for added account security.</string>
-  <string name="login_item_reused_passwords_subtitle">Items from your vaults that use this password.</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">このサービスは 2FA を提供します。アカウントのセキュリティを強化するには、これを有効にしてください。</string>
+  <string name="login_item_reused_passwords_subtitle">このパスワードを使用する保管庫内のアイテム。</string>
   <string name="field_email">メールアドレス</string>
   <string name="field_username">ユーザー名</string>
   <string name="field_username_or_email">ユーザー名またはメールアドレス</string>
@@ -79,7 +79,7 @@
   <string name="credit_card_expiration_date_field_name">有効期限</string>
   <string name="credit_card_cardholder_copied_to_clipboard">カードの名義がクリップボードにコピーされました</string>
   <string name="credit_card_number_copied_to_clipboard">カード番号がクリップボードにコピーされました</string>
-  <string name="credit_card_verifcation_number_copied_to_clipboard">Security code copied to clipboard</string>
+  <string name="credit_card_verifcation_number_copied_to_clipboard">セキュリティコードがクリップボードにコピーされました</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">ごみ箱に移動</string>
   <string name="migrate_item_detail_bottom_sheet">別の保管庫に移動</string>
@@ -98,13 +98,13 @@
     12 February 2023 12:34
     -->
   <string name="date_full_date_format_with_year">yyyy LLLL dd HH:mm</string>
-  <string name="item_detail_cannot_perform_action_edit_title">Cannot edit</string>
+  <string name="item_detail_cannot_perform_action_edit_title">編集できません</string>
   <string name="item_detail_cannot_perform_action_edit_no_permissions_message">十分な権限がないため、このアイテムを編集できません。</string>
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">編集できるのは、最も古い保管庫内のアイテムのみです。 このアイテムを編集するには、現在のプランをアップグレードしてください。</string>
   <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">このアイテムはごみ箱内にあるため編集できません。編集する前にごみ箱から移動してください。</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">共有できません</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">この保管庫を共有するための十分な権限がありません。</string>
-  <string name="item_detail_cannot_perform_action_share_limit_reached">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">保管庫の共有制限に達しました。さらに多くのボールトを共有するには、現在のプランをアップグレードしてください。</string>
   <string name="item_detail_history_created">Created</string>
   <string name="item_detail_history_modified_last">最終更新日時</string>
   <string name="item_detail_history_button_view">アイテムの履歴を表示</string>

@@ -22,11 +22,11 @@
   </plurals>
   <string name="sync_progress_item_count">%1$d/%2$d 個のアイテム</string>
   <string name="sync_dialog_title">アイテムを同期中…</string>
-  <string name="sync_dialog_title_error">Sync failed</string>
-  <string name="sync_dialog_title_success">Sync completed</string>
+  <string name="sync_dialog_title_error">同期に失敗しました</string>
+  <string name="sync_dialog_title_success">同期が完了しました</string>
   <string name="sync_dialog_subtitle">アイテムをダウンロードし、解読しています。数分かかる場合があります。</string>
-  <string name="sync_dialog_subtitle_error">There was an error downloading and decrypting your items. Please try again.</string>
-  <string name="sync_dialog_subtitle_success">Your items were successfully downloaded and decrypted.</string>
+  <string name="sync_dialog_subtitle_error">アイテムのダウンロードと復号化中にエラーが発生しました。もう一度お試しください。</string>
+  <string name="sync_dialog_subtitle_success">アイテムは正常にダウンロードされ、復号化されました。</string>
   <string name="sync_item_not_started">始まっていない</string>
-  <string name="sync_item_failed">Sync failed</string>
+  <string name="sync_item_failed">同期に失敗しました</string>
 </resources>

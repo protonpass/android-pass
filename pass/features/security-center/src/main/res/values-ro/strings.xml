@@ -18,7 +18,7 @@
   -->
 <resources>
   <!-- Home screen -->
-  <string name="security_center_home_top_bar_title">Monitorizare Proton Pass</string>
+  <string name="security_center_home_top_bar_title">Pass Monitor</string>
   <string name="security_center_home_dark_web_monitoring_title">Monitorizare pe internetul ascuns</string>
   <string name="security_center_home_widget_breaches_title">Compromitere detectată</string>
   <string name="security_center_home_widget_breaches_subtitle">Adresa de e-mail v-a fost divulgată în cel puțin o compromitere a datelor.</string>

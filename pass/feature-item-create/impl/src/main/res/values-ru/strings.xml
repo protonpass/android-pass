@@ -48,7 +48,7 @@
   <string name="bottomsheet_custom_field_option_edit">Изменить имя</string>
   <string name="bottomsheet_custom_field_option_remove">Удалить поле</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Удалить пользовательское поле</string>
-  <string name="bottomsheet_custom_section_option_remove">Remove section</string>
+  <string name="bottomsheet_custom_section_option_remove">Удалить раздел</string>
   <string name="create_login_add_custom_field_button">Добавить другое поле</string>
   <string name="custom_field_hidden_placeholder">Добавить скрытый текст</string>
   <string name="custom_field_hidden_icon_content_description">Иконка скрытого настраиваемого поля</string>
@@ -56,8 +56,8 @@
   <string name="custom_field_dialog_title">Название настраиваемого поля</string>
   <string name="custom_field_dialog_body">Дайте имя настраиваемому полю</string>
   <string name="custom_field_dialog_placeholder">Например, Идентификатор пользователя или PIN</string>
-  <string name="custom_section_dialog_title">Enter a section title</string>
-  <string name="custom_section_dialog_placeholder">Title</string>
+  <string name="custom_section_dialog_title">Ввести заголовок раздела</string>
+  <string name="custom_section_dialog_placeholder">Заголовок</string>
   <string name="custom_field_options_content_description">Варианты для настраиваемого поля</string>
   <!-- Create Note -->
   <string name="create_note_item_creation_error">Не удалось создать заметку</string>
@@ -178,5 +178,5 @@
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Для редактирования этого элемента приложение должно быть обновлено</string>
   <string name="remove_passkey_dialog_title">Remove this passkey?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">You are about to remove the passkey for user \'%1$s\' for \'%2$s\'. Are you sure?</string>
-  <string name="add_a_custom_section">Add a custom section</string>
+  <string name="add_a_custom_section">Добавить пользовательский раздел</string>
 </resources>

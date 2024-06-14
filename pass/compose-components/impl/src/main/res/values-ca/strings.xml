@@ -123,7 +123,7 @@
   <string name="item_details_login_section_username_title">Nom d\'usuari</string>
   <string name="item_details_login_section_username_or_username_title">Nom d\'usuari o adreça de correu electrònic</string>
   <string name="item_details_login_section_password_title">Contrasenya</string>
-  <string name="item_details_login_section_primary_totp_title">Token 2FA (TOTP)</string>
+  <string name="item_details_login_section_primary_totp_title">Testimoni d\'A2F (TOTP)</string>
   <string name="item_details_login_section_websites_title">Llocs web</string>
   <string name="item_details_shared_section_note_title">Nota</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">The app version is not supported anymore, please update your app.</string>
@@ -138,5 +138,5 @@
   <string name="email_address">Adreça de correu electrònic</string>
   <string name="password">Contrasenya</string>
   <!-- Tooltips -->
-  <string name="tooltip_dismiss_button_content_description">Button to dismiss this tooltip and not show it again</string>
+  <string name="tooltip_dismiss_button_content_description">Botó per descartar aquesta informació i no tornar-la a mostrar</string>
 </resources>

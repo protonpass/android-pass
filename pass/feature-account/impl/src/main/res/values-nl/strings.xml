@@ -20,13 +20,13 @@
   <string name="account_settings_list_item_password_hint_grace">Wachtwoord opnieuw instellen aangevraagd</string>
   <string name="account_settings_list_item_password_hint_insecure">Nieuw wachtwoord aanvragen klaar</string>
   <string name="account_settings_list_item_extra_password_header">Extra password for Proton Pass</string>
-  <string name="account_settings_list_item_extra_password_active">Active</string>
+  <string name="account_settings_list_item_extra_password_active">Actief</string>
   <string name="account_settings_list_item_extra_password_description">The extra password will be required to use Pass. It acts as an additional password on top of your Proton password.</string>
-  <string name="configure_extra_password_continue">Continue</string>
+  <string name="configure_extra_password_continue">Doorgaan</string>
   <string name="configure_extra_password_title">Set extra password</string>
   <string name="configure_extra_password_enter_extra_password">Extra password</string>
   <string name="configure_extra_password_repeat_extra_password">Wachtwoord herhalen</string>
   <string name="configure_extra_password_description">You will be asked for this password during login and when switching from another Proton app to Proton Pass on web.</string>
   <string name="configure_extra_password_warning">Caution: You won’t be able to access your Pass account if you lose this password.</string>
-  <string name="extra_password_options_remove">Remove</string>
+  <string name="extra_password_options_remove">Verwijderen</string>
 </resources>

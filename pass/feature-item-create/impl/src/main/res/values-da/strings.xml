@@ -110,7 +110,7 @@
   <string name="identity_field_city_title">By</string>
   <string name="identity_field_state_or_province_title">Stat eller provins</string>
   <string name="identity_field_country_or_region_title">Land eller region</string>
-  <string name="identity_field_social_security_number_title">CPR-nummer</string>
+  <string name="identity_field_social_security_number_title">CPR-nummer (personnummer)</string>
   <string name="identity_field_passport_number_title">Pasnummer</string>
   <string name="identity_field_license_number_title">Licensnummer</string>
   <string name="identity_field_website_title">Websted</string>

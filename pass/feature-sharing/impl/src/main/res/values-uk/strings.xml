@@ -124,6 +124,8 @@
   <string name="share_with_suggestions_title">Пропозиції</string>
   <string name="share_with_recents_title">Нещодавні</string>
   <string name="share_with_remove_email_content_description">Видалити пошту</string>
+  <string name="share_with_secure_link_title">Via secure link</string>
+  <string name="share_with_secure_link_description">Generate a secure link to this item.</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Встановити рівень доступу для всіх учасників</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Встановити рівень доступу для %s</string>
   <string name="sharing_edit_permissions_remove_user">Видалити користувача</string>

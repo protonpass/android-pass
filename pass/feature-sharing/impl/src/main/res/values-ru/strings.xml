@@ -124,6 +124,8 @@
   <string name="share_with_suggestions_title">Рекомендации</string>
   <string name="share_with_recents_title">Недавние</string>
   <string name="share_with_remove_email_content_description">Удалить адрес эл. почты</string>
+  <string name="share_with_secure_link_title">Via secure link</string>
+  <string name="share_with_secure_link_description">Generate a secure link to this item.</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Установить уровень доступа для всех участников</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Set access level for %s</string>
   <string name="sharing_edit_permissions_remove_user">Удалить пользователя</string>

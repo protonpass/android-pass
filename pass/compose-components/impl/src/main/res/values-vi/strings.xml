@@ -5,7 +5,7 @@
   <string name="sort_by_title_desc">Tiêu đề (Z-A)</string>
   <string name="sort_by_creation_asc">Cũ nhất đến mới nhất</string>
   <string name="sort_by_creation_desc">Mới nhất đến cũ nhất</string>
-  <string name="sort_by_modification_date">Recently used</string>
+  <string name="sort_by_modification_date">Đã dùng gần đây</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Tất cả</string>
   <string name="item_list_header_pinned_search_results">Đã ghim</string>
@@ -16,26 +16,26 @@
   <plurals name="item_list_header_results">
     <item quantity="other">kết quả</item>
   </plurals>
-  <string name="item_list_header_identities_type">Identities</string>
+  <string name="item_list_header_identities_type">Danh tính</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Xác nhận</string>
   <string name="bottomsheet_cancel_button">Hủy</string>
   <string name="bottomsheet_move_to_trash">Chuyển tới thùng rác</string>
   <string name="bottomsheet_pin_item">Ghim</string>
   <string name="bottomsheet_unpin_item">Bỏ ghim</string>
-  <string name="bottomsheet_view_item_history">View history</string>
-  <string name="bottomsheet_monitor_exclude">Exclude from monitoring</string>
-  <string name="bottomsheet_monitor_include">Include in monitoring</string>
+  <string name="bottomsheet_view_item_history">Xem lịch sử</string>
+  <string name="bottomsheet_monitor_exclude">Bỏ qua theo dõi</string>
+  <string name="bottomsheet_monitor_include">Thêm vào theo dõi</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Mở menu tùy chọn nội dung</string>
   <string name="action_upgrade_now">Nâng cấp ngay</string>
-  <string name="action_not_now">Not now</string>
-  <string name="action_learn_more">Learn more</string>
-  <string name="action_enable">Enable</string>
-  <string name="action_view_details">View details</string>
-  <string name="action_see_all">See all</string>
-  <string name="action_confirm">Confirm</string>
-  <string name="action_continue">Continue</string>
+  <string name="action_not_now">Để sau</string>
+  <string name="action_learn_more">Tìm hiểu thêm</string>
+  <string name="action_enable">Bật</string>
+  <string name="action_view_details">Xem chi tiết</string>
+  <string name="action_see_all">Xem tất cả</string>
+  <string name="action_confirm">Xác nhận</string>
+  <string name="action_continue">Tiếp tục</string>
   <string name="action_retry">Thử lại</string>
   <!-- Empty list -->
   <string name="empty_list_title">Thêm nội dung đầu tiên của bạn</string>
@@ -62,17 +62,17 @@
   <string name="bottom_bar_list_items_icon_content_description">Liệt kê nội dung</string>
   <string name="bottom_bar_add_item_icon_content_description">Thêm nội dung</string>
   <string name="bottom_bar_profile_icon_content_description">Hồ sơ</string>
-  <string name="bottom_bar_security_center_icon_content_description">Security center</string>
+  <string name="bottom_bar_security_center_icon_content_description">Trung tâm Bảo mật</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">Hôm nay</string>
   <string name="most_recent_yesterday">Hôm qua</string>
   <string name="most_recent_this_week">Tuần này</string>
   <string name="most_recent_last_two_weeks">Hai tuần gần đây</string>
-  <string name="most_recent_last_30_days">Last month</string>
+  <string name="most_recent_last_30_days">Tháng trước</string>
   <string name="most_recent_last_60_days">60 ngày gần đây</string>
   <string name="most_recent_last_90_days">90 ngày gần đây</string>
   <string name="most_recent_within_the_last_year">Trong năm qua</string>
-  <string name="most_recent_more_than_1_year">Older than 1 year</string>
+  <string name="most_recent_more_than_1_year">Cũ hơn 1 năm</string>
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">Biểu tượng tìm kiếm</string>
   <!-- Select Vault BottomSheet -->
@@ -110,31 +110,31 @@
     -->
   <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
   <!-- Items -->
-  <string name="item_details_alias_section_alias_title">Alias address</string>
-  <string name="item_details_alias_section_mailboxes_title">Forwarding to</string>
-  <string name="item_details_credit_card_section_cardholder_title">Name on card</string>
-  <string name="item_details_credit_card_section_card_number_title">Card number</string>
+  <string name="item_details_alias_section_alias_title">Địa chỉ bí danh</string>
+  <string name="item_details_alias_section_mailboxes_title">Chuyển tiếp đến</string>
+  <string name="item_details_credit_card_section_cardholder_title">Tên trên thẻ</string>
+  <string name="item_details_credit_card_section_card_number_title">Số thẻ</string>
   <string name="item_details_credit_card_section_expiration_date_title">Hết hạn vào</string>
-  <string name="item_details_credit_card_section_cvv_title">Security code</string>
-  <string name="item_details_credit_card_section_pin_title">PIN code</string>
-  <string name="item_details_login_section_email_title">Email address</string>
-  <string name="item_details_login_section_username_title">Username</string>
+  <string name="item_details_credit_card_section_cvv_title">Mã bảo mật</string>
+  <string name="item_details_credit_card_section_pin_title">Mã PIN</string>
+  <string name="item_details_login_section_email_title">Địa chỉ email</string>
+  <string name="item_details_login_section_username_title">Tên người dùng</string>
   <string name="item_details_login_section_username_or_username_title">Tên đăng nhập hoặc Email</string>
-  <string name="item_details_login_section_password_title">Password</string>
+  <string name="item_details_login_section_password_title">Mật khẩu</string>
   <string name="item_details_login_section_primary_totp_title">Mã bảo mật 2FA (TOTP)</string>
-  <string name="item_details_login_section_websites_title">Websites</string>
+  <string name="item_details_login_section_websites_title">Các trang web</string>
   <string name="item_details_shared_section_note_title">Ghi chú</string>
-  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">The app version is not supported anymore, please update your app.</string>
+  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Phiên bản ứng dụng nay không còn được hỗ trợ, vui lòng cập nhật.</string>
   <!-- Passkeys -->
-  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Passkey</string>
+  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Khóa truy cập</string>
   <!-- Upgrade -->
-  <string name="dialog_upgrade_plan_title">Upgrade plan?</string>
-  <string name="dialog_upgrade_plan_message">This feature is not available for free tier users. If you want to enjoy this along with other cool features, upgrade your plan and give it a try!</string>
-  <string name="dialog_upgrade_plan_action_confirm">Upgrade</string>
-  <string name="dialog_upgrade_plan_action_cancel">Not now</string>
+  <string name="dialog_upgrade_plan_title">Nâng cấp gói người dùng?</string>
+  <string name="dialog_upgrade_plan_message">Tính năng này không khả dụng với người dùng miễn phí. Nếu muốn sử dụng cùng các tính năng hữu ích khác, hãy nâng cấp gói người dùng và trải nghiệm thử.</string>
+  <string name="dialog_upgrade_plan_action_confirm">Nâng cấp</string>
+  <string name="dialog_upgrade_plan_action_cancel">Để sau</string>
   <!-- Words -->
   <string name="email_address">Email address</string>
-  <string name="password">Password</string>
+  <string name="password">Mật khẩu</string>
   <!-- Tooltips -->
-  <string name="tooltip_dismiss_button_content_description">Button to dismiss this tooltip and not show it again</string>
+  <string name="tooltip_dismiss_button_content_description">Nút để tắt đi hướng dẫn và không bao giờ hiện lại nó</string>
 </resources>

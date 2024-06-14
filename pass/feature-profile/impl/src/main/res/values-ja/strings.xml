@@ -13,8 +13,8 @@
   <string name="profile_option_autofill_subtitle">ユーザー名とパスワードを自動的に入力します。</string>
   <string name="profile_error_biometry_failed_to_start">生体認証を開始できませんでした</string>
   <string name="profile_error_biometry_failed_to_authenticate">認証に失敗しました</string>
-  <string name="profile_fingerprint_lock_enabled">Fingerprint lock enabled</string>
-  <string name="profile_fingerprint_lock_disabled">Fingerprint lock disabled</string>
+  <string name="profile_fingerprint_lock_enabled">指紋ロックが有効</string>
+  <string name="profile_fingerprint_lock_disabled">指紋ロックが無効です</string>
   <string name="profile_error_performing_operation">操作の実行エラー</string>
   <string name="profile_app_version_copied_to_clipboard">コピーされたアプリのバージョン</string>
   <string name="feedback_option_reddit">RedditでProtonをチェック</string>
@@ -32,7 +32,7 @@
   <string name="app_lock_config_biometric">生体認証</string>
   <string name="app_lock_config_pin_code">PIN コード</string>
   <string name="app_lock_config_app_lock_time">自動ロック</string>
-  <string name="app_lock_config_password">Password</string>
+  <string name="app_lock_config_password">パスワード</string>
   <string name="app_lock_config_use_system_lock_when_biometric_fails">生体認証に失敗した場合、システムロックを使用する</string>
   <string name="configure_pin_set_pin_code">PINコードの設定</string>
   <string name="configure_pin_unlock_the_app_with_this_code">このコードでアプリのロックを解除する</string>
@@ -50,9 +50,9 @@
   <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Samsung ブラウザがデフォルトのブラウザとして設定されています。このブラウザは、他のパスワードマネージャーによる自動入力をサポートしていません。</string>
   <string name="profile_passkey_support_section_title">パスキー</string>
   <string name="profile_passkey_support_subtitle_supported">パスキーに対応しています</string>
-  <string name="profile_passkey_support_subtitle_not_supported_android_version">Your android version does not support passkeys</string>
-  <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Your device does not support passkeys</string>
-  <string name="profile_passkey_support_subtitle_not_supported_unknown">Could not check support for passkeys</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">あなたのAndroidバージョンはパスキーをサポートしていません</string>
+  <string name="profile_passkey_support_subtitle_not_supported_credential_manager">お使いのデバイスはパスキーをサポートしていません</string>
+  <string name="profile_passkey_support_subtitle_not_supported_unknown">パスキーのサポートを確認できませんでした</string>
   <plurals name="profile_after_days">
     <item quantity="other">%d 日後</item>
   </plurals>
@@ -62,5 +62,5 @@
   <plurals name="profile_after_hours">
     <item quantity="other">%d 時間後</item>
   </plurals>
-  <string name="profile_less_than_a_minute">Less than a minute</string>
+  <string name="profile_less_than_a_minute">一分未満</string>
 </resources>

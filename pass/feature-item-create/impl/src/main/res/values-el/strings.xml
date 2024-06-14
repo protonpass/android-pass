@@ -178,5 +178,5 @@
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Η εφαρμογή πρέπει να ενημερωθεί για να επεξεργαστείτε αυτό το στοιχείο</string>
   <string name="remove_passkey_dialog_title">Αφαίρεση αυτού του κλειδιού πρόσβασης;</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Πρόκειται να καταργήσετε το κλειδί πρόσβασης για το χρήστη \'%1$s\' για \'%2$s\'. Είστε σίγουροι;</string>
-  <string name="add_a_custom_section">Add a custom section</string>
+  <string name="add_a_custom_section">Προσθήκη προσαρμοσμένης ενότητας</string>
 </resources>

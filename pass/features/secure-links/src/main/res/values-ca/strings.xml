@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!--Create screen-->
+  <string name="secure_links_create_title">Comparteix un enllaç segur</string>
+  <string name="secure_links_create_row_expiration_title">L\'enllaç caduca després</string>
+  <string name="secure_links_create_row_expiration_options_one_hour">1 hora</string>
+  <string name="secure_links_create_row_expiration_options_one_day">1 dia</string>
+  <string name="secure_links_create_row_expiration_options_seven_days">7 dies</string>
+  <string name="secure_links_create_row_expiration_options_fourteen_days">14 dies</string>
+  <string name="secure_links_create_row_expiration_options_thirty_days">30 dies</string>
+  <string name="secure_links_create_row_max_views_title">Restringeix el nombre de visualitzacions</string>
+  <string name="secure_links_create_row_max_views_subtitle">Maximum views: %d</string>
+  <string name="secure_links_create_button_generate">Generate secure link</string>
+  <string name="secure_links_create_snackbar_message_error">There was an error generating secure link</string>
+  <!--Overview screen-->
+  <string name="secure_links_overview_widget_expiration_title">Caduca en:</string>
+  <string name="secure_links_overview_widget_max_views_title">Can be viewed:</string>
+  <plurals name="secure_links_overview_widget_max_views_limited">
+    <item quantity="one">%d vegada</item>
+    <item quantity="other">%d vegades</item>
+  </plurals>
+  <string name="secure_links_overview_widget_max_views_unlimited">Sense límit</string>
+  <string name="secure_links_overview_button_copy_link">Copia l\'enllaç</string>
+  <string name="secure_links_overview_button_share_link">Comparteix l\'enllaç</string>
+  <string name="secure_links_overview_button_view_all_links">View all your shared links</string>
+  <string name="secure_links_overview_snackbar_message_link_copied">S\'ha copiat l\'enllaç segur.</string>
+</resources>

@@ -114,6 +114,8 @@
   <string name="share_with_suggestions_title">Suggerimenti</string>
   <string name="share_with_recents_title">Recenti</string>
   <string name="share_with_remove_email_content_description">Rimuovi questo indirizzo email</string>
+  <string name="share_with_secure_link_title">Tramite link sicuro</string>
+  <string name="share_with_secure_link_description">Genera un link sicuro a questo elemento.</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Imposta il livello di accesso per tutti i membri</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Imposta il livello di accesso per %s</string>
   <string name="sharing_edit_permissions_remove_user">Rimuovi l\'utente</string>

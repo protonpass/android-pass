@@ -124,6 +124,8 @@
   <string name="share_with_suggestions_title">Návrhy</string>
   <string name="share_with_recents_title">Nedávne</string>
   <string name="share_with_remove_email_content_description">Odstrániť email</string>
+  <string name="share_with_secure_link_title">Cez bezpečný odkaz</string>
+  <string name="share_with_secure_link_description">Vygenerovať bezpečný odkaz na túto položku.</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Nastavenie úrovne prístupu pre všetkých členov</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Nastaviť úroveň prístupu pre %s</string>
   <string name="sharing_edit_permissions_remove_user">Odstrániť používateľa</string>

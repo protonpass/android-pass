@@ -17,11 +17,11 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="extra_password_error">Error checking extra password</string>
-  <string name="extra_password_enter_extra_password">Enter your extra password</string>
-  <string name="extra_password_label">Extra password</string>
-  <string name="extra_password_conceal_password_action">Conceal extra password</string>
-  <string name="extra_password_reveal_password_action">Reveal extra password</string>
-  <string name="extra_password_error_empty">Extra password cannot be empty</string>
-  <string name="extra_password_error_wrong">Invalid extra password</string>
+  <string name="extra_password_error">S\'ha produït un error en comprovar la contrasenya addicional</string>
+  <string name="extra_password_enter_extra_password">Introdueixi la seva contrasenya addicional</string>
+  <string name="extra_password_label">Contrasenya addicional</string>
+  <string name="extra_password_conceal_password_action">Oculti la contrasenya addicional</string>
+  <string name="extra_password_reveal_password_action">Mostrar la contrasenya addicional</string>
+  <string name="extra_password_error_empty">La contrasenya addicional no pot ser buida</string>
+  <string name="extra_password_error_wrong">La contrasenya addicional no és vàlida.</string>
 </resources>

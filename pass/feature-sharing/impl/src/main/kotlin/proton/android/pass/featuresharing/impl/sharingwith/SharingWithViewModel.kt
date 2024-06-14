@@ -312,7 +312,7 @@ class SharingWithViewModel @Inject constructor(
         } else {
             errorMessageFlow.update { ErrorMessage.EmailNotValid }
         }
-    
+
         return false
     }
 

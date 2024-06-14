@@ -140,12 +140,7 @@ import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.CheckLocalExtraPassword
-
-<<<<<<< HEAD
 import proton.android.pass.data.api.usecases.extrapassword.HasExtraPassword
-
-=======
->>>>>>> ed7f18191 (chore: create secure links list observer use case)
 import proton.android.pass.data.api.usecases.extrapassword.RemoveExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.SetupExtraPassword
 import proton.android.pass.data.api.usecases.items.GetItemCategory

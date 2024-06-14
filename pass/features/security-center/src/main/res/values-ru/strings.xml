@@ -40,7 +40,7 @@
   <string name="security_center_home_section_password_health">Password Health</string>
   <!-- Sentinel bottom sheet -->
   <string name="security_center_sentinel_title">Proton Sentinel</string>
-  <string name="security_center_sentinel_subtitle">Proton Sentinel is an advanced account protection program powered by sophisticated AI systems and specialists working around the clock to protect you from bad actors and security threats.</string>
+  <string name="security_center_sentinel_subtitle">Proton Sentinel это продвинутая программа для защиты аккаунта, которая защищает вас от злоумышленников и угроз безопасности при помощи мощных ИИ и круглосуточно работающих специалистов.</string>
   <string name="security_center_sentinel_button_enable">Enable Proton Sentinel</string>
   <string name="security_center_sentinel_button_disable">Отключить Proton Sentinel</string>
   <string name="security_center_sentinel_snackbar_message_enable_canceled">Proton Sentinel protection activation has been canceled</string>
@@ -58,9 +58,9 @@
   <string name="security_center_missing_tfa_top_bar_title">Неактивная двухфакторная аутентификация</string>
   <string name="security_center_missing_tfa_top_bar_subtitle">Для дополнительной безопасности установите двухфакторную аутентификацию для следующих аккаунтов.</string>
   <!-- Excluded items screen -->
-  <string name="security_center_excluded_items_top_bar_title">Excluded items</string>
+  <string name="security_center_excluded_items_top_bar_title">Исключенные элементы</string>
   <!-- Dark web monitor -->
-  <string name="security_center_dark_web_monitor_top_bar_title">Dark Web Monitoring</string>
+  <string name="security_center_dark_web_monitor_top_bar_title">Мониторинг Темной паутины</string>
   <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Last check: %s</string>
   <string name="security_center_dark_web_monitor_custom_emails_title">Пользовательские адреса электронной почты</string>
   <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">Not verified</string>
@@ -80,7 +80,7 @@
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Error loading custom email addresses</string>
   <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Could not get email addresses</string>
-  <string name="security_center_dark_web_monitor_custom_email_option_verify">Verify</string>
+  <string name="security_center_dark_web_monitor_custom_email_option_verify">Подтвердить</string>
   <string name="security_center_dark_web_monitor_custom_email_option_remove">Удалить</string>
   <string name="security_center_dark_web_monitor_latest_breach_on">Latest breach on %s</string>
   <plurals name="security_center_dark_web_monitor_found_in_breaches">
@@ -121,7 +121,7 @@
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Повысьте узнаваемость бренда вашей организации и создайте более целостный образ в Интернете для ваших пользователей.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Breaches detected for</string>
-  <string name="security_center_verify_report_title_none">No breaches detected for</string>
+  <string name="security_center_verify_report_title_none">Утечки не обнаружены для</string>
   <!-- Email breach report -->
   <string name="security_center_email_report_used_in_header">Used in</string>
   <string name="security_center_email_report_breaches_header">Утечки</string>
@@ -132,7 +132,7 @@
   <string name="security_center_email_report_snackbar_get_breaches_error">Не удалось загрузить утечки</string>
   <string name="security_center_email_report_options_menu">Меню параметров отчета об утечке</string>
   <!-- Breach report detail-->
-  <string name="security_center_report_detail_your_exposed_information">Your exposed information</string>
+  <string name="security_center_report_detail_your_exposed_information">Ваша раскрытая информация</string>
   <string name="security_center_report_detail_subtitle">Your info was in a data breach and found on __DATE__</string>
   <string name="security_center_report_detail_details">Информация</string>
   <string name="security_center_report_detail_email_address">Адрес электронной почты</string>
@@ -143,7 +143,7 @@
   <string name="security_center_report_detail_snackbar_error">Не удалось загрузить информацию об утечке</string>
   <string name="security_center_report_detail_excluded_from_monitoring">Исключено из мониторинга</string>
   <string name="security_center_report_resolve_confirmation_dialog_title">Устраненить все утечки?</string>
-  <string name="security_center_report_resolve_confirmation_dialog_message">All current breaches will be marked as resolved. In case of future data breaches, you will be notified.</string>
+  <string name="security_center_report_resolve_confirmation_dialog_message">Все текущие утечки будут отмечены как устраненные. В случае будущих утечек данных вы будете уведомлены.</string>
   <!-- Proton list -->
   <string name="security_center_proton_list_top_bar_title">Адреса Proton</string>
   <string name="security_center_proton_list_no_breaches_detected">Утечки не обнаружены</string>

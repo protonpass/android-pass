@@ -154,12 +154,12 @@
   <string name="security_center_proton_list_not_monitored">Не назіраецца.</string>
   <!-- Address Bottomsheet options -->
   <string name="security_center_address_bottomsheet_disable_monitoring">Прыпыніць назіранне</string>
-  <string name="security_center_address_bottomsheet_enable_monitoring">Аднавіць назіранне</string>
+  <string name="security_center_address_bottomsheet_enable_monitoring">Узнавіць назіранне</string>
   <string name="security_center_address_bottomsheet_remove_custom_email">Выдаліць карыстальніцкую электронную пошту</string>
   <string name="security_center_address_bottomsheet_snackbar_message_enable_error">Адбылася памылка падчас прыпынення назірання</string>
   <string name="security_center_address_bottomsheet_snackbar_message_disable_error">Адбылася памылка падчас аднаўлення назірання</string>
   <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_error">Немагчыма выдаліць карыстальніцкую электронную пошту</string>
-  <string name="security_center_address_bottomsheet_snackbar_message_enable_success">Назіранне паспяхова адноўлена</string>
+  <string name="security_center_address_bottomsheet_snackbar_message_enable_success">Назіранне паспяхова ўзноўлена</string>
   <string name="security_center_address_bottomsheet_snackbar_message_disable_success">Назіранне паспяхова прыпынена</string>
   <string name="security_center_address_bottomsheet_snackbar_message_remove_custom_email_success">Карыстальніцкія электронная пошта выдалена</string>
   <!-- Alias list -->

@@ -19,7 +19,7 @@
     <item quantity="many">результатов</item>
     <item quantity="other">результатов</item>
   </plurals>
-  <string name="item_list_header_identities_type">Identities</string>
+  <string name="item_list_header_identities_type">Личные данные</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">Подтвердить</string>
   <string name="bottomsheet_cancel_button">Отменить</string>
@@ -117,7 +117,7 @@
   <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">Адрес псевдонима</string>
-  <string name="item_details_alias_section_mailboxes_title">Forwarding to</string>
+  <string name="item_details_alias_section_mailboxes_title">Пересылка на</string>
   <string name="item_details_credit_card_section_cardholder_title">Имя на карте</string>
   <string name="item_details_credit_card_section_card_number_title">Номер карты</string>
   <string name="item_details_credit_card_section_expiration_date_title">Срок действия</string>
@@ -132,7 +132,7 @@
   <string name="item_details_shared_section_note_title">Примечания</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Версия приложения больше не поддерживается, пожалуйста, обновите приложение.</string>
   <!-- Passkeys -->
-  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Passkey</string>
+  <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Ключ доступа</string>
   <!-- Upgrade -->
   <string name="dialog_upgrade_plan_title">Улучшить план?</string>
   <string name="dialog_upgrade_plan_message">This feature is not available for free tier users. If you want to enjoy this along with other cool features, upgrade your plan and give it a try!</string>

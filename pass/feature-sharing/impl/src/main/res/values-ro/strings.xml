@@ -119,6 +119,8 @@
   <string name="share_with_suggestions_title">Sugestii</string>
   <string name="share_with_recents_title">Recente</string>
   <string name="share_with_remove_email_content_description">Eliminare e-mail</string>
+  <string name="share_with_secure_link_title">Prin legătură web securizată</string>
+  <string name="share_with_secure_link_description">Generează o legătură web sigură pentru acest articol.</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Setare nivel de acces pentru toți membrii</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Setare nivel de acces pentru %s</string>
   <string name="sharing_edit_permissions_remove_user">Eliminare utilizator</string>

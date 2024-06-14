@@ -37,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
@@ -151,7 +152,9 @@ private fun SecureLinksListGridCellInfo(
         Text(
             text = title,
             style = ProtonTheme.typography.body2Medium,
-            color = PassTheme.colors.textNorm
+            color = PassTheme.colors.textNorm,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
         )
 
         Text(

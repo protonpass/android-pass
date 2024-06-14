@@ -84,7 +84,7 @@ internal fun ExpandableEmailUsernameInput(
                 onFocusChange(LoginField.Email, isFocused)
             },
             leadingIcon = {
-                if (isExpanded.value || !canUpdateUsername) {
+                if (isExpanded.value) {
                     Icon(
                         painter = painterResource(CoreR.drawable.ic_proton_envelope),
                         contentDescription = null,
@@ -155,7 +155,7 @@ internal fun ExpandableEmailUsernameInput(
 
             UsernameInput(
                 value = username,
-                canUpdateUsername = canUpdateUsername,
+                canUpdateUsername = true,
                 isEditAllowed = isEditAllowed,
                 onChange = { newUsername ->
                     onEvent(LoginContentEvent.OnUsernameChanged(newUsername))

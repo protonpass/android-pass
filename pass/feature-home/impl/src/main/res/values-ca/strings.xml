@@ -126,7 +126,7 @@
   <string name="home_snackbar_item_pinned_success">S\'ha ancorat l\'element.</string>
   <string name="home_snackbar_item_pinned_error">S\'ha produït un error en ancorar aquest element.</string>
   <string name="home_snackbar_item_unpinned_success">S\'ha ancorat l\'element.</string>
-  <string name="home_snackbar_item_unpinned_error">There was an error unpinning this item</string>
+  <string name="home_snackbar_item_unpinned_error">S\'ha produït un error en desancorar aquest element.</string>
   <string name="home_snackbar_items_pinned_success">S\'ha ancorat l\'element.</string>
   <string name="home_snackbar_items_pinned_partial_success">S\'ha produït un error en fixar alguns elements</string>
   <string name="home_snackbar_items_pinned_error">S\'ha produït un error en ancorar els elements.</string>

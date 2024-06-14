@@ -18,10 +18,10 @@
   -->
 <resources>
   <!-- Home screen -->
-  <string name="security_center_home_top_bar_title">Pass-ის მონიტორი</string>
+  <string name="security_center_home_top_bar_title">Pass Monitor</string>
   <string name="security_center_home_dark_web_monitoring_title">Dark Web Monitoring</string>
   <string name="security_center_home_widget_breaches_title">აღმოჩენილია გაჟონვა</string>
-  <string name="security_center_home_widget_breaches_subtitle">Your email address was leaked in at least 1 data breach.</string>
+  <string name="security_center_home_widget_breaches_subtitle">თქვენი ელფოსტის მისამართი, სულ ცოტა, 1 მონაცემების გაჟონვაში გამოჩნდა.</string>
   <string name="security_center_home_widget_no_breaches_subtitle">მიიღეთ შეტყობინება, თუ თქვენი ელფოსტა, პაროლი ან რამე თქვენ შესახებ გაიჟონება.</string>
   <string name="security_center_home_row_no_data_breaches_subtitle">გაჟონვები აღმოჩენილი არაა</string>
   <string name="security_center_home_row_data_breaches_title">Dark Web-ის განგაში</string>
@@ -45,7 +45,7 @@
   <string name="security_center_sentinel_button_disable">Proton Sentinel-ის გათიშვა</string>
   <string name="security_center_sentinel_snackbar_message_enable_canceled">Proton Sentinel-ით დაცვის აქტივაცია გაუქმდა</string>
   <string name="security_center_sentinel_snackbar_message_enable_error">შეცდომა Proton Sentinel-ის დაცვის ჩართვისას. თავიდან სცადეთ.</string>
-  <string name="security_center_sentinel_snackbar_message_disable_canceled">Proton Sentinel protection deactivation has been canceled</string>
+  <string name="security_center_sentinel_snackbar_message_disable_canceled">Proton Sentinel-ით დაცვის დეაქტივაცია გაუქმდა</string>
   <string name="security_center_sentinel_snackbar_message_disable_error">შეცდომა Proton Sentinel-ის დაცვის გამორთვისას. თავიდან სცადეთ.</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">სუსტი პაროლები</string>
@@ -110,9 +110,9 @@
   <string name="security_center_verify_email_code_resend_body">Please check in your Spam for an email called “Please confirm your email address for Proton Pass“</string>
   <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">თუ ასეთ ელფოსტას ვერ პოულობთ, შეგიძლიათ </string>
   <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">ახალი კოდის გამოთხოვა.</string>
-  <string name="security_center_verify_email_snackbar_message_resend_code_success">A new verification has been sent, please check your inbox.</string>
+  <string name="security_center_verify_email_snackbar_message_resend_code_success">გამოგზავნილია ახალი მოსაწვევი. შეამოწმეთ თქვენი საფოსტო ყუთი.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">There was an error sending the verification code. Please try again later.</string>
-  <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Too many invalid verifications. Removing custom email.</string>
+  <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">მეტისმეტად ბევრი არასწორი გადამოწმება. მორგებული ელფოსტა წაიშლება.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">აღმოჩენილია გაჟონვები ვისთვის</string>
   <string name="security_center_verify_report_title_none">გაჟონვები აღმოჩენილი არაა ელფოსტისთვის</string>
@@ -127,7 +127,7 @@
   <string name="security_center_email_report_options_menu">გაჟონვის ანგარიშის მორგების მენიუ</string>
   <!-- Breach report detail-->
   <string name="security_center_report_detail_your_exposed_information">თქვენი გაჟონილი ინფორმაცია</string>
-  <string name="security_center_report_detail_subtitle">Your info was in a data breach and found on __DATE__</string>
+  <string name="security_center_report_detail_subtitle">თქვენი ინფორმაცია აღმოჩენილია გაჟონვაში.პოვნის დროა __DATE__</string>
   <string name="security_center_report_detail_details">დეტალები</string>
   <string name="security_center_report_detail_email_address">ელფოსტის მისამართი</string>
   <string name="security_center_report_detail_password">პაროლი</string>

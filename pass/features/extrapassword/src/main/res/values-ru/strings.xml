@@ -17,11 +17,11 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="extra_password_error">Error checking extra password</string>
-  <string name="extra_password_enter_extra_password">Enter your extra password</string>
-  <string name="extra_password_label">Extra password</string>
-  <string name="extra_password_conceal_password_action">Conceal extra password</string>
-  <string name="extra_password_reveal_password_action">Reveal extra password</string>
-  <string name="extra_password_error_empty">Extra password cannot be empty</string>
-  <string name="extra_password_error_wrong">Invalid extra password</string>
+  <string name="extra_password_error">Ошибка проверки дополнительного пароля</string>
+  <string name="extra_password_enter_extra_password">Введите дополнительный пароль</string>
+  <string name="extra_password_label">Дополнительный пароль</string>
+  <string name="extra_password_conceal_password_action">Отменить дополнительный пароль</string>
+  <string name="extra_password_reveal_password_action">Показать дополнительный пароль</string>
+  <string name="extra_password_error_empty">Дополнительный пароль не может быть пустым</string>
+  <string name="extra_password_error_wrong">Недействительный дополнительный пароль</string>
 </resources>

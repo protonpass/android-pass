@@ -157,7 +157,7 @@
   <string name="create_identity_item_creation_error">Не атрымалася стварыць ідэнтычнасць:</string>
   <string name="create_identity_item_creation_success">Ідэнтычнасць створана</string>
   <!--  Common create items  -->
-  <string name="title_create">Стварэнне</string>
+  <string name="title_create">Стварыць</string>
   <string name="changes_saved">Змены захаваны</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">Сакрэтны ключ 2ФА (TOTP)</string>

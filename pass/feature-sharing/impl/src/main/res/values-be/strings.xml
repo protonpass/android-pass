@@ -124,6 +124,8 @@
   <string name="share_with_suggestions_title">Прапановы</string>
   <string name="share_with_recents_title">Нядаўнія</string>
   <string name="share_with_remove_email_content_description">Выдаліць электронную пошту</string>
+  <string name="share_with_secure_link_title">Праз бяспечную спасылку</string>
+  <string name="share_with_secure_link_description">Згенерыраваць бяспечную спасылку для гэтага элемента.</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Прызначэнне ўзроўню доступу для ўсіх удзельнікаў</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Прызначыць узровень доступу для %s</string>
   <string name="sharing_edit_permissions_remove_user">Выдаліць карыстальніка</string>

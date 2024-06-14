@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!--Create screen-->
+  <string name="secure_links_create_title">Partager un lien sécurisé</string>
+  <string name="secure_links_create_row_expiration_title">Le lien arrive à expiration après</string>
+  <string name="secure_links_create_row_expiration_options_one_hour">1 heure</string>
+  <string name="secure_links_create_row_expiration_options_one_day">1 jour</string>
+  <string name="secure_links_create_row_expiration_options_seven_days">7 jours</string>
+  <string name="secure_links_create_row_expiration_options_fourteen_days">14 jours</string>
+  <string name="secure_links_create_row_expiration_options_thirty_days">30 jours</string>
+  <string name="secure_links_create_row_max_views_title">Limiter le nombre de vues</string>
+  <string name="secure_links_create_row_max_views_subtitle">Nombre maximal d\'affichages : %d</string>
+  <string name="secure_links_create_button_generate">Générer un lien sécurisé</string>
+  <string name="secure_links_create_snackbar_message_error">Une erreur s\'est produite lors de la génération du lien sécurisé.</string>
+  <!--Overview screen-->
+  <string name="secure_links_overview_widget_expiration_title">Expire dans :</string>
+  <string name="secure_links_overview_widget_max_views_title">Peut être vu :</string>
+  <plurals name="secure_links_overview_widget_max_views_limited">
+    <item quantity="one">%d fois</item>
+    <item quantity="other">%d fois</item>
+  </plurals>
+  <string name="secure_links_overview_widget_max_views_unlimited">Illimité</string>
+  <string name="secure_links_overview_button_copy_link">Copier le lien</string>
+  <string name="secure_links_overview_button_share_link">Partager le lien</string>
+  <string name="secure_links_overview_button_view_all_links">Afficher tous vos liens partagés</string>
+  <string name="secure_links_overview_snackbar_message_link_copied">Le lien sécurisé a été copié.</string>
+</resources>

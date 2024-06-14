@@ -166,7 +166,7 @@
   <string name="security_center_alias_list_options_menu">Alias screen options menu</string>
   <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">Datasäkerhet</string>
-  <string name="dark_web_help_dialog_subtitle">Proton never shares your information with third parties. All data comes from searches for the appearance of Proton domains on the dark web.</string>
+  <string name="dark_web_help_dialog_subtitle">Proton delar aldrig din information med tredje part. All data kommer från sökningar efter förekomsten av Proton-domäner på mörka webben.</string>
   <!-- Cannot add custom emails -->
   <string name="dark_web_cannot_add_custom_emails_dialog_title">Kan inte lägga till anpassad e-post</string>
   <string name="dark_web_cannot_add_custom_emails_dialog_subtitle">Du har nått gränsen för anpassad e-post.</string>

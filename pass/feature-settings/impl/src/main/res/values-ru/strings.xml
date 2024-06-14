@@ -5,14 +5,14 @@
   <string name="settings_autofill_preference_title">Автозаполнение</string>
   <string name="settings_autofill_preference_description">Для быстрого и лёгкого входа разрешите Proton Pass заполнять ваши имена пользователей и пароли.</string>
   <string name="settings_authentication_section_title">Аутентификация</string>
-  <string name="settings_authentication_preference_title">Fingerprint lock</string>
+  <string name="settings_authentication_preference_title">Блокировка отпечатком пальца</string>
   <string name="settings_authentication_preference_description_enabled">South Carolina</string>
   <string name="settings_authentication_preference_description_no_fingerprint">Вы не можете требовать отпечатка для взаимодействия с приложением, поскольку на устройстве не зарегистрировано отпечатков.</string>
   <string name="settings_appearance_preference_title">Тема</string>
   <string name="settings_appearance_preference_subtitle_match_system" comment="Subtitle for the appearance preference when the theme is set to match the system theme">Как в системе</string>
   <string name="settings_appearance_preference_subtitle_light">Светлая тема</string>
   <string name="settings_appearance_preference_subtitle_dark">Тёмная тема</string>
-  <string name="settings_fingerprint_lock_enabled">Fingerprint lock enabled</string>
+  <string name="settings_fingerprint_lock_enabled">Блокировка отпечатком включена</string>
   <string name="settings_error_performing_operation">Ошибка выполнения операции</string>
   <string name="settings_option_clipboard">Буфер обмена</string>
   <string name="settings_application_section_title">Приложение</string>

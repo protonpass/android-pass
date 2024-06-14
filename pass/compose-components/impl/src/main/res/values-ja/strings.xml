@@ -5,7 +5,7 @@
   <string name="sort_by_title_desc">タイトル (Z-A)</string>
   <string name="sort_by_creation_asc">古いものから新しいものへ</string>
   <string name="sort_by_creation_desc">新しいものから古いものへ</string>
-  <string name="sort_by_modification_date">Recently used</string>
+  <string name="sort_by_modification_date">最近使用された</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">すべて</string>
   <string name="item_list_header_pinned_search_results">ピン留めしました</string>
@@ -16,7 +16,7 @@
   <plurals name="item_list_header_results">
     <item quantity="other">結果</item>
   </plurals>
-  <string name="item_list_header_identities_type">Identities</string>
+  <string name="item_list_header_identities_type">ユーザー情報</string>
   <!-- Bottomsheets -->
   <string name="bottomsheet_confirm_button">確認</string>
   <string name="bottomsheet_cancel_button">キャンセル</string>
@@ -24,19 +24,19 @@
   <string name="bottomsheet_pin_item">ピン留めする</string>
   <string name="bottomsheet_unpin_item">ピン留めを解除</string>
   <string name="bottomsheet_view_item_history">履歴を表示</string>
-  <string name="bottomsheet_monitor_exclude">Exclude from monitoring</string>
-  <string name="bottomsheet_monitor_include">Include in monitoring</string>
+  <string name="bottomsheet_monitor_exclude">監視から除外</string>
+  <string name="bottomsheet_monitor_include">監視に含める</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">アイテムアクションメニューを開く</string>
   <string name="action_upgrade_now">今すぐアップグレード</string>
   <string name="action_not_now">今ではない</string>
   <string name="action_learn_more">詳細</string>
-  <string name="action_enable">Enable</string>
+  <string name="action_enable">有効</string>
   <string name="action_view_details">詳細の表示</string>
-  <string name="action_see_all">See all</string>
-  <string name="action_confirm">Confirm</string>
-  <string name="action_continue">Continue</string>
-  <string name="action_retry">Retry</string>
+  <string name="action_see_all">すべてを見る</string>
+  <string name="action_confirm">確認</string>
+  <string name="action_continue">続行</string>
+  <string name="action_retry">再試行</string>
   <!-- Empty list -->
   <string name="empty_list_title">最初の項目を追加</string>
   <string name="empty_search_results_title">結果が見つかりません</string>
@@ -72,7 +72,7 @@
   <string name="most_recent_last_60_days">過去 60 日間</string>
   <string name="most_recent_last_90_days">過去 90 日間</string>
   <string name="most_recent_within_the_last_year">過去 1 年以内</string>
-  <string name="most_recent_more_than_1_year">Older than 1 year</string>
+  <string name="most_recent_more_than_1_year">1年以上前</string>
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">検索アイコン</string>
   <!-- Select Vault BottomSheet -->
@@ -124,17 +124,17 @@
   <string name="item_details_login_section_primary_totp_title">2 要素認証トークン (TOTP)</string>
   <string name="item_details_login_section_websites_title">ウェブサイト</string>
   <string name="item_details_shared_section_note_title">メモ</string>
-  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">The app version is not supported anymore, please update your app.</string>
+  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">アプリのバージョンはサポートされなくなりました。アプリを更新してください。</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">パスキー</string>
   <!-- Upgrade -->
-  <string name="dialog_upgrade_plan_title">Upgrade plan?</string>
-  <string name="dialog_upgrade_plan_message">This feature is not available for free tier users. If you want to enjoy this along with other cool features, upgrade your plan and give it a try!</string>
+  <string name="dialog_upgrade_plan_title">プランをダウングレードですか?</string>
+  <string name="dialog_upgrade_plan_message">この機能は無料プランのユーザーにはご利用いただけません。他の便利な機能とともにこの機能を楽しみたい場合は、プランをアップグレードしてお試しください。</string>
   <string name="dialog_upgrade_plan_action_confirm">アップグレード</string>
   <string name="dialog_upgrade_plan_action_cancel">後で</string>
   <!-- Words -->
   <string name="email_address">メールアドレス</string>
   <string name="password">パスワード</string>
   <!-- Tooltips -->
-  <string name="tooltip_dismiss_button_content_description">Button to dismiss this tooltip and not show it again</string>
+  <string name="tooltip_dismiss_button_content_description">このツールヒントを閉じて再度表示しないようにするボタン</string>
 </resources>

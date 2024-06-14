@@ -18,7 +18,7 @@
   -->
 <resources>
   <!-- Home screen -->
-  <string name="security_center_home_top_bar_title">Pass izleyicisi</string>
+  <string name="security_center_home_top_bar_title">Pass Monitor</string>
   <string name="security_center_home_dark_web_monitoring_title">Karanlık ağ izleme</string>
   <string name="security_center_home_widget_breaches_title">Veriler ele geçirilmiş</string>
   <string name="security_center_home_widget_breaches_subtitle">E-posta adresiniz en az 1 verilerin ele geçirilmesi olayında açığa çıkmış.</string>

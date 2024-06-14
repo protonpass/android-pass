@@ -124,6 +124,8 @@
   <string name="share_with_suggestions_title">Sugestie</string>
   <string name="share_with_recents_title">Ostatnie</string>
   <string name="share_with_remove_email_content_description">Usuń adres</string>
+  <string name="share_with_secure_link_title">przez link</string>
+  <string name="share_with_secure_link_description">Utwórz link do elementu.</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Ustaw uprawnienia dla wszystkich użytkowników</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Ustaw uprawnienia dla użytkownika %s</string>
   <string name="sharing_edit_permissions_remove_user">Usuń użytkownika</string>

@@ -127,7 +127,7 @@ private fun SecureLinksListGridCellIcon(
         text = itemTitle,
         canLoadExternalImages = canLoadExternalImages,
         website = itemWebsite,
-        packageName = itemPackageName,
+        packageName = itemPackageName
     )
 
     ItemCategory.Alias,
@@ -186,10 +186,7 @@ private fun SecureLinksListGridCellInfo(
 
 
 @Composable
-private fun BoxScope.SecureLinksGridCellMenu(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit
-) {
+private fun BoxScope.SecureLinksGridCellMenu(modifier: Modifier = Modifier, onClick: () -> Unit) {
     IconButton(
         modifier = modifier.align(alignment = Alignment.TopEnd),
         onClick = onClick
@@ -203,9 +200,7 @@ private fun BoxScope.SecureLinksGridCellMenu(
 }
 
 @[Preview Composable]
-internal fun SecureLinksListGridCellPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+internal fun SecureLinksListGridCellPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             SecureLinksListGridCell(

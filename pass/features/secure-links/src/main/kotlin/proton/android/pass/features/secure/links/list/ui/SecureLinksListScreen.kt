@@ -41,7 +41,7 @@ fun SecureLinksListScreen(
                 }
 
                 SecureLinksListUiEvent.OnCellClicked -> {
-                   // Will be implemented in IDTEAM-3453
+                    // Will be implemented in IDTEAM-3453
                 }
 
                 SecureLinksListUiEvent.OnCellOptionsClicked -> {

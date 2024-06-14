@@ -48,7 +48,7 @@ internal fun SecureLinksListContent(
                 title = stringResource(id = R.string.secure_links_list_title),
                 onUpClick = { onUiEvent(SecureLinksListUiEvent.OnBackClicked) }
             )
-        },
+        }
     ) { innerPadding ->
         when (isLoadingState) {
             IsLoadingState.Loading -> {

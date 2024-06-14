@@ -49,6 +49,7 @@ internal fun EmailInput(
             bottom = Spacing.medium
         ),
         value = email,
+        editable = isEditable,
         isError = isInvalid,
         errorMessage = stringResource(id = R.string.field_email_error),
         onChange = onEmailChange,

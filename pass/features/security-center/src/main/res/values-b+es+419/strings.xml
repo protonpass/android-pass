@@ -18,7 +18,7 @@
   -->
 <resources>
   <!-- Home screen -->
-  <string name="security_center_home_top_bar_title">Monitor de Pass</string>
+  <string name="security_center_home_top_bar_title">Pass Monitor</string>
   <string name="security_center_home_dark_web_monitoring_title">Monitoreo de la Dark Web</string>
   <string name="security_center_home_widget_breaches_title">Vulneración detectada</string>
   <string name="security_center_home_widget_breaches_subtitle">Las direcciones de correo fueron filtradas en al menos una filtración de datos.</string>

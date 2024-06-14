@@ -38,7 +38,7 @@
   <string name="create_login_item_creation_error">No s\'ha pogut crear l\'inici de sessió</string>
   <string name="create_login_item_update_error">No s\'ha pogut actualitzar l\'inici de sessió</string>
   <string name="create_login_init_error">Problema en recuperar els detalls de l\'inici de sessió</string>
-  <string name="create_login_invalid_totp">El contingut 2FA no és vàlid</string>
+  <string name="create_login_invalid_totp">El contingut A2F no és vàlid</string>
   <string name="login_created">S\'ha creat l\'inici de sessió</string>
   <string name="bottomsheet_modify_alias_title">Modifica l\'àlies</string>
   <string name="bottomsheet_custom_field_type_text">Text</string>
@@ -48,7 +48,7 @@
   <string name="bottomsheet_custom_field_option_edit">Edita el nom</string>
   <string name="bottomsheet_custom_field_option_remove">Esborra el camp</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Esborra el camp personalitzat</string>
-  <string name="bottomsheet_custom_section_option_remove">Elimina la secció</string>
+  <string name="bottomsheet_custom_section_option_remove">Esborri la secció</string>
   <string name="create_login_add_custom_field_button">Afegeix un altre camp</string>
   <string name="custom_field_hidden_placeholder">Afegeix text ocult</string>
   <string name="custom_field_hidden_icon_content_description">Icona de camp personalitzat amagat</string>
@@ -56,7 +56,7 @@
   <string name="custom_field_dialog_title">Nom del camp personalitzat</string>
   <string name="custom_field_dialog_body">Give your custom field a name</string>
   <string name="custom_field_dialog_placeholder">Per exemple, l\'ID d\'usuari, el PIN</string>
-  <string name="custom_section_dialog_title">Enter a section title</string>
+  <string name="custom_section_dialog_title">Introdueixi un títol de secció</string>
   <string name="custom_section_dialog_placeholder">Títol</string>
   <string name="custom_field_options_content_description">Opcions del camp personalitzat</string>
   <!-- Create Note -->
@@ -178,5 +178,5 @@
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">The app needs to be updated to edit this item</string>
   <string name="remove_passkey_dialog_title">Voleu suprimir aquesta clau d\'accés?</string>
   <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">You are about to remove the passkey for user \'%1$s\' for \'%2$s\'. Are you sure?</string>
-  <string name="add_a_custom_section">Add a custom section</string>
+  <string name="add_a_custom_section">Afegeixi una secció personalitzada</string>
 </resources>

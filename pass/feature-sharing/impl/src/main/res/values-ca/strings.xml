@@ -109,16 +109,18 @@
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Mou a una caixa forta compartida</string>
   <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Crea una caixa forta per compartir</string>
   <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">This item will be moved to the new vault.</string>
-  <string name="sharing_from_item_vault_limit_reached_upgrade">Upgrade to create more vaults</string>
+  <string name="sharing_from_item_vault_limit_reached_upgrade">Milloreu per crear més caixes fortes</string>
   <string name="sharing_from_item_vault_limit_reached">Heu arribat al límit de caixes fortes.</string>
   <string name="share_with_suggestions_title">Suggeriments</string>
   <string name="share_with_recents_title">Recents</string>
   <string name="share_with_remove_email_content_description">Esborra el correu electrònic</string>
+  <string name="share_with_secure_link_title">Mitjançant un enllaç segur</string>
+  <string name="share_with_secure_link_description">Generar un enllaç segur a aquest element.</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Estableix el nivell d`accés per a tots els membres</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Defineix el nivell d\'accés per %s</string>
   <string name="sharing_edit_permissions_remove_user">Esborra l\'usuari</string>
   <string name="sharing_error_dialog_title">Error desconegut</string>
   <string name="sharing_error_dialog_message">There was an error sending an invite for this vault. If the issue persists, please contact customer support service.</string>
-  <string name="sharing_with_no_addresses_can_be_invited">No addresses can be invited</string>
-  <string name="sharing_with_some_addresses_cannot_be_invited">Some addresses cannot be invited</string>
+  <string name="sharing_with_no_addresses_can_be_invited">No es poden convidar adreces.</string>
+  <string name="sharing_with_some_addresses_cannot_be_invited">Algunes adreces no es poden convidar.</string>
 </resources>

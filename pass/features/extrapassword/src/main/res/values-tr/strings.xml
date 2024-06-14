@@ -17,11 +17,11 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="extra_password_error">Error checking extra password</string>
-  <string name="extra_password_enter_extra_password">Enter your extra password</string>
-  <string name="extra_password_label">Extra password</string>
-  <string name="extra_password_conceal_password_action">Conceal extra password</string>
-  <string name="extra_password_reveal_password_action">Reveal extra password</string>
-  <string name="extra_password_error_empty">Extra password cannot be empty</string>
-  <string name="extra_password_error_wrong">Invalid extra password</string>
+  <string name="extra_password_error">Ek parola denetlenirken sorun çıktı</string>
+  <string name="extra_password_enter_extra_password">Ek parolanızı yazın</string>
+  <string name="extra_password_label">Ek parola</string>
+  <string name="extra_password_conceal_password_action">Ek parolayı gizle</string>
+  <string name="extra_password_reveal_password_action">Ek parolayı görüntüle</string>
+  <string name="extra_password_error_empty">Ek parola boş olamaz</string>
+  <string name="extra_password_error_wrong">Ek parola geçersiz</string>
 </resources>

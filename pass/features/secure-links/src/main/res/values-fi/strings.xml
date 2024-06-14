@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!--Create screen-->
+  <string name="secure_links_create_title">Jaa turvallinen linkki</string>
+  <string name="secure_links_create_row_expiration_title">Linkki erääntyy</string>
+  <string name="secure_links_create_row_expiration_options_one_hour">Yksi tunti</string>
+  <string name="secure_links_create_row_expiration_options_one_day">Yksi päivä</string>
+  <string name="secure_links_create_row_expiration_options_seven_days">7 päivää</string>
+  <string name="secure_links_create_row_expiration_options_fourteen_days">14 päivää</string>
+  <string name="secure_links_create_row_expiration_options_thirty_days">30 päivää</string>
+  <string name="secure_links_create_row_max_views_title">Rajoita katselujen määrää</string>
+  <string name="secure_links_create_row_max_views_subtitle">Katselujen enimmäismäärä: %d</string>
+  <string name="secure_links_create_button_generate">Luo turvallinen linkki</string>
+  <string name="secure_links_create_snackbar_message_error">Turvallisen linkin luomisessa tapahtui virhe</string>
+  <!--Overview screen-->
+  <string name="secure_links_overview_widget_expiration_title">Erääntyy:</string>
+  <string name="secure_links_overview_widget_max_views_title">Voi katsella:</string>
+  <plurals name="secure_links_overview_widget_max_views_limited">
+    <item quantity="one">%d kerran</item>
+    <item quantity="other">%d kertaa</item>
+  </plurals>
+  <string name="secure_links_overview_widget_max_views_unlimited">Unlimited</string>
+  <string name="secure_links_overview_button_copy_link">Kopioi linkki</string>
+  <string name="secure_links_overview_button_share_link">Jaa linkki</string>
+  <string name="secure_links_overview_button_view_all_links">Näytä kaikki jaetut linkkisi</string>
+  <string name="secure_links_overview_snackbar_message_link_copied">Turvallinen linkki on kopioitu</string>
+</resources>

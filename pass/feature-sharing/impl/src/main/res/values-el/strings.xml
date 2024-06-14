@@ -114,6 +114,8 @@
   <string name="share_with_suggestions_title">Προτάσεις</string>
   <string name="share_with_recents_title">Πρόσφατες</string>
   <string name="share_with_remove_email_content_description">Αφαίρεση email</string>
+  <string name="share_with_secure_link_title">Μέσω ασφαλούς συνδέσμου</string>
+  <string name="share_with_secure_link_description">Δημιουργία ασφαλούς σύνδεσης προς αυτό το στοιχείο.</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Ορισμός επιπέδου πρόσβασης για όλα τα μέλη</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Ορισμός επιπέδου πρόσβασης για %s</string>
   <string name="sharing_edit_permissions_remove_user">Αφαίρεση χρήστη</string>

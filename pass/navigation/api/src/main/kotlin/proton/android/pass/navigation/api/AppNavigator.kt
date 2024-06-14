@@ -112,7 +112,7 @@ class AppNavigator(
     fun navigateBack(comesFromBottomsheet: Boolean = false, force: Boolean = false) {
         if (!force && shouldDiscard(comesFromBottomsheet)) return
         PassLogger.i(TAG, "Navigating back to $previousRoute")
-        navController.popBackStack()
+        navController.navigateUp()
     }
 
     fun navigateBackWithResult(
@@ -125,7 +125,7 @@ class AppNavigator(
         navController.previousBackStackEntry
             ?.savedStateHandle
             ?.set(key, value)
-        navController.popBackStack()
+        navController.navigateUp()
     }
 
     fun navigateBackWithResult(values: Map<String, Any>, comesFromBottomsheet: Boolean = false) {
@@ -138,7 +138,7 @@ class AppNavigator(
                     it[key] = value
                 }
             }
-        navController.popBackStack()
+        navController.navigateUp()
     }
 
     private fun shouldDiscard(comesFromBottomsheet: Boolean): Boolean {
@@ -163,7 +163,10 @@ class AppNavigator(
         }
         ?: false
 
-    companion object {
+    private companion object {
+
         private const val TAG = "AppNavigator"
+
     }
+
 }

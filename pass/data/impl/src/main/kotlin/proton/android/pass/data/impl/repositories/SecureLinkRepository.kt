@@ -34,6 +34,7 @@ import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.data.api.usecases.securelink.SecureLinkOptions
 import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.data.impl.local.LocalShareKeyDataSource
+import proton.android.pass.data.impl.local.securelinks.SecureLinksLocalDataSource
 import proton.android.pass.data.impl.remote.RemoteSecureLinkDataSource
 import proton.android.pass.data.impl.requests.CreateSecureLinkRequest
 import proton.android.pass.data.impl.responses.GetSecureLinkResponse
@@ -60,6 +61,7 @@ class SecureLinkRepositoryImpl @Inject constructor(
     private val localItemDataSource: LocalItemDataSource,
     private val localShareKeyDataSource: LocalShareKeyDataSource,
     private val remoteSecureLinkDataSource: RemoteSecureLinkDataSource,
+    private val secureLinksLocalDataSource: SecureLinksLocalDataSource,
     private val encryptionContextProvider: EncryptionContextProvider
 ) : SecureLinkRepository {
 
@@ -116,6 +118,19 @@ class SecureLinkRepositoryImpl @Inject constructor(
 
         val encodedLinkKey = Base64.encodeBase64String(linkKey.value(), Base64.Mode.UrlSafe)
         val concatenated = "${response.url}#$encodedLinkKey"
+
+        secureLinksLocalDataSource.create(
+            userId = userId,
+            secureLink = SecureLink(
+                id = SecureLinkId(response.secureLinkId),
+                shareId = shareId,
+                itemId = itemId,
+                expiration = Instant.fromEpochSeconds(options.expirationTime.inWholeSeconds),
+                maxReadCount = options.maxReadCount,
+                readCount = 0,
+                url = concatenated
+            )
+        )
 
         return concatenated
     }

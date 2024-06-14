@@ -117,7 +117,7 @@
   <string name="password_score_vulnerable">Уязвимый</string>
   <string name="password_score_weak">Слабый</string>
   <string name="password_score_strong">Надежный</string>
-  <string name="passkey_detail_bottomsheet_title">Passkey</string>
+  <string name="passkey_detail_bottomsheet_title">Ключ доступа</string>
   <string name="passkey_detail_bottomsheet_username">Имя пользователя</string>
   <string name="passkey_detail_bottomsheet_domain">Домен</string>
   <string name="passkey_detail_bottomsheet_key">Ключ</string>

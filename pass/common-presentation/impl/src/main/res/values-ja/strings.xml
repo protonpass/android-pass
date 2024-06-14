@@ -19,7 +19,7 @@
 <resources>
   <string name="item_details_snackbar_message_alias_copied">エイリアスがコピーされました</string>
   <string name="item_details_snackbar_message_card_number_copied">カード番号をコピーしました</string>
-  <string name="item_details_snackbar_message_custom_field_copied">Custom field copied</string>
+  <string name="item_details_snackbar_message_custom_field_copied">カスタムフィールドをコピーしました</string>
   <string name="item_details_snackbar_message_cvv_copied">認証番号をコピーしました</string>
   <string name="item_details_snackbar_message_email_copied">メールアドレスをコピーしました</string>
   <string name="item_details_snackbar_message_password_copied">パスワードをコピーしました</string>

@@ -33,7 +33,7 @@
   <string name="share_with_title">と共有する</string>
   <string name="share_with_email_hint">メールアドレス</string>
   <string name="share_with_email_error">無効なメールアドレスです</string>
-  <string name="share_with_email_cannot_invite_outside_org">You can\'t invite people outside of your organization, contact admin for more info</string>
+  <string name="share_with_email_cannot_invite_outside_org">組織外の人を招待することはできません。詳細については管理者にお問い合わせください。</string>
   <string name="share_permissions_title">アクセスレベルの設定</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%sがあなたにアイテムへのアクセスを招待しています。</string>
   <string name="sharing_join_shared_vault">参加と同期</string>
@@ -107,13 +107,15 @@
   <string name="sharing_from_item_vault_limit_reached_upgrade">アップグレードして保管庫をさらに作成します</string>
   <string name="sharing_from_item_vault_limit_reached">保管庫の制限に達しました</string>
   <string name="share_with_suggestions_title">候補</string>
-  <string name="share_with_recents_title">Recents</string>
+  <string name="share_with_recents_title">最近</string>
   <string name="share_with_remove_email_content_description">メールを削除</string>
+  <string name="share_with_secure_link_title">Via secure link</string>
+  <string name="share_with_secure_link_description">Generate a secure link to this item.</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">すべてのメンバーのアクセス レベルを設定する</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">%s のアクセス レベルを設定します</string>
   <string name="sharing_edit_permissions_remove_user">ユーザーを削除する</string>
   <string name="sharing_error_dialog_title">不明なエラー</string>
   <string name="sharing_error_dialog_message">この保管庫への招待の送信中にエラーが発生しました。 問題が解決しない場合は、カスタマー サポート サービスにお問い合わせください。</string>
-  <string name="sharing_with_no_addresses_can_be_invited">No addresses can be invited</string>
-  <string name="sharing_with_some_addresses_cannot_be_invited">Some addresses cannot be invited</string>
+  <string name="sharing_with_no_addresses_can_be_invited">招待できるアドレスがありません</string>
+  <string name="sharing_with_some_addresses_cannot_be_invited">一部のアドレスは招待できません</string>
 </resources>

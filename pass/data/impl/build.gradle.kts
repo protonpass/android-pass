@@ -112,6 +112,7 @@ dependencies {
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.crypto.fakes)
     testImplementation(projects.pass.data.fakes)
+    testImplementation(projects.pass.network.fakes)
     testImplementation(projects.pass.preferences.fakes)
 
     androidTestImplementation(files("../../../../proton-libs/gopenpgp/gopenpgp.aar"))
@@ -119,6 +120,7 @@ dependencies {
     androidTestImplementation(projects.pass.common.fakes)
     androidTestImplementation(projects.pass.crypto.fakes)
     androidTestImplementation(projects.pass.data.fakes)
+    androidTestImplementation(projects.pass.network.fakes)
 
     androidTestImplementation(libs.androidx.compose.ui.test)
     androidTestImplementation(libs.androidx.compose.ui.test.junit)

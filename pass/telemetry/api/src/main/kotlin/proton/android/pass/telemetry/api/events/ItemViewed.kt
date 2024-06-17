@@ -27,9 +27,8 @@ import proton.android.pass.telemetry.api.TelemetryEvent
 
 data class ItemViewed(
     val shareId: ShareId,
-    val itemId: ItemId,
-    val eventId: Option<Long> = None
-) : TelemetryEvent.LiveTelemetryEvent(eventName = EVENT_NAME, id = eventId) {
+    val itemId: ItemId
+) : TelemetryEvent.LiveTelemetryEvent(eventName = EVENT_NAME) {
     override fun dimensions(): Map<String, String> = mapOf(
         KEY_SHARE_ID to shareId.id,
         KEY_ITEM_ID to itemId.id
@@ -41,13 +40,12 @@ data class ItemViewed(
         private const val KEY_SHARE_ID = "shareId"
         private const val KEY_ITEM_ID = "itemId"
 
-        fun fromDimensions(dimensions: Map<String, String>, eventId: Long): Option<ItemViewed> {
+        fun fromDimensions(dimensions: Map<String, String>): Option<ItemViewed> {
             val shareId = dimensions[KEY_SHARE_ID] ?: return None
             val itemId = dimensions[KEY_ITEM_ID] ?: return None
             return ItemViewed(
                 shareId = ShareId(shareId),
-                itemId = ItemId(itemId),
-                eventId = eventId.some()
+                itemId = ItemId(itemId)
             ).some()
         }
     }

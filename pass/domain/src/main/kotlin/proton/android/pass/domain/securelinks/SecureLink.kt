@@ -30,12 +30,12 @@ data class SecureLink(
     val id: SecureLinkId,
     val shareId: ShareId,
     val itemId: ItemId,
-    val expiration: Instant?,
+    val expirationInSeconds: Long,
     val maxReadCount: Int?,
     val readCount: Int,
     val url: String
 ) {
 
-    val isExpired: Boolean = expiration == null || expiration < Clock.System.now()
+    val isExpired: Boolean = Instant.fromEpochSeconds(expirationInSeconds) < Clock.System.now()
 
 }

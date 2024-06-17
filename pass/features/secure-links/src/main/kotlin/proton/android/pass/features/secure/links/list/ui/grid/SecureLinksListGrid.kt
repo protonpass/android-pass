@@ -49,7 +49,7 @@ internal fun SecureLinksListGrid(
                 title = secureLinksModel.itemTitle,
                 website = secureLinksModel.itemWebsite,
                 packageName = secureLinksModel.itemPackageName,
-                expiration = secureLinksModel.remainingTime,
+                remainingTime = secureLinksModel.remainingTime,
                 views = secureLinksModel.views,
                 canLoadExternalImages = canLoadExternalImages,
                 onCellClick = { onUiEvent(SecureLinksListUiEvent.OnCellClicked) },

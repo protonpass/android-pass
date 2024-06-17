@@ -32,6 +32,7 @@ abstract class SecureLinksDao : BaseDao<SecureLinkEntity>() {
         """
             SELECT * FROM ${SecureLinkTable.NAME}
             WHERE ${SecureLinkTable.Columns.USER_ID} = :userId
+            ORDER BY ${SecureLinkTable.Columns.EXPIRATION} ASC
         """
     )
     abstract fun observeSecureLinks(userId: String): Flow<List<SecureLinkEntity>>
@@ -40,9 +41,9 @@ abstract class SecureLinksDao : BaseDao<SecureLinkEntity>() {
         """
             SELECT * FROM ${SecureLinkTable.NAME}
             WHERE ${SecureLinkTable.Columns.USER_ID} = :userId
-            AND ${SecureLinkTable.Columns.ID} = :id
+            AND ${SecureLinkTable.Columns.LINK_ID} = :linkId
         """
     )
-    abstract fun observeSecureLink(userId: String, id: String): Flow<SecureLinkEntity>
+    abstract fun observeSecureLink(userId: String, linkId: String): Flow<SecureLinkEntity>
 
 }

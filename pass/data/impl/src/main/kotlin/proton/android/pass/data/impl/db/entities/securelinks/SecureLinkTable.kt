@@ -20,11 +20,11 @@ package proton.android.pass.data.impl.db.entities.securelinks
 
 internal object SecureLinkTable {
 
-    internal const val NAME = "secure_links"
+    internal const val NAME = "SecureLinkEntity"
 
     internal object Columns {
 
-        internal const val ID = "id"
+        internal const val LINK_ID = "link_id"
 
         internal const val USER_ID = "user_id"
 

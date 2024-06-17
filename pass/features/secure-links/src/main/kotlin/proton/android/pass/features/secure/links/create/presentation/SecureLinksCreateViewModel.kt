@@ -106,7 +106,7 @@ class SecureLinksCreateViewModel @Inject constructor(
                     shareId = shareId,
                     itemId = itemId,
                     options = SecureLinkOptions(
-                        expirationTime = state.value.expiration.duration,
+                        expirationSeconds = state.value.expiration.duration.inWholeSeconds,
                         maxReadCount = state.value.maxViewsAllowedOption.value()
                     )
                 )

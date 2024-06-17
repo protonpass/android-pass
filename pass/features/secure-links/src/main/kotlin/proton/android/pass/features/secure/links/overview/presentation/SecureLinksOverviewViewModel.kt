@@ -36,7 +36,6 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLink
-import proton.android.pass.domain.securelinks.SecureLinkExpiration
 import proton.android.pass.domain.securelinks.SecureLinkId
 import proton.android.pass.features.secure.links.overview.navigation.SecureLinksOverviewLinkIdNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -82,7 +81,7 @@ class SecureLinksOverviewViewModel @Inject constructor(
     ) { secureLink, itemUiModel, vault, useFavIconsPreference ->
         SecureLinksOverviewState(
             secureLinkUrl = secureLink.url,
-            expiration = SecureLinkExpiration.SevenDays,
+            expirationSeconds = secureLink.expirationInSeconds,
             maxViewsAllowed = secureLink.maxReadCount,
             itemUiModel = itemUiModel,
             canLoadExternalImages = useFavIconsPreference.value(),

@@ -38,12 +38,12 @@ import proton.android.pass.commonui.api.PassTopBarBackButtonType
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
 import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
+import proton.android.pass.composecomponents.impl.utils.passRemainingTimeText
 import proton.android.pass.features.secure.links.R
 import proton.android.pass.features.secure.links.overview.presentation.SecureLinksOverviewState
 import proton.android.pass.features.secure.links.overview.ui.headers.SecureLinksOverviewHeader
 import proton.android.pass.features.secure.links.overview.ui.widgets.SecureLinksOverviewInfoWidget
 import proton.android.pass.features.secure.links.overview.ui.widgets.SecureLinksOverviewLinkWidget
-import proton.android.pass.features.secure.links.shared.presentation.SecureLink
 import me.proton.core.presentation.R as CoreR
 
 @Composable
@@ -112,9 +112,7 @@ internal fun SecureLinksOverviewContent(
                     modifier = Modifier.weight(weight = 1f),
                     iconResId = CoreR.drawable.ic_proton_clock,
                     titleResId = R.string.secure_links_overview_widget_expiration_title,
-                    infoText = SecureLink.expirationOptionsMap[expiration]
-                        ?.let { expirationResId -> stringResource(id = expirationResId) }
-                        ?: ""
+                    infoText = passRemainingTimeText(remainingTime = remainingTime).orEmpty()
                 )
 
                 SecureLinksOverviewInfoWidget(

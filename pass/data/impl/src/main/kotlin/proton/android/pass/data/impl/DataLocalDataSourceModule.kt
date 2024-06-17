@@ -34,6 +34,8 @@ import proton.android.pass.data.impl.local.LocalInviteDataSource
 import proton.android.pass.data.impl.local.LocalInviteDataSourceImpl
 import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.data.impl.local.LocalItemDataSourceImpl
+import proton.android.pass.data.impl.local.LocalLiveTelemetryDataSource
+import proton.android.pass.data.impl.local.LocalLiveTelemetryDataSourceImpl
 import proton.android.pass.data.impl.local.LocalOrganizationSettingsDataSource
 import proton.android.pass.data.impl.local.LocalOrganizationSettingsDataSourceImpl
 import proton.android.pass.data.impl.local.LocalPlanDataSource
@@ -101,5 +103,8 @@ abstract class DataLocalDataSourceModule {
 
     @[Binds Singleton]
     abstract fun bindSecureLinksLocalDataSource(impl: SecureLinksLocalDataSourceImpl): SecureLinksLocalDataSource
+
+    @Binds
+    abstract fun bindLocalLiveTelemetryDataSource(impl: LocalLiveTelemetryDataSourceImpl): LocalLiveTelemetryDataSource
 
 }

@@ -22,6 +22,7 @@ import me.proton.core.data.room.db.Database
 import proton.android.pass.data.impl.db.dao.InviteDao
 import proton.android.pass.data.impl.db.dao.InviteKeyDao
 import proton.android.pass.data.impl.db.dao.ItemsDao
+import proton.android.pass.data.impl.db.dao.LiveTelemetryDao
 import proton.android.pass.data.impl.db.dao.PassDataMigrationDao
 import proton.android.pass.data.impl.db.dao.PassEventsDao
 import proton.android.pass.data.impl.db.dao.PassOrganizationSettingsDao
@@ -59,6 +60,7 @@ interface PassDatabase : Database {
     fun userAccessDataDao(): UserAccessDataDao
 
     fun organizationSettingsDao(): PassOrganizationSettingsDao
+    fun liveTelemetryDao(): LiveTelemetryDao
 
     fun secureLinksDao(): SecureLinksDao
 

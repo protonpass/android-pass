@@ -21,6 +21,7 @@ package proton.android.pass.data.api.usecases.securelink
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.securelinks.SecureLinkId
 import kotlin.time.Duration
 
 data class SecureLinkOptions(
@@ -35,6 +36,6 @@ interface GenerateSecureLink {
         shareId: ShareId,
         itemId: ItemId,
         options: SecureLinkOptions
-    ): String
+    ): SecureLinkId
 
 }

@@ -16,16 +16,14 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.secure.links.overview.navigation
+package proton.android.pass.data.api.usecases.securelink
 
-import androidx.navigation.NavType
-import proton.android.pass.domain.securelinks.SecureLinkExpiration
-import proton.android.pass.navigation.api.NavArgId
+import kotlinx.coroutines.flow.Flow
+import proton.android.pass.domain.securelinks.SecureLink
+import proton.android.pass.domain.securelinks.SecureLinkId
 
-internal object SecureLinksOverviewExpirationNavArgId : NavArgId {
+interface ObserveSecureLink {
 
-    override val key: String = "secureLinksOverviewExpiration"
-
-    override val navType: NavType<*> = NavType.EnumType(SecureLinkExpiration::class.java)
+    operator fun invoke(secureLinkId: SecureLinkId): Flow<SecureLink>
 
 }

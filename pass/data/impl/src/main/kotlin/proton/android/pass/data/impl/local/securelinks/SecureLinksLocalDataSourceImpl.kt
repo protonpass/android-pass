@@ -22,6 +22,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.crypto.api.context.EncryptionContext
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.securelinks.SecureLinkEntity
 import proton.android.pass.domain.ItemId
@@ -31,27 +33,45 @@ import proton.android.pass.domain.securelinks.SecureLinkId
 import javax.inject.Inject
 
 class SecureLinksLocalDataSourceImpl @Inject constructor(
-    private val database: PassDatabase
+    private val database: PassDatabase,
+    private val encryptionContextProvider: EncryptionContextProvider
 ) : SecureLinksLocalDataSource {
 
-    override suspend fun create(userId: UserId, secureLink: SecureLink) = database.secureLinksDao()
-        .insertOrIgnore(secureLink.toEntity(userId))
+    override suspend fun create(userId: UserId, secureLink: SecureLink) =
+        encryptionContextProvider.withEncryptionContext {
+            secureLink.toEntity(userId, this@withEncryptionContext)
+        }.let { entity ->
+            database.secureLinksDao().insertOrIgnore(entity)
+        }
 
     override suspend fun getAll(userId: UserId): List<SecureLink> = observeAll(userId).first()
 
     override fun observe(userId: UserId, secureLinkId: SecureLinkId): Flow<SecureLink> = database.secureLinksDao()
         .observeSecureLink(userId = userId.id, linkId = secureLinkId.id)
-        .map { entity -> entity.toDomain() }
+        .map { entity ->
+            encryptionContextProvider.withEncryptionContext {
+                entity.toDomain(this@withEncryptionContext)
+            }
+        }
 
     override fun observeAll(userId: UserId): Flow<List<SecureLink>> = database.secureLinksDao()
         .observeSecureLinks(userId = userId.id)
-        .map { entities -> entities.map { entity -> entity.toDomain() } }
+        .map { entities ->
+            encryptionContextProvider.withEncryptionContext {
+                entities.map { entity ->
+                    entity.toDomain(this@withEncryptionContext)
+                }
+            }
+        }
 
-    override suspend fun update(userId: UserId, secureLinks: List<SecureLink>) = secureLinks
-        .map { secureLink -> secureLink.toEntity(userId) }
-        .let { entities -> database.secureLinksDao().insertOrUpdate(*entities.toTypedArray()) }
+    override suspend fun update(userId: UserId, secureLinks: List<SecureLink>) =
+        encryptionContextProvider.withEncryptionContext {
+            secureLinks.map { secureLink ->
+                secureLink.toEntity(userId, this@withEncryptionContext)
+            }
+        }.let { entities -> database.secureLinksDao().insertOrUpdate(*entities.toTypedArray()) }
 
-    private fun SecureLink.toEntity(userId: UserId) = SecureLinkEntity(
+    private fun SecureLink.toEntity(userId: UserId, encryptionContext: EncryptionContext) = SecureLinkEntity(
         userId = userId.id,
         linkId = id.id,
         shareId = shareId.id,
@@ -59,17 +79,17 @@ class SecureLinksLocalDataSourceImpl @Inject constructor(
         expirationInSeconds = expirationInSeconds,
         maxViews = maxReadCount,
         views = readCount,
-        url = url
+        url = encryptionContext.encrypt(url)
     )
 
-    private fun SecureLinkEntity.toDomain() = SecureLink(
+    private fun SecureLinkEntity.toDomain(encryptionContext: EncryptionContext) = SecureLink(
         id = SecureLinkId(id = linkId),
         shareId = ShareId(id = shareId),
         itemId = ItemId(id = itemId),
         expirationInSeconds = expirationInSeconds,
         maxReadCount = maxViews,
         readCount = views,
-        url = url
+        url = encryptionContext.decrypt(url)
     )
 
 }

@@ -137,21 +137,17 @@ class SecureLinkRepositoryImpl @Inject constructor(
         return SecureLinkId(id = response.secureLinkId)
     }
 
-    override fun observeSecureLink(
-        userId: UserId,
-        secureLinkId: SecureLinkId
-    ): Flow<SecureLink> = secureLinksLocalDataSource.observe(userId, secureLinkId)
+    override fun observeSecureLink(userId: UserId, secureLinkId: SecureLinkId): Flow<SecureLink> =
+        secureLinksLocalDataSource.observe(userId, secureLinkId)
 
     override fun observeSecureLinks(userId: UserId): Flow<List<SecureLink>> =
         secureLinksLocalDataSource.observeAll(userId)
             .onStart {
-                secureLinksLocalDataSource.getAll(userId).let { localSecureLinks ->
-                    emit(localSecureLinks)
+                secureLinksLocalDataSource.getAll(userId)
+                    .also { localSecureLinks -> emit(localSecureLinks) }
 
-                    fetchSecureLinksFromRemote(userId).let { remoteSecureLinks ->
-                        secureLinksLocalDataSource.update(userId, remoteSecureLinks)
-                    }
-                }
+                fetchSecureLinksFromRemote(userId)
+                    .also { remoteSecureLinks -> secureLinksLocalDataSource.update(userId, remoteSecureLinks) }
             }
 
     private suspend fun fetchSecureLinksFromRemote(userId: UserId): List<SecureLink> {

@@ -46,7 +46,7 @@ internal data class SecureLinksOverviewState(
             itemUiModel = null,
             canLoadExternalImages = false,
             shareIcon = null,
-            expirationSeconds = 0L,
+            expirationSeconds = 0L
         )
 
     }

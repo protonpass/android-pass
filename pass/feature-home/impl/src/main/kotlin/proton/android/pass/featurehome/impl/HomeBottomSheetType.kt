@@ -23,6 +23,7 @@ internal enum class HomeBottomSheetType {
     CreditCardOptions,
     LoginOptions,
     NoteOptions,
+    IdentityOptions,
     TrashItemOptions,
     TrashOptions,
     Unknown

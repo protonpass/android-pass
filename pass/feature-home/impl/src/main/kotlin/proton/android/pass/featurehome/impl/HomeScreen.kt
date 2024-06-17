@@ -61,6 +61,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.AliasOptions
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.CreditCardOptions
+import proton.android.pass.featurehome.impl.HomeBottomSheetType.IdentityOptions
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.LoginOptions
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.NoteOptions
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.TrashItemOptions
@@ -69,6 +70,7 @@ import proton.android.pass.featurehome.impl.HomeBottomSheetType.Unknown
 import proton.android.pass.featurehome.impl.HomeNavigation.SortingBottomsheet
 import proton.android.pass.featurehome.impl.bottomsheet.AliasOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.CreditCardOptionsBottomSheetContents
+import proton.android.pass.featurehome.impl.bottomsheet.IdentityOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.LoginOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.NoteOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.TrashAllBottomSheetContents
@@ -464,6 +466,41 @@ fun HomeScreen(
                     isFreePlan = homeUiState.isFreePlan
                 )
 
+                IdentityOptions -> IdentityOptionsBottomSheetContents(
+                    itemUiModel = selectedItem!!,
+                    isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
+                    action = homeUiState.action,
+                    isFreePlan = homeUiState.isFreePlan,
+                    onCopyFullName = {
+                        scope.launch { bottomSheetState.hide() }
+                        homeViewModel.copyToClipboard(it, HomeClipboardType.FullName)
+                    },
+                    onPinned = { shareId, itemId ->
+                        scope.launch { bottomSheetState.hide() }
+                        homeViewModel.pinItem(shareId, itemId)
+                    },
+                    onUnpinned = { shareId, itemId ->
+                        scope.launch { bottomSheetState.hide() }
+                        homeViewModel.unpinItem(shareId, itemId)
+                    },
+                    onViewHistory = { shareId, itemId ->
+                        scope.launch { bottomSheetState.hide() }
+                        homeViewModel.viewItemHistory(shareId, itemId)
+                    },
+                    onEdit = { shareId, itemId ->
+                        scope.launch { bottomSheetState.hide() }
+                        onNavigateEvent(HomeNavigation.EditLogin(shareId, itemId))
+                    },
+                    onMoveToTrash = {
+                        scope.launch { bottomSheetState.hide() }
+                        homeViewModel.sendItemsToTrash(listOf(it))
+                    },
+                    onRemoveFromRecentSearch = { shareId, itemId ->
+                        scope.launch { bottomSheetState.hide() }
+                        homeViewModel.onClearRecentSearch(shareId, itemId)
+                    }
+                )
+
                 TrashItemOptions -> TrashItemBottomSheetContents(
                     itemUiModel = selectedItem!!,
                     onRestoreItem = remember {
@@ -657,7 +694,7 @@ fun HomeScreen(
                                     is ItemContents.Login -> LoginOptions
                                     is ItemContents.Note -> NoteOptions
                                     is ItemContents.CreditCard -> CreditCardOptions
-                                    is ItemContents.Identity -> TODO()
+                                    is ItemContents.Identity -> IdentityOptions
                                     is ItemContents.Unknown -> LoginOptions
                                 }
                             }

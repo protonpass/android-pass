@@ -92,7 +92,6 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.SearchEntry
 import proton.android.pass.data.api.repositories.BulkMoveToVaultEvent
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
-import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.PinItemsResult
 import proton.android.pass.data.api.usecases.ClearTrash
 import proton.android.pass.data.api.usecases.DeleteItems
@@ -197,7 +196,6 @@ class HomeViewModel @Inject constructor(
     appDispatchers: AppDispatchers,
     getUserPlan: GetUserPlan,
     savedState: SavedStateHandleProvider,
-    itemSyncStatusRepository: ItemSyncStatusRepository,
     featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
 
@@ -703,6 +701,11 @@ class HomeViewModel @Inject constructor(
                         isSecure = true
                     )
                     HomeSnackbarMessage.CreditCardCvvCopied
+                }
+
+                HomeClipboardType.FullName -> {
+                    clipboardManager.copyToClipboard(text = sanitizedText)
+                    HomeSnackbarMessage.FullNameCopied
                 }
             }
 

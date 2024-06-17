@@ -54,7 +54,11 @@ sealed interface IdentityUiState {
     ) : IdentityUiState
 
     val hasUserEdited: Boolean
-        get() = if (this is CreateIdentity) sharedState.hasUserEditedContent else false
+        get() = when (this) {
+            is CreateIdentity -> sharedState.hasUserEditedContent
+            is UpdateIdentity -> sharedState.hasUserEditedContent
+            else -> false
+        }
 
     fun shouldShowVaultSelector(): Boolean = when {
         this is CreateIdentity && shareUiState is ShareUiState.Success -> shareUiState.vaultList.size > 1
@@ -74,18 +78,28 @@ sealed interface IdentityUiState {
         else -> None
     }
 
-    fun getItemSavedState(): ItemSavedState =
-        if (this is CreateIdentity) sharedState.isItemSaved else ItemSavedState.Unknown
+    fun getItemSavedState(): ItemSavedState = when (this) {
+        is CreateIdentity -> sharedState.isItemSaved
+        is UpdateIdentity -> sharedState.isItemSaved
+        else -> ItemSavedState.Unknown
+    }
 
     fun getSubmitLoadingState(): IsLoadingState = when (this) {
         is Loading -> IsLoadingState.Loading
         is CreateIdentity -> sharedState.isLoadingState
+        is UpdateIdentity -> sharedState.isLoadingState
         else -> IsLoadingState.NotLoading
     }
 
-    fun getValidationErrors(): PersistentSet<IdentityValidationErrors> =
-        if (this is CreateIdentity) sharedState.validationErrors else persistentSetOf()
+    fun getValidationErrors(): PersistentSet<IdentityValidationErrors> = when (this) {
+        is CreateIdentity -> sharedState.validationErrors
+        is UpdateIdentity -> sharedState.validationErrors
+        else -> persistentSetOf()
+    }
 
-    fun getExtraFields(): PersistentSet<ExtraField> =
-        if (this is CreateIdentity) sharedState.extraFields else persistentSetOf()
+    fun getExtraFields(): PersistentSet<ExtraField> = when (this) {
+        is CreateIdentity -> sharedState.extraFields
+        is UpdateIdentity -> sharedState.extraFields
+        else -> persistentSetOf()
+    }
 }

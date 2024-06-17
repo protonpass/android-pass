@@ -53,6 +53,8 @@ import proton.android.pass.featureitemdetail.impl.ItemDetailScopeNavArgId
 import proton.android.pass.featureitemdetail.impl.ItemDetailScreen
 import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.waitUntilExists
@@ -87,6 +89,9 @@ class LoginDetailScreenTest {
 
     @Inject
     lateinit var observeTotp: TestObserveTotpFromUri
+
+    @Inject
+    lateinit var ffRepo: TestFeatureFlagsPreferenceRepository
 
     @Before
     fun setup() {
@@ -148,9 +153,11 @@ class LoginDetailScreenTest {
     }
 
     @Test
-    fun clickEmailOrUsernameCopiesEmailOrUsername() {
-        val emailOrUsername = "user@email.com"
-        performSetup(email = emailOrUsername)
+    fun clickEmailCopiesEmail() {
+        ffRepo.set(FeatureFlag.USERNAME_SPLIT, true)
+
+        val email = "user@email.com"
+        performSetup(email = email)
         composeTestRule.apply {
             setContent {
                 PassTheme(isDark = true) {
@@ -160,10 +167,66 @@ class LoginDetailScreenTest {
                 }
             }
 
-            waitUntilExists(hasText(emailOrUsername))
+            waitUntilExists(hasText(email))
 
-            onNode(hasText(emailOrUsername)).performClick()
-            assertEquals(emailOrUsername, clipboardManager.getContents())
+            onNode(hasText(email)).performClick()
+            assertEquals(email, clipboardManager.getContents())
+        }
+    }
+
+    @Test
+    fun clickUsernameCopiesUsername() {
+        ffRepo.set(FeatureFlag.USERNAME_SPLIT, true)
+
+        val username = "myusername"
+        performSetup(username = username)
+        composeTestRule.apply {
+            setContent {
+                PassTheme(isDark = true) {
+                    ItemDetailScreen(
+                        onNavigate = {}
+                    )
+                }
+            }
+
+            waitUntilExists(hasText(username))
+
+            onNode(hasText(username)).performClick()
+            assertEquals(username, clipboardManager.getContents())
+        }
+    }
+
+    /**
+     * This test is only temporary. It should not happen, as the FF for split should be enabled and
+     * never disabled again.
+     * If it is not enabled, username should be an empty string
+     *
+     * 2024-06-17: cquintana
+     */
+    @Test
+    fun usernameSplitEmptyUsernameDisabledClickEmailCopiesEmail() {
+        ffRepo.set(FeatureFlag.USERNAME_SPLIT, false)
+
+        val email = "some@test.email"
+        val username = "test_username"
+        performSetup(username = username, email = email)
+        composeTestRule.apply {
+            setContent {
+                PassTheme(isDark = true) {
+                    ItemDetailScreen(
+                        onNavigate = {}
+                    )
+                }
+            }
+
+            // Username is not shown
+            onNode(hasText(username)).assertDoesNotExist()
+
+            // Email is shown
+            waitUntilExists(hasText(email))
+
+            onNode(hasText(email)).performClick()
+            assertEquals(email, clipboardManager.getContents())
         }
     }
 

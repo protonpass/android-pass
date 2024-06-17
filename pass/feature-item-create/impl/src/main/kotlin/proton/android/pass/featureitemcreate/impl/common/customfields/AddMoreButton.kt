@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemcreate.impl.identity.ui
+package proton.android.pass.featureitemcreate.impl.common.customfields
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -26,6 +26,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -36,24 +37,30 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.CircleButton
 
 @Composable
-internal fun AddMoreButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
+internal fun AddMoreButton(
+    modifier: Modifier = Modifier,
+    text: String = stringResource(proton.android.pass.featureitemcreate.impl.R.string.identity_add_more_fields),
+    textColor: Color = PassTheme.colors.interactionNormMajor2,
+    bgColor: Color = PassTheme.colors.interactionNormMinor1,
+    onClick: () -> Unit
+) {
     CircleButton(
         modifier = modifier,
         contentPadding = PaddingValues(vertical = Spacing.small, horizontal = Spacing.medium),
-        color = PassTheme.colors.interactionNormMinor1,
+        color = bgColor,
         onClick = onClick,
         content = {
             Icon(
                 modifier = Modifier.size(16.dp),
                 painter = painterResource(R.drawable.ic_proton_plus),
                 contentDescription = null,
-                tint = PassTheme.colors.interactionNormMajor2
+                tint = textColor
             )
             Spacer(modifier = Modifier.width(Spacing.small))
             Text(
-                text = stringResource(proton.android.pass.featureitemcreate.impl.R.string.identity_add_more_fields),
+                text = text,
                 style = ProtonTheme.typography.captionMedium,
-                color = PassTheme.colors.interactionNormMajor2
+                color = textColor
             )
         }
     )

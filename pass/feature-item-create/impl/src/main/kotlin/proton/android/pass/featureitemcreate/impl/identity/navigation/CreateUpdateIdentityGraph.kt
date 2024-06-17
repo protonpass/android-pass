@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,11 +16,11 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureitemcreate.impl.common
+package proton.android.pass.featureitemcreate.impl.identity.navigation
 
-enum class CustomFieldPrefix {
-    CreateLogin,
-    UpdateLogin,
-    CreateIdentity,
-    UpdateIdentity
+import androidx.navigation.NavGraphBuilder
+
+fun NavGraphBuilder.createUpdateIdentityGraph(onNavigate: (BaseIdentityNavigation) -> Unit) {
+    createIdentityGraph(onNavigate)
+    updateIdentityGraph(onNavigate)
 }

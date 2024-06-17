@@ -20,9 +20,9 @@ package proton.android.pass.featureitemcreate.impl.identity.presentation
 
 import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.persistentSetOf
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.Item
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.common.CustomFieldIndexTitle
@@ -32,11 +32,7 @@ import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsh
 @Suppress("ComplexInterface", "TooManyFunctions")
 interface IdentityFormActions {
     fun onFieldChange(field: FieldChange)
-    fun onAddExtraSection(value: String)
-    fun onRenameCustomSection(value: CustomFieldIndexTitle)
-    fun onRemoveCustomSection(index: Int)
-    fun onAddCustomField(value: CustomFieldContent, customExtraField: CustomExtraField)
-    fun onRemoveCustomField(index: Int, customExtraField: CustomExtraField)
+    fun observeDraftChanges(coroutineScope: CoroutineScope)
     fun onRenameCustomField(value: CustomFieldIndexTitle, customExtraField: CustomExtraField)
     fun getFormState(): IdentityItemFormState
     fun isFormStateValid(): Boolean
@@ -48,6 +44,7 @@ interface IdentityActionsProvider : IdentityFormActions {
     fun updateLoadingState(loadingState: IsLoadingState)
     fun onItemSavedState(item: Item)
     fun updateSelectedSection(customExtraField: CustomExtraField)
+    fun onItemReceivedState(item: Item)
 }
 
 data class IdentitySharedUiState(

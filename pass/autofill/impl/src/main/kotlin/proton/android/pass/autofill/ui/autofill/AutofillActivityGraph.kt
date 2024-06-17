@@ -60,6 +60,7 @@ import proton.android.pass.featureitemcreate.impl.dialogs.customfield.EditCustom
 import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdentityNavigation
 import proton.android.pass.featureitemcreate.impl.identity.navigation.CreateIdentity
 import proton.android.pass.featureitemcreate.impl.identity.navigation.CreateIdentityNavigation
+import proton.android.pass.featureitemcreate.impl.identity.navigation.UpdateIdentityNavigation
 import proton.android.pass.featureitemcreate.impl.identity.navigation.bottomsheets.IdentityFieldsBottomSheet
 import proton.android.pass.featureitemcreate.impl.identity.navigation.createIdentityGraph
 import proton.android.pass.featureitemcreate.impl.identity.navigation.customsection.CustomSectionNameDialogNavItem
@@ -438,6 +439,10 @@ fun NavGraphBuilder.autofillActivityGraph(
 
                 BaseIdentityNavigation.RemoveCustomSection -> dismissBottomSheet {
                     appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
+
+                is UpdateIdentityNavigation.IdentityUpdated -> {
+                    // Updates cannot happen
                 }
             }
         }

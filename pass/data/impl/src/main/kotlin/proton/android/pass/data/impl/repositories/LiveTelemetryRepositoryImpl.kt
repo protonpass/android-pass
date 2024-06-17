@@ -73,6 +73,9 @@ class LiveTelemetryRepositoryImpl @Inject constructor(
     }
 
     override suspend fun flushPendingEvents(userId: UserId) {
+        val networkStatus = networkMonitor.connectivity.firstOrNull() ?: NetworkStatus.Offline
+        if (networkStatus == NetworkStatus.Offline) return
+
         val pending = getPendingEvents(userId)
         trySendEvents(userId, pending)
     }
@@ -157,7 +160,7 @@ class LiveTelemetryRepositoryImpl @Inject constructor(
                         .deserialize(entity.dimensions)
                         .mapValues { it.value.content }
 
-                    when (val item = ItemViewed.fromDimensions(dimensions, entity.id)) {
+                    when (val item = ItemViewed.fromDimensions(dimensions)) {
                         None -> {
                             PassLogger.w(TAG, "Could not deserialize ItemViewed event")
                             null
@@ -184,6 +187,13 @@ class LiveTelemetryRepositoryImpl @Inject constructor(
         local.storeEvents(events.map { it.toEntity(userId) })
     }
 
+    private suspend fun getPlanForUser(userId: UserId): Plan {
+        return userIdPlanCache.getOrPut(userId) {
+            getUserPlan(userId).firstOrNull()
+                ?: throw IllegalStateException("Cannot get plan for user ${userId.id}")
+        }
+    }
+
     private fun LiveTelemetryEvent.toEntity(userId: UserId) = LiveTelemetryEntity(
         id = 0,
         userId = userId.id,
@@ -191,14 +201,6 @@ class LiveTelemetryRepositoryImpl @Inject constructor(
         dimensions = DimensionsSerializer.serialize(dimensions()),
         createTime = clock.now().epochSeconds
     )
-
-    private suspend fun getPlanForUser(userId: UserId): Plan {
-        return userIdPlanCache.getOrPut(userId) {
-            getUserPlan(userId).firstOrNull()
-                ?: throw IllegalStateException("Cannot get plan for user ${userId.id}")
-        }
-
-    }
 
     companion object {
         private const val TAG = "LiveTelemetryRepositoryImpl"

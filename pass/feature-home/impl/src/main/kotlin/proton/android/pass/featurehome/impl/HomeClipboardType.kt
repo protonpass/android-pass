@@ -23,6 +23,7 @@ enum class HomeClipboardType {
     Note,
     Password,
     Username,
+    FullName,
     CreditCardNumber,
     CreditCardCvv
 }

@@ -18,10 +18,10 @@
 
 package proton.android.pass.featurepasskeys.telemetry
 
-import proton.android.pass.telemetry.api.TelemetryEvent
+import proton.android.pass.telemetry.api.TelemetryEvent.DeferredTelemetryEvent
 
-data object CreatePromptDisplay : TelemetryEvent("passkey.create_prompt_display")
-data object CreateDone : TelemetryEvent("passkey.create_done")
-data object DisplaySuggestions : TelemetryEvent("passkey.display_suggestions")
-data object DisplayAllPasskeys : TelemetryEvent("passkey.display_all_passkeys")
-data object AuthDone : TelemetryEvent("passkey.auth_done")
+data object CreatePromptDisplay : DeferredTelemetryEvent("passkey.create_prompt_display")
+data object CreateDone : DeferredTelemetryEvent("passkey.create_done")
+data object DisplaySuggestions : DeferredTelemetryEvent("passkey.display_suggestions")
+data object DisplayAllPasskeys : DeferredTelemetryEvent("passkey.display_all_passkeys")
+data object AuthDone : DeferredTelemetryEvent("passkey.auth_done")

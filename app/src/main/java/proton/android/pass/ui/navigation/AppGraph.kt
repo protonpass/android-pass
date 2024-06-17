@@ -746,7 +746,10 @@ fun NavGraphBuilder.appGraph(
                     val prefix = CustomFieldPrefix.fromLogin(backDestination)
                     appNavigator.navigate(
                         destination = EditCustomFieldNameDialogNavItem(prefix),
-                        route = EditCustomFieldNameDialogNavItem(prefix).buildRoute(it.index, it.currentValue),
+                        route = EditCustomFieldNameDialogNavItem(prefix).buildRoute(
+                            it.index,
+                            it.currentValue
+                        ),
                         backDestination = backDestination
                     )
                 }

@@ -39,25 +39,13 @@ class SecureLinksLocalDataSourceImpl @Inject constructor(
 
     override suspend fun getAll(userId: UserId): List<SecureLink> = observeAll(userId).first()
 
-    override fun observe(
-        userId: UserId,
-        secureLinkId: SecureLinkId
-    ): Flow<SecureLink> = database.secureLinksDao()
+    override fun observe(userId: UserId, secureLinkId: SecureLinkId): Flow<SecureLink> = database.secureLinksDao()
         .observeSecureLink(userId = userId.id, linkId = secureLinkId.id)
         .map { entity -> entity.toDomain() }
 
     override fun observeAll(userId: UserId): Flow<List<SecureLink>> = database.secureLinksDao()
         .observeSecureLinks(userId = userId.id)
-        .map { entities ->
-            entities.map { entity ->
-                println("JIBIRI: entity: $entity")
-                entity.toDomain()
-            }
-        }
-
-    override suspend fun remove(userId: UserId, secureLinks: List<SecureLink>) = secureLinks
-        .map { secureLink -> secureLink.toEntity(userId) }
-        .let { entities -> database.secureLinksDao().delete(*entities.toTypedArray()) }
+        .map { entities -> entities.map { entity -> entity.toDomain() } }
 
     override suspend fun update(userId: UserId, secureLinks: List<SecureLink>) = secureLinks
         .map { secureLink -> secureLink.toEntity(userId) }

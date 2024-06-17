@@ -3580,7 +3580,6 @@
       },
       {
         "tableName": "SecureLinkEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_id` TEXT NOT NULL, `link_id` TEXT NOT NULL, `share_id` TEXT NOT NULL, `item_id` TEXT NOT NULL, `expiration` INTEGER NOT NULL, `is_expired` INTEGER NOT NULL, `max_views` INTEGER, `views` INTEGER NOT NULL, `url` TEXT NOT NULL, PRIMARY KEY(`link_id`), FOREIGN KEY(`user_id`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`item_id`, `share_id`) REFERENCES `ItemEntity`(`id`, `share_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`share_id`) REFERENCES `ShareEntity`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "userId",

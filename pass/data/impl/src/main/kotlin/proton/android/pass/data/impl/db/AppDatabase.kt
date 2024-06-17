@@ -235,10 +235,9 @@ abstract class AppDatabase :
             AppDatabaseMigrations.MIGRATION_48_49
         )
 
-        fun buildDatabase(context: Context): AppDatabase =
-            databaseBuilder<AppDatabase>(context, DB_NAME)
-                .apply { migrations.forEach { addMigrations(it) } }
-                .fallbackToDestructiveMigration()
-                .build()
+        fun buildDatabase(context: Context): AppDatabase = databaseBuilder<AppDatabase>(context, DB_NAME)
+            .apply { migrations.forEach { addMigrations(it) } }
+            .fallbackToDestructiveMigration()
+            .build()
     }
 }

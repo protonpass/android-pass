@@ -21,7 +21,6 @@ package proton.android.pass.data.impl.local.securelinks
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.securelinks.SecureLinkEntity
@@ -44,12 +43,17 @@ class SecureLinksLocalDataSourceImpl @Inject constructor(
         userId: UserId,
         secureLinkId: SecureLinkId
     ): Flow<SecureLink> = database.secureLinksDao()
-        .observeSecureLink(userId = userId.id, id = secureLinkId.id)
+        .observeSecureLink(userId = userId.id, linkId = secureLinkId.id)
         .map { entity -> entity.toDomain() }
 
     override fun observeAll(userId: UserId): Flow<List<SecureLink>> = database.secureLinksDao()
         .observeSecureLinks(userId = userId.id)
-        .map { entities -> entities.map { entity -> entity.toDomain() } }
+        .map { entities ->
+            entities.map { entity ->
+                println("JIBIRI: entity: $entity")
+                entity.toDomain()
+            }
+        }
 
     override suspend fun remove(userId: UserId, secureLinks: List<SecureLink>) = secureLinks
         .map { secureLink -> secureLink.toEntity(userId) }
@@ -61,20 +65,20 @@ class SecureLinksLocalDataSourceImpl @Inject constructor(
 
     private fun SecureLink.toEntity(userId: UserId) = SecureLinkEntity(
         userId = userId.id,
-        id = id.id,
+        linkId = id.id,
         shareId = shareId.id,
         itemId = itemId.id,
-        expiration = expiration?.epochSeconds,
+        expirationInSeconds = expirationInSeconds,
         maxViews = maxReadCount,
         views = readCount,
         url = url
     )
 
     private fun SecureLinkEntity.toDomain() = SecureLink(
-        id = SecureLinkId(id = id),
+        id = SecureLinkId(id = linkId),
         shareId = ShareId(id = shareId),
         itemId = ItemId(id = itemId),
-        expiration = expiration?.let { epochSeconds -> Instant.fromEpochSeconds(epochSeconds) },
+        expirationInSeconds = expirationInSeconds,
         maxReadCount = maxViews,
         readCount = views,
         url = url

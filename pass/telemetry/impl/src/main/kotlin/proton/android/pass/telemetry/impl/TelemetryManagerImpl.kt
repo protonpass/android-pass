@@ -50,6 +50,7 @@ class TelemetryManagerImpl @Inject constructor(
                 deferredTelemetryManager.startListening(
                     onSubscribed = {
                         PassLogger.i(TAG, "Subscribed to deferred telemetry")
+                        onSubscribed()
                     },
                     onPerformed = onPerformed
                 )
@@ -58,6 +59,7 @@ class TelemetryManagerImpl @Inject constructor(
                 liveTelemetryManager.startListening(
                     onSubscribed = {
                         PassLogger.i(TAG, "Subscribed to live telemetry")
+                        onSubscribed()
                     },
                     onPerformed = onPerformed
                 )

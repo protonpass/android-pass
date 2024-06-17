@@ -26,12 +26,12 @@ import proton.android.pass.domain.securelinks.SecureLink
 import javax.inject.Inject
 
 class ObserveUnexpiredSecureLinksImpl @Inject constructor(
-    private val observeSecureLinks: ObserveSecureLinks,
+    private val observeSecureLinks: ObserveSecureLinks
 ) : ObserveUnexpiredSecureLinks {
 
     override fun invoke(): Flow<List<SecureLink>> = observeSecureLinks()
         .map { secureLinks ->
-            secureLinks.filter { secureLink -> !secureLink.isExpired}
+            secureLinks.filter { secureLink -> !secureLink.isExpired }
         }
 
 }

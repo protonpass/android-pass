@@ -140,7 +140,7 @@ fun UpdateIdentityScreen(
     }
     ItemSavedLaunchedEffect(
         isItemSaved = state.getItemSavedState(),
-        selectedShareId = state.getSelectedVault().value()?.shareId,
+        selectedShareId = state.getSelectedShareId().value(),
         onSuccess = { shareId, itemId, _ ->
             actionAfterKeyboardHide = {
                 onNavigate(UpdateIdentityNavigation.IdentityUpdated(shareId, itemId))

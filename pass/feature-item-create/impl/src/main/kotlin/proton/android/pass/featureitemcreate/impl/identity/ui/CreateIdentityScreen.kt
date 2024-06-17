@@ -81,8 +81,9 @@ fun CreateIdentityScreen(
     }
     BackHandler(onBack = onExit)
     Box(modifier = modifier.fillMaxSize()) {
-        CreateIdentityContent(
+        IdentityContent(
             identityItemFormState = viewModel.getFormState(),
+            selectedShareId = state.getSelectedShareId(),
             selectedVault = state.getSelectedVault(),
             isLoadingState = state.getSubmitLoadingState(),
             shouldShowVaultSelector = state.shouldShowVaultSelector(),

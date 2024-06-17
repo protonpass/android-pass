@@ -30,7 +30,10 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.commonui.api.toUiModel
@@ -69,6 +72,8 @@ class IdentityActionsProviderImpl @Inject constructor(
     private val identityFieldDraftRepository: IdentityFieldDraftRepository,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : IdentityActionsProvider {
+
+    private var itemOption: Option<Item> = None
 
     @OptIn(SavedStateHandleSaveableApi::class)
     private var identityItemFormMutableState: IdentityItemFormState by savedStateHandleProvider.get()
@@ -476,11 +481,14 @@ class IdentityActionsProviderImpl @Inject constructor(
     }
 
     override fun onItemReceivedState(item: Item) {
+        itemOption = item.some()
         val itemContents = encryptionContextProvider.withEncryptionContext {
             item.toItemContents(this@withEncryptionContext) as ItemContents.Identity
         }
         identityItemFormMutableState = IdentityItemFormState(itemContents)
     }
+
+    override fun getReceivedItem(): Item = itemOption.value() ?: throw IllegalStateException("Item is not received")
 
     @Suppress("LongMethod")
     private fun updateCustomFieldState(

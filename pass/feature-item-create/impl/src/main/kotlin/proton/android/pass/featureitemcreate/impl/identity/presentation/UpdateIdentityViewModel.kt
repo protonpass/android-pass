@@ -23,9 +23,11 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -51,6 +53,7 @@ class UpdateIdentityViewModel @Inject constructor(
     private val identityActionsProvider: IdentityActionsProvider,
     private val telemetryManager: TelemetryManager,
     private val snackbarDispatcher: SnackbarDispatcher,
+    private val accountManager: AccountManager,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel(), IdentityActionsProvider by identityActionsProvider {
 
@@ -91,17 +94,20 @@ class UpdateIdentityViewModel @Inject constructor(
         if (!identityActionsProvider.isFormStateValid()) return@launch
         identityActionsProvider.updateLoadingState(IsLoadingState.Loading)
         runCatching {
-
-            /*createItem(
+            val userId = accountManager.getPrimaryUserId().first()
+                ?: throw IllegalStateException("User id is null")
+            updateItem(
+                userId = userId,
                 shareId = shareId,
-                itemContents = identityActionsProvider.getFormState().toItemContents()
-            )*/
+                item = identityActionsProvider.getReceivedItem(),
+                contents = identityActionsProvider.getFormState().toItemContents()
+            )
         }.onSuccess { item ->
-            // identityActionsProvider.onItemSavedState(item.id, )
+            identityActionsProvider.onItemSavedState(item)
             telemetryManager.sendEvent(ItemCreate(EventItemType.Identity))
             snackbarDispatcher(ItemUpdated)
         }.onFailure {
-            PassLogger.w(TAG, "Could not create item")
+            PassLogger.w(TAG, "Could not update item")
             PassLogger.w(TAG, it)
             snackbarDispatcher(ItemUpdateError)
         }

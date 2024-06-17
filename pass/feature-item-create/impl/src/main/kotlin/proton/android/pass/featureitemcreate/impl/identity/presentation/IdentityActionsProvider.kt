@@ -45,6 +45,7 @@ interface IdentityActionsProvider : IdentityFormActions {
     fun onItemSavedState(item: Item)
     fun updateSelectedSection(customExtraField: CustomExtraField)
     fun onItemReceivedState(item: Item)
+    fun getReceivedItem(): Item
 }
 
 data class IdentitySharedUiState(

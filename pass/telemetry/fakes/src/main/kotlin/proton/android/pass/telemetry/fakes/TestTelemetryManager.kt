@@ -18,7 +18,7 @@
 
 package proton.android.pass.telemetry.fakes
 
-import proton.android.pass.telemetry.api.TelemetryEvent
+import proton.android.pass.telemetry.api.DeferredTelemetryEvent
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -26,11 +26,11 @@ import javax.inject.Singleton
 @Singleton
 class TestTelemetryManager @Inject constructor() : TelemetryManager {
 
-    private val memory: MutableList<TelemetryEvent> = mutableListOf()
+    private val memory: MutableList<DeferredTelemetryEvent> = mutableListOf()
 
-    fun getMemory(): List<TelemetryEvent> = memory
+    fun getMemory(): List<DeferredTelemetryEvent> = memory
 
-    override fun sendEvent(event: TelemetryEvent) {
+    override fun sendEvent(event: DeferredTelemetryEvent) {
         memory.add(event)
     }
 

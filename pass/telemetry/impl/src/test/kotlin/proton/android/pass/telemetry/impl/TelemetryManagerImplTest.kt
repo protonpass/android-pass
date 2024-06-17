@@ -26,10 +26,10 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.data.fakes.repositories.TestTelemetryRepository
-import proton.android.pass.telemetry.api.TelemetryEvent
+import proton.android.pass.telemetry.api.TelemetryEvent.DeferredTelemetryEvent
 import proton.android.pass.test.MainDispatcherRule
 
-data object TestEvent : TelemetryEvent("test")
+data object TestEvent : DeferredTelemetryEvent("test")
 
 class TelemetryManagerImplTest {
 

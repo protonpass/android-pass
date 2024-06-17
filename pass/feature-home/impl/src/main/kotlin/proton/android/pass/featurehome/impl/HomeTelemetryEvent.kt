@@ -19,10 +19,10 @@
 package proton.android.pass.featurehome.impl
 
 import proton.android.pass.telemetry.api.EventItemType
-import proton.android.pass.telemetry.api.TelemetryEvent
+import proton.android.pass.telemetry.api.TelemetryEvent.DeferredTelemetryEvent
 
-data class ItemDelete(val itemType: EventItemType) : TelemetryEvent("item.deletion") {
+data class ItemDelete(val itemType: EventItemType) : DeferredTelemetryEvent("item.deletion") {
     override fun dimensions(): Map<String, String> = mapOf("type" to itemType.itemTypeName)
 }
-data object SearchTriggered : TelemetryEvent("search.triggered")
-data object SearchItemClicked : TelemetryEvent("search.click")
+data object SearchTriggered : DeferredTelemetryEvent("search.triggered")
+data object SearchItemClicked : DeferredTelemetryEvent("search.click")

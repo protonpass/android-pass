@@ -20,20 +20,20 @@ package proton.android.pass.autofill
 
 import proton.android.pass.autofill.extensions.isBrowser
 import proton.android.pass.domain.entity.PackageName
-import proton.android.pass.telemetry.api.TelemetryEvent
+import proton.android.pass.telemetry.api.TelemetryEvent.DeferredTelemetryEvent
 
 enum class AutofillTriggerSource(val source: String) {
     Source("source"),
     App("app")
 }
 
-data object AutosaveDone : TelemetryEvent("autosave.done")
-data object AutosaveDisplay : TelemetryEvent("autosave.display")
+data object AutosaveDone : DeferredTelemetryEvent("autosave.done")
+data object AutosaveDisplay : DeferredTelemetryEvent("autosave.display")
 
 data class AutofillDisplayed(
     val source: AutofillTriggerSource,
     val app: PackageName
-) : TelemetryEvent("autofill.display") {
+) : DeferredTelemetryEvent("autofill.display") {
     override fun dimensions(): Map<String, String> {
         val map = mutableMapOf("location" to source.source)
         if (app.isBrowser()) {
@@ -46,7 +46,7 @@ data class AutofillDisplayed(
 data class AutofillDone(
     val source: AutofillTriggerSource,
     val app: PackageName
-) : TelemetryEvent("autofill.triggered") {
+) : DeferredTelemetryEvent("autofill.triggered") {
     override fun dimensions(): Map<String, String> {
         val map = mutableMapOf("location" to source.source)
         if (app.isBrowser()) {
@@ -57,4 +57,4 @@ data class AutofillDone(
     }
 }
 
-data object MFAAutofillCopied : TelemetryEvent("2fa.autofill")
+data object MFAAutofillCopied : DeferredTelemetryEvent("2fa.autofill")

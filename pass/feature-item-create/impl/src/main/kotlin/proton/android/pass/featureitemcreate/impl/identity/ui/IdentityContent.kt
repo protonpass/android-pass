@@ -29,6 +29,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.featureitemcreate.impl.common.CreateUpdateTopBar
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent
@@ -38,11 +39,12 @@ import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsh
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun UpdateIdentityContent(
+fun IdentityContent(
     modifier: Modifier = Modifier,
     identityItemFormState: IdentityItemFormState,
     isLoadingState: IsLoadingState,
     topBarActionName: String,
+    selectedShareId: Option<ShareId>,
     selectedVault: Option<Vault>,
     shouldShowVaultSelector: Boolean,
     validationErrors: PersistentSet<IdentityValidationErrors>,
@@ -62,16 +64,16 @@ fun UpdateIdentityContent(
                 showVaultSelector = shouldShowVaultSelector,
                 onCloseClick = { onEvent(IdentityContentEvent.Up) },
                 onActionClick = {
-                    when (selectedVault) {
+                    when (selectedShareId) {
                         None -> return@CreateUpdateTopBar
-                        is Some -> onEvent(IdentityContentEvent.Submit(selectedVault.value.shareId))
+                        is Some -> onEvent(IdentityContentEvent.Submit(selectedShareId.value))
                     }
                 },
                 onUpgrade = { },
                 onVaultSelectorClick = {
-                    when (selectedVault) {
+                    when (selectedShareId) {
                         None -> return@CreateUpdateTopBar
-                        is Some -> onEvent(IdentityContentEvent.OnVaultSelect(selectedVault.value.shareId))
+                        is Some -> onEvent(IdentityContentEvent.OnVaultSelect(selectedShareId.value))
                     }
                 }
             )

@@ -19,29 +19,34 @@
 package proton.android.pass.features.secure.links.overview.presentation
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior.State
+import kotlinx.datetime.Instant
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.ShareIcon
-import proton.android.pass.domain.securelinks.SecureLinkExpiration
+import proton.android.pass.domain.time.RemainingTime
 
 @State
 internal data class SecureLinksOverviewState(
     internal val secureLinkUrl: String,
     internal val maxViewsAllowed: Int?,
-    internal val expiration: SecureLinkExpiration,
     internal val itemUiModel: ItemUiModel?,
     internal val canLoadExternalImages: Boolean,
-    internal val shareIcon: ShareIcon?
+    internal val shareIcon: ShareIcon?,
+    private val expirationSeconds: Long
 ) {
+
+    internal val remainingTime: RemainingTime = RemainingTime(
+        endInstant = Instant.fromEpochSeconds(expirationSeconds)
+    )
 
     internal companion object {
 
         internal val Initial: SecureLinksOverviewState = SecureLinksOverviewState(
             secureLinkUrl = "",
             maxViewsAllowed = null,
-            expiration = SecureLinkExpiration.SevenDays,
             itemUiModel = null,
             canLoadExternalImages = false,
-            shareIcon = null
+            shareIcon = null,
+            expirationSeconds = 0L,
         )
 
     }

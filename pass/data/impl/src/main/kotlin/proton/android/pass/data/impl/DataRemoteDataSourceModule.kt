@@ -24,14 +24,14 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.core.datasources.RemoteSentinelDataSource
 import proton.android.pass.data.impl.core.datasources.RemoteSentinelDataSourceImpl
-import proton.android.pass.data.impl.remote.RemoteExtraPasswordDataSource
-import proton.android.pass.data.impl.remote.RemoteExtraPasswordDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteAliasDataSource
 import proton.android.pass.data.impl.remote.RemoteAliasDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteBreachDataSource
 import proton.android.pass.data.impl.remote.RemoteBreachDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteEventDataSource
 import proton.android.pass.data.impl.remote.RemoteEventDataSourceImpl
+import proton.android.pass.data.impl.remote.RemoteExtraPasswordDataSource
+import proton.android.pass.data.impl.remote.RemoteExtraPasswordDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteImageFetcher
 import proton.android.pass.data.impl.remote.RemoteImageFetcherImpl
 import proton.android.pass.data.impl.remote.RemoteInviteDataSource
@@ -40,6 +40,8 @@ import proton.android.pass.data.impl.remote.RemoteItemDataSource
 import proton.android.pass.data.impl.remote.RemoteItemDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteItemKeyDataSource
 import proton.android.pass.data.impl.remote.RemoteItemKeyDataSourceImpl
+import proton.android.pass.data.impl.remote.RemoteLiveTelemetryDataSource
+import proton.android.pass.data.impl.remote.RemoteLiveTelemetryDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteOrganizationSettingsDataSource
 import proton.android.pass.data.impl.remote.RemoteOrganizationSettingsDataSourceImpl
 import proton.android.pass.data.impl.remote.RemotePlanDataSource
@@ -104,5 +106,10 @@ abstract class DataRemoteDataSourceModule {
 
     @Binds
     abstract fun bindRemoteAccessKeyDataSource(impl: RemoteExtraPasswordDataSourceImpl): RemoteExtraPasswordDataSource
+
+    @Binds
+    abstract fun bindRemoteLiveTelemetryDataSource(
+        impl: RemoteLiveTelemetryDataSourceImpl
+    ): RemoteLiveTelemetryDataSource
 }
 

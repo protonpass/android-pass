@@ -14,6 +14,7 @@ dependencies {
     implementation(projects.pass.common.api)
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.domain)
+    implementation(projects.pass.telemetry.api)
 
     testImplementation(libs.kotlinTest)
     testImplementation(libs.coroutines.test)

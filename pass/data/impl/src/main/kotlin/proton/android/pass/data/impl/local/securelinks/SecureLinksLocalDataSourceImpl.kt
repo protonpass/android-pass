@@ -19,6 +19,7 @@
 package proton.android.pass.data.impl.local.securelinks
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
@@ -37,6 +38,8 @@ class SecureLinksLocalDataSourceImpl @Inject constructor(
     override suspend fun create(userId: UserId, secureLink: SecureLink) = database.secureLinksDao()
         .insertOrIgnore(secureLink.toEntity(userId))
 
+    override suspend fun getAll(userId: UserId): List<SecureLink> = observeAll(userId).first()
+
     override fun observe(
         userId: UserId,
         secureLinkId: SecureLinkId
@@ -47,6 +50,14 @@ class SecureLinksLocalDataSourceImpl @Inject constructor(
     override fun observeAll(userId: UserId): Flow<List<SecureLink>> = database.secureLinksDao()
         .observeSecureLinks(userId = userId.id)
         .map { entities -> entities.map { entity -> entity.toDomain() } }
+
+    override suspend fun remove(userId: UserId, secureLinks: List<SecureLink>) = secureLinks
+        .map { secureLink -> secureLink.toEntity(userId) }
+        .let { entities -> database.secureLinksDao().delete(*entities.toTypedArray()) }
+
+    override suspend fun update(userId: UserId, secureLinks: List<SecureLink>) = secureLinks
+        .map { secureLink -> secureLink.toEntity(userId) }
+        .let { entities -> database.secureLinksDao().insertOrUpdate(*entities.toTypedArray()) }
 
     private fun SecureLink.toEntity(userId: UserId) = SecureLinkEntity(
         userId = userId.id,

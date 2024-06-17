@@ -34,6 +34,7 @@ import proton.android.pass.data.impl.requests.CreateNewUserInvitesRequest
 import proton.android.pass.data.impl.requests.CreateSecureLinkRequest
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.requests.ExtraPasswordSendSrpDataRequest
+import proton.android.pass.data.impl.requests.ItemReadRequest
 import proton.android.pass.data.impl.requests.MigrateItemRequest
 import proton.android.pass.data.impl.requests.MigrateItemsRequest
 import proton.android.pass.data.impl.requests.SetupExtraPasswordRequest
@@ -240,6 +241,9 @@ interface PasswordManagerApi : BaseRetrofitApi {
     // Telemetry
     @POST("/data/v1/stats/multiple")
     suspend fun sendTelemetry(@Body request: TelemetryRequest): retrofit2.Response<okhttp3.ResponseBody>
+
+    @PUT("$PREFIX/share/{shareId}/item/read")
+    suspend fun sendItemReadEvent(@Path("shareId") shareId: String, @Body request: ItemReadRequest): CodeOnlyResponse
 
     // Sharing
     @POST("$PREFIX/share/{shareId}/invite")

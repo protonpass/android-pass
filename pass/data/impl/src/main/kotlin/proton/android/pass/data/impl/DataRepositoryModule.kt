@@ -31,20 +31,21 @@ import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.repositories.InviteRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
+import proton.android.pass.data.api.repositories.LiveTelemetryRepository
 import proton.android.pass.data.api.repositories.OrganizationSettingsRepository
 import proton.android.pass.data.api.repositories.SearchEntryRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.TelemetryRepository
 import proton.android.pass.data.api.repositories.UserAccessDataRepository
 import proton.android.pass.data.impl.core.repositories.SentinelRepositoryImpl
-import proton.android.pass.data.impl.repositories.ExtraPasswordRepository
-import proton.android.pass.data.impl.repositories.ExtraPasswordRepositoryImpl
 import proton.android.pass.data.impl.repositories.AliasRepositoryImpl
 import proton.android.pass.data.impl.repositories.BreachRepositoryImpl
 import proton.android.pass.data.impl.repositories.BulkInviteRepositoryImpl
 import proton.android.pass.data.impl.repositories.BulkMoveToVaultRepositoryImpl
 import proton.android.pass.data.impl.repositories.EventRepository
 import proton.android.pass.data.impl.repositories.EventRepositoryImpl
+import proton.android.pass.data.impl.repositories.ExtraPasswordRepository
+import proton.android.pass.data.impl.repositories.ExtraPasswordRepositoryImpl
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatusRepository
 import proton.android.pass.data.impl.repositories.FetchShareItemsStatusRepositoryImpl
 import proton.android.pass.data.impl.repositories.InviteRepositoryImpl
@@ -52,13 +53,14 @@ import proton.android.pass.data.impl.repositories.ItemKeyRepository
 import proton.android.pass.data.impl.repositories.ItemKeyRepositoryImpl
 import proton.android.pass.data.impl.repositories.ItemRepositoryImpl
 import proton.android.pass.data.impl.repositories.ItemSyncStatusRepositoryImpl
+import proton.android.pass.data.impl.repositories.LiveTelemetryRepositoryImpl
 import proton.android.pass.data.impl.repositories.OnMemoryDraftRepository
 import proton.android.pass.data.impl.repositories.OrganizationSettingsRepositoryImpl
 import proton.android.pass.data.impl.repositories.PlanRepository
 import proton.android.pass.data.impl.repositories.PlanRepositoryImpl
+import proton.android.pass.data.impl.repositories.SearchEntryRepositoryImpl
 import proton.android.pass.data.impl.repositories.SecureLinkRepository
 import proton.android.pass.data.impl.repositories.SecureLinkRepositoryImpl
-import proton.android.pass.data.impl.repositories.SearchEntryRepositoryImpl
 import proton.android.pass.data.impl.repositories.ShareKeyRepository
 import proton.android.pass.data.impl.repositories.ShareKeyRepositoryImpl
 import proton.android.pass.data.impl.repositories.ShareRepositoryImpl
@@ -136,4 +138,7 @@ abstract class DataRepositoryModule {
 
     @Binds
     abstract fun bindAccessKeyRepository(impl: ExtraPasswordRepositoryImpl): ExtraPasswordRepository
+
+    @Binds
+    abstract fun bindLiveTelemetryRepository(impl: LiveTelemetryRepositoryImpl): LiveTelemetryRepository
 }

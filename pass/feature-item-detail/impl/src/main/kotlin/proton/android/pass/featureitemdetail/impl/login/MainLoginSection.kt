@@ -77,7 +77,7 @@ internal fun MainLoginSection(
                     iconResId = CoreR.drawable.ic_proton_user,
                     email = email,
                     showViewAlias = showViewAlias,
-                    onEmailClick = { onEvent(LoginDetailEvent.OnUsernameClick) },
+                    onEmailClick = { onEvent(LoginDetailEvent.OnEmailClick(email)) },
                     onGoToAliasClick = { onEvent(LoginDetailEvent.OnGoToAliasClick) }
                 )
             }

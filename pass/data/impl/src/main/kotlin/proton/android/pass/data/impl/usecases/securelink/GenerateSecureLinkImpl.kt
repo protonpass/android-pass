@@ -26,6 +26,7 @@ import proton.android.pass.data.api.usecases.securelink.SecureLinkOptions
 import proton.android.pass.data.impl.repositories.SecureLinkRepository
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.securelinks.SecureLinkId
 import javax.inject.Inject
 
 class GenerateSecureLinkImpl @Inject constructor(
@@ -38,9 +39,9 @@ class GenerateSecureLinkImpl @Inject constructor(
         shareId: ShareId,
         itemId: ItemId,
         options: SecureLinkOptions
-    ): String {
+    ): SecureLinkId {
         val id = userId ?: observeCurrentUser().firstOrNull()?.userId
-            ?: throw IllegalStateException("No user logged in")
+        ?: throw IllegalStateException("No user logged in")
 
         return repository.createSecureLink(id, shareId, itemId, options)
     }

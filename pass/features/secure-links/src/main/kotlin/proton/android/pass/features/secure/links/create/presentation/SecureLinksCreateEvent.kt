@@ -18,20 +18,14 @@
 
 package proton.android.pass.features.secure.links.create.presentation
 
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.securelinks.SecureLinkExpiration
+import proton.android.pass.domain.securelinks.SecureLinkId
 
 internal sealed interface SecureLinksCreateEvent {
 
     data object Idle : SecureLinksCreateEvent
 
     data class OnLinkGenerated(
-        internal val shareId: ShareId,
-        internal val itemId: ItemId,
-        internal val expiration: SecureLinkExpiration,
-        internal val maxViewsAllowed: Int?,
-        internal val secureLink: String
+        internal val secureLinkId: SecureLinkId
     ) : SecureLinksCreateEvent
 
 }

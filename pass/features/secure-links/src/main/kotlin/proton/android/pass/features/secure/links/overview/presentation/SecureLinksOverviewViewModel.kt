@@ -24,6 +24,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -34,14 +35,10 @@ import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.api.usecases.ObserveItemById
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
+import proton.android.pass.data.api.usecases.securelink.ObserveSecureLink
 import proton.android.pass.domain.securelinks.SecureLinkExpiration
-import proton.android.pass.features.secure.links.overview.navigation.SecureLinksOverviewExpirationNavArgId
-import proton.android.pass.features.secure.links.overview.navigation.SecureLinksOverviewLinkNavArgId
-import proton.android.pass.features.secure.links.overview.navigation.SecureLinksOverviewMaxViewsNavArgId
-import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.navigation.api.NavParamEncoder
+import proton.android.pass.domain.securelinks.SecureLinkId
+import proton.android.pass.features.secure.links.overview.navigation.SecureLinksOverviewLinkIdNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
@@ -50,6 +47,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SecureLinksOverviewViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
+    observeSecureLink: ObserveSecureLink,
     observeItemById: ObserveItemById,
     observeVaultById: GetVaultById,
     userPreferencesRepository: UserPreferencesRepository,
@@ -58,41 +56,34 @@ class SecureLinksOverviewViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
-    private val shareId: ShareId = savedStateHandleProvider.get()
-        .require<String>(CommonNavArgId.ShareId.key)
-        .let(::ShareId)
+    private val secureLinkId: SecureLinkId = savedStateHandleProvider.get()
+        .require<String>(SecureLinksOverviewLinkIdNavArgId.key)
+        .let(::SecureLinkId)
 
-    private val itemId: ItemId = savedStateHandleProvider.get()
-        .require<String>(CommonNavArgId.ItemId.key)
-        .let(::ItemId)
+    private val secureLinkFlow = observeSecureLink(secureLinkId = secureLinkId)
 
-    private val expiration = savedStateHandleProvider.get()
-        .require<SecureLinkExpiration>(SecureLinksOverviewExpirationNavArgId.key)
-
-    private val maxViewsAllowed: Int? = savedStateHandleProvider.get()
-        .get<String>(SecureLinksOverviewMaxViewsNavArgId.key)
-        ?.toIntOrNull()
-
-    private val secureLink = savedStateHandleProvider.get()
-        .require<String>(SecureLinksOverviewLinkNavArgId.key)
-        .let(NavParamEncoder::decode)
-
-    private val itemUiModelFlow = observeItemById(shareId = shareId, itemId = itemId)
-        .map { item ->
-            encryptionContextProvider.withEncryptionContext {
-                item.toUiModel(this@withEncryptionContext).copy(isPinned = false)
-            }
+    private val itemUiModelFlow = secureLinkFlow.flatMapLatest { secureLink ->
+        observeItemById(shareId = secureLink.shareId, itemId = secureLink.itemId)
+    }.map { item ->
+        encryptionContextProvider.withEncryptionContext {
+            item.toUiModel(this@withEncryptionContext).copy(isPinned = false)
         }
+    }
+
+    private val vaultFlow = secureLinkFlow.flatMapLatest { secureLink ->
+        observeVaultById(shareId = secureLink.shareId)
+    }
 
     internal val state: StateFlow<SecureLinksOverviewState> = combine(
+        secureLinkFlow,
         itemUiModelFlow,
-        observeVaultById(shareId = shareId),
+        vaultFlow,
         userPreferencesRepository.getUseFaviconsPreference()
-    ) { itemUiModel, vault, useFavIconsPreference ->
+    ) { secureLink, itemUiModel, vault, useFavIconsPreference ->
         SecureLinksOverviewState(
-            secureLink = secureLink,
-            expiration = expiration,
-            maxViewsAllows = maxViewsAllowed,
+            secureLinkUrl = secureLink.url,
+            expiration = SecureLinkExpiration.SevenDays,
+            maxViewsAllowed = secureLink.maxReadCount,
             itemUiModel = itemUiModel,
             canLoadExternalImages = useFavIconsPreference.value(),
             shareIcon = vault.icon
@@ -100,15 +91,11 @@ class SecureLinksOverviewViewModel @Inject constructor(
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = SecureLinksOverviewState.initial(
-            secureLink = secureLink,
-            expiration = expiration,
-            maxViewsAllows = maxViewsAllowed
-        )
+        initialValue = SecureLinksOverviewState.Initial
     )
 
     internal fun onLinkCopied() {
-        clipboardManager.copyToClipboard(text = secureLink, isSecure = false)
+        clipboardManager.copyToClipboard(text = state.value.secureLinkUrl, isSecure = false)
 
         viewModelScope.launch {
             snackbarDispatcher(SecureLinksOverviewSnackbarMessage.LinkCopied)

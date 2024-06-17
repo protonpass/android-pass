@@ -37,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -164,13 +165,17 @@ private fun SecureLinksListGridCellInfo(
                 }
 
                 is Some -> {
-                    stringResource(
-                        id = R.string.secure_links_list_expiration_description,
-                        passRemainingTimeText(remainingTime = expiration.value)
-                            ?: stringResource(id = R.string.secure_links_list_unknown_expiration_description)
-                    )
+                    passRemainingTimeText(remainingTime = expiration.value)
+                        ?.let { remainingTimeText ->
+                            stringResource(
+                                id = R.string.secure_links_list_expiration_description,
+                                remainingTimeText
+                            )
+                        }
+                        .orEmpty()
                 }
             },
+            textAlign = TextAlign.Center,
             style = ProtonTheme.typography.captionRegular,
             color = PassTheme.colors.textWeak
         )
@@ -186,7 +191,6 @@ private fun SecureLinksListGridCellInfo(
         )
     }
 }
-
 
 @Composable
 private fun BoxScope.SecureLinksGridCellMenu(modifier: Modifier = Modifier, onClick: () -> Unit) {

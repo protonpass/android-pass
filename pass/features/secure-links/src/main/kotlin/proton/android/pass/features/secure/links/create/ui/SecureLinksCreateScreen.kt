@@ -43,11 +43,7 @@ fun SecureLinksCreateScreen(
         when (val event = state.event) {
             SecureLinksCreateEvent.Idle -> {}
             is SecureLinksCreateEvent.OnLinkGenerated -> SecureLinksNavDestination.SecureLinkOverview(
-                shareId = event.shareId,
-                itemId = event.itemId,
-                expiration = event.expiration,
-                secureLink = event.secureLink,
-                maxViewsAllowed = event.maxViewsAllowed
+                secureLinkId = event.secureLinkId
             ).also(onNavigated)
         }
     }

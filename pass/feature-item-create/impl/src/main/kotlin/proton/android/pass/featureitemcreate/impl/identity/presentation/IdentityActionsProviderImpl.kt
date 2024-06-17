@@ -23,19 +23,30 @@ import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.collections.immutable.toPersistentSet
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_KEY
+import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_TITLE_KEY
+import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_SECTION_TITLE_KEY
 import proton.android.pass.data.api.repositories.DRAFT_IDENTITY_CUSTOM_FIELD_KEY
+import proton.android.pass.data.api.repositories.DRAFT_IDENTITY_EXTRA_SECTION_KEY
+import proton.android.pass.data.api.repositories.DRAFT_REMOVE_CUSTOM_FIELD_KEY
+import proton.android.pass.data.api.repositories.DRAFT_REMOVE_CUSTOM_SECTION_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemContents
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.common.CustomFieldIndexTitle
 import proton.android.pass.featureitemcreate.impl.common.UICustomFieldContent
@@ -50,7 +61,7 @@ import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsh
 import proton.android.pass.featureitemcreate.impl.identity.ui.IdentitySectionType
 import javax.inject.Inject
 
-@Suppress("TooManyFunctions")
+@Suppress("TooManyFunctions", "LargeClass")
 @ViewModelScoped
 class IdentityActionsProviderImpl @Inject constructor(
     private val draftRepository: DraftRepository,
@@ -225,14 +236,14 @@ class IdentityActionsProviderImpl @Inject constructor(
         }
     }
 
-    override fun onAddExtraSection(value: String) {
+    private fun onAddExtraSection(value: String) {
         identityItemFormMutableState = identityItemFormMutableState.copy(
             uiExtraSections = identityItemFormMutableState.uiExtraSections +
                 listOf(UIExtraSection(value, emptyList()))
         )
     }
 
-    override fun onRenameCustomSection(value: CustomFieldIndexTitle) {
+    private fun onRenameCustomSection(value: CustomFieldIndexTitle) {
         identityItemFormMutableState = identityItemFormMutableState.copy(
             uiExtraSections = identityItemFormMutableState.uiExtraSections.toMutableList()
                 .apply {
@@ -244,14 +255,14 @@ class IdentityActionsProviderImpl @Inject constructor(
         )
     }
 
-    override fun onRemoveCustomSection(index: Int) {
+    private fun onRemoveCustomSection(index: Int) {
         identityItemFormMutableState = identityItemFormMutableState.copy(
             uiExtraSections = identityItemFormMutableState.uiExtraSections.toMutableList()
                 .apply { removeAt(index) }
         )
     }
 
-    override fun onAddCustomField(value: CustomFieldContent, customExtraField: CustomExtraField) {
+    private fun onAddCustomField(value: CustomFieldContent, customExtraField: CustomExtraField) {
         val uiCustomFieldContent = UICustomFieldContent.from(value)
         identityItemFormMutableState = when (customExtraField) {
             AddressCustomField -> identityItemFormMutableState.copy(
@@ -298,7 +309,7 @@ class IdentityActionsProviderImpl @Inject constructor(
         }
     }
 
-    override fun onRemoveCustomField(index: Int, customExtraField: CustomExtraField) {
+    private fun onRemoveCustomField(index: Int, customExtraField: CustomExtraField) {
         identityItemFormMutableState = when (customExtraField) {
             AddressCustomField -> identityItemFormMutableState.copy(
                 uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(
@@ -350,12 +361,16 @@ class IdentityActionsProviderImpl @Inject constructor(
         val (content, index) = when (customExtraField) {
             AddressCustomField ->
                 identityItemFormMutableState.uiAddressDetails.customFields[value.index] to value.index
+
             ContactCustomField ->
                 identityItemFormMutableState.uiContactDetails.customFields[value.index] to value.index
+
             PersonalCustomField ->
                 identityItemFormMutableState.uiPersonalDetails.customFields[value.index] to value.index
+
             WorkCustomField ->
                 identityItemFormMutableState.uiWorkDetails.customFields[value.index] to value.index
+
             is ExtraSectionCustomField ->
                 identityItemFormMutableState.uiExtraSections[customExtraField.index]
                     .customFields[value.index] to value.index
@@ -460,6 +475,13 @@ class IdentityActionsProviderImpl @Inject constructor(
         draftRepository.save(DRAFT_IDENTITY_CUSTOM_FIELD_KEY, customExtraField)
     }
 
+    override fun onItemReceivedState(item: Item) {
+        val itemContents = encryptionContextProvider.withEncryptionContext {
+            item.toItemContents(this@withEncryptionContext) as ItemContents.Identity
+        }
+        identityItemFormMutableState = IdentityItemFormState(itemContents)
+    }
+
     @Suppress("LongMethod")
     private fun updateCustomFieldState(
         field: FieldChange.CustomField,
@@ -554,5 +576,78 @@ class IdentityActionsProviderImpl @Inject constructor(
                     }
             )
         }
+    }
+
+
+    private suspend fun observeNewCustomField() {
+        draftRepository.get<CustomFieldContent>(DRAFT_CUSTOM_FIELD_KEY)
+            .collect {
+                if (it !is Some) return@collect
+                draftRepository.delete<CustomFieldContent>(DRAFT_CUSTOM_FIELD_KEY)
+                val extraFieldType =
+                    draftRepository.delete<CustomExtraField>(DRAFT_IDENTITY_CUSTOM_FIELD_KEY)
+                if (extraFieldType !is Some) return@collect
+                onAddCustomField(it.value, extraFieldType.value)
+            }
+    }
+
+    private suspend fun observeNewExtraSection() {
+        draftRepository.get<String>(DRAFT_IDENTITY_EXTRA_SECTION_KEY)
+            .collect {
+                if (it !is Some) return@collect
+                draftRepository.delete<String>(DRAFT_IDENTITY_EXTRA_SECTION_KEY)
+                onAddExtraSection(it.value)
+            }
+    }
+
+    private suspend fun observeRemoveCustomField() {
+        draftRepository.get<Int>(DRAFT_REMOVE_CUSTOM_FIELD_KEY)
+            .collect {
+                if (it !is Some) return@collect
+                draftRepository.delete<Int>(DRAFT_REMOVE_CUSTOM_FIELD_KEY)
+                val extraFieldType =
+                    draftRepository.delete<CustomExtraField>(DRAFT_IDENTITY_CUSTOM_FIELD_KEY)
+                if (extraFieldType !is Some) return@collect
+                onRemoveCustomField(it.value, extraFieldType.value)
+            }
+    }
+
+    private suspend fun observeRemoveExtraSection() {
+        draftRepository.get<Int>(DRAFT_REMOVE_CUSTOM_SECTION_KEY)
+            .collect {
+                if (it !is Some) return@collect
+                draftRepository.delete<Int>(DRAFT_REMOVE_CUSTOM_SECTION_KEY)
+                onRemoveCustomSection(it.value)
+            }
+    }
+
+    private suspend fun observeRenameCustomField() {
+        draftRepository.get<CustomFieldIndexTitle>(DRAFT_CUSTOM_FIELD_TITLE_KEY)
+            .collect {
+                if (it !is Some) return@collect
+                draftRepository.delete<CustomFieldIndexTitle>(DRAFT_CUSTOM_FIELD_TITLE_KEY)
+                val extraFieldType =
+                    draftRepository.delete<CustomExtraField>(DRAFT_IDENTITY_CUSTOM_FIELD_KEY)
+                if (extraFieldType !is Some) return@collect
+                onRenameCustomField(it.value, extraFieldType.value)
+            }
+    }
+
+    private suspend fun observeRenameExtraSection() {
+        draftRepository.get<CustomFieldIndexTitle>(DRAFT_CUSTOM_SECTION_TITLE_KEY)
+            .collect {
+                if (it !is Some) return@collect
+                draftRepository.delete<CustomFieldIndexTitle>(DRAFT_CUSTOM_SECTION_TITLE_KEY)
+                onRenameCustomSection(it.value)
+            }
+    }
+
+    override fun observeDraftChanges(coroutineScope: CoroutineScope) {
+        coroutineScope.launch { observeNewCustomField() }
+        coroutineScope.launch { observeRemoveCustomField() }
+        coroutineScope.launch { observeRenameCustomField() }
+        coroutineScope.launch { observeNewExtraSection() }
+        coroutineScope.launch { observeRemoveExtraSection() }
+        coroutineScope.launch { observeRenameExtraSection() }
     }
 }

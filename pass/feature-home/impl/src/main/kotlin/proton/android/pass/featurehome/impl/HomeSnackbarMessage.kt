@@ -37,6 +37,7 @@ enum class HomeSnackbarMessage(
     MoveToTrashError(R.string.home_snackbar_move_to_trash_error, SnackbarType.ERROR),
     AliasCopied(R.string.alias_copied_to_clipboard, SnackbarType.NORM, true),
     NoteCopied(R.string.note_copied_to_clipboard, SnackbarType.NORM, true),
+    FullNameCopied(R.string.full_name_copied_to_clipboard, SnackbarType.NORM, true),
     PasswordCopied(R.string.password_copied_to_clipboard, SnackbarType.NORM, true),
     UsernameCopied(R.string.username_copied_to_clipboard, SnackbarType.NORM, true),
     CreditCardNumberCopied(

@@ -23,6 +23,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -30,6 +31,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.securelink.ObserveUnexpiredSecureLinks
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import javax.inject.Inject
@@ -57,6 +59,9 @@ class SecureLinksListViewModel @Inject constructor(
                 }
             }
         }
+    }.catch { error ->
+        PassLogger.w(TAG, "There was an error while observing secure links")
+        PassLogger.w(TAG, error)
     }
 
     internal val state: StateFlow<SecureLinksListState> = combine(
@@ -73,5 +78,11 @@ class SecureLinksListViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000L),
         initialValue = SecureLinksListState.Initial
     )
+
+    private companion object {
+
+        private const val TAG = "SecureLinksListViewModel"
+
+    }
 
 }

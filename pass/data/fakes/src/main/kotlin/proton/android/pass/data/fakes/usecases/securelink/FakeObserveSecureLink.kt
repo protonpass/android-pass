@@ -16,15 +16,19 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.secure.links.overview.navigation
+package proton.android.pass.data.fakes.usecases.securelink
 
-import androidx.navigation.NavType
-import proton.android.pass.navigation.api.OptionalNavArgId
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
+import proton.android.pass.data.api.usecases.securelink.ObserveSecureLink
+import proton.android.pass.domain.securelinks.SecureLink
+import proton.android.pass.domain.securelinks.SecureLinkId
+import javax.inject.Inject
+import javax.inject.Singleton
 
-internal object SecureLinksOverviewMaxViewsNavArgId : OptionalNavArgId {
+@Singleton
+class FakeObserveSecureLink @Inject constructor() : ObserveSecureLink {
 
-    override val key: String = "secureLinksOverviewMaxViews"
-
-    override val navType: NavType<*> = NavType.StringType
+    override fun invoke(secureLinkId: SecureLinkId): Flow<SecureLink> = emptyFlow()
 
 }

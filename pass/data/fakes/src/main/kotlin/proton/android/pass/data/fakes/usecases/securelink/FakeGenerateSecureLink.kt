@@ -23,16 +23,17 @@ import proton.android.pass.data.api.usecases.securelink.GenerateSecureLink
 import proton.android.pass.data.api.usecases.securelink.SecureLinkOptions
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.securelinks.SecureLinkId
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class FakeGenerateSecureLink @Inject constructor() : GenerateSecureLink {
 
-    private var response: Result<String> = Result.success(DEFAULT_URL)
+    private var secureLinkId = SecureLinkId(id = "")
 
-    fun setResponse(value: Result<String>) {
-        response = value
+    fun setSecureLinkId(newSecureLinkId: String) {
+        secureLinkId = SecureLinkId(id = newSecureLinkId)
     }
 
     override suspend fun invoke(
@@ -40,9 +41,12 @@ class FakeGenerateSecureLink @Inject constructor() : GenerateSecureLink {
         shareId: ShareId,
         itemId: ItemId,
         options: SecureLinkOptions
-    ): String = response.getOrThrow()
+    ): SecureLinkId = secureLinkId
 
-    companion object {
+    private companion object {
+
         const val DEFAULT_URL = "https://default.local"
+
     }
+
 }

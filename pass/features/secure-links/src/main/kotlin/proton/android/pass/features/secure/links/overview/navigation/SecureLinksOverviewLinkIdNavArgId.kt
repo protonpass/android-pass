@@ -21,9 +21,9 @@ package proton.android.pass.features.secure.links.overview.navigation
 import androidx.navigation.NavType
 import proton.android.pass.navigation.api.NavArgId
 
-internal object SecureLinksOverviewLinkNavArgId : NavArgId {
+internal object SecureLinksOverviewLinkIdNavArgId : NavArgId {
 
-    override val key: String = "secureLinksOverviewLink"
+    override val key: String = "secureLinksOverviewLinkId"
 
     override val navType: NavType<*> = NavType.StringType
 

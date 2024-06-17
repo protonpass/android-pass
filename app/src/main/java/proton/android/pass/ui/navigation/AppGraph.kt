@@ -746,7 +746,10 @@ fun NavGraphBuilder.appGraph(
                     val prefix = CustomFieldPrefix.fromLogin(backDestination)
                     appNavigator.navigate(
                         destination = EditCustomFieldNameDialogNavItem(prefix),
-                        route = EditCustomFieldNameDialogNavItem(prefix).buildRoute(it.index, it.currentValue),
+                        route = EditCustomFieldNameDialogNavItem(prefix).buildRoute(
+                            it.index,
+                            it.currentValue
+                        ),
                         backDestination = backDestination
                     )
                 }
@@ -1649,11 +1652,7 @@ fun NavGraphBuilder.appGraph(
                 is SecureLinksNavDestination.SecureLinkOverview -> appNavigator.navigate(
                     destination = SecureLinksOverviewNavItem,
                     route = SecureLinksOverviewNavItem.createNavRoute(
-                        shareId = destination.shareId,
-                        itemId = destination.itemId,
-                        expiration = destination.expiration,
-                        maxViewsAllowed = destination.maxViewsAllowed,
-                        secureLink = destination.secureLink
+                        secureLinkId = destination.secureLinkId
                     ),
                     backDestination = ViewItem
                 )

@@ -114,16 +114,10 @@ class SecureLinksCreateViewModel @Inject constructor(
                 PassLogger.w(TAG, "There was an error generating a secure link")
                 PassLogger.w(TAG, error)
                 snackbarDispatcher(SecureLinksCreateSnackbarMessage.GenerateSecureLinkError)
-            }.onSuccess { secureLink ->
+            }.onSuccess { secureLinkId ->
                 _state.update { currentState ->
                     currentState.copy(
-                        event = SecureLinksCreateEvent.OnLinkGenerated(
-                            shareId = shareId,
-                            itemId = itemId,
-                            expiration = state.value.expiration,
-                            maxViewsAllowed = state.value.maxViewsAllowedOption.value(),
-                            secureLink = secureLink
-                        )
+                        event = SecureLinksCreateEvent.OnLinkGenerated(secureLinkId)
                     )
                 }
             }

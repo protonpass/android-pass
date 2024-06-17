@@ -18,32 +18,23 @@
 
 package proton.android.pass.data.impl.usecases.securelink
 
-import kotlinx.coroutines.flow.firstOrNull
-import me.proton.core.domain.entity.UserId
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
-import proton.android.pass.data.api.usecases.securelink.GenerateSecureLink
-import proton.android.pass.data.api.usecases.securelink.SecureLinkOptions
+import proton.android.pass.data.api.usecases.securelink.ObserveSecureLink
 import proton.android.pass.data.impl.repositories.SecureLinkRepository
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.securelinks.SecureLink
 import proton.android.pass.domain.securelinks.SecureLinkId
 import javax.inject.Inject
 
-class GenerateSecureLinkImpl @Inject constructor(
+class ObserveSecureLinkImpl @Inject constructor(
     private val observeCurrentUser: ObserveCurrentUser,
     private val repository: SecureLinkRepository
-) : GenerateSecureLink {
+) : ObserveSecureLink {
 
-    override suspend fun invoke(
-        userId: UserId?,
-        shareId: ShareId,
-        itemId: ItemId,
-        options: SecureLinkOptions
-    ): SecureLinkId {
-        val id = userId ?: observeCurrentUser().firstOrNull()?.userId
-        ?: throw IllegalStateException("No user logged in")
-
-        return repository.createSecureLink(id, shareId, itemId, options)
-    }
+    override fun invoke(secureLinkId: SecureLinkId): Flow<SecureLink> = observeCurrentUser()
+        .flatMapLatest { user ->
+            repository.observeSecureLink(user.userId, secureLinkId)
+        }
 
 }

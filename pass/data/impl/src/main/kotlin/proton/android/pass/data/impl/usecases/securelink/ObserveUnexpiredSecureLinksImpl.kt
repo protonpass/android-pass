@@ -16,26 +16,22 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.domain.securelinks
+package proton.android.pass.data.impl.usecases.securelink
 
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinks
+import proton.android.pass.data.api.usecases.securelink.ObserveUnexpiredSecureLinks
+import proton.android.pass.domain.securelinks.SecureLink
+import javax.inject.Inject
 
-@JvmInline
-value class SecureLinkId(val id: String)
+class ObserveUnexpiredSecureLinksImpl @Inject constructor(
+    private val observeSecureLinks: ObserveSecureLinks,
+) : ObserveUnexpiredSecureLinks {
 
-data class SecureLink(
-    val id: SecureLinkId,
-    val shareId: ShareId,
-    val itemId: ItemId,
-    val expiration: Instant?,
-    val maxReadCount: Int?,
-    val readCount: Int,
-    val url: String
-) {
-
-    val isExpired: Boolean = expiration == null || expiration < Clock.System.now()
+    override fun invoke(): Flow<List<SecureLink>> = observeSecureLinks()
+        .map { secureLinks ->
+            secureLinks.filter { secureLink -> !secureLink.isExpired}
+        }
 
 }

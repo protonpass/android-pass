@@ -33,8 +33,6 @@ interface SecureLinksLocalDataSource {
 
     fun observeAll(userId: UserId): Flow<List<SecureLink>>
 
-    suspend fun remove(userId: UserId, secureLinks: List<SecureLink>)
-
     suspend fun update(userId: UserId, secureLinks: List<SecureLink>)
 
 }

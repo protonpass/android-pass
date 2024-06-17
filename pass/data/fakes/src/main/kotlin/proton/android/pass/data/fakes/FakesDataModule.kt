@@ -158,6 +158,7 @@ import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry
 import proton.android.pass.data.api.usecases.securelink.GenerateSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinks
+import proton.android.pass.data.api.usecases.securelink.ObserveUnexpiredSecureLinks
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
 import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareId
@@ -297,6 +298,7 @@ import proton.android.pass.data.fakes.usecases.items.FakeUpdateItemFlag
 import proton.android.pass.data.fakes.usecases.securelink.FakeGenerateSecureLink
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLink
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLinks
+import proton.android.pass.data.fakes.usecases.securelink.FakeObserveUnexpiredSecureLinks
 import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
 import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
 import proton.android.pass.data.fakes.usecases.vaults.FakeObserveVaultsGroupedByShareId
@@ -740,5 +742,8 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObserveSecureLinks(impl: FakeObserveSecureLinks): ObserveSecureLinks
+
+    @Binds
+    abstract fun bindObserveUnexpiredSecureLinks(impl: FakeObserveUnexpiredSecureLinks): ObserveUnexpiredSecureLinks
 
 }

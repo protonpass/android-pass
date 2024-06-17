@@ -121,7 +121,7 @@ internal fun SecureLinksOverviewContent(
                     modifier = Modifier.weight(weight = 1f),
                     iconResId = CoreR.drawable.ic_proton_eye,
                     titleResId = R.string.secure_links_overview_widget_max_views_title,
-                    infoText = maxViewsAllows
+                    infoText = maxViewsAllowed
                         ?.let { maxViews ->
                             pluralStringResource(
                                 id = R.plurals.secure_links_overview_widget_max_views_limited,
@@ -133,7 +133,7 @@ internal fun SecureLinksOverviewContent(
                 )
             }
 
-            SecureLinksOverviewLinkWidget(secureLink = secureLink)
+            SecureLinksOverviewLinkWidget(secureLink = secureLinkUrl)
         }
     }
 }

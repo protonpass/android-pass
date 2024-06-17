@@ -25,6 +25,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
@@ -41,31 +42,43 @@ sealed interface IdentityUiState {
     data object Error : IdentityUiState
 
     @Immutable
-    data class Success(
+    data class CreateIdentity(
         val shareUiState: ShareUiState,
         val sharedState: IdentitySharedUiState
     ) : IdentityUiState
 
+    @Immutable
+    data class UpdateIdentity(
+        val selectedShareId: ShareId,
+        val sharedState: IdentitySharedUiState
+    ) : IdentityUiState
+
     val hasUserEdited: Boolean
-        get() = if (this is Success) sharedState.hasUserEditedContent else false
+        get() = if (this is CreateIdentity) sharedState.hasUserEditedContent else false
 
-    fun shouldShowVaultSelector(): Boolean =
-        if (this is Success && shareUiState is ShareUiState.Success) shareUiState.vaultList.size > 1 else false
+    fun shouldShowVaultSelector(): Boolean = when {
+        this is CreateIdentity && shareUiState is ShareUiState.Success -> shareUiState.vaultList.size > 1
+        else -> false
+    }
 
-    fun getSelectedVault(): Option<Vault> =
-        if (this is Success && shareUiState is ShareUiState.Success) shareUiState.currentVault.vault.some() else None
+    fun getSelectedVault(): Option<Vault> = when {
+        this is CreateIdentity && shareUiState is ShareUiState.Success ->
+            shareUiState.currentVault.vault.some()
+        else -> None
+    }
 
-    fun getItemSavedState(): ItemSavedState = if (this is Success) sharedState.isItemSaved else ItemSavedState.Unknown
+    fun getItemSavedState(): ItemSavedState =
+        if (this is CreateIdentity) sharedState.isItemSaved else ItemSavedState.Unknown
 
     fun getSubmitLoadingState(): IsLoadingState = when (this) {
         is Loading -> IsLoadingState.Loading
-        is Success -> sharedState.isLoadingState
+        is CreateIdentity -> sharedState.isLoadingState
         else -> IsLoadingState.NotLoading
     }
 
     fun getValidationErrors(): PersistentSet<IdentityValidationErrors> =
-        if (this is Success) sharedState.validationErrors else persistentSetOf()
+        if (this is CreateIdentity) sharedState.validationErrors else persistentSetOf()
 
     fun getExtraFields(): PersistentSet<ExtraField> =
-        if (this is Success) sharedState.extraFields else persistentSetOf()
+        if (this is CreateIdentity) sharedState.extraFields else persistentSetOf()
 }

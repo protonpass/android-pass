@@ -489,7 +489,7 @@ fun HomeScreen(
                     },
                     onEdit = { shareId, itemId ->
                         scope.launch { bottomSheetState.hide() }
-                        onNavigateEvent(HomeNavigation.EditLogin(shareId, itemId))
+                        onNavigateEvent(HomeNavigation.EditIdentity(shareId, itemId))
                     },
                     onMoveToTrash = {
                         scope.launch { bottomSheetState.hide() }

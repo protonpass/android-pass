@@ -40,27 +40,16 @@ import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_KEY
-import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_TITLE_KEY
-import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_SECTION_TITLE_KEY
-import proton.android.pass.data.api.repositories.DRAFT_IDENTITY_CUSTOM_FIELD_KEY
-import proton.android.pass.data.api.repositories.DRAFT_IDENTITY_EXTRA_SECTION_KEY
-import proton.android.pass.data.api.repositories.DRAFT_REMOVE_CUSTOM_FIELD_KEY
-import proton.android.pass.data.api.repositories.DRAFT_REMOVE_CUSTOM_SECTION_KEY
-import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
-import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featureitemcreate.impl.ItemCreate
-import proton.android.pass.featureitemcreate.impl.common.CustomFieldIndexTitle
 import proton.android.pass.featureitemcreate.impl.common.OptionShareIdSaver
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.featureitemcreate.impl.common.getShareUiStateFlow
 import proton.android.pass.featureitemcreate.impl.identity.presentation.IdentitySnackbarMessage.ItemCreated
 import proton.android.pass.featureitemcreate.impl.identity.presentation.IdentitySnackbarMessage.ItemCreationError
-import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.CustomExtraField
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
@@ -76,7 +65,6 @@ class CreateIdentityViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     private val inAppReviewTriggerMetrics: InAppReviewTriggerMetrics,
     private val snackbarDispatcher: SnackbarDispatcher,
-    private val draftRepository: DraftRepository,
     observeVaults: ObserveVaultsWithItemCount,
     observeDefaultVault: ObserveDefaultVault,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -89,12 +77,7 @@ class CreateIdentityViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            launch { observeNewCustomField() }
-            launch { observeRemoveCustomField() }
-            launch { observeRenameCustomField() }
-            launch { observeNewExtraSection() }
-            launch { observeRemoveExtraSection() }
-            launch { observeRenameExtraSection() }
+            identityActionsProvider.observeDraftChanges(this)
         }
     }
 
@@ -126,7 +109,7 @@ class CreateIdentityViewModel @Inject constructor(
         when (shareUiState) {
             is ShareUiState.Error -> IdentityUiState.Error
             is ShareUiState.Loading -> IdentityUiState.Loading
-            is ShareUiState.Success -> IdentityUiState.Success(shareUiState, sharedState)
+            is ShareUiState.Success -> IdentityUiState.CreateIdentity(shareUiState, sharedState)
             ShareUiState.NotInitialised -> IdentityUiState.NotInitialised
         }
     }.stateIn(
@@ -163,69 +146,6 @@ class CreateIdentityViewModel @Inject constructor(
     override fun onCleared() {
         identityActionsProvider.clearState()
         super.onCleared()
-    }
-
-    private suspend fun observeNewCustomField() {
-        draftRepository.get<CustomFieldContent>(DRAFT_CUSTOM_FIELD_KEY)
-            .collect {
-                if (it !is Some) return@collect
-                draftRepository.delete<CustomFieldContent>(DRAFT_CUSTOM_FIELD_KEY)
-                val extraFieldType =
-                    draftRepository.delete<CustomExtraField>(DRAFT_IDENTITY_CUSTOM_FIELD_KEY)
-                if (extraFieldType !is Some) return@collect
-                identityActionsProvider.onAddCustomField(it.value, extraFieldType.value)
-            }
-    }
-
-    private suspend fun observeNewExtraSection() {
-        draftRepository.get<String>(DRAFT_IDENTITY_EXTRA_SECTION_KEY)
-            .collect {
-                if (it !is Some) return@collect
-                draftRepository.delete<String>(DRAFT_IDENTITY_EXTRA_SECTION_KEY)
-                identityActionsProvider.onAddExtraSection(it.value)
-            }
-    }
-
-    private suspend fun observeRemoveCustomField() {
-        draftRepository.get<Int>(DRAFT_REMOVE_CUSTOM_FIELD_KEY)
-            .collect {
-                if (it !is Some) return@collect
-                draftRepository.delete<Int>(DRAFT_REMOVE_CUSTOM_FIELD_KEY)
-                val extraFieldType =
-                    draftRepository.delete<CustomExtraField>(DRAFT_IDENTITY_CUSTOM_FIELD_KEY)
-                if (extraFieldType !is Some) return@collect
-                identityActionsProvider.onRemoveCustomField(it.value, extraFieldType.value)
-            }
-    }
-
-    private suspend fun observeRemoveExtraSection() {
-        draftRepository.get<Int>(DRAFT_REMOVE_CUSTOM_SECTION_KEY)
-            .collect {
-                if (it !is Some) return@collect
-                draftRepository.delete<Int>(DRAFT_REMOVE_CUSTOM_SECTION_KEY)
-                identityActionsProvider.onRemoveCustomSection(it.value)
-            }
-    }
-
-    private suspend fun observeRenameCustomField() {
-        draftRepository.get<CustomFieldIndexTitle>(DRAFT_CUSTOM_FIELD_TITLE_KEY)
-            .collect {
-                if (it !is Some) return@collect
-                draftRepository.delete<CustomFieldIndexTitle>(DRAFT_CUSTOM_FIELD_TITLE_KEY)
-                val extraFieldType =
-                    draftRepository.delete<CustomExtraField>(DRAFT_IDENTITY_CUSTOM_FIELD_KEY)
-                if (extraFieldType !is Some) return@collect
-                identityActionsProvider.onRenameCustomField(it.value, extraFieldType.value)
-            }
-    }
-
-    private suspend fun observeRenameExtraSection() {
-        draftRepository.get<CustomFieldIndexTitle>(DRAFT_CUSTOM_SECTION_TITLE_KEY)
-            .collect {
-                if (it !is Some) return@collect
-                draftRepository.delete<CustomFieldIndexTitle>(DRAFT_CUSTOM_SECTION_TITLE_KEY)
-                identityActionsProvider.onRenameCustomSection(it.value)
-            }
     }
 
     companion object {

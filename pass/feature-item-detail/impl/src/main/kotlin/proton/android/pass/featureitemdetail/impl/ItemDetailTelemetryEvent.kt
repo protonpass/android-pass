@@ -19,20 +19,20 @@
 package proton.android.pass.featureitemdetail.impl
 
 import proton.android.pass.telemetry.api.EventItemType
-import proton.android.pass.telemetry.api.TelemetryEvent
+import proton.android.pass.telemetry.api.TelemetryEvent.DeferredTelemetryEvent
 
-data class ItemDelete(val itemType: EventItemType) : TelemetryEvent("item.deletion") {
+data class ItemDelete(val itemType: EventItemType) : DeferredTelemetryEvent("item.deletion") {
     override fun dimensions(): Map<String, String> = mapOf("type" to itemType.itemTypeName)
 }
-data class ItemRead(val itemType: EventItemType) : TelemetryEvent("item.read") {
+data class ItemRead(val itemType: EventItemType) : DeferredTelemetryEvent("item.read") {
     override fun dimensions(): Map<String, String> = mapOf("type" to itemType.itemTypeName)
 }
 
 data object PassMonitorItemDetailFromWeakPassword :
-    TelemetryEvent("pass_monitor.item_detail_from_weak_password")
+    DeferredTelemetryEvent("pass_monitor.item_detail_from_weak_password")
 
 data object PassMonitorItemDetailFromMissing2FA :
-    TelemetryEvent("pass_monitor.item_detail_from_missing_2fa")
+    DeferredTelemetryEvent("pass_monitor.item_detail_from_missing_2fa")
 
 data object PassMonitorItemDetailFromReusedPassword :
-    TelemetryEvent("pass_monitor.item_detail_from_reused_password")
+    DeferredTelemetryEvent("pass_monitor.item_detail_from_reused_password")

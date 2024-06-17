@@ -35,5 +35,14 @@ abstract class TelemetryModule {
 
     @Binds
     abstract fun bindTelemetryManager(impl: TelemetryManagerImpl): TelemetryManager
+
+    @Binds
+    abstract fun bindLiveTelemetryManager(impl: LiveTelemetryManagerImpl): LiveTelemetryManager
+
+    @Binds
+    abstract fun bindDeferredTelemetryManager(impl: DeferredTelemetryManagerImpl): DeferredTelemetryManager
+
+    @Binds
+    abstract fun bindLiveTelemetrySender(impl: LiveTelemetrySenderImpl): LiveTelemetrySender
 }
 

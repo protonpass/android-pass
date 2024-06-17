@@ -41,10 +41,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import kotlinx.datetime.Clock
 import me.proton.core.compose.theme.ProtonTheme
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Radius
 import proton.android.pass.commonui.api.Spacing
@@ -67,7 +65,7 @@ internal fun SecureLinksListGridCell(
     website: String?,
     packageName: String?,
     canLoadExternalImages: Boolean,
-    expiration: Option<RemainingTime>,
+    remainingTime: RemainingTime,
     views: Int,
     onCellClick: () -> Unit,
     onCellOptionsClick: () -> Unit
@@ -101,7 +99,7 @@ internal fun SecureLinksListGridCell(
 
             SecureLinksListGridCellInfo(
                 title = title,
-                expiration = expiration,
+                remainingTime = remainingTime,
                 views = views
             )
         }
@@ -142,7 +140,7 @@ private fun SecureLinksListGridCellIcon(
 private fun SecureLinksListGridCellInfo(
     modifier: Modifier = Modifier,
     title: String,
-    expiration: Option<RemainingTime>,
+    remainingTime: RemainingTime,
     views: Int
 ) {
     Column(
@@ -159,22 +157,14 @@ private fun SecureLinksListGridCellInfo(
         )
 
         Text(
-            text = when (expiration) {
-                None -> {
-                    stringResource(id = R.string.secure_links_list_unknown_expiration_description)
+            text = passRemainingTimeText(remainingTime = remainingTime)
+                ?.let { remainingTimeText ->
+                    stringResource(
+                        id = R.string.secure_links_list_expiration_description,
+                        remainingTimeText
+                    )
                 }
-
-                is Some -> {
-                    passRemainingTimeText(remainingTime = expiration.value)
-                        ?.let { remainingTimeText ->
-                            stringResource(
-                                id = R.string.secure_links_list_expiration_description,
-                                remainingTimeText
-                            )
-                        }
-                        .orEmpty()
-                }
-            },
+                .orEmpty(),
             textAlign = TextAlign.Center,
             style = ProtonTheme.typography.captionRegular,
             color = PassTheme.colors.textWeak
@@ -216,8 +206,8 @@ internal fun SecureLinksListGridCellPreview(@PreviewParameter(ThemePreviewProvid
                 title = "Link title",
                 website = null,
                 packageName = null,
-                expiration = None,
-                views = 2,
+                remainingTime = RemainingTime(endInstant = Clock.System.now()),
+                views = 0,
                 onCellClick = {},
                 onCellOptionsClick = {}
             )

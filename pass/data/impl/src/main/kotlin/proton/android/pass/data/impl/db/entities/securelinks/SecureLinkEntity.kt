@@ -23,19 +23,19 @@ import androidx.room.Entity
 
 @Entity(
     tableName = SecureLinkTable.NAME,
-    primaryKeys = [SecureLinkTable.Columns.ID]
+    primaryKeys = [SecureLinkTable.Columns.LINK_ID]
 )
 data class SecureLinkEntity(
     @ColumnInfo(name = SecureLinkTable.Columns.USER_ID, index = true)
     val userId: String,
-    @ColumnInfo(name = SecureLinkTable.Columns.ID)
-    val id: String,
+    @ColumnInfo(name = SecureLinkTable.Columns.LINK_ID)
+    val linkId: String,
     @ColumnInfo(name = SecureLinkTable.Columns.SHARE_ID)
     val shareId: String,
     @ColumnInfo(name = SecureLinkTable.Columns.ITEM_ID)
     val itemId: String,
     @ColumnInfo(name = SecureLinkTable.Columns.EXPIRATION)
-    val expiration: Long?,
+    val expirationInSeconds: Long,
     @ColumnInfo(name = SecureLinkTable.Columns.MAX_VIEWS)
     val maxViews: Int?,
     @ColumnInfo(name = SecureLinkTable.Columns.VIEWS)

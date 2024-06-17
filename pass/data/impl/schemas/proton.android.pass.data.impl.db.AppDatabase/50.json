@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 50,
-    "identityHash": "2f7c4e4b6822e792555144f61962f59c",
+    "identityHash": "3a53e1e68141aee0fe00781dca042855",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -3579,8 +3579,8 @@
         ]
       },
       {
-        "tableName": "secure_links",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_id` TEXT NOT NULL, `id` TEXT NOT NULL, `share_id` TEXT NOT NULL, `item_id` TEXT NOT NULL, `expiration` INTEGER, `max_views` INTEGER, `views` INTEGER NOT NULL, `url` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "tableName": "SecureLinkEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_id` TEXT NOT NULL, `link_id` TEXT NOT NULL, `share_id` TEXT NOT NULL, `item_id` TEXT NOT NULL, `expiration` INTEGER NOT NULL, `max_views` INTEGER, `views` INTEGER NOT NULL, `url` TEXT NOT NULL, PRIMARY KEY(`link_id`))",
         "fields": [
           {
             "fieldPath": "userId",
@@ -3589,8 +3589,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "id",
-            "columnName": "id",
+            "fieldPath": "linkId",
+            "columnName": "link_id",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -3607,10 +3607,10 @@
             "notNull": true
           },
           {
-            "fieldPath": "expiration",
+            "fieldPath": "expirationInSeconds",
             "columnName": "expiration",
             "affinity": "INTEGER",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "maxViews",
@@ -3634,18 +3634,18 @@
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "id"
+            "link_id"
           ]
         },
         "indices": [
           {
-            "name": "index_secure_links_user_id",
+            "name": "index_SecureLinkEntity_user_id",
             "unique": false,
             "columnNames": [
               "user_id"
             ],
             "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_secure_links_user_id` ON `${TABLE_NAME}` (`user_id`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_SecureLinkEntity_user_id` ON `${TABLE_NAME}` (`user_id`)"
           }
         ],
         "foreignKeys": []
@@ -3654,7 +3654,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2f7c4e4b6822e792555144f61962f59c')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3a53e1e68141aee0fe00781dca042855')"
     ]
   }
 }

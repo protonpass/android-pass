@@ -24,7 +24,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.onStart
-import kotlinx.datetime.Instant
+import kotlinx.datetime.Clock
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.crypto.api.Base64
@@ -104,7 +104,7 @@ class SecureLinkRepositoryImpl @Inject constructor(
 
         val request = CreateSecureLinkRequest(
             revision = item.revision,
-            expirationTime = options.expirationTime.inWholeSeconds,
+            expirationTime = options.expirationSeconds,
             maxReadCount = options.maxReadCount,
             encryptedItemKey = encodedEncryptedItemKey,
             encryptedLinkKey = encodedEncryptedLinkKey,
@@ -127,7 +127,7 @@ class SecureLinkRepositoryImpl @Inject constructor(
                 id = SecureLinkId(response.secureLinkId),
                 shareId = shareId,
                 itemId = itemId,
-                expiration = Instant.fromEpochSeconds(options.expirationTime.inWholeSeconds),
+                expirationInSeconds = Clock.System.now().epochSeconds + options.expirationSeconds,
                 maxReadCount = options.maxReadCount,
                 readCount = 0,
                 url = concatenated
@@ -150,11 +150,6 @@ class SecureLinkRepositoryImpl @Inject constructor(
 
                     fetchSecureLinksFromRemote(userId).let { remoteSecureLinks ->
                         secureLinksLocalDataSource.update(userId, remoteSecureLinks)
-
-                        secureLinksLocalDataSource.remove(
-                            userId = userId,
-                            secureLinks = localSecureLinks.minus(remoteSecureLinks.toSet())
-                        )
                     }
                 }
             }
@@ -181,7 +176,7 @@ class SecureLinkRepositoryImpl @Inject constructor(
                 id = SecureLinkId(link.linkId),
                 shareId = ShareId(link.shareId),
                 itemId = ItemId(link.itemId),
-                expiration = Instant.fromEpochSeconds(link.expirationTime),
+                expirationInSeconds = link.expirationTime,
                 maxReadCount = link.maxReadCount,
                 readCount = link.readCount,
                 url = fullUrl

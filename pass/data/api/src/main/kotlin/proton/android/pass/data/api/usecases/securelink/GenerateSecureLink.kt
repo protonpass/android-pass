@@ -22,10 +22,9 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.securelinks.SecureLinkId
-import kotlin.time.Duration
 
 data class SecureLinkOptions(
-    val expirationTime: Duration,
+    val expirationSeconds: Long,
     val maxReadCount: Int?
 )
 

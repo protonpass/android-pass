@@ -25,8 +25,9 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.data.fakes.repositories.TestTelemetryRepository
+import proton.android.pass.telemetry.api.TelemetryEvent
 import proton.android.pass.telemetry.api.TelemetryEvent.DeferredTelemetryEvent
+import proton.android.pass.telemetry.api.TelemetryEvent.LiveTelemetryEvent
 import proton.android.pass.test.MainDispatcherRule
 
 data object TestEvent : DeferredTelemetryEvent("test")
@@ -37,18 +38,21 @@ class TelemetryManagerImplTest {
     val dispatcher = MainDispatcherRule()
 
     private lateinit var instance: TelemetryManagerImpl
-    private lateinit var repository: TestTelemetryRepository
+    private lateinit var deferred: FakeDeferredTelemetryManager
+    private lateinit var live: FakeLiveTelemetryManager
 
     @Before
     fun setup() {
-        repository = TestTelemetryRepository()
-        instance = TelemetryManagerImpl(repository)
+        deferred = FakeDeferredTelemetryManager()
+        live = FakeLiveTelemetryManager()
+        instance = TelemetryManagerImpl(
+            deferredTelemetryManager = deferred,
+            liveTelemetryManager = live
+        )
     }
 
     @Test
     fun `sent event is stored`() = runTest {
-        repository.setStoreResult(Result.success(Unit))
-
         val startMutex = Mutex()
         startMutex.lock()
 
@@ -57,7 +61,7 @@ class TelemetryManagerImplTest {
 
         val job = launch {
             instance.startListening(
-                onSubscribed = { startMutex.unlock() },
+                onSubscribed = { if (startMutex.isLocked) startMutex.unlock() },
                 onPerformed = { eventMutex.unlock() }
             )
         }
@@ -71,11 +75,34 @@ class TelemetryManagerImplTest {
         // Make sure the process has been called
         eventMutex.lock()
 
-        val memory = repository.getMemory()
+        val memory = deferred.getMemory()
         assertThat(memory.size).isEqualTo(1)
-        assertThat(memory[0].event).isEqualTo(TestEvent.eventName)
+        assertThat(memory[0].eventName).isEqualTo(TestEvent.eventName)
 
         job.cancel()
     }
+
+    open class FakeTelemetryManager<T : TelemetryEvent> {
+        private var onPerformedCallback: (() -> Unit)? = null
+
+        private var memory: MutableList<T> = mutableListOf()
+        fun getMemory(): List<T> = memory
+
+        open fun sendEvent(event: T) {
+            memory.add(event)
+            onPerformedCallback?.invoke()
+        }
+
+        open suspend fun startListening(onSubscribed: () -> Unit, onPerformed: () -> Unit) {
+            onPerformedCallback = onPerformed
+            onSubscribed()
+        }
+    }
+
+    private class FakeDeferredTelemetryManager :
+        FakeTelemetryManager<DeferredTelemetryEvent>(), DeferredTelemetryManager
+
+    private class FakeLiveTelemetryManager :
+        FakeTelemetryManager<LiveTelemetryEvent>(), LiveTelemetryManager
 
 }

@@ -23,10 +23,10 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.onStart
 import kotlinx.datetime.Instant
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -51,7 +51,9 @@ interface SecureLinkRepository {
         shareId: ShareId,
         itemId: ItemId,
         options: SecureLinkOptions
-    ): String
+    ): SecureLinkId
+
+    fun observeSecureLink(userId: UserId, secureLinkId: SecureLinkId): Flow<SecureLink>
 
     fun observeSecureLinks(userId: UserId): Flow<List<SecureLink>>
 
@@ -70,7 +72,7 @@ class SecureLinkRepositoryImpl @Inject constructor(
         shareId: ShareId,
         itemId: ItemId,
         options: SecureLinkOptions
-    ): String {
+    ): SecureLinkId {
         val item = localItemDataSource.getById(shareId, itemId) ?: throw IllegalStateException(
             "Item not found [shareId=${shareId.id}] [itemId=${itemId.id}]"
         )
@@ -132,13 +134,30 @@ class SecureLinkRepositoryImpl @Inject constructor(
             )
         )
 
-        return concatenated
+        return SecureLinkId(id = response.secureLinkId)
     }
 
-    override fun observeSecureLinks(userId: UserId): Flow<List<SecureLink>> = oneShot {
-        // To be changed to observing the local database when we implement the local data source
-        fetchSecureLinksFromRemote(userId)
-    }
+    override fun observeSecureLink(
+        userId: UserId,
+        secureLinkId: SecureLinkId
+    ): Flow<SecureLink> = secureLinksLocalDataSource.observe(userId, secureLinkId)
+
+    override fun observeSecureLinks(userId: UserId): Flow<List<SecureLink>> =
+        secureLinksLocalDataSource.observeAll(userId)
+            .onStart {
+                secureLinksLocalDataSource.getAll(userId).let { localSecureLinks ->
+                    emit(localSecureLinks)
+
+                    fetchSecureLinksFromRemote(userId).let { remoteSecureLinks ->
+                        secureLinksLocalDataSource.update(userId, remoteSecureLinks)
+
+                        secureLinksLocalDataSource.remove(
+                            userId = userId,
+                            secureLinks = localSecureLinks.minus(remoteSecureLinks.toSet())
+                        )
+                    }
+                }
+            }
 
     private suspend fun fetchSecureLinksFromRemote(userId: UserId): List<SecureLink> {
         val remoteLinks = remoteSecureLinkDataSource.getAllSecureLinks(userId)

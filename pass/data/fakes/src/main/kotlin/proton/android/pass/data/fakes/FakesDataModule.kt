@@ -156,6 +156,7 @@ import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry
 import proton.android.pass.data.api.usecases.securelink.GenerateSecureLink
+import proton.android.pass.data.api.usecases.securelink.ObserveSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinks
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
@@ -294,6 +295,7 @@ import proton.android.pass.data.fakes.usecases.items.FakeObserveMonitoredItems
 import proton.android.pass.data.fakes.usecases.items.FakeOpenItemRevision
 import proton.android.pass.data.fakes.usecases.items.FakeUpdateItemFlag
 import proton.android.pass.data.fakes.usecases.securelink.FakeGenerateSecureLink
+import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLink
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLinks
 import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
 import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
@@ -732,6 +734,9 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindHasExtraPassword(impl: FakeHasExtraPassword): HasExtraPassword
+
+    @Binds
+    abstract fun bindObserveSecureLink(impl: FakeObserveSecureLink): ObserveSecureLink
 
     @Binds
     abstract fun bindObserveSecureLinks(impl: FakeObserveSecureLinks): ObserveSecureLinks

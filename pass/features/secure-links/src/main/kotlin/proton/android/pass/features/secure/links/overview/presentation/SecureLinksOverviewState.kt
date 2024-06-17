@@ -25,8 +25,8 @@ import proton.android.pass.domain.securelinks.SecureLinkExpiration
 
 @State
 internal data class SecureLinksOverviewState(
-    internal val secureLink: String,
-    internal val maxViewsAllows: Int?,
+    internal val secureLinkUrl: String,
+    internal val maxViewsAllowed: Int?,
     internal val expiration: SecureLinkExpiration,
     internal val itemUiModel: ItemUiModel?,
     internal val canLoadExternalImages: Boolean,
@@ -35,14 +35,10 @@ internal data class SecureLinksOverviewState(
 
     internal companion object {
 
-        internal fun initial(
-            secureLink: String,
-            maxViewsAllows: Int?,
-            expiration: SecureLinkExpiration
-        ): SecureLinksOverviewState = SecureLinksOverviewState(
-            secureLink = secureLink,
-            maxViewsAllows = maxViewsAllows,
-            expiration = expiration,
+        internal val Initial: SecureLinksOverviewState = SecureLinksOverviewState(
+            secureLinkUrl = "",
+            maxViewsAllowed = null,
+            expiration = SecureLinkExpiration.SevenDays,
             itemUiModel = null,
             canLoadExternalImages = false,
             shareIcon = null

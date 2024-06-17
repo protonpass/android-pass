@@ -50,7 +50,7 @@ fun SecureLinksOverviewScreen(
                 SecureLinksOverviewUiEvent.OnShareLinkClicked -> {
                     AndroidUtils.shareTextWithThirdParties(
                         context = context,
-                        text = state.secureLink
+                        text = state.secureLinkUrl
                     )
                 }
 

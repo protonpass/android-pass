@@ -96,9 +96,11 @@ dependencies {
     implementation(projects.pass.dataModels.api)
     implementation(projects.pass.domain)
     implementation(projects.pass.log.api)
+    implementation(projects.pass.network.api)
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.protos)
+    implementation(projects.pass.telemetry.api)
 
     testImplementation(libs.core.test.kotlin)
     testImplementation(libs.junit)

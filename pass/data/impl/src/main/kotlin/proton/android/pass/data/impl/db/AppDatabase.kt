@@ -82,6 +82,7 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
 import proton.android.pass.data.impl.db.entities.InviteEntity
 import proton.android.pass.data.impl.db.entities.InviteKeyEntity
 import proton.android.pass.data.impl.db.entities.ItemEntity
+import proton.android.pass.data.impl.db.entities.LiveTelemetryEntity
 import proton.android.pass.data.impl.db.entities.PassDataMigrationEntity
 import proton.android.pass.data.impl.db.entities.PassEventEntity
 import proton.android.pass.data.impl.db.entities.PassOrganizationSettingsEntity
@@ -136,7 +137,8 @@ import proton.android.pass.data.impl.db.entities.securelinks.SecureLinkEntity
         InviteKeyEntity::class,
         UserAccessDataEntity::class,
         PassOrganizationSettingsEntity::class,
-        SecureLinkEntity::class
+        SecureLinkEntity::class,
+        LiveTelemetryEntity::class
     ],
     autoMigrations = [
         AutoMigration(from = 2, to = 3, spec = AppDatabaseMigrations.MIGRATION_2_3::class),
@@ -167,7 +169,8 @@ import proton.android.pass.data.impl.db.entities.securelinks.SecureLinkEntity
         AutoMigration(from = 41, to = 42),
         AutoMigration(from = 45, to = 46),
         AutoMigration(from = 47, to = 48),
-        AutoMigration(from = 49, to = 50)
+        AutoMigration(from = 49, to = 50),
+        AutoMigration(from = 50, to = 51)
     ],
     version = AppDatabase.VERSION,
     exportSchema = true
@@ -208,7 +211,7 @@ abstract class AppDatabase :
     DeviceRecoveryDatabase {
 
     companion object {
-        const val VERSION = 50
+        const val VERSION = 51
 
         const val DB_NAME = "db-passkey"
 

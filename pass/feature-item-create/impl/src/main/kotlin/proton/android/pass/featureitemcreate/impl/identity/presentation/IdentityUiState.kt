@@ -67,6 +67,13 @@ sealed interface IdentityUiState {
         else -> None
     }
 
+    fun getSelectedShareId(): Option<ShareId> = when {
+        this is CreateIdentity && shareUiState is ShareUiState.Success ->
+            shareUiState.currentVault.vault.some().map { it.shareId }
+        this is UpdateIdentity -> selectedShareId.some()
+        else -> None
+    }
+
     fun getItemSavedState(): ItemSavedState =
         if (this is CreateIdentity) sharedState.isItemSaved else ItemSavedState.Unknown
 

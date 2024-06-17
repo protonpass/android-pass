@@ -18,6 +18,8 @@
 
 package proton.android.pass.telemetry.api
 
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemType
 
@@ -52,7 +54,16 @@ enum class EventItemType(val itemTypeName: String) {
     }
 }
 
-@Suppress("UnnecessaryAbstractClass")
-abstract class TelemetryEvent(val eventName: String) {
+sealed class TelemetryEvent(val eventName: String) {
     open fun dimensions(): Map<String, String> = emptyMap()
+
+    @Suppress("UnnecessaryAbstractClass")
+    abstract class DeferredTelemetryEvent(eventName: String) : TelemetryEvent(eventName)
+
+    @Suppress("UnnecessaryAbstractClass")
+    abstract class LiveTelemetryEvent(
+        val id: Option<Long> = None,
+        eventName: String
+    ) : TelemetryEvent(eventName)
+
 }

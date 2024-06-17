@@ -49,6 +49,7 @@ import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
+import proton.android.pass.telemetry.api.events.ItemViewed
 import javax.inject.Inject
 
 @HiltViewModel
@@ -123,6 +124,7 @@ class ItemDetailViewModel @Inject constructor(
         }
         eventItemType?.let {
             telemetryManager.sendEvent(ItemRead(eventItemType))
+            telemetryManager.sendEvent(ItemViewed(shareId, itemId))
         }
     }
 

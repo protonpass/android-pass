@@ -29,11 +29,12 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.presentation.app.AppLifecycleProvider
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.telemetry.api.TelemetryManager
+import proton.android.pass.telemetry.impl.work.LiveTelemetrySenderWorker
 import proton.android.pass.telemetry.impl.work.TelemetrySenderWorker
-import proton.android.pass.telemetry.impl.work.TelemetrySenderWorker.Companion.WORKER_UNIQUE_NAME
 import javax.inject.Inject
 import kotlin.random.Random
 import kotlin.time.Duration.Companion.hours
+import kotlin.time.Duration.Companion.minutes
 
 interface TelemetryStartupManager {
     fun start()
@@ -67,22 +68,40 @@ class TelemetryStartupManagerImpl @Inject constructor(
     }
 
     private fun enqueueWorker() {
+        enqueueDeferredTelemetryWorker()
+        enqueueLiveTelemetryWorker()
+    }
+
+    private fun enqueueDeferredTelemetryWorker() {
         val initialDelay = Random.nextInt(1, 3)
         val request = TelemetrySenderWorker.getRequestFor(
-            repeatInterval = SEND_TELEMETRY_INTERVAL,
+            repeatInterval = DEFERRED_TELEMETRY_INTERVAL,
             initialDelay = initialDelay.hours
         )
         workManager.enqueueUniquePeriodicWork(
-            WORKER_UNIQUE_NAME,
+            TelemetrySenderWorker.WORKER_UNIQUE_NAME,
             ExistingPeriodicWorkPolicy.KEEP,
             request
         )
-        PassLogger.i(TAG, "$WORKER_UNIQUE_NAME enqueued")
+        PassLogger.i(TAG, "${TelemetrySenderWorker.WORKER_UNIQUE_NAME} enqueued")
+    }
+
+    private fun enqueueLiveTelemetryWorker() {
+        val request = LiveTelemetrySenderWorker.getRequestFor(LIVE_TELEMETRY_INTERVAL)
+        workManager.enqueueUniquePeriodicWork(
+            LiveTelemetrySenderWorker.WORKER_UNIQUE_NAME,
+            ExistingPeriodicWorkPolicy.KEEP,
+            request
+        )
+        PassLogger.i(TAG, "${LiveTelemetrySenderWorker.WORKER_UNIQUE_NAME} enqueued")
     }
 
     private fun cancelWorker() {
-        workManager.cancelUniqueWork(WORKER_UNIQUE_NAME)
-        PassLogger.i(TAG, "$WORKER_UNIQUE_NAME cancelled")
+        workManager.cancelUniqueWork(TelemetrySenderWorker.WORKER_UNIQUE_NAME)
+        PassLogger.i(TAG, "${TelemetrySenderWorker.WORKER_UNIQUE_NAME} cancelled")
+
+        workManager.cancelUniqueWork(LiveTelemetrySenderWorker.WORKER_UNIQUE_NAME)
+        PassLogger.i(TAG, "${LiveTelemetrySenderWorker.WORKER_UNIQUE_NAME} cancelled")
     }
 
     private suspend fun startListener() {
@@ -97,6 +116,7 @@ class TelemetryStartupManagerImpl @Inject constructor(
     companion object {
         private const val TAG = "TelemetryStartupManagerImpl"
 
-        private val SEND_TELEMETRY_INTERVAL = 6.hours
+        private val DEFERRED_TELEMETRY_INTERVAL = 6.hours
+        private val LIVE_TELEMETRY_INTERVAL = 15.minutes
     }
 }

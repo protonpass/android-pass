@@ -18,32 +18,32 @@
 
 package proton.android.pass.features.security.center
 
-import proton.android.pass.telemetry.api.TelemetryEvent
+import proton.android.pass.telemetry.api.TelemetryEvent.DeferredTelemetryEvent
 
 data object PassMonitorDisplayHome :
-    TelemetryEvent("pass_monitor.display_home")
+    DeferredTelemetryEvent("pass_monitor.display_home")
 
 data object PassMonitorDisplayWeakPasswords :
-    TelemetryEvent("pass_monitor.display_weak_passwords")
+    DeferredTelemetryEvent("pass_monitor.display_weak_passwords")
 
 data object PassMonitorDisplayReusedPasswords :
-    TelemetryEvent("pass_monitor.display_reused_passwords")
+    DeferredTelemetryEvent("pass_monitor.display_reused_passwords")
 
 data object PassMonitorDisplayMissing2FA :
-    TelemetryEvent("pass_monitor.display_missing_2fa")
+    DeferredTelemetryEvent("pass_monitor.display_missing_2fa")
 
 data object PassMonitorDisplayExcludedItems :
-    TelemetryEvent("pass_monitor.display_excluded_items")
+    DeferredTelemetryEvent("pass_monitor.display_excluded_items")
 
 data object PassMonitorDisplayDarkWebMonitoring :
-    TelemetryEvent("pass_monitor.display_dark_web_monitoring")
+    DeferredTelemetryEvent("pass_monitor.display_dark_web_monitoring")
 
 data object PassMonitorDisplayMonitoringProtonAddresses :
-    TelemetryEvent("pass_monitor.display_monitoring_proton_addresses")
+    DeferredTelemetryEvent("pass_monitor.display_monitoring_proton_addresses")
 
 data object PassMonitorDisplayMonitoringEmailAliases :
-    TelemetryEvent("pass_monitor.display_monitoring_email_aliases")
+    DeferredTelemetryEvent("pass_monitor.display_monitoring_email_aliases")
 
 data object PassMonitorAddCustomEmailFromSuggestion :
-    TelemetryEvent("pass_monitor.add_custom_email_from_suggestion")
+    DeferredTelemetryEvent("pass_monitor.add_custom_email_from_suggestion")
 

@@ -19,15 +19,15 @@
 package proton.android.pass.featureitemcreate.impl
 
 import proton.android.pass.telemetry.api.EventItemType
-import proton.android.pass.telemetry.api.TelemetryEvent
+import proton.android.pass.telemetry.api.TelemetryEvent.DeferredTelemetryEvent
 
-data class ItemCreate(val itemType: EventItemType) : TelemetryEvent("item.creation") {
+data class ItemCreate(val itemType: EventItemType) : DeferredTelemetryEvent("item.creation") {
     override fun dimensions(): Map<String, String> = mapOf("type" to itemType.itemTypeName)
 }
 
-data class ItemUpdate(val itemType: EventItemType) : TelemetryEvent("item.update") {
+data class ItemUpdate(val itemType: EventItemType) : DeferredTelemetryEvent("item.update") {
     override fun dimensions(): Map<String, String> = mapOf("type" to itemType.itemTypeName)
 }
 
-data object MFACreated : TelemetryEvent("2fa.creation")
-data object MFAUpdated : TelemetryEvent("2fa.update")
+data object MFACreated : DeferredTelemetryEvent("2fa.creation")
+data object MFAUpdated : DeferredTelemetryEvent("2fa.update")

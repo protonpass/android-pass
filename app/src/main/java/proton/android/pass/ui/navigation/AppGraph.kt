@@ -66,8 +66,10 @@ import proton.android.pass.featureitemcreate.impl.dialogs.customfield.EditCustom
 import proton.android.pass.featureitemcreate.impl.identity.navigation.BaseIdentityNavigation
 import proton.android.pass.featureitemcreate.impl.identity.navigation.CreateIdentity
 import proton.android.pass.featureitemcreate.impl.identity.navigation.CreateIdentityNavigation
+import proton.android.pass.featureitemcreate.impl.identity.navigation.UpdateIdentity
+import proton.android.pass.featureitemcreate.impl.identity.navigation.UpdateIdentityNavigation
 import proton.android.pass.featureitemcreate.impl.identity.navigation.bottomsheets.IdentityFieldsBottomSheet
-import proton.android.pass.featureitemcreate.impl.identity.navigation.createIdentityGraph
+import proton.android.pass.featureitemcreate.impl.identity.navigation.createUpdateIdentityGraph
 import proton.android.pass.featureitemcreate.impl.identity.navigation.customsection.CustomSectionNameDialogNavItem
 import proton.android.pass.featureitemcreate.impl.identity.navigation.customsection.CustomSectionOptionsBottomSheetNavItem
 import proton.android.pass.featureitemcreate.impl.identity.navigation.customsection.EditCustomSectionNameDialogNavItem
@@ -275,6 +277,11 @@ fun NavGraphBuilder.appGraph(
                 is HomeNavigation.EditCreditCard -> appNavigator.navigate(
                     EditCreditCard,
                     EditCreditCard.createNavRoute(it.shareId, it.itemId)
+                )
+
+                is HomeNavigation.EditIdentity -> appNavigator.navigate(
+                    UpdateIdentity,
+                    UpdateIdentity.createNavRoute(it.shareId, it.itemId)
                 )
 
                 is HomeNavigation.ItemDetail -> {
@@ -882,7 +889,7 @@ fun NavGraphBuilder.appGraph(
             }
         }
     )
-    createIdentityGraph(
+    createUpdateIdentityGraph(
         onNavigate = {
             val backDestination = when {
                 appNavigator.hasDestinationInStack(CreateIdentity) -> CreateIdentity
@@ -951,6 +958,12 @@ fun NavGraphBuilder.appGraph(
                 BaseIdentityNavigation.RemoveCustomSection -> dismissBottomSheet {
                     appNavigator.navigateBack(comesFromBottomsheet = true)
                 }
+
+                is UpdateIdentityNavigation.IdentityUpdated -> appNavigator.navigate(
+                    destination = ViewItem,
+                    route = ViewItem.createNavRoute(it.shareId, it.itemId),
+                    backDestination = Home
+                )
             }
         }
     )

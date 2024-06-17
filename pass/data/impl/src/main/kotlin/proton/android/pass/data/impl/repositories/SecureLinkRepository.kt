@@ -24,7 +24,10 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.onStart
+<<<<<<< HEAD
 import kotlinx.datetime.Clock
+=======
+>>>>>>> da1ba0116 (refactor: use secure links local data source)
 import kotlinx.datetime.Instant
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId

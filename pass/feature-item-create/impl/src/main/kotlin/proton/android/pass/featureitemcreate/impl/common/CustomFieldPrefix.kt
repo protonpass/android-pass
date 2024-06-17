@@ -21,5 +21,6 @@ package proton.android.pass.featureitemcreate.impl.common
 enum class CustomFieldPrefix {
     CreateLogin,
     UpdateLogin,
-    CreateIdentity
+    CreateIdentity,
+    UpdateIdentity
 }

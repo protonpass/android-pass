@@ -29,20 +29,20 @@ import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.GetItemById
-import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinks
+import proton.android.pass.data.api.usecases.securelink.ObserveUnexpiredSecureLinks
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import javax.inject.Inject
 
 @HiltViewModel
 class SecureLinksListViewModel @Inject constructor(
-    observeSecureLinks: ObserveSecureLinks,
+    observeUnexpiredSecureLinks: ObserveUnexpiredSecureLinks,
     getItemById: GetItemById,
     encryptionContextProvider: EncryptionContextProvider,
     userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
 
-    private val secureLinksModelsFlow = observeSecureLinks().map { secureLinks ->
+    private val secureLinksModelsFlow = observeUnexpiredSecureLinks().map { secureLinks ->
         secureLinks.map { secureLink ->
             getItemById(
                 shareId = secureLink.shareId,

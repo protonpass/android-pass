@@ -31,16 +31,15 @@ import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
-import proton.android.pass.composecomponents.impl.buttons.TransparentTextButton
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.common.UICustomFieldContent
+import proton.android.pass.featureitemcreate.impl.common.customfields.AddMoreButton
 import proton.android.pass.featureitemcreate.impl.common.customfields.CustomFieldEntry
 import proton.android.pass.featureitemcreate.impl.login.LoginCustomField
 import proton.android.pass.featureitemcreate.impl.login.LoginCustomField.CustomFieldHidden
 import proton.android.pass.featureitemcreate.impl.login.LoginCustomField.CustomFieldTOTP
 import proton.android.pass.featureitemcreate.impl.login.LoginCustomField.CustomFieldText
 import proton.android.pass.featureitemcreate.impl.login.LoginItemValidationErrors
-import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun CustomFieldsContent(
@@ -117,11 +116,10 @@ internal fun CustomFieldsContent(
         }
 
         if (canUseCustomFields) {
-            TransparentTextButton(
+            AddMoreButton(
                 text = stringResource(R.string.create_login_add_custom_field_button),
-                icon = CoreR.drawable.ic_proton_plus,
-                iconContentDescription = null,
-                color = PassTheme.colors.loginInteractionNormMajor2,
+                bgColor = PassTheme.colors.loginInteractionNormMinor1,
+                textColor = PassTheme.colors.loginInteractionNormMajor2,
                 onClick = { onEvent(CustomFieldEvent.AddCustomField) }
             )
         }

@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.featureitemcreate.impl.common.customfields.AddMoreButton
 import proton.android.pass.featureitemcreate.impl.common.customfields.CustomFieldEntry
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent.OnAddExtraSectionCustomField

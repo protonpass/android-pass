@@ -320,6 +320,9 @@ class IdentityActionsProviderImpl @Inject constructor(
 
             is ExtraSectionCustomField -> {
                 val extraSection = identityItemFormMutableState.uiExtraSections
+                identityFieldDraftRepository.addCustomFieldIndex(
+                    extraSection[customExtraField.index].customFields.size
+                )
                 identityItemFormMutableState.copy(
                     uiExtraSections = extraSection.toMutableList()
                         .apply {

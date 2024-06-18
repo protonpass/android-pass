@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 50,
-    "identityHash": "3a53e1e68141aee0fe00781dca042855",
+    "identityHash": "3147695997e2531a7c36cfcac3337fcd",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -3580,7 +3580,7 @@
       },
       {
         "tableName": "SecureLinkEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_id` TEXT NOT NULL, `link_id` TEXT NOT NULL, `share_id` TEXT NOT NULL, `item_id` TEXT NOT NULL, `expiration` INTEGER NOT NULL, `max_views` INTEGER, `views` INTEGER NOT NULL, `url` TEXT NOT NULL, PRIMARY KEY(`link_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_id` TEXT NOT NULL, `link_id` TEXT NOT NULL, `share_id` TEXT NOT NULL, `item_id` TEXT NOT NULL, `expiration` INTEGER NOT NULL, `max_views` INTEGER, `views` INTEGER NOT NULL, `url` TEXT NOT NULL, PRIMARY KEY(`link_id`), FOREIGN KEY(`user_id`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`item_id`, `share_id`) REFERENCES `ItemEntity`(`id`, `share_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`share_id`) REFERENCES `ShareEntity`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "userId",
@@ -3648,13 +3648,49 @@
             "createSql": "CREATE INDEX IF NOT EXISTS `index_SecureLinkEntity_user_id` ON `${TABLE_NAME}` (`user_id`)"
           }
         ],
-        "foreignKeys": []
+        "foreignKeys": [
+          {
+            "table": "UserEntity",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "user_id"
+            ],
+            "referencedColumns": [
+              "userId"
+            ]
+          },
+          {
+            "table": "ItemEntity",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "item_id",
+              "share_id"
+            ],
+            "referencedColumns": [
+              "id",
+              "share_id"
+            ]
+          },
+          {
+            "table": "ShareEntity",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "share_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3a53e1e68141aee0fe00781dca042855')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3147695997e2531a7c36cfcac3337fcd')"
     ]
   }
 }

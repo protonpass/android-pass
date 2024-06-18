@@ -129,7 +129,8 @@ import proton.android.pass.features.item.history.restore.navigation.ItemHistoryR
 import proton.android.pass.features.item.history.timeline.navigation.ItemHistoryTimelineNavItem
 import proton.android.pass.features.secure.links.create.navigation.SecureLinksCreateNavItem
 import proton.android.pass.features.secure.links.list.navigation.SecureLinksListNavItem
-import proton.android.pass.features.secure.links.overview.navigation.SecureLinksOverviewNavItem
+import proton.android.pass.features.secure.links.overview.navigation.SecureLinksOverviewBottomSheetNavItem
+import proton.android.pass.features.secure.links.overview.navigation.SecureLinksOverviewScreenNavItem
 import proton.android.pass.features.secure.links.overview.navigation.SecureLinksOverviewNavScope
 import proton.android.pass.features.secure.links.shared.navigation.SecureLinksNavDestination
 import proton.android.pass.features.secure.links.shared.navigation.secureLinksNavGraph
@@ -1649,15 +1650,14 @@ fun NavGraphBuilder.appGraph(
 
                 is SecureLinksNavDestination.SecureLinkOverview -> when (destination.scope) {
                     SecureLinksOverviewNavScope.SecureLinksGeneration -> appNavigator.navigate(
-                        destination = SecureLinksOverviewNavItem,
-                        route = SecureLinksOverviewNavItem.createNavRoute(destination.secureLinkId),
+                        destination = SecureLinksOverviewScreenNavItem,
+                        route = SecureLinksOverviewScreenNavItem.createNavRoute(destination.secureLinkId),
                         backDestination = ViewItem
                     )
 
                     SecureLinksOverviewNavScope.SecureLinksList -> appNavigator.navigate(
-                        destination = SecureLinksOverviewNavItem,
-                        route = SecureLinksOverviewNavItem.createNavRoute(destination.secureLinkId),
-                        backDestination = ViewItem
+                        destination = SecureLinksOverviewBottomSheetNavItem,
+                        route = SecureLinksOverviewBottomSheetNavItem.createNavRoute(destination.secureLinkId)
                     )
                 }
 

@@ -720,24 +720,12 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 BaseLoginNavigation.AddCustomField -> {
-                    val prefix = when (backDestination) {
-                        CreateLogin -> CustomFieldPrefix.CreateLogin
-                        EditLogin -> CustomFieldPrefix.UpdateLogin
-                        else -> throw IllegalStateException("Missing backdestination")
-                    }
-
-                    appNavigator.navigate(
-                        destination = AddCustomFieldBottomSheetNavItem(prefix)
-                    )
+                    val prefix = CustomFieldPrefix.fromLogin(backDestination)
+                    appNavigator.navigate(AddCustomFieldBottomSheetNavItem(prefix))
                 }
 
                 is BaseLoginNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
-                    val prefix = when (backDestination) {
-                        CreateLogin -> CustomFieldPrefix.CreateLogin
-                        EditLogin -> CustomFieldPrefix.UpdateLogin
-                        else -> throw IllegalStateException("Missing backdestination")
-                    }
-
+                    val prefix = CustomFieldPrefix.fromLogin(backDestination)
                     appNavigator.navigate(
                         destination = CustomFieldNameDialogNavItem(prefix),
                         route = CustomFieldNameDialogNavItem(prefix).buildRoute(it.type),
@@ -746,27 +734,16 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 is BaseLoginNavigation.CustomFieldOptions -> {
-                    val prefix = when (backDestination) {
-                        CreateLogin -> CustomFieldPrefix.CreateLogin
-                        EditLogin -> CustomFieldPrefix.UpdateLogin
-                        else -> throw IllegalStateException("Missing backdestination")
-                    }
+                    val prefix = CustomFieldPrefix.fromLogin(backDestination)
                     appNavigator.navigate(
                         destination = CustomFieldOptionsBottomSheetNavItem(prefix),
-                        route = CustomFieldOptionsBottomSheetNavItem(prefix).buildRoute(
-                            it.index,
-                            it.currentValue
-                        )
+                        route = CustomFieldOptionsBottomSheetNavItem(prefix)
+                            .buildRoute(it.index, it.currentValue)
                     )
                 }
 
                 is BaseLoginNavigation.EditCustomField -> dismissBottomSheet {
-                    val prefix = when (backDestination) {
-                        CreateLogin -> CustomFieldPrefix.CreateLogin
-                        EditLogin -> CustomFieldPrefix.UpdateLogin
-                        else -> throw IllegalStateException("Missing backdestination")
-                    }
-
+                    val prefix = CustomFieldPrefix.fromLogin(backDestination)
                     appNavigator.navigate(
                         destination = EditCustomFieldNameDialogNavItem(prefix),
                         route = EditCustomFieldNameDialogNavItem(prefix).buildRoute(it.index, it.currentValue),
@@ -893,6 +870,7 @@ fun NavGraphBuilder.appGraph(
         onNavigate = {
             val backDestination = when {
                 appNavigator.hasDestinationInStack(CreateIdentity) -> CreateIdentity
+                appNavigator.hasDestinationInStack(UpdateIdentity) -> UpdateIdentity
                 else -> null
             }
             when (it) {
@@ -911,29 +889,36 @@ fun NavGraphBuilder.appGraph(
                     route = SelectVaultBottomsheet.createNavRoute(it.shareId)
                 )
 
-                BaseIdentityNavigation.OpenCustomFieldBottomSheet ->
-                    dismissBottomSheet { appNavigator.navigate(AddCustomFieldBottomSheetNavItem.CreateIdentity) }
-
-                is BaseIdentityNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
-                    appNavigator.navigate(
-                        destination = CustomFieldNameDialogNavItem.CreateIdentity,
-                        route = CustomFieldNameDialogNavItem.CreateIdentity.buildRoute(it.type),
-                        backDestination = CreateIdentity
-                    )
+                BaseIdentityNavigation.OpenCustomFieldBottomSheet -> dismissBottomSheet {
+                    val prefix = CustomFieldPrefix.fromIdentity(backDestination)
+                    appNavigator.navigate(AddCustomFieldBottomSheetNavItem(prefix))
                 }
 
-                is BaseIdentityNavigation.EditCustomField -> dismissBottomSheet {
+                is BaseIdentityNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
+                    val prefix = CustomFieldPrefix.fromIdentity(backDestination)
                     appNavigator.navigate(
-                        destination = EditCustomFieldNameDialogNavItem.CreateIdentity,
-                        route = EditCustomFieldNameDialogNavItem.CreateIdentity.buildRoute(it.index, it.title),
+                        destination = CustomFieldNameDialogNavItem(prefix),
+                        route = CustomFieldNameDialogNavItem(prefix).buildRoute(it.type),
                         backDestination = backDestination
                     )
                 }
 
-                is BaseIdentityNavigation.CustomFieldOptions -> appNavigator.navigate(
-                    destination = CustomFieldOptionsBottomSheetNavItem.CreateIdentity,
-                    route = CustomFieldOptionsBottomSheetNavItem.CreateIdentity.buildRoute(it.index, it.title)
-                )
+                is BaseIdentityNavigation.EditCustomField -> dismissBottomSheet {
+                    val prefix = CustomFieldPrefix.fromIdentity(backDestination)
+                    appNavigator.navigate(
+                        destination = EditCustomFieldNameDialogNavItem(prefix),
+                        route = EditCustomFieldNameDialogNavItem(prefix).buildRoute(it.index, it.title),
+                        backDestination = backDestination
+                    )
+                }
+
+                is BaseIdentityNavigation.CustomFieldOptions -> {
+                    val prefix = CustomFieldPrefix.fromIdentity(backDestination)
+                    appNavigator.navigate(
+                        destination = CustomFieldOptionsBottomSheetNavItem(prefix),
+                        route = CustomFieldOptionsBottomSheetNavItem(prefix).buildRoute(it.index, it.title)
+                    )
+                }
 
                 BaseIdentityNavigation.RemovedCustomField -> dismissBottomSheet {
                     appNavigator.navigateBack(comesFromBottomsheet = true)

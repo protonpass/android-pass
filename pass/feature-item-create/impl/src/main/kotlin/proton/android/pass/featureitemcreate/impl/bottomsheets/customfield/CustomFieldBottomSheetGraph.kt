@@ -43,7 +43,6 @@ class AddCustomFieldBottomSheetNavItem(val prefix: CustomFieldPrefix) : NavItem(
 ) {
     companion object {
         val CreateLogin = AddCustomFieldBottomSheetNavItem(CustomFieldPrefix.CreateLogin)
-        val UpdateLogin = AddCustomFieldBottomSheetNavItem(CustomFieldPrefix.UpdateLogin)
         val CreateIdentity = AddCustomFieldBottomSheetNavItem(CustomFieldPrefix.CreateIdentity)
     }
 }
@@ -65,9 +64,7 @@ class CustomFieldOptionsBottomSheetNavItem(val prefix: CustomFieldPrefix) : NavI
 
     companion object {
         val CreateLogin = CustomFieldOptionsBottomSheetNavItem(CustomFieldPrefix.CreateLogin)
-        val UpdateLogin = CustomFieldOptionsBottomSheetNavItem(CustomFieldPrefix.UpdateLogin)
         val CreateIdentity = CustomFieldOptionsBottomSheetNavItem(CustomFieldPrefix.CreateIdentity)
-
     }
 }
 

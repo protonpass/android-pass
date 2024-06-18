@@ -18,8 +18,6 @@
 
 package proton.android.pass.domain.securelinks
 
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
@@ -31,11 +29,8 @@ data class SecureLink(
     val shareId: ShareId,
     val itemId: ItemId,
     val expirationInSeconds: Long,
+    val isExpired: Boolean,
     val maxReadCount: Int?,
     val readCount: Int,
     val url: String
-) {
-
-    val isExpired: Boolean = Instant.fromEpochSeconds(expirationInSeconds) < Clock.System.now()
-
-}
+)

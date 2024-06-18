@@ -75,7 +75,7 @@ fun IdentityOptionsBottomSheetContents(
         BottomSheetItemRow(
             title = { BottomSheetItemTitle(text = contents.title) },
             subtitle = {
-                if (contents.personalDetailsContent.fullName.isNotBlank()) {
+                if (contents.personalDetailsContent.hasFullName) {
                     BottomSheetItemSubtitle(text = contents.personalDetailsContent.fullName)
                 }
             },

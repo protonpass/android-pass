@@ -208,7 +208,7 @@ internal fun SecureLinksListGridCellPreview(@PreviewParameter(ThemePreviewProvid
                 website = null,
                 packageName = null,
                 remainingTime = RemainingTime(
-                    endInstant = Clock.System.now() + 1.hours,
+                    endInstant = Clock.System.now() + 1.hours
                 ),
                 views = 2,
                 onCellClick = {},

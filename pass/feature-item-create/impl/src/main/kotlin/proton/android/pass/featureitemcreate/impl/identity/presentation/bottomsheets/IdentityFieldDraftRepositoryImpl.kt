@@ -85,10 +85,10 @@ class IdentityFieldDraftRepositoryImpl @Inject constructor() : IdentityFieldDraf
         lastAddedExtraFieldStateFlow,
         lastAddedExtraFieldIndexStateFlow
     ) { field, index ->
-        if (field is Some && index is Some) {
-            FocusedField(index.value, field.value).some()
-        } else {
-            None
+        when {
+            field is Some && index is Some -> FocusedField(index.value, field.value).some()
+            field is Some && field.value !is CustomExtraField -> FocusedField(0, field.value).some()
+            else -> None
         }
     }
 

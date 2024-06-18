@@ -88,7 +88,7 @@ fun NavGraphBuilder.customFieldBottomSheetGraph(
     onCloseNavigate: () -> Unit
 ) {
     bottomSheet(AddCustomFieldBottomSheetNavItem(prefix)) {
-        AddCustomFieldBottomSheet {
+        AddCustomFieldBottomSheet(prefix = prefix) {
             when (it) {
                 is AddCustomFieldNavigation.AddText -> onAddCustomFieldNavigate(CustomFieldType.Text)
                 is AddCustomFieldNavigation.AddHidden -> onAddCustomFieldNavigate(CustomFieldType.Hidden)

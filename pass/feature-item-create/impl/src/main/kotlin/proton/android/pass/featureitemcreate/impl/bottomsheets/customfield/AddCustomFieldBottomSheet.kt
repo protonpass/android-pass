@@ -35,17 +35,24 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemLis
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.featureitemcreate.impl.R
+import proton.android.pass.featureitemcreate.impl.common.CustomFieldPrefix
 import me.proton.core.presentation.compose.R as CoreR
 
 @Composable
-fun AddCustomFieldBottomSheet(modifier: Modifier = Modifier, onNavigate: (AddCustomFieldNavigation) -> Unit) {
+fun AddCustomFieldBottomSheet(
+    modifier: Modifier = Modifier,
+    prefix: CustomFieldPrefix,
+    onNavigate: (AddCustomFieldNavigation) -> Unit
+) {
+    val list = mutableListOf<BottomSheetItem>()
+    list.add(textField { onNavigate(AddCustomFieldNavigation.AddText) })
+    if (prefix != CustomFieldPrefix.CreateIdentity && prefix != CustomFieldPrefix.UpdateIdentity) {
+        list.add(totpField { onNavigate(AddCustomFieldNavigation.AddTotp) })
+    }
+    list.add(hiddenField { onNavigate(AddCustomFieldNavigation.AddHidden) })
     BottomSheetItemList(
         modifier = modifier.bottomSheet(),
-        items = listOf(
-            textField { onNavigate(AddCustomFieldNavigation.AddText) },
-            totpField { onNavigate(AddCustomFieldNavigation.AddTotp) },
-            hiddenField { onNavigate(AddCustomFieldNavigation.AddHidden) }
-        ).withDividers().toPersistentList()
+        items = list.withDividers().toPersistentList()
     )
 }
 
@@ -109,7 +116,7 @@ private fun totpField(onClick: () -> Unit): BottomSheetItem = object : BottomShe
 fun AddCustomFieldBottomSheetPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            AddCustomFieldBottomSheet(onNavigate = {})
+            AddCustomFieldBottomSheet(prefix = CustomFieldPrefix.CreateLogin, onNavigate = {})
         }
     }
 }

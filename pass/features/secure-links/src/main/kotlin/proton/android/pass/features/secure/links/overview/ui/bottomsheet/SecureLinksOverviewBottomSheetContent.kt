@@ -27,7 +27,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.features.secure.links.R
 import proton.android.pass.features.secure.links.overview.presentation.SecureLinksOverviewState
-import proton.android.pass.features.secure.links.overview.ui.shared.SecureLinksOverviewUiEvent
+import proton.android.pass.features.secure.links.overview.ui.shared.events.SecureLinksOverviewUiEvent
 import proton.android.pass.features.secure.links.overview.ui.shared.footers.SecureLinksOverviewFooter
 import proton.android.pass.features.secure.links.overview.ui.shared.headers.SecureLinksOverviewHeader
 import proton.android.pass.features.secure.links.overview.ui.shared.widgets.SecureLinksOverviewWidget

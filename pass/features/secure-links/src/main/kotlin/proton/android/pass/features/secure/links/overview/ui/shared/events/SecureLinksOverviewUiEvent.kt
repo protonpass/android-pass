@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.secure.links.overview.ui.shared
+package proton.android.pass.features.secure.links.overview.ui.shared.events
 
 internal sealed interface SecureLinksOverviewUiEvent {
 

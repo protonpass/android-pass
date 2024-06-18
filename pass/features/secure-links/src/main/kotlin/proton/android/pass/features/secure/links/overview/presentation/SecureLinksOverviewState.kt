@@ -27,6 +27,7 @@ import proton.android.pass.domain.time.RemainingTime
 @State
 internal data class SecureLinksOverviewState(
     internal val secureLinkUrl: String,
+    internal val currentViews: Int,
     internal val maxViewsAllowed: Int?,
     internal val itemUiModel: ItemUiModel?,
     internal val canLoadExternalImages: Boolean,
@@ -42,6 +43,7 @@ internal data class SecureLinksOverviewState(
 
         internal val Initial: SecureLinksOverviewState = SecureLinksOverviewState(
             secureLinkUrl = "",
+            currentViews = 0,
             maxViewsAllowed = null,
             itemUiModel = null,
             canLoadExternalImages = false,

@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.secure.links.overview.ui.widgets
+package proton.android.pass.features.secure.links.overview.ui.shared.widgets
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -47,7 +47,7 @@ import proton.android.pass.features.secure.links.R
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-internal fun SecureLinksOverviewInfoWidget(
+internal fun SecureLinksOverviewWidgetInfo(
     modifier: Modifier = Modifier,
     @DrawableRes iconResId: Int,
     @StringRes titleResId: Int,
@@ -92,7 +92,7 @@ internal fun SecureLinksOverviewInfoWidget(
 internal fun SecureLinksOverviewInfoWidgetPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            SecureLinksOverviewInfoWidget(
+            SecureLinksOverviewWidgetInfo(
                 iconResId = CoreR.drawable.ic_proton_clock,
                 titleResId = R.string.secure_links_overview_widget_expiration_title,
                 infoText = "14 days"

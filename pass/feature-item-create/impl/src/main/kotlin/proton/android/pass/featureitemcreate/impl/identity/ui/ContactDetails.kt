@@ -22,8 +22,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.PersistentSet
@@ -31,6 +34,7 @@ import kotlinx.collections.immutable.persistentSetOf
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
@@ -45,6 +49,7 @@ import proton.android.pass.featureitemcreate.impl.identity.presentation.UIContac
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.ContactCustomField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.ContactDetailsField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Facebook
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.FocusedField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Instagram
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Linkedin
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Reddit
@@ -68,9 +73,10 @@ internal fun ContactDetails(
     uiContactDetails: UIContactDetails,
     enabled: Boolean,
     extraFields: PersistentSet<ContactDetailsField>,
-    focusedField: Option<ContactDetailsField>,
+    focusedField: Option<FocusedField>,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
+    val field = focusedField.value()
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.Start,
@@ -120,7 +126,7 @@ internal fun ContactDetails(
                 LinkedinInput(
                     value = uiContactDetails.linkedin,
                     enabled = enabled,
-                    requestFocus = focusedField.value() is Linkedin,
+                    requestFocus = field?.extraField is Linkedin,
                     onChange = { onEvent(OnFieldChange(FieldChange.Linkedin(it))) },
                     onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
                 )
@@ -130,7 +136,7 @@ internal fun ContactDetails(
                 RedditInput(
                     value = uiContactDetails.reddit,
                     enabled = enabled,
-                    requestFocus = focusedField.value() is Reddit,
+                    requestFocus = field?.extraField is Reddit,
                     onChange = { onEvent(OnFieldChange(FieldChange.Reddit(it))) },
                     onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
                 )
@@ -140,7 +146,7 @@ internal fun ContactDetails(
                 FacebookInput(
                     value = uiContactDetails.facebook,
                     enabled = enabled,
-                    requestFocus = focusedField.value() is Facebook,
+                    requestFocus = field?.extraField is Facebook,
                     onChange = { onEvent(OnFieldChange(FieldChange.Facebook(it))) },
                     onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
                 )
@@ -150,7 +156,7 @@ internal fun ContactDetails(
                 YahooInput(
                     value = uiContactDetails.yahoo,
                     enabled = enabled,
-                    requestFocus = focusedField.value() is Yahoo,
+                    requestFocus = field?.extraField is Yahoo,
                     onChange = { onEvent(OnFieldChange(FieldChange.Yahoo(it))) },
                     onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
                 )
@@ -160,33 +166,38 @@ internal fun ContactDetails(
                 InstagramInput(
                     value = uiContactDetails.instagram,
                     enabled = enabled,
-                    requestFocus = focusedField.value() is Instagram,
+                    requestFocus = field?.extraField is Instagram,
                     onChange = { onEvent(OnFieldChange(FieldChange.Instagram(it))) },
                     onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
                 )
             }
         }
-        if (extraFields.contains(ContactCustomField)) {
-            uiContactDetails.customFields.forEachIndexed { index, value ->
-                CustomFieldEntry(
-                    entry = value,
-                    canEdit = enabled,
-                    isError = false,
-                    errorMessage = "",
-                    index = index,
-                    onValueChange = {
-                        val fieldChange = FieldChange.CustomField(
-                            sectionType = ContactDetails,
-                            customFieldType = value.toCustomFieldType(),
-                            index = index,
-                            value = it
-                        )
-                        onEvent(OnFieldChange(fieldChange))
-                    },
-                    onFocusChange = { _, _ -> },
-                    onOptionsClick = { onEvent(OnCustomFieldOptions(index, value.label, ContactCustomField)) }
-                )
-            }
+        uiContactDetails.customFields.forEachIndexed { index, value ->
+            val focusRequester = remember { FocusRequester() }
+            CustomFieldEntry(
+                modifier = Modifier.focusRequester(focusRequester),
+                entry = value,
+                canEdit = enabled,
+                isError = false,
+                errorMessage = "",
+                index = index,
+                onValueChange = {
+                    val fieldChange = FieldChange.CustomField(
+                        sectionType = ContactDetails,
+                        customFieldType = value.toCustomFieldType(),
+                        index = index,
+                        value = it
+                    )
+                    onEvent(OnFieldChange(fieldChange))
+                },
+                onFocusChange = { _, _ -> },
+                onOptionsClick = { onEvent(OnCustomFieldOptions(index, value.label, ContactCustomField)) }
+            )
+            RequestFocusLaunchedEffect(
+                focusRequester = focusRequester,
+                requestFocus = field?.extraField is ContactCustomField && field.index == index,
+                callback = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
+            )
         }
         AddMoreButton(onClick = { onEvent(IdentityContentEvent.OnAddContactDetailField) })
     }

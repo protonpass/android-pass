@@ -36,6 +36,7 @@ import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityCo
 import proton.android.pass.featureitemcreate.impl.identity.presentation.IdentityItemFormState
 import proton.android.pass.featureitemcreate.impl.identity.presentation.IdentityValidationErrors
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.ExtraField
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.FocusedField
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -49,7 +50,7 @@ fun IdentityContent(
     shouldShowVaultSelector: Boolean,
     validationErrors: PersistentSet<IdentityValidationErrors>,
     extraFields: PersistentSet<ExtraField>,
-    focusedField: Option<ExtraField>,
+    focusedField: Option<FocusedField>,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
     Scaffold(

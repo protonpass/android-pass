@@ -22,8 +22,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.PersistentSet
@@ -31,6 +34,7 @@ import kotlinx.collections.immutable.persistentSetOf
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
@@ -42,6 +46,7 @@ import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityCo
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent.OnFieldChange
 import proton.android.pass.featureitemcreate.impl.identity.presentation.FieldChange
 import proton.android.pass.featureitemcreate.impl.identity.presentation.UIWorkDetails
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.FocusedField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.PersonalWebsite
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.WorkCustomField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.WorkDetailsField
@@ -60,9 +65,10 @@ internal fun WorkDetails(
     uiWorkDetails: UIWorkDetails,
     enabled: Boolean,
     extraFields: PersistentSet<WorkDetailsField>,
-    focusedField: Option<WorkDetailsField>,
+    focusedField: Option<FocusedField>,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
+    val field = focusedField.value()
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.Start,
@@ -87,7 +93,7 @@ internal fun WorkDetails(
                 PersonalWebsiteInput(
                     value = uiWorkDetails.personalWebsite,
                     enabled = enabled,
-                    requestFocus = focusedField.value() is PersonalWebsite,
+                    requestFocus = field?.extraField is PersonalWebsite,
                     onChange = { onEvent(OnFieldChange(FieldChange.PersonalWebsite(it))) },
                     onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
                 )
@@ -97,7 +103,7 @@ internal fun WorkDetails(
                 WorkPhoneNumberInput(
                     value = uiWorkDetails.workPhoneNumber,
                     enabled = enabled,
-                    requestFocus = focusedField.value() is WorkPhoneNumber,
+                    requestFocus = field?.extraField is WorkPhoneNumber,
                     onChange = { onEvent(OnFieldChange(FieldChange.WorkPhoneNumber(it))) },
                     onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
                 )
@@ -107,33 +113,38 @@ internal fun WorkDetails(
                 WorkEmailInput(
                     value = uiWorkDetails.workEmail,
                     enabled = enabled,
-                    requestFocus = focusedField.value() is WorkEmail,
+                    requestFocus = field?.extraField is WorkEmail,
                     onChange = { onEvent(OnFieldChange(FieldChange.WorkEmail(it))) },
                     onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
                 )
             }
         }
-        if (extraFields.contains(WorkCustomField)) {
-            uiWorkDetails.customFields.forEachIndexed { index, value ->
-                CustomFieldEntry(
-                    entry = value,
-                    canEdit = enabled,
-                    isError = false,
-                    errorMessage = "",
-                    index = index,
-                    onValueChange = {
-                        val fieldChange = FieldChange.CustomField(
-                            sectionType = WorkDetails,
-                            customFieldType = value.toCustomFieldType(),
-                            index = index,
-                            value = it
-                        )
-                        onEvent(OnFieldChange(fieldChange))
-                    },
-                    onFocusChange = { _, _ -> },
-                    onOptionsClick = { onEvent(OnCustomFieldOptions(index, value.label, WorkCustomField)) }
-                )
-            }
+        uiWorkDetails.customFields.forEachIndexed { index, value ->
+            val focusRequester = remember { FocusRequester() }
+            CustomFieldEntry(
+                modifier = Modifier.focusRequester(focusRequester),
+                entry = value,
+                canEdit = enabled,
+                isError = false,
+                errorMessage = "",
+                index = index,
+                onValueChange = {
+                    val fieldChange = FieldChange.CustomField(
+                        sectionType = WorkDetails,
+                        customFieldType = value.toCustomFieldType(),
+                        index = index,
+                        value = it
+                    )
+                    onEvent(OnFieldChange(fieldChange))
+                },
+                onFocusChange = { _, _ -> },
+                onOptionsClick = { onEvent(OnCustomFieldOptions(index, value.label, WorkCustomField)) }
+            )
+            RequestFocusLaunchedEffect(
+                focusRequester = focusRequester,
+                requestFocus = field?.extraField is WorkCustomField && field.index == index,
+                callback = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
+            )
         }
         AddMoreButton(onClick = { onEvent(IdentityContentEvent.OnAddWorkField) })
     }

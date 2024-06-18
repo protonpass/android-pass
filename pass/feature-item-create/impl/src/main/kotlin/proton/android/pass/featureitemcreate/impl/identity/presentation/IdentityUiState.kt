@@ -30,6 +30,7 @@ import proton.android.pass.domain.Vault
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.ExtraField
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.FocusedField
 
 sealed interface IdentityUiState {
     @Immutable
@@ -105,7 +106,7 @@ sealed interface IdentityUiState {
         else -> persistentSetOf()
     }
 
-    fun getFocusedField(): Option<ExtraField> = when (this) {
+    fun getFocusedField(): Option<FocusedField> = when (this) {
         is CreateIdentity -> sharedState.focusedField
         is UpdateIdentity -> sharedState.focusedField
         else -> None

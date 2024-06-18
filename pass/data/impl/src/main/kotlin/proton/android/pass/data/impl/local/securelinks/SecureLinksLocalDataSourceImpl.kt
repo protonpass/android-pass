@@ -44,6 +44,17 @@ class SecureLinksLocalDataSourceImpl @Inject constructor(
             database.secureLinksDao().insertOrIgnore(entity)
         }
 
+    override suspend fun delete(userId: UserId, secureLinkId: SecureLinkId) = read(userId, secureLinkId)
+        .let { secureLink ->
+            encryptionContextProvider.withEncryptionContext {
+                secureLink.toEntity(userId, this@withEncryptionContext)
+            }
+        }
+        .let { entity ->
+            database.secureLinksDao().delete(entity)
+        }
+
+
     override suspend fun getAll(userId: UserId): List<SecureLink> = observeAll(userId).first()
 
     override fun observe(userId: UserId, secureLinkId: SecureLinkId): Flow<SecureLink> = database.secureLinksDao()
@@ -63,6 +74,9 @@ class SecureLinksLocalDataSourceImpl @Inject constructor(
                 }
             }
         }
+
+    override suspend fun read(userId: UserId, secureLinkId: SecureLinkId): SecureLink = observe(userId, secureLinkId)
+        .first()
 
     override suspend fun update(userId: UserId, secureLinks: List<SecureLink>) =
         encryptionContextProvider.withEncryptionContext {

@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.secure.links.overview.ui.widgets
+package proton.android.pass.features.secure.links.overview.ui.shared.widgets
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -36,7 +36,7 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.body3Weak
 
 @Composable
-internal fun SecureLinksOverviewLinkWidget(modifier: Modifier = Modifier, secureLink: String) {
+internal fun SecureLinksOverviewWidgetLink(modifier: Modifier = Modifier, secureLink: String) {
     Text(
         modifier = modifier
             .background(
@@ -57,7 +57,7 @@ internal fun SecureLinksOverviewLinkWidget(modifier: Modifier = Modifier, secure
 internal fun SecureLinksOverviewLinkWidgetPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            SecureLinksOverviewLinkWidget(
+            SecureLinksOverviewWidgetLink(
                 secureLink = "https://secure/link/PNHEXJT1SAME13XDS70YEAYJKW#zq1Ax1m"
             )
         }

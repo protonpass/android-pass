@@ -16,27 +16,24 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.local.securelinks
+package proton.android.pass.data.impl.usecases.securelink
 
-import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.domain.securelinks.SecureLink
+import kotlinx.coroutines.flow.first
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.api.usecases.securelink.DeleteSecureLink
+import proton.android.pass.data.impl.repositories.SecureLinkRepository
 import proton.android.pass.domain.securelinks.SecureLinkId
+import javax.inject.Inject
 
-interface SecureLinksLocalDataSource {
+class DeleteSecureLinkImpl @Inject constructor(
+    private val observeCurrentUser: ObserveCurrentUser,
+    private val secureLinkRepository: SecureLinkRepository
+) : DeleteSecureLink {
 
-    suspend fun create(userId: UserId, secureLink: SecureLink)
-
-    suspend fun delete(userId: UserId, secureLinkId: SecureLinkId)
-
-    suspend fun getAll(userId: UserId): List<SecureLink>
-
-    fun observe(userId: UserId, secureLinkId: SecureLinkId): Flow<SecureLink>
-
-    fun observeAll(userId: UserId): Flow<List<SecureLink>>
-
-    suspend fun read(userId: UserId, secureLinkId: SecureLinkId): SecureLink
-
-    suspend fun update(userId: UserId, secureLinks: List<SecureLink>)
+    override suspend fun invoke(secureLinkId: SecureLinkId) = observeCurrentUser()
+        .first()
+        .let { user ->
+            secureLinkRepository.deleteSecureLink(user.userId, secureLinkId)
+        }
 
 }

@@ -22,6 +22,7 @@ import kotlinx.datetime.Instant
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.domain.securelinks.SecureLink
+import proton.android.pass.domain.securelinks.SecureLinkId
 import proton.android.pass.domain.time.RemainingTime
 
 internal data class SecureLinkModel(
@@ -29,6 +30,8 @@ internal data class SecureLinkModel(
     private val itemType: ItemType,
     private val secureLink: SecureLink
 ) {
+
+    internal val secureLinkId: SecureLinkId = secureLink.id
 
     internal val itemCategory: ItemCategory = itemType.category
 

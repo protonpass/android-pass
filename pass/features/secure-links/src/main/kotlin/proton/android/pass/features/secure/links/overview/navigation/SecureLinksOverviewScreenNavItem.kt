@@ -21,8 +21,8 @@ package proton.android.pass.features.secure.links.overview.navigation
 import proton.android.pass.domain.securelinks.SecureLinkId
 import proton.android.pass.navigation.api.NavItem
 
-object SecureLinksOverviewNavItem : NavItem(
-    baseRoute = "secure-links/overview",
+object SecureLinksOverviewScreenNavItem : NavItem(
+    baseRoute = "secure-links/overview/screen",
     navArgIds = listOf(SecureLinksOverviewLinkIdNavArgId)
 ) {
 

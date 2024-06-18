@@ -156,6 +156,7 @@ import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry
+import proton.android.pass.data.api.usecases.securelink.DeleteSecureLink
 import proton.android.pass.data.api.usecases.securelink.GenerateSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinks
@@ -297,6 +298,7 @@ import proton.android.pass.data.fakes.usecases.items.FakeObserveItemRevisions
 import proton.android.pass.data.fakes.usecases.items.FakeObserveMonitoredItems
 import proton.android.pass.data.fakes.usecases.items.FakeOpenItemRevision
 import proton.android.pass.data.fakes.usecases.items.FakeUpdateItemFlag
+import proton.android.pass.data.fakes.usecases.securelink.FakeDeleteSecureLink
 import proton.android.pass.data.fakes.usecases.securelink.FakeGenerateSecureLink
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLink
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLinks
@@ -750,5 +752,8 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObserveUnexpiredSecureLinks(impl: FakeObserveUnexpiredSecureLinks): ObserveUnexpiredSecureLinks
+
+    @Binds
+    abstract fun bindDeleteSecureLink(impl: FakeDeleteSecureLink): DeleteSecureLink
 
 }

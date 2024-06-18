@@ -27,11 +27,15 @@ interface SecureLinksLocalDataSource {
 
     suspend fun create(userId: UserId, secureLink: SecureLink)
 
+    suspend fun delete(userId: UserId, secureLinkId: SecureLinkId)
+
     suspend fun getAll(userId: UserId): List<SecureLink>
 
     fun observe(userId: UserId, secureLinkId: SecureLinkId): Flow<SecureLink>
 
     fun observeAll(userId: UserId): Flow<List<SecureLink>>
+
+    suspend fun read(userId: UserId, secureLinkId: SecureLinkId): SecureLink
 
     suspend fun update(userId: UserId, secureLinks: List<SecureLink>)
 

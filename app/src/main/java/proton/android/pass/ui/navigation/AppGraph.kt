@@ -1640,8 +1640,8 @@ fun NavGraphBuilder.appGraph(
     secureLinksNavGraph(
         onNavigated = { destination ->
             when (destination) {
-                SecureLinksNavDestination.Back -> appNavigator.navigateBack(
-                    comesFromBottomsheet = false
+                is SecureLinksNavDestination.Back -> appNavigator.navigateBack(
+                    comesFromBottomsheet = destination.comesFromBottomSheet
                 )
 
                 SecureLinksNavDestination.Close -> appNavigator.popUpTo(

@@ -222,6 +222,8 @@ data class PersonalDetailsContent(
     val customFields: List<CustomFieldContent>
 ) {
 
+    val hasFullName: Boolean = fullName.isNotBlank()
+
     companion object {
         val EMPTY = PersonalDetailsContent(
             fullName = "",

@@ -20,10 +20,35 @@ package proton.android.pass.data.impl.db.entities.securelinks
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
+import me.proton.core.user.data.entity.UserEntity
+import proton.android.pass.data.impl.db.entities.ExternalColumns
+import proton.android.pass.data.impl.db.entities.ItemEntity
+import proton.android.pass.data.impl.db.entities.ShareEntity
 
 @Entity(
     tableName = SecureLinkTable.NAME,
-    primaryKeys = [SecureLinkTable.Columns.LINK_ID]
+    primaryKeys = [SecureLinkTable.Columns.LINK_ID],
+    foreignKeys = [
+        ForeignKey(
+            entity = UserEntity::class,
+            parentColumns = [ExternalColumns.USER_ID],
+            childColumns = [SecureLinkTable.Columns.USER_ID],
+            onDelete = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = ItemEntity::class,
+            parentColumns = [ItemEntity.Columns.ID, ItemEntity.Columns.SHARE_ID],
+            childColumns = [SecureLinkTable.Columns.ITEM_ID, SecureLinkTable.Columns.SHARE_ID],
+            onDelete = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = ShareEntity::class,
+            parentColumns = [ShareEntity.Columns.ID],
+            childColumns = [SecureLinkTable.Columns.SHARE_ID],
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
 )
 data class SecureLinkEntity(
     @ColumnInfo(name = SecureLinkTable.Columns.USER_ID, index = true)

@@ -41,6 +41,7 @@
     <string name="secure_links_overview_button_copy_link">Copy link</string>
     <string name="secure_links_overview_button_share_link">Share link</string>
     <string name="secure_links_overview_button_view_all_links">View all your secure links</string>
+    <string name="secure_links_overview_button_delete_link">Remove link</string>
     <string name="secure_links_overview_snackbar_message_link_copied">Secure link copied</string>
 
     <!--List screen-->

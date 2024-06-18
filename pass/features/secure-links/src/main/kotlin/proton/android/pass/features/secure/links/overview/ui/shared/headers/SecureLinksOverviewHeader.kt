@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.secure.links.overview.ui.headers
+package proton.android.pass.features.secure.links.overview.ui.shared.headers
 
 import androidx.compose.runtime.Composable
 import proton.android.pass.commonuimodels.api.ItemUiModel

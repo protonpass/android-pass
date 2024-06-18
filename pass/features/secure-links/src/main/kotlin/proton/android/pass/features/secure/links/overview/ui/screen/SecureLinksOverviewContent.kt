@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.secure.links.overview.ui
+package proton.android.pass.features.secure.links.overview.ui.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -41,9 +41,10 @@ import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
 import proton.android.pass.composecomponents.impl.utils.passRemainingTimeText
 import proton.android.pass.features.secure.links.R
 import proton.android.pass.features.secure.links.overview.presentation.SecureLinksOverviewState
-import proton.android.pass.features.secure.links.overview.ui.headers.SecureLinksOverviewHeader
-import proton.android.pass.features.secure.links.overview.ui.widgets.SecureLinksOverviewInfoWidget
-import proton.android.pass.features.secure.links.overview.ui.widgets.SecureLinksOverviewLinkWidget
+import proton.android.pass.features.secure.links.overview.ui.shared.SecureLinksOverviewUiEvent
+import proton.android.pass.features.secure.links.overview.ui.shared.headers.SecureLinksOverviewHeader
+import proton.android.pass.features.secure.links.overview.ui.shared.widgets.SecureLinksOverviewWidgetInfo
+import proton.android.pass.features.secure.links.overview.ui.shared.widgets.SecureLinksOverviewWidgetLink
 import me.proton.core.presentation.R as CoreR
 
 @Composable
@@ -108,14 +109,14 @@ internal fun SecureLinksOverviewContent(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(space = Spacing.small)
             ) {
-                SecureLinksOverviewInfoWidget(
+                SecureLinksOverviewWidgetInfo(
                     modifier = Modifier.weight(weight = 1f),
                     iconResId = CoreR.drawable.ic_proton_clock,
                     titleResId = R.string.secure_links_overview_widget_expiration_title,
                     infoText = passRemainingTimeText(remainingTime = remainingTime).orEmpty()
                 )
 
-                SecureLinksOverviewInfoWidget(
+                SecureLinksOverviewWidgetInfo(
                     modifier = Modifier.weight(weight = 1f),
                     iconResId = CoreR.drawable.ic_proton_eye,
                     titleResId = R.string.secure_links_overview_widget_max_views_title,
@@ -131,7 +132,7 @@ internal fun SecureLinksOverviewContent(
                 )
             }
 
-            SecureLinksOverviewLinkWidget(secureLink = secureLinkUrl)
+            SecureLinksOverviewWidgetLink(secureLink = secureLinkUrl)
         }
     }
 }

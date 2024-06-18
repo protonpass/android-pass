@@ -34,5 +34,7 @@ data class CreatedSecureLink(
     @SerialName("Url")
     val url: String,
     @SerialName("PublicLinkID")
-    val secureLinkId: String
+    val secureLinkId: String,
+    @SerialName("ExpirationTime")
+    val expirationTime: Long
 )

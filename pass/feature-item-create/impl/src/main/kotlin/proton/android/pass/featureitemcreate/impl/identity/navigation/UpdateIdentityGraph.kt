@@ -68,11 +68,7 @@ fun NavGraphBuilder.updateIdentityGraph(onNavigate: (BaseIdentityNavigation) -> 
         customFieldBottomSheetGraph(
             prefix = CustomFieldPrefix.UpdateIdentity,
             onAddCustomFieldNavigate = {
-                onNavigate(
-                    BaseIdentityNavigation.CustomFieldTypeSelected(
-                        it
-                    )
-                )
+                onNavigate(BaseIdentityNavigation.CustomFieldTypeSelected(it))
             },
             onEditCustomFieldNavigate = { title: String, index: Int ->
                 onNavigate(BaseIdentityNavigation.EditCustomField(title, index))

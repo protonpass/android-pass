@@ -26,13 +26,13 @@ import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.toItemContents
@@ -468,12 +468,13 @@ class IdentityActionsProviderImpl @Inject constructor(
         identityFieldDraftRepository.clearAddedFields()
     }
 
-    override fun observeSharedState(): Flow<IdentitySharedUiState> = combine(
+    override fun observeSharedState(): Flow<IdentitySharedUiState> = combineN(
         isLoadingState,
         hasUserEditedContentState,
         validationErrorsState.map { it.toPersistentSet() },
         isItemSavedState,
         identityFieldDraftRepository.observeExtraFields().map(Set<ExtraField>::toPersistentSet),
+        identityFieldDraftRepository.observeLastAddedExtraField(),
         ::IdentitySharedUiState
     )
 
@@ -550,6 +551,10 @@ class IdentityActionsProviderImpl @Inject constructor(
 
     override fun getReceivedItem(): Item =
         itemState.value.value() ?: throw IllegalStateException("Item is not received")
+
+    override fun resetLastAddedFieldFocus() {
+        identityFieldDraftRepository.resetLastAddedExtraField()
+    }
 
     @Suppress("LongMethod")
     private fun updateCustomFieldState(
@@ -646,7 +651,6 @@ class IdentityActionsProviderImpl @Inject constructor(
             )
         }
     }
-
 
     private suspend fun observeNewCustomField() {
         draftRepository.get<CustomFieldContent>(DRAFT_CUSTOM_FIELD_KEY)

@@ -78,6 +78,7 @@ fun UpdateIdentityScreen(
             isLoadingState = state.getSubmitLoadingState(),
             validationErrors = state.getValidationErrors(),
             extraFields = state.getExtraFields(),
+            focusedField = state.getFocusedField(),
             topBarActionName = stringResource(id = R.string.action_save),
             onEvent = { event ->
                 when (event) {
@@ -124,6 +125,9 @@ fun UpdateIdentityScreen(
                         actionAfterKeyboardHide = {
                             onNavigate(ExtraSectionOptions(event.label, event.index))
                         }
+
+                    IdentityContentEvent.ClearLastAddedFieldFocus ->
+                        viewModel.resetLastAddedFieldFocus()
                 }
             }
         )

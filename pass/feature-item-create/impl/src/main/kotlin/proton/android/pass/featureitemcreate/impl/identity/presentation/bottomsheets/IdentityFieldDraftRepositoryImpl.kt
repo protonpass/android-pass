@@ -21,9 +21,11 @@ package proton.android.pass.featureitemcreate.impl.identity.presentation.bottoms
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -33,6 +35,7 @@ class IdentityFieldDraftRepositoryImpl @Inject constructor() : IdentityFieldDraf
 
     private val extraFieldsStateFlow = MutableStateFlow<Set<ExtraField>>(emptySet())
     private val lastAddedExtraFieldStateFlow = MutableStateFlow<Option<ExtraField>>(None)
+    private val lastAddedExtraFieldIndexStateFlow = MutableStateFlow<Option<Int>>(None)
 
     private fun getAvailableFieldsMap(sectionIndex: Int): Map<Class<out ExtraField>, Set<ExtraField>> = mapOf(
         PersonalDetailsField::class.java to setOf(
@@ -78,19 +81,36 @@ class IdentityFieldDraftRepositoryImpl @Inject constructor() : IdentityFieldDraf
 
     override fun observeExtraFields(): Flow<Set<ExtraField>> = extraFieldsStateFlow.asStateFlow()
 
-    override fun observeLastAddedExtraField(): Flow<Option<ExtraField>> = lastAddedExtraFieldStateFlow.asStateFlow()
+    override fun observeLastAddedExtraField(): Flow<Option<FocusedField>> = combine(
+        lastAddedExtraFieldStateFlow,
+        lastAddedExtraFieldIndexStateFlow
+    ) { field, index ->
+        if (field is Some && index is Some) {
+            FocusedField(index.value, field.value).some()
+        } else {
+            None
+        }
+    }
 
     override fun resetLastAddedExtraField() {
         lastAddedExtraFieldStateFlow.update { None }
+        lastAddedExtraFieldIndexStateFlow.update { None }
     }
 
-    override fun addField(extraField: ExtraField) {
+    override fun addField(extraField: ExtraField, focus: Boolean) {
         extraFieldsStateFlow.update { it + extraField }
-        lastAddedExtraFieldStateFlow.update { extraField.some() }
+        if (focus) {
+            lastAddedExtraFieldStateFlow.update { extraField.some() }
+        }
+    }
+
+    override fun addCustomFieldIndex(index: Int) {
+        lastAddedExtraFieldIndexStateFlow.update { index.some() }
     }
 
     override fun clearAddedFields() {
         extraFieldsStateFlow.update { emptySet() }
         lastAddedExtraFieldStateFlow.update { None }
+        lastAddedExtraFieldIndexStateFlow.update { None }
     }
 }

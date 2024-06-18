@@ -22,6 +22,8 @@ import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.Item
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
@@ -46,6 +48,7 @@ interface IdentityActionsProvider : IdentityFormActions {
     fun updateSelectedSection(customExtraField: CustomExtraField)
     fun onItemReceivedState(item: Item)
     fun getReceivedItem(): Item
+    fun resetLastAddedFieldFocus()
 }
 
 data class IdentitySharedUiState(
@@ -53,7 +56,8 @@ data class IdentitySharedUiState(
     val hasUserEditedContent: Boolean,
     val validationErrors: PersistentSet<IdentityValidationErrors>,
     val isItemSaved: ItemSavedState,
-    val extraFields: PersistentSet<ExtraField>
+    val extraFields: PersistentSet<ExtraField>,
+    val focusedField: Option<ExtraField>
 ) {
     companion object {
         val Initial = IdentitySharedUiState(
@@ -61,7 +65,8 @@ data class IdentitySharedUiState(
             hasUserEditedContent = false,
             validationErrors = persistentSetOf(),
             isItemSaved = ItemSavedState.Unknown,
-            extraFields = persistentSetOf()
+            extraFields = persistentSetOf(),
+            focusedField = None
         )
     }
 }

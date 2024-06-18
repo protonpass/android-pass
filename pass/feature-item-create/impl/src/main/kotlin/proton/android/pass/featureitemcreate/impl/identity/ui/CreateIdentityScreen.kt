@@ -89,6 +89,7 @@ fun CreateIdentityScreen(
             shouldShowVaultSelector = state.shouldShowVaultSelector(),
             validationErrors = state.getValidationErrors(),
             extraFields = state.getExtraFields(),
+            focusedField = state.getFocusedField(),
             topBarActionName = stringResource(id = R.string.title_create),
             onEvent = { event ->
                 when (event) {
@@ -135,6 +136,9 @@ fun CreateIdentityScreen(
                         actionAfterKeyboardHide = {
                             onNavigate(ExtraSectionOptions(event.label, event.index))
                         }
+
+                    IdentityContentEvent.ClearLastAddedFieldFocus ->
+                        viewModel.resetLastAddedFieldFocus()
                 }
             }
         )

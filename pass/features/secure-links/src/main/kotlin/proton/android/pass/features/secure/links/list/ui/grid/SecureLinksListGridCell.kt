@@ -55,6 +55,7 @@ import proton.android.pass.composecomponents.impl.utils.passRemainingTimeText
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.domain.time.RemainingTime
 import proton.android.pass.features.secure.links.R
+import kotlin.time.Duration.Companion.hours
 import me.proton.core.presentation.R as CoreR
 
 @Composable
@@ -206,8 +207,10 @@ internal fun SecureLinksListGridCellPreview(@PreviewParameter(ThemePreviewProvid
                 title = "Link title",
                 website = null,
                 packageName = null,
-                remainingTime = RemainingTime(endInstant = Clock.System.now()),
-                views = 0,
+                remainingTime = RemainingTime(
+                    endInstant = Clock.System.now() + 1.hours,
+                ),
+                views = 2,
                 onCellClick = {},
                 onCellOptionsClick = {}
             )

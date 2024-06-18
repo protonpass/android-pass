@@ -201,6 +201,7 @@ fun IdentityItemForm(
                     section = section,
                     enabled = enabled,
                     sectionIndex = sectionIndex,
+                    focusedField = focusedField,
                     onEvent = onEvent
                 )
             }

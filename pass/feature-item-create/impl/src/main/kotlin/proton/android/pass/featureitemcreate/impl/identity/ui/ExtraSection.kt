@@ -21,7 +21,12 @@ package proton.android.pass.featureitemcreate.impl.identity.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import proton.android.pass.common.api.Option
+import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.featureitemcreate.impl.common.customfields.AddMoreButton
 import proton.android.pass.featureitemcreate.impl.common.customfields.CustomFieldEntry
@@ -32,6 +37,7 @@ import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityCo
 import proton.android.pass.featureitemcreate.impl.identity.presentation.FieldChange
 import proton.android.pass.featureitemcreate.impl.identity.presentation.UIExtraSection
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.ExtraSectionCustomField
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.FocusedField
 
 @Composable
 fun ExtraSection(
@@ -39,14 +45,18 @@ fun ExtraSection(
     section: UIExtraSection,
     enabled: Boolean,
     sectionIndex: Int,
+    focusedField: Option<FocusedField>,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
+    val field = focusedField.value()
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(Spacing.small)
     ) {
         section.customFields.forEachIndexed { index, value ->
+            val focusRequester = remember { FocusRequester() }
             CustomFieldEntry(
+                modifier = Modifier.focusRequester(focusRequester),
                 entry = value,
                 canEdit = enabled,
                 isError = false,
@@ -71,6 +81,13 @@ fun ExtraSection(
                         )
                     )
                 }
+            )
+            RequestFocusLaunchedEffect(
+                focusRequester = focusRequester,
+                requestFocus = field?.extraField is ExtraSectionCustomField &&
+                    (field.extraField as? ExtraSectionCustomField)?.index == sectionIndex &&
+                    field.index == index,
+                callback = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
             )
         }
         AddMoreButton(onClick = { onEvent(OnAddExtraSectionCustomField(sectionIndex)) })

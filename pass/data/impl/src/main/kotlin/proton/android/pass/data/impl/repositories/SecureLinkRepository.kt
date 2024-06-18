@@ -24,7 +24,6 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.onStart
-import kotlinx.datetime.Clock
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.crypto.api.Base64
@@ -127,7 +126,7 @@ class SecureLinkRepositoryImpl @Inject constructor(
                 id = SecureLinkId(response.secureLinkId),
                 shareId = shareId,
                 itemId = itemId,
-                expirationInSeconds = Clock.System.now().epochSeconds + options.expirationSeconds,
+                expirationInSeconds = response.expirationTime,
                 maxReadCount = options.maxReadCount,
                 readCount = 0,
                 url = concatenated

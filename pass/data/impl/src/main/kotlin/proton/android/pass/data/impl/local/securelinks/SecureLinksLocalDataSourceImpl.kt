@@ -77,6 +77,7 @@ class SecureLinksLocalDataSourceImpl @Inject constructor(
         shareId = shareId.id,
         itemId = itemId.id,
         expirationInSeconds = expirationInSeconds,
+        isExpired = isExpired,
         maxViews = maxReadCount,
         views = readCount,
         url = encryptionContext.encrypt(url)
@@ -87,6 +88,7 @@ class SecureLinksLocalDataSourceImpl @Inject constructor(
         shareId = ShareId(id = shareId),
         itemId = ItemId(id = itemId),
         expirationInSeconds = expirationInSeconds,
+        isExpired = isExpired,
         maxReadCount = maxViews,
         readCount = views,
         url = encryptionContext.decrypt(url)

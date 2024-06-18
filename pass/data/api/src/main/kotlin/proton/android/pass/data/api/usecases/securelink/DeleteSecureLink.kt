@@ -16,27 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.impl.local.securelinks
+package proton.android.pass.data.api.usecases.securelink
 
-import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.domain.securelinks.SecureLink
 import proton.android.pass.domain.securelinks.SecureLinkId
 
-interface SecureLinksLocalDataSource {
+interface DeleteSecureLink {
 
-    suspend fun create(userId: UserId, secureLink: SecureLink)
-
-    suspend fun delete(userId: UserId, secureLinkId: SecureLinkId)
-
-    suspend fun getAll(userId: UserId): List<SecureLink>
-
-    fun observe(userId: UserId, secureLinkId: SecureLinkId): Flow<SecureLink>
-
-    fun observeAll(userId: UserId): Flow<List<SecureLink>>
-
-    suspend fun read(userId: UserId, secureLinkId: SecureLinkId): SecureLink
-
-    suspend fun update(userId: UserId, secureLinks: List<SecureLink>)
+    suspend operator fun invoke(secureLinkId: SecureLinkId)
 
 }

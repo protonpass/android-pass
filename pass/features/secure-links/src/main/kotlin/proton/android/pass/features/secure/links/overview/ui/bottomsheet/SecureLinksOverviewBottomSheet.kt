@@ -19,10 +19,12 @@
 package proton.android.pass.features.secure.links.overview.ui.bottomsheet
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.features.secure.links.overview.presentation.SecureLinksOverviewEvent
 import proton.android.pass.features.secure.links.overview.presentation.SecureLinksOverviewViewModel
 import proton.android.pass.features.secure.links.overview.ui.shared.events.handleSecureLinksOverviewUiEvent
 import proton.android.pass.features.secure.links.shared.navigation.SecureLinksNavDestination
@@ -34,6 +36,18 @@ internal fun SecureLinksOverviewBottomSheet(
 ) = with(viewModel) {
     val state by state.collectAsStateWithLifecycle()
     val context = LocalContext.current
+
+    LaunchedEffect(key1 = state.event) {
+        when (state.event) {
+            SecureLinksOverviewEvent.Idle -> {}
+
+            SecureLinksOverviewEvent.OnSecureLinkDeleted -> SecureLinksNavDestination.Back(
+                comesFromBottomSheet = true
+            ).also(onNavigated)
+        }
+
+        onEventConsumed(event = state.event)
+    }
 
     SecureLinksOverviewBottomSheetContent(
         state = state,

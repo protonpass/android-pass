@@ -21,23 +21,32 @@ package proton.android.pass.features.secure.links.overview.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.FlowUtils.oneShot
+import proton.android.pass.common.api.onError
+import proton.android.pass.common.api.onSuccess
+import proton.android.pass.common.api.runCatching
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.api.usecases.ObserveItemById
+import proton.android.pass.data.api.usecases.securelink.DeleteSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLink
 import proton.android.pass.domain.securelinks.SecureLinkId
 import proton.android.pass.features.secure.links.overview.navigation.SecureLinksOverviewLinkIdNavArgId
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
@@ -52,14 +61,17 @@ class SecureLinksOverviewViewModel @Inject constructor(
     userPreferencesRepository: UserPreferencesRepository,
     encryptionContextProvider: EncryptionContextProvider,
     private val clipboardManager: ClipboardManager,
-    private val snackbarDispatcher: SnackbarDispatcher
+    private val snackbarDispatcher: SnackbarDispatcher,
+    private val deleteSecureLink: DeleteSecureLink
 ) : ViewModel() {
 
     private val secureLinkId: SecureLinkId = savedStateHandleProvider.get()
         .require<String>(SecureLinksOverviewLinkIdNavArgId.key)
         .let(::SecureLinkId)
 
-    private val secureLinkFlow = observeSecureLink(secureLinkId = secureLinkId)
+    private val secureLinkFlow = oneShot {
+        observeSecureLink(secureLinkId = secureLinkId).first()
+    }
 
     private val itemUiModelFlow = secureLinkFlow.flatMapLatest { secureLink ->
         observeItemById(shareId = secureLink.shareId, itemId = secureLink.itemId)
@@ -73,12 +85,15 @@ class SecureLinksOverviewViewModel @Inject constructor(
         observeVaultById(shareId = secureLink.shareId)
     }
 
+    private val eventFlow = MutableStateFlow<SecureLinksOverviewEvent>(SecureLinksOverviewEvent.Idle)
+
     internal val state: StateFlow<SecureLinksOverviewState> = combine(
         secureLinkFlow,
         itemUiModelFlow,
         vaultFlow,
-        userPreferencesRepository.getUseFaviconsPreference()
-    ) { secureLink, itemUiModel, vault, useFavIconsPreference ->
+        userPreferencesRepository.getUseFaviconsPreference(),
+        eventFlow
+    ) { secureLink, itemUiModel, vault, useFavIconsPreference, event ->
         SecureLinksOverviewState(
             secureLinkUrl = secureLink.url,
             currentViews = secureLink.readCount,
@@ -86,13 +101,18 @@ class SecureLinksOverviewViewModel @Inject constructor(
             maxViewsAllowed = secureLink.maxReadCount,
             itemUiModel = itemUiModel,
             canLoadExternalImages = useFavIconsPreference.value(),
-            shareIcon = vault.icon
+            shareIcon = vault.icon,
+            event = event
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = SecureLinksOverviewState.Initial
     )
+
+    internal fun onEventConsumed(event: SecureLinksOverviewEvent) {
+        eventFlow.compareAndSet(event, SecureLinksOverviewEvent.Idle)
+    }
 
     internal fun onLinkCopied() {
         clipboardManager.copyToClipboard(text = state.value.secureLinkUrl, isSecure = false)
@@ -104,8 +124,21 @@ class SecureLinksOverviewViewModel @Inject constructor(
 
     internal fun onLinkDeleted() {
         viewModelScope.launch {
-            println("JIBIRI: onLinkDeleted -> secureLinkId: $secureLinkId")
+            runCatching { deleteSecureLink(secureLinkId) }
+                .onError { error ->
+                    PassLogger.w(TAG, "There was an error deleting the secure link")
+                    PassLogger.w(TAG, error)
+                }
+                .onSuccess {
+                    eventFlow.update { SecureLinksOverviewEvent.OnSecureLinkDeleted }
+                }
         }
+    }
+
+    private companion object {
+
+        private const val TAG = "SecureLinksOverviewViewModel"
+
     }
 
 }

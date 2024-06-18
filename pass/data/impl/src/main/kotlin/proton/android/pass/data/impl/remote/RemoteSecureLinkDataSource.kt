@@ -26,6 +26,7 @@ import proton.android.pass.data.impl.responses.CreatedSecureLink
 import proton.android.pass.data.impl.responses.GetSecureLinkResponse
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.securelinks.SecureLinkId
 import javax.inject.Inject
 
 interface RemoteSecureLinkDataSource {
@@ -38,6 +39,8 @@ interface RemoteSecureLinkDataSource {
     ): CreatedSecureLink
 
     suspend fun getAllSecureLinks(userId: UserId): List<GetSecureLinkResponse>
+
+    suspend fun deleteSecureLink(userId: UserId, secureLinkId: SecureLinkId)
 
 }
 
@@ -60,5 +63,11 @@ class RemoteSecureLinkDataSourceImpl @Inject constructor(
             .invoke { getAllSecureLinks() }
             .valueOrThrow
             .links
+
+    override suspend fun deleteSecureLink(userId: UserId, secureLinkId: SecureLinkId) {
+        apiProvider.get<PasswordManagerApi>(userId)
+            .invoke { deleteSecureLink(secureLinkId = secureLinkId.id) }
+            .valueOrThrow
+    }
 
 }

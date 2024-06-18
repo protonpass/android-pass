@@ -32,6 +32,7 @@ internal data class SecureLinksOverviewState(
     internal val itemUiModel: ItemUiModel?,
     internal val canLoadExternalImages: Boolean,
     internal val shareIcon: ShareIcon?,
+    internal val event: SecureLinksOverviewEvent,
     private val expirationSeconds: Long
 ) {
 
@@ -48,6 +49,7 @@ internal data class SecureLinksOverviewState(
             itemUiModel = null,
             canLoadExternalImages = false,
             shareIcon = null,
+            event = SecureLinksOverviewEvent.Idle,
             expirationSeconds = 0L
         )
 

@@ -16,47 +16,32 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.secure.links.overview.ui
+package proton.android.pass.features.secure.links.overview.ui.bottomsheet
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.commonui.api.AndroidUtils
 import proton.android.pass.features.secure.links.overview.presentation.SecureLinksOverviewViewModel
+import proton.android.pass.features.secure.links.overview.ui.shared.SecureLinksOverviewUiEvent
 import proton.android.pass.features.secure.links.shared.navigation.SecureLinksNavDestination
 
 @Composable
-fun SecureLinksOverviewScreen(
+internal fun SecureLinksOverviewBottomSheet(
     onNavigated: (SecureLinksNavDestination) -> Unit,
     viewModel: SecureLinksOverviewViewModel = hiltViewModel()
-) = with(viewModel) {
-    val state by state.collectAsStateWithLifecycle()
-    val context = LocalContext.current
+) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
-    SecureLinksOverviewContent(
+    SecureLinksOverviewBottomSheetContent(
         state = state,
         onUiEvent = { uiEvent ->
             when (uiEvent) {
-                SecureLinksOverviewUiEvent.OnCloseClicked -> {
-                    onNavigated(SecureLinksNavDestination.Close)
-                }
-
-                SecureLinksOverviewUiEvent.OnCopyLinkClicked -> {
-                    onLinkCopied()
-                }
-
-                SecureLinksOverviewUiEvent.OnShareLinkClicked -> {
-                    AndroidUtils.shareTextWithThirdParties(
-                        context = context,
-                        text = state.secureLinkUrl
-                    )
-                }
-
-                SecureLinksOverviewUiEvent.OnViewAllLinksClicked -> {
-                    onNavigated(SecureLinksNavDestination.SecureLinksList)
-                }
+                SecureLinksOverviewUiEvent.OnCopyLinkClicked -> TODO()
+                SecureLinksOverviewUiEvent.OnShareLinkClicked -> TODO()
+                SecureLinksOverviewUiEvent.OnViewAllLinksClicked -> TODO()
+                SecureLinksOverviewUiEvent.OnCloseClicked -> TODO()
+                SecureLinksOverviewUiEvent.OnDeleteLinkClicked -> TODO()
             }
         }
     )

@@ -29,12 +29,15 @@ import org.junit.Test
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
+import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.telemetry.api.EventItemType
+import proton.android.pass.telemetry.api.events.ItemViewed
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.FixedClock
 import proton.android.pass.test.MainDispatcherRule
@@ -99,7 +102,12 @@ class ItemDetailViewModelTest {
         )
         itemTypes.forEach { (itemType, eventItemType) ->
             instance.sendItemReadEvent(itemType)
-            assertThat(telemetryManager.getMemory().last()).isEqualTo(ItemRead(eventItemType))
+
+            val twoLastEvents = telemetryManager.getMemory().takeLast(2)
+            assertThat(twoLastEvents.first()).isEqualTo(ItemRead(eventItemType))
+
+            val expected = ItemViewed(ShareId(SHARE_ID), ItemId(ITEM_ID))
+            assertThat(twoLastEvents.last()).isEqualTo(expected)
         }
 
         // If we send an Unknown ItemTypeUiState, TelemetryManager should not receive any call

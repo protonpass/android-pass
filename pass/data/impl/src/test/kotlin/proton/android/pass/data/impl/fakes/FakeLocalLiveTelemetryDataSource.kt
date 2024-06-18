@@ -26,9 +26,11 @@ class FakeLocalLiveTelemetryDataSource : LocalLiveTelemetryDataSource {
 
     private var pending: MutableMap<UserId, List<LiveTelemetryEntity>> = mutableMapOf()
     private var memory: MutableMap<UserId, List<LiveTelemetryEntity>> = mutableMapOf()
+    private var deleteMemory: MutableMap<UserId, List<Long>> = mutableMapOf()
 
     fun getMemory(): Map<UserId, List<LiveTelemetryEntity>> = memory
     fun getMemory(userId: UserId): List<LiveTelemetryEntity> = memory[userId] ?: emptyList()
+    fun getDeleteMemory(userId: UserId): List<Long> = deleteMemory[userId] ?: emptyList()
 
     fun setPending(userId: UserId, events: List<LiveTelemetryEntity>) {
         pending[userId] = events
@@ -40,6 +42,9 @@ class FakeLocalLiveTelemetryDataSource : LocalLiveTelemetryDataSource {
         pending.computeIfPresent(userId) { _, list ->
             list.filter { it.id !in events }
         }
+
+        deleteMemory[userId] = (deleteMemory[userId] ?: emptyList()) + events
+
     }
 
     override suspend fun storeEvents(events: List<LiveTelemetryEntity>) {

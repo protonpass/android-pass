@@ -20,29 +20,32 @@ package proton.android.pass.features.secure.links.overview.ui.bottomsheet
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.secure.links.overview.presentation.SecureLinksOverviewViewModel
-import proton.android.pass.features.secure.links.overview.ui.shared.SecureLinksOverviewUiEvent
+import proton.android.pass.features.secure.links.overview.ui.shared.events.handleSecureLinksOverviewUiEvent
 import proton.android.pass.features.secure.links.shared.navigation.SecureLinksNavDestination
 
 @Composable
 internal fun SecureLinksOverviewBottomSheet(
     onNavigated: (SecureLinksNavDestination) -> Unit,
     viewModel: SecureLinksOverviewViewModel = hiltViewModel()
-) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
+) = with(viewModel) {
+    val state by state.collectAsStateWithLifecycle()
+    val context = LocalContext.current
 
     SecureLinksOverviewBottomSheetContent(
         state = state,
         onUiEvent = { uiEvent ->
-            when (uiEvent) {
-                SecureLinksOverviewUiEvent.OnCopyLinkClicked -> TODO()
-                SecureLinksOverviewUiEvent.OnShareLinkClicked -> TODO()
-                SecureLinksOverviewUiEvent.OnViewAllLinksClicked -> TODO()
-                SecureLinksOverviewUiEvent.OnCloseClicked -> TODO()
-                SecureLinksOverviewUiEvent.OnDeleteLinkClicked -> TODO()
-            }
+            handleSecureLinksOverviewUiEvent(
+                uiEvent = uiEvent,
+                secureLinkUrl = state.secureLinkUrl,
+                onNavigated = onNavigated,
+                onLinkCopied = ::onLinkCopied,
+                onLinkDeleted = ::onLinkDeleted,
+                context = context
+            )
         }
     )
 }

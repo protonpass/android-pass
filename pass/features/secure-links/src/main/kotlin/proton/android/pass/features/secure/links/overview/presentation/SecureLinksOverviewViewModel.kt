@@ -102,4 +102,10 @@ class SecureLinksOverviewViewModel @Inject constructor(
         }
     }
 
+    internal fun onLinkDeleted() {
+        viewModelScope.launch {
+            println("JIBIRI: onLinkDeleted -> secureLinkId: $secureLinkId")
+        }
+    }
+
 }

@@ -65,7 +65,7 @@ class IdentityFieldsViewModel @Inject constructor(
     )
 
     fun onFieldClick(extraField: ExtraField) {
-        identityFieldDraftRepository.addField(extraField)
+        identityFieldDraftRepository.addField(extraField, true)
         if (extraField is CustomExtraField) {
             draftRepository.save(DRAFT_IDENTITY_CUSTOM_FIELD_KEY, extraField)
             eventFlow.update { IdentityFieldsEvent.OnAddCustomExtraField }

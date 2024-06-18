@@ -34,7 +34,6 @@ import androidx.compose.ui.res.stringResource
 import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.toPersistentSet
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.isCollapsedSaver
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
@@ -51,6 +50,7 @@ import proton.android.pass.featureitemcreate.impl.identity.presentation.Identity
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.AddressDetailsField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.ContactDetailsField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.ExtraField
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.FocusedField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.PersonalDetailsField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.WorkDetailsField
 import proton.android.pass.featureitemcreate.impl.identity.ui.IdentitySectionType.AddressDetails
@@ -65,7 +65,7 @@ fun IdentityItemForm(
     identityItemFormState: IdentityItemFormState,
     validationErrors: PersistentSet<IdentityValidationErrors>,
     extraFields: PersistentSet<ExtraField>,
-    focusedField: Option<ExtraField>,
+    focusedField: Option<FocusedField>,
     enabled: Boolean,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
@@ -113,7 +113,7 @@ fun IdentityItemForm(
                 uiPersonalDetails = identityItemFormState.uiPersonalDetails,
                 extraFields = extraFields.filterIsInstance<PersonalDetailsField>()
                     .toPersistentSet(),
-                focusedField = (focusedField.value() as? PersonalDetailsField).toOption(),
+                focusedField = focusedField,
                 onEvent = onEvent
             )
         }
@@ -134,7 +134,7 @@ fun IdentityItemForm(
                 enabled = enabled,
                 uiAddressDetails = identityItemFormState.uiAddressDetails,
                 extraFields = extraFields.filterIsInstance<AddressDetailsField>().toPersistentSet(),
-                focusedField = (focusedField.value() as? AddressDetailsField).toOption(),
+                focusedField = focusedField,
                 onEvent = onEvent
             )
         }
@@ -155,7 +155,7 @@ fun IdentityItemForm(
                 enabled = enabled,
                 uiContactDetails = identityItemFormState.uiContactDetails,
                 extraFields = extraFields.filterIsInstance<ContactDetailsField>().toPersistentSet(),
-                focusedField = (focusedField.value() as? ContactDetailsField).toOption(),
+                focusedField = focusedField,
                 onEvent = onEvent
             )
         }
@@ -176,7 +176,7 @@ fun IdentityItemForm(
                 enabled = enabled,
                 uiWorkDetails = identityItemFormState.uiWorkDetails,
                 extraFields = extraFields.filterIsInstance<WorkDetailsField>().toPersistentSet(),
-                focusedField = (focusedField.value() as? WorkDetailsField).toOption(),
+                focusedField = focusedField,
                 onEvent = onEvent
             )
         }

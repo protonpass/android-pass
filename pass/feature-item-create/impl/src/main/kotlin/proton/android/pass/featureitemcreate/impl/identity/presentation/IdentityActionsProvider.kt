@@ -30,6 +30,7 @@ import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.common.CustomFieldIndexTitle
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.CustomExtraField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.ExtraField
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.FocusedField
 
 @Suppress("ComplexInterface", "TooManyFunctions")
 interface IdentityFormActions {
@@ -57,7 +58,7 @@ data class IdentitySharedUiState(
     val validationErrors: PersistentSet<IdentityValidationErrors>,
     val isItemSaved: ItemSavedState,
     val extraFields: PersistentSet<ExtraField>,
-    val focusedField: Option<ExtraField>
+    val focusedField: Option<FocusedField>
 ) {
     companion object {
         val Initial = IdentitySharedUiState(

@@ -22,8 +22,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.PersistentSet
@@ -31,6 +34,7 @@ import kotlinx.collections.immutable.persistentSetOf
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
@@ -44,6 +48,7 @@ import proton.android.pass.featureitemcreate.impl.identity.presentation.FieldCha
 import proton.android.pass.featureitemcreate.impl.identity.presentation.UIPersonalDetails
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Birthdate
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.FirstName
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.FocusedField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Gender
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.LastName
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.MiddleName
@@ -65,9 +70,10 @@ internal fun PersonalDetails(
     uiPersonalDetails: UIPersonalDetails,
     enabled: Boolean,
     extraFields: PersistentSet<PersonalDetailsField>,
-    focusedField: Option<PersonalDetailsField>,
+    focusedField: Option<FocusedField>,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
+    val field = focusedField.value()
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.Start,
@@ -99,7 +105,7 @@ internal fun PersonalDetails(
                 FirstNameInput(
                     value = uiPersonalDetails.firstName,
                     enabled = enabled,
-                    requestFocus = focusedField.value() is FirstName,
+                    requestFocus = field?.extraField is FirstName,
                     onChange = { onEvent(OnFieldChange(FieldChange.FirstName(it))) },
                     onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
                 )
@@ -109,7 +115,7 @@ internal fun PersonalDetails(
                 MiddleNameInput(
                     value = uiPersonalDetails.middleName,
                     enabled = enabled,
-                    requestFocus = focusedField.value() is MiddleName,
+                    requestFocus = field?.extraField is MiddleName,
                     onChange = { onEvent(OnFieldChange(FieldChange.MiddleName(it))) },
                     onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
 
@@ -120,7 +126,7 @@ internal fun PersonalDetails(
                 LastNameInput(
                     value = uiPersonalDetails.lastName,
                     enabled = enabled,
-                    requestFocus = focusedField.value() is LastName,
+                    requestFocus = field?.extraField is LastName,
                     onChange = { onEvent(OnFieldChange(FieldChange.LastName(it))) },
                     onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
                 )
@@ -130,7 +136,7 @@ internal fun PersonalDetails(
                 BirthdateInput(
                     value = uiPersonalDetails.birthdate,
                     enabled = enabled,
-                    requestFocus = focusedField.value() is Birthdate,
+                    requestFocus = field?.extraField is Birthdate,
                     onChange = { onEvent(OnFieldChange(FieldChange.Birthdate(it))) },
                     onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
                 )
@@ -140,33 +146,38 @@ internal fun PersonalDetails(
                 GenderInput(
                     value = uiPersonalDetails.gender,
                     enabled = enabled,
-                    requestFocus = focusedField.value() is Gender,
+                    requestFocus = field?.extraField is Gender,
                     onChange = { onEvent(OnFieldChange(FieldChange.Gender(it))) },
                     onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
                 )
             }
         }
-        if (extraFields.contains(PersonalCustomField)) {
-            uiPersonalDetails.customFields.forEachIndexed { index, value ->
-                CustomFieldEntry(
-                    entry = value,
-                    canEdit = enabled,
-                    isError = false,
-                    errorMessage = "",
-                    index = index,
-                    onValueChange = {
-                        val fieldChange = FieldChange.CustomField(
-                            sectionType = PersonalDetails,
-                            customFieldType = value.toCustomFieldType(),
-                            index = index,
-                            value = it
-                        )
-                        onEvent(OnFieldChange(fieldChange))
-                    },
-                    onFocusChange = { _, _ -> },
-                    onOptionsClick = { onEvent(OnCustomFieldOptions(index, value.label, PersonalCustomField)) }
-                )
-            }
+        uiPersonalDetails.customFields.forEachIndexed { index, value ->
+            val focusRequester = remember { FocusRequester() }
+            CustomFieldEntry(
+                modifier = Modifier.focusRequester(focusRequester),
+                entry = value,
+                canEdit = enabled,
+                isError = false,
+                errorMessage = "",
+                index = index,
+                onValueChange = {
+                    val fieldChange = FieldChange.CustomField(
+                        sectionType = PersonalDetails,
+                        customFieldType = value.toCustomFieldType(),
+                        index = index,
+                        value = it
+                    )
+                    onEvent(OnFieldChange(fieldChange))
+                },
+                onFocusChange = { _, _ -> },
+                onOptionsClick = { onEvent(OnCustomFieldOptions(index, value.label, PersonalCustomField)) }
+            )
+            RequestFocusLaunchedEffect(
+                focusRequester = focusRequester,
+                requestFocus = field?.extraField is PersonalCustomField && field.index == index,
+                callback = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
+            )
         }
         AddMoreButton(onClick = { onEvent(IdentityContentEvent.OnAddPersonalDetailField) })
     }

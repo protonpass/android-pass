@@ -68,12 +68,14 @@ sealed interface IdentityUiState {
     fun getSelectedVault(): Option<Vault> = when {
         this is CreateIdentity && shareUiState is ShareUiState.Success ->
             shareUiState.currentVault.vault.some()
+
         else -> None
     }
 
     fun getSelectedShareId(): Option<ShareId> = when {
         this is CreateIdentity && shareUiState is ShareUiState.Success ->
             shareUiState.currentVault.vault.some().map { it.shareId }
+
         this is UpdateIdentity -> selectedShareId.some()
         else -> None
     }
@@ -101,5 +103,11 @@ sealed interface IdentityUiState {
         is CreateIdentity -> sharedState.extraFields
         is UpdateIdentity -> sharedState.extraFields
         else -> persistentSetOf()
+    }
+
+    fun getFocusedField(): Option<ExtraField> = when (this) {
+        is CreateIdentity -> sharedState.focusedField
+        is UpdateIdentity -> sharedState.focusedField
+        else -> None
     }
 }

@@ -28,6 +28,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.persistentSetOf
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -60,6 +62,7 @@ internal fun AddressDetails(
     uiAddressDetails: UIAddressDetails,
     enabled: Boolean,
     extraFields: PersistentSet<AddressDetailsField>,
+    focusedField: Option<AddressDetailsField>,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
     Column(
@@ -110,7 +113,9 @@ internal fun AddressDetails(
                 FloorInput(
                     value = uiAddressDetails.floor,
                     enabled = enabled,
-                    onChange = { onEvent(OnFieldChange(FieldChange.Floor(it))) }
+                    requestFocus = focusedField.value() is Floor,
+                    onChange = { onEvent(OnFieldChange(FieldChange.Floor(it))) },
+                    onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
                 )
             }
             if (extraFields.contains(County)) {
@@ -118,7 +123,9 @@ internal fun AddressDetails(
                 CountyInput(
                     value = uiAddressDetails.county,
                     enabled = enabled,
-                    onChange = { onEvent(OnFieldChange(FieldChange.County(it))) }
+                    requestFocus = focusedField.value() is County,
+                    onChange = { onEvent(OnFieldChange(FieldChange.County(it))) },
+                    onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
                 )
             }
         }
@@ -157,6 +164,7 @@ fun AddressDetailsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark:
                 uiAddressDetails = UIAddressDetails.EMPTY,
                 enabled = true,
                 extraFields = persistentSetOf(),
+                focusedField = None,
                 onEvent = {}
             )
         }

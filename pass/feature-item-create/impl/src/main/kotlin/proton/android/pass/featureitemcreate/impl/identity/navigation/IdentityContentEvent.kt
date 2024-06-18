@@ -50,4 +50,6 @@ sealed interface IdentityContentEvent {
     value class OnAddExtraSectionCustomField(val index: Int) : IdentityContentEvent
 
     data class OnExtraSectionOptions(val index: Int, val label: String) : IdentityContentEvent
+
+    data object ClearLastAddedFieldFocus : IdentityContentEvent
 }

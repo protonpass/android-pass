@@ -28,6 +28,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.persistentSetOf
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -66,6 +68,7 @@ internal fun ContactDetails(
     uiContactDetails: UIContactDetails,
     enabled: Boolean,
     extraFields: PersistentSet<ContactDetailsField>,
+    focusedField: Option<ContactDetailsField>,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
     Column(
@@ -117,7 +120,9 @@ internal fun ContactDetails(
                 LinkedinInput(
                     value = uiContactDetails.linkedin,
                     enabled = enabled,
-                    onChange = { onEvent(OnFieldChange(FieldChange.Linkedin(it))) }
+                    requestFocus = focusedField.value() is Linkedin,
+                    onChange = { onEvent(OnFieldChange(FieldChange.Linkedin(it))) },
+                    onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
                 )
             }
             if (extraFields.contains(Reddit)) {
@@ -125,7 +130,9 @@ internal fun ContactDetails(
                 RedditInput(
                     value = uiContactDetails.reddit,
                     enabled = enabled,
-                    onChange = { onEvent(OnFieldChange(FieldChange.Reddit(it))) }
+                    requestFocus = focusedField.value() is Reddit,
+                    onChange = { onEvent(OnFieldChange(FieldChange.Reddit(it))) },
+                    onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
                 )
             }
             if (extraFields.contains(Facebook)) {
@@ -133,7 +140,9 @@ internal fun ContactDetails(
                 FacebookInput(
                     value = uiContactDetails.facebook,
                     enabled = enabled,
-                    onChange = { onEvent(OnFieldChange(FieldChange.Facebook(it))) }
+                    requestFocus = focusedField.value() is Facebook,
+                    onChange = { onEvent(OnFieldChange(FieldChange.Facebook(it))) },
+                    onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
                 )
             }
             if (extraFields.contains(Yahoo)) {
@@ -141,7 +150,9 @@ internal fun ContactDetails(
                 YahooInput(
                     value = uiContactDetails.yahoo,
                     enabled = enabled,
-                    onChange = { onEvent(OnFieldChange(FieldChange.Yahoo(it))) }
+                    requestFocus = focusedField.value() is Yahoo,
+                    onChange = { onEvent(OnFieldChange(FieldChange.Yahoo(it))) },
+                    onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
                 )
             }
             if (extraFields.contains(Instagram)) {
@@ -149,7 +160,9 @@ internal fun ContactDetails(
                 InstagramInput(
                     value = uiContactDetails.instagram,
                     enabled = enabled,
-                    onChange = { onEvent(OnFieldChange(FieldChange.Instagram(it))) }
+                    requestFocus = focusedField.value() is Instagram,
+                    onChange = { onEvent(OnFieldChange(FieldChange.Instagram(it))) },
+                    onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
                 )
             }
         }
@@ -188,6 +201,7 @@ fun ContactDetailsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark:
                 uiContactDetails = UIContactDetails.EMPTY,
                 enabled = true,
                 extraFields = persistentSetOf(),
+                focusedField = None,
                 onEvent = {}
             )
         }

@@ -28,6 +28,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.persistentSetOf
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -63,6 +65,7 @@ internal fun PersonalDetails(
     uiPersonalDetails: UIPersonalDetails,
     enabled: Boolean,
     extraFields: PersistentSet<PersonalDetailsField>,
+    focusedField: Option<PersonalDetailsField>,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
     Column(
@@ -96,7 +99,9 @@ internal fun PersonalDetails(
                 FirstNameInput(
                     value = uiPersonalDetails.firstName,
                     enabled = enabled,
-                    onChange = { onEvent(OnFieldChange(FieldChange.FirstName(it))) }
+                    requestFocus = focusedField.value() is FirstName,
+                    onChange = { onEvent(OnFieldChange(FieldChange.FirstName(it))) },
+                    onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
                 )
             }
             if (extraFields.contains(MiddleName)) {
@@ -104,7 +109,10 @@ internal fun PersonalDetails(
                 MiddleNameInput(
                     value = uiPersonalDetails.middleName,
                     enabled = enabled,
-                    onChange = { onEvent(OnFieldChange(FieldChange.MiddleName(it))) }
+                    requestFocus = focusedField.value() is MiddleName,
+                    onChange = { onEvent(OnFieldChange(FieldChange.MiddleName(it))) },
+                    onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
+
                 )
             }
             if (extraFields.contains(LastName)) {
@@ -112,7 +120,9 @@ internal fun PersonalDetails(
                 LastNameInput(
                     value = uiPersonalDetails.lastName,
                     enabled = enabled,
-                    onChange = { onEvent(OnFieldChange(FieldChange.LastName(it))) }
+                    requestFocus = focusedField.value() is LastName,
+                    onChange = { onEvent(OnFieldChange(FieldChange.LastName(it))) },
+                    onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
                 )
             }
             if (extraFields.contains(Birthdate)) {
@@ -120,7 +130,9 @@ internal fun PersonalDetails(
                 BirthdateInput(
                     value = uiPersonalDetails.birthdate,
                     enabled = enabled,
-                    onChange = { onEvent(OnFieldChange(FieldChange.Birthdate(it))) }
+                    requestFocus = focusedField.value() is Birthdate,
+                    onChange = { onEvent(OnFieldChange(FieldChange.Birthdate(it))) },
+                    onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
                 )
             }
             if (extraFields.contains(Gender)) {
@@ -128,7 +140,9 @@ internal fun PersonalDetails(
                 GenderInput(
                     value = uiPersonalDetails.gender,
                     enabled = enabled,
-                    onChange = { onEvent(OnFieldChange(FieldChange.Gender(it))) }
+                    requestFocus = focusedField.value() is Gender,
+                    onChange = { onEvent(OnFieldChange(FieldChange.Gender(it))) },
+                    onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
                 )
             }
         }
@@ -167,6 +181,7 @@ fun PersonalDetailsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark
                 uiPersonalDetails = UIPersonalDetails.EMPTY,
                 enabled = true,
                 extraFields = persistentSetOf(),
+                focusedField = None,
                 onEvent = { }
             )
         }

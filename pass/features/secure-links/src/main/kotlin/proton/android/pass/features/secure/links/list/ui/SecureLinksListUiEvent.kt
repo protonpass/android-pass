@@ -18,11 +18,13 @@
 
 package proton.android.pass.features.secure.links.list.ui
 
+import proton.android.pass.domain.securelinks.SecureLinkId
+
 internal interface SecureLinksListUiEvent {
 
     data object OnBackClicked : SecureLinksListUiEvent
 
-    data object OnCellClicked : SecureLinksListUiEvent
+    data class OnCellClicked(val secureLinkId: SecureLinkId) : SecureLinksListUiEvent
 
     data object OnCellOptionsClicked : SecureLinksListUiEvent
 

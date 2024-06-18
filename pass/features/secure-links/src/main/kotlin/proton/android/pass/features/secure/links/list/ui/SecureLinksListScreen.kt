@@ -24,6 +24,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.secure.links.list.presentation.SecureLinksListViewModel
 import proton.android.pass.features.secure.links.shared.navigation.SecureLinksNavDestination
+import proton.android.pass.features.secure.links.overview.navigation.SecureLinksOverviewNavScope
 
 @Composable
 fun SecureLinksListScreen(
@@ -40,8 +41,11 @@ fun SecureLinksListScreen(
                     onNavigated(SecureLinksNavDestination.Back)
                 }
 
-                SecureLinksListUiEvent.OnCellClicked -> {
-                    // Will be implemented in IDTEAM-3453
+                is SecureLinksListUiEvent.OnCellClicked -> {
+                    SecureLinksNavDestination.SecureLinkOverview(
+                        secureLinkId = uiEvent.secureLinkId,
+                        scope = SecureLinksOverviewNavScope.SecureLinksList
+                    ).also(onNavigated)
                 }
 
                 SecureLinksListUiEvent.OnCellOptionsClicked -> {

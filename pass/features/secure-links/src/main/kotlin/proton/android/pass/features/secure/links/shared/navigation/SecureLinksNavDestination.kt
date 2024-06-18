@@ -19,6 +19,7 @@
 package proton.android.pass.features.secure.links.shared.navigation
 
 import proton.android.pass.domain.securelinks.SecureLinkId
+import proton.android.pass.features.secure.links.overview.navigation.SecureLinksOverviewNavScope
 
 sealed interface SecureLinksNavDestination {
 
@@ -27,7 +28,8 @@ sealed interface SecureLinksNavDestination {
     data object Close : SecureLinksNavDestination
 
     data class SecureLinkOverview(
-        val secureLinkId: SecureLinkId
+        val secureLinkId: SecureLinkId,
+        val scope: SecureLinksOverviewNavScope
     ) : SecureLinksNavDestination
 
     data object SecureLinksList : SecureLinksNavDestination

@@ -229,13 +229,13 @@ fun ItemContents.serializeToProto(
                     .addAllExtraWorkDetails(
                         workDetailsContent.customFields.mapToExtraFields(encryptionContext)
                     )
+                    .clearExtraSections()
                     .addAllExtraSections(
                         extraSectionContentList.map {
                             ItemV1.ExtraIdentitySection.newBuilder()
                                 .setSectionName(it.title)
-                                .addAllSectionFields(
-                                    it.customFields.mapToExtraFields(encryptionContext)
-                                )
+                                .clearSectionFields()
+                                .addAllSectionFields(it.customFields.mapToExtraFields(encryptionContext))
                                 .build()
                         }
                     )

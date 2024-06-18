@@ -55,12 +55,28 @@ import proton.android.pass.featureitemcreate.impl.common.CustomFieldIndexTitle
 import proton.android.pass.featureitemcreate.impl.common.UICustomFieldContent
 import proton.android.pass.featureitemcreate.impl.common.UIHiddenState
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.AddressCustomField
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Birthdate
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.ContactCustomField
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.County
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.CustomExtraField
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.ExtraField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.ExtraSectionCustomField
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Facebook
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.FirstName
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Floor
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Gender
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.IdentityFieldDraftRepository
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Instagram
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.LastName
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Linkedin
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.MiddleName
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.PersonalCustomField
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.PersonalWebsite
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Reddit
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.WorkCustomField
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.WorkEmail
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.WorkPhoneNumber
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Yahoo
 import proton.android.pass.featureitemcreate.impl.identity.ui.IdentitySectionType
 import javax.inject.Inject
 
@@ -73,7 +89,7 @@ class IdentityActionsProviderImpl @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider
 ) : IdentityActionsProvider {
 
-    private var itemOption: Option<Item> = None
+    private var itemState: MutableStateFlow<Option<Item>> = MutableStateFlow(None)
 
     @OptIn(SavedStateHandleSaveableApi::class)
     private var identityItemFormMutableState: IdentityItemFormState by savedStateHandleProvider.get()
@@ -85,14 +101,6 @@ class IdentityActionsProviderImpl @Inject constructor(
         MutableStateFlow(emptySet())
     private val isItemSavedState: MutableStateFlow<ItemSavedState> =
         MutableStateFlow(ItemSavedState.Unknown)
-    private val state: Flow<IdentitySharedUiState> = combine(
-        isLoadingState,
-        hasUserEditedContentState,
-        validationErrorsState.map { it.toPersistentSet() },
-        isItemSavedState,
-        identityFieldDraftRepository.observeExtraFields().map { it.toPersistentSet() },
-        ::IdentitySharedUiState
-    )
 
     @Suppress("LongMethod")
     override fun onFieldChange(field: FieldChange) {
@@ -460,7 +468,14 @@ class IdentityActionsProviderImpl @Inject constructor(
         identityFieldDraftRepository.clearAddedFields()
     }
 
-    override fun observeSharedState(): Flow<IdentitySharedUiState> = state
+    override fun observeSharedState(): Flow<IdentitySharedUiState> = combine(
+        isLoadingState,
+        hasUserEditedContentState,
+        validationErrorsState.map { it.toPersistentSet() },
+        isItemSavedState,
+        identityFieldDraftRepository.observeExtraFields().map(Set<ExtraField>::toPersistentSet),
+        ::IdentitySharedUiState
+    )
 
     override fun updateLoadingState(loadingState: IsLoadingState) {
         isLoadingState.update { loadingState }
@@ -481,14 +496,60 @@ class IdentityActionsProviderImpl @Inject constructor(
     }
 
     override fun onItemReceivedState(item: Item) {
-        itemOption = item.some()
+        itemState.update { item.some() }
         val itemContents = encryptionContextProvider.withEncryptionContext {
             item.toItemContents(this@withEncryptionContext) as ItemContents.Identity
+        }
+        val personalDetails = itemContents.personalDetailsContent
+        val addressDetails = itemContents.addressDetailsContent
+        val contactDetails = itemContents.contactDetailsContent
+        val workDetails = itemContents.workDetailsContent
+
+        val fields = listOf(
+            personalDetails.firstName to FirstName,
+            personalDetails.middleName to MiddleName,
+            personalDetails.lastName to LastName,
+            personalDetails.birthdate to Birthdate,
+            personalDetails.gender to Gender,
+            addressDetails.floor to Floor,
+            addressDetails.county to County,
+            contactDetails.linkedin to Linkedin,
+            contactDetails.reddit to Reddit,
+            contactDetails.facebook to Facebook,
+            contactDetails.yahoo to Yahoo,
+            contactDetails.instagram to Instagram,
+            workDetails.personalWebsite to PersonalWebsite,
+            workDetails.workPhoneNumber to WorkPhoneNumber,
+            workDetails.workEmail to WorkEmail
+        )
+        fields.forEach { (value, field) ->
+            if (value.isNotBlank()) {
+                identityFieldDraftRepository.addField(field)
+            }
+        }
+
+        if (personalDetails.customFields.isNotEmpty()) {
+            identityFieldDraftRepository.addField(PersonalCustomField)
+        }
+        if (addressDetails.customFields.isNotEmpty()) {
+            identityFieldDraftRepository.addField(AddressCustomField)
+        }
+        if (contactDetails.customFields.isNotEmpty()) {
+            identityFieldDraftRepository.addField(ContactCustomField)
+        }
+        if (workDetails.customFields.isNotEmpty()) {
+            identityFieldDraftRepository.addField(WorkCustomField)
+        }
+        if (itemContents.extraSectionContentList.isNotEmpty()) {
+            itemContents.extraSectionContentList.forEachIndexed { index, _ ->
+                identityFieldDraftRepository.addField(ExtraSectionCustomField(index))
+            }
         }
         identityItemFormMutableState = IdentityItemFormState(itemContents)
     }
 
-    override fun getReceivedItem(): Item = itemOption.value() ?: throw IllegalStateException("Item is not received")
+    override fun getReceivedItem(): Item =
+        itemState.value.value() ?: throw IllegalStateException("Item is not received")
 
     @Suppress("LongMethod")
     private fun updateCustomFieldState(

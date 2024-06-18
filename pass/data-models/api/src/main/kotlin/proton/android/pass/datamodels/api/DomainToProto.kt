@@ -229,6 +229,16 @@ fun ItemContents.serializeToProto(
                     .addAllExtraWorkDetails(
                         workDetailsContent.customFields.mapToExtraFields(encryptionContext)
                     )
+                    .addAllExtraSections(
+                        extraSectionContentList.map {
+                            ItemV1.ExtraIdentitySection.newBuilder()
+                                .setSectionName(it.title)
+                                .addAllSectionFields(
+                                    it.customFields.mapToExtraFields(encryptionContext)
+                                )
+                                .build()
+                        }
+                    )
                     .build()
             )
 

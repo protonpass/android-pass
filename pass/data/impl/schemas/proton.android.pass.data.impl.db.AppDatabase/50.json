@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 50,
-    "identityHash": "3147695997e2531a7c36cfcac3337fcd",
+    "identityHash": "b4af66d441435c0533bd3be28de9f261",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -3580,7 +3580,7 @@
       },
       {
         "tableName": "SecureLinkEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_id` TEXT NOT NULL, `link_id` TEXT NOT NULL, `share_id` TEXT NOT NULL, `item_id` TEXT NOT NULL, `expiration` INTEGER NOT NULL, `max_views` INTEGER, `views` INTEGER NOT NULL, `url` TEXT NOT NULL, PRIMARY KEY(`link_id`), FOREIGN KEY(`user_id`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`item_id`, `share_id`) REFERENCES `ItemEntity`(`id`, `share_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`share_id`) REFERENCES `ShareEntity`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_id` TEXT NOT NULL, `link_id` TEXT NOT NULL, `share_id` TEXT NOT NULL, `item_id` TEXT NOT NULL, `expiration` INTEGER NOT NULL, `is_expired` INTEGER NOT NULL, `max_views` INTEGER, `views` INTEGER NOT NULL, `url` TEXT NOT NULL, PRIMARY KEY(`link_id`), FOREIGN KEY(`user_id`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`item_id`, `share_id`) REFERENCES `ItemEntity`(`id`, `share_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`share_id`) REFERENCES `ShareEntity`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "userId",
@@ -3609,6 +3609,12 @@
           {
             "fieldPath": "expirationInSeconds",
             "columnName": "expiration",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isExpired",
+            "columnName": "is_expired",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -3690,7 +3696,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3147695997e2531a7c36cfcac3337fcd')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b4af66d441435c0533bd3be28de9f261')"
     ]
   }
 }

@@ -27,44 +27,75 @@ import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.db.entities.ShareEntity
 
 @Entity(
-    tableName = SecureLinkTable.NAME,
-    primaryKeys = [SecureLinkTable.Columns.LINK_ID],
+    tableName = SecureLinkEntity.TABLE_NAME,
+    primaryKeys = [SecureLinkEntity.Columns.LINK_ID],
     foreignKeys = [
         ForeignKey(
             entity = UserEntity::class,
             parentColumns = [ExternalColumns.USER_ID],
-            childColumns = [SecureLinkTable.Columns.USER_ID],
+            childColumns = [SecureLinkEntity.Columns.USER_ID],
             onDelete = ForeignKey.CASCADE
         ),
         ForeignKey(
             entity = ItemEntity::class,
             parentColumns = [ItemEntity.Columns.ID, ItemEntity.Columns.SHARE_ID],
-            childColumns = [SecureLinkTable.Columns.ITEM_ID, SecureLinkTable.Columns.SHARE_ID],
+            childColumns = [SecureLinkEntity.Columns.ITEM_ID, SecureLinkEntity.Columns.SHARE_ID],
             onDelete = ForeignKey.CASCADE
         ),
         ForeignKey(
             entity = ShareEntity::class,
             parentColumns = [ShareEntity.Columns.ID],
-            childColumns = [SecureLinkTable.Columns.SHARE_ID],
+            childColumns = [SecureLinkEntity.Columns.SHARE_ID],
             onDelete = ForeignKey.CASCADE
         )
     ]
 )
 data class SecureLinkEntity(
-    @ColumnInfo(name = SecureLinkTable.Columns.USER_ID, index = true)
+    @ColumnInfo(name = Columns.USER_ID, index = true)
     val userId: String,
-    @ColumnInfo(name = SecureLinkTable.Columns.LINK_ID)
+    @ColumnInfo(name = Columns.LINK_ID)
     val linkId: String,
-    @ColumnInfo(name = SecureLinkTable.Columns.SHARE_ID)
+    @ColumnInfo(name = Columns.SHARE_ID)
     val shareId: String,
-    @ColumnInfo(name = SecureLinkTable.Columns.ITEM_ID)
+    @ColumnInfo(name = Columns.ITEM_ID)
     val itemId: String,
-    @ColumnInfo(name = SecureLinkTable.Columns.EXPIRATION)
+    @ColumnInfo(name = Columns.EXPIRATION)
     val expirationInSeconds: Long,
-    @ColumnInfo(name = SecureLinkTable.Columns.MAX_VIEWS)
+    @ColumnInfo(name = Columns.IS_EXPIRED)
+    val isExpired: Boolean,
+    @ColumnInfo(name = Columns.MAX_VIEWS)
     val maxViews: Int?,
-    @ColumnInfo(name = SecureLinkTable.Columns.VIEWS)
+    @ColumnInfo(name = Columns.VIEWS)
     val views: Int,
-    @ColumnInfo(name = SecureLinkTable.Columns.URL)
+    @ColumnInfo(name = Columns.URL)
     val url: String
-)
+) {
+    internal companion object {
+
+        const val TABLE_NAME = "SecureLinkEntity"
+
+    }
+
+    internal object Columns {
+
+        internal const val LINK_ID = "link_id"
+
+        internal const val USER_ID = "user_id"
+
+        internal const val SHARE_ID = "share_id"
+
+        internal const val ITEM_ID = "item_id"
+
+        internal const val EXPIRATION = "expiration"
+
+        internal const val IS_EXPIRED = "is_expired"
+
+        internal const val MAX_VIEWS = "max_views"
+
+        internal const val VIEWS = "views"
+
+        internal const val URL = "url"
+
+    }
+
+}

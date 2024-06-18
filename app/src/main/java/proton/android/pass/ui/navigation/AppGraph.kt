@@ -130,6 +130,7 @@ import proton.android.pass.features.item.history.timeline.navigation.ItemHistory
 import proton.android.pass.features.secure.links.create.navigation.SecureLinksCreateNavItem
 import proton.android.pass.features.secure.links.list.navigation.SecureLinksListNavItem
 import proton.android.pass.features.secure.links.overview.navigation.SecureLinksOverviewNavItem
+import proton.android.pass.features.secure.links.overview.navigation.SecureLinksOverviewNavScope
 import proton.android.pass.features.secure.links.shared.navigation.SecureLinksNavDestination
 import proton.android.pass.features.secure.links.shared.navigation.secureLinksNavGraph
 import proton.android.pass.features.security.center.addressoptions.navigation.SecurityCenterAliasAddressOptionsNavItem
@@ -1646,13 +1647,19 @@ fun NavGraphBuilder.appGraph(
                     destination = ViewItem
                 )
 
-                is SecureLinksNavDestination.SecureLinkOverview -> appNavigator.navigate(
-                    destination = SecureLinksOverviewNavItem,
-                    route = SecureLinksOverviewNavItem.createNavRoute(
-                        secureLinkId = destination.secureLinkId
-                    ),
-                    backDestination = ViewItem
-                )
+                is SecureLinksNavDestination.SecureLinkOverview -> when (destination.scope) {
+                    SecureLinksOverviewNavScope.SecureLinksGeneration -> appNavigator.navigate(
+                        destination = SecureLinksOverviewNavItem,
+                        route = SecureLinksOverviewNavItem.createNavRoute(destination.secureLinkId),
+                        backDestination = ViewItem
+                    )
+
+                    SecureLinksOverviewNavScope.SecureLinksList -> appNavigator.navigate(
+                        destination = SecureLinksOverviewNavItem,
+                        route = SecureLinksOverviewNavItem.createNavRoute(destination.secureLinkId),
+                        backDestination = ViewItem
+                    )
+                }
 
                 SecureLinksNavDestination.SecureLinksList -> appNavigator.navigate(
                     destination = SecureLinksListNavItem

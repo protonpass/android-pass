@@ -162,6 +162,28 @@ class LiveTelemetryRepositoryImplTest {
     }
 
     @Test
+    fun `deletes events that do not need to be sent`() = runTest {
+        // These events are in the pending list but should not be sent
+        setupPlan(freePlan)
+        val entities = (0 until 3).map { sampleEvent.toEntity(USER_ID, it.toLong()) }
+        local.setPending(USER_ID, entities)
+        assertThat(local.getPendingEvents(USER_ID)).isEqualTo(entities)
+
+        // Try to send the events
+        instance.flushPendingEvents(USER_ID)
+
+        // There should be 0 pending events
+        assertThat(local.getPendingEvents(USER_ID)).isEmpty()
+
+        // There should be no events in the remote
+        assertThat(remote.getMemory()).isEmpty()
+
+        // There should be 3 events in the delete memory
+        val deletedEntityIds = entities.map { it.id }
+        assertThat(local.getDeleteMemory(USER_ID)).isEqualTo(deletedEntityIds)
+    }
+
+    @Test
     fun `chunks requests when sending`() = runTest {
         val entities = (0 until 100).map { sampleEvent.toEntity(USER_ID, it.toLong()) }
         local.setPending(USER_ID, entities)

@@ -44,7 +44,6 @@ class CustomFieldNameDialogNavItem(prefix: CustomFieldPrefix) : NavItem(
 
     companion object {
         val CreateLogin = CustomFieldNameDialogNavItem(CustomFieldPrefix.CreateLogin)
-        val UpdateLogin = CustomFieldNameDialogNavItem(CustomFieldPrefix.UpdateLogin)
         val CreateIdentity = CustomFieldNameDialogNavItem(CustomFieldPrefix.CreateIdentity)
     }
 }
@@ -58,7 +57,6 @@ class EditCustomFieldNameDialogNavItem(val prefix: CustomFieldPrefix) : NavItem(
 
     companion object {
         val CreateLogin = EditCustomFieldNameDialogNavItem(CustomFieldPrefix.CreateLogin)
-        val UpdateLogin = EditCustomFieldNameDialogNavItem(CustomFieldPrefix.UpdateLogin)
         val CreateIdentity = EditCustomFieldNameDialogNavItem(CustomFieldPrefix.CreateIdentity)
     }
 }

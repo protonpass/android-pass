@@ -67,7 +67,7 @@ class LiveTelemetryRepositoryImpl @Inject constructor(
         val networkStatus = networkMonitor.connectivity.firstOrNull() ?: NetworkStatus.Offline
 
         when (networkStatus) {
-            NetworkStatus.Online -> trySendEvents(userId, listOf(None to event))
+            NetworkStatus.Online -> trySendEvents(userId, listOf(EventToSend(None, event)))
             NetworkStatus.Offline -> storeEvents(userId, listOf(event))
         }
     }
@@ -80,33 +80,27 @@ class LiveTelemetryRepositoryImpl @Inject constructor(
         trySendEvents(userId, pending)
     }
 
-    private suspend fun trySendEvents(
-        userId: UserId,
-        events: List<Pair<Option<LiveTelemetryEntity>, LiveTelemetryEvent>>
-    ) {
+    private suspend fun trySendEvents(userId: UserId, events: List<EventToSend>) {
         val plan = getPlanForUser(userId)
-        val eventsToSend: List<Pair<Option<LiveTelemetryEntity>, LiveTelemetryEvent>> = events
-            .filter { shouldSendEvent(plan, it.second) }
+        val eventsToSend: List<EventToSend> = events
+            .filter { shouldSendEvent(plan, it.event) }
 
         sendItemViewedEvents(userId, eventsToSend)
     }
 
-    private suspend fun sendItemViewedEvents(
-        userId: UserId,
-        events: List<Pair<Option<LiveTelemetryEntity>, LiveTelemetryEvent>>
-    ) {
-        val itemViewedEvents: List<Pair<Option<LiveTelemetryEntity>, ItemViewed>> = events
-            .filter { it.second is ItemViewed }
-            .map { it.first to it.second as ItemViewed }
+    private suspend fun sendItemViewedEvents(userId: UserId, events: List<EventToSend>) {
+        val itemViewedEvents: List<ItemViewedEventToSend> = events
+            .filter { it.event is ItemViewed }
+            .map { ItemViewedEventToSend(it.entity, it.event as ItemViewed) }
 
         sendItemViewed(userId, itemViewedEvents)
     }
 
-    private suspend fun sendItemViewed(userId: UserId, events: List<Pair<Option<LiveTelemetryEntity>, ItemViewed>>) {
+    private suspend fun sendItemViewed(userId: UserId, events: List<ItemViewedEventToSend>) {
         if (events.isEmpty()) return
 
-        val requestsPerShare: Map<ShareId, List<Pair<Option<LiveTelemetryEntity>, ItemViewed>>> =
-            events.groupBy { it.second.shareId }
+        val requestsPerShare: Map<ShareId, List<ItemViewedEventToSend>> =
+            events.groupBy { it.event.shareId }
 
         coroutineScope {
             requestsPerShare.map { (shareId, items) ->
@@ -115,7 +109,7 @@ class LiveTelemetryRepositoryImpl @Inject constructor(
                         val request = ItemReadRequest(
                             entitiesItems.map { item ->
                                 ItemReadBody(
-                                    itemId = item.second.itemId.id,
+                                    itemId = item.event.itemId.id,
                                     timestamp = clock.now().epochSeconds
                                 )
                             }
@@ -142,17 +136,17 @@ class LiveTelemetryRepositoryImpl @Inject constructor(
         }.flatten().awaitAll()
     }
 
-    private suspend fun deleteIfStored(userId: UserId, events: List<Pair<Option<LiveTelemetryEntity>, ItemViewed>>) {
+    private suspend fun deleteIfStored(userId: UserId, events: List<ItemViewedEventToSend>) {
         val ids = events.mapNotNull { (entity, _) -> entity.value()?.id }
         local.deletePendingEvents(userId, ids)
     }
 
-    private suspend fun storeIfNotStored(userId: UserId, events: List<Pair<Option<LiveTelemetryEntity>, ItemViewed>>) {
-        val notStored = events.filter { it.first.isEmpty() }
-        storeEvents(userId, notStored.map { it.second })
+    private suspend fun storeIfNotStored(userId: UserId, events: List<ItemViewedEventToSend>) {
+        val notStored = events.filter { it.entity.isEmpty() }
+        storeEvents(userId, notStored.map { it.event })
     }
 
-    private suspend fun getPendingEvents(userId: UserId): List<Pair<Option<LiveTelemetryEntity>, LiveTelemetryEvent>> =
+    private suspend fun getPendingEvents(userId: UserId): List<EventToSend> =
         local.getPendingEvents(userId).mapNotNull { entity ->
             when (entity.event) {
                 ItemViewed.EVENT_NAME -> {
@@ -165,7 +159,7 @@ class LiveTelemetryRepositoryImpl @Inject constructor(
                             PassLogger.w(TAG, "Could not deserialize ItemViewed event")
                             null
                         }
-                        is Some -> entity.some() to item.value
+                        is Some -> EventToSend(entity.some(), item.value)
                     }
                 }
 
@@ -200,6 +194,16 @@ class LiveTelemetryRepositoryImpl @Inject constructor(
         event = eventName,
         dimensions = DimensionsSerializer.serialize(dimensions()),
         createTime = clock.now().epochSeconds
+    )
+
+    private data class EventToSend(
+        val entity: Option<LiveTelemetryEntity>,
+        val event: LiveTelemetryEvent
+    )
+
+    private data class ItemViewedEventToSend(
+        val entity: Option<LiveTelemetryEntity>,
+        val event: ItemViewed
     )
 
     companion object {

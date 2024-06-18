@@ -28,6 +28,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.persistentSetOf
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -58,6 +60,7 @@ internal fun WorkDetails(
     uiWorkDetails: UIWorkDetails,
     enabled: Boolean,
     extraFields: PersistentSet<WorkDetailsField>,
+    focusedField: Option<WorkDetailsField>,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
     Column(
@@ -84,7 +87,9 @@ internal fun WorkDetails(
                 PersonalWebsiteInput(
                     value = uiWorkDetails.personalWebsite,
                     enabled = enabled,
-                    onChange = { onEvent(OnFieldChange(FieldChange.PersonalWebsite(it))) }
+                    requestFocus = focusedField.value() is PersonalWebsite,
+                    onChange = { onEvent(OnFieldChange(FieldChange.PersonalWebsite(it))) },
+                    onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
                 )
             }
             if (extraFields.contains(WorkPhoneNumber)) {
@@ -92,7 +97,9 @@ internal fun WorkDetails(
                 WorkPhoneNumberInput(
                     value = uiWorkDetails.workPhoneNumber,
                     enabled = enabled,
-                    onChange = { onEvent(OnFieldChange(FieldChange.WorkPhoneNumber(it))) }
+                    requestFocus = focusedField.value() is WorkPhoneNumber,
+                    onChange = { onEvent(OnFieldChange(FieldChange.WorkPhoneNumber(it))) },
+                    onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
                 )
             }
             if (extraFields.contains(WorkEmail)) {
@@ -100,7 +107,9 @@ internal fun WorkDetails(
                 WorkEmailInput(
                     value = uiWorkDetails.workEmail,
                     enabled = enabled,
-                    onChange = { onEvent(OnFieldChange(FieldChange.WorkEmail(it))) }
+                    requestFocus = focusedField.value() is WorkEmail,
+                    onChange = { onEvent(OnFieldChange(FieldChange.WorkEmail(it))) },
+                    onClearFocus = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
                 )
             }
         }
@@ -139,6 +148,7 @@ fun WorkDetailsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
                 uiWorkDetails = UIWorkDetails.EMPTY,
                 enabled = true,
                 extraFields = persistentSetOf(),
+                focusedField = None,
                 onEvent = {}
             )
         }

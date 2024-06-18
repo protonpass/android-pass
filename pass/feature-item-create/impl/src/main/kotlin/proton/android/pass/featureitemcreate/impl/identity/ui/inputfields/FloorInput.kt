@@ -20,10 +20,14 @@ package proton.android.pass.featureitemcreate.impl.identity.ui.inputfields
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
+import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
@@ -36,15 +40,20 @@ internal fun FloorInput(
     modifier: Modifier = Modifier,
     value: String,
     enabled: Boolean,
-    onChange: (String) -> Unit
+    requestFocus: Boolean = false,
+    onChange: (String) -> Unit,
+    onClearFocus: () -> Unit
 ) {
+    val focusRequester = remember { FocusRequester() }
     ProtonTextField(
-        modifier = modifier.padding(
-            start = Spacing.medium,
-            top = Spacing.medium,
-            end = Spacing.small,
-            bottom = Spacing.medium
-        ),
+        modifier = modifier
+            .padding(
+                start = Spacing.medium,
+                top = Spacing.medium,
+                end = Spacing.small,
+                bottom = Spacing.medium
+            )
+            .focusRequester(focusRequester),
         value = value,
         onChange = onChange,
         moveToNextOnEnter = true,
@@ -63,4 +72,5 @@ internal fun FloorInput(
             }
         }
     )
+    RequestFocusLaunchedEffect(focusRequester, requestFocus, onClearFocus)
 }

@@ -74,7 +74,11 @@ fun IdentityOptionsBottomSheetContents(
     Column(modifier.bottomSheet()) {
         BottomSheetItemRow(
             title = { BottomSheetItemTitle(text = contents.title) },
-            subtitle = { BottomSheetItemSubtitle(text = contents.personalDetailsContent.fullName) },
+            subtitle = {
+                if (contents.personalDetailsContent.fullName.isNotBlank()) {
+                    BottomSheetItemSubtitle(text = contents.personalDetailsContent.fullName)
+                }
+            },
             leftIcon = { IdentityIcon() }
         )
 

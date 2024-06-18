@@ -28,6 +28,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.secure.links.create.presentation.SecureLinksCreateEvent
 import proton.android.pass.features.secure.links.create.presentation.SecureLinksCreateViewModel
+import proton.android.pass.features.secure.links.overview.navigation.SecureLinksOverviewNavScope
 import proton.android.pass.features.secure.links.shared.navigation.SecureLinksNavDestination
 
 @Composable
@@ -43,7 +44,8 @@ fun SecureLinksCreateScreen(
         when (val event = state.event) {
             SecureLinksCreateEvent.Idle -> {}
             is SecureLinksCreateEvent.OnLinkGenerated -> SecureLinksNavDestination.SecureLinkOverview(
-                secureLinkId = event.secureLinkId
+                secureLinkId = event.secureLinkId,
+                scope = SecureLinksOverviewNavScope.SecureLinksGeneration
             ).also(onNavigated)
         }
     }

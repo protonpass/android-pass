@@ -81,6 +81,7 @@ class SecureLinksOverviewViewModel @Inject constructor(
     ) { secureLink, itemUiModel, vault, useFavIconsPreference ->
         SecureLinksOverviewState(
             secureLinkUrl = secureLink.url,
+            currentViews = secureLink.readCount,
             expirationSeconds = secureLink.expirationInSeconds,
             maxViewsAllowed = secureLink.maxReadCount,
             itemUiModel = itemUiModel,

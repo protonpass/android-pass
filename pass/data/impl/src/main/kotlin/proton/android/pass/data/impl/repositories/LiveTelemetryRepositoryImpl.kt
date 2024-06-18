@@ -82,8 +82,10 @@ class LiveTelemetryRepositoryImpl @Inject constructor(
 
     private suspend fun trySendEvents(userId: UserId, events: List<EventToSend>) {
         val plan = getPlanForUser(userId)
-        val eventsToSend: List<EventToSend> = events
-            .filter { shouldSendEvent(plan, it.event) }
+        val (eventsToSend, eventsToDelete) = events.partition { shouldSendEvent(plan, it.event) }
+
+        // Delete events that are not going to be sent
+        local.deletePendingEvents(userId, eventsToDelete.mapNotNull { it.entity.value()?.id })
 
         sendItemViewedEvents(userId, eventsToSend)
     }

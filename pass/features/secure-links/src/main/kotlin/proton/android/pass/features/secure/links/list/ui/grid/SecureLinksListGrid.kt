@@ -52,7 +52,11 @@ internal fun SecureLinksListGrid(
                 remainingTime = secureLinksModel.remainingTime,
                 views = secureLinksModel.views,
                 canLoadExternalImages = canLoadExternalImages,
-                onCellClick = { onUiEvent(SecureLinksListUiEvent.OnCellClicked) },
+                onCellClick = {
+                    SecureLinksListUiEvent.OnCellClicked(
+                        secureLinkId = secureLinksModel.secureLinkId
+                    ).also(onUiEvent)
+                },
                 onCellOptionsClick = { onUiEvent(SecureLinksListUiEvent.OnCellOptionsClicked) }
             )
         }

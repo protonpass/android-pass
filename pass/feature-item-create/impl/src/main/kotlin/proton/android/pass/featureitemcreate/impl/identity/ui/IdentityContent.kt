@@ -49,6 +49,7 @@ fun IdentityContent(
     shouldShowVaultSelector: Boolean,
     validationErrors: PersistentSet<IdentityValidationErrors>,
     extraFields: PersistentSet<ExtraField>,
+    focusedField: Option<ExtraField>,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
     Scaffold(
@@ -85,6 +86,7 @@ fun IdentityContent(
             enabled = !isLoadingState.value(),
             validationErrors = validationErrors,
             extraFields = extraFields,
+            focusedField = focusedField,
             onEvent = onEvent
         )
     }

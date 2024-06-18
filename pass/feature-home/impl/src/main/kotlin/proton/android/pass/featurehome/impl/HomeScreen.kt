@@ -249,299 +249,317 @@ fun HomeScreen(
         sheetState = bottomSheetState,
         sheetContent = {
             when (currentBottomSheet) {
-                LoginOptions -> LoginOptionsBottomSheetContents(
-                    itemUiModel = selectedItem!!,
-                    isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
-                    canLoadExternalImages = homeUiState.homeListUiState.canLoadExternalImages,
-                    action = homeUiState.action,
-                    onCopyUsername = remember {
-                        {
+                LoginOptions -> {
+                    val item = selectedItem ?: return@PassModalBottomSheetLayout
+                    LoginOptionsBottomSheetContents(
+                        itemUiModel = item,
+                        isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
+                        canLoadExternalImages = homeUiState.homeListUiState.canLoadExternalImages,
+                        action = homeUiState.action,
+                        onCopyUsername = remember {
+                            {
+                                scope.launch { bottomSheetState.hide() }
+                                homeViewModel.copyToClipboard(it, HomeClipboardType.Username)
+                            }
+                        },
+                        onCopyPassword = remember {
+                            {
+                                scope.launch { bottomSheetState.hide() }
+                                homeViewModel.copyToClipboard(it, HomeClipboardType.Password)
+                            }
+                        },
+                        onPinned = remember {
+                            { shareId, itemId ->
+                                homeViewModel.pinItem(shareId, itemId)
+                            }
+                        },
+                        onUnpinned = remember {
+                            { shareId, itemId ->
+                                homeViewModel.unpinItem(shareId, itemId)
+                            }
+                        },
+                        onViewHistory = remember {
+                            { shareId, itemId ->
+                                scope.launch { bottomSheetState.hide() }
+                                homeViewModel.viewItemHistory(shareId, itemId)
+                            }
+                        },
+                        onEdit = remember {
+                            { shareId, itemId ->
+                                scope.launch { bottomSheetState.hide() }
+                                onNavigateEvent(HomeNavigation.EditLogin(shareId, itemId))
+                            }
+                        },
+                        onMoveToTrash = remember {
+                            {
+                                scope.launch {
+                                    bottomSheetState.hide()
+                                    homeViewModel.sendItemsToTrash(listOf(it))
+                                }
+                            }
+                        },
+                        onRemoveFromRecentSearch = remember {
+                            { shareId, itemId ->
+                                scope.launch {
+                                    bottomSheetState.hide()
+                                    homeViewModel.onClearRecentSearch(shareId, itemId)
+                                }
+                            }
+                        },
+                        isFreePlan = homeUiState.isFreePlan
+                    )
+                }
+
+                AliasOptions -> {
+                    val item = selectedItem ?: return@PassModalBottomSheetLayout
+                    AliasOptionsBottomSheetContents(
+                        itemUiModel = item,
+                        isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
+                        action = homeUiState.action,
+                        onCopyAlias = remember {
+                            {
+                                scope.launch { bottomSheetState.hide() }
+                                homeViewModel.copyToClipboard(it, HomeClipboardType.Alias)
+                            }
+                        },
+                        onPinned = remember {
+                            { shareId, itemId ->
+                                homeViewModel.pinItem(shareId, itemId)
+                            }
+                        },
+                        onUnpinned = remember {
+                            { shareId, itemId ->
+                                homeViewModel.unpinItem(shareId, itemId)
+                            }
+                        },
+                        onViewHistory = remember {
+                            { shareId, itemId ->
+                                scope.launch { bottomSheetState.hide() }
+                                homeViewModel.viewItemHistory(shareId, itemId)
+                            }
+                        },
+                        onEdit = remember {
+                            { shareId, itemId ->
+                                scope.launch { bottomSheetState.hide() }
+                                onNavigateEvent(HomeNavigation.EditAlias(shareId, itemId))
+                            }
+                        },
+                        onMoveToTrash = remember {
+                            {
+                                scope.launch {
+                                    bottomSheetState.hide()
+                                    aliasToBeTrashed = it
+                                }
+                            }
+                        },
+                        onRemoveFromRecentSearch = remember {
+                            { shareId, itemId ->
+                                scope.launch {
+                                    bottomSheetState.hide()
+                                    homeViewModel.onClearRecentSearch(shareId, itemId)
+                                }
+                            }
+                        },
+                        isFreePlan = homeUiState.isFreePlan
+                    )
+                }
+
+                NoteOptions -> {
+                    val item = selectedItem ?: return@PassModalBottomSheetLayout
+                    NoteOptionsBottomSheetContents(
+                        itemUiModel = item,
+                        isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
+                        action = homeUiState.action,
+                        onCopyNote = remember {
+                            {
+                                scope.launch { bottomSheetState.hide() }
+                                homeViewModel.copyToClipboard(it, HomeClipboardType.Note)
+                            }
+                        },
+                        onPinned = remember {
+                            { shareId, itemId ->
+                                homeViewModel.pinItem(shareId, itemId)
+                            }
+                        },
+                        onUnpinned = remember {
+                            { shareId, itemId ->
+                                homeViewModel.unpinItem(shareId, itemId)
+                            }
+                        },
+                        onViewHistory = remember {
+                            { shareId, itemId ->
+                                scope.launch { bottomSheetState.hide() }
+                                homeViewModel.viewItemHistory(shareId, itemId)
+                            }
+                        },
+                        onEdit = remember {
+                            { shareId, itemId ->
+                                scope.launch { bottomSheetState.hide() }
+                                onNavigateEvent(HomeNavigation.EditNote(shareId, itemId))
+                            }
+                        },
+                        onMoveToTrash = remember {
+                            {
+                                scope.launch {
+                                    bottomSheetState.hide()
+                                    homeViewModel.sendItemsToTrash(listOf(it))
+                                }
+                            }
+                        },
+                        onRemoveFromRecentSearch = remember {
+                            { shareId, itemId ->
+                                scope.launch {
+                                    bottomSheetState.hide()
+                                    homeViewModel.onClearRecentSearch(shareId, itemId)
+                                }
+                            }
+                        },
+                        isFreePlan = homeUiState.isFreePlan
+                    )
+                }
+
+                CreditCardOptions -> {
+                    val item = selectedItem ?: return@PassModalBottomSheetLayout
+                    CreditCardOptionsBottomSheetContents(
+                        itemUiModel = item,
+                        isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
+                        action = homeUiState.action,
+                        onCopyNumber = remember {
+                            {
+                                scope.launch { bottomSheetState.hide() }
+                                homeViewModel.copyToClipboard(it, HomeClipboardType.CreditCardNumber)
+                            }
+                        },
+                        onCopyCvv = remember {
+                            {
+                                scope.launch { bottomSheetState.hide() }
+                                homeViewModel.copyToClipboard(it, HomeClipboardType.CreditCardCvv)
+                            }
+                        },
+                        onPinned = remember {
+                            { shareId, itemId ->
+                                homeViewModel.pinItem(shareId, itemId)
+                            }
+                        },
+                        onUnpinned = remember {
+                            { shareId, itemId ->
+                                homeViewModel.unpinItem(shareId, itemId)
+                            }
+                        },
+                        onViewHistory = remember {
+                            { shareId, itemId ->
+                                scope.launch { bottomSheetState.hide() }
+                                homeViewModel.viewItemHistory(shareId, itemId)
+                            }
+                        },
+                        onEdit = remember {
+                            { shareId, itemId ->
+                                scope.launch { bottomSheetState.hide() }
+                                onNavigateEvent(HomeNavigation.EditCreditCard(shareId, itemId))
+                            }
+                        },
+                        onMoveToTrash = remember {
+                            {
+                                scope.launch {
+                                    bottomSheetState.hide()
+                                    homeViewModel.sendItemsToTrash(listOf(it))
+                                }
+                            }
+                        },
+                        onRemoveFromRecentSearch = remember {
+                            { shareId, itemId ->
+                                scope.launch {
+                                    bottomSheetState.hide()
+                                    homeViewModel.onClearRecentSearch(shareId, itemId)
+                                }
+                            }
+                        },
+                        isFreePlan = homeUiState.isFreePlan
+                    )
+                }
+
+                IdentityOptions -> {
+                    val item = selectedItem ?: return@PassModalBottomSheetLayout
+                    IdentityOptionsBottomSheetContents(
+                        itemUiModel = item,
+                        isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
+                        action = homeUiState.action,
+                        isFreePlan = homeUiState.isFreePlan,
+                        onCopyFullName = {
                             scope.launch { bottomSheetState.hide() }
-                            homeViewModel.copyToClipboard(it, HomeClipboardType.Username)
-                        }
-                    },
-                    onCopyPassword = remember {
-                        {
+                            homeViewModel.copyToClipboard(it, HomeClipboardType.FullName)
+                        },
+                        onPinned = { shareId, itemId ->
                             scope.launch { bottomSheetState.hide() }
-                            homeViewModel.copyToClipboard(it, HomeClipboardType.Password)
-                        }
-                    },
-                    onPinned = remember {
-                        { shareId, itemId ->
                             homeViewModel.pinItem(shareId, itemId)
-                        }
-                    },
-                    onUnpinned = remember {
-                        { shareId, itemId ->
+                        },
+                        onUnpinned = { shareId, itemId ->
+                            scope.launch { bottomSheetState.hide() }
                             homeViewModel.unpinItem(shareId, itemId)
-                        }
-                    },
-                    onViewHistory = remember {
-                        { shareId, itemId ->
+                        },
+                        onViewHistory = { shareId, itemId ->
                             scope.launch { bottomSheetState.hide() }
                             homeViewModel.viewItemHistory(shareId, itemId)
-                        }
-                    },
-                    onEdit = remember {
-                        { shareId, itemId ->
+                        },
+                        onEdit = { shareId, itemId ->
                             scope.launch { bottomSheetState.hide() }
-                            onNavigateEvent(HomeNavigation.EditLogin(shareId, itemId))
+                            onNavigateEvent(HomeNavigation.EditIdentity(shareId, itemId))
+                        },
+                        onMoveToTrash = {
+                            scope.launch { bottomSheetState.hide() }
+                            homeViewModel.sendItemsToTrash(listOf(it))
+                        },
+                        onRemoveFromRecentSearch = { shareId, itemId ->
+                            scope.launch { bottomSheetState.hide() }
+                            homeViewModel.onClearRecentSearch(shareId, itemId)
                         }
-                    },
-                    onMoveToTrash = remember {
-                        {
-                            scope.launch {
-                                bottomSheetState.hide()
-                                homeViewModel.sendItemsToTrash(listOf(it))
-                            }
-                        }
-                    },
-                    onRemoveFromRecentSearch = remember {
-                        { shareId, itemId ->
-                            scope.launch {
-                                bottomSheetState.hide()
-                                homeViewModel.onClearRecentSearch(shareId, itemId)
-                            }
-                        }
-                    },
-                    isFreePlan = homeUiState.isFreePlan
-                )
+                    )
+                }
 
-                AliasOptions -> AliasOptionsBottomSheetContents(
-                    itemUiModel = selectedItem!!,
-                    isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
-                    action = homeUiState.action,
-                    onCopyAlias = remember {
-                        {
-                            scope.launch { bottomSheetState.hide() }
-                            homeViewModel.copyToClipboard(it, HomeClipboardType.Alias)
-                        }
-                    },
-                    onPinned = remember {
-                        { shareId, itemId ->
-                            homeViewModel.pinItem(shareId, itemId)
-                        }
-                    },
-                    onUnpinned = remember {
-                        { shareId, itemId ->
-                            homeViewModel.unpinItem(shareId, itemId)
-                        }
-                    },
-                    onViewHistory = remember {
-                        { shareId, itemId ->
-                            scope.launch { bottomSheetState.hide() }
-                            homeViewModel.viewItemHistory(shareId, itemId)
-                        }
-                    },
-                    onEdit = remember {
-                        { shareId, itemId ->
-                            scope.launch { bottomSheetState.hide() }
-                            onNavigateEvent(HomeNavigation.EditAlias(shareId, itemId))
-                        }
-                    },
-                    onMoveToTrash = remember {
-                        {
-                            scope.launch {
-                                bottomSheetState.hide()
-                                aliasToBeTrashed = it
+                TrashItemOptions -> {
+                    val item = selectedItem ?: return@PassModalBottomSheetLayout
+                    TrashItemBottomSheetContents(
+                        itemUiModel = item,
+                        onRestoreItem = remember {
+                            {
+                                scope.launch {
+                                    bottomSheetState.hide()
+                                    homeViewModel.restoreItems(listOf(it))
+                                }
                             }
-                        }
-                    },
-                    onRemoveFromRecentSearch = remember {
-                        { shareId, itemId ->
-                            scope.launch {
-                                bottomSheetState.hide()
-                                homeViewModel.onClearRecentSearch(shareId, itemId)
+                        },
+                        onDeleteItem = remember {
+                            {
+                                scope.launch {
+                                    bottomSheetState.hide()
+                                    shouldShowDeleteItemDialog = true
+                                }
                             }
-                        }
-                    },
-                    isFreePlan = homeUiState.isFreePlan
-                )
+                        },
+                        icon = {
+                            when (val contents = item.contents) {
+                                is ItemContents.Login -> {
+                                    val sortedPackages =
+                                        contents.packageInfoSet.sortedBy { it.packageName.value }
+                                    val packageName = sortedPackages.firstOrNull()?.packageName?.value
+                                    val website = contents.urls.firstOrNull()
+                                    LoginIcon(
+                                        text = item.contents.title,
+                                        canLoadExternalImages = homeUiState.homeListUiState.canLoadExternalImages,
+                                        website = website,
+                                        packageName = packageName
+                                    )
+                                }
 
-                NoteOptions -> NoteOptionsBottomSheetContents(
-                    itemUiModel = selectedItem!!,
-                    isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
-                    action = homeUiState.action,
-                    onCopyNote = remember {
-                        {
-                            scope.launch { bottomSheetState.hide() }
-                            homeViewModel.copyToClipboard(it, HomeClipboardType.Note)
-                        }
-                    },
-                    onPinned = remember {
-                        { shareId, itemId ->
-                            homeViewModel.pinItem(shareId, itemId)
-                        }
-                    },
-                    onUnpinned = remember {
-                        { shareId, itemId ->
-                            homeViewModel.unpinItem(shareId, itemId)
-                        }
-                    },
-                    onViewHistory = remember {
-                        { shareId, itemId ->
-                            scope.launch { bottomSheetState.hide() }
-                            homeViewModel.viewItemHistory(shareId, itemId)
-                        }
-                    },
-                    onEdit = remember {
-                        { shareId, itemId ->
-                            scope.launch { bottomSheetState.hide() }
-                            onNavigateEvent(HomeNavigation.EditNote(shareId, itemId))
-                        }
-                    },
-                    onMoveToTrash = remember {
-                        {
-                            scope.launch {
-                                bottomSheetState.hide()
-                                homeViewModel.sendItemsToTrash(listOf(it))
+                                is ItemContents.Alias -> AliasIcon()
+                                is ItemContents.Note -> NoteIcon()
+                                is ItemContents.CreditCard -> CreditCardIcon()
+                                is ItemContents.Identity -> IdentityIcon()
+                                is ItemContents.Unknown -> {}
                             }
                         }
-                    },
-                    onRemoveFromRecentSearch = remember {
-                        { shareId, itemId ->
-                            scope.launch {
-                                bottomSheetState.hide()
-                                homeViewModel.onClearRecentSearch(shareId, itemId)
-                            }
-                        }
-                    },
-                    isFreePlan = homeUiState.isFreePlan
-                )
-
-                CreditCardOptions -> CreditCardOptionsBottomSheetContents(
-                    itemUiModel = selectedItem!!,
-                    isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
-                    action = homeUiState.action,
-                    onCopyNumber = remember {
-                        {
-                            scope.launch { bottomSheetState.hide() }
-                            homeViewModel.copyToClipboard(it, HomeClipboardType.CreditCardNumber)
-                        }
-                    },
-                    onCopyCvv = remember {
-                        {
-                            scope.launch { bottomSheetState.hide() }
-                            homeViewModel.copyToClipboard(it, HomeClipboardType.CreditCardCvv)
-                        }
-                    },
-                    onPinned = remember {
-                        { shareId, itemId ->
-                            homeViewModel.pinItem(shareId, itemId)
-                        }
-                    },
-                    onUnpinned = remember {
-                        { shareId, itemId ->
-                            homeViewModel.unpinItem(shareId, itemId)
-                        }
-                    },
-                    onViewHistory = remember {
-                        { shareId, itemId ->
-                            scope.launch { bottomSheetState.hide() }
-                            homeViewModel.viewItemHistory(shareId, itemId)
-                        }
-                    },
-                    onEdit = remember {
-                        { shareId, itemId ->
-                            scope.launch { bottomSheetState.hide() }
-                            onNavigateEvent(HomeNavigation.EditCreditCard(shareId, itemId))
-                        }
-                    },
-                    onMoveToTrash = remember {
-                        {
-                            scope.launch {
-                                bottomSheetState.hide()
-                                homeViewModel.sendItemsToTrash(listOf(it))
-                            }
-                        }
-                    },
-                    onRemoveFromRecentSearch = remember {
-                        { shareId, itemId ->
-                            scope.launch {
-                                bottomSheetState.hide()
-                                homeViewModel.onClearRecentSearch(shareId, itemId)
-                            }
-                        }
-                    },
-                    isFreePlan = homeUiState.isFreePlan
-                )
-
-                IdentityOptions -> IdentityOptionsBottomSheetContents(
-                    itemUiModel = selectedItem!!,
-                    isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
-                    action = homeUiState.action,
-                    isFreePlan = homeUiState.isFreePlan,
-                    onCopyFullName = {
-                        scope.launch { bottomSheetState.hide() }
-                        homeViewModel.copyToClipboard(it, HomeClipboardType.FullName)
-                    },
-                    onPinned = { shareId, itemId ->
-                        scope.launch { bottomSheetState.hide() }
-                        homeViewModel.pinItem(shareId, itemId)
-                    },
-                    onUnpinned = { shareId, itemId ->
-                        scope.launch { bottomSheetState.hide() }
-                        homeViewModel.unpinItem(shareId, itemId)
-                    },
-                    onViewHistory = { shareId, itemId ->
-                        scope.launch { bottomSheetState.hide() }
-                        homeViewModel.viewItemHistory(shareId, itemId)
-                    },
-                    onEdit = { shareId, itemId ->
-                        scope.launch { bottomSheetState.hide() }
-                        onNavigateEvent(HomeNavigation.EditIdentity(shareId, itemId))
-                    },
-                    onMoveToTrash = {
-                        scope.launch { bottomSheetState.hide() }
-                        homeViewModel.sendItemsToTrash(listOf(it))
-                    },
-                    onRemoveFromRecentSearch = { shareId, itemId ->
-                        scope.launch { bottomSheetState.hide() }
-                        homeViewModel.onClearRecentSearch(shareId, itemId)
-                    }
-                )
-
-                TrashItemOptions -> TrashItemBottomSheetContents(
-                    itemUiModel = selectedItem!!,
-                    onRestoreItem = remember {
-                        {
-                            scope.launch {
-                                bottomSheetState.hide()
-                                homeViewModel.restoreItems(listOf(it))
-                            }
-                        }
-                    },
-                    onDeleteItem = remember {
-                        {
-                            scope.launch {
-                                bottomSheetState.hide()
-                                shouldShowDeleteItemDialog = true
-                            }
-                        }
-                    },
-                    icon = {
-                        when (val contents = selectedItem!!.contents) {
-                            is ItemContents.Login -> {
-                                val sortedPackages =
-                                    contents.packageInfoSet.sortedBy { it.packageName.value }
-                                val packageName = sortedPackages.firstOrNull()?.packageName?.value
-                                val website = contents.urls.firstOrNull()
-                                LoginIcon(
-                                    text = selectedItem!!.contents.title,
-                                    canLoadExternalImages = homeUiState.homeListUiState.canLoadExternalImages,
-                                    website = website,
-                                    packageName = packageName
-                                )
-                            }
-
-                            is ItemContents.Alias -> AliasIcon()
-                            is ItemContents.Note -> NoteIcon()
-                            is ItemContents.CreditCard -> CreditCardIcon()
-                            is ItemContents.Identity -> IdentityIcon()
-                            is ItemContents.Unknown -> {}
-                        }
-                    }
-                )
+                    )
+                }
 
                 TrashOptions -> TrashAllBottomSheetContents(
                     onEmptyTrash = {

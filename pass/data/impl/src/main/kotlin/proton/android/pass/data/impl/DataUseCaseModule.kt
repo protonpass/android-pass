@@ -162,6 +162,7 @@ import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry
+import proton.android.pass.data.api.usecases.securelink.DeleteSecureLink
 import proton.android.pass.data.api.usecases.securelink.GenerateSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinks
@@ -316,6 +317,7 @@ import proton.android.pass.data.impl.usecases.searchentry.AddSearchEntryImpl
 import proton.android.pass.data.impl.usecases.searchentry.DeleteAllSearchEntryImpl
 import proton.android.pass.data.impl.usecases.searchentry.DeleteSearchEntryImpl
 import proton.android.pass.data.impl.usecases.searchentry.ObserveSearchEntryImpl
+import proton.android.pass.data.impl.usecases.securelink.DeleteSecureLinkImpl
 import proton.android.pass.data.impl.usecases.securelink.GenerateSecureLinkImpl
 import proton.android.pass.data.impl.usecases.securelink.ObserveSecureLinkImpl
 import proton.android.pass.data.impl.usecases.securelink.ObserveSecureLinksImpl
@@ -801,5 +803,8 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindObserveUnexpiredSecureLinks(impl: ObserveUnexpiredSecureLinksImpl): ObserveUnexpiredSecureLinks
+
+    @[Binds Singleton]
+    abstract fun bindDeleteSecureLink(impl: DeleteSecureLinkImpl): DeleteSecureLink
 
 }

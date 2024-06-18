@@ -23,25 +23,24 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.data.room.db.BaseDao
 import proton.android.pass.data.impl.db.entities.securelinks.SecureLinkEntity
-import proton.android.pass.data.impl.db.entities.securelinks.SecureLinkTable
 
 @Dao
 abstract class SecureLinksDao : BaseDao<SecureLinkEntity>() {
 
     @Query(
         """
-            SELECT * FROM ${SecureLinkTable.NAME}
-            WHERE ${SecureLinkTable.Columns.USER_ID} = :userId
-            ORDER BY ${SecureLinkTable.Columns.EXPIRATION} ASC
+            SELECT * FROM ${SecureLinkEntity.TABLE_NAME}
+            WHERE ${SecureLinkEntity.Columns.USER_ID} = :userId
+            ORDER BY ${SecureLinkEntity.Columns.EXPIRATION} ASC
         """
     )
     abstract fun observeSecureLinks(userId: String): Flow<List<SecureLinkEntity>>
 
     @Query(
         """
-            SELECT * FROM ${SecureLinkTable.NAME}
-            WHERE ${SecureLinkTable.Columns.USER_ID} = :userId
-            AND ${SecureLinkTable.Columns.LINK_ID} = :linkId
+            SELECT * FROM ${SecureLinkEntity.TABLE_NAME}
+            WHERE ${SecureLinkEntity.Columns.USER_ID} = :userId
+            AND ${SecureLinkEntity.Columns.LINK_ID} = :linkId
         """
     )
     abstract fun observeSecureLink(userId: String, linkId: String): Flow<SecureLinkEntity>

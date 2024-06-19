@@ -24,8 +24,10 @@ internal interface SecureLinksListUiEvent {
 
     data object OnBackClicked : SecureLinksListUiEvent
 
-    data class OnCellClicked(val secureLinkId: SecureLinkId) : SecureLinksListUiEvent
+    @JvmInline
+    value class OnCellClicked(val secureLinkId: SecureLinkId) : SecureLinksListUiEvent
 
-    data object OnCellOptionsClicked : SecureLinksListUiEvent
+    @JvmInline
+    value class OnCellOptionsClicked(val secureLinkId: SecureLinkId) : SecureLinksListUiEvent
 
 }

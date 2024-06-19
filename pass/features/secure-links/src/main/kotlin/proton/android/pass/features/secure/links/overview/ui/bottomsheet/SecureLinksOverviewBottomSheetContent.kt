@@ -23,6 +23,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.features.secure.links.R
@@ -51,10 +53,18 @@ internal fun SecureLinksOverviewBottomSheetContent(
         }
 
         SecureLinksOverviewWidget(
+            viewsTitleResId = R.string.secure_links_overview_widget_open_times_title,
             remainingTime = remainingTime,
-            currentViews = currentViews,
-            maxViewsAllowed = maxViewsAllowed,
-            linkUrl = secureLinkUrl
+            linkUrl = secureLinkUrl,
+            viewsText = if (maxViewsAllowed == null) {
+                stringResource(id = R.string.secure_links_overview_widget_max_views_unlimited)
+            } else {
+                pluralStringResource(
+                    id = R.plurals.secure_links_overview_widget_max_views_limited,
+                    count = maxViewsAllowed,
+                    maxViewsAllowed
+                )
+            }.let { maxViews -> "$currentViews/$maxViews" }
         )
 
         SecureLinksOverviewFooter(

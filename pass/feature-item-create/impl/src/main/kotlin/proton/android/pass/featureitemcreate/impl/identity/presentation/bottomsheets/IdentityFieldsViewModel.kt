@@ -21,18 +21,25 @@ package proton.android.pass.featureitemcreate.impl.identity.presentation.bottoms
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.toPersistentSet
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.getOrNull
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.repositories.DRAFT_IDENTITY_CUSTOM_FIELD_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
+import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.featureitemcreate.impl.identity.navigation.bottomsheets.AddIdentityFieldType
 import proton.android.pass.featureitemcreate.impl.identity.navigation.bottomsheets.IdentityFieldsSectionNavArgId
 import proton.android.pass.featureitemcreate.impl.identity.navigation.bottomsheets.IdentitySectionIndexNavArgId
@@ -42,6 +49,7 @@ import javax.inject.Inject
 class IdentityFieldsViewModel @Inject constructor(
     private val identityFieldDraftRepository: IdentityFieldDraftRepository,
     private val draftRepository: DraftRepository,
+    observeUpgradeInfo: ObserveUpgradeInfo,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -53,16 +61,30 @@ class IdentityFieldsViewModel @Inject constructor(
     private val eventFlow: MutableStateFlow<IdentityFieldsEvent> =
         MutableStateFlow(IdentityFieldsEvent.Idle)
 
-    val state = combine(
-        flowOf(identityFieldDraftRepository.getSectionFields(addIdentityFieldType.toExtraField(), sectionIndex)),
-        eventFlow
-    ) { sectionFields: Set<ExtraField>, event ->
-        IdentityFieldsUiState(fieldSet = sectionFields.toPersistentSet(), event = event)
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
-        initialValue = IdentityFieldsUiState.Initial
-    )
+    private val fieldFlow: Flow<PersistentSet<ExtraField>> = combine(
+        flowOf(
+            identityFieldDraftRepository.getSectionFields(
+                clazz = addIdentityFieldType.toExtraField(),
+                extraSectionIndex = sectionIndex
+            )
+        ),
+        observeUpgradeInfo().distinctUntilChanged().asLoadingResult().map { result ->
+            result.getOrNull()?.plan?.let { it.isPaidPlan || it.isTrialPlan } ?: false
+        }
+    ) { sectionFields: Set<ExtraField>, isPaidPlan: Boolean ->
+        if (isPaidPlan) {
+            sectionFields
+        } else {
+            sectionFields.filterNot { it is CustomExtraField }
+        }.toPersistentSet()
+    }
+
+    val state = combine(fieldFlow, eventFlow, ::IdentityFieldsUiState)
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = IdentityFieldsUiState.Initial
+        )
 
     fun onFieldClick(extraField: ExtraField) {
         identityFieldDraftRepository.addField(extraField, true)

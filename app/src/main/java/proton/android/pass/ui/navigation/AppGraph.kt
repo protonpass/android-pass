@@ -129,9 +129,10 @@ import proton.android.pass.features.item.history.restore.navigation.ItemHistoryR
 import proton.android.pass.features.item.history.timeline.navigation.ItemHistoryTimelineNavItem
 import proton.android.pass.features.secure.links.create.navigation.SecureLinksCreateNavItem
 import proton.android.pass.features.secure.links.list.navigation.SecureLinksListNavItem
+import proton.android.pass.features.secure.links.listmenu.navigation.SecureLinksListMenuNavItem
 import proton.android.pass.features.secure.links.overview.navigation.SecureLinksOverviewBottomSheetNavItem
-import proton.android.pass.features.secure.links.overview.navigation.SecureLinksOverviewScreenNavItem
 import proton.android.pass.features.secure.links.overview.navigation.SecureLinksOverviewNavScope
+import proton.android.pass.features.secure.links.overview.navigation.SecureLinksOverviewScreenNavItem
 import proton.android.pass.features.secure.links.shared.navigation.SecureLinksNavDestination
 import proton.android.pass.features.secure.links.shared.navigation.secureLinksNavGraph
 import proton.android.pass.features.security.center.addressoptions.navigation.SecurityCenterAliasAddressOptionsNavItem
@@ -1663,6 +1664,11 @@ fun NavGraphBuilder.appGraph(
 
                 SecureLinksNavDestination.SecureLinksList -> appNavigator.navigate(
                     destination = SecureLinksListNavItem
+                )
+
+                is SecureLinksNavDestination.SecureLinksListMenu -> appNavigator.navigate(
+                    destination = SecureLinksListMenuNavItem,
+                    route = SecureLinksListMenuNavItem.createNavRoute(destination.secureLinkId)
                 )
             }
         }

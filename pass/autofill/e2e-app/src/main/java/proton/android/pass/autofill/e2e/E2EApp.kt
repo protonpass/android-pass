@@ -23,6 +23,7 @@ import dagger.hilt.android.HiltAndroidApp
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.data.api.usecases.SuggestedCreditCardItemsResult
+import proton.android.pass.data.fakes.usecases.FakeGetSuggestedIdentityItems
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedCreditCardItems
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedLoginItems
 import proton.android.pass.data.fakes.usecases.TestObserveItems
@@ -41,6 +42,9 @@ class E2EApp : Application() {
 
     @Inject
     lateinit var creditCardItems: TestGetSuggestedCreditCardItems
+
+    @Inject
+    lateinit var identityItems: FakeGetSuggestedIdentityItems
 
     override fun onCreate() {
         super.onCreate()
@@ -85,6 +89,18 @@ class E2EApp : Application() {
             )
         )
         creditCardItems.sendValue(Result.success(SuggestedCreditCardItemsResult.Items(creditCards)))
+
+        val identities = listOf(
+            TestObserveItems.createIdentity(
+                itemId = ItemId("identity1"),
+                fullName = "Peter Parker"
+            ),
+            TestObserveItems.createIdentity(
+                itemId = ItemId("identity2"),
+                fullName = "Tony Stark"
+            )
+        )
+        identityItems.sendValue(Result.success(identities))
     }
 
     private fun setupLogger() {

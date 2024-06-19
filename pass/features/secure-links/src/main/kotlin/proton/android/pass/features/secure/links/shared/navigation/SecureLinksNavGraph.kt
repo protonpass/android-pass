@@ -23,6 +23,8 @@ import proton.android.pass.features.secure.links.create.navigation.SecureLinksCr
 import proton.android.pass.features.secure.links.create.ui.SecureLinksCreateScreen
 import proton.android.pass.features.secure.links.list.navigation.SecureLinksListNavItem
 import proton.android.pass.features.secure.links.list.ui.SecureLinksListScreen
+import proton.android.pass.features.secure.links.listmenu.navigation.SecureLinksListMenuNavItem
+import proton.android.pass.features.secure.links.listmenu.ui.SecureLinksListMenuBottomSheet
 import proton.android.pass.features.secure.links.overview.navigation.SecureLinksOverviewBottomSheetNavItem
 import proton.android.pass.features.secure.links.overview.navigation.SecureLinksOverviewScreenNavItem
 import proton.android.pass.features.secure.links.overview.ui.bottomsheet.SecureLinksOverviewBottomSheet
@@ -46,6 +48,10 @@ fun NavGraphBuilder.secureLinksNavGraph(onNavigated: (SecureLinksNavDestination)
 
     composable(navItem = SecureLinksListNavItem) {
         SecureLinksListScreen(onNavigated = onNavigated)
+    }
+
+    bottomSheet(navItem = SecureLinksListMenuNavItem) {
+        SecureLinksListMenuBottomSheet(onNavigated = onNavigated)
     }
 
 }

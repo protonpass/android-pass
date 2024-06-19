@@ -16,18 +16,17 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.secure.links.list.ui
+package proton.android.pass.features.secure.links.listmenu.navigation
 
 import proton.android.pass.domain.securelinks.SecureLinkId
+import proton.android.pass.features.secure.links.overview.navigation.SecureLinksOverviewLinkIdNavArgId
+import proton.android.pass.navigation.api.NavItem
 
-internal interface SecureLinksListUiEvent {
+object SecureLinksListMenuNavItem : NavItem(
+    baseRoute = "secure-links/list/menu",
+    navArgIds = listOf(SecureLinksOverviewLinkIdNavArgId)
+) {
 
-    data object OnBackClicked : SecureLinksListUiEvent
-
-    @JvmInline
-    value class OnCellClicked(val secureLinkId: SecureLinkId) : SecureLinksListUiEvent
-
-    @JvmInline
-    value class OnCellOptionsClicked(val secureLinkId: SecureLinkId) : SecureLinksListUiEvent
+    fun createNavRoute(secureLinkId: SecureLinkId) = "$baseRoute/${secureLinkId.id}"
 
 }

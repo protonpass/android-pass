@@ -16,44 +16,49 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.secure.links.list.ui
+package proton.android.pass.features.secure.links.listmenu.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.features.secure.links.list.presentation.SecureLinksListViewModel
-import proton.android.pass.features.secure.links.overview.navigation.SecureLinksOverviewNavScope
+import proton.android.pass.features.secure.links.listmenu.presentation.SecureLinksListMenuEvent
+import proton.android.pass.features.secure.links.listmenu.presentation.SecureLinksListMenuViewModel
 import proton.android.pass.features.secure.links.shared.navigation.SecureLinksNavDestination
 
 @Composable
-fun SecureLinksListScreen(
+internal fun SecureLinksListMenuBottomSheet(
     onNavigated: (SecureLinksNavDestination) -> Unit,
-    viewModel: SecureLinksListViewModel = hiltViewModel()
+    viewModel: SecureLinksListMenuViewModel = hiltViewModel()
 ) = with(viewModel) {
     val state by state.collectAsStateWithLifecycle()
 
-    SecureLinksListContent(
-        state = state,
+    LaunchedEffect(key1 = state.event) {
+        when (state.event) {
+            SecureLinksListMenuEvent.Idle -> {
+            }
+
+            SecureLinksListMenuEvent.OnLinkCopied,
+            SecureLinksListMenuEvent.OnLinkRemoved -> {
+                SecureLinksNavDestination.Back(
+                    comesFromBottomSheet = true
+                ).also(onNavigated)
+            }
+        }
+
+        onEventConsumed(event = state.event)
+    }
+
+    SecureLinksListMenuContent(
         onUiEvent = { uiEvent ->
             when (uiEvent) {
-                SecureLinksListUiEvent.OnBackClicked -> {
-                    SecureLinksNavDestination.Back(
-                        comesFromBottomSheet = false
-                    ).also(onNavigated)
+                SecureLinksListMenuUiEvent.OnCopyLinkClicked -> {
+                    onCopyLink()
                 }
 
-                is SecureLinksListUiEvent.OnCellClicked -> {
-                    SecureLinksNavDestination.SecureLinkOverview(
-                        secureLinkId = uiEvent.secureLinkId,
-                        scope = SecureLinksOverviewNavScope.SecureLinksList
-                    ).also(onNavigated)
-                }
-
-                is SecureLinksListUiEvent.OnCellOptionsClicked -> {
-                   SecureLinksNavDestination.SecureLinksListMenu(
-                       secureLinkId = uiEvent.secureLinkId
-                   ).also(onNavigated)
+                SecureLinksListMenuUiEvent.OnRemoveLinkClicked -> {
+                    onDeletedLink()
                 }
             }
         }

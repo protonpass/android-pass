@@ -50,12 +50,12 @@ internal fun SecureLinksOverviewFooter(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         PassCircleButton(
-            text = stringResource(id = R.string.secure_links_overview_button_copy_link),
+            text = stringResource(id = R.string.secure_links_shared_action_copy_link),
             onClick = onCopyLinkClicked
         )
 
         PassCircleButton(
-            text = stringResource(id = R.string.secure_links_overview_button_share_link),
+            text = stringResource(id = R.string.secure_links_shared_action_share_link),
             textColor = PassTheme.colors.interactionNormMajor2,
             backgroundColor = PassTheme.colors.interactionNormMinor1,
             onClick = onShareLinkClicked

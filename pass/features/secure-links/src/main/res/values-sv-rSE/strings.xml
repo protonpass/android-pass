@@ -37,8 +37,8 @@
     <item quantity="other">%d gånger</item>
   </plurals>
   <string name="secure_links_overview_widget_max_views_unlimited">Obegränsat</string>
-  <string name="secure_links_overview_button_copy_link">Kopiera länk</string>
-  <string name="secure_links_overview_button_share_link">Dela länk</string>
+  <string name="secure_links_shared_action_copy_link">Kopiera länk</string>
+  <string name="secure_links_shared_action_share_link">Dela länk</string>
   <string name="secure_links_overview_button_view_all_links">Visa alla dina delade länkar</string>
   <string name="secure_links_overview_snackbar_message_link_copied">Säker länk kopierad</string>
 </resources>

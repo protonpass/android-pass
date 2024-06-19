@@ -16,18 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.secure.links.list.ui
+package proton.android.pass.features.secure.links.listmenu.ui
 
-import proton.android.pass.domain.securelinks.SecureLinkId
+internal sealed interface SecureLinksListMenuUiEvent {
 
-internal interface SecureLinksListUiEvent {
+    data object OnCopyLinkClicked : SecureLinksListMenuUiEvent
 
-    data object OnBackClicked : SecureLinksListUiEvent
-
-    @JvmInline
-    value class OnCellClicked(val secureLinkId: SecureLinkId) : SecureLinksListUiEvent
-
-    @JvmInline
-    value class OnCellOptionsClicked(val secureLinkId: SecureLinkId) : SecureLinksListUiEvent
+    data object OnRemoveLinkClicked : SecureLinksListMenuUiEvent
 
 }

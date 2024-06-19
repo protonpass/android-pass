@@ -50,8 +50,10 @@ fun SecureLinksListScreen(
                     ).also(onNavigated)
                 }
 
-                SecureLinksListUiEvent.OnCellOptionsClicked -> {
-                    // Will be implemented in IDTEAM-3453
+                is SecureLinksListUiEvent.OnCellOptionsClicked -> {
+                   SecureLinksNavDestination.SecureLinksListMenu(
+                       secureLinkId = uiEvent.secureLinkId
+                   ).also(onNavigated)
                 }
             }
         }

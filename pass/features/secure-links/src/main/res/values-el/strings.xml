@@ -37,8 +37,8 @@
     <item quantity="other">%d φορές</item>
   </plurals>
   <string name="secure_links_overview_widget_max_views_unlimited">Απεριόριστο</string>
-  <string name="secure_links_overview_button_copy_link">Αντιγραφή συνδέσμου</string>
-  <string name="secure_links_overview_button_share_link">Κοινοποίηση συνδέσμου</string>
+  <string name="secure_links_shared_action_copy_link">Αντιγραφή συνδέσμου</string>
+  <string name="secure_links_shared_action_share_link">Κοινοποίηση συνδέσμου</string>
   <string name="secure_links_overview_button_view_all_links">Προβολή όλων των κοινόχρηστων συνδέσμων σας</string>
   <string name="secure_links_overview_snackbar_message_link_copied">Ο ασφαλής σύνδεσμος αντιγράφηκε</string>
 </resources>

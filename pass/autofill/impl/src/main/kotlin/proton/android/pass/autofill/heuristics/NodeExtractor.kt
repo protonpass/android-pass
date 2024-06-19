@@ -460,7 +460,6 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
             "email" -> return FieldType.Email
             "password" -> return FieldType.Password
             "submit" -> return FieldType.SubmitButton
-            "tel" -> return FieldType.Phone
             // Support for these fields will be added in the future
             // "text" -> FieldType.Other
             else -> {}

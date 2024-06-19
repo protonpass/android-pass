@@ -60,6 +60,7 @@ import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetSuggestedCreditCardItems
+import proton.android.pass.data.api.usecases.GetSuggestedIdentityItems
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.GetVaultById
@@ -171,6 +172,7 @@ import proton.android.pass.data.fakes.repositories.TestInviteRepository
 import proton.android.pass.data.fakes.repositories.TestItemRepository
 import proton.android.pass.data.fakes.repositories.TestUserAccessDataRepository
 import proton.android.pass.data.fakes.usecases.FakeGetItemById
+import proton.android.pass.data.fakes.usecases.FakeGetSuggestedIdentityItems
 import proton.android.pass.data.fakes.usecases.FakeObserveAddressesByUserId
 import proton.android.pass.data.fakes.usecases.FakeObserveInviteRecommendations
 import proton.android.pass.data.fakes.usecases.FakePinItem
@@ -314,6 +316,9 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindGetSuggestedCreditCardItems(impl: TestGetSuggestedCreditCardItems): GetSuggestedCreditCardItems
+
+    @Binds
+    abstract fun bindGetSuggestedIdentityItems(impl: FakeGetSuggestedIdentityItems): GetSuggestedIdentityItems
 
     @Binds
     abstract fun bindItemRepository(impl: TestItemRepository): ItemRepository

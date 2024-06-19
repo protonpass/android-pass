@@ -45,6 +45,7 @@ import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.GetSuggestedCreditCardItems
+import proton.android.pass.data.api.usecases.GetSuggestedIdentityItems
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import proton.android.pass.data.api.usecases.SuggestedCreditCardItemsResult
 import proton.android.pass.domain.Item
@@ -56,6 +57,7 @@ class AutofillServiceManager @Inject constructor(
     @ApplicationContext private val context: Context,
     private val getSuggestedLoginItems: GetSuggestedLoginItems,
     private val getSuggestedCreditCardItems: GetSuggestedCreditCardItems,
+    private val getSuggestedIdentityItems: GetSuggestedIdentityItems,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val needsBiometricAuth: NeedsBiometricAuth,
     @AppIcon private val appIcon: Int
@@ -80,6 +82,12 @@ class AutofillServiceManager @Inject constructor(
                 request = inlineSuggestionsRequest,
                 autofillData = autofillData,
                 suggestionType = SuggestionType.CreditCard
+            )
+
+            is NodeCluster.Identity -> handleSuggestions(
+                request = inlineSuggestionsRequest,
+                autofillData = autofillData,
+                suggestionType = SuggestionType.Identity
             )
         }
     }
@@ -179,6 +187,11 @@ class AutofillServiceManager @Inject constructor(
             ).firstOrNull() ?: emptyList()
             SuggestedItemsResult.Show(items)
         }
+
+        SuggestionType.Identity -> {
+            val items = getSuggestedIdentityItems().firstOrNull() ?: emptyList()
+            SuggestedItemsResult.Show(items)
+        }
     }
 
     suspend fun createMenuPresentationDataset(autofillData: AutofillData): List<Dataset> {
@@ -188,6 +201,7 @@ class AutofillServiceManager @Inject constructor(
             is NodeCluster.SignUp -> getSuggestedItems(SuggestionType.Login, autofillData)
 
             is NodeCluster.CreditCard -> getSuggestedItems(SuggestionType.CreditCard, autofillData)
+            is NodeCluster.Identity -> getSuggestedItems(SuggestionType.Identity, autofillData)
         }
 
         return when (suggestedItemsResult) {
@@ -461,6 +475,7 @@ class AutofillServiceManager @Inject constructor(
 sealed interface SuggestionType {
     data object Login : SuggestionType
     data object CreditCard : SuggestionType
+    data object Identity : SuggestionType
 }
 
 sealed interface SuggestedItemsResult {

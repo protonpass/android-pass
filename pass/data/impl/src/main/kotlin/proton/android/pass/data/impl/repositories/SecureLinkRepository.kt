@@ -22,8 +22,9 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.flow
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
@@ -149,15 +150,15 @@ class SecureLinkRepositoryImpl @Inject constructor(
     override fun observeSecureLink(userId: UserId, secureLinkId: SecureLinkId): Flow<SecureLink> =
         secureLinksLocalDataSource.observe(userId, secureLinkId)
 
-    override fun observeSecureLinks(userId: UserId): Flow<List<SecureLink>> =
-        secureLinksLocalDataSource.observeAll(userId)
-            .onStart {
-                secureLinksLocalDataSource.getAll(userId)
-                    .also { localSecureLinks -> emit(localSecureLinks) }
+    override fun observeSecureLinks(userId: UserId): Flow<List<SecureLink>> = flow {
+        emit(secureLinksLocalDataSource.getAll(userId))
 
-                fetchSecureLinksFromRemote(userId)
-                    .also { remoteSecureLinks -> secureLinksLocalDataSource.update(userId, remoteSecureLinks) }
-            }
+        fetchSecureLinksFromRemote(userId).also { remoteSecureLinks ->
+            secureLinksLocalDataSource.update(userId, remoteSecureLinks)
+        }
+
+        emitAll(secureLinksLocalDataSource.observeAll(userId))
+    }
 
     private suspend fun fetchSecureLinksFromRemote(userId: UserId): List<SecureLink> {
         val remoteLinks = remoteSecureLinkDataSource.getAllSecureLinks(userId)

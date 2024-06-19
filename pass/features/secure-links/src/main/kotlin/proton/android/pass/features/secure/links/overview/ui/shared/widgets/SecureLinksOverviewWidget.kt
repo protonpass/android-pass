@@ -18,14 +18,13 @@
 
 package proton.android.pass.features.secure.links.overview.ui.shared.widgets
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.pluralStringResource
-import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.utils.passRemainingTimeText
 import proton.android.pass.domain.time.RemainingTime
@@ -35,9 +34,9 @@ import me.proton.core.presentation.R as CoreR
 @Composable
 internal fun SecureLinksOverviewWidget(
     modifier: Modifier = Modifier,
+    @StringRes viewsTitleResId: Int,
+    viewsText: String,
     remainingTime: RemainingTime,
-    currentViews: Int,
-    maxViewsAllowed: Int?,
     linkUrl: String
 ) {
     Column(
@@ -58,16 +57,8 @@ internal fun SecureLinksOverviewWidget(
             SecureLinksOverviewWidgetInfo(
                 modifier = Modifier.weight(weight = 1f),
                 iconResId = CoreR.drawable.ic_proton_eye,
-                titleResId = R.string.secure_links_overview_widget_max_views_title,
-                infoText = maxViewsAllowed
-                    ?.let { maxViews ->
-                        pluralStringResource(
-                            id = R.plurals.secure_links_overview_widget_max_views_limited,
-                            count = maxViews,
-                            maxViews
-                        )
-                    }
-                    ?: stringResource(id = R.string.secure_links_overview_widget_max_views_unlimited)
+                titleResId = viewsTitleResId,
+                infoText = viewsText
             )
         }
 

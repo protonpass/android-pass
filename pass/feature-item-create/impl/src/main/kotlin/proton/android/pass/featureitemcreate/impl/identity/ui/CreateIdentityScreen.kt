@@ -139,6 +139,9 @@ fun CreateIdentityScreen(
 
                     IdentityContentEvent.ClearLastAddedFieldFocus ->
                         viewModel.resetLastAddedFieldFocus()
+
+                    is IdentityContentEvent.OnCustomFieldFocused ->
+                        viewModel.onCustomFieldFocusChange(event.index, event.isFocused, event.customExtraField)
                 }
             }
         )

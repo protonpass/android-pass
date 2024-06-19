@@ -153,7 +153,9 @@ internal fun AddressDetails(
                     )
                     onEvent(OnFieldChange(fieldChange))
                 },
-                onFocusChange = { _, _ -> },
+                onFocusChange = { idx, isFocused ->
+                    onEvent(IdentityContentEvent.OnCustomFieldFocused(idx, isFocused, AddressCustomField))
+                },
                 onOptionsClick = { onEvent(OnCustomFieldOptions(index, value.label, AddressCustomField)) }
             )
             RequestFocusLaunchedEffect(

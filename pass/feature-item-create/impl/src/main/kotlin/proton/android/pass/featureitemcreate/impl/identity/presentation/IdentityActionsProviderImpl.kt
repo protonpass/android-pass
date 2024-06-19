@@ -485,6 +485,107 @@ class IdentityActionsProviderImpl @Inject constructor(
         identityFieldDraftRepository.clearAddedFields()
     }
 
+    @Suppress("LongMethod")
+    override fun onCustomFieldFocusChange(
+        index: Int,
+        focused: Boolean,
+        customExtraField: CustomExtraField
+    ) {
+        identityItemFormMutableState = when (customExtraField) {
+            AddressCustomField -> handleFieldFocusChange(
+                index,
+                focused,
+                identityItemFormMutableState.uiAddressDetails.customFields
+            ) { updatedFields ->
+                identityItemFormMutableState.copy(
+                    uiAddressDetails = identityItemFormMutableState.uiAddressDetails.copy(
+                        customFields = updatedFields
+                    )
+                )
+            }
+            ContactCustomField -> handleFieldFocusChange(
+                index,
+                focused,
+                identityItemFormMutableState.uiContactDetails.customFields
+            ) { updatedFields ->
+                identityItemFormMutableState.copy(
+                    uiContactDetails = identityItemFormMutableState.uiContactDetails.copy(
+                        customFields = updatedFields
+                    )
+                )
+            }
+            PersonalCustomField -> handleFieldFocusChange(
+                index,
+                focused,
+                identityItemFormMutableState.uiPersonalDetails.customFields
+            ) { updatedFields ->
+                identityItemFormMutableState.copy(
+                    uiPersonalDetails = identityItemFormMutableState.uiPersonalDetails.copy(
+                        customFields = updatedFields
+                    )
+                )
+            }
+            WorkCustomField -> handleFieldFocusChange(
+                index,
+                focused,
+                identityItemFormMutableState.uiWorkDetails.customFields
+            ) { updatedFields ->
+                identityItemFormMutableState.copy(
+                    uiWorkDetails = identityItemFormMutableState.uiWorkDetails.copy(
+                        customFields = updatedFields
+                    )
+                )
+            }
+            is ExtraSectionCustomField -> handleFieldFocusChange(
+                index,
+                focused,
+                identityItemFormMutableState.uiExtraSections[customExtraField.index].customFields
+            ) { updatedFields ->
+                identityItemFormMutableState.copy(
+                    uiExtraSections = identityItemFormMutableState.uiExtraSections.toMutableList()
+                        .apply {
+                            set(
+                                customExtraField.index,
+                                identityItemFormMutableState.uiExtraSections[customExtraField.index].copy(
+                                    customFields = updatedFields
+                                )
+                            )
+                        }
+                )
+            }
+        }
+    }
+
+    private fun handleFieldFocusChange(
+        index: Int,
+        focused: Boolean,
+        customFields: List<UICustomFieldContent>,
+        updateState: (List<UICustomFieldContent>) -> IdentityItemFormState
+    ): IdentityItemFormState {
+        val fieldContent: UICustomFieldContent = customFields[index]
+        return if (fieldContent is UICustomFieldContent.Hidden) {
+            val fieldChange = when {
+                fieldContent.value is UIHiddenState.Empty -> fieldContent
+                focused -> encryptionContextProvider.withEncryptionContext {
+                    fieldContent.copy(
+                        value = UIHiddenState.Revealed(
+                            encrypted = fieldContent.value.encrypted,
+                            clearText = decrypt(fieldContent.value.encrypted)
+                        )
+                    )
+                }
+                else -> fieldContent.copy(
+                    value = UIHiddenState.Concealed(
+                        encrypted = fieldContent.value.encrypted
+                    )
+                )
+            }
+            updateState(customFields.toMutableList().apply { set(index, fieldChange) })
+        } else {
+            identityItemFormMutableState
+        }
+    }
+
     override fun observeSharedState(): Flow<IdentitySharedUiState> = combineN(
         isLoadingState,
         hasUserEditedContentState,
@@ -601,10 +702,14 @@ class IdentityActionsProviderImpl @Inject constructor(
                 is UICustomFieldContent.Hidden -> {
                     UICustomFieldContent.Hidden(
                         label = content.label,
-                        value = UIHiddenState.Revealed(
-                            encrypted = encrypt(field.value),
-                            clearText = field.value
-                        )
+                        value = if (field.value.isBlank()) {
+                            UIHiddenState.Empty(encrypt(""))
+                        } else {
+                            UIHiddenState.Revealed(
+                                encrypted = encrypt(field.value),
+                                clearText = field.value
+                            )
+                        }
                     )
                 }
 

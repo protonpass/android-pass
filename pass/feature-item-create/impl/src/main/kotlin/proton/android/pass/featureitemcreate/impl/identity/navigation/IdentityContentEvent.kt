@@ -40,6 +40,12 @@ sealed interface IdentityContentEvent {
         val customExtraField: CustomExtraField
     ) : IdentityContentEvent
 
+    data class OnCustomFieldFocused(
+        val index: Int,
+        val isFocused: Boolean,
+        val customExtraField: CustomExtraField
+    ) : IdentityContentEvent
+
     data object OnAddPersonalDetailField : IdentityContentEvent
     data object OnAddAddressDetailField : IdentityContentEvent
     data object OnAddContactDetailField : IdentityContentEvent

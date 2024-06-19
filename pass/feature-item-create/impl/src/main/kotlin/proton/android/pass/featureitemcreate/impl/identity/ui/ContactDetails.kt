@@ -190,7 +190,9 @@ internal fun ContactDetails(
                     )
                     onEvent(OnFieldChange(fieldChange))
                 },
-                onFocusChange = { _, _ -> },
+                onFocusChange = { idx, isFocused ->
+                    onEvent(IdentityContentEvent.OnCustomFieldFocused(idx, isFocused, ContactCustomField))
+                },
                 onOptionsClick = { onEvent(OnCustomFieldOptions(index, value.label, ContactCustomField)) }
             )
             RequestFocusLaunchedEffect(

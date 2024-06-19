@@ -137,4 +137,5 @@ fladle {
         )
     )
     useOrchestrator.set(true)
+    flakyTestAttempts.set(1)
 }

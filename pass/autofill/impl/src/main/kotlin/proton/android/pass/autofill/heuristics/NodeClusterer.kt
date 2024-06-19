@@ -81,6 +81,19 @@ sealed interface NodeCluster : Parcelable {
     }
 
     @Parcelize
+    data class Identity(
+        val fullName: AssistField,
+        val address: AssistField?,
+        val postalCode: AssistField?,
+        val phoneNumber: AssistField?
+    ) : NodeCluster {
+        override fun isFocused() = fields().any { it.isFocused }
+        override fun fields(): List<AssistField> = listOfNotNull(fullName, address, postalCode, phoneNumber)
+
+        override fun type() = "Identity"
+    }
+
+    @Parcelize
     data class CreditCard(
         val cardNumber: AssistField,
         val cardHolder: CardHolder?,

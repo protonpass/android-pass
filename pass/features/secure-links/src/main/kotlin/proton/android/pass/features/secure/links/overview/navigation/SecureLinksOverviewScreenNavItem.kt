@@ -19,11 +19,12 @@
 package proton.android.pass.features.secure.links.overview.navigation
 
 import proton.android.pass.domain.securelinks.SecureLinkId
+import proton.android.pass.features.secure.links.shared.navigation.SecureLinksLinkIdNavArgId
 import proton.android.pass.navigation.api.NavItem
 
 object SecureLinksOverviewScreenNavItem : NavItem(
     baseRoute = "secure-links/overview/screen",
-    navArgIds = listOf(SecureLinksOverviewLinkIdNavArgId)
+    navArgIds = listOf(SecureLinksLinkIdNavArgId)
 ) {
 
     fun createNavRoute(secureLinkId: SecureLinkId) = "$baseRoute/${secureLinkId.id}"

@@ -55,50 +55,70 @@ object ItemUiFilter {
         content.aliasEmail.preprocess().contains(query)
 
     private fun isIdentityMatch(content: ItemContents.Identity, query: String): Boolean {
+        val personalDetails = content.personalDetailsContent
+        val addressDetails = content.addressDetailsContent
+        val contactDetails = content.contactDetailsContent
+        val workDetails = content.workDetailsContent
+
         val identityProperties = listOf(
-            content.personalDetailsContent.fullName,
-            content.personalDetailsContent.firstName,
-            content.personalDetailsContent.middleName,
-            content.personalDetailsContent.lastName,
-            content.personalDetailsContent.birthdate,
-            content.personalDetailsContent.gender,
-            content.personalDetailsContent.email,
-            content.personalDetailsContent.phoneNumber,
-            content.addressDetailsContent.organization,
-            content.addressDetailsContent.streetAddress,
-            content.addressDetailsContent.zipOrPostalCode,
-            content.addressDetailsContent.city,
-            content.addressDetailsContent.stateOrProvince,
-            content.addressDetailsContent.countryOrRegion,
-            content.addressDetailsContent.floor,
-            content.addressDetailsContent.county,
-            content.contactDetailsContent.socialSecurityNumber,
-            content.contactDetailsContent.passportNumber,
-            content.contactDetailsContent.licenseNumber,
-            content.contactDetailsContent.website,
-            content.contactDetailsContent.xHandle,
-            content.contactDetailsContent.secondPhoneNumber,
-            content.contactDetailsContent.linkedin,
-            content.contactDetailsContent.reddit,
-            content.contactDetailsContent.facebook,
-            content.contactDetailsContent.yahoo,
-            content.contactDetailsContent.instagram,
-            content.workDetailsContent.company,
-            content.workDetailsContent.jobTitle,
-            content.workDetailsContent.personalWebsite,
-            content.workDetailsContent.workPhoneNumber,
-            content.workDetailsContent.workEmail
+            personalDetails.fullName,
+            personalDetails.firstName,
+            personalDetails.middleName,
+            personalDetails.lastName,
+            personalDetails.birthdate,
+            personalDetails.gender,
+            personalDetails.email,
+            personalDetails.phoneNumber,
+            addressDetails.organization,
+            addressDetails.streetAddress,
+            addressDetails.zipOrPostalCode,
+            addressDetails.city,
+            addressDetails.stateOrProvince,
+            addressDetails.countryOrRegion,
+            addressDetails.floor,
+            addressDetails.county,
+            contactDetails.socialSecurityNumber,
+            contactDetails.passportNumber,
+            contactDetails.licenseNumber,
+            contactDetails.website,
+            contactDetails.xHandle,
+            contactDetails.secondPhoneNumber,
+            contactDetails.linkedin,
+            contactDetails.reddit,
+            contactDetails.facebook,
+            contactDetails.yahoo,
+            contactDetails.instagram,
+            workDetails.company,
+            workDetails.jobTitle,
+            workDetails.personalWebsite,
+            workDetails.workPhoneNumber,
+            workDetails.workEmail
         )
         identityProperties.forEach { fieldValue ->
             if (fieldValue.preprocess().contains(query)) {
                 return true
             }
         }
+        return when {
+            hasMatchingCustomField(personalDetails.customFields, query) -> true
+            hasMatchingCustomField(addressDetails.customFields, query) -> true
+            hasMatchingCustomField(contactDetails.customFields, query) -> true
+            hasMatchingCustomField(workDetails.customFields, query) -> true
+            else -> {
+                content.extraSectionContentList.forEach {
+                    if (hasMatchingCustomField(it.customFields, query)) return true
+                }
 
-        return false
+                false
+            }
+        }
     }
 
-    @Suppress("ReturnCount")
+    private fun hasMatchingCustomField(customFields: List<CustomFieldContent>, query: String): Boolean {
+        val customFieldsText: List<CustomFieldContent.Text> = customFields.filterByType()
+        return customFieldsText.any { it.label.preprocess().contains(query) || it.value.preprocess().contains(query) }
+    }
+
     private fun isLoginMatch(content: ItemContents.Login, query: String): Boolean {
         if (content.itemEmail.preprocess().contains(query)) return true
 
@@ -108,14 +128,7 @@ object ItemUiFilter {
         if (anyWebsiteMatches) return true
 
         val textCustomFields: List<CustomFieldContent.Text> = content.customFields.filterByType()
-
-        val anyCustomFieldLabelMatches = textCustomFields.any { it.label.preprocess().contains(query) }
-        if (anyCustomFieldLabelMatches) return true
-
-        val anyCustomFieldValueMatches = textCustomFields.any { it.value.preprocess().contains(query) }
-        if (anyCustomFieldValueMatches) return true
-
-        return false
+        return hasMatchingCustomField(textCustomFields, query)
     }
 
     private fun isNoteMatch(content: ItemContents.Note, query: String): Boolean =

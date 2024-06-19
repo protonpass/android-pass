@@ -16,23 +16,15 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.secure.links.overview.presentation
+package proton.android.pass.features.secure.links.shared.navigation
 
-import androidx.annotation.StringRes
-import proton.android.pass.features.secure.links.R
-import proton.android.pass.notifications.api.SnackbarMessage
-import proton.android.pass.notifications.api.SnackbarType
+import androidx.navigation.NavType
+import proton.android.pass.navigation.api.NavArgId
 
-internal enum class SecureLinksOverviewSnackbarMessage(
-    @StringRes override val id: Int,
-    override val type: SnackbarType,
-    override val isClipboard: Boolean = false
-) : SnackbarMessage {
+internal object SecureLinksLinkIdNavArgId : NavArgId {
 
-    LinkCopied(
-        id = R.string.secure_links_overview_snackbar_message_link_copied,
-        type = SnackbarType.NORM,
-        isClipboard = true
-    )
+    override val key: String = "secureLinksLinkId"
+
+    override val navType: NavType<*> = NavType.StringType
 
 }

@@ -40,5 +40,5 @@
   <string name="secure_links_shared_action_copy_link">Kopier kobling</string>
   <string name="secure_links_shared_action_share_link">Del kobling</string>
   <string name="secure_links_overview_button_view_all_links">Vis alle dine delte koblinger</string>
-  <string name="secure_links_overview_snackbar_message_link_copied">Sikker kobling kopiert</string>
+  <string name="secure_links_shared_snackbar_message_link_copied">Sikker kobling kopiert</string>
 </resources>

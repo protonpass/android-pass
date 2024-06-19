@@ -579,6 +579,7 @@ class SelectItemViewModel @Inject constructor(
             }
 
             is SelectItemState.Autofill.CreditCard -> flowOf(LoadingResult.Success(emptyList()))
+            is SelectItemState.Autofill.Identity -> flowOf(LoadingResult.Success(emptyList()))
         }
 
     private fun getSuggestionsForPasskey(state: SelectItemState.Passkey): Flow<LoadingResult<List<Item>>> =

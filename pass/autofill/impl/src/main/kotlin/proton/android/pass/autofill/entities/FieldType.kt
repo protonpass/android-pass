@@ -23,27 +23,31 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 enum class FieldType : Parcelable {
-    FullName,
     Username,
     Email,
     Password,
     Totp,
-    Phone,
     Other,
     Unknown,
 
     SubmitButton,
 
+    FullName,
+
     // Credit Card
     CardNumber,
-    CardholderName,
     CardholderFirstName,
     CardholderLastName,
     CardExpirationMMYY,
     CardExpirationMM,
     CardExpirationYY,
     CardExpirationYYYY,
-    CardCvv
+    CardCvv,
+
+    // Identity
+    Address,
+    PostalCode,
+    Phone
     ;
 
     companion object {

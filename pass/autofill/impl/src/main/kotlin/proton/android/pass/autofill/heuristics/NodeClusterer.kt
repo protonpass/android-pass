@@ -178,8 +178,32 @@ object NodeClusterer {
 
         clusterLogins(nodes, clusters, addedNodes)
         clusterCreditCards(nodes, clusters, addedNodes)
+        clusterIdentities(nodes, clusters, addedNodes)
 
         return clusters
+    }
+
+    private fun clusterIdentities(
+        nodes: List<AssistField>,
+        clusters: MutableList<NodeCluster>,
+        addedNodes: MutableSet<AssistField>
+    ) {
+        val fullName = nodes.getNodeOfType(FieldType.FullName, addedNodes)
+        val address = nodes.getNodeOfType(FieldType.Address, addedNodes)
+        val postalCode = nodes.getNodeOfType(FieldType.PostalCode, addedNodes)
+        val phoneNumber = nodes.getNodeOfType(FieldType.Phone, addedNodes)
+
+        if (fullName != null) {
+            clusters.add(
+                NodeCluster.Identity(
+                    fullName = fullName,
+                    address = address,
+                    postalCode = postalCode,
+                    phoneNumber = phoneNumber
+                )
+            )
+            addedNodes.add(fullName)
+        }
     }
 
     private fun clusterLogins(
@@ -312,7 +336,7 @@ object NodeClusterer {
         nodes: List<AssistField>,
         addedNodes: MutableSet<AssistField>
     ): NodeCluster.CreditCard.CardHolder? {
-        val cardHolderNode = nodes.getNodeOfType(FieldType.CardholderName, addedNodes)
+        val cardHolderNode = nodes.getNodeOfType(FieldType.FullName, addedNodes)
         val cardHolderFirstNameNode = nodes.getNodeOfType(FieldType.CardholderFirstName, addedNodes)
         val cardHolderLastNameNode = nodes.getNodeOfType(FieldType.CardholderLastName, addedNodes)
 

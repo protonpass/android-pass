@@ -38,11 +38,14 @@ import proton.android.pass.composecomponents.impl.pinning.BoxedPin
 import proton.android.pass.composecomponents.impl.pinning.CircledPin
 import proton.android.pass.domain.AddressDetailsContent
 import proton.android.pass.domain.ContactDetailsContent
+import proton.android.pass.domain.CustomFieldContent
+import proton.android.pass.domain.ExtraSectionContent
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.PersonalDetailsContent
 import proton.android.pass.domain.WorkDetailsContent
 
 private const val MAX_PREVIEW_LENGTH = 128
+private const val MAX_CUSTOM_FIELDS = 2
 
 @Composable
 fun IdentityRow(
@@ -52,7 +55,7 @@ fun IdentityRow(
     vaultIcon: Int? = null,
     selection: ItemSelectionModeState = ItemSelectionModeState.NotInSelectionMode
 ) {
-    val content = item.contents as ItemContents.Identity
+    val content = remember(item.contents) { item.contents as ItemContents.Identity }
     val highlightColor = PassTheme.colors.interactionNorm
     val fields = remember(
         content.title,
@@ -60,6 +63,7 @@ fun IdentityRow(
         content.addressDetailsContent,
         content.contactDetailsContent,
         content.workDetailsContent,
+        content.extraSectionContentList,
         highlight
     ) {
         getHighlightedFields(
@@ -68,6 +72,7 @@ fun IdentityRow(
             addressDetailsContent = content.addressDetailsContent,
             contactDetailsContent = content.contactDetailsContent,
             workDetailsContent = content.workDetailsContent,
+            extraSectionContentList = content.extraSectionContentList,
             highlight = highlight,
             highlightColor = highlightColor
         )
@@ -122,6 +127,7 @@ private fun getHighlightedFields(
     addressDetailsContent: AddressDetailsContent,
     contactDetailsContent: ContactDetailsContent,
     workDetailsContent: WorkDetailsContent,
+    extraSectionContentList: List<ExtraSectionContent>,
     highlight: String,
     highlightColor: Color
 ): IdentityHighlightFields {
@@ -156,6 +162,10 @@ private fun getHighlightedFields(
                 highlightColor
             )
         )
+        val personalCustomField = personalDetailsContent.customFields.filterIsInstance<CustomFieldContent.Text>()
+            .mapNotNull { customField -> customFieldToAnnotatedString(customField, highlight, highlightColor) }
+            .take(MAX_CUSTOM_FIELDS)
+        annotatedFields.addAll(personalCustomField)
 
         // Highlight fields for AddressDetails
         annotatedFields.addAll(
@@ -174,6 +184,11 @@ private fun getHighlightedFields(
                 highlightColor
             )
         )
+
+        val addressCustomField = addressDetailsContent.customFields.filterIsInstance<CustomFieldContent.Text>()
+            .mapNotNull { customField -> customFieldToAnnotatedString(customField, highlight, highlightColor) }
+            .take(MAX_CUSTOM_FIELDS)
+        annotatedFields.addAll(addressCustomField)
 
         // Highlight fields for ContactDetails
         annotatedFields.addAll(
@@ -196,6 +211,11 @@ private fun getHighlightedFields(
             )
         )
 
+        val contactCustomField = contactDetailsContent.customFields.filterIsInstance<CustomFieldContent.Text>()
+            .mapNotNull { customField -> customFieldToAnnotatedString(customField, highlight, highlightColor) }
+            .take(MAX_CUSTOM_FIELDS)
+        annotatedFields.addAll(contactCustomField)
+
         // Highlight fields for WorkDetails
         annotatedFields.addAll(
             highlightFields(
@@ -210,6 +230,25 @@ private fun getHighlightedFields(
                 highlightColor
             )
         )
+
+        val workCustomField = workDetailsContent.customFields.filterIsInstance<CustomFieldContent.Text>()
+            .mapNotNull { customField -> customFieldToAnnotatedString(customField, highlight, highlightColor) }
+            .take(MAX_CUSTOM_FIELDS)
+        annotatedFields.addAll(workCustomField)
+
+        extraSectionContentList.forEach { extraSectionContent ->
+            val extraSectionCustomField =
+                extraSectionContent.customFields.filterIsInstance<CustomFieldContent.Text>()
+                    .mapNotNull { customField ->
+                        customFieldToAnnotatedString(
+                            customField,
+                            highlight,
+                            highlightColor
+                        )
+                    }
+                    .take(MAX_CUSTOM_FIELDS)
+            annotatedFields.addAll(extraSectionCustomField)
+        }
     }
 
     return IdentityHighlightFields(
@@ -218,20 +257,24 @@ private fun getHighlightedFields(
     )
 }
 
+private fun customFieldToAnnotatedString(
+    customField: CustomFieldContent.Text,
+    highlight: String,
+    highlightColor: Color
+): AnnotatedString? {
+    val customFieldText = "${customField.label}: ${customField.value}"
+    return customFieldText.highlight(highlight, highlightColor)
+}
+
 private fun highlightFields(
     fields: List<String>,
     highlight: String,
     highlightColor: Color
 ): List<AnnotatedString> {
     val annotatedFields: MutableList<AnnotatedString> = mutableListOf()
-
-    if (highlight.isNotBlank()) {
-        fields.forEach { fieldValue ->
-            if (fieldValue.contains(highlight, ignoreCase = true)) {
-                fieldValue.highlight(highlight, highlightColor)?.let {
-                    annotatedFields.add(it)
-                }
-            }
+    fields.forEach { fieldValue ->
+        fieldValue.highlight(highlight, highlightColor)?.let {
+            annotatedFields.add(it)
         }
     }
 

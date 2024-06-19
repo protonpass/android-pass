@@ -460,8 +460,8 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
             "email" -> return FieldType.Email
             "password" -> return FieldType.Password
             "submit" -> return FieldType.SubmitButton
+            "tel" -> return FieldType.Phone
             // Support for these fields will be added in the future
-            // "tel" -> FieldType.Phone
             // "text" -> FieldType.Other
             else -> {}
         }
@@ -491,11 +491,17 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
             View.AUTOFILL_HINT_EMAIL_ADDRESS -> return FieldType.Email
             View.AUTOFILL_HINT_USERNAME -> return FieldType.Username
             View.AUTOFILL_HINT_PASSWORD, HINT_CURRENT_PASSWORD -> return FieldType.Password
-            View.AUTOFILL_HINT_NAME -> return FieldType.CardholderName
+
+            View.AUTOFILL_HINT_NAME -> return FieldType.FullName
+
             View.AUTOFILL_HINT_CREDIT_CARD_NUMBER -> return FieldType.CardNumber
             View.AUTOFILL_HINT_CREDIT_CARD_EXPIRATION_MONTH -> return FieldType.CardExpirationMM
             View.AUTOFILL_HINT_CREDIT_CARD_EXPIRATION_YEAR -> return FieldType.CardExpirationYY
             View.AUTOFILL_HINT_CREDIT_CARD_SECURITY_CODE -> return FieldType.CardCvv
+
+            View.AUTOFILL_HINT_POSTAL_ADDRESS -> return FieldType.Address
+            View.AUTOFILL_HINT_POSTAL_CODE -> return FieldType.PostalCode
+            View.AUTOFILL_HINT_PHONE -> return FieldType.Phone
             else -> {}
         }
 
@@ -536,16 +542,20 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
             InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS,
             InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS
         ) -> FieldType.Email
-
         inputType.hasVariations(
             InputType.TYPE_TEXT_VARIATION_PASSWORD,
             InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD
         ) -> FieldType.Password
-        /* Support for these fields will be added in the future
         inputType.hasVariations(
             InputType.TYPE_TEXT_VARIATION_PERSON_NAME
         ) -> FieldType.FullName
-        inputType.value == InputType.TYPE_CLASS_PHONE -> FieldType.Phone
+        inputType.hasVariations(
+            InputType.TYPE_CLASS_PHONE
+        ) -> FieldType.Phone
+        inputType.hasVariations(
+            InputType.TYPE_TEXT_VARIATION_POSTAL_ADDRESS
+        ) -> FieldType.Address
+        /*
         inputType.hasVariations(
             InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
         ) -> FieldType.Username

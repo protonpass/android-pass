@@ -32,6 +32,7 @@ import proton.android.pass.featureitemcreate.impl.common.customfields.AddMoreBut
 import proton.android.pass.featureitemcreate.impl.common.customfields.CustomFieldEntry
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent.OnAddExtraSectionCustomField
+import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent.OnCustomFieldFocused
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent.OnCustomFieldOptions
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent.OnFieldChange
 import proton.android.pass.featureitemcreate.impl.identity.presentation.FieldChange
@@ -71,7 +72,9 @@ fun ExtraSection(
                     )
                     onEvent(OnFieldChange(fieldChange))
                 },
-                onFocusChange = { _, _ -> },
+                onFocusChange = { idx, isFocused ->
+                    onEvent(OnCustomFieldFocused(idx, isFocused, ExtraSectionCustomField(sectionIndex)))
+                },
                 onOptionsClick = {
                     onEvent(
                         OnCustomFieldOptions(

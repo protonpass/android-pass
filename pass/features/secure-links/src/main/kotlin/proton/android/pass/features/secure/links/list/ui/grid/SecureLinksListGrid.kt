@@ -57,7 +57,11 @@ internal fun SecureLinksListGrid(
                         secureLinkId = secureLinksModel.secureLinkId
                     ).also(onUiEvent)
                 },
-                onCellOptionsClick = { onUiEvent(SecureLinksListUiEvent.OnCellOptionsClicked) }
+                onCellOptionsClick = {
+                    SecureLinksListUiEvent.OnCellOptionsClicked(
+                        secureLinkId = secureLinksModel.secureLinkId
+                    ).also(onUiEvent)
+                }
             )
         }
     }

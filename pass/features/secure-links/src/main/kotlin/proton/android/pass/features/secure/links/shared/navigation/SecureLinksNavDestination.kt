@@ -35,4 +35,7 @@ sealed interface SecureLinksNavDestination {
 
     data object SecureLinksList : SecureLinksNavDestination
 
+    @JvmInline
+    value class SecureLinksListMenu(val secureLinkId: SecureLinkId) : SecureLinksNavDestination
+
 }

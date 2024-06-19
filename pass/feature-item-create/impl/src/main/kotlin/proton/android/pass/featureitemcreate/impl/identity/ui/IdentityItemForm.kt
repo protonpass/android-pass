@@ -28,12 +28,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.toPersistentSet
-import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.isCollapsedSaver
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
@@ -46,11 +45,10 @@ import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityCo
 import proton.android.pass.featureitemcreate.impl.identity.navigation.IdentityContentEvent.OnFieldChange
 import proton.android.pass.featureitemcreate.impl.identity.presentation.FieldChange
 import proton.android.pass.featureitemcreate.impl.identity.presentation.IdentityItemFormState
+import proton.android.pass.featureitemcreate.impl.identity.presentation.IdentityUiState
 import proton.android.pass.featureitemcreate.impl.identity.presentation.IdentityValidationErrors
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.AddressDetailsField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.ContactDetailsField
-import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.ExtraField
-import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.FocusedField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.PersonalDetailsField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.WorkDetailsField
 import proton.android.pass.featureitemcreate.impl.identity.ui.IdentitySectionType.AddressDetails
@@ -63,15 +61,16 @@ import proton.android.pass.featureitemcreate.impl.identity.ui.IdentitySectionTyp
 fun IdentityItemForm(
     modifier: Modifier,
     identityItemFormState: IdentityItemFormState,
-    validationErrors: PersistentSet<IdentityValidationErrors>,
-    extraFields: PersistentSet<ExtraField>,
-    focusedField: Option<FocusedField>,
-    enabled: Boolean,
+    identityUiState: IdentityUiState,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
     val isGroupCollapsed = rememberSaveable(saver = isCollapsedSaver()) {
         mutableStateListOf(ContactDetails, WorkDetails)
     }
+    val enabled = remember(identityUiState) { !identityUiState.getSubmitLoadingState().value() }
+    val extraFields = remember(identityUiState) { identityUiState.getExtraFields() }
+    val focusedField = remember(identityUiState) { identityUiState.getFocusedField() }
+    val canUseCustomFields = remember(identityUiState) { identityUiState.getCanUseCustomFields() }
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -90,7 +89,8 @@ fun IdentityItemForm(
                 ),
             value = identityItemFormState.title,
             requestFocus = true,
-            onTitleRequiredError = validationErrors.contains(IdentityValidationErrors.BlankTitle),
+            onTitleRequiredError = identityUiState.getValidationErrors()
+                .contains(IdentityValidationErrors.BlankTitle),
             enabled = enabled,
             isRounded = true,
             onChange = { onEvent(OnFieldChange(FieldChange.Title(it))) }
@@ -206,12 +206,14 @@ fun IdentityItemForm(
                 )
             }
         }
-        PassDivider(modifier = Modifier.padding(Spacing.medium))
-        AddSectionButton(
-            modifier = Modifier
-                .padding(Spacing.medium)
-                .fillMaxWidth(),
-            onClick = { onEvent(IdentityContentEvent.OnAddExtraSection) }
-        )
+        if (canUseCustomFields) {
+            PassDivider(modifier = Modifier.padding(Spacing.medium))
+            AddSectionButton(
+                modifier = Modifier
+                    .padding(Spacing.medium)
+                    .fillMaxWidth(),
+                onClick = { onEvent(IdentityContentEvent.OnAddExtraSection) }
+            )
+        }
     }
 }

@@ -40,5 +40,5 @@
   <string name="secure_links_shared_action_copy_link">Bağlantıyı kopyala</string>
   <string name="secure_links_shared_action_share_link">Bağlantıyı paylaş</string>
   <string name="secure_links_overview_button_view_all_links">Tüm paylaşılmış bağlantılarınızı görüntüleyin</string>
-  <string name="secure_links_overview_snackbar_message_link_copied">Güvenli bağlantı kopyalandı</string>
+  <string name="secure_links_shared_snackbar_message_link_copied">Güvenli bağlantı kopyalandı</string>
 </resources>

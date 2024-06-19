@@ -126,7 +126,9 @@ private fun getHighlightedFields(
     highlightColor: Color
 ): IdentityHighlightFields {
     var annotatedTitle = AnnotatedString(title.take(MAX_PREVIEW_LENGTH))
-    val nameAndEmail = personalDetailsContent.fullName + " / " + personalDetailsContent.email
+    val nameAndEmail = listOf(personalDetailsContent.fullName, personalDetailsContent.email)
+        .filter { it.isNotBlank() }
+        .joinToString(" / ")
     var annotatedFullNameEmail = AnnotatedString(nameAndEmail.take(MAX_PREVIEW_LENGTH))
 
     val annotatedFields: MutableList<AnnotatedString> = mutableListOf()

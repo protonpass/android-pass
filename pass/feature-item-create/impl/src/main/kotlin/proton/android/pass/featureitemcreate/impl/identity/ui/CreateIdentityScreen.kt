@@ -83,13 +83,7 @@ fun CreateIdentityScreen(
     Box(modifier = modifier.fillMaxSize()) {
         IdentityContent(
             identityItemFormState = viewModel.getFormState(),
-            selectedShareId = state.getSelectedShareId(),
-            selectedVault = state.getSelectedVault(),
-            isLoadingState = state.getSubmitLoadingState(),
-            shouldShowVaultSelector = state.shouldShowVaultSelector(),
-            validationErrors = state.getValidationErrors(),
-            extraFields = state.getExtraFields(),
-            focusedField = state.getFocusedField(),
+            identityUiState = state,
             topBarActionName = stringResource(id = R.string.title_create),
             onEvent = { event ->
                 when (event) {

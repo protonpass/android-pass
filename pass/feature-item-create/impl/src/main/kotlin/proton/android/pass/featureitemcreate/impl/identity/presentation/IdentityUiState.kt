@@ -111,4 +111,10 @@ sealed interface IdentityUiState {
         is UpdateIdentity -> sharedState.focusedField
         else -> None
     }
+
+    fun getCanUseCustomFields(): Boolean = when (this) {
+        is CreateIdentity -> sharedState.canUseCustomFields
+        is UpdateIdentity -> sharedState.canUseCustomFields
+        else -> false
+    }
 }

@@ -40,5 +40,5 @@
   <string name="secure_links_shared_action_copy_link">Copier le lien</string>
   <string name="secure_links_shared_action_share_link">Partager le lien</string>
   <string name="secure_links_overview_button_view_all_links">Afficher tous vos liens partagés</string>
-  <string name="secure_links_overview_snackbar_message_link_copied">Le lien sécurisé a été copié.</string>
+  <string name="secure_links_shared_snackbar_message_link_copied">Le lien sécurisé a été copié.</string>
 </resources>

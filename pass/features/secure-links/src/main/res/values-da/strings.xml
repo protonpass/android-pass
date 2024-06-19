@@ -40,5 +40,5 @@
   <string name="secure_links_shared_action_copy_link">Kopier link</string>
   <string name="secure_links_shared_action_share_link">Del link</string>
   <string name="secure_links_overview_button_view_all_links">Vis alle dine delte links</string>
-  <string name="secure_links_overview_snackbar_message_link_copied">Sikkert link kopieret</string>
+  <string name="secure_links_shared_snackbar_message_link_copied">Sikkert link kopieret</string>
 </resources>

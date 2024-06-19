@@ -105,7 +105,7 @@ internal val fieldKeywordsList = listOf(
         deniedKeywords = emptyList()
     ),
     kw(
-        fieldType = FieldType.CardholderName,
+        fieldType = FieldType.FullName,
         allowedKeywords = listOf("cardholder", "cardname", "holdername", "ccname"),
         deniedKeywords = emptyList()
     ),

@@ -24,6 +24,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.PassTopBarBackButtonType
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
@@ -73,10 +75,18 @@ internal fun SecureLinksOverviewScreenContent(
             }
 
             SecureLinksOverviewWidget(
+                viewsTitleResId = R.string.secure_links_overview_widget_max_views_title,
                 remainingTime = remainingTime,
-                currentViews = currentViews,
-                maxViewsAllowed = maxViewsAllowed,
-                linkUrl = secureLinkUrl
+                linkUrl = secureLinkUrl,
+                viewsText = maxViewsAllowed
+                    ?.let { maxViews ->
+                        pluralStringResource(
+                            id = R.plurals.secure_links_overview_widget_max_views_limited,
+                            count = maxViews,
+                            maxViews
+                        )
+                    }
+                    ?: stringResource(id = R.string.secure_links_overview_widget_max_views_unlimited)
             )
         }
     }

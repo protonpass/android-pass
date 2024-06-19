@@ -50,6 +50,10 @@ sealed class SelectItemState(
         data class CreditCard(
             val title: String
         ) : Autofill(ItemTypeFilter.CreditCards, title)
+
+        data class Identity(
+            val title: String
+        ) : Autofill(ItemTypeFilter.Identity, title)
     }
 
     sealed class Passkey(

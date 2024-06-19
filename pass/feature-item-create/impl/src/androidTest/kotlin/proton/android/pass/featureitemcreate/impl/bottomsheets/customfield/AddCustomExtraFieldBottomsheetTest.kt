@@ -28,6 +28,7 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.featureitemcreate.impl.R
+import proton.android.pass.featureitemcreate.impl.common.CustomFieldPrefix
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 
@@ -61,6 +62,7 @@ class AddCustomExtraFieldBottomsheetTest {
             setContent {
                 PassTheme {
                     AddCustomFieldBottomSheet(
+                        prefix = CustomFieldPrefix.CreateLogin,
                         onNavigate = {
                             if (it == navigation) {
                                 checker.call()

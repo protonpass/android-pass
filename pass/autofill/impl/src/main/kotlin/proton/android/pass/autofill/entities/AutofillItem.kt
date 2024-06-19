@@ -57,4 +57,18 @@ sealed interface AutofillItem : Parcelable {
         override fun itemId() = ItemId(itemId)
         override fun type() = "AutofillItem.CreditCard"
     }
+
+    @Parcelize
+    data class Identity(
+        val itemId: String,
+        val shareId: String,
+        val fullName: String,
+        val address: String?,
+        val postalCode: String?,
+        val phoneNumber: String?
+    ) : AutofillItem {
+        override fun shareId() = ShareId(shareId)
+        override fun itemId() = ItemId(itemId)
+        override fun type() = "AutofillItem.Identity"
+    }
 }

@@ -43,6 +43,7 @@ import proton.android.pass.featureitemcreate.impl.alias.CreateAliasBottomSheet
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasNavigation
 import proton.android.pass.featureitemcreate.impl.alias.createAliasGraph
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomSheetMode.AutofillCreditCard
+import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomSheetMode.AutofillIdentity
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomSheetMode.AutofillLogin
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheet
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation
@@ -451,6 +452,7 @@ fun NavGraphBuilder.autofillActivityGraph(
         is NodeCluster.CreditCard -> AutofillCreditCard
         is NodeCluster.Login,
         is NodeCluster.SignUp -> AutofillLogin
+        is NodeCluster.Identity -> AutofillIdentity
 
         NodeCluster.Empty -> AutofillLogin
     }

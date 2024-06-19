@@ -165,4 +165,6 @@ private fun getSaveSessionType(
             )
         }
     }
+
+    is NodeCluster.Identity -> SaveSessionType.NotAutoSaveable
 }

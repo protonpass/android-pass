@@ -21,6 +21,7 @@ package proton.android.pass.autofill.heuristics
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.autofill.heuristics.mappers.CreditCardMapper.mapCreditCardFields
+import proton.android.pass.autofill.heuristics.mappers.IdentityMapper.mapIdentityFields
 import proton.android.pass.autofill.heuristics.mappers.LoginMapper.mapLoginFields
 import proton.android.pass.autofill.heuristics.mappers.LoginMapper.mapSignUpFields
 import proton.android.pass.crypto.api.context.EncryptionContext
@@ -51,6 +52,10 @@ object ItemFieldMapper {
 
             is NodeCluster.SignUp -> if (autofillItem is AutofillItem.Login) {
                 return mapSignUpFields(encryptionContext, autofillItem, cluster)
+            }
+
+            is NodeCluster.Identity -> if (autofillItem is AutofillItem.Identity) {
+                return mapIdentityFields(autofillItem, cluster)
             }
         }
 

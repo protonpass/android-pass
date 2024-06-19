@@ -77,10 +77,8 @@ fun AutofillAppState.toSelectItemState(): SelectItemState.Autofill {
                 suggestionsUrl = url
             )
         }
-
-        else -> throw IllegalStateException(
-            "Unknown cluster type: ${autofillData.assistInfo.cluster::javaClass}"
-        )
+        is NodeCluster.Identity -> SelectItemState.Autofill.Identity(title = suggestionsTitle)
+        NodeCluster.Empty -> throw IllegalStateException("Empty cluster type")
     }
 }
 

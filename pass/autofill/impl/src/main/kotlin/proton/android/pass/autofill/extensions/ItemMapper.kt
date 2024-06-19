@@ -50,7 +50,17 @@ fun ItemUiModel.toAutoFillItem(): AutofillItem = when (val content = contents) {
         totp = null
     )
 
-    else -> throw IllegalStateException("Unsupported item type: ${this::javaClass.name}")
+    is ItemContents.Identity -> AutofillItem.Identity(
+        shareId = shareId.id,
+        itemId = id.id,
+        fullName = content.personalDetailsContent.fullName,
+        address = content.addressDetailsContent.streetAddress,
+        postalCode = content.addressDetailsContent.zipOrPostalCode,
+        phoneNumber = content.personalDetailsContent.phoneNumber
+    )
+
+    is ItemContents.Note,
+    is ItemContents.Unknown -> throw IllegalStateException("Unsupported item type")
 }
 
 data class CreatedAlias(

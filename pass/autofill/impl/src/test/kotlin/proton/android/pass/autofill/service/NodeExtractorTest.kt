@@ -83,7 +83,7 @@ class NodeExtractorTest {
         Assert.assertEquals(FieldType.Email, emailType)
         Assert.assertEquals(FieldType.Password, passwordType)
         Assert.assertEquals(FieldType.CardNumber, creditCardType)
-        Assert.assertEquals(FieldType.Unknown, phoneType)
+        Assert.assertEquals(FieldType.Phone, phoneType)
     }
 
     @Test

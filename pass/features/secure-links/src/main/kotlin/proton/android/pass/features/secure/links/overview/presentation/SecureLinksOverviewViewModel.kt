@@ -45,7 +45,8 @@ import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.securelink.DeleteSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLink
 import proton.android.pass.domain.securelinks.SecureLinkId
-import proton.android.pass.features.secure.links.overview.navigation.SecureLinksOverviewLinkIdNavArgId
+import proton.android.pass.features.secure.links.shared.navigation.SecureLinksLinkIdNavArgId
+import proton.android.pass.features.secure.links.shared.presentation.SecureLinksSharedSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -66,7 +67,7 @@ class SecureLinksOverviewViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val secureLinkId: SecureLinkId = savedStateHandleProvider.get()
-        .require<String>(SecureLinksOverviewLinkIdNavArgId.key)
+        .require<String>(SecureLinksLinkIdNavArgId.key)
         .let(::SecureLinkId)
 
     private val secureLinkFlow = oneShot {
@@ -118,7 +119,7 @@ class SecureLinksOverviewViewModel @Inject constructor(
         clipboardManager.copyToClipboard(text = state.value.secureLinkUrl, isSecure = false)
 
         viewModelScope.launch {
-            snackbarDispatcher(SecureLinksOverviewSnackbarMessage.LinkCopied)
+            snackbarDispatcher(SecureLinksSharedSnackbarMessage.LinkCopied)
         }
     }
 

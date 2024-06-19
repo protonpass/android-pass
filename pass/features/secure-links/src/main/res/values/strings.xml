@@ -39,7 +39,6 @@
     </plurals>
     <string name="secure_links_overview_widget_max_views_unlimited">Unlimited</string>
     <string name="secure_links_overview_button_view_all_links">View all your secure links</string>
-    <string name="secure_links_overview_snackbar_message_link_copied">Secure link copied</string>
 
     <!--List screen-->
     <string name="secure_links_list_title">Secure links</string>
@@ -53,5 +52,6 @@
     <string name="secure_links_shared_action_copy_link">Copy link</string>
     <string name="secure_links_shared_action_share_link">Share link</string>
     <string name="secure_links_shared_action_delete_link">Remove link</string>
+    <string name="secure_links_shared_snackbar_message_link_copied">Secure link copied</string>
 
 </resources>

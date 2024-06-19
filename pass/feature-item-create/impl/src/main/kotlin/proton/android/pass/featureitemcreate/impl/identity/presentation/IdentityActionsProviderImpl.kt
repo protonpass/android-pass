@@ -26,13 +26,17 @@ import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
+import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.toItemContents
@@ -47,6 +51,8 @@ import proton.android.pass.data.api.repositories.DRAFT_IDENTITY_EXTRA_SECTION_KE
 import proton.android.pass.data.api.repositories.DRAFT_REMOVE_CUSTOM_FIELD_KEY
 import proton.android.pass.data.api.repositories.DRAFT_REMOVE_CUSTOM_SECTION_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
+import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
+import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
@@ -86,6 +92,7 @@ class IdentityActionsProviderImpl @Inject constructor(
     private val draftRepository: DraftRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val identityFieldDraftRepository: IdentityFieldDraftRepository,
+    private val observeUpgradeInfo: ObserveUpgradeInfo,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : IdentityActionsProvider {
 
@@ -593,8 +600,12 @@ class IdentityActionsProviderImpl @Inject constructor(
         isItemSavedState,
         identityFieldDraftRepository.observeExtraFields().map(Set<ExtraField>::toPersistentSet),
         identityFieldDraftRepository.observeLastAddedExtraField(),
+        observeUpgradeInfo().distinctUntilChanged().asLoadingResult().map(::canUseCustomFields),
         ::IdentitySharedUiState
     )
+
+    private fun canUseCustomFields(result: LoadingResult<UpgradeInfo>) =
+        result.getOrNull()?.plan?.let { it.isPaidPlan || it.isTrialPlan } ?: false
 
     override fun updateLoadingState(loadingState: IsLoadingState) {
         isLoadingState.update { loadingState }

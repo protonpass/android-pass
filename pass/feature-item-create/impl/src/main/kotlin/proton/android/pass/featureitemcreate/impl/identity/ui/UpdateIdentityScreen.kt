@@ -72,13 +72,7 @@ fun UpdateIdentityScreen(
     Box(modifier = modifier.fillMaxSize()) {
         IdentityContent(
             identityItemFormState = viewModel.getFormState(),
-            shouldShowVaultSelector = state.shouldShowVaultSelector(),
-            selectedVault = state.getSelectedVault(),
-            selectedShareId = state.getSelectedShareId(),
-            isLoadingState = state.getSubmitLoadingState(),
-            validationErrors = state.getValidationErrors(),
-            extraFields = state.getExtraFields(),
-            focusedField = state.getFocusedField(),
+            identityUiState = state,
             topBarActionName = stringResource(id = R.string.action_save),
             onEvent = { event ->
                 when (event) {

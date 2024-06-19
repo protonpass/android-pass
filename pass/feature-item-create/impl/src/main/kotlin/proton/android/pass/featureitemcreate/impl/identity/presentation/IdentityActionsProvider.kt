@@ -63,7 +63,8 @@ data class IdentitySharedUiState(
     val validationErrors: PersistentSet<IdentityValidationErrors>,
     val isItemSaved: ItemSavedState,
     val extraFields: PersistentSet<ExtraField>,
-    val focusedField: Option<FocusedField>
+    val focusedField: Option<FocusedField>,
+    val canUseCustomFields: Boolean
 ) {
     companion object {
         val Initial = IdentitySharedUiState(
@@ -72,7 +73,8 @@ data class IdentitySharedUiState(
             validationErrors = persistentSetOf(),
             isItemSaved = ItemSavedState.Unknown,
             extraFields = persistentSetOf(),
-            focusedField = None
+            focusedField = None,
+            canUseCustomFields = false
         )
     }
 }

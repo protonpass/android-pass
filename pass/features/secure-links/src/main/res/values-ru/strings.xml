@@ -42,5 +42,5 @@
   <string name="secure_links_shared_action_copy_link">Копировать ссылку</string>
   <string name="secure_links_shared_action_share_link">Поделиться ссылкой</string>
   <string name="secure_links_overview_button_view_all_links">View all your shared links</string>
-  <string name="secure_links_overview_snackbar_message_link_copied">Защищенная ссылка скопирована</string>
+  <string name="secure_links_shared_snackbar_message_link_copied">Защищенная ссылка скопирована</string>
 </resources>

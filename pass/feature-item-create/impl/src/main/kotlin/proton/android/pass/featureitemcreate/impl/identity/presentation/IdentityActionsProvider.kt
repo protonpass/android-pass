@@ -40,6 +40,11 @@ interface IdentityFormActions {
     fun getFormState(): IdentityItemFormState
     fun isFormStateValid(): Boolean
     fun clearState()
+    fun onCustomFieldFocusChange(
+        index: Int,
+        focused: Boolean,
+        customExtraField: CustomExtraField
+    )
 }
 
 interface IdentityActionsProvider : IdentityFormActions {

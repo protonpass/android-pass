@@ -46,9 +46,9 @@ sealed interface UIHiddenState : Parcelable {
     ) : UIHiddenState, Parcelable
 
     fun toHiddenState() = when (this) {
-        is Empty -> proton.android.pass.domain.HiddenState.Empty(encrypted)
-        is Concealed -> proton.android.pass.domain.HiddenState.Concealed(encrypted)
-        is Revealed -> proton.android.pass.domain.HiddenState.Revealed(encrypted, clearText)
+        is Empty -> HiddenState.Empty(encrypted)
+        is Concealed -> HiddenState.Concealed(encrypted)
+        is Revealed -> HiddenState.Revealed(encrypted, clearText)
     }
 
     fun compare(other: UIHiddenState, encryptionContext: EncryptionContext): Boolean = when (this) {

@@ -33,6 +33,7 @@
     <!--Overview screen-->
     <string name="secure_links_overview_widget_expiration_title">Expires in:</string>
     <string name="secure_links_overview_widget_max_views_title">Can be viewed:</string>
+    <string name="secure_links_overview_widget_open_times_title">Opened:</string>
     <plurals name="secure_links_overview_widget_max_views_limited">
         <item quantity="one">%d time</item>
         <item quantity="other">%d times</item>

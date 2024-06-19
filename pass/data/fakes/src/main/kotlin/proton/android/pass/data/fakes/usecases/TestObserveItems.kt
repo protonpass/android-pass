@@ -32,6 +32,8 @@ import proton.android.pass.data.api.usecases.items.ItemIsBreachedFilter
 import proton.android.pass.data.api.usecases.items.ItemSecurityCheckFilter
 import proton.android.pass.datamodels.api.fromParsed
 import proton.android.pass.datamodels.api.serializeToProto
+import proton.android.pass.domain.AddressDetailsContent
+import proton.android.pass.domain.ContactDetailsContent
 import proton.android.pass.domain.CreditCardType
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
@@ -39,8 +41,10 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ItemType
+import proton.android.pass.domain.PersonalDetailsContent
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareSelection
+import proton.android.pass.domain.WorkDetailsContent
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -218,6 +222,30 @@ class TestObserveItems @Inject constructor() : ObserveItems {
                     HiddenState.Concealed(TestEncryptionContext.encrypt(pin))
                 },
                 expirationDate = expirationDate
+            )
+        )
+
+        fun createIdentity(
+            shareId: ShareId = ShareId("share-123"),
+            itemId: ItemId = ItemId("item-123"),
+            fullName: String = "John Doe"
+        ) = createItem(
+            shareId = shareId,
+            itemId = itemId,
+            itemContents = ItemContents.Identity(
+                title = "Identity",
+                note = "note",
+                personalDetailsContent = PersonalDetailsContent.EMPTY.copy(
+                    fullName = fullName,
+                    phoneNumber = "1234567890"
+                ),
+                addressDetailsContent = AddressDetailsContent.EMPTY.copy(
+                    streetAddress = "123 Main St",
+                    zipOrPostalCode = "12345"
+                ),
+                contactDetailsContent = ContactDetailsContent.EMPTY,
+                workDetailsContent = WorkDetailsContent.EMPTY,
+                extraSectionContentList = emptyList()
             )
         )
     }

@@ -55,6 +55,7 @@ import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.GetPublicSuffixList
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetSuggestedCreditCardItems
+import proton.android.pass.data.api.usecases.GetSuggestedIdentityItems
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.GetVaultById
@@ -206,6 +207,7 @@ import proton.android.pass.data.impl.usecases.GetItemByIdWithVaultImpl
 import proton.android.pass.data.impl.usecases.GetPublicSuffixListImpl
 import proton.android.pass.data.impl.usecases.GetShareByIdImpl
 import proton.android.pass.data.impl.usecases.GetSuggestedCreditCardItemsImpl
+import proton.android.pass.data.impl.usecases.GetSuggestedIdentityItemsImpl
 import proton.android.pass.data.impl.usecases.GetSuggestedLoginItemsImpl
 import proton.android.pass.data.impl.usecases.GetUserPlanImpl
 import proton.android.pass.data.impl.usecases.GetVaultByIdImpl
@@ -373,6 +375,9 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindGetSuggestedCreditCardItems(impl: GetSuggestedCreditCardItemsImpl): GetSuggestedCreditCardItems
+
+    @Binds
+    abstract fun bindGetSuggestedIdentityItems(impl: GetSuggestedIdentityItemsImpl): GetSuggestedIdentityItems
 
     @Binds
     abstract fun bindObserveAccounts(impl: ObserveAccountsImpl): ObserveAccounts

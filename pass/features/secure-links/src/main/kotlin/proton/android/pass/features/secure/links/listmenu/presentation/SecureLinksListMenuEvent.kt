@@ -24,6 +24,8 @@ internal sealed interface SecureLinksListMenuEvent {
 
     data object OnLinkCopied : SecureLinksListMenuEvent
 
-    data object OnLinkRemoved : SecureLinksListMenuEvent
+    data object OnLinkDeleted : SecureLinksListMenuEvent
+
+    data object OnDeleteLinkError : SecureLinksListMenuEvent
 
 }

@@ -41,7 +41,8 @@ internal fun SecureLinksOverviewBottomSheet(
         when (state.event) {
             SecureLinksOverviewEvent.Idle -> {}
 
-            SecureLinksOverviewEvent.OnSecureLinkDeleted -> SecureLinksNavDestination.Back(
+            SecureLinksOverviewEvent.OnLinkDeleted,
+            SecureLinksOverviewEvent.OnDeleteLinkError -> SecureLinksNavDestination.Back(
                 comesFromBottomSheet = true
             ).also(onNavigated)
         }
@@ -56,8 +57,8 @@ internal fun SecureLinksOverviewBottomSheet(
                 uiEvent = uiEvent,
                 secureLinkUrl = state.secureLinkUrl,
                 onNavigated = onNavigated,
-                onLinkCopied = ::onLinkCopied,
-                onLinkDeleted = ::onLinkDeleted,
+                onLinkCopied = ::onCopyLink,
+                onLinkDeleted = ::onDeletedLink,
                 context = context
             )
         }

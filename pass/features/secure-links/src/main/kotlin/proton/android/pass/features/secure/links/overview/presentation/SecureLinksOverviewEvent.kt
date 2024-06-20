@@ -22,6 +22,8 @@ internal sealed interface SecureLinksOverviewEvent {
 
     data object Idle : SecureLinksOverviewEvent
 
-    data object OnSecureLinkDeleted : SecureLinksOverviewEvent
+    data object OnLinkDeleted : SecureLinksOverviewEvent
+
+    data object OnDeleteLinkError : SecureLinksOverviewEvent
 
 }

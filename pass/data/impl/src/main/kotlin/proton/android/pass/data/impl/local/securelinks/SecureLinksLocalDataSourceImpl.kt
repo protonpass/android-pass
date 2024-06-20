@@ -54,8 +54,9 @@ class SecureLinksLocalDataSourceImpl @Inject constructor(
             database.secureLinksDao().delete(entity)
         }
 
-
     override suspend fun getAll(userId: UserId): List<SecureLink> = observeAll(userId).first()
+
+    override suspend fun getCount(userId: UserId): Int = observeCount(userId).first()
 
     override fun observe(userId: UserId, secureLinkId: SecureLinkId): Flow<SecureLink> = database.secureLinksDao()
         .observeSecureLink(userId = userId.id, linkId = secureLinkId.id)
@@ -74,6 +75,9 @@ class SecureLinksLocalDataSourceImpl @Inject constructor(
                 }
             }
         }
+
+    override fun observeCount(userId: UserId): Flow<Int> = database.secureLinksDao()
+        .observeSecureLinksCount(userId = userId.id)
 
     override suspend fun read(userId: UserId, secureLinkId: SecureLinkId): SecureLink = observe(userId, secureLinkId)
         .first()

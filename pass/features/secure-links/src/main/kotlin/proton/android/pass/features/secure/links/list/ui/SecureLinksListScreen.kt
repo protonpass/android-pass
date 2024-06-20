@@ -43,7 +43,7 @@ fun SecureLinksListScreen(
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 SecureLinksListUiEvent.OnBackClicked -> {
-                   onNavigated(SecureLinksNavDestination.Profile)
+                    onNavigated(SecureLinksNavDestination.Profile)
                 }
 
                 is SecureLinksListUiEvent.OnCellClicked -> {
@@ -54,9 +54,9 @@ fun SecureLinksListScreen(
                 }
 
                 is SecureLinksListUiEvent.OnCellOptionsClicked -> {
-                   SecureLinksNavDestination.SecureLinksListMenu(
-                       secureLinkId = uiEvent.secureLinkId
-                   ).also(onNavigated)
+                    SecureLinksNavDestination.SecureLinksListMenu(
+                        secureLinkId = uiEvent.secureLinkId
+                    ).also(onNavigated)
                 }
             }
         }

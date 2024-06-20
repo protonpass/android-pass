@@ -72,7 +72,7 @@ internal fun SecureLinksOverviewBottomSheetContent(
             linkTextColor = PassTheme.colors.passwordInteractionNormMajor2,
             onCopyLinkClicked = { onUiEvent(SecureLinksOverviewUiEvent.OnCopyLinkClicked) },
             onShareLinkClicked = { onUiEvent(SecureLinksOverviewUiEvent.OnShareLinkClicked) },
-            onLinkClicked = { onUiEvent(SecureLinksOverviewUiEvent.OnDeleteLinkClicked) },
+            onLinkClicked = { onUiEvent(SecureLinksOverviewUiEvent.OnDeleteLinkClicked) }
         )
     }
 }

@@ -34,7 +34,7 @@ internal object ItemDisplayBuilder {
         is ItemType.Alias,
         is ItemType.Note,
         ItemType.Password,
-        ItemType.Unknown -> throw IllegalArgumentException("Unsupported item type for title}")
+        ItemType.Unknown -> throw IllegalArgumentException("Unsupported item type for title")
     }
 
     internal fun createSubtitle(item: Item, encryptionContext: EncryptionContext): String =
@@ -45,7 +45,7 @@ internal object ItemDisplayBuilder {
             is ItemType.Alias,
             is ItemType.Note,
             ItemType.Password,
-            ItemType.Unknown -> throw IllegalArgumentException("Unsupported item type for title}")
+            ItemType.Unknown -> throw IllegalArgumentException("Unsupported item type for subtitle")
         }
 
     private fun createIdentitySubtitle(itemType: ItemType.Identity): String =

@@ -38,9 +38,7 @@ fun SecureLinksListScreen(
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 SecureLinksListUiEvent.OnBackClicked -> {
-                    SecureLinksNavDestination.Back(
-                        comesFromBottomSheet = false
-                    ).also(onNavigated)
+                   onNavigated(SecureLinksNavDestination.Profile)
                 }
 
                 is SecureLinksListUiEvent.OnCellClicked -> {

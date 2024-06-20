@@ -56,7 +56,7 @@ internal fun SecureLinksOverviewScreenContent(
                 linkTextResId = R.string.secure_links_overview_button_view_all_links,
                 onCopyLinkClicked = { onUiEvent(SecureLinksOverviewUiEvent.OnCopyLinkClicked) },
                 onShareLinkClicked = { onUiEvent(SecureLinksOverviewUiEvent.OnShareLinkClicked) },
-                onLinkClicked = { onUiEvent(SecureLinksOverviewUiEvent.OnViewAllLinksClicked) },
+                onLinkClicked = { onUiEvent(SecureLinksOverviewUiEvent.OnViewAllLinksClicked) }
             )
         }
     ) { innerPaddingValue ->

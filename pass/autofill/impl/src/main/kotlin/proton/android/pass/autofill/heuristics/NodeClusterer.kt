@@ -172,13 +172,15 @@ interface IdentifiableNode {
 
 object NodeClusterer {
 
-    fun cluster(nodes: List<AssistField>): List<NodeCluster> {
+    fun cluster(nodes: List<AssistField>, isIdentityEnabled: Boolean): List<NodeCluster> {
         val clusters = mutableListOf<NodeCluster>()
         val addedNodes = mutableSetOf<AssistField>()
 
         clusterLogins(nodes, clusters, addedNodes)
         clusterCreditCards(nodes, clusters, addedNodes)
-        clusterIdentities(nodes, clusters, addedNodes)
+        if (isIdentityEnabled) {
+            clusterIdentities(nodes, clusters, addedNodes)
+        }
 
         return clusters
     }

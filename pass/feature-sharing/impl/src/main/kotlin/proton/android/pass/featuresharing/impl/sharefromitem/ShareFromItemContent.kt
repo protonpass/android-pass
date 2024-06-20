@@ -50,7 +50,7 @@ internal fun ShareFromItemContent(
         ),
         verticalArrangement = Arrangement.spacedBy(Spacing.mediumSmall)
     ) {
-        if (state.isSecureLinkEnabled) {
+        if (state.isSecureLinkAvailable) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(R.string.sharing_from_item_title),
@@ -59,7 +59,14 @@ internal fun ShareFromItemContent(
             )
 
             ShareItemSecureLinkRow(
-                onClick = { onEvent(ShareFromItemEvent.ShareSecureLink) }
+                shouldShowPlusIcon = !state.canUsePaidFeatures,
+                onClick = {
+                    if (state.canUsePaidFeatures) {
+                        ShareFromItemEvent.ShareSecureLink
+                    } else {
+                        ShareFromItemEvent.UpsellSecureLink
+                    }.also(onEvent)
+                }
             )
 
             PassDivider(

@@ -18,7 +18,6 @@
 
 package proton.android.pass.autofill
 
-import android.app.assist.AssistStructure
 import android.app.assist.AssistStructure.WindowNode
 import android.content.Context
 import android.os.Build
@@ -104,7 +103,7 @@ object AutoFillHandler {
     @Suppress("LongParameterList")
     private suspend fun searchAndFill(
         context: Context,
-        windowNode: AssistStructure.WindowNode,
+        windowNode: WindowNode,
         request: FillRequest,
         autofillServiceManager: AutofillServiceManager,
         telemetryManager: TelemetryManager,
@@ -114,7 +113,8 @@ object AutoFillHandler {
             context = context,
             accountManager = accountManager,
             request = request,
-            windowNode = windowNode
+            windowNode = windowNode,
+            isIdentityEnabled = autofillServiceManager.isIdentityEnabled()
         )
         val assistInfo = when (shouldAutofill) {
             is ShouldAutofillResult.No -> {
@@ -203,7 +203,8 @@ object AutoFillHandler {
         context: Context,
         accountManager: AccountManager,
         request: FillRequest,
-        windowNode: WindowNode
+        windowNode: WindowNode,
+        isIdentityEnabled: Boolean
     ): ShouldAutofillResult {
         if (isSelfAutofill(context, windowNode)) {
             PassLogger.d(TAG, "Do not self autofill")
@@ -223,7 +224,7 @@ object AutoFillHandler {
         }
         PassLogger.d(TAG, "Fields found: ${extractionResult.fields.map { it.type }.joinToString()}")
 
-        val clusteredNodes = NodeClusterer.cluster(extractionResult.fields)
+        val clusteredNodes = NodeClusterer.cluster(extractionResult.fields, isIdentityEnabled)
         PassLogger.d(TAG, "Clusters found: ${clusteredNodes.joinToString()}")
 
         val focusedCluster = clusteredNodes.focused()

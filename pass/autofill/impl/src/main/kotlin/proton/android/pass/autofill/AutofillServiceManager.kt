@@ -50,6 +50,8 @@ import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import proton.android.pass.data.api.usecases.SuggestedCreditCardItemsResult
 import proton.android.pass.domain.Item
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 import kotlin.math.min
 
@@ -60,7 +62,8 @@ class AutofillServiceManager @Inject constructor(
     private val getSuggestedIdentityItems: GetSuggestedIdentityItems,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val needsBiometricAuth: NeedsBiometricAuth,
-    @AppIcon private val appIcon: Int
+    @AppIcon private val appIcon: Int,
+    private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
 ) {
 
     @RequiresApi(Build.VERSION_CODES.R)
@@ -91,6 +94,10 @@ class AutofillServiceManager @Inject constructor(
             )
         }
     }
+
+    suspend fun isIdentityEnabled(): Boolean = featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.IDENTITY_V1)
+        .firstOrNull()
+        ?: false
 
     @RequiresApi(Build.VERSION_CODES.R)
     private suspend fun handleSuggestions(

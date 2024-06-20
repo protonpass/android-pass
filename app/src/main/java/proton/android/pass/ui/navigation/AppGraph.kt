@@ -1624,6 +1624,11 @@ fun NavGraphBuilder.appGraph(
                     itemId = it.itemId
                 )
             )
+
+            is SharingNavigation.Upsell -> appNavigator.navigate(
+                destination = UpsellNavItem,
+                route = UpsellNavItem.createNavRoute(paidFeature = it.paidFeature)
+            )
         }
     }
 

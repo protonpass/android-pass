@@ -59,7 +59,8 @@ internal data class ShareFromItemUiState(
     val showMoveToSharedVault: Boolean,
     val showCreateVault: CreateNewVaultState,
     val event: ShareFromItemNavEvent,
-    val isSecureLinkEnabled: Boolean
+    val isSecureLinkAvailable: Boolean,
+    val canUsePaidFeatures: Boolean
 ) {
 
     internal companion object {
@@ -70,7 +71,8 @@ internal data class ShareFromItemUiState(
             showMoveToSharedVault = false,
             showCreateVault = CreateNewVaultState.Hide,
             event = ShareFromItemNavEvent.Unknown,
-            isSecureLinkEnabled = false
+            isSecureLinkAvailable = false,
+            canUsePaidFeatures = false
         )
 
     }

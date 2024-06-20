@@ -1649,6 +1649,10 @@ fun NavGraphBuilder.appGraph(
                     destination = ViewItem
                 )
 
+                SecureLinksNavDestination.Profile -> appNavigator.navigate(
+                    destination = Profile
+                )
+
                 is SecureLinksNavDestination.SecureLinkOverview -> when (destination.scope) {
                     SecureLinksOverviewNavScope.SecureLinksGeneration -> appNavigator.navigate(
                         destination = SecureLinksOverviewScreenNavItem,
@@ -1663,7 +1667,8 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 SecureLinksNavDestination.SecureLinksList -> appNavigator.navigate(
-                    destination = SecureLinksListNavItem
+                    destination = SecureLinksListNavItem,
+                    backDestination = Profile
                 )
 
                 is SecureLinksNavDestination.SecureLinksListMenu -> appNavigator.navigate(

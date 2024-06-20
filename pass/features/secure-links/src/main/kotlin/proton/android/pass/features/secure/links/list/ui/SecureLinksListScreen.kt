@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.secure.links.list.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -32,6 +33,10 @@ fun SecureLinksListScreen(
     viewModel: SecureLinksListViewModel = hiltViewModel()
 ) = with(viewModel) {
     val state by state.collectAsStateWithLifecycle()
+
+    BackHandler {
+        onNavigated(SecureLinksNavDestination.Profile)
+    }
 
     SecureLinksListContent(
         state = state,

@@ -32,6 +32,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -39,12 +40,14 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
+import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.canCreate
+import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.domain.toPermissions
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.preferences.FeatureFlag
@@ -59,7 +62,8 @@ class ShareFromItemViewModel @Inject constructor(
     getVaultWithItemCount: GetVaultWithItemCountById,
     canCreateVault: CanCreateVault,
     getUserPlan: GetUserPlan,
-    featureFlagsRepository: FeatureFlagsPreferencesRepository
+    featureFlagsRepository: FeatureFlagsPreferencesRepository,
+    observeItemById: ObserveItemById
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -96,20 +100,49 @@ class ShareFromItemViewModel @Inject constructor(
         }
     }.asLoadingResult()
 
-    internal val state: StateFlow<ShareFromItemUiState> = combine(
+    private val isSecureLinkAvailableFlow = combine(
+        observeItemById(shareId, itemId),
+        featureFlagsRepository.get<Boolean>(FeatureFlag.SECURE_LINK_V1)
+    ) { item, isSecureLinkEnabled ->
+        when (item.itemType.category) {
+            ItemCategory.Login,
+            ItemCategory.Note,
+            ItemCategory.Password,
+            ItemCategory.CreditCard,
+            ItemCategory.Identity -> true
+
+            ItemCategory.Alias,
+            ItemCategory.Unknown -> false
+        } && isSecureLinkEnabled
+    }
+
+    private val canUsePaidFeaturesFlow = getUserPlan()
+        .map { userPlan ->
+            when (userPlan.planType) {
+                is PlanType.Paid,
+                is PlanType.Trial -> true
+
+                is PlanType.Free,
+                is PlanType.Unknown -> false
+            }
+        }
+
+    internal val state: StateFlow<ShareFromItemUiState> = combineN(
         getVaultWithItemCount(shareId = shareId),
         canMoveToSharedVaultFlow,
         showCreateVaultFlow,
         navEventState,
-        featureFlagsRepository.get<Boolean>(FeatureFlag.SECURE_LINK_V1)
-    ) { vault, canMoveToSharedVault, createVault, event, isSecureLinkEnabled ->
+        isSecureLinkAvailableFlow,
+        canUsePaidFeaturesFlow
+    ) { vault, canMoveToSharedVault, createVault, event, isSecureLinkAvailable, canUsePaidFeatures ->
         ShareFromItemUiState(
             vault = vault.some(),
             itemId = itemId,
             showMoveToSharedVault = canMoveToSharedVault.getOrNull() ?: false,
             showCreateVault = createVault.getOrNull() ?: CreateNewVaultState.Hide,
             event = event,
-            isSecureLinkEnabled = isSecureLinkEnabled
+            isSecureLinkAvailable = isSecureLinkAvailable,
+            canUsePaidFeatures = canUsePaidFeatures
         )
     }.stateIn(
         scope = viewModelScope,

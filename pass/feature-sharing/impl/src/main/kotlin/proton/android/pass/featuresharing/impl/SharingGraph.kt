@@ -28,6 +28,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.NewUserInviteId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.ShareRole
+import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.featuresharing.impl.accept.AcceptInviteBottomSheet
 import proton.android.pass.featuresharing.impl.confirmed.InviteConfirmedBottomSheet
 import proton.android.pass.featuresharing.impl.invitesinfo.InvitesErrorDialog
@@ -177,6 +178,9 @@ sealed interface SharingNavigation {
     data object InviteToVaultEditAllPermissions : SharingNavigation
 
     data object InviteError : SharingNavigation
+
+    @JvmInline
+    value class Upsell(val paidFeature: PaidFeature) : SharingNavigation
 }
 
 fun NavGraphBuilder.sharingGraph(onNavigateEvent: (SharingNavigation) -> Unit) {

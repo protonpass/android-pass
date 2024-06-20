@@ -45,6 +45,9 @@ internal fun List<FieldKeywords>.match(fields: List<String>): Pair<FieldType, St
     return FieldType.Unknown to ""
 }
 
+private val ALLOWED_POSTAL_CODE_KEYWORDS = listOf("postalcode", "zip", "zipcode")
+private val ALLOWED_PHONE_KEYWORDS = listOf("phone", "tel", "telephone", "mobile", "cellphone")
+
 internal val fieldKeywordsList = listOf(
     kw(
         fieldType = FieldType.Username,
@@ -106,7 +109,7 @@ internal val fieldKeywordsList = listOf(
     ),
     kw(
         fieldType = FieldType.FullName,
-        allowedKeywords = listOf("cardholder", "cardname", "holdername", "ccname"),
+        allowedKeywords = listOf("cardholder", "cardname", "holdername", "ccname", "namefull", "fullname"),
         deniedKeywords = emptyList()
     ),
 
@@ -144,6 +147,21 @@ internal val fieldKeywordsList = listOf(
             "yy",
             "anoaa"
         ),
+        deniedKeywords = emptyList()
+    ),
+    kw(
+        fieldType = FieldType.Address,
+        allowedKeywords = listOf("addresshome", "street"),
+        deniedKeywords = ALLOWED_POSTAL_CODE_KEYWORDS + ALLOWED_PHONE_KEYWORDS + listOf("country")
+    ),
+    kw(
+        fieldType = FieldType.PostalCode,
+        allowedKeywords = ALLOWED_POSTAL_CODE_KEYWORDS,
+        deniedKeywords = emptyList()
+    ),
+    kw(
+        fieldType = FieldType.Phone,
+        allowedKeywords = ALLOWED_PHONE_KEYWORDS,
         deniedKeywords = emptyList()
     )
 )

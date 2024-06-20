@@ -31,9 +31,13 @@ interface SecureLinksLocalDataSource {
 
     suspend fun getAll(userId: UserId): List<SecureLink>
 
+    suspend fun getCount(userId: UserId): Int
+
     fun observe(userId: UserId, secureLinkId: SecureLinkId): Flow<SecureLink>
 
     fun observeAll(userId: UserId): Flow<List<SecureLink>>
+
+    fun observeCount(userId: UserId): Flow<Int>
 
     suspend fun read(userId: UserId, secureLinkId: SecureLinkId): SecureLink
 

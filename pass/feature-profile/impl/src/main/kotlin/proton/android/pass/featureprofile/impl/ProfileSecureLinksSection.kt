@@ -39,6 +39,8 @@ import me.proton.core.compose.theme.defaultWeak
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.commonui.api.applyIf
+import proton.android.pass.composecomponents.impl.container.Circle
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.icon.PassPlusIcon
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -47,16 +49,19 @@ import proton.android.pass.composecomponents.impl.R as CompR
 internal fun ProfileSecureLinksSection(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
-    shouldShowPlusIcon: Boolean
+    shouldShowPlusIcon: Boolean,
+    secureLinksCount: Int
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .roundedContainerNorm()
             .clickable { onClick() }
-            .padding(
-                horizontal = Spacing.medium,
-                vertical = 26.dp
+            .padding(horizontal = Spacing.medium)
+            .applyIf(
+                condition = shouldShowPlusIcon,
+                ifTrue = { padding(vertical = 26.dp) },
+                ifFalse = { padding(vertical = 18.dp) }
             ),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
@@ -70,11 +75,26 @@ internal fun ProfileSecureLinksSection(
         if (shouldShowPlusIcon) {
             PassPlusIcon()
         } else {
-            Icon(
-                painter = painterResource(CompR.drawable.ic_chevron_tiny_right),
-                contentDescription = null,
-                tint = PassTheme.colors.textHint
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(space = Spacing.small)
+            ) {
+                Circle(
+                    backgroundColor = PassTheme.colors.backgroundMedium
+                ) {
+                    Text(
+                        text = secureLinksCount.toString(),
+                        color = PassTheme.colors.textNorm,
+                        style = ProtonTheme.typography.body1Medium
+                    )
+                }
+
+                Icon(
+                    painter = painterResource(CompR.drawable.ic_chevron_tiny_right),
+                    contentDescription = null,
+                    tint = PassTheme.colors.textHint
+                )
+            }
         }
     }
 }
@@ -89,7 +109,8 @@ internal fun ProfileSecureLinksSectionPreview(
         Surface {
             ProfileSecureLinksSection(
                 onClick = {},
-                shouldShowPlusIcon = showPlusIcon
+                shouldShowPlusIcon = showPlusIcon,
+                secureLinksCount = 4
             )
         }
     }

@@ -57,7 +57,8 @@ internal data class ProfileUiState(
     val userBrowser: DefaultBrowser,
     val passkeySupport: ProfilePasskeySupportSection,
     val isIdentityEnabled: Boolean,
-    val isSecureLinksEnabled: Boolean
+    val isSecureLinksEnabled: Boolean,
+    val secureLinksCount: Int
 ) {
 
     internal companion object {
@@ -73,7 +74,8 @@ internal data class ProfileUiState(
             userBrowser = DefaultBrowser.Other,
             passkeySupport = ProfilePasskeySupportSection.Hide,
             isIdentityEnabled = false,
-            isSecureLinksEnabled = false
+            isSecureLinksEnabled = false,
+            secureLinksCount = 0
         )
 
     }

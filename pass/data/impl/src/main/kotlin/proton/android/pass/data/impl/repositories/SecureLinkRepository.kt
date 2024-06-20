@@ -63,6 +63,8 @@ interface SecureLinkRepository {
 
     fun observeSecureLinks(userId: UserId): Flow<List<SecureLink>>
 
+    fun observeSecureLinksCount(userId: UserId): Flow<Int>
+
 }
 
 class SecureLinkRepositoryImpl @Inject constructor(
@@ -180,6 +182,20 @@ class SecureLinkRepositoryImpl @Inject constructor(
             }
 
         emitAll(secureLinksLocalDataSource.observeAll(userId))
+    }
+
+    override fun observeSecureLinksCount(userId: UserId): Flow<Int> = flow {
+        emit(secureLinksLocalDataSource.getCount(userId))
+
+        runCatching { fetchSecureLinksFromRemote(userId) }
+            .onFailure { error ->
+                throw error
+            }
+            .onSuccess { remoteSecureLinks ->
+                secureLinksLocalDataSource.update(userId, remoteSecureLinks)
+            }
+
+        emitAll(secureLinksLocalDataSource.observeCount(userId))
     }
 
     private suspend fun fetchSecureLinksFromRemote(userId: UserId): List<SecureLink> {

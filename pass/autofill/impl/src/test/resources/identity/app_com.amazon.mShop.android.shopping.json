@@ -1,0 +1,1416 @@
+{
+  "rootContent": {
+    "id": 1813880709,
+    "className": "android.widget.FrameLayout",
+    "isImportantForAutofill": true,
+    "children": [
+      {
+        "id": 740228258,
+        "className": "android.view.ViewGroup",
+        "isImportantForAutofill": true,
+        "children": [
+          {
+            "id": 740258049,
+            "className": "android.widget.FrameLayout",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": 754676893,
+                "className": "android.widget.FrameLayout",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": 764478132,
+                    "className": "android.widget.FrameLayout",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "canary_fragment_container"
+                    ]
+                  },
+                  {
+                    "id": 754706684,
+                    "className": "android.widget.ViewSwitcher",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": 758519932,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 758549723,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 758609305,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 762392762,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 762422553,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 762482135,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 762541717,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 762571508,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 762601299,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 762631090,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 762869418,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 761856524,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 761886315,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 761945897,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 762005479,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 762094852,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 762184225,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 761439450,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 764061058,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 761528823,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 761618196,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 761767151,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 760456347,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 760486138,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 760545720,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 760664884,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 760813839,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 760843630,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 760933003,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 761052167,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 761081958,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 761171331,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      },
+                      {
+                        "id": 761320286,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          ""
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "layoutSwitcher"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "ssnap_parent_layout"
+                ]
+              },
+              {
+                "id": 764031267,
+                "className": "android.widget.FrameLayout",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": 763971685,
+                    "className": "android.widget.RelativeLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": 763941894,
+                        "className": "android.webkit.WebView",
+                        "isImportantForAutofill": true
+                      },
+                      {
+                        "id": 764507923,
+                        "className": "android.view.View",
+                        "isImportantForAutofill": true,
+                        "hintKeywordList": [
+                          "snapshot"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "mash_web_fragment"
+                    ]
+                  },
+                  {
+                    "id": 764537714,
+                    "className": "android.widget.LinearLayout",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "bottom_tool_bar"
+                    ]
+                  },
+                  {
+                    "id": 764567505,
+                    "className": "android.widget.LinearLayout",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "glow_sub_nav_bar_view"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "mshop_webView_container"
+                ]
+              },
+              {
+                "id": 764180222,
+                "className": "android.widget.FrameLayout",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": 764120640,
+                    "className": "android.widget.RelativeLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": 764090849,
+                        "className": "android.webkit.WebView",
+                        "isImportantForAutofill": true
+                      },
+                      {
+                        "id": 764597296,
+                        "className": "android.view.View",
+                        "isImportantForAutofill": true,
+                        "hintKeywordList": [
+                          "snapshot"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "mash_web_fragment"
+                    ]
+                  },
+                  {
+                    "id": 764627087,
+                    "className": "android.widget.LinearLayout",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "bottom_tool_bar"
+                    ]
+                  },
+                  {
+                    "id": 764656878,
+                    "className": "android.widget.LinearLayout",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "glow_sub_nav_bar_view"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "mshop_webView_container"
+                ]
+              },
+              {
+                "id": 767665769,
+                "className": "android.widget.FrameLayout",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": 767606187,
+                    "className": "android.widget.RelativeLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": 767576396,
+                        "className": "android.webkit.WebView",
+                        "isImportantForAutofill": true,
+                        "isFocused": true,
+                        "htmlAttributes": [
+                          {
+                            "key": "name",
+                            "value": "address-ui-address-form"
+                          }
+                        ],
+                        "children": [
+                          {
+                            "id": 830557453,
+                            "isImportantForAutofill": true,
+                            "text": "",
+                            "autofillHints": [
+                              "off"
+                            ],
+                            "htmlAttributes": [
+                              {
+                                "key": "name",
+                                "value": "address-ui-widgets-countrycode"
+                              },
+                              {
+                                "key": "type",
+                                "value": "select-one"
+                              },
+                              {
+                                "key": "label",
+                                "value": "no se puede cambiar el país, inténtalo de nuevo"
+                              },
+                              {
+                                "key": "ua-autofill-hints",
+                                "value": "address_home_country"
+                              },
+                              {
+                                "key": "id",
+                                "value": "address-ui-widgets-countrycode-dropdown-nativeid"
+                              },
+                              {
+                                "key": "crowdsourcing-autofill-hints",
+                                "value": "address_home_country"
+                              },
+                              {
+                                "key": "computed-autofill-hints",
+                                "value": "address_home_country"
+                              },
+                              {
+                                "key": "crowdsourcing-predictions-autofill-hints",
+                                "value": "address_home_country"
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "",
+                              "",
+                              "Afganistán",
+                              "Albania",
+                              "Alemania",
+                              "Andorra",
+                              "Angola",
+                              "Anguilla",
+                              "Antártida",
+                              "Antigua y Barbuda",
+                              "Antillas Neerlandesas",
+                              "Arabia Saudita",
+                              "Argelia",
+                              "Argentina",
+                              "Armenia",
+                              "Aruba",
+                              "Australia",
+                              "Austria",
+                              "Azerbaiyán",
+                              "Bahamas",
+                              "Bahréin",
+                              "Bangladesh",
+                              "Barbados",
+                              "Belarús, República de",
+                              "Bélgica",
+                              "Belice",
+                              "Benín",
+                              "Bermudas",
+                              "Bolivia",
+                              "Bonaire, San Eustaquio y Saba",
+                              "Bosnia y Herzegovina",
+                              "Botsuana",
+                              "Brasil",
+                              "Brunei Darussalam",
+                              "Bulgaria",
+                              "Burkina Faso",
+                              "Burundi",
+                              "Bután",
+                              "Cabo Verde",
+                              "Camboya",
+                              "Camerún",
+                              "Canadá",
+                              "Chad",
+                              "Chile",
+                              "China",
+                              "Chipre",
+                              "Ciudad del Vaticano",
+                              "Colombia",
+                              "Comoras",
+                              "Congo",
+                              "Congo, República Democrática del",
+                              "Corea, República de",
+                              "Costa de Marfil",
+                              "Costa Rica",
+                              "Croacia",
+                              "Curasao",
+                              "Dinamarca",
+                              "Dominica",
+                              "Ecuador",
+                              "Egipto",
+                              "El Salvador",
+                              "Emiratos Árabes Unidos",
+                              "Eritrea",
+                              "Eslovaquia",
+                              "Eslovenia",
+                              "España",
+                              "Estados Unidos",
+                              "Estonia",
+                              "Etiopía",
+                              "Federación de Rusia",
+                              "Filipinas",
+                              "Finlandia",
+                              "Fiyi",
+                              "Francia",
+                              "Gabón",
+                              "Gambia",
+                              "Georgia",
+                              "Ghana",
+                              "Gibraltar",
+                              "Granada",
+                              "Grecia",
+                              "Groenlandia",
+                              "Guadalupe",
+                              "Guam",
+                              "Guatemala",
+                              "Guayana Francesa",
+                              "Guernesey",
+                              "Guinea",
+                              "Guinea-Bissau",
+                              "Guinea Ecuatorial",
+                              "Guyana",
+                              "Haití",
+                              "Honduras",
+                              "Hong Kong",
+                              "Hungría",
+                              "India",
+                              "Indonesia",
+                              "Irak",
+                              "Irlanda",
+                              "Isla Bouvet",
+                              "Isla de Man",
+                              "Isla de Navidad",
+                              "Isla de San Martín",
+                              "Islandia",
+                              "Isla Norfolk",
+                              "Islas Caimán",
+                              "Islas Canarias",
+                              "Islas Cocos (Keeling)",
+                              "Islas Cook",
+                              "Islas de Åland",
+                              "Islas Feroe",
+                              "Islas Georgias del Sur y Sándwich del Sur",
+                              "Islas Heard y McDonald",
+                              "Islas Malvinas (Falkland)",
+                              "Islas Marianas del Norte",
+                              "Islas Marshall",
+                              "Islas Salomón",
+                              "Islas Turcas y Caicos",
+                              "Islas Ultramarinas menores de Estados Unidos",
+                              "Islas Vírgenes Británicas",
+                              "Islas Vírgenes de los Estados Unidos",
+                              "Israel",
+                              "Italia",
+                              "Jamaica",
+                              "Japón",
+                              "Jersey",
+                              "Jordania",
+                              "Kazajstán",
+                              "Kenia",
+                              "Kirguistán",
+                              "Kiribati",
+                              "Kosovo",
+                              "Kuwait",
+                              "Lesoto",
+                              "Letonia",
+                              "Líbano",
+                              "Liberia",
+                              "Libia",
+                              "Liechtenstein",
+                              "Lituania",
+                              "Luxemburgo",
+                              "Macao",
+                              "Macedonia, ex República Yugoslava de",
+                              "Madagascar",
+                              "Malasia",
+                              "Malawi",
+                              "Maldivas",
+                              "Malí",
+                              "Malta",
+                              "Marruecos",
+                              "Martinica",
+                              "Mauricio",
+                              "Mauritania",
+                              "Mayotte",
+                              "México",
+                              "Micronesia, Estados Federados de",
+                              "Moldavia, República de",
+                              "Mónaco",
+                              "Mongolia",
+                              "Montenegro",
+                              "Montserrat",
+                              "Mozambique",
+                              "Myanmar",
+                              "Namibia",
+                              "Nauru",
+                              "Nepal",
+                              "Nicaragua",
+                              "Níger",
+                              "Nigeria",
+                              "Niue",
+                              "Noruega",
+                              "Nueva Caledonia",
+                              "Nueva Zelandia",
+                              "Omán",
+                              "Países Bajos",
+                              "Pakistán",
+                              "Palaos",
+                              "Panamá",
+                              "Papúa Nueva Guinea",
+                              "Paraguay",
+                              "Perú",
+                              "Pitcairn",
+                              "Polinesia Francesa",
+                              "Polonia",
+                              "Portugal",
+                              "Puerto Rico",
+                              "Qatar",
+                              "Randa",
+                              "Reino Unido",
+                              "República Centroafricana",
+                              "República Checa",
+                              "República Democrática Popular Lao",
+                              "República Dominicana",
+                              "Reunión",
+                              "Rumania",
+                              "Sahara Occidental",
+                              "Salvar y Han Mayen",
+                              "Samoa",
+                              "Samoa Americana",
+                              "San Bartolomé",
+                              "San Cristóbal y Nieves",
+                              "San Marino",
+                              "San Pedro y Miquelón",
+                              "Santa Elena, Ascensión y Tristan de Cuña",
+                              "Santa Lucía",
+                              "Sant Maarten",
+                              "Santo Tomé y Príncipe",
+                              "San Vicente y las Granadinas",
+                              "Senegal",
+                              "Serbia, República de",
+                              "Seychelles",
+                              "Sierra Leona",
+                              "Singapur",
+                              "Somalia",
+                              "Sri Lanka",
+                              "Suazilandia",
+                              "Sudáfrica",
+                              "Suecia",
+                              "Suiza",
+                              "Surinam",
+                              "Tailandia",
+                              "Tailandia",
+                              "Taiwán",
+                              "Tanzania, República Unida de",
+                              "Territorio británico del océano Índico",
+                              "Territorios Palestinos",
+                              "Tierras australes y antárticas francesas",
+                              "Timor-leste",
+                              "Togo",
+                              "Tokelau",
+                              "Tonga",
+                              "Trinidad y Tobago",
+                              "Túnez",
+                              "Turkmenistán",
+                              "Turquía",
+                              "Tuvalu",
+                              "Ucrania",
+                              "Uganda",
+                              "Uruguay",
+                              "Uzbekistán",
+                              "Vanuatu",
+                              "Venezuela",
+                              "Vietnam",
+                              "Wallis y Futuna",
+                              "Yemen",
+                              "Yibuti",
+                              "Zambia",
+                              "Zimbabue"
+                            ]
+                          },
+                          {
+                            "id": 830558414,
+                            "isImportantForAutofill": true,
+                            "text": "",
+                            "isFocused": true,
+                            "expectedAutofill": "identity_full_name",
+                            "htmlAttributes": [
+                              {
+                                "key": "name",
+                                "value": "address-ui-widgets-enteraddressfullname"
+                              },
+                              {
+                                "key": "type",
+                                "value": "text"
+                              },
+                              {
+                                "key": "label",
+                                "value": "nombre completo (nombre y apellidos)"
+                              },
+                              {
+                                "key": "ua-autofill-hints",
+                                "value": "name_full"
+                              },
+                              {
+                                "key": "id",
+                                "value": "address-ui-widgets-enteraddressfullname"
+                              },
+                              {
+                                "key": "crowdsourcing-autofill-hints",
+                                "value": "name_full"
+                              },
+                              {
+                                "key": "computed-autofill-hints",
+                                "value": "name_full"
+                              },
+                              {
+                                "key": "crowdsourcing-predictions-autofill-hints",
+                                "value": "name_full"
+                              },
+                              {
+                                "key": "maxlength",
+                                "value": "50"
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "",
+                              ""
+                            ]
+                          },
+                          {
+                            "id": 830559375,
+                            "isImportantForAutofill": true,
+                            "text": "",
+                            "expectedAutofill": "identity_phone",
+                            "htmlAttributes": [
+                              {
+                                "key": "name",
+                                "value": "address-ui-widgets-enteraddressphonenumber"
+                              },
+                              {
+                                "key": "type",
+                                "value": "tel"
+                              },
+                              {
+                                "key": "label",
+                                "value": "número de teléfono"
+                              },
+                              {
+                                "key": "ua-autofill-hints",
+                                "value": "phone_home_city_and_number"
+                              },
+                              {
+                                "key": "id",
+                                "value": "address-ui-widgets-enteraddressphonenumber"
+                              },
+                              {
+                                "key": "crowdsourcing-autofill-hints",
+                                "value": "phone_home_city_and_number"
+                              },
+                              {
+                                "key": "computed-autofill-hints",
+                                "value": "phone_home_city_and_number"
+                              },
+                              {
+                                "key": "crowdsourcing-predictions-autofill-hints",
+                                "value": "phone_home_city_and_number"
+                              },
+                              {
+                                "key": "maxlength",
+                                "value": "20"
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "",
+                              ""
+                            ]
+                          },
+                          {
+                            "id": 830560336,
+                            "isImportantForAutofill": true,
+                            "text": "",
+                            "expectedAutofill": "identity_address",
+                            "htmlAttributes": [
+                              {
+                                "key": "name",
+                                "value": "address-ui-widgets-enteraddressline1"
+                              },
+                              {
+                                "key": "type",
+                                "value": "text"
+                              },
+                              {
+                                "key": "label",
+                                "value": "línea de dirección 1"
+                              },
+                              {
+                                "key": "ua-autofill-hints",
+                                "value": "address_home_line1"
+                              },
+                              {
+                                "key": "id",
+                                "value": "address-ui-widgets-enteraddressline1"
+                              },
+                              {
+                                "key": "crowdsourcing-autofill-hints",
+                                "value": "no_server_data"
+                              },
+                              {
+                                "key": "computed-autofill-hints",
+                                "value": "address_home_line1"
+                              },
+                              {
+                                "key": "crowdsourcing-predictions-autofill-hints",
+                                "value": "no_server_data"
+                              },
+                              {
+                                "key": "maxlength",
+                                "value": "60"
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "",
+                              "Nombre y número de la calle"
+                            ]
+                          },
+                          {
+                            "id": 830561297,
+                            "isImportantForAutofill": true,
+                            "text": "",
+                            "htmlAttributes": [
+                              {
+                                "key": "name",
+                                "value": "address-ui-widgets-enteraddressline2"
+                              },
+                              {
+                                "key": "type",
+                                "value": "text"
+                              },
+                              {
+                                "key": "label",
+                                "value": "apartamento, suite, unidad, edificio o piso"
+                              },
+                              {
+                                "key": "ua-autofill-hints",
+                                "value": "address_home_line2"
+                              },
+                              {
+                                "key": "id",
+                                "value": "address-ui-widgets-enteraddressline2"
+                              },
+                              {
+                                "key": "crowdsourcing-autofill-hints",
+                                "value": "no_server_data"
+                              },
+                              {
+                                "key": "computed-autofill-hints",
+                                "value": "address_home_line2"
+                              },
+                              {
+                                "key": "crowdsourcing-predictions-autofill-hints",
+                                "value": "no_server_data"
+                              },
+                              {
+                                "key": "maxlength",
+                                "value": "60"
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "",
+                              "Apartamento, suite, unidad, edificio o piso"
+                            ]
+                          },
+                          {
+                            "id": 830562258,
+                            "isImportantForAutofill": true,
+                            "text": "",
+                            "expectedAutofill": "identity_postal_code",
+                            "htmlAttributes": [
+                              {
+                                "key": "name",
+                                "value": "address-ui-widgets-enteraddresspostalcode"
+                              },
+                              {
+                                "key": "type",
+                                "value": "number"
+                              },
+                              {
+                                "key": "label",
+                                "value": "código postal"
+                              },
+                              {
+                                "key": "ua-autofill-hints",
+                                "value": "address_home_zip"
+                              },
+                              {
+                                "key": "id",
+                                "value": "address-ui-widgets-enteraddresspostalcode"
+                              },
+                              {
+                                "key": "crowdsourcing-autofill-hints",
+                                "value": "address_home_zip"
+                              },
+                              {
+                                "key": "computed-autofill-hints",
+                                "value": "address_home_zip"
+                              },
+                              {
+                                "key": "crowdsourcing-predictions-autofill-hints",
+                                "value": "address_home_zip"
+                              },
+                              {
+                                "key": "maxlength",
+                                "value": "20"
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "",
+                              ""
+                            ]
+                          },
+                          {
+                            "id": 830563219,
+                            "isImportantForAutofill": true,
+                            "text": "",
+                            "htmlAttributes": [
+                              {
+                                "key": "name",
+                                "value": "address-ui-widgets-enteraddresscity"
+                              },
+                              {
+                                "key": "type",
+                                "value": "text"
+                              },
+                              {
+                                "key": "label",
+                                "value": "ciudad"
+                              },
+                              {
+                                "key": "ua-autofill-hints",
+                                "value": "address_home_city"
+                              },
+                              {
+                                "key": "id",
+                                "value": "address-ui-widgets-enteraddresscity"
+                              },
+                              {
+                                "key": "crowdsourcing-autofill-hints",
+                                "value": "no_server_data"
+                              },
+                              {
+                                "key": "computed-autofill-hints",
+                                "value": "address_home_city"
+                              },
+                              {
+                                "key": "crowdsourcing-predictions-autofill-hints",
+                                "value": "no_server_data"
+                              },
+                              {
+                                "key": "maxlength",
+                                "value": "50"
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "",
+                              ""
+                            ]
+                          },
+                          {
+                            "id": 830564180,
+                            "isImportantForAutofill": true,
+                            "text": "",
+                            "htmlAttributes": [
+                              {
+                                "key": "name",
+                                "value": "address-ui-widgets-enteraddressstateorregion"
+                              },
+                              {
+                                "key": "type",
+                                "value": "text"
+                              },
+                              {
+                                "key": "label",
+                                "value": "provincia"
+                              },
+                              {
+                                "key": "ua-autofill-hints",
+                                "value": "address_home_state"
+                              },
+                              {
+                                "key": "id",
+                                "value": "address-ui-widgets-enteraddressstateorregion"
+                              },
+                              {
+                                "key": "crowdsourcing-autofill-hints",
+                                "value": "no_server_data"
+                              },
+                              {
+                                "key": "computed-autofill-hints",
+                                "value": "address_home_state"
+                              },
+                              {
+                                "key": "crowdsourcing-predictions-autofill-hints",
+                                "value": "no_server_data"
+                              },
+                              {
+                                "key": "maxlength",
+                                "value": "50"
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "",
+                              "Elegir una provincia"
+                            ]
+                          },
+                          {
+                            "id": 830565141,
+                            "isImportantForAutofill": true,
+                            "text": "",
+                            "htmlAttributes": [
+                              {
+                                "key": "name",
+                                "value": "address-ui-widgets-taxid"
+                              },
+                              {
+                                "key": "type",
+                                "value": "text"
+                              },
+                              {
+                                "key": "label",
+                                "value": "nif (solo para las islas canarias, ceuta y melilla)"
+                              },
+                              {
+                                "key": "id",
+                                "value": "address-ui-widgets-taxid"
+                              },
+                              {
+                                "key": "crowdsourcing-autofill-hints",
+                                "value": "no_server_data"
+                              },
+                              {
+                                "key": "computed-autofill-hints",
+                                "value": "unknown_type"
+                              },
+                              {
+                                "key": "crowdsourcing-predictions-autofill-hints",
+                                "value": "no_server_data"
+                              },
+                              {
+                                "key": "maxlength",
+                                "value": "20"
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "",
+                              ""
+                            ]
+                          },
+                          {
+                            "id": 830566102,
+                            "isImportantForAutofill": true,
+                            "text": "",
+                            "htmlAttributes": [
+                              {
+                                "key": "name",
+                                "value": "address-ui-widgets-use-as-my-default"
+                              },
+                              {
+                                "key": "type",
+                                "value": "checkbox"
+                              },
+                              {
+                                "key": "label",
+                                "value": "ubicación añadidaañade los detalles restantes"
+                              },
+                              {
+                                "key": "id",
+                                "value": "address-ui-widgets-use-as-my-default"
+                              },
+                              {
+                                "key": "crowdsourcing-autofill-hints",
+                                "value": "no_server_data"
+                              },
+                              {
+                                "key": "computed-autofill-hints",
+                                "value": "unknown_type"
+                              },
+                              {
+                                "key": "crowdsourcing-predictions-autofill-hints",
+                                "value": "no_server_data"
+                              }
+                            ],
+                            "hintKeywordList": [
+                              "",
+                              ""
+                            ]
+                          }
+                        ],
+                        "url": "https://www.amazon.es"
+                      },
+                      {
+                        "id": 767695560,
+                        "className": "android.view.View",
+                        "isImportantForAutofill": true,
+                        "hintKeywordList": [
+                          "snapshot"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "mash_web_fragment"
+                    ]
+                  },
+                  {
+                    "id": 767725351,
+                    "className": "android.widget.LinearLayout",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "bottom_tool_bar"
+                    ]
+                  },
+                  {
+                    "id": 767755142,
+                    "className": "android.widget.LinearLayout",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "glow_sub_nav_bar_view"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "mshop_webView_container"
+                ]
+              }
+            ],
+            "hintKeywordList": [
+              "fragment_switch_view_container"
+            ]
+          },
+          {
+            "id": 764776042,
+            "className": "android.widget.FrameLayout",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "dim_background"
+            ]
+          },
+          {
+            "id": 764805833,
+            "className": "android.widget.FrameLayout",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "non_blocking_bottom_sheet_container"
+            ]
+          },
+          {
+            "id": 764835624,
+            "className": "android.widget.LinearLayout",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "bottom_fixed_secondary_container"
+            ]
+          },
+          {
+            "id": 740407004,
+            "className": "android.widget.LinearLayout",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": 764865415,
+                "className": "android.widget.FrameLayout",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "canary_fragment_container"
+                ]
+              }
+            ],
+            "hintKeywordList": [
+              "bottom_fixed_bar_container"
+            ]
+          },
+          {
+            "id": 741151779,
+            "className": "android.widget.LinearLayout",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": 741211361,
+                "className": "android.widget.RelativeLayout",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "alexa_listening_visuals"
+                ]
+              },
+              {
+                "id": 741241152,
+                "className": "android.widget.FrameLayout",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "alexa_speaking_visuals"
+                ]
+              }
+            ],
+            "hintKeywordList": [
+              "bottom_overlay_bar_container"
+            ]
+          },
+          {
+            "id": 764895206,
+            "className": "android.view.ViewGroup",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": 764924997,
+                "className": "android.view.ViewGroup",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "action_bar_container_view"
+                ]
+              }
+            ],
+            "hintKeywordList": [
+              "action_bar_container"
+            ]
+          },
+          {
+            "id": 741270943,
+            "className": "android.widget.LinearLayout",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "subnav_container"
+            ]
+          },
+          {
+            "id": 741717808,
+            "className": "android.widget.LinearLayout",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": 764299386,
+                "className": "android.widget.RelativeLayout",
+                "isImportantForAutofill": true,
+                "children": [
+                  {
+                    "id": 764954788,
+                    "className": "android.widget.LinearLayout",
+                    "isImportantForAutofill": true,
+                    "hintKeywordList": [
+                      "top_bar_back_icon"
+                    ]
+                  },
+                  {
+                    "id": 764269595,
+                    "className": "android.widget.LinearLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": 764239804,
+                        "className": "android.widget.TextView",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          "",
+                          "top_bar_title_text_view"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "top_bar_title"
+                    ]
+                  },
+                  {
+                    "id": 764358968,
+                    "className": "android.widget.LinearLayout",
+                    "isImportantForAutofill": true,
+                    "children": [
+                      {
+                        "id": 764329177,
+                        "className": "android.widget.Button",
+                        "isImportantForAutofill": true,
+                        "text": "",
+                        "hintKeywordList": [
+                          "",
+                          "top_bar_cancel_text_button"
+                        ]
+                      }
+                    ],
+                    "hintKeywordList": [
+                      "top_bar_cancel_button"
+                    ]
+                  }
+                ],
+                "hintKeywordList": [
+                  "modal_top_bar_container"
+                ]
+              }
+            ],
+            "hintKeywordList": [
+              "top_container"
+            ]
+          },
+          {
+            "id": 759711572,
+            "className": "android.widget.FrameLayout",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "overlay_container"
+            ]
+          },
+          {
+            "id": 742462583,
+            "className": "android.view.ViewGroup",
+            "isImportantForAutofill": true,
+            "children": [
+              {
+                "id": 742492374,
+                "className": "android.widget.LinearLayout",
+                "isImportantForAutofill": true,
+                "hintKeywordList": [
+                  "bottom_sheet_layout"
+                ]
+              }
+            ],
+            "hintKeywordList": [
+              "bottom_sheet"
+            ]
+          },
+          {
+            "id": 764984579,
+            "className": "android.widget.FrameLayout",
+            "isImportantForAutofill": true,
+            "hintKeywordList": [
+              "appcx_bottom_sheet_container"
+            ]
+          }
+        ],
+        "hintKeywordList": [
+          "root_container"
+        ]
+      }
+    ]
+  },
+  "packageName": "com.amazon.mShop.android.shopping"
+}

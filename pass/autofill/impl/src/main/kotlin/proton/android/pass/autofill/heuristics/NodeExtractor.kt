@@ -455,6 +455,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
 
     @Suppress("ReturnCount")
     private fun detectFieldTypeUsingHtmlInfo(attributes: List<Pair<String, String>>): FieldType {
+        attributes.ifEmpty { return FieldType.Unknown }
         val typeAttribute = attributes.firstOrNull { it.first == "type" }
         when (typeAttribute?.second) {
             "email" -> return FieldType.Email

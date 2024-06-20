@@ -47,10 +47,17 @@ enum class ExpectedAutofill(val value: String, val assertedValue: String = value
     CC_EXPIRATION_MONTH_MM("card_expiration_month_mm", CC_EXPIRATION_MONTH),
     CC_EXPIRATION_YEAR_YY("card_expiration_year_yy", CC_EXPIRATION_YEAR.takeLast(2)),
     CC_EXPIRATION_YEAR_YYYY("card_expiration_year_yyyy", CC_EXPIRATION_YEAR),
-    CC_CVV("card_cvv");
+    CC_CVV("card_cvv"),
+
+    IDENTITY_FULL_NAME("identity_full_name"),
+    IDENTITY_ADDRESS("identity_address"),
+    IDENTITY_POSTAL_CODE("identity_postal_code"),
+    IDENTITY_PHONE("identity_phone")
+
+    ;
 
     companion object {
-        fun all(): List<String> = values().map { it.value }
+        fun all(): List<String> = entries.map { it.value }
     }
 }
 

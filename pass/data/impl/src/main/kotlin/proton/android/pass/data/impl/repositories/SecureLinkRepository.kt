@@ -166,11 +166,18 @@ class SecureLinkRepositoryImpl @Inject constructor(
         secureLinksLocalDataSource.observe(userId, secureLinkId)
 
     override fun observeSecureLinks(userId: UserId): Flow<List<SecureLink>> = flow {
-        emit(secureLinksLocalDataSource.getAll(userId))
+        val localSecureLinks = secureLinksLocalDataSource.getAll(userId)
+        emit(localSecureLinks)
 
-        fetchSecureLinksFromRemote(userId).also { remoteSecureLinks ->
-            secureLinksLocalDataSource.update(userId, remoteSecureLinks)
-        }
+        runCatching { fetchSecureLinksFromRemote(userId) }
+            .onFailure { error ->
+                if (localSecureLinks.isEmpty()) {
+                    throw error
+                }
+            }
+            .onSuccess { remoteSecureLinks ->
+                secureLinksLocalDataSource.update(userId, remoteSecureLinks)
+            }
 
         emitAll(secureLinksLocalDataSource.observeAll(userId))
     }
@@ -259,4 +266,5 @@ class SecureLinkRepositoryImpl @Inject constructor(
         private const val SECURE_LINK_DOES_NOT_EXITS_ERROR_CODE = 2001
 
     }
+
 }

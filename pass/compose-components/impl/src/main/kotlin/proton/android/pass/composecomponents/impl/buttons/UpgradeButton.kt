@@ -34,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.R
@@ -41,33 +42,38 @@ import proton.android.pass.composecomponents.impl.R
 @Composable
 fun UpgradeButton(
     modifier: Modifier = Modifier,
-    color: Color = PassTheme.colors.interactionNormMajor1,
+    color: Color = PassTheme.colors.interactionNormMinor2,
     onUpgradeClick: () -> Unit
 ) {
     CircleButton(
         modifier = modifier,
-        contentPadding = PaddingValues(16.dp, 10.dp),
+        contentPadding = PaddingValues(
+            horizontal = Spacing.medium,
+            vertical = 10.dp
+        ),
         color = color,
         onClick = onUpgradeClick
     ) {
+        Icon(
+            modifier = Modifier.size(size = Spacing.medium),
+            painter = painterResource(R.drawable.ic_brand_pass),
+            contentDescription = null,
+            tint = PassTheme.colors.interactionNormMajor2
+        )
+
+        Spacer(modifier = Modifier.width(width = Spacing.small))
+
         Text(
             text = stringResource(R.string.upgrade),
             style = PassTheme.typography.body3Norm(),
-            color = PassTheme.colors.textInvert
-        )
-        Spacer(modifier = Modifier.width(8.dp))
-        Icon(
-            modifier = Modifier.size(16.dp),
-            painter = painterResource(me.proton.core.presentation.compose.R.drawable.ic_proton_arrow_out_square),
-            contentDescription = null,
-            tint = PassTheme.colors.textInvert
+            color = PassTheme.colors.interactionNormMajor2
         )
     }
 }
 
 @Preview
 @Composable
-fun UpgradeButtonPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun UpgradeButtonPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             UpgradeButton {}

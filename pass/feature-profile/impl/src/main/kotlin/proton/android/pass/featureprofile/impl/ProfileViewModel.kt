@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
@@ -49,6 +50,7 @@ import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveMFACount
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
+import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
 import proton.android.pass.domain.PlanType
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.AppVersionCopied
 import proton.android.pass.log.api.PassLogger
@@ -74,7 +76,8 @@ class ProfileViewModel @Inject constructor(
     observeMFACount: ObserveMFACount,
     observeUpgradeInfo: ObserveUpgradeInfo,
     getDefaultBrowser: GetDefaultBrowser,
-    observeOrganizationSettings: ObserveOrganizationSettings
+    observeOrganizationSettings: ObserveOrganizationSettings,
+    observeSecureLinksCount: ObserveSecureLinksCount
 ) : ViewModel() {
 
     private val userAppLockSectionStateFlow: Flow<AppLockSectionState> = combine(
@@ -160,6 +163,13 @@ class ProfileViewModel @Inject constructor(
             emit(ProfilePasskeySupportSection.Hide)
         }.distinctUntilChanged()
 
+    private val secureLinksCountFlow = observeSecureLinksCount()
+        .catch { error ->
+            PassLogger.w(TAG, "Error retrieving secure links count")
+            PassLogger.w(TAG, error)
+        }
+        .distinctUntilChanged()
+
     internal val state: StateFlow<ProfileUiState> = combineN(
         appLockSectionStateFlow,
         autofillStatusFlow,
@@ -169,9 +179,10 @@ class ProfileViewModel @Inject constructor(
         oneShot { getDefaultBrowser() }.asLoadingResult(),
         passkeySupportFlow,
         featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.IDENTITY_V1),
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.SECURE_LINK_V1)
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.SECURE_LINK_V1),
+        secureLinksCountFlow
     ) { appLockSectionState, autofillStatus, itemSummaryUiState, upgradeInfo, event, browser,
-        passkey, isIdentityEnabled, isSecureLinksEnabled ->
+        passkey, isIdentityEnabled, isSecureLinksEnabled, secureLinksCount ->
         val (accountType, showUpgradeButton) = when (upgradeInfo) {
             LoadingResult.Loading -> PlanInfo.Hide to false
             is LoadingResult.Error -> {
@@ -207,7 +218,8 @@ class ProfileViewModel @Inject constructor(
             userBrowser = defaultBrowser,
             passkeySupport = passkey,
             isIdentityEnabled = isIdentityEnabled,
-            isSecureLinksEnabled = isSecureLinksEnabled
+            isSecureLinksEnabled = isSecureLinksEnabled,
+            secureLinksCount = secureLinksCount
         )
     }.stateIn(
         scope = viewModelScope,

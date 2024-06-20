@@ -129,6 +129,7 @@ internal fun ProfileContent(
                 if (state.isSecureLinksEnabled) {
                     ProfileSecureLinksSection(
                         shouldShowPlusIcon = state.showUpgradeButton,
+                        secureLinksCount = state.secureLinksCount,
                         onClick = { onEvent(ProfileUiEvent.OnSecureLinksClicked) }
                     )
                 }

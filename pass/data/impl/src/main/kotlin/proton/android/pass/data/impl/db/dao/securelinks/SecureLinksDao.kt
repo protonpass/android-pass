@@ -45,4 +45,12 @@ abstract class SecureLinksDao : BaseDao<SecureLinkEntity>() {
     )
     abstract fun observeSecureLink(userId: String, linkId: String): Flow<SecureLinkEntity>
 
+    @Query(
+        """
+            SELECT COUNT(${SecureLinkEntity.Columns.LINK_ID}) FROM ${SecureLinkEntity.TABLE_NAME}
+            WHERE ${SecureLinkEntity.Columns.USER_ID} = :userId
+        """
+    )
+    abstract fun observeSecureLinksCount(userId: String): Flow<Int>
+
 }

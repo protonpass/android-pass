@@ -24,6 +24,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.featuresharing.impl.SharingNavigation
 
 @Composable
@@ -76,6 +77,10 @@ fun ShareFromItemBottomSheet(
                     ShareFromItemEvent.Upgrade -> {
                         onNavigateEvent(SharingNavigation.Upgrade)
                     }
+
+                    ShareFromItemEvent.UpsellSecureLink -> SharingNavigation.Upsell(
+                        paidFeature = PaidFeature.SecureLinks
+                    ).also(onNavigateEvent)
                 }
             }
         }

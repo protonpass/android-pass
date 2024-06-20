@@ -188,21 +188,26 @@ object NodeClusterer {
         clusters: MutableList<NodeCluster>,
         addedNodes: MutableSet<AssistField>
     ) {
-        val fullName = nodes.getNodeOfType(FieldType.FullName, addedNodes)
-        val address = nodes.getNodeOfType(FieldType.Address, addedNodes)
-        val postalCode = nodes.getNodeOfType(FieldType.PostalCode, addedNodes)
-        val phoneNumber = nodes.getNodeOfType(FieldType.Phone, addedNodes)
+        val fullNameFields = nodes.getNodesForType(FieldType.FullName, addedNodes)
+        fullNameFields.ifEmpty { return }
+        val addressFields = nodes.getNodesForType(FieldType.Address, addedNodes)
+        val postalCodeFields = nodes.getNodesForType(FieldType.PostalCode, addedNodes)
+        val phoneNumberFields = nodes.getNodesForType(FieldType.Phone, addedNodes)
 
-        if (fullName != null) {
+        if (addressFields.isNotEmpty() || postalCodeFields.isNotEmpty() || phoneNumberFields.isNotEmpty()) {
+
+            val nearestAddressField = HeuristicsUtils.findNearestNodeByParentId(
+                currentField = fullNameFields.first(),
+                fields = addressFields
+            )
             clusters.add(
                 NodeCluster.Identity(
-                    fullName = fullName,
-                    address = address,
-                    postalCode = postalCode,
-                    phoneNumber = phoneNumber
+                    fullName = fullNameFields.first(),
+                    address = nearestAddressField,
+                    postalCode = postalCodeFields.firstOrNull(),
+                    phoneNumber = phoneNumberFields.firstOrNull()
                 )
             )
-            addedNodes.add(fullName)
         }
     }
 

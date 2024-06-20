@@ -32,7 +32,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -49,7 +48,7 @@ fun UpgradeButton(
         modifier = modifier,
         contentPadding = PaddingValues(
             horizontal = Spacing.medium,
-            vertical = 10.dp
+            vertical = Spacing.mediumSmall
         ),
         color = color,
         onClick = onUpgradeClick

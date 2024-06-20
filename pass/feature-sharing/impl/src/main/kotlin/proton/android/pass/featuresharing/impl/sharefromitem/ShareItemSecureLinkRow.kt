@@ -29,6 +29,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -36,17 +37,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
+import proton.android.pass.composecomponents.impl.icon.PassPlusIcon
 import proton.android.pass.featuresharing.impl.R
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-internal fun ShareItemSecureLinkRow(modifier: Modifier = Modifier, onClick: () -> Unit) {
+internal fun ShareItemSecureLinkRow(
+    modifier: Modifier = Modifier,
+    shouldShowPlusIcon: Boolean,
+    onClick: () -> Unit
+) {
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -73,6 +82,7 @@ internal fun ShareItemSecureLinkRow(modifier: Modifier = Modifier, onClick: () -
         }
 
         Column(
+            modifier = Modifier.weight(1f, fill = true),
             verticalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
         ) {
             Text(
@@ -85,6 +95,26 @@ internal fun ShareItemSecureLinkRow(modifier: Modifier = Modifier, onClick: () -
                 text = stringResource(id = R.string.share_with_secure_link_description),
                 style = PassTheme.typography.body3Weak(),
                 color = PassTheme.colors.textWeak
+            )
+        }
+
+        if (shouldShowPlusIcon) {
+            PassPlusIcon()
+        }
+    }
+}
+
+@[Preview Composable]
+internal fun ShareItemSecureLinkRowPreview(
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+) {
+    val (isDark, shouldShowPlusIcon) = input
+
+    PassTheme(isDark = isDark) {
+        Surface {
+            ShareItemSecureLinkRow(
+                shouldShowPlusIcon = shouldShowPlusIcon,
+                onClick = {}
             )
         }
     }

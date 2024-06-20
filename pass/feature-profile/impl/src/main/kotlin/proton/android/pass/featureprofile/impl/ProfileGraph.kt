@@ -24,6 +24,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
+import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.featureprofile.impl.applocktime.AppLockTimeBottomsheet
 import proton.android.pass.featureprofile.impl.applocktype.AppLockTypeBottomsheet
 import proton.android.pass.featureprofile.impl.pinconfig.PinConfigScreen
@@ -89,6 +90,9 @@ sealed interface ProfileNavigation {
     data object Upgrade : ProfileNavigation
 
     data object SecureLinks : ProfileNavigation
+
+    @JvmInline
+    value class UpsellSecureLinks(val paidFeature: PaidFeature) : ProfileNavigation
 
 }
 

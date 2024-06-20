@@ -610,6 +610,11 @@ fun NavGraphBuilder.appGraph(
                 ProfileNavigation.SecureLinks -> appNavigator.navigate(
                     destination = SecureLinksListNavItem
                 )
+
+                is ProfileNavigation.UpsellSecureLinks -> appNavigator.navigate(
+                    destination = UpsellNavItem,
+                    route = UpsellNavItem.createNavRoute(paidFeature = it.paidFeature)
+                )
             }
         }
     )

@@ -29,6 +29,8 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.ApiException
+import me.proton.core.network.domain.ApiResult
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -143,7 +145,20 @@ class SecureLinkRepositoryImpl @Inject constructor(
     }
 
     override suspend fun deleteSecureLink(userId: UserId, secureLinkId: SecureLinkId) {
-        remoteSecureLinkDataSource.deleteSecureLink(userId, secureLinkId)
+        runCatching { remoteSecureLinkDataSource.deleteSecureLink(userId, secureLinkId) }
+            .onFailure { exception ->
+                if (exception is ApiException) {
+                    val error = exception.error
+                    if (
+                        !(error is ApiResult.Error.Http && error.proton?.code == SECURE_LINK_DOES_NOT_EXITS_ERROR_CODE)
+                    ) {
+                        throw exception
+                    }
+                } else {
+                    throw exception
+                }
+            }
+
         secureLinksLocalDataSource.delete(userId, secureLinkId)
     }
 
@@ -237,5 +252,11 @@ class SecureLinkRepositoryImpl @Inject constructor(
                 response.linkKeyShareKeyRotation
             )
         }
+    }
+
+    private companion object {
+
+        private const val SECURE_LINK_DOES_NOT_EXITS_ERROR_CODE = 2001
+
     }
 }

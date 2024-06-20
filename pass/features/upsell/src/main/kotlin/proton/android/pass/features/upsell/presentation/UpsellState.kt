@@ -34,6 +34,7 @@ internal data class UpsellState(private val paidFeature: PaidFeature) {
     internal val canUpgrade: Boolean = when (paidFeature) {
         PaidFeature.SentinelEssential -> false
         PaidFeature.DarkWebMonitoring,
+        PaidFeature.SecureLinks,
         PaidFeature.SentinelFree,
         PaidFeature.ViewMissing2fa -> true
     }
@@ -43,6 +44,7 @@ internal data class UpsellState(private val paidFeature: PaidFeature) {
         PaidFeature.SentinelEssential,
         PaidFeature.DarkWebMonitoring,
         PaidFeature.SentinelFree,
+        PaidFeature.SecureLinks,
         PaidFeature.ViewMissing2fa -> R.drawable.logo_feature_pass_plus
     }
 
@@ -51,12 +53,14 @@ internal data class UpsellState(private val paidFeature: PaidFeature) {
         PaidFeature.SentinelEssential,
         PaidFeature.DarkWebMonitoring,
         PaidFeature.SentinelFree,
+        PaidFeature.SecureLinks,
         PaidFeature.ViewMissing2fa -> R.string.upsell_monitor_title
     }
 
     @StringRes
     internal val subtitle: Int = when (paidFeature) {
         PaidFeature.DarkWebMonitoring -> R.string.upsell_dark_web_monitoring_subtitle
+        PaidFeature.SecureLinks,
         PaidFeature.SentinelEssential,
         PaidFeature.SentinelFree -> R.string.upsell_sentinel_subtitle
 
@@ -68,6 +72,7 @@ internal data class UpsellState(private val paidFeature: PaidFeature) {
         PaidFeature.SentinelEssential -> R.string.upsell_button_upgrade_essentials
         PaidFeature.DarkWebMonitoring,
         PaidFeature.SentinelFree,
+        PaidFeature.SecureLinks,
         PaidFeature.ViewMissing2fa -> R.string.upsell_button_upgrade
     }
 
@@ -86,6 +91,15 @@ internal data class UpsellState(private val paidFeature: PaidFeature) {
             CoreR.drawable.ic_proton_lock to R.string.upsell_paid_feature_authenticator,
             CoreR.drawable.ic_proton_alias to R.string.upsell_paid_feature_unlimited_aliases,
             CoreR.drawable.ic_proton_users_plus to R.string.upsell_paid_feature_vault_sharing
+        )
+
+        PaidFeature.SecureLinks -> persistentListOf(
+            CompR.drawable.ic_shield_union to R.string.upsell_paid_feature_dark_web_monitoring,
+            CoreR.drawable.ic_proton_user to R.string.upsell_paid_feature_sentinel,
+            CoreR.drawable.ic_proton_lock to R.string.upsell_paid_feature_authenticator,
+            CoreR.drawable.ic_proton_alias to R.string.upsell_paid_feature_unlimited_aliases,
+            CoreR.drawable.ic_proton_users_plus to R.string.upsell_paid_feature_vault_sharing,
+            CoreR.drawable.ic_proton_link to R.string.upsell_paid_feature_secure_links
         )
     }
 }

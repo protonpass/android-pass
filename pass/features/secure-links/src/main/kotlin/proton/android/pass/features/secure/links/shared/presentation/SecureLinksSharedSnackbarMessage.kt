@@ -33,6 +33,18 @@ internal enum class SecureLinksSharedSnackbarMessage(
         id = R.string.secure_links_shared_snackbar_message_link_copied,
         type = SnackbarType.NORM,
         isClipboard = true
+    ),
+
+    LinkDeletionCanceled(
+        id = R.string.secure_links_shared_snackbar_message_link_deletion_canceled,
+        type = SnackbarType.WARNING,
+        isClipboard = false
+    ),
+
+    LinkDeletionError(
+        id = R.string.secure_links_shared_snackbar_message_link_deletion_error,
+        type = SnackbarType.ERROR,
+        isClipboard = false
     )
 
 }

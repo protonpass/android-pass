@@ -42,8 +42,8 @@ fun SecureLinksOverviewScreen(
                 uiEvent = uiEvent,
                 secureLinkUrl = state.secureLinkUrl,
                 onNavigated = onNavigated,
-                onLinkCopied = ::onLinkCopied,
-                onLinkDeleted = ::onLinkDeleted,
+                onLinkCopied = ::onCopyLink,
+                onLinkDeleted = ::onDeletedLink,
                 context = context
             )
         }

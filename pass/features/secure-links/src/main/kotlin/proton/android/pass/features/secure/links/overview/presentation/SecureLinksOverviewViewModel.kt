@@ -52,6 +52,7 @@ import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import javax.inject.Inject
+import kotlin.coroutines.cancellation.CancellationException
 
 @HiltViewModel
 class SecureLinksOverviewViewModel @Inject constructor(
@@ -115,7 +116,7 @@ class SecureLinksOverviewViewModel @Inject constructor(
         eventFlow.compareAndSet(event, SecureLinksOverviewEvent.Idle)
     }
 
-    internal fun onLinkCopied() {
+    internal fun onCopyLink() {
         clipboardManager.copyToClipboard(text = state.value.secureLinkUrl, isSecure = false)
 
         viewModelScope.launch {
@@ -123,15 +124,22 @@ class SecureLinksOverviewViewModel @Inject constructor(
         }
     }
 
-    internal fun onLinkDeleted() {
+    internal fun onDeletedLink() {
         viewModelScope.launch {
             runCatching { deleteSecureLink(secureLinkId) }
                 .onError { error ->
                     PassLogger.w(TAG, "There was an error deleting the secure link")
                     PassLogger.w(TAG, error)
+                    if (error is CancellationException) {
+                        SecureLinksSharedSnackbarMessage.LinkDeletionCanceled
+                    } else {
+                        SecureLinksSharedSnackbarMessage.LinkDeletionError
+                    }.also { snackbarMessage -> snackbarDispatcher(snackbarMessage) }
+
+                    eventFlow.update { SecureLinksOverviewEvent.OnDeleteLinkError }
                 }
                 .onSuccess {
-                    eventFlow.update { SecureLinksOverviewEvent.OnSecureLinkDeleted }
+                    eventFlow.update { SecureLinksOverviewEvent.OnLinkDeleted }
                 }
         }
     }

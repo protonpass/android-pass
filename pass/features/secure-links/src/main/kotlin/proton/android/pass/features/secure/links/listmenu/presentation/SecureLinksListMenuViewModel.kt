@@ -39,11 +39,12 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.securelink.DeleteSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLink
 import proton.android.pass.domain.securelinks.SecureLinkId
-import proton.android.pass.features.secure.links.shared.presentation.SecureLinksSharedSnackbarMessage
 import proton.android.pass.features.secure.links.shared.navigation.SecureLinksLinkIdNavArgId
+import proton.android.pass.features.secure.links.shared.presentation.SecureLinksSharedSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
+import kotlin.coroutines.cancellation.CancellationException
 
 @HiltViewModel
 class SecureLinksListMenuViewModel @Inject constructor(
@@ -98,9 +99,16 @@ class SecureLinksListMenuViewModel @Inject constructor(
                 .onError { error ->
                     PassLogger.w(TAG, "There was an error deleting the secure link")
                     PassLogger.w(TAG, error)
+                    if (error is CancellationException) {
+                        SecureLinksSharedSnackbarMessage.LinkDeletionCanceled
+                    } else {
+                        SecureLinksSharedSnackbarMessage.LinkDeletionError
+                    }.also { snackbarMessage -> snackbarDispatcher(snackbarMessage) }
+
+                    eventFlow.update { SecureLinksListMenuEvent.OnDeleteLinkError }
                 }
                 .onSuccess {
-                    eventFlow.update { SecureLinksListMenuEvent.OnLinkRemoved }
+                    eventFlow.update { SecureLinksListMenuEvent.OnLinkDeleted }
                 }
         }
     }

@@ -19,24 +19,96 @@
 package proton.android.pass.autofill
 
 import android.util.Log
+import me.proton.core.util.kotlin.CoreLogger
+import me.proton.core.util.kotlin.Logger
 import org.junit.Before
-import timber.log.Timber
 
 open class BaseAutofillTest(val priority: Int = Log.DEBUG) {
-    private class TestTree(val priority: Int) : Timber.Tree() {
-        override fun log(
-            priority: Int,
-            tag: String?,
-            message: String,
-            t: Throwable?
-        ) {
-            if (priority < this.priority) return
-            println("$tag: $message")
-        }
-    }
 
     @Before
     fun setup() {
-        Timber.plant(TestTree(priority))
+        val logger = object : Logger {
+            override fun d(tag: String, message: String) {
+                if (priority < Log.DEBUG) return
+                println("D: $tag: $message")
+            }
+
+            override fun d(
+                tag: String,
+                e: Throwable,
+                message: String
+            ) {
+                if (priority < Log.DEBUG) return
+                println("D: $tag: $message : $e")
+            }
+
+            override fun e(tag: String, message: String) {
+                if (priority < Log.ERROR) return
+                println("E: $tag: $message")
+            }
+
+            override fun e(tag: String, e: Throwable) {
+                if (priority < Log.ERROR) return
+                println("E: $tag: $e")
+            }
+
+            override fun e(
+                tag: String,
+                e: Throwable,
+                message: String
+            ) {
+                if (priority < Log.ERROR) return
+                println("E: $tag: $message : $e")
+            }
+
+            override fun i(tag: String, message: String) {
+                if (priority < Log.INFO) return
+                println("I: $tag: $message")
+            }
+
+            override fun i(
+                tag: String,
+                e: Throwable,
+                message: String
+            ) {
+                if (priority < Log.INFO) return
+                println("I: $tag: $message : $e")
+            }
+
+            override fun v(tag: String, message: String) {
+                if (priority < Log.VERBOSE) return
+                println("V: $tag: $message")
+            }
+
+            override fun v(
+                tag: String,
+                e: Throwable,
+                message: String
+            ) {
+                if (priority < Log.VERBOSE) return
+                println("V: $tag: $message : $e")
+            }
+
+            override fun w(tag: String, message: String) {
+                if (priority < Log.WARN) return
+                println("W: $tag: $message")
+            }
+
+            override fun w(tag: String, e: Throwable) {
+                if (priority < Log.WARN) return
+                println("W: $tag: $e")
+            }
+
+            override fun w(
+                tag: String,
+                e: Throwable,
+                message: String
+            ) {
+                if (priority < Log.WARN) return
+                println("W: $tag: $message : $e")
+            }
+        }
+
+        CoreLogger.set(logger)
     }
 }

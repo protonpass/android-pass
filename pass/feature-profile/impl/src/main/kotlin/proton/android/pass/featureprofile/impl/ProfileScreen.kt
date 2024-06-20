@@ -28,6 +28,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.AppUrls.PASS_STORE
 import proton.android.pass.commonui.api.BrowserUtils.openWebsite
+import proton.android.pass.domain.features.PaidFeature
 
 @Suppress("CyclomaticComplexMethod", "ComplexMethod")
 @Composable
@@ -89,7 +90,7 @@ fun ProfileScreen(
                 ProfileUiEvent.OnSecurityCenterClick -> onNavigateEvent(ProfileNavigation.SecurityCenter)
                 ProfileUiEvent.OnSecureLinksClicked -> {
                     if (state.showUpgradeButton) {
-                        ProfileNavigation.Upgrade
+                        ProfileNavigation.UpsellSecureLinks(PaidFeature.SecureLinks)
                     } else {
                         ProfileNavigation.SecureLinks
                     }.also(onNavigateEvent)

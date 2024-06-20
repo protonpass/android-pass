@@ -47,9 +47,7 @@ internal fun SecureLinksListMenuContent(
 }
 
 @[Preview Composable]
-internal fun SecureLinksListBottomSheetContentPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+internal fun SecureLinksListBottomSheetContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             SecureLinksListMenuContent(

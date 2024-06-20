@@ -32,6 +32,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.securelink.ObserveUnexpiredSecureLinks
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import javax.inject.Inject
@@ -41,7 +42,8 @@ class SecureLinksListViewModel @Inject constructor(
     observeUnexpiredSecureLinks: ObserveUnexpiredSecureLinks,
     getItemById: GetItemById,
     encryptionContextProvider: EncryptionContextProvider,
-    userPreferencesRepository: UserPreferencesRepository
+    userPreferencesRepository: UserPreferencesRepository,
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     private val secureLinksModelsFlow = observeUnexpiredSecureLinks().map { secureLinks ->
@@ -62,6 +64,7 @@ class SecureLinksListViewModel @Inject constructor(
     }.catch { error ->
         PassLogger.w(TAG, "There was an error while observing secure links")
         PassLogger.w(TAG, error)
+        snackbarDispatcher(SecureLinksListSnackbarMessage.LinksFetchingError)
     }
 
     internal val state: StateFlow<SecureLinksListState> = combine(

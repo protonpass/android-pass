@@ -166,6 +166,7 @@ import proton.android.pass.data.api.usecases.securelink.DeleteSecureLink
 import proton.android.pass.data.api.usecases.securelink.GenerateSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinks
+import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
 import proton.android.pass.data.api.usecases.securelink.ObserveUnexpiredSecureLinks
 import proton.android.pass.data.api.usecases.sync.ForceSyncItems
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
@@ -320,6 +321,7 @@ import proton.android.pass.data.impl.usecases.searchentry.ObserveSearchEntryImpl
 import proton.android.pass.data.impl.usecases.securelink.DeleteSecureLinkImpl
 import proton.android.pass.data.impl.usecases.securelink.GenerateSecureLinkImpl
 import proton.android.pass.data.impl.usecases.securelink.ObserveSecureLinkImpl
+import proton.android.pass.data.impl.usecases.securelink.ObserveSecureLinksCountImpl
 import proton.android.pass.data.impl.usecases.securelink.ObserveSecureLinksImpl
 import proton.android.pass.data.impl.usecases.securelink.ObserveUnexpiredSecureLinksImpl
 import proton.android.pass.data.impl.usecases.sync.ForceSyncItemsImpl
@@ -806,5 +808,8 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindDeleteSecureLink(impl: DeleteSecureLinkImpl): DeleteSecureLink
+
+    @[Binds Singleton]
+    abstract fun bindObserveSecureLinksCount(impl: ObserveSecureLinksCountImpl): ObserveSecureLinksCount
 
 }

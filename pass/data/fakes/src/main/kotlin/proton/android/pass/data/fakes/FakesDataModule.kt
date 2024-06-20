@@ -160,6 +160,7 @@ import proton.android.pass.data.api.usecases.securelink.DeleteSecureLink
 import proton.android.pass.data.api.usecases.securelink.GenerateSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinks
+import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
 import proton.android.pass.data.api.usecases.securelink.ObserveUnexpiredSecureLinks
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
@@ -302,6 +303,7 @@ import proton.android.pass.data.fakes.usecases.securelink.FakeDeleteSecureLink
 import proton.android.pass.data.fakes.usecases.securelink.FakeGenerateSecureLink
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLink
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLinks
+import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLinksCount
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveUnexpiredSecureLinks
 import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
 import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
@@ -755,5 +757,8 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindDeleteSecureLink(impl: FakeDeleteSecureLink): DeleteSecureLink
+
+    @Binds
+    abstract fun bindObserveSecureLinksCount(impl: FakeObserveSecureLinksCount): ObserveSecureLinksCount
 
 }

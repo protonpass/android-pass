@@ -575,7 +575,7 @@ fun NavGraphBuilder.appGraph(
             when (it) {
                 ProfileNavigation.Account -> appNavigator.navigate(Account)
                 ProfileNavigation.Settings -> appNavigator.navigate(Settings)
-                ProfileNavigation.List -> appNavigator.navigate(Home)
+                ProfileNavigation.List -> appNavigator.popUpTo(Home)
                 ProfileNavigation.CreateItem -> appNavigator.navigate(CreateItemBottomsheet)
                 ProfileNavigation.Feedback -> appNavigator.navigate(FeedbackBottomsheet)
                 ProfileNavigation.Report -> dismissBottomSheet {

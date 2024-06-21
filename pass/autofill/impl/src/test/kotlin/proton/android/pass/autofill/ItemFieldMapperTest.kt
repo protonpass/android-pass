@@ -133,6 +133,7 @@ class ItemFieldMapperTest {
     private fun field(id: AutofillFieldId, type: FieldType) = AssistField(
         id = id,
         type = type,
+        detectionType = null,
         value = null,
         text = null,
         isFocused = false,

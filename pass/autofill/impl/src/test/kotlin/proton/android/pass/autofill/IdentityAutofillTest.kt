@@ -33,6 +33,11 @@ class IdentityAutofillTest : BaseAutofillTest() {
         runIdentityAutofillTest("identity/chrome_aliexpress.json")
     }
 
+    @Test
+    fun `can autofill ebay app`() {
+        runIdentityAutofillTest("identity/app_com.ebay.mobile.json")
+    }
+
     private fun runIdentityAutofillTest(file: String) {
         runAutofillTest(
             file = file,

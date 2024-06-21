@@ -28,6 +28,7 @@ import proton.android.pass.autofill.heuristics.IdentifiableNode
 data class AssistField(
     val id: AutofillFieldId,
     val type: FieldType?,
+    val detectionType: DetectionType?,
     val value: AutofillValue?,
     val text: String?,
     val isFocused: Boolean,
@@ -40,3 +41,4 @@ data class AssistField(
     @IgnoredOnParcel
     override val parentPath = nodePath
 }
+

@@ -23,6 +23,7 @@ import kotlinx.parcelize.Parcelize
 import proton.android.pass.autofill.entities.AssistField
 import proton.android.pass.autofill.entities.AutofillFieldId
 import proton.android.pass.autofill.entities.FieldType
+import proton.android.pass.log.api.PassLogger
 
 @Parcelize
 sealed interface NodeCluster : Parcelable {
@@ -172,7 +173,9 @@ interface IdentifiableNode {
 
 object NodeClusterer {
 
-    fun cluster(nodes: List<AssistField>, isIdentityEnabled: Boolean): List<NodeCluster> {
+    private const val TAG = "NodeClusterer"
+
+    fun cluster(nodes: List<AssistField>, isIdentityEnabled: Boolean = false): List<NodeCluster> {
         val clusters = mutableListOf<NodeCluster>()
         val addedNodes = mutableSetOf<AssistField>()
 
@@ -191,23 +194,34 @@ object NodeClusterer {
         addedNodes: MutableSet<AssistField>
     ) {
         val fullNameFields = nodes.getNodesForType(FieldType.FullName, addedNodes)
-        fullNameFields.ifEmpty { return }
+        fullNameFields.ifEmpty {
+            PassLogger.d(TAG, "No full name found")
+            return
+        }
+        val firstFullName = fullNameFields.first()
         val addressFields = nodes.getNodesForType(FieldType.Address, addedNodes)
         val postalCodeFields = nodes.getNodesForType(FieldType.PostalCode, addedNodes)
         val phoneNumberFields = nodes.getNodesForType(FieldType.Phone, addedNodes)
 
         if (addressFields.isNotEmpty() || postalCodeFields.isNotEmpty() || phoneNumberFields.isNotEmpty()) {
-
             val nearestAddressField = HeuristicsUtils.findNearestNodeByParentId(
-                currentField = fullNameFields.first(),
+                currentField = firstFullName,
                 fields = addressFields
+            )
+            val nearestPostalCodeField = HeuristicsUtils.findNearestNodeByParentId(
+                currentField = firstFullName,
+                fields = postalCodeFields
+            )
+            val nearestPhoneNumberField = HeuristicsUtils.findNearestNodeByParentId(
+                currentField = firstFullName,
+                fields = phoneNumberFields
             )
             clusters.add(
                 NodeCluster.Identity(
-                    fullName = fullNameFields.first(),
+                    fullName = firstFullName,
                     address = nearestAddressField,
-                    postalCode = postalCodeFields.firstOrNull(),
-                    phoneNumber = phoneNumberFields.firstOrNull()
+                    postalCode = nearestPostalCodeField,
+                    phoneNumber = nearestPhoneNumberField
                 )
             )
         }
@@ -343,9 +357,15 @@ object NodeClusterer {
         nodes: List<AssistField>,
         addedNodes: MutableSet<AssistField>
     ): NodeCluster.CreditCard.CardHolder? {
-        val cardHolderNode = nodes.getNodeOfType(FieldType.FullName, addedNodes)
         val cardHolderFirstNameNode = nodes.getNodeOfType(FieldType.CardholderFirstName, addedNodes)
         val cardHolderLastNameNode = nodes.getNodeOfType(FieldType.CardholderLastName, addedNodes)
+
+        val anyCardNode = nodes.find { it.type?.isCreditCardField() ?: false } ?: return null
+        val cardHolderNodes = nodes.getNodesForType(FieldType.FullName, addedNodes)
+        val cardHolderName = HeuristicsUtils.findNearestNodeByParentId(
+            currentField = anyCardNode,
+            fields = cardHolderNodes
+        )
 
         return when {
             cardHolderLastNameNode != null -> when {
@@ -354,8 +374,8 @@ object NodeClusterer {
                     lastName = cardHolderLastNameNode.also { addedNodes.add(it) }
                 )
 
-                cardHolderNode != null -> NodeCluster.CreditCard.CardHolder.FirstNameLastName(
-                    firstName = cardHolderNode.also { addedNodes.add(it) },
+                cardHolderName != null -> NodeCluster.CreditCard.CardHolder.FirstNameLastName(
+                    firstName = cardHolderName.also { addedNodes.add(it) },
                     lastName = cardHolderLastNameNode.also { addedNodes.add(it) }
                 )
 
@@ -365,9 +385,9 @@ object NodeClusterer {
             }
 
             cardHolderFirstNameNode != null -> when {
-                cardHolderNode != null -> NodeCluster.CreditCard.CardHolder.FirstNameLastName(
+                cardHolderName != null -> NodeCluster.CreditCard.CardHolder.FirstNameLastName(
                     firstName = cardHolderFirstNameNode.also { addedNodes.add(it) },
-                    lastName = cardHolderNode.also { addedNodes.add(it) }
+                    lastName = cardHolderName.also { addedNodes.add(it) }
                 )
 
                 else -> NodeCluster.CreditCard.CardHolder.SingleField(
@@ -376,8 +396,8 @@ object NodeClusterer {
             }
 
             // At this point we know cardHolderFirstName and cardHolderLastName are null
-            cardHolderNode != null -> NodeCluster.CreditCard.CardHolder.SingleField(
-                field = cardHolderNode.also { addedNodes.add(it) }
+            cardHolderName != null -> NodeCluster.CreditCard.CardHolder.SingleField(
+                field = cardHolderName.also { addedNodes.add(it) }
             )
 
             else -> null

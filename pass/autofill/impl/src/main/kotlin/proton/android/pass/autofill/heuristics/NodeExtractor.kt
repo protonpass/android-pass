@@ -29,6 +29,7 @@ import proton.android.pass.autofill.entities.AndroidAutofillFieldId
 import proton.android.pass.autofill.entities.AssistField
 import proton.android.pass.autofill.entities.AutofillFieldId
 import proton.android.pass.autofill.entities.AutofillNode
+import proton.android.pass.autofill.entities.DetectionType
 import proton.android.pass.autofill.entities.FieldType
 import proton.android.pass.autofill.entities.InputTypeValue
 import proton.android.pass.common.api.None
@@ -150,6 +151,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
                     AssistField(
                         id = node.id!!,
                         type = fieldType,
+                        detectionType = DetectionType.ExactMatch,
                         value = node.autofillValue,
                         text = node.text.toString(),
                         isFocused = node.isFocused,
@@ -315,6 +317,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
                 AssistField(
                     id = autofillContext.node.id!!,
                     type = fieldType,
+                    detectionType = DetectionType.ContextMatch,
                     value = autofillContext.node.autofillValue,
                     text = autofillContext.node.text,
                     isFocused = autofillContext.node.isFocused,

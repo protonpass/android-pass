@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -19,26 +19,14 @@
 package proton.android.pass.autofill.entities
 
 import android.os.Parcelable
-import android.view.autofill.AutofillValue
-import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
-import proton.android.pass.autofill.heuristics.IdentifiableNode
 
 @Parcelize
-data class AssistField(
-    val id: AutofillFieldId,
-    val type: FieldType?,
-    val detectionType: DetectionType?,
-    val value: AutofillValue?,
-    val text: String?,
-    val isFocused: Boolean,
-    val nodePath: List<AutofillFieldId>,
-    val url: String?
-) : IdentifiableNode, Parcelable {
-    @IgnoredOnParcel
-    override val nodeId = id
+sealed interface DetectionType : Parcelable {
 
-    @IgnoredOnParcel
-    override val parentPath = nodePath
+    @Parcelize
+    data object ExactMatch : DetectionType
+
+    @Parcelize
+    data object ContextMatch : DetectionType
 }
-

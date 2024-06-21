@@ -66,7 +66,9 @@ private fun mainSection(
             color = highlightColor
         )
     ) {
-        append(input.substring(span.start, span.end))
+        val safeStart = span.start.coerceAtLeast(0).coerceAtMost(input.length)
+        val safeEnd = span.end.coerceAtLeast(safeStart).coerceAtMost(input.length)
+        append(input.substring(safeStart, safeEnd))
     }
 }
 

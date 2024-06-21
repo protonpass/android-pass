@@ -90,14 +90,12 @@ fun runAutofillTest(
     PassLogger.i(TAG, "Mapped nodes: ${res.mappings.size}")
     PassLogger.i(TAG, "Clusters: ${clusters.size} | Focused: $focusedCluster")
 
-    assertThat(res.mappings.size).isEqualTo(nodesWithExpectedContents.size)
     for (nodeWithExpectedContents in nodesWithExpectedContents) {
         val (node, expectedAutofill) = nodeWithExpectedContents
         val field = res.mappings.find {
             (it.autofillFieldId as TestAutofillId).id == node.id
         }
-        assertThat(field).isNotNull()
-
-        assertThat(field!!.contents).isEqualTo(expectedAutofill.assertedValue)
+        assertThat(field?.contents).isEqualTo(expectedAutofill.assertedValue)
     }
+    assertThat(res.mappings.size).isEqualTo(nodesWithExpectedContents.size)
 }

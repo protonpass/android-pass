@@ -28,6 +28,8 @@ internal data class SecureLinksListState(
     internal val isLoadingState: IsLoadingState
 ) {
 
+    internal val hasSecureLinks: Boolean = secureLinksModels.isNotEmpty()
+
     internal companion object {
 
         internal val Initial: SecureLinksListState = SecureLinksListState(

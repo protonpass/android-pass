@@ -16,21 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.domain.securelinks
+package proton.android.pass.data.api.usecases.securelink
 
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
+import kotlinx.coroutines.flow.Flow
+import proton.android.pass.domain.securelinks.SecureLink
 
-@JvmInline
-value class SecureLinkId(val id: String)
+interface ObserveInactiveSecureLinks {
 
-data class SecureLink(
-    val id: SecureLinkId,
-    val shareId: ShareId,
-    val itemId: ItemId,
-    val expirationInSeconds: Long,
-    val isActive: Boolean,
-    val maxReadCount: Int?,
-    val readCount: Int,
-    val url: String
-)
+    operator fun invoke(): Flow<List<SecureLink>>
+
+}

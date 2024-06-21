@@ -68,7 +68,8 @@ internal fun SecureLinksListContent(
                             .fillMaxWidth()
                             .padding(paddingValues = innerPadding)
                             .padding(all = Spacing.medium),
-                        secureLinksModels = secureLinksModels,
+                        activeSecureLinksModels = activeSecureLinksModels,
+                        inactiveSecureLinksModels = inactiveSecureLinksModels,
                         canLoadExternalImages = canLoadExternalImages,
                         onUiEvent = onUiEvent
                     )

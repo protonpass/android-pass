@@ -61,4 +61,6 @@ internal data class SecureLinkModel(
         endInstant = Instant.fromEpochSeconds(secureLink.expirationInSeconds)
     )
 
+    internal val isActive: Boolean = secureLink.isActive
+
 }

@@ -22,7 +22,6 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.mapSaver
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 
 data class GeneratePasskeyData(
@@ -30,31 +29,26 @@ data class GeneratePasskeyData(
     val request: String
 )
 
-@Suppress("SENSELESS_COMPARISON") // for null check
 val GeneratePasskeyDataStateSaver: Saver<Option<GeneratePasskeyData>, Any> = run {
     val origin = "origin"
     val request = "request"
     mapSaver(
-        save = { value ->
-            if (value == null) {
-                emptyMap()
+        save = { dataOption: Option<GeneratePasskeyData>? ->
+            val value = dataOption?.value()
+            if (value != null) {
+                mapOf(
+                    origin to value.origin,
+                    request to value.request
+                )
             } else {
-                when (value) {
-                    is Some -> mapOf(
-                        origin to value.value.origin,
-                        request to value.value.request
-                    )
-                    else -> emptyMap()
-                }
+                emptyMap()
             }
         },
-        restore = { values ->
-            when {
-                values == null -> None
-                values.isEmpty() -> None
-                values[origin] == null -> None
-                values[request] == null -> None
-                else -> GeneratePasskeyData(
+        restore = { values: Map<String, Any?>? ->
+            if (values.isNullOrEmpty() || values[origin] == null || values[request] == null) {
+                None
+            } else {
+                GeneratePasskeyData(
                     origin = values[origin] as String,
                     request = values[request] as String
                 ).some()

@@ -32,6 +32,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -41,23 +42,24 @@ import proton.android.pass.composecomponents.impl.R
 @Composable
 fun UpgradeButton(
     modifier: Modifier = Modifier,
-    color: Color = PassTheme.colors.interactionNormMinor2,
+    backgroundColor: Color = PassTheme.colors.interactionNormMinor2,
+    contentColor: Color = PassTheme.colors.interactionNormMajor2,
     onUpgradeClick: () -> Unit
 ) {
     CircleButton(
         modifier = modifier,
         contentPadding = PaddingValues(
             horizontal = Spacing.medium,
-            vertical = Spacing.mediumSmall
+            vertical = 10.dp
         ),
-        color = color,
+        color = backgroundColor,
         onClick = onUpgradeClick
     ) {
         Icon(
             modifier = Modifier.size(size = Spacing.medium),
             painter = painterResource(R.drawable.ic_brand_pass),
             contentDescription = null,
-            tint = PassTheme.colors.interactionNormMajor2
+            tint = contentColor
         )
 
         Spacer(modifier = Modifier.width(width = Spacing.small))
@@ -65,7 +67,7 @@ fun UpgradeButton(
         Text(
             text = stringResource(R.string.upgrade),
             style = PassTheme.typography.body3Norm(),
-            color = PassTheme.colors.interactionNormMajor2
+            color = contentColor
         )
     }
 }

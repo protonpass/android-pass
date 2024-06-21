@@ -34,6 +34,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.features.secure.links.R
 import proton.android.pass.features.secure.links.list.presentation.SecureLinksListState
 import proton.android.pass.features.secure.links.list.ui.grid.SecureLinksListGrid
+import proton.android.pass.features.secure.links.list.ui.grid.SecureLinksListGridEmpty
 
 @Composable
 internal fun SecureLinksListContent(
@@ -61,15 +62,19 @@ internal fun SecureLinksListContent(
             }
 
             IsLoadingState.NotLoading -> {
-                SecureLinksListGrid(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(paddingValues = innerPadding)
-                        .padding(all = Spacing.medium),
-                    secureLinksModels = secureLinksModels,
-                    canLoadExternalImages = canLoadExternalImages,
-                    onUiEvent = onUiEvent
-                )
+                if (hasSecureLinks) {
+                    SecureLinksListGrid(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(paddingValues = innerPadding)
+                            .padding(all = Spacing.medium),
+                        secureLinksModels = secureLinksModels,
+                        canLoadExternalImages = canLoadExternalImages,
+                        onUiEvent = onUiEvent
+                    )
+                } else {
+                    SecureLinksListGridEmpty()
+                }
             }
         }
     }

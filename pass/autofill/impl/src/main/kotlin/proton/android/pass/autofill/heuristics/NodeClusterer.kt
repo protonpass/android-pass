@@ -22,6 +22,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import proton.android.pass.autofill.entities.AssistField
 import proton.android.pass.autofill.entities.AutofillFieldId
+import proton.android.pass.autofill.entities.DetectionType
 import proton.android.pass.autofill.entities.FieldType
 import proton.android.pass.log.api.PassLogger
 
@@ -204,28 +205,23 @@ object NodeClusterer {
         val phoneNumberFields = nodes.getNodesForType(FieldType.Phone, addedNodes)
 
         if (addressFields.isNotEmpty() || postalCodeFields.isNotEmpty() || phoneNumberFields.isNotEmpty()) {
-            val nearestAddressField = HeuristicsUtils.findNearestNodeByParentId(
-                currentField = firstFullName,
-                fields = addressFields
-            )
-            val nearestPostalCodeField = HeuristicsUtils.findNearestNodeByParentId(
-                currentField = firstFullName,
-                fields = postalCodeFields
-            )
-            val nearestPhoneNumberField = HeuristicsUtils.findNearestNodeByParentId(
-                currentField = firstFullName,
-                fields = phoneNumberFields
-            )
             clusters.add(
                 NodeCluster.Identity(
                     fullName = firstFullName.also { addedNodes.add(it) },
-                    address = nearestAddressField?.also { addedNodes.add(it) },
-                    postalCode = nearestPostalCodeField?.also { addedNodes.add(it) },
-                    phoneNumber = nearestPhoneNumberField?.also { addedNodes.add(it) }
+                    address = addressFields.findFieldToCluster(firstFullName)
+                        ?.also { addedNodes.add(it) },
+                    postalCode = postalCodeFields.findFieldToCluster(firstFullName)
+                        ?.also { addedNodes.add(it) },
+                    phoneNumber = phoneNumberFields.findFieldToCluster(firstFullName)
+                        ?.also { addedNodes.add(it) }
                 )
             )
         }
     }
+
+    private fun List<AssistField>.findFieldToCluster(referenceField: AssistField): AssistField? =
+        firstOrNull { it.detectionType == DetectionType.ExactMatch }
+            ?: HeuristicsUtils.findNearestNodeByParentId(referenceField, this)
 
     private fun clusterLogins(
         nodes: List<AssistField>,

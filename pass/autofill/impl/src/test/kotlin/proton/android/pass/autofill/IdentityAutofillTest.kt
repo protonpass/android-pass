@@ -38,6 +38,11 @@ class IdentityAutofillTest : BaseAutofillTest() {
         runIdentityAutofillTest("identity/app_com.ebay.mobile.json")
     }
 
+    @Test
+    fun `can autofill shopify chrome`() {
+        runIdentityAutofillTest("identity/chrome_shopify.json")
+    }
+
     private fun runIdentityAutofillTest(file: String) {
         runAutofillTest(
             file = file,

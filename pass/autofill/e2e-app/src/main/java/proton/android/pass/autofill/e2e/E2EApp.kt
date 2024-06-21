@@ -21,6 +21,8 @@ package proton.android.pass.autofill.e2e
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 import me.proton.core.domain.entity.UserId
+import me.proton.core.util.android.sentry.TimberLogger
+import me.proton.core.util.kotlin.CoreLogger
 import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.data.api.usecases.SuggestedCreditCardItemsResult
 import proton.android.pass.data.fakes.usecases.FakeGetSuggestedIdentityItems
@@ -28,6 +30,8 @@ import proton.android.pass.data.fakes.usecases.TestGetSuggestedCreditCardItems
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedLoginItems
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.domain.ItemId
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -46,11 +50,15 @@ class E2EApp : Application() {
     @Inject
     lateinit var identityItems: FakeGetSuggestedIdentityItems
 
+    @Inject
+    lateinit var featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository
+
     override fun onCreate() {
         super.onCreate()
         setupItems()
         setupAccount()
         setupLogger()
+        featureFlagsPreferencesRepository.set(FeatureFlag.IDENTITY_V1, true)
     }
 
     private fun setupItems() {
@@ -105,6 +113,7 @@ class E2EApp : Application() {
 
     private fun setupLogger() {
         Timber.plant(Timber.DebugTree())
+        CoreLogger.set(TimberLogger)
     }
 
     private fun setupAccount() {

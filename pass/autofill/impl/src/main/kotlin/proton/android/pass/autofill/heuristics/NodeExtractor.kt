@@ -245,6 +245,8 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
             val hasValidInputType = nodeHasValidInputType(node)
             PassLogger.v(TAG, "------------------------------------")
             PassLogger.v(TAG, "[$nodeId] nodeInputTypeFlags $inputTypeFlags")
+            PassLogger.v(TAG, "[$nodeId] htmlAttributes ${node.htmlAttributes.joinToString()}")
+            PassLogger.v(TAG, "[$nodeId] hintKeywordList ${node.hintKeywordList.joinToString()}")
             PassLogger.v(TAG, "[$nodeId] isImportant $isImportant")
             PassLogger.v(TAG, "[$nodeId] hasAutofillInfo $hasAutofillInfo")
             PassLogger.v(TAG, "[$nodeId] nodeHasValidHints $hasValidHints")
@@ -509,6 +511,8 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
 
         if (USERNAME_REGEX.containsMatchIn(sanitizedHint)) return FieldType.Username
         if (EMAIL_REGEX.containsMatchIn(sanitizedHint)) return FieldType.Email
+        if (NAME_REGEX.containsMatchIn(sanitizedHint)) return FieldType.FullName
+        if (PHONE_REGEX.containsMatchIn(sanitizedHint)) return FieldType.Phone
 
         return fieldKeywordsList.match(sanitizedHint).also {
             if (it != FieldType.Unknown) {
@@ -542,16 +546,20 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
             InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS,
             InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS
         ) -> FieldType.Email
+
         inputType.hasVariations(
             InputType.TYPE_TEXT_VARIATION_PASSWORD,
             InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD
         ) -> FieldType.Password
+
         inputType.hasVariations(
             InputType.TYPE_TEXT_VARIATION_PERSON_NAME
         ) -> FieldType.FullName
+
         inputType.hasVariations(
             InputType.TYPE_CLASS_PHONE
         ) -> FieldType.Phone
+
         inputType.hasVariations(
             InputType.TYPE_TEXT_VARIATION_POSTAL_ADDRESS
         ) -> FieldType.Address
@@ -625,7 +633,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
 
     companion object {
         const val HINT_CURRENT_PASSWORD = "current-password"
-        const val TAG = "AssistNodeTraversal"
+        const val TAG = "NodeExtractor"
         const val MAX_CONTEXT_JUMPS = 3
 
 
@@ -639,6 +647,8 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
             REGEX_OPTIONS
         )
         private val EMAIL_REGEX = Regex("co(?:urriel|rrei?o)|email", REGEX_OPTIONS)
+        private val NAME_REGEX = Regex("(?<!user)(?<!last)name|nombre", REGEX_OPTIONS)
+        private val PHONE_REGEX = Regex("phone|telefon", REGEX_OPTIONS)
     }
 }
 

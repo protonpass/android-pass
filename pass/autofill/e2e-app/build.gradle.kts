@@ -83,6 +83,7 @@ dependencies {
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
     implementation(libs.core.userSettings.domain)
+    implementation(libs.core.utilAndroidSentry)
 
     implementation(projects.pass.account.fakes)
     implementation(projects.pass.appConfig.fakes)

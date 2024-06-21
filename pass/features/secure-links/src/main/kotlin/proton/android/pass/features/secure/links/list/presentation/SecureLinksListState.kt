@@ -23,7 +23,8 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
 @Stable
 internal data class SecureLinksListState(
-    internal val secureLinksModels: List<SecureLinkModel>,
+    internal val activeSecureLinksModels: List<SecureLinkModel>,
+    internal val inactiveSecureLinksModels: List<SecureLinkModel>,
     internal val canLoadExternalImages: Boolean,
     internal val isLoadingState: IsLoadingState
 ) {
@@ -33,7 +34,8 @@ internal data class SecureLinksListState(
     internal companion object {
 
         internal val Initial: SecureLinksListState = SecureLinksListState(
-            secureLinksModels = emptyList(),
+            activeSecureLinksModels = emptyList(),
+            inactiveSecureLinksModels = emptyList(),
             canLoadExternalImages = false,
             isLoadingState = IsLoadingState.Loading
         )

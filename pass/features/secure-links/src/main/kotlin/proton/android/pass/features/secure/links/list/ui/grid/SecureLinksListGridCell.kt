@@ -34,6 +34,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -46,7 +47,8 @@ import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Radius
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
 import proton.android.pass.composecomponents.impl.item.icon.IdentityIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
@@ -69,16 +71,24 @@ internal fun SecureLinksListGridCell(
     remainingTime: RemainingTime,
     views: Int,
     onCellClick: () -> Unit,
-    onCellOptionsClick: () -> Unit
+    onCellOptionsClick: () -> Unit,
+    isEnabled: Boolean
 ) {
     Box(
         modifier = modifier
             .fillMaxWidth()
+            .clip(shape = RoundedCornerShape(size = Radius.medium))
             .background(
-                color = PassTheme.colors.interactionNormMinor2,
-                shape = RoundedCornerShape(size = Radius.medium)
+                color = if (isEnabled) {
+                    PassTheme.colors.interactionNormMinor2
+                } else {
+                    PassTheme.colors.textDisabled
+                }
             )
-            .clickable { onCellClick() }
+            .applyIf(
+                condition = isEnabled,
+                ifTrue = { clickable { onCellClick() } }
+            )
     ) {
         Column(
             modifier = Modifier
@@ -165,7 +175,7 @@ private fun SecureLinksListGridCellInfo(
                         remainingTimeText
                     )
                 }
-                .orEmpty(),
+                ?: stringResource(id = R.string.secure_links_list_expired_description),
             textAlign = TextAlign.Center,
             style = ProtonTheme.typography.captionRegular,
             color = PassTheme.colors.textWeak
@@ -198,7 +208,11 @@ private fun BoxScope.SecureLinksGridCellMenu(modifier: Modifier = Modifier, onCl
 }
 
 @[Preview Composable]
-internal fun SecureLinksListGridCellPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun SecureLinksListGridCellPreview(
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+) {
+    val (isDark, isEnabled) = input
+
     PassTheme(isDark = isDark) {
         Surface {
             SecureLinksListGridCell(
@@ -212,7 +226,8 @@ internal fun SecureLinksListGridCellPreview(@PreviewParameter(ThemePreviewProvid
                 ),
                 views = 2,
                 onCellClick = {},
-                onCellOptionsClick = {}
+                onCellOptionsClick = {},
+                isEnabled = isEnabled
             )
         }
     }

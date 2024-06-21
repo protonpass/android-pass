@@ -61,8 +61,8 @@ data class SecureLinkEntity(
     val itemId: String,
     @ColumnInfo(name = Columns.EXPIRATION)
     val expirationInSeconds: Long,
-    @ColumnInfo(name = Columns.IS_EXPIRED)
-    val isExpired: Boolean,
+    @ColumnInfo(name = Columns.IS_ACTIVE)
+    val isActive: Boolean,
     @ColumnInfo(name = Columns.MAX_VIEWS)
     val maxViews: Int?,
     @ColumnInfo(name = Columns.VIEWS)
@@ -88,7 +88,7 @@ data class SecureLinkEntity(
 
         internal const val EXPIRATION = "expiration"
 
-        internal const val IS_EXPIRED = "is_expired"
+        internal const val IS_ACTIVE = "is_active"
 
         internal const val MAX_VIEWS = "max_views"
 

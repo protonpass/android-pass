@@ -25,7 +25,7 @@
   <string name="security_center_home_widget_no_breaches_subtitle">Soyez averti si votre adresse e-mail, mot de passe ou d\'autres données personnelles ont été divulguées.</string>
   <string name="security_center_home_row_no_data_breaches_subtitle">Aucune fuite de données n\'a été détectée.</string>
   <string name="security_center_home_row_data_breaches_title">Alerte provenant du dark web</string>
-  <string name="security_center_home_row_data_breaches_subtitle">Fuites de données détectées</string>
+  <string name="security_center_home_row_data_breaches_subtitle">Des fuites de données ont été détectées.</string>
   <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
   <string name="security_center_home_row_sentinel_subtitle">Programme de protection de compte avancée</string>
   <string name="security_center_home_row_insecure_passwords_title">Mots de passe faible</string>

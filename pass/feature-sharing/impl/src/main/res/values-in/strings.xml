@@ -34,6 +34,7 @@
   <string name="share_with_email_hint">Alamat email</string>
   <string name="share_with_email_error">Alamat email tidak valid</string>
   <string name="share_with_email_cannot_invite_outside_org">Anda tidak dapat mengundang pengguna yang berada di luar organisasi Anda. Hubungi admin untuk informasi lebih lanjut</string>
+  <string name="share_with_email_email_already_added">Anda telah menambahkan alamat email ini</string>
   <string name="share_permissions_title">Tentukan tingkat akses</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s mengundang Anda untuk mengakses item pada</string>
   <string name="sharing_join_shared_vault">Gabung dan sinkronkan</string>

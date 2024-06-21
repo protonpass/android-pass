@@ -22,11 +22,4 @@
   <string name="account_settings_list_item_extra_password_header">Дополнительный пароль для Proton Pass</string>
   <string name="account_settings_list_item_extra_password_active">Активный</string>
   <string name="account_settings_list_item_extra_password_description">Для использования Pass потребуется дополнительный пароль. Он действует как дополнительный пароль в дополнение к вашему паролю Proton.</string>
-  <string name="configure_extra_password_continue">Продолжить</string>
-  <string name="configure_extra_password_title">Установить дополнительный пароль</string>
-  <string name="configure_extra_password_enter_extra_password">Дополнительный пароль</string>
-  <string name="configure_extra_password_repeat_extra_password">Повторите пароль</string>
-  <string name="configure_extra_password_description">Вам будет предложено ввести этот пароль при входе в систему и при переходе в сети из другого приложения Proton в Proton Pass.</string>
-  <string name="configure_extra_password_warning">Внимание: Если вы потеряете этот пароль, вы не сможете получить доступ к своему аккаунту Pass.</string>
-  <string name="extra_password_options_remove">Удалить</string>
 </resources>

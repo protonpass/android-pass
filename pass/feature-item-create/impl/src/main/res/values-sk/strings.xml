@@ -154,8 +154,11 @@
   <string name="identity_section_work_details">Podrobnosti o pracovnej činnosti</string>
   <string name="identity_add_more_fields">Pridať ďalšie</string>
   <string name="identity_bottomsheet_add_field">Pridať pole</string>
+  <string name="create_identity_init_error">Problém s načítaním podrobností identity</string>
   <string name="create_identity_item_creation_error">Nepodarilo sa vytvoriť identitu</string>
   <string name="create_identity_item_creation_success">Identita bola vytvorená</string>
+  <string name="update_identity_item_creation_success">Identita aktualizovaná</string>
+  <string name="update_identity_item_creation_error">Nepodarilo sa aktualizovať identitu</string>
   <!--  Common create items  -->
   <string name="title_create">Vytvoriť</string>
   <string name="changes_saved">Zmeny uložené</string>

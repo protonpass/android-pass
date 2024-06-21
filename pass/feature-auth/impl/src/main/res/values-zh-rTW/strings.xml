@@ -24,6 +24,7 @@
   </plurals>
   <string name="auth_unlock_app_title">解鎖 Proton Pass</string>
   <string name="auth_unlock_app_subtitle">輸入 %s 的主密碼</string>
+  <string name="auth_unlock_app_extra_password_subtitle">Enter the extra password for %s</string>
   <string name="auth_master_password_label">主密碼</string>
   <string name="auth_action_reveal_password">顯示主密碼</string>
   <string name="auth_action_conceal_password">隱藏主密碼</string>
@@ -33,6 +34,9 @@
   <string name="auth_error_verifying_password">驗證密碼時發生錯誤</string>
   <string name="auth_error_empty_password">密碼不能為空</string>
   <string name="auth_error_pin_cannot_be_empty">Pin碼不能為空白</string>
+  <string name="auth_extra_password_label">Enter your extra password</string>
+  <string name="auth_extra_password_error">Error on authenticating with extra password</string>
+  <string name="auth_error_wrong_password_no_attempts">密碼錯誤</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="other">密碼錯誤。剩餘 %d 次嘗試</item>
   </plurals>

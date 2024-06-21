@@ -36,6 +36,7 @@
   <string name="share_with_email_hint">E-mailadresse</string>
   <string name="share_with_email_error">Ugyldig e-mailadresse</string>
   <string name="share_with_email_cannot_invite_outside_org">Du kan ikke invitere folk uden for din organisation, kontakt administrator for mere info.</string>
+  <string name="share_with_email_email_already_added">Du har allerede tilføjet denne e-mailadresse</string>
   <string name="share_permissions_title">Angiv adgangsniveau</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s inviterer dig til at tilgå elementer i</string>
   <string name="sharing_join_shared_vault">Tilmeld og synkronisér</string>

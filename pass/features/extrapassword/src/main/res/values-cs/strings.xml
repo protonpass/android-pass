@@ -17,11 +17,21 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="extra_password_error">Chyba při kontrole dodatečného hesla</string>
-  <string name="extra_password_enter_extra_password">Zadejte své dodatečné heslo</string>
-  <string name="extra_password_label">Dodatečné heslo</string>
-  <string name="extra_password_conceal_password_action">Skrýt dodatečné heslo</string>
-  <string name="extra_password_reveal_password_action">Zobrazit dodatečné heslo</string>
-  <string name="extra_password_error_empty">Dodatečné heslo nemůže být prázdné</string>
-  <string name="extra_password_error_wrong">Neplatné dodatečné heslo</string>
+  <string name="configure_extra_password_continue">Pokračovat</string>
+  <string name="configure_extra_password_title">Nastavte dodatečné heslo</string>
+  <string name="configure_extra_password_enter_extra_password">Dodatečné heslo</string>
+  <string name="configure_extra_password_repeat_extra_password">Zopakujte heslo</string>
+  <string name="configure_extra_password_description">O toto heslo budete požádáni při přihlašování a při přechodu z jiné aplikace Proton do Proton Pass na webu.</string>
+  <string name="configure_extra_password_warning">Upozornění: Pokud toto heslo ztratíte, nebudete mít přístup ke svému účtu Pass.</string>
+  <string name="configure_extra_password_mismatch">Hesla se neshodují</string>
+  <string name="extra_password_options_remove">Odebrat</string>
+  <string name="info_extra_password_title">Extra password</string>
+  <string name="info_extra_password_body">Protect Proton Pass with an extra password.</string>
+  <string name="info_extra_password_button">Nastavte dodatečné heslo</string>
+  <string name="configure_extra_password_cannot_be_blank">Password cannot be blank</string>
+  <string name="configure_extra_password_password_too_short">Heslo je příliš krátké</string>
+  <string name="confirm_extra_password_title">Nastavte dodatečné heslo</string>
+  <string name="confirm_extra_password_body">You will be logged out and will have to log in again on all of your other devices.</string>
+  <string name="confirm_extra_password_error">Could not set extra password</string>
+  <string name="confirm_extra_password_success">Extra password set</string>
 </resources>

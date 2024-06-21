@@ -9,21 +9,21 @@
   <string name="action_note">Ghi chú</string>
   <string name="action_credit_card">Thẻ tín dụng</string>
   <string name="action_password">Mật khẩu</string>
-  <string name="action_identity">Identity</string>
+  <string name="action_identity">Danh tính</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Thêm thông tin đăng nhập cho một ừng dụng hoặc một trang web</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Tạo một bí danh email để sử dụng trên các ứng dụng mới</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Ghi lại một mã PIN, mã thường, hay một ghi chú cho bản thân</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Lưu trữ an toàn thông tin thanh toán của bạn</string>
-  <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Fill in your personal data</string>
+  <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Điền vào thông tin cá nhân</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Tạo một mật khẩu bảo mật</string>
   <!-- Create Login -->
-  <string name="field_email_title">Email address</string>
+  <string name="field_email_title">Địa chỉ email</string>
   <string name="field_email_hint">Thêm địa chỉ thư điện tử</string>
   <string name="field_email_error">Địa chỉ email không hợp lệ</string>
   <string name="field_email_tooltip_title">Thêm trường tùy chỉnh tên tài khoản</string>
   <string name="field_email_tooltip_description">Ấn vào đây để thêm trường tên tài khoản</string>
-  <string name="field_username_title">Username</string>
-  <string name="field_username_hint">Add username</string>
+  <string name="field_username_title">Tên người dùng</string>
+  <string name="field_username_hint">Thêm tên người dùng</string>
   <string name="field_username_or_email_title">Tên đăng nhập hoặc Email</string>
   <string name="field_username_or_email_hint">Thêm tên đăng nhập hoặc địa chỉ email</string>
   <string name="field_password_title">Mật khẩu</string>
@@ -48,7 +48,7 @@
   <string name="bottomsheet_custom_field_option_edit">Sửa tên</string>
   <string name="bottomsheet_custom_field_option_remove">Xóa trường</string>
   <string name="bottomsheet_custom_field_option_remove_content_description">Xóa trường tùy chỉnh</string>
-  <string name="bottomsheet_custom_section_option_remove">Remove section</string>
+  <string name="bottomsheet_custom_section_option_remove">Xóa mục</string>
   <string name="create_login_add_custom_field_button">Thêm trường khác</string>
   <string name="custom_field_hidden_placeholder">Thêm văn bản ẩn</string>
   <string name="custom_field_hidden_icon_content_description">Biểu tượng trường nội dung tùy chỉnh ẩn</string>
@@ -56,8 +56,8 @@
   <string name="custom_field_dialog_title">Tên trường tùy chọn</string>
   <string name="custom_field_dialog_body">Cho trường tùy chọn của bạn một cái tên</string>
   <string name="custom_field_dialog_placeholder">Vd. ID người dùng, mã PIN</string>
-  <string name="custom_section_dialog_title">Enter a section title</string>
-  <string name="custom_section_dialog_placeholder">Title</string>
+  <string name="custom_section_dialog_title">Nhập tên cho mục</string>
+  <string name="custom_section_dialog_placeholder">Tiêu đề</string>
   <string name="custom_field_options_content_description">Tùy chọn trường tùy chỉnh</string>
   <!-- Create Note -->
   <string name="create_note_item_creation_error">Không thể tạo ghi chú</string>
@@ -94,8 +94,8 @@
   <string name="field_card_pin_title">Mã PIN</string>
   <string name="field_card_pin_hint">123456</string>
   <string name="field_card_expiration_date_title">Ngày hết hạn</string>
-  <string name="field_card_expiration_date_hint">MM / YY</string>
-  <string name="field_card_expiration_date_error">Enter a valid date in MM/YY format</string>
+  <string name="field_card_expiration_date_hint">Tháng / Năm</string>
+  <string name="field_card_expiration_date_error">Nhập một ngày hợp lệ ở dạng Tháng / Năm</string>
   <string name="create_credit_card_item_creation_error">Không thể tạo thẻ</string>
   <string name="create_credit_card_item_creation_success">Đã tạo thẻ</string>
   <string name="credit_card_init_error">Lỗi khi lấy thông tin thẻ</string>
@@ -154,8 +154,11 @@
   <string name="identity_section_work_details">Work details</string>
   <string name="identity_add_more_fields">Add more</string>
   <string name="identity_bottomsheet_add_field">Add field</string>
+  <string name="create_identity_init_error">Problem retrieving identity details</string>
   <string name="create_identity_item_creation_error">Could not create identity</string>
   <string name="create_identity_item_creation_success">Identity created</string>
+  <string name="update_identity_item_creation_success">Đã cập nhật danh tính</string>
+  <string name="update_identity_item_creation_error">Could not update identity</string>
   <!--  Common create items  -->
   <string name="title_create">Create</string>
   <string name="changes_saved">Đã lưu thay đổi</string>

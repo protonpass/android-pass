@@ -154,8 +154,11 @@
   <string name="identity_section_work_details">작업 세부 정보</string>
   <string name="identity_add_more_fields">더 추가하기</string>
   <string name="identity_bottomsheet_add_field">필드 추가</string>
+  <string name="create_identity_init_error">Problem retrieving identity details</string>
   <string name="create_identity_item_creation_error">신원을 만들 수 없습니다</string>
   <string name="create_identity_item_creation_success">신원을 만들었습니다</string>
+  <string name="update_identity_item_creation_success">신원 업데이트됨</string>
+  <string name="update_identity_item_creation_error">Could not update identity</string>
   <!--  Common create items  -->
   <string name="title_create">생성</string>
   <string name="changes_saved">변경 사항 저장됨</string>

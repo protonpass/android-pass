@@ -17,11 +17,21 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="extra_password_error">Eroare la verificarea parolei suplimentare.</string>
-  <string name="extra_password_enter_extra_password">Introduceți parola suplimentară</string>
-  <string name="extra_password_label">Parola suplimentară</string>
-  <string name="extra_password_conceal_password_action">Ascundere parolă suplimentară</string>
-  <string name="extra_password_reveal_password_action">Afișare parolă suplimentară</string>
-  <string name="extra_password_error_empty">Parola suplimentară nu poate fi goală.</string>
-  <string name="extra_password_error_wrong">Parolă suplimentară nevalidă.</string>
+  <string name="configure_extra_password_continue">Continuare</string>
+  <string name="configure_extra_password_title">Setare parolă suplimentară</string>
+  <string name="configure_extra_password_enter_extra_password">Parola suplimentară</string>
+  <string name="configure_extra_password_repeat_extra_password">Repetare parolă</string>
+  <string name="configure_extra_password_description">Vi se va cere această parolă în timpul conectării și când treceți de la o altă aplicație Proton la Proton Pass pe web.</string>
+  <string name="configure_extra_password_warning">Atenție: nu veți putea accesa contul Pass dacă pierdeți această parolă.</string>
+  <string name="configure_extra_password_mismatch">Parolele nu coincid.</string>
+  <string name="extra_password_options_remove">Eliminare</string>
+  <string name="info_extra_password_title">Parola suplimentară</string>
+  <string name="info_extra_password_body">Protejați Proton Pass cu o parolă suplimentară.</string>
+  <string name="info_extra_password_button">Setare parolă suplimentară</string>
+  <string name="configure_extra_password_cannot_be_blank">Parola nu poate fi goală.</string>
+  <string name="configure_extra_password_password_too_short">Parolă prea scurtă</string>
+  <string name="confirm_extra_password_title">Setare parolă suplimentară</string>
+  <string name="confirm_extra_password_body">Contul se va deconecta și va trebui să vă reconectați pe toate celelalte dispozitive.</string>
+  <string name="confirm_extra_password_error">Nu s-a putut seta parola suplimentară.</string>
+  <string name="confirm_extra_password_success">Parolă suplimentară setată</string>
 </resources>

@@ -36,6 +36,7 @@
   <string name="share_with_email_hint">E-mailadres</string>
   <string name="share_with_email_error">Ongeldig e-mailadres</string>
   <string name="share_with_email_cannot_invite_outside_org">U kunt geen mensen buiten uw organisatie uitnodigen, neem contact op met de beheerder voor meer informatie</string>
+  <string name="share_with_email_email_already_added">You have already added this email address</string>
   <string name="share_permissions_title">Stel toegangsniveau in</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s nodigt u uit met toegang tot items in</string>
   <string name="sharing_join_shared_vault">Samenvoegen en synchroniseren.</string>

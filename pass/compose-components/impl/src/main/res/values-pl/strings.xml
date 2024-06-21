@@ -38,6 +38,7 @@
   <string name="action_view_details">Pokaż szczegóły</string>
   <string name="action_see_all">Zobacz wszystko</string>
   <string name="action_confirm">Potwierdź</string>
+  <string name="action_cancel">Cancel</string>
   <string name="action_continue">Kontynuuj</string>
   <string name="action_retry">Spróbuj ponownie</string>
   <!-- Empty list -->
@@ -143,4 +144,29 @@
   <string name="password">Hasło</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Przycisk odrzucający podpowiedź i niepokazujący jej ponownie</string>
+  <!-- Time units -->
+  <plurals name="time_unit_days">
+    <item quantity="one">%d dzień</item>
+    <item quantity="few">%d dnia</item>
+    <item quantity="many">%d dnia</item>
+    <item quantity="other">%d dnia</item>
+  </plurals>
+  <plurals name="time_unit_hours">
+    <item quantity="one">%d godzinę</item>
+    <item quantity="few">%d godzin</item>
+    <item quantity="many">%d godziny</item>
+    <item quantity="other">%d godziny</item>
+  </plurals>
+  <plurals name="time_unit_minutes">
+    <item quantity="one">%d minutę</item>
+    <item quantity="few">%d minuty</item>
+    <item quantity="many">%d minut</item>
+    <item quantity="other">%d minut</item>
+  </plurals>
+  <plurals name="time_unit_seconds">
+    <item quantity="one">%d sekundę</item>
+    <item quantity="few">%d sekund</item>
+    <item quantity="many">%d sekundy</item>
+    <item quantity="other">%d sekundy</item>
+  </plurals>
 </resources>

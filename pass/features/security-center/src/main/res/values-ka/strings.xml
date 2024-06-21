@@ -92,8 +92,8 @@
   <string name="security_center_dark_web_monitor_see_all">ყველას ნახვა</string>
   <string name="security_center_dark_web_monitor_no_proton_addresses">Proton-ის მისამართების გარეშე</string>
   <string name="security_center_dark_web_monitor_no_aliases">ფსევდონიმების გარეშე</string>
-  <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">There was an error sending the verification code. Please try again later.</string>
-  <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">There was an error removing the email. Please try again later.</string>
+  <string name="security_center_custom_email_bottomsheet_snackbar_message_resend_code_error">შეცდომა გადამოწმების კოდის გაგზავნისას. მოგვიანებით სცადეთ.</string>
+  <string name="security_center_custom_email_bottomsheet_snackbar_message_remove_email_error">შეცდომა ელფოსტის წაშლისას. მოგვიანებით სცადეთ.</string>
   <!-- Add custom email monitoring -->
   <string name="security_center_custom_email_top_bar_title">მომხმარებლის ელფოსტის მონიტორინგი</string>
   <string name="security_center_custom_email_email_address_placeholder">ელფოსტის მისამართი</string>
@@ -111,7 +111,7 @@
   <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">თუ ასეთ ელფოსტას ვერ პოულობთ, შეგიძლიათ </string>
   <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">ახალი კოდის გამოთხოვა.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_success">გამოგზავნილია ახალი მოსაწვევი. შეამოწმეთ თქვენი საფოსტო ყუთი.</string>
-  <string name="security_center_verify_email_snackbar_message_resend_code_error">There was an error sending the verification code. Please try again later.</string>
+  <string name="security_center_verify_email_snackbar_message_resend_code_error">შეცდომა გადამოწმების კოდის გაგზავნისას. მოგვიანებით სცადეთ.</string>
   <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">მეტისმეტად ბევრი არასწორი გადამოწმება. მორგებული ელფოსტა წაიშლება.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">აღმოჩენილია გაჟონვები ვისთვის</string>
@@ -143,7 +143,7 @@
   <string name="security_center_proton_list_no_breaches_detected">გაჟონვები აღმოჩენილი არაა</string>
   <string name="security_center_proton_list_excluded_from_monitoring">ამოღებულია მონიტორინგიდან</string>
   <string name="security_center_proton_list_error">მისამართების ჩატვირთვა შეუძლებელია</string>
-  <string name="security_center_proton_list_included_in_monitoring">Enable monitoring to get notified if your Proton addresses were leaked.</string>
+  <string name="security_center_proton_list_included_in_monitoring">ჩართეთ მონიტორინგი, თუ გნებავთ, მიიღოთ გაფრთხლება, თუ თქვენი Proton-ის მისამართები გაჟონავს.</string>
   <string name="security_center_proton_list_options_menu">Proton-ის ეკრანის პარამეტრების მენიუ</string>
   <string name="security_center_proton_list_not_monitored">მონიტორინგის ქვეშ არაა</string>
   <!-- Address Bottomsheet options -->

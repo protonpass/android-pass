@@ -40,6 +40,7 @@
   <string name="share_with_email_hint">Адрес эл. почты</string>
   <string name="share_with_email_error">Недействительный адрес эл. почты</string>
   <string name="share_with_email_cannot_invite_outside_org">You can\'t invite people outside of your organization, contact admin for more info</string>
+  <string name="share_with_email_email_already_added">You have already added this email address</string>
   <string name="share_permissions_title">Установить уровень доступа</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s приглашает вас получить доступ к элементам в</string>
   <string name="sharing_join_shared_vault">Присоединиться и синхронизировать</string>
@@ -124,8 +125,8 @@
   <string name="share_with_suggestions_title">Рекомендации</string>
   <string name="share_with_recents_title">Недавние</string>
   <string name="share_with_remove_email_content_description">Удалить адрес эл. почты</string>
-  <string name="share_with_secure_link_title">Via secure link</string>
-  <string name="share_with_secure_link_description">Generate a secure link to this item.</string>
+  <string name="share_with_secure_link_title">Через защищенную ссылку</string>
+  <string name="share_with_secure_link_description">Сгенерировать защищенную ссылку на этот элемент.</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Установить уровень доступа для всех участников</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Set access level for %s</string>
   <string name="sharing_edit_permissions_remove_user">Удалить пользователя</string>

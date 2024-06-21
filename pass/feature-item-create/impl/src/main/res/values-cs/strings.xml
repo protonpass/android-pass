@@ -112,7 +112,7 @@
   <string name="identity_field_country_or_region_title">Země nebo region</string>
   <string name="identity_field_social_security_number_title">Rodné číslo (číslo sociálního pojištění)</string>
   <string name="identity_field_passport_number_title">Číslo cestovního pasu</string>
-  <string name="identity_field_license_number_title">Série a číslo řidičského průkazu</string>
+  <string name="identity_field_license_number_title">Číslo řidičského průkazu</string>
   <string name="identity_field_website_title">Webová stránka</string>
   <string name="identity_field_xhandle_title">X uživatelské jméno</string>
   <string name="identity_field_company_title">Společnost</string>
@@ -154,8 +154,11 @@
   <string name="identity_section_work_details">Detaily práce</string>
   <string name="identity_add_more_fields">Přidat další</string>
   <string name="identity_bottomsheet_add_field">Přidat pole</string>
+  <string name="create_identity_init_error">Problem retrieving identity details</string>
   <string name="create_identity_item_creation_error">Nelze vytvořit identitu</string>
   <string name="create_identity_item_creation_success">Identita vytvořena</string>
+  <string name="update_identity_item_creation_success">Identita aktualizována</string>
+  <string name="update_identity_item_creation_error">Could not update identity</string>
   <!--  Common create items  -->
   <string name="title_create">Vytvořit</string>
   <string name="changes_saved">Změny uloženy</string>

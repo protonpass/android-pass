@@ -37,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import kotlinx.collections.immutable.PersistentList
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
@@ -51,8 +52,8 @@ private const val SECURE_LINKS_GRID_COLUMN_COUNT = 2
 internal fun SecureLinksListGrid(
     modifier: Modifier = Modifier,
     onUiEvent: (SecureLinksListUiEvent) -> Unit,
-    activeSecureLinksModels: List<SecureLinkModel>,
-    inactiveSecureLinksModels: List<SecureLinkModel>,
+    activeSecureLinksModels: PersistentList<SecureLinkModel>,
+    inactiveSecureLinksModels: PersistentList<SecureLinkModel>,
     canLoadExternalImages: Boolean
 ) {
     LazyVerticalGrid(

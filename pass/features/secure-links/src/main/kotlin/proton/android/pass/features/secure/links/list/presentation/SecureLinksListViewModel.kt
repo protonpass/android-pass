@@ -21,6 +21,7 @@ package proton.android.pass.features.secure.links.list.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -50,10 +51,10 @@ class SecureLinksListViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val activeSecureLinksModelsFlow = observeActiveSecureLinks()
-        .map { activeSecureLinks -> activeSecureLinks.toModel() }
+        .map { activeSecureLinks -> activeSecureLinks.toModel().toPersistentList() }
 
     private val inactiveSecureLinksModelsFlow = observeInactiveSecureLinks()
-        .map { inactiveSecureLinks -> inactiveSecureLinks.toModel() }
+        .map { inactiveSecureLinks -> inactiveSecureLinks.toModel().toPersistentList() }
 
     internal val state: StateFlow<SecureLinksListState> = combine(
         activeSecureLinksModelsFlow,

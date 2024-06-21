@@ -102,7 +102,8 @@ internal fun CreateUpdateTopBar(
             if (showUpgrade) {
                 UpgradeButton(
                     modifier = Modifier.padding(Spacing.mediumSmall, 0.dp),
-                    color = actionColor,
+                    backgroundColor = actionColor,
+                    contentColor = PassTheme.colors.textInvert,
                     onUpgradeClick = onUpgrade
                 )
             } else {

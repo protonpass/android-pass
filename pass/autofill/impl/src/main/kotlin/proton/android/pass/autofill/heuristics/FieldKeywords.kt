@@ -68,22 +68,22 @@ internal val fieldKeywordsList = listOf(
             "accountname",
             "userid"
         ),
-        deniedKeywords = DEFAULT_DENIED_KEYWORDS
+        deniedKeywords = emptyList()
     ),
     kw(
         fieldType = FieldType.Email,
         allowedKeywords = ALLOWED_EMAIL_KEYWORDS,
-        deniedKeywords = DEFAULT_DENIED_KEYWORDS
+        deniedKeywords = emptyList()
     ),
     kw(
         fieldType = FieldType.Password,
         allowedKeywords = listOf("password"),
-        deniedKeywords = DEFAULT_DENIED_KEYWORDS
+        deniedKeywords = emptyList()
     ),
     kw(
         fieldType = FieldType.Totp,
         allowedKeywords = listOf("otp", "totp", "mfa", "2fa", "tfa"),
-        deniedKeywords = DEFAULT_DENIED_KEYWORDS
+        deniedKeywords = emptyList()
     ),
     kw(
         fieldType = FieldType.CardNumber,
@@ -94,12 +94,12 @@ internal val fieldKeywordsList = listOf(
             "inputcard",
             "numerodetarjeta"
         ),
-        deniedKeywords = DEFAULT_DENIED_KEYWORDS
+        deniedKeywords = emptyList()
     ),
     kw(
         fieldType = FieldType.CardCvv,
         allowedKeywords = listOf("cvc", "cvv", "securitycode"),
-        deniedKeywords = DEFAULT_DENIED_KEYWORDS
+        deniedKeywords = emptyList()
     ),
 
     // Keywords for cardholder name are order-sensitve. First we want to test if we find
@@ -107,12 +107,12 @@ internal val fieldKeywordsList = listOf(
     kw(
         fieldType = FieldType.CardholderFirstName,
         allowedKeywords = listOf("firstname"),
-        deniedKeywords = DEFAULT_DENIED_KEYWORDS
+        deniedKeywords = emptyList()
     ),
     kw(
         fieldType = FieldType.CardholderLastName,
         allowedKeywords = listOf("lastname"),
-        deniedKeywords = DEFAULT_DENIED_KEYWORDS
+        deniedKeywords = emptyList()
     ),
     kw(
         fieldType = FieldType.FullName,
@@ -124,7 +124,7 @@ internal val fieldKeywordsList = listOf(
             "namefull",
             "fullname"
         ),
-        deniedKeywords = DEFAULT_DENIED_KEYWORDS
+        deniedKeywords = emptyList()
     ),
 
     // Keywords for expiration are order-sensitive. First we want to test for MMYY.
@@ -133,7 +133,7 @@ internal val fieldKeywordsList = listOf(
     kw(
         fieldType = FieldType.CardExpirationMMYY,
         allowedKeywords = listOf("mmyy", "mmaa"),
-        deniedKeywords = DEFAULT_DENIED_KEYWORDS
+        deniedKeywords = emptyList()
     ),
     kw(
         fieldType = FieldType.CardExpirationMM,
@@ -144,12 +144,12 @@ internal val fieldKeywordsList = listOf(
             "expirationdatemonth",
             "mesmm"
         ),
-        deniedKeywords = DEFAULT_DENIED_KEYWORDS
+        deniedKeywords = emptyList()
     ),
     kw(
         fieldType = FieldType.CardExpirationYYYY,
         allowedKeywords = listOf("4digityear", "yyyy"),
-        deniedKeywords = DEFAULT_DENIED_KEYWORDS
+        deniedKeywords = emptyList()
     ),
     kw(
         fieldType = FieldType.CardExpirationYY,
@@ -161,13 +161,12 @@ internal val fieldKeywordsList = listOf(
             "yy",
             "anoaa"
         ),
-        deniedKeywords = DEFAULT_DENIED_KEYWORDS
+        deniedKeywords = emptyList()
     ),
     kw(
         fieldType = FieldType.Address,
         allowedKeywords = ALLOWED_ADDRESS_KEYWORDS,
-        deniedKeywords = DEFAULT_DENIED_KEYWORDS +
-            ALLOWED_EMAIL_KEYWORDS +
+        deniedKeywords = ALLOWED_EMAIL_KEYWORDS +
             ALLOWED_POSTAL_CODE_KEYWORDS +
             ALLOWED_PHONE_KEYWORDS +
             listOf("country", "button")
@@ -175,12 +174,12 @@ internal val fieldKeywordsList = listOf(
     kw(
         fieldType = FieldType.PostalCode,
         allowedKeywords = ALLOWED_POSTAL_CODE_KEYWORDS,
-        deniedKeywords = DEFAULT_DENIED_KEYWORDS
+        deniedKeywords = emptyList()
     ),
     kw(
         fieldType = FieldType.Phone,
         allowedKeywords = ALLOWED_PHONE_KEYWORDS,
-        deniedKeywords = DEFAULT_DENIED_KEYWORDS
+        deniedKeywords = emptyList()
     )
 )
 
@@ -188,4 +187,4 @@ private fun kw(
     fieldType: FieldType,
     allowedKeywords: List<String>,
     deniedKeywords: List<String>
-) = FieldKeywords(fieldType, allowedKeywords, deniedKeywords)
+) = FieldKeywords(fieldType, allowedKeywords, deniedKeywords + DEFAULT_DENIED_KEYWORDS)

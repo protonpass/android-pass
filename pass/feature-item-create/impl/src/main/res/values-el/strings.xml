@@ -154,8 +154,11 @@
   <string name="identity_section_work_details">Λεπτομέρειες εργασίας</string>
   <string name="identity_add_more_fields">Προσθέστε περισσότερα</string>
   <string name="identity_bottomsheet_add_field">Προσθήκη πεδίου</string>
+  <string name="create_identity_init_error">Πρόβλημα ανάκτησης λεπτομερειών ταυτότητας</string>
   <string name="create_identity_item_creation_error">Δεν ήταν δυνατή η δημιουργία ταυτότητας</string>
   <string name="create_identity_item_creation_success">Ταυτότητα που δημιουργήθηκε</string>
+  <string name="update_identity_item_creation_success">Η ταυτότητα ενημερώθηκε</string>
+  <string name="update_identity_item_creation_error">Δεν ήταν δυνατή η ενημέρωση της ταυτότητας</string>
   <!--  Common create items  -->
   <string name="title_create">Δημιουργία</string>
   <string name="changes_saved">Έχει αποθηκευτεί η αλλαγή</string>

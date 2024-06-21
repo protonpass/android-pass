@@ -38,6 +38,7 @@
   <string name="action_view_details">Zobraziť podrobnosti</string>
   <string name="action_see_all">Zobraziť všetko</string>
   <string name="action_confirm">Potvrdiť</string>
+  <string name="action_cancel">Zrušiť</string>
   <string name="action_continue">Pokračovať</string>
   <string name="action_retry">Opakovať</string>
   <!-- Empty list -->
@@ -143,4 +144,29 @@
   <string name="password">Heslo</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Tlačidlo na zrušenie tejto nápovedy a jej opätovné nezobrazenie</string>
+  <!-- Time units -->
+  <plurals name="time_unit_days">
+    <item quantity="one">%d deň</item>
+    <item quantity="few">%d dní</item>
+    <item quantity="many">%d dni</item>
+    <item quantity="other">%d dni</item>
+  </plurals>
+  <plurals name="time_unit_hours">
+    <item quantity="one">%d hodina</item>
+    <item quantity="few">%d hodín</item>
+    <item quantity="many">%d hodiny</item>
+    <item quantity="other">%d hodiny</item>
+  </plurals>
+  <plurals name="time_unit_minutes">
+    <item quantity="one">%d minúta</item>
+    <item quantity="few">%d minúty</item>
+    <item quantity="many">%d minút</item>
+    <item quantity="other">%d minút</item>
+  </plurals>
+  <plurals name="time_unit_seconds">
+    <item quantity="one">%d sekunda</item>
+    <item quantity="few">%d sekúnd</item>
+    <item quantity="many">%d sekundy</item>
+    <item quantity="other">%d sekundy</item>
+  </plurals>
 </resources>

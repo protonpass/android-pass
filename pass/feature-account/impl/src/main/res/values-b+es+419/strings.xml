@@ -22,11 +22,4 @@
   <string name="account_settings_list_item_extra_password_header">Contraseña adicional para Proton Pass</string>
   <string name="account_settings_list_item_extra_password_active">Activa</string>
   <string name="account_settings_list_item_extra_password_description">La contraseña adicional se requerirá para usar Pass. Funciona como una contraseña extra por encima de su contraseña de Proton.</string>
-  <string name="configure_extra_password_continue">Continuar</string>
-  <string name="configure_extra_password_title">Establezca la contraseña adicional</string>
-  <string name="configure_extra_password_enter_extra_password">Contraseña adicional</string>
-  <string name="configure_extra_password_repeat_extra_password">Repetir la contraseña</string>
-  <string name="configure_extra_password_description">Se le pedirá esta contraseña durante el inicio de sesión y cuando cambie de una aplicación de Proton a Proton Pass en la web.</string>
-  <string name="configure_extra_password_warning">Precaución: No podrá acceder a su cuenta de Pass si pierde esta contraseña.</string>
-  <string name="extra_password_options_remove">Borrar</string>
 </resources>

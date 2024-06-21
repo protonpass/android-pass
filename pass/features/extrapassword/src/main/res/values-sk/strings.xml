@@ -17,11 +17,21 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="extra_password_error">Chyba pri kontrole dodatočného hesla</string>
-  <string name="extra_password_enter_extra_password">Zadajte vaše dodatočné heslo</string>
-  <string name="extra_password_label">Dodatočné heslo</string>
-  <string name="extra_password_conceal_password_action">Skryť dodatočné heslo</string>
-  <string name="extra_password_reveal_password_action">Odhaliť dodatočné heslo</string>
-  <string name="extra_password_error_empty">Dodatočné heslo nemôže byť prázdne</string>
-  <string name="extra_password_error_wrong">Neplatné dodatočné heslo</string>
+  <string name="configure_extra_password_continue">Pokračovať</string>
+  <string name="configure_extra_password_title">Nastaviť dodatočné heslo</string>
+  <string name="configure_extra_password_enter_extra_password">Dodatočné heslo</string>
+  <string name="configure_extra_password_repeat_extra_password">Zopakovať heslo</string>
+  <string name="configure_extra_password_description">O toto heslo budete požiadaní počas prihlasovania a pri prechode z inej Proton aplikácie do Proton Pass na webe.</string>
+  <string name="configure_extra_password_warning">Pozor: Pokiaľ toto heslo stratíte, nebudete mať prístup k vášmu účtu Pass.</string>
+  <string name="configure_extra_password_mismatch">Heslá sa nezhodujú</string>
+  <string name="extra_password_options_remove">Odstrániť</string>
+  <string name="info_extra_password_title">Dodatočné heslo</string>
+  <string name="info_extra_password_body">Ochránte Proton Pass s dodatočným heslom.</string>
+  <string name="info_extra_password_button">Nastaviť dodatočné heslo</string>
+  <string name="configure_extra_password_cannot_be_blank">Heslo nemôže byť prázdne</string>
+  <string name="configure_extra_password_password_too_short">Heslo je príliš krátke</string>
+  <string name="confirm_extra_password_title">Nastaviť dodatočné heslo</string>
+  <string name="confirm_extra_password_body">Dôjde k odhláseniu a budete sa musieť znova prihlásiť na všetkých ostatných zariadeniach.</string>
+  <string name="confirm_extra_password_error">Nie je možné nastaviť dodatočné heslo</string>
+  <string name="confirm_extra_password_success">Dodatočné heslo bolo nastavené</string>
 </resources>

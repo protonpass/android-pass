@@ -154,8 +154,11 @@
   <string name="identity_section_work_details">Loc de muncă</string>
   <string name="identity_add_more_fields">Adăugare în plus</string>
   <string name="identity_bottomsheet_add_field">Adăugare câmp</string>
+  <string name="create_identity_init_error">Problemă preluare detalii identitate.</string>
   <string name="create_identity_item_creation_error">Nu s-a putut crea identitatea</string>
   <string name="create_identity_item_creation_success">Identitatea s-a creat.</string>
+  <string name="update_identity_item_creation_success">Identitatea s-a actualizat.</string>
+  <string name="update_identity_item_creation_error">Nu s-a putut actualiza identitatea.</string>
   <!--  Common create items  -->
   <string name="title_create">Creare</string>
   <string name="changes_saved">Modificările s-au salvat.</string>

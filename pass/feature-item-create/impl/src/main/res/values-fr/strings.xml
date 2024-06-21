@@ -154,8 +154,11 @@
   <string name="identity_section_work_details">Informations sur le poste</string>
   <string name="identity_add_more_fields">Ajouter d\'autres champs</string>
   <string name="identity_bottomsheet_add_field">Ajouter un champ</string>
+  <string name="create_identity_init_error">Problème de récupération des informations de l\'identité</string>
   <string name="create_identity_item_creation_error">L\'identité n\'a pas pu être créée.</string>
   <string name="create_identity_item_creation_success">L\'identité a été créée.</string>
+  <string name="update_identity_item_creation_success">L\'identité a été mise à jour.</string>
+  <string name="update_identity_item_creation_error">L\'identité n\'a pas pu être actualisée.</string>
   <!--  Common create items  -->
   <string name="title_create">Créer</string>
   <string name="changes_saved">Les modifications ont été enregistrées.</string>

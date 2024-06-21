@@ -22,11 +22,4 @@
   <string name="account_settings_list_item_extra_password_header">Proton Pass의 추가 비밀번호</string>
   <string name="account_settings_list_item_extra_password_active">활성</string>
   <string name="account_settings_list_item_extra_password_description">추가 비밀번호가 Pass 사용에 필요해 집니다. 사용자의 Proton 비밀번호의 축사적인 비밀번호가 됩니다.</string>
-  <string name="configure_extra_password_continue">계속</string>
-  <string name="configure_extra_password_title">추가 비밀번호 설정</string>
-  <string name="configure_extra_password_enter_extra_password">추가 비밀번호</string>
-  <string name="configure_extra_password_repeat_extra_password">비밀번호 확인</string>
-  <string name="configure_extra_password_description">로그인하는 동안 그리고 다른 Proton 앱에서 웹에서 Proton Pass로 전환할 때 이 비밀번호를 입력하라는 메시지가 표시됩니다.</string>
-  <string name="configure_extra_password_warning">경고: 이 비밀번호를 분실하면 Pass 계정에 접근할 수 없게 됩니다.</string>
-  <string name="extra_password_options_remove">삭제</string>
 </resources>

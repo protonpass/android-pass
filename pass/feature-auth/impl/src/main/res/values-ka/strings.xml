@@ -25,6 +25,7 @@
   </plurals>
   <string name="auth_unlock_app_title">განბლოკეთ Proton Pass</string>
   <string name="auth_unlock_app_subtitle">შეიყვანეთ მთავარი პაროლი %s-სთვის</string>
+  <string name="auth_unlock_app_extra_password_subtitle">შეიყვანეთ დამატებითი პაროლი %s-სთვის</string>
   <string name="auth_master_password_label">მთავარი პაროლი</string>
   <string name="auth_action_reveal_password">მთავარი პაროლის გამოჩენა</string>
   <string name="auth_action_conceal_password">მთავარი პაროლის დამალვა</string>
@@ -34,6 +35,9 @@
   <string name="auth_error_verifying_password">შეცდომა თქვენი პაროლის გადამოწმებისას</string>
   <string name="auth_error_empty_password">პაროლი ცარიელი ვერ იქნება</string>
   <string name="auth_error_pin_cannot_be_empty">PIN-კოდი ცარიელი ვერ იქნება</string>
+  <string name="auth_extra_password_label">შეიყვანეთ თქვენი დაამატებითი პაროლი</string>
+  <string name="auth_extra_password_error">დამატებითი პაროლით ავთენტიკაციის შეცდომა</string>
+  <string name="auth_error_wrong_password_no_attempts">არასწორი პაროლი</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">პაროლი არასწორია. დარჩენილია %d ცდა</item>
     <item quantity="other">პაროლი არასწორია. დარჩენილია %d ცდა</item>

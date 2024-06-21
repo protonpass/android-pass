@@ -34,6 +34,7 @@
   <string name="share_with_email_hint">メールアドレス</string>
   <string name="share_with_email_error">無効なメールアドレスです</string>
   <string name="share_with_email_cannot_invite_outside_org">組織外の人を招待することはできません。詳細については管理者にお問い合わせください。</string>
+  <string name="share_with_email_email_already_added">You have already added this email address</string>
   <string name="share_permissions_title">アクセスレベルの設定</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%sがあなたにアイテムへのアクセスを招待しています。</string>
   <string name="sharing_join_shared_vault">参加と同期</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="account_title">Compte</string>
-  <string name="account_recovery_title">Account and Recovery</string>
+  <string name="account_recovery_title">Compte i recuperació</string>
   <string name="account_username_label">Nom d\'usuari</string>
   <string name="account_subscription_label">Pla de subscripció</string>
   <string name="account_permanently_delete_warning">Això eliminarà permanentment el vostre compte i totes les dades. No el podreu reactivar.</string>
@@ -22,11 +22,4 @@
   <string name="account_settings_list_item_extra_password_header">Contrasenya addicional per a Proton Pass</string>
   <string name="account_settings_list_item_extra_password_active">Actiu</string>
   <string name="account_settings_list_item_extra_password_description">Es requerirà la contrasenya addicional per utilitzar Pass. Actua com una contrasenya addicional a la contrasenya de Proton.</string>
-  <string name="configure_extra_password_continue">Continuï</string>
-  <string name="configure_extra_password_title">Estableixi la contrasenya addicional</string>
-  <string name="configure_extra_password_enter_extra_password">Contrasenya addicional</string>
-  <string name="configure_extra_password_repeat_extra_password">Repeteix la contrasenya</string>
-  <string name="configure_extra_password_description">Se li demanarà aquesta contrasenya durant la sessió i quan canviï d\'una altra aplicació Proton a Proton Pass al web.</string>
-  <string name="configure_extra_password_warning">Precaució: no podrà accedir al seu compte Pass si perd aquesta contrasenya.</string>
-  <string name="extra_password_options_remove">Esborra</string>
 </resources>

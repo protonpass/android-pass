@@ -6,4 +6,8 @@
   <string name="restart_to_complete_the_update">Käynnistä uudelleen päivityksen viimeistelemiseksi</string>
   <string name="action_restart">Käynnistä uudelleen</string>
   <string name="shortcut_share_logs_title">Jaa lokitiedot</string>
+  <string name="no_account_found">Tiliä ei löytynyt</string>
+  <string name="no_session_found">Istuntoja ei löytynyt</string>
+  <string name="auth_with_extra_password_failed">Todennus lisäsalasanalla epäonnistui</string>
+  <string name="error_login_in_user">Error login in user</string>
 </resources>

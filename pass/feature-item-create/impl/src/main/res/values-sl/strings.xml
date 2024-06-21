@@ -154,8 +154,11 @@
   <string name="identity_section_work_details">Podatki o delovnem mestu</string>
   <string name="identity_add_more_fields">Dodaj več</string>
   <string name="identity_bottomsheet_add_field">Dodaj polje</string>
+  <string name="create_identity_init_error">Problem retrieving identity details</string>
   <string name="create_identity_item_creation_error">Identitete ni bilo mogoče ustvariti</string>
   <string name="create_identity_item_creation_success">Identiteta je bila ustvarjena</string>
+  <string name="update_identity_item_creation_success">Identiteta je posodobljena</string>
+  <string name="update_identity_item_creation_error">Could not update identity</string>
   <!--  Common create items  -->
   <string name="title_create">Ustvari</string>
   <string name="changes_saved">Spremembe shranjene.</string>

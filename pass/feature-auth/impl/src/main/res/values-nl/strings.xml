@@ -25,6 +25,7 @@
   </plurals>
   <string name="auth_unlock_app_title">Ontgrendel Proton Pass</string>
   <string name="auth_unlock_app_subtitle">Voer het hoofdwachtwoord in voor %s</string>
+  <string name="auth_unlock_app_extra_password_subtitle">Enter the extra password for %s</string>
   <string name="auth_master_password_label">Hoofdwachtwoord</string>
   <string name="auth_action_reveal_password">Hoofdwachtwoord weergeven</string>
   <string name="auth_action_conceal_password">Hoofdwachtwoord verbergen</string>
@@ -34,6 +35,9 @@
   <string name="auth_error_verifying_password">Fout bij het verifiëren van uw wachtwoord</string>
   <string name="auth_error_empty_password">Wachtwoord kan niet leeg zijn</string>
   <string name="auth_error_pin_cannot_be_empty">Pincode mag niet leeg zijn</string>
+  <string name="auth_extra_password_label">Enter your extra password</string>
+  <string name="auth_extra_password_error">Error on authenticating with extra password</string>
+  <string name="auth_error_wrong_password_no_attempts">Ongeldig wachtwoord</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Incorrect wachtwoord. %d resterende poging</item>
     <item quantity="other">Incorrect wachtwoord. %d resterende pogingen</item>

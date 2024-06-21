@@ -34,6 +34,7 @@
   <string name="share_with_email_hint">이메일 주소</string>
   <string name="share_with_email_error">유효하지 않은 이메일 주소입니다.</string>
   <string name="share_with_email_cannot_invite_outside_org">조직으로 사용자를 초대할 수 없습니다. 더 자세한 내용은 관리자에게 문의하십시오.</string>
+  <string name="share_with_email_email_already_added">You have already added this email address</string>
   <string name="share_permissions_title">접근 수준 설정</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s님이 항목 공유를 초대합니다:</string>
   <string name="sharing_join_shared_vault">참가 및 동기화</string>
@@ -109,8 +110,8 @@
   <string name="share_with_suggestions_title">제안</string>
   <string name="share_with_recents_title">최근</string>
   <string name="share_with_remove_email_content_description">이메일 제거</string>
-  <string name="share_with_secure_link_title">보안 링크를 통해</string>
-  <string name="share_with_secure_link_description">Generate a secure link to this item.</string>
+  <string name="share_with_secure_link_title">안전한 링크를 이용함</string>
+  <string name="share_with_secure_link_description">이 항목으로의 안전한 링크를 만듭니다.</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">전체 구성원의 접근 수준을 설정하세요.</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">%s님에게 접근 권한 설정</string>
   <string name="sharing_edit_permissions_remove_user">사용자 제거</string>

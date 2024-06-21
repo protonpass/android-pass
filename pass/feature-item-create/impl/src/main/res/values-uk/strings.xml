@@ -154,8 +154,11 @@
   <string name="identity_section_work_details">Робочі деталі</string>
   <string name="identity_add_more_fields">Додати ще</string>
   <string name="identity_bottomsheet_add_field">Додати поле</string>
+  <string name="create_identity_init_error">Problem retrieving identity details</string>
   <string name="create_identity_item_creation_error">Не вдалося створити ідентичність</string>
   <string name="create_identity_item_creation_success">Ідентичність створено</string>
+  <string name="update_identity_item_creation_success">Identity updated</string>
+  <string name="update_identity_item_creation_error">Could not update identity</string>
   <!--  Common create items  -->
   <string name="title_create">Створити</string>
   <string name="changes_saved">Зміни збережено</string>

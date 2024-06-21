@@ -17,11 +17,21 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="extra_password_error">Fehler beim Prüfen des zusätzlichen Passworts.</string>
-  <string name="extra_password_enter_extra_password">Gib dein zusätzliches Passwort ein.</string>
-  <string name="extra_password_label">Zusätzliches Passwort</string>
-  <string name="extra_password_conceal_password_action">Zusätzliches Passwort ausblenden</string>
-  <string name="extra_password_reveal_password_action">Zusätzliches Passwort anzeigen</string>
-  <string name="extra_password_error_empty">Das zusätzliche Passwort darf nicht leer sein.</string>
-  <string name="extra_password_error_wrong">Ungültiges zusätzliches Passwort</string>
+  <string name="configure_extra_password_continue">Fortfahren</string>
+  <string name="configure_extra_password_title">Zusätzliches Passwort festlegen</string>
+  <string name="configure_extra_password_enter_extra_password">Zusätzliches Passwort</string>
+  <string name="configure_extra_password_repeat_extra_password">Passwort wiederholen</string>
+  <string name="configure_extra_password_description">Du wirst bei der Anmeldung und beim Wechsel von einer anderen Proton-App zu Proton Pass im Web nach diesem Passwort gefragt.</string>
+  <string name="configure_extra_password_warning">Achtung! Wenn du dieses Passwort verlierst, kannst du nicht mehr auf dein Pass-Konto zugreifen.</string>
+  <string name="configure_extra_password_mismatch">Die Passwörter stimmen nicht überein</string>
+  <string name="extra_password_options_remove">Entfernen</string>
+  <string name="info_extra_password_title">Extra password</string>
+  <string name="info_extra_password_body">Schütze Proton Pass mit einem zusätzlichen Passwort.</string>
+  <string name="info_extra_password_button">Zusätzliches Passwort festlegen</string>
+  <string name="configure_extra_password_cannot_be_blank">Password cannot be blank</string>
+  <string name="configure_extra_password_password_too_short">Passwort zu kurz</string>
+  <string name="confirm_extra_password_title">Zusätzliches Passwort festlegen</string>
+  <string name="confirm_extra_password_body">Du wirst abgemeldet und musst dich auf allen anderen Geräten erneut anmelden.</string>
+  <string name="confirm_extra_password_error">Could not set extra password</string>
+  <string name="confirm_extra_password_success">Zusätzliches Passwort festgelegt.</string>
 </resources>

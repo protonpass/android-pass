@@ -36,6 +36,7 @@
   <string name="action_view_details">Details weergeven</string>
   <string name="action_see_all">Alles weergeven</string>
   <string name="action_confirm">Bevestigen</string>
+  <string name="action_cancel">Cancel</string>
   <string name="action_continue">Doorgaan</string>
   <string name="action_retry">Opnieuw proberen</string>
   <!-- Empty list -->
@@ -139,4 +140,21 @@
   <string name="password">Wachtwoord</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Button to dismiss this tooltip and not show it again</string>
+  <!-- Time units -->
+  <plurals name="time_unit_days">
+    <item quantity="one">%d dag</item>
+    <item quantity="other">%d dagen</item>
+  </plurals>
+  <plurals name="time_unit_hours">
+    <item quantity="one">%d uur</item>
+    <item quantity="other">%d uren</item>
+  </plurals>
+  <plurals name="time_unit_minutes">
+    <item quantity="one">%d minuut</item>
+    <item quantity="other">%d minuten</item>
+  </plurals>
+  <plurals name="time_unit_seconds">
+    <item quantity="one">%d seconde</item>
+    <item quantity="other">%d seconden</item>
+  </plurals>
 </resources>

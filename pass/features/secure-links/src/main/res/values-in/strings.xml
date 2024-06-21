@@ -20,24 +20,30 @@
   <!--Create screen-->
   <string name="secure_links_create_title">Bagikan tautan aman</string>
   <string name="secure_links_create_row_expiration_title">Tautan kedaluwarsa setelah</string>
-  <string name="secure_links_create_row_expiration_options_one_hour">1 hour</string>
-  <string name="secure_links_create_row_expiration_options_one_day">1 day</string>
-  <string name="secure_links_create_row_expiration_options_seven_days">7 days</string>
-  <string name="secure_links_create_row_expiration_options_fourteen_days">14 days</string>
-  <string name="secure_links_create_row_expiration_options_thirty_days">30 days</string>
+  <string name="secure_links_create_row_expiration_options_one_hour">1 jam</string>
+  <string name="secure_links_create_row_expiration_options_one_day">1 hari</string>
+  <string name="secure_links_create_row_expiration_options_seven_days">7 hari</string>
+  <string name="secure_links_create_row_expiration_options_fourteen_days">14 hari</string>
+  <string name="secure_links_create_row_expiration_options_thirty_days">30 hari</string>
   <string name="secure_links_create_row_max_views_title">Batasi jumlah tampilan</string>
   <string name="secure_links_create_row_max_views_subtitle">Jumlah tampilan maksimum: %d</string>
   <string name="secure_links_create_button_generate">Hasilkan tautan aman</string>
   <string name="secure_links_create_snackbar_message_error">Terdapat masalah dalam menghasilkan tautan aman</string>
   <!--Overview screen-->
-  <string name="secure_links_overview_widget_expiration_title">Expires in:</string>
-  <string name="secure_links_overview_widget_max_views_title">Can be viewed:</string>
+  <string name="secure_links_overview_widget_expiration_title">Kedaluwarsa dalam:</string>
+  <string name="secure_links_overview_widget_max_views_title">Dapat ditampilkan:</string>
   <plurals name="secure_links_overview_widget_max_views_limited">
     <item quantity="other">%d kali</item>
   </plurals>
   <string name="secure_links_overview_widget_max_views_unlimited">Tidak terbatas</string>
   <string name="secure_links_shared_action_copy_link">Salin tautan</string>
   <string name="secure_links_shared_action_share_link">Bagikan tautan</string>
-  <string name="secure_links_overview_button_view_all_links">Lihat seluruh tautan yang Anda bagikan</string>
+  <string name="secure_links_overview_button_view_all_links">Lihat seluruh tautan aman Anda</string>
   <string name="secure_links_shared_snackbar_message_link_copied">Tautan aman disalin</string>
+  <!--List screen-->
+  <string name="secure_links_list_title">Tautan aman</string>
+  <string name="secure_links_list_expiration_description">Kedaluwarsa dalam %s</string>
+  <plurals name="secure_links_list_viewed_times_description">
+    <item quantity="other">%d kali dilihat</item>
+  </plurals>
 </resources>

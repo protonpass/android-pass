@@ -36,6 +36,7 @@
   <string name="action_view_details">Ayrıntıları görüntüle</string>
   <string name="action_see_all">Tümünü görüntüle</string>
   <string name="action_confirm">Onayla</string>
+  <string name="action_cancel">Cancel</string>
   <string name="action_continue">İlerle</string>
   <string name="action_retry">Yeniden dene</string>
   <!-- Empty list -->
@@ -139,4 +140,21 @@
   <string name="password">Parola</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Bu ipucunu yok sayıp bir daha görüntülenmemesini sağlayan düğme</string>
+  <!-- Time units -->
+  <plurals name="time_unit_days">
+    <item quantity="one">%d gün</item>
+    <item quantity="other">%d gün</item>
+  </plurals>
+  <plurals name="time_unit_hours">
+    <item quantity="one">%d saat</item>
+    <item quantity="other">%d saat</item>
+  </plurals>
+  <plurals name="time_unit_minutes">
+    <item quantity="one">%d dakika</item>
+    <item quantity="other">%d dakika</item>
+  </plurals>
+  <plurals name="time_unit_seconds">
+    <item quantity="one">%d saniye</item>
+    <item quantity="other">%d saniye</item>
+  </plurals>
 </resources>

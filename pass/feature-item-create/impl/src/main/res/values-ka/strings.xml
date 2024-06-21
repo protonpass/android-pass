@@ -154,8 +154,11 @@
   <string name="identity_section_work_details">სამსახურის დეტალები</string>
   <string name="identity_add_more_fields">მეტის დამატება</string>
   <string name="identity_bottomsheet_add_field">ველის დამატება</string>
+  <string name="create_identity_init_error">შეცდომა იდენტიფიკატორის დეტალების მიღებისას</string>
   <string name="create_identity_item_creation_error">იდენტიფიკატორის შექმნა შეუძლებელია</string>
   <string name="create_identity_item_creation_success">იდენტიფიკატორი შეიცვალა</string>
+  <string name="update_identity_item_creation_success">იდენტიფიკატორი განახლდა</string>
+  <string name="update_identity_item_creation_error">იდენტიფიკატორის განახლება შეუძლებელია</string>
   <!--  Common create items  -->
   <string name="title_create">შექმნა</string>
   <string name="changes_saved">ცვლილებები შენახულია</string>

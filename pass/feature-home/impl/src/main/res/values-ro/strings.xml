@@ -40,9 +40,11 @@
   <string name="bottomsheet_copy_cvv">Copiere cod de securitate</string>
   <string name="bottomsheet_copy_note">Copiere notă</string>
   <string name="bottomsheet_edit">Editare</string>
+  <string name="bottomsheet_copy_full_name">Copiere nume complet</string>
   <!-- Clipboard -->
   <string name="alias_copied_to_clipboard">Alias copiat</string>
   <string name="note_copied_to_clipboard">Nota a fost copiată.</string>
+  <string name="full_name_copied_to_clipboard">Numele complet s-a copiat.</string>
   <string name="username_copied_to_clipboard">Nume de utilizator copiat</string>
   <string name="password_copied_to_clipboard">Parola s-a copiat</string>
   <string name="credit_card_number_copied_to_clipboard">Numărul cardul de plată s-a copiat.</string>

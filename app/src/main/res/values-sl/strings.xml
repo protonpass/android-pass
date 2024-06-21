@@ -6,4 +6,8 @@
   <string name="restart_to_complete_the_update">Znova zaženite, da dokončate posodobitev</string>
   <string name="action_restart">Ponovni zagon</string>
   <string name="shortcut_share_logs_title">Delite dnevnike</string>
+  <string name="no_account_found">No account found</string>
+  <string name="no_session_found">No session found</string>
+  <string name="auth_with_extra_password_failed">Auth with extra password failed</string>
+  <string name="error_login_in_user">Error login in user</string>
 </resources>

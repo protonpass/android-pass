@@ -40,9 +40,11 @@
   <string name="bottomsheet_copy_cvv">Kopírovat bezpečnostní kód</string>
   <string name="bottomsheet_copy_note">Kopírovat poznámku</string>
   <string name="bottomsheet_edit">Upravit</string>
+  <string name="bottomsheet_copy_full_name">Copy full name</string>
   <!-- Clipboard -->
   <string name="alias_copied_to_clipboard">Alias byl zkopírován</string>
   <string name="note_copied_to_clipboard">Poznámka zkopírována</string>
+  <string name="full_name_copied_to_clipboard">Celé jméno zkopírováno</string>
   <string name="username_copied_to_clipboard">Uživatelské jméno bylo zkopírováno</string>
   <string name="password_copied_to_clipboard">Heslo bylo zkopírováno</string>
   <string name="credit_card_number_copied_to_clipboard">Číslo platební karty zkopírováno</string>

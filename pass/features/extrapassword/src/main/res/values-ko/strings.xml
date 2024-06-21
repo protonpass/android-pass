@@ -17,11 +17,21 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="extra_password_error">추가 비밀번호 확인 중 오류가 발생했습니다</string>
-  <string name="extra_password_enter_extra_password">추가 비밀번호 입력</string>
-  <string name="extra_password_label">추가 비밀번호</string>
-  <string name="extra_password_conceal_password_action">추가 비밀번호 숨기기</string>
-  <string name="extra_password_reveal_password_action">추가 비밀번호 보이기</string>
-  <string name="extra_password_error_empty">추가 비밀번호는 비워둘 수 없습니다.</string>
-  <string name="extra_password_error_wrong">잘못된 추가 비밀번호</string>
+  <string name="configure_extra_password_continue">계속</string>
+  <string name="configure_extra_password_title">추가 비밀번호 설정</string>
+  <string name="configure_extra_password_enter_extra_password">추가 비밀번호</string>
+  <string name="configure_extra_password_repeat_extra_password">비밀번호 확인</string>
+  <string name="configure_extra_password_description">로그인하는 동안 그리고 다른 Proton 앱에서 웹에서 Proton Pass로 전환할 때 이 비밀번호를 입력하라는 메시지가 표시됩니다.</string>
+  <string name="configure_extra_password_warning">경고: 이 비밀번호를 분실하면 Pass 계정에 접근할 수 없게 됩니다.</string>
+  <string name="configure_extra_password_mismatch">비밀번호가 일치하지 않습니다</string>
+  <string name="extra_password_options_remove">삭제</string>
+  <string name="info_extra_password_title">추가 비밀번호</string>
+  <string name="info_extra_password_body">추가 비밀버호로 Proton Pass 보호하기</string>
+  <string name="info_extra_password_button">추가 비밀번호 설정</string>
+  <string name="configure_extra_password_cannot_be_blank">암호는 비워둘 수 없습니다.</string>
+  <string name="configure_extra_password_password_too_short">비밀번호가 너무 짧습니다</string>
+  <string name="confirm_extra_password_title">추가 비밀번호 설정</string>
+  <string name="confirm_extra_password_body">사용자가 로그아웃되고 다른 모든 장치에서 다시 로그인해야 합니다.</string>
+  <string name="confirm_extra_password_error">추가 비밀번호를 설정할 수 없음</string>
+  <string name="confirm_extra_password_success">추가 비밀번호 설정</string>
 </resources>

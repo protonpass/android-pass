@@ -17,11 +17,21 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="extra_password_error">Une erreur s\'est produite lors de la vérification du mot de passe supplémentaire.</string>
-  <string name="extra_password_enter_extra_password">Saisissez votre mot de passe supplémentaire</string>
-  <string name="extra_password_label">Mot de passe supplémentaire</string>
-  <string name="extra_password_conceal_password_action">Masquer le mot de passe supplémentaire</string>
-  <string name="extra_password_reveal_password_action">Afficher le mot de passe supplémentaire</string>
-  <string name="extra_password_error_empty">Le champ Mot de passe supplémentaire ne doit pas être vide</string>
-  <string name="extra_password_error_wrong">Le mot de passe supplémentaire n\'est pa valide.</string>
+  <string name="configure_extra_password_continue">Continuer</string>
+  <string name="configure_extra_password_title">Définissez un mot de passe supplémentaire</string>
+  <string name="configure_extra_password_enter_extra_password">Mot de passe supplémentaire</string>
+  <string name="configure_extra_password_repeat_extra_password">Confirmez le mot de passe</string>
+  <string name="configure_extra_password_description">Ce mot de passe vous sera demandé lorsque vous vous connectez et passer d\'une autre application Proton à Proton Pass sur le web.</string>
+  <string name="configure_extra_password_warning">Avertissement : vous ne pourrez plus accéder à votre compte Pass si vous perdez ce mot de passe.</string>
+  <string name="configure_extra_password_mismatch">Les mots de passe ne correspondent pas.</string>
+  <string name="extra_password_options_remove">Retirer</string>
+  <string name="info_extra_password_title">Mot de passe supplémentaire</string>
+  <string name="info_extra_password_body">Protégez Proton Pass avec un mot de passe supplémentaire.</string>
+  <string name="info_extra_password_button">Définissez un mot de passe supplémentaire</string>
+  <string name="configure_extra_password_cannot_be_blank">Le mot de passe ne peut pas être vide.</string>
+  <string name="configure_extra_password_password_too_short">Le mot de passe est trop court.</string>
+  <string name="confirm_extra_password_title">Définir un mot de passe supplémentaire</string>
+  <string name="confirm_extra_password_body">Vous serez déconnecté et vous devrez vous connecter à nouveau sur tous vos autres appareils.</string>
+  <string name="confirm_extra_password_error">Le mot de passe supplémentaire n\'a pas pu être configuré.</string>
+  <string name="confirm_extra_password_success">Le mot de passe supplémentaire est configuré.</string>
 </resources>

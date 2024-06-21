@@ -151,7 +151,7 @@ internal val fieldKeywordsList = listOf(
     ),
     kw(
         fieldType = FieldType.Address,
-        allowedKeywords = listOf("addresshome", "street"),
+        allowedKeywords = listOf("addresshome", "street", "calle", "casa", "house"),
         deniedKeywords = ALLOWED_POSTAL_CODE_KEYWORDS + ALLOWED_PHONE_KEYWORDS + listOf("country")
     ),
     kw(

@@ -50,6 +50,25 @@ enum class FieldType : Parcelable {
     Phone
     ;
 
+    fun isCreditCardField(): Boolean = when (this) {
+        CardNumber,
+        CardholderFirstName,
+        CardholderLastName,
+        CardExpirationMMYY,
+        CardExpirationMM,
+        CardExpirationYY,
+        CardExpirationYYYY,
+        CardCvv -> true
+        else -> false
+    }
+
+    fun isIdentityField(): Boolean = when (this) {
+        Address,
+        PostalCode,
+        Phone -> true
+        else -> false
+    }
+
     companion object {
         fun from(value: String): FieldType = try {
             FieldType.valueOf(value)

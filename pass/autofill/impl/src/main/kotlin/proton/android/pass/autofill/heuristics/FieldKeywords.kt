@@ -67,23 +67,19 @@ internal val fieldKeywordsList = listOf(
             "identifier",
             "accountname",
             "userid"
-        ),
-        deniedKeywords = emptyList()
+        )
     ),
     kw(
         fieldType = FieldType.Email,
-        allowedKeywords = ALLOWED_EMAIL_KEYWORDS,
-        deniedKeywords = emptyList()
+        allowedKeywords = ALLOWED_EMAIL_KEYWORDS
     ),
     kw(
         fieldType = FieldType.Password,
-        allowedKeywords = listOf("password"),
-        deniedKeywords = emptyList()
+        allowedKeywords = listOf("password")
     ),
     kw(
         fieldType = FieldType.Totp,
-        allowedKeywords = listOf("otp", "totp", "mfa", "2fa", "tfa"),
-        deniedKeywords = emptyList()
+        allowedKeywords = listOf("otp", "totp", "mfa", "2fa", "tfa")
     ),
     kw(
         fieldType = FieldType.CardNumber,
@@ -93,26 +89,22 @@ internal val fieldKeywordsList = listOf(
             "ccnumber",
             "inputcard",
             "numerodetarjeta"
-        ),
-        deniedKeywords = emptyList()
+        )
     ),
     kw(
         fieldType = FieldType.CardCvv,
-        allowedKeywords = listOf("cvc", "cvv", "securitycode"),
-        deniedKeywords = emptyList()
+        allowedKeywords = listOf("cvc", "cvv", "securitycode")
     ),
 
     // Keywords for cardholder name are order-sensitve. First we want to test if we find
     // different fields for first name and last name, and if we can't, fallback to CardholderName
     kw(
         fieldType = FieldType.CardholderFirstName,
-        allowedKeywords = listOf("firstname"),
-        deniedKeywords = emptyList()
+        allowedKeywords = listOf("firstname")
     ),
     kw(
         fieldType = FieldType.CardholderLastName,
-        allowedKeywords = listOf("lastname"),
-        deniedKeywords = emptyList()
+        allowedKeywords = listOf("lastname")
     ),
     kw(
         fieldType = FieldType.FullName,
@@ -123,8 +115,7 @@ internal val fieldKeywordsList = listOf(
             "ccname",
             "namefull",
             "fullname"
-        ),
-        deniedKeywords = emptyList()
+        )
     ),
 
     // Keywords for expiration are order-sensitive. First we want to test for MMYY.
@@ -132,8 +123,7 @@ internal val fieldKeywordsList = listOf(
     // so it needs to be evaluated first.
     kw(
         fieldType = FieldType.CardExpirationMMYY,
-        allowedKeywords = listOf("mmyy", "mmaa"),
-        deniedKeywords = emptyList()
+        allowedKeywords = listOf("mmyy", "mmaa")
     ),
     kw(
         fieldType = FieldType.CardExpirationMM,
@@ -143,13 +133,11 @@ internal val fieldKeywordsList = listOf(
             "expirationmonth",
             "expirationdatemonth",
             "mesmm"
-        ),
-        deniedKeywords = emptyList()
+        )
     ),
     kw(
         fieldType = FieldType.CardExpirationYYYY,
-        allowedKeywords = listOf("4digityear", "yyyy"),
-        deniedKeywords = emptyList()
+        allowedKeywords = listOf("4digityear", "yyyy")
     ),
     kw(
         fieldType = FieldType.CardExpirationYY,
@@ -160,8 +148,7 @@ internal val fieldKeywordsList = listOf(
             "expirationdateyear",
             "yy",
             "anoaa"
-        ),
-        deniedKeywords = emptyList()
+        )
     ),
     kw(
         fieldType = FieldType.Address,
@@ -173,18 +160,16 @@ internal val fieldKeywordsList = listOf(
     ),
     kw(
         fieldType = FieldType.PostalCode,
-        allowedKeywords = ALLOWED_POSTAL_CODE_KEYWORDS,
-        deniedKeywords = emptyList()
+        allowedKeywords = ALLOWED_POSTAL_CODE_KEYWORDS
     ),
     kw(
         fieldType = FieldType.Phone,
-        allowedKeywords = ALLOWED_PHONE_KEYWORDS,
-        deniedKeywords = emptyList()
+        allowedKeywords = ALLOWED_PHONE_KEYWORDS
     )
 )
 
 private fun kw(
     fieldType: FieldType,
     allowedKeywords: List<String>,
-    deniedKeywords: List<String>
+    deniedKeywords: List<String> = emptyList()
 ) = FieldKeywords(fieldType, allowedKeywords, deniedKeywords + DEFAULT_DENIED_KEYWORDS)

@@ -154,8 +154,11 @@
   <string name="identity_section_work_details">Падрабязнасці аб працы</string>
   <string name="identity_add_more_fields">Дадаць яшчэ</string>
   <string name="identity_bottomsheet_add_field">Дадаць поле</string>
+  <string name="create_identity_init_error">Праблема пры атрыманні падрабязнасцяў ідэнтычнасці</string>
   <string name="create_identity_item_creation_error">Не атрымалася стварыць ідэнтычнасць:</string>
   <string name="create_identity_item_creation_success">Ідэнтычнасць створана</string>
+  <string name="update_identity_item_creation_success">Ідэнтычнасць абноўлена</string>
+  <string name="update_identity_item_creation_error">Не атрымалася абнавіць ідэнтычнасць:</string>
   <!--  Common create items  -->
   <string name="title_create">Стварыць</string>
   <string name="changes_saved">Змены захаваны</string>

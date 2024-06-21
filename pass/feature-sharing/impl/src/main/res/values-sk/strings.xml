@@ -40,6 +40,7 @@
   <string name="share_with_email_hint">Emailová adresa</string>
   <string name="share_with_email_error">Neplatná emailová adresa</string>
   <string name="share_with_email_cannot_invite_outside_org">Nemôžete pozvať ľudí mimo vašej organizácie, ďalšie informácie získate od správcu</string>
+  <string name="share_with_email_email_already_added">Túto emailovú adresu už ste pridali</string>
   <string name="share_permissions_title">Nastavte úroveň prístupu</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s vás pozýva na prístup k položkám v</string>
   <string name="sharing_join_shared_vault">Pripojiť a synchronizovať</string>

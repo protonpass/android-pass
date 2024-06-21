@@ -17,11 +17,21 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="extra_password_error">Feil ved kontroll av ekstra passord</string>
-  <string name="extra_password_enter_extra_password">Angi det ekstra passordet ditt</string>
-  <string name="extra_password_label">Ekstra passord</string>
-  <string name="extra_password_conceal_password_action">Skjul ekstra passord</string>
-  <string name="extra_password_reveal_password_action">Avslør ekstra passord</string>
-  <string name="extra_password_error_empty">Ekstra passord kan ikke være tomt</string>
-  <string name="extra_password_error_wrong">Ugyldig ekstra passord</string>
+  <string name="configure_extra_password_continue">Fortsett</string>
+  <string name="configure_extra_password_title">Angi ekstra passord</string>
+  <string name="configure_extra_password_enter_extra_password">Ekstra passord</string>
+  <string name="configure_extra_password_repeat_extra_password">Gjenta passord</string>
+  <string name="configure_extra_password_description">Du vil bli bedt om dette passordet under innlogging og når du bytter fra en annen Proton-app til Proton Pass på nettet.</string>
+  <string name="configure_extra_password_warning">Forsiktig: du får ikke tilgang til Pass-kontoen din hvis du mister dette passordet.</string>
+  <string name="configure_extra_password_mismatch">Passordene samsvarer ikke</string>
+  <string name="extra_password_options_remove">Fjern</string>
+  <string name="info_extra_password_title">Ekstra passord</string>
+  <string name="info_extra_password_body">Beskytt Proton Pass med et ekstra passord.</string>
+  <string name="info_extra_password_button">Angi ekstra passord</string>
+  <string name="configure_extra_password_cannot_be_blank">Passord må fylles ut</string>
+  <string name="configure_extra_password_password_too_short">Passordet er for kort</string>
+  <string name="confirm_extra_password_title">Angi ekstra passord</string>
+  <string name="confirm_extra_password_body">Du blir logget ut og må logge på igjen på alle de andre enhetene dine.</string>
+  <string name="confirm_extra_password_error">Kunne ikke angi ekstra passord</string>
+  <string name="confirm_extra_password_success">Ekstra passord angitt</string>
 </resources>

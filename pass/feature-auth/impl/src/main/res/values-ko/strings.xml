@@ -24,6 +24,7 @@
   </plurals>
   <string name="auth_unlock_app_title">Proton Pass 잠금 해제</string>
   <string name="auth_unlock_app_subtitle">%s의 마스터 비밀번호 입력</string>
+  <string name="auth_unlock_app_extra_password_subtitle">Enter the extra password for %s</string>
   <string name="auth_master_password_label">마스터 비밀번호</string>
   <string name="auth_action_reveal_password">마스터 비밀번호 보이기</string>
   <string name="auth_action_conceal_password">마스터 비밀번호 숨기기</string>
@@ -33,6 +34,9 @@
   <string name="auth_error_verifying_password">비밀번호를 확인하는 데 오류가 발생했습니다</string>
   <string name="auth_error_empty_password">비밀번호는 비울 수 없습니다</string>
   <string name="auth_error_pin_cannot_be_empty">PIN은 비울 수 없습니다</string>
+  <string name="auth_extra_password_label">추가 비밀번호 입력</string>
+  <string name="auth_extra_password_error">Error on authenticating with extra password</string>
+  <string name="auth_error_wrong_password_no_attempts">잘못된 비밀번호입니다</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="other">잘못된 비밀번호입니다. %d회 남았습니다</item>
   </plurals>

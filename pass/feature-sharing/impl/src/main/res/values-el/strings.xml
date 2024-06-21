@@ -36,6 +36,7 @@
   <string name="share_with_email_hint">Διεύθυνση ηλεκτρονικού ταχυδρομείου</string>
   <string name="share_with_email_error">Μη έγκυρη διεύθυνση email</string>
   <string name="share_with_email_cannot_invite_outside_org">Δεν μπορείτε να προσκαλέσετε άτομα εκτός του οργανισμού σας, επικοινωνήστε με το διαχειριστή για περισσότερες πληροφορίες</string>
+  <string name="share_with_email_email_already_added">Έχετε ήδη προσθέσει αυτήν τη διεύθυνση ηλεκτρονικού ταχυδρομείου</string>
   <string name="share_permissions_title">Ορισμός επιπέδου πρόσβασης</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s σας προσκαλεί να αποκτήσετε πρόσβαση σε στοιχεία στη</string>
   <string name="sharing_join_shared_vault">Συμμετάσχετε και συγχρονίστε</string>

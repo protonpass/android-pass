@@ -24,6 +24,7 @@
   </plurals>
   <string name="auth_unlock_app_title">Proton Pass をロック解除</string>
   <string name="auth_unlock_app_subtitle">%s 用のマスターパスワードを入力</string>
+  <string name="auth_unlock_app_extra_password_subtitle">Enter the extra password for %s</string>
   <string name="auth_master_password_label">マスターパスワード</string>
   <string name="auth_action_reveal_password">マスターパスワードを表示</string>
   <string name="auth_action_conceal_password">マスターパスワードを非表示</string>
@@ -33,6 +34,9 @@
   <string name="auth_error_verifying_password">パスワード認証中のエラー</string>
   <string name="auth_error_empty_password">パスワードは空にできません</string>
   <string name="auth_error_pin_cannot_be_empty">PIN コードを空にすることはできません</string>
+  <string name="auth_extra_password_label">Enter your extra password</string>
+  <string name="auth_extra_password_error">Error on authenticating with extra password</string>
+  <string name="auth_error_wrong_password_no_attempts">パスワードが正しくありません</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="other">パスワードが正しくありません。あと %d 回試行できます。</item>
   </plurals>

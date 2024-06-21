@@ -17,11 +17,21 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="extra_password_error">Erro ao verificar a senha adicional</string>
-  <string name="extra_password_enter_extra_password">Digite sua senha adicional</string>
-  <string name="extra_password_label">Senha adicional</string>
-  <string name="extra_password_conceal_password_action">Ocultar senha adicional</string>
-  <string name="extra_password_reveal_password_action">Revelar senha adicional</string>
-  <string name="extra_password_error_empty">A senha adicional está vazia</string>
-  <string name="extra_password_error_wrong">A senha adicional não é valida.</string>
+  <string name="configure_extra_password_continue">Continuar</string>
+  <string name="configure_extra_password_title">Defina senha adicional</string>
+  <string name="configure_extra_password_enter_extra_password">Senha adicional</string>
+  <string name="configure_extra_password_repeat_extra_password">Repetir senha</string>
+  <string name="configure_extra_password_description">Essa senha será solicitada a você ao iniciar sessão e quando mudar de outro aplicativo do Proton para o Proton Pass na web.</string>
+  <string name="configure_extra_password_warning">Cuidado: você não poderá acessar sua conta do Pass se você perder essa senha.</string>
+  <string name="configure_extra_password_mismatch">Senhas não correspondem</string>
+  <string name="extra_password_options_remove">Remover</string>
+  <string name="info_extra_password_title">Senha adicional</string>
+  <string name="info_extra_password_body">Proteja o Proton Pass com uma senha adicional.</string>
+  <string name="info_extra_password_button">Defina senha adicional</string>
+  <string name="configure_extra_password_cannot_be_blank">A senha não pode estar em branco</string>
+  <string name="configure_extra_password_password_too_short">Senha muito curta</string>
+  <string name="confirm_extra_password_title">Defina senha adicional</string>
+  <string name="confirm_extra_password_body">You will be logged out and will have to log in again on all of your other devices.</string>
+  <string name="confirm_extra_password_error">Could not set extra password</string>
+  <string name="confirm_extra_password_success">Senha adicional configurada</string>
 </resources>

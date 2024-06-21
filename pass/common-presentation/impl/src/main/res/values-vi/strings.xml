@@ -17,14 +17,14 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="item_details_snackbar_message_alias_copied">Alias copied</string>
+  <string name="item_details_snackbar_message_alias_copied">Đã sao chép alias</string>
   <string name="item_details_snackbar_message_card_number_copied">Đã sao chép số thẻ</string>
-  <string name="item_details_snackbar_message_custom_field_copied">Custom field copied</string>
+  <string name="item_details_snackbar_message_custom_field_copied">Đã sao chép trường tùy chọn</string>
   <string name="item_details_snackbar_message_cvv_copied">Đã sao chép số CVV</string>
-  <string name="item_details_snackbar_message_email_copied">Email address copied</string>
+  <string name="item_details_snackbar_message_email_copied">Đã sao chép địa chỉ email</string>
   <string name="item_details_snackbar_message_password_copied">Đã sao chép mật khẩu</string>
-  <string name="item_details_snackbar_message_pin_copied">PIN code copied</string>
-  <string name="item_details_snackbar_message_totp_copied">TOTP copied</string>
+  <string name="item_details_snackbar_message_pin_copied">Đã sao chép mã PIN</string>
+  <string name="item_details_snackbar_message_totp_copied">Đã sao chép mã TOTP</string>
   <string name="item_details_snackbar_message_username_copied">Đã sao chép tên đăng nhập</string>
-  <string name="item_details_snackbar_message_website_copied">Website URL copied</string>
+  <string name="item_details_snackbar_message_website_copied">Đã sao chép URL của trang web</string>
 </resources>

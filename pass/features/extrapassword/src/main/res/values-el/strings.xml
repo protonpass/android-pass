@@ -17,11 +17,21 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="extra_password_error">Σφάλμα κατά τον έλεγχο επιπλέον κωδικού πρόσβασης</string>
-  <string name="extra_password_enter_extra_password">Εισαγάγετε τον επιπλέον κωδικό πρόσβασής σας</string>
-  <string name="extra_password_label">Επιπλέον κωδικός πρόσβασης</string>
-  <string name="extra_password_conceal_password_action">Απόκρυψη επιπλέον κωδικού πρόσβασης</string>
-  <string name="extra_password_reveal_password_action">Αποκάλυψη επιπλέον κωδικού πρόσβασης</string>
-  <string name="extra_password_error_empty">Ο επιπλέον κωδικός πρόσβασης δεν μπορεί να είναι κενός</string>
-  <string name="extra_password_error_wrong">Μη έγκυρος επιπλέον κωδικός πρόσβασης</string>
+  <string name="configure_extra_password_continue">Συνέχεια</string>
+  <string name="configure_extra_password_title">Ορισμός επιπλέον κωδικού πρόσβασης</string>
+  <string name="configure_extra_password_enter_extra_password">Επιπλέον κωδικός πρόσβασης</string>
+  <string name="configure_extra_password_repeat_extra_password">Επανάληψη κωδικού</string>
+  <string name="configure_extra_password_description">Θα σας ζητηθεί αυτός ο κωδικός πρόσβασης κατά τη σύνδεση και κατά τη μετάβαση από άλλη εφαρμογή Proton στο Proton Pass στον ιστό.</string>
+  <string name="configure_extra_password_warning">Προσοχή: Δε θα μπορείτε να αποκτήσετε πρόσβαση στον λογαριασμό σας Pass αν χάσετε αυτόν τον κωδικό πρόσβασης.</string>
+  <string name="configure_extra_password_mismatch">Οι κωδικοί πρόσβασης δεν ταυτίζονται</string>
+  <string name="extra_password_options_remove">Αφαίρεση</string>
+  <string name="info_extra_password_title">Επιπλέον κωδικός πρόσβασης</string>
+  <string name="info_extra_password_body">Προστατέψτε το Proton Pass με έναν επιπλέον κωδικό πρόσβασης.</string>
+  <string name="info_extra_password_button">Ορισμός επιπλέον κωδικού πρόσβασης</string>
+  <string name="configure_extra_password_cannot_be_blank">Ο κωδικός δεν μπορεί να είναι κενός</string>
+  <string name="configure_extra_password_password_too_short">Ο κωδικός είναι πολύ σύντομος</string>
+  <string name="confirm_extra_password_title">Ορισμός επιπλέον κωδικού πρόσβασης</string>
+  <string name="confirm_extra_password_body">Θα αποσυνδεθείτε και θα πρέπει να συνδεθείτε ξανά σε όλες τις άλλες συσκευές σας.</string>
+  <string name="confirm_extra_password_error">Δεν ήταν δυνατός ο ορισμός επιπλέον κωδικού πρόσβασης</string>
+  <string name="confirm_extra_password_success">Ο επιπλέον ορισμός κωδικού πρόσβασης έχει τεθεί</string>
 </resources>

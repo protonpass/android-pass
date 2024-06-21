@@ -40,6 +40,7 @@
   <string name="share_with_email_hint">Adres e-mail</string>
   <string name="share_with_email_error">Adres e-mail jest nieprawidłowy</string>
   <string name="share_with_email_cannot_invite_outside_org">Nie możesz zapraszać użytkowników spoza swojej organizacji. Skontaktuj się z administratorem, aby uzyskać więcej informacji</string>
+  <string name="share_with_email_email_already_added">You have already added this email address</string>
   <string name="share_permissions_title">Ustaw uprawnienia</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s udostępnia Ci sejf</string>
   <string name="sharing_join_shared_vault">Dołącz i synchronizuj</string>

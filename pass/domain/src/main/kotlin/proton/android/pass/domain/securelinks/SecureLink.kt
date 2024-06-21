@@ -29,7 +29,7 @@ data class SecureLink(
     val shareId: ShareId,
     val itemId: ItemId,
     val expirationInSeconds: Long,
-    val isExpired: Boolean,
+    val isActive: Boolean,
     val maxReadCount: Int?,
     val readCount: Int,
     val url: String

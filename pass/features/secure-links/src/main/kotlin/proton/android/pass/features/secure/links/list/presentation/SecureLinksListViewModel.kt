@@ -30,7 +30,9 @@ import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.GetItemById
-import proton.android.pass.data.api.usecases.securelink.ObserveUnexpiredSecureLinks
+import proton.android.pass.data.api.usecases.securelink.ObserveActiveSecureLinks
+import proton.android.pass.data.api.usecases.securelink.ObserveInactiveSecureLinks
+import proton.android.pass.domain.securelinks.SecureLink
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -39,48 +41,55 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SecureLinksListViewModel @Inject constructor(
-    observeUnexpiredSecureLinks: ObserveUnexpiredSecureLinks,
-    getItemById: GetItemById,
-    encryptionContextProvider: EncryptionContextProvider,
+    observeActiveSecureLinks: ObserveActiveSecureLinks,
+    observeInactiveSecureLinks: ObserveInactiveSecureLinks,
     userPreferencesRepository: UserPreferencesRepository,
+    private val getItemById: GetItemById,
+    private val encryptionContextProvider: EncryptionContextProvider,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
-    private val secureLinksModelsFlow = observeUnexpiredSecureLinks().map { secureLinks ->
-        secureLinks.map { secureLink ->
-            getItemById(
-                shareId = secureLink.shareId,
-                itemId = secureLink.itemId
-            ).let { item ->
-                encryptionContextProvider.withEncryptionContext {
-                    SecureLinkModel(
-                        itemTitle = decrypt(item.title),
-                        itemType = item.itemType,
-                        secureLink = secureLink
-                    )
-                }
-            }
-        }
+    private val activeSecureLinksModelsFlow = observeActiveSecureLinks()
+        .map { activeSecureLinks -> activeSecureLinks.toModel() }
+
+    private val inactiveSecureLinksModelsFlow = observeInactiveSecureLinks()
+        .map { inactiveSecureLinks -> inactiveSecureLinks.toModel() }
+
+    internal val state: StateFlow<SecureLinksListState> = combine(
+        activeSecureLinksModelsFlow,
+        inactiveSecureLinksModelsFlow,
+        userPreferencesRepository.getUseFaviconsPreference()
+    ) { activeSecureLinksModels, inactiveSecureLinksModels, useFaviconsPreference ->
+        SecureLinksListState(
+            activeSecureLinksModels = activeSecureLinksModels,
+            inactiveSecureLinksModels = inactiveSecureLinksModels,
+            canLoadExternalImages = useFaviconsPreference.value(),
+            isLoadingState = IsLoadingState.NotLoading
+        )
     }.catch { error ->
         PassLogger.w(TAG, "There was an error while observing secure links")
         PassLogger.w(TAG, error)
         snackbarDispatcher(SecureLinksListSnackbarMessage.LinksFetchingError)
-    }
-
-    internal val state: StateFlow<SecureLinksListState> = combine(
-        secureLinksModelsFlow,
-        userPreferencesRepository.getUseFaviconsPreference()
-    ) { secureLinkModels, useFaviconsPreference ->
-        SecureLinksListState(
-            secureLinksModels = secureLinkModels,
-            canLoadExternalImages = useFaviconsPreference.value(),
-            isLoadingState = IsLoadingState.NotLoading
-        )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
         initialValue = SecureLinksListState.Initial
     )
+
+    private suspend fun List<SecureLink>.toModel() = map { secureLink ->
+        getItemById(
+            shareId = secureLink.shareId,
+            itemId = secureLink.itemId
+        ).let { item ->
+            encryptionContextProvider.withEncryptionContext {
+                SecureLinkModel(
+                    itemTitle = decrypt(item.title),
+                    itemType = item.itemType,
+                    secureLink = secureLink
+                )
+            }
+        }
+    }
 
     private companion object {
 

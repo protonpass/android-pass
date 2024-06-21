@@ -19,12 +19,14 @@
 package proton.android.pass.features.secure.links.list.presentation
 
 import androidx.compose.runtime.Stable
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
 @Stable
 internal data class SecureLinksListState(
-    internal val activeSecureLinksModels: List<SecureLinkModel>,
-    internal val inactiveSecureLinksModels: List<SecureLinkModel>,
+    internal val activeSecureLinksModels: PersistentList<SecureLinkModel>,
+    internal val inactiveSecureLinksModels: PersistentList<SecureLinkModel>,
     internal val canLoadExternalImages: Boolean,
     internal val isLoadingState: IsLoadingState
 ) {
@@ -34,8 +36,8 @@ internal data class SecureLinksListState(
     internal companion object {
 
         internal val Initial: SecureLinksListState = SecureLinksListState(
-            activeSecureLinksModels = emptyList(),
-            inactiveSecureLinksModels = emptyList(),
+            activeSecureLinksModels = persistentListOf(),
+            inactiveSecureLinksModels = persistentListOf(),
             canLoadExternalImages = false,
             isLoadingState = IsLoadingState.Loading
         )

@@ -17,11 +17,21 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="extra_password_error">დამატებითი პაროლის შემოწმების შეცდომა</string>
-  <string name="extra_password_enter_extra_password">შეიყვანეთ თქვენი დაამატებითი პაროლი</string>
-  <string name="extra_password_label">დამატებითი პაროლი</string>
-  <string name="extra_password_conceal_password_action">დამატებითი პაროლის დამალვა</string>
-  <string name="extra_password_reveal_password_action">დამატებითი პაროლის გამოჩენა</string>
-  <string name="extra_password_error_empty">დამატებითი პაროლი ცარიელი არ შეიძლება იყოს</string>
-  <string name="extra_password_error_wrong">არასწორი დამატებითი პაროლი</string>
+  <string name="configure_extra_password_continue">გაგრძელება</string>
+  <string name="configure_extra_password_title">დამატებითი პაროლის დაყენება</string>
+  <string name="configure_extra_password_enter_extra_password">დამატებითი პაროლი</string>
+  <string name="configure_extra_password_repeat_extra_password">გაიმეორეთ პაროლი</string>
+  <string name="configure_extra_password_description">You will be asked for this password during login and when switching from another Proton app to Proton Pass on web.</string>
+  <string name="configure_extra_password_warning">Caution: You won’t be able to access your Pass account if you lose this password.</string>
+  <string name="configure_extra_password_mismatch">პაროლები არ ემთხვევა</string>
+  <string name="extra_password_options_remove">წაშლა</string>
+  <string name="info_extra_password_title">დამატებითი პაროლი</string>
+  <string name="info_extra_password_body">დაიცავით Proton Pass დამატებითი პაროლით.</string>
+  <string name="info_extra_password_button">დამატებითი პაროლის დაყენება</string>
+  <string name="configure_extra_password_cannot_be_blank">პაროლი ცარიელი ვერ იქნება</string>
+  <string name="configure_extra_password_password_too_short">პაროლი ძალიან მოკლეა</string>
+  <string name="confirm_extra_password_title">დამატებითი პაროლის დაყენება</string>
+  <string name="confirm_extra_password_body">You will be logged out and will have to log in again on all of your other devices.</string>
+  <string name="confirm_extra_password_error">დამატებითი პაროლის დაყენება შეუძლებელია</string>
+  <string name="confirm_extra_password_success">დამატებითი პაროლი დაყენებულია</string>
 </resources>

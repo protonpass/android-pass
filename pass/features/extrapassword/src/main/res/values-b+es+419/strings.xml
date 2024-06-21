@@ -17,11 +17,21 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="extra_password_error">Error al comprobar la contraseña adicional</string>
-  <string name="extra_password_enter_extra_password">Ingrese su contraseña adicional</string>
-  <string name="extra_password_label">Contraseña adicional</string>
-  <string name="extra_password_conceal_password_action">Ocultar la contraseña adicional</string>
-  <string name="extra_password_reveal_password_action">Mostrar la contraseña adicional</string>
-  <string name="extra_password_error_empty">La contraseña adicional no puede estar vacía.</string>
-  <string name="extra_password_error_wrong">Contraseña adicional inválida</string>
+  <string name="configure_extra_password_continue">Continuar</string>
+  <string name="configure_extra_password_title">Establezca la contraseña adicional</string>
+  <string name="configure_extra_password_enter_extra_password">Contraseña adicional</string>
+  <string name="configure_extra_password_repeat_extra_password">Repetir la contraseña</string>
+  <string name="configure_extra_password_description">Se le pedirá esta contraseña durante el inicio de sesión y cuando cambie de una aplicación de Proton a Proton Pass en la web.</string>
+  <string name="configure_extra_password_warning">Precaución: No podrá acceder a su cuenta de Pass si pierde esta contraseña.</string>
+  <string name="configure_extra_password_mismatch">Las contraseñas no coinciden.</string>
+  <string name="extra_password_options_remove">Borrar</string>
+  <string name="info_extra_password_title">Contraseña adicional</string>
+  <string name="info_extra_password_body">Proteja Proton Pass con una contraseña adicional.</string>
+  <string name="info_extra_password_button">Configure la contraseña adicional</string>
+  <string name="configure_extra_password_cannot_be_blank">La contraseña no puede estar en blanco.</string>
+  <string name="configure_extra_password_password_too_short">La contraseña es demasiado corta.</string>
+  <string name="confirm_extra_password_title">Configure la contraseña adicional</string>
+  <string name="confirm_extra_password_body">Se cerrará la sesión y tendrás que volver a iniciarla en todos los dispositivos.</string>
+  <string name="confirm_extra_password_error">No se ha podido configurar la contraseña adicional.</string>
+  <string name="confirm_extra_password_success">La contraseña adicional está configurada.</string>
 </resources>

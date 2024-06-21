@@ -11,6 +11,7 @@
   <string name="profile_option_rating">Valora l\'aplicació</string>
   <string name="profile_option_autofill">Emplenament automàtic</string>
   <string name="profile_option_autofill_subtitle">Ompliu automàticament els vostres noms d\'usuari i contrasenyes.</string>
+  <string name="profile_option_secure_links">Enllaces segurs</string>
   <string name="profile_error_biometry_failed_to_start">No s\'ha pogut iniciar l\'autenticació biomètrica</string>
   <string name="profile_error_biometry_failed_to_authenticate">No s’ha pogut autenticar</string>
   <string name="profile_fingerprint_lock_enabled">S\'ha activat el bloqueig per empremta digital.</string>
@@ -51,8 +52,8 @@
   <string name="profile_passkey_support_section_title">Claus d\'accés</string>
   <string name="profile_passkey_support_subtitle_supported">Se suporten claus d\'accés</string>
   <string name="profile_passkey_support_subtitle_not_supported_android_version">La vostra versió d\'Android no suporta claus de pas</string>
-  <string name="profile_passkey_support_subtitle_not_supported_credential_manager">El seu dispositiu no suporta claus d\'accés.</string>
-  <string name="profile_passkey_support_subtitle_not_supported_unknown">No s\'ha pogut comprovar el suport per a les claus d\'accés</string>
+  <string name="profile_passkey_support_subtitle_not_supported_credential_manager">El vostre dispositiu no suporta claus d\'accés.</string>
+  <string name="profile_passkey_support_subtitle_not_supported_unknown">No s\'ha pogut comprovar la compatibilitat per a les claus d\'accés</string>
   <plurals name="profile_after_days">
     <item quantity="one">Després de %d dia</item>
     <item quantity="other">Després de %d dies</item>

@@ -22,11 +22,4 @@
   <string name="account_settings_list_item_extra_password_header">Επιπλέον κωδικός πρόσβασης για το Proton Pass</string>
   <string name="account_settings_list_item_extra_password_active">Ενεργό</string>
   <string name="account_settings_list_item_extra_password_description">Ο επιπλέον κωδικός πρόσβασης θα απαιτηθεί για τη χρήση του Pass. Λειτουργεί ως πρόσθετος κωδικός πρόσβασης πάνω από τον κωδικό πρόσβασης Proton.</string>
-  <string name="configure_extra_password_continue">Συνέχεια</string>
-  <string name="configure_extra_password_title">Ορισμός επιπλέον κωδικού πρόσβασης</string>
-  <string name="configure_extra_password_enter_extra_password">Επιπλέον κωδικός πρόσβασης</string>
-  <string name="configure_extra_password_repeat_extra_password">Επανάληψη κωδικού</string>
-  <string name="configure_extra_password_description">Θα σας ζητηθεί αυτός ο κωδικός πρόσβασης κατά τη σύνδεση και κατά τη μετάβαση από άλλη εφαρμογή Proton στο Proton Pass στον ιστό.</string>
-  <string name="configure_extra_password_warning">Προσοχή: Δε θα μπορείτε να αποκτήσετε πρόσβαση στον λογαριασμό σας Pass αν χάσετε αυτόν τον κωδικό πρόσβασης.</string>
-  <string name="extra_password_options_remove">Αφαίρεση</string>
 </resources>

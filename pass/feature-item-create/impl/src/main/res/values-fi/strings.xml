@@ -120,7 +120,7 @@
   <string name="identity_field_first_name_title">Etunimi</string>
   <string name="identity_field_last_name_title">Sukunimi</string>
   <string name="identity_field_middle_name_title">Toinen nimi</string>
-  <string name="identity_field_birthdate_title">Syntymäaika</string>
+  <string name="identity_field_birthdate_title">Syntymäpäivä</string>
   <string name="identity_field_gender_title">Sukupuoli</string>
   <string name="identity_field_floor_title">Kerros</string>
   <string name="identity_field_county_title">Maa</string>
@@ -130,12 +130,12 @@
   <string name="identity_field_yahoo_title">Yahoo-käyttäjätunnus</string>
   <string name="identity_field_instagram_title">Instagram-käyttäjätunnus</string>
   <string name="identity_field_personal_website_title">Henkilökohtainen verkkosivusto</string>
-  <string name="identity_field_work_phone_number_title">Työpuhelinnumero</string>
-  <string name="identity_field_work_email_title">Työsähköpostiosoite</string>
+  <string name="identity_field_work_phone_number_title">Työpuhelin</string>
+  <string name="identity_field_work_email_title">Työsähköposti</string>
   <string name="identity_add_field_first_name">Etunimi</string>
   <string name="identity_add_field_middle_name">Toinen nimi</string>
   <string name="identity_add_field_last_name">Sukunimi</string>
-  <string name="identity_add_field_birthdate">Syntymäaika</string>
+  <string name="identity_add_field_birthdate">Syntymäpäivä</string>
   <string name="identity_add_field_gender">Sukupuoli</string>
   <string name="identity_add_field_floor">Kerros</string>
   <string name="identity_add_field_county">Maa</string>
@@ -145,8 +145,8 @@
   <string name="identity_add_field_yahoo">Yahoo-käyttäjätunnus</string>
   <string name="identity_add_field_instagram">Instagram-käyttäjätunnus</string>
   <string name="identity_add_field_personal_website">Henkilökohtainen verkkosivusto</string>
-  <string name="identity_add_field_work_phone_number">Työpuhelinnumero</string>
-  <string name="identity_add_field_work_email_address">Työsähköpostiosoite</string>
+  <string name="identity_add_field_work_phone_number">Työpuhelin</string>
+  <string name="identity_add_field_work_email_address">Työsähköposti</string>
   <string name="identity_add_field_custom_field">Mukautettu kenttä</string>
   <string name="identity_section_personal_details">Henkilötiedot</string>
   <string name="identity_section_address_details">Osoitetiedot</string>
@@ -154,8 +154,11 @@
   <string name="identity_section_work_details">Työtiedot</string>
   <string name="identity_add_more_fields">Lisää</string>
   <string name="identity_bottomsheet_add_field">Lisää kenttä</string>
+  <string name="create_identity_init_error">Ongelma identiteetin tietojen noudossa</string>
   <string name="create_identity_item_creation_error">Identiteettiä ei voitu luoda</string>
   <string name="create_identity_item_creation_success">Identiteetti luotiin</string>
+  <string name="update_identity_item_creation_success">Identiteettiä muokattiin</string>
+  <string name="update_identity_item_creation_error">Identiteettiä ei voitu päivittää</string>
   <!--  Common create items  -->
   <string name="title_create">Luo</string>
   <string name="changes_saved">Muutokset tallennettiin</string>

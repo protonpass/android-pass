@@ -154,8 +154,11 @@
   <string name="identity_section_work_details">Szczegóły służbowe</string>
   <string name="identity_add_more_fields">Dodaj więcej</string>
   <string name="identity_bottomsheet_add_field">Dodaj pole</string>
+  <string name="create_identity_init_error">Problem retrieving identity details</string>
   <string name="create_identity_item_creation_error">Nie można utworzyć tożsamości</string>
   <string name="create_identity_item_creation_success">Tożsamość została utworzona</string>
+  <string name="update_identity_item_creation_success">Tożsamość została zaktualizowana</string>
+  <string name="update_identity_item_creation_error">Could not update identity</string>
   <!--  Common create items  -->
   <string name="title_create">Utwórz</string>
   <string name="changes_saved">Zmiany zostały zapisane</string>

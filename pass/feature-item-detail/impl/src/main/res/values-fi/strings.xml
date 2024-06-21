@@ -108,7 +108,7 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Oikeutesi eivät riitä tämän holvin jakamiseen.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Olet saavuttanut holvien jakamisrajan. Jos haluat jakaa lisää holveja, päivitä nykyinen tilauksesi.</string>
   <string name="item_detail_history_created">Luotu</string>
-  <string name="item_detail_history_modified_last">Viimeksi muokattu</string>
+  <string name="item_detail_history_modified_last">Muokattu viimeksi</string>
   <string name="item_detail_history_button_view">Näytä kohteen historia</string>
   <string name="password_score_vulnerable">Haavoittuvainen</string>
   <string name="password_score_weak">Heikko</string>

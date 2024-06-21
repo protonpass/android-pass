@@ -17,11 +17,21 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="extra_password_error">Errore nella verifica della password aggiuntiva</string>
-  <string name="extra_password_enter_extra_password">Inserisci la password aggiuntiva</string>
-  <string name="extra_password_label">Password aggiuntiva</string>
-  <string name="extra_password_conceal_password_action">Nascondi la password aggiuntiva</string>
-  <string name="extra_password_reveal_password_action">Mostra la password aggiuntiva</string>
-  <string name="extra_password_error_empty">Password aggiuntiva necessaria</string>
-  <string name="extra_password_error_wrong">Password aggiuntiva non valida</string>
+  <string name="configure_extra_password_continue">Continua</string>
+  <string name="configure_extra_password_title">Imposta una password aggiuntiva</string>
+  <string name="configure_extra_password_enter_extra_password">Password aggiuntiva</string>
+  <string name="configure_extra_password_repeat_extra_password">Conferma la password</string>
+  <string name="configure_extra_password_description">Ti verrà richiesta questa password quando effettui l\'accesso e quando passi da un\'altra app Proton a Proton Pass web.</string>
+  <string name="configure_extra_password_warning">Attenzione: non potrai accedere al tuo account Pass se perdi questa password.</string>
+  <string name="configure_extra_password_mismatch">Le password non corrispondono</string>
+  <string name="extra_password_options_remove">Disabilita</string>
+  <string name="info_extra_password_title">Password aggiuntiva</string>
+  <string name="info_extra_password_body">Proteggi Proton Pass con una password aggiuntiva.</string>
+  <string name="info_extra_password_button">Imposta la password aggiuntiva</string>
+  <string name="configure_extra_password_cannot_be_blank">La password non può essere vuota</string>
+  <string name="configure_extra_password_password_too_short">Password troppo corta</string>
+  <string name="confirm_extra_password_title">Imposta la password aggiuntiva</string>
+  <string name="confirm_extra_password_body">Verrai disconnesso e dovrai accedere nuovamente su tutti gli altri tuoi dispositivi.</string>
+  <string name="confirm_extra_password_error">Impossibile impostare la password aggiuntiva</string>
+  <string name="confirm_extra_password_success">Password aggiuntiva impostata</string>
 </resources>

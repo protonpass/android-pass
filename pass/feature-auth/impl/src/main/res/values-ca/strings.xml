@@ -25,6 +25,7 @@
   </plurals>
   <string name="auth_unlock_app_title">Desbloqueja Proton Pass</string>
   <string name="auth_unlock_app_subtitle">Introduïu la contrasenya principal per a %s</string>
+  <string name="auth_unlock_app_extra_password_subtitle">Introduïu la contrasenya addicional per a %s</string>
   <string name="auth_master_password_label">Contrasenya principal</string>
   <string name="auth_action_reveal_password">Mostra la contrasenya principal</string>
   <string name="auth_action_conceal_password">Oculta la contrasenya principal</string>
@@ -34,6 +35,9 @@
   <string name="auth_error_verifying_password">S\'ha produït un error en verificar la vostra contrasenya.</string>
   <string name="auth_error_empty_password">La contrasenya no pot estar buida.</string>
   <string name="auth_error_pin_cannot_be_empty">El codi PIN no pot estar buit.</string>
+  <string name="auth_extra_password_label">Introduïu la vostra contrasenya d\'inici de sessió</string>
+  <string name="auth_extra_password_error">Error on authenticating with extra password</string>
+  <string name="auth_error_wrong_password_no_attempts">La contrasenya no és correcta.</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Contrasenya incorrecta. %d intent restant.</item>
     <item quantity="other">Contrasenya incorrecta. %d intents restants.</item>

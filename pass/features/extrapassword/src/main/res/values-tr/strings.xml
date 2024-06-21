@@ -17,11 +17,21 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="extra_password_error">Ek parola denetlenirken sorun çıktı</string>
-  <string name="extra_password_enter_extra_password">Ek parolanızı yazın</string>
-  <string name="extra_password_label">Ek parola</string>
-  <string name="extra_password_conceal_password_action">Ek parolayı gizle</string>
-  <string name="extra_password_reveal_password_action">Ek parolayı görüntüle</string>
-  <string name="extra_password_error_empty">Ek parola boş olamaz</string>
-  <string name="extra_password_error_wrong">Ek parola geçersiz</string>
+  <string name="configure_extra_password_continue">İlerle</string>
+  <string name="configure_extra_password_title">Ek parolayı ayarla</string>
+  <string name="configure_extra_password_enter_extra_password">Ek parola</string>
+  <string name="configure_extra_password_repeat_extra_password">Parola onayı</string>
+  <string name="configure_extra_password_description">Oturum açarken ve başka bir Proton uygulamasından Proton Pass İnternet uygulamasına geçerken sizden bu parola istenir.</string>
+  <string name="configure_extra_password_warning">Dikkat: Bu parolayı kaybederseniz Pass hesabınıza erişemezsiniz.</string>
+  <string name="configure_extra_password_mismatch">Parola ile onayı aynı değil</string>
+  <string name="extra_password_options_remove">Kaldır</string>
+  <string name="info_extra_password_title">Extra password</string>
+  <string name="info_extra_password_body">Proton Pass uygulamasını bir ek parola ile koruyun.</string>
+  <string name="info_extra_password_button">Ek parolayı ayarla</string>
+  <string name="configure_extra_password_cannot_be_blank">Password cannot be blank</string>
+  <string name="configure_extra_password_password_too_short">Parola çok kısa</string>
+  <string name="confirm_extra_password_title">Ek parolayı ayarla</string>
+  <string name="confirm_extra_password_body">Oturumunuz kapatılacak ve diğer tüm aygıtlarınızda yeniden oturum açmanız gerekecek.</string>
+  <string name="confirm_extra_password_error">Could not set extra password</string>
+  <string name="confirm_extra_password_success">Ek parola ayarlandı</string>
 </resources>

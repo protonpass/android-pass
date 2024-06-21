@@ -34,6 +34,7 @@
   <string name="share_with_email_hint">Địa chỉ email</string>
   <string name="share_with_email_error">Địa chỉ email không hợp lệ</string>
   <string name="share_with_email_cannot_invite_outside_org">You can\'t invite people outside of your organization, contact admin for more info</string>
+  <string name="share_with_email_email_already_added">You have already added this email address</string>
   <string name="share_permissions_title">Thiết lập cấp độ truy cập</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s mời bạn truy cập nội dung trong</string>
   <string name="sharing_join_shared_vault">Tham gia và đồng bộ</string>

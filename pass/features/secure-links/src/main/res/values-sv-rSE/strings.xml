@@ -26,7 +26,7 @@
   <string name="secure_links_create_row_expiration_options_fourteen_days">14 dagar</string>
   <string name="secure_links_create_row_expiration_options_thirty_days">30 dagar</string>
   <string name="secure_links_create_row_max_views_title">Begränsa antalet visningar</string>
-  <string name="secure_links_create_row_max_views_subtitle">Maximum views: %d</string>
+  <string name="secure_links_create_row_max_views_subtitle">Maximalt antal visningar: %d</string>
   <string name="secure_links_create_button_generate">Generera säker länk</string>
   <string name="secure_links_create_snackbar_message_error">Det var ett fel vid generering av säker länk</string>
   <!--Overview screen-->
@@ -39,6 +39,13 @@
   <string name="secure_links_overview_widget_max_views_unlimited">Obegränsat</string>
   <string name="secure_links_shared_action_copy_link">Kopiera länk</string>
   <string name="secure_links_shared_action_share_link">Dela länk</string>
-  <string name="secure_links_overview_button_view_all_links">Visa alla dina delade länkar</string>
+  <string name="secure_links_overview_button_view_all_links">Visa alla dina säkra länkar</string>
   <string name="secure_links_shared_snackbar_message_link_copied">Säker länk kopierad</string>
+  <!--List screen-->
+  <string name="secure_links_list_title">Säkra länkar</string>
+  <string name="secure_links_list_expiration_description">Löper ut om %s</string>
+  <plurals name="secure_links_list_viewed_times_description">
+    <item quantity="one">%d visning</item>
+    <item quantity="other">%d visningar</item>
+  </plurals>
 </resources>

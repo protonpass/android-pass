@@ -26,7 +26,7 @@
   <string name="sync_dialog_title_error">სინქრონიზაცია ჩავარდა</string>
   <string name="sync_dialog_title_success">სინქრონიზაცია დასრულდა</string>
   <string name="sync_dialog_subtitle">მიმდინარეობს თქვენი ელემენტების გადმოწერა და გაშიფვრა. ამას რამდენიმე წუთი შეიძლება, დასჭირდეს.</string>
-  <string name="sync_dialog_subtitle_error">There was an error downloading and decrypting your items. Please try again.</string>
+  <string name="sync_dialog_subtitle_error">თქვენი ელემენტების გადმოწერის და გაშიფვრის შეცდომა. თავიდან სცადეთ.</string>
   <string name="sync_dialog_subtitle_success">თქვენი ელემენტები წარმატებით გადმოიწერა და გაიშიფრა.</string>
   <string name="sync_item_not_started">არ არის დაწყებული</string>
   <string name="sync_item_failed">სინქრონიზაცია ჩავარდა</string>

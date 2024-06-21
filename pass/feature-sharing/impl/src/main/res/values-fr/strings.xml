@@ -36,6 +36,7 @@
   <string name="share_with_email_hint">Adresse e-mail</string>
   <string name="share_with_email_error">L\'adresse e-mail n\'est pas valide.</string>
   <string name="share_with_email_cannot_invite_outside_org">Vous ne pouvez pas inviter des personnes extérieures à votre organisation. Contactez l\'administrateur pour plus d\'informations.</string>
+  <string name="share_with_email_email_already_added">Vous avez déjà ajouté cette adresse e-mail.</string>
   <string name="share_permissions_title">Définir le niveau d\'accès</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s vous invite à accéder à des éléments dans</string>
   <string name="sharing_join_shared_vault">Rejoindre et synchroniser</string>

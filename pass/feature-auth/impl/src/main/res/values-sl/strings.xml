@@ -27,6 +27,7 @@
   </plurals>
   <string name="auth_unlock_app_title">Odkleni Proton Pass</string>
   <string name="auth_unlock_app_subtitle">Vnesite glavno geslo za %s</string>
+  <string name="auth_unlock_app_extra_password_subtitle">Enter the extra password for %s</string>
   <string name="auth_master_password_label">Glavno geslo</string>
   <string name="auth_action_reveal_password">Razkrij glavno geslo</string>
   <string name="auth_action_conceal_password">Skrij glavno geslo</string>
@@ -36,6 +37,9 @@
   <string name="auth_error_verifying_password">Napaka pri preverjanju gesla</string>
   <string name="auth_error_empty_password">Geslo ne more biti prazno.</string>
   <string name="auth_error_pin_cannot_be_empty">PIN vnos ne sme biti prazen.</string>
+  <string name="auth_extra_password_label">Vnesite dodatno geslo</string>
+  <string name="auth_extra_password_error">Error on authenticating with extra password</string>
+  <string name="auth_error_wrong_password_no_attempts">Napačno geslo</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Napačno geslo. Še %d poskus</item>
     <item quantity="two">Napačno geslo. Še %d poskusa</item>

@@ -36,6 +36,7 @@
   <string name="action_view_details">დეტალების ხილვა</string>
   <string name="action_see_all">ყველას ნახვა</string>
   <string name="action_confirm">დასტური</string>
+  <string name="action_cancel">გაუქმება</string>
   <string name="action_continue">გაგრძელება</string>
   <string name="action_retry">თავიდან</string>
   <!-- Empty list -->
@@ -139,4 +140,21 @@
   <string name="password">პაროლი</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">ღილაკი, რომ ეს მინიშნება მოაცილოთ და აღარასდროს გაჩვენოთ</string>
+  <!-- Time units -->
+  <plurals name="time_unit_days">
+    <item quantity="one">%d დღე</item>
+    <item quantity="other">%d დღე</item>
+  </plurals>
+  <plurals name="time_unit_hours">
+    <item quantity="one">%d სთ</item>
+    <item quantity="other">%d სთ</item>
+  </plurals>
+  <plurals name="time_unit_minutes">
+    <item quantity="one">%d წუთი</item>
+    <item quantity="other">%d წუთი</item>
+  </plurals>
+  <plurals name="time_unit_seconds">
+    <item quantity="one">%d წამი</item>
+    <item quantity="other">%d წამი</item>
+  </plurals>
 </resources>

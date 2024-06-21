@@ -58,6 +58,7 @@ class AutofillAppStateTest {
                         username = AssistField(
                             id = TestAutofillId(234),
                             type = FieldType.Username,
+                            detectionType = null,
                             value = null,
                             text = null,
                             isFocused = true,

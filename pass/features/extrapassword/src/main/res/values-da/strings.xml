@@ -17,11 +17,21 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="extra_password_error">Fejl ved kontrol af ekstra adgangskode</string>
-  <string name="extra_password_enter_extra_password">Indtast din ekstra adgangskode</string>
-  <string name="extra_password_label">Ekstra adgangskode</string>
-  <string name="extra_password_conceal_password_action">Skjul ekstra adgangskode</string>
-  <string name="extra_password_reveal_password_action">Vis ekstra adgangskode</string>
-  <string name="extra_password_error_empty">Ekstra adgangskode kan ikke være tom</string>
-  <string name="extra_password_error_wrong">Ugyldig ekstra adgangskode</string>
+  <string name="configure_extra_password_continue">Fortsæt</string>
+  <string name="configure_extra_password_title">Angiv ekstra adgangskode</string>
+  <string name="configure_extra_password_enter_extra_password">Ekstra adgangskode</string>
+  <string name="configure_extra_password_repeat_extra_password">Gentag adgangskode</string>
+  <string name="configure_extra_password_description">Du bliver bedt om denne adgangskode under indlogning, og ved skift fra anden Proton-app til Proton Pass på nettet.</string>
+  <string name="configure_extra_password_warning">Bemærk: Du vil ikke kunne få adgang til din Pass-konto, hvis du mister denne adgangskode.</string>
+  <string name="configure_extra_password_mismatch">Adgangskoder matcher ikke</string>
+  <string name="extra_password_options_remove">Fjern</string>
+  <string name="info_extra_password_title">Ekstra adgangskode</string>
+  <string name="info_extra_password_body">Beskyt Proton Pass med en ekstra adgangskode.</string>
+  <string name="info_extra_password_button">Indstil ekstra adgangskode</string>
+  <string name="configure_extra_password_cannot_be_blank">Adgangskoden kan ikke være tom</string>
+  <string name="configure_extra_password_password_too_short">Adgangskode for kort</string>
+  <string name="confirm_extra_password_title">Indstil ekstra adgangskode</string>
+  <string name="confirm_extra_password_body">Du bliver logget ud og skal logge ind igen på alle dine andre enheder.</string>
+  <string name="confirm_extra_password_error">Kunne ikke indstille ekstra adgangskode</string>
+  <string name="confirm_extra_password_success">Ekstra adgangskode indstillet</string>
 </resources>

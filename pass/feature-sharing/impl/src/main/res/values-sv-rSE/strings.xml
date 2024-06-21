@@ -36,6 +36,7 @@
   <string name="share_with_email_hint">E-postadress</string>
   <string name="share_with_email_error">Ogiltig e-postadress</string>
   <string name="share_with_email_cannot_invite_outside_org">Du kan inte bjuda in personer utanför din organisation, kontakta administratören för mer information</string>
+  <string name="share_with_email_email_already_added">Du har redan lagt till denna e-postadress</string>
   <string name="share_permissions_title">Ställ in åtkomstnivå</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s bjöd in dig för att komma åt objekt i</string>
   <string name="sharing_join_shared_vault">Gå med och synkronisera</string>

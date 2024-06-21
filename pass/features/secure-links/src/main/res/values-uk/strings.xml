@@ -41,6 +41,15 @@
   <string name="secure_links_overview_widget_max_views_unlimited">Unlimited</string>
   <string name="secure_links_shared_action_copy_link">Copy link</string>
   <string name="secure_links_shared_action_share_link">Share link</string>
-  <string name="secure_links_overview_button_view_all_links">View all your shared links</string>
+  <string name="secure_links_overview_button_view_all_links">View all your secure links</string>
   <string name="secure_links_shared_snackbar_message_link_copied">Захищене посилання скопійовано</string>
+  <!--List screen-->
+  <string name="secure_links_list_title">Secure links</string>
+  <string name="secure_links_list_expiration_description">Expires in %s</string>
+  <plurals name="secure_links_list_viewed_times_description">
+    <item quantity="one">%d view</item>
+    <item quantity="few">%d views</item>
+    <item quantity="many">%d views</item>
+    <item quantity="other">%d views</item>
+  </plurals>
 </resources>

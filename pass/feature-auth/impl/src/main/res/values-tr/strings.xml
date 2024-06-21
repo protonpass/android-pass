@@ -25,6 +25,7 @@
   </plurals>
   <string name="auth_unlock_app_title">Proton Pass kilidini aç</string>
   <string name="auth_unlock_app_subtitle">%s ana parolasını yazın</string>
+  <string name="auth_unlock_app_extra_password_subtitle">Enter the extra password for %s</string>
   <string name="auth_master_password_label">Ana parola</string>
   <string name="auth_action_reveal_password">Ana parolayı göster</string>
   <string name="auth_action_conceal_password">Ana parolayı gizle</string>
@@ -34,6 +35,9 @@
   <string name="auth_error_verifying_password">Parolanız onaylanırken sorun çıktı</string>
   <string name="auth_error_empty_password">Parola boş olamaz</string>
   <string name="auth_error_pin_cannot_be_empty">PIN kodu boş olamaz</string>
+  <string name="auth_extra_password_label">Ek parolanızı yazın</string>
+  <string name="auth_extra_password_error">Error on authenticating with extra password</string>
+  <string name="auth_error_wrong_password_no_attempts">Parola geçersiz</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Parola geçersiz. %d kez daha deneyebilirsiniz</item>
     <item quantity="other">Parola geçersiz. %d kez daha deneyebilirsiniz</item>

@@ -6,4 +6,8 @@
   <string name="restart_to_complete_the_update">Genstart for at fuldføre opdateringen</string>
   <string name="action_restart">Genstart</string>
   <string name="shortcut_share_logs_title">Del logfiler</string>
+  <string name="no_account_found">Ingen konto fundet</string>
+  <string name="no_session_found">Ingen session fundet</string>
+  <string name="auth_with_extra_password_failed">Mislykket godkendelse med ekstra adgangskode</string>
+  <string name="error_login_in_user">Fejl ved login på bruger</string>
 </resources>

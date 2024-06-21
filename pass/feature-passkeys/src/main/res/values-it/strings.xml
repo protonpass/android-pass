@@ -19,8 +19,8 @@
 <resources>
   <string name="select_passkey_action_title" comment="Title of the action to select a passkey. Will appear in the system passkey selector">Seleziona un\'altra passkey</string>
   <string name="select_passkey_action_subtitle" comment="Subtitle of the action to select a passkey. Will appear in the system passkey selector">Seleziona una passkey da Proton Pass</string>
-  <string name="passkeys_user_logged_out">Sei stato disconnesso. Apri l\'app per effettuare nuovamente l\'accesso.</string>
+  <string name="passkeys_user_logged_out">Effettua nuovamente l\'accesso nell\'applicazione.</string>
   <string name="passkey_confirm_item_title" comment="Title of the dialog for confirming the generation of a passkey for an item">Genera la passkey</string>
-  <string name="passkey_confirm_item_body" comment="Body of the dialog for confirming the generation of a passkey for an item. The placeholder contains the item title">Sei sicuro di voler generare una passkey per l\'elemento \'%s\'?</string>
+  <string name="passkey_confirm_item_body" comment="Body of the dialog for confirming the generation of a passkey for an item. The placeholder contains the item title">Sei sicuro di voler generare una passkey per \"%s\"?</string>
   <string name="passkey_error_generating_passkey">Generazione della passkey non riuscita</string>
 </resources>

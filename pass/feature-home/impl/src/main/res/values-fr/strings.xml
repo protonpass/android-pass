@@ -40,9 +40,11 @@
   <string name="bottomsheet_copy_cvv">Copier le code de sécurité</string>
   <string name="bottomsheet_copy_note">Copier la note</string>
   <string name="bottomsheet_edit">Modifier</string>
+  <string name="bottomsheet_copy_full_name">Copier le nom complet</string>
   <!-- Clipboard -->
   <string name="alias_copied_to_clipboard">L\'alias a été copié.</string>
   <string name="note_copied_to_clipboard">La note a été copiée.</string>
+  <string name="full_name_copied_to_clipboard">Le nom complet a été copié.</string>
   <string name="username_copied_to_clipboard">Le nom d\'utilisateur a été copié.</string>
   <string name="password_copied_to_clipboard">Le mot de passe a été copié.</string>
   <string name="credit_card_number_copied_to_clipboard">Le numéro de carte de paiement a été copié.</string>

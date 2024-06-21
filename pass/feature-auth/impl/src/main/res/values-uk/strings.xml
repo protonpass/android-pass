@@ -27,6 +27,7 @@
   </plurals>
   <string name="auth_unlock_app_title">Розблокувати Proton Pass</string>
   <string name="auth_unlock_app_subtitle">Введіть основний пароль для %s</string>
+  <string name="auth_unlock_app_extra_password_subtitle">Enter the extra password for %s</string>
   <string name="auth_master_password_label">Основний пароль</string>
   <string name="auth_action_reveal_password">Показати основний пароль</string>
   <string name="auth_action_conceal_password">Приховати основний пароль</string>
@@ -36,6 +37,9 @@
   <string name="auth_error_verifying_password">Помилка під час перевірки пароля</string>
   <string name="auth_error_empty_password">Потрібно ввести пароль</string>
   <string name="auth_error_pin_cannot_be_empty">Потрібно ввести PIN-код</string>
+  <string name="auth_extra_password_label">Уведіть ваш додатковий пароль</string>
+  <string name="auth_extra_password_error">Error on authenticating with extra password</string>
+  <string name="auth_error_wrong_password_no_attempts">Неправильний пароль</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Неправильний пароль. Залишилась %d спроба</item>
     <item quantity="few">Неправильний пароль. Залишилося %d спроби</item>

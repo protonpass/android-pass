@@ -154,8 +154,11 @@
   <string name="identity_section_work_details">Work details</string>
   <string name="identity_add_more_fields">Add more</string>
   <string name="identity_bottomsheet_add_field">Add field</string>
+  <string name="create_identity_init_error">Problem retrieving identity details</string>
   <string name="create_identity_item_creation_error">Could not create identity</string>
   <string name="create_identity_item_creation_success">Identity created</string>
+  <string name="update_identity_item_creation_success">Identity updated</string>
+  <string name="update_identity_item_creation_error">Could not update identity</string>
   <!--  Common create items  -->
   <string name="title_create">創建</string>
   <string name="changes_saved">更改保存。</string>

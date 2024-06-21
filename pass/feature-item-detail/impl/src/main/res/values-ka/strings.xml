@@ -44,7 +44,7 @@
     <item quantity="other">%d სხვა მომხმარებელი იყენებს ამ პაროლს</item>
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">მოირგეთ 2FA მეტი უსაფრთხოებისთვის</string>
-  <string name="login_item_monitor_widget_missing_two_fa_subtitle">This service offers 2FA. Enable it for added account security.</string>
+  <string name="login_item_monitor_widget_missing_two_fa_subtitle">ეს სერვისი გთავაზობთ 2FA-ს. ჩართეთ ის დამატებითი ანგარიშის უსაფრთხოებისთვის.</string>
   <string name="login_item_reused_passwords_subtitle">ელემენტები თქვენი საცავებიდან, რომლებიც ამ პაროლს იყენებს.</string>
   <string name="field_email">ელფოსტის მისამართი</string>
   <string name="field_username">მომხმარებლის სახელი</string>

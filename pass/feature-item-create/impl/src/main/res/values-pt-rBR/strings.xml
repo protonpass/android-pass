@@ -154,8 +154,11 @@
   <string name="identity_section_work_details">Detalhes do trabalho</string>
   <string name="identity_add_more_fields">Adicionar mais</string>
   <string name="identity_bottomsheet_add_field">Adicionar campo</string>
+  <string name="create_identity_init_error">Problema ao recuperar os detalhes da identidade.</string>
   <string name="create_identity_item_creation_error">Não foi possível criar a identidade</string>
   <string name="create_identity_item_creation_success">Identidade criada</string>
+  <string name="update_identity_item_creation_success">Identidade atualizada</string>
+  <string name="update_identity_item_creation_error">Não foi possível atualizar a identidade</string>
   <!--  Common create items  -->
   <string name="title_create">Criar</string>
   <string name="changes_saved">Alterações salvas</string>

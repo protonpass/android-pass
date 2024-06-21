@@ -151,6 +151,7 @@ class NodeClustererTest {
     ): AssistField = AssistField(
         id = TestAutofillId(id),
         type = FieldType.Username,
+        detectionType = null,
         value = null,
         text = null,
         isFocused = false,
@@ -161,6 +162,7 @@ class NodeClustererTest {
     private fun passwordField(id: Int, nodePath: List<Int>): AssistField = AssistField(
         id = TestAutofillId(id),
         type = FieldType.Password,
+        detectionType = null,
         value = null,
         text = null,
         isFocused = false,

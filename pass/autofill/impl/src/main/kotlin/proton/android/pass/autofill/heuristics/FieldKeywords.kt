@@ -46,17 +46,17 @@ internal fun List<FieldKeywords>.match(fields: List<String>): Pair<FieldType, St
 }
 
 private val ALLOWED_ADDRESS_KEYWORDS = listOf(
-    "addresshome",
-    "homeaddress",
-    "addressline",
-    "lineaddress",
+    "address",
     "street",
     "calle",
     "casa",
+    "home",
     "house"
 )
 private val ALLOWED_POSTAL_CODE_KEYWORDS = listOf("postalcode", "zip", "zipcode")
 private val ALLOWED_PHONE_KEYWORDS = listOf("phone", "telef", "teleph", "mobile", "cellphone")
+private val ALLOWED_EMAIL_KEYWORDS = listOf(View.AUTOFILL_HINT_EMAIL_ADDRESS, "email")
+private val DEFAULT_DENIED_KEYWORDS = listOf("composer", "message", MOZILLA_BROWSER_PREFIX)
 
 internal val fieldKeywordsList = listOf(
     kw(
@@ -68,25 +68,22 @@ internal val fieldKeywordsList = listOf(
             "accountname",
             "userid"
         ),
-        deniedKeywords = listOf("composer", "message", MOZILLA_BROWSER_PREFIX)
+        deniedKeywords = DEFAULT_DENIED_KEYWORDS
     ),
     kw(
         fieldType = FieldType.Email,
-        allowedKeywords = listOf(
-            View.AUTOFILL_HINT_EMAIL_ADDRESS,
-            "email"
-        ),
-        deniedKeywords = listOf("composer", "message", MOZILLA_BROWSER_PREFIX)
+        allowedKeywords = ALLOWED_EMAIL_KEYWORDS,
+        deniedKeywords = DEFAULT_DENIED_KEYWORDS
     ),
     kw(
         fieldType = FieldType.Password,
         allowedKeywords = listOf("password"),
-        deniedKeywords = emptyList()
+        deniedKeywords = DEFAULT_DENIED_KEYWORDS
     ),
     kw(
         fieldType = FieldType.Totp,
         allowedKeywords = listOf("otp", "totp", "mfa", "2fa", "tfa"),
-        deniedKeywords = emptyList()
+        deniedKeywords = DEFAULT_DENIED_KEYWORDS
     ),
     kw(
         fieldType = FieldType.CardNumber,
@@ -97,12 +94,12 @@ internal val fieldKeywordsList = listOf(
             "inputcard",
             "numerodetarjeta"
         ),
-        deniedKeywords = emptyList()
+        deniedKeywords = DEFAULT_DENIED_KEYWORDS
     ),
     kw(
         fieldType = FieldType.CardCvv,
         allowedKeywords = listOf("cvc", "cvv", "securitycode"),
-        deniedKeywords = emptyList()
+        deniedKeywords = DEFAULT_DENIED_KEYWORDS
     ),
 
     // Keywords for cardholder name are order-sensitve. First we want to test if we find
@@ -110,12 +107,12 @@ internal val fieldKeywordsList = listOf(
     kw(
         fieldType = FieldType.CardholderFirstName,
         allowedKeywords = listOf("firstname"),
-        deniedKeywords = emptyList()
+        deniedKeywords = DEFAULT_DENIED_KEYWORDS
     ),
     kw(
         fieldType = FieldType.CardholderLastName,
         allowedKeywords = listOf("lastname"),
-        deniedKeywords = emptyList()
+        deniedKeywords = DEFAULT_DENIED_KEYWORDS
     ),
     kw(
         fieldType = FieldType.FullName,
@@ -127,7 +124,7 @@ internal val fieldKeywordsList = listOf(
             "namefull",
             "fullname"
         ),
-        deniedKeywords = emptyList()
+        deniedKeywords = DEFAULT_DENIED_KEYWORDS
     ),
 
     // Keywords for expiration are order-sensitive. First we want to test for MMYY.
@@ -136,7 +133,7 @@ internal val fieldKeywordsList = listOf(
     kw(
         fieldType = FieldType.CardExpirationMMYY,
         allowedKeywords = listOf("mmyy", "mmaa"),
-        deniedKeywords = emptyList()
+        deniedKeywords = DEFAULT_DENIED_KEYWORDS
     ),
     kw(
         fieldType = FieldType.CardExpirationMM,
@@ -147,12 +144,12 @@ internal val fieldKeywordsList = listOf(
             "expirationdatemonth",
             "mesmm"
         ),
-        deniedKeywords = emptyList()
+        deniedKeywords = DEFAULT_DENIED_KEYWORDS
     ),
     kw(
         fieldType = FieldType.CardExpirationYYYY,
         allowedKeywords = listOf("4digityear", "yyyy"),
-        deniedKeywords = emptyList()
+        deniedKeywords = DEFAULT_DENIED_KEYWORDS
     ),
     kw(
         fieldType = FieldType.CardExpirationYY,
@@ -164,22 +161,26 @@ internal val fieldKeywordsList = listOf(
             "yy",
             "anoaa"
         ),
-        deniedKeywords = emptyList()
+        deniedKeywords = DEFAULT_DENIED_KEYWORDS
     ),
     kw(
         fieldType = FieldType.Address,
         allowedKeywords = ALLOWED_ADDRESS_KEYWORDS,
-        deniedKeywords = ALLOWED_POSTAL_CODE_KEYWORDS + ALLOWED_PHONE_KEYWORDS + listOf("country")
+        deniedKeywords = DEFAULT_DENIED_KEYWORDS +
+            ALLOWED_EMAIL_KEYWORDS +
+            ALLOWED_POSTAL_CODE_KEYWORDS +
+            ALLOWED_PHONE_KEYWORDS +
+            listOf("country", "button")
     ),
     kw(
         fieldType = FieldType.PostalCode,
         allowedKeywords = ALLOWED_POSTAL_CODE_KEYWORDS,
-        deniedKeywords = emptyList()
+        deniedKeywords = DEFAULT_DENIED_KEYWORDS
     ),
     kw(
         fieldType = FieldType.Phone,
         allowedKeywords = ALLOWED_PHONE_KEYWORDS,
-        deniedKeywords = emptyList()
+        deniedKeywords = DEFAULT_DENIED_KEYWORDS
     )
 )
 

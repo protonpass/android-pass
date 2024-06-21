@@ -20,6 +20,7 @@ package proton.android.pass.data.impl.db
 
 import androidx.room.DeleteColumn
 import androidx.room.DeleteTable
+import androidx.room.RenameColumn
 import androidx.room.RenameTable
 import androidx.room.migration.AutoMigrationSpec
 import androidx.room.migration.Migration
@@ -43,6 +44,7 @@ import me.proton.core.usersettings.data.db.UserSettingsDatabase
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.data.impl.db.entities.ShareKeyEntity
+import proton.android.pass.data.impl.db.entities.securelinks.SecureLinkEntity
 import proton.android.pass.domain.items.ItemCategory
 
 @Suppress("ClassNaming")
@@ -263,6 +265,17 @@ object AppDatabaseMigrations {
             UserKeyDatabase.MIGRATION_1.migrate(db)
         }
     }
+
+    @RenameColumn.Entries(
+        value = [
+            RenameColumn(
+                tableName = SecureLinkEntity.TABLE_NAME,
+                fromColumnName = "is_expired",
+                toColumnName = SecureLinkEntity.Columns.IS_ACTIVE
+            )
+        ]
+    )
+    class MIGRATION_50_51 : AutoMigrationSpec
 
     val MIGRATION_51_52 = object : Migration(51, 52) {
         override fun migrate(db: SupportSQLiteDatabase) {

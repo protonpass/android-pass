@@ -161,7 +161,8 @@ import proton.android.pass.data.api.usecases.securelink.GenerateSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinks
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
-import proton.android.pass.data.api.usecases.securelink.ObserveUnexpiredSecureLinks
+import proton.android.pass.data.api.usecases.securelink.ObserveActiveSecureLinks
+import proton.android.pass.data.api.usecases.securelink.ObserveInactiveSecureLinks
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
 import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareId
@@ -304,7 +305,8 @@ import proton.android.pass.data.fakes.usecases.securelink.FakeGenerateSecureLink
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLink
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLinks
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLinksCount
-import proton.android.pass.data.fakes.usecases.securelink.FakeObserveUnexpiredSecureLinks
+import proton.android.pass.data.fakes.usecases.securelink.FakeObserveActiveSecureLinks
+import proton.android.pass.data.fakes.usecases.securelink.FakeObserveInactiveSecureLinks
 import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
 import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
 import proton.android.pass.data.fakes.usecases.vaults.FakeObserveVaultsGroupedByShareId
@@ -753,7 +755,10 @@ abstract class FakesDataModule {
     abstract fun bindObserveSecureLinks(impl: FakeObserveSecureLinks): ObserveSecureLinks
 
     @Binds
-    abstract fun bindObserveUnexpiredSecureLinks(impl: FakeObserveUnexpiredSecureLinks): ObserveUnexpiredSecureLinks
+    abstract fun bindObserveActiveSecureLinks(impl: FakeObserveActiveSecureLinks): ObserveActiveSecureLinks
+
+    @Binds
+    abstract fun bindObserveInactiveSecureLinks(impl: FakeObserveInactiveSecureLinks): ObserveInactiveSecureLinks
 
     @Binds
     abstract fun bindDeleteSecureLink(impl: FakeDeleteSecureLink): DeleteSecureLink

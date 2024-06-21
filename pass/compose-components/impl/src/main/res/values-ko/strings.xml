@@ -35,6 +35,7 @@
   <string name="action_view_details">자세히 보기</string>
   <string name="action_see_all">모두 보기</string>
   <string name="action_confirm">확인</string>
+  <string name="action_cancel">Cancel</string>
   <string name="action_continue">계속하기</string>
   <string name="action_retry">다시 시도하기</string>
   <!-- Empty list -->
@@ -137,4 +138,17 @@
   <string name="password">비밀번호</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">이 말풍선을 무시하고 더 이상 보지 않기 위한 버튼</string>
+  <!-- Time units -->
+  <plurals name="time_unit_days">
+    <item quantity="other">%d일</item>
+  </plurals>
+  <plurals name="time_unit_hours">
+    <item quantity="other">%d시간</item>
+  </plurals>
+  <plurals name="time_unit_minutes">
+    <item quantity="other">%d분</item>
+  </plurals>
+  <plurals name="time_unit_seconds">
+    <item quantity="other">%d초</item>
+  </plurals>
 </resources>

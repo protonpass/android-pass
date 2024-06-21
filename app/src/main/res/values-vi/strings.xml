@@ -6,4 +6,8 @@
   <string name="restart_to_complete_the_update">Mở lại để hoàn tất cập nhật</string>
   <string name="action_restart">Mở lại</string>
   <string name="shortcut_share_logs_title">Chia sẽ nhật ký</string>
+  <string name="no_account_found">Không tìm thấy tài khoản</string>
+  <string name="no_session_found">Không tìm thấy phiên làm việc</string>
+  <string name="auth_with_extra_password_failed">Xác thực bằng mật khẩu thứ 2 thất bại</string>
+  <string name="error_login_in_user">Lỗi đăng nhập người dùng</string>
 </resources>

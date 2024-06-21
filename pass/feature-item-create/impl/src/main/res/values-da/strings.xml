@@ -154,8 +154,11 @@
   <string name="identity_section_work_details">Arbejdsoplysninger</string>
   <string name="identity_add_more_fields">Tilføj mere</string>
   <string name="identity_bottomsheet_add_field">Tilføj felt</string>
+  <string name="create_identity_init_error">Problem med at hente identitetsdetaljer</string>
   <string name="create_identity_item_creation_error">Identitet kunne ikke oprettes</string>
   <string name="create_identity_item_creation_success">Identitet oprettet</string>
+  <string name="update_identity_item_creation_success">Identitet opdateret</string>
+  <string name="update_identity_item_creation_error">Identitet kunne ikke opdateres</string>
   <!--  Common create items  -->
   <string name="title_create">Opret</string>
   <string name="changes_saved">Ændringer gemt</string>

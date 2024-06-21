@@ -36,6 +36,7 @@
   <string name="action_view_details">Details anzeigen</string>
   <string name="action_see_all">Alle ansehen</string>
   <string name="action_confirm">Bestätigen</string>
+  <string name="action_cancel">Abbrechen</string>
   <string name="action_continue">Fortfahren</string>
   <string name="action_retry">Erneut versuchen</string>
   <!-- Empty list -->
@@ -139,4 +140,21 @@
   <string name="password">Passwort</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Schaltfläche, um diesen Tooltip auszublenden und nicht mehr anzuzeigen</string>
+  <!-- Time units -->
+  <plurals name="time_unit_days">
+    <item quantity="one">%d Tag</item>
+    <item quantity="other">%d Tage</item>
+  </plurals>
+  <plurals name="time_unit_hours">
+    <item quantity="one">%d Stunde</item>
+    <item quantity="other">%d Stunden</item>
+  </plurals>
+  <plurals name="time_unit_minutes">
+    <item quantity="one">%d Minute</item>
+    <item quantity="other">%d Minuten</item>
+  </plurals>
+  <plurals name="time_unit_seconds">
+    <item quantity="one">%d Sekunde</item>
+    <item quantity="other">%d Sekunden</item>
+  </plurals>
 </resources>

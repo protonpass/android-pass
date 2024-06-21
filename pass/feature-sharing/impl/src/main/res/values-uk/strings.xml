@@ -40,6 +40,7 @@
   <string name="share_with_email_hint">Адреса електронної пошти</string>
   <string name="share_with_email_error">Недійсна адреса електронної пошти</string>
   <string name="share_with_email_cannot_invite_outside_org">Ви не можете запрошувати людей поза вашою організацією, зв\'яжіться з адміністратором для отримання додаткової інформації</string>
+  <string name="share_with_email_email_already_added">You have already added this email address</string>
   <string name="share_permissions_title">Задати рівень доступу</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s запрошує вас отримати доступ до елементів у</string>
   <string name="sharing_join_shared_vault">Приєднатися та синхронізувати</string>

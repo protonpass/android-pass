@@ -36,6 +36,7 @@
   <string name="share_with_email_hint">ელფოსტის მისამართი</string>
   <string name="share_with_email_error">არასწორი ელფოსტის მისამართი</string>
   <string name="share_with_email_cannot_invite_outside_org">თქვენი ორგანიზაციის გარედან ხალხს ვერ მოიწვევთ. მეტი დეტალებისთვის დაუკავშირდით ადმინისტრატორს</string>
+  <string name="share_with_email_email_already_added">ეს ელფოსტის მისამართი უკვე დაამატეთ</string>
   <string name="share_permissions_title">წვდომის დონის დაყენება</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s გიწვევთ ელემენტებზე წვდომსთვის</string>
   <string name="sharing_join_shared_vault">შემოგვიერთდით და დასინქრონდით</string>
@@ -115,7 +116,7 @@
   <string name="share_with_recents_title">ახლახან გამოყენებულები</string>
   <string name="share_with_remove_email_content_description">ელფოსტის წაშლა</string>
   <string name="share_with_secure_link_title">დაცული ბმულით</string>
-  <string name="share_with_secure_link_description">Generate a secure link to this item.</string>
+  <string name="share_with_secure_link_description">დაცული ბმულის შექმნა ამ ელემენტისთვის.</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">წვდომის დონის დაყენება ყველაწევრისთვის</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">წვდომის დონის დაყენება მომხმარებლისთვის %s</string>
   <string name="sharing_edit_permissions_remove_user">მომხმარებლის წაშლა</string>

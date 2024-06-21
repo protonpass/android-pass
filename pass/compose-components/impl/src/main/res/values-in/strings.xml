@@ -35,6 +35,7 @@
   <string name="action_view_details">Lihat rincian</string>
   <string name="action_see_all">Lihat semua</string>
   <string name="action_confirm">Konfirmasi</string>
+  <string name="action_cancel">Batal</string>
   <string name="action_continue">Lanjutkan</string>
   <string name="action_retry">Coba lagi</string>
   <!-- Empty list -->
@@ -137,4 +138,17 @@
   <string name="password">Kata sandi</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Tombol untuk menutup tooltip dan tidak menampilkannya kembali</string>
+  <!-- Time units -->
+  <plurals name="time_unit_days">
+    <item quantity="other">%d hari</item>
+  </plurals>
+  <plurals name="time_unit_hours">
+    <item quantity="other">%d jam</item>
+  </plurals>
+  <plurals name="time_unit_minutes">
+    <item quantity="other">%d menit</item>
+  </plurals>
+  <plurals name="time_unit_seconds">
+    <item quantity="other">%d detik</item>
+  </plurals>
 </resources>

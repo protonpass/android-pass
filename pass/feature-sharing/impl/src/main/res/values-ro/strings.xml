@@ -38,6 +38,7 @@
   <string name="share_with_email_hint">Adresa de e-mail</string>
   <string name="share_with_email_error">Adresă de e-mail nevalidă.</string>
   <string name="share_with_email_cannot_invite_outside_org">Nu puteți invita persoane din afara organizației proprii. Contactați administratorul pentru mai multe informații.</string>
+  <string name="share_with_email_email_already_added">Deja ați adăugat această adresă de e-mail.</string>
   <string name="share_permissions_title">Setare nivel de acces</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s vă invită să accesați articolele din</string>
   <string name="sharing_join_shared_vault">Alăturare și sincronizare</string>

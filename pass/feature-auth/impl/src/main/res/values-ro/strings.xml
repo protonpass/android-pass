@@ -26,6 +26,7 @@
   </plurals>
   <string name="auth_unlock_app_title">Deblocare Proton Pass</string>
   <string name="auth_unlock_app_subtitle">Introduceți parola principală pentru [%s]</string>
+  <string name="auth_unlock_app_extra_password_subtitle">Introduceți parola suplimentară pentru [%s]</string>
   <string name="auth_master_password_label">Parolă principală</string>
   <string name="auth_action_reveal_password">Afișare parolă principală</string>
   <string name="auth_action_conceal_password">Ascundere parolă principală</string>
@@ -35,6 +36,9 @@
   <string name="auth_error_verifying_password">Eroare la verificarea parolei.</string>
   <string name="auth_error_empty_password">Parola nu poate fi goală.</string>
   <string name="auth_error_pin_cannot_be_empty">Codul PIN nu poate fi gol.</string>
+  <string name="auth_extra_password_label">Introduceți parola suplimentară</string>
+  <string name="auth_extra_password_error">Eroare la autentificarea cu parola suplimentară.</string>
+  <string name="auth_error_wrong_password_no_attempts">Parolă incorectă</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Parola nu este corectă. Încercări rămase: [%d]</item>
     <item quantity="few">Parola nu este corectă. Încercări rămase: [%d]</item>

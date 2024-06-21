@@ -17,11 +17,21 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="extra_password_error">Kesalahan pemeriksaan kata sandi tambahan</string>
-  <string name="extra_password_enter_extra_password">Masukkan kata sandi tambahan</string>
-  <string name="extra_password_label">Kata sandi tambahan</string>
-  <string name="extra_password_conceal_password_action">Samarkan kata sandi tambahan</string>
-  <string name="extra_password_reveal_password_action">Tampilkan kata sandi tambahan</string>
-  <string name="extra_password_error_empty">Kata sandi tambahan tidak dapat kosong</string>
-  <string name="extra_password_error_wrong">Kata sandi tambahan tidak sah</string>
+  <string name="configure_extra_password_continue">Lanjutkan</string>
+  <string name="configure_extra_password_title">Tetapkan sandi tambahan</string>
+  <string name="configure_extra_password_enter_extra_password">Kata sandi tambahan</string>
+  <string name="configure_extra_password_repeat_extra_password">Ulangi kata sandi</string>
+  <string name="configure_extra_password_description">Kamu akan diminta kata sandi ini saat masuk dan saat berpindah dari Proton app lain ke Proton Pass di web.</string>
+  <string name="configure_extra_password_warning">Perhatian: Kamu tidak akan bisa mengakses Pass account jika kamu lupa sandi ini.</string>
+  <string name="configure_extra_password_mismatch">Kata sandi tidak sesuai</string>
+  <string name="extra_password_options_remove">Hapus</string>
+  <string name="info_extra_password_title">Kata sandi tambahan</string>
+  <string name="info_extra_password_body">Lindungi Proton Pass dengan kata sandi tambahan.</string>
+  <string name="info_extra_password_button">Tetapkan kata sandi tambahan</string>
+  <string name="configure_extra_password_cannot_be_blank">Kata sandi tidak boleh kosong</string>
+  <string name="configure_extra_password_password_too_short">Kata sandi terlalu pendek</string>
+  <string name="confirm_extra_password_title">Tetapkan kata sandi tambahan</string>
+  <string name="confirm_extra_password_body">Anda akan dikeluarkan dari akun dan perlu untuk masuk kembali pada seluruh perangkat lainnya yang Anda miliki</string>
+  <string name="confirm_extra_password_error">Kata sandi tambahan tidak dapat ditetapkan</string>
+  <string name="confirm_extra_password_success">Kata sandi tambahan ditetapkan</string>
 </resources>

@@ -12,7 +12,7 @@
   <string name="item_list_header_logins_type">Login</string>
   <string name="item_list_header_aliases_type">Alias</string>
   <string name="item_list_header_notes_type">Note</string>
-  <string name="item_list_header_credit_cards_type">Carte di credito</string>
+  <string name="item_list_header_credit_cards_type">Carte</string>
   <plurals name="item_list_header_results">
     <item quantity="one">risultato</item>
     <item quantity="other">risultati</item>
@@ -28,20 +28,21 @@
   <string name="bottomsheet_monitor_exclude">Escludi dal monitoraggio</string>
   <string name="bottomsheet_monitor_include">Includi nel monitoraggio</string>
   <!-- Actions -->
-  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Menu apri azioni elemento</string>
-  <string name="action_upgrade_now">Effettua l\'upgrade ora</string>
+  <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Apri menu azioni elemento</string>
+  <string name="action_upgrade_now">Effettua l\'upgrade</string>
   <string name="action_not_now">Non adesso</string>
   <string name="action_learn_more">Scopri di più</string>
   <string name="action_enable">Abilita</string>
   <string name="action_view_details">Visualizza i dettagli</string>
   <string name="action_see_all">Mostra tutto</string>
   <string name="action_confirm">Conferma</string>
+  <string name="action_cancel">Annulla</string>
   <string name="action_continue">Continua</string>
   <string name="action_retry">Riprova</string>
   <!-- Empty list -->
-  <string name="empty_list_title">Aggiungi il tuo primo elemento</string>
+  <string name="empty_list_title">Aggiungi un elemento</string>
   <string name="empty_search_results_title">Nessun risultato trovato</string>
-  <string name="empty_list_open_extension">Apri l\'estensione per il browser</string>
+  <string name="empty_list_open_extension">Apri l\'estensione per browser</string>
   <string name="empty_list_create_item_button">Crea un nuovo elemento</string>
   <!-- Field -->
   <string name="field_title_title">Nome</string>
@@ -82,8 +83,8 @@
     <item quantity="other">%d elementi</item>
   </plurals>
   <!-- Confirm close dialog -->
-  <string name="confirm_close_dialog_title">Vuoi scartare le modifiche?</string>
-  <string name="confirm_close_dialog_message">Sono presenti modifiche non salvate. Sei sicuro di volerle scartare?</string>
+  <string name="confirm_close_dialog_title">Scarta le modifiche</string>
+  <string name="confirm_close_dialog_message">Sei sicuro di voler scartare le modifiche?</string>
   <string name="confirm_close_dialog_close_button">Scarta</string>
   <!-- Upgrade -->
   <string name="upgrade">Effettua l\'upgrade</string>
@@ -97,20 +98,20 @@
   <!-- Pinning -->
   <string name="pinning_carousel_see_all">Mostra tutto</string>
   <!-- Dates -->
-  <string name="date_today" comment="Pattern to display today's date and time. (e.g. Today 10:25)">Oggi %s</string>
-  <string name="date_yesterday" comment="Pattern to display yesterday's date and time. (e.g. Yesterday 10:25)">Ieri %s</string>
+  <string name="date_today" comment="Pattern to display today's date and time. (e.g. Today 10:25)">Oggi alle %s</string>
+  <string name="date_yesterday" comment="Pattern to display yesterday's date and time. (e.g. Yesterday 10:25)">Ieri alle %s</string>
   <!--
     Pattern used when displaying a date in the same year as we are.
     It would translate to
     12 February 12:34
     -->
-  <string name="date_full_date_format">dd LLLL HH:mm</string>
+  <string name="date_full_date_format">dd LLLL alle HH:mm</string>
   <!--
     Pattern used when displaying a date including the year.
     It would translate to
     12 February 2023 12:34
     -->
-  <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+  <string name="date_full_date_format_with_year">dd LLLL yyyy alle HH:mm</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">Indirizzo alias</string>
   <string name="item_details_alias_section_mailboxes_title">Inoltra a</string>
@@ -130,8 +131,8 @@
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Passkey</string>
   <!-- Upgrade -->
-  <string name="dialog_upgrade_plan_title">Vuoi effettuare l\'upgrade del piano?</string>
-  <string name="dialog_upgrade_plan_message">Questa funzionalità non è disponibile per gli utenti con un piano gratuito.Effettua l\'upgrade per utilizzarla insieme ad altre fantastiche funzionalità.</string>
+  <string name="dialog_upgrade_plan_title">Effettua l\'upgrade</string>
+  <string name="dialog_upgrade_plan_message">Questa funzionalità non è disponibile per gli utenti con un piano gratuito. Effettua l\'upgrade per utilizzarla insieme ad altre fantastiche funzionalità.</string>
   <string name="dialog_upgrade_plan_action_confirm">Effettua l\'upgrade</string>
   <string name="dialog_upgrade_plan_action_cancel">Non adesso</string>
   <!-- Words -->
@@ -139,4 +140,21 @@
   <string name="password">Password</string>
   <!-- Tooltips -->
   <string name="tooltip_dismiss_button_content_description">Pulsante per chiudere questo suggerimento e non mostrarlo più</string>
+  <!-- Time units -->
+  <plurals name="time_unit_days">
+    <item quantity="one">%d giorno</item>
+    <item quantity="other">%d giorni</item>
+  </plurals>
+  <plurals name="time_unit_hours">
+    <item quantity="one">%d ora</item>
+    <item quantity="other">%d ore</item>
+  </plurals>
+  <plurals name="time_unit_minutes">
+    <item quantity="one">%d minuto</item>
+    <item quantity="other">%d minuti</item>
+  </plurals>
+  <plurals name="time_unit_seconds">
+    <item quantity="one">%d secondo</item>
+    <item quantity="other">%d secondi</item>
+  </plurals>
 </resources>

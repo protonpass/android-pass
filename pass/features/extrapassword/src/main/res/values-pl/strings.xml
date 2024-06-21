@@ -17,11 +17,21 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="extra_password_error">Wystąpił błąd podczas sprawdzania dodatkowego hasła</string>
-  <string name="extra_password_enter_extra_password">Wpisz dodatkowe hasło</string>
-  <string name="extra_password_label">Dodatkowe hasło</string>
-  <string name="extra_password_conceal_password_action">Ukryj dodatkowe hasło</string>
-  <string name="extra_password_reveal_password_action">Pokaż dodatkowe hasło</string>
-  <string name="extra_password_error_empty">Dodatkowe hasło nie może być puste</string>
-  <string name="extra_password_error_wrong">Dodatkowe hasło jest nieprawidłowe</string>
+  <string name="configure_extra_password_continue">Kontynuuj</string>
+  <string name="configure_extra_password_title">Ustaw dodatkowe hasło</string>
+  <string name="configure_extra_password_enter_extra_password">Dodatkowe hasło</string>
+  <string name="configure_extra_password_repeat_extra_password">Potwierdź hasło</string>
+  <string name="configure_extra_password_description">Hasło będzie wymagane podczas logowania i przełączania się do aplikacji Proton Pass przez przeglądarkę.</string>
+  <string name="configure_extra_password_warning">Ostrzeżenie: Jeśli zapomnisz tego hasła, stracisz dostęp do konta Proton Pass.</string>
+  <string name="configure_extra_password_mismatch">Hasła nie pasują do siebie</string>
+  <string name="extra_password_options_remove">Usuń</string>
+  <string name="info_extra_password_title">Extra password</string>
+  <string name="info_extra_password_body">Chroń Proton Pass za pomocą dodatkowego hasła.</string>
+  <string name="info_extra_password_button">Ustaw dodatkowe hasło</string>
+  <string name="configure_extra_password_cannot_be_blank">Password cannot be blank</string>
+  <string name="configure_extra_password_password_too_short">Hasło jest zbyt krótkie</string>
+  <string name="confirm_extra_password_title">Ustaw dodatkowe hasło</string>
+  <string name="confirm_extra_password_body">Konieczne będzie ponowne zalogowanie się na wszystkich urządzeniach.</string>
+  <string name="confirm_extra_password_error">Could not set extra password</string>
+  <string name="confirm_extra_password_success">Ustaw dodatkowe hasło</string>
 </resources>

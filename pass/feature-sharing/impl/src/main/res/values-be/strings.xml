@@ -40,6 +40,7 @@
   <string name="share_with_email_hint">Адрас электроннай пошты</string>
   <string name="share_with_email_error">Памылковы адрас электроннай пошты</string>
   <string name="share_with_email_cannot_invite_outside_org">У вас няма магчымасці запрашаць карыстальнікаў па-за межамі вашай арганізацыі. Звяжыцеся з адміністратарам, каб атрымаць дадатковыя звесткі</string>
+  <string name="share_with_email_email_already_added">Вы ўжо дадавалі гэты адрас электроннай пошты</string>
   <string name="share_permissions_title">Задаць узровень доступу</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s запрасіў(-ла) вас атрымаць доступ да элементаў у</string>
   <string name="sharing_join_shared_vault">Далучыцца і сінхранізаваць</string>

@@ -17,11 +17,21 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="extra_password_error">Ошибка проверки дополнительного пароля</string>
-  <string name="extra_password_enter_extra_password">Введите дополнительный пароль</string>
-  <string name="extra_password_label">Дополнительный пароль</string>
-  <string name="extra_password_conceal_password_action">Отменить дополнительный пароль</string>
-  <string name="extra_password_reveal_password_action">Показать дополнительный пароль</string>
-  <string name="extra_password_error_empty">Дополнительный пароль не может быть пустым</string>
-  <string name="extra_password_error_wrong">Недействительный дополнительный пароль</string>
+  <string name="configure_extra_password_continue">Продолжить</string>
+  <string name="configure_extra_password_title">Установить дополнительный пароль</string>
+  <string name="configure_extra_password_enter_extra_password">Дополнительный пароль</string>
+  <string name="configure_extra_password_repeat_extra_password">Повторите пароль</string>
+  <string name="configure_extra_password_description">Вам будет предложено ввести этот пароль при входе в систему и при переходе в сети из другого приложения Proton в Proton Pass.</string>
+  <string name="configure_extra_password_warning">Внимание: Если вы потеряете этот пароль, вы не сможете получить доступ к своему аккаунту Pass.</string>
+  <string name="configure_extra_password_mismatch">Пароли не совпадают</string>
+  <string name="extra_password_options_remove">Удалить</string>
+  <string name="info_extra_password_title">Extra password</string>
+  <string name="info_extra_password_body">Protect Proton Pass with an extra password.</string>
+  <string name="info_extra_password_button">Установить дополнительный пароль</string>
+  <string name="configure_extra_password_cannot_be_blank">Password cannot be blank</string>
+  <string name="configure_extra_password_password_too_short">Пароль слишком короткий</string>
+  <string name="confirm_extra_password_title">Установить дополнительный пароль</string>
+  <string name="confirm_extra_password_body">You will be logged out and will have to log in again on all of your other devices.</string>
+  <string name="confirm_extra_password_error">Could not set extra password</string>
+  <string name="confirm_extra_password_success">Дополнительный пароль установлен</string>
 </resources>

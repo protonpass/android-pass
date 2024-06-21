@@ -41,6 +41,15 @@
   <string name="secure_links_overview_widget_max_views_unlimited">Неабмежавана</string>
   <string name="secure_links_shared_action_copy_link">Скапіяваць спасылку</string>
   <string name="secure_links_shared_action_share_link">Абагуліць спасылку</string>
-  <string name="secure_links_overview_button_view_all_links">Паглядзець усе твае абагуленыя спасылкі</string>
+  <string name="secure_links_overview_button_view_all_links">Паглядзець усе вашы бяспечныя спасылкі</string>
   <string name="secure_links_shared_snackbar_message_link_copied">Бяспечная спасылка скапіявана</string>
+  <!--List screen-->
+  <string name="secure_links_list_title">Бяспечныя спасылкі</string>
+  <string name="secure_links_list_expiration_description">Дзейнічаюць да %s</string>
+  <plurals name="secure_links_list_viewed_times_description">
+    <item quantity="one">%d прагляд</item>
+    <item quantity="few">%d прагляды</item>
+    <item quantity="many">%d праглядаў</item>
+    <item quantity="other">%d праглядаў</item>
+  </plurals>
 </resources>

@@ -25,6 +25,7 @@
   </plurals>
   <string name="auth_unlock_app_title">Ξεκλείδωμα Proton Pass</string>
   <string name="auth_unlock_app_subtitle">Εισαγωγή κύριου κωδικού για %s</string>
+  <string name="auth_unlock_app_extra_password_subtitle">Εισαγάγετε τον επιπλέον κωδικό πρόσβασης για το %s</string>
   <string name="auth_master_password_label">Κύριος κωδικός</string>
   <string name="auth_action_reveal_password">Εμφάνιση κύριου κωδικού</string>
   <string name="auth_action_conceal_password">Απόκρυψη κύριου κωδικού</string>
@@ -34,6 +35,9 @@
   <string name="auth_error_verifying_password">Σφάλμα επαλήθευσης κωδικού</string>
   <string name="auth_error_empty_password">Ο κωδικός δεν μπορεί να είναι κενός</string>
   <string name="auth_error_pin_cannot_be_empty">Το PIN δεν μπορεί να είναι κενό</string>
+  <string name="auth_extra_password_label">Εισαγάγετε τον επιπλέον κωδικό πρόσβασής σας</string>
+  <string name="auth_extra_password_error">Σφάλμα κατά τον έλεγχο ταυτότητας με επιπλέον κωδικό πρόσβασης</string>
+  <string name="auth_error_wrong_password_no_attempts">Λανθασμένος κωδικός πρόσβασης</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Λανθασμένος κωδικός. Απομένει %d προσπάθεια</item>
     <item quantity="other">Λανθασμένος κωδικός. Απομένουν %d προσπάθειες</item>

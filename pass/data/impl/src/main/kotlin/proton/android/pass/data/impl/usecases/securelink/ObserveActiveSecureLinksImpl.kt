@@ -16,25 +16,22 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.data.fakes.usecases.securelink
+package proton.android.pass.data.impl.usecases.securelink
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.update
-import proton.android.pass.data.api.usecases.securelink.ObserveUnexpiredSecureLinks
+import kotlinx.coroutines.flow.map
+import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinks
+import proton.android.pass.data.api.usecases.securelink.ObserveActiveSecureLinks
 import proton.android.pass.domain.securelinks.SecureLink
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class FakeObserveUnexpiredSecureLinks @Inject constructor() : ObserveUnexpiredSecureLinks {
+class ObserveActiveSecureLinksImpl @Inject constructor(
+    private val observeSecureLinks: ObserveSecureLinks
+) : ObserveActiveSecureLinks {
 
-    private val unexpiredSecureLinksFlow = MutableStateFlow<List<SecureLink>>(emptyList())
-
-    fun emit(newSecureLinks: List<SecureLink>) {
-        unexpiredSecureLinksFlow.update { newSecureLinks }
-    }
-
-    override fun invoke(): Flow<List<SecureLink>> = unexpiredSecureLinksFlow
+    override fun invoke(): Flow<List<SecureLink>> = observeSecureLinks()
+        .map { secureLinks ->
+            secureLinks.filter { secureLink -> secureLink.isActive }
+        }
 
 }

@@ -1518,6 +1518,7 @@
                                                                                     "className": "android.widget.EditText",
                                                                                     "isImportantForAutofill": true,
                                                                                     "text": "",
+                                                                                    "expectedAutofill": "identity_address",
                                                                                     "hintKeywordList": [
                                                                                       "",
                                                                                       ""

@@ -218,10 +218,10 @@ object NodeClusterer {
             )
             clusters.add(
                 NodeCluster.Identity(
-                    fullName = firstFullName,
-                    address = nearestAddressField,
-                    postalCode = nearestPostalCodeField,
-                    phoneNumber = nearestPhoneNumberField
+                    fullName = firstFullName.also { addedNodes.add(it) },
+                    address = nearestAddressField?.also { addedNodes.add(it) },
+                    postalCode = nearestPostalCodeField?.also { addedNodes.add(it) },
+                    phoneNumber = nearestPhoneNumberField?.also { addedNodes.add(it) }
                 )
             )
         }

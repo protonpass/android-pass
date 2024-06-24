@@ -24,7 +24,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
@@ -33,12 +32,14 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.FlowUtils.oneShot
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.runCatching
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.api.usecases.ObserveItemById
@@ -89,13 +90,16 @@ class SecureLinksOverviewViewModel @Inject constructor(
 
     private val eventFlow = MutableStateFlow<SecureLinksOverviewEvent>(SecureLinksOverviewEvent.Idle)
 
-    internal val state: StateFlow<SecureLinksOverviewState> = combine(
+    private val isDeletingLoadingStateFlow = MutableStateFlow<IsLoadingState>(IsLoadingState.NotLoading)
+
+    internal val state: StateFlow<SecureLinksOverviewState> = combineN(
         secureLinkFlow,
         itemUiModelFlow,
         vaultFlow,
         userPreferencesRepository.getUseFaviconsPreference(),
-        eventFlow
-    ) { secureLink, itemUiModel, vault, useFavIconsPreference, event ->
+        eventFlow,
+        isDeletingLoadingStateFlow
+    ) { secureLink, itemUiModel, vault, useFavIconsPreference, event, isDeletingLoadingState ->
         SecureLinksOverviewState(
             secureLinkUrl = secureLink.url,
             currentViews = secureLink.readCount,
@@ -104,7 +108,8 @@ class SecureLinksOverviewViewModel @Inject constructor(
             itemUiModel = itemUiModel,
             canLoadExternalImages = useFavIconsPreference.value(),
             shareIcon = vault.icon,
-            event = event
+            event = event,
+            isDeletingLoadingState = isDeletingLoadingState
         )
     }.stateIn(
         scope = viewModelScope,
@@ -126,6 +131,8 @@ class SecureLinksOverviewViewModel @Inject constructor(
 
     internal fun onDeletedLink() {
         viewModelScope.launch {
+            isDeletingLoadingStateFlow.update { IsLoadingState.Loading }
+
             runCatching { deleteSecureLink(secureLinkId) }
                 .onError { error ->
                     PassLogger.w(TAG, "There was an error deleting the secure link")
@@ -141,6 +148,8 @@ class SecureLinksOverviewViewModel @Inject constructor(
                 .onSuccess {
                     eventFlow.update { SecureLinksOverviewEvent.OnLinkDeleted }
                 }
+
+            isDeletingLoadingStateFlow.update { IsLoadingState.NotLoading }
         }
     }
 

@@ -42,6 +42,7 @@ import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
+import proton.android.pass.data.api.usecases.securelink.DeleteInactiveSecureLinks
 import proton.android.pass.data.api.usecases.securelink.DeleteSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLink
 import proton.android.pass.domain.securelinks.SecureLinkId
@@ -58,7 +59,8 @@ class SecureLinksListMenuViewModel @Inject constructor(
     observeSecureLink: ObserveSecureLink,
     private val clipboardManager: ClipboardManager,
     private val snackbarDispatcher: SnackbarDispatcher,
-    private val deleteSecureLink: DeleteSecureLink
+    private val deleteSecureLink: DeleteSecureLink,
+    private val deleteInactiveSecureLinks: DeleteInactiveSecureLinks
 ) : ViewModel() {
 
     private val secureLinkIdOption: Option<SecureLinkId> = savedStateHandleProvider.get()
@@ -139,7 +141,27 @@ class SecureLinksListMenuViewModel @Inject constructor(
     }
 
     internal fun onDeleteInactiveLinks() {
-// Delete all inative links
+        viewModelScope.launch {
+            actionFlow.update { BottomSheetItemAction.Remove }
+
+            runCatching { deleteInactiveSecureLinks() }
+                .onError { error ->
+                    PassLogger.w(TAG, "There was an error deleting inactive secure links")
+                    PassLogger.w(TAG, error)
+                    if (error is CancellationException) {
+                        SecureLinksSharedSnackbarMessage.InactiveLinksDeletionCanceled
+                    } else {
+                        SecureLinksSharedSnackbarMessage.InactiveLinksDeletionError
+                    }.also { snackbarMessage -> snackbarDispatcher(snackbarMessage) }
+
+                    eventFlow.update { SecureLinksListMenuEvent.OnInactiveLinksDeleted }
+                }
+                .onSuccess {
+                    eventFlow.update { SecureLinksListMenuEvent.OnDeleteInactiveLinksError }
+                }
+
+            actionFlow.update { BottomSheetItemAction.None }
+        }
     }
 
     private companion object {

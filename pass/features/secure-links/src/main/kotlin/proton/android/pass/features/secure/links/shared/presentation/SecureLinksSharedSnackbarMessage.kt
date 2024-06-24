@@ -45,6 +45,18 @@ internal enum class SecureLinksSharedSnackbarMessage(
         id = R.string.secure_links_shared_snackbar_message_link_deletion_error,
         type = SnackbarType.ERROR,
         isClipboard = false
+    ),
+
+    InactiveLinksDeletionCanceled(
+        id = R.string.secure_links_shared_snackbar_message_inactive_links_deletion_canceled,
+        type = SnackbarType.WARNING,
+        isClipboard = false
+    ),
+
+    InactiveLinksDeletionError(
+        id = R.string.secure_links_shared_snackbar_message_inactive_links_deletion_error,
+        type = SnackbarType.ERROR,
+        isClipboard = false
     )
 
 }

@@ -28,4 +28,8 @@ internal sealed interface SecureLinksListMenuEvent {
 
     data object OnDeleteLinkError : SecureLinksListMenuEvent
 
+    data object OnInactiveLinksDeleted : SecureLinksListMenuEvent
+
+    data object OnDeleteInactiveLinksError : SecureLinksListMenuEvent
+
 }

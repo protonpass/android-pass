@@ -21,6 +21,7 @@ package proton.android.pass.features.secure.links.overview.presentation
 import com.google.android.material.bottomsheet.BottomSheetBehavior.State
 import kotlinx.datetime.Instant
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.time.RemainingTime
 
@@ -33,12 +34,15 @@ internal data class SecureLinksOverviewState(
     internal val canLoadExternalImages: Boolean,
     internal val shareIcon: ShareIcon?,
     internal val event: SecureLinksOverviewEvent,
-    private val expirationSeconds: Long
+    private val expirationSeconds: Long,
+    private val isDeletingLoadingState: IsLoadingState
 ) {
 
     internal val remainingTime: RemainingTime = RemainingTime(
         endInstant = Instant.fromEpochSeconds(expirationSeconds)
     )
+
+    internal val isDeleting: Boolean = isDeletingLoadingState is IsLoadingState.Loading
 
     internal companion object {
 
@@ -50,7 +54,8 @@ internal data class SecureLinksOverviewState(
             canLoadExternalImages = false,
             shareIcon = null,
             event = SecureLinksOverviewEvent.Idle,
-            expirationSeconds = 0L
+            expirationSeconds = 0L,
+            isDeletingLoadingState = IsLoadingState.NotLoading
         )
 
     }

@@ -52,8 +52,7 @@ internal fun SecureLinksListMenuBottomSheet(
     }
 
     SecureLinksListMenuContent(
-        action = state.action,
-        menuModel = state.menuModel,
+        state = state,
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 SecureLinksListMenuUiEvent.OnCopyLinkClicked -> {

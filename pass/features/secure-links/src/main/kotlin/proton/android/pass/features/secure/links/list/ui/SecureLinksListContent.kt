@@ -71,6 +71,8 @@ internal fun SecureLinksListContent(
                         activeSecureLinksModels = activeSecureLinksModels,
                         inactiveSecureLinksModels = inactiveSecureLinksModels,
                         canLoadExternalImages = canLoadExternalImages,
+                        hasActiveSecureLinks = hasActiveSecureLinks,
+                        hasInactiveSecureLinks = hasInactiveSecureLinks,
                         onUiEvent = onUiEvent
                     )
                 } else {

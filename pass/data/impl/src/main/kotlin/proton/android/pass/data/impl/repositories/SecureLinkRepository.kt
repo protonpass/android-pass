@@ -57,6 +57,8 @@ interface SecureLinkRepository {
 
     suspend fun deleteSecureLink(userId: UserId, secureLinkId: SecureLinkId)
 
+    suspend fun deleteInactiveSecureLinks(userId: UserId)
+
     fun observeSecureLink(userId: UserId, secureLinkId: SecureLinkId): Flow<SecureLink>
 
     fun observeSecureLinks(userId: UserId): Flow<List<SecureLink>>
@@ -160,6 +162,10 @@ class SecureLinkRepositoryImpl @Inject constructor(
             }
 
         secureLinksLocalDataSource.delete(userId, secureLinkId)
+    }
+
+    override suspend fun deleteInactiveSecureLinks(userId: UserId) {
+        secureLinksLocalDataSource.deleteAllInactive(userId)
     }
 
     override fun observeSecureLink(userId: UserId, secureLinkId: SecureLinkId): Flow<SecureLink> =

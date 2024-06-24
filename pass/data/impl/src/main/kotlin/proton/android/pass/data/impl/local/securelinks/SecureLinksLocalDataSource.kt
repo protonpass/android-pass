@@ -29,6 +29,8 @@ interface SecureLinksLocalDataSource {
 
     suspend fun delete(userId: UserId, secureLinkId: SecureLinkId)
 
+    suspend fun deleteAllInactive(userId: UserId)
+
     suspend fun getAll(userId: UserId): List<SecureLink>
 
     suspend fun getCount(userId: UserId): Int

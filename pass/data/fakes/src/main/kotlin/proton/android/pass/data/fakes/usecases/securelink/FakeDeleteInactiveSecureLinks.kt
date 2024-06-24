@@ -16,20 +16,15 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.secure.links.listmenu.presentation
+package proton.android.pass.data.fakes.usecases.securelink
 
-internal sealed interface SecureLinksListMenuEvent {
+import proton.android.pass.data.api.usecases.securelink.DeleteInactiveSecureLinks
+import javax.inject.Inject
+import javax.inject.Singleton
 
-    data object Idle : SecureLinksListMenuEvent
+@Singleton
+class FakeDeleteInactiveSecureLinks @Inject constructor() : DeleteInactiveSecureLinks {
 
-    data object OnLinkCopied : SecureLinksListMenuEvent
-
-    data object OnLinkDeleted : SecureLinksListMenuEvent
-
-    data object OnDeleteLinkError : SecureLinksListMenuEvent
-
-    data object OnInactiveLinksDeleted : SecureLinksListMenuEvent
-
-    data object OnDeleteInactiveLinksError : SecureLinksListMenuEvent
+    override suspend fun invoke() {}
 
 }

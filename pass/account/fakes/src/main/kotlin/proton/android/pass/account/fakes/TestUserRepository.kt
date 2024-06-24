@@ -28,6 +28,7 @@ import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.CreateUserType
 import me.proton.core.user.domain.entity.Domain
+import me.proton.core.user.domain.entity.SecondFactorFido
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserRepository
@@ -109,7 +110,8 @@ class TestUserRepository : UserRepository {
         sessionUserId: SessionUserId,
         srpProofs: SrpProofs,
         srpSession: String,
-        twoFactorCode: String?
+        secondFactorCode: String?,
+        secondFactorFido: SecondFactorFido?
     ): Boolean {
         throw IllegalStateException("Not implemented")
     }

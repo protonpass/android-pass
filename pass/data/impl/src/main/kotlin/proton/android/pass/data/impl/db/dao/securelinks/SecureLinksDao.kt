@@ -53,4 +53,12 @@ abstract class SecureLinksDao : BaseDao<SecureLinkEntity>() {
     )
     abstract fun observeSecureLinksCount(userId: String): Flow<Int>
 
+    @Query(
+        """
+            DELETE FROM ${SecureLinkEntity.TABLE_NAME}
+            WHERE ${SecureLinkEntity.Columns.USER_ID} = :userId
+        """
+    )
+    abstract fun deleteAllInactiveSecureLinks(userId: String)
+
 }

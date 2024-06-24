@@ -16,20 +16,23 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.secure.links.listmenu.presentation
+package proton.android.pass.data.impl.usecases.securelink
 
-internal sealed interface SecureLinksListMenuEvent {
+import kotlinx.coroutines.flow.first
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.api.usecases.securelink.DeleteInactiveSecureLinks
+import proton.android.pass.data.impl.repositories.SecureLinkRepository
+import javax.inject.Inject
 
-    data object Idle : SecureLinksListMenuEvent
+class DeleteInactiveSecureLinksImpl @Inject constructor(
+    private val observeCurrentUser: ObserveCurrentUser,
+    private val secureLinkRepository: SecureLinkRepository
+) : DeleteInactiveSecureLinks {
 
-    data object OnLinkCopied : SecureLinksListMenuEvent
-
-    data object OnLinkDeleted : SecureLinksListMenuEvent
-
-    data object OnDeleteLinkError : SecureLinksListMenuEvent
-
-    data object OnInactiveLinksDeleted : SecureLinksListMenuEvent
-
-    data object OnDeleteInactiveLinksError : SecureLinksListMenuEvent
+    override suspend fun invoke() = observeCurrentUser()
+        .first()
+        .let { user ->
+            secureLinkRepository.deleteInactiveSecureLinks(user.userId)
+        }
 
 }

@@ -41,6 +41,7 @@ import kotlinx.collections.immutable.PersistentList
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.features.secure.links.R
 import proton.android.pass.features.secure.links.list.presentation.SecureLinkModel
 import proton.android.pass.features.secure.links.list.ui.SecureLinksListUiEvent
@@ -54,6 +55,8 @@ internal fun SecureLinksListGrid(
     onUiEvent: (SecureLinksListUiEvent) -> Unit,
     activeSecureLinksModels: PersistentList<SecureLinkModel>,
     inactiveSecureLinksModels: PersistentList<SecureLinkModel>,
+    hasActiveSecureLinks: Boolean,
+    hasInactiveSecureLinks: Boolean,
     canLoadExternalImages: Boolean
 ) {
     LazyVerticalGrid(
@@ -68,8 +71,14 @@ internal fun SecureLinksListGrid(
             onUiEvent = onUiEvent
         )
 
-        if (inactiveSecureLinksModels.isNotEmpty()) {
+        if (hasInactiveSecureLinks) {
             secureLinksListGridHeader(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .applyIf(
+                        condition = hasActiveSecureLinks,
+                        ifTrue = { padding(top = Spacing.medium) }
+                    ),
                 textResId = R.string.secure_links_list_header_title_inactive,
                 onClick = {}
             )
@@ -83,14 +92,16 @@ internal fun SecureLinksListGrid(
     }
 }
 
-private fun LazyGridScope.secureLinksListGridHeader(@StringRes textResId: Int, onClick: () -> Unit) {
+private fun LazyGridScope.secureLinksListGridHeader(
+    modifier: Modifier = Modifier,
+    @StringRes textResId: Int,
+    onClick: () -> Unit
+) {
     item(
         span = { GridItemSpan(currentLineSpan = SECURE_LINKS_GRID_COLUMN_COUNT) }
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = Spacing.medium),
+            modifier = modifier,
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {

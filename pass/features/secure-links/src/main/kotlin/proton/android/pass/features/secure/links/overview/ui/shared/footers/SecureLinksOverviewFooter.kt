@@ -21,15 +21,11 @@ package proton.android.pass.features.secure.links.overview.ui.shared.footers
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
@@ -42,7 +38,9 @@ internal fun SecureLinksOverviewFooter(
     onCopyLinkClicked: () -> Unit,
     onShareLinkClicked: () -> Unit,
     onLinkClicked: () -> Unit,
-    linkTextColor: Color = PassTheme.colors.interactionNormMajor2
+    linkTextColor: Color = PassTheme.colors.interactionNormMajor2,
+    linkBackgroundColor: Color = PassTheme.colors.backgroundNorm,
+    isLinkLoading: Boolean = false
 ) {
     Column(
         modifier = modifier,
@@ -61,14 +59,12 @@ internal fun SecureLinksOverviewFooter(
             onClick = onShareLinkClicked
         )
 
-        TextButton(
-            onClick = onLinkClicked
-        ) {
-            Text(
-                text = stringResource(id = linkTextResId),
-                style = ProtonTheme.typography.defaultNorm,
-                color = linkTextColor
-            )
-        }
+        PassCircleButton(
+            text = stringResource(id = linkTextResId),
+            textColor = linkTextColor,
+            backgroundColor = linkBackgroundColor,
+            onClick = onLinkClicked,
+            isLoading = isLinkLoading
+        )
     }
 }

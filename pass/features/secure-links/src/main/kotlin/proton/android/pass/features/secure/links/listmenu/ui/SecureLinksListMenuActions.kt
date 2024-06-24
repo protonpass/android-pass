@@ -22,8 +22,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
+import proton.android.pass.composecomponents.impl.bottomsheet.PassBottomSheetActionLoading
 import proton.android.pass.features.secure.links.R
 import me.proton.core.presentation.R as CoreR
 
@@ -49,12 +51,20 @@ internal fun copyLink(onClick: () -> Unit): BottomSheetItem = object : BottomShe
 
 }
 
-internal fun removeLink(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+internal fun removeLink(
+    isActive: Boolean,
+    action: BottomSheetItemAction,
+    onClick: () -> Unit
+): BottomSheetItem = object : BottomSheetItem {
 
     override val title: @Composable () -> Unit
         get() = {
             BottomSheetItemTitle(
-                text = stringResource(R.string.secure_links_shared_action_delete_link),
+                text = if (isActive) {
+                    R.string.secure_links_shared_action_delete_link
+                } else {
+                    R.string.secure_links_shared_action_delete_link_inactive
+                }.let { textResId -> stringResource(id = textResId) },
                 color = PassTheme.colors.passwordInteractionNormMajor1
             )
         }
@@ -71,7 +81,50 @@ internal fun removeLink(onClick: () -> Unit): BottomSheetItem = object : BottomS
         }
 
     override val endIcon: @Composable (() -> Unit)
-        get() = {}
+        get() = {
+            if (action is BottomSheetItemAction.Remove) {
+                PassBottomSheetActionLoading()
+            }
+        }
+
+    override val onClick: (() -> Unit)
+        get() = { onClick() }
+
+    override val isDivider: Boolean
+        get() = false
+
+}
+
+internal fun removeLinks(
+    action: BottomSheetItemAction,
+    onClick: () -> Unit
+): BottomSheetItem = object : BottomSheetItem {
+
+    override val title: @Composable () -> Unit
+        get() = {
+            BottomSheetItemTitle(
+                text = stringResource(id = R.string.secure_links_shared_action_delete_links_inactive),
+                color = PassTheme.colors.passwordInteractionNormMajor1
+            )
+        }
+
+    override val subtitle: @Composable (() -> Unit)?
+        get() = null
+
+    override val leftIcon: @Composable (() -> Unit)
+        get() = {
+            BottomSheetItemIcon(
+                iconId = CoreR.drawable.ic_proton_trash,
+                tint = PassTheme.colors.passwordInteractionNormMajor1
+            )
+        }
+
+    override val endIcon: @Composable (() -> Unit)
+        get() = {
+            if (action is BottomSheetItemAction.Remove) {
+                PassBottomSheetActionLoading()
+            }
+        }
 
     override val onClick: (() -> Unit)
         get() = { onClick() }

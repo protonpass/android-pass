@@ -24,4 +24,6 @@ internal sealed interface SecureLinksListMenuUiEvent {
 
     data object OnRemoveLinkClicked : SecureLinksListMenuUiEvent
 
+    data object OnRemoveInactiveLinksClicked : SecureLinksListMenuUiEvent
+
 }

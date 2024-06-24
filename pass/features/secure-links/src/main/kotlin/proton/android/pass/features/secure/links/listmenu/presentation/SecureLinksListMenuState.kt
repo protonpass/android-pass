@@ -19,18 +19,37 @@
 package proton.android.pass.features.secure.links.listmenu.presentation
 
 import androidx.compose.runtime.Stable
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
+import proton.android.pass.domain.securelinks.SecureLink
 
 @Stable
 internal data class SecureLinksListMenuState(
-    internal val secureLinkUrl: String,
-    internal val event: SecureLinksListMenuEvent
+    internal val action: BottomSheetItemAction,
+    internal val event: SecureLinksListMenuEvent,
+    private val secureLinkOption: Option<SecureLink>
 ) {
+
+    internal val menuModel: SecureLinksListMenuModel = when (secureLinkOption) {
+        None -> SecureLinksListMenuModel.AllInactiveSecureLinks
+        is Some -> SecureLinksListMenuModel.SingleSecureLink(
+            isLinkActive = secureLinkOption.value.isActive
+        )
+    }
+
+    internal val secureLinkUrl: String = when (secureLinkOption) {
+        None -> ""
+        is Some -> secureLinkOption.value.url
+    }
 
     internal companion object {
 
         internal val Initial: SecureLinksListMenuState = SecureLinksListMenuState(
-            secureLinkUrl = "",
-            event = SecureLinksListMenuEvent.Idle
+            action = BottomSheetItemAction.None,
+            event = SecureLinksListMenuEvent.Idle,
+            secureLinkOption = None
         )
 
     }

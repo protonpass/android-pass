@@ -31,11 +31,11 @@ internal data class SecureLinksListState(
     internal val isLoadingState: IsLoadingState
 ) {
 
-    private val hasActiveSecureLinks: Boolean = activeSecureLinksModels.isNotEmpty()
+    internal val hasActiveSecureLinks: Boolean = activeSecureLinksModels.isNotEmpty()
 
-    private val hasInactiveSecureLinks: Boolean = inactiveSecureLinksModels.isNotEmpty()
+    internal val hasInactiveSecureLinks: Boolean = inactiveSecureLinksModels.isNotEmpty()
 
-    internal val hasSecureLinks: Boolean = hasActiveSecureLinks && hasInactiveSecureLinks
+    internal val hasSecureLinks: Boolean = hasActiveSecureLinks || hasInactiveSecureLinks
 
     internal companion object {
 

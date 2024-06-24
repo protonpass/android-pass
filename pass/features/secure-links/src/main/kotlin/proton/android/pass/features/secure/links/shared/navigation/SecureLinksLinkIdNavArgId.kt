@@ -19,9 +19,9 @@
 package proton.android.pass.features.secure.links.shared.navigation
 
 import androidx.navigation.NavType
-import proton.android.pass.navigation.api.NavArgId
+import proton.android.pass.navigation.api.OptionalNavArgId
 
-internal object SecureLinksLinkIdNavArgId : NavArgId {
+internal object SecureLinksLinkIdNavArgId : OptionalNavArgId {
 
     override val key: String = "secureLinksLinkId"
 

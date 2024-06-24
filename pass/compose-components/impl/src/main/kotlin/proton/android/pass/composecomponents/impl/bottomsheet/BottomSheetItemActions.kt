@@ -52,6 +52,9 @@ sealed interface BottomSheetItemAction {
     @Stable
     data object MonitorInclude : BottomSheetItemAction
 
+    @Stable
+    data object Remove : BottomSheetItemAction
+
 }
 
 fun monitorExclude(action: BottomSheetItemAction, onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {

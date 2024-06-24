@@ -52,6 +52,8 @@ internal fun SecureLinksListMenuBottomSheet(
     }
 
     SecureLinksListMenuContent(
+        action = state.action,
+        menuModel = state.menuModel,
         onUiEvent = { uiEvent ->
             when (uiEvent) {
                 SecureLinksListMenuUiEvent.OnCopyLinkClicked -> {
@@ -59,7 +61,11 @@ internal fun SecureLinksListMenuBottomSheet(
                 }
 
                 SecureLinksListMenuUiEvent.OnRemoveLinkClicked -> {
-                    onDeletedLink()
+                    onDeleteLink()
+                }
+
+                SecureLinksListMenuUiEvent.OnRemoveInactiveLinksClicked -> {
+                    onDeleteInactiveLinks()
                 }
             }
         }

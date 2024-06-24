@@ -26,16 +26,22 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.FlowUtils.oneShot
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.runCatching
+import proton.android.pass.common.api.some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
-import proton.android.pass.commonui.api.require
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
 import proton.android.pass.data.api.usecases.securelink.DeleteSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLink
 import proton.android.pass.domain.securelinks.SecureLinkId
@@ -55,23 +61,33 @@ class SecureLinksListMenuViewModel @Inject constructor(
     private val deleteSecureLink: DeleteSecureLink
 ) : ViewModel() {
 
-    private val secureLinkId: SecureLinkId = savedStateHandleProvider.get()
-        .require<String>(SecureLinksLinkIdNavArgId.key)
-        .let(::SecureLinkId)
+    private val secureLinkIdOption: Option<SecureLinkId> = savedStateHandleProvider.get()
+        .get<String>(SecureLinksLinkIdNavArgId.key)
+        ?.let(::SecureLinkId)
+        .toOption()
 
-    private val secureLinkFlow = oneShot {
-        observeSecureLink(secureLinkId = secureLinkId).first()
+    private val secureLinkOptionFlow = when (secureLinkIdOption) {
+        None -> flowOf(None)
+        is Some -> oneShot {
+            observeSecureLink(secureLinkIdOption.value)
+                .first()
+                .some()
+        }
     }
+
+    private val actionFlow = MutableStateFlow<BottomSheetItemAction>(BottomSheetItemAction.None)
 
     private val eventFlow = MutableStateFlow<SecureLinksListMenuEvent>(SecureLinksListMenuEvent.Idle)
 
     internal val state: StateFlow<SecureLinksListMenuState> = combine(
-        secureLinkFlow,
-        eventFlow
-    ) { secureLink, event ->
+        actionFlow,
+        eventFlow,
+        secureLinkOptionFlow
+    ) { action, event, secureLinkOption ->
         SecureLinksListMenuState(
-            secureLinkUrl = secureLink.url,
-            event = event
+            action = action,
+            event = event,
+            secureLinkOption = secureLinkOption
         )
     }.stateIn(
         scope = viewModelScope,
@@ -93,24 +109,37 @@ class SecureLinksListMenuViewModel @Inject constructor(
         eventFlow.update { SecureLinksListMenuEvent.OnLinkCopied }
     }
 
-    internal fun onDeletedLink() {
-        viewModelScope.launch {
-            runCatching { deleteSecureLink(secureLinkId) }
-                .onError { error ->
-                    PassLogger.w(TAG, "There was an error deleting the secure link")
-                    PassLogger.w(TAG, error)
-                    if (error is CancellationException) {
-                        SecureLinksSharedSnackbarMessage.LinkDeletionCanceled
-                    } else {
-                        SecureLinksSharedSnackbarMessage.LinkDeletionError
-                    }.also { snackbarMessage -> snackbarDispatcher(snackbarMessage) }
+    internal fun onDeleteLink() {
+        when (secureLinkIdOption) {
+            None -> return
+            is Some -> {
+                viewModelScope.launch {
+                    actionFlow.update { BottomSheetItemAction.Remove }
 
-                    eventFlow.update { SecureLinksListMenuEvent.OnDeleteLinkError }
+                    runCatching { deleteSecureLink(secureLinkIdOption.value) }
+                        .onError { error ->
+                            PassLogger.w(TAG, "There was an error deleting the secure link")
+                            PassLogger.w(TAG, error)
+                            if (error is CancellationException) {
+                                SecureLinksSharedSnackbarMessage.LinkDeletionCanceled
+                            } else {
+                                SecureLinksSharedSnackbarMessage.LinkDeletionError
+                            }.also { snackbarMessage -> snackbarDispatcher(snackbarMessage) }
+
+                            eventFlow.update { SecureLinksListMenuEvent.OnDeleteLinkError }
+                        }
+                        .onSuccess {
+                            eventFlow.update { SecureLinksListMenuEvent.OnLinkDeleted }
+                        }
+
+                    actionFlow.update { BottomSheetItemAction.None }
                 }
-                .onSuccess {
-                    eventFlow.update { SecureLinksListMenuEvent.OnLinkDeleted }
-                }
+            }
         }
+    }
+
+    internal fun onDeleteInactiveLinks() {
+// Delete all inative links
     }
 
     private companion object {

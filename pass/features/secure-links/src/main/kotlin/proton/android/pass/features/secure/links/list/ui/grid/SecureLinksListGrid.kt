@@ -80,7 +80,9 @@ internal fun SecureLinksListGrid(
                         ifTrue = { padding(top = Spacing.medium) }
                     ),
                 textResId = R.string.secure_links_list_header_title_inactive,
-                onClick = {}
+                onClick = {
+                    onUiEvent(SecureLinksListUiEvent.OnCellsHeaderOptionsClicked)
+                }
             )
 
             secureLinksListGridCellItems(

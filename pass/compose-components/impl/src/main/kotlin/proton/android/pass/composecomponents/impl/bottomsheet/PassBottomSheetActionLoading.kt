@@ -16,20 +16,17 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.secure.links.list.ui
+package proton.android.pass.composecomponents.impl.bottomsheet
 
-import proton.android.pass.domain.securelinks.SecureLinkId
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 
-internal interface SecureLinksListUiEvent {
-
-    data object OnBackClicked : SecureLinksListUiEvent
-
-    @JvmInline
-    value class OnCellClicked(val secureLinkId: SecureLinkId) : SecureLinksListUiEvent
-
-    @JvmInline
-    value class OnCellOptionsClicked(val secureLinkId: SecureLinkId) : SecureLinksListUiEvent
-
-    data object OnCellsHeaderOptionsClicked: SecureLinksListUiEvent
-
+@Composable
+fun PassBottomSheetActionLoading(
+    modifier: Modifier = Modifier
+) {
+    CircularProgressIndicator(modifier = modifier.size(20.dp))
 }

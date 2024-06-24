@@ -21,12 +21,20 @@ package proton.android.pass.features.secure.links.listmenu.navigation
 import proton.android.pass.domain.securelinks.SecureLinkId
 import proton.android.pass.features.secure.links.shared.navigation.SecureLinksLinkIdNavArgId
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.toPath
 
 object SecureLinksListMenuNavItem : NavItem(
     baseRoute = "secure-links/list/menu",
-    navArgIds = listOf(SecureLinksLinkIdNavArgId)
+    optionalArgIds = listOf(SecureLinksLinkIdNavArgId)
 ) {
 
-    fun createNavRoute(secureLinkId: SecureLinkId) = "$baseRoute/${secureLinkId.id}"
+    fun createNavRoute(secureLinkId: SecureLinkId?) = buildString {
+        append(baseRoute)
+
+        secureLinkId?.let { linkId ->
+            mapOf(SecureLinksLinkIdNavArgId.key to linkId.id)
+                .also { pathMap -> append(pathMap.toPath()) }
+        }
+    }
 
 }

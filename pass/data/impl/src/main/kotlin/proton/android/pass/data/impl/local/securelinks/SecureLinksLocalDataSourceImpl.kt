@@ -21,7 +21,9 @@ package proton.android.pass.data.impl.local.securelinks
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.impl.db.PassDatabase
@@ -34,7 +36,8 @@ import javax.inject.Inject
 
 class SecureLinksLocalDataSourceImpl @Inject constructor(
     private val database: PassDatabase,
-    private val encryptionContextProvider: EncryptionContextProvider
+    private val encryptionContextProvider: EncryptionContextProvider,
+    private val appDispatchers: AppDispatchers
 ) : SecureLinksLocalDataSource {
 
     override suspend fun create(userId: UserId, secureLink: SecureLink) =
@@ -53,6 +56,10 @@ class SecureLinksLocalDataSourceImpl @Inject constructor(
         .let { entity ->
             database.secureLinksDao().delete(entity)
         }
+
+    override suspend fun deleteAllInactive(userId: UserId) = withContext(appDispatchers.io){
+        database.secureLinksDao().deleteAllInactiveSecureLinks(userId.id)
+    }
 
     override suspend fun getAll(userId: UserId): List<SecureLink> = observeAll(userId).first()
 

@@ -16,20 +16,10 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.secure.links.listmenu.presentation
+package proton.android.pass.data.api.usecases.securelink
 
-internal sealed interface SecureLinksListMenuEvent {
+interface DeleteInactiveSecureLinks {
 
-    data object Idle : SecureLinksListMenuEvent
-
-    data object OnLinkCopied : SecureLinksListMenuEvent
-
-    data object OnLinkDeleted : SecureLinksListMenuEvent
-
-    data object OnDeleteLinkError : SecureLinksListMenuEvent
-
-    data object OnInactiveLinksDeleted : SecureLinksListMenuEvent
-
-    data object OnDeleteInactiveLinksError : SecureLinksListMenuEvent
+    suspend operator fun invoke()
 
 }

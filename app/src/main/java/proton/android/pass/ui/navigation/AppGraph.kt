@@ -1677,8 +1677,7 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 SecureLinksNavDestination.SecureLinksList -> appNavigator.navigate(
-                    destination = SecureLinksListNavItem,
-                    backDestination = Profile
+                    destination = SecureLinksListNavItem
                 )
 
                 is SecureLinksNavDestination.SecureLinksListMenu -> appNavigator.navigate(

@@ -223,7 +223,8 @@ fun HomeScreen(
             BottomSheetItemAction.MonitorInclude,
             BottomSheetItemAction.Pin,
             BottomSheetItemAction.Unpin,
-            BottomSheetItemAction.History -> return@LaunchedEffect
+            BottomSheetItemAction.History,
+            BottomSheetItemAction.Remove -> return@LaunchedEffect
         }
     }
 

@@ -70,9 +70,11 @@ internal fun SecureLinksOverviewBottomSheetContent(
         SecureLinksOverviewFooter(
             linkTextResId = R.string.secure_links_shared_action_delete_link,
             linkTextColor = PassTheme.colors.passwordInteractionNormMajor2,
+            linkBackgroundColor = PassTheme.colors.bottomSheetBackground,
             onCopyLinkClicked = { onUiEvent(SecureLinksOverviewUiEvent.OnCopyLinkClicked) },
             onShareLinkClicked = { onUiEvent(SecureLinksOverviewUiEvent.OnShareLinkClicked) },
-            onLinkClicked = { onUiEvent(SecureLinksOverviewUiEvent.OnDeleteLinkClicked) }
+            onLinkClicked = { onUiEvent(SecureLinksOverviewUiEvent.OnDeleteLinkClicked) },
+            isLinkLoading = isDeleting
         )
     }
 }

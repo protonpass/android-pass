@@ -49,6 +49,9 @@ import me.proton.core.presentation.R as CoreR
 
 private const val SECURE_LINKS_GRID_COLUMN_COUNT = 2
 
+private const val SECURE_LINKS_GRID_PREFIX_ACTIVE = "active"
+private const val SECURE_LINKS_GRID_PREFIX_INACTIVE = "inactive"
+
 @Composable
 internal fun SecureLinksListGrid(
     modifier: Modifier = Modifier,
@@ -66,6 +69,7 @@ internal fun SecureLinksListGrid(
         verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
     ) {
         secureLinksListGridCellItems(
+            prefix = SECURE_LINKS_GRID_PREFIX_ACTIVE,
             secureLinksModels = activeSecureLinksModels,
             canLoadExternalImages = canLoadExternalImages,
             onUiEvent = onUiEvent
@@ -86,6 +90,7 @@ internal fun SecureLinksListGrid(
             )
 
             secureLinksListGridCellItems(
+                prefix = SECURE_LINKS_GRID_PREFIX_INACTIVE,
                 secureLinksModels = inactiveSecureLinksModels,
                 canLoadExternalImages = canLoadExternalImages,
                 onUiEvent = onUiEvent
@@ -128,13 +133,14 @@ private fun LazyGridScope.secureLinksListGridHeader(
 }
 
 private fun LazyGridScope.secureLinksListGridCellItems(
+    prefix: String,
     secureLinksModels: List<SecureLinkModel>,
     canLoadExternalImages: Boolean,
     onUiEvent: (SecureLinksListUiEvent) -> Unit
 ) {
     items(
         items = secureLinksModels,
-        key = { secureLinkModel -> secureLinkModel.secureLinkId.id }
+        key = { secureLinkModel -> "${prefix}_${secureLinkModel.secureLinkId.id}" }
     ) { secureLinksModel ->
         SecureLinksListGridCell(
             itemCategory = secureLinksModel.itemCategory,

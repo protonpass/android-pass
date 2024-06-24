@@ -21,6 +21,7 @@ package proton.android.pass.account.fakes
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.entity.key.PublicAddress
+import me.proton.core.key.domain.entity.key.PublicAddressInfo
 import me.proton.core.key.domain.entity.key.PublicAddressKey
 import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.entity.key.PublicSignedKeyList
@@ -75,6 +76,15 @@ class TestPublicAddressRepository @Inject constructor() : PublicAddressRepositor
         email: String,
         source: Source
     ): PublicAddress = addressList[email] ?: throw IllegalStateException("Address not set")
+
+    override suspend fun getPublicAddressInfo(
+        sessionUserId: SessionUserId,
+        email: String,
+        internalOnly: Boolean,
+        source: Source
+    ): PublicAddressInfo {
+        throw IllegalStateException("This method should not be called")
+    }
 
 
     override suspend fun getSKLAtEpoch(

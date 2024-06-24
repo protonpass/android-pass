@@ -47,6 +47,8 @@ import me.proton.core.key.data.db.KeySaltDatabase
 import me.proton.core.key.data.db.PublicAddressDatabase
 import me.proton.core.key.data.entity.KeySaltEntity
 import me.proton.core.key.data.entity.PublicAddressEntity
+import me.proton.core.key.data.entity.PublicAddressInfoEntity
+import me.proton.core.key.data.entity.PublicAddressKeyDataEntity
 import me.proton.core.key.data.entity.PublicAddressKeyEntity
 import me.proton.core.keytransparency.data.local.KeyTransparencyDatabase
 import me.proton.core.keytransparency.data.local.entity.AddressChangeEntity
@@ -114,6 +116,8 @@ import proton.android.pass.data.impl.db.entities.securelinks.SecureLinkEntity
         ObservabilityEventEntity::class,
         PublicAddressEntity::class,
         PublicAddressKeyEntity::class,
+        PublicAddressInfoEntity::class,
+        PublicAddressKeyDataEntity::class,
         SelfAuditResultEntity::class,
         SessionDetailsEntity::class,
         SessionEntity::class,
@@ -211,7 +215,7 @@ abstract class AppDatabase :
     DeviceRecoveryDatabase {
 
     companion object {
-        const val VERSION = 51
+        const val VERSION = 52
 
         const val DB_NAME = "db-passkey"
 
@@ -235,7 +239,8 @@ abstract class AppDatabase :
             AppDatabaseMigrations.MIGRATION_43_44,
             AppDatabaseMigrations.MIGRATION_44_45,
             AppDatabaseMigrations.MIGRATION_46_47,
-            AppDatabaseMigrations.MIGRATION_48_49
+            AppDatabaseMigrations.MIGRATION_48_49,
+            AppDatabaseMigrations.MIGRATION_51_52
         )
 
         fun buildDatabase(context: Context): AppDatabase = databaseBuilder<AppDatabase>(context, DB_NAME)

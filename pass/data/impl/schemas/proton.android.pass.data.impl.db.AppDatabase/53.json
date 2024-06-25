@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 51,
-    "identityHash": "9778328db9867dda2f894f5a6e7f9b14",
+    "version": 53,
+    "identityHash": "1c5e3b682c676e37f4900d838cab5c14",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -567,7 +567,7 @@
       },
       {
         "tableName": "EventMetadataEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `config` TEXT NOT NULL, `eventId` TEXT, `nextEventId` TEXT, `refresh` TEXT, `more` INTEGER, `retry` INTEGER NOT NULL, `state` TEXT NOT NULL, `createdAt` INTEGER NOT NULL, `updatedAt` INTEGER, PRIMARY KEY(`userId`, `config`), FOREIGN KEY(`userId`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `config` TEXT NOT NULL, `eventId` TEXT, `nextEventId` TEXT, `refresh` TEXT, `more` INTEGER, `retry` INTEGER NOT NULL, `state` TEXT NOT NULL, `createdAt` INTEGER NOT NULL, `updatedAt` INTEGER, `fetchedAt` INTEGER, PRIMARY KEY(`userId`, `config`), FOREIGN KEY(`userId`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "userId",
@@ -626,6 +626,12 @@
           {
             "fieldPath": "updatedAt",
             "columnName": "updatedAt",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fetchedAt",
+            "columnName": "fetchedAt",
             "affinity": "INTEGER",
             "notNull": false
           }
@@ -1409,6 +1415,187 @@
         ]
       },
       {
+        "tableName": "PublicAddressInfoEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`email` TEXT NOT NULL, `warnings` TEXT NOT NULL, `protonMx` INTEGER NOT NULL, `isProton` INTEGER NOT NULL, `addressSignedKeyList_data` TEXT, `addressSignedKeyList_signature` TEXT, `addressSignedKeyList_minEpochId` INTEGER, `addressSignedKeyList_maxEpochId` INTEGER, `addressSignedKeyList_expectedMinEpochId` INTEGER, `catchAllSignedKeyList_data` TEXT, `catchAllSignedKeyList_signature` TEXT, `catchAllSignedKeyList_minEpochId` INTEGER, `catchAllSignedKeyList_maxEpochId` INTEGER, `catchAllSignedKeyList_expectedMinEpochId` INTEGER, PRIMARY KEY(`email`))",
+        "fields": [
+          {
+            "fieldPath": "email",
+            "columnName": "email",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "warnings",
+            "columnName": "warnings",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "protonMx",
+            "columnName": "protonMx",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isProton",
+            "columnName": "isProton",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "addressSignedKeyList.data",
+            "columnName": "addressSignedKeyList_data",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "addressSignedKeyList.signature",
+            "columnName": "addressSignedKeyList_signature",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "addressSignedKeyList.minEpochId",
+            "columnName": "addressSignedKeyList_minEpochId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "addressSignedKeyList.maxEpochId",
+            "columnName": "addressSignedKeyList_maxEpochId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "addressSignedKeyList.expectedMinEpochId",
+            "columnName": "addressSignedKeyList_expectedMinEpochId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "catchAllSignedKeyList.data",
+            "columnName": "catchAllSignedKeyList_data",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "catchAllSignedKeyList.signature",
+            "columnName": "catchAllSignedKeyList_signature",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "catchAllSignedKeyList.minEpochId",
+            "columnName": "catchAllSignedKeyList_minEpochId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "catchAllSignedKeyList.maxEpochId",
+            "columnName": "catchAllSignedKeyList_maxEpochId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "catchAllSignedKeyList.expectedMinEpochId",
+            "columnName": "catchAllSignedKeyList_expectedMinEpochId",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "email"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_PublicAddressInfoEntity_email",
+            "unique": false,
+            "columnNames": [
+              "email"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_PublicAddressInfoEntity_email` ON `${TABLE_NAME}` (`email`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "PublicAddressKeyDataEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`email` TEXT NOT NULL, `emailAddressType` INTEGER NOT NULL, `flags` INTEGER NOT NULL, `publicKey` TEXT NOT NULL, `isPrimary` INTEGER NOT NULL, `source` INTEGER, PRIMARY KEY(`email`, `publicKey`), FOREIGN KEY(`email`) REFERENCES `PublicAddressInfoEntity`(`email`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "email",
+            "columnName": "email",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "emailAddressType",
+            "columnName": "emailAddressType",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "flags",
+            "columnName": "flags",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "publicKey",
+            "columnName": "publicKey",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isPrimary",
+            "columnName": "isPrimary",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "source",
+            "columnName": "source",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "email",
+            "publicKey"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_PublicAddressKeyDataEntity_email",
+            "unique": false,
+            "columnNames": [
+              "email"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_PublicAddressKeyDataEntity_email` ON `${TABLE_NAME}` (`email`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "PublicAddressInfoEntity",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "email"
+            ],
+            "referencedColumns": [
+              "email"
+            ]
+          }
+        ]
+      },
+      {
         "tableName": "SelfAuditResultEntity",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `timestamp` INTEGER NOT NULL, PRIMARY KEY(`userId`), FOREIGN KEY(`userId`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
@@ -1448,7 +1635,7 @@
       },
       {
         "tableName": "SessionDetailsEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`sessionId` TEXT NOT NULL, `initialEventId` TEXT NOT NULL, `requiredAccountType` TEXT NOT NULL, `secondFactorEnabled` INTEGER NOT NULL, `twoPassModeEnabled` INTEGER NOT NULL, `password` TEXT, PRIMARY KEY(`sessionId`), FOREIGN KEY(`sessionId`) REFERENCES `SessionEntity`(`sessionId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`sessionId` TEXT NOT NULL, `initialEventId` TEXT NOT NULL, `requiredAccountType` TEXT NOT NULL, `secondFactorEnabled` INTEGER NOT NULL, `twoPassModeEnabled` INTEGER NOT NULL, `password` TEXT, `fido2AuthenticationOptionsJson` TEXT, PRIMARY KEY(`sessionId`), FOREIGN KEY(`sessionId`) REFERENCES `SessionEntity`(`sessionId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "sessionId",
@@ -1483,6 +1670,12 @@
           {
             "fieldPath": "password",
             "columnName": "password",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fido2AuthenticationOptionsJson",
+            "columnName": "fido2AuthenticationOptionsJson",
             "affinity": "TEXT",
             "notNull": false
           }
@@ -1904,7 +2097,7 @@
       },
       {
         "tableName": "UserSettingsEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `news` INTEGER, `locale` TEXT, `logAuth` INTEGER, `density` INTEGER, `weekStart` INTEGER, `dateFormat` INTEGER, `timeFormat` INTEGER, `earlyAccess` INTEGER, `deviceRecovery` INTEGER, `telemetry` INTEGER, `crashReports` INTEGER, `sessionAccountRecovery` INTEGER, `email_value` TEXT, `email_status` INTEGER, `email_notify` INTEGER, `email_reset` INTEGER, `phone_value` TEXT, `phone_status` INTEGER, `phone_notify` INTEGER, `phone_reset` INTEGER, `password_mode` INTEGER, `password_expirationTime` INTEGER, `twoFA_enabled` INTEGER, `twoFA_allowed` INTEGER, `twoFA_expirationTime` INTEGER, PRIMARY KEY(`userId`), FOREIGN KEY(`userId`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `news` INTEGER, `locale` TEXT, `logAuth` INTEGER, `density` INTEGER, `weekStart` INTEGER, `dateFormat` INTEGER, `timeFormat` INTEGER, `earlyAccess` INTEGER, `deviceRecovery` INTEGER, `telemetry` INTEGER, `crashReports` INTEGER, `sessionAccountRecovery` INTEGER, `email_value` TEXT, `email_status` INTEGER, `email_notify` INTEGER, `email_reset` INTEGER, `phone_value` TEXT, `phone_status` INTEGER, `phone_notify` INTEGER, `phone_reset` INTEGER, `password_mode` INTEGER, `password_expirationTime` INTEGER, `twoFA_enabled` INTEGER, `twoFA_allowed` INTEGER, `twoFA_expirationTime` INTEGER, `twoFA_registeredKeys` TEXT, PRIMARY KEY(`userId`), FOREIGN KEY(`userId`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "userId",
@@ -2060,6 +2253,12 @@
             "fieldPath": "twoFA.expirationTime",
             "columnName": "twoFA_expirationTime",
             "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "twoFA.registeredKeys",
+            "columnName": "twoFA_registeredKeys",
+            "affinity": "TEXT",
             "notNull": false
           }
         ],
@@ -3580,7 +3779,7 @@
       },
       {
         "tableName": "SecureLinkEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_id` TEXT NOT NULL, `link_id` TEXT NOT NULL, `share_id` TEXT NOT NULL, `item_id` TEXT NOT NULL, `expiration` INTEGER NOT NULL, `is_expired` INTEGER NOT NULL, `max_views` INTEGER, `views` INTEGER NOT NULL, `url` TEXT NOT NULL, PRIMARY KEY(`link_id`), FOREIGN KEY(`user_id`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`item_id`, `share_id`) REFERENCES `ItemEntity`(`id`, `share_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`share_id`) REFERENCES `ShareEntity`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_id` TEXT NOT NULL, `link_id` TEXT NOT NULL, `share_id` TEXT NOT NULL, `item_id` TEXT NOT NULL, `expiration` INTEGER NOT NULL, `is_active` INTEGER NOT NULL, `max_views` INTEGER, `views` INTEGER NOT NULL, `url` TEXT NOT NULL, PRIMARY KEY(`link_id`), FOREIGN KEY(`user_id`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`item_id`, `share_id`) REFERENCES `ItemEntity`(`id`, `share_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`share_id`) REFERENCES `ShareEntity`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "userId",
@@ -3613,8 +3812,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "isExpired",
-            "columnName": "is_expired",
+            "fieldPath": "isActive",
+            "columnName": "is_active",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -3762,7 +3961,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9778328db9867dda2f894f5a6e7f9b14')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1c5e3b682c676e37f4900d838cab5c14')"
     ]
   }
 }

@@ -266,6 +266,15 @@ object AppDatabaseMigrations {
         }
     }
 
+    val MIGRATION_51_52 = object : Migration(51, 52) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            AccountDatabase.MIGRATION_8.migrate(db)
+            UserSettingsDatabase.MIGRATION_7.migrate(db)
+            PublicAddressDatabase.MIGRATION_3.migrate(db)
+            EventMetadataDatabase.MIGRATION_3.migrate(db)
+        }
+    }
+
     @RenameColumn.Entries(
         value = [
             RenameColumn(
@@ -275,14 +284,5 @@ object AppDatabaseMigrations {
             )
         ]
     )
-    class MIGRATION_50_51 : AutoMigrationSpec
-
-    val MIGRATION_51_52 = object : Migration(51, 52) {
-        override fun migrate(db: SupportSQLiteDatabase) {
-            AccountDatabase.MIGRATION_8.migrate(db)
-            UserSettingsDatabase.MIGRATION_7.migrate(db)
-            PublicAddressDatabase.MIGRATION_3.migrate(db)
-            EventMetadataDatabase.MIGRATION_3.migrate(db)
-        }
-    }
+    class MIGRATION_52_53 : AutoMigrationSpec
 }

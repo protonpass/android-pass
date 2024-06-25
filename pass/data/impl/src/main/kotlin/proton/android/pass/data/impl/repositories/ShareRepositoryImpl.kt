@@ -193,19 +193,23 @@ class ShareRepositoryImpl @Inject constructor(
             .filterNot { localSharesMap.containsKey(ShareId(it.shareId)) }
             .map { ShareId(it.shareId) }
 
-        val inactiveShares = localShares.filter { !it.isActive }.map { ShareId(it.id) }
-
+        val inactiveLocalShares = localShares.filter { !it.isActive }.map { ShareId(it.id) }
         val remoteSharesToSave = remoteShares.filter {
-            sharesNotInLocal.contains(ShareId(it.shareId)) || inactiveShares.contains(ShareId(it.shareId))
+            sharesNotInLocal.contains(ShareId(it.shareId)) || inactiveLocalShares.contains(ShareId(it.shareId))
         }
 
         val storedShares = storeShares(userId, remoteSharesToSave)
+        val inactiveNotInLocalShares = storedShares
+            .filter { !it.isActive }
+            .map { ShareId(it.id) }
 
         val newShares = storedShares.filter {
             it.isActive && sharesNotInLocal.contains(ShareId(it.id))
         }
 
-        val allShareIds = remoteSharesMap.keys.filterNot { inactiveShares.contains(it) }.toSet()
+        val allShareIds = remoteSharesMap.keys.filterNot {
+            inactiveLocalShares.contains(it) || inactiveNotInLocalShares.contains(it)
+        }.toSet()
 
         val wasFirstSync = !hadLocalSharesOnStart && allShareIds.isNotEmpty()
 
@@ -372,6 +376,7 @@ class ShareRepositoryImpl @Inject constructor(
                     PassLogger.i(TAG, "Storing ${shareEntities.size} shares")
                     localShareDataSource.upsertShares(shareEntities)
                 }
+
                 // Now that we have inserted the shares, we can safely insert the shareKeys
                 if (shareKeyEntities.isNotEmpty()) {
                     PassLogger.i(TAG, "Storing ${shareKeyEntities.size} ShareKeys")

@@ -21,13 +21,13 @@ package proton.android.pass.data.fakes.usecases.securelink
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
-import proton.android.pass.data.api.usecases.securelink.ObserveActiveSecureLinks
+import proton.android.pass.data.api.usecases.securelink.ObserveInactiveSecureLinks
 import proton.android.pass.domain.securelinks.SecureLink
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FakeObserveInactiveSecureLinks @Inject constructor() : ObserveActiveSecureLinks {
+class FakeObserveInactiveSecureLinks @Inject constructor() : ObserveInactiveSecureLinks {
 
     private val inactiveSecureLinksFlow = MutableStateFlow<List<SecureLink>>(emptyList())
 

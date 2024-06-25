@@ -57,7 +57,7 @@ class SecureLinksLocalDataSourceImpl @Inject constructor(
             database.secureLinksDao().delete(entity)
         }
 
-    override suspend fun deleteAllInactive(userId: UserId) = withContext(appDispatchers.io){
+    override suspend fun deleteAllInactive(userId: UserId) = withContext(appDispatchers.io) {
         database.secureLinksDao().deleteAllInactiveSecureLinks(userId.id)
     }
 

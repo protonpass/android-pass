@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -47,6 +48,7 @@ internal fun SecureLinksListGridEmpty(modifier: Modifier = Modifier) {
         Column(
             modifier = modifier
                 .fillMaxWidth()
+                .padding(horizontal = Spacing.large)
                 .align(alignment = Alignment.Center),
             verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
         ) {

@@ -408,6 +408,9 @@ interface PasswordManagerApi : BaseRetrofitApi {
     @DELETE("$PREFIX/public_link/{secureLinkId}")
     suspend fun deleteSecureLink(@Path("secureLinkId") secureLinkId: String): CodeOnlyResponse
 
+    @DELETE("$PREFIX/public_link/inactive")
+    suspend fun deleteInactiveSecureLinks(): CodeOnlyResponse
+
     // Extra Password
     @POST("$PREFIX/user/srp")
     suspend fun setupExtraPassword(@Body request: SetupExtraPasswordRequest)

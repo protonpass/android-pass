@@ -42,6 +42,8 @@ interface RemoteSecureLinkDataSource {
 
     suspend fun deleteSecureLink(userId: UserId, secureLinkId: SecureLinkId)
 
+    suspend fun deleteInactiveSecureLinks(userId: UserId)
+
 }
 
 class RemoteSecureLinkDataSourceImpl @Inject constructor(
@@ -67,6 +69,12 @@ class RemoteSecureLinkDataSourceImpl @Inject constructor(
     override suspend fun deleteSecureLink(userId: UserId, secureLinkId: SecureLinkId) {
         apiProvider.get<PasswordManagerApi>(userId)
             .invoke { deleteSecureLink(secureLinkId = secureLinkId.id) }
+            .valueOrThrow
+    }
+
+    override suspend fun deleteInactiveSecureLinks(userId: UserId) {
+        apiProvider.get<PasswordManagerApi>(userId)
+            .invoke { deleteInactiveSecureLinks() }
             .valueOrThrow
     }
 

@@ -63,4 +63,8 @@ internal data class SecureLinkModel(
 
     internal val isActive: Boolean = secureLink.isActive
 
+    internal val hasReachedMaxViewsLimit: Boolean = secureLink.maxReadCount
+        ?.let { maxViewsLimit -> maxViewsLimit == views }
+        ?: false
+
 }

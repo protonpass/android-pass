@@ -41,6 +41,8 @@ class LocalShareKeyDataSourceImpl @Inject constructor(
         passDatabase.shareKeysDao().getLatestKeyForShare(shareId.id)
 
     override suspend fun storeShareKeys(entities: List<ShareKeyEntity>) {
-        passDatabase.shareKeysDao().insertOrUpdate(*entities.toTypedArray())
+        val (active, inactive) = entities.partition { it.isActive }
+        passDatabase.shareKeysDao().insertOrUpdate(*active.toTypedArray())
+        passDatabase.shareKeysDao().delete(*inactive.toTypedArray())
     }
 }

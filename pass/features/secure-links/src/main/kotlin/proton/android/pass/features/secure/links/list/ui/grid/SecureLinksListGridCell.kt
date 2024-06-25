@@ -72,7 +72,8 @@ internal fun SecureLinksListGridCell(
     views: Int,
     onCellClick: () -> Unit,
     onCellOptionsClick: () -> Unit,
-    isEnabled: Boolean
+    isEnabled: Boolean,
+    hasReachedMaxViewsLimit: Boolean
 ) {
     Box(
         modifier = modifier
@@ -111,7 +112,8 @@ internal fun SecureLinksListGridCell(
             SecureLinksListGridCellInfo(
                 title = title,
                 remainingTime = remainingTime,
-                views = views
+                views = views,
+                hasReachedMaxViewsLimit = hasReachedMaxViewsLimit
             )
         }
 
@@ -152,7 +154,8 @@ private fun SecureLinksListGridCellInfo(
     modifier: Modifier = Modifier,
     title: String,
     remainingTime: RemainingTime,
-    views: Int
+    views: Int,
+    hasReachedMaxViewsLimit: Boolean
 ) {
     Column(
         modifier = modifier,
@@ -186,7 +189,7 @@ private fun SecureLinksListGridCellInfo(
                 id = R.plurals.secure_links_list_viewed_times_description,
                 count = views,
                 views
-            ),
+            ).let { viewsText -> if (hasReachedMaxViewsLimit) "$views/$viewsText" else viewsText },
             style = ProtonTheme.typography.captionRegular,
             color = PassTheme.colors.textWeak
         )
@@ -227,7 +230,8 @@ internal fun SecureLinksListGridCellPreview(
                 views = 2,
                 onCellClick = {},
                 onCellOptionsClick = {},
-                isEnabled = isEnabled
+                isEnabled = isEnabled,
+                hasReachedMaxViewsLimit = !isEnabled
             )
         }
     }

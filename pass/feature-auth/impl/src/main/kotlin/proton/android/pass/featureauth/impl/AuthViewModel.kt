@@ -65,6 +65,7 @@ import proton.android.pass.data.api.usecases.extrapassword.CheckLocalExtraPasswo
 import proton.android.pass.data.api.usecases.extrapassword.HasExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.RemoveExtraPassword
 import proton.android.pass.featureauth.impl.AuthSnackbarMessage.AuthExtraPasswordError
+import proton.android.pass.featureauth.impl.AuthSnackbarMessage.AuthExtraPasswordTooManyAttemptsError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.UserIdNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -259,6 +260,8 @@ class AuthViewModel @Inject constructor(
         when (err) {
             is TooManyExtraPasswordAttemptsException -> {
                 PassLogger.w(TAG, "Too many attempts")
+                snackbarDispatcher(AuthExtraPasswordTooManyAttemptsError)
+                delay(WRONG_PASSWORD_DELAY_SECONDS)
                 updateAuthEventFlow(AuthEvent.ForceSignOut)
             }
 
@@ -273,6 +276,8 @@ class AuthViewModel @Inject constructor(
                 PassLogger.w(TAG, "Wrong local extra password")
                 val remainingAttempts = incrementAttemptAndReturnRemaining()
                 if (remainingAttempts <= 0) {
+                    snackbarDispatcher(AuthExtraPasswordTooManyAttemptsError)
+                    delay(WRONG_PASSWORD_DELAY_SECONDS)
                     updateAuthEventFlow(AuthEvent.ForceSignOut)
                 } else {
                     formContentFlow.update {

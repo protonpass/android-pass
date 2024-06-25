@@ -35,7 +35,7 @@
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Copiere parolă</string>
   <string name="bottomsheet_copy_username">Copiere nume utilizator</string>
-  <string name="bottomsheet_copy_alias">Copiere adresă de e-mail</string>
+  <string name="bottomsheet_copy_email">Copiere adresă de e-mail</string>
   <string name="bottomsheet_copy_number">Copiere număr</string>
   <string name="bottomsheet_copy_cvv">Copiere cod de securitate</string>
   <string name="bottomsheet_copy_note">Copiere notă</string>

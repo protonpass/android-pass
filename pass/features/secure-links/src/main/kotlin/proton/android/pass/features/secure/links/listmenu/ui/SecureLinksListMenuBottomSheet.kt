@@ -43,7 +43,7 @@ internal fun SecureLinksListMenuBottomSheet(
             SecureLinksListMenuEvent.OnLinkDeleted,
             SecureLinksListMenuEvent.OnDeleteLinkError,
             SecureLinksListMenuEvent.OnInactiveLinksDeleted,
-            SecureLinksListMenuEvent.OnDeleteInactiveLinksError, -> {
+            SecureLinksListMenuEvent.OnDeleteInactiveLinksError -> {
                 SecureLinksNavDestination.Back(
                     comesFromBottomSheet = true
                 ).also(onNavigated)

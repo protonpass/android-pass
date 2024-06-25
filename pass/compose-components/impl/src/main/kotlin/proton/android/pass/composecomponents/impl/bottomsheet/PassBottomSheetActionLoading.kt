@@ -25,8 +25,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun PassBottomSheetActionLoading(
-    modifier: Modifier = Modifier
-) {
+fun PassBottomSheetActionLoading(modifier: Modifier = Modifier) {
     CircularProgressIndicator(modifier = modifier.size(20.dp))
 }

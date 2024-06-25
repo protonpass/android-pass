@@ -24,6 +24,8 @@ import android.content.Intent
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.clipboard.api.CouldNotAccessClipboard
+import proton.android.pass.clipboard.api.CouldNotGetClipboardContent
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
@@ -47,15 +49,21 @@ class ClearClipboardBroadcastReceiver : BroadcastReceiver() {
             return
         }
 
-        // Check if it has primary clip
-        if (shouldClearClipboard(clipboardManager, encryptedExpected)) {
-            clipboardManager.clearClipboard()
-        }
+        clipboardManager.getClipboardContent()
+            .onSuccess {
+                if (shouldClearClipboard(it, encryptedExpected)) {
+                    clipboardManager.clearClipboard()
+                }
+            }
+            .onFailure {
+                if (it is CouldNotAccessClipboard || it is CouldNotGetClipboardContent) {
+                    clipboardManager.clearClipboard()
+                }
+            }
     }
 
-    private fun shouldClearClipboard(clipboardManager: ClipboardManager, expected: EncryptedString): Boolean {
-        val result = clipboardManager.getClipboardContent()
-        val contentsMatch = result.getOrNull() == encryptionContextProvider.withEncryptionContext {
+    private fun shouldClearClipboard(content: String, expected: EncryptedString): Boolean {
+        val contentsMatch = content == encryptionContextProvider.withEncryptionContext {
             decrypt(expected)
         }
 

@@ -20,10 +20,11 @@ package proton.android.pass.featurehome.impl
 
 enum class HomeClipboardType {
     Alias,
+    CreditCardCvv,
+    CreditCardNumber,
+    Email,
+    FullName,
     Note,
     Password,
-    Username,
-    FullName,
-    CreditCardNumber,
-    CreditCardCvv
+    Username
 }

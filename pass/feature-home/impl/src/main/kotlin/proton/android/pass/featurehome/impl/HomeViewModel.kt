@@ -535,13 +535,15 @@ class HomeViewModel @Inject constructor(
         getUserPlan().asLoadingResult(),
         navEventState,
         pinningUiStateFlow,
-        bottomSheetItemActionFlow
+        bottomSheetItemActionFlow,
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT)
     ) { homeListUiState,
         searchUiState,
         userPlan,
         navEvent,
         pinningUiState,
-        bottomSheetItemAction ->
+        bottomSheetItemAction,
+        isUsernameSplitEnabled ->
         HomeUiState(
             homeListUiState = homeListUiState,
             searchUiState = searchUiState,
@@ -549,7 +551,8 @@ class HomeViewModel @Inject constructor(
             accountType = AccountType.fromPlan(userPlan),
             navEvent = navEvent,
             action = bottomSheetItemAction,
-            isFreePlan = userPlan.map { plan -> plan.isFreePlan }.getOrNull() ?: true
+            isFreePlan = userPlan.map { plan -> plan.isFreePlan }.getOrNull() ?: true,
+            isUsernameSplitEnabled = isUsernameSplitEnabled
         )
     }
         .stateIn(
@@ -680,6 +683,11 @@ class HomeViewModel @Inject constructor(
                         isSecure = true
                     )
                     HomeSnackbarMessage.PasswordCopied
+                }
+
+                HomeClipboardType.Email -> {
+                    clipboardManager.copyToClipboard(text = sanitizedText)
+                    HomeSnackbarMessage.EmailCopied
                 }
 
                 HomeClipboardType.Username -> {

@@ -35,7 +35,7 @@
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Kopírovať heslo</string>
   <string name="bottomsheet_copy_username">Kopírovať meno používateľa</string>
-  <string name="bottomsheet_copy_alias">Kopírovať emailovú adresu</string>
+  <string name="bottomsheet_copy_email">Kopírovať emailovú adresu</string>
   <string name="bottomsheet_copy_number">Kopírovať číslo</string>
   <string name="bottomsheet_copy_cvv">Kopírovať bezpečnostný kód</string>
   <string name="bottomsheet_copy_note">Kopírovať poznámku</string>

@@ -59,6 +59,7 @@ fun LoginOptionsBottomSheetContents(
     action: BottomSheetItemAction,
     isRecentSearch: Boolean = false,
     canLoadExternalImages: Boolean,
+    onCopyEmail: (String) -> Unit,
     onCopyUsername: (String) -> Unit,
     onCopyPassword: (EncryptedString) -> Unit,
     onPinned: (ShareId, ItemId) -> Unit,
@@ -67,7 +68,8 @@ fun LoginOptionsBottomSheetContents(
     onEdit: (ShareId, ItemId) -> Unit,
     onMoveToTrash: (ItemUiModel) -> Unit,
     onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit,
-    isFreePlan: Boolean
+    isFreePlan: Boolean,
+    isUsernameSplitEnabled: Boolean
 ) {
     val contents = itemUiModel.contents as ItemContents.Login
 
@@ -91,10 +93,16 @@ fun LoginOptionsBottomSheetContents(
             }
         )
 
-        val bottomSheetItems = mutableListOf(
-            copyUsername(contents.itemEmail, onCopyUsername),
-            copyPassword(contents.password.encrypted, onCopyPassword)
-        ).apply {
+        mutableListOf<BottomSheetItem>().apply {
+            if (isUsernameSplitEnabled) {
+                add(copyEmail(contents.itemEmail, onCopyEmail))
+                add(copyUsername(contents.itemUsername, onCopyUsername))
+            } else {
+                add(copyUsername(contents.itemEmail, onCopyUsername))
+            }
+
+            add(copyPassword(contents.password.encrypted, onCopyPassword))
+
             if (itemUiModel.isPinned) {
                 add(unpin(action) { onUnpinned(itemUiModel.shareId, itemUiModel.id) })
             } else {
@@ -111,12 +119,26 @@ fun LoginOptionsBottomSheetContents(
             if (isRecentSearch) {
                 add(removeFromRecentSearch(itemUiModel, onRemoveFromRecentSearch))
             }
+        }.also { bottomSheetItems ->
+            BottomSheetItemList(
+                items = bottomSheetItems.withDividers().toPersistentList()
+            )
         }
-
-        BottomSheetItemList(
-            items = bottomSheetItems.withDividers().toPersistentList()
-        )
     }
+}
+
+private fun copyEmail(email: String, onCopyEmail: (String) -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_email)) }
+    override val subtitle: (@Composable () -> Unit)?
+        get() = null
+    override val leftIcon: (@Composable () -> Unit)
+        get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
+    override val onClick: () -> Unit
+        get() = { onCopyEmail(email) }
+    override val isDivider = false
 }
 
 private fun copyUsername(username: String, onCopyUsername: (String) -> Unit): BottomSheetItem =
@@ -181,6 +203,7 @@ internal fun LoginOptionsBottomSheetContentsPreview(
                 ),
                 isRecentSearch = input.second,
                 action = BottomSheetItemAction.None,
+                onCopyEmail = {},
                 onCopyUsername = {},
                 onCopyPassword = {},
                 onPinned = { _, _ -> },
@@ -190,7 +213,8 @@ internal fun LoginOptionsBottomSheetContentsPreview(
                 onMoveToTrash = {},
                 onRemoveFromRecentSearch = { _, _ -> },
                 canLoadExternalImages = false,
-                isFreePlan = input.second
+                isFreePlan = input.second,
+                isUsernameSplitEnabled = true
             )
         }
     }

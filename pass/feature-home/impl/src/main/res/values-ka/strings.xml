@@ -35,7 +35,7 @@
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">პაროლის კოპირება</string>
   <string name="bottomsheet_copy_username">მომხმარებლის სახელის კოპირება</string>
-  <string name="bottomsheet_copy_alias">ელფოსტის მისამართის კოპირება</string>
+  <string name="bottomsheet_copy_email">ელფოსტის მისამართის კოპირება</string>
   <string name="bottomsheet_copy_number">ნომრის კოპირება</string>
   <string name="bottomsheet_copy_cvv">უსაფრთხოების კოდის კოპირება</string>
   <string name="bottomsheet_copy_note">შენიშვნის კოპირება</string>

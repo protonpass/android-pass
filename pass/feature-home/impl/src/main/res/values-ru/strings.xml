@@ -35,7 +35,7 @@
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Скопировать пароль</string>
   <string name="bottomsheet_copy_username">Скопировать имя пользователя</string>
-  <string name="bottomsheet_copy_alias">Скопировать адрес электронной почты</string>
+  <string name="bottomsheet_copy_email">Скопировать адрес электронной почты</string>
   <string name="bottomsheet_copy_number">Скопировать номер</string>
   <string name="bottomsheet_copy_cvv">Скопировать код безопасности</string>
   <string name="bottomsheet_copy_note">Скопировать заметку</string>

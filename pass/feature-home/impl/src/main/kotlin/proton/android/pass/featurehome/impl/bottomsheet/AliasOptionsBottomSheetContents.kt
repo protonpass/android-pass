@@ -105,7 +105,7 @@ fun AliasOptionsBottomSheetContents(
 
 private fun copyAlias(aliasEmail: String, onCopyAlias: (String) -> Unit): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
-        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_alias)) }
+        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_email)) }
     override val subtitle: (@Composable () -> Unit)?
         get() = null
     override val leftIcon: (@Composable () -> Unit)

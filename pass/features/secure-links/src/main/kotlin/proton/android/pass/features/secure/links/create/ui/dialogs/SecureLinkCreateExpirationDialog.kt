@@ -31,7 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.ImmutableMap
-import kotlinx.collections.immutable.toPersistentMap
+import kotlinx.collections.immutable.persistentMapOf
 import me.proton.core.compose.component.ProtonDialogTitle
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
@@ -107,11 +107,11 @@ internal fun SecureLinkCreateExpirationDialogPreview(@PreviewParameter(ThemePrev
         Surface {
             SecureLinkCreateExpirationDialog(
                 selectedExpiration = SecureLinkExpiration.OneDay,
-                expirationOptionsMap = mapOf(
+                expirationOptionsMap = persistentMapOf(
                     SecureLinkExpiration.OneHour to R.string.secure_links_create_row_expiration_options_one_hour,
                     SecureLinkExpiration.OneDay to R.string.secure_links_create_row_expiration_options_one_day,
                     SecureLinkExpiration.SevenDays to R.string.secure_links_create_row_expiration_options_seven_days
-                ).toPersistentMap(),
+                ),
                 onUiEvent = {}
             )
         }

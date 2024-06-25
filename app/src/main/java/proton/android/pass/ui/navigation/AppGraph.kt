@@ -1617,13 +1617,15 @@ fun NavGraphBuilder.appGraph(
                 destination = InvitesErrorDialog
             )
 
-            is SharingNavigation.ShareItem -> appNavigator.navigate(
-                destination = SecureLinksCreateNavItem,
-                route = SecureLinksCreateNavItem.createNavRoute(
-                    shareId = it.shareId,
-                    itemId = it.itemId
+            is SharingNavigation.ShareItem -> dismissBottomSheet {
+                appNavigator.navigate(
+                    destination = SecureLinksCreateNavItem,
+                    route = SecureLinksCreateNavItem.createNavRoute(
+                        shareId = it.shareId,
+                        itemId = it.itemId
+                    )
                 )
-            )
+            }
 
             is SharingNavigation.Upsell -> appNavigator.navigate(
                 destination = UpsellNavItem,

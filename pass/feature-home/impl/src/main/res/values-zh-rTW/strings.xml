@@ -35,7 +35,7 @@
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">複製密碼</string>
   <string name="bottomsheet_copy_username">複製使用者名稱</string>
-  <string name="bottomsheet_copy_alias">複製電子郵件位址</string>
+  <string name="bottomsheet_copy_email">複製電子郵件位址</string>
   <string name="bottomsheet_copy_number">複製號碼</string>
   <string name="bottomsheet_copy_cvv">複製安全防護代碼</string>
   <string name="bottomsheet_copy_note">複製備註</string>

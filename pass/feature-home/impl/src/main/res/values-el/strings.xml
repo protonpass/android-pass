@@ -35,7 +35,7 @@
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Αντιγραφή συνθηματικού</string>
   <string name="bottomsheet_copy_username">Αντιγραφή ονόματος χρήστη</string>
-  <string name="bottomsheet_copy_alias">Αντιγραφή διεύθυνσης ηλεκτρονικού ταχυδρομείου</string>
+  <string name="bottomsheet_copy_email">Αντιγραφή διεύθυνσης ηλεκτρονικού ταχυδρομείου</string>
   <string name="bottomsheet_copy_number">Αντιγραφή αριθμού</string>
   <string name="bottomsheet_copy_cvv">Αντιγραφή κωδικού ασφαλείας</string>
   <string name="bottomsheet_copy_note">Αντιγραφή σημείωσης</string>

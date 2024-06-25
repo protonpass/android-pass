@@ -35,7 +35,7 @@
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Kopiuj hasło</string>
   <string name="bottomsheet_copy_username">Kopiuj nazwę użytkownika</string>
-  <string name="bottomsheet_copy_alias">Kopiuj adres e-mail</string>
+  <string name="bottomsheet_copy_email">Kopiuj adres e-mail</string>
   <string name="bottomsheet_copy_number">Kopiuj numer</string>
   <string name="bottomsheet_copy_cvv">Kopiuj kod zabezpieczający</string>
   <string name="bottomsheet_copy_note">Kopiuj notatkę</string>

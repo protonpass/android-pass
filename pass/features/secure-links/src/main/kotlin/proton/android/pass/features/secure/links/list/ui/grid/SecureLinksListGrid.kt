@@ -160,7 +160,8 @@ private fun LazyGridScope.secureLinksListGridCellItems(
                 SecureLinksListUiEvent.OnCellOptionsClicked(
                     secureLinkId = secureLinksModel.secureLinkId
                 ).also(onUiEvent)
-            }
+            },
+            hasReachedMaxViewsLimit = secureLinksModel.hasReachedMaxViewsLimit
         )
     }
 }

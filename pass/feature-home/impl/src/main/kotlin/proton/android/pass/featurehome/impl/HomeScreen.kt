@@ -256,6 +256,12 @@ fun HomeScreen(
                         isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
                         canLoadExternalImages = homeUiState.homeListUiState.canLoadExternalImages,
                         action = homeUiState.action,
+                        onCopyEmail = remember {
+                            {
+                                scope.launch { bottomSheetState.hide() }
+                                homeViewModel.copyToClipboard(it, HomeClipboardType.Email)
+                            }
+                        },
                         onCopyUsername = remember {
                             {
                                 scope.launch { bottomSheetState.hide() }
@@ -306,7 +312,8 @@ fun HomeScreen(
                                 }
                             }
                         },
-                        isFreePlan = homeUiState.isFreePlan
+                        isFreePlan = homeUiState.isFreePlan,
+                        isUsernameSplitEnabled = homeUiState.isUsernameSplitEnabled
                     )
                 }
 

@@ -35,7 +35,7 @@
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Parolayı kopyala</string>
   <string name="bottomsheet_copy_username">Kullanıcı adını kopyala</string>
-  <string name="bottomsheet_copy_alias">E-posta adresini kopyala</string>
+  <string name="bottomsheet_copy_email">E-posta adresini kopyala</string>
   <string name="bottomsheet_copy_number">Numarayı kopyala</string>
   <string name="bottomsheet_copy_cvv">Güvenlik kodunu kopyala</string>
   <string name="bottomsheet_copy_note">Notu kopyala</string>

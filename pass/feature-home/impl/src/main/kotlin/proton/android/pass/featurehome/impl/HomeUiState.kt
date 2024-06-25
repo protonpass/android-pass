@@ -71,7 +71,8 @@ internal data class HomeUiState(
     val accountType: AccountType,
     val navEvent: HomeNavEvent,
     val action: BottomSheetItemAction,
-    val isFreePlan: Boolean
+    val isFreePlan: Boolean,
+    val isUsernameSplitEnabled: Boolean
 ) {
     internal fun shouldShowRecentSearchHeader() =
         homeListUiState.items.isNotEmpty() && searchUiState.inSearchMode && searchUiState.isInSuggestionsMode
@@ -99,7 +100,8 @@ internal data class HomeUiState(
             accountType = AccountType.Free,
             navEvent = HomeNavEvent.Unknown,
             action = BottomSheetItemAction.None,
-            isFreePlan = true
+            isFreePlan = true,
+            isUsernameSplitEnabled = false
         )
 
     }

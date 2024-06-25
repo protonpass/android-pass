@@ -35,7 +35,7 @@
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Sao chép mật khẩu</string>
   <string name="bottomsheet_copy_username">Sao chép tên đăng nhập</string>
-  <string name="bottomsheet_copy_alias">Sao chép địa chỉ email</string>
+  <string name="bottomsheet_copy_email">Sao chép địa chỉ email</string>
   <string name="bottomsheet_copy_number">Sao chép số thẻ</string>
   <string name="bottomsheet_copy_cvv">Sao chép mã bảo mật</string>
   <string name="bottomsheet_copy_note">Sao chép ghi chú</string>

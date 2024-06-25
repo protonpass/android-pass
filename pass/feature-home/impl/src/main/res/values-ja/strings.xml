@@ -35,7 +35,7 @@
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">パスワードをコピー</string>
   <string name="bottomsheet_copy_username">ユーザー名をコピー</string>
-  <string name="bottomsheet_copy_alias">メールアドレスをコピー</string>
+  <string name="bottomsheet_copy_email">メールアドレスをコピー</string>
   <string name="bottomsheet_copy_number">番号をコピー</string>
   <string name="bottomsheet_copy_cvv">セキュリティコードをコピー</string>
   <string name="bottomsheet_copy_note">メモをコピー</string>

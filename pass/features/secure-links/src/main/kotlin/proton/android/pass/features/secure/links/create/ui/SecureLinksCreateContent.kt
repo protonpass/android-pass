@@ -22,17 +22,19 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import kotlinx.collections.immutable.persistentMapOf
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.PassCircleButton
 import proton.android.pass.composecomponents.impl.topbar.PassExtendedTopBar
+import proton.android.pass.domain.securelinks.SecureLinkExpiration
 import proton.android.pass.features.secure.links.R
 import proton.android.pass.features.secure.links.create.presentation.SecureLinksCreateState
 import proton.android.pass.features.secure.links.create.ui.dialogs.SecureLinkCreateExpirationDialog
 import proton.android.pass.features.secure.links.create.ui.rows.SecureLinkCreateExpirationRow
 import proton.android.pass.features.secure.links.create.ui.rows.SecureLinkCreateMaxViewsRow
-import proton.android.pass.features.secure.links.shared.presentation.SecureLink
 
 @Composable
 internal fun SecureLinksCreateContent(
@@ -41,6 +43,16 @@ internal fun SecureLinksCreateContent(
     shouldDisplayExpirationDialog: Boolean,
     onUiEvent: (SecureLinksCreateUiEvent) -> Unit
 ) = with(state) {
+    val expirationOptionsMap = remember {
+        persistentMapOf(
+            SecureLinkExpiration.OneHour to R.string.secure_links_create_row_expiration_options_one_hour,
+            SecureLinkExpiration.OneDay to R.string.secure_links_create_row_expiration_options_one_day,
+            SecureLinkExpiration.SevenDays to R.string.secure_links_create_row_expiration_options_seven_days,
+            SecureLinkExpiration.FourteenDays to R.string.secure_links_create_row_expiration_options_fourteen_days,
+            SecureLinkExpiration.ThirtyDays to R.string.secure_links_create_row_expiration_options_thirty_days
+        )
+    }
+
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -65,7 +77,7 @@ internal fun SecureLinksCreateContent(
         ) {
             SecureLinkCreateExpirationRow(
                 isConfigurationAllowed = isConfigurationAllowed,
-                expirationText = SecureLink.expirationOptionsMap[expiration]
+                expirationText = expirationOptionsMap[expiration]
                     ?.let { expirationResId -> stringResource(id = expirationResId) }
                     ?: "",
                 onUiEvent = onUiEvent
@@ -84,7 +96,7 @@ internal fun SecureLinksCreateContent(
     if (shouldDisplayExpirationDialog) {
         SecureLinkCreateExpirationDialog(
             selectedExpiration = expiration,
-            expirationOptionsMap = SecureLink.expirationOptionsMap,
+            expirationOptionsMap = expirationOptionsMap,
             onUiEvent = onUiEvent
         )
     }

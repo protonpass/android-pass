@@ -53,9 +53,7 @@ internal fun SecureLinksListMenuOptionsAllLinks(
 }
 
 @[Preview Composable Suppress("FunctionMaxLength")]
-internal fun SecureLinksListMenuOptionsAllLinksPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+internal fun SecureLinksListMenuOptionsAllLinksPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             SecureLinksListMenuOptionsAllLinks(

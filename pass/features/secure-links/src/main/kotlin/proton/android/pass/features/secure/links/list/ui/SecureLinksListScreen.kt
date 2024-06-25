@@ -59,7 +59,7 @@ fun SecureLinksListScreen(
                     ).also(onNavigated)
                 }
 
-                SecureLinksListUiEvent.OnCellsHeaderOptionsClicked ->{
+                SecureLinksListUiEvent.OnCellsHeaderOptionsClicked -> {
                     SecureLinksNavDestination.SecureLinksListMenu(
                         secureLinkId = null
                     ).also(onNavigated)

@@ -35,7 +35,7 @@
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Kopiera lösenord</string>
   <string name="bottomsheet_copy_username">Kopiera användarnamn</string>
-  <string name="bottomsheet_copy_alias">Kopiera e-postadress</string>
+  <string name="bottomsheet_copy_email">Kopiera e-postadress</string>
   <string name="bottomsheet_copy_number">Kopiera nummer</string>
   <string name="bottomsheet_copy_cvv">Kopiera säkerhetskod</string>
   <string name="bottomsheet_copy_note">Kopiera anteckning</string>

@@ -35,7 +35,7 @@
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">암호 복사</string>
   <string name="bottomsheet_copy_username">사용자 이름 복사</string>
-  <string name="bottomsheet_copy_alias">이메일 주소 복사</string>
+  <string name="bottomsheet_copy_email">이메일 주소 복사</string>
   <string name="bottomsheet_copy_number">번호 복사</string>
   <string name="bottomsheet_copy_cvv">보안 코드 복사</string>
   <string name="bottomsheet_copy_note">메모 복사</string>

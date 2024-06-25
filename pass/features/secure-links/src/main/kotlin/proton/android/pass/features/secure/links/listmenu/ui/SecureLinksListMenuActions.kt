@@ -95,41 +95,39 @@ internal fun removeLink(
 
 }
 
-internal fun removeLinks(
-    action: BottomSheetItemAction,
-    onClick: () -> Unit
-): BottomSheetItem = object : BottomSheetItem {
+internal fun removeLinks(action: BottomSheetItemAction, onClick: () -> Unit): BottomSheetItem =
+    object : BottomSheetItem {
 
-    override val title: @Composable () -> Unit
-        get() = {
-            BottomSheetItemTitle(
-                text = stringResource(id = R.string.secure_links_shared_action_delete_links_inactive),
-                color = PassTheme.colors.passwordInteractionNormMajor1
-            )
-        }
-
-    override val subtitle: @Composable (() -> Unit)?
-        get() = null
-
-    override val leftIcon: @Composable (() -> Unit)
-        get() = {
-            BottomSheetItemIcon(
-                iconId = CoreR.drawable.ic_proton_trash,
-                tint = PassTheme.colors.passwordInteractionNormMajor1
-            )
-        }
-
-    override val endIcon: @Composable (() -> Unit)
-        get() = {
-            if (action is BottomSheetItemAction.Remove) {
-                PassBottomSheetActionLoading()
+        override val title: @Composable () -> Unit
+            get() = {
+                BottomSheetItemTitle(
+                    text = stringResource(id = R.string.secure_links_shared_action_delete_links_inactive),
+                    color = PassTheme.colors.passwordInteractionNormMajor1
+                )
             }
-        }
 
-    override val onClick: (() -> Unit)
-        get() = { onClick() }
+        override val subtitle: @Composable (() -> Unit)?
+            get() = null
 
-    override val isDivider: Boolean
-        get() = false
+        override val leftIcon: @Composable (() -> Unit)
+            get() = {
+                BottomSheetItemIcon(
+                    iconId = CoreR.drawable.ic_proton_trash,
+                    tint = PassTheme.colors.passwordInteractionNormMajor1
+                )
+            }
 
-}
+        override val endIcon: @Composable (() -> Unit)
+            get() = {
+                if (action is BottomSheetItemAction.Remove) {
+                    PassBottomSheetActionLoading()
+                }
+            }
+
+        override val onClick: (() -> Unit)
+            get() = { onClick() }
+
+        override val isDivider: Boolean
+            get() = false
+
+    }

@@ -86,11 +86,12 @@ sealed interface NodeCluster : Parcelable {
     data class Identity(
         val fullName: AssistField,
         val address: AssistField?,
+        val city: AssistField?,
         val postalCode: AssistField?,
         val phoneNumber: AssistField?
     ) : NodeCluster {
         override fun isFocused() = fields().any { it.isFocused }
-        override fun fields(): List<AssistField> = listOfNotNull(fullName, address, postalCode, phoneNumber)
+        override fun fields(): List<AssistField> = listOfNotNull(fullName, address, city, postalCode, phoneNumber)
 
         override fun type() = "Identity"
     }
@@ -201,14 +202,17 @@ object NodeClusterer {
         }
         val firstFullName = fullNameFields.first()
         val addressFields = nodes.getNodesForType(FieldType.Address, addedNodes)
+        val cityFields = nodes.getNodesForType(FieldType.City, addedNodes)
         val postalCodeFields = nodes.getNodesForType(FieldType.PostalCode, addedNodes)
         val phoneNumberFields = nodes.getNodesForType(FieldType.Phone, addedNodes)
 
-        if (addressFields.isNotEmpty() || postalCodeFields.isNotEmpty() || phoneNumberFields.isNotEmpty()) {
+        if (listOf(addressFields, cityFields, postalCodeFields, phoneNumberFields).any { it.isNotEmpty() }) {
             clusters.add(
                 NodeCluster.Identity(
                     fullName = firstFullName.also { addedNodes.add(it) },
                     address = addressFields.findFieldToCluster(firstFullName)
+                        ?.also { addedNodes.add(it) },
+                    city = cityFields.findFieldToCluster(firstFullName)
                         ?.also { addedNodes.add(it) },
                     postalCode = postalCodeFields.findFieldToCluster(firstFullName)
                         ?.also { addedNodes.add(it) },

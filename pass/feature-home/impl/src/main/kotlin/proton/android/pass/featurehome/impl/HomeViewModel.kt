@@ -402,10 +402,11 @@ class HomeViewModel @Inject constructor(
         } ?: emptyList()
         val sortedPinnedItems = pinnedItems.sortItemLists(searchOptions.sortingOption)
             .toPersistentList()
-        val filteredPinnedItems = pinnedItems
-            .filterByType(searchOptions.filterOption.searchFilterType)
+        val textFilteredPinnedItems = pinnedItems
             .filterByQuery(searchQuery)
-        val groupedItems = filteredPinnedItems
+        val typeFilteredPinnedItems = textFilteredPinnedItems
+            .filterByType(searchOptions.filterOption.searchFilterType)
+        val groupedItems = typeFilteredPinnedItems
             .groupedItemLists(searchOptions.sortingOption, clock.now())
             .toPersistentList()
         PinningUiState(
@@ -413,11 +414,11 @@ class HomeViewModel @Inject constructor(
             filteredItems = groupedItems,
             unFilteredItems = sortedPinnedItems,
             itemTypeCount = ItemTypeCount(
-                loginCount = filteredPinnedItems.count { it.contents is ItemContents.Login },
-                aliasCount = filteredPinnedItems.count { it.contents is ItemContents.Alias },
-                noteCount = filteredPinnedItems.count { it.contents is ItemContents.Note },
-                creditCardCount = filteredPinnedItems.count { it.contents is ItemContents.CreditCard },
-                identityCount = filteredPinnedItems.count { it.contents is ItemContents.Identity }
+                loginCount = textFilteredPinnedItems.count { it.contents is ItemContents.Login },
+                aliasCount = textFilteredPinnedItems.count { it.contents is ItemContents.Alias },
+                noteCount = textFilteredPinnedItems.count { it.contents is ItemContents.Note },
+                creditCardCount = textFilteredPinnedItems.count { it.contents is ItemContents.CreditCard },
+                identityCount = textFilteredPinnedItems.count { it.contents is ItemContents.Identity }
             )
         )
     }

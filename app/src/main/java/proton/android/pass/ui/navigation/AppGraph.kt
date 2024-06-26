@@ -766,7 +766,10 @@ fun NavGraphBuilder.appGraph(
                     val prefix = CustomFieldPrefix.fromLogin(backDestination)
                     appNavigator.navigate(
                         destination = EditCustomFieldNameDialogNavItem(prefix),
-                        route = EditCustomFieldNameDialogNavItem(prefix).buildRoute(it.index, it.currentValue),
+                        route = EditCustomFieldNameDialogNavItem(prefix).buildRoute(
+                            it.index,
+                            it.currentValue
+                        ),
                         backDestination = backDestination
                     )
                 }
@@ -927,7 +930,10 @@ fun NavGraphBuilder.appGraph(
                     val prefix = CustomFieldPrefix.fromIdentity(backDestination)
                     appNavigator.navigate(
                         destination = EditCustomFieldNameDialogNavItem(prefix),
-                        route = EditCustomFieldNameDialogNavItem(prefix).buildRoute(it.index, it.title),
+                        route = EditCustomFieldNameDialogNavItem(prefix).buildRoute(
+                            it.index,
+                            it.title
+                        ),
                         backDestination = backDestination
                     )
                 }
@@ -936,7 +942,10 @@ fun NavGraphBuilder.appGraph(
                     val prefix = CustomFieldPrefix.fromIdentity(backDestination)
                     appNavigator.navigate(
                         destination = CustomFieldOptionsBottomSheetNavItem(prefix),
-                        route = CustomFieldOptionsBottomSheetNavItem(prefix).buildRoute(it.index, it.title)
+                        route = CustomFieldOptionsBottomSheetNavItem(prefix).buildRoute(
+                            it.index,
+                            it.title
+                        )
                     )
                 }
 
@@ -1130,7 +1139,11 @@ fun NavGraphBuilder.appGraph(
                         itemId = itemDetailsNavDestination.itemId
                     )
 
-                    ItemCategory.Identity -> TODO()
+                    ItemCategory.Identity -> UpdateIdentity to UpdateIdentity.createNavRoute(
+                        shareId = itemDetailsNavDestination.shareId,
+                        itemId = itemDetailsNavDestination.itemId
+                    )
+                    
                     ItemCategory.Login -> EditLogin to EditLogin.createNavRoute(
                         shareId = itemDetailsNavDestination.shareId,
                         itemId = itemDetailsNavDestination.itemId

@@ -292,18 +292,30 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 is HomeNavigation.ItemDetail -> {
-                    appNavigator.navigate(
-                        destination = ItemDetailsNavItem,
-                        route = ItemDetailsNavItem.createNavRoute(
-                            shareId = it.shareId,
-                            itemId = it.itemId
+                    // This when clause will be removed once all item categories are migrated to new feature
+                    when (it.itemCategory) {
+                        ItemCategory.Login,
+                        ItemCategory.Alias,
+                        ItemCategory.Note,
+                        ItemCategory.CreditCard -> appNavigator.navigate(
+                            ViewItem,
+                            ViewItem.createNavRoute(it.shareId, it.itemId)
                         )
-                    )
 
-//                    appNavigator.navigate(
-//                        ViewItem,
-//                        ViewItem.createNavRoute(it.shareId, it.itemId)
-//                    )
+                        // Identity is the first item category using the new feature
+                        ItemCategory.Identity -> appNavigator.navigate(
+                            destination = ItemDetailsNavItem,
+                            route = ItemDetailsNavItem.createNavRoute(
+                                shareId = it.shareId,
+                                itemId = it.itemId
+                            )
+                        )
+
+                        ItemCategory.Unknown,
+                        ItemCategory.Password -> {
+                            // This should never happen
+                        }
+                    }
                 }
 
                 HomeNavigation.Profile -> {
@@ -1009,8 +1021,11 @@ fun NavGraphBuilder.appGraph(
                         is ItemContents.Note -> EditNote
                         is ItemContents.Alias -> EditAlias
                         is ItemContents.CreditCard -> EditCreditCard
-                        is ItemContents.Identity -> TODO()
                         is ItemContents.Unknown -> null
+                        is ItemContents.Identity -> {
+                            // Not required for identity as already migrated to new item-details feature
+                            throw IllegalStateException("Identity should navigate from new graph")
+                        }
                     }
                     val route = when (it.itemUiModel.contents) {
                         is ItemContents.Login -> EditLogin.createNavRoute(
@@ -1033,7 +1048,10 @@ fun NavGraphBuilder.appGraph(
                             it.itemUiModel.id
                         )
 
-                        is ItemContents.Identity -> TODO()
+                        is ItemContents.Identity -> {
+                            // Not required for identity as already migrated to new item-details feature
+                            throw IllegalStateException("Identity should navigate from new graph")
+                        }
 
                         is ItemContents.Unknown -> null
                     }
@@ -1143,7 +1161,7 @@ fun NavGraphBuilder.appGraph(
                         shareId = itemDetailsNavDestination.shareId,
                         itemId = itemDetailsNavDestination.itemId
                     )
-                    
+
                     ItemCategory.Login -> EditLogin to EditLogin.createNavRoute(
                         shareId = itemDetailsNavDestination.shareId,
                         itemId = itemDetailsNavDestination.itemId

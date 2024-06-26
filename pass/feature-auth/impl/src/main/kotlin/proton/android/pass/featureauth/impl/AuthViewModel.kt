@@ -145,7 +145,9 @@ class AuthViewModel @Inject constructor(
                 authMethod = authMethod,
                 showExtraPassword = shouldShowExtraPassword(hasExtraPassword),
                 showPinOrBiometry = origin == AuthOrigin.AUTO_LOCK,
-                showLogout = origin != AuthOrigin.EXTRA_PASSWORD_LOGIN
+                showLogout = origin != AuthOrigin.EXTRA_PASSWORD_LOGIN,
+                showBackNavigation = origin == AuthOrigin.EXTRA_PASSWORD_CONFIGURE ||
+                    origin == AuthOrigin.EXTRA_PASSWORD_REMOVE
             )
         )
     }

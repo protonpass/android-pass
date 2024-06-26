@@ -83,6 +83,12 @@ internal enum class ItemDetailsSnackbarMessage(
         isClipboard = true
     ),
 
+    FacebookCopied(
+        id = R.string.item_details_snackbar_message_facebook_copied,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
+
     FirstNameCopied(
         id = R.string.item_details_snackbar_message_first_name_copied,
         type = SnackbarType.NORM,
@@ -107,8 +113,26 @@ internal enum class ItemDetailsSnackbarMessage(
         isClipboard = true
     ),
 
+    InstagramCopied(
+        id = R.string.item_details_snackbar_message_instagram_copied,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
+
     LastNameCopied(
         id = R.string.item_details_snackbar_message_last_name_copied,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
+
+    LicenseNumberCopied(
+        id = R.string.item_details_snackbar_message_license_number_copied,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
+
+    LinkedInCopied(
+        id = R.string.item_details_snackbar_message_linkedin_copied,
         type = SnackbarType.NORM,
         isClipboard = true
     ),
@@ -119,8 +143,26 @@ internal enum class ItemDetailsSnackbarMessage(
         isClipboard = true
     ),
 
+    PassportNumberCopied(
+        id = R.string.item_details_snackbar_message_passport_number_copied,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
+
     PhoneNumberCopied(
         id = R.string.item_details_snackbar_message_phone_number_copied,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
+
+    RedditCopied(
+        id = R.string.item_details_snackbar_message_reddit_copied,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
+
+    SocialSecurityNumberCopied(
+        id = R.string.item_details_snackbar_message_social_security_number_copied,
         type = SnackbarType.NORM,
         isClipboard = true
     ),
@@ -163,6 +205,18 @@ internal enum class ItemDetailsSnackbarMessage(
 
     WebsiteCopied(
         id = R.string.item_details_snackbar_message_website_copied,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
+
+    XHandleCopied(
+        id = R.string.item_details_snackbar_message_x_handle_copied,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
+
+    YahooCopied(
+        id = R.string.item_details_snackbar_message_yahoo_copied,
         type = SnackbarType.NORM,
         isClipboard = true
     ),

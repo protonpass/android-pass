@@ -57,6 +57,7 @@ abstract class SecureLinksDao : BaseDao<SecureLinkEntity>() {
         """
             DELETE FROM ${SecureLinkEntity.TABLE_NAME}
             WHERE ${SecureLinkEntity.Columns.USER_ID} = :userId
+            AND ${SecureLinkEntity.Columns.IS_ACTIVE} = 0
         """
     )
     abstract fun deleteAllInactiveSecureLinks(userId: String)

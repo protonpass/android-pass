@@ -18,6 +18,7 @@
 
 package proton.android.pass.autofill.heuristics.mappers
 
+import proton.android.pass.autofill.entities.AssistField
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.autofill.entities.DatasetMapping
@@ -30,46 +31,28 @@ object IdentityMapper {
 
     fun mapIdentityFields(autofillItem: AutofillItem.Identity, cluster: NodeCluster.Identity): AutofillMappings {
         val mappings = mutableListOf<DatasetMapping>()
-
-        mappings.add(
-            DatasetMapping(
-                autofillFieldId = cluster.fullName.id,
-                contents = autofillItem.fullName,
-                displayValue = autofillItem.fullName
-            )
-        )
-        if (cluster.address != null && autofillItem.address != null) {
-            mappings.add(
-                DatasetMapping(
-                    autofillFieldId = cluster.address.id,
-                    contents = autofillItem.address,
-                    displayValue = autofillItem.address
-                )
-            )
-        }
-        if (cluster.postalCode != null && autofillItem.postalCode != null) {
-            mappings.add(
-                DatasetMapping(
-                    autofillFieldId = cluster.postalCode.id,
-                    contents = autofillItem.postalCode,
-                    displayValue = autofillItem.postalCode
-                )
-            )
-        }
-        if (cluster.phoneNumber != null && autofillItem.phoneNumber != null) {
-            mappings.add(
-                DatasetMapping(
-                    autofillFieldId = cluster.phoneNumber.id,
-                    contents = autofillItem.phoneNumber,
-                    displayValue = autofillItem.phoneNumber
-                )
-            )
-        }
+        mappings.addMapping(cluster.fullName, autofillItem.fullName)
+        mappings.addMapping(cluster.address, autofillItem.address)
+        mappings.addMapping(cluster.city, autofillItem.city)
+        mappings.addMapping(cluster.postalCode, autofillItem.postalCode)
+        mappings.addMapping(cluster.phoneNumber, autofillItem.phoneNumber)
 
         if (mappings.isEmpty()) {
             PassLogger.w(TAG, "No mappings found for autofill")
         }
 
         return AutofillMappings(mappings)
+    }
+
+    private fun MutableList<DatasetMapping>.addMapping(clusterField: AssistField?, autofillField: String?) {
+        if (clusterField != null && autofillField != null) {
+            add(
+                DatasetMapping(
+                    autofillFieldId = clusterField.id,
+                    contents = autofillField,
+                    displayValue = autofillField
+                )
+            )
+        }
     }
 }

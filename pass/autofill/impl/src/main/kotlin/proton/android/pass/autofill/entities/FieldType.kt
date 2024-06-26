@@ -46,6 +46,7 @@ enum class FieldType : Parcelable {
 
     // Identity
     Address,
+    City,
     PostalCode,
     Phone
     ;
@@ -64,6 +65,7 @@ enum class FieldType : Parcelable {
 
     fun isIdentityField(): Boolean = when (this) {
         Address,
+        City,
         PostalCode,
         Phone -> true
         else -> false

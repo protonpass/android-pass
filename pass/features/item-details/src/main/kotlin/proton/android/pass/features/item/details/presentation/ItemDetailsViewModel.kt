@@ -102,10 +102,7 @@ class ItemDetailsViewModel @Inject constructor(
                 isVisible = isVisible,
                 hiddenState = hiddenState,
                 hiddenFieldType = hiddenFieldType,
-                itemCategory = observeItemById(shareId, itemId)
-                    .first()
-                    .itemType
-                    .category
+                itemCategory = observeItemById(shareId, itemId).first().itemType.category
             )
         }
     }

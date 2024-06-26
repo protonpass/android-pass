@@ -676,7 +676,8 @@ fun HomeScreen(
                             onNavigateEvent(
                                 HomeNavigation.ItemDetail(
                                     homeUiEvent.item.shareId,
-                                    homeUiEvent.item.id
+                                    homeUiEvent.item.id,
+                                    homeUiEvent.item.category
                                 )
                             )
                         }

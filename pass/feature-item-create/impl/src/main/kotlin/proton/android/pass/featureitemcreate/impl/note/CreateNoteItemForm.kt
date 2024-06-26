@@ -21,6 +21,7 @@ package proton.android.pass.featureitemcreate.impl.note
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -52,7 +53,7 @@ internal fun CreateNoteItemForm(
         )
         FullNoteSection(
             modifier = Modifier.weight(1f),
-            textFieldModifier = Modifier.weight(1f),
+            textFieldModifier = Modifier.weight(1f).fillMaxWidth(),
             enabled = enabled,
             value = noteItemFormState.note,
             onChange = { onEvent(NoteContentUiEvent.OnNoteChange(it)) }

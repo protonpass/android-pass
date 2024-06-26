@@ -165,13 +165,8 @@ class SecureLinkRepositoryImpl @Inject constructor(
     }
 
     override suspend fun deleteInactiveSecureLinks(userId: UserId) {
-        runCatching { remoteSecureLinkDataSource.deleteInactiveSecureLinks(userId) }
-            .onFailure { error ->
-                throw error
-            }
-            .onSuccess {
-                secureLinksLocalDataSource.deleteAllInactive(userId)
-            }
+        remoteSecureLinkDataSource.deleteInactiveSecureLinks(userId)
+        secureLinksLocalDataSource.deleteAllInactive(userId)
     }
 
     override fun observeSecureLink(userId: UserId, secureLinkId: SecureLinkId): Flow<SecureLink> =

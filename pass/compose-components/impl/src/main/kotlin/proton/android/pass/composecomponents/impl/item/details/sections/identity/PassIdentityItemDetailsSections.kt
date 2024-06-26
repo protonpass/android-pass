@@ -54,7 +54,7 @@ internal fun PassIdentityItemDetailsSections(
             )
         }
 
-        if(contactDetailsContent.hasContactDetails) {
+        if (contactDetailsContent.hasContactDetails) {
             PassIdentityItemDetailsContactSection(
                 contactDetailsContent = contactDetailsContent,
                 itemColors = itemColors,
@@ -62,6 +62,12 @@ internal fun PassIdentityItemDetailsSections(
             )
         }
 
+        if (workDetailsContent.hasWorkDetails) {
+            PassIdentityItemDetailsWorkSection(
+                workDetailsContent = workDetailsContent,
+                itemColors = itemColors,
+                onEvent = onEvent
+            )
+        }
     }
 }
-

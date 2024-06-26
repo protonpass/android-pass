@@ -38,7 +38,7 @@ internal fun PassIdentityItemDetailsAddressSection(
 ) = with(addressDetailsContent) {
     val sections = mutableListOf<@Composable () -> Unit>()
 
-    if(hasStreetAddress) {
+    if (hasStreetAddress) {
         sections.add {
             PassItemDetailFieldRow(
                 icon = null,
@@ -55,7 +55,7 @@ internal fun PassIdentityItemDetailsAddressSection(
         }
     }
 
-    if(hasFloor) {
+    if (hasFloor) {
         sections.add {
             PassItemDetailFieldRow(
                 icon = null,
@@ -72,7 +72,7 @@ internal fun PassIdentityItemDetailsAddressSection(
         }
     }
 
-    if(hasCity) {
+    if (hasCity) {
         sections.add {
             PassItemDetailFieldRow(
                 icon = null,
@@ -89,7 +89,7 @@ internal fun PassIdentityItemDetailsAddressSection(
         }
     }
 
-    if(hasZipOrPostalCode) {
+    if (hasZipOrPostalCode) {
         sections.add {
             PassItemDetailFieldRow(
                 icon = null,
@@ -106,7 +106,7 @@ internal fun PassIdentityItemDetailsAddressSection(
         }
     }
 
-    if(hasStateOrProvince) {
+    if (hasStateOrProvince) {
         sections.add {
             PassItemDetailFieldRow(
                 icon = null,
@@ -123,7 +123,7 @@ internal fun PassIdentityItemDetailsAddressSection(
         }
     }
 
-    if(hasCounty) {
+    if (hasCounty) {
         sections.add {
             PassItemDetailFieldRow(
                 icon = null,
@@ -140,7 +140,7 @@ internal fun PassIdentityItemDetailsAddressSection(
         }
     }
 
-    if(hasCountryOrRegion) {
+    if (hasCountryOrRegion) {
         sections.add {
             PassItemDetailFieldRow(
                 icon = null,

@@ -77,12 +77,12 @@ class SecureLinksListViewModel @Inject constructor(
         initialValue = SecureLinksListState.Initial
     )
 
-    private suspend fun List<SecureLink>.toModel() = map { secureLink ->
-        getItemById(
-            shareId = secureLink.shareId,
-            itemId = secureLink.itemId
-        ).let { item ->
-            encryptionContextProvider.withEncryptionContext {
+    private suspend fun List<SecureLink>.toModel() = encryptionContextProvider.withEncryptionContextSuspendable {
+        map { secureLink ->
+            getItemById(
+                shareId = secureLink.shareId,
+                itemId = secureLink.itemId
+            ).let { item ->
                 SecureLinkModel(
                     itemTitle = decrypt(item.title),
                     itemType = item.itemType,

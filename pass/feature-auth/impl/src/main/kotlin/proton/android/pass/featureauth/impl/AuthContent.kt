@@ -40,6 +40,7 @@ import proton.android.pass.common.api.getOrNull
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
+import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
 import me.proton.core.presentation.R as CoreR
 
 @Composable
@@ -63,6 +64,16 @@ fun AuthContent(
             ProtonTopAppBar(
                 modifier = Modifier.fillMaxWidth(),
                 title = {},
+                navigationIcon = {
+                    if (state.showBackNavigation) {
+                        BackArrowCircleIconButton(
+                            modifier = Modifier.padding(Spacing.mediumSmall, Spacing.extraSmall),
+                            color = PassTheme.colors.interactionNorm,
+                            backgroundColor = PassTheme.colors.interactionNormMinor1,
+                            onUpClick = { onEvent(AuthUiEvent.OnNavigateBack) }
+                        )
+                    }
+                },
                 actions = {
                     if (canLogout && state.showLogout) {
                         IconButton(

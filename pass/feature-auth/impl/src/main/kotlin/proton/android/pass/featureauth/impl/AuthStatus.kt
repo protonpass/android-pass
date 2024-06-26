@@ -64,7 +64,8 @@ data class AuthStateContent(
     val authMethod: Option<AuthMethod>,
     val showExtraPassword: LoadingResult<Boolean>,
     val showPinOrBiometry: Boolean,
-    val showLogout: Boolean
+    val showLogout: Boolean,
+    val showBackNavigation: Boolean
 ) {
     companion object {
         fun default(address: Option<String>) = AuthStateContent(
@@ -77,7 +78,8 @@ data class AuthStateContent(
             authMethod = None,
             showExtraPassword = LoadingResult.Loading,
             showPinOrBiometry = false,
-            showLogout = true
+            showLogout = true,
+            showBackNavigation = false
         )
     }
 }

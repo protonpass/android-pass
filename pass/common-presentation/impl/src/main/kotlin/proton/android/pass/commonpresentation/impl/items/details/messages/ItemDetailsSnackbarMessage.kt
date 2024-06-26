@@ -53,6 +53,12 @@ internal enum class ItemDetailsSnackbarMessage(
         isClipboard = true
     ),
 
+    CompanyCopied(
+        id = R.string.item_details_snackbar_message_company_copied,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
+
     CountryOrRegionCopied(
         id = R.string.item_details_snackbar_message_country_or_region_copied,
         type = SnackbarType.NORM,
@@ -139,6 +145,12 @@ internal enum class ItemDetailsSnackbarMessage(
 
     MiddleNameCopied(
         id = R.string.item_details_snackbar_message_middle_name_copied,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
+
+    OccupationCopied(
+        id = R.string.item_details_snackbar_message_occupation_copied,
         type = SnackbarType.NORM,
         isClipboard = true
     ),

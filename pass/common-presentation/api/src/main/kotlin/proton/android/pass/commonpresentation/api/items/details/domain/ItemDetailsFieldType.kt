@@ -30,6 +30,8 @@ sealed interface ItemDetailsFieldType {
 
         data object City : Plain
 
+        data object Company : Plain
+
         data object CountryOrRegion : Plain
 
         data object County : Plain
@@ -57,6 +59,8 @@ sealed interface ItemDetailsFieldType {
         data object LinkedIn : Plain
 
         data object MiddleName : Plain
+
+        data object Occupation : Plain
 
         data object PassportNumber : Plain
 

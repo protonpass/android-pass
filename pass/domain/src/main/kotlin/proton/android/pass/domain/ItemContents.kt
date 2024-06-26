@@ -372,7 +372,7 @@ data class ContactDetailsContent(
 
     val hasInstagram: Boolean by lazy { instagram.isNotBlank() }
 
-    val hasCustomFields: Boolean by lazy { customFields.isNotEmpty() }
+    private val hasCustomFields: Boolean by lazy { customFields.isNotEmpty() }
 
     val hasContactDetails: Boolean by lazy {
         listOf(
@@ -419,6 +419,30 @@ data class WorkDetailsContent(
     val workEmail: String,
     val customFields: List<CustomFieldContent>
 ) {
+
+    val hasCompany: Boolean by lazy {  company.isNotBlank() }
+
+    val hasJobTitle: Boolean by lazy {  jobTitle.isNotBlank() }
+
+    val hasPersonalWebsite: Boolean by lazy {  personalWebsite.isNotBlank() }
+
+    val hasWorkPhoneNumber: Boolean by lazy {  workPhoneNumber.isNotBlank() }
+
+    val hasWorkEmail: Boolean by lazy {  workEmail.isNotBlank() }
+
+    private val hasCustomFields: Boolean by lazy {  customFields.isNotEmpty() }
+
+    val hasWorkDetails: Boolean by lazy {
+        listOf(
+            hasCompany,
+            hasJobTitle,
+            hasPersonalWebsite,
+            hasWorkPhoneNumber,
+            hasWorkEmail,
+            hasCustomFields
+        ).any { hasBeenSet -> hasBeenSet }
+    }
+
     companion object {
         val EMPTY = WorkDetailsContent(
             company = "",

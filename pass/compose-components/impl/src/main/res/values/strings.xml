@@ -181,6 +181,12 @@
     <string name="item_details_identity_section_contact_facebook_title">Facebook</string>
     <string name="item_details_identity_section_contact_yahoo_title">Yahoo</string>
     <string name="item_details_identity_section_contact_instagram_title">Instagram</string>
+    <string name="item_details_identity_section_work_title">Work details</string>
+    <string name="item_details_identity_section_work_company_title">Company</string>
+    <string name="item_details_identity_section_work_occupation_title">Occupation</string>
+    <string name="item_details_identity_section_work_email_title">Work email address</string>
+    <string name="item_details_identity_section_work_phone_number_title">Work phone number</string>
+    <string name="item_details_identity_section_work_personal_website_title">Personal website</string>
 
     <string name="item_details_shared_section_note_title">Note</string>
     <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">The app version is not supported anymore, please update your app.</string>

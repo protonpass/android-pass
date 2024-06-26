@@ -21,6 +21,7 @@
     <string name="item_details_snackbar_message_birthdate_copied">Birthdate copied</string>
     <string name="item_details_snackbar_message_card_number_copied">Card number copied</string>
     <string name="item_details_snackbar_message_city_copied">City copied</string>
+    <string name="item_details_snackbar_message_company_copied">Company copied</string>
     <string name="item_details_snackbar_message_country_or_region_copied">Country or region copied</string>
     <string name="item_details_snackbar_message_county_copied">County copied</string>
     <string name="item_details_snackbar_message_custom_field_copied">Custom field copied</string>
@@ -36,6 +37,7 @@
     <string name="item_details_snackbar_message_license_number_copied">License number copied</string>
     <string name="item_details_snackbar_message_linkedin_copied">LinkedIn copied</string>
     <string name="item_details_snackbar_message_middle_name_copied">Middle name copied</string>
+    <string name="item_details_snackbar_message_occupation_copied">Occupation copied</string>
     <string name="item_details_snackbar_message_passport_number_copied">Passport number copied</string>
     <string name="item_details_snackbar_message_password_copied">Password copied</string>
     <string name="item_details_snackbar_message_phone_number_copied">Phone number copied</string>

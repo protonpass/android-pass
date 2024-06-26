@@ -252,7 +252,8 @@ fun AuthScreenMasterPasswordFormPreview(
                     authMethod = None,
                     showExtraPassword = LoadingResult.Success(input.second.hasExtraPassword),
                     showPinOrBiometry = true,
-                    showLogout = true
+                    showLogout = true,
+                    showBackNavigation = false
                 ),
                 onEvent = {},
                 onSubmit = {}

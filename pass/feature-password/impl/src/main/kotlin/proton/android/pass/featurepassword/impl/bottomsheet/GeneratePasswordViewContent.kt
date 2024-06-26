@@ -20,7 +20,7 @@ package proton.android.pass.featurepassword.impl.bottomsheet
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -54,7 +54,7 @@ fun GeneratePasswordViewContent(
     ) {
         Column(
             modifier = Modifier
-                .height(110.dp)
+                .defaultMinSize(minHeight = 110.dp)
                 .wrapContentHeight(align = Alignment.CenterVertically),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(Spacing.small)

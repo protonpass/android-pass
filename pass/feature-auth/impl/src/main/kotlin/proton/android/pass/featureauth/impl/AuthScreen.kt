@@ -71,6 +71,7 @@ fun AuthScreen(
                     viewModel.onTogglePasswordVisibility(it.value)
 
                 AuthUiEvent.OnAuthAgainClick -> viewModel.onAuthMethodRequested()
+                AuthUiEvent.OnNavigateBack -> navigation(AuthNavigation.Back(viewModel.origin))
             }
         }
     )

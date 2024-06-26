@@ -19,6 +19,8 @@
 package proton.android.pass.featureauth.impl
 
 sealed interface AuthUiEvent {
+    data object OnNavigateBack : AuthUiEvent
+
     @JvmInline
     value class OnPasswordUpdate(val value: String) : AuthUiEvent
 

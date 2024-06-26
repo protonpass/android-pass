@@ -241,7 +241,8 @@ class TestObserveItems @Inject constructor() : ObserveItems {
                 ),
                 addressDetailsContent = AddressDetailsContent.EMPTY.copy(
                     streetAddress = "123 Main St",
-                    zipOrPostalCode = "12345"
+                    zipOrPostalCode = "12345",
+                    city = "City"
                 ),
                 contactDetailsContent = ContactDetailsContent.EMPTY,
                 workDetailsContent = WorkDetailsContent.EMPTY,

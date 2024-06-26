@@ -30,6 +30,7 @@ import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.composecomponents.impl.dialogs.PassUpgradePlanDialog
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.NavItemType
@@ -112,7 +113,11 @@ sealed interface HomeNavigation {
 
     data class EditIdentity(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
 
-    data class ItemDetail(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
+    data class ItemDetail(
+        val shareId: ShareId,
+        val itemId: ItemId,
+        val itemCategory: ItemCategory
+    ) : HomeNavigation
 
     data class ItemHistory(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
 

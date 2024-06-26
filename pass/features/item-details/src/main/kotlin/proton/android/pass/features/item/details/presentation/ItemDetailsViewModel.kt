@@ -46,7 +46,7 @@ class ItemDetailsViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     getItemActions: GetItemActions,
     private val observeItemById: ObserveItemById,
-    private val itemDetailsHandler: ItemDetailsHandler,
+    private val itemDetailsHandler: ItemDetailsHandler
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -83,10 +83,7 @@ class ItemDetailsViewModel @Inject constructor(
         }
     }
 
-    internal fun onItemHiddenFieldClicked(
-        hiddenState: HiddenState,
-        hiddenFieldType: ItemDetailsFieldType.Hidden
-    ) {
+    internal fun onItemHiddenFieldClicked(hiddenState: HiddenState, hiddenFieldType: ItemDetailsFieldType.Hidden) {
         viewModelScope.launch {
             itemDetailsHandler.onItemDetailsHiddenFieldClicked(hiddenState, hiddenFieldType)
         }

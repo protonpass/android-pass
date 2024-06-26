@@ -56,7 +56,7 @@ internal fun ItemDetailsTopBar(
     onOptionsClick: () -> Unit,
     onShareClick: () -> Unit,
     actions: ItemActions,
-    isLoading: Boolean,
+    isLoading: Boolean
 ) {
     ProtonTopAppBar(
         modifier = modifier,

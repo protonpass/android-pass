@@ -24,7 +24,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,7 +37,6 @@ import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun VaultPreviewSection(
     modifier: Modifier = Modifier,
@@ -61,6 +59,7 @@ fun VaultPreviewSection(
             value = state.name,
             onTitleRequiredError = state.isTitleRequiredError,
             enabled = state.isLoading == IsLoadingState.NotLoading,
+            requestFocus = true,
             moveToNextOnEnter = false,
             onChange = onNameChange,
             onDoneClick = {

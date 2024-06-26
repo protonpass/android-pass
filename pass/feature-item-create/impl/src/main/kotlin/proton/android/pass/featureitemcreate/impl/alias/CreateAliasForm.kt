@@ -75,7 +75,7 @@ internal fun CreateAliasForm(
                     bottom = Spacing.medium
                 ),
             value = aliasItemFormState.title,
-            requestFocus = true,
+            requestFocus = !isLoading,
             onTitleRequiredError = onTitleRequiredError,
             enabled = isEditAllowed,
             isRounded = true,

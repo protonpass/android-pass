@@ -1748,6 +1748,7 @@
                                                                                 "id": 2011559690,
                                                                                 "className": "android.widget.EditText",
                                                                                 "isImportantForAutofill": true,
+                                                                                "expectedAutofill": "identity_postal_code",
                                                                                 "text": "",
                                                                                 "hintKeywordList": [
                                                                                   "",

@@ -66,7 +66,7 @@ sealed class ItemDetailState(
         val contents: ItemContents.Identity,
         private val isPinned: Boolean,
         private val vault: Vault?
-    ): ItemDetailState(
+    ) : ItemDetailState(
         itemContents = contents,
         isItemPinned = isPinned,
         itemVault = vault,

@@ -55,6 +55,7 @@ fun ItemUiModel.toAutoFillItem(): AutofillItem = when (val content = contents) {
         itemId = id.id,
         fullName = content.personalDetailsContent.fullName,
         address = content.addressDetailsContent.streetAddress,
+        city = content.addressDetailsContent.city,
         postalCode = content.addressDetailsContent.zipOrPostalCode,
         phoneNumber = content.personalDetailsContent.phoneNumber
     )

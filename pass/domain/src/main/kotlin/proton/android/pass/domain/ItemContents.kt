@@ -350,6 +350,47 @@ data class ContactDetailsContent(
     val instagram: String,
     val customFields: List<CustomFieldContent>
 ) {
+    val hasSocialSecurityNumber: Boolean by lazy { socialSecurityNumber.isNotBlank() }
+
+    val hasPassportNumber: Boolean by lazy { passportNumber.isNotBlank() }
+
+    val hasLicenseNumber: Boolean by lazy { licenseNumber.isNotBlank() }
+
+    val hasWebsite: Boolean by lazy { website.isNotBlank() }
+
+    val hasXHandle: Boolean by lazy { xHandle.isNotBlank() }
+
+    val hasSecondPhoneNumber: Boolean by lazy { secondPhoneNumber.isNotBlank() }
+
+    val hasLinkedin: Boolean by lazy { linkedin.isNotBlank() }
+
+    val hasReddit: Boolean by lazy { reddit.isNotBlank() }
+
+    val hasFacebook: Boolean by lazy { facebook.isNotBlank() }
+
+    val hasYahoo: Boolean by lazy { yahoo.isNotBlank() }
+
+    val hasInstagram: Boolean by lazy { instagram.isNotBlank() }
+
+    val hasCustomFields: Boolean by lazy { customFields.isNotEmpty() }
+
+    val hasContactDetails: Boolean by lazy {
+        listOf(
+            hasSocialSecurityNumber,
+            hasPassportNumber,
+            hasLicenseNumber,
+            hasWebsite,
+            hasXHandle,
+            hasSecondPhoneNumber,
+            hasLinkedin,
+            hasReddit,
+            hasFacebook,
+            hasYahoo,
+            hasInstagram,
+            hasCustomFields
+        ).any { hasBeenSet -> hasBeenSet }
+    }
+
     companion object {
         val EMPTY = ContactDetailsContent(
             socialSecurityNumber = "",

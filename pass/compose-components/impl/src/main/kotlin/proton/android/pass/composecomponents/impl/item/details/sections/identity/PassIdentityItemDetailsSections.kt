@@ -53,6 +53,15 @@ internal fun PassIdentityItemDetailsSections(
                 onEvent = onEvent
             )
         }
+
+        if(contactDetailsContent.hasContactDetails) {
+            PassIdentityItemDetailsContactSection(
+                contactDetailsContent = contactDetailsContent,
+                itemColors = itemColors,
+                onEvent = onEvent
+            )
+        }
+
     }
 }
 

@@ -133,6 +133,7 @@ private fun LazyGridScope.secureLinksListGridHeader(
 }
 
 private fun LazyGridScope.secureLinksListGridCellItems(
+    modifier: Modifier = Modifier,
     prefix: String,
     secureLinksModels: List<SecureLinkModel>,
     canLoadExternalImages: Boolean,
@@ -143,6 +144,7 @@ private fun LazyGridScope.secureLinksListGridCellItems(
         key = { secureLinkModel -> "${prefix}_${secureLinkModel.secureLinkId.id}" }
     ) { secureLinksModel ->
         SecureLinksListGridCell(
+            modifier = modifier,
             itemCategory = secureLinksModel.itemCategory,
             title = secureLinksModel.itemTitle,
             website = secureLinksModel.itemWebsite,

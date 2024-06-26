@@ -53,6 +53,7 @@ private val ALLOWED_ADDRESS_KEYWORDS = listOf(
     "home",
     "house"
 )
+private val ALLOWED_CITY_KEYWORDS = listOf("city")
 private val ALLOWED_POSTAL_CODE_KEYWORDS = listOf("postalcode", "zip", "zipcode")
 private val ALLOWED_PHONE_KEYWORDS = listOf("phone", "telef", "teleph", "mobile", "cellphone")
 private val ALLOWED_EMAIL_KEYWORDS = listOf(View.AUTOFILL_HINT_EMAIL_ADDRESS, "email")
@@ -156,7 +157,13 @@ internal val fieldKeywordsList = listOf(
         deniedKeywords = ALLOWED_EMAIL_KEYWORDS +
             ALLOWED_POSTAL_CODE_KEYWORDS +
             ALLOWED_PHONE_KEYWORDS +
+            ALLOWED_CITY_KEYWORDS +
             listOf("country", "button")
+    ),
+    kw(
+        fieldType = FieldType.City,
+        allowedKeywords = ALLOWED_CITY_KEYWORDS,
+        deniedKeywords = ALLOWED_PHONE_KEYWORDS
     ),
     kw(
         fieldType = FieldType.PostalCode,

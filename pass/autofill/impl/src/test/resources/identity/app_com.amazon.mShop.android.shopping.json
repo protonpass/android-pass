@@ -995,6 +995,7 @@
                             "id": 830563219,
                             "isImportantForAutofill": true,
                             "text": "",
+                            "expectedAutofill": "identity_city",
                             "htmlAttributes": [
                               {
                                 "key": "name",

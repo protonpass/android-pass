@@ -64,6 +64,7 @@ sealed interface AutofillItem : Parcelable {
         val shareId: String,
         val fullName: String,
         val address: String?,
+        val city: String?,
         val postalCode: String?,
         val phoneNumber: String?
     ) : AutofillItem {

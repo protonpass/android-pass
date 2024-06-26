@@ -51,6 +51,7 @@ class IdentityAutofillTest : BaseAutofillTest() {
                 shareId = "shareID",
                 fullName = ExpectedAutofill.IDENTITY_FULL_NAME.value,
                 address = ExpectedAutofill.IDENTITY_ADDRESS.value,
+                city = ExpectedAutofill.IDENTITY_CITY.value,
                 phoneNumber = ExpectedAutofill.IDENTITY_PHONE.value,
                 postalCode = ExpectedAutofill.IDENTITY_POSTAL_CODE.value
             )

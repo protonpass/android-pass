@@ -65,10 +65,7 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
                 identityItemContentsFlow.update { identityItemContents }
             }
 
-    override fun updateHiddenState(
-        hiddenFieldType: ItemDetailsFieldType.Hidden,
-        hiddenState: HiddenState
-    ) {
+    override fun updateHiddenState(hiddenFieldType: ItemDetailsFieldType.Hidden, hiddenState: HiddenState) {
         identityItemContentsFlow.update { identityItemContents ->
             when (hiddenFieldType) {
                 is ItemDetailsFieldType.Hidden.CustomField,

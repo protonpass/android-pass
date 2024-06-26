@@ -33,7 +33,7 @@ internal sealed interface ItemDetailsUiEvent {
         internal val shareId: ShareId,
         internal val itemId: ItemId,
         internal val itemCategory: ItemCategory
-    ): ItemDetailsUiEvent
+    ) : ItemDetailsUiEvent
 
     data class OnFieldClicked(
         internal val text: String,

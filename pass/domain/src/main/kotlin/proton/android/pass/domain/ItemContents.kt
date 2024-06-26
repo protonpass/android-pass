@@ -420,17 +420,17 @@ data class WorkDetailsContent(
     val customFields: List<CustomFieldContent>
 ) {
 
-    val hasCompany: Boolean by lazy {  company.isNotBlank() }
+    val hasCompany: Boolean by lazy { company.isNotBlank() }
 
-    val hasJobTitle: Boolean by lazy {  jobTitle.isNotBlank() }
+    val hasJobTitle: Boolean by lazy { jobTitle.isNotBlank() }
 
-    val hasPersonalWebsite: Boolean by lazy {  personalWebsite.isNotBlank() }
+    val hasPersonalWebsite: Boolean by lazy { personalWebsite.isNotBlank() }
 
-    val hasWorkPhoneNumber: Boolean by lazy {  workPhoneNumber.isNotBlank() }
+    val hasWorkPhoneNumber: Boolean by lazy { workPhoneNumber.isNotBlank() }
 
-    val hasWorkEmail: Boolean by lazy {  workEmail.isNotBlank() }
+    val hasWorkEmail: Boolean by lazy { workEmail.isNotBlank() }
 
-    private val hasCustomFields: Boolean by lazy {  customFields.isNotEmpty() }
+    private val hasCustomFields: Boolean by lazy { customFields.isNotEmpty() }
 
     val hasWorkDetails: Boolean by lazy {
         listOf(

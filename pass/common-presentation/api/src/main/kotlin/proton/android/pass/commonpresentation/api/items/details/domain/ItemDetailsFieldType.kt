@@ -38,6 +38,8 @@ sealed interface ItemDetailsFieldType {
 
         data object Email : Plain
 
+        data object Facebook : Plain
+
         data object FirstName : Plain
 
         data object Floor : Plain
@@ -46,11 +48,23 @@ sealed interface ItemDetailsFieldType {
 
         data object Gender : Plain
 
+        data object Instagram : Plain
+
         data object LastName : Plain
+
+        data object LicenseNumber : Plain
+
+        data object LinkedIn : Plain
 
         data object MiddleName : Plain
 
+        data object PassportNumber : Plain
+
         data object PhoneNumber : Plain
+
+        data object Reddit : Plain
+
+        data object SocialSecurityNumber : Plain
 
         data object StateOrProvince : Plain
 
@@ -61,6 +75,10 @@ sealed interface ItemDetailsFieldType {
         data object Username : Plain
 
         data object Website : Plain
+
+        data object XHandle : Plain
+
+        data object Yahoo : Plain
 
         data object ZipOrPostalCode : Plain
 

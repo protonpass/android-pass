@@ -53,6 +53,10 @@ class SnackbarDispatcherImpl @Inject constructor() : SnackbarDispatcher {
         }
     }
 
+    override fun reset() {
+        snackbarState.update { None }
+    }
+
     private fun shouldDisplay(snackbarMessage: SnackbarMessage): Boolean =
         !(snackbarMessage.isClipboard && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
 

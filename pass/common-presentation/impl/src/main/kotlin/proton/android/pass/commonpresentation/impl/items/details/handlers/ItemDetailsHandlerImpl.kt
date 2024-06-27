@@ -91,6 +91,7 @@ class ItemDetailsHandlerImpl @Inject constructor(
         ItemDetailsFieldType.Plain.LinkedIn -> ItemDetailsSnackbarMessage.LinkedInCopied
         ItemDetailsFieldType.Plain.MiddleName -> ItemDetailsSnackbarMessage.MiddleNameCopied
         ItemDetailsFieldType.Plain.Occupation -> ItemDetailsSnackbarMessage.OccupationCopied
+        ItemDetailsFieldType.Plain.Organization -> ItemDetailsSnackbarMessage.OrganizationCopied
         ItemDetailsFieldType.Plain.PassportNumber -> ItemDetailsSnackbarMessage.PassportNumberCopied
         ItemDetailsFieldType.Plain.PhoneNumber -> ItemDetailsSnackbarMessage.PhoneNumberCopied
         ItemDetailsFieldType.Plain.Reddit -> ItemDetailsSnackbarMessage.RedditCopied

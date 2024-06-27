@@ -25,8 +25,8 @@ import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
-import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailFieldRow
-import proton.android.pass.composecomponents.impl.item.details.sections.identity.shared.rows.PassIdentityItemDetailsCustomFieldRow
+import proton.android.pass.composecomponents.impl.item.details.rows.addItemDetailsFieldRow
+import proton.android.pass.composecomponents.impl.item.details.sections.identity.shared.rows.addCustomFieldRows
 import proton.android.pass.composecomponents.impl.item.details.sections.identity.shared.sections.PassIdentityItemDetailsSection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.WorkDetailsContent
@@ -38,107 +38,69 @@ internal fun PassIdentityItemDetailsWorkSection(
     itemColors: PassItemColors,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) = with(workDetailsContent) {
-    val sections = mutableListOf<@Composable () -> Unit>()
+    val rows = mutableListOf<@Composable () -> Unit>()
 
     if (hasCompany) {
-        sections.add {
-            PassItemDetailFieldRow(
-                icon = null,
-                title = stringResource(id = R.string.item_details_identity_section_work_company_title),
-                subtitle = company,
-                itemColors = itemColors,
-                onClick = {
-                    PassItemDetailsUiEvent.OnSectionClick(
-                        section = company,
-                        field = ItemDetailsFieldType.Plain.Company
-                    ).also(onEvent)
-                }
-            )
-        }
+        rows.addItemDetailsFieldRow(
+            titleResId = R.string.item_details_identity_section_work_company_title,
+            section = company,
+            field = ItemDetailsFieldType.Plain.Company,
+            itemColors = itemColors,
+            onEvent = onEvent
+        )
     }
 
     if (hasJobTitle) {
-        sections.add {
-            PassItemDetailFieldRow(
-                icon = null,
-                title = stringResource(id = R.string.item_details_identity_section_work_occupation_title),
-                subtitle = jobTitle,
-                itemColors = itemColors,
-                onClick = {
-                    PassItemDetailsUiEvent.OnSectionClick(
-                        section = jobTitle,
-                        field = ItemDetailsFieldType.Plain.Occupation
-                    ).also(onEvent)
-                }
-            )
-        }
+        rows.addItemDetailsFieldRow(
+            titleResId = R.string.item_details_identity_section_work_occupation_title,
+            section = jobTitle,
+            field = ItemDetailsFieldType.Plain.Occupation,
+            itemColors = itemColors,
+            onEvent = onEvent
+        )
     }
 
     if (hasWorkPhoneNumber) {
-        sections.add {
-            PassItemDetailFieldRow(
-                icon = null,
-                title = stringResource(id = R.string.item_details_identity_section_work_email_title),
-                subtitle = workPhoneNumber,
-                itemColors = itemColors,
-                onClick = {
-                    PassItemDetailsUiEvent.OnSectionClick(
-                        section = workPhoneNumber,
-                        field = ItemDetailsFieldType.Plain.PhoneNumber
-                    ).also(onEvent)
-                }
-            )
-        }
+        rows.addItemDetailsFieldRow(
+            titleResId = R.string.item_details_identity_section_work_phone_number_title,
+            section = workPhoneNumber,
+            field = ItemDetailsFieldType.Plain.PhoneNumber,
+            itemColors = itemColors,
+            onEvent = onEvent
+        )
     }
 
     if (hasWorkEmail) {
-        sections.add {
-            PassItemDetailFieldRow(
-                icon = null,
-                title = stringResource(id = R.string.item_details_identity_section_work_phone_number_title),
-                subtitle = workEmail,
-                itemColors = itemColors,
-                onClick = {
-                    PassItemDetailsUiEvent.OnSectionClick(
-                        section = workEmail,
-                        field = ItemDetailsFieldType.Plain.Email
-                    ).also(onEvent)
-                }
-            )
-        }
+        rows.addItemDetailsFieldRow(
+            titleResId = R.string.item_details_identity_section_work_email_title,
+            section = workEmail,
+            field = ItemDetailsFieldType.Plain.Email,
+            itemColors = itemColors,
+            onEvent = onEvent
+        )
     }
 
     if (hasPersonalWebsite) {
-        sections.add {
-            PassItemDetailFieldRow(
-                icon = null,
-                title = stringResource(id = R.string.item_details_identity_section_work_personal_website_title),
-                subtitle = personalWebsite,
-                itemColors = itemColors,
-                onClick = {
-                    PassItemDetailsUiEvent.OnSectionClick(
-                        section = personalWebsite,
-                        field = ItemDetailsFieldType.Plain.Website
-                    ).also(onEvent)
-                }
-            )
-        }
+        rows.addItemDetailsFieldRow(
+            titleResId = R.string.item_details_identity_section_work_personal_website_title,
+            section = personalWebsite,
+            field = ItemDetailsFieldType.Plain.Website,
+            itemColors = itemColors,
+            onEvent = onEvent
+        )
     }
 
-    customFields.forEachIndexed { index, customFieldContent ->
-        sections.add {
-            PassIdentityItemDetailsCustomFieldRow(
-                customFieldIndex = index,
-                customFieldContent = customFieldContent,
-                itemColors = itemColors,
-                onEvent = onEvent
-            )
-        }
+    if (hasCustomFields) {
+        rows.addCustomFieldRows(
+            customFields = customFields,
+            itemColors = itemColors,
+            onEvent = onEvent
+        )
     }
 
     PassIdentityItemDetailsSection(
         modifier = modifier,
         title = stringResource(id = R.string.item_details_identity_section_work_title),
-        sections = sections.toPersistentList()
+        sections = rows.toPersistentList()
     )
 }

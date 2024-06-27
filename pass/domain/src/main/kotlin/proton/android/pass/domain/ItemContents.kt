@@ -238,7 +238,7 @@ data class PersonalDetailsContent(
 
     val hasPhoneNumber: Boolean by lazy { phoneNumber.isNotBlank() }
 
-    private val hasCustomFields: Boolean by lazy { customFields.isNotEmpty() }
+    val hasCustomFields: Boolean by lazy { customFields.isNotEmpty() }
 
     val hasPersonalDetails: Boolean by lazy {
         listOf(
@@ -301,7 +301,7 @@ data class AddressDetailsContent(
 
     val hasCounty: Boolean by lazy { county.isNotBlank() }
 
-    private val hasCustomFields: Boolean by lazy { customFields.isNotEmpty() }
+    val hasCustomFields: Boolean by lazy { customFields.isNotEmpty() }
 
     val hasAddressDetails: Boolean by lazy {
         listOf(
@@ -372,7 +372,7 @@ data class ContactDetailsContent(
 
     val hasInstagram: Boolean by lazy { instagram.isNotBlank() }
 
-    private val hasCustomFields: Boolean by lazy { customFields.isNotEmpty() }
+    val hasCustomFields: Boolean by lazy { customFields.isNotEmpty() }
 
     val hasContactDetails: Boolean by lazy {
         listOf(
@@ -430,7 +430,7 @@ data class WorkDetailsContent(
 
     val hasWorkEmail: Boolean by lazy { workEmail.isNotBlank() }
 
-    private val hasCustomFields: Boolean by lazy { customFields.isNotEmpty() }
+    val hasCustomFields: Boolean by lazy { customFields.isNotEmpty() }
 
     val hasWorkDetails: Boolean by lazy {
         listOf(
@@ -460,6 +460,9 @@ data class ExtraSectionContent(
     val title: String,
     val customFields: List<CustomFieldContent>
 ) {
+
+    val hasCustomFields: Boolean by lazy { customFields.isNotEmpty() }
+
     companion object {
         val EMPTY = ExtraSectionContent(
             title = "",

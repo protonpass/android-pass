@@ -38,7 +38,8 @@ internal fun PassIdentityItemDetailsSections(
     itemColors: PassItemColors,
     onEvent: (PassItemDetailsUiEvent) -> Unit,
     createdAt: Instant,
-    modifiedAt: Instant
+    modifiedAt: Instant,
+    shouldDisplayItemHistorySection: Boolean
 ) = with(contents) {
     Column(
         modifier = modifier,
@@ -84,12 +85,14 @@ internal fun PassIdentityItemDetailsSections(
             )
         }
 
-        PassItemDetailsHistorySection(
-            modifier = Modifier.padding(vertical = Spacing.extraSmall),
-            createdAt = createdAt,
-            modifiedAt = modifiedAt,
-            itemColors = itemColors,
-            onEvent = onEvent
-        )
+        if (shouldDisplayItemHistorySection) {
+            PassItemDetailsHistorySection(
+                modifier = Modifier.padding(vertical = Spacing.extraSmall),
+                createdAt = createdAt,
+                modifiedAt = modifiedAt,
+                itemColors = itemColors,
+                onEvent = onEvent
+            )
+        }
     }
 }

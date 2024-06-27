@@ -53,9 +53,11 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
         getVaultById(shareId = item.shareId)
     ) { aliasItemContents, aliasDetails, vault ->
         ItemDetailState.Alias(
-            contents = aliasItemContents,
-            isPinned = item.isPinned,
-            vault = vault,
+            itemContents = aliasItemContents,
+            isItemPinned = item.isPinned,
+            itemVault = vault,
+            itemCreatedAt = item.createTime,
+            itemModifiedAt = item.modificationTime,
             mailboxes = aliasDetails.mailboxes
         )
     }

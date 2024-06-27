@@ -50,7 +50,7 @@ fun ManageVaultContent(
         topBar = {
             BackArrowTopAppBar(
                 title = "",
-                onUpClick = { onNavigateEvent(SharingNavigation.BackToHome) }
+                onUpClick = { onNavigateEvent(SharingNavigation.Back) }
             )
         }
     ) { padding ->

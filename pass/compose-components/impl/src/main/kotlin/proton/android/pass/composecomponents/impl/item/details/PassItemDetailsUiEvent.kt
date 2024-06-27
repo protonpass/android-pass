@@ -44,4 +44,7 @@ sealed interface PassItemDetailsUiEvent {
 
     @JvmInline
     value class OnPasskeyClick(val passkey: UIPasskeyContent) : PassItemDetailsUiEvent
+
+    data object OnViewItemHistoryClick : PassItemDetailsUiEvent
+
 }

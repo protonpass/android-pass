@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
@@ -65,6 +66,14 @@ internal fun PassIdentityItemDetailsSections(
         if (workDetailsContent.hasWorkDetails) {
             PassIdentityItemDetailsWorkSection(
                 workDetailsContent = workDetailsContent,
+                itemColors = itemColors,
+                onEvent = onEvent
+            )
+        }
+
+        if (extraSectionContentList.isNotEmpty()) {
+            PassIdentityItemDetailsExtraSection(
+                extraSectionContents = extraSectionContentList.toPersistentList(),
                 itemColors = itemColors,
                 onEvent = onEvent
             )

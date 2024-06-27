@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.composecomponents.impl.item.details.sections.identity
+package proton.android.pass.composecomponents.impl.item.details.sections.identity.shared.rows
 
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable

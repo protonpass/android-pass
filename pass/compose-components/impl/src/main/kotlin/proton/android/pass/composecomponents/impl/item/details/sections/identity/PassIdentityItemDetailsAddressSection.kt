@@ -25,8 +25,8 @@ import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
-import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailFieldRow
-import proton.android.pass.composecomponents.impl.item.details.sections.identity.shared.rows.PassIdentityItemDetailsCustomFieldRow
+import proton.android.pass.composecomponents.impl.item.details.rows.addItemDetailsFieldRow
+import proton.android.pass.composecomponents.impl.item.details.sections.identity.shared.rows.addCustomFieldRows
 import proton.android.pass.composecomponents.impl.item.details.sections.identity.shared.sections.PassIdentityItemDetailsSection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.AddressDetailsContent
@@ -38,141 +38,89 @@ internal fun PassIdentityItemDetailsAddressSection(
     itemColors: PassItemColors,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) = with(addressDetailsContent) {
-    val sections = mutableListOf<@Composable () -> Unit>()
+    val rows = mutableListOf<@Composable () -> Unit>()
 
     if (hasStreetAddress) {
-        sections.add {
-            PassItemDetailFieldRow(
-                icon = null,
-                title = stringResource(id = R.string.item_details_identity_section_address_street_address_title),
-                subtitle = streetAddress,
-                itemColors = itemColors,
-                onClick = {
-                    PassItemDetailsUiEvent.OnSectionClick(
-                        section = streetAddress,
-                        field = ItemDetailsFieldType.Plain.StreetAddress
-                    ).also(onEvent)
-                }
-            )
-        }
+        rows.addItemDetailsFieldRow(
+            titleResId = R.string.item_details_identity_section_address_street_address_title,
+            section = streetAddress,
+            field = ItemDetailsFieldType.Plain.StreetAddress,
+            itemColors = itemColors,
+            onEvent = onEvent
+        )
     }
 
     if (hasFloor) {
-        sections.add {
-            PassItemDetailFieldRow(
-                icon = null,
-                title = stringResource(id = R.string.item_details_identity_section_address_floor_title),
-                subtitle = floor,
-                itemColors = itemColors,
-                onClick = {
-                    PassItemDetailsUiEvent.OnSectionClick(
-                        section = floor,
-                        field = ItemDetailsFieldType.Plain.Floor
-                    ).also(onEvent)
-                }
-            )
-        }
+        rows.addItemDetailsFieldRow(
+            titleResId = R.string.item_details_identity_section_address_floor_title,
+            section = floor,
+            field = ItemDetailsFieldType.Plain.Floor,
+            itemColors = itemColors,
+            onEvent = onEvent
+        )
     }
 
     if (hasCity) {
-        sections.add {
-            PassItemDetailFieldRow(
-                icon = null,
-                title = stringResource(id = R.string.item_details_identity_section_address_city_title),
-                subtitle = city,
-                itemColors = itemColors,
-                onClick = {
-                    PassItemDetailsUiEvent.OnSectionClick(
-                        section = city,
-                        field = ItemDetailsFieldType.Plain.City
-                    ).also(onEvent)
-                }
-            )
-        }
+        rows.addItemDetailsFieldRow(
+            titleResId = R.string.item_details_identity_section_address_city_title,
+            section = city,
+            field = ItemDetailsFieldType.Plain.City,
+            itemColors = itemColors,
+            onEvent = onEvent
+        )
     }
 
     if (hasZipOrPostalCode) {
-        sections.add {
-            PassItemDetailFieldRow(
-                icon = null,
-                title = stringResource(id = R.string.item_details_identity_section_address_zip_or_postal_code_title),
-                subtitle = zipOrPostalCode,
-                itemColors = itemColors,
-                onClick = {
-                    PassItemDetailsUiEvent.OnSectionClick(
-                        section = zipOrPostalCode,
-                        field = ItemDetailsFieldType.Plain.ZipOrPostalCode
-                    ).also(onEvent)
-                }
-            )
-        }
+        rows.addItemDetailsFieldRow(
+            titleResId = R.string.item_details_identity_section_address_zip_or_postal_code_title,
+            section = zipOrPostalCode,
+            field = ItemDetailsFieldType.Plain.ZipOrPostalCode,
+            itemColors = itemColors,
+            onEvent = onEvent
+        )
     }
 
     if (hasStateOrProvince) {
-        sections.add {
-            PassItemDetailFieldRow(
-                icon = null,
-                title = stringResource(id = R.string.item_details_identity_section_address_state_or_province_title),
-                subtitle = stateOrProvince,
-                itemColors = itemColors,
-                onClick = {
-                    PassItemDetailsUiEvent.OnSectionClick(
-                        section = stateOrProvince,
-                        field = ItemDetailsFieldType.Plain.StateOrProvince
-                    ).also(onEvent)
-                }
-            )
-        }
+        rows.addItemDetailsFieldRow(
+            titleResId = R.string.item_details_identity_section_address_state_or_province_title,
+            section = stateOrProvince,
+            field = ItemDetailsFieldType.Plain.StateOrProvince,
+            itemColors = itemColors,
+            onEvent = onEvent
+        )
     }
 
     if (hasCounty) {
-        sections.add {
-            PassItemDetailFieldRow(
-                icon = null,
-                title = stringResource(id = R.string.item_details_identity_section_address_county_title),
-                subtitle = county,
-                itemColors = itemColors,
-                onClick = {
-                    PassItemDetailsUiEvent.OnSectionClick(
-                        section = county,
-                        field = ItemDetailsFieldType.Plain.County
-                    ).also(onEvent)
-                }
-            )
-        }
+        rows.addItemDetailsFieldRow(
+            titleResId = R.string.item_details_identity_section_address_county_title,
+            section = county,
+            field = ItemDetailsFieldType.Plain.County,
+            itemColors = itemColors,
+            onEvent = onEvent
+        )
     }
 
     if (hasCountryOrRegion) {
-        sections.add {
-            PassItemDetailFieldRow(
-                icon = null,
-                title = stringResource(id = R.string.item_details_identity_section_address_country_or_region_title),
-                subtitle = countryOrRegion,
-                itemColors = itemColors,
-                onClick = {
-                    PassItemDetailsUiEvent.OnSectionClick(
-                        section = countryOrRegion,
-                        field = ItemDetailsFieldType.Plain.CountryOrRegion
-                    ).also(onEvent)
-                }
-            )
-        }
+        rows.addItemDetailsFieldRow(
+            titleResId = R.string.item_details_identity_section_address_country_or_region_title,
+            section = countryOrRegion,
+            field = ItemDetailsFieldType.Plain.CountryOrRegion,
+            itemColors = itemColors,
+            onEvent = onEvent
+        )
     }
 
-    customFields.forEachIndexed { index, customFieldContent ->
-        sections.add {
-            PassIdentityItemDetailsCustomFieldRow(
-                customFieldIndex = index,
-                customFieldContent = customFieldContent,
-                itemColors = itemColors,
-                onEvent = onEvent
-            )
-        }
+    if (hasCustomFields) {
+        rows.addCustomFieldRows(
+            customFields = customFields,
+            itemColors = itemColors,
+            onEvent = onEvent
+        )
     }
 
     PassIdentityItemDetailsSection(
         modifier = modifier,
         title = stringResource(id = R.string.item_details_identity_section_address_title),
-        sections = sections.toPersistentList()
+        sections = rows.toPersistentList()
     )
 }

@@ -986,8 +986,11 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 is UpdateIdentityNavigation.IdentityUpdated -> appNavigator.navigate(
-                    destination = ViewItem,
-                    route = ViewItem.createNavRoute(it.shareId, it.itemId),
+                    destination = ItemDetailsNavItem,
+                    route = ItemDetailsNavItem.createNavRoute(
+                        shareId = it.shareId,
+                        itemId = it.itemId
+                    ),
                     backDestination = Home
                 )
             }

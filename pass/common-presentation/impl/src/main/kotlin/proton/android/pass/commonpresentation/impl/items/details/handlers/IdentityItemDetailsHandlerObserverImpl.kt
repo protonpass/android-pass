@@ -48,11 +48,11 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
         observeVaultById(shareId = item.shareId)
     ) { identityItemContents, vault ->
         ItemDetailState.Identity(
-            contents = identityItemContents,
-            isPinned = item.isPinned,
-            createdAt = item.createTime,
-            modifiedAt = item.modificationTime,
-            vault = vault
+            itemContents = identityItemContents,
+            isItemPinned = item.isPinned,
+            itemCreatedAt = item.createTime,
+            itemModifiedAt = item.modificationTime,
+            itemVault = vault
         )
     }
 

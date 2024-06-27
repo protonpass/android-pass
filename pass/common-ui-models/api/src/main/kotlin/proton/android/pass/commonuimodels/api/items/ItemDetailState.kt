@@ -30,91 +30,103 @@ import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.domain.items.ItemCustomField
 
 @Stable
-sealed class ItemDetailState(
-    val itemContents: ItemContents,
-    val isItemPinned: Boolean,
-    val itemVault: Vault?,
+sealed interface ItemDetailState {
+
+    val itemContents: ItemContents
+
+    val isItemPinned: Boolean
+
+    val itemVault: Vault?
+
     val itemCategory: ItemCategory
-) {
+
+    val itemCreatedAt: Instant
+
+    val itemModifiedAt: Instant
 
     @Stable
     data class Alias(
-        val contents: ItemContents.Alias,
-        val mailboxes: List<AliasMailbox>,
-        private val isPinned: Boolean,
-        private val vault: Vault?
-    ) : ItemDetailState(
-        itemContents = contents,
-        isItemPinned = isPinned,
-        itemVault = vault,
-        itemCategory = ItemCategory.Alias
-    )
+        override val itemContents: ItemContents.Alias,
+        override val isItemPinned: Boolean,
+        override val itemVault: Vault?,
+        override val itemCreatedAt: Instant,
+        override val itemModifiedAt: Instant,
+        val mailboxes: List<AliasMailbox>
+    ) : ItemDetailState {
+
+        override val itemCategory: ItemCategory = ItemCategory.Alias
+
+    }
 
     @Stable
     data class CreditCard(
-        val contents: ItemContents.CreditCard,
-        private val isPinned: Boolean,
-        private val vault: Vault?
-    ) : ItemDetailState(
-        itemContents = contents,
-        isItemPinned = isPinned,
-        itemVault = vault,
-        itemCategory = ItemCategory.CreditCard
-    )
+        override val itemContents: ItemContents.CreditCard,
+        override val isItemPinned: Boolean,
+        override val itemVault: Vault?,
+        override val itemCreatedAt: Instant,
+        override val itemModifiedAt: Instant
+    ) : ItemDetailState {
+
+        override val itemCategory: ItemCategory = ItemCategory.CreditCard
+
+    }
 
     @Stable
     data class Identity(
-        val contents: ItemContents.Identity,
-        val createdAt: Instant,
-        val modifiedAt: Instant,
-        private val isPinned: Boolean,
-        private val vault: Vault?
-    ) : ItemDetailState(
-        itemContents = contents,
-        isItemPinned = isPinned,
-        itemVault = vault,
-        itemCategory = ItemCategory.Identity
-    )
+        override val itemContents: ItemContents.Identity,
+        override val isItemPinned: Boolean,
+        override val itemVault: Vault?,
+        override val itemCreatedAt: Instant,
+        override val itemModifiedAt: Instant
+    ) : ItemDetailState {
+
+        override val itemCategory: ItemCategory = ItemCategory.Identity
+
+    }
 
     @Stable
     data class Login(
-        val contents: ItemContents.Login,
+        override val itemContents: ItemContents.Login,
+        override val isItemPinned: Boolean,
+        override val itemVault: Vault?,
+        override val itemCreatedAt: Instant,
+        override val itemModifiedAt: Instant,
         val canLoadExternalImages: Boolean,
         val passwordStrength: PasswordStrength,
         val primaryTotp: Totp?,
         val customFields: List<ItemCustomField>,
         val passkeys: List<UIPasskeyContent>,
-        val isUsernameSplitEnabled: Boolean,
-        private val isPinned: Boolean,
-        private val vault: Vault?
-    ) : ItemDetailState(
-        itemContents = contents,
-        isItemPinned = isPinned,
-        itemVault = vault,
-        itemCategory = ItemCategory.Login
-    )
+        val isUsernameSplitEnabled: Boolean
+    ) : ItemDetailState {
+
+        override val itemCategory: ItemCategory = ItemCategory.Login
+
+    }
 
     @Stable
     data class Note(
-        val contents: ItemContents.Note,
-        private val isPinned: Boolean,
-        private val vault: Vault?
-    ) : ItemDetailState(
-        itemContents = contents,
-        isItemPinned = isPinned,
-        itemVault = vault,
-        itemCategory = ItemCategory.Note
-    )
+        override val itemContents: ItemContents.Note,
+        override val isItemPinned: Boolean,
+        override val itemVault: Vault?,
+        override val itemCreatedAt: Instant,
+        override val itemModifiedAt: Instant
+    ) : ItemDetailState {
+
+        override val itemCategory: ItemCategory = ItemCategory.Note
+
+    }
 
     @Stable
     data class Unknown(
-        val contents: ItemContents.Unknown,
-        private val vault: Vault?
-    ) : ItemDetailState(
-        itemContents = contents,
-        isItemPinned = false,
-        itemVault = vault,
-        itemCategory = ItemCategory.Unknown
-    )
+        override val itemContents: ItemContents.Unknown,
+        override val isItemPinned: Boolean,
+        override val itemVault: Vault?,
+        override val itemCreatedAt: Instant,
+        override val itemModifiedAt: Instant
+    ) : ItemDetailState {
+
+        override val itemCategory: ItemCategory = ItemCategory.Unknown
+
+    }
 
 }

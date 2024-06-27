@@ -25,8 +25,8 @@ import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
-import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailFieldRow
-import proton.android.pass.composecomponents.impl.item.details.sections.identity.shared.rows.PassIdentityItemDetailsCustomFieldRow
+import proton.android.pass.composecomponents.impl.item.details.rows.addItemDetailsFieldRow
+import proton.android.pass.composecomponents.impl.item.details.sections.identity.shared.rows.addCustomFieldRows
 import proton.android.pass.composecomponents.impl.item.details.sections.identity.shared.sections.PassIdentityItemDetailsSection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.PersonalDetailsContent
@@ -38,158 +38,99 @@ internal fun PassIdentityItemDetailsPersonalSection(
     itemColors: PassItemColors,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) = with(personalDetailsContent) {
-    val sections = mutableListOf<@Composable () -> Unit>()
+    val rows = mutableListOf<@Composable () -> Unit>()
 
     if (hasFirstName) {
-        sections.add {
-            PassItemDetailFieldRow(
-                icon = null,
-                title = stringResource(id = R.string.item_details_identity_section_personal_first_name_title),
-                subtitle = firstName,
-                itemColors = itemColors,
-                onClick = {
-                    PassItemDetailsUiEvent.OnSectionClick(
-                        section = firstName,
-                        field = ItemDetailsFieldType.Plain.FirstName
-                    ).also(onEvent)
-                }
-            )
-        }
+        rows.addItemDetailsFieldRow(
+            titleResId = R.string.item_details_identity_section_personal_first_name_title,
+            section = firstName,
+            field = ItemDetailsFieldType.Plain.FirstName,
+            itemColors = itemColors,
+            onEvent = onEvent
+        )
     }
 
     if (hasMiddleName) {
-        sections.add {
-            PassItemDetailFieldRow(
-                icon = null,
-                title = stringResource(id = R.string.item_details_identity_section_personal_middle_name_title),
-                subtitle = middleName,
-                itemColors = itemColors,
-                onClick = {
-                    PassItemDetailsUiEvent.OnSectionClick(
-                        section = middleName,
-                        field = ItemDetailsFieldType.Plain.MiddleName
-                    ).also(onEvent)
-                }
-            )
-        }
+        rows.addItemDetailsFieldRow(
+            titleResId = R.string.item_details_identity_section_personal_middle_name_title,
+            section = middleName,
+            field = ItemDetailsFieldType.Plain.MiddleName,
+            itemColors = itemColors,
+            onEvent = onEvent
+        )
     }
 
     if (hasLastName) {
-        sections.add {
-            PassItemDetailFieldRow(
-                icon = null,
-                title = stringResource(id = R.string.item_details_identity_section_personal_last_name_title),
-                subtitle = lastName,
-                itemColors = itemColors,
-                onClick = {
-                    PassItemDetailsUiEvent.OnSectionClick(
-                        section = lastName,
-                        field = ItemDetailsFieldType.Plain.LastName
-                    ).also(onEvent)
-                }
-            )
-        }
+        rows.addItemDetailsFieldRow(
+            titleResId = R.string.item_details_identity_section_personal_last_name_title,
+            section = lastName,
+            field = ItemDetailsFieldType.Plain.LastName,
+            itemColors = itemColors,
+            onEvent = onEvent
+        )
     }
 
     if (hasFullName) {
-        sections.add {
-            PassItemDetailFieldRow(
-                icon = null,
-                title = stringResource(id = R.string.item_details_identity_section_personal_full_name_title),
-                subtitle = fullName,
-                itemColors = itemColors,
-                onClick = {
-                    PassItemDetailsUiEvent.OnSectionClick(
-                        section = fullName,
-                        field = ItemDetailsFieldType.Plain.FullName
-                    ).also(onEvent)
-                }
-            )
-        }
+        rows.addItemDetailsFieldRow(
+            titleResId = R.string.item_details_identity_section_personal_full_name_title,
+            section = fullName,
+            field = ItemDetailsFieldType.Plain.FullName,
+            itemColors = itemColors,
+            onEvent = onEvent
+        )
     }
 
     if (hasEmail) {
-        sections.add {
-            PassItemDetailFieldRow(
-                icon = null,
-                title = stringResource(id = R.string.item_details_identity_section_personal_email_title),
-                subtitle = email,
-                itemColors = itemColors,
-                onClick = {
-                    PassItemDetailsUiEvent.OnSectionClick(
-                        section = email,
-                        field = ItemDetailsFieldType.Plain.Email
-                    ).also(onEvent)
-                }
-            )
-        }
+        rows.addItemDetailsFieldRow(
+            titleResId = R.string.item_details_identity_section_personal_email_title,
+            section = email,
+            field = ItemDetailsFieldType.Plain.Email,
+            itemColors = itemColors,
+            onEvent = onEvent
+        )
     }
 
     if (hasGender) {
-        sections.add {
-            PassItemDetailFieldRow(
-                icon = null,
-                title = stringResource(id = R.string.item_details_identity_section_personal_gender_title),
-                subtitle = gender,
-                itemColors = itemColors,
-                onClick = {
-                    PassItemDetailsUiEvent.OnSectionClick(
-                        section = gender,
-                        field = ItemDetailsFieldType.Plain.Gender
-                    ).also(onEvent)
-                }
-            )
-        }
+        rows.addItemDetailsFieldRow(
+            titleResId = R.string.item_details_identity_section_personal_gender_title,
+            section = gender,
+            field = ItemDetailsFieldType.Plain.Gender,
+            itemColors = itemColors,
+            onEvent = onEvent
+        )
     }
 
     if (hasPhoneNumber) {
-        sections.add {
-            PassItemDetailFieldRow(
-                icon = null,
-                title = stringResource(id = R.string.item_details_identity_section_personal_phone_title),
-                subtitle = phoneNumber,
-                itemColors = itemColors,
-                onClick = {
-                    PassItemDetailsUiEvent.OnSectionClick(
-                        section = phoneNumber,
-                        field = ItemDetailsFieldType.Plain.PhoneNumber
-                    ).also(onEvent)
-                }
-            )
-        }
+        rows.addItemDetailsFieldRow(
+            titleResId = R.string.item_details_identity_section_personal_phone_title,
+            section = phoneNumber,
+            field = ItemDetailsFieldType.Plain.PhoneNumber,
+            itemColors = itemColors,
+            onEvent = onEvent
+        )
     }
 
     if (hasBirthdate) {
-        sections.add {
-            PassItemDetailFieldRow(
-                icon = null,
-                title = stringResource(id = R.string.item_details_identity_section_personal_birthday_title),
-                subtitle = birthdate,
-                itemColors = itemColors,
-                onClick = {
-                    PassItemDetailsUiEvent.OnSectionClick(
-                        section = birthdate,
-                        field = ItemDetailsFieldType.Plain.BirthDate
-                    ).also(onEvent)
-                }
-            )
-        }
+        rows.addItemDetailsFieldRow(
+            titleResId = R.string.item_details_identity_section_personal_birthday_title,
+            section = birthdate,
+            field = ItemDetailsFieldType.Plain.BirthDate,
+            itemColors = itemColors,
+            onEvent = onEvent
+        )
     }
 
-    customFields.forEachIndexed { index, customFieldContent ->
-        sections.add {
-            PassIdentityItemDetailsCustomFieldRow(
-                customFieldIndex = index,
-                customFieldContent = customFieldContent,
-                itemColors = itemColors,
-                onEvent = onEvent
-            )
-        }
+    if (hasCustomFields) {
+        rows.addCustomFieldRows(
+            customFields = customFields,
+            itemColors = itemColors,
+            onEvent = onEvent
+        )
     }
 
     PassIdentityItemDetailsSection(
         modifier = modifier,
         title = stringResource(id = R.string.item_details_identity_section_personal_title),
-        sections = sections.toPersistentList()
+        sections = rows.toPersistentList()
     )
 }

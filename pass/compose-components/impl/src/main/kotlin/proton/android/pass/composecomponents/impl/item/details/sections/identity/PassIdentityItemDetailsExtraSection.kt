@@ -23,7 +23,7 @@ import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
-import proton.android.pass.composecomponents.impl.item.details.sections.identity.shared.rows.PassIdentityItemDetailsCustomFieldRow
+import proton.android.pass.composecomponents.impl.item.details.sections.identity.shared.rows.addCustomFieldRows
 import proton.android.pass.composecomponents.impl.item.details.sections.identity.shared.sections.PassIdentityItemDetailsSection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.ExtraSectionContent
@@ -36,23 +36,20 @@ internal fun PassIdentityItemDetailsExtraSection(
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
     extraSectionContents.forEach { extraSectionContent ->
-        val sections = mutableListOf<@Composable () -> Unit>()
+        if (extraSectionContent.hasCustomFields) {
+            val rows = mutableListOf<@Composable () -> Unit>()
 
-        extraSectionContent.customFields.forEachIndexed { index, customFieldContent ->
-            sections.add {
-                PassIdentityItemDetailsCustomFieldRow(
-                    customFieldIndex = index,
-                    customFieldContent = customFieldContent,
-                    itemColors = itemColors,
-                    onEvent = onEvent
-                )
-            }
+            rows.addCustomFieldRows(
+                customFields = extraSectionContent.customFields,
+                itemColors = itemColors,
+                onEvent = onEvent
+            )
+
+            PassIdentityItemDetailsSection(
+                modifier = modifier,
+                title = extraSectionContent.title,
+                sections = rows.toPersistentList()
+            )
         }
-
-        PassIdentityItemDetailsSection(
-            modifier = modifier,
-            title = extraSectionContent.title,
-            sections = sections.toPersistentList()
-        )
     }
 }

@@ -87,3 +87,20 @@ internal fun PassIdentityItemDetailsCustomFieldRow(
         // We do not offer TOTP on identity
     }
 }
+
+internal fun MutableList<@Composable () -> Unit>.addCustomFieldRows(
+    customFields: List<CustomFieldContent>,
+    itemColors: PassItemColors,
+    onEvent: (PassItemDetailsUiEvent) -> Unit,
+) {
+    customFields.forEachIndexed { index, customFieldContent ->
+        add {
+            PassIdentityItemDetailsCustomFieldRow(
+                customFieldIndex = index,
+                customFieldContent = customFieldContent,
+                itemColors = itemColors,
+                onEvent = onEvent
+            )
+        }
+    }
+}

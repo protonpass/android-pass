@@ -27,10 +27,12 @@ import kotlinx.collections.immutable.PersistentList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
+import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Vault
-import proton.android.pass.featureitemdetail.impl.common.HistorySection
+import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureitemdetail.impl.common.MoreInfo
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.NoteSection
@@ -75,12 +77,11 @@ fun AliasDetailContent(
         )
 
         if (isHistoryFeatureEnabled) {
-            HistorySection(
-                createdInstant = itemUiModel.createTime,
-                modifiedInstant = itemUiModel.modificationTime,
+            PassItemDetailsHistorySection(
+                createdAt = itemUiModel.createTime,
+                modifiedAt = itemUiModel.modificationTime,
                 onViewItemHistoryClicked = onViewItemHistoryClicked,
-                buttonBackgroundColor = PassTheme.colors.aliasInteractionNormMinor2,
-                buttonTextColor = PassTheme.colors.aliasInteractionNormMajor2
+                itemColors = passItemColors(itemCategory = ItemCategory.Alias)
             )
         }
 

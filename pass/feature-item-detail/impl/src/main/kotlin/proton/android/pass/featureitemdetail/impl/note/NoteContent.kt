@@ -38,10 +38,12 @@ import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
 import proton.android.pass.composecomponents.impl.pinning.CircledPin
+import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Vault
-import proton.android.pass.featureitemdetail.impl.common.HistorySection
+import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleInput
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleText
 import proton.android.pass.featureitemdetail.impl.common.MoreInfo
@@ -96,12 +98,11 @@ fun NoteContent(
         }
 
         if (isHistoryFeatureEnabled) {
-            HistorySection(
-                createdInstant = itemUiModel.createTime,
-                modifiedInstant = itemUiModel.modificationTime,
+            PassItemDetailsHistorySection(
+                createdAt = itemUiModel.createTime,
+                modifiedAt = itemUiModel.modificationTime,
                 onViewItemHistoryClicked = onViewItemHistoryClicked,
-                buttonBackgroundColor = PassTheme.colors.noteInteractionNormMinor2,
-                buttonTextColor = PassTheme.colors.noteInteractionNormMajor2
+                itemColors = passItemColors(itemCategory = ItemCategory.Note)
             )
         }
 

@@ -20,11 +20,14 @@ package proton.android.pass.composecomponents.impl.item.details.sections.identit
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.datetime.Instant
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
+import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.ItemContents
 
@@ -33,7 +36,9 @@ internal fun PassIdentityItemDetailsSections(
     modifier: Modifier = Modifier,
     contents: ItemContents.Identity,
     itemColors: PassItemColors,
-    onEvent: (PassItemDetailsUiEvent) -> Unit
+    onEvent: (PassItemDetailsUiEvent) -> Unit,
+    createdAt: Instant,
+    modifiedAt: Instant
 ) = with(contents) {
     Column(
         modifier = modifier,
@@ -78,5 +83,13 @@ internal fun PassIdentityItemDetailsSections(
                 onEvent = onEvent
             )
         }
+
+        PassItemDetailsHistorySection(
+            modifier = Modifier.padding(vertical = Spacing.extraSmall),
+            createdAt = createdAt,
+            modifiedAt = modifiedAt,
+            itemColors = itemColors,
+            onEvent = onEvent
+        )
     }
 }

@@ -25,4 +25,5 @@ interface SnackbarDispatcher {
     val snackbarMessage: Flow<Option<SnackbarMessage>>
     suspend operator fun invoke(snackbarMessage: SnackbarMessage)
     suspend fun snackbarMessageDelivered()
+    fun reset()
 }

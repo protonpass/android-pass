@@ -23,7 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import kotlinx.datetime.Instant
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmWithLoadingDialog
-import proton.android.pass.composecomponents.impl.utils.protonFormattedDateText
+import proton.android.pass.composecomponents.impl.utils.passFormattedDateText
 import proton.android.pass.features.item.history.R
 import me.proton.core.presentation.R as CoreR
 
@@ -44,7 +44,7 @@ internal fun ItemHistoryRestoreConfirmationDialog(
         title = stringResource(R.string.item_history_restore_confirmation_dialog_title),
         message = stringResource(
             id = R.string.item_history_restore_confirmation_dialog_message,
-            protonFormattedDateText(endInstant = Instant.fromEpochSeconds(revisionTime))
+            passFormattedDateText(endInstant = Instant.fromEpochSeconds(revisionTime))
         ),
         confirmText = stringResource(id = R.string.item_history_restore_action),
         cancelText = stringResource(id = CoreR.string.presentation_alert_cancel),

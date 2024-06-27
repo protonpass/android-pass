@@ -36,4 +36,9 @@ sealed interface ItemDetailsNavDestination {
     @JvmInline
     value class PasskeyDetails(val passkeyContent: UIPasskeyContent) : ItemDetailsNavDestination
 
+    data class ItemHistory(
+        val shareId: ShareId,
+        val itemId: ItemId
+    ) : ItemDetailsNavDestination
+
 }

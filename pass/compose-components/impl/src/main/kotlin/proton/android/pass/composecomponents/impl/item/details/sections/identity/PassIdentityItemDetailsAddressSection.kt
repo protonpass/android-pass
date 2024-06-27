@@ -40,6 +40,16 @@ internal fun PassIdentityItemDetailsAddressSection(
 ) = with(addressDetailsContent) {
     val rows = mutableListOf<@Composable () -> Unit>()
 
+    if (hasOrganization) {
+        rows.addItemDetailsFieldRow(
+            titleResId = R.string.item_details_identity_section_address_organization_title,
+            section = organization,
+            field = ItemDetailsFieldType.Plain.Organization,
+            itemColors = itemColors,
+            onEvent = onEvent
+        )
+    }
+
     if (hasStreetAddress) {
         rows.addItemDetailsFieldRow(
             titleResId = R.string.item_details_identity_section_address_street_address_title,

@@ -35,9 +35,11 @@ import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
 import proton.android.pass.composecomponents.impl.item.details.sections.login.passkeys.PasskeysSection
+import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
+import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Vault
-import proton.android.pass.featureitemdetail.impl.common.HistorySection
+import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureitemdetail.impl.common.MoreInfo
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.NoteSection
@@ -128,12 +130,11 @@ internal fun LoginContent(
         }
 
         if (isHistoryFeatureEnabled) {
-            HistorySection(
-                createdInstant = itemUiModel.createTime,
-                modifiedInstant = itemUiModel.modificationTime,
+            PassItemDetailsHistorySection(
+                createdAt = itemUiModel.createTime,
+                modifiedAt = itemUiModel.modificationTime,
                 onViewItemHistoryClicked = { onEvent(LoginDetailEvent.OnViewItemHistoryClicked) },
-                buttonBackgroundColor = PassTheme.colors.loginInteractionNormMinor2,
-                buttonTextColor = PassTheme.colors.loginInteractionNormMajor2
+                itemColors = passItemColors(itemCategory = ItemCategory.Login)
             )
         }
 

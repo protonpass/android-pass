@@ -40,7 +40,6 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.item.PassHistoryItemRow
-import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.composecomponents.impl.utils.passFormattedDateText
 import proton.android.pass.composecomponents.impl.utils.passItemColors
@@ -48,11 +47,11 @@ import proton.android.pass.domain.items.ItemCategory
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-internal fun PassItemDetailsHistorySection(
+fun PassItemDetailsHistorySection(
     modifier: Modifier = Modifier,
     createdAt: Instant,
     modifiedAt: Instant,
-    onEvent: (PassItemDetailsUiEvent) -> Unit,
+    onViewItemHistoryClicked: () -> Unit,
     itemColors: PassItemColors
 ) {
     RoundedCornersColumn(
@@ -94,7 +93,7 @@ internal fun PassItemDetailsHistorySection(
                     end = Spacing.medium,
                     bottom = Spacing.medium
                 ),
-            onClick = { onEvent(PassItemDetailsUiEvent.OnViewItemHistoryClick) },
+            onClick = onViewItemHistoryClicked,
             shape = RoundedCornerShape(size = Radius.large),
             colors = ButtonDefaults.buttonColors(itemColors.minorSecondary),
             contentPadding = PaddingValues(
@@ -121,7 +120,7 @@ internal fun PassItemDetailsHistorySectionPreview(@PreviewParameter(ThemePreview
             PassItemDetailsHistorySection(
                 createdAt = Instant.fromEpochMilliseconds(1_697_213_366_026),
                 modifiedAt = Instant.fromEpochMilliseconds(1_707_213_366_026),
-                onEvent = {},
+                onViewItemHistoryClicked = {},
                 itemColors = passItemColors(ItemCategory.Login)
             )
         }

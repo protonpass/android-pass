@@ -1048,7 +1048,8 @@ fun NavGraphBuilder.appGraph(
                 is ItemDetailNavigation.ManageVault -> {
                     appNavigator.navigate(
                         destination = ManageVault,
-                        route = ManageVault.createRoute(it.shareId)
+                        route = ManageVault.createRoute(it.shareId),
+                        backDestination = ViewItem
                     )
                 }
 

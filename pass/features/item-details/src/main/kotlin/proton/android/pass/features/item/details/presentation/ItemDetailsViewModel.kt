@@ -34,6 +34,7 @@ import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDet
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.usecases.GetItemActions
+import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemId
@@ -45,6 +46,7 @@ import javax.inject.Inject
 class ItemDetailsViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     getItemActions: GetItemActions,
+    observeUserPlan: GetUserPlan,
     private val observeItemById: ObserveItemById,
     private val itemDetailsHandler: ItemDetailsHandler
 ) : ViewModel() {
@@ -61,13 +63,15 @@ class ItemDetailsViewModel @Inject constructor(
         .flatMapLatest { item ->
             combine(
                 itemDetailsHandler.observeItemDetails(item),
-                oneShot { getItemActions(shareId, itemId) }
-            ) { itemDetailsState, itemActions ->
+                oneShot { getItemActions(shareId, itemId) },
+                observeUserPlan()
+            ) { itemDetailsState, itemActions, userPlan ->
                 ItemDetailsState.Success(
                     shareId = shareId,
                     itemId = itemId,
                     itemDetailState = itemDetailsState,
-                    itemActions = itemActions
+                    itemActions = itemActions,
+                    userPlan = userPlan
                 )
             }
         }

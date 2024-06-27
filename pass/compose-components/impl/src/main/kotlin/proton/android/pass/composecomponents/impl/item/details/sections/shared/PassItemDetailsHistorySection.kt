@@ -115,9 +115,7 @@ internal fun PassItemDetailsHistorySection(
 
 
 @[Preview Composable Suppress("MagicNumber")]
-internal fun PassItemDetailsHistorySectionPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+internal fun PassItemDetailsHistorySectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             PassItemDetailsHistorySection(

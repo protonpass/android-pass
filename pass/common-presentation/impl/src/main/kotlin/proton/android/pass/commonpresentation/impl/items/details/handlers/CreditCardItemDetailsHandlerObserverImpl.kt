@@ -48,9 +48,11 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
         getVaultById(shareId = item.shareId)
     ) { creditCardItemContents, vault ->
         ItemDetailState.CreditCard(
-            contents = creditCardItemContents,
-            isPinned = item.isPinned,
-            vault = vault
+            itemContents = creditCardItemContents,
+            isItemPinned = item.isPinned,
+            itemVault = vault,
+            itemCreatedAt = item.createTime,
+            itemModifiedAt = item.modificationTime
         )
     }
 

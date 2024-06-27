@@ -50,6 +50,8 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
         ItemDetailState.Identity(
             contents = identityItemContents,
             isPinned = item.isPinned,
+            createdAt = item.createTime,
+            modifiedAt = item.modificationTime,
             vault = vault
         )
     }

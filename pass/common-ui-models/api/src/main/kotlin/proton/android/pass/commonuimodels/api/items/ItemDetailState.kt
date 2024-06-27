@@ -19,6 +19,7 @@
 package proton.android.pass.commonuimodels.api.items
 
 import androidx.compose.runtime.Stable
+import kotlinx.datetime.Instant
 import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.domain.AliasMailbox
@@ -64,6 +65,8 @@ sealed class ItemDetailState(
     @Stable
     data class Identity(
         val contents: ItemContents.Identity,
+        val createdAt: Instant,
+        val modifiedAt: Instant,
         private val isPinned: Boolean,
         private val vault: Vault?
     ) : ItemDetailState(

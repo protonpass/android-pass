@@ -36,7 +36,7 @@ import proton.android.pass.composecomponents.impl.timelines.PassTimelineNode
 import proton.android.pass.composecomponents.impl.timelines.PassTimelineNodeConfig
 import proton.android.pass.composecomponents.impl.timelines.PassTimelineNodeType
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
-import proton.android.pass.composecomponents.impl.utils.protonFormattedDateText
+import proton.android.pass.composecomponents.impl.utils.passFormattedDateText
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -72,7 +72,7 @@ internal fun ItemHistoryTimelineNodes(
                 PassHistoryItemRow(
                     leadingIcon = timelineNodeVariant.leadingIconId,
                     title = stringResource(id = timelineNodeVariant.titleId),
-                    subtitle = protonFormattedDateText(
+                    subtitle = passFormattedDateText(
                         endInstant = Instant.fromEpochSeconds(itemRevision.revisionTime)
                     ),
                     trailingIcon = timelineNodeVariant.trailingIconId,

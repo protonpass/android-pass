@@ -56,7 +56,7 @@ import proton.android.pass.composecomponents.impl.icon.PassPlusIcon
 import proton.android.pass.composecomponents.impl.item.SectionSubtitle
 import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.composecomponents.impl.utils.PassBlurEffect
-import proton.android.pass.composecomponents.impl.utils.protonFormattedDateText
+import proton.android.pass.composecomponents.impl.utils.passFormattedDateText
 import proton.android.pass.features.security.center.R
 import proton.android.pass.features.security.center.shared.ui.DateUtils
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -130,7 +130,7 @@ internal fun SecurityCenterHomeDataBreachesWidget(
 
                     SectionTitle(
                         text = DateUtils.formatDate(dataBreachedTime.toInt()).getOrElse {
-                            protonFormattedDateText(
+                            passFormattedDateText(
                                 endInstant = Instant.fromEpochSeconds(dataBreachedTime)
                             )
                         }

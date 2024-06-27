@@ -58,7 +58,9 @@ internal fun PassItemDetailSections(
             modifier = modifier,
             contents = contents,
             itemColors = itemColors,
-            onEvent = onEvent
+            onEvent = onEvent,
+            createdAt = createdAt,
+            modifiedAt = modifiedAt
         )
 
         is ItemDetailState.Login -> PassLoginItemDetailSections(

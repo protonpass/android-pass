@@ -1189,6 +1189,14 @@ fun NavGraphBuilder.appGraph(
                         passkey = itemDetailsNavDestination.passkeyContent
                     )
                 )
+
+                is ItemDetailsNavDestination.ItemHistory -> appNavigator.navigate(
+                    destination = ItemHistoryTimelineNavItem,
+                    route = ItemHistoryTimelineNavItem.createNavRoute(
+                        shareId = itemDetailsNavDestination.shareId,
+                        itemId = itemDetailsNavDestination.itemId
+                    )
+                )
             }
         }
     )

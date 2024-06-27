@@ -1654,13 +1654,17 @@ fun NavGraphBuilder.appGraph(
     secureLinksNavGraph(
         onNavigated = { destination ->
             when (destination) {
-                is SecureLinksNavDestination.Back -> appNavigator.navigateBack(
-                    comesFromBottomsheet = destination.comesFromBottomSheet
+                SecureLinksNavDestination.Back -> appNavigator.navigateBack(
+                    comesFromBottomsheet = false
                 )
 
                 SecureLinksNavDestination.Close -> appNavigator.popUpTo(
                     destination = ViewItem
                 )
+
+                SecureLinksNavDestination.DismissBottomSheet -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
 
                 SecureLinksNavDestination.Profile -> appNavigator.navigate(
                     destination = Profile

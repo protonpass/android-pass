@@ -44,4 +44,8 @@ class TestSnackbarDispatcher @Inject constructor() : SnackbarDispatcher {
     override suspend fun snackbarMessageDelivered() {
         snackbarState.tryEmit(None)
     }
+
+    override fun reset() {
+        snackbarState.tryEmit(None)
+    }
 }

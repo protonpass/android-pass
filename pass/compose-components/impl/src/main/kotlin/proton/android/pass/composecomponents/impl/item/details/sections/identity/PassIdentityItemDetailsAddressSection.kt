@@ -26,6 +26,8 @@ import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetai
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailFieldRow
+import proton.android.pass.composecomponents.impl.item.details.sections.identity.shared.rows.PassIdentityItemDetailsCustomFieldRow
+import proton.android.pass.composecomponents.impl.item.details.sections.identity.shared.sections.PassIdentityItemDetailsSection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.AddressDetailsContent
 
@@ -170,7 +172,7 @@ internal fun PassIdentityItemDetailsAddressSection(
 
     PassIdentityItemDetailsSection(
         modifier = modifier,
-        titleResId = R.string.item_details_identity_section_address_title,
+        title = stringResource(id = R.string.item_details_identity_section_address_title),
         sections = sections.toPersistentList()
     )
 }

@@ -48,9 +48,11 @@ class NoteItemDetailsHandlerObserverImpl @Inject constructor(
         getVaultById(shareId = item.shareId)
     ) { noteItemContents, vault ->
         ItemDetailState.Note(
-            contents = noteItemContents,
-            isPinned = item.isPinned,
-            vault = vault
+            itemContents = noteItemContents,
+            isItemPinned = item.isPinned,
+            itemVault = vault,
+            itemCreatedAt = item.createTime,
+            itemModifiedAt = item.modificationTime,
         )
     }
 
@@ -65,7 +67,10 @@ class NoteItemDetailsHandlerObserverImpl @Inject constructor(
                 noteItemContentsFlow.update { noteItemContents }
             }
 
-    override fun updateHiddenState(hiddenFieldType: ItemDetailsFieldType.Hidden, hiddenState: HiddenState) {
+    override fun updateHiddenState(
+        hiddenFieldType: ItemDetailsFieldType.Hidden,
+        hiddenState: HiddenState
+    ) {
         noteItemContentsFlow.update { noteItemContents ->
             when (hiddenFieldType) {
                 is ItemDetailsFieldType.Hidden.CustomField,

@@ -71,9 +71,11 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
         featureFlagsRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT)
     ) { loginItemContents, primaryTotp, customFields, vault, useFaviconsPreference, isUsernameSplitEnabled ->
         ItemDetailState.Login(
-            contents = loginItemContents,
-            isPinned = item.isPinned,
-            vault = vault,
+            itemContents = loginItemContents,
+            isItemPinned = item.isPinned,
+            itemVault = vault,
+            itemCreatedAt = item.createTime,
+            itemModifiedAt = item.modificationTime,
             canLoadExternalImages = useFaviconsPreference.value(),
             passwordStrength = encryptionContextProvider.withEncryptionContext {
                 decrypt(loginItemContents.password.encrypted)

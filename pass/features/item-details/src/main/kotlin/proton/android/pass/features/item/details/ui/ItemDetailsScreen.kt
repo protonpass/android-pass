@@ -39,9 +39,8 @@ fun ItemDetailsScreen(
         state = state,
         onEvent = { uiEvent ->
             when (uiEvent) {
-                ItemDetailsUiEvent.OnNavigateBack ->
-                    ItemDetailsNavDestination.Back
-                        .also(onNavigated)
+                ItemDetailsUiEvent.OnNavigateBack -> ItemDetailsNavDestination.Back
+                    .also(onNavigated)
 
                 is ItemDetailsUiEvent.OnEditClicked -> ItemDetailsNavDestination.EditItem(
                     shareId = uiEvent.shareId,
@@ -73,6 +72,11 @@ fun ItemDetailsScreen(
                     context = context,
                     website = uiEvent.link
                 )
+
+                is ItemDetailsUiEvent.OnViewItemHistoryClicked -> ItemDetailsNavDestination.ItemHistory(
+                    shareId = uiEvent.shareId,
+                    itemId = uiEvent.itemId
+                ).also(onNavigated)
             }
         }
     )

@@ -124,42 +124,46 @@ private fun ItemHistoryRestoreDetails(
                 onRestoreClick = { onEvent(ItemHistoryRestoreUiEvent.OnRestoreClick) }
             )
         },
-        onEvent = {
-            when (it) {
+        onEvent = { uiEvent ->
+            when (uiEvent) {
                 is PassItemDetailsUiEvent.OnSectionClick -> onEvent(
                     ItemHistoryRestoreUiEvent.OnSectionClick(
-                        section = it.section,
-                        field = it.field
+                        section = uiEvent.section,
+                        field = uiEvent.field
 
                     )
                 )
 
                 is PassItemDetailsUiEvent.OnHiddenSectionClick -> onEvent(
                     ItemHistoryRestoreUiEvent.OnHiddenSectionClick(
-                        state = it.state,
-                        field = it.field
+                        state = uiEvent.state,
+                        field = uiEvent.field
                     )
                 )
 
                 is PassItemDetailsUiEvent.OnHiddenSectionToggle -> onEvent(
                     ItemHistoryRestoreUiEvent.OnHiddenSectionToggle(
-                        state = it.state,
-                        hiddenState = it.hiddenState,
-                        field = it.field
+                        state = uiEvent.state,
+                        hiddenState = uiEvent.hiddenState,
+                        field = uiEvent.field
                     )
                 )
 
                 is PassItemDetailsUiEvent.OnLinkClick -> {
-                    BrowserUtils.openWebsite(context, it.link)
+                    BrowserUtils.openWebsite(context, uiEvent.link)
                 }
 
                 is PassItemDetailsUiEvent.OnPasskeyClick -> onEvent(
                     ItemHistoryRestoreUiEvent.OnPasskeyClick(
                         shareId = shareId,
                         itemId = itemId,
-                        passkey = it.passkey
+                        passkey = uiEvent.passkey
                     )
                 )
+
+                PassItemDetailsUiEvent.OnViewItemHistoryClick -> {
+                    // We do nothing since item history widget shouldn't appear on restore screen
+                }
             }
         }
     )

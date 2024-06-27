@@ -32,7 +32,7 @@ import java.util.Locale
 private const val DEFAULT_DATE_TEXT = ""
 
 @Composable
-fun protonFormattedDateText(
+fun passFormattedDateText(
     endInstant: Instant,
     startInstant: Instant = Instant.fromEpochSeconds(epochSeconds = 0),
     locale: Locale = Locale.getDefault()

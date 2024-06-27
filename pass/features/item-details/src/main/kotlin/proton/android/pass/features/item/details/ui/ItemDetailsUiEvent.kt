@@ -57,4 +57,9 @@ internal sealed interface ItemDetailsUiEvent {
     @JvmInline
     value class OnPasskeyClicked(internal val passkeyContent: UIPasskeyContent) : ItemDetailsUiEvent
 
+    data class OnViewItemHistoryClicked(
+        internal val shareId: ShareId,
+        internal val itemId: ItemId,
+    ) : ItemDetailsUiEvent
+
 }

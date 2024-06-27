@@ -36,6 +36,7 @@ dependencies {
     implementation(libs.core.domain)
     implementation(libs.core.user.domain)
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.datetime)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

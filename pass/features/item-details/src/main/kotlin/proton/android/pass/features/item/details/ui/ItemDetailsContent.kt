@@ -93,6 +93,11 @@ internal fun ItemDetailsContent(
                             text = uiEvent.section,
                             field = uiEvent.field
                         )
+
+                        PassItemDetailsUiEvent.OnViewItemHistoryClick -> ItemDetailsUiEvent.OnViewItemHistoryClicked(
+                            shareId = shareId,
+                            itemId = itemId
+                        )
                     }.also(onEvent)
                 }
             )

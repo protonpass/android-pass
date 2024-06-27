@@ -16,14 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.composecomponents.impl.item.details.sections.identity
+package proton.android.pass.composecomponents.impl.item.details.sections.identity.shared.sections
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.item.SectionTitle
@@ -32,19 +30,15 @@ import proton.android.pass.composecomponents.impl.item.details.sections.shared.P
 @Composable
 internal fun PassIdentityItemDetailsSection(
     modifier: Modifier = Modifier,
-    @StringRes titleResId: Int,
+    title: String,
     sections: ImmutableList<@Composable () -> Unit>
 ) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
     ) {
-        SectionTitle(
-            text = stringResource(id = titleResId)
-        )
+        SectionTitle(text = title)
 
-        PassItemDetailMainSectionContainer(
-            sections = sections
-        )
+        PassItemDetailMainSectionContainer(sections = sections)
     }
 }

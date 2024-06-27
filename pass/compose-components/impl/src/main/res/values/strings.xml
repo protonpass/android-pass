@@ -162,6 +162,7 @@
     <string name="item_details_identity_section_personal_phone_title">Phone number</string>
     <string name="item_details_identity_section_personal_birthday_title">Birthday</string>
     <string name="item_details_identity_section_address_title">Address details</string>
+    <string name="item_details_identity_section_address_organization_title">Organization</string>
     <string name="item_details_identity_section_address_street_address_title">Street address, P.O. box</string>
     <string name="item_details_identity_section_address_floor_title">Floor</string>
     <string name="item_details_identity_section_address_city_title">City</string>

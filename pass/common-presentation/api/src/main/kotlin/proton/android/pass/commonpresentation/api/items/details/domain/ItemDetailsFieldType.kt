@@ -62,6 +62,8 @@ sealed interface ItemDetailsFieldType {
 
         data object Occupation : Plain
 
+        data object Organization : Plain
+
         data object PassportNumber : Plain
 
         data object PhoneNumber : Plain

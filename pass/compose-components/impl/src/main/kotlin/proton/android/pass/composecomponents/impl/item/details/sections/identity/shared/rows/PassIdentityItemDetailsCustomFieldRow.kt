@@ -91,7 +91,7 @@ internal fun PassIdentityItemDetailsCustomFieldRow(
 internal fun MutableList<@Composable () -> Unit>.addCustomFieldRows(
     customFields: List<CustomFieldContent>,
     itemColors: PassItemColors,
-    onEvent: (PassItemDetailsUiEvent) -> Unit,
+    onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
     customFields.forEachIndexed { index, customFieldContent ->
         add {

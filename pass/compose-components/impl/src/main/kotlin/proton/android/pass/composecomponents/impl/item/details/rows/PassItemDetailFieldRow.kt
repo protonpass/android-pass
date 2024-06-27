@@ -19,6 +19,7 @@
 package proton.android.pass.composecomponents.impl.item.details.rows
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -33,11 +34,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.composecomponents.impl.item.SectionSubtitle
 import proton.android.pass.composecomponents.impl.item.SectionTitle
+import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 
 @Composable
@@ -98,4 +102,27 @@ internal fun PassItemDetailFieldRow(
         contentInBetween?.invoke()
     }
 
+}
+
+internal fun MutableList<@Composable () -> Unit>.addItemDetailsFieldRow(
+    @StringRes titleResId: Int,
+    section: String,
+    field: ItemDetailsFieldType.Plain,
+    itemColors: PassItemColors,
+    onEvent: (PassItemDetailsUiEvent) -> Unit
+) {
+    add {
+        PassItemDetailFieldRow(
+            icon = null,
+            title = stringResource(id = titleResId),
+            subtitle = section,
+            itemColors = itemColors,
+            onClick = {
+                PassItemDetailsUiEvent.OnSectionClick(
+                    section = section,
+                    field = field
+                ).also(onEvent)
+            }
+        )
+    }
 }

@@ -23,10 +23,11 @@ import proton.android.pass.features.secure.links.overview.navigation.SecureLinks
 
 sealed interface SecureLinksNavDestination {
 
-    @JvmInline
-    value class Back(val comesFromBottomSheet: Boolean) : SecureLinksNavDestination
+    data object Back : SecureLinksNavDestination
 
     data object Close : SecureLinksNavDestination
+
+    data object DismissBottomSheet : SecureLinksNavDestination
 
     data object Profile : SecureLinksNavDestination
 

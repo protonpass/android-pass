@@ -42,9 +42,9 @@ internal fun SecureLinksOverviewBottomSheet(
             SecureLinksOverviewEvent.Idle -> {}
 
             SecureLinksOverviewEvent.OnLinkDeleted,
-            SecureLinksOverviewEvent.OnDeleteLinkError -> SecureLinksNavDestination.Back(
-                comesFromBottomSheet = true
-            ).also(onNavigated)
+            SecureLinksOverviewEvent.OnDeleteLinkError -> {
+                onNavigated(SecureLinksNavDestination.DismissBottomSheet)
+            }
         }
 
         onEventConsumed(event = state.event)

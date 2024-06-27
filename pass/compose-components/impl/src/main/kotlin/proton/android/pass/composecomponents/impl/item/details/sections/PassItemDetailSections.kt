@@ -36,7 +36,8 @@ internal fun PassItemDetailSections(
     modifier: Modifier = Modifier,
     itemDetailState: ItemDetailState,
     itemColors: PassItemColors,
-    onEvent: (PassItemDetailsUiEvent) -> Unit
+    onEvent: (PassItemDetailsUiEvent) -> Unit,
+    shouldDisplayItemHistorySection: Boolean
 ) = with(itemDetailState) {
     when (this) {
         is ItemDetailState.Alias -> PassAliasItemDetailSections(
@@ -60,7 +61,8 @@ internal fun PassItemDetailSections(
             itemColors = itemColors,
             onEvent = onEvent,
             createdAt = itemCreatedAt,
-            modifiedAt = itemModifiedAt
+            modifiedAt = itemModifiedAt,
+            shouldDisplayItemHistorySection = shouldDisplayItemHistorySection
         )
 
         is ItemDetailState.Login -> PassLoginItemDetailSections(

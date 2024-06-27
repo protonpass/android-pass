@@ -1,0 +1,14 @@
+## 1.23.0 (2024-06-27)
+
+### Fixes :bug:
+
+- Sync issues on password reset.
+- Pinned items incorrect counting.
+- Fixes Custom fields not opening.
+- Improves clear clipboard.
+- Other bug fixes and improvements.
+
+### Other
+
+- Improve note scrolling.
+- Updated translations.

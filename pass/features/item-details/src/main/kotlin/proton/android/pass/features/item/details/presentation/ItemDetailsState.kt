@@ -22,6 +22,8 @@ import androidx.compose.runtime.Stable
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.Plan
+import proton.android.pass.domain.PlanType
 import proton.android.pass.domain.ShareId
 
 @Stable
@@ -35,7 +37,18 @@ internal sealed interface ItemDetailsState {
         internal val shareId: ShareId,
         internal val itemId: ItemId,
         internal val itemDetailState: ItemDetailState,
-        internal val itemActions: ItemActions
-    ) : ItemDetailsState
+        internal val itemActions: ItemActions,
+        private val userPlan: Plan
+    ) : ItemDetailsState {
+
+        internal val shouldDisplayItemHistorySection: Boolean = when (userPlan.planType) {
+            is PlanType.Paid,
+            is PlanType.Trial -> true
+
+            is PlanType.Free,
+            is PlanType.Unknown -> false
+        }
+
+    }
 
 }

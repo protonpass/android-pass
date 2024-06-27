@@ -48,6 +48,7 @@ internal fun ItemDetailsContent(
                 modifier = modifier,
                 itemDetailState = itemDetailState,
                 itemColors = itemColors,
+                shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
                 topBar = {
                     ItemDetailsTopBar(
                         isLoading = false,

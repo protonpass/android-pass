@@ -42,7 +42,8 @@ fun PassItemDetailsContent(
     topBar: @Composable () -> Unit,
     itemDetailState: ItemDetailState,
     itemColors: PassItemColors,
-    onEvent: (PassItemDetailsUiEvent) -> Unit
+    onEvent: (PassItemDetailsUiEvent) -> Unit,
+    shouldDisplayItemHistorySection: Boolean
 ) {
     Scaffold(
         modifier = modifier,
@@ -73,7 +74,8 @@ fun PassItemDetailsContent(
                     .padding(horizontal = Spacing.medium),
                 itemDetailState = itemDetailState,
                 itemColors = itemColors,
-                onEvent = onEvent
+                onEvent = onEvent,
+                shouldDisplayItemHistorySection = shouldDisplayItemHistorySection
             )
         }
     }

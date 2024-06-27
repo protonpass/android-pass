@@ -59,7 +59,7 @@ internal sealed interface ItemDetailsUiEvent {
 
     data class OnViewItemHistoryClicked(
         internal val shareId: ShareId,
-        internal val itemId: ItemId,
+        internal val itemId: ItemId
     ) : ItemDetailsUiEvent
 
 }

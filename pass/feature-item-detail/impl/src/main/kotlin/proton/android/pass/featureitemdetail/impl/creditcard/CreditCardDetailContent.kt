@@ -25,9 +25,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
+import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Vault
-import proton.android.pass.featureitemdetail.impl.common.HistorySection
+import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureitemdetail.impl.common.MoreInfo
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.NoteSection
@@ -73,12 +75,11 @@ fun CreditCardDetailContent(
         )
 
         if (isHistoryFeatureEnabled) {
-            HistorySection(
-                createdInstant = contents.model.createTime,
-                modifiedInstant = contents.model.modificationTime,
+            PassItemDetailsHistorySection(
+                createdAt = contents.model.createTime,
+                modifiedAt = contents.model.modificationTime,
                 onViewItemHistoryClicked = { onEvent(CreditCardDetailEvent.OnViewItemHistoryClicked) },
-                buttonBackgroundColor = PassTheme.colors.cardInteractionNormMinor2,
-                buttonTextColor = PassTheme.colors.cardInteractionNormMajor2
+                itemColors = passItemColors(itemCategory = ItemCategory.CreditCard)
             )
         }
 

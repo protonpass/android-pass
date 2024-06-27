@@ -91,7 +91,7 @@ internal fun PassIdentityItemDetailsSections(
                 createdAt = createdAt,
                 modifiedAt = modifiedAt,
                 itemColors = itemColors,
-                onEvent = onEvent
+                onViewItemHistoryClicked = { onEvent(PassItemDetailsUiEvent.OnViewItemHistoryClick) }
             )
         }
     }

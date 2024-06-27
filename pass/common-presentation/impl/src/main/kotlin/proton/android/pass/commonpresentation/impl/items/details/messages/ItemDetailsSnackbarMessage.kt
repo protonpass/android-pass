@@ -155,6 +155,12 @@ internal enum class ItemDetailsSnackbarMessage(
         isClipboard = true
     ),
 
+    OrganizationCopied(
+        id = R.string.item_details_snackbar_message_organization_copied,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
+
     PassportNumberCopied(
         id = R.string.item_details_snackbar_message_passport_number_copied,
         type = SnackbarType.NORM,

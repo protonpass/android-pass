@@ -41,7 +41,7 @@ internal fun PassItemDetailSections(
     when (this) {
         is ItemDetailState.Alias -> PassAliasItemDetailSections(
             modifier = modifier,
-            contents = contents,
+            contents = itemContents,
             itemColors = itemColors,
             mailboxes = mailboxes.toImmutableList(),
             onEvent = onEvent
@@ -49,23 +49,23 @@ internal fun PassItemDetailSections(
 
         is ItemDetailState.CreditCard -> PassCreditCardItemDetailsSections(
             modifier = modifier,
-            contents = contents,
+            contents = itemContents,
             itemColors = itemColors,
             onEvent = onEvent
         )
 
         is ItemDetailState.Identity -> PassIdentityItemDetailsSections(
             modifier = modifier,
-            contents = contents,
+            contents = itemContents,
             itemColors = itemColors,
             onEvent = onEvent,
-            createdAt = createdAt,
-            modifiedAt = modifiedAt
+            createdAt = itemCreatedAt,
+            modifiedAt = itemModifiedAt
         )
 
         is ItemDetailState.Login -> PassLoginItemDetailSections(
             modifier = modifier,
-            contents = contents,
+            contents = itemContents,
             passwordStrength = passwordStrength,
             primaryTotp = primaryTotp,
             customFields = customFields.toImmutableList(),
@@ -77,10 +77,10 @@ internal fun PassItemDetailSections(
 
         is ItemDetailState.Note -> PassNoteItemDetailSections(
             modifier = modifier,
-            contents = contents
+            contents = itemContents
         )
 
-        is ItemDetailState.Unknown -> contents.note.let { note ->
+        is ItemDetailState.Unknown -> itemContents.note.let { note ->
             if (note.isNotBlank()) {
                 PassSharedItemDetailNoteSection(
                     note = note,

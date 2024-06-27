@@ -52,7 +52,7 @@ internal fun PassItemDetailTitleRow(
         is ItemDetailState.Alias -> {
             ItemDetailTitleRow(
                 modifier = modifier,
-                title = contents.title,
+                title = itemContents.title,
                 isPinned = isItemPinned,
                 itemColors = itemColors,
                 vault = itemVault
@@ -67,7 +67,7 @@ internal fun PassItemDetailTitleRow(
         is ItemDetailState.CreditCard -> {
             ItemDetailTitleRow(
                 modifier = modifier,
-                title = contents.title,
+                title = itemContents.title,
                 isPinned = isItemPinned,
                 itemColors = itemColors,
                 vault = itemVault
@@ -82,7 +82,7 @@ internal fun PassItemDetailTitleRow(
         is ItemDetailState.Identity -> {
             ItemDetailTitleRow(
                 modifier = modifier,
-                title = contents.title,
+                title = itemContents.title,
                 isPinned = isItemPinned,
                 itemColors = itemColors,
                 vault = itemVault
@@ -97,7 +97,7 @@ internal fun PassItemDetailTitleRow(
         is ItemDetailState.Login -> {
             ItemDetailTitleRow(
                 modifier = modifier,
-                title = contents.title,
+                title = itemContents.title,
                 isPinned = isItemPinned,
                 itemColors = itemColors,
                 vault = itemVault
@@ -105,9 +105,9 @@ internal fun PassItemDetailTitleRow(
                 LoginIcon(
                     size = 60,
                     shape = PassTheme.shapes.squircleMediumLargeShape,
-                    text = contents.title,
-                    website = contents.websiteUrl,
-                    packageName = contents.packageName,
+                    text = itemContents.title,
+                    website = itemContents.websiteUrl,
+                    packageName = itemContents.packageName,
                     canLoadExternalImages = canLoadExternalImages
                 )
             }
@@ -134,7 +134,7 @@ internal fun PassItemDetailTitleRow(
                         }
 
                         PassItemDetailTitle(
-                            text = contents.title,
+                            text = itemContents.title,
                             maxLines = Int.MAX_VALUE
                         )
                     }
@@ -152,7 +152,7 @@ internal fun PassItemDetailTitleRow(
         is ItemDetailState.Unknown -> {
             ItemDetailTitleRow(
                 modifier = modifier,
-                title = contents.title,
+                title = itemContents.title,
                 isPinned = false,
                 itemColors = itemColors,
                 vault = itemVault

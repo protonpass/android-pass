@@ -124,6 +124,7 @@ private fun ItemHistoryRestoreDetails(
                 onRestoreClick = { onEvent(ItemHistoryRestoreUiEvent.OnRestoreClick) }
             )
         },
+        shouldDisplayItemHistorySection = false,
         onEvent = { uiEvent ->
             when (uiEvent) {
                 is PassItemDetailsUiEvent.OnSectionClick -> onEvent(

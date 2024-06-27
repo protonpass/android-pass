@@ -25,13 +25,19 @@ import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentActivity
 import dagger.hilt.android.AndroidEntryPoint
+import me.proton.core.auth.presentation.ui.AddAccountActivity
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.ui.AppNavigation
 import proton.android.pass.ui.MainActivity
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class EnterExtraPasswordActivity : FragmentActivity() {
+
+    @Inject
+    lateinit var snackbarDispatcher: SnackbarDispatcher
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,12 +55,20 @@ class EnterExtraPasswordActivity : FragmentActivity() {
                 onNavigate = {
                     when (it) {
                         AppNavigation.Finish -> finishAndGoBackToMain()
-                        is AppNavigation.ForceSignOut -> finish()
+                        is AppNavigation.ForceSignOut -> finishAndRestart()
                         else -> {}
                     }
                 }
             )
         }
+    }
+
+    private fun finishAndRestart() {
+        snackbarDispatcher.reset()
+        val intent = Intent(this, AddAccountActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intent)
+        finish()
     }
 
     private fun finishAndGoBackToMain() {

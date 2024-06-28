@@ -167,6 +167,10 @@ private fun ItemHistoryRestoreDetails(
                 PassItemDetailsUiEvent.OnViewItemHistoryClick -> {
                     // We do nothing since item history widget shouldn't appear on restore screen
                 }
+
+                is PassItemDetailsUiEvent.OnSharedVaultClick -> {
+                    // We do nothing since we don't allow shared vault management from restore screen
+                }
             }
         }
     )

@@ -37,6 +37,7 @@
   <string name="auth_error_pin_cannot_be_empty">O código PIN não pode estar vazio</string>
   <string name="auth_extra_password_label">Digite sua senha adicional</string>
   <string name="auth_extra_password_error">Erro na autenticação com a senha adicional</string>
+  <string name="auth_extra_password_too_many_attempts">Too many failed login attempts. You have been logged out.</string>
   <string name="auth_error_wrong_password_no_attempts">A senha não é válida.</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">A senha é incorreta. Resta %d tentativa.</item>

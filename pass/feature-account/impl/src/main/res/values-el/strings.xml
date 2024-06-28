@@ -14,7 +14,7 @@
   <string name="account_manage_subscription">Διαχείριση συνδρομής</string>
   <string name="account_get_user_info_error">Δεν ήταν δυνατή η ανάκτηση των πληροφοριών χρήστη</string>
   <string name="manage_subscription_icon_content_description">Κουμπί διαχείρισης συνδρομής</string>
-  <string name="account_settings_list_item_password_header">Διαχείριση κωδικών πρόσβασης</string>
+  <string name="account_settings_list_item_password_header">Αλλαγή κωδικού πρόσβασης</string>
   <string name="account_settings_list_item_recovery_header">Διεύθυνση email ανάκτησης</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Μη ορισμένο</string>
   <string name="account_settings_list_item_password_hint_grace">Εκκρεμεί επαναφορά κωδικού πρόσβασης</string>

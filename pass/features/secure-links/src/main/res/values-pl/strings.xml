@@ -18,38 +18,52 @@
   -->
 <resources>
   <!--Create screen-->
-  <string name="secure_links_create_title">Share secure link</string>
-  <string name="secure_links_create_row_expiration_title">Link expires after</string>
-  <string name="secure_links_create_row_expiration_options_one_hour">1 hour</string>
-  <string name="secure_links_create_row_expiration_options_one_day">1 day</string>
-  <string name="secure_links_create_row_expiration_options_seven_days">7 days</string>
-  <string name="secure_links_create_row_expiration_options_fourteen_days">14 days</string>
-  <string name="secure_links_create_row_expiration_options_thirty_days">30 days</string>
+  <string name="secure_links_create_title">Udostępnij link</string>
+  <string name="secure_links_create_row_expiration_title">Link wygaśnie za</string>
+  <string name="secure_links_create_row_expiration_options_one_hour">1 godzinę</string>
+  <string name="secure_links_create_row_expiration_options_one_day">1 dzień</string>
+  <string name="secure_links_create_row_expiration_options_seven_days">7 dni</string>
+  <string name="secure_links_create_row_expiration_options_fourteen_days">14 dni</string>
+  <string name="secure_links_create_row_expiration_options_thirty_days">30 dni</string>
   <string name="secure_links_create_row_max_views_title">Ogranicz liczbę dostępów</string>
-  <string name="secure_links_create_row_max_views_subtitle">Maximum views: %d</string>
-  <string name="secure_links_create_button_generate">Generate secure link</string>
-  <string name="secure_links_create_snackbar_message_error">There was an error generating secure link</string>
+  <string name="secure_links_create_row_max_views_subtitle">Maksymalna liczba dostępów: %d</string>
+  <string name="secure_links_create_button_generate">Generuj link</string>
+  <string name="secure_links_create_snackbar_message_error">Wystąpił błąd podczas generowania linku</string>
   <!--Overview screen-->
   <string name="secure_links_overview_widget_expiration_title">Wygasa za:</string>
-  <string name="secure_links_overview_widget_max_views_title">Można obejrzeć:</string>
+  <string name="secure_links_overview_widget_max_views_title">Maksymalna liczba dostępów:</string>
+  <string name="secure_links_overview_widget_open_times_title">Otwarto:</string>
   <plurals name="secure_links_overview_widget_max_views_limited">
     <item quantity="one">%d raz</item>
     <item quantity="few">%d razy</item>
     <item quantity="many">%d razy</item>
     <item quantity="other">%d razy</item>
   </plurals>
-  <string name="secure_links_overview_widget_max_views_unlimited">Bez ograniczeń</string>
+  <string name="secure_links_overview_widget_max_views_unlimited">Bez limitu</string>
+  <string name="secure_links_overview_button_view_all_links">Wyświetl wszystkie linki</string>
+  <!--List screen-->
+  <string name="secure_links_list_title">Linki</string>
+  <string name="secure_links_list_empty_title">Brak linków</string>
+  <string name="secure_links_list_empty_subtitle">Linki możesz utworzyć w opcjach udostępniania poszczególnych elementów</string>
+  <string name="secure_links_list_expiration_description">Wygasa za %s</string>
+  <string name="secure_links_list_expired_description">Wygasł</string>
+  <plurals name="secure_links_list_viewed_times_description">
+    <item quantity="one">otwarto %d raz</item>
+    <item quantity="few">otwarto %d razy</item>
+    <item quantity="many">otwarto %d razy</item>
+    <item quantity="other">otwarto %d razy</item>
+  </plurals>
+  <string name="secure_links_list_snackbar_message_links_fetch_error">Wystąpił błąd podczas pobierania linków</string>
+  <string name="secure_links_list_header_title_inactive">Nieaktywne linki</string>
+  <!--Shared-->
   <string name="secure_links_shared_action_copy_link">Kopiuj link</string>
   <string name="secure_links_shared_action_share_link">Udostępnij link</string>
-  <string name="secure_links_overview_button_view_all_links">View all your secure links</string>
+  <string name="secure_links_shared_action_delete_link">Usuń link</string>
+  <string name="secure_links_shared_action_delete_link_inactive">Usuń nieaktywne linki</string>
+  <string name="secure_links_shared_action_delete_links_inactive">Usuń wszystkie nieaktywne linki</string>
   <string name="secure_links_shared_snackbar_message_link_copied">Link został skopiowany</string>
-  <!--List screen-->
-  <string name="secure_links_list_title">Secure links</string>
-  <string name="secure_links_list_expiration_description">Expires in %s</string>
-  <plurals name="secure_links_list_viewed_times_description">
-    <item quantity="one">%d view</item>
-    <item quantity="few">%d views</item>
-    <item quantity="many">%d views</item>
-    <item quantity="other">%d views</item>
-  </plurals>
+  <string name="secure_links_shared_snackbar_message_link_deletion_canceled">Usunięcie linku zostało anulowane</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_error">Wystąpił błąd podczas usuwania linku</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Usunięcie nieaktywnych linku zostało anulowane</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">Wystąpił błąd podczas usuwania nieaktywnych linków</string>
 </resources>

@@ -9,5 +9,5 @@
   <string name="no_account_found">No s\'ha trobat cap compte.</string>
   <string name="no_session_found">No s\'ha trobat cap sessió.</string>
   <string name="auth_with_extra_password_failed">L\'autenticació amb contrasenya addicional no ha funcionat.</string>
-  <string name="error_login_in_user">Error amb l\'inici de sessió de l\'usuari</string>
+  <string name="error_login_in_user">Error d\'inici de sessió d\'usuari</string>
 </resources>

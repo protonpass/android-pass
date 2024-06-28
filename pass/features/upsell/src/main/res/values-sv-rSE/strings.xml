@@ -26,6 +26,7 @@
   <string name="upsell_paid_feature_authenticator">Integrerad 2FA-autentisering</string>
   <string name="upsell_paid_feature_unlimited_aliases">Obegränsat antal hide-my-email-alias</string>
   <string name="upsell_paid_feature_vault_sharing">Valvdelning (upp till 10 personer)</string>
+  <string name="upsell_paid_feature_secure_links">Säkra länkar</string>
   <string name="upsell_paid_feature_authenticator_essential">Kräver 2FA för organisation</string>
   <string name="upsell_paid_feature_sso_essential">SSO-integration (kommer snart)</string>
   <string name="upsell_button_upgrade">Skaffa Pass Plus</string>

@@ -39,8 +39,8 @@
   <string name="share_with_title">Поделиться с</string>
   <string name="share_with_email_hint">Адрес эл. почты</string>
   <string name="share_with_email_error">Недействительный адрес эл. почты</string>
-  <string name="share_with_email_cannot_invite_outside_org">You can\'t invite people outside of your organization, contact admin for more info</string>
-  <string name="share_with_email_email_already_added">You have already added this email address</string>
+  <string name="share_with_email_cannot_invite_outside_org">Вы не можете приглашать людей за пределами вашей организации, свяжитесь с администратором для получения дополнительной информации</string>
+  <string name="share_with_email_email_already_added">Вы уже добавили этот адрес электронной почты</string>
   <string name="share_permissions_title">Установить уровень доступа</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s приглашает вас получить доступ к элементам в</string>
   <string name="sharing_join_shared_vault">Присоединиться и синхронизировать</string>
@@ -107,10 +107,10 @@
   <string name="sharing_snackbar_transfer_ownership_error">Ошибка при передаче владения</string>
   <string name="sharing_invites_info_dialog_title">Ограничение количества участников</string>
   <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
-    <item quantity="one">This vault can have up to %1$d members. You still have %2$d invite left.</item>
-    <item quantity="few">This vault can have up to %1$d members. У вас осталось еще %2$d приглашений.</item>
-    <item quantity="many">This vault can have up to %1$d members. У вас осталось еще %2$d приглашений.</item>
-    <item quantity="other">This vault can have up to %1$d members. У вас осталось еще %2$d приглашений.</item>
+    <item quantity="one">В этом хранилище может быть до %1$d участников. У вас осталось %2$d приглашение.</item>
+    <item quantity="few">В этом хранилище может быть до %1$d участников. У вас осталось %2$d приглашения.</item>
+    <item quantity="many">В этом хранилище может быть до %1$d участников. У вас осталось %2$d приглашений.</item>
+    <item quantity="other">В этом хранилище может быть до %1$d участников. У вас осталось %2$d приглашений.</item>
   </plurals>
   <string name="sharing_limit_reached">Это хранилище достигло предела количества участников и приглашений.</string>
   <string name="sharing_invites_info_upgrade_text">Улучшите сейчас, чтобы пригласить больше.</string>
@@ -128,10 +128,10 @@
   <string name="share_with_secure_link_title">Через защищенную ссылку</string>
   <string name="share_with_secure_link_description">Сгенерировать защищенную ссылку на этот элемент.</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Установить уровень доступа для всех участников</string>
-  <string name="sharing_edit_permissions_set_access_level_single_member">Set access level for %s</string>
+  <string name="sharing_edit_permissions_set_access_level_single_member">Установить уровень доступа для %s</string>
   <string name="sharing_edit_permissions_remove_user">Удалить пользователя</string>
   <string name="sharing_error_dialog_title">Неизвестная ошибка</string>
-  <string name="sharing_error_dialog_message">There was an error sending an invite for this vault. If the issue persists, please contact customer support service.</string>
-  <string name="sharing_with_no_addresses_can_be_invited">No addresses can be invited</string>
-  <string name="sharing_with_some_addresses_cannot_be_invited">Some addresses cannot be invited</string>
+  <string name="sharing_error_dialog_message">При отправке приглашения для этого хранилища произошла ошибка. Если проблема сохранится, обратитесь в службу поддержки клиентов.</string>
+  <string name="sharing_with_no_addresses_can_be_invited">Никакие адреса не могут быть приглашены</string>
+  <string name="sharing_with_some_addresses_cannot_be_invited">Некоторые адреса не могут быть приглашены</string>
 </resources>

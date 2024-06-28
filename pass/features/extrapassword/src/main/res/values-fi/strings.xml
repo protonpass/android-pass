@@ -29,7 +29,7 @@
   <string name="info_extra_password_body">Suojaa Proton Pass lisäsalasanalla</string>
   <string name="info_extra_password_button">Aseta lisäsalasana</string>
   <string name="configure_extra_password_cannot_be_blank">Salasana ei voi olla tyhjä</string>
-  <string name="configure_extra_password_password_too_short">Salasana on liian lyhyt</string>
+  <string name="configure_extra_password_password_too_short">Extra password must have at least 8 characters</string>
   <string name="confirm_extra_password_title">Aseta lisäsalasana</string>
   <string name="confirm_extra_password_body">Sinut kirjataan ulos ja sinun on kirjauduttava uudelleen sisään kaikilla muilla laitteillasi.</string>
   <string name="confirm_extra_password_error">Lisäsalasanaa ei voitu asettaa</string>

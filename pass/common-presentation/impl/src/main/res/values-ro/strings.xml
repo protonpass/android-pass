@@ -18,13 +18,38 @@
   -->
 <resources>
   <string name="item_details_snackbar_message_alias_copied">Aliasul a fost copiat.</string>
+  <string name="item_details_snackbar_message_birthdate_copied">Birthdate copied</string>
   <string name="item_details_snackbar_message_card_number_copied">Număr card a fost copiat.</string>
+  <string name="item_details_snackbar_message_city_copied">City copied</string>
+  <string name="item_details_snackbar_message_company_copied">Company copied</string>
+  <string name="item_details_snackbar_message_country_or_region_copied">Country or region copied</string>
+  <string name="item_details_snackbar_message_county_copied">County copied</string>
   <string name="item_details_snackbar_message_custom_field_copied">Câmpul personal a fost copiat.</string>
   <string name="item_details_snackbar_message_cvv_copied">Codul de securitate s-a copiat.</string>
   <string name="item_details_snackbar_message_email_copied">Adresa de e-mail a fost copiată</string>
+  <string name="item_details_snackbar_message_facebook_copied">Facebook copied</string>
+  <string name="item_details_snackbar_message_first_name_copied">First name copied</string>
+  <string name="item_details_snackbar_message_floor_copied">Floor copied</string>
+  <string name="item_details_snackbar_message_full_name_copied">Full name copied</string>
+  <string name="item_details_snackbar_message_gender_copied">Gender copied</string>
+  <string name="item_details_snackbar_message_instagram_copied">Instagram copied</string>
+  <string name="item_details_snackbar_message_last_name_copied">Last name copied</string>
+  <string name="item_details_snackbar_message_license_number_copied">License number copied</string>
+  <string name="item_details_snackbar_message_linkedin_copied">LinkedIn copied</string>
+  <string name="item_details_snackbar_message_middle_name_copied">Middle name copied</string>
+  <string name="item_details_snackbar_message_occupation_copied">Occupation copied</string>
+  <string name="item_details_snackbar_message_passport_number_copied">Passport number copied</string>
   <string name="item_details_snackbar_message_password_copied">Parola a fost copiată.</string>
+  <string name="item_details_snackbar_message_phone_number_copied">Phone number copied</string>
   <string name="item_details_snackbar_message_pin_copied">Codul PIN a fost copiat.</string>
+  <string name="item_details_snackbar_message_reddit_copied">Reddit copied</string>
+  <string name="item_details_snackbar_message_social_security_number_copied">Social security number copied</string>
+  <string name="item_details_snackbar_message_state_or_province_copied">State or province copied</string>
+  <string name="item_details_snackbar_message_street_address_copied">Street address copied</string>
   <string name="item_details_snackbar_message_totp_copied">TOTP a fost copiat.</string>
   <string name="item_details_snackbar_message_username_copied">Numele de utilizator a fost copiat.</string>
   <string name="item_details_snackbar_message_website_copied">Adresa URL a fost copiată.</string>
+  <string name="item_details_snackbar_message_x_handle_copied">X handle copied</string>
+  <string name="item_details_snackbar_message_yahoo_copied">Yahoo copied</string>
+  <string name="item_details_snackbar_message_zip_or_postal_code_copied">Zip or postal code copied</string>
 </resources>

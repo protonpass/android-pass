@@ -39,6 +39,7 @@
   <string name="auth_error_pin_cannot_be_empty">PIN vnos ne sme biti prazen.</string>
   <string name="auth_extra_password_label">Vnesite dodatno geslo</string>
   <string name="auth_extra_password_error">Error on authenticating with extra password</string>
+  <string name="auth_extra_password_too_many_attempts">Too many failed login attempts. You have been logged out.</string>
   <string name="auth_error_wrong_password_no_attempts">Napačno geslo</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Napačno geslo. Še %d poskus</item>

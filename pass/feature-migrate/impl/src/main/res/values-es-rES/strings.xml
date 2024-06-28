@@ -6,7 +6,7 @@
   </plurals>
   <string name="migrate_all_items_confirm_title_bottom_sheet">¿Mover todos los elementos a la siguiente caja fuerte?</string>
   <string name="migrate_item_confirm_confirm_button">Mover</string>
-  <string name="migrate_item_success_snackbar">Los elementos han sido movidos.</string>
+  <string name="migrate_item_success_snackbar">Se han movido los elementos.</string>
   <string name="migrate_item_error_snackbar">Error al mover los elementos</string>
   <string name="migrate_item_some_not_migrated_error_snackbar">Error al mover algunos elementos</string>
   <string name="migrate_item_warning_history">Al mover elementos entre cajas fuertes conservaremos hasta las últimas 50 modificaciones realizadas de cada elemento.</string>

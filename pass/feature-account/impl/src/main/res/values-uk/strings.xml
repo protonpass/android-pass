@@ -14,7 +14,7 @@
   <string name="account_manage_subscription">Керувати передплатою</string>
   <string name="account_get_user_info_error">Не вдалося отримати інформацію про користувача</string>
   <string name="manage_subscription_icon_content_description">Кнопка керування передплатою</string>
-  <string name="account_settings_list_item_password_header">Керування паролями</string>
+  <string name="account_settings_list_item_password_header">Змінити пароль</string>
   <string name="account_settings_list_item_recovery_header">Резервна е-пошта</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Не встановлено</string>
   <string name="account_settings_list_item_password_hint_grace">Очікується скидання пароля</string>

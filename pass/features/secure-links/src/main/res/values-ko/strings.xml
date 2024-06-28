@@ -32,18 +32,32 @@
   <!--Overview screen-->
   <string name="secure_links_overview_widget_expiration_title">만료까지:</string>
   <string name="secure_links_overview_widget_max_views_title">확인할 수 있는 사람은:</string>
+  <string name="secure_links_overview_widget_open_times_title">열림:</string>
   <plurals name="secure_links_overview_widget_max_views_limited">
     <item quantity="other">%d번</item>
   </plurals>
   <string name="secure_links_overview_widget_max_views_unlimited">무제한</string>
-  <string name="secure_links_shared_action_copy_link">링크 복사하기</string>
-  <string name="secure_links_shared_action_share_link">링크 공유하기</string>
   <string name="secure_links_overview_button_view_all_links">내 안전한 링크 모두 보기</string>
-  <string name="secure_links_shared_snackbar_message_link_copied">안전한 링크 복사함</string>
   <!--List screen-->
   <string name="secure_links_list_title">안전한 링크</string>
+  <string name="secure_links_list_empty_title">보안 링크 없음</string>
+  <string name="secure_links_list_empty_subtitle">항목 상세 정보 공유 옵션을 안전한 링크에서 생성 가능합니다.</string>
   <string name="secure_links_list_expiration_description">%s 후 만료</string>
+  <string name="secure_links_list_expired_description">Expired</string>
   <plurals name="secure_links_list_viewed_times_description">
     <item quantity="other">%d명 조회</item>
   </plurals>
+  <string name="secure_links_list_snackbar_message_links_fetch_error">안전한 링크를 패칭하는데 오류가 생겼습니다.</string>
+  <string name="secure_links_list_header_title_inactive">Inactive links</string>
+  <!--Shared-->
+  <string name="secure_links_shared_action_copy_link">링크 복사하기</string>
+  <string name="secure_links_shared_action_share_link">링크 공유하기</string>
+  <string name="secure_links_shared_action_delete_link">링크 삭제</string>
+  <string name="secure_links_shared_action_delete_link_inactive">Remove inactive link</string>
+  <string name="secure_links_shared_action_delete_links_inactive">Remove all inactive links</string>
+  <string name="secure_links_shared_snackbar_message_link_copied">안전한 링크 복사함</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_canceled">안전한 링크 삭제가 취소되었습니다.</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_error">안전한 링크 삭제 중 오류가 발생했습니다.</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Inactive secure links deletion was canceled</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">There was an error deleting inactive secure links</string>
 </resources>

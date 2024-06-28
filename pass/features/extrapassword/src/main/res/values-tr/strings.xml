@@ -25,13 +25,13 @@
   <string name="configure_extra_password_warning">Dikkat: Bu parolayı kaybederseniz Pass hesabınıza erişemezsiniz.</string>
   <string name="configure_extra_password_mismatch">Parola ile onayı aynı değil</string>
   <string name="extra_password_options_remove">Kaldır</string>
-  <string name="info_extra_password_title">Extra password</string>
+  <string name="info_extra_password_title">Ek parola</string>
   <string name="info_extra_password_body">Proton Pass uygulamasını bir ek parola ile koruyun.</string>
   <string name="info_extra_password_button">Ek parolayı ayarla</string>
-  <string name="configure_extra_password_cannot_be_blank">Password cannot be blank</string>
-  <string name="configure_extra_password_password_too_short">Parola çok kısa</string>
+  <string name="configure_extra_password_cannot_be_blank">Parola boş olamaz</string>
+  <string name="configure_extra_password_password_too_short">Extra password must have at least 8 characters</string>
   <string name="confirm_extra_password_title">Ek parolayı ayarla</string>
   <string name="confirm_extra_password_body">Oturumunuz kapatılacak ve diğer tüm aygıtlarınızda yeniden oturum açmanız gerekecek.</string>
-  <string name="confirm_extra_password_error">Could not set extra password</string>
+  <string name="confirm_extra_password_error">Ek parola ayarlanamadı</string>
   <string name="confirm_extra_password_success">Ek parola ayarlandı</string>
 </resources>

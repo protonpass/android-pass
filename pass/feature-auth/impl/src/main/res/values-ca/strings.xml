@@ -36,7 +36,8 @@
   <string name="auth_error_empty_password">La contrasenya no pot estar buida.</string>
   <string name="auth_error_pin_cannot_be_empty">El codi PIN no pot estar buit.</string>
   <string name="auth_extra_password_label">Introduïu la vostra contrasenya d\'inici de sessió</string>
-  <string name="auth_extra_password_error">Error on authenticating with extra password</string>
+  <string name="auth_extra_password_error">Error en autenticar-se amb una contrasenya addicional</string>
+  <string name="auth_extra_password_too_many_attempts">Too many failed login attempts. You have been logged out.</string>
   <string name="auth_error_wrong_password_no_attempts">La contrasenya no és correcta.</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Contrasenya incorrecta. %d intent restant.</item>

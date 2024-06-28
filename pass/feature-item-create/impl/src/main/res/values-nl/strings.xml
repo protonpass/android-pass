@@ -110,7 +110,7 @@
   <string name="identity_field_city_title">Plaats</string>
   <string name="identity_field_state_or_province_title">Provincie</string>
   <string name="identity_field_country_or_region_title">Land of regio</string>
-  <string name="identity_field_social_security_number_title">Burgerservicenummer</string>
+  <string name="identity_field_social_security_number_title">Burgerservicenummer (Rijksregisternummer)</string>
   <string name="identity_field_passport_number_title">Paspoortnummer</string>
   <string name="identity_field_license_number_title">Licentienummer</string>
   <string name="identity_field_website_title">Website</string>
@@ -152,7 +152,7 @@
   <string name="identity_section_address_details">Adresgegevens</string>
   <string name="identity_section_contact_details">Contactgegevens</string>
   <string name="identity_section_work_details">Werk gegevens</string>
-  <string name="identity_add_more_fields">Add more</string>
+  <string name="identity_add_more_fields">Add another field</string>
   <string name="identity_bottomsheet_add_field">Add field</string>
   <string name="create_identity_init_error">Problem retrieving identity details</string>
   <string name="create_identity_item_creation_error">Could not create identity</string>

@@ -45,6 +45,7 @@
   <string name="alias_copied_to_clipboard">ფსევდონიმი დაკოპირდა</string>
   <string name="note_copied_to_clipboard">შენიშვნა დაკოპირდა</string>
   <string name="full_name_copied_to_clipboard">სრული სახელი დაკოპირდა</string>
+  <string name="email_copied_to_clipboard">ელფოსტის მისამართი დაკოპირდა</string>
   <string name="username_copied_to_clipboard">მომხმარებლის სახელი დაკოპირდა</string>
   <string name="password_copied_to_clipboard">პაროლი დაკოპირდა</string>
   <string name="credit_card_number_copied_to_clipboard">საკრედიტო ბარათის ნომერი დაკოპირდა</string>

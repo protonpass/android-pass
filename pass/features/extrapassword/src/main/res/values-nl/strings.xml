@@ -29,7 +29,7 @@
   <string name="info_extra_password_body">Protect Proton Pass with an extra password.</string>
   <string name="info_extra_password_button">Set extra password</string>
   <string name="configure_extra_password_cannot_be_blank">Password cannot be blank</string>
-  <string name="configure_extra_password_password_too_short">Wachtwoord is te kort</string>
+  <string name="configure_extra_password_password_too_short">Extra password must have at least 8 characters</string>
   <string name="confirm_extra_password_title">Set extra password</string>
   <string name="confirm_extra_password_body">You will be logged out and will have to log in again on all of your other devices.</string>
   <string name="confirm_extra_password_error">Could not set extra password</string>

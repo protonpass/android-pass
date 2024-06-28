@@ -29,7 +29,7 @@
   <string name="info_extra_password_body">Protégez Proton Pass avec un mot de passe supplémentaire.</string>
   <string name="info_extra_password_button">Définissez un mot de passe supplémentaire</string>
   <string name="configure_extra_password_cannot_be_blank">Le mot de passe ne peut pas être vide.</string>
-  <string name="configure_extra_password_password_too_short">Le mot de passe est trop court.</string>
+  <string name="configure_extra_password_password_too_short">Le mot de passe supplémentaire doit comporter au moins 8 caractères.</string>
   <string name="confirm_extra_password_title">Définir un mot de passe supplémentaire</string>
   <string name="confirm_extra_password_body">Vous serez déconnecté et vous devrez vous connecter à nouveau sur tous vos autres appareils.</string>
   <string name="confirm_extra_password_error">Le mot de passe supplémentaire n\'a pas pu être configuré.</string>

@@ -14,7 +14,7 @@
   <string name="account_manage_subscription">Hantera prenumeration</string>
   <string name="account_get_user_info_error">Kunde inte hämta användarinformationen</string>
   <string name="manage_subscription_icon_content_description">Knapp för “Hantera prenumeration“</string>
-  <string name="account_settings_list_item_password_header">Lösenordshantering</string>
+  <string name="account_settings_list_item_password_header">Ändra lösenord</string>
   <string name="account_settings_list_item_recovery_header">E-post för återställning</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Inte inställd</string>
   <string name="account_settings_list_item_password_hint_grace">Lösenordsåterställning väntar</string>

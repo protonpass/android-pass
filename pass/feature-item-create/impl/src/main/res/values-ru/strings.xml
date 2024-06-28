@@ -9,12 +9,12 @@
   <string name="action_note">Заметка</string>
   <string name="action_credit_card">Кредитная карта</string>
   <string name="action_password">Пароль</string>
-  <string name="action_identity">Identity</string>
+  <string name="action_identity">Личные данные</string>
   <string name="item_type_login_description" comment="Subtitle of the Item Type LOGIN in the Create new item bottomsheet">Добавить данные для входа в приложение или на сайт</string>
   <string name="item_type_alias_description" comment="Subtitle of the Item Type ALIAS in the Create new item bottomsheet">Получите псевдоним электронной почты для использования в новых приложениях</string>
   <string name="item_type_note_description" comment="Subtitle of the Item Type NOTE in the Create new item bottomsheet">Запишите PIN-код, код или заметку для себя</string>
   <string name="item_type_credit_card_description" comment="Subtitle of the Item Type CREDIT CARD in the Create new item bottomsheet">Безопасно сохранить платежную информацию</string>
-  <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Fill in your personal data</string>
+  <string name="item_type_identity_description" comment="Subtitle of the Item Type IDENTITY in the Create new item bottomsheet">Заполните ваши личные данные</string>
   <string name="item_type_password_description" comment="Subtitle of the Item Type PASSWORD in the Create new item bottomsheet">Сгенерировать надежный пароль</string>
   <!-- Create Login -->
   <string name="field_email_title">Адрес электронной почты</string>
@@ -114,7 +114,7 @@
   <string name="identity_field_passport_number_title">Номер паспорта</string>
   <string name="identity_field_license_number_title">Номер лицензии</string>
   <string name="identity_field_website_title">Веб-сайт</string>
-  <string name="identity_field_xhandle_title">X handle</string>
+  <string name="identity_field_xhandle_title">Дескриптор Х</string>
   <string name="identity_field_company_title">Компания</string>
   <string name="identity_field_job_title_title">Должность</string>
   <string name="identity_field_first_name_title">Имя</string>
@@ -147,25 +147,25 @@
   <string name="identity_add_field_personal_website">URL личного веб-сайта</string>
   <string name="identity_add_field_work_phone_number">Рабочий номер телефона</string>
   <string name="identity_add_field_work_email_address">Рабочий адрес электронной почты</string>
-  <string name="identity_add_field_custom_field">Custom field</string>
+  <string name="identity_add_field_custom_field">Пользовательское поле</string>
   <string name="identity_section_personal_details">Личная информация</string>
   <string name="identity_section_address_details">Информация о адресе</string>
   <string name="identity_section_contact_details">Информация контакта</string>
   <string name="identity_section_work_details">Информация о работе</string>
-  <string name="identity_add_more_fields">Добавить еще</string>
+  <string name="identity_add_more_fields">Add another field</string>
   <string name="identity_bottomsheet_add_field">Добавить поле</string>
-  <string name="create_identity_init_error">Problem retrieving identity details</string>
-  <string name="create_identity_item_creation_error">Could not create identity</string>
-  <string name="create_identity_item_creation_success">Identity created</string>
+  <string name="create_identity_init_error">Проблема с получением информации о личных данных</string>
+  <string name="create_identity_item_creation_error">Не удалось создать личные данные</string>
+  <string name="create_identity_item_creation_success">Личные данные созданы</string>
   <string name="update_identity_item_creation_success">Личные данные обновлены</string>
-  <string name="update_identity_item_creation_error">Could not update identity</string>
+  <string name="update_identity_item_creation_error">Не удалось обновить личные данные</string>
   <!--  Common create items  -->
   <string name="title_create">Создать</string>
   <string name="changes_saved">Изменения сохранены</string>
   <!--  TOTP  -->
   <string name="totp_create_login_field_title">Секретный ключ двухфакторной аутентификации (TOTP)</string>
-  <string name="totp_create_login_field_invalid">Invalid 2FA secret key (TOTP)</string>
-  <string name="totp_create_login_field_placeholder">Add 2FA secret key (TOTP)</string>
+  <string name="totp_create_login_field_invalid">Недействительный секретный ключ двухфакторной аутентификации (TOTP)</string>
+  <string name="totp_create_login_field_placeholder">Добавить секретный ключ двухфакторной аутентификации (TOTP)</string>
   <string name="close_scree_icon_content_description">Кнопка закрытия экрана</string>
   <string name="totp_paste_code_action">Вставить код</string>
   <string name="totp_scan_code_action">Сканировать код</string>
@@ -179,7 +179,7 @@
   <string name="select_suffix_upgrade_for_custom_domains">Улучшите для своих доменов</string>
   <string name="create_alias_content_limit_banner">Вы достигли лимита на количество псевдонимов, которые можно создать. Создавайте неограниченное количество псевдонимов, улучшив свою подписку.</string>
   <string name="snackbar_update_app_to_update_item" comment="This message will appear to users that try to update an item that needs a newer version of the app to do so">Для редактирования этого элемента приложение должно быть обновлено</string>
-  <string name="remove_passkey_dialog_title">Remove this passkey?</string>
-  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">You are about to remove the passkey for user \'%1$s\' for \'%2$s\'. Are you sure?</string>
+  <string name="remove_passkey_dialog_title">Удалить этот ключ доступа?</string>
+  <string name="remove_passkey_dialog_body" comment="Body of the dialog that asks the user if they want to remove the passkey for an item. Placeholder 1 is the username (such as my_user). Placeholder 2 is the domain (such as google.com)">Вы собираетесь удалить ключ доступа для пользователя \'%1$s\' для \'%2$s\'. Вы уверены?</string>
   <string name="add_a_custom_section">Добавить пользовательский раздел</string>
 </resources>

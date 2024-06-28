@@ -39,6 +39,7 @@
   <string name="action_cancel">Cancelar</string>
   <string name="action_continue">Continuar</string>
   <string name="action_retry">Reintentar</string>
+  <string name="action_edit">Editar</string>
   <!-- Empty list -->
   <string name="empty_list_title">Añada el primer elemento</string>
   <string name="empty_search_results_title">No se encontraron resultados</string>
@@ -126,6 +127,41 @@
   <string name="item_details_login_section_password_title">Contraseña</string>
   <string name="item_details_login_section_primary_totp_title">Token 2FA (TOTP)</string>
   <string name="item_details_login_section_websites_title">Sitios web</string>
+  <string name="item_details_identity_section_personal_title">Detalles personales</string>
+  <string name="item_details_identity_section_personal_first_name_title">Nombre</string>
+  <string name="item_details_identity_section_personal_middle_name_title">Segundo nombre</string>
+  <string name="item_details_identity_section_personal_last_name_title">Apellido</string>
+  <string name="item_details_identity_section_personal_full_name_title">Nombre completo</string>
+  <string name="item_details_identity_section_personal_email_title">Correo electrónico</string>
+  <string name="item_details_identity_section_personal_gender_title">Género</string>
+  <string name="item_details_identity_section_personal_phone_title">Número telefónico</string>
+  <string name="item_details_identity_section_personal_birthday_title">Cumpleaños</string>
+  <string name="item_details_identity_section_address_title">Detalles de la dirección</string>
+  <string name="item_details_identity_section_address_street_address_title">Dirección de calle, apartado postal</string>
+  <string name="item_details_identity_section_address_floor_title">Piso</string>
+  <string name="item_details_identity_section_address_city_title">Ciudad</string>
+  <string name="item_details_identity_section_address_zip_or_postal_code_title">Código postal</string>
+  <string name="item_details_identity_section_address_state_or_province_title">Estado o provincia</string>
+  <string name="item_details_identity_section_address_county_title">Condado</string>
+  <string name="item_details_identity_section_address_country_or_region_title">País o región</string>
+  <string name="item_details_identity_section_contact_title">Detalles de contacto</string>
+  <string name="item_details_identity_section_contact_social_security_number_title">Número de seguro social</string>
+  <string name="item_details_identity_section_contact_passport_number_title">Número de pasaporte</string>
+  <string name="item_details_identity_section_contact_license_number_title">Número de licencia</string>
+  <string name="item_details_identity_section_contact_website_title">Sitio web</string>
+  <string name="item_details_identity_section_contact_x_handle_title">Usuario de X</string>
+  <string name="item_details_identity_section_contact_secondary_phone_number_title">Número telefónico secundario</string>
+  <string name="item_details_identity_section_contact_linkedin_title">LinkedIn</string>
+  <string name="item_details_identity_section_contact_reddit_title">Reddit</string>
+  <string name="item_details_identity_section_contact_facebook_title">Facebook</string>
+  <string name="item_details_identity_section_contact_yahoo_title">Yahoo!</string>
+  <string name="item_details_identity_section_contact_instagram_title">Instagram</string>
+  <string name="item_details_identity_section_work_title">Detalles de trabajo</string>
+  <string name="item_details_identity_section_work_company_title">Compañía</string>
+  <string name="item_details_identity_section_work_occupation_title">Ocupación</string>
+  <string name="item_details_identity_section_work_email_title">Correo electrónico laboral</string>
+  <string name="item_details_identity_section_work_phone_number_title">Número telefónico laboral</string>
+  <string name="item_details_identity_section_work_personal_website_title">Sitio web personal</string>
   <string name="item_details_shared_section_note_title">Nota</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">La versión de la aplicación ya no es compatible, actualice la aplicación.</string>
   <!-- Passkeys -->

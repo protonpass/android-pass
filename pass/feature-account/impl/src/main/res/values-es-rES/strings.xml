@@ -14,7 +14,7 @@
   <string name="account_manage_subscription">Gestionar la suscripción</string>
   <string name="account_get_user_info_error">No hemos podido recuperar la información del usuario.</string>
   <string name="manage_subscription_icon_content_description">Botón de gestión de la suscripción</string>
-  <string name="account_settings_list_item_password_header">Gestión de contraseñas</string>
+  <string name="account_settings_list_item_password_header">Cambiar la contraseña</string>
   <string name="account_settings_list_item_recovery_header">Correo electrónico de recuperación</string>
   <string name="account_settings_list_item_recovery_hint_not_set">No establecido</string>
   <string name="account_settings_list_item_password_hint_grace">Restablecimiento de contraseña pendiente</string>

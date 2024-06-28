@@ -11,10 +11,10 @@
   <string name="account_sign_out_icon_content_description">Botó de tancament de sessió</string>
   <string name="account_manage_account">Gestiona el compte</string>
   <string name="account_manage_account_icon_content_description">Botó de gestió del compte</string>
-  <string name="account_manage_subscription">Gestiona la subscripció</string>
+  <string name="account_manage_subscription">Gestioneu la subscripció</string>
   <string name="account_get_user_info_error">No s\'ha pogut recuperar la informació de l\'usuari</string>
   <string name="manage_subscription_icon_content_description">Botó de gestió de la subscripció</string>
-  <string name="account_settings_list_item_password_header">Gestió de contrasenyes</string>
+  <string name="account_settings_list_item_password_header">Canvia la contrasenya</string>
   <string name="account_settings_list_item_recovery_header">Correu electrònic de recuperació</string>
   <string name="account_settings_list_item_recovery_hint_not_set">No s\'ha configurat</string>
   <string name="account_settings_list_item_password_hint_grace">El restabliment de la contrasenya està pendent</string>

@@ -29,7 +29,7 @@
   <string name="info_extra_password_body">Protejați Proton Pass cu o parolă suplimentară.</string>
   <string name="info_extra_password_button">Setare parolă suplimentară</string>
   <string name="configure_extra_password_cannot_be_blank">Parola nu poate fi goală.</string>
-  <string name="configure_extra_password_password_too_short">Parolă prea scurtă</string>
+  <string name="configure_extra_password_password_too_short">Extra password must have at least 8 characters</string>
   <string name="confirm_extra_password_title">Setare parolă suplimentară</string>
   <string name="confirm_extra_password_body">Contul se va deconecta și va trebui să vă reconectați pe toate celelalte dispozitive.</string>
   <string name="confirm_extra_password_error">Nu s-a putut seta parola suplimentară.</string>

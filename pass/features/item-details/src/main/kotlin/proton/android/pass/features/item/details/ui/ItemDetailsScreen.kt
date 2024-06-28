@@ -79,9 +79,14 @@ fun ItemDetailsScreen(
                     itemId = uiEvent.itemId
                 ).also(onNavigated)
 
-                is ItemDetailsUiEvent.OnShareClicked -> ItemDetailsNavDestination.ItemSharing(
+                is ItemDetailsUiEvent.OnShareItemClicked -> ItemDetailsNavDestination.ItemSharing(
                     shareId = uiEvent.shareId,
                     itemId = uiEvent.itemId
+                ).also(onNavigated)
+
+                is ItemDetailsUiEvent.OnSharedVaultClicked -> ItemDetailsNavDestination.ManageSharedVault(
+                    sharedVaultId = uiEvent.sharedVaultId,
+                    itemCategory = uiEvent.itemCategory
                 ).also(onNavigated)
             }
         }

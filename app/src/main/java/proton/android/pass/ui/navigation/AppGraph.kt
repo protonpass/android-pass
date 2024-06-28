@@ -1200,6 +1200,14 @@ fun NavGraphBuilder.appGraph(
                         itemId = itemDetailsNavDestination.itemId
                     )
                 )
+
+                is ItemDetailsNavDestination.ItemSharing -> appNavigator.navigate(
+                    destination = ShareFromItem,
+                    route = ShareFromItem.buildRoute(
+                        shareId = itemDetailsNavDestination.shareId,
+                        itemId = itemDetailsNavDestination.itemId
+                    )
+                )
             }
         }
     )

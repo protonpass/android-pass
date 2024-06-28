@@ -22,6 +22,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.ButtonElevation
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -32,7 +34,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -42,18 +43,20 @@ import proton.android.pass.composecomponents.impl.R
 @Composable
 fun UpgradeButton(
     modifier: Modifier = Modifier,
+    onUpgradeClick: () -> Unit,
     backgroundColor: Color = PassTheme.colors.interactionNormMinor2,
     contentColor: Color = PassTheme.colors.interactionNormMajor2,
-    onUpgradeClick: () -> Unit
+    elevation: ButtonElevation = ButtonDefaults.elevation()
 ) {
     CircleButton(
         modifier = modifier,
         contentPadding = PaddingValues(
             horizontal = Spacing.medium,
-            vertical = 10.dp
+            vertical = Spacing.mediumSmall
         ),
         color = backgroundColor,
-        onClick = onUpgradeClick
+        onClick = onUpgradeClick,
+        elevation = elevation
     ) {
         Icon(
             modifier = Modifier.size(size = Spacing.medium),
@@ -77,7 +80,9 @@ fun UpgradeButton(
 internal fun UpgradeButtonPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            UpgradeButton {}
+            UpgradeButton(
+                onUpgradeClick = {}
+            )
         }
     }
 }

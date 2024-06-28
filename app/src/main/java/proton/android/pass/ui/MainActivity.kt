@@ -45,6 +45,7 @@ import me.proton.core.notification.presentation.deeplink.onActivityCreate
 import proton.android.pass.autofill.di.UserPreferenceEntryPoint
 import proton.android.pass.commonui.api.setSecureMode
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.AllowScreenshotsPreference
 import proton.android.pass.ui.launcher.LauncherViewModel
 import proton.android.pass.ui.launcher.LauncherViewModel.State.AccountNeeded
@@ -58,6 +59,9 @@ class MainActivity : FragmentActivity() {
 
     @Inject
     lateinit var deeplinkManager: DeeplinkManager
+
+    @Inject
+    lateinit var snackbarDispatcher: SnackbarDispatcher
 
     private val launcherViewModel: LauncherViewModel by viewModels()
 
@@ -114,7 +118,10 @@ class MainActivity : FragmentActivity() {
                                 is AppNavigation.Finish -> finish()
                                 is AppNavigation.SignOut ->
                                     SignOutDialogActivity.start(this, it.userId)
-                                is AppNavigation.ForceSignOut -> launcherViewModel.disable()
+                                is AppNavigation.ForceSignOut -> {
+                                    launcherViewModel.disable()
+                                    snackbarDispatcher.reset()
+                                }
                                 is AppNavigation.Report -> launcherViewModel.report()
                                 is AppNavigation.Subscription -> launcherViewModel.subscription()
                                 is AppNavigation.Upgrade -> launcherViewModel.upgrade()

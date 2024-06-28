@@ -46,4 +46,9 @@ sealed interface ItemDetailsNavDestination {
         val itemId: ItemId
     ) : ItemDetailsNavDestination
 
+    data class ManageSharedVault(
+        val sharedVaultId: ShareId,
+        val itemCategory: ItemCategory
+    ) : ItemDetailsNavDestination
+
 }

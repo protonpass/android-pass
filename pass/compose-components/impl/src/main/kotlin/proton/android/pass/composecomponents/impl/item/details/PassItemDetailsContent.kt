@@ -65,7 +65,8 @@ fun PassItemDetailsContent(
                         vertical = Spacing.small
                     ),
                 itemDetailState = itemDetailState,
-                itemColors = itemColors
+                itemColors = itemColors,
+                onEvent = onEvent
             )
 
             PassItemDetailSections(

@@ -21,8 +21,10 @@ package proton.android.pass.composecomponents.impl.item.details
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.domain.HiddenState
+import proton.android.pass.domain.ShareId
 
 sealed interface PassItemDetailsUiEvent {
+
     data class OnSectionClick(
         val section: String,
         val field: ItemDetailsFieldType.Plain
@@ -46,5 +48,8 @@ sealed interface PassItemDetailsUiEvent {
     value class OnPasskeyClick(val passkey: UIPasskeyContent) : PassItemDetailsUiEvent
 
     data object OnViewItemHistoryClick : PassItemDetailsUiEvent
+
+    @JvmInline
+    value class OnSharedVaultClick(val sharedVaultId: ShareId) : PassItemDetailsUiEvent
 
 }

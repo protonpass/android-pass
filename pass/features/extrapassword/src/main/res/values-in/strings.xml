@@ -29,7 +29,7 @@
   <string name="info_extra_password_body">Lindungi Proton Pass dengan kata sandi tambahan.</string>
   <string name="info_extra_password_button">Tetapkan kata sandi tambahan</string>
   <string name="configure_extra_password_cannot_be_blank">Kata sandi tidak boleh kosong</string>
-  <string name="configure_extra_password_password_too_short">Kata sandi terlalu pendek</string>
+  <string name="configure_extra_password_password_too_short">Kata sandi tambahan harus mengandung setidaknya 8 karakter</string>
   <string name="confirm_extra_password_title">Tetapkan kata sandi tambahan</string>
   <string name="confirm_extra_password_body">Anda akan dikeluarkan dari akun dan perlu untuk masuk kembali pada seluruh perangkat lainnya yang Anda miliki</string>
   <string name="confirm_extra_password_error">Kata sandi tambahan tidak dapat ditetapkan</string>

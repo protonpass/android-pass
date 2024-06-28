@@ -23,7 +23,7 @@
   <string name="bottomsheet_cancel_button">Cancel·la</string>
   <string name="bottomsheet_move_to_trash">Mou a la paperera</string>
   <string name="bottomsheet_pin_item">Ancora</string>
-  <string name="bottomsheet_unpin_item">Desancora</string>
+  <string name="bottomsheet_unpin_item">No fixis</string>
   <string name="bottomsheet_view_item_history">Visualitza l\'historial</string>
   <string name="bottomsheet_monitor_exclude">Exclou de la supervisió</string>
   <string name="bottomsheet_monitor_include">Incloure en la supervisió</string>
@@ -39,6 +39,7 @@
   <string name="action_cancel">Cancel·la</string>
   <string name="action_continue">Continua</string>
   <string name="action_retry">Torna a provar</string>
+  <string name="action_edit">Editar</string>
   <!-- Empty list -->
   <string name="empty_list_title">Afegeix el primer element</string>
   <string name="empty_search_results_title">No s\'han trobat resultats</string>
@@ -126,14 +127,49 @@
   <string name="item_details_login_section_password_title">Contrasenya</string>
   <string name="item_details_login_section_primary_totp_title">Testimoni d\'A2F (TOTP)</string>
   <string name="item_details_login_section_websites_title">Llocs web</string>
+  <string name="item_details_identity_section_personal_title">Personal details</string>
+  <string name="item_details_identity_section_personal_first_name_title">First name</string>
+  <string name="item_details_identity_section_personal_middle_name_title">Middle name</string>
+  <string name="item_details_identity_section_personal_last_name_title">Last name</string>
+  <string name="item_details_identity_section_personal_full_name_title">Full name</string>
+  <string name="item_details_identity_section_personal_email_title">Email address</string>
+  <string name="item_details_identity_section_personal_gender_title">Gender</string>
+  <string name="item_details_identity_section_personal_phone_title">Phone number</string>
+  <string name="item_details_identity_section_personal_birthday_title">Birthday</string>
+  <string name="item_details_identity_section_address_title">Address details</string>
+  <string name="item_details_identity_section_address_street_address_title">Street address, P.O. box</string>
+  <string name="item_details_identity_section_address_floor_title">Floor</string>
+  <string name="item_details_identity_section_address_city_title">City</string>
+  <string name="item_details_identity_section_address_zip_or_postal_code_title">ZIP or postal code</string>
+  <string name="item_details_identity_section_address_state_or_province_title">State or province</string>
+  <string name="item_details_identity_section_address_county_title">County</string>
+  <string name="item_details_identity_section_address_country_or_region_title">Country or region</string>
+  <string name="item_details_identity_section_contact_title">Contact details</string>
+  <string name="item_details_identity_section_contact_social_security_number_title">Social security number</string>
+  <string name="item_details_identity_section_contact_passport_number_title">Passport number</string>
+  <string name="item_details_identity_section_contact_license_number_title">License number</string>
+  <string name="item_details_identity_section_contact_website_title">Website</string>
+  <string name="item_details_identity_section_contact_x_handle_title">X-Handle</string>
+  <string name="item_details_identity_section_contact_secondary_phone_number_title">Secondary phone number</string>
+  <string name="item_details_identity_section_contact_linkedin_title">LinkedIn</string>
+  <string name="item_details_identity_section_contact_reddit_title">Reddit</string>
+  <string name="item_details_identity_section_contact_facebook_title">Facebook</string>
+  <string name="item_details_identity_section_contact_yahoo_title">Yahoo</string>
+  <string name="item_details_identity_section_contact_instagram_title">Instagram</string>
+  <string name="item_details_identity_section_work_title">Work details</string>
+  <string name="item_details_identity_section_work_company_title">Company</string>
+  <string name="item_details_identity_section_work_occupation_title">Occupation</string>
+  <string name="item_details_identity_section_work_email_title">Work email address</string>
+  <string name="item_details_identity_section_work_phone_number_title">Work phone number</string>
+  <string name="item_details_identity_section_work_personal_website_title">Personal website</string>
   <string name="item_details_shared_section_note_title">Nota</string>
-  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">The app version is not supported anymore, please update your app.</string>
+  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">La versió de l\'aplicació ja no és compatible. Actualitzeu la vostra aplicació.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Clau d\'accés</string>
   <!-- Upgrade -->
-  <string name="dialog_upgrade_plan_title">Voleu actualitzar el pla?</string>
-  <string name="dialog_upgrade_plan_message">This feature is not available for free tier users. If you want to enjoy this along with other cool features, upgrade your plan and give it a try!</string>
-  <string name="dialog_upgrade_plan_action_confirm">Actualitza</string>
+  <string name="dialog_upgrade_plan_title">Voleu millorar el pla?</string>
+  <string name="dialog_upgrade_plan_message">Aquesta funció no està disponible per als usuaris de nivell gratuït. Si voleu gaudir-ne juntament amb altres funcions interessants, milloreu el vostre pla i proveu-ho!</string>
+  <string name="dialog_upgrade_plan_action_confirm">Millora</string>
   <string name="dialog_upgrade_plan_action_cancel">Ara no</string>
   <!-- Words -->
   <string name="email_address">Adreça de correu electrònic</string>

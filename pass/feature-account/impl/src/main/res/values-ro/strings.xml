@@ -14,7 +14,7 @@
   <string name="account_manage_subscription">Gestionare abonament</string>
   <string name="account_get_user_info_error">Nu s-au putut prelua informațiile utilizatorului.</string>
   <string name="manage_subscription_icon_content_description">Buton gestionare abonament</string>
-  <string name="account_settings_list_item_password_header">Gestionare parole</string>
+  <string name="account_settings_list_item_password_header">Schimbare parolă</string>
   <string name="account_settings_list_item_recovery_header">E-mail de recuperare</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Nesetat</string>
   <string name="account_settings_list_item_password_hint_grace">Resetarea parolei este în așteptare.</string>

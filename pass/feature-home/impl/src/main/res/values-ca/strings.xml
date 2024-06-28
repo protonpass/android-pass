@@ -4,7 +4,7 @@
   <string name="home_empty_vault_title">La vostra caixa forta està buida</string>
   <string name="home_empty_vault_subtitle">Comenceu creant el primer element.</string>
   <string name="home_empty_read_only_vault_title">Aquesta caixa forta està buida.</string>
-  <string name="home_empty_read_only_vault_subtitle">You can\'t add items to a read-only vault.</string>
+  <string name="home_empty_read_only_vault_subtitle">No podeu afegir elements a una caixa forta només de lectura.</string>
   <string name="home_empty_vault_create_login">Crea un inici de sessió</string>
   <string name="home_empty_vault_create_alias">Crea un àlies hide-my-email</string>
   <string name="home_empty_vault_create_note">Crea una nota</string>
@@ -25,7 +25,7 @@
   <string name="home_autofill_banner_text">Un toc i -presto!- el vostre nom d\'usuari i contrasenya s\'omplen a l\'instant.</string>
   <string name="home_autofill_banner_settings">Activa l\'emplenament automàtic</string>
   <string name="home_trial_banner_title">El nostre regal de benvinguda per a vostè.</string>
-  <string name="home_trial_banner_text">7 days to try premium features for free. Only during your first week of Proton Pass.</string>
+  <string name="home_trial_banner_text">7 dies per provar les funcions prèmium de manera gratuïta. Només durant la primera setmana de Proton Pass.</string>
   <string name="home_trial_banner_settings">Més informació ›</string>
   <string name="home_notification_permission_banner_title">Obteniu actualitzacions importants</string>
   <string name="home_notification_permission_banner_text">Habiliteu les notificacions automàtiques per a rebre una notificació quan altres persones comparteixin una caixa forta.</string>
@@ -35,7 +35,7 @@
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Copia la contrasenya</string>
   <string name="bottomsheet_copy_username">Copia el nom d\'usuari</string>
-  <string name="bottomsheet_copy_email">Copia l\'adreça del correu electrònic</string>
+  <string name="bottomsheet_copy_email">Copia l\'adreça de correu electrònic</string>
   <string name="bottomsheet_copy_number">Copia el número</string>
   <string name="bottomsheet_copy_cvv">Copia el codi de seguretat</string>
   <string name="bottomsheet_copy_note">Copia la nota</string>
@@ -45,6 +45,7 @@
   <string name="alias_copied_to_clipboard">S\'ha copiat l\'àlies</string>
   <string name="note_copied_to_clipboard">S\'ha copiat la nota.</string>
   <string name="full_name_copied_to_clipboard">S\'ha copiat el nom complet.</string>
+  <string name="email_copied_to_clipboard">S\'ha copiat l\'adreça de correu electrònic.</string>
   <string name="username_copied_to_clipboard">S\'ha copiat el nom d\'usuari</string>
   <string name="password_copied_to_clipboard">S\'ha copiat la contrasenya</string>
   <string name="credit_card_number_copied_to_clipboard">S\'ha copiat el número de la targeta de crèdit</string>
@@ -101,24 +102,24 @@
     <item quantity="other">Voleu restaurar %d elements?</item>
   </plurals>
   <plurals name="alert_confirm_restore_items_message">
-    <item quantity="one">Are you sure you want to restore the trashed item?</item>
-    <item quantity="other">Are you sure you want to restore the %d trashed items?</item>
+    <item quantity="one">Esteu segur que voleu restaurar l\'element de la paperera?</item>
+    <item quantity="other">Esteu segur que voleu restaurar els %d elements de la paperera?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_title">
     <item quantity="one">Voleu moure %d element a la paperera?</item>
     <item quantity="other">Voleu moure %d elements a la paperera?</item>
   </plurals>
   <plurals name="alert_confirm_trash_items_message">
-    <item quantity="one">Are you sure you want to move the item to the trash?</item>
-    <item quantity="other">Are you sure you want to move %d items to the trash?</item>
+    <item quantity="one">Esteu segur que voleu moure l\'element a la paperera?</item>
+    <item quantity="other">Esteu segur que voleu moure %d elements a la paperera?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_title">
     <item quantity="one">Voleu suprimir permanentment %d element?</item>
     <item quantity="other">Voleu suprimir permanentment %d elements?</item>
   </plurals>
   <plurals name="alert_confirm_delete_items_message">
-    <item quantity="one">Are you sure you want to delete the item? This action is irreversible</item>
-    <item quantity="other">Are you sure you want to delete the %d items? This action is irreversible</item>
+    <item quantity="one">Esteu segur que voleu eliminar l\'element? Aquesta acció és irreversible</item>
+    <item quantity="other">Esteu segur que voleu eliminar els %d elements? Aquesta acció és irreversible</item>
   </plurals>
   <!-- Recent search -->
   <string name="recent_search_header_count">Cerques recents</string>
@@ -127,7 +128,7 @@
   <!-- Pinning -->
   <string name="home_snackbar_item_pinned_success">S\'ha ancorat l\'element.</string>
   <string name="home_snackbar_item_pinned_error">S\'ha produït un error en ancorar aquest element.</string>
-  <string name="home_snackbar_item_unpinned_success">S\'ha ancorat l\'element.</string>
+  <string name="home_snackbar_item_unpinned_success">S\'ha fixat l\'element.</string>
   <string name="home_snackbar_item_unpinned_error">S\'ha produït un error en desancorar aquest element.</string>
   <string name="home_snackbar_items_pinned_success">S\'ha ancorat l\'element.</string>
   <string name="home_snackbar_items_pinned_partial_success">S\'ha produït un error en fixar alguns elements</string>

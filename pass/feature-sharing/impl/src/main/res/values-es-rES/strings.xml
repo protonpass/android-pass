@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="share_continue">Continuar</string>
-  <string name="sharing_can_view">Visualizador</string>
+  <string name="sharing_can_view">Lector</string>
   <string name="sharing_can_edit">Editor</string>
   <string name="sharing_can_manage">Administrador</string>
   <string name="sharing_can_view_description">Permite ver los elementos en esta caja fuerte.</string>

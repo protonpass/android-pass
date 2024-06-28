@@ -45,6 +45,7 @@
   <string name="alias_copied_to_clipboard">Alias copiado</string>
   <string name="note_copied_to_clipboard">Nota copiada</string>
   <string name="full_name_copied_to_clipboard">El nombre completo ha sido copiado.</string>
+  <string name="email_copied_to_clipboard">Dirección de correo electrónico copiada</string>
   <string name="username_copied_to_clipboard">Nombre de usuario copiado</string>
   <string name="password_copied_to_clipboard">Contraseña copiada</string>
   <string name="credit_card_number_copied_to_clipboard">Número de tarjeta de crédito copiado</string>

@@ -152,7 +152,7 @@
   <string name="identity_section_address_details">Adressuppgifter</string>
   <string name="identity_section_contact_details">Kontaktdetaljer</string>
   <string name="identity_section_work_details">Arbetsdetaljer</string>
-  <string name="identity_add_more_fields">Lägg till fler</string>
+  <string name="identity_add_more_fields">Lägg till ett annat fält</string>
   <string name="identity_bottomsheet_add_field">Lägg till fält</string>
   <string name="create_identity_init_error">Problem att hämta identitetsdetaljer</string>
   <string name="create_identity_item_creation_error">Kunde inte skapa identitet</string>

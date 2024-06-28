@@ -26,6 +26,7 @@
   <string name="upsell_paid_feature_authenticator">Integrierter 2FA-Authentifikator</string>
   <string name="upsell_paid_feature_unlimited_aliases">Unbegrenzte hide-my-email-Aliasse</string>
   <string name="upsell_paid_feature_vault_sharing">Tresor teilen (bis zu 10 Personen)</string>
+  <string name="upsell_paid_feature_secure_links">Sichere Links</string>
   <string name="upsell_paid_feature_authenticator_essential">2FA für die Organisation erforderlich</string>
   <string name="upsell_paid_feature_sso_essential">SSO-Integration (demnächst verfügbar)</string>
   <string name="upsell_button_upgrade">Pass Plus holen</string>

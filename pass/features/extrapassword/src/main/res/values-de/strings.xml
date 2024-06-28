@@ -25,13 +25,13 @@
   <string name="configure_extra_password_warning">Achtung! Wenn du dieses Passwort verlierst, kannst du nicht mehr auf dein Pass-Konto zugreifen.</string>
   <string name="configure_extra_password_mismatch">Die Passwörter stimmen nicht überein</string>
   <string name="extra_password_options_remove">Entfernen</string>
-  <string name="info_extra_password_title">Extra password</string>
+  <string name="info_extra_password_title">Zusätzliches Passwort</string>
   <string name="info_extra_password_body">Schütze Proton Pass mit einem zusätzlichen Passwort.</string>
   <string name="info_extra_password_button">Zusätzliches Passwort festlegen</string>
-  <string name="configure_extra_password_cannot_be_blank">Password cannot be blank</string>
-  <string name="configure_extra_password_password_too_short">Passwort zu kurz</string>
+  <string name="configure_extra_password_cannot_be_blank">Passwort darf nicht leer sein</string>
+  <string name="configure_extra_password_password_too_short">Extra password must have at least 8 characters</string>
   <string name="confirm_extra_password_title">Zusätzliches Passwort festlegen</string>
   <string name="confirm_extra_password_body">Du wirst abgemeldet und musst dich auf allen anderen Geräten erneut anmelden.</string>
-  <string name="confirm_extra_password_error">Could not set extra password</string>
+  <string name="confirm_extra_password_error">Fehler beim Festlegen des zusätzlichen Passworts.</string>
   <string name="confirm_extra_password_success">Zusätzliches Passwort festgelegt.</string>
 </resources>

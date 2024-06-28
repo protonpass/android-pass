@@ -32,6 +32,7 @@
   <!--Overview screen-->
   <string name="secure_links_overview_widget_expiration_title">Дзейнічае да:</string>
   <string name="secure_links_overview_widget_max_views_title">Могуць праглядаць:</string>
+  <string name="secure_links_overview_widget_open_times_title">Адкрыта:</string>
   <plurals name="secure_links_overview_widget_max_views_limited">
     <item quantity="one">%d раз</item>
     <item quantity="few">%d разы</item>
@@ -39,17 +40,30 @@
     <item quantity="other">%d разоў</item>
   </plurals>
   <string name="secure_links_overview_widget_max_views_unlimited">Неабмежавана</string>
-  <string name="secure_links_shared_action_copy_link">Скапіяваць спасылку</string>
-  <string name="secure_links_shared_action_share_link">Абагуліць спасылку</string>
   <string name="secure_links_overview_button_view_all_links">Паглядзець усе вашы бяспечныя спасылкі</string>
-  <string name="secure_links_shared_snackbar_message_link_copied">Бяспечная спасылка скапіявана</string>
   <!--List screen-->
   <string name="secure_links_list_title">Бяспечныя спасылкі</string>
+  <string name="secure_links_list_empty_title">Няма бяспечных спасылак</string>
+  <string name="secure_links_list_empty_subtitle">Вы можаце пачаць ствараць бяспечныя спасылкі з параметраў абагульвання падрабязнасцяў элемента</string>
   <string name="secure_links_list_expiration_description">Дзейнічаюць да %s</string>
+  <string name="secure_links_list_expired_description">Пратэрмінавана</string>
   <plurals name="secure_links_list_viewed_times_description">
     <item quantity="one">%d прагляд</item>
     <item quantity="few">%d прагляды</item>
     <item quantity="many">%d праглядаў</item>
     <item quantity="other">%d праглядаў</item>
   </plurals>
+  <string name="secure_links_list_snackbar_message_links_fetch_error">Адбылася памылка падчас атрымання бяспечнай спасылкі</string>
+  <string name="secure_links_list_header_title_inactive">Неактыўныя спасылкі</string>
+  <!--Shared-->
+  <string name="secure_links_shared_action_copy_link">Скапіяваць спасылку</string>
+  <string name="secure_links_shared_action_share_link">Абагуліць спасылку</string>
+  <string name="secure_links_shared_action_delete_link">Выдаліць спасылку</string>
+  <string name="secure_links_shared_action_delete_link_inactive">Выдаліць усе неактыўныя спасылкі</string>
+  <string name="secure_links_shared_action_delete_links_inactive">Выдаліць усе неактыўныя спасылкі</string>
+  <string name="secure_links_shared_snackbar_message_link_copied">Бяспечная спасылка скапіявана</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_canceled">Выдаленне бяспечнай спасылкі скасавана</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_error">Адбылася памылка падчас выдалення бяспечнай спасылкі</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Выдаленне бяспечных спасылак, якія больш не з\'яўляюцца актыўнымі было скасавана.</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">Адбылася памылка падчас выдалення бяспечных спасылак, якія больш не з\'яўляюцца актыўнымі</string>
 </resources>

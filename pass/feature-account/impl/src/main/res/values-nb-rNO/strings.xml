@@ -14,7 +14,7 @@
   <string name="account_manage_subscription">Behandle abonnementet</string>
   <string name="account_get_user_info_error">Kan ikke hente brukerinformasjonen</string>
   <string name="manage_subscription_icon_content_description">Knapp for å behandle abonnement</string>
-  <string name="account_settings_list_item_password_header">Passordhåndtering</string>
+  <string name="account_settings_list_item_password_header">Endre passord</string>
   <string name="account_settings_list_item_recovery_header">E-post for gjenoppretting</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Ikke angitt</string>
   <string name="account_settings_list_item_password_hint_grace">Venter på tilbakestilling av passord</string>

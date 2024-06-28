@@ -39,6 +39,7 @@
   <string name="action_cancel">Ακύρωση</string>
   <string name="action_continue">Συνέχεια</string>
   <string name="action_retry">Δοκιμάστε ξανά</string>
+  <string name="action_edit">Επεξεργασία</string>
   <!-- Empty list -->
   <string name="empty_list_title">Προσθέστε το πρώτο σας στοιχείο</string>
   <string name="empty_search_results_title">Δε βρέθηκε αποτέλεσμα</string>
@@ -126,6 +127,41 @@
   <string name="item_details_login_section_password_title">Κωδικός</string>
   <string name="item_details_login_section_primary_totp_title">Διακριτικό 2FA (TOTP)</string>
   <string name="item_details_login_section_websites_title">Ιστοσελίδες</string>
+  <string name="item_details_identity_section_personal_title">Personal details</string>
+  <string name="item_details_identity_section_personal_first_name_title">First name</string>
+  <string name="item_details_identity_section_personal_middle_name_title">Middle name</string>
+  <string name="item_details_identity_section_personal_last_name_title">Last name</string>
+  <string name="item_details_identity_section_personal_full_name_title">Full name</string>
+  <string name="item_details_identity_section_personal_email_title">Email address</string>
+  <string name="item_details_identity_section_personal_gender_title">Gender</string>
+  <string name="item_details_identity_section_personal_phone_title">Phone number</string>
+  <string name="item_details_identity_section_personal_birthday_title">Birthday</string>
+  <string name="item_details_identity_section_address_title">Address details</string>
+  <string name="item_details_identity_section_address_street_address_title">Street address, P.O. box</string>
+  <string name="item_details_identity_section_address_floor_title">Floor</string>
+  <string name="item_details_identity_section_address_city_title">City</string>
+  <string name="item_details_identity_section_address_zip_or_postal_code_title">ZIP or postal code</string>
+  <string name="item_details_identity_section_address_state_or_province_title">State or province</string>
+  <string name="item_details_identity_section_address_county_title">County</string>
+  <string name="item_details_identity_section_address_country_or_region_title">Country or region</string>
+  <string name="item_details_identity_section_contact_title">Contact details</string>
+  <string name="item_details_identity_section_contact_social_security_number_title">Social security number</string>
+  <string name="item_details_identity_section_contact_passport_number_title">Passport number</string>
+  <string name="item_details_identity_section_contact_license_number_title">License number</string>
+  <string name="item_details_identity_section_contact_website_title">Website</string>
+  <string name="item_details_identity_section_contact_x_handle_title">X-Handle</string>
+  <string name="item_details_identity_section_contact_secondary_phone_number_title">Secondary phone number</string>
+  <string name="item_details_identity_section_contact_linkedin_title">LinkedIn</string>
+  <string name="item_details_identity_section_contact_reddit_title">Reddit</string>
+  <string name="item_details_identity_section_contact_facebook_title">Facebook</string>
+  <string name="item_details_identity_section_contact_yahoo_title">Yahoo</string>
+  <string name="item_details_identity_section_contact_instagram_title">Instagram</string>
+  <string name="item_details_identity_section_work_title">Work details</string>
+  <string name="item_details_identity_section_work_company_title">Company</string>
+  <string name="item_details_identity_section_work_occupation_title">Occupation</string>
+  <string name="item_details_identity_section_work_email_title">Work email address</string>
+  <string name="item_details_identity_section_work_phone_number_title">Work phone number</string>
+  <string name="item_details_identity_section_work_personal_website_title">Personal website</string>
   <string name="item_details_shared_section_note_title">Σημείωση</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Αυτή η έκδοση της εφαρμογής δεν υποστηρίζεται πλέον, παρακαλούμε ενημερώστε την εφαρμογή σας.</string>
   <!-- Passkeys -->

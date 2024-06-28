@@ -39,6 +39,7 @@
   <string name="action_cancel">Avbryt</string>
   <string name="action_continue">Fortsett</string>
   <string name="action_retry">Prøv igjen</string>
+  <string name="action_edit">Rediger</string>
   <!-- Empty list -->
   <string name="empty_list_title">Legg til ditt første element</string>
   <string name="empty_search_results_title">Ingen resultater funnet</string>
@@ -126,6 +127,41 @@
   <string name="item_details_login_section_password_title">Passord</string>
   <string name="item_details_login_section_primary_totp_title">2FA-token (TOTP)</string>
   <string name="item_details_login_section_websites_title">Nettsteder</string>
+  <string name="item_details_identity_section_personal_title">Personopplysninger</string>
+  <string name="item_details_identity_section_personal_first_name_title">Fornavn</string>
+  <string name="item_details_identity_section_personal_middle_name_title">Mellomnavn</string>
+  <string name="item_details_identity_section_personal_last_name_title">Etternavn</string>
+  <string name="item_details_identity_section_personal_full_name_title">Fullt navn</string>
+  <string name="item_details_identity_section_personal_email_title">E-postadresse</string>
+  <string name="item_details_identity_section_personal_gender_title">Kjønn</string>
+  <string name="item_details_identity_section_personal_phone_title">Telefonnummer</string>
+  <string name="item_details_identity_section_personal_birthday_title">Bursdag</string>
+  <string name="item_details_identity_section_address_title">Adressedetaljer</string>
+  <string name="item_details_identity_section_address_street_address_title">Gateadresse, postboksadresse</string>
+  <string name="item_details_identity_section_address_floor_title">Etasje</string>
+  <string name="item_details_identity_section_address_city_title">By</string>
+  <string name="item_details_identity_section_address_zip_or_postal_code_title">Postnummer</string>
+  <string name="item_details_identity_section_address_state_or_province_title">Delstat eller provins</string>
+  <string name="item_details_identity_section_address_county_title">Fylke</string>
+  <string name="item_details_identity_section_address_country_or_region_title">Land eller region</string>
+  <string name="item_details_identity_section_contact_title">Kontaktdetaljer</string>
+  <string name="item_details_identity_section_contact_social_security_number_title">Personnummer</string>
+  <string name="item_details_identity_section_contact_passport_number_title">Passnummer</string>
+  <string name="item_details_identity_section_contact_license_number_title">Førerkortnummer</string>
+  <string name="item_details_identity_section_contact_website_title">Nettsted</string>
+  <string name="item_details_identity_section_contact_x_handle_title">X-brukernavn</string>
+  <string name="item_details_identity_section_contact_secondary_phone_number_title">Sekundært telefonnummer</string>
+  <string name="item_details_identity_section_contact_linkedin_title">LinkedIn</string>
+  <string name="item_details_identity_section_contact_reddit_title">Reddit</string>
+  <string name="item_details_identity_section_contact_facebook_title">Facebook</string>
+  <string name="item_details_identity_section_contact_yahoo_title">Yahoo</string>
+  <string name="item_details_identity_section_contact_instagram_title">Instagram</string>
+  <string name="item_details_identity_section_work_title">Arbeidsdetaljer</string>
+  <string name="item_details_identity_section_work_company_title">Firma</string>
+  <string name="item_details_identity_section_work_occupation_title">Yrke</string>
+  <string name="item_details_identity_section_work_email_title">E-postadresse for arbeid</string>
+  <string name="item_details_identity_section_work_phone_number_title">Telefonnummer for arbeid</string>
+  <string name="item_details_identity_section_work_personal_website_title">Personlig nettside</string>
   <string name="item_details_shared_section_note_title">Notat</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Appversjonen støttes ikke lenger, vennligst oppdater appen din.</string>
   <!-- Passkeys -->

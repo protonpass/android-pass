@@ -152,7 +152,7 @@
   <string name="identity_section_address_details">Detaily adresy</string>
   <string name="identity_section_contact_details">Detaily kontaktu</string>
   <string name="identity_section_work_details">Detaily práce</string>
-  <string name="identity_add_more_fields">Přidat další</string>
+  <string name="identity_add_more_fields">Add another field</string>
   <string name="identity_bottomsheet_add_field">Přidat pole</string>
   <string name="create_identity_init_error">Problem retrieving identity details</string>
   <string name="create_identity_item_creation_error">Nelze vytvořit identitu</string>

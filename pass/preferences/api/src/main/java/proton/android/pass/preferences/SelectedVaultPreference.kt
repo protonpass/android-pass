@@ -31,16 +31,18 @@ sealed interface SelectedVaultPreference {
     data object Trash : SelectedVaultPreference {
         override fun value(): String = TRASH_VALUE
     }
-    data class Vault(val shareId: String) : SelectedVaultPreference {
+
+    @JvmInline
+    value class Vault(val shareId: String) : SelectedVaultPreference {
         override fun value(): String = shareId
     }
 
-    companion object
-}
-
-fun SelectedVaultPreference.Companion.fromValue(value: String): SelectedVaultPreference = when {
-    value == ALL_VAULTS_VALUE -> SelectedVaultPreference.AllVaults
-    value == TRASH_VALUE -> SelectedVaultPreference.Trash
-    value.isNotBlank() -> SelectedVaultPreference.Vault(value)
-    else -> SelectedVaultPreference.AllVaults
+    companion object {
+        fun fromValue(value: String): SelectedVaultPreference = when {
+            value == ALL_VAULTS_VALUE -> AllVaults
+            value == TRASH_VALUE -> Trash
+            value.isNotBlank() -> Vault(value)
+            else -> AllVaults
+        }
+    }
 }

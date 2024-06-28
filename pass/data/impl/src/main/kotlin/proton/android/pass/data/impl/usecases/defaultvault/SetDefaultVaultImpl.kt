@@ -18,6 +18,8 @@
 
 package proton.android.pass.data.impl.usecases.defaultvault
 
+import kotlinx.coroutines.flow.firstOrNull
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.defaultvault.SetDefaultVault
 import proton.android.pass.domain.ShareId
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -26,9 +28,11 @@ import javax.inject.Singleton
 
 @Singleton
 class SetDefaultVaultImpl @Inject constructor(
+    private val observeCurrentUser: ObserveCurrentUser,
     private val userPreferencesRepository: UserPreferencesRepository
 ) : SetDefaultVault {
 
-    override suspend fun invoke(shareId: ShareId): Result<Unit> = userPreferencesRepository.setDefaultVault(shareId.id)
-
+    override suspend fun invoke(shareId: ShareId): Result<Unit> = observeCurrentUser().firstOrNull()
+        ?.let { userPreferencesRepository.setDefaultVault(it.userId, shareId) }
+        ?: Result.failure(Exception("No user found"))
 }

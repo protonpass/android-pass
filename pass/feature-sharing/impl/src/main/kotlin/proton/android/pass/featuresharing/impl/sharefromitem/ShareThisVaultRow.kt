@@ -20,8 +20,6 @@ package proton.android.pass.featuresharing.impl.sharefromitem
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -40,7 +38,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultSmallNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -55,9 +52,8 @@ import proton.android.pass.domain.Vault
 import proton.android.pass.domain.VaultWithItemCount
 import proton.android.pass.featuresharing.impl.R
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun ShareThisVaultRow(
+internal fun ShareThisVaultRow(
     modifier: Modifier = Modifier,
     vault: VaultWithItemCount,
     onShareClick: () -> Unit
@@ -79,49 +75,51 @@ fun ShareThisVaultRow(
             icon = vault.vault.icon.toResource(),
             iconColor = vault.vault.color.toColor()
         )
-        FlowRow(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalArrangement = Arrangement.Center
+
+        Column(
+            modifier = Modifier.weight(weight = 1f)
         ) {
-            Column {
-                Text(
-                    text = vault.vault.name,
-                    style = ProtonTheme.typography.defaultSmallNorm,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
-                )
-                Text(
-                    text = pluralStringResource(
-                        R.plurals.sharing_item_count,
-                        itemCount.toInt(),
-                        itemCount.toInt()
-                    ),
-                    style = PassTheme.typography.body3Weak()
-                )
-            }
-            CircleButton(
-                modifier = Modifier.padding(Spacing.none, Spacing.extraSmall),
-                color = PassTheme.colors.interactionNormMinor1,
-                elevation = ButtonDefaults.elevation(0.dp),
-                onClick = onShareClick
-            ) {
-                Text(
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .padding(Spacing.mediumSmall),
-                    text = stringResource(R.string.sharing_from_item_share_this_vault_action),
-                    color = PassTheme.colors.interactionNormMajor2,
-                    textAlign = TextAlign.Center
-                )
-            }
+            Text(
+                text = vault.vault.name,
+                style = ProtonTheme.typography.body2Regular,
+                color = PassTheme.colors.textNorm,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
+            )
+
+            Text(
+                text = pluralStringResource(
+                    R.plurals.sharing_item_count,
+                    itemCount.toInt(),
+                    itemCount.toInt()
+                ),
+                style = PassTheme.typography.body3Weak(),
+                color = PassTheme.colors.textWeak
+            )
+        }
+
+        CircleButton(
+            modifier = Modifier.padding(Spacing.none, Spacing.extraSmall),
+            color = PassTheme.colors.interactionNormMinor1,
+            elevation = ButtonDefaults.elevation(0.dp),
+            onClick = onShareClick
+        ) {
+            Text(
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
+                    .padding(Spacing.mediumSmall),
+                text = stringResource(R.string.sharing_from_item_share_this_vault_action),
+                style = ProtonTheme.typography.body2Regular,
+                color = PassTheme.colors.interactionNormMajor2,
+                textAlign = TextAlign.Center
+            )
         }
     }
 }
 
 @Preview
 @Composable
-fun ShareThisVaultRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun ShareThisVaultRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             ShareThisVaultRow(

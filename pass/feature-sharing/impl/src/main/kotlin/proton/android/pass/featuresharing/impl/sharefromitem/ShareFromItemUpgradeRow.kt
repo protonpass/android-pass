@@ -21,6 +21,7 @@ package proton.android.pass.featuresharing.impl.sharefromitem
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -30,6 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -38,30 +40,32 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.featuresharing.impl.R
 
 @Composable
-@Suppress("MagicNumber")
-fun ShareFromItemUpgradeRow(modifier: Modifier = Modifier, onClick: () -> Unit) {
+internal fun ShareFromItemUpgradeRow(modifier: Modifier = Modifier, onClick: () -> Unit) {
     Row(
         modifier = modifier
             .roundedContainerNorm()
-            .padding(Spacing.medium),
+            .padding(all = Spacing.medium),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            modifier = Modifier.weight(0.7f),
-            text = stringResource(id = R.string.sharing_from_item_vault_limit_reached_upgrade)
+            modifier = Modifier.weight(1f),
+            text = stringResource(id = R.string.sharing_from_item_vault_limit_reached_upgrade),
+            style = ProtonTheme.typography.body2Regular,
+            color = PassTheme.colors.textNorm
         )
 
         UpgradeButton(
-            modifier = Modifier.padding(horizontal = 8.dp),
-            onUpgradeClick = onClick
+            modifier = Modifier.padding(horizontal = Spacing.small),
+            onUpgradeClick = onClick,
+            elevation = ButtonDefaults.elevation(0.dp)
         )
     }
 }
 
 @Preview
 @Composable
-fun ShareFromItemUpgradeRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun ShareFromItemUpgradeRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             ShareFromItemUpgradeRow(

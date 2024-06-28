@@ -22,12 +22,14 @@ import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.items.ItemCategory
 
 sealed interface ItemHistoryNavDestination {
 
     data object Back : ItemHistoryNavDestination
 
-    data object Detail : ItemHistoryNavDestination
+    @JvmInline
+    value class Detail(val itemCategory: ItemCategory) : ItemHistoryNavDestination
 
     data class Restore(
         val shareId: ShareId,

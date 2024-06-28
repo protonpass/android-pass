@@ -21,9 +21,9 @@ package proton.android.pass.commonpresentation.impl.items.details.handlers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.update
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
@@ -56,16 +56,15 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
         )
     }
 
-    private fun observeIdentityItemContents(item: Item): Flow<ItemContents.Identity> =
-        identityItemContentsFlow.map { identityItemContents ->
-            identityItemContents ?: encryptionContextProvider.withEncryptionContext {
-                item.toItemContents(this@withEncryptionContext) as ItemContents.Identity
-            }
+    private fun observeIdentityItemContents(item: Item): Flow<ItemContents.Identity> = flow {
+        encryptionContextProvider.withEncryptionContext {
+            item.toItemContents(this@withEncryptionContext) as ItemContents.Identity
+        }.let { identityItemContents ->
+            identityItemContentsFlow.update { identityItemContents }
+        }.also {
+            emitAll(identityItemContentsFlow.filterNotNull())
         }
-            .distinctUntilChanged()
-            .onEach { identityItemContents ->
-                identityItemContentsFlow.update { identityItemContents }
-            }
+    }
 
     override fun updateHiddenState(hiddenFieldType: ItemDetailsFieldType.Hidden, hiddenState: HiddenState) {
         identityItemContentsFlow.update { identityItemContents ->

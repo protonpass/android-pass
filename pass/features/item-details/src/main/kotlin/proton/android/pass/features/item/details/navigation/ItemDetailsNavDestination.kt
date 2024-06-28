@@ -41,4 +41,9 @@ sealed interface ItemDetailsNavDestination {
         val itemId: ItemId
     ) : ItemDetailsNavDestination
 
+    data class ItemSharing(
+        val shareId: ShareId,
+        val itemId: ItemId
+    ) : ItemDetailsNavDestination
+
 }

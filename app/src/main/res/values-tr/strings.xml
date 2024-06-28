@@ -6,8 +6,8 @@
   <string name="restart_to_complete_the_update">Güncellemeyi tamamlamak için yeniden başlatın</string>
   <string name="action_restart">Yeniden başlat</string>
   <string name="shortcut_share_logs_title">Günlükleri paylaş</string>
-  <string name="no_account_found">No account found</string>
-  <string name="no_session_found">No session found</string>
-  <string name="auth_with_extra_password_failed">Auth with extra password failed</string>
-  <string name="error_login_in_user">Error login in user</string>
+  <string name="no_account_found">Herhangi bir hesap bulunamadı</string>
+  <string name="no_session_found">Herhangi bir oturum bulunamadı</string>
+  <string name="auth_with_extra_password_failed">Ek parola ile kimlik doğrulanamadı</string>
+  <string name="error_login_in_user">Kullanıcı oturumu açılırken sorun çıktı</string>
 </resources>

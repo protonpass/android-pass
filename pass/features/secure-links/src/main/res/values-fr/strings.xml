@@ -32,20 +32,34 @@
   <!--Overview screen-->
   <string name="secure_links_overview_widget_expiration_title">Expire dans :</string>
   <string name="secure_links_overview_widget_max_views_title">Peut être vu :</string>
+  <string name="secure_links_overview_widget_open_times_title">Ouvert :</string>
   <plurals name="secure_links_overview_widget_max_views_limited">
     <item quantity="one">%d fois</item>
     <item quantity="other">%d fois</item>
   </plurals>
   <string name="secure_links_overview_widget_max_views_unlimited">Illimité</string>
-  <string name="secure_links_shared_action_copy_link">Copier le lien</string>
-  <string name="secure_links_shared_action_share_link">Partager le lien</string>
   <string name="secure_links_overview_button_view_all_links">Afficher tous vos liens sécurisés</string>
-  <string name="secure_links_shared_snackbar_message_link_copied">Le lien sécurisé a été copié.</string>
   <!--List screen-->
   <string name="secure_links_list_title">Liens sécurisés</string>
+  <string name="secure_links_list_empty_title">Aucun lien séurisé</string>
+  <string name="secure_links_list_empty_subtitle">Vous pouvez commencer à créer des liens sécurisés depuis les options de partage des informations d\'un élément.</string>
   <string name="secure_links_list_expiration_description">Expire dans %s</string>
+  <string name="secure_links_list_expired_description">Expiré</string>
   <plurals name="secure_links_list_viewed_times_description">
     <item quantity="one">%d affichage</item>
     <item quantity="other">%d affichages</item>
   </plurals>
+  <string name="secure_links_list_snackbar_message_links_fetch_error">Une erreur s\'est produite lors de la récupération des liens sécurisés.</string>
+  <string name="secure_links_list_header_title_inactive">Liens inactifs</string>
+  <!--Shared-->
+  <string name="secure_links_shared_action_copy_link">Copier le lien</string>
+  <string name="secure_links_shared_action_share_link">Partager le lien</string>
+  <string name="secure_links_shared_action_delete_link">Retirer le lien</string>
+  <string name="secure_links_shared_action_delete_link_inactive">Supprimer le lien inactif</string>
+  <string name="secure_links_shared_action_delete_links_inactive">Supprimer tous les liens inactifs</string>
+  <string name="secure_links_shared_snackbar_message_link_copied">Le lien sécurisé a été copié.</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_canceled">La suppression du lien sécurisé a été annulée.</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_error">Une erreur s\'est produite lors de la suppression du lien sécurisé.</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">La suppression des liens sécurisés inactifs a été annulée.</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">Une erreur s\'est produite lors de la suppression des liens sécurisés inactifs.</string>
 </resources>

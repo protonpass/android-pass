@@ -152,7 +152,7 @@
   <string name="identity_section_address_details">Detail alamat</string>
   <string name="identity_section_contact_details">Rincian kontak</string>
   <string name="identity_section_work_details">Detail pekerjaan</string>
-  <string name="identity_add_more_fields">Tambahkan lagi</string>
+  <string name="identity_add_more_fields">Tambah kolom lainnya</string>
   <string name="identity_bottomsheet_add_field">Tambahkan kolom</string>
   <string name="create_identity_init_error">Terdapat masalah dalam memperoleh rincian identitas</string>
   <string name="create_identity_item_creation_error">Identitas tidak dapat dibuat</string>

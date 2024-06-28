@@ -29,7 +29,7 @@
   <string name="info_extra_password_body">Beskyt Proton Pass med en ekstra adgangskode.</string>
   <string name="info_extra_password_button">Indstil ekstra adgangskode</string>
   <string name="configure_extra_password_cannot_be_blank">Adgangskoden kan ikke være tom</string>
-  <string name="configure_extra_password_password_too_short">Adgangskode for kort</string>
+  <string name="configure_extra_password_password_too_short">Ekstra adgangskode skal indeholde mindst 8 tegn</string>
   <string name="confirm_extra_password_title">Indstil ekstra adgangskode</string>
   <string name="confirm_extra_password_body">Du bliver logget ud og skal logge ind igen på alle dine andre enheder.</string>
   <string name="confirm_extra_password_error">Kunne ikke indstille ekstra adgangskode</string>

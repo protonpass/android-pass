@@ -14,7 +14,7 @@
   <string name="account_manage_subscription">Abonnement beheren</string>
   <string name="account_get_user_info_error">Kan de gebruikersgegevens niet ophalen</string>
   <string name="manage_subscription_icon_content_description">Abonnement beheren knop</string>
-  <string name="account_settings_list_item_password_header">Wachtwoordbeheer</string>
+  <string name="account_settings_list_item_password_header">Wachtwoord wijzigen</string>
   <string name="account_settings_list_item_recovery_header">Herstel e-mailadres</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Niet ingesteld</string>
   <string name="account_settings_list_item_password_hint_grace">Wachtwoord opnieuw instellen aangevraagd</string>

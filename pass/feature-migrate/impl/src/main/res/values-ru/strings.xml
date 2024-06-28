@@ -11,7 +11,7 @@
   <string name="migrate_item_success_snackbar">Элементы перемещены</string>
   <string name="migrate_item_error_snackbar">Ошибка при перемещении элементов</string>
   <string name="migrate_item_some_not_migrated_error_snackbar">Ошибка при перемещении некоторых элементов</string>
-  <string name="migrate_item_warning_history">When moving items between vaults we will preserve up to the last 50 modifications performed to each item</string>
+  <string name="migrate_item_warning_history">При перемещении элементов между хранилищами мы сохраним до 50 последних изменений, выполненных для каждого элемента</string>
   <string name="migrate_all_items_success_snackbar">Все элементы перемещены</string>
   <string name="migrate_all_items_error_snackbar">Ошибка при перемещении всех элементов хранилища</string>
   <string name="migrate_init_error_snackbar">Не удалось подготовить экран переноса</string>

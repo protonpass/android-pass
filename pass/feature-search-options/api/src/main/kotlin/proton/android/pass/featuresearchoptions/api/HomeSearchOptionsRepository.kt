@@ -20,6 +20,7 @@ package proton.android.pass.featuresearchoptions.api
 
 import androidx.compose.runtime.Stable
 import kotlinx.coroutines.flow.Flow
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ShareId
 
 interface HomeSearchOptionsRepository {
@@ -29,8 +30,8 @@ interface HomeSearchOptionsRepository {
     fun observeVaultSelectionOption(): Flow<VaultSelectionOption>
     fun setSortingOption(sortingOption: SortingOption)
     fun setFilterOption(filterOption: FilterOption)
-    fun setVaultSelectionOption(vaultSelectionOption: VaultSelectionOption)
-    fun clearSearchOptions()
+    fun setVaultSelectionOption(userId: UserId, vaultSelectionOption: VaultSelectionOption)
+    fun clearSearchOptions(userId: UserId)
 }
 
 data class SearchOptions(

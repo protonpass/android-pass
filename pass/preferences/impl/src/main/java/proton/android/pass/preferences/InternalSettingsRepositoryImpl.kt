@@ -29,6 +29,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Instant
 import me.proton.android.pass.preferences.AppUsage
 import me.proton.android.pass.preferences.LastItemAutofill
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
@@ -106,11 +107,15 @@ class InternalSettingsRepositoryImpl @Inject constructor(
         inMemoryPreferences.observe<Int>(FilterOptionPreference::class.java.name)
             .map { it?.let { FilterOptionPreference.fromValue(it) } ?: FilterOptionPreference.All }
 
-    override fun setSelectedVault(selectedVault: SelectedVaultPreference): Result<Unit> =
-        setPreference { it.setSelectedVault(selectedVault.value()) }
+    override fun setSelectedVault(userId: UserId, selectedVault: SelectedVaultPreference): Result<Unit> =
+        setPreference {
+            it.putSelectedVaultPerUser(userId.id, selectedVault.value())
+        }
 
-    override fun getSelectedVault(): Flow<SelectedVaultPreference> = getPreference {
-        SelectedVaultPreference.fromValue(it.selectedVault)
+    override fun getSelectedVault(userId: UserId): Flow<SelectedVaultPreference> = getPreference {
+        SelectedVaultPreference.fromValue(
+            it.selectedVaultPerUserMap[userId.id] ?: SelectedVaultPreference.AllVaults.value()
+        )
     }
 
     override fun setPinAttemptsCount(count: Int): Result<Unit> = setPreference {

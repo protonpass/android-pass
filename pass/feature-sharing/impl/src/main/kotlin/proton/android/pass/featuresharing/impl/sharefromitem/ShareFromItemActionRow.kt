@@ -40,6 +40,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -48,7 +49,7 @@ import proton.android.pass.featuresharing.impl.R
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun ShareFromItemActionRow(
+internal fun ShareFromItemActionRow(
     modifier: Modifier = Modifier,
     @DrawableRes icon: Int,
     @StringRes title: Int,
@@ -67,7 +68,7 @@ fun ShareFromItemActionRow(
                 .size(42.dp)
                 .clip(CircleShape)
                 .background(PassTheme.colors.interactionNormMinor1)
-                .padding(8.dp),
+                .padding(all = Spacing.small),
             contentAlignment = Alignment.Center
         ) {
             Icon(
@@ -77,13 +78,18 @@ fun ShareFromItemActionRow(
                 tint = PassTheme.colors.interactionNormMajor2
             )
         }
-        Text(text = stringResource(title))
+
+        Text(
+            text = stringResource(title),
+            style = ProtonTheme.typography.body2Regular,
+            color = PassTheme.colors.textNorm
+        )
     }
 }
 
 @Preview
 @Composable
-fun ShareFromItemActionRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun ShareFromItemActionRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             ShareFromItemActionRow(

@@ -29,10 +29,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultHighlightNorm
-import me.proton.core.compose.theme.defaultWeak
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.featuresharing.impl.R
 import me.proton.core.presentation.R as CoreR
@@ -73,7 +73,9 @@ internal fun ShareFromItemContent(
                 modifier = Modifier.padding(vertical = Spacing.small)
             )
         } else {
-            Column {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
+            ) {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     text = stringResource(R.string.sharing_from_item_title),
@@ -84,7 +86,8 @@ internal fun ShareFromItemContent(
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     text = stringResource(R.string.sharing_from_item_description),
-                    style = ProtonTheme.typography.defaultWeak,
+                    style = PassTheme.typography.body3Weak(),
+                    color = PassTheme.colors.textWeak,
                     textAlign = TextAlign.Center
                 )
             }
@@ -119,7 +122,8 @@ internal fun ShareFromItemContent(
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     text = stringResource(R.string.sharing_from_item_create_vault_to_share_subtitle),
-                    style = ProtonTheme.typography.defaultWeak,
+                    style = PassTheme.typography.body3Weak(),
+                    color = PassTheme.colors.textWeak,
                     textAlign = TextAlign.Center
                 )
             }

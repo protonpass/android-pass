@@ -62,9 +62,14 @@ internal sealed interface ItemDetailsUiEvent {
         internal val itemId: ItemId
     ) : ItemDetailsUiEvent
 
-    data class OnShareClicked(
+    data class OnShareItemClicked(
         internal val shareId: ShareId,
         internal val itemId: ItemId
+    ) : ItemDetailsUiEvent
+
+    data class OnSharedVaultClicked(
+        internal val sharedVaultId: ShareId,
+        internal val itemCategory: ItemCategory
     ) : ItemDetailsUiEvent
 
 }

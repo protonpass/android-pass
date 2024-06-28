@@ -23,6 +23,8 @@ import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureaccount.impl.Account
 import proton.android.pass.featureaccount.impl.AccountNavigation
@@ -291,32 +293,14 @@ fun NavGraphBuilder.appGraph(
                     UpdateIdentity.createNavRoute(it.shareId, it.itemId)
                 )
 
-                is HomeNavigation.ItemDetail -> {
-                    // This when clause will be removed once all item categories are migrated to new feature
-                    when (it.itemCategory) {
-                        ItemCategory.Login,
-                        ItemCategory.Alias,
-                        ItemCategory.Note,
-                        ItemCategory.CreditCard -> appNavigator.navigate(
-                            ViewItem,
-                            ViewItem.createNavRoute(it.shareId, it.itemId)
-                        )
-
-                        // Identity is the first item category using the new feature
-                        ItemCategory.Identity -> appNavigator.navigate(
-                            destination = ItemDetailsNavItem,
-                            route = ItemDetailsNavItem.createNavRoute(
-                                shareId = it.shareId,
-                                itemId = it.itemId
-                            )
-                        )
-
-                        ItemCategory.Unknown,
-                        ItemCategory.Password -> {
-                            // This should never happen
-                        }
-                    }
-                }
+                is HomeNavigation.ItemDetail -> appNavigator.navigate(
+                    destination = getItemDetailsDestination(it.itemCategory),
+                    route = getItemDetailsRoute(
+                        itemCategory = it.itemCategory,
+                        shareId = it.shareId,
+                        itemId = it.itemId
+                    )
+                )
 
                 HomeNavigation.Profile -> {
                     appNavigator.navigate(Profile)
@@ -1149,42 +1133,14 @@ fun NavGraphBuilder.appGraph(
                     comesFromBottomsheet = false
                 )
 
-                is ItemDetailsNavDestination.EditItem -> when (itemDetailsNavDestination.itemCategory) {
-                    ItemCategory.Alias -> EditAlias to EditAlias.createNavRoute(
+                is ItemDetailsNavDestination.EditItem -> appNavigator.navigate(
+                    destination = getItemDetailsDestination(itemDetailsNavDestination.itemCategory),
+                    route = getItemDetailsRoute(
+                        itemCategory = itemDetailsNavDestination.itemCategory,
                         shareId = itemDetailsNavDestination.shareId,
                         itemId = itemDetailsNavDestination.itemId
                     )
-
-                    ItemCategory.CreditCard -> EditCreditCard to EditCreditCard.createNavRoute(
-                        shareId = itemDetailsNavDestination.shareId,
-                        itemId = itemDetailsNavDestination.itemId
-                    )
-
-                    ItemCategory.Identity -> UpdateIdentity to UpdateIdentity.createNavRoute(
-                        shareId = itemDetailsNavDestination.shareId,
-                        itemId = itemDetailsNavDestination.itemId
-                    )
-
-                    ItemCategory.Login -> EditLogin to EditLogin.createNavRoute(
-                        shareId = itemDetailsNavDestination.shareId,
-                        itemId = itemDetailsNavDestination.itemId
-                    )
-
-                    ItemCategory.Note -> EditNote to EditNote.createNavRoute(
-                        shareId = itemDetailsNavDestination.shareId,
-                        itemId = itemDetailsNavDestination.itemId
-                    )
-
-                    ItemCategory.Password,
-                    ItemCategory.Unknown -> throw IllegalStateException(
-                        "Cannot edit items with category: ${itemDetailsNavDestination.itemCategory}"
-                    )
-                }.also { (editDestination, editRoute) ->
-                    appNavigator.navigate(
-                        destination = editDestination,
-                        route = editRoute
-                    )
-                }
+                )
 
                 is ItemDetailsNavDestination.PasskeyDetails -> appNavigator.navigate(
                     destination = ViewPasskeyDetailsBottomSheet,
@@ -1208,6 +1164,14 @@ fun NavGraphBuilder.appGraph(
                         itemId = itemDetailsNavDestination.itemId
                     )
                 )
+
+                is ItemDetailsNavDestination.ManageSharedVault -> appNavigator.navigate(
+                    destination = ManageVault,
+                    route = ManageVault.createRoute(
+                        shareId = itemDetailsNavDestination.sharedVaultId
+                    ),
+                    backDestination = getItemDetailsDestination(itemDetailsNavDestination.itemCategory)
+                )
             }
         }
     )
@@ -1219,25 +1183,10 @@ fun NavGraphBuilder.appGraph(
                     comesFromBottomsheet = false
                 )
 
-                // The when clause could be removed once all categories are migrated to new item-details feature
-                is ItemHistoryNavDestination.Detail -> when (itemHistoryNavDestination.itemCategory) {
-                    ItemCategory.Alias,
-                    ItemCategory.CreditCard,
-                    ItemCategory.Login,
-                    ItemCategory.Note -> ViewItem
-
-                    ItemCategory.Identity -> ItemDetailsNavItem
-
-                    ItemCategory.Password,
-                    ItemCategory.Unknown -> throw IllegalArgumentException(
-                        "Cannot view items with category: ${itemHistoryNavDestination.itemCategory}"
-                    )
-                }.let { destination ->
-                    appNavigator.popUpTo(
-                        destination = destination,
-                        comesFromBottomsheet = false
-                    )
-                }
+                is ItemHistoryNavDestination.Detail -> appNavigator.popUpTo(
+                    destination = getItemDetailsDestination(itemHistoryNavDestination.itemCategory),
+                    comesFromBottomsheet = false
+                )
 
                 is ItemHistoryNavDestination.Restore -> appNavigator.navigate(
                     destination = ItemHistoryRestoreNavItem,
@@ -1821,4 +1770,38 @@ fun NavGraphBuilder.appGraph(
             }
         }
     )
+}
+
+// This fun should be removed once all categories are migrated to new item-details feature
+// ItemDetailsNavItem should be keep as new destination
+private fun getItemDetailsDestination(itemCategory: ItemCategory) = when (itemCategory) {
+    ItemCategory.Login,
+    ItemCategory.Alias,
+    ItemCategory.Note,
+    ItemCategory.CreditCard -> ViewItem
+
+    // Identity is the first item category migrated
+    ItemCategory.Identity -> ItemDetailsNavItem
+
+    ItemCategory.Unknown,
+    ItemCategory.Password -> throw IllegalArgumentException("Cannot view items with category: $itemCategory")
+}
+
+// This fun should be removed once all categories are migrated to new item-details feature
+// ItemDetailsNavItem route should be keep as new destination route
+private fun getItemDetailsRoute(
+    itemCategory: ItemCategory,
+    shareId: ShareId,
+    itemId: ItemId
+) = when (itemCategory) {
+    ItemCategory.Login,
+    ItemCategory.Alias,
+    ItemCategory.Note,
+    ItemCategory.CreditCard -> ViewItem.createNavRoute(shareId, itemId)
+
+    // Identity is the first item category migrated
+    ItemCategory.Identity -> ItemDetailsNavItem.createNavRoute(shareId, itemId)
+
+    ItemCategory.Unknown,
+    ItemCategory.Password -> throw IllegalArgumentException("Cannot view items with category: $itemCategory")
 }

@@ -78,6 +78,11 @@ fun ItemDetailsScreen(
                     shareId = uiEvent.shareId,
                     itemId = uiEvent.itemId
                 ).also(onNavigated)
+
+                is ItemDetailsUiEvent.OnShareClicked -> ItemDetailsNavDestination.ItemSharing(
+                    shareId = uiEvent.shareId,
+                    itemId = uiEvent.itemId
+                ).also(onNavigated)
             }
         }
     )

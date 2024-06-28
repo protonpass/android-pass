@@ -1211,10 +1211,25 @@ fun NavGraphBuilder.appGraph(
                     comesFromBottomsheet = false
                 )
 
-                is ItemHistoryNavDestination.Detail -> appNavigator.popUpTo(
-                    destination = ViewItem,
-                    comesFromBottomsheet = false
-                )
+                // The when clause could be removed once all categories are migrated to new item-details feature
+                is ItemHistoryNavDestination.Detail -> when (itemHistoryNavDestination.itemCategory) {
+                    ItemCategory.Alias,
+                    ItemCategory.CreditCard,
+                    ItemCategory.Login,
+                    ItemCategory.Note -> ViewItem
+
+                    ItemCategory.Identity -> ItemDetailsNavItem
+
+                    ItemCategory.Password,
+                    ItemCategory.Unknown -> null
+                }.let { navItem ->
+                    navItem?.let { destination ->
+                        appNavigator.popUpTo(
+                            destination = destination,
+                            comesFromBottomsheet = false
+                        )
+                    }
+                }
 
                 is ItemHistoryNavDestination.Restore -> appNavigator.navigate(
                     destination = ItemHistoryRestoreNavItem,

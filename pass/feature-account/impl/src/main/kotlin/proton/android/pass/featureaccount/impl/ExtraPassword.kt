@@ -80,7 +80,7 @@ internal fun ExtraPassword(
             ColorSettingOption(
                 modifier = Modifier.roundedContainerNorm(),
                 innerModifier = Modifier.padding(vertical = Spacing.medium),
-                text = stringResource(R.string.account_settings_list_item_extra_password_header),
+                text = stringResource(R.string.account_settings_list_item_extra_password_header_set),
                 textColor = PassTheme.colors.interactionNormMajor2,
                 iconBgColor = PassTheme.colors.interactionNormMinor1,
                 onClick = { onEvent(AccountContentEvent.SetExtraPassword) }

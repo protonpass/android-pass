@@ -34,7 +34,7 @@
   <string name="share_with_email_hint">이메일 주소</string>
   <string name="share_with_email_error">유효하지 않은 이메일 주소입니다.</string>
   <string name="share_with_email_cannot_invite_outside_org">조직으로 사용자를 초대할 수 없습니다. 더 자세한 내용은 관리자에게 문의하십시오.</string>
-  <string name="share_with_email_email_already_added">You have already added this email address</string>
+  <string name="share_with_email_email_already_added">이미 이 이메일 주소를 추가했습니다.</string>
   <string name="share_permissions_title">접근 수준 설정</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s님이 항목 공유를 초대합니다:</string>
   <string name="sharing_join_shared_vault">참가 및 동기화</string>
@@ -71,7 +71,7 @@
   <string name="share_manage_vault_invite_pending_user_creation" comment="Text that will be shown in the vault member list, below the user email when the user has not created the account yet">계정 생성 전송 중</string>
   <string name="share_manage_vault_invite_confirm_access" comment="Text that will be shown in the vault member list, on a button, when the invited user has created the account and we want to grant him access to the vault">접근 확인</string>
   <string name="share_manage_vault_invitations_title" comment="Text that will be used as the title of the list containing the invites for a vault">초대</string>
-  <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">멤버</string>
+  <string name="share_manage_vault_members_title" comment="Text that will be used as the title of the list containing the members of a vault">구성원</string>
   <string name="share_manage_vault_current_user_indicator">나</string>
   <string name="share_role_can_view">보기 가능</string>
   <string name="share_role_can_edit">편집 가능</string>

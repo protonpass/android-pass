@@ -26,6 +26,7 @@
   <string name="upsell_paid_feature_authenticator">Autenticador A2F integrado</string>
   <string name="upsell_paid_feature_unlimited_aliases">Aliases do Hide-my-email ilimitados</string>
   <string name="upsell_paid_feature_vault_sharing">Compartilhar cofre (até 10 pessoa)</string>
+  <string name="upsell_paid_feature_secure_links">Links seguros</string>
   <string name="upsell_paid_feature_authenticator_essential">Requer A2F para a organização</string>
   <string name="upsell_paid_feature_sso_essential">Integração SSO (em breve)</string>
   <string name="upsell_button_upgrade">Obter Pass Plus</string>

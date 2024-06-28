@@ -6,8 +6,8 @@
   <string name="restart_to_complete_the_update">Neu starten, um das Update abzuschließen.</string>
   <string name="action_restart">Neu starten</string>
   <string name="shortcut_share_logs_title">Logs teilen</string>
-  <string name="no_account_found">No account found</string>
-  <string name="no_session_found">No session found</string>
+  <string name="no_account_found">Kein Konto gefunden</string>
+  <string name="no_session_found">Keine Sitzung gefunden</string>
   <string name="auth_with_extra_password_failed">Auth with extra password failed</string>
   <string name="error_login_in_user">Error login in user</string>
 </resources>

@@ -37,6 +37,7 @@
   <string name="auth_error_pin_cannot_be_empty">Der PIN-Code darf nicht leer sein</string>
   <string name="auth_extra_password_label">Gib dein zusätzliches Passwort ein.</string>
   <string name="auth_extra_password_error">Error on authenticating with extra password</string>
+  <string name="auth_extra_password_too_many_attempts">Too many failed login attempts. You have been logged out.</string>
   <string name="auth_error_wrong_password_no_attempts">Ungültiges Passwort</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Ungültiges Passwort. %d Versuch verbleibend</item>

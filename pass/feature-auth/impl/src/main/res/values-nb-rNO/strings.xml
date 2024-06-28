@@ -37,6 +37,7 @@
   <string name="auth_error_pin_cannot_be_empty">PIN-kode kan ikke være tom</string>
   <string name="auth_extra_password_label">Angi det ekstra passordet ditt</string>
   <string name="auth_extra_password_error">Feil ved autentisering med ekstra passord</string>
+  <string name="auth_extra_password_too_many_attempts">For mange mislykkede påloggingsforsøk. Du har blitt logget av.</string>
   <string name="auth_error_wrong_password_no_attempts">Feil passord</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Feil passord. %d forsøk gjenstår</item>

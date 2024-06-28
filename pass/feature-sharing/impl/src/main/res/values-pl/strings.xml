@@ -40,7 +40,7 @@
   <string name="share_with_email_hint">Adres e-mail</string>
   <string name="share_with_email_error">Adres e-mail jest nieprawidłowy</string>
   <string name="share_with_email_cannot_invite_outside_org">Nie możesz zapraszać użytkowników spoza swojej organizacji. Skontaktuj się z administratorem, aby uzyskać więcej informacji</string>
-  <string name="share_with_email_email_already_added">You have already added this email address</string>
+  <string name="share_with_email_email_already_added">Ten adres e-mail został już dodany</string>
   <string name="share_permissions_title">Ustaw uprawnienia</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s udostępnia Ci sejf</string>
   <string name="sharing_join_shared_vault">Dołącz i synchronizuj</string>
@@ -98,7 +98,7 @@
   <string name="sharing_transfer_ownership_confirm_message">Zmienić właściciela sejfu na %s?</string>
   <string name="sharing_snackbar_cancel_invite_success">Zaproszenie zostało anulowane</string>
   <string name="sharing_snackbar_cancel_invite_error">Wystąpił błąd podczas anulowania zaproszenia</string>
-  <string name="sharing_snackbar_resend_invite_success">Zaproszenie zostało wysłane</string>
+  <string name="sharing_snackbar_resend_invite_success">Zaproszenie zostało ponownie wysłane</string>
   <string name="sharing_snackbar_resend_invite_error">Wystąpił błąd podczas wysyłania zaproszenia</string>
   <string name="sharing_snackbar_confirm_invite_success">Zaproszenie zostało potwierdzone</string>
   <string name="sharing_snackbar_confirm_invite_error">Wystąpił błąd podczas potwierdzania zaproszenia</string>

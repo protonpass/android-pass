@@ -38,9 +38,10 @@
   <string name="action_view_details">Pokaż szczegóły</string>
   <string name="action_see_all">Zobacz wszystko</string>
   <string name="action_confirm">Potwierdź</string>
-  <string name="action_cancel">Cancel</string>
+  <string name="action_cancel">Anuluj</string>
   <string name="action_continue">Kontynuuj</string>
   <string name="action_retry">Spróbuj ponownie</string>
+  <string name="action_edit">Edytuj</string>
   <!-- Empty list -->
   <string name="empty_list_title">Dodaj pierwszy element</string>
   <string name="empty_search_results_title">Nie znaleziono żadnych wyników</string>
@@ -130,6 +131,41 @@
   <string name="item_details_login_section_password_title">Hasło</string>
   <string name="item_details_login_section_primary_totp_title">Token TOTP</string>
   <string name="item_details_login_section_websites_title">Strony internetowe</string>
+  <string name="item_details_identity_section_personal_title">Szczegóły osobiste</string>
+  <string name="item_details_identity_section_personal_first_name_title">Imię</string>
+  <string name="item_details_identity_section_personal_middle_name_title">Drugie imię</string>
+  <string name="item_details_identity_section_personal_last_name_title">Nazwisko</string>
+  <string name="item_details_identity_section_personal_full_name_title">Imię i nazwisko</string>
+  <string name="item_details_identity_section_personal_email_title">Adres e-mail</string>
+  <string name="item_details_identity_section_personal_gender_title">Płeć</string>
+  <string name="item_details_identity_section_personal_phone_title">Numer telefonu</string>
+  <string name="item_details_identity_section_personal_birthday_title">Urodziny</string>
+  <string name="item_details_identity_section_address_title">Szczegóły adresu</string>
+  <string name="item_details_identity_section_address_street_address_title">Ulica</string>
+  <string name="item_details_identity_section_address_floor_title">Piętro</string>
+  <string name="item_details_identity_section_address_city_title">Miasto</string>
+  <string name="item_details_identity_section_address_zip_or_postal_code_title">Kod pocztowy</string>
+  <string name="item_details_identity_section_address_state_or_province_title">Stan lub województwo</string>
+  <string name="item_details_identity_section_address_county_title">Powiat</string>
+  <string name="item_details_identity_section_address_country_or_region_title">Kraj lub region</string>
+  <string name="item_details_identity_section_contact_title">Szczegóły kontaktu</string>
+  <string name="item_details_identity_section_contact_social_security_number_title">Numer ubezpieczenia społecznego</string>
+  <string name="item_details_identity_section_contact_passport_number_title">Numer paszportu</string>
+  <string name="item_details_identity_section_contact_license_number_title">Numer prawa jazdy</string>
+  <string name="item_details_identity_section_contact_website_title">Strona internetowa</string>
+  <string name="item_details_identity_section_contact_x_handle_title">Profil X</string>
+  <string name="item_details_identity_section_contact_secondary_phone_number_title">Dodatkowy numer telefonu</string>
+  <string name="item_details_identity_section_contact_linkedin_title">LinkedIn</string>
+  <string name="item_details_identity_section_contact_reddit_title">Reddit</string>
+  <string name="item_details_identity_section_contact_facebook_title">Facebook</string>
+  <string name="item_details_identity_section_contact_yahoo_title">Yahoo</string>
+  <string name="item_details_identity_section_contact_instagram_title">Instagram</string>
+  <string name="item_details_identity_section_work_title">Szczegóły służbowe</string>
+  <string name="item_details_identity_section_work_company_title">Firma</string>
+  <string name="item_details_identity_section_work_occupation_title">Occupation</string>
+  <string name="item_details_identity_section_work_email_title">Służbowy adres e-mail</string>
+  <string name="item_details_identity_section_work_phone_number_title">Służbowy numer telefonu</string>
+  <string name="item_details_identity_section_work_personal_website_title">Osobista strona internetowa</string>
   <string name="item_details_shared_section_note_title">Notatka</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Wersja aplikacji nie jest obsługiwana. Zaktualizuj aplikację.</string>
   <!-- Passkeys -->
@@ -147,26 +183,26 @@
   <!-- Time units -->
   <plurals name="time_unit_days">
     <item quantity="one">%d dzień</item>
-    <item quantity="few">%d dnia</item>
-    <item quantity="many">%d dnia</item>
+    <item quantity="few">%d dni</item>
+    <item quantity="many">%d dni</item>
     <item quantity="other">%d dnia</item>
   </plurals>
   <plurals name="time_unit_hours">
-    <item quantity="one">%d godzinę</item>
-    <item quantity="few">%d godzin</item>
-    <item quantity="many">%d godziny</item>
+    <item quantity="one">%d godzina</item>
+    <item quantity="few">%d godziny</item>
+    <item quantity="many">%d godzin</item>
     <item quantity="other">%d godziny</item>
   </plurals>
   <plurals name="time_unit_minutes">
-    <item quantity="one">%d minutę</item>
+    <item quantity="one">%d minuta</item>
     <item quantity="few">%d minuty</item>
     <item quantity="many">%d minut</item>
-    <item quantity="other">%d minut</item>
+    <item quantity="other">%d minuty</item>
   </plurals>
   <plurals name="time_unit_seconds">
-    <item quantity="one">%d sekundę</item>
-    <item quantity="few">%d sekund</item>
-    <item quantity="many">%d sekundy</item>
+    <item quantity="one">%d sekunda</item>
+    <item quantity="few">%d sekundy</item>
+    <item quantity="many">%d sekund</item>
     <item quantity="other">%d sekundy</item>
   </plurals>
 </resources>

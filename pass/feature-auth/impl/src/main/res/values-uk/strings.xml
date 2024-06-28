@@ -39,6 +39,7 @@
   <string name="auth_error_pin_cannot_be_empty">Потрібно ввести PIN-код</string>
   <string name="auth_extra_password_label">Уведіть ваш додатковий пароль</string>
   <string name="auth_extra_password_error">Error on authenticating with extra password</string>
+  <string name="auth_extra_password_too_many_attempts">Too many failed login attempts. You have been logged out.</string>
   <string name="auth_error_wrong_password_no_attempts">Неправильний пароль</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Неправильний пароль. Залишилась %d спроба</item>

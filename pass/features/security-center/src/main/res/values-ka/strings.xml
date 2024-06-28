@@ -56,7 +56,7 @@
   <string name="security_center_reused_pass_list_sticky_header_label" comment="Shows the number of times that an item has a reused password (e.g. Reused 3 times). Note that there's not singular case as that would mean that the password has been never been reused">გამოყენებულია %1$d-ჯერ</string>
   <!-- Missing 2FA -->
   <string name="security_center_missing_tfa_top_bar_title">არააქტიური 2FA</string>
-  <string name="security_center_missing_tfa_top_bar_subtitle">For added security, set up two-factor authentication on the following accounts.</string>
+  <string name="security_center_missing_tfa_top_bar_subtitle">დამატებითი უსაფრთხოებისთვის. მოირგეთ 2FA შემდეგ ანგარიშებზე.</string>
   <!-- Excluded items screen -->
   <string name="security_center_excluded_items_top_bar_title">ამოღებული ელემენტები</string>
   <!-- Dark web monitor -->
@@ -160,7 +160,7 @@
   <string name="security_center_alias_list_top_bar_title">Hide-my-email-ის ფსევდონიმები</string>
   <string name="security_center_alias_list_excluded_from_monitoring">ამოღებულია მონიტორინგიდან</string>
   <string name="security_center_alias_list_error">მისამართების ჩატვირთვა შეუძლებელია</string>
-  <string name="security_center_alias_list_included_in_monitoring">Enable monitoring to get notified if your Hide-my-email aliases were leaked.</string>
+  <string name="security_center_alias_list_included_in_monitoring">ჩართეთ მონიტორინგი, თუ გნებავთ, მიიღოთ გაფრთხლება, თუ თქვენი Hide-my-email-ის ფსევდონიმები გაჟონავს.</string>
   <string name="security_center_alias_list_monitored">მონიტორინგით</string>
   <string name="security_center_alias_list_custom_email_message">Aliases with custom domains are not monitored, please add them as a custom email for monitoring.</string>
   <string name="security_center_alias_list_options_menu">ფსევდონიმის ეკრანის პარამეტრების მენიუ</string>

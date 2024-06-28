@@ -14,7 +14,7 @@
   <string name="account_manage_subscription">Spravovat předplatné</string>
   <string name="account_get_user_info_error">Nelze načíst informace o uživateli</string>
   <string name="manage_subscription_icon_content_description">Tlačítko správy předplatného</string>
-  <string name="account_settings_list_item_password_header">Správa hesel</string>
+  <string name="account_settings_list_item_password_header">Změnit heslo</string>
   <string name="account_settings_list_item_recovery_header">E-mail pro obnovení</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Nenastaveno</string>
   <string name="account_settings_list_item_password_hint_grace">Čekání na reset hesla</string>

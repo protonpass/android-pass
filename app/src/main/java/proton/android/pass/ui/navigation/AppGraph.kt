@@ -1221,14 +1221,14 @@ fun NavGraphBuilder.appGraph(
                     ItemCategory.Identity -> ItemDetailsNavItem
 
                     ItemCategory.Password,
-                    ItemCategory.Unknown -> null
-                }.let { navItem ->
-                    navItem?.let { destination ->
-                        appNavigator.popUpTo(
-                            destination = destination,
-                            comesFromBottomsheet = false
-                        )
-                    }
+                    ItemCategory.Unknown -> throw IllegalArgumentException(
+                        "Cannot view items with category: ${itemHistoryNavDestination.itemCategory}"
+                    )
+                }.let { destination ->
+                    appNavigator.popUpTo(
+                        destination = destination,
+                        comesFromBottomsheet = false
+                    )
                 }
 
                 is ItemHistoryNavDestination.Restore -> appNavigator.navigate(

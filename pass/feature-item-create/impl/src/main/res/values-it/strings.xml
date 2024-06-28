@@ -152,7 +152,7 @@
   <string name="identity_section_address_details">Dettagli dell\'indirizzo</string>
   <string name="identity_section_contact_details">Dettagli di contatto</string>
   <string name="identity_section_work_details">Dettagli dell\'impiego</string>
-  <string name="identity_add_more_fields">Aggiungi altro</string>
+  <string name="identity_add_more_fields">Aggiungi un altro campo</string>
   <string name="identity_bottomsheet_add_field">Aggiungi un campo</string>
   <string name="create_identity_init_error">Caricamento dei dettagli dell\'identità non riuscito</string>
   <string name="create_identity_item_creation_error">Creazione dell\'identità non riuscita</string>

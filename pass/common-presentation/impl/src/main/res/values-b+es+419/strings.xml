@@ -18,13 +18,38 @@
   -->
 <resources>
   <string name="item_details_snackbar_message_alias_copied">El alias fue copiado.</string>
+  <string name="item_details_snackbar_message_birthdate_copied">Cumpleaños copiado</string>
   <string name="item_details_snackbar_message_card_number_copied">El número de la tarjeta ha sido copiado.</string>
+  <string name="item_details_snackbar_message_city_copied">Ciudad copiada</string>
+  <string name="item_details_snackbar_message_company_copied">Compañía copiada</string>
+  <string name="item_details_snackbar_message_country_or_region_copied">País o región copiado</string>
+  <string name="item_details_snackbar_message_county_copied">Condado copiado</string>
   <string name="item_details_snackbar_message_custom_field_copied">El campo personalizado ha sido copiado.</string>
   <string name="item_details_snackbar_message_cvv_copied">El código de seguridad ha sido copiado.</string>
   <string name="item_details_snackbar_message_email_copied">Dirección de correo electrónico copiada</string>
+  <string name="item_details_snackbar_message_facebook_copied">Facebook copiado</string>
+  <string name="item_details_snackbar_message_first_name_copied">Nombre copiado</string>
+  <string name="item_details_snackbar_message_floor_copied">Piso copiado</string>
+  <string name="item_details_snackbar_message_full_name_copied">Nombre completo copiado</string>
+  <string name="item_details_snackbar_message_gender_copied">Género copiado</string>
+  <string name="item_details_snackbar_message_instagram_copied">Instagram copiado</string>
+  <string name="item_details_snackbar_message_last_name_copied">Apellido copiado</string>
+  <string name="item_details_snackbar_message_license_number_copied">Número de licencia copiado</string>
+  <string name="item_details_snackbar_message_linkedin_copied">LinkedIn copiado</string>
+  <string name="item_details_snackbar_message_middle_name_copied">Segundo nombre copiado</string>
+  <string name="item_details_snackbar_message_occupation_copied">Ocupación copiada</string>
+  <string name="item_details_snackbar_message_passport_number_copied">Número de pasaporte copiado</string>
   <string name="item_details_snackbar_message_password_copied">La contraseña ha sido copiada.</string>
+  <string name="item_details_snackbar_message_phone_number_copied">Número telefónico copiado</string>
   <string name="item_details_snackbar_message_pin_copied">El código PIN ha sido copiado.</string>
+  <string name="item_details_snackbar_message_reddit_copied">Reddit copiado</string>
+  <string name="item_details_snackbar_message_social_security_number_copied">Número de seguro social copiado</string>
+  <string name="item_details_snackbar_message_state_or_province_copied">Estado o provincia copiado</string>
+  <string name="item_details_snackbar_message_street_address_copied">Dirección de calle copiada</string>
   <string name="item_details_snackbar_message_totp_copied">El TOTP ha sido copiado.</string>
   <string name="item_details_snackbar_message_username_copied">El nombre de usuario ha sido copiado.</string>
   <string name="item_details_snackbar_message_website_copied">La URL del sitio web ha sido copiada</string>
+  <string name="item_details_snackbar_message_x_handle_copied">Usuario de X copiado</string>
+  <string name="item_details_snackbar_message_yahoo_copied">Yahoo! copiado</string>
+  <string name="item_details_snackbar_message_zip_or_postal_code_copied">Código postal copiado</string>
 </resources>

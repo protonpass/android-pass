@@ -32,20 +32,34 @@
   <!--Overview screen-->
   <string name="secure_links_overview_widget_expiration_title">Utløper om:</string>
   <string name="secure_links_overview_widget_max_views_title">Kan sees:</string>
+  <string name="secure_links_overview_widget_open_times_title">Åpnet:</string>
   <plurals name="secure_links_overview_widget_max_views_limited">
     <item quantity="one">%d gang</item>
     <item quantity="other">%d ganger</item>
   </plurals>
   <string name="secure_links_overview_widget_max_views_unlimited">Ubegrenset</string>
-  <string name="secure_links_shared_action_copy_link">Kopier kobling</string>
-  <string name="secure_links_shared_action_share_link">Del kobling</string>
   <string name="secure_links_overview_button_view_all_links">Vis alle dine sikre koblinger</string>
-  <string name="secure_links_shared_snackbar_message_link_copied">Sikker kobling kopiert</string>
   <!--List screen-->
   <string name="secure_links_list_title">Sikre koblinger</string>
+  <string name="secure_links_list_empty_title">Ingen sikre koblinger</string>
+  <string name="secure_links_list_empty_subtitle">Du kan begynne å opprette sikre koblinger fra delingsalternativer for elementdetaljer</string>
   <string name="secure_links_list_expiration_description">Utløper om %s</string>
+  <string name="secure_links_list_expired_description">Utløpt</string>
   <plurals name="secure_links_list_viewed_times_description">
     <item quantity="one">%d visning</item>
     <item quantity="other">%d visninger</item>
   </plurals>
+  <string name="secure_links_list_snackbar_message_links_fetch_error">Det oppstod en feil under henting av sikre koblinger</string>
+  <string name="secure_links_list_header_title_inactive">Inaktive koblinger</string>
+  <!--Shared-->
+  <string name="secure_links_shared_action_copy_link">Kopier kobling</string>
+  <string name="secure_links_shared_action_share_link">Del kobling</string>
+  <string name="secure_links_shared_action_delete_link">Fjern kobling</string>
+  <string name="secure_links_shared_action_delete_link_inactive">Fjern inaktiv kobling</string>
+  <string name="secure_links_shared_action_delete_links_inactive">Fjern alle inaktive koblinger</string>
+  <string name="secure_links_shared_snackbar_message_link_copied">Sikker kobling kopiert</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_canceled">Sikker sletting av kobling ble avbrutt</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_error">Det oppstod en feil under sletting av sikker kobling</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Sletting av inaktive sikre koblinger ble avbrutt</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">Det oppstod en feil under sletting av inaktive sikre koblinger</string>
 </resources>

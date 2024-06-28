@@ -39,6 +39,7 @@
   <string name="auth_error_pin_cannot_be_empty">PIN nemôže byť prázdny</string>
   <string name="auth_extra_password_label">Zadajte vaše dodatočné heslo</string>
   <string name="auth_extra_password_error">Chyba pri overovaní pomocou dodatočného hesla</string>
+  <string name="auth_extra_password_too_many_attempts">Too many failed login attempts. You have been logged out.</string>
   <string name="auth_error_wrong_password_no_attempts">Nesprávne heslo</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Nesprávne heslo. Zostáva %d pokus.</item>

@@ -11,11 +11,11 @@
   <string name="profile_option_rating">Оценить приложение</string>
   <string name="profile_option_autofill">Автозаполнение</string>
   <string name="profile_option_autofill_subtitle">Автоматическое заполнение имен пользователей и паролей.</string>
-  <string name="profile_option_secure_links">Secure links</string>
+  <string name="profile_option_secure_links">Защищенные ссылки</string>
   <string name="profile_error_biometry_failed_to_start">Не удалось запустить биометрическую аутентификацию</string>
   <string name="profile_error_biometry_failed_to_authenticate">Сбой аутентификации</string>
-  <string name="profile_fingerprint_lock_enabled">Fingerprint lock enabled</string>
-  <string name="profile_fingerprint_lock_disabled">Fingerprint lock disabled</string>
+  <string name="profile_fingerprint_lock_enabled">Отпечаток ключа включен</string>
+  <string name="profile_fingerprint_lock_disabled">Отпечаток ключа отключен</string>
   <string name="profile_error_performing_operation">Ошибка выполнения операции</string>
   <string name="profile_app_version_copied_to_clipboard">Версия приложения скопирована</string>
   <string name="feedback_option_reddit">Узнайте о Proton на Reddit</string>
@@ -49,11 +49,11 @@
   <string name="profile_option_unlock_with">Разблокировать с помощью</string>
   <string name="profile_option_change_pin_code">Изменить PIN-код</string>
   <string name="profile_option_autofill_samsung_not_supported" comment="This text will appear on the Autofill toggle if the user has the default browser set to Samsung Browser">Браузер Samsung установлен в качестве браузера по умолчанию. Он не поддерживает автозаполнение внешними менеджерами паролей.</string>
-  <string name="profile_passkey_support_section_title">Passkeys</string>
-  <string name="profile_passkey_support_subtitle_supported">Passkeys are supported</string>
-  <string name="profile_passkey_support_subtitle_not_supported_android_version">Your android version does not support passkeys</string>
-  <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Your device does not support passkeys</string>
-  <string name="profile_passkey_support_subtitle_not_supported_unknown">Could not check support for passkeys</string>
+  <string name="profile_passkey_support_section_title">Ключи доступа</string>
+  <string name="profile_passkey_support_subtitle_supported">Ключи доступа поддерживаются</string>
+  <string name="profile_passkey_support_subtitle_not_supported_android_version">Ваша версия Android не поддерживает ключи доступа</string>
+  <string name="profile_passkey_support_subtitle_not_supported_credential_manager">Ваше устройство не поддерживает ключи доступа</string>
+  <string name="profile_passkey_support_subtitle_not_supported_unknown">Не удалось проверить поддержку ключей доступа</string>
   <plurals name="profile_after_days">
     <item quantity="one">Через %d день</item>
     <item quantity="few">Через %d дня</item>

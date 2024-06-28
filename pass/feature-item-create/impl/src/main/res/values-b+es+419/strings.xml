@@ -114,7 +114,7 @@
   <string name="identity_field_passport_number_title">Número de pasaporte</string>
   <string name="identity_field_license_number_title">Número de licencia</string>
   <string name="identity_field_website_title">Sitio web</string>
-  <string name="identity_field_xhandle_title">Usuario de X</string>
+  <string name="identity_field_xhandle_title">Nombre de usuario de X</string>
   <string name="identity_field_company_title">Compañía</string>
   <string name="identity_field_job_title_title">Puesto laboral</string>
   <string name="identity_field_first_name_title">Nombre</string>
@@ -152,7 +152,7 @@
   <string name="identity_section_address_details">Detalles de dirección</string>
   <string name="identity_section_contact_details">Detalles de contacto</string>
   <string name="identity_section_work_details">Detalles de trabajo</string>
-  <string name="identity_add_more_fields">Añadir más</string>
+  <string name="identity_add_more_fields">Añadir otro campo</string>
   <string name="identity_bottomsheet_add_field">Añadir un campo</string>
   <string name="create_identity_init_error">Problema al recuperar los detalles de la identidad</string>
   <string name="create_identity_item_creation_error">No se pudo crear la identidad</string>

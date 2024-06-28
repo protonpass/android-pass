@@ -14,7 +14,7 @@
   <string name="account_manage_subscription">Gerenciar assinatura</string>
   <string name="account_get_user_info_error">Não foi possível recuperar as informações do usuário</string>
   <string name="manage_subscription_icon_content_description">Botão de gerenciar assinatura</string>
-  <string name="account_settings_list_item_password_header">Gerenciamento de senhas</string>
+  <string name="account_settings_list_item_password_header">Alterar senha</string>
   <string name="account_settings_list_item_recovery_header">E-mail de recuperação</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Não definido</string>
   <string name="account_settings_list_item_password_hint_grace">Redefinição de senha pendente</string>

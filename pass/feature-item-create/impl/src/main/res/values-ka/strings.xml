@@ -152,7 +152,7 @@
   <string name="identity_section_address_details">მისამართის დეტალები</string>
   <string name="identity_section_contact_details">კონტაქტის დეტალები</string>
   <string name="identity_section_work_details">სამსახურის დეტალები</string>
-  <string name="identity_add_more_fields">მეტის დამატება</string>
+  <string name="identity_add_more_fields">Add another field</string>
   <string name="identity_bottomsheet_add_field">ველის დამატება</string>
   <string name="create_identity_init_error">შეცდომა იდენტიფიკატორის დეტალების მიღებისას</string>
   <string name="create_identity_item_creation_error">იდენტიფიკატორის შექმნა შეუძლებელია</string>

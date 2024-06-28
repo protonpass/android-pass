@@ -152,7 +152,7 @@
   <string name="identity_section_address_details">Podrobnosti naslova</string>
   <string name="identity_section_contact_details">Podrobnosti stika</string>
   <string name="identity_section_work_details">Podatki o delovnem mestu</string>
-  <string name="identity_add_more_fields">Dodaj več</string>
+  <string name="identity_add_more_fields">Add another field</string>
   <string name="identity_bottomsheet_add_field">Dodaj polje</string>
   <string name="create_identity_init_error">Problem retrieving identity details</string>
   <string name="create_identity_item_creation_error">Identitete ni bilo mogoče ustvariti</string>

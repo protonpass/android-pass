@@ -35,19 +35,19 @@
   <string name="share_with_title">Comparteix amb</string>
   <string name="share_with_email_hint">Adreça de correu electrònic</string>
   <string name="share_with_email_error">L\'adreça de correu electrònic no és vàlida.</string>
-  <string name="share_with_email_cannot_invite_outside_org">You can\'t invite people outside of your organization, contact admin for more info</string>
-  <string name="share_with_email_email_already_added">You have already added this email address</string>
+  <string name="share_with_email_cannot_invite_outside_org">No podeu convidar persones fora de la vostra organització, contacteu amb l\'administrador per obtenir més informació</string>
+  <string name="share_with_email_email_already_added">Ja heu afegit aquesta adreça de correu electrònic</string>
   <string name="share_permissions_title">Estableix el nivell d`accés</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s us convida a accedir a elements a</string>
   <string name="sharing_join_shared_vault">Uniu-vos i sincronitzeu</string>
   <string name="sharing_reject_invitation">Rebutja la invitació</string>
-  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Congratulations, your access has been confirmed</string>
+  <string name="sharing_invitation_access_confirmed_title" comment="Title for the access confirmed bottomsheet">Enhorabona, el vostre accés s\'ha confirmat</string>
   <string name="sharing_invitation_access_confirmed_accept" comment="Button that will appear in the access confirmed bottomsheet">Mostra la caixa forta compartida</string>
   <string name="sharing_invitation_access_confirmed_close" comment="Button that will appear in the access confirmed bottomsheet for closing the bottomsheet">Tanca</string>
   <string name="sharing_snackbar_get_invite_error">No s’ha pogut obtenir la invitació.</string>
   <string name="sharing_snackbar_invite_accepted">Invitació acceptada</string>
   <string name="sharing_snackbar_invite_accept_error">S\'ha produït un error en acceptar la invitació</string>
-  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">Could not accept the invite as you have reached the vault limit</string>
+  <string name="sharing_snackbar_invite_accept_error_cannot_create_more_vaults">No s\'ha pogut acceptar la invitació perquè heu arribat al límit de la caixa forta</string>
   <string name="sharing_snackbar_invite_rejected">Invitació rebutjada</string>
   <string name="sharing_snackbar_invite_reject_error">S\'ha produït un error en rebutjar la invitació.</string>
   <string name="sharing_snackbar_vault_not_found">No s\'ha pogut trobar la caixa forta.</string>
@@ -99,17 +99,17 @@
   <string name="sharing_snackbar_transfer_ownership_error">Error transferint la propietat</string>
   <string name="sharing_invites_info_dialog_title">Límit de nombre de membres</string>
   <plurals name="sharing_invites_info_dialog_message" comment="Message that will appear when clicking the NUMBER invites left. Param 1: Max members of the vault (will always be greater than one). Param 2: Number of invites left.">
-    <item quantity="one">This vault can have up to %1$d members. You still have %2$d invite left.</item>
-    <item quantity="other">This vault can have up to %1$d members. You still have %2$d invites left.</item>
+    <item quantity="one">Aquesta caixa forta pot tenir fins a %1$d membres. Encara us queda %2$d invitació.</item>
+    <item quantity="other">Aquesta caixa forta pot tenir fins a %1$d membres. Encara us queden %2$d invitacions.</item>
   </plurals>
-  <string name="sharing_limit_reached">This vault has reached the member and invites limit.</string>
+  <string name="sharing_limit_reached">Aquesta caixa forta ha arribat al límit de membres i invitacions.</string>
   <string name="sharing_invites_info_upgrade_text">Actualitzeu ara per a convidar-ne més.</string>
   <string name="sharing_from_item_title" comment="Title for the Share from item bottomsheet">Comparteix</string>
-  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Use vaults to share items with others</string>
+  <string name="sharing_from_item_description" comment="Description for the Share from item bottomsheet">Utilitzeu les caixes fortes per compartir elements amb altres persones</string>
   <string name="sharing_from_item_share_this_vault_action" comment="Button for sharing this vault">Comparteix aquesta caixa forta</string>
   <string name="sharing_from_item_move_to_shared_vault_action" comment="Button for moving an item to a shared vault">Mou a una caixa forta compartida</string>
   <string name="sharing_from_item_create_vault_to_share_action" comment="Button for creating a new vault and sharing it">Crea una caixa forta per compartir</string>
-  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">This item will be moved to the new vault.</string>
+  <string name="sharing_from_item_create_vault_to_share_subtitle" comment="Text that will appear under the sharing_from_item_create_vault_to_share_action button">Aquest element es mourà a la caixa forta nova.</string>
   <string name="sharing_from_item_vault_limit_reached_upgrade">Milloreu per crear més caixes fortes</string>
   <string name="sharing_from_item_vault_limit_reached">Heu arribat al límit de caixes fortes.</string>
   <string name="share_with_suggestions_title">Suggeriments</string>
@@ -121,7 +121,7 @@
   <string name="sharing_edit_permissions_set_access_level_single_member">Defineix el nivell d\'accés per %s</string>
   <string name="sharing_edit_permissions_remove_user">Esborra l\'usuari</string>
   <string name="sharing_error_dialog_title">Error desconegut</string>
-  <string name="sharing_error_dialog_message">There was an error sending an invite for this vault. If the issue persists, please contact customer support service.</string>
+  <string name="sharing_error_dialog_message">S\'ha produït un error en enviar una invitació per a aquesta caixa forta. Si el problema persisteix, si us plau, poseu-vos en contacte amb el servei d\'atenció al client.</string>
   <string name="sharing_with_no_addresses_can_be_invited">No es poden convidar adreces.</string>
   <string name="sharing_with_some_addresses_cannot_be_invited">Algunes adreces no es poden convidar.</string>
 </resources>

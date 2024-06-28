@@ -5,7 +5,7 @@
   <string name="sort_by_title_desc">Заголовок (Я-А)</string>
   <string name="sort_by_creation_asc">От старых к новым</string>
   <string name="sort_by_creation_desc">От новых к старым</string>
-  <string name="sort_by_modification_date">Recently used</string>
+  <string name="sort_by_modification_date">Недавно использованные</string>
   <!-- List header results -->
   <string name="item_list_header_all_search_results">Все</string>
   <string name="item_list_header_pinned_search_results">Закреплённые</string>
@@ -26,7 +26,7 @@
   <string name="bottomsheet_move_to_trash">Переместить в Корзину</string>
   <string name="bottomsheet_pin_item">Закрепить</string>
   <string name="bottomsheet_unpin_item">Открепить</string>
-  <string name="bottomsheet_view_item_history">View history</string>
+  <string name="bottomsheet_view_item_history">Посмотреть историю</string>
   <string name="bottomsheet_monitor_exclude">Исключить из мониторинга</string>
   <string name="bottomsheet_monitor_include">Включить в мониторинг</string>
   <!-- Actions -->
@@ -38,9 +38,10 @@
   <string name="action_view_details">Просмотреть детали</string>
   <string name="action_see_all">Посмотреть все</string>
   <string name="action_confirm">Подтвердить</string>
-  <string name="action_cancel">Cancel</string>
+  <string name="action_cancel">Отменить</string>
   <string name="action_continue">Продолжить</string>
   <string name="action_retry">Повторите попытку</string>
+  <string name="action_edit">Редактировать</string>
   <!-- Empty list -->
   <string name="empty_list_title">Добавьте свой первый элемент</string>
   <string name="empty_search_results_title">Ничего не найдено</string>
@@ -66,7 +67,7 @@
   <string name="bottom_bar_list_items_icon_content_description">Элементы списка</string>
   <string name="bottom_bar_add_item_icon_content_description">Добавить элемент</string>
   <string name="bottom_bar_profile_icon_content_description">Профиль</string>
-  <string name="bottom_bar_security_center_icon_content_description">Security center</string>
+  <string name="bottom_bar_security_center_icon_content_description">Центр безопасности</string>
   <!-- List group by most recents -->
   <string name="most_recent_today">Сегодня</string>
   <string name="most_recent_yesterday">Вчера</string>
@@ -76,7 +77,7 @@
   <string name="most_recent_last_60_days">Последние 60 дней</string>
   <string name="most_recent_last_90_days">Последние 90 дней</string>
   <string name="most_recent_within_the_last_year">За последний год</string>
-  <string name="most_recent_more_than_1_year">Older than 1 year</string>
+  <string name="most_recent_more_than_1_year">Старше 1 года</string>
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">Иконка поиска</string>
   <!-- Select Vault BottomSheet -->
@@ -130,20 +131,55 @@
   <string name="item_details_login_section_password_title">Пароль</string>
   <string name="item_details_login_section_primary_totp_title">Токен 2ФА (TOTP)</string>
   <string name="item_details_login_section_websites_title">Веб-сайты</string>
+  <string name="item_details_identity_section_personal_title">Personal details</string>
+  <string name="item_details_identity_section_personal_first_name_title">First name</string>
+  <string name="item_details_identity_section_personal_middle_name_title">Middle name</string>
+  <string name="item_details_identity_section_personal_last_name_title">Last name</string>
+  <string name="item_details_identity_section_personal_full_name_title">Full name</string>
+  <string name="item_details_identity_section_personal_email_title">Email address</string>
+  <string name="item_details_identity_section_personal_gender_title">Gender</string>
+  <string name="item_details_identity_section_personal_phone_title">Phone number</string>
+  <string name="item_details_identity_section_personal_birthday_title">Birthday</string>
+  <string name="item_details_identity_section_address_title">Address details</string>
+  <string name="item_details_identity_section_address_street_address_title">Street address, P.O. box</string>
+  <string name="item_details_identity_section_address_floor_title">Floor</string>
+  <string name="item_details_identity_section_address_city_title">City</string>
+  <string name="item_details_identity_section_address_zip_or_postal_code_title">ZIP or postal code</string>
+  <string name="item_details_identity_section_address_state_or_province_title">State or province</string>
+  <string name="item_details_identity_section_address_county_title">County</string>
+  <string name="item_details_identity_section_address_country_or_region_title">Country or region</string>
+  <string name="item_details_identity_section_contact_title">Contact details</string>
+  <string name="item_details_identity_section_contact_social_security_number_title">Social security number</string>
+  <string name="item_details_identity_section_contact_passport_number_title">Passport number</string>
+  <string name="item_details_identity_section_contact_license_number_title">License number</string>
+  <string name="item_details_identity_section_contact_website_title">Website</string>
+  <string name="item_details_identity_section_contact_x_handle_title">X-Handle</string>
+  <string name="item_details_identity_section_contact_secondary_phone_number_title">Secondary phone number</string>
+  <string name="item_details_identity_section_contact_linkedin_title">LinkedIn</string>
+  <string name="item_details_identity_section_contact_reddit_title">Reddit</string>
+  <string name="item_details_identity_section_contact_facebook_title">Facebook</string>
+  <string name="item_details_identity_section_contact_yahoo_title">Yahoo</string>
+  <string name="item_details_identity_section_contact_instagram_title">Instagram</string>
+  <string name="item_details_identity_section_work_title">Work details</string>
+  <string name="item_details_identity_section_work_company_title">Company</string>
+  <string name="item_details_identity_section_work_occupation_title">Occupation</string>
+  <string name="item_details_identity_section_work_email_title">Work email address</string>
+  <string name="item_details_identity_section_work_phone_number_title">Work phone number</string>
+  <string name="item_details_identity_section_work_personal_website_title">Personal website</string>
   <string name="item_details_shared_section_note_title">Примечания</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Версия приложения больше не поддерживается, пожалуйста, обновите приложение.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Ключ доступа</string>
   <!-- Upgrade -->
   <string name="dialog_upgrade_plan_title">Улучшить план?</string>
-  <string name="dialog_upgrade_plan_message">This feature is not available for free tier users. If you want to enjoy this along with other cool features, upgrade your plan and give it a try!</string>
+  <string name="dialog_upgrade_plan_message">Эта функция недоступна пользователям бесплатного тарифа. Если вы хотите воспользоваться этой функцией, а также другими классными возможностями, перейдите на новый тариф и попробуйте!</string>
   <string name="dialog_upgrade_plan_action_confirm">Сменить тариф</string>
   <string name="dialog_upgrade_plan_action_cancel">Не сейчас</string>
   <!-- Words -->
   <string name="email_address">Адрес эл. почты</string>
   <string name="password">Пароль</string>
   <!-- Tooltips -->
-  <string name="tooltip_dismiss_button_content_description">Button to dismiss this tooltip and not show it again</string>
+  <string name="tooltip_dismiss_button_content_description">Кнопка, чтобы закрыть подсказку и не показывать ее снова</string>
   <!-- Time units -->
   <plurals name="time_unit_days">
     <item quantity="one">%d день</item>

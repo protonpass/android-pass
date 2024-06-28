@@ -32,6 +32,7 @@
   <!--Overview screen-->
   <string name="secure_links_overview_widget_expiration_title">Истекает через:</string>
   <string name="secure_links_overview_widget_max_views_title">Можно посмотреть:</string>
+  <string name="secure_links_overview_widget_open_times_title">Открыто:</string>
   <plurals name="secure_links_overview_widget_max_views_limited">
     <item quantity="one">%d раз</item>
     <item quantity="few">%d раза</item>
@@ -39,17 +40,30 @@
     <item quantity="other">%d раз</item>
   </plurals>
   <string name="secure_links_overview_widget_max_views_unlimited">Неограниченно</string>
+  <string name="secure_links_overview_button_view_all_links">Посмотреть все ваши защищенные ссылки</string>
+  <!--List screen-->
+  <string name="secure_links_list_title">Защищенные ссылки</string>
+  <string name="secure_links_list_empty_title">Нет защищенных ссылок</string>
+  <string name="secure_links_list_empty_subtitle">Вы можете начать создавать защищенные ссылки из параметров совместного использования деталей элемента</string>
+  <string name="secure_links_list_expiration_description">Истекает через %s</string>
+  <string name="secure_links_list_expired_description">Expired</string>
+  <plurals name="secure_links_list_viewed_times_description">
+    <item quantity="one">%d просмотр</item>
+    <item quantity="few">%d просмотра</item>
+    <item quantity="many">%d просмотров</item>
+    <item quantity="other">%d просмотров</item>
+  </plurals>
+  <string name="secure_links_list_snackbar_message_links_fetch_error">Возникла ошибка при получении защищенных ссылок</string>
+  <string name="secure_links_list_header_title_inactive">Inactive links</string>
+  <!--Shared-->
   <string name="secure_links_shared_action_copy_link">Копировать ссылку</string>
   <string name="secure_links_shared_action_share_link">Поделиться ссылкой</string>
-  <string name="secure_links_overview_button_view_all_links">View all your secure links</string>
+  <string name="secure_links_shared_action_delete_link">Удалить ссылку</string>
+  <string name="secure_links_shared_action_delete_link_inactive">Remove inactive link</string>
+  <string name="secure_links_shared_action_delete_links_inactive">Remove all inactive links</string>
   <string name="secure_links_shared_snackbar_message_link_copied">Защищенная ссылка скопирована</string>
-  <!--List screen-->
-  <string name="secure_links_list_title">Secure links</string>
-  <string name="secure_links_list_expiration_description">Expires in %s</string>
-  <plurals name="secure_links_list_viewed_times_description">
-    <item quantity="one">%d view</item>
-    <item quantity="few">%d views</item>
-    <item quantity="many">%d views</item>
-    <item quantity="other">%d views</item>
-  </plurals>
+  <string name="secure_links_shared_snackbar_message_link_deletion_canceled">Защищенное удаление ссылок было отменено</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_error">Произошла ошибка при удалении защищенной ссылки</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Inactive secure links deletion was canceled</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">There was an error deleting inactive secure links</string>
 </resources>

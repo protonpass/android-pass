@@ -26,6 +26,7 @@
   <string name="upsell_paid_feature_authenticator">Autenticador 2FA integrado</string>
   <string name="upsell_paid_feature_unlimited_aliases">Alias de hide-my-email ilimitados</string>
   <string name="upsell_paid_feature_vault_sharing">Compartir bóveda (hasta 10 personas)</string>
+  <string name="upsell_paid_feature_secure_links">Enlaces seguros</string>
   <string name="upsell_paid_feature_authenticator_essential">Autenticación 2FA necesaria para la organización</string>
   <string name="upsell_paid_feature_sso_essential">Integración SSO (próximamente)</string>
   <string name="upsell_button_upgrade">Obtener Pass Plus</string>

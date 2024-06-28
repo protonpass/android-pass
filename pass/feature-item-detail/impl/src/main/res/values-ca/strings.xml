@@ -45,7 +45,7 @@
   </plurals>
   <string name="login_item_monitor_widget_missing_two_fa_title">Configureu A2F per a més seguretat</string>
   <string name="login_item_monitor_widget_missing_two_fa_subtitle">Aquest servei ofereix A2F. Habiliteu-lo per a augmentar la seguretat del compte.</string>
-  <string name="login_item_reused_passwords_subtitle">Elements de les seves caixes fortes que utilitzen aquesta contrasenya.</string>
+  <string name="login_item_reused_passwords_subtitle">Elements de les vostres caixes fortes que utilitzen aquesta contrasenya.</string>
   <string name="field_email">Adreça de correu electrònic</string>
   <string name="field_username">Nom d\'usuari</string>
   <string name="field_username_or_email">Nom d\'usuari o adreça de correu electrònic</string>
@@ -101,12 +101,12 @@
     -->
   <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
   <string name="item_detail_cannot_perform_action_edit_title">No es pot editar.</string>
-  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">You cannot edit this item because you don\'t have enough permissions to do so.</string>
-  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">You are only allowed to edit items in your oldest vaults. In order to edit this item, please upgrade your current plan.</string>
-  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">You cannot edit this item because it\'s in the trash. Please move it out of the trash before editing it.</string>
+  <string name="item_detail_cannot_perform_action_edit_no_permissions_message">No podeu editar aquest element perquè no teniu prou permisos per fer-ho.</string>
+  <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Només podeu editar elements a les vostres caixes fortes més antigues. Per editar aquest element, milloreu el vostre pla actual.</string>
+  <string name="item_detail_cannot_perform_action_edit_item_in_trash_message">No podeu editar aquest element perquè és a la paperera. Si us plau, traieu-lo de la paperera abans d\'editar-lo.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">No es pot compartir.</string>
-  <string name="item_detail_cannot_perform_action_share_no_permissions_message">You don\'t have enough permissions to share this vault.</string>
-  <string name="item_detail_cannot_perform_action_share_limit_reached">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
+  <string name="item_detail_cannot_perform_action_share_no_permissions_message">No teniu prou permisos per compartir aquesta caixa forta.</string>
+  <string name="item_detail_cannot_perform_action_share_limit_reached">Heu assolit el límit de compartició de la caixa forta. Per compartir més caixes fortes, milloreu el vostre pla actual.</string>
   <string name="item_detail_history_created">Creat</string>
   <string name="item_detail_history_modified_last">Última modificació</string>
   <string name="item_detail_history_button_view">Mostra l\'historial de l\'element</string>
@@ -117,5 +117,5 @@
   <string name="passkey_detail_bottomsheet_username">Nom d\'usuari</string>
   <string name="passkey_detail_bottomsheet_domain">Domini</string>
   <string name="passkey_detail_bottomsheet_key">Clau</string>
-  <string name="passkey_detail_bottomsheet_created">Creat</string>
+  <string name="passkey_detail_bottomsheet_created">Creada</string>
 </resources>

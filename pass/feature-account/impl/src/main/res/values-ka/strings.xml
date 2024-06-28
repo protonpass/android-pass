@@ -14,7 +14,7 @@
   <string name="account_manage_subscription">გამოწერის მართვა</string>
   <string name="account_get_user_info_error">მომხმარებლის ინფორმაციის მიღების შეცდომა</string>
   <string name="manage_subscription_icon_content_description">გამოწერის ღილაკის მართვა</string>
-  <string name="account_settings_list_item_password_header">პაროლების მართვა</string>
+  <string name="account_settings_list_item_password_header">პაროლის შეცვლა</string>
   <string name="account_settings_list_item_recovery_header">აღდგენის ელფოსტა</string>
   <string name="account_settings_list_item_recovery_hint_not_set">დაყენებული არაა</string>
   <string name="account_settings_list_item_password_hint_grace">პაროლის ჩამოყრა რიგშია</string>

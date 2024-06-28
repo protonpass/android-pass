@@ -17,7 +17,7 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="select_item_only_searching_in_oldest_vaults">Your plan only allows to use items in your oldest vaults.</string>
+  <string name="select_item_only_searching_in_oldest_vaults">Ваш тариф позволяет использовать элементы только в самых старых хранилищах.</string>
   <string name="error_credentials_not_found">Совпадающих учётных данных не найдено</string>
   <!-- Placeholder will contain the domain / app name we are trying to autofill -->
   <string name="select_item_suggestions_for_placeholder">Предложения для %s</string>

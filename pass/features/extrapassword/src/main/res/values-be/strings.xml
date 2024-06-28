@@ -29,7 +29,7 @@
   <string name="info_extra_password_body">Абараніць Proton Pass з дапамогай дадатковага пароля.</string>
   <string name="info_extra_password_button">Задаць дадатковы пароль</string>
   <string name="configure_extra_password_cannot_be_blank">Пароль не можа быць пустым</string>
-  <string name="configure_extra_password_password_too_short">Пароль занадта кароткі</string>
+  <string name="configure_extra_password_password_too_short">Дадатковы пароль павінен мець прынамсі 8 сімвалаў</string>
   <string name="confirm_extra_password_title">Задаць дадатковы пароль</string>
   <string name="confirm_extra_password_body">На ўсіх вашых іншых прыладах сеанс будзе завершаны і вам неабходна будзе аўтарызавацца паўторна.</string>
   <string name="confirm_extra_password_error">Немагчыма задаць дадатковы пароль</string>

@@ -26,6 +26,7 @@
   <string name="upsell_paid_feature_authenticator">Інтегрований двоетапний (2FA) автентифікатор</string>
   <string name="upsell_paid_feature_unlimited_aliases">Необмежена кількість псевдонімів Hide-my-email</string>
   <string name="upsell_paid_feature_vault_sharing">Vault sharing (up to 10 people)</string>
+  <string name="upsell_paid_feature_secure_links">Secure links</string>
   <string name="upsell_paid_feature_authenticator_essential">Вимагати двоетапну автентифікацію для організації</string>
   <string name="upsell_paid_feature_sso_essential">Інтеграція SSO (незабаром)</string>
   <string name="upsell_button_upgrade">Get Pass Plus</string>

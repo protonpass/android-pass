@@ -67,7 +67,7 @@ internal fun ItemDetailsContent(
                         },
                         onOptionsClick = {},
                         onShareClick = {
-                            ItemDetailsUiEvent.OnShareClicked(
+                            ItemDetailsUiEvent.OnShareItemClicked(
                                 shareId = shareId,
                                 itemId = itemId
                             ).also(onEvent)
@@ -103,6 +103,11 @@ internal fun ItemDetailsContent(
                         PassItemDetailsUiEvent.OnViewItemHistoryClick -> ItemDetailsUiEvent.OnViewItemHistoryClicked(
                             shareId = shareId,
                             itemId = itemId
+                        )
+
+                        is PassItemDetailsUiEvent.OnSharedVaultClick -> ItemDetailsUiEvent.OnSharedVaultClicked(
+                            sharedVaultId = uiEvent.sharedVaultId,
+                            itemCategory = itemDetailState.itemCategory
                         )
                     }.also(onEvent)
                 }

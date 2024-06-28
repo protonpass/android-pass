@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
+import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.titles.PassItemDetailSubtitle
 import proton.android.pass.composecomponents.impl.item.details.titles.PassItemDetailTitle
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
@@ -40,13 +41,15 @@ import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.pinning.BoxedPin
 import proton.android.pass.composecomponents.impl.pinning.CircledPin
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 
 @Composable
 internal fun PassItemDetailTitleRow(
     modifier: Modifier = Modifier,
     itemDetailState: ItemDetailState,
-    itemColors: PassItemColors
+    itemColors: PassItemColors,
+    onEvent: (PassItemDetailsUiEvent) -> Unit
 ) = with(itemDetailState) {
     when (this) {
         is ItemDetailState.Alias -> {
@@ -55,7 +58,12 @@ internal fun PassItemDetailTitleRow(
                 title = itemContents.title,
                 isPinned = isItemPinned,
                 itemColors = itemColors,
-                vault = itemVault
+                vault = itemVault,
+                onSharedVaultClick = { sharedVaultId ->
+                    PassItemDetailsUiEvent.OnSharedVaultClick(
+                        sharedVaultId = sharedVaultId
+                    ).also(onEvent)
+                }
             ) {
                 AliasIcon(
                     size = 60,
@@ -70,7 +78,12 @@ internal fun PassItemDetailTitleRow(
                 title = itemContents.title,
                 isPinned = isItemPinned,
                 itemColors = itemColors,
-                vault = itemVault
+                vault = itemVault,
+                onSharedVaultClick = { sharedVaultId ->
+                    PassItemDetailsUiEvent.OnSharedVaultClick(
+                        sharedVaultId = sharedVaultId
+                    ).also(onEvent)
+                }
             ) {
                 CreditCardIcon(
                     size = 60,
@@ -85,7 +98,12 @@ internal fun PassItemDetailTitleRow(
                 title = itemContents.title,
                 isPinned = isItemPinned,
                 itemColors = itemColors,
-                vault = itemVault
+                vault = itemVault,
+                onSharedVaultClick = { sharedVaultId ->
+                    PassItemDetailsUiEvent.OnSharedVaultClick(
+                        sharedVaultId = sharedVaultId
+                    ).also(onEvent)
+                }
             ) {
                 IdentityIcon(
                     size = 60,
@@ -100,7 +118,12 @@ internal fun PassItemDetailTitleRow(
                 title = itemContents.title,
                 isPinned = isItemPinned,
                 itemColors = itemColors,
-                vault = itemVault
+                vault = itemVault,
+                onSharedVaultClick = { sharedVaultId ->
+                    PassItemDetailsUiEvent.OnSharedVaultClick(
+                        sharedVaultId = sharedVaultId
+                    ).also(onEvent)
+                }
             ) {
                 LoginIcon(
                     size = 60,
@@ -142,7 +165,11 @@ internal fun PassItemDetailTitleRow(
                     itemVault?.let { vault ->
                         PassItemDetailSubtitle(
                             vault = vault,
-                            onClick = {}
+                            onClick = {
+                                PassItemDetailsUiEvent.OnSharedVaultClick(
+                                    sharedVaultId = vault.shareId
+                                ).also(onEvent)
+                            }
                         )
                     }
                 }
@@ -155,8 +182,10 @@ internal fun PassItemDetailTitleRow(
                 title = itemContents.title,
                 isPinned = false,
                 itemColors = itemColors,
-                vault = itemVault
-            ) {}
+                vault = itemVault,
+                onSharedVaultClick = {},
+                iconContent = {}
+            )
         }
     }
 }
@@ -168,6 +197,7 @@ private fun ItemDetailTitleRow(
     isPinned: Boolean,
     itemColors: PassItemColors,
     vault: Vault?,
+    onSharedVaultClick: (ShareId) -> Unit,
     iconContent: @Composable RowScope.() -> Unit
 ) {
     Row(
@@ -196,7 +226,7 @@ private fun ItemDetailTitleRow(
             vault?.let { itemVault ->
                 PassItemDetailSubtitle(
                     vault = itemVault,
-                    onClick = {}
+                    onClick = { onSharedVaultClick(itemVault.shareId) }
                 )
             }
         }

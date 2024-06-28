@@ -91,7 +91,9 @@ private fun ItemHistoryRestoreDetails(
             ItemHistoryRestoreEvent.OnItemRestored -> {
                 isDialogVisible = false
                 isDialogLoading = false
-                onNavigated(ItemHistoryNavDestination.Detail)
+                ItemHistoryNavDestination.Detail(
+                    itemCategory = itemDetailState.itemCategory
+                ).also(onNavigated)
             }
 
             ItemHistoryRestoreEvent.OnRestoreItem -> {

@@ -66,7 +66,12 @@ internal fun ItemDetailsContent(
                             ).also(onEvent)
                         },
                         onOptionsClick = {},
-                        onShareClick = {}
+                        onShareClick = {
+                            ItemDetailsUiEvent.OnShareClicked(
+                                shareId = shareId,
+                                itemId = itemId
+                            ).also(onEvent)
+                        }
                     )
                 },
                 onEvent = { uiEvent ->

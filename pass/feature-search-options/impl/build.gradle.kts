@@ -43,6 +43,7 @@ dependencies {
     implementation(libs.kotlinx.collections)
     implementation(libs.core.presentation.compose)
     implementation(libs.core.presentation)
+    implementation(libs.core.user.domain)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.ui)

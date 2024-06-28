@@ -26,10 +26,11 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.appconfig.api.AppConfig
-import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.some
+import proton.android.pass.common.api.toOption
+import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.monitor.MonitorStatusPreference
 import proton.android.pass.preferences.sentinel.SentinelStatusPreference
@@ -185,14 +186,12 @@ class UserPreferencesRepositoryImpl @Inject constructor(
         AllowScreenshotsPreference.from(value)
     }
 
-    override fun setDefaultVault(shareId: String): Result<Unit> = setPreference {
-        it.setDefaultVault(shareId)
+    override fun setDefaultVault(userId: UserId, shareId: ShareId): Result<Unit> = setPreference {
+        it.putDefaultVaultPerUser(userId.id, shareId.id)
     }
 
-    override fun getDefaultVault(): Flow<Option<String>> = getPreference {
-        val value = it.defaultVault
-        if (value.isNullOrBlank()) None
-        else value.some()
+    override fun getDefaultVault(userId: UserId): Flow<Option<String>> = getPreference {
+        it.defaultVaultPerUserMap[userId.id].toOption()
     }
 
     override fun tryClearPreferences(): Result<Unit> = runBlocking { clearPreferences() }

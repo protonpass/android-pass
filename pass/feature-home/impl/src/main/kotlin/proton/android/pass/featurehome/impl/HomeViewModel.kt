@@ -42,6 +42,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -98,6 +99,7 @@ import proton.android.pass.data.api.usecases.DeleteItems
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveAppNeedsUpdate
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObservePinnedItems
 import proton.android.pass.data.api.usecases.ObserveVaults
@@ -187,6 +189,7 @@ class HomeViewModel @Inject constructor(
     private val unpinItem: UnpinItem,
     private val pinItems: PinItems,
     private val unpinItems: UnpinItems,
+    private val observeCurrentUser: ObserveCurrentUser,
     observeVaults: ObserveVaults,
     clock: Clock,
     observeItems: ObserveItems,
@@ -233,11 +236,15 @@ class HomeViewModel @Inject constructor(
 
     private val shareListWrapperFlow: Flow<ShareListWrapper> = combine(
         searchOptionsFlow.map { it.vaultSelectionOption },
-        observeVaults().asLoadingResult()
-    ) { vaultSelection, vaultsResult ->
+        observeVaults().asLoadingResult(),
+        observeCurrentUser()
+    ) { vaultSelection, vaultsResult, currentUser ->
         val vaults: List<Vault> = vaultsResult.getOrNull() ?: emptyList()
         if (vaults.size == 1 && vaultSelection is VaultSelectionOption.AllVaults) {
-            homeSearchOptionsRepository.setVaultSelectionOption(VaultSelectionOption.Vault(vaults.first().shareId))
+            homeSearchOptionsRepository.setVaultSelectionOption(
+                currentUser.userId,
+                VaultSelectionOption.Vault(vaults.first().shareId)
+            )
         }
         val shares: PersistentMap<ShareId, ShareUiModel> = vaults.associate {
             it.shareId to ShareUiModel.fromVault(it)
@@ -250,7 +257,10 @@ class HomeViewModel @Inject constructor(
                     .firstOrNull { it.shareId == vaultSelection.shareId }
                     .toOption()
                 if (match is None && vaults.isNotEmpty()) {
-                    homeSearchOptionsRepository.setVaultSelectionOption(VaultSelectionOption.AllVaults)
+                    homeSearchOptionsRepository.setVaultSelectionOption(
+                        currentUser.userId,
+                        VaultSelectionOption.AllVaults
+                    )
                 }
                 match.map { ShareUiModel.fromVault(it) }
             }
@@ -564,12 +574,17 @@ class HomeViewModel @Inject constructor(
 
 
     init {
-        // Setup initial share id if we can get one from the route
-        val initialShareId: String? = savedState.get()[CommonOptionalNavArgId.ShareId.key]
-        if (initialShareId != null) {
-            val vaultSelection = VaultSelectionOption.Vault(ShareId(initialShareId))
-            homeSearchOptionsRepository.setVaultSelectionOption(vaultSelection)
+        viewModelScope.launch {
+            // Setup initial share id if we can get one from the route
+            val initialShareId: String? = savedState.get()[CommonOptionalNavArgId.ShareId.key]
+            if (initialShareId != null) {
+                val vaultSelection = VaultSelectionOption.Vault(ShareId(initialShareId))
+                observeCurrentUser().firstOrNull()?.let {
+                    homeSearchOptionsRepository.setVaultSelectionOption(it.userId, vaultSelection)
+                }
+            }
         }
+
 
         // Observe bulkMoveToVault event
         viewModelScope.launch {
@@ -774,7 +789,11 @@ class HomeViewModel @Inject constructor(
     }
 
     fun setVaultSelection(vaultSelection: VaultSelectionOption) {
-        homeSearchOptionsRepository.setVaultSelectionOption(vaultSelection)
+        viewModelScope.launch {
+            observeCurrentUser().firstOrNull()?.let {
+                homeSearchOptionsRepository.setVaultSelectionOption(it.userId, vaultSelection)
+            }
+        }
         homeSearchOptionsRepository.setFilterOption(FilterOption(SearchFilterType.All))
     }
 

@@ -18,9 +18,14 @@
 
 package proton.android.pass.featuresearchoptions.impl
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.featuresearchoptions.api.FilterOption
 import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.SearchOptions
@@ -34,13 +39,19 @@ import javax.inject.Singleton
 
 @Singleton
 class HomeSearchOptionsRepositoryImpl @Inject constructor(
+    observeCurrentUser: ObserveCurrentUser,
     private val internalSettingsRepository: InternalSettingsRepository
 ) : HomeSearchOptionsRepository {
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val selectedVaultFlow = observeCurrentUser()
+        .flatMapLatest { internalSettingsRepository.getSelectedVault(it.userId) }
+        .distinctUntilChanged()
 
     override fun observeSearchOptions(): Flow<SearchOptions> = combine(
         internalSettingsRepository.getHomeFilterOption(),
         internalSettingsRepository.getHomeSortingOption(),
-        internalSettingsRepository.getSelectedVault()
+        selectedVaultFlow
     ) { filter, sorting, vault ->
         SearchOptions(
             filterOption = FilterOption(filter.toDomain()),
@@ -56,9 +67,8 @@ class HomeSearchOptionsRepositoryImpl @Inject constructor(
     override fun observeFilterOption(): Flow<FilterOption> = internalSettingsRepository.getHomeFilterOption()
         .map { FilterOption(it.toDomain()) }
 
-    override fun observeVaultSelectionOption(): Flow<VaultSelectionOption> = internalSettingsRepository
-        .getSelectedVault()
-        .map { it.toSelectionOption() }
+    override fun observeVaultSelectionOption(): Flow<VaultSelectionOption> = selectedVaultFlow
+        .map(SelectedVaultPreference::toSelectionOption)
 
     override fun setSortingOption(sortingOption: SortingOption) {
         internalSettingsRepository.setHomeSortingOption(sortingOption.toPreference())
@@ -68,12 +78,12 @@ class HomeSearchOptionsRepositoryImpl @Inject constructor(
         internalSettingsRepository.setHomeFilterOption(filterOption.toPreference())
     }
 
-    override fun setVaultSelectionOption(vaultSelectionOption: VaultSelectionOption) {
-        internalSettingsRepository.setSelectedVault(vaultSelectionOption.toPreference())
+    override fun setVaultSelectionOption(userId: UserId, vaultSelectionOption: VaultSelectionOption) {
+        internalSettingsRepository.setSelectedVault(userId, vaultSelectionOption.toPreference())
     }
 
-    override fun clearSearchOptions() {
+    override fun clearSearchOptions(userId: UserId) {
         internalSettingsRepository.setHomeSortingOption(SortingOptionPreference.MostRecent)
-        internalSettingsRepository.setSelectedVault(SelectedVaultPreference.AllVaults)
+        internalSettingsRepository.setSelectedVault(userId, SelectedVaultPreference.AllVaults)
     }
 }

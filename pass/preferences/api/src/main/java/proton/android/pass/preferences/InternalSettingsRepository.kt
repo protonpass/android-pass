@@ -19,6 +19,7 @@
 package proton.android.pass.preferences
 
 import kotlinx.coroutines.flow.Flow
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
 
 @Suppress("TooManyFunctions", "ComplexInterface")
@@ -45,8 +46,8 @@ interface InternalSettingsRepository {
     fun setAutofillFilterOption(filterOption: FilterOptionPreference): Result<Unit>
     fun getAutofillFilterOption(): Flow<FilterOptionPreference>
 
-    fun setSelectedVault(selectedVault: SelectedVaultPreference): Result<Unit>
-    fun getSelectedVault(): Flow<SelectedVaultPreference>
+    fun setSelectedVault(userId: UserId, selectedVault: SelectedVaultPreference): Result<Unit>
+    fun getSelectedVault(userId: UserId): Flow<SelectedVaultPreference>
 
     fun setPinAttemptsCount(count: Int): Result<Unit>
     fun getPinAttemptsCount(): Flow<Int>

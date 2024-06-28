@@ -39,6 +39,7 @@
   <string name="action_cancel">Annulla</string>
   <string name="action_continue">Continua</string>
   <string name="action_retry">Riprova</string>
+  <string name="action_edit">Modifica</string>
   <!-- Empty list -->
   <string name="empty_list_title">Aggiungi un elemento</string>
   <string name="empty_search_results_title">Nessun risultato trovato</string>
@@ -126,6 +127,41 @@
   <string name="item_details_login_section_password_title">Password</string>
   <string name="item_details_login_section_primary_totp_title">Token 2FA (TOTP)</string>
   <string name="item_details_login_section_websites_title">Siti web</string>
+  <string name="item_details_identity_section_personal_title">Informazioni personali</string>
+  <string name="item_details_identity_section_personal_first_name_title">Nome</string>
+  <string name="item_details_identity_section_personal_middle_name_title">Secondo nome</string>
+  <string name="item_details_identity_section_personal_last_name_title">Cognome</string>
+  <string name="item_details_identity_section_personal_full_name_title">Nome completo</string>
+  <string name="item_details_identity_section_personal_email_title">Indirizzo email</string>
+  <string name="item_details_identity_section_personal_gender_title">Sesso</string>
+  <string name="item_details_identity_section_personal_phone_title">Telefono</string>
+  <string name="item_details_identity_section_personal_birthday_title">Compleanno</string>
+  <string name="item_details_identity_section_address_title">Dettagli dell\'indirizzo</string>
+  <string name="item_details_identity_section_address_street_address_title">Indirizzo o casella postale</string>
+  <string name="item_details_identity_section_address_floor_title">Piano</string>
+  <string name="item_details_identity_section_address_city_title">Città</string>
+  <string name="item_details_identity_section_address_zip_or_postal_code_title">CAP</string>
+  <string name="item_details_identity_section_address_state_or_province_title">Stato o provincia</string>
+  <string name="item_details_identity_section_address_county_title">Provincia</string>
+  <string name="item_details_identity_section_address_country_or_region_title">Paese o regione</string>
+  <string name="item_details_identity_section_contact_title">Dettagli di contatto</string>
+  <string name="item_details_identity_section_contact_social_security_number_title">Codice fiscale</string>
+  <string name="item_details_identity_section_contact_passport_number_title">Passaporto</string>
+  <string name="item_details_identity_section_contact_license_number_title">Patente</string>
+  <string name="item_details_identity_section_contact_website_title">Sito web</string>
+  <string name="item_details_identity_section_contact_x_handle_title">Nome utente di X</string>
+  <string name="item_details_identity_section_contact_secondary_phone_number_title">Numero di telefono secondario</string>
+  <string name="item_details_identity_section_contact_linkedin_title">LinkedIn</string>
+  <string name="item_details_identity_section_contact_reddit_title">Reddit</string>
+  <string name="item_details_identity_section_contact_facebook_title">Facebook</string>
+  <string name="item_details_identity_section_contact_yahoo_title">Yahoo</string>
+  <string name="item_details_identity_section_contact_instagram_title">Instagram</string>
+  <string name="item_details_identity_section_work_title">Dettagli di lavoro</string>
+  <string name="item_details_identity_section_work_company_title">Azienda</string>
+  <string name="item_details_identity_section_work_occupation_title">Tipo di occupazione</string>
+  <string name="item_details_identity_section_work_email_title">Indirizzo email lavorativo</string>
+  <string name="item_details_identity_section_work_phone_number_title">Numero di telefono lavorativo</string>
+  <string name="item_details_identity_section_work_personal_website_title">Sito web personale</string>
   <string name="item_details_shared_section_note_title">Nota</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">La versione della tua applicazione non è più supportata. Aggiorna l\'applicazione.</string>
   <!-- Passkeys -->

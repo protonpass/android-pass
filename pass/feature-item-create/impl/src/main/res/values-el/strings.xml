@@ -152,7 +152,7 @@
   <string name="identity_section_address_details">Λεπτομέρειες διεύθυνσης</string>
   <string name="identity_section_contact_details">Στοιχεία επαφής</string>
   <string name="identity_section_work_details">Λεπτομέρειες εργασίας</string>
-  <string name="identity_add_more_fields">Προσθέστε περισσότερα</string>
+  <string name="identity_add_more_fields">Add another field</string>
   <string name="identity_bottomsheet_add_field">Προσθήκη πεδίου</string>
   <string name="create_identity_init_error">Πρόβλημα ανάκτησης λεπτομερειών ταυτότητας</string>
   <string name="create_identity_item_creation_error">Δεν ήταν δυνατή η δημιουργία ταυτότητας</string>

@@ -14,7 +14,7 @@
   <string name="account_manage_subscription">Управление подпиской</string>
   <string name="account_get_user_info_error">Не могу получить информацию о пользователе</string>
   <string name="manage_subscription_icon_content_description">Кнопка управления подпиской</string>
-  <string name="account_settings_list_item_password_header">Управление паролями</string>
+  <string name="account_settings_list_item_password_header">Изменить пароль</string>
   <string name="account_settings_list_item_recovery_header">Резервный адрес электронной почты</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Не установлен</string>
   <string name="account_settings_list_item_password_hint_grace">Ожидается сброс пароля</string>

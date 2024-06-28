@@ -36,7 +36,7 @@
   <string name="share_with_email_hint">E-posta adresi</string>
   <string name="share_with_email_error">E-posta adresi geçersiz</string>
   <string name="share_with_email_cannot_invite_outside_org">Kuruluşunuz dışındaki kişileri davet edemezsiniz. Ayrıntılı bilgi almak için yönetici ile görüşün</string>
-  <string name="share_with_email_email_already_added">You have already added this email address</string>
+  <string name="share_with_email_email_already_added">Bu e-posta adresini zaten eklemişsiniz</string>
   <string name="share_permissions_title">Erişim düzeyini ayarla</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s sizi şu kasadaki ögelere erişmeye davet ediyor:</string>
   <string name="sharing_join_shared_vault">Katıl ve eşitle</string>

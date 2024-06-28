@@ -19,16 +19,17 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.defaultvault.ObserveDefaultVault
 import proton.android.pass.domain.ShareId
@@ -42,16 +43,21 @@ import javax.inject.Singleton
 
 @Singleton
 class ObserveDefaultVaultImpl @Inject constructor(
+    private val observeCurrentUser: ObserveCurrentUser,
     private val preferencesRepository: UserPreferencesRepository,
     private val getVaultWithItemCount: GetVaultWithItemCountById,
     private val observeVaults: ObserveVaults
 ) : ObserveDefaultVault {
 
-    override fun invoke(): Flow<Option<VaultWithItemCount>> = preferencesRepository.getDefaultVault()
-        .flatMapLatest { defaultVault ->
+    override fun invoke(): Flow<Option<VaultWithItemCount>> = observeCurrentUser()
+        .flatMapLatest { user ->
+            preferencesRepository.getDefaultVault(user.userId)
+                .map { user.userId to it }
+        }
+        .flatMapLatest { (userId, defaultVault) ->
             when (defaultVault) {
                 None -> {
-                    setDefaultVault()
+                    setDefaultVault(userId)
                     flowOf(None)
                 }
 
@@ -59,14 +65,8 @@ class ObserveDefaultVaultImpl @Inject constructor(
                     .map { it.toOption() }
             }
         }
-        .catch {
-            PassLogger.w(TAG, "Could not find the default vault")
-            PassLogger.w(TAG, it)
-            setDefaultVault()
-            emit(None)
-        }
 
-    private suspend fun setDefaultVault() {
+    private suspend fun setDefaultVault(userId: UserId) {
         val vaults = observeVaults().firstOrNull() ?: run {
             PassLogger.w(TAG, "There are no vaults")
             return
@@ -77,7 +77,7 @@ class ObserveDefaultVaultImpl @Inject constructor(
             return
         }
 
-        preferencesRepository.setDefaultVault(defaultVault.shareId.id)
+        preferencesRepository.setDefaultVault(userId, defaultVault.shareId)
             .onSuccess {
                 PassLogger.i(TAG, "Set default vault to ${defaultVault.shareId.id}")
             }

@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.datetime.Instant
+import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
@@ -37,9 +38,12 @@ internal fun PassIdentityItemDetailsSections(
     contents: ItemContents.Identity,
     itemColors: PassItemColors,
     onEvent: (PassItemDetailsUiEvent) -> Unit,
+    lastAutofillOption: Option<Instant>,
+    revision: Long,
     createdAt: Instant,
     modifiedAt: Instant,
-    shouldDisplayItemHistorySection: Boolean
+    shouldDisplayItemHistorySection: Boolean,
+    shouldDisplayItemHistoryButton: Boolean
 ) = with(contents) {
     Column(
         modifier = modifier,
@@ -88,10 +92,13 @@ internal fun PassIdentityItemDetailsSections(
         if (shouldDisplayItemHistorySection) {
             PassItemDetailsHistorySection(
                 modifier = Modifier.padding(vertical = Spacing.extraSmall),
+                lastAutofillAtOption = lastAutofillOption,
+                revision = revision,
                 createdAt = createdAt,
                 modifiedAt = modifiedAt,
                 itemColors = itemColors,
-                onViewItemHistoryClicked = { onEvent(PassItemDetailsUiEvent.OnViewItemHistoryClick) }
+                onViewItemHistoryClicked = { onEvent(PassItemDetailsUiEvent.OnViewItemHistoryClick) },
+                shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton
             )
         }
     }

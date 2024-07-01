@@ -42,7 +42,8 @@ fun Item.toUiModel(context: EncryptionContext): ItemUiModel = ItemUiModel(
     modificationTime = modificationTime,
     lastAutofillTime = lastAutofillTime.value(),
     isPinned = isPinned,
-    category = itemType.category
+    category = itemType.category,
+    revision = revision
 )
 
 fun Item.toUiModel(
@@ -62,7 +63,8 @@ fun Item.toUiModel(
     modificationTime = modificationTime,
     lastAutofillTime = lastAutofillTime.value(),
     isPinned = isPinned,
-    category = itemType.category
+    category = itemType.category,
+    revision = revision
 )
 
 fun Item.itemName(context: EncryptionContext): String = context.decrypt(title)

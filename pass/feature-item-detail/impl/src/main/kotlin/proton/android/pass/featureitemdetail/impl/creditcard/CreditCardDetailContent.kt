@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
@@ -74,14 +75,15 @@ fun CreditCardDetailContent(
             accentColor = PassTheme.colors.cardInteractionNorm
         )
 
-        if (isHistoryFeatureEnabled) {
-            PassItemDetailsHistorySection(
-                createdAt = contents.model.createTime,
-                modifiedAt = contents.model.modificationTime,
-                onViewItemHistoryClicked = { onEvent(CreditCardDetailEvent.OnViewItemHistoryClicked) },
-                itemColors = passItemColors(itemCategory = ItemCategory.CreditCard)
-            )
-        }
+        PassItemDetailsHistorySection(
+            lastAutofillAtOption = contents.model.lastAutofillTime.toOption(),
+            revision = contents.model.revision,
+            createdAt = contents.model.createTime,
+            modifiedAt = contents.model.modificationTime,
+            onViewItemHistoryClicked = { onEvent(CreditCardDetailEvent.OnViewItemHistoryClicked) },
+            itemColors = passItemColors(itemCategory = ItemCategory.CreditCard),
+            shouldDisplayItemHistoryButton = isHistoryFeatureEnabled
+        )
 
         MoreInfo(moreInfoUiState = moreInfoUiState)
     }

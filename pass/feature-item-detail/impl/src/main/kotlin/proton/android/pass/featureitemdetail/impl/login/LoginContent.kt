@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.collections.immutable.toPersistentSet
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonrust.api.PasswordScore
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
@@ -129,14 +130,15 @@ internal fun LoginContent(
             )
         }
 
-        if (isHistoryFeatureEnabled) {
-            PassItemDetailsHistorySection(
-                createdAt = itemUiModel.createTime,
-                modifiedAt = itemUiModel.modificationTime,
-                onViewItemHistoryClicked = { onEvent(LoginDetailEvent.OnViewItemHistoryClicked) },
-                itemColors = passItemColors(itemCategory = ItemCategory.Login)
-            )
-        }
+        PassItemDetailsHistorySection(
+            lastAutofillAtOption = itemUiModel.lastAutofillTime.toOption(),
+            revision = itemUiModel.revision,
+            createdAt = itemUiModel.createTime,
+            modifiedAt = itemUiModel.modificationTime,
+            onViewItemHistoryClicked = { onEvent(LoginDetailEvent.OnViewItemHistoryClicked) },
+            itemColors = passItemColors(itemCategory = ItemCategory.Login),
+            shouldDisplayItemHistoryButton = isHistoryFeatureEnabled
+        )
 
         LinkedAppsListSection(
             packageInfoUiSet = contents.packageInfoSet.map { PackageInfoUi(it) }.toPersistentSet(),

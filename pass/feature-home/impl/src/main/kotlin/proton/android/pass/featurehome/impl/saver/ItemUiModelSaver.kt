@@ -36,6 +36,7 @@ val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
     val lastAutofillTime = "last_autofill_time"
     val canModify = "can_modify"
     val isPinned = "is_pinned"
+    val revision = "revision"
     mapSaver(
         save = {
             it?.let { itemUiModel ->
@@ -47,7 +48,8 @@ val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
                     modificationTime to itemUiModel.modificationTime.toString(),
                     lastAutofillTime to itemUiModel.lastAutofillTime?.toString(),
                     canModify to itemUiModel.canModify,
-                    isPinned to itemUiModel.isPinned
+                    isPinned to itemUiModel.isPinned,
+                    revision to itemUiModel.revision,
                 )
             } ?: emptyMap()
         },
@@ -62,7 +64,8 @@ val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
                     modificationTime = (values[modificationTime] as String).let { Instant.parse(it) },
                     lastAutofillTime = (values[modificationTime] as? String)?.let { Instant.parse(it) },
                     canModify = values[canModify] as Boolean,
-                    isPinned = values[isPinned] as Boolean
+                    isPinned = values[isPinned] as Boolean,
+                    revision = values[revision] as Long,
                 )
             } else {
                 null

@@ -52,6 +52,8 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
             isItemPinned = item.isPinned,
             itemCreatedAt = item.createTime,
             itemModifiedAt = item.modificationTime,
+            itemLastAutofillAtOption = item.lastAutofillTime,
+            itemRevision = item.revision,
             itemVault = vault
         )
     }

@@ -20,6 +20,7 @@ package proton.android.pass.commonuimodels.api.items
 
 import androidx.compose.runtime.Stable
 import kotlinx.datetime.Instant
+import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.domain.AliasMailbox
@@ -77,7 +78,9 @@ sealed interface ItemDetailState {
         override val isItemPinned: Boolean,
         override val itemVault: Vault?,
         override val itemCreatedAt: Instant,
-        override val itemModifiedAt: Instant
+        override val itemModifiedAt: Instant,
+        val itemLastAutofillAtOption: Option<Instant>,
+        val itemRevision: Long
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Identity

@@ -33,10 +33,13 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.sp
 import kotlinx.datetime.Instant
 import me.proton.core.compose.component.ProtonButton
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Radius
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.item.PassHistoryItemRow
@@ -49,79 +52,99 @@ import me.proton.core.presentation.R as CoreR
 @Composable
 fun PassItemDetailsHistorySection(
     modifier: Modifier = Modifier,
+    lastAutofillAtOption: Option<Instant>,
+    revision: Long,
     createdAt: Instant,
     modifiedAt: Instant,
     onViewItemHistoryClicked: () -> Unit,
-    itemColors: PassItemColors
+    itemColors: PassItemColors,
+    shouldDisplayItemHistoryButton: Boolean
 ) {
     RoundedCornersColumn(
         modifier = modifier
     ) {
+        if (lastAutofillAtOption is Some) {
+            PassHistoryItemRow(
+                leadingIcon = CoreR.drawable.ic_proton_magic_proton_wand,
+                title = stringResource(id = R.string.item_details_shared_section_item_history_last_autofill_title),
+                subtitle = passFormattedDateText(endInstant = lastAutofillAtOption.value),
+                paddingValues = PaddingValues(
+                    top = Spacing.medium,
+                    start = Spacing.medium,
+                )
+            )
+        }
+
         PassHistoryItemRow(
             leadingIcon = CoreR.drawable.ic_proton_pencil,
-            title = stringResource(id = R.string.item_details_shared_section_item_history_modified_title),
-            subtitle = passFormattedDateText(
-                startInstant = Instant.fromEpochSeconds(0),
-                endInstant = modifiedAt
+            title = stringResource(
+                id = R.string.item_details_shared_section_item_history_modified_times_title,
+                revision
             ),
+            subtitle = passFormattedDateText(endInstant = modifiedAt),
             paddingValues = PaddingValues(
                 top = Spacing.medium,
                 start = Spacing.medium,
-                bottom = Spacing.small
             )
         )
 
         PassHistoryItemRow(
             leadingIcon = CoreR.drawable.ic_proton_bolt,
             title = stringResource(id = R.string.item_details_shared_section_item_history_created_title),
-            subtitle = passFormattedDateText(
-                startInstant = Instant.fromEpochSeconds(0),
-                endInstant = createdAt
-            ),
+            subtitle = passFormattedDateText(endInstant = createdAt),
             paddingValues = PaddingValues(
-                top = Spacing.small,
+                top = Spacing.medium,
                 start = Spacing.medium,
                 bottom = Spacing.medium
             )
         )
 
-        ProtonButton(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    start = Spacing.medium,
-                    end = Spacing.medium,
-                    bottom = Spacing.medium
+        if (shouldDisplayItemHistoryButton) {
+            ProtonButton(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        start = Spacing.medium,
+                        end = Spacing.medium,
+                        bottom = Spacing.medium
+                    ),
+                onClick = onViewItemHistoryClicked,
+                shape = RoundedCornerShape(size = Radius.large),
+                colors = ButtonDefaults.buttonColors(itemColors.minorSecondary),
+                contentPadding = PaddingValues(
+                    horizontal = Spacing.mediumSmall,
+                    vertical = Spacing.mediumSmall
                 ),
-            onClick = onViewItemHistoryClicked,
-            shape = RoundedCornerShape(size = Radius.large),
-            colors = ButtonDefaults.buttonColors(itemColors.minorSecondary),
-            contentPadding = PaddingValues(
-                horizontal = Spacing.mediumSmall,
-                vertical = Spacing.mediumSmall
-            ),
-            elevation = null,
-            border = null
-        ) {
-            Text(
-                text = stringResource(id = R.string.item_details_shared_section_item_history_button_view),
-                fontSize = 16.sp,
-                color = itemColors.majorSecondary
-            )
+                elevation = null,
+                border = null
+            ) {
+                Text(
+                    text = stringResource(id = R.string.item_details_shared_section_item_history_button_view),
+                    fontSize = 16.sp,
+                    color = itemColors.majorSecondary
+                )
+            }
         }
     }
 }
 
 
 @[Preview Composable Suppress("MagicNumber")]
-internal fun PassItemDetailsHistorySectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun PassItemDetailsHistorySectionPreview(
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+) {
+    val (isDark, shouldDisplayItemHistoryButton) = input
+
     PassTheme(isDark = isDark) {
         Surface {
             PassItemDetailsHistorySection(
+                lastAutofillAtOption = Instant.fromEpochMilliseconds(1_684_213_366_026).toOption(),
+                revision = 2,
                 createdAt = Instant.fromEpochMilliseconds(1_697_213_366_026),
                 modifiedAt = Instant.fromEpochMilliseconds(1_707_213_366_026),
                 onViewItemHistoryClicked = {},
-                itemColors = passItemColors(ItemCategory.Login)
+                itemColors = passItemColors(ItemCategory.Login),
+                shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton
             )
         }
     }

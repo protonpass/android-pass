@@ -101,7 +101,8 @@ fun PinCarouselPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
                         createTime = Clock.System.now(),
                         modificationTime = Clock.System.now(),
                         lastAutofillTime = Clock.System.now(),
-                        isPinned = true
+                        isPinned = true,
+                        revision = 1
                     ),
                     ItemUiModel(
                         id = ItemId("2"),
@@ -122,7 +123,8 @@ fun PinCarouselPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
                         createTime = Clock.System.now(),
                         modificationTime = Clock.System.now(),
                         lastAutofillTime = Clock.System.now(),
-                        isPinned = true
+                        isPinned = true,
+                        revision = 1
                     )
                 ),
                 canLoadExternalImages = false,

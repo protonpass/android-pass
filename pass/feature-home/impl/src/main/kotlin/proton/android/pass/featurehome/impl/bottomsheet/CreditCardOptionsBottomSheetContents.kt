@@ -146,7 +146,8 @@ fun CreditCardOptionsBottomSheetContentsPreview(
                     createTime = Clock.System.now(),
                     modificationTime = Clock.System.now(),
                     lastAutofillTime = Clock.System.now(),
-                    isPinned = false
+                    isPinned = false,
+                    revision = 1
                 ),
                 isRecentSearch = input.second,
                 onCopyNumber = {},

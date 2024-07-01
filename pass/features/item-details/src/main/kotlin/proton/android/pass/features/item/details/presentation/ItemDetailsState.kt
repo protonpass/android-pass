@@ -41,7 +41,7 @@ internal sealed interface ItemDetailsState {
         private val userPlan: Plan
     ) : ItemDetailsState {
 
-        internal val shouldDisplayItemHistorySection: Boolean = when (userPlan.planType) {
+        internal val hasPaidPlan: Boolean = when (userPlan.planType) {
             is PlanType.Paid,
             is PlanType.Trial -> true
 

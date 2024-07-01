@@ -1704,10 +1704,19 @@ fun NavGraphBuilder.appGraph(
                 )
             }
 
-            is SharingNavigation.Upsell -> appNavigator.navigate(
-                destination = UpsellNavItem,
-                route = UpsellNavItem.createNavRoute(paidFeature = it.paidFeature)
-            )
+            is SharingNavigation.Upsell -> dismissBottomSheet {
+                appNavigator.navigate(
+                    destination = UpsellNavItem,
+                    route = UpsellNavItem.createNavRoute(paidFeature = it.paidFeature)
+                )
+            }
+
+            is SharingNavigation.ManageSharedVault -> dismissBottomSheet {
+                appNavigator.navigate(
+                    destination = ManageVault,
+                    route = ManageVault.createRoute(shareId = it.sharedVaultId)
+                )
+            }
         }
     }
 

@@ -105,6 +105,7 @@ class CreateAliasScreenTest {
 
         val vault = VaultWithItemCount(
             vault = Vault(
+                userId = USER_ID,
                 shareId = ShareId(SHARE_ID),
                 name = "Test vault",
             ),

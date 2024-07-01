@@ -19,9 +19,11 @@
 package proton.android.pass.domain
 
 import androidx.compose.runtime.Stable
+import me.proton.core.domain.entity.UserId
 
 @Stable
 data class Vault(
+    val userId: UserId,
     val shareId: ShareId,
     val name: String,
     val color: ShareColor = ShareColor.Color1,

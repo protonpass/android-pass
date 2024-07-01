@@ -29,6 +29,7 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.components.SingletonComponent
 import kotlinx.datetime.Clock
+import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -334,6 +335,7 @@ class LoginDetailScreenTest {
         val withVault = ItemWithVaultInfo(
             item = item,
             vault = Vault(
+                userId = UserId(""),
                 shareId = ShareId(SHARE_ID),
                 name = vaultName
             ),

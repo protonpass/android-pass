@@ -22,6 +22,7 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
+import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -93,6 +94,7 @@ class MigrateSelectVaultViewModelTest {
     private fun initialVaults(): Pair<VaultWithItemCount, VaultWithItemCount> = Pair(
         VaultWithItemCount(
             vault = Vault(
+                userId = UserId(""),
                 shareId = SHARE_ID,
                 name = "vault1"
             ),
@@ -101,6 +103,7 @@ class MigrateSelectVaultViewModelTest {
         ),
         VaultWithItemCount(
             vault = Vault(
+                userId = UserId(""),
                 shareId = ShareId("OTHER_SHARE_ID"),
                 name = "vault2"
             ),

@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -71,6 +72,7 @@ fun VaultRowSectionPreview(@PreviewParameter(ThemePreviewProvider::class) isDark
             VaultRowSection(
                 vaultWithItemCount = VaultWithItemCount(
                     vault = Vault(
+                        userId = UserId(id = ""),
                         shareId = ShareId("id"),
                         name = "Vault name",
                         color = ShareColor.Color1,

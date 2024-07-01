@@ -21,6 +21,7 @@ package proton.android.pass.featureitemdetail.impl.creditcard
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
+import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -416,6 +417,7 @@ class CreditCardDetailViewModelTest {
         private const val ITEM_ID = "itemid-456"
 
         private val TEST_VAULT = Vault(
+            userId = UserId(""),
             shareId = ShareId(SHARE_ID),
             name = "Vault"
         )

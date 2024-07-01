@@ -32,8 +32,6 @@ import proton.android.pass.featuresearchoptions.api.SearchOptions
 import proton.android.pass.featuresearchoptions.api.SortingOption
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.android.pass.preferences.InternalSettingsRepository
-import proton.android.pass.preferences.SelectedVaultPreference
-import proton.android.pass.preferences.SortingOptionPreference
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -45,18 +43,22 @@ class HomeSearchOptionsRepositoryImpl @Inject constructor(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private val selectedVaultFlow = observeCurrentUser()
-        .flatMapLatest { internalSettingsRepository.getSelectedVault(it.userId) }
+        .flatMapLatest { user ->
+            internalSettingsRepository.getSelectedVault(user.userId)
+                .map { selectedVault -> user.userId to selectedVault }
+        }
         .distinctUntilChanged()
 
     override fun observeSearchOptions(): Flow<SearchOptions> = combine(
         internalSettingsRepository.getHomeFilterOption(),
         internalSettingsRepository.getHomeSortingOption(),
         selectedVaultFlow
-    ) { filter, sorting, vault ->
+    ) { filter, sorting, (userId, vault) ->
         SearchOptions(
             filterOption = FilterOption(filter.toDomain()),
             sortingOption = SortingOption(sorting.toDomain()),
-            vaultSelectionOption = vault.toSelectionOption()
+            vaultSelectionOption = vault.toSelectionOption(),
+            userId = userId
         )
     }
 
@@ -68,7 +70,7 @@ class HomeSearchOptionsRepositoryImpl @Inject constructor(
         .map { FilterOption(it.toDomain()) }
 
     override fun observeVaultSelectionOption(): Flow<VaultSelectionOption> = selectedVaultFlow
-        .map(SelectedVaultPreference::toSelectionOption)
+        .map { it.second.toSelectionOption() }
 
     override fun setSortingOption(sortingOption: SortingOption) {
         internalSettingsRepository.setHomeSortingOption(sortingOption.toPreference())
@@ -80,10 +82,5 @@ class HomeSearchOptionsRepositoryImpl @Inject constructor(
 
     override fun setVaultSelectionOption(userId: UserId, vaultSelectionOption: VaultSelectionOption) {
         internalSettingsRepository.setSelectedVault(userId, vaultSelectionOption.toPreference())
-    }
-
-    override fun clearSearchOptions(userId: UserId) {
-        internalSettingsRepository.setHomeSortingOption(SortingOptionPreference.MostRecent)
-        internalSettingsRepository.setSelectedVault(userId, SelectedVaultPreference.AllVaults)
     }
 }

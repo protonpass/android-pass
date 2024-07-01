@@ -21,6 +21,7 @@ package proton.android.pass.featuresearchoptions.fakes
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.featuresearchoptions.api.FilterOption
 import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.SearchOptions
@@ -55,10 +56,7 @@ class TestHomeSearchOptionsRepository @Inject constructor() : HomeSearchOptionsR
         filterOptionFlow.update { filterOption }
     }
 
-    override fun setVaultSelectionOption(vaultSelectionOption: VaultSelectionOption) {
+    override fun setVaultSelectionOption(userId: UserId, vaultSelectionOption: VaultSelectionOption) {
         vaultSelectionOptionFlow.update { vaultSelectionOption }
-    }
-
-    override fun clearSearchOptions() {
     }
 }

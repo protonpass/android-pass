@@ -504,6 +504,7 @@ class ShareRepositoryImpl @Inject constructor(
 
         return Share(
             id = ShareId(entity.id),
+            userId = UserId(entity.userId),
             shareType = shareType,
             targetId = entity.targetId,
             permission = SharePermission(entity.permission),

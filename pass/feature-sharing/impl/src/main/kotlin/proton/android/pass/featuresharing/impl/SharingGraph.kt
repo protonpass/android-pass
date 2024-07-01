@@ -181,6 +181,9 @@ sealed interface SharingNavigation {
 
     @JvmInline
     value class Upsell(val paidFeature: PaidFeature) : SharingNavigation
+
+    @JvmInline
+    value class ManageSharedVault(val sharedVaultId: ShareId) : SharingNavigation
 }
 
 fun NavGraphBuilder.sharingGraph(onNavigateEvent: (SharingNavigation) -> Unit) {

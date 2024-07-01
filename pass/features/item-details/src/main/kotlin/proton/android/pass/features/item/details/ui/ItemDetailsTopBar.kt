@@ -159,7 +159,7 @@ private fun ItemDetailEditButton(
         modifier = modifier,
         color = editButtonBackgroundColor,
         isLoading = isLoading,
-        showClickEffect = editButtonEnabled,
+        buttonEnabled = editButtonEnabled,
         text = {
             Text(
                 text = stringResource(id = CompR.string.action_edit),
@@ -194,8 +194,7 @@ private fun ItemDetailShareButton(
         tintColor = iconColor,
         iconContentDescription = stringResource(id = R.string.item_details_toolbar_content_description_share_button),
         enabled = isEnabled,
-        onClick = onShareClick,
-        onDisabledClick = onShareClick
+        onClick = onShareClick
     )
 }
 

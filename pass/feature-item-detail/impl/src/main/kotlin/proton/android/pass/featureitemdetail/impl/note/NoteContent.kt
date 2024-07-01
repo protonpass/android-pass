@@ -35,6 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.ItemUiModel
@@ -97,14 +98,15 @@ fun NoteContent(
             )
         }
 
-        if (isHistoryFeatureEnabled) {
-            PassItemDetailsHistorySection(
-                createdAt = itemUiModel.createTime,
-                modifiedAt = itemUiModel.modificationTime,
-                onViewItemHistoryClicked = onViewItemHistoryClicked,
-                itemColors = passItemColors(itemCategory = ItemCategory.Note)
-            )
-        }
+        PassItemDetailsHistorySection(
+            lastAutofillAtOption = itemUiModel.lastAutofillTime.toOption(),
+            revision = itemUiModel.revision,
+            createdAt = itemUiModel.createTime,
+            modifiedAt = itemUiModel.modificationTime,
+            onViewItemHistoryClicked = onViewItemHistoryClicked,
+            itemColors = passItemColors(itemCategory = ItemCategory.Note),
+            shouldDisplayItemHistoryButton = isHistoryFeatureEnabled
+        )
 
         MoreInfo(moreInfoUiState = moreInfoUiState)
     }

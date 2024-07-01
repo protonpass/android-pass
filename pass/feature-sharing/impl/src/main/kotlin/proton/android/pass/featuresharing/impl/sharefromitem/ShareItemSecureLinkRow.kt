@@ -18,6 +18,7 @@
 
 package proton.android.pass.featuresharing.impl.sharefromitem
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -36,7 +37,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -47,12 +47,14 @@ import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.icon.PassPlusIcon
-import proton.android.pass.featuresharing.impl.R
 import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun ShareItemSecureLinkRow(
     modifier: Modifier = Modifier,
+    @DrawableRes iconResId: Int,
+    title: String,
+    description: String,
     shouldShowPlusIcon: Boolean,
     onClick: () -> Unit
 ) {
@@ -75,7 +77,7 @@ internal fun ShareItemSecureLinkRow(
         ) {
             Icon(
                 modifier = Modifier.size(20.dp),
-                painter = painterResource(id = CoreR.drawable.ic_proton_link),
+                painter = painterResource(id = iconResId),
                 contentDescription = null,
                 tint = PassTheme.colors.interactionNormMajor2
             )
@@ -86,13 +88,13 @@ internal fun ShareItemSecureLinkRow(
             verticalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
         ) {
             Text(
-                text = stringResource(id = R.string.share_with_secure_link_title),
+                text = title,
                 style = ProtonTheme.typography.body2Regular,
                 color = PassTheme.colors.textNorm
             )
 
             Text(
-                text = stringResource(id = R.string.share_with_secure_link_description),
+                text = description,
                 style = PassTheme.typography.body3Weak(),
                 color = PassTheme.colors.textWeak
             )
@@ -113,6 +115,9 @@ internal fun ShareItemSecureLinkRowPreview(
     PassTheme(isDark = isDark) {
         Surface {
             ShareItemSecureLinkRow(
+                iconResId = CoreR.drawable.ic_proton_link,
+                title = "Share item row title",
+                description = "Share item row description.",
                 shouldShowPlusIcon = shouldShowPlusIcon,
                 onClick = {}
             )

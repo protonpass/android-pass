@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import me.proton.core.compose.theme.ProtonTheme
@@ -59,6 +60,9 @@ internal fun ShareFromItemContent(
             )
 
             ShareItemSecureLinkRow(
+                iconResId = CoreR.drawable.ic_proton_link,
+                title = stringResource(id = R.string.share_with_secure_link_title),
+                description = stringResource(id = R.string.share_with_secure_link_description),
                 shouldShowPlusIcon = !state.canUsePaidFeatures,
                 onClick = {
                     if (state.canUsePaidFeatures) {
@@ -68,6 +72,27 @@ internal fun ShareFromItemContent(
                     }.also(onEvent)
                 }
             )
+
+            if (state.canManageSharedVault || state.canViewSharedVaultMembers) {
+                ShareItemSecureLinkRow(
+                    iconResId = CoreR.drawable.ic_proton_users,
+                    title = if (state.canManageSharedVault) {
+                        R.string.share_with_manage_shared_vault_title
+                    } else {
+                        R.string.share_with_view_shared_vault_members_title
+                    }.let { titleResId -> stringResource(id = titleResId) },
+                    description = pluralStringResource(
+                        id = R.plurals.share_with_manage_shared_vault_description,
+                        count = state.sharedVaultMembersCount,
+                        state.sharedVaultMembersCount
+                    ),
+                    shouldShowPlusIcon = false,
+                    onClick = {
+                        ShareFromItemEvent.ManageSharedVault
+                            .also(onEvent)
+                    }
+                )
+            }
 
             PassDivider(
                 modifier = Modifier.padding(vertical = Spacing.small)

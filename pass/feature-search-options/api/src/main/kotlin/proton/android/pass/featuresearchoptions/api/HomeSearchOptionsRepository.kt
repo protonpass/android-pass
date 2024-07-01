@@ -31,19 +31,20 @@ interface HomeSearchOptionsRepository {
     fun setSortingOption(sortingOption: SortingOption)
     fun setFilterOption(filterOption: FilterOption)
     fun setVaultSelectionOption(userId: UserId, vaultSelectionOption: VaultSelectionOption)
-    fun clearSearchOptions(userId: UserId)
 }
 
 data class SearchOptions(
     val filterOption: FilterOption,
     val sortingOption: SortingOption,
-    val vaultSelectionOption: VaultSelectionOption
+    val vaultSelectionOption: VaultSelectionOption,
+    val userId: UserId?
 ) {
     companion object {
         val Initial = SearchOptions(
             filterOption = FilterOption(SearchFilterType.All),
             sortingOption = SortingOption(SearchSortingType.MostRecent),
-            vaultSelectionOption = VaultSelectionOption.AllVaults
+            vaultSelectionOption = VaultSelectionOption.AllVaults,
+            userId = null
         )
     }
 }
@@ -53,8 +54,8 @@ data class SortingOption(val searchSortingType: SearchSortingType)
 data class FilterOption(val searchFilterType: SearchFilterType)
 
 @Stable
-sealed class VaultSelectionOption {
-    data object AllVaults : VaultSelectionOption()
-    data object Trash : VaultSelectionOption()
-    data class Vault(val shareId: ShareId) : VaultSelectionOption()
+sealed interface VaultSelectionOption {
+    data object AllVaults : VaultSelectionOption
+    data object Trash : VaultSelectionOption
+    data class Vault(val shareId: ShareId) : VaultSelectionOption
 }

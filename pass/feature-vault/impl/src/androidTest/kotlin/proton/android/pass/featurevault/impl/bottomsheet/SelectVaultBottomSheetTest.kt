@@ -26,6 +26,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -255,6 +256,7 @@ class SelectVaultBottomSheetTest {
         val vaults = listOf(
             VaultWithItemCount(
                 vault = Vault(
+                    userId = UserId(""),
                     shareId = shareIdForIndex(0),
                     name = vaultNameForIndex(0),
                 ),
@@ -263,6 +265,7 @@ class SelectVaultBottomSheetTest {
             ),
             VaultWithItemCount(
                 vault = Vault(
+                    userId = UserId(""),
                     shareId = shareIdForIndex(1),
                     name = vaultNameForIndex(1),
                     role = ShareRole.Read
@@ -296,6 +299,7 @@ class SelectVaultBottomSheetTest {
         val vaults = (0 until count).map {
             VaultWithItemCount(
                 vault = Vault(
+                    userId = UserId(""),
                     shareId = shareIdForIndex(it),
                     name = vaultNameForIndex(it),
                 ),

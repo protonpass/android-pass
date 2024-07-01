@@ -22,6 +22,7 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
+import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
@@ -150,6 +151,7 @@ class ObserveUsableVaultsImplTest {
     private fun setVaults(vaults: Map<ShareId, ShareRole>) {
         val vaultInstances: List<Vault> = vaults.map { (shareId, role) ->
             Vault(
+                userId = UserId(""),
                 shareId = shareId,
                 role = role,
                 name = "unused"

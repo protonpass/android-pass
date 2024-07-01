@@ -35,6 +35,7 @@ dependencies {
     implementation(libs.kotlinx.datetime)
 
     implementation(projects.pass.common.api)
+    implementation(projects.pass.domain)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

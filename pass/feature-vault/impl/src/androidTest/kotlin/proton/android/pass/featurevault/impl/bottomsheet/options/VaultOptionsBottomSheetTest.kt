@@ -25,6 +25,7 @@ import androidx.compose.ui.test.performClick
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -34,13 +35,13 @@ import proton.android.pass.data.api.usecases.capabilities.VaultAccessData
 import proton.android.pass.data.fakes.usecases.TestCanManageVaultAccess
 import proton.android.pass.data.fakes.usecases.TestCanMigrateVault
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 import proton.android.pass.featurevault.impl.R
 import proton.android.pass.featurevault.impl.VaultNavigation
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
 import javax.inject.Inject
 
 @HiltAndroidTest
@@ -104,6 +105,7 @@ class VaultOptionsBottomSheetTest {
     @Test
     fun canClickDelete() {
         val vaultToDelete = Vault(
+            userId = UserId(""),
             shareId = ShareId(SHARE_ID),
             name = "Test vault",
             isOwned = true,
@@ -111,6 +113,7 @@ class VaultOptionsBottomSheetTest {
             shared = false
         )
         val anotherVault = Vault(
+            userId = UserId(""),
             shareId = ShareId("OtherShare"),
             name = "another vault",
             isOwned = true,
@@ -172,6 +175,7 @@ class VaultOptionsBottomSheetTest {
 
     private fun setVault(owned: Boolean = true, shared: Boolean = false) {
         val vault = Vault(
+            userId = UserId(""),
             shareId = ShareId(SHARE_ID),
             name = "Test vault",
             isOwned = owned,

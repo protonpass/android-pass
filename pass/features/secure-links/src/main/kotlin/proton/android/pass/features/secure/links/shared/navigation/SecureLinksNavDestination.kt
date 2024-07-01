@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.secure.links.shared.navigation
 
+import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.domain.securelinks.SecureLinkId
 import proton.android.pass.features.secure.links.overview.navigation.SecureLinksOverviewNavScope
 
@@ -25,7 +26,8 @@ sealed interface SecureLinksNavDestination {
 
     data object Back : SecureLinksNavDestination
 
-    data object Close : SecureLinksNavDestination
+    @JvmInline
+    value class Close(val itemCategory: ItemCategory) : SecureLinksNavDestination
 
     data object DismissBottomSheet : SecureLinksNavDestination
 

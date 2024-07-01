@@ -47,7 +47,13 @@ internal fun SecureLinksOverviewScreenContent(
         topBar = {
             PassExtendedTopBar(
                 backButton = PassTopBarBackButtonType.Cross,
-                onUpClick = { onUiEvent(SecureLinksOverviewUiEvent.OnCloseClicked) }
+                onUpClick = {
+                    itemUiModel?.category?.let { itemCategory ->
+                        SecureLinksOverviewUiEvent.OnCloseClicked(
+                            itemCategory = itemCategory
+                        ).also(onUiEvent)
+                    }
+                }
             )
         },
         bottomBar = {

@@ -32,8 +32,10 @@ internal fun handleSecureLinksOverviewUiEvent(
     context: Context
 ) {
     when (uiEvent) {
-        SecureLinksOverviewUiEvent.OnCloseClicked -> {
-            onNavigated(SecureLinksNavDestination.Close)
+        is SecureLinksOverviewUiEvent.OnCloseClicked -> {
+            SecureLinksNavDestination.Close(
+                itemCategory = uiEvent.itemCategory
+            ).also(onNavigated)
         }
 
         SecureLinksOverviewUiEvent.OnCopyLinkClicked -> {

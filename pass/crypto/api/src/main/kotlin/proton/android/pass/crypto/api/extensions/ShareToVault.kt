@@ -36,6 +36,7 @@ fun Share.toVault(encryptionContext: EncryptionContext): Option<Vault> = content
         val parsed = VaultV1.Vault.parseFrom(decrypted)
         Vault(
             shareId = id,
+            userId = userId,
             name = parsed.name,
             color = color,
             icon = icon,

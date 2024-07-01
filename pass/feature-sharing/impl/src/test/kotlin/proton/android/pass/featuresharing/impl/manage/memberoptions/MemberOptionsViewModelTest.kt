@@ -22,6 +22,7 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
+import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -29,6 +30,9 @@ import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.data.fakes.usecases.TestRemoveMemberFromVault
 import proton.android.pass.data.fakes.usecases.TestSetVaultMemberPermission
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.ShareRole
+import proton.android.pass.domain.Vault
 import proton.android.pass.featuresharing.impl.SharingSnackbarMessage
 import proton.android.pass.featuresharing.impl.manage.bottomsheet.MemberEmailArg
 import proton.android.pass.featuresharing.impl.manage.bottomsheet.MemberShareIdArg
@@ -42,9 +46,6 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavParamEncoder
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.ShareRole
-import proton.android.pass.domain.Vault
 
 class MemberOptionsViewModelTest {
 
@@ -263,6 +264,7 @@ class MemberOptionsViewModelTest {
 
     private fun emitVault(owned: Boolean = true) {
         val vault = Vault(
+            userId = UserId(""),
             name = "test",
             shareId = ShareId(USER_SHARE_ID),
             isOwned = owned
@@ -271,6 +273,7 @@ class MemberOptionsViewModelTest {
     }
 
     private fun vaultWith(shareId: String, owned: Boolean) = Vault(
+        userId = UserId(""),
         name = "Some vault $shareId",
         shareId = ShareId(shareId),
         isOwned = owned

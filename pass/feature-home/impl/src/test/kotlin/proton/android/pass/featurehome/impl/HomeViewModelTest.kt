@@ -49,6 +49,7 @@ import proton.android.pass.data.fakes.usecases.TestDeleteItems
 import proton.android.pass.data.fakes.usecases.TestDeleteSearchEntry
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestObserveAppNeedsUpdate
+import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObservePinnedItems
 import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
@@ -75,6 +76,7 @@ import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.FixedClock
 import proton.android.pass.test.MainDispatcherRule
+import proton.android.pass.test.domain.TestUser
 
 internal class HomeViewModelTest {
 
@@ -107,6 +109,7 @@ internal class HomeViewModelTest {
     private lateinit var savedState: TestSavedStateHandleProvider
     private lateinit var bulkMoveToVaultRepository: TestBulkMoveToVaultRepository
     private lateinit var toastManager: TestToastManager
+    private lateinit var observeCurrentUser: TestObserveCurrentUser
 
     @Before
     internal fun setup() {
@@ -134,6 +137,7 @@ internal class HomeViewModelTest {
         bulkMoveToVaultRepository = TestBulkMoveToVaultRepository()
         toastManager = TestToastManager()
         observePinnedItems = TestObservePinnedItems()
+        observeCurrentUser = TestObserveCurrentUser().apply { sendUser(TestUser.create()) }
         createViewModel()
     }
 
@@ -213,6 +217,7 @@ internal class HomeViewModelTest {
             .distinct()
             .map { shareId ->
                 Vault(
+                    userId = UserId(""),
                     shareId = shareId,
                     name = "Vault ${shareId.id}",
                     color = ShareColor.Color1,
@@ -275,7 +280,8 @@ internal class HomeViewModelTest {
             unpinItems = TestUnpinItems(),
             observeAppNeedsUpdate = TestObserveAppNeedsUpdate(),
             appDispatchers = TestAppDispatchers(),
-            featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository()
+            featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository(),
+            observeCurrentUser = observeCurrentUser
         )
     }
 

@@ -128,7 +128,7 @@ internal class CreateLoginViewModelTest {
     @Test
     fun `when a create item event without title should return a BlankTitle validation error`() = runTest {
         val vault =
-            VaultWithItemCount(Vault(ShareId("shareId"), "Share"), 1, 0)
+            VaultWithItemCount(Vault(UserId(""), ShareId("shareId"), "Share"), 1, 0)
         observeVaults.sendResult(Result.success(listOf(vault)))
 
         instance.createItem()
@@ -355,7 +355,7 @@ internal class CreateLoginViewModelTest {
     }
 
     private fun sendInitialVault(shareId: ShareId): VaultWithItemCount {
-        val vault = VaultWithItemCount(Vault(shareId, "Share"), 1, 0)
+        val vault = VaultWithItemCount(Vault(UserId(""), shareId, "Share"), 1, 0)
         observeVaults.sendResult(Result.success(listOf(vault)))
         return vault
     }

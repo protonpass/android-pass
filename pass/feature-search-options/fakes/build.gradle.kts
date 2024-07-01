@@ -31,6 +31,8 @@ androidComponents.beforeVariants { variant ->
 dependencies {
     api(projects.pass.featureSearchOptions.api)
 
+    implementation(libs.core.user.domain)
+
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)

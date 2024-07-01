@@ -26,6 +26,7 @@ import androidx.compose.ui.test.performClick
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -112,6 +113,7 @@ class DefaultVaultBottomSheetTest {
                 listOf(
                     VaultWithItemCount(
                         vault = Vault(
+                            userId = UserId(""),
                             shareId = ShareId(DEFAULT_VAULT_SHARE_ID),
                             name = DEFAULT_VAULT_NAME,
                             role = ShareRole.Admin
@@ -121,6 +123,7 @@ class DefaultVaultBottomSheetTest {
                     ),
                     VaultWithItemCount(
                         vault = Vault(
+                            userId = UserId(""),
                             shareId = ShareId("2"),
                             name = DISABLED_VAULT_NAME,
                             role = ShareRole.Read

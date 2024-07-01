@@ -18,6 +18,7 @@
 
 package proton.android.pass.test.domain
 
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.domain.Share
 import proton.android.pass.domain.ShareColor
@@ -37,6 +38,7 @@ object TestShare {
         isOwner: Boolean = true
     ): Share = Share(
         id = shareId,
+        userId = UserId(""),
         shareType = ShareType.Vault,
         targetId = "456",
         permission = SharePermission(SharePermissionFlag.Admin.value),

@@ -56,10 +56,12 @@ class FeatureHomeApp : Application() {
     private fun setupVaults() {
         val vaults = listOf(
             Vault(
+                userId = UserId(""),
                 shareId = ShareId(SHARE_ID),
                 name = "Main vault"
             ),
             Vault(
+                userId = UserId(""),
                 shareId = ShareId("OtherShareID"),
                 name = "Other vault"
             )

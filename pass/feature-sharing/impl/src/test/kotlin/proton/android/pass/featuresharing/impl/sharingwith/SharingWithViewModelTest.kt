@@ -23,6 +23,7 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
+import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -141,6 +142,7 @@ class SharingWithViewModelTest {
         checkAddressesCanBeInvited.setAddressCanBeInvited(invitedEmail)
 
         val testVault = Vault(
+            userId = UserId(""),
             shareId = ShareId(id = SHARE_ID),
             name = "vault name"
         )

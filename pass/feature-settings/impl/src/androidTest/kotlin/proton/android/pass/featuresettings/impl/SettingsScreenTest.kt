@@ -27,6 +27,7 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
+import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -69,10 +70,12 @@ class SettingsScreenTest {
             Result.success(
                 listOf(
                     Vault(
+                        userId = UserId(""),
                         shareId = ShareId("1"),
                         name = "Vault 1",
                     ),
                     Vault(
+                        userId = UserId(""),
                         shareId = ShareId("2"),
                         name = "Vault 2",
                     )

@@ -20,6 +20,7 @@ package proton.android.pass.data.impl.usecases
 
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
+import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.data.api.usecases.ItemActions
@@ -265,6 +266,7 @@ internal class GetItemActionsImplTest {
         owned: Boolean,
         role: ShareRole
     ) = Vault(
+        userId = UserId(""),
         name = "testVault",
         shareId = shareId,
         isOwned = owned,

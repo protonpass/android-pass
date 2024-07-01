@@ -38,10 +38,10 @@ sealed interface SelectedVaultPreference {
     }
 
     companion object {
-        fun fromValue(value: String): SelectedVaultPreference = when {
+        fun fromValue(value: String?): SelectedVaultPreference = when {
             value == ALL_VAULTS_VALUE -> AllVaults
             value == TRASH_VALUE -> Trash
-            value.isNotBlank() -> Vault(value)
+            !value.isNullOrBlank() -> Vault(value)
             else -> AllVaults
         }
     }

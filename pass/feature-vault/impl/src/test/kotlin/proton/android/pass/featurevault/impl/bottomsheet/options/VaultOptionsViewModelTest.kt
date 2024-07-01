@@ -21,6 +21,7 @@ package proton.android.pass.featurevault.impl.bottomsheet.options
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
+import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -30,12 +31,12 @@ import proton.android.pass.data.fakes.usecases.TestCanManageVaultAccess
 import proton.android.pass.data.fakes.usecases.TestCanMigrateVault
 import proton.android.pass.data.fakes.usecases.TestCanShareVault
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
+import proton.android.pass.domain.ShareId
+import proton.android.pass.domain.Vault
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestUtils
-import proton.android.pass.domain.ShareId
-import proton.android.pass.domain.Vault
 
 class VaultOptionsViewModelTest {
 
@@ -315,6 +316,7 @@ class VaultOptionsViewModelTest {
 
     private fun emitDefaultVault(owned: Boolean = true, shared: Boolean = true): Vault {
         val defaultVault = Vault(
+            userId = UserId(""),
             shareId = ShareId(SHARE_ID),
             name = "Test vault",
             isOwned = owned,
@@ -327,6 +329,7 @@ class VaultOptionsViewModelTest {
     }
 
     private fun vaultWith(owned: Boolean): Vault = Vault(
+        userId = UserId(""),
         shareId = ShareId("ShareId-${TestUtils.randomString()}"),
         name = "Some vault",
         isOwned = owned,

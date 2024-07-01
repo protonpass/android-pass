@@ -22,6 +22,7 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
+import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -79,6 +80,7 @@ class EditVaultViewModelTest {
     @Test
     fun `onStart sets share contents`() = runTest {
         val vault = Vault(
+            userId = UserId(""),
             shareId = ShareId(SHARE_ID),
             name = "some name",
             color = ShareColor.Color4,
@@ -101,6 +103,7 @@ class EditVaultViewModelTest {
     fun `onEditClick sends the proper values`() = runTest {
         // Given
         val vault = Vault(
+            userId = UserId(""),
             shareId = ShareId(SHARE_ID),
             name = "some name",
             color = ShareColor.Color4,
@@ -137,6 +140,7 @@ class EditVaultViewModelTest {
     fun `onEditClick sends snackbar message on error`() = runTest {
         // Given
         val vault = Vault(
+            userId = UserId(""),
             shareId = ShareId(SHARE_ID),
             name = "some name",
             color = ShareColor.Color4,

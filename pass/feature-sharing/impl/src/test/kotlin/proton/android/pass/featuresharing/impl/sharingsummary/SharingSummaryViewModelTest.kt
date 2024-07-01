@@ -25,6 +25,7 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
+import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -171,6 +172,7 @@ class SharingSummaryViewModelTest {
 
     private fun createVaultWithItemCount() = VaultWithItemCount(
         vault = Vault(
+            userId = UserId(""),
             shareId = ShareId(id = TEST_SHARE_ID),
             name = "Evangeline Potter",
             color = ShareColor.Color1,

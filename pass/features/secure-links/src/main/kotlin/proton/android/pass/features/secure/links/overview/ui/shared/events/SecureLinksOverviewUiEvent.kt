@@ -18,9 +18,12 @@
 
 package proton.android.pass.features.secure.links.overview.ui.shared.events
 
+import proton.android.pass.domain.items.ItemCategory
+
 internal sealed interface SecureLinksOverviewUiEvent {
 
-    data object OnCloseClicked : SecureLinksOverviewUiEvent
+    @JvmInline
+    value class OnCloseClicked(internal val itemCategory: ItemCategory) : SecureLinksOverviewUiEvent
 
     data object OnCopyLinkClicked : SecureLinksOverviewUiEvent
 

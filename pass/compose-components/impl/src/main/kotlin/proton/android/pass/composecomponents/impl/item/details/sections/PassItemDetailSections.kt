@@ -58,6 +58,8 @@ internal fun PassItemDetailSections(
 
         is ItemDetailState.Identity -> PassIdentityItemDetailsSections(
             modifier = modifier,
+            itemId = itemId,
+            shareId = shareId,
             contents = itemContents,
             itemColors = itemColors,
             onEvent = onEvent,

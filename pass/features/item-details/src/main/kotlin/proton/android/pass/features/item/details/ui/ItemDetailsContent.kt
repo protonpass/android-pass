@@ -48,7 +48,8 @@ internal fun ItemDetailsContent(
                 modifier = modifier,
                 itemDetailState = itemDetailState,
                 itemColors = itemColors,
-                shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
+                shouldDisplayItemHistorySection = true,
+                shouldDisplayItemHistoryButton = hasPaidPlan,
                 topBar = {
                     ItemDetailsTopBar(
                         isLoading = false,

@@ -103,7 +103,6 @@ import proton.android.pass.featureselectitem.ui.SelectItemSnackbarMessage
 import proton.android.pass.featureselectitem.ui.SelectItemUiState
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import javax.inject.Inject
@@ -116,7 +115,6 @@ class SelectItemViewModel @Inject constructor(
     private val getSuggestedLoginItems: GetSuggestedLoginItems,
     private val observeItemsWithPasskeys: ObserveItemsWithPasskeys,
     preferenceRepository: UserPreferencesRepository,
-    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     observeActiveItems: ObserveActiveItems,
     observePinnedItems: ObservePinnedItems,
     observeVaults: ObserveVaults,
@@ -537,23 +535,25 @@ class SelectItemViewModel @Inject constructor(
         itemClickedFlow.update { AutofillItemClickedEvent.None }
     }
 
-    private fun getShareSelection(planType: PlanType, vaults: List<Vault>): ShareSelection = when (planType) {
-        is PlanType.Paid,
-        is PlanType.Trial -> ShareSelection.AllShares
+    private fun getShareSelection(planType: PlanType, vaults: List<Vault>): ShareSelection =
+        when (planType) {
+            is PlanType.Paid,
+            is PlanType.Trial -> ShareSelection.AllShares
 
-        is PlanType.Free,
-        is PlanType.Unknown -> vaults.filter { vault -> vault.role.toPermissions().canCreate() }
-            .map { writeableVault -> writeableVault.shareId }
-            .let { writeableVaults -> ShareSelection.Shares(writeableVaults) }
-    }
+            is PlanType.Free,
+            is PlanType.Unknown -> vaults.filter { vault -> vault.role.toPermissions().canCreate() }
+                .map { writeableVault -> writeableVault.shareId }
+                .let { writeableVaults -> ShareSelection.Shares(writeableVaults) }
+        }
 
-    private fun List<ItemUiModel>.sortItemLists(sortingOption: SortingOption) = when (sortingOption.searchSortingType) {
-        SearchSortingType.MostRecent -> sortMostRecent()
-        SearchSortingType.TitleAsc -> sortByTitleAsc()
-        SearchSortingType.TitleDesc -> sortByTitleDesc()
-        SearchSortingType.CreationAsc -> sortByCreationAsc()
-        SearchSortingType.CreationDesc -> sortByCreationDesc()
-    }
+    private fun List<ItemUiModel>.sortItemLists(sortingOption: SortingOption) =
+        when (sortingOption.searchSortingType) {
+            SearchSortingType.MostRecent -> sortMostRecent()
+            SearchSortingType.TitleAsc -> sortByTitleAsc()
+            SearchSortingType.TitleDesc -> sortByTitleDesc()
+            SearchSortingType.CreationAsc -> sortByCreationAsc()
+            SearchSortingType.CreationDesc -> sortByCreationDesc()
+        }
 
     private fun List<ItemUiModel>.groupedItemLists(sortingOption: SortingOption, instant: Instant) =
         when (sortingOption.searchSortingType) {
@@ -564,10 +564,11 @@ class SelectItemViewModel @Inject constructor(
             SearchSortingType.CreationDesc -> groupAndSortByCreationDesc()
         }
 
-    private fun getSuggestionsForState(state: SelectItemState): Flow<LoadingResult<List<Item>>> = when (state) {
-        is SelectItemState.Autofill -> getSuggestionsForAutofill(state)
-        is SelectItemState.Passkey -> getSuggestionsForPasskey(state)
-    }
+    private fun getSuggestionsForState(state: SelectItemState): Flow<LoadingResult<List<Item>>> =
+        when (state) {
+            is SelectItemState.Autofill -> getSuggestionsForAutofill(state)
+            is SelectItemState.Passkey -> getSuggestionsForPasskey(state)
+        }
 
     private fun getSuggestionsForAutofill(state: SelectItemState.Autofill): Flow<LoadingResult<List<Item>>> =
         when (state) {

@@ -37,7 +37,8 @@ data class ItemUiModel(
     val lastAutofillTime: Instant?,
     val isPinned: Boolean,
     val canModify: Boolean = true,
-    val category: ItemCategory = ItemCategory.Unknown
+    val category: ItemCategory = ItemCategory.Unknown,
+    val revision: Long
 ) {
 
     fun isInTrash() = state == ItemState.Trashed.value

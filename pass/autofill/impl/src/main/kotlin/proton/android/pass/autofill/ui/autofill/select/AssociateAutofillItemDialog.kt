@@ -142,7 +142,8 @@ fun AssociateAutofillItemDialogPreview(@PreviewParameter(ThemePreviewProvider::c
                     createTime = Clock.System.now(),
                     modificationTime = Clock.System.now(),
                     lastAutofillTime = null,
-                    isPinned = false
+                    isPinned = false,
+                    revision = 1
                 ),
                 onAssociateAndAutofill = {},
                 onAutofill = {},

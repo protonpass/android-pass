@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.PersistentList
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.ItemUiModel
@@ -76,14 +77,15 @@ fun AliasDetailContent(
             accentColor = PassTheme.colors.aliasInteractionNorm
         )
 
-        if (isHistoryFeatureEnabled) {
-            PassItemDetailsHistorySection(
-                createdAt = itemUiModel.createTime,
-                modifiedAt = itemUiModel.modificationTime,
-                onViewItemHistoryClicked = onViewItemHistoryClicked,
-                itemColors = passItemColors(itemCategory = ItemCategory.Alias)
-            )
-        }
+        PassItemDetailsHistorySection(
+            lastAutofillAtOption = itemUiModel.lastAutofillTime.toOption(),
+            revision = itemUiModel.revision,
+            createdAt = itemUiModel.createTime,
+            modifiedAt = itemUiModel.modificationTime,
+            onViewItemHistoryClicked = onViewItemHistoryClicked,
+            itemColors = passItemColors(itemCategory = ItemCategory.Alias),
+            shouldDisplayItemHistoryButton = isHistoryFeatureEnabled
+        )
 
         MoreInfo(moreInfoUiState = moreInfoUiState)
     }

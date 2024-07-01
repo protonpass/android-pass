@@ -45,7 +45,8 @@ internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
             createTime = Clock.System.now(),
             modificationTime = Clock.System.now(),
             lastAutofillTime = Clock.System.now(),
-            isPinned = true
+            isPinned = true,
+            revision = 1
         ),
         ItemUiModel(
             id = ItemId("123"),
@@ -66,7 +67,8 @@ internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
             createTime = Clock.System.now(),
             modificationTime = Clock.System.now(),
             lastAutofillTime = Clock.System.now(),
-            isPinned = true
+            isPinned = true,
+            revision = 1
         ),
         ItemUiModel(
             id = ItemId("123"),
@@ -80,7 +82,8 @@ internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
             createTime = Clock.System.now(),
             modificationTime = Clock.System.now(),
             lastAutofillTime = Clock.System.now(),
-            isPinned = true
+            isPinned = true,
+            revision = 1
         ),
         ItemUiModel(
             id = ItemId("123"),
@@ -99,7 +102,8 @@ internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
             createTime = Clock.System.now(),
             modificationTime = Clock.System.now(),
             lastAutofillTime = Clock.System.now(),
-            isPinned = true
+            isPinned = true,
+            revision = 1
         ),
         ItemUiModel(
             id = ItemId("123"),
@@ -117,7 +121,8 @@ internal class PinItemPreviewProvider : PreviewParameterProvider<ItemUiModel> {
             createTime = Clock.System.now(),
             modificationTime = Clock.System.now(),
             lastAutofillTime = Clock.System.now(),
-            isPinned = true
+            isPinned = true,
+            revision = 1
         )
     )
 }

@@ -43,7 +43,8 @@ fun PassItemDetailsContent(
     itemDetailState: ItemDetailState,
     itemColors: PassItemColors,
     onEvent: (PassItemDetailsUiEvent) -> Unit,
-    shouldDisplayItemHistorySection: Boolean
+    shouldDisplayItemHistorySection: Boolean,
+    shouldDisplayItemHistoryButton: Boolean
 ) {
     Scaffold(
         modifier = modifier,
@@ -76,7 +77,8 @@ fun PassItemDetailsContent(
                 itemDetailState = itemDetailState,
                 itemColors = itemColors,
                 onEvent = onEvent,
-                shouldDisplayItemHistorySection = shouldDisplayItemHistorySection
+                shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
+                shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton
             )
         }
     }

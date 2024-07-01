@@ -23,6 +23,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -190,8 +191,16 @@ class UserPreferencesRepositoryImpl @Inject constructor(
         it.putDefaultVaultPerUser(userId.id, shareId.id)
     }
 
-    override fun getDefaultVault(userId: UserId): Flow<Option<String>> = getPreference {
-        it.defaultVaultPerUserMap[userId.id].toOption()
+    override fun getDefaultVault(userId: UserId): Flow<Option<String>> = combine(
+        getPreference { it.defaultVaultPerUserMap },
+        getPreference { it.defaultVault }
+    ) { defaultVaultPerUser, defaultVault ->
+        if (defaultVaultPerUser.isEmpty() && defaultVault.isNotBlank()) {
+            setPreference { it.putDefaultVaultPerUser(userId.id, defaultVault) }
+            defaultVault.toOption()
+        } else {
+            defaultVaultPerUser[userId.id].toOption()
+        }
     }
 
     override fun tryClearPreferences(): Result<Unit> = runBlocking { clearPreferences() }

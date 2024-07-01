@@ -99,7 +99,8 @@ internal class LoginRowPreviewProvider : PreviewParameterProvider<LoginRowParame
                 createTime = Clock.System.now(),
                 modificationTime = Clock.System.now(),
                 lastAutofillTime = Clock.System.now(),
-                isPinned = false
+                isPinned = false,
+                revision = 1
             ),
             highlight = highlight
         )

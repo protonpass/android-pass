@@ -24,6 +24,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Instant
@@ -108,14 +109,19 @@ class InternalSettingsRepositoryImpl @Inject constructor(
             .map { it?.let { FilterOptionPreference.fromValue(it) } ?: FilterOptionPreference.All }
 
     override fun setSelectedVault(userId: UserId, selectedVault: SelectedVaultPreference): Result<Unit> =
-        setPreference {
-            it.putSelectedVaultPerUser(userId.id, selectedVault.value())
-        }
+        setPreference { it.putSelectedVaultPerUser(userId.id, selectedVault.value()) }
 
-    override fun getSelectedVault(userId: UserId): Flow<SelectedVaultPreference> = getPreference {
-        SelectedVaultPreference.fromValue(
-            it.selectedVaultPerUserMap[userId.id] ?: SelectedVaultPreference.AllVaults.value()
-        )
+    override fun getSelectedVault(userId: UserId): Flow<SelectedVaultPreference> = combine(
+        getPreference { it.selectedVaultPerUserMap },
+        getPreference { it.selectedVault }
+    ) { selectedVaultPerUser, selectedVault ->
+        val vault = if (selectedVaultPerUser.isEmpty() && selectedVault.isNotBlank()) {
+            setPreference { it.putSelectedVaultPerUser(userId.id, selectedVault) }
+            selectedVault
+        } else {
+            selectedVaultPerUser[userId.id]
+        }
+        SelectedVaultPreference.fromValue(vault)
     }
 
     override fun setPinAttemptsCount(count: Int): Result<Unit> = setPreference {

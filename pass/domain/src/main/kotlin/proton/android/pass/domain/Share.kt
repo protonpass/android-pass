@@ -20,6 +20,7 @@ package proton.android.pass.domain
 
 import androidx.compose.runtime.Stable
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
 import java.util.Date
 
@@ -33,6 +34,7 @@ value class VaultId(val id: String)
 
 data class Share(
     val id: ShareId,
+    val userId: UserId,
     val shareType: ShareType,
     val targetId: String,
     val permission: SharePermission,

@@ -20,9 +20,11 @@ package proton.android.pass.preferences
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
+import proton.android.pass.domain.ShareId
 import proton.android.pass.preferences.monitor.MonitorStatusPreference
 import proton.android.pass.preferences.sentinel.SentinelStatusPreference
 import javax.inject.Inject
@@ -181,12 +183,12 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
 
     override fun getAllowScreenshotsPreference(): Flow<AllowScreenshotsPreference> = allowScreenshotsPreference
 
-    override fun setDefaultVault(shareId: String): Result<Unit> {
-        defaultVaultPreference.tryEmit(shareId.toOption())
+    override fun setDefaultVault(userId: UserId, shareId: ShareId): Result<Unit> {
+        defaultVaultPreference.tryEmit(shareId.id.toOption())
         return Result.success(Unit)
     }
 
-    override fun getDefaultVault(): Flow<Option<String>> = defaultVaultPreference
+    override fun getDefaultVault(userId: UserId): Flow<Option<String>> = defaultVaultPreference
 
     override fun tryClearPreferences(): Result<Unit> = Result.success(Unit)
 

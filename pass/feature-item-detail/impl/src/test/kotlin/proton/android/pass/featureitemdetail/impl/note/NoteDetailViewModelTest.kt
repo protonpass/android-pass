@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -336,6 +337,7 @@ class NoteDetailViewModelTest {
         private const val VAULT_NAME = "Test Vault"
 
         private val TEST_VAULT = Vault(
+            userId = UserId(""),
             shareId = ShareId(SHARE_ID),
             name = VAULT_NAME,
             color = ShareColor.Color1,

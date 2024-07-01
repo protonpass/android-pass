@@ -23,6 +23,7 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
+import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -98,6 +99,7 @@ class MigrateSelectVaultForMigrateItemsViewModelTest {
     fun `filters shared vaults when filter mode is set to Shared`() = runTest {
         val sharedVault = VaultWithItemCount(
             vault = Vault(
+                userId = UserId(""),
                 shareId = ShareId("shared-vault"),
                 name = "vault1",
                 shared = true
@@ -108,6 +110,7 @@ class MigrateSelectVaultForMigrateItemsViewModelTest {
 
         val nonSharedVault = VaultWithItemCount(
             vault = Vault(
+                userId = UserId(""),
                 shareId = ShareId("non-shared-vault"),
                 name = "vault2",
                 shared = false
@@ -144,6 +147,7 @@ class MigrateSelectVaultForMigrateItemsViewModelTest {
     private fun initialVaults(firstVaultShared: Boolean): Pair<VaultWithItemCount, VaultWithItemCount> = Pair(
         VaultWithItemCount(
             vault = Vault(
+                userId = UserId(""),
                 shareId = SHARE_ID,
                 name = "vault1",
                 shared = firstVaultShared
@@ -153,6 +157,7 @@ class MigrateSelectVaultForMigrateItemsViewModelTest {
         ),
         VaultWithItemCount(
             vault = Vault(
+                userId = UserId(""),
                 shareId = ShareId("OTHER_SHARE_ID"),
                 name = "vault2"
             ),

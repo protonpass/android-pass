@@ -20,6 +20,7 @@ package proton.android.pass.featureitemcreate.impl.common
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.PassPalette
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
@@ -85,6 +86,7 @@ class CreateUpdateTopBarPreviewProvider : PreviewParameterProvider<CreateUpdateT
                 closeIconColor = PassPalette.GreenSheen100,
                 closeBackgroundColor = PassPalette.GreenSheen8,
                 vault = Vault(
+                    userId = UserId(id = ""),
                     shareId = ShareId(id = ""),
                     name = "Personal",
                     color = ShareColor.Color2,
@@ -97,6 +99,7 @@ class CreateUpdateTopBarPreviewProvider : PreviewParameterProvider<CreateUpdateT
                 closeIconColor = PassPalette.GreenSheen100,
                 closeBackgroundColor = PassPalette.GreenSheen8,
                 vault = Vault(
+                    userId = UserId(id = ""),
                     shareId = ShareId(id = ""),
                     name = "Vault with a long title that should be truncated",
                     color = ShareColor.Color2,

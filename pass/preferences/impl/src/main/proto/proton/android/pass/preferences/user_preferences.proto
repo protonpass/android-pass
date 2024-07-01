@@ -27,7 +27,7 @@ message UserPreferences {
   AppLockTypePrefProto app_lock_type = 13;
   BooleanPrefProto biometric_system_lock = 14;
   BooleanPrefProto has_dismissed_notification_banner = 15;
-  // string default_vault = 16; // This is now stored in default_vault_per_user
+  string default_vault = 16; // This is now stored in default_vault_per_user
   BooleanPrefProto sentinel_status = 17;
   MonitorStatusPrefProto monitor_status = 18;
   map<string, string> default_vault_per_user = 19;

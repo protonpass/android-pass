@@ -29,12 +29,17 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
+import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
 @Composable
 internal fun PassIdentityItemDetailsSections(
     modifier: Modifier = Modifier,
+    itemId: ItemId,
+    shareId: ShareId,
     contents: ItemContents.Identity,
     itemColors: PassItemColors,
     onEvent: (PassItemDetailsUiEvent) -> Unit,
@@ -101,5 +106,10 @@ internal fun PassIdentityItemDetailsSections(
                 shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton
             )
         }
+
+        PassItemDetailsMoreInfoSection(
+            itemId = itemId,
+            shareId = shareId
+        )
     }
 }

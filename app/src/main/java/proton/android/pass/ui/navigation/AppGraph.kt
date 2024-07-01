@@ -1743,8 +1743,8 @@ fun NavGraphBuilder.appGraph(
                     comesFromBottomsheet = false
                 )
 
-                SecureLinksNavDestination.Close -> appNavigator.popUpTo(
-                    destination = ViewItem
+                is SecureLinksNavDestination.Close -> appNavigator.popUpTo(
+                    destination = getItemDetailsDestination(destination.itemCategory)
                 )
 
                 SecureLinksNavDestination.DismissBottomSheet -> dismissBottomSheet {

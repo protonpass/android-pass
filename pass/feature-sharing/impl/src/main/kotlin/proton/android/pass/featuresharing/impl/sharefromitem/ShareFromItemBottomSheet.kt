@@ -81,6 +81,10 @@ fun ShareFromItemBottomSheet(
                     ShareFromItemEvent.UpsellSecureLink -> SharingNavigation.Upsell(
                         paidFeature = PaidFeature.SecureLinks
                     ).also(onNavigateEvent)
+
+                    ShareFromItemEvent.ManageSharedVault -> SharingNavigation.ManageSharedVault(
+                        sharedVaultId = vault.vault.shareId
+                    ).also(onNavigateEvent)
                 }
             }
         }

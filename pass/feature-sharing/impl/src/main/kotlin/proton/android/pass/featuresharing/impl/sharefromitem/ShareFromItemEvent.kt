@@ -32,4 +32,6 @@ internal sealed interface ShareFromItemEvent {
 
     data object UpsellSecureLink : ShareFromItemEvent
 
+    data object ManageSharedVault : ShareFromItemEvent
+
 }

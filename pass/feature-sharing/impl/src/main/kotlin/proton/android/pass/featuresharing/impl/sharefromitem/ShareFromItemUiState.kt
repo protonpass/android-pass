@@ -21,6 +21,8 @@ package proton.android.pass.featuresharing.impl.sharefromitem
 import androidx.compose.runtime.Stable
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
+import proton.android.pass.data.api.usecases.capabilities.VaultAccessData
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.VaultWithItemCount
 
@@ -60,8 +62,25 @@ internal data class ShareFromItemUiState(
     val showCreateVault: CreateNewVaultState,
     val event: ShareFromItemNavEvent,
     val isSecureLinkAvailable: Boolean,
-    val canUsePaidFeatures: Boolean
+    val canUsePaidFeatures: Boolean,
+    private val vaultAccessData: VaultAccessData
 ) {
+
+    private val isSharedVault: Boolean = when (vault) {
+        None -> false
+        is Some -> vault.value.vault.shared
+    }
+
+    internal val canManageSharedVault: Boolean = isSharedVault && vaultAccessData.canManageAccess
+
+    internal val canViewSharedVaultMembers: Boolean = isSharedVault && vaultAccessData.canViewMembers
+
+    internal val sharedVaultMembersCount: Int by lazy {
+        when (vault) {
+            None -> 0
+            is Some -> vault.value.vault.members
+        }
+    }
 
     internal companion object {
 
@@ -72,7 +91,11 @@ internal data class ShareFromItemUiState(
             showCreateVault = CreateNewVaultState.Hide,
             event = ShareFromItemNavEvent.Unknown,
             isSecureLinkAvailable = false,
-            canUsePaidFeatures = false
+            canUsePaidFeatures = false,
+            vaultAccessData = VaultAccessData(
+                canManageAccess = false,
+                canViewMembers = false
+            )
         )
 
     }

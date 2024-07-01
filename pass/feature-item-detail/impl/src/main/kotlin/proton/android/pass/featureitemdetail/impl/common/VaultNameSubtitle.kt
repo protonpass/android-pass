@@ -43,6 +43,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
@@ -121,6 +122,7 @@ fun VaultNameSubtitlePreview(@PreviewParameter(ThemedBooleanPreviewProvider::cla
         Surface {
             VaultNameSubtitle(
                 vault = Vault(
+                    userId = UserId(id = ""),
                     shareId = ShareId("123"),
                     name = "Vault Name",
                     color = ShareColor.Color1,

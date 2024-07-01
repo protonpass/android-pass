@@ -25,7 +25,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.ImmutableSet
-import kotlinx.collections.immutable.PersistentMap
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toImmutableList
@@ -53,6 +52,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.LoadingResult
@@ -150,6 +150,7 @@ import proton.android.pass.featurehome.impl.HomeSnackbarMessage.RestoreItemsSucc
 import proton.android.pass.featuresearchoptions.api.FilterOption
 import proton.android.pass.featuresearchoptions.api.HomeSearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.SearchFilterType
+import proton.android.pass.featuresearchoptions.api.SearchOptions
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.featuresearchoptions.api.SortingOption
 import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
@@ -235,38 +236,25 @@ class HomeViewModel @Inject constructor(
         .onEach { shouldScrollToTopFlow.update { true } }
 
     private val shareListWrapperFlow: Flow<ShareListWrapper> = combine(
-        searchOptionsFlow.map { it.vaultSelectionOption },
-        observeVaults().asLoadingResult(),
-        observeCurrentUser()
-    ) { vaultSelection, vaultsResult, currentUser ->
-        val vaults: List<Vault> = vaultsResult.getOrNull() ?: emptyList()
-        if (vaults.size == 1 && vaultSelection is VaultSelectionOption.AllVaults) {
-            homeSearchOptionsRepository.setVaultSelectionOption(
-                currentUser.userId,
-                VaultSelectionOption.Vault(vaults.first().shareId)
-            )
+        searchOptionsFlow,
+        observeVaults().asLoadingResult()
+    ) { searchOptions: SearchOptions, vaultsResult ->
+        val vaults: List<Vault> = vaultsResult.getOrNull().orEmpty()
+        val selectedShare: Option<ShareUiModel> = searchOptions.vaultSelectionOption
+            .let { it as? VaultSelectionOption.Vault }
+            ?.let { vault -> vaults.firstOrNull { it.shareId == vault.shareId } }
+            ?.let(ShareUiModel.Companion::fromVault)
+            .toOption()
+
+        val isVaultSelected = searchOptions.vaultSelectionOption is VaultSelectionOption.Vault
+        if (isVaultSelected) {
+            autoSelectAllVaultsIfCannotFindVault(selectedShare, vaults, searchOptions.userId)
         }
-        val shares: PersistentMap<ShareId, ShareUiModel> = vaults.associate {
-            it.shareId to ShareUiModel.fromVault(it)
-        }.toPersistentMap()
-        val selectedShare: Option<ShareUiModel> = when (vaultSelection) {
-            VaultSelectionOption.AllVaults -> None
-            VaultSelectionOption.Trash -> None
-            is VaultSelectionOption.Vault -> {
-                val match: Option<Vault> = vaults
-                    .firstOrNull { it.shareId == vaultSelection.shareId }
-                    .toOption()
-                if (match is None && vaults.isNotEmpty()) {
-                    homeSearchOptionsRepository.setVaultSelectionOption(
-                        currentUser.userId,
-                        VaultSelectionOption.AllVaults
-                    )
-                }
-                match.map { ShareUiModel.fromVault(it) }
-            }
-        }
+        autoSelectVaultIfSingle(vaults, searchOptions.vaultSelectionOption, searchOptions.userId)
+
         ShareListWrapper(
-            shares = shares,
+            shares = vaults.associate { it.shareId to ShareUiModel.fromVault(it) }
+                .toPersistentMap(),
             selectedShare = selectedShare
         )
     }.distinctUntilChanged()
@@ -1082,6 +1070,32 @@ class HomeViewModel @Inject constructor(
             SearchSortingType.CreationAsc -> groupAndSortByCreationAsc()
             SearchSortingType.CreationDesc -> groupAndSortByCreationDesc()
         }
+
+    private fun autoSelectAllVaultsIfCannotFindVault(
+        selectedShare: Option<ShareUiModel>,
+        vaultList: List<Vault>,
+        userId: UserId?
+    ) {
+        userId ?: return
+        val doAllVaultsBelongToUser = vaultList.all { it.userId == userId }
+        if (selectedShare is None && vaultList.isNotEmpty() && doAllVaultsBelongToUser) {
+            homeSearchOptionsRepository.setVaultSelectionOption(
+                userId,
+                VaultSelectionOption.AllVaults
+            )
+        }
+    }
+
+    private fun autoSelectVaultIfSingle(
+        vaults: List<Vault>,
+        vaultSelection: VaultSelectionOption,
+        userId: UserId?
+    ) {
+        if (vaults.size == 1 && vaultSelection is VaultSelectionOption.AllVaults && userId != null) {
+            val selection = VaultSelectionOption.Vault(vaults.first().shareId)
+            homeSearchOptionsRepository.setVaultSelectionOption(userId, selection)
+        }
+    }
 
     private data class SelectionState(
         val selectedItems: List<ItemUiModel>,

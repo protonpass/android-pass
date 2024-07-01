@@ -148,6 +148,7 @@ class HomeScreenTest {
     fun canNavigateToCreateVault() {
         val vault = VaultWithItemCount(
             vault = Vault(
+                userId = UserId(""),
                 shareId = ShareId("ShareId-canNavigateToCreateVault"),
                 name = "Vault canNavigateToCreateVault",
                 color = ShareColor.Color1,
@@ -305,6 +306,7 @@ class HomeScreenTest {
             .distinct()
             .map { shareId ->
                 Vault(
+                    userId = UserId(""),
                     shareId = shareId,
                     name = "Vault ${shareId.id}",
                     color = ShareColor.Color1,

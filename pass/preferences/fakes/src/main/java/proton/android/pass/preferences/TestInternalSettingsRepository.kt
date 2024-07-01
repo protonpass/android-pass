@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.datetime.Clock
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -103,12 +104,12 @@ class TestInternalSettingsRepository @Inject constructor() : InternalSettingsRep
 
     override fun getAutofillFilterOption(): Flow<FilterOptionPreference> = autofillFilterOptionFlow
 
-    override fun setSelectedVault(selectedVault: SelectedVaultPreference): Result<Unit> {
+    override fun setSelectedVault(userId: UserId, selectedVault: SelectedVaultPreference): Result<Unit> {
         selectedVaultFlow.update { selectedVault }
         return Result.success(Unit)
     }
 
-    override fun getSelectedVault(): Flow<SelectedVaultPreference> = selectedVaultFlow
+    override fun getSelectedVault(userId: UserId): Flow<SelectedVaultPreference> = selectedVaultFlow
 
     override fun setPinAttemptsCount(count: Int): Result<Unit> {
         pinAttemptsCountFlow.update { count }

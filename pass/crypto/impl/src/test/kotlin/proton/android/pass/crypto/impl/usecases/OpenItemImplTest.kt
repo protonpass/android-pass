@@ -18,6 +18,7 @@
 
 package proton.android.pass.crypto.impl.usecases
 
+import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.common.api.None
@@ -79,6 +80,7 @@ class OpenItemImplTest {
     private fun getShare(): Share {
         return Share(
             id = ShareId(SHARE_ID),
+            userId = UserId(""),
             shareType = ShareType.Vault,
             targetId = VAULT_ID,
             permission = SharePermission(SharePermissionFlag.Admin.value),

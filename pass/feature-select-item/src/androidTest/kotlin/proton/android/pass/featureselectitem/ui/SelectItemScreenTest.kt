@@ -31,6 +31,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import dagger.hilt.components.SingletonComponent
 import kotlinx.datetime.Clock
+import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -330,6 +331,7 @@ class SelectItemScreenTest {
         val vaultList = (0 until vaults).map {
             val shareId = ShareId("shareid-test-$it")
             Vault(
+                userId = UserId(""),
                 shareId = shareId,
                 name = "testVault-$it",
             )

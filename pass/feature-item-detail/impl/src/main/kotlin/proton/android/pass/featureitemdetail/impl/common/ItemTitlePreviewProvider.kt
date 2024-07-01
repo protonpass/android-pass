@@ -20,6 +20,7 @@ package proton.android.pass.featureitemdetail.impl.common
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.datetime.Instant
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.domain.ItemContents
@@ -44,6 +45,7 @@ class ItemTitlePreviewProvider : PreviewParameterProvider<ItemTitleInput> {
             yield(
                 ItemTitleInput(
                     vault = Vault(
+                        userId = UserId(id = ""),
                         shareId = ShareId("123"),
                         name = "A vault",
                         color = ShareColor.Color1,
@@ -63,6 +65,7 @@ class ItemTitlePreviewProvider : PreviewParameterProvider<ItemTitleInput> {
             yield(
                 ItemTitleInput(
                     vault = Vault(
+                        userId = UserId(id = ""),
                         shareId = ShareId("123"),
                         name = "A vault",
                         color = ShareColor.Color1,

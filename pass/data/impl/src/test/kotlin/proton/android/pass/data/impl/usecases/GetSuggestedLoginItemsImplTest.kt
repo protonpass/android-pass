@@ -22,6 +22,7 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
+import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -155,16 +156,19 @@ class GetSuggestedLoginItemsImplTest {
         val secondShareId = ShareId("456")
         val vaults = listOf(
             Vault(
+                userId = UserId(""),
                 shareId = firstShareId,
                 name = "default",
                 role = ShareRole.Admin
             ),
             Vault(
+                userId = UserId(""),
                 shareId = secondShareId,
                 name = "other",
                 role = ShareRole.Admin
             ),
             Vault(
+                userId = UserId(""),
                 shareId = ShareId("789"),
                 name = "another",
                 role = ShareRole.Read

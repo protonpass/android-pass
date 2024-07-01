@@ -19,6 +19,7 @@
 package proton.android.pass.composecomponents.impl.bottomsheet
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.ShareId
@@ -36,6 +37,7 @@ class BottomSheetVaultRowPreviewProvider : PreviewParameterProvider<VaultRowInpu
                                 VaultRowInput(
                                     vault = VaultWithItemCount(
                                         vault = Vault(
+                                            userId = UserId("123"),
                                             shareId = ShareId("123"),
                                             name = "some vault",
                                             color = ShareColor.Color2,

@@ -33,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
@@ -119,6 +120,7 @@ fun SelectVaultBottomsheetContentPreview(
 ) {
     val selectedVault = VaultWithItemCount(
         vault = Vault(
+            userId = UserId(id = ""),
             shareId = ShareId("123"),
             name = "vault 1"
         ),
@@ -137,6 +139,7 @@ fun SelectVaultBottomsheetContentPreview(
                         VaultWithStatus(
                             vault = VaultWithItemCount(
                                 vault = Vault(
+                                    userId = UserId(id = ""),
                                     shareId = ShareId("other"),
                                     name = "vault 2",
                                     color = ShareColor.Color2,
@@ -150,6 +153,7 @@ fun SelectVaultBottomsheetContentPreview(
                         VaultWithStatus(
                             vault = VaultWithItemCount(
                                 vault = Vault(
+                                    userId = UserId(id = ""),
                                     shareId = ShareId("another"),
                                     name = "vault 3",
                                     color = ShareColor.Color3,

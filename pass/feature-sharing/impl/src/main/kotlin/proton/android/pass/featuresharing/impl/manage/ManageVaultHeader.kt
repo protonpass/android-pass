@@ -30,6 +30,7 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -85,6 +86,7 @@ fun ManageVaultHeaderPreview(@PreviewParameter(ThemePreviewProvider::class) isDa
             ManageVaultHeader(
                 vault = VaultWithItemCount(
                     vault = Vault(
+                        userId = UserId(id = ""),
                         shareId = ShareId("123"),
                         name = "Vault name"
                     ),

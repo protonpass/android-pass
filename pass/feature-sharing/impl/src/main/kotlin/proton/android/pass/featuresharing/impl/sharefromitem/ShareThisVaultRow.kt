@@ -38,6 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -125,6 +126,7 @@ internal fun ShareThisVaultRowPreview(@PreviewParameter(ThemePreviewProvider::cl
             ShareThisVaultRow(
                 vault = VaultWithItemCount(
                     vault = Vault(
+                        userId = UserId(id = ""),
                         shareId = ShareId("Share"),
                         name = "Test vault with a very very long name"
                     ),

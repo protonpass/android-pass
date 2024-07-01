@@ -25,6 +25,8 @@ import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Totp
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.items.ItemCategory
@@ -75,6 +77,8 @@ sealed interface ItemDetailState {
     @Stable
     data class Identity(
         override val itemContents: ItemContents.Identity,
+        val itemId: ItemId,
+        val shareId: ShareId,
         override val isItemPinned: Boolean,
         override val itemVault: Vault?,
         override val itemCreatedAt: Instant,

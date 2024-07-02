@@ -67,7 +67,7 @@ private const val CHEVRON_ROTATION_DEGREES_ANIMATION_LABEL = "chevronRotationDeg
 private const val IS_MORE_INFO_EXPANDED_DEFAULT = false
 
 @Composable
-internal fun PassItemDetailsMoreInfoSection(
+fun PassItemDetailsMoreInfoSection(
     modifier: Modifier = Modifier,
     itemId: ItemId,
     shareId: ShareId

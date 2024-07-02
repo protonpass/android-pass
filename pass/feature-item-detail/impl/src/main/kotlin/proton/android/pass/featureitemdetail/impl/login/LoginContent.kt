@@ -37,12 +37,11 @@ import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
 import proton.android.pass.composecomponents.impl.item.details.sections.login.passkeys.PasskeysSection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
+import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.items.ItemCategory
-import proton.android.pass.featureitemdetail.impl.common.MoreInfo
-import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.NoteSection
 import proton.android.pass.featureitemdetail.impl.login.customfield.CustomFieldDetails
 
@@ -53,7 +52,6 @@ internal fun LoginContent(
     passwordScore: PasswordScore?,
     vault: Vault?,
     totpUiState: TotpUiState?,
-    moreInfoUiState: MoreInfoUiState,
     showViewAlias: Boolean,
     canLoadExternalImages: Boolean,
     customFields: ImmutableList<CustomFieldUiContent>,
@@ -146,6 +144,9 @@ internal fun LoginContent(
             onLinkedAppDelete = {}
         )
 
-        MoreInfo(moreInfoUiState = moreInfoUiState)
+        PassItemDetailsMoreInfoSection(
+            itemId = itemUiModel.id,
+            shareId = itemUiModel.shareId
+        )
     }
 }

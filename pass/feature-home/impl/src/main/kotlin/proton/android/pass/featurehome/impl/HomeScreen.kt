@@ -219,6 +219,7 @@ fun HomeScreen(
     LaunchedEffect(homeUiState.action) {
         when (homeUiState.action) {
             BottomSheetItemAction.None -> bottomSheetState.hide()
+            BottomSheetItemAction.Migrate,
             BottomSheetItemAction.MonitorExclude,
             BottomSheetItemAction.MonitorInclude,
             BottomSheetItemAction.Pin,

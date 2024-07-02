@@ -29,6 +29,11 @@ internal enum class ItemDetailMenuSnackBarMessage(
     override val isClipboard: Boolean = false
 ) : SnackbarMessage {
 
+    ItemMigrationError(
+        id = CompR.string.snack_bar_message_item_migration_error,
+        type = SnackbarType.ERROR
+    ),
+
     ItemPinnedSuccess(
         id = CompR.string.snack_bar_message_item_pinned_success,
         type = SnackbarType.SUCCESS

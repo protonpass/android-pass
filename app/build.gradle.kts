@@ -30,6 +30,7 @@ plugins {
     id("io.sentry.android.gradle")
     id("org.jetbrains.kotlin.kapt")
     alias(libs.plugins.gradlePlugin.proton.environmentConfig)
+    alias(libs.plugins.gradlePlugin.dependency.guard)
 }
 
 val privateProperties = Properties().apply {
@@ -525,4 +526,15 @@ fun VariantDimension.setAssetLinksResValue(host: String) {
             }]
         """.trimIndent()
     )
+}
+
+dependencyGuard {
+    configuration("playProdReleaseRuntimeClasspath") {
+        artifacts = true
+        modules = false
+
+        allowedFilter = {
+            !it.contains("junit")
+        }
+    }
 }

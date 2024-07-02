@@ -28,6 +28,7 @@ sealed interface AppNavigation {
     data object Restart : AppNavigation
     data object PasswordManagement : AppNavigation
     data object RecoveryEmail : AppNavigation
+    data object SecurityKeys : AppNavigation
     data object AddAccount : AppNavigation
 
 

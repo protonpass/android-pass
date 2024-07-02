@@ -344,6 +344,8 @@ dependencies {
     implementation(libs.core.accountManager.presentation.compose)
     implementation(libs.core.accountRecovery)
     implementation(libs.core.auth)
+    implementation(libs.core.authFidoDagger)
+    implementation(libs.core.authFidoDomain)
     implementation(libs.core.challenge)
     implementation(libs.core.country)
     implementation(libs.core.crypto)
@@ -368,6 +370,10 @@ dependencies {
 
     addFdroidSpecialLib(
         default = libs.core.paymentIap,
+        fdroid = null
+    )
+    addFdroidSpecialLib(
+        default = libs.core.authFidoPlay,
         fdroid = null
     )
 

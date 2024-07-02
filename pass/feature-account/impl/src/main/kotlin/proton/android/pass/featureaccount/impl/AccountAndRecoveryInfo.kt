@@ -25,9 +25,11 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import me.proton.core.auth.fido.domain.entity.Fido2RegisteredKey
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallWeak
 import me.proton.core.domain.entity.UserId
@@ -110,6 +112,32 @@ internal fun AccountPasswordAndRecoveryInfo(state: AccountUiState, onEvent: (Acc
         text = recoveryHint,
         onClick = { onEvent(AccountContentEvent.RecoveryEmail) }
     )
+
+    if (state.isFido2Enabled) {
+        Divider(color = PassTheme.colors.inputBorderNorm)
+
+        SettingOption(
+            label = stringResource(R.string.account_settings_list_item_security_keys),
+            text = SecurityKeysSettingsItemHint(state.registeredSecurityKeys),
+            onClick = { onEvent(AccountContentEvent.SecurityKeys) }
+        )
+    }
+}
+
+@Composable
+fun SecurityKeysSettingsItemHint(registeredSecurityKeys: List<Fido2RegisteredKey>?): String = when {
+    registeredSecurityKeys.isNullOrEmpty() ->
+        stringResource(R.string.account_settings_list_item_security_keys_hint_not_set)
+
+    registeredSecurityKeys.size == 1 -> stringResource(
+        R.string.account_settings_list_item_security_keys_hint_single,
+        registeredSecurityKeys.first().name
+    )
+
+    else -> pluralStringResource(
+        id = R.plurals.account_settings_list_item_security_keys_hint_many,
+        count = registeredSecurityKeys.size
+    )
 }
 
 @Preview
@@ -128,7 +156,9 @@ fun AccountInfoPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
                     showSubscriptionButton = true,
                     showExtraPassword = true,
                     isExtraPasswordEnabled = false,
-                    userId = UserId("")
+                    userId = UserId(""),
+                    isFido2Enabled = true,
+                    registeredSecurityKeys = emptyList()
                 ),
                 onEvent = {}
             )

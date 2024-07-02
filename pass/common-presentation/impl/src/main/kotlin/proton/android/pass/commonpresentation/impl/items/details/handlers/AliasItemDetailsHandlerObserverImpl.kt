@@ -21,9 +21,9 @@ package proton.android.pass.commonpresentation.impl.items.details.handlers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
@@ -54,6 +54,8 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
     ) { aliasItemContents, aliasDetails, vault ->
         ItemDetailState.Alias(
             itemContents = aliasItemContents,
+            itemId = item.id,
+            shareId = item.shareId,
             isItemPinned = item.isPinned,
             itemVault = vault,
             itemCreatedAt = item.createTime,
@@ -62,21 +64,24 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
         )
     }
 
-    private fun observeAliasItemContents(item: Item): Flow<ItemContents.Alias> =
-        aliasItemContentsFlow.map { aliasItemContents ->
-            aliasItemContents ?: encryptionContextProvider.withEncryptionContext {
-                item.toItemContents(this@withEncryptionContext) as ItemContents.Alias
-            }
+    private fun observeAliasItemContents(item: Item): Flow<ItemContents.Alias> = flow {
+        encryptionContextProvider.withEncryptionContext {
+            item.toItemContents(this@withEncryptionContext) as ItemContents.Alias
+        }.let { aliasItemContents ->
+            aliasItemContentsFlow.update { aliasItemContents }
+        }.also {
+            emitAll(aliasItemContentsFlow.filterNotNull())
         }
-            .distinctUntilChanged()
-            .onEach { aliasItemContents ->
-                aliasItemContentsFlow.update { aliasItemContents }
-            }
+    }
 
-    private fun observeAliasDetails(item: Item): Flow<AliasDetails> = getAliasDetails(item.shareId, item.id)
-        .onStart { emit(AliasDetails("", emptyList(), emptyList())) }
+    private fun observeAliasDetails(item: Item): Flow<AliasDetails> =
+        getAliasDetails(item.shareId, item.id)
+            .onStart { emit(AliasDetails("", emptyList(), emptyList())) }
 
-    override fun updateHiddenState(hiddenFieldType: ItemDetailsFieldType.Hidden, hiddenState: HiddenState) {
+    override fun updateHiddenState(
+        hiddenFieldType: ItemDetailsFieldType.Hidden,
+        hiddenState: HiddenState
+    ) {
         aliasItemContentsFlow.update { aliasItemContents ->
             when (hiddenFieldType) {
                 is ItemDetailsFieldType.Hidden.CustomField,

@@ -21,11 +21,13 @@ package proton.android.pass.commonpresentation.impl.items.details.handlers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import proton.android.pass.common.api.combineN
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
@@ -72,6 +74,8 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     ) { loginItemContents, primaryTotp, customFields, vault, useFaviconsPreference, isUsernameSplitEnabled ->
         ItemDetailState.Login(
             itemContents = loginItemContents,
+            itemId = item.id,
+            shareId = item.shareId,
             isItemPinned = item.isPinned,
             itemVault = vault,
             itemCreatedAt = item.createTime,
@@ -88,22 +92,24 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
         )
     }
 
-    private fun observeLoginItemContents(item: Item): Flow<ItemContents.Login> = combine(
-        loginItemContentsFlow,
-        featureFlagsRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT)
-    ) { loginItemContents, isUsernameSplitEnabled ->
-        loginItemContents ?: encryptionContextProvider.withEncryptionContext {
-            item.toItemContents(
-                encryptionContext = this@withEncryptionContext,
-                isUsernameSplitEnabled = isUsernameSplitEnabled,
-                emailValidator = emailValidator
-            ) as ItemContents.Login
-        }
+    private fun observeLoginItemContents(item: Item): Flow<ItemContents.Login> = flow {
+        featureFlagsRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT).first()
+            .let { isUsernameSplitEnabled ->
+                encryptionContextProvider.withEncryptionContext {
+                    item.toItemContents(
+                        encryptionContext = this@withEncryptionContext,
+                        isUsernameSplitEnabled = isUsernameSplitEnabled,
+                        emailValidator = emailValidator
+                    ) as ItemContents.Login
+                }
+            }
+            .let { loginItemContents ->
+                loginItemContentsFlow.update { loginItemContents }
+            }
+            .also {
+                emitAll(loginItemContentsFlow.filterNotNull())
+            }
     }
-        .distinctUntilChanged()
-        .onEach { loginItemContents ->
-            loginItemContentsFlow.update { loginItemContents }
-        }
 
     private fun observePrimaryTotp(item: Item): Flow<Totp?> = observeLoginItemContents(item)
         .flatMapLatest { loginItemContents ->
@@ -168,7 +174,10 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
         }
     }
 
-    override fun updateHiddenState(hiddenFieldType: ItemDetailsFieldType.Hidden, hiddenState: HiddenState) {
+    override fun updateHiddenState(
+        hiddenFieldType: ItemDetailsFieldType.Hidden,
+        hiddenState: HiddenState
+    ) {
         loginItemContentsFlow.update { loginItemContents ->
             when (hiddenFieldType) {
                 is ItemDetailsFieldType.Hidden.CustomField -> loginItemContents?.copy(

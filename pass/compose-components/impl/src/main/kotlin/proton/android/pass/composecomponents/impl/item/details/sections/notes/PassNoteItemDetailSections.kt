@@ -20,12 +20,25 @@ package proton.android.pass.composecomponents.impl.item.details.sections.notes
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
 @Composable
-internal fun PassNoteItemDetailSections(modifier: Modifier = Modifier, contents: ItemContents.Note) = with(contents) {
+internal fun PassNoteItemDetailSections(
+    modifier: Modifier = Modifier,
+    itemId: ItemId,
+    shareId: ShareId,
+    contents: ItemContents.Note
+) = with(contents) {
     PassNoteItemDetailMainSection(
         modifier = modifier,
         note = note
+    )
+
+    PassItemDetailsMoreInfoSection(
+        itemId = itemId,
+        shareId = shareId
     )
 }

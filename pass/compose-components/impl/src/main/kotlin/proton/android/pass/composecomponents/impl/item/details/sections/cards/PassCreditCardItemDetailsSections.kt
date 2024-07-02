@@ -24,13 +24,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
+import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassSharedItemDetailNoteSection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
 @Composable
 internal fun PassCreditCardItemDetailsSections(
     modifier: Modifier = Modifier,
+    itemId: ItemId,
+    shareId: ShareId,
     contents: ItemContents.CreditCard,
     itemColors: PassItemColors,
     onEvent: (PassItemDetailsUiEvent) -> Unit
@@ -55,5 +60,10 @@ internal fun PassCreditCardItemDetailsSections(
                 itemColors = itemColors
             )
         }
+
+        PassItemDetailsMoreInfoSection(
+            itemId = itemId,
+            shareId = shareId
+        )
     }
 }

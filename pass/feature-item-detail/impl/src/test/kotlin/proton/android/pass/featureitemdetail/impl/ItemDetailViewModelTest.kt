@@ -22,7 +22,6 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import kotlinx.datetime.Instant
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -39,31 +38,27 @@ import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.events.ItemViewed
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
-import proton.android.pass.test.FixedClock
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestItem
 
-class ItemDetailViewModelTest {
+internal class ItemDetailViewModelTest {
 
     @get:Rule
     val dispatcher = MainDispatcherRule()
 
     private lateinit var instance: ItemDetailViewModel
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
-    private lateinit var clock: FixedClock
     private lateinit var telemetryManager: TestTelemetryManager
     private lateinit var getItemById: FakeGetItemById
 
     @Before
     fun setup() {
         snackbarDispatcher = TestSnackbarDispatcher()
-        clock = FixedClock(Instant.fromEpochSeconds(TEST_TIMESTAMP))
         telemetryManager = TestTelemetryManager()
         getItemById = FakeGetItemById()
 
         instance = ItemDetailViewModel(
             snackbarDispatcher = snackbarDispatcher,
-            clock = clock,
             telemetryManager = telemetryManager,
             getItemById = getItemById,
             userPreferenceRepository = TestPreferenceRepository().apply {
@@ -85,10 +80,6 @@ class ItemDetailViewModelTest {
         instance.uiState.test {
             val emitted = awaitItem()
             assertThat(emitted.itemTypeUiState).isEqualTo(ItemTypeUiState.Note)
-            assertThat(emitted.moreInfoUiState.createdTime).isEqualTo(item.createTime)
-            assertThat(emitted.moreInfoUiState.lastAutofilled).isEqualTo(item.lastAutofillTime)
-            assertThat(emitted.moreInfoUiState.lastModified).isEqualTo(item.modificationTime)
-            assertThat(emitted.moreInfoUiState.now).isEqualTo(clock.now())
         }
     }
 

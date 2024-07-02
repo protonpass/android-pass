@@ -232,4 +232,10 @@
         <item quantity="one">%d second</item>
         <item quantity="other">%d seconds</item>
     </plurals>
+
+    <!-- Snack bars -->
+    <string name="snack_bar_message_item_pinned_success">Item successfully pinned</string>
+    <string name="snack_bar_message_item_pinned_error">There was an error pinning this item</string>
+    <string name="snack_bar_message_item_unpinned_success">Item successfully unpinned</string>
+    <string name="snack_bar_message_item_unpinned_error">There was an error unpinning this item</string>
 </resources>

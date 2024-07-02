@@ -43,20 +43,16 @@ fun ItemDetailContent(
     ) {
         when (uiState.itemTypeUiState) {
             ItemTypeUiState.Login -> LoginDetail(
-                moreInfoUiState = uiState.moreInfoUiState,
                 canLoadExternalImages = uiState.canLoadExternalImages,
                 onNavigate = onNavigate
             )
             ItemTypeUiState.Note -> NoteDetail(
-                moreInfoUiState = uiState.moreInfoUiState,
                 onNavigate = onNavigate
             )
             ItemTypeUiState.Alias -> AliasDetail(
-                moreInfoUiState = uiState.moreInfoUiState,
                 onNavigate = onNavigate
             )
             ItemTypeUiState.CreditCard -> CreditCardDetail(
-                moreInfoUiState = uiState.moreInfoUiState,
                 onNavigate = onNavigate
             )
             ItemTypeUiState.Password -> {}

@@ -46,7 +46,6 @@ import proton.android.pass.domain.ItemState
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
-import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.onEditClick
 import proton.android.pass.featureitemdetail.impl.common.onShareClick
 import proton.android.pass.featuretrash.impl.ConfirmDeleteItemDialog
@@ -59,7 +58,6 @@ import proton.android.pass.featuretrash.impl.TrashItemBottomSheetContents
 @Composable
 fun NoteDetail(
     modifier: Modifier = Modifier,
-    moreInfoUiState: MoreInfoUiState,
     viewModel: NoteDetailViewModel = hiltViewModel(),
     onNavigate: (ItemDetailNavigation) -> Unit
 ) {
@@ -177,7 +175,6 @@ fun NoteDetail(
                             .verticalScroll(rememberScrollState()),
                         itemUiModel = state.itemUiModel,
                         vault = state.vault,
-                        moreInfoUiState = moreInfoUiState,
                         onVaultClick = {
                             state.vault?.shareId?.let {
                                 onNavigate(ItemDetailNavigation.ManageVault(it))

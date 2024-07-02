@@ -60,8 +60,7 @@ fun PasskeyDetailBottomSheet(
         is PasskeyDetailBottomSheetContent.Success -> {
             PasskeyDetailBottomSheetContent(
                 modifier = modifier,
-                passkey = content.passkey,
-                now = content.now
+                passkey = content.passkey
             )
         }
     }

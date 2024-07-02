@@ -70,7 +70,7 @@ fun PassItemDetailsHistorySection(
                 subtitle = passFormattedDateText(endInstant = lastAutofillAtOption.value),
                 paddingValues = PaddingValues(
                     top = Spacing.medium,
-                    start = Spacing.medium,
+                    start = Spacing.medium
                 )
             )
         }
@@ -84,7 +84,7 @@ fun PassItemDetailsHistorySection(
             subtitle = passFormattedDateText(endInstant = modifiedAt),
             paddingValues = PaddingValues(
                 top = Spacing.medium,
-                start = Spacing.medium,
+                start = Spacing.medium
             )
         )
 

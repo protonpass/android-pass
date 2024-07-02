@@ -21,9 +21,14 @@ package proton.android.pass.featureaccount.impl
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
+import me.proton.core.usersettings.domain.usecase.ObserveRegisteredSecurityKeys
+import me.proton.core.usersettings.domain.usecase.ObserveUserSettings
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.account.fakes.FakeAccountRepository
+import proton.android.pass.account.fakes.FakeIsFido2Enabled
+import proton.android.pass.account.fakes.FakeUserSettingsRepository
 import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.UpgradeInfo
@@ -50,12 +55,19 @@ internal class AccountViewModelTest {
     private lateinit var getUpgradeInfo: TestObserveUpgradeInfo
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
 
+    private lateinit var observeRegisteredSecurityKeys: ObserveRegisteredSecurityKeys
+
     @Before
     fun setup() {
         observeCurrentUser = TestObserveCurrentUser()
         observeCurrentUserSettings = TestObserveCurrentUserSettings()
         getUpgradeInfo = TestObserveUpgradeInfo()
         snackbarDispatcher = TestSnackbarDispatcher()
+        observeRegisteredSecurityKeys = ObserveRegisteredSecurityKeys(
+            accountRepository = FakeAccountRepository(),
+            isFido2Enabled = FakeIsFido2Enabled(),
+            observeUserSettings = ObserveUserSettings(FakeUserSettingsRepository())
+        )
 
         instance = AccountViewModel(
             observeCurrentUser = observeCurrentUser,
@@ -63,7 +75,9 @@ internal class AccountViewModelTest {
             observeCurrentUserSettings = observeCurrentUserSettings,
             hasExtraPassword = FakeHasExtraPassword(),
             featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository(),
-            accountManager = TestAccountManager()
+            accountManager = TestAccountManager(),
+            isFido2Enabled = FakeIsFido2Enabled(),
+            observeRegisteredSecurityKeys = observeRegisteredSecurityKeys
         )
     }
 

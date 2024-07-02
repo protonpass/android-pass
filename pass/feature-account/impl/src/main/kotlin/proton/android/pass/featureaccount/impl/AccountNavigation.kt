@@ -26,6 +26,7 @@ sealed interface AccountNavigation {
     data object Back : AccountNavigation
     data object PasswordManagement : AccountNavigation
     data object RecoveryEmail : AccountNavigation
+    data object SecurityKeys : AccountNavigation
     data object SetExtraPassword : AccountNavigation
 
     @JvmInline

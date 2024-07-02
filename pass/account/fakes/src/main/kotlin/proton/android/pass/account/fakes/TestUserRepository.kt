@@ -19,6 +19,7 @@
 package proton.android.pass.account.fakes
 
 import kotlinx.coroutines.flow.Flow
+import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
@@ -28,7 +29,6 @@ import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.CreateUserType
 import me.proton.core.user.domain.entity.Domain
-import me.proton.core.user.domain.entity.SecondFactorFido
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserRepository
@@ -110,8 +110,7 @@ class TestUserRepository : UserRepository {
         sessionUserId: SessionUserId,
         srpProofs: SrpProofs,
         srpSession: String,
-        secondFactorCode: String?,
-        secondFactorFido: SecondFactorFido?
+        secondFactorProof: SecondFactorProof?
     ): Boolean {
         throw IllegalStateException("Not implemented")
     }

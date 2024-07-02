@@ -16,21 +16,28 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.details.navigation
+package proton.android.pass.features.item.details.detailmenu.presentation
 
+import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.commonui.api.require
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.navigation.api.NavItem
+import javax.inject.Inject
 
-object ItemDetailsNavItem : NavItem(
-    baseRoute = "item/details",
-    navArgIds = listOf(
-        CommonNavArgId.ShareId,
-        CommonNavArgId.ItemId
-    )
-) {
+@HiltViewModel
+class ItemDetailsMenuViewModel @Inject constructor(
+    savedStateHandleProvider: SavedStateHandleProvider
+) : ViewModel() {
 
-    fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
+    private val shareId: ShareId = savedStateHandleProvider.get()
+        .require<String>(CommonNavArgId.ShareId.key)
+        .let(::ShareId)
+
+    private val itemId: ItemId = savedStateHandleProvider.get()
+        .require<String>(CommonNavArgId.ItemId.key)
+        .let(::ItemId)
 
 }

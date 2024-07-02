@@ -176,10 +176,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
         }
     }
 
-    override fun updateHiddenState(
-        hiddenFieldType: ItemDetailsFieldType.Hidden,
-        hiddenState: HiddenState
-    ) {
+    override fun updateHiddenState(hiddenFieldType: ItemDetailsFieldType.Hidden, hiddenState: HiddenState) {
         loginItemContentsFlow.update { loginItemContents ->
             when (hiddenFieldType) {
                 is ItemDetailsFieldType.Hidden.CustomField -> loginItemContents?.copy(

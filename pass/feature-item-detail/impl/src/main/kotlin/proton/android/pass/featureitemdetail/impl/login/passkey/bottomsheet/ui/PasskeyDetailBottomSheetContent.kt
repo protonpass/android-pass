@@ -56,10 +56,7 @@ import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
-internal fun PasskeyDetailBottomSheetContent(
-    modifier: Modifier = Modifier,
-    passkey: Passkey
-) {
+internal fun PasskeyDetailBottomSheetContent(modifier: Modifier = Modifier, passkey: Passkey) {
     Column(
         modifier = modifier
             .bottomSheet()

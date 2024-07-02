@@ -20,6 +20,7 @@ package proton.android.pass.account.fakes
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.PlainByteArray
@@ -68,7 +69,7 @@ class FakeUserManager @Inject constructor() : UserManager {
     override suspend fun changePassword(
         userId: UserId,
         newPassword: EncryptedString,
-        secondFactorCode: String,
+        secondFactorProof: SecondFactorProof?,
         proofs: SrpProofs,
         srpSession: String,
         auth: Auth?

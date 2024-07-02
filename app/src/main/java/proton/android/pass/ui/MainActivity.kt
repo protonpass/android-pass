@@ -41,6 +41,7 @@ import me.proton.core.accountmanager.presentation.compose.SignOutDialogActivity
 import me.proton.core.compose.component.ProtonCenteredProgress
 import me.proton.core.notification.presentation.deeplink.DeeplinkManager
 import me.proton.core.notification.presentation.deeplink.onActivityCreate
+import me.proton.core.usersettings.presentation.compose.view.SecurityKeysActivity
 import proton.android.pass.autofill.di.UserPreferenceEntryPoint
 import proton.android.pass.commonui.api.setSecureMode
 import proton.android.pass.log.api.PassLogger
@@ -128,6 +129,7 @@ class MainActivity : FragmentActivity() {
                             is AppNavigation.AddAccount -> launcherViewModel.addAccount()
                             is AppNavigation.RemoveAccount -> launcherViewModel.remove(it.userId)
                             is AppNavigation.SwitchAccount -> launcherViewModel.switch(it.userId)
+                            is AppNavigation.SecurityKeys -> SecurityKeysActivity.start(this@MainActivity)
                         }
                     }
                 )

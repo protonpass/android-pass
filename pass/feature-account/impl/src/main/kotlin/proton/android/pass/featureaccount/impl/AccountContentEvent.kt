@@ -25,6 +25,7 @@ internal sealed interface AccountContentEvent {
     data object Upgrade : AccountContentEvent
     data object PasswordManagement : AccountContentEvent
     data object RecoveryEmail : AccountContentEvent
+    data object SecurityKeys : AccountContentEvent
     data object DeleteAccount : AccountContentEvent
 
     @JvmInline

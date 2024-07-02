@@ -35,7 +35,8 @@ object TestItemUiModel {
         createTime: Instant = Clock.System.now(),
         modificationTime: Instant = Clock.System.now(),
         lastAutofillTime: Instant? = null,
-        isPinned: Boolean = false
+        isPinned: Boolean = false,
+        revision: Long = 0
     ): ItemUiModel = ItemUiModel(
         id = ItemId(id = id),
         shareId = ShareId(id = "share-id"),
@@ -44,7 +45,8 @@ object TestItemUiModel {
         state = 0,
         modificationTime = modificationTime,
         lastAutofillTime = lastAutofillTime,
-        isPinned = isPinned
+        isPinned = isPinned,
+        revision = revision
     )
 
 }

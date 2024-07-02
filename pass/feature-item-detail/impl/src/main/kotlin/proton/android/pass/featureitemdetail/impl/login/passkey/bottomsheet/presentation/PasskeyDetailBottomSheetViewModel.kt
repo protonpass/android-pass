@@ -32,8 +32,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
 import kotlinx.serialization.json.Json
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
@@ -66,10 +64,7 @@ sealed interface PasskeyDetailBottomSheetContent {
     data object Loading : PasskeyDetailBottomSheetContent
 
     @Stable
-    data class Success(
-        val passkey: Passkey,
-        val now: Instant
-    ) : PasskeyDetailBottomSheetContent
+    data class Success(val passkey: Passkey) : PasskeyDetailBottomSheetContent
 }
 
 @Stable
@@ -97,7 +92,6 @@ data class PasskeyDetailBottomSheetState(
 @HiltViewModel
 class PasskeyDetailBottomSheetViewModel @Inject constructor(
     private val getPasskeyById: GetPasskeyById,
-    private val clock: Clock,
     private val savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -141,10 +135,7 @@ class PasskeyDetailBottomSheetViewModel @Inject constructor(
         eventFlow
     ) { result, event ->
         val content = result.map { passkey ->
-            PasskeyDetailBottomSheetContent.Success(
-                passkey = passkey,
-                now = clock.now()
-            )
+            PasskeyDetailBottomSheetContent.Success(passkey = passkey)
         }.getOrNull() ?: PasskeyDetailBottomSheetContent.Loading
         PasskeyDetailBottomSheetState(
             event = event,

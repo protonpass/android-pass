@@ -46,7 +46,6 @@ import proton.android.pass.domain.ItemState
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
-import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsBottomSheetContents
 import proton.android.pass.featureitemdetail.impl.common.onEditClick
 import proton.android.pass.featureitemdetail.impl.common.onShareClick
@@ -61,7 +60,6 @@ import proton.android.pass.featuretrash.impl.TrashItemBottomSheetContents
 @Composable
 fun AliasDetail(
     modifier: Modifier = Modifier,
-    moreInfoUiState: MoreInfoUiState,
     onNavigate: (ItemDetailNavigation) -> Unit,
     viewModel: AliasDetailViewModel = hiltViewModel()
 ) {
@@ -178,7 +176,6 @@ fun AliasDetail(
                         mailboxes = state.mailboxes,
                         isLoading = state.isLoadingMailboxes,
                         onCopyAlias = { viewModel.onCopyAlias(it) },
-                        moreInfoUiState = moreInfoUiState,
                         onCreateLoginFromAlias = { alias ->
                             val event = ItemDetailNavigation.OnCreateLoginFromAlias(
                                 alias = alias,

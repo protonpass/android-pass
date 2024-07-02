@@ -21,7 +21,6 @@ package proton.android.pass.featureitemdetail.impl
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
-import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 
 @Stable
 sealed interface ItemDetailScreenEvent {
@@ -36,14 +35,12 @@ sealed interface ItemDetailScreenEvent {
 @Immutable
 data class ItemDetailScreenUiState(
     val itemTypeUiState: ItemTypeUiState,
-    val moreInfoUiState: MoreInfoUiState,
     val canLoadExternalImages: Boolean,
     val event: ItemDetailScreenEvent
 ) {
     companion object {
         val Initial = ItemDetailScreenUiState(
             itemTypeUiState = ItemTypeUiState.Unknown,
-            moreInfoUiState = MoreInfoUiState.Initial,
             canLoadExternalImages = false,
             event = ItemDetailScreenEvent.Idle
         )

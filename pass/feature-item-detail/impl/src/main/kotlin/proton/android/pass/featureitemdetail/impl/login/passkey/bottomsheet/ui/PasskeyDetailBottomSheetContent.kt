@@ -47,19 +47,18 @@ import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
 import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.form.PassDivider
+import proton.android.pass.composecomponents.impl.utils.passFormattedDateText
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.PasskeyCreationData
 import proton.android.pass.domain.PasskeyId
 import proton.android.pass.featureitemdetail.impl.R
-import proton.android.pass.featureitemdetail.impl.common.formatMoreInfoInstantText
 import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 internal fun PasskeyDetailBottomSheetContent(
     modifier: Modifier = Modifier,
-    passkey: Passkey,
-    now: Instant
+    passkey: Passkey
 ) {
     Column(
         modifier = modifier
@@ -95,10 +94,7 @@ internal fun PasskeyDetailBottomSheetContent(
             PassDivider()
             PasskeyDetailRow(
                 title = stringResource(R.string.passkey_detail_bottomsheet_created),
-                subtitle = formatMoreInfoInstantText(
-                    now = now,
-                    toFormat = passkey.createTime
-                ),
+                subtitle = passFormattedDateText(endInstant = passkey.createTime),
                 icon = CoreR.drawable.ic_proton_calendar_today
             )
         }
@@ -166,8 +162,7 @@ fun PasskeyDetailBottomSheetContentPreview(@PreviewParameter(ThemePreviewProvide
                         appVersion = "1.2.3",
                         deviceName = "Pixel 6"
                     )
-                ),
-                now = now
+                )
             )
         }
     }

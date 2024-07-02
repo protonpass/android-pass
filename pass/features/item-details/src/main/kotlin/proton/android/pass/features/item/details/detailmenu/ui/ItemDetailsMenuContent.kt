@@ -20,10 +20,54 @@ package proton.android.pass.features.item.details.detailmenu.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import kotlinx.collections.immutable.toPersistentList
+import proton.android.pass.commonui.api.bottomSheet
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
+import proton.android.pass.composecomponents.impl.bottomsheet.pin
+import proton.android.pass.composecomponents.impl.bottomsheet.unpin
+import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
+import proton.android.pass.domain.items.ItemCategory
+import proton.android.pass.features.item.details.detailmenu.presentation.ItemDetailsMenuState
 
 @Composable
 internal fun ItemDetailsMenuContent(
-    modifier: Modifier = Modifier
-) {
-// Add menu content
+    modifier: Modifier = Modifier,
+    onEvent: (ItemDetailsMenuUiEvent) -> Unit,
+    state: ItemDetailsMenuState
+) = with(state) {
+    when (itemCategory) {
+        ItemCategory.Login -> mutableListOf<BottomSheetItem>().apply {
+
+        }
+
+        ItemCategory.Alias,
+        ItemCategory.Note,
+        ItemCategory.CreditCard,
+        ItemCategory.Identity -> mutableListOf<BottomSheetItem>().apply {
+            if (isItemPinned) {
+                add(
+                    unpin(
+                        action = action,
+                        onClick = { onEvent(ItemDetailsMenuUiEvent.OnUnpinItemClicked) }
+                    )
+                )
+            } else {
+                add(
+                    pin(
+                        action = action,
+                        onClick = { onEvent(ItemDetailsMenuUiEvent.OnPinItemClicked) }
+                    )
+                )
+            }
+        }
+
+        ItemCategory.Password,
+        ItemCategory.Unknown -> emptyList()
+    }.also { bottomSheetItems ->
+        BottomSheetItemList(
+            modifier = modifier.bottomSheet(),
+            items = bottomSheetItems.withDividers().toPersistentList()
+        )
+    }
 }

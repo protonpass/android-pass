@@ -19,7 +19,11 @@
 package proton.android.pass.features.item.details.detailmenu.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.features.item.details.detailmenu.presentation.ItemDetailsMenuEvent
 import proton.android.pass.features.item.details.detailmenu.presentation.ItemDetailsMenuViewModel
 import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination
 
@@ -28,7 +32,28 @@ fun ItemDetailsMenuBottomSheet(
     onNavigated: (ItemDetailsNavDestination) -> Unit,
     viewModel: ItemDetailsMenuViewModel = hiltViewModel()
 ) = with(viewModel) {
+    val state by state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(key1 = state.event) {
+        when (state.event) {
+            ItemDetailsMenuEvent.Idle -> {}
+
+            ItemDetailsMenuEvent.OnItemPinned,
+            ItemDetailsMenuEvent.OnItemUnpinned -> {
+                onNavigated(ItemDetailsNavDestination.DismissBottomSheet)
+            }
+        }
+
+        onConsumeEvent(state.event)
+    }
 
     ItemDetailsMenuContent(
+        state = state,
+        onEvent = { uiEvent ->
+            when (uiEvent) {
+                ItemDetailsMenuUiEvent.OnPinItemClicked -> onPinItem()
+                ItemDetailsMenuUiEvent.OnUnpinItemClicked -> onUnpinItem()
+            }
+        }
     )
 }

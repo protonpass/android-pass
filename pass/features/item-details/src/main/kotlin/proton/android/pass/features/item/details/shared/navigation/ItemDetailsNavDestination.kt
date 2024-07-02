@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.details.navigation
+package proton.android.pass.features.item.details.shared.navigation
 
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.domain.ItemId
@@ -50,5 +50,12 @@ sealed interface ItemDetailsNavDestination {
         val sharedVaultId: ShareId,
         val itemCategory: ItemCategory
     ) : ItemDetailsNavDestination
+
+    data class ItemMenu(
+        val shareId: ShareId,
+        val itemId: ItemId
+    ) : ItemDetailsNavDestination
+
+    data object DismissBottomSheet : ItemDetailsNavDestination
 
 }

@@ -21,6 +21,7 @@ package proton.android.pass.featureitemdetail.impl
 import androidx.annotation.StringRes
 import proton.android.pass.notifications.api.SnackbarMessage
 import proton.android.pass.notifications.api.SnackbarType
+import proton.android.pass.composecomponents.impl.R as CompR
 
 enum class DetailSnackbarMessages(
     @StringRes override val id: Int,
@@ -50,10 +51,10 @@ enum class DetailSnackbarMessages(
     ItemRestored(R.string.item_restored_message, SnackbarType.NORM),
     ItemNotRestored(R.string.item_restored_message_error, SnackbarType.ERROR),
     GenerateTotpError(R.string.login_item_generate_totp_error, SnackbarType.ERROR),
-    ItemPinnedSuccess(R.string.item_pinned_message, SnackbarType.SUCCESS),
-    ItemPinnedError(R.string.item_pinned_message_error, SnackbarType.ERROR),
-    ItemUnpinnedSuccess(R.string.item_unpinned_message, SnackbarType.SUCCESS),
-    ItemUnpinnedError(R.string.item_unpinned_message_error, SnackbarType.ERROR),
+    ItemPinnedSuccess(CompR.string.snack_bar_message_item_pinned_success, SnackbarType.SUCCESS),
+    ItemPinnedError(CompR.string.snack_bar_message_item_pinned_error, SnackbarType.ERROR),
+    ItemUnpinnedSuccess(CompR.string.snack_bar_message_item_unpinned_success, SnackbarType.SUCCESS),
+    ItemUnpinnedError(CompR.string.snack_bar_message_item_unpinned_error, SnackbarType.ERROR),
     ItemMonitorExcludedSuccess(R.string.item_monitor_exclude_message, SnackbarType.SUCCESS),
     ItemMonitorExcludedError(R.string.item_monitor_exclude_message_error, SnackbarType.ERROR),
     ItemMonitorIncludedSuccess(R.string.item_monitor_include_message, SnackbarType.SUCCESS),

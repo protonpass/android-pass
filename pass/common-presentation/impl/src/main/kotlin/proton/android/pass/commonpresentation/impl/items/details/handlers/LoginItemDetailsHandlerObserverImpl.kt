@@ -80,6 +80,8 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
             itemVault = vault,
             itemCreatedAt = item.createTime,
             itemModifiedAt = item.modificationTime,
+            itemLastAutofillAtOption = item.lastAutofillTime,
+            itemRevision = item.revision,
             canLoadExternalImages = useFaviconsPreference.value(),
             passwordStrength = encryptionContextProvider.withEncryptionContext {
                 decrypt(loginItemContents.password.encrypted)

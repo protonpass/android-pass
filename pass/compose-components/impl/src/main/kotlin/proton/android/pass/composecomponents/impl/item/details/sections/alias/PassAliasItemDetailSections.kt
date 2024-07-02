@@ -23,8 +23,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.datetime.Instant
+import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
+import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassSharedItemDetailNoteSection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
@@ -41,7 +44,13 @@ internal fun PassAliasItemDetailSections(
     contents: ItemContents.Alias,
     itemColors: PassItemColors,
     mailboxes: ImmutableList<AliasMailbox>,
-    onEvent: (PassItemDetailsUiEvent) -> Unit
+    onEvent: (PassItemDetailsUiEvent) -> Unit,
+    lastAutofillOption: Option<Instant>,
+    revision: Long,
+    createdAt: Instant,
+    modifiedAt: Instant,
+    shouldDisplayItemHistorySection: Boolean,
+    shouldDisplayItemHistoryButton: Boolean
 ) = with(contents) {
     Column(
         modifier = modifier,
@@ -58,6 +67,18 @@ internal fun PassAliasItemDetailSections(
             PassSharedItemDetailNoteSection(
                 note = note,
                 itemColors = itemColors
+            )
+        }
+
+        if (shouldDisplayItemHistorySection) {
+            PassItemDetailsHistorySection(
+                lastAutofillAtOption = lastAutofillOption,
+                revision = revision,
+                createdAt = createdAt,
+                modifiedAt = modifiedAt,
+                itemColors = itemColors,
+                onViewItemHistoryClicked = { onEvent(PassItemDetailsUiEvent.OnViewItemHistoryClick) },
+                shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton
             )
         }
 

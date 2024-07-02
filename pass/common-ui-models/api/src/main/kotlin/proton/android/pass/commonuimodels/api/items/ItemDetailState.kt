@@ -51,6 +51,10 @@ sealed interface ItemDetailState {
 
     val itemModifiedAt: Instant
 
+    val itemLastAutofillAtOption: Option<Instant>
+
+    val itemRevision: Long
+
     @Stable
     data class Alias(
         override val itemContents: ItemContents.Alias,
@@ -60,6 +64,8 @@ sealed interface ItemDetailState {
         override val itemVault: Vault?,
         override val itemCreatedAt: Instant,
         override val itemModifiedAt: Instant,
+        override val itemLastAutofillAtOption: Option<Instant>,
+        override val itemRevision: Long,
         val mailboxes: List<AliasMailbox>
     ) : ItemDetailState {
 
@@ -75,7 +81,9 @@ sealed interface ItemDetailState {
         override val isItemPinned: Boolean,
         override val itemVault: Vault?,
         override val itemCreatedAt: Instant,
-        override val itemModifiedAt: Instant
+        override val itemModifiedAt: Instant,
+        override val itemLastAutofillAtOption: Option<Instant>,
+        override val itemRevision: Long
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.CreditCard
@@ -91,8 +99,8 @@ sealed interface ItemDetailState {
         override val itemVault: Vault?,
         override val itemCreatedAt: Instant,
         override val itemModifiedAt: Instant,
-        val itemLastAutofillAtOption: Option<Instant>,
-        val itemRevision: Long
+        override val itemLastAutofillAtOption: Option<Instant>,
+        override val itemRevision: Long
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Identity
@@ -108,6 +116,8 @@ sealed interface ItemDetailState {
         override val itemVault: Vault?,
         override val itemCreatedAt: Instant,
         override val itemModifiedAt: Instant,
+        override val itemLastAutofillAtOption: Option<Instant>,
+        override val itemRevision: Long,
         val canLoadExternalImages: Boolean,
         val passwordStrength: PasswordStrength,
         val primaryTotp: Totp?,
@@ -128,7 +138,9 @@ sealed interface ItemDetailState {
         override val isItemPinned: Boolean,
         override val itemVault: Vault?,
         override val itemCreatedAt: Instant,
-        override val itemModifiedAt: Instant
+        override val itemModifiedAt: Instant,
+        override val itemLastAutofillAtOption: Option<Instant>,
+        override val itemRevision: Long
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Note
@@ -143,7 +155,9 @@ sealed interface ItemDetailState {
         override val isItemPinned: Boolean,
         override val itemVault: Vault?,
         override val itemCreatedAt: Instant,
-        override val itemModifiedAt: Instant
+        override val itemModifiedAt: Instant,
+        override val itemLastAutofillAtOption: Option<Instant>,
+        override val itemRevision: Long
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Unknown

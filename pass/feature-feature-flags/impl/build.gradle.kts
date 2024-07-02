@@ -52,6 +52,7 @@ dependencies {
     implementation(libs.androidx.compose.uiToolingPreview)
     debugImplementation(libs.androidx.compose.uiTestManifest)
 
+    implementation(projects.pass.common.api)
     implementation(projects.pass.log.api)
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.notifications.api)

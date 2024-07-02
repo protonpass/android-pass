@@ -18,6 +18,8 @@
 
 package proton.android.pass.featureprofile.impl
 
+import me.proton.core.domain.entity.UserId
+
 sealed interface ProfileUiEvent {
 
     data object OnAccountClick : ProfileUiEvent
@@ -57,5 +59,16 @@ sealed interface ProfileUiEvent {
     data object OnUpgradeClick : ProfileUiEvent
 
     data object OnSecureLinksClicked : ProfileUiEvent
+
+    data object OnAddAccount : ProfileUiEvent
+
+    @JvmInline
+    value class OnSignOut(val userId: UserId) : ProfileUiEvent
+
+    @JvmInline
+    value class OnRemoveAccount(val userId: UserId) : ProfileUiEvent
+
+    @JvmInline
+    value class OnSwitchAccount(val userId: UserId) : ProfileUiEvent
 
 }

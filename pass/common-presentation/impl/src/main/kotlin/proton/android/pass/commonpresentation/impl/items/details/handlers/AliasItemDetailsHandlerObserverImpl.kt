@@ -60,6 +60,8 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
             itemVault = vault,
             itemCreatedAt = item.createTime,
             itemModifiedAt = item.modificationTime,
+            itemLastAutofillAtOption = item.lastAutofillTime,
+            itemRevision = item.revision,
             mailboxes = aliasDetails.mailboxes
         )
     }

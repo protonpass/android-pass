@@ -535,25 +535,23 @@ class SelectItemViewModel @Inject constructor(
         itemClickedFlow.update { AutofillItemClickedEvent.None }
     }
 
-    private fun getShareSelection(planType: PlanType, vaults: List<Vault>): ShareSelection =
-        when (planType) {
-            is PlanType.Paid,
-            is PlanType.Trial -> ShareSelection.AllShares
+    private fun getShareSelection(planType: PlanType, vaults: List<Vault>): ShareSelection = when (planType) {
+        is PlanType.Paid,
+        is PlanType.Trial -> ShareSelection.AllShares
 
-            is PlanType.Free,
-            is PlanType.Unknown -> vaults.filter { vault -> vault.role.toPermissions().canCreate() }
-                .map { writeableVault -> writeableVault.shareId }
-                .let { writeableVaults -> ShareSelection.Shares(writeableVaults) }
-        }
+        is PlanType.Free,
+        is PlanType.Unknown -> vaults.filter { vault -> vault.role.toPermissions().canCreate() }
+            .map { writeableVault -> writeableVault.shareId }
+            .let { writeableVaults -> ShareSelection.Shares(writeableVaults) }
+    }
 
-    private fun List<ItemUiModel>.sortItemLists(sortingOption: SortingOption) =
-        when (sortingOption.searchSortingType) {
-            SearchSortingType.MostRecent -> sortMostRecent()
-            SearchSortingType.TitleAsc -> sortByTitleAsc()
-            SearchSortingType.TitleDesc -> sortByTitleDesc()
-            SearchSortingType.CreationAsc -> sortByCreationAsc()
-            SearchSortingType.CreationDesc -> sortByCreationDesc()
-        }
+    private fun List<ItemUiModel>.sortItemLists(sortingOption: SortingOption) = when (sortingOption.searchSortingType) {
+        SearchSortingType.MostRecent -> sortMostRecent()
+        SearchSortingType.TitleAsc -> sortByTitleAsc()
+        SearchSortingType.TitleDesc -> sortByTitleDesc()
+        SearchSortingType.CreationAsc -> sortByCreationAsc()
+        SearchSortingType.CreationDesc -> sortByCreationDesc()
+    }
 
     private fun List<ItemUiModel>.groupedItemLists(sortingOption: SortingOption, instant: Instant) =
         when (sortingOption.searchSortingType) {
@@ -564,11 +562,10 @@ class SelectItemViewModel @Inject constructor(
             SearchSortingType.CreationDesc -> groupAndSortByCreationDesc()
         }
 
-    private fun getSuggestionsForState(state: SelectItemState): Flow<LoadingResult<List<Item>>> =
-        when (state) {
-            is SelectItemState.Autofill -> getSuggestionsForAutofill(state)
-            is SelectItemState.Passkey -> getSuggestionsForPasskey(state)
-        }
+    private fun getSuggestionsForState(state: SelectItemState): Flow<LoadingResult<List<Item>>> = when (state) {
+        is SelectItemState.Autofill -> getSuggestionsForAutofill(state)
+        is SelectItemState.Passkey -> getSuggestionsForPasskey(state)
+    }
 
     private fun getSuggestionsForAutofill(state: SelectItemState.Autofill): Flow<LoadingResult<List<Item>>> =
         when (state) {

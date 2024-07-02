@@ -20,14 +20,20 @@ package proton.android.pass.account.fakes
 
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.auth.domain.feature.IsFido2Enabled
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.payment.domain.PaymentManager
 import me.proton.core.user.domain.UserManager
 import me.proton.core.usersettings.domain.repository.DeviceSettingsRepository
+import me.proton.core.usersettings.domain.repository.UserSettingsRepository
+import me.proton.core.usersettings.domain.usecase.ObserveRegisteredSecurityKeys
+import me.proton.core.usersettings.domain.usecase.ObserveUserSettings
 import proton.android.pass.account.api.AccountOrchestrators
 
 @Module
@@ -54,4 +60,29 @@ abstract class FakesAccountModule {
 
     @Binds
     abstract fun bindUserManager(impl: FakeUserManager): UserManager
+
+    @Binds
+    abstract fun bindUserSettingsRepository(impl: FakeUserSettingsRepository): UserSettingsRepository
+
+    @Binds
+    abstract fun bindAccountRepository(impl: FakeAccountRepository): AccountRepository
+
+    @Binds
+    abstract fun bindIsFido2Enabled(impl: FakeIsFido2Enabled): IsFido2Enabled
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+class FakesAccountModuleProvides {
+
+    @Provides
+    fun provideObserveRegisteredSecurityKeys(
+        accountRepository: AccountRepository,
+        isFido2Enabled: IsFido2Enabled,
+        userSettingsRepository: FakeUserSettingsRepository
+    ): ObserveRegisteredSecurityKeys = ObserveRegisteredSecurityKeys(
+        accountRepository,
+        isFido2Enabled,
+        ObserveUserSettings(userSettingsRepository)
+    )
 }

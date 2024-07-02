@@ -44,7 +44,7 @@ commons-codec = "1.15"
 # Compose marker
 compose-stable-marker = "1.0.0"
 # Core
-core = "25.0.1"
+core = "25.2.1"
 # Dagger
 dagger = "2.49"
 # Google
@@ -204,6 +204,9 @@ core-accountRecovery = { module = "me.proton.core:account-recovery", version.ref
 core-accountRecovery-test = { module = "me.proton.core:account-recovery-test", version.ref = "core" }
 core-auth = { module = "me.proton.core:auth", version.ref = "core" }
 core-auth-test = { module = "me.proton.core:auth-test", version.ref = "core" }
+core-authFidoDagger = { module = "me.proton.core:auth-fido-dagger", version.ref = "core" }
+core-authFidoDomain = { module = "me.proton.core:auth-fido-domain", version.ref = "core" }
+core-authFidoPlay = { module = "me.proton.core:auth-fido-play", version.ref = "core" }
 core-challenge = { module = "me.proton.core:challenge", version.ref = "core" }
 core-country = { module = "me.proton.core:country", version.ref = "core" }
 core-crypto = { module = "me.proton.core:crypto", version.ref = "core" }

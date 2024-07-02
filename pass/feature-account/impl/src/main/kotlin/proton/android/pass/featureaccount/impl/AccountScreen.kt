@@ -61,6 +61,8 @@ fun AccountScreen(
                 AccountContentEvent.SetExtraPassword -> onNavigate(AccountNavigation.SetExtraPassword)
                 is AccountContentEvent.ExtraPasswordOptions ->
                     onNavigate(AccountNavigation.ExtraPasswordOptions(it.userId))
+
+                AccountContentEvent.SecurityKeys -> onNavigate(AccountNavigation.SecurityKeys)
             }
         }
     )

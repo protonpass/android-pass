@@ -21,9 +21,9 @@ package proton.android.pass.commonpresentation.impl.items.details.handlers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.update
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
@@ -49,6 +49,8 @@ class NoteItemDetailsHandlerObserverImpl @Inject constructor(
     ) { noteItemContents, vault ->
         ItemDetailState.Note(
             itemContents = noteItemContents,
+            itemId = item.id,
+            shareId = item.shareId,
             isItemPinned = item.isPinned,
             itemVault = vault,
             itemCreatedAt = item.createTime,
@@ -56,18 +58,20 @@ class NoteItemDetailsHandlerObserverImpl @Inject constructor(
         )
     }
 
-    private fun observeNoteItemContents(item: Item): Flow<ItemContents.Note> =
-        noteItemContentsFlow.map { noteItemContents ->
-            noteItemContents ?: encryptionContextProvider.withEncryptionContext {
-                item.toItemContents(this@withEncryptionContext) as ItemContents.Note
-            }
+    private fun observeNoteItemContents(item: Item): Flow<ItemContents.Note> = flow {
+        encryptionContextProvider.withEncryptionContext {
+            item.toItemContents(this@withEncryptionContext) as ItemContents.Note
+        }.let { noteItemContents ->
+            noteItemContentsFlow.update { noteItemContents }
+        }.also {
+            emitAll(noteItemContentsFlow.filterNotNull())
         }
-            .distinctUntilChanged()
-            .onEach { noteItemContents ->
-                noteItemContentsFlow.update { noteItemContents }
-            }
+    }
 
-    override fun updateHiddenState(hiddenFieldType: ItemDetailsFieldType.Hidden, hiddenState: HiddenState) {
+    override fun updateHiddenState(
+        hiddenFieldType: ItemDetailsFieldType.Hidden,
+        hiddenState: HiddenState
+    ) {
         noteItemContentsFlow.update { noteItemContents ->
             when (hiddenFieldType) {
                 is ItemDetailsFieldType.Hidden.CustomField,

@@ -59,5 +59,11 @@ enum class FeatureFlag(
         description = "Enable secure links",
         key = "PassPublicLinkV1",
         isEnabledDefault = false
+    ),
+    ACCOUNT_SWITCH_V1(
+        title = "Account switch (v1)",
+        description = "Enable account switch",
+        key = "PassAccountSwitchV1",
+        isEnabledDefault = false
     )
 }

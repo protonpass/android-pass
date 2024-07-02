@@ -24,6 +24,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.domain.features.PaidFeature
 import proton.android.pass.featureprofile.impl.applocktime.AppLockTimeBottomsheet
 import proton.android.pass.featureprofile.impl.applocktype.AppLockTypeBottomsheet
@@ -93,6 +94,17 @@ sealed interface ProfileNavigation {
 
     @JvmInline
     value class UpsellSecureLinks(val paidFeature: PaidFeature) : ProfileNavigation
+
+    data object OnAddAccount : ProfileNavigation
+
+    @JvmInline
+    value class OnSignOut(val userId: UserId) : ProfileNavigation
+
+    @JvmInline
+    value class OnRemoveAccount(val userId: UserId) : ProfileNavigation
+
+    @JvmInline
+    value class OnSwitchAccount(val userId: UserId) : ProfileNavigation
 
 }
 

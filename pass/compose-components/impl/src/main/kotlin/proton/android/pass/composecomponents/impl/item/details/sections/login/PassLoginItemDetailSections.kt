@@ -26,6 +26,8 @@ import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.collections.immutable.toPersistentSet
+import kotlinx.datetime.Instant
+import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.PackageInfoUi
@@ -33,6 +35,7 @@ import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.sections.login.passkeys.PasskeysSection
+import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassSharedItemDetailNoteSection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
@@ -54,7 +57,13 @@ internal fun PassLoginItemDetailSections(
     passkeys: ImmutableList<UIPasskeyContent>,
     itemColors: PassItemColors,
     onEvent: (PassItemDetailsUiEvent) -> Unit,
-    isUsernameSplitEnabled: Boolean
+    isUsernameSplitEnabled: Boolean,
+    lastAutofillOption: Option<Instant>,
+    revision: Long,
+    createdAt: Instant,
+    modifiedAt: Instant,
+    shouldDisplayItemHistorySection: Boolean,
+    shouldDisplayItemHistoryButton: Boolean
 ) = with(contents) {
     Column(
         modifier = modifier,
@@ -111,6 +120,18 @@ internal fun PassLoginItemDetailSections(
                 packageInfoUiSet = mapped,
                 isEditable = false,
                 onLinkedAppDelete = {}
+            )
+        }
+
+        if (shouldDisplayItemHistorySection) {
+            PassItemDetailsHistorySection(
+                lastAutofillAtOption = lastAutofillOption,
+                revision = revision,
+                createdAt = createdAt,
+                modifiedAt = modifiedAt,
+                itemColors = itemColors,
+                onViewItemHistoryClicked = { onEvent(PassItemDetailsUiEvent.OnViewItemHistoryClick) },
+                shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton
             )
         }
 

@@ -27,19 +27,17 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
+import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.items.ItemCategory
-import proton.android.pass.featureitemdetail.impl.common.MoreInfo
-import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.NoteSection
 
 @Composable
 fun CreditCardDetailContent(
     modifier: Modifier = Modifier,
     contents: CreditCardDetailUiState.ItemContent,
-    moreInfoUiState: MoreInfoUiState,
     vault: Vault?,
     isDowngradedMode: Boolean,
     onEvent: (CreditCardDetailEvent) -> Unit,
@@ -85,6 +83,9 @@ fun CreditCardDetailContent(
             shouldDisplayItemHistoryButton = isHistoryFeatureEnabled
         )
 
-        MoreInfo(moreInfoUiState = moreInfoUiState)
+        PassItemDetailsMoreInfoSection(
+            itemId = contents.model.id,
+            shareId = contents.model.shareId
+        )
     }
 }

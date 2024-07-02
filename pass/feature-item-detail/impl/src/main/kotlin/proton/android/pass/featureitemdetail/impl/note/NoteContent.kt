@@ -40,6 +40,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
+import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
 import proton.android.pass.composecomponents.impl.pinning.CircledPin
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.ItemContents
@@ -47,8 +48,6 @@ import proton.android.pass.domain.Vault
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleInput
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleText
-import proton.android.pass.featureitemdetail.impl.common.MoreInfo
-import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.ThemeItemTitleProvider
 import proton.android.pass.featureitemdetail.impl.common.VaultNameSubtitle
 
@@ -57,7 +56,6 @@ fun NoteContent(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
     vault: Vault?,
-    moreInfoUiState: MoreInfoUiState,
     onVaultClick: () -> Unit,
     isPinned: Boolean,
     onViewItemHistoryClicked: () -> Unit,
@@ -108,7 +106,10 @@ fun NoteContent(
             shouldDisplayItemHistoryButton = isHistoryFeatureEnabled
         )
 
-        MoreInfo(moreInfoUiState = moreInfoUiState)
+        PassItemDetailsMoreInfoSection(
+            itemId = itemUiModel.id,
+            shareId = itemUiModel.shareId
+        )
     }
 }
 
@@ -122,8 +123,6 @@ fun NoteContentPreview(@PreviewParameter(ThemeItemTitleProvider::class) input: P
             NoteContent(
                 itemUiModel = params.itemUiModel,
                 vault = params.vault,
-                // We don't care about the MoreInfo as we are not showing it
-                moreInfoUiState = MoreInfoUiState.Initial,
                 onVaultClick = {},
                 isPinned = params.isPinned,
                 onViewItemHistoryClicked = {},

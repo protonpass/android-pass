@@ -38,8 +38,15 @@ fun ItemDetailsMenuBottomSheet(
         when (state.event) {
             ItemDetailsMenuEvent.Idle -> {}
 
+            ItemDetailsMenuEvent.OnItemMigrated -> {
+                onNavigated(ItemDetailsNavDestination.ItemMigration)
+            }
+
+            ItemDetailsMenuEvent.OnItemMigrationError,
             ItemDetailsMenuEvent.OnItemPinned,
-            ItemDetailsMenuEvent.OnItemUnpinned -> {
+            ItemDetailsMenuEvent.OnItemPinningError,
+            ItemDetailsMenuEvent.OnItemUnpinned,
+            ItemDetailsMenuEvent.OnItemUnpinningError -> {
                 onNavigated(ItemDetailsNavDestination.DismissBottomSheet)
             }
         }
@@ -51,6 +58,7 @@ fun ItemDetailsMenuBottomSheet(
         state = state,
         onEvent = { uiEvent ->
             when (uiEvent) {
+                ItemDetailsMenuUiEvent.OnMigrateItemClicked -> onMigrateItem()
                 ItemDetailsMenuUiEvent.OnPinItemClicked -> onPinItem()
                 ItemDetailsMenuUiEvent.OnUnpinItemClicked -> onUnpinItem()
             }

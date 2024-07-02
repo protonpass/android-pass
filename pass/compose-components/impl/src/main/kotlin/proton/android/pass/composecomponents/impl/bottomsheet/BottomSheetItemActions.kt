@@ -47,6 +47,9 @@ sealed interface BottomSheetItemAction {
     data object History : BottomSheetItemAction
 
     @Stable
+    data object Migrate : BottomSheetItemAction
+
+    @Stable
     data object MonitorExclude : BottomSheetItemAction
 
     @Stable
@@ -55,6 +58,30 @@ sealed interface BottomSheetItemAction {
     @Stable
     data object Remove : BottomSheetItemAction
 
+}
+
+fun migrate(action: BottomSheetItemAction, onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+
+    override val title: @Composable () -> Unit
+        get() = { BottomSheetItemTitle(text = stringResource(R.string.bottomsheet_migrate_item)) }
+
+    override val subtitle: @Composable (() -> Unit)?
+        get() = null
+
+    override val leftIcon: @Composable (() -> Unit)
+        get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_folder_arrow_in) }
+
+    override val endIcon: (@Composable () -> Unit)
+        get() = {
+            if (action is BottomSheetItemAction.Migrate) {
+                CircularProgressIndicator(modifier = Modifier.size(20.dp))
+            }
+        }
+
+    override val onClick: () -> Unit
+        get() = { onClick() }
+
+    override val isDivider = false
 }
 
 fun monitorExclude(action: BottomSheetItemAction, onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {

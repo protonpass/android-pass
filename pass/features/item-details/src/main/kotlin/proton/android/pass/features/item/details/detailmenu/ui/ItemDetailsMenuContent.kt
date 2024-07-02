@@ -24,10 +24,10 @@ import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
+import proton.android.pass.composecomponents.impl.bottomsheet.migrate
 import proton.android.pass.composecomponents.impl.bottomsheet.pin
 import proton.android.pass.composecomponents.impl.bottomsheet.unpin
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
-import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.item.details.detailmenu.presentation.ItemDetailsMenuState
 
 @Composable
@@ -36,35 +36,32 @@ internal fun ItemDetailsMenuContent(
     onEvent: (ItemDetailsMenuUiEvent) -> Unit,
     state: ItemDetailsMenuState
 ) = with(state) {
-    when (itemCategory) {
-        ItemCategory.Login -> mutableListOf<BottomSheetItem>().apply {
-
+    mutableListOf<BottomSheetItem>().apply {
+        if (canMigrateItem) {
+            add(
+                migrate(
+                    action = action,
+                    onClick = { onEvent(ItemDetailsMenuUiEvent.OnMigrateItemClicked) }
+                )
+            )
         }
 
-        ItemCategory.Alias,
-        ItemCategory.Note,
-        ItemCategory.CreditCard,
-        ItemCategory.Identity -> mutableListOf<BottomSheetItem>().apply {
-            if (isItemPinned) {
-                add(
-                    unpin(
-                        action = action,
-                        onClick = { onEvent(ItemDetailsMenuUiEvent.OnUnpinItemClicked) }
-                    )
+        if (isItemPinned) {
+            add(
+                unpin(
+                    action = action,
+                    onClick = { onEvent(ItemDetailsMenuUiEvent.OnUnpinItemClicked) }
                 )
-            } else {
-                add(
-                    pin(
-                        action = action,
-                        onClick = { onEvent(ItemDetailsMenuUiEvent.OnPinItemClicked) }
-                    )
+            )
+        } else {
+            add(
+                pin(
+                    action = action,
+                    onClick = { onEvent(ItemDetailsMenuUiEvent.OnPinItemClicked) }
                 )
-            }
+            )
         }
-
-        ItemCategory.Password,
-        ItemCategory.Unknown -> emptyList()
-    }.also { bottomSheetItems ->
+    }.let { bottomSheetItems ->
         BottomSheetItemList(
             modifier = modifier.bottomSheet(),
             items = bottomSheetItems.withDividers().toPersistentList()

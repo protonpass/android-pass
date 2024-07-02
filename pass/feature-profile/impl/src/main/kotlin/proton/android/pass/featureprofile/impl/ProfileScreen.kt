@@ -95,6 +95,11 @@ fun ProfileScreen(
                         ProfileNavigation.SecureLinks
                     }.also(onNavigateEvent)
                 }
+
+                ProfileUiEvent.OnAddAccount -> onNavigateEvent(ProfileNavigation.OnAddAccount)
+                is ProfileUiEvent.OnRemoveAccount -> onNavigateEvent(ProfileNavigation.OnRemoveAccount(it.userId))
+                is ProfileUiEvent.OnSignOut -> onNavigateEvent(ProfileNavigation.OnSignOut(it.userId))
+                is ProfileUiEvent.OnSwitchAccount -> onNavigateEvent(ProfileNavigation.OnSwitchAccount(it.userId))
             }
         }
     )

@@ -58,6 +58,7 @@ internal data class ProfileUiState(
     val passkeySupport: ProfilePasskeySupportSection,
     val isIdentityEnabled: Boolean,
     val isSecureLinksEnabled: Boolean,
+    val isAccountSwitchEnabled: Boolean,
     val secureLinksCount: Int
 ) {
 
@@ -75,6 +76,7 @@ internal data class ProfileUiState(
             passkeySupport = ProfilePasskeySupportSection.Hide,
             isIdentityEnabled = false,
             isSecureLinksEnabled = false,
+            isAccountSwitchEnabled = false,
             secureLinksCount = 0
         )
 

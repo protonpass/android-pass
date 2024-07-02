@@ -126,9 +126,10 @@ import proton.android.pass.features.extrapassword.confirm.navigation.ConfirmExtr
 import proton.android.pass.features.extrapassword.extraPasswordGraph
 import proton.android.pass.features.extrapassword.infosheet.navigation.ExtraPasswordInfoNavItem
 import proton.android.pass.features.extrapassword.options.navigation.ExtraPasswordOptionsNavItem
-import proton.android.pass.features.item.details.navigation.ItemDetailsNavDestination
-import proton.android.pass.features.item.details.navigation.ItemDetailsNavItem
-import proton.android.pass.features.item.details.navigation.itemDetailsNavGraph
+import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination
+import proton.android.pass.features.item.details.detail.navigation.ItemDetailsNavItem
+import proton.android.pass.features.item.details.detailmenu.navigation.ItemDetailsMenuNavItem
+import proton.android.pass.features.item.details.shared.navigation.itemDetailsNavGraph
 import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestination
 import proton.android.pass.features.item.history.navigation.itemHistoryNavGraph
 import proton.android.pass.features.item.history.restore.navigation.ItemHistoryRestoreNavItem
@@ -1172,6 +1173,18 @@ fun NavGraphBuilder.appGraph(
                     ),
                     backDestination = getItemDetailsDestination(itemDetailsNavDestination.itemCategory)
                 )
+
+                is ItemDetailsNavDestination.ItemMenu -> appNavigator.navigate(
+                    destination = ItemDetailsMenuNavItem,
+                    route = ItemDetailsMenuNavItem.createNavRoute(
+                        shareId = itemDetailsNavDestination.shareId,
+                        itemId = itemDetailsNavDestination.itemId
+                    )
+                )
+
+                ItemDetailsNavDestination.DismissBottomSheet -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
             }
         }
     )

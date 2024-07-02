@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.details.ui
+package proton.android.pass.features.item.details.detail.ui
 
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
@@ -70,6 +70,11 @@ internal sealed interface ItemDetailsUiEvent {
     data class OnSharedVaultClicked(
         internal val sharedVaultId: ShareId,
         internal val itemCategory: ItemCategory
+    ) : ItemDetailsUiEvent
+
+    data class OnMenuClicked(
+        internal val shareId: ShareId,
+        internal val itemId: ItemId
     ) : ItemDetailsUiEvent
 
 }

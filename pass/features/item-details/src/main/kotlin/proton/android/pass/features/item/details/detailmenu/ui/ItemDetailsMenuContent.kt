@@ -16,16 +16,14 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.details.navigation
+package proton.android.pass.features.item.details.detailmenu.ui
 
-import androidx.navigation.NavGraphBuilder
-import proton.android.pass.features.item.details.ui.ItemDetailsScreen
-import proton.android.pass.navigation.api.composable
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 
-fun NavGraphBuilder.itemDetailsNavGraph(onNavigated: (ItemDetailsNavDestination) -> Unit) {
-
-    composable(navItem = ItemDetailsNavItem) {
-        ItemDetailsScreen(onNavigated = onNavigated)
-    }
-
+@Composable
+internal fun ItemDetailsMenuContent(
+    modifier: Modifier = Modifier
+) {
+// Add menu content
 }

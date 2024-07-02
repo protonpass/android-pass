@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.details.ui
+package proton.android.pass.features.item.details.detail.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,8 +24,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.BrowserUtils
-import proton.android.pass.features.item.details.navigation.ItemDetailsNavDestination
-import proton.android.pass.features.item.details.presentation.ItemDetailsViewModel
+import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination
+import proton.android.pass.features.item.details.detail.presentation.ItemDetailsViewModel
 
 @Composable
 fun ItemDetailsScreen(
@@ -87,6 +87,11 @@ fun ItemDetailsScreen(
                 is ItemDetailsUiEvent.OnSharedVaultClicked -> ItemDetailsNavDestination.ManageSharedVault(
                     sharedVaultId = uiEvent.sharedVaultId,
                     itemCategory = uiEvent.itemCategory
+                ).also(onNavigated)
+
+                is ItemDetailsUiEvent.OnMenuClicked -> ItemDetailsNavDestination.ItemMenu(
+                    shareId = uiEvent.shareId,
+                    itemId = uiEvent.itemId
                 ).also(onNavigated)
             }
         }

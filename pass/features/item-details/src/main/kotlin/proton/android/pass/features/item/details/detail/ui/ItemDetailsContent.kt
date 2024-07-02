@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.details.ui
+package proton.android.pass.features.item.details.detail.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -24,7 +24,7 @@ import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsCo
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.loading.PassFullScreenLoading
 import proton.android.pass.composecomponents.impl.utils.passItemColors
-import proton.android.pass.features.item.details.presentation.ItemDetailsState
+import proton.android.pass.features.item.details.detail.presentation.ItemDetailsState
 
 @Composable
 internal fun ItemDetailsContent(
@@ -66,7 +66,12 @@ internal fun ItemDetailsContent(
                                 itemCategory = itemDetailState.itemCategory
                             ).also(onEvent)
                         },
-                        onOptionsClick = {},
+                        onOptionsClick = {
+                            ItemDetailsUiEvent.OnMenuClicked(
+                                shareId = shareId,
+                                itemId = itemId
+                            ).also(onEvent)
+                        },
                         onShareClick = {
                             ItemDetailsUiEvent.OnShareItemClicked(
                                 shareId = shareId,

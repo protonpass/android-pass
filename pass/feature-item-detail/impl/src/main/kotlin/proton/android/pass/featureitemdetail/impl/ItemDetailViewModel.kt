@@ -29,7 +29,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.datetime.Clock
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
@@ -41,7 +40,6 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
-import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -55,7 +53,6 @@ import javax.inject.Inject
 @HiltViewModel
 class ItemDetailViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
-    private val clock: Clock,
     private val telemetryManager: TelemetryManager,
     getItemById: GetItemById,
     savedStateHandle: SavedStateHandleProvider,
@@ -100,7 +97,6 @@ class ItemDetailViewModel @Inject constructor(
                     is ItemType.Identity -> ItemTypeUiState.Identity
                     ItemType.Unknown -> ItemTypeUiState.Unknown
                 },
-                moreInfoUiState = getMoreInfoUiState(result.data),
                 canLoadExternalImages = favicons.value(),
                 event = event
             )
@@ -131,14 +127,6 @@ class ItemDetailViewModel @Inject constructor(
     fun clearEvent() {
         eventFlow.update { ItemDetailScreenEvent.Idle }
     }
-
-    private fun getMoreInfoUiState(item: Item): MoreInfoUiState = MoreInfoUiState(
-        now = clock.now(),
-        createdTime = item.createTime,
-        lastAutofilled = item.lastAutofillTime,
-        lastModified = item.modificationTime,
-        numRevisions = item.revision
-    )
 
     companion object {
         private const val TAG = "ItemDetailViewModel"

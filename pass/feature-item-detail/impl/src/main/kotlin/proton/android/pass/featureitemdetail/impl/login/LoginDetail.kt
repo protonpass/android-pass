@@ -51,7 +51,6 @@ import proton.android.pass.domain.PasskeyId
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
 import proton.android.pass.featureitemdetail.impl.common.ItemDetailEvent
-import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.onEditClick
 import proton.android.pass.featureitemdetail.impl.common.onShareClick
 import proton.android.pass.featureitemdetail.impl.login.LoginDetailBottomSheetType.TopBarOptions
@@ -70,7 +69,6 @@ import proton.android.pass.featuretrash.impl.TrashItemBottomSheetContents
 @Suppress("ComplexMethod")
 fun LoginDetail(
     modifier: Modifier = Modifier,
-    moreInfoUiState: MoreInfoUiState,
     canLoadExternalImages: Boolean,
     onNavigate: (ItemDetailNavigation) -> Unit,
     viewModel: LoginDetailViewModel = hiltViewModel()
@@ -227,7 +225,6 @@ fun LoginDetail(
                         vault = state.vault,
                         showViewAlias = state.linkedAlias.isNotEmpty(),
                         totpUiState = state.totpUiState,
-                        moreInfoUiState = moreInfoUiState,
                         canLoadExternalImages = canLoadExternalImages,
                         customFields = state.customFields,
                         passkeys = state.passkeys,

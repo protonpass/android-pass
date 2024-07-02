@@ -19,7 +19,11 @@
 package proton.android.pass.features.item.details.detailmenu.presentation
 
 import androidx.compose.runtime.Stable
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
+import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.domain.items.ItemCategory
 
 @Stable
@@ -27,8 +31,17 @@ internal data class ItemDetailsMenuState(
     internal val itemCategory: ItemCategory,
     internal val isItemPinned: Boolean,
     internal val action: BottomSheetItemAction,
-    internal val event: ItemDetailsMenuEvent
+    internal val event: ItemDetailsMenuEvent,
+    private val itemActionsOption: Option<ItemActions>
 ) {
+
+    internal val canMigrateItem: Boolean = when (itemActionsOption) {
+        None -> false
+        is Some -> itemActionsOption
+            .value
+            .canMoveToOtherVault
+            .value()
+    }
 
     internal companion object {
 
@@ -36,7 +49,8 @@ internal data class ItemDetailsMenuState(
             itemCategory = ItemCategory.Unknown,
             isItemPinned = false,
             action = BottomSheetItemAction.None,
-            event = ItemDetailsMenuEvent.Idle
+            event = ItemDetailsMenuEvent.Idle,
+            itemActionsOption = None
         )
 
     }

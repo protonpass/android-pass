@@ -44,7 +44,6 @@ class DeferredTelemetryManagerImpl @Inject constructor(
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
 
-
     override fun sendEvent(event: TelemetryEvent.DeferredTelemetryEvent) {
         mutableEventFlow.tryEmit(event)
     }

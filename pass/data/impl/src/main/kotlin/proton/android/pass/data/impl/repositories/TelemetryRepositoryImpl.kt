@@ -33,6 +33,7 @@ import proton.android.pass.data.impl.remote.RemoteTelemetryDataSource
 import proton.android.pass.data.impl.requests.EventInfo
 import proton.android.pass.data.impl.requests.TelemetryRequest
 import proton.android.pass.data.impl.util.DimensionsSerializer
+import proton.android.pass.data.impl.util.runConcurrently
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
@@ -59,25 +60,33 @@ class TelemetryRepositoryImpl @Inject constructor(
     }
 
     override suspend fun sendEvents() {
-        val userId = requireNotNull(accountManager.getPrimaryUserId().first())
-        val planName = requireNotNull(getUserPlan(userId).firstOrNull())
-        val planInternalName = planName.planType.internalName
-        val all = localDataSource.getAll(userId)
-
-        if (all.isNotEmpty()) {
-            all.chunked(MAX_EVENT_BATCH_SIZE).forEach { eventChunk ->
-                runCatching {
-                    performSend(userId, planInternalName, eventChunk)
-                }.onSuccess {
-                    val min = eventChunk.first().id
-                    val max = eventChunk.last().id
-                    localDataSource.removeInRange(min = min, max = max)
-                }.onFailure {
-                    PassLogger.w(TAG, "Error sending events")
-                    PassLogger.w(TAG, it)
+        val eventsGrouped = localDataSource.getAll().groupBy { it.userId }.mapKeys { UserId(it.key) }
+        runConcurrently(
+            items = eventsGrouped.entries,
+            block = { (userId, events) ->
+                val planName = requireNotNull(getUserPlan(userId).firstOrNull())
+                val planInternalName = planName.planType.internalName
+                events.chunked(MAX_EVENT_BATCH_SIZE).forEach { eventChunk ->
+                    runCatching {
+                        performSend(userId, planInternalName, eventChunk)
+                    }.onSuccess {
+                        val min = eventChunk.first().id
+                        val max = eventChunk.last().id
+                        localDataSource.removeInRange(min = min, max = max)
+                    }.onFailure {
+                        PassLogger.w(TAG, "Error sending events")
+                        PassLogger.w(TAG, it)
+                    }
                 }
+            },
+            onSuccess = { _, _ ->
+                PassLogger.d(TAG, "Events sent successfully")
+            },
+            onFailure = { _, throwable ->
+                PassLogger.w(TAG, "Error sending events")
+                PassLogger.w(TAG, throwable)
             }
-        }
+        )
     }
 
     private suspend fun performSend(

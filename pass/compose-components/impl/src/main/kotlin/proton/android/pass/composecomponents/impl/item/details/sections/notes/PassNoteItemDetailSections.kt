@@ -18,9 +18,17 @@
 
 package proton.android.pass.composecomponents.impl.item.details.sections.notes
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import kotlinx.datetime.Instant
+import proton.android.pass.common.api.Option
+import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
+import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
+import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -30,15 +38,39 @@ internal fun PassNoteItemDetailSections(
     modifier: Modifier = Modifier,
     itemId: ItemId,
     shareId: ShareId,
-    contents: ItemContents.Note
+    contents: ItemContents.Note,
+    itemColors: PassItemColors,
+    onEvent: (PassItemDetailsUiEvent) -> Unit,
+    lastAutofillOption: Option<Instant>,
+    revision: Long,
+    createdAt: Instant,
+    modifiedAt: Instant,
+    shouldDisplayItemHistorySection: Boolean,
+    shouldDisplayItemHistoryButton: Boolean
 ) = with(contents) {
-    PassNoteItemDetailMainSection(
+    Column(
         modifier = modifier,
-        note = note
-    )
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
+    ) {
+        PassNoteItemDetailMainSection(
+            note = note
+        )
 
-    PassItemDetailsMoreInfoSection(
-        itemId = itemId,
-        shareId = shareId
-    )
+        if (shouldDisplayItemHistorySection) {
+            PassItemDetailsHistorySection(
+                lastAutofillAtOption = lastAutofillOption,
+                revision = revision,
+                createdAt = createdAt,
+                modifiedAt = modifiedAt,
+                itemColors = itemColors,
+                onViewItemHistoryClicked = { onEvent(PassItemDetailsUiEvent.OnViewItemHistoryClick) },
+                shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton
+            )
+        }
+
+        PassItemDetailsMoreInfoSection(
+            itemId = itemId,
+            shareId = shareId
+        )
+    }
 }

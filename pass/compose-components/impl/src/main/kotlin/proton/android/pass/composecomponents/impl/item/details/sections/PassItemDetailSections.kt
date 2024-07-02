@@ -43,6 +43,8 @@ internal fun PassItemDetailSections(
     when (this) {
         is ItemDetailState.Alias -> PassAliasItemDetailSections(
             modifier = modifier,
+            itemId = itemId,
+            shareId = shareId,
             contents = itemContents,
             itemColors = itemColors,
             mailboxes = mailboxes.toImmutableList(),
@@ -51,6 +53,8 @@ internal fun PassItemDetailSections(
 
         is ItemDetailState.CreditCard -> PassCreditCardItemDetailsSections(
             modifier = modifier,
+            itemId = itemId,
+            shareId = shareId,
             contents = itemContents,
             itemColors = itemColors,
             onEvent = onEvent
@@ -73,6 +77,8 @@ internal fun PassItemDetailSections(
 
         is ItemDetailState.Login -> PassLoginItemDetailSections(
             modifier = modifier,
+            itemId = itemId,
+            shareId = shareId,
             contents = itemContents,
             passwordStrength = passwordStrength,
             primaryTotp = primaryTotp,
@@ -85,6 +91,8 @@ internal fun PassItemDetailSections(
 
         is ItemDetailState.Note -> PassNoteItemDetailSections(
             modifier = modifier,
+            itemId = itemId,
+            shareId = shareId,
             contents = itemContents
         )
 

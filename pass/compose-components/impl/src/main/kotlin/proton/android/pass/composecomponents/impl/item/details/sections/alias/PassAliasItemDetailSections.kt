@@ -25,14 +25,19 @@ import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
+import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassSharedItemDetailNoteSection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 
 @Composable
 internal fun PassAliasItemDetailSections(
     modifier: Modifier = Modifier,
+    itemId: ItemId,
+    shareId: ShareId,
     contents: ItemContents.Alias,
     itemColors: PassItemColors,
     mailboxes: ImmutableList<AliasMailbox>,
@@ -55,5 +60,10 @@ internal fun PassAliasItemDetailSections(
                 itemColors = itemColors
             )
         }
+
+        PassItemDetailsMoreInfoSection(
+            itemId = itemId,
+            shareId = shareId
+        )
     }
 }

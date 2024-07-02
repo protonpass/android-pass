@@ -190,7 +190,7 @@ private fun PassItemDetailsMoreInfoRow(
 private fun PassItemDetailsMoreInfoText(
     modifier: Modifier = Modifier,
     text: String,
-    style: TextStyle = ProtonTheme.typography.overlineStrongNorm,
+    style: TextStyle = ProtonTheme.typography.overlineStrongNorm
 ) {
     Text(
         modifier = modifier,

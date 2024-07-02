@@ -76,14 +76,10 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
         }
     }
 
-    private fun observeAliasDetails(item: Item): Flow<AliasDetails> =
-        getAliasDetails(item.shareId, item.id)
-            .onStart { emit(AliasDetails("", emptyList(), emptyList())) }
+    private fun observeAliasDetails(item: Item): Flow<AliasDetails> = getAliasDetails(item.shareId, item.id)
+        .onStart { emit(AliasDetails("", emptyList(), emptyList())) }
 
-    override fun updateHiddenState(
-        hiddenFieldType: ItemDetailsFieldType.Hidden,
-        hiddenState: HiddenState
-    ) {
+    override fun updateHiddenState(hiddenFieldType: ItemDetailsFieldType.Hidden, hiddenState: HiddenState) {
         aliasItemContentsFlow.update { aliasItemContents ->
             when (hiddenFieldType) {
                 is ItemDetailsFieldType.Hidden.CustomField,

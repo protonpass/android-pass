@@ -35,6 +35,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import me.proton.core.accountmanager.presentation.compose.AccountPrimaryItem
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionWeak
@@ -96,6 +97,19 @@ internal fun ProfileContent(
                 .background(PassTheme.colors.backgroundStrong)
                 .padding(padding)
         ) {
+            if (state.isAccountSwitchEnabled) {
+                AccountPrimaryItem(
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(
+                            horizontal = Spacing.medium,
+                            vertical = Spacing.none
+                        ),
+                    onSignIn = { onEvent(ProfileUiEvent.OnAddAccount) },
+                    onSignOut = { onEvent(ProfileUiEvent.OnSignOut(it)) },
+                    onRemove = { onEvent(ProfileUiEvent.OnRemoveAccount(it)) },
+                    onSwitch = { onEvent(ProfileUiEvent.OnSwitchAccount(it)) }
+                )
+            }
             ItemSummary(
                 modifier = Modifier.padding(
                     horizontal = Spacing.none,

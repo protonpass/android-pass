@@ -33,15 +33,20 @@ import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.sections.login.passkeys.PasskeysSection
+import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassSharedItemDetailNoteSection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Totp
 import proton.android.pass.domain.items.ItemCustomField
 
 @Composable
 internal fun PassLoginItemDetailSections(
     modifier: Modifier = Modifier,
+    itemId: ItemId,
+    shareId: ShareId,
     contents: ItemContents.Login,
     passwordStrength: PasswordStrength,
     primaryTotp: Totp?,
@@ -108,5 +113,10 @@ internal fun PassLoginItemDetailSections(
                 onLinkedAppDelete = {}
             )
         }
+
+        PassItemDetailsMoreInfoSection(
+            itemId = itemId,
+            shareId = shareId
+        )
     }
 }

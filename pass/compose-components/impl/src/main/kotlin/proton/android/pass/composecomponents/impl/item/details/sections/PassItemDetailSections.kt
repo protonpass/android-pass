@@ -48,7 +48,13 @@ internal fun PassItemDetailSections(
             contents = itemContents,
             itemColors = itemColors,
             mailboxes = mailboxes.toImmutableList(),
-            onEvent = onEvent
+            onEvent = onEvent,
+            lastAutofillOption = itemLastAutofillAtOption,
+            revision = itemRevision,
+            createdAt = itemCreatedAt,
+            modifiedAt = itemModifiedAt,
+            shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
+            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton
         )
 
         is ItemDetailState.CreditCard -> PassCreditCardItemDetailsSections(
@@ -57,7 +63,13 @@ internal fun PassItemDetailSections(
             shareId = shareId,
             contents = itemContents,
             itemColors = itemColors,
-            onEvent = onEvent
+            onEvent = onEvent,
+            lastAutofillOption = itemLastAutofillAtOption,
+            revision = itemRevision,
+            createdAt = itemCreatedAt,
+            modifiedAt = itemModifiedAt,
+            shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
+            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton
         )
 
         is ItemDetailState.Identity -> PassIdentityItemDetailsSections(
@@ -86,14 +98,28 @@ internal fun PassItemDetailSections(
             passkeys = passkeys.toImmutableList(),
             itemColors = itemColors,
             onEvent = onEvent,
-            isUsernameSplitEnabled = isUsernameSplitEnabled
+            isUsernameSplitEnabled = isUsernameSplitEnabled,
+            lastAutofillOption = itemLastAutofillAtOption,
+            revision = itemRevision,
+            createdAt = itemCreatedAt,
+            modifiedAt = itemModifiedAt,
+            shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
+            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton
         )
 
         is ItemDetailState.Note -> PassNoteItemDetailSections(
             modifier = modifier,
             itemId = itemId,
             shareId = shareId,
-            contents = itemContents
+            contents = itemContents,
+            itemColors = itemColors,
+            onEvent = onEvent,
+            lastAutofillOption = itemLastAutofillAtOption,
+            revision = itemRevision,
+            createdAt = itemCreatedAt,
+            modifiedAt = itemModifiedAt,
+            shouldDisplayItemHistorySection = shouldDisplayItemHistorySection,
+            shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton
         )
 
         is ItemDetailState.Unknown -> itemContents.note.let { note ->

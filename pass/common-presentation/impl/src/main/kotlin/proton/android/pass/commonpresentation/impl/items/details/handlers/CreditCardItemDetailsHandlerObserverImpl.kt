@@ -54,7 +54,9 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
             isItemPinned = item.isPinned,
             itemVault = vault,
             itemCreatedAt = item.createTime,
-            itemModifiedAt = item.modificationTime
+            itemModifiedAt = item.modificationTime,
+            itemLastAutofillAtOption = item.lastAutofillTime,
+            itemRevision = item.revision,
         )
     }
 

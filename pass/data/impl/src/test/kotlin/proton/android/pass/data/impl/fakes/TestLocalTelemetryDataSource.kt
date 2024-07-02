@@ -36,11 +36,13 @@ class TestLocalTelemetryDataSource : LocalTelemetryDataSource {
         operationMemory.add(Operation.Store(entity))
     }
 
-    override suspend fun getAll(userId: UserId): List<TelemetryEntity> = memory
+    override suspend fun getAllByUserId(userId: UserId): List<TelemetryEntity> = memory
+
+    override suspend fun getAll(): List<TelemetryEntity> = memory
 
     override suspend fun removeInRange(min: Long, max: Long) {
         operationMemory.add(Operation.RemoveInRange(min = min, max = max))
-        val newList = memory.filter { it.id >= min && it.id <= max }
+        val newList = memory.filter { it.id in min..max }
         memory = newList.toMutableList()
     }
 

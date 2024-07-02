@@ -37,6 +37,10 @@ sealed interface ItemDetailState {
 
     val itemContents: ItemContents
 
+    val itemId: ItemId
+
+    val shareId: ShareId
+
     val isItemPinned: Boolean
 
     val itemVault: Vault?
@@ -50,6 +54,8 @@ sealed interface ItemDetailState {
     @Stable
     data class Alias(
         override val itemContents: ItemContents.Alias,
+        override val itemId: ItemId,
+        override val shareId: ShareId,
         override val isItemPinned: Boolean,
         override val itemVault: Vault?,
         override val itemCreatedAt: Instant,
@@ -64,6 +70,8 @@ sealed interface ItemDetailState {
     @Stable
     data class CreditCard(
         override val itemContents: ItemContents.CreditCard,
+        override val itemId: ItemId,
+        override val shareId: ShareId,
         override val isItemPinned: Boolean,
         override val itemVault: Vault?,
         override val itemCreatedAt: Instant,
@@ -77,8 +85,8 @@ sealed interface ItemDetailState {
     @Stable
     data class Identity(
         override val itemContents: ItemContents.Identity,
-        val itemId: ItemId,
-        val shareId: ShareId,
+        override val itemId: ItemId,
+        override val shareId: ShareId,
         override val isItemPinned: Boolean,
         override val itemVault: Vault?,
         override val itemCreatedAt: Instant,
@@ -94,6 +102,8 @@ sealed interface ItemDetailState {
     @Stable
     data class Login(
         override val itemContents: ItemContents.Login,
+        override val itemId: ItemId,
+        override val shareId: ShareId,
         override val isItemPinned: Boolean,
         override val itemVault: Vault?,
         override val itemCreatedAt: Instant,
@@ -113,6 +123,8 @@ sealed interface ItemDetailState {
     @Stable
     data class Note(
         override val itemContents: ItemContents.Note,
+        override val itemId: ItemId,
+        override val shareId: ShareId,
         override val isItemPinned: Boolean,
         override val itemVault: Vault?,
         override val itemCreatedAt: Instant,
@@ -126,6 +138,8 @@ sealed interface ItemDetailState {
     @Stable
     data class Unknown(
         override val itemContents: ItemContents.Unknown,
+        override val itemId: ItemId,
+        override val shareId: ShareId,
         override val isItemPinned: Boolean,
         override val itemVault: Vault?,
         override val itemCreatedAt: Instant,

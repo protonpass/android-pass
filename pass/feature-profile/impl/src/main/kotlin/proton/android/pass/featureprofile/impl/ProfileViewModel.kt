@@ -180,9 +180,10 @@ class ProfileViewModel @Inject constructor(
         passkeySupportFlow,
         featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.IDENTITY_V1),
         featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.SECURE_LINK_V1),
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.ACCOUNT_SWITCH_V1),
         secureLinksCountFlow
     ) { appLockSectionState, autofillStatus, itemSummaryUiState, upgradeInfo, event, browser,
-        passkey, isIdentityEnabled, isSecureLinksEnabled, secureLinksCount ->
+        passkey, isIdentityEnabled, isSecureLinksEnabled, isAccountSwitchEnabled, secureLinksCount ->
         val (accountType, showUpgradeButton) = when (upgradeInfo) {
             LoadingResult.Loading -> PlanInfo.Hide to false
             is LoadingResult.Error -> {
@@ -219,6 +220,7 @@ class ProfileViewModel @Inject constructor(
             passkeySupport = passkey,
             isIdentityEnabled = isIdentityEnabled,
             isSecureLinksEnabled = isSecureLinksEnabled,
+            isAccountSwitchEnabled = isAccountSwitchEnabled,
             secureLinksCount = secureLinksCount
         )
     }.stateIn(

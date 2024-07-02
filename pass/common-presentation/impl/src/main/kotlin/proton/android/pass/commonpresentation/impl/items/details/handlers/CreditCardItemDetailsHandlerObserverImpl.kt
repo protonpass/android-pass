@@ -56,7 +56,7 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
             itemCreatedAt = item.createTime,
             itemModifiedAt = item.modificationTime,
             itemLastAutofillAtOption = item.lastAutofillTime,
-            itemRevision = item.revision,
+            itemRevision = item.revision
         )
     }
 

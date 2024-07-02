@@ -79,6 +79,7 @@ dependencies {
     androidTestImplementation(libs.androidx.test.espresso.intents)
 
     kaptAndroidTest(libs.dagger.hilt.android.compiler)
+    androidTestImplementation(projects.pass.account.fakes)
     androidTestImplementation(projects.pass.appConfig.fakes)
     androidTestImplementation(projects.pass.autofill.fakes)
     androidTestImplementation(projects.pass.biometry.fakes)

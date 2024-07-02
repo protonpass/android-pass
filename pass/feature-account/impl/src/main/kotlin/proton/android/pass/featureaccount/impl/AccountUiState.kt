@@ -19,6 +19,7 @@
 package proton.android.pass.featureaccount.impl
 
 import androidx.compose.runtime.Stable
+import me.proton.core.auth.fido.domain.entity.Fido2RegisteredKey
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.UserRecovery
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -53,7 +54,9 @@ data class AccountUiState(
     val showUpgradeButton: Boolean,
     val showSubscriptionButton: Boolean,
     val showExtraPassword: Boolean,
-    val isExtraPasswordEnabled: Boolean
+    val isExtraPasswordEnabled: Boolean,
+    val isFido2Enabled: Boolean,
+    val registeredSecurityKeys: List<Fido2RegisteredKey>?
 ) {
     companion object {
         val Initial = AccountUiState(
@@ -66,7 +69,9 @@ data class AccountUiState(
             showUpgradeButton = false,
             showSubscriptionButton = false,
             showExtraPassword = false,
-            isExtraPasswordEnabled = false
+            isExtraPasswordEnabled = false,
+            isFido2Enabled = false,
+            registeredSecurityKeys = emptyList()
         )
     }
 }

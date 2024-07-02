@@ -23,11 +23,14 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import me.proton.core.auth.domain.feature.IsFido2Enabled
+import me.proton.core.usersettings.domain.usecase.ObserveRegisteredSecurityKeys
 import kotlinx.coroutines.flow.take
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
@@ -35,6 +38,7 @@ import me.proton.core.accountmanager.domain.onAccountState
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
@@ -53,7 +57,9 @@ class AccountViewModel @Inject constructor(
     observeCurrentUserSettings: ObserveCurrentUserSettings,
     featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     hasExtraPassword: HasExtraPassword,
-    accountManager: AccountManager
+    accountManager: AccountManager,
+    isFido2Enabled: IsFido2Enabled,
+    observeRegisteredSecurityKeys: ObserveRegisteredSecurityKeys
 ) : ViewModel() {
 
     internal val hasBeenSignedOut: StateFlow<Boolean> =
@@ -75,13 +81,19 @@ class AccountViewModel @Inject constructor(
         .flatMapLatest { user -> observeUpgradeInfo(userId = user.userId, forceRefresh = true) }
         .distinctUntilChanged()
 
-    val state: StateFlow<AccountUiState> = combine(
+    val state: StateFlow<AccountUiState> = combineN(
         currentUserFlow.asLoadingResult(),
         upgradeInfoFlow.asLoadingResult(),
         observeCurrentUserSettings().asLoadingResult(),
         oneShot { hasExtraPassword() }.asLoadingResult(),
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.ACCESS_KEY_V1)
-    ) { userResult, upgradeInfoResult, currentUserSettingsResult, hasExtraPassword, isAccessKeyV1Enabled ->
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.ACCESS_KEY_V1),
+        currentUserFlow.flatMapLatest { oneShot { observeRegisteredSecurityKeys(it.userId) } }
+    ) { userResult,
+        upgradeInfoResult,
+        currentUserSettingsResult,
+        hasExtraPassword,
+        isAccessKeyV1Enabled,
+        securityKeys ->
 
         val plan = when (upgradeInfoResult) {
             is LoadingResult.Error -> {
@@ -113,21 +125,26 @@ class AccountViewModel @Inject constructor(
                 showSubscriptionButton = isSubscriptionAvailable,
                 showExtraPassword = isAccessKeyV1Enabled,
                 isExtraPasswordEnabled = hasExtraPassword.getOrNull() ?: false,
-                userId = null
+                userId = null,
+                isFido2Enabled = false,
+                registeredSecurityKeys = emptyList()
             )
 
-            is LoadingResult.Success -> AccountUiState(
-                email = userResult.data.email,
-                recoveryEmail = currentUserSettingsSuccess?.email?.value,
-                recoveryState = userResult.data.recovery?.state?.enum,
-                plan = plan,
-                isLoadingState = IsLoadingState.NotLoading,
-                showUpgradeButton = isUpgradeAvailable,
-                showSubscriptionButton = isSubscriptionAvailable,
-                showExtraPassword = isAccessKeyV1Enabled,
-                isExtraPasswordEnabled = hasExtraPassword.getOrNull() ?: false,
-                userId = userResult.data.userId
-            )
+            is LoadingResult.Success ->
+                AccountUiState(
+                    email = userResult.data.email,
+                    recoveryEmail = currentUserSettingsSuccess?.email?.value,
+                    recoveryState = userResult.data.recovery?.state?.enum,
+                    plan = plan,
+                    isLoadingState = IsLoadingState.NotLoading,
+                    showUpgradeButton = isUpgradeAvailable,
+                    showSubscriptionButton = isSubscriptionAvailable,
+                    showExtraPassword = isAccessKeyV1Enabled,
+                    isExtraPasswordEnabled = hasExtraPassword.getOrNull() ?: false,
+                    userId = userResult.data.userId,
+                    isFido2Enabled = isFido2Enabled(userResult.data.userId),
+                    registeredSecurityKeys = securityKeys.firstOrNull() ?: emptyList()
+                )
         }
     }
         .stateIn(

@@ -25,7 +25,8 @@ import javax.inject.Inject
 
 interface LocalTelemetryDataSource {
     suspend fun store(entity: TelemetryEntity)
-    suspend fun getAll(userId: UserId): List<TelemetryEntity>
+    suspend fun getAllByUserId(userId: UserId): List<TelemetryEntity>
+    suspend fun getAll(): List<TelemetryEntity>
     suspend fun removeInRange(min: Long, max: Long)
 }
 
@@ -36,7 +37,10 @@ class LocalTelemetryDataSourceImpl @Inject constructor(
         db.telemetryEventsDao().insertOrUpdate(entity)
     }
 
-    override suspend fun getAll(userId: UserId): List<TelemetryEntity> = db.telemetryEventsDao().getAll(userId.id)
+    override suspend fun getAllByUserId(userId: UserId): List<TelemetryEntity> =
+        db.telemetryEventsDao().getAllByUserId(userId.id)
+
+    override suspend fun getAll(): List<TelemetryEntity> = db.telemetryEventsDao().getAll()
 
     override suspend fun removeInRange(min: Long, max: Long) = db.telemetryEventsDao().deleteInRange(min, max)
 }

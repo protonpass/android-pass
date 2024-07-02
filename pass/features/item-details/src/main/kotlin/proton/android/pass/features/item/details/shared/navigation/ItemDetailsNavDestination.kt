@@ -56,6 +56,8 @@ sealed interface ItemDetailsNavDestination {
         val itemId: ItemId
     ) : ItemDetailsNavDestination
 
+    data object ItemMigration : ItemDetailsNavDestination
+
     data object DismissBottomSheet : ItemDetailsNavDestination
 
 }

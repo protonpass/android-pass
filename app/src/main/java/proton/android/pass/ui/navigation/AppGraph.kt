@@ -126,9 +126,9 @@ import proton.android.pass.features.extrapassword.confirm.navigation.ConfirmExtr
 import proton.android.pass.features.extrapassword.extraPasswordGraph
 import proton.android.pass.features.extrapassword.infosheet.navigation.ExtraPasswordInfoNavItem
 import proton.android.pass.features.extrapassword.options.navigation.ExtraPasswordOptionsNavItem
-import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination
 import proton.android.pass.features.item.details.detail.navigation.ItemDetailsNavItem
 import proton.android.pass.features.item.details.detailmenu.navigation.ItemDetailsMenuNavItem
+import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination
 import proton.android.pass.features.item.details.shared.navigation.itemDetailsNavGraph
 import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestination
 import proton.android.pass.features.item.history.navigation.itemHistoryNavGraph
@@ -1181,6 +1181,15 @@ fun NavGraphBuilder.appGraph(
                         itemId = itemDetailsNavDestination.itemId
                     )
                 )
+
+                ItemDetailsNavDestination.ItemMigration -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = MigrateSelectVault,
+                        route = MigrateSelectVault.createNavRouteForMigrateSelectedItems(
+                            filter = MigrateVaultFilter.All
+                        )
+                    )
+                }
 
                 ItemDetailsNavDestination.DismissBottomSheet -> dismissBottomSheet {
                     appNavigator.navigateBack(comesFromBottomsheet = true)

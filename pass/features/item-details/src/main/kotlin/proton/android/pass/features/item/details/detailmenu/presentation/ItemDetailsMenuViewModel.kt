@@ -28,9 +28,12 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
+import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
+import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.UnpinItem
@@ -45,6 +48,8 @@ import javax.inject.Inject
 class ItemDetailsMenuViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     observeItemById: ObserveItemById,
+    getItemActions: GetItemActions,
+    private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     private val pinItem: PinItem,
     private val unpinItem: UnpinItem,
     private val snackbarDispatcher: SnackbarDispatcher
@@ -71,7 +76,8 @@ class ItemDetailsMenuViewModel @Inject constructor(
             itemCategory = item.itemType.category,
             isItemPinned = item.isPinned,
             action = action,
-            event = event
+            event = event,
+            itemActionsOption = getItemActions(shareId, itemId).toOption()
         )
     }.stateIn(
         scope = viewModelScope,
@@ -83,6 +89,25 @@ class ItemDetailsMenuViewModel @Inject constructor(
         eventFlow.compareAndSet(event, ItemDetailsMenuEvent.Idle)
     }
 
+    internal fun onMigrateItem() {
+        viewModelScope.launch {
+            actionFlow.update { BottomSheetItemAction.Migrate }
+
+            runCatching { bulkMoveToVaultRepository.save(mapOf(shareId to listOf(itemId))) }
+                .onFailure { error ->
+                    PassLogger.w(TAG, "There was an error migrating item")
+                    PassLogger.w(TAG, error)
+                    eventFlow.update { ItemDetailsMenuEvent.OnItemMigrationError }
+                    snackbarDispatcher(ItemDetailMenuSnackBarMessage.ItemMigrationError)
+                }
+                .onSuccess {
+                    eventFlow.update { ItemDetailsMenuEvent.OnItemMigrated }
+                }
+
+            actionFlow.update { BottomSheetItemAction.None }
+        }
+    }
+
     internal fun onPinItem() {
         viewModelScope.launch {
             actionFlow.update { BottomSheetItemAction.Pin }
@@ -91,14 +116,15 @@ class ItemDetailsMenuViewModel @Inject constructor(
                 .onFailure { error ->
                     PassLogger.w(TAG, "There was an error pinning item")
                     PassLogger.w(TAG, error)
+                    eventFlow.update { ItemDetailsMenuEvent.OnItemPinningError }
                     snackbarDispatcher(ItemDetailMenuSnackBarMessage.ItemPinnedError)
                 }
                 .onSuccess {
+                    eventFlow.update { ItemDetailsMenuEvent.OnItemPinned }
                     snackbarDispatcher(ItemDetailMenuSnackBarMessage.ItemPinnedSuccess)
                 }
 
             actionFlow.update { BottomSheetItemAction.None }
-            eventFlow.update { ItemDetailsMenuEvent.OnItemPinned }
         }
     }
 
@@ -110,14 +136,15 @@ class ItemDetailsMenuViewModel @Inject constructor(
                 .onFailure { error ->
                     PassLogger.w(TAG, "There was an error unpinning item")
                     PassLogger.w(TAG, error)
+                    eventFlow.update { ItemDetailsMenuEvent.OnItemUnpinningError }
                     snackbarDispatcher(ItemDetailMenuSnackBarMessage.ItemUnpinnedError)
                 }
                 .onSuccess {
+                    eventFlow.update { ItemDetailsMenuEvent.OnItemUnpinned }
                     snackbarDispatcher(ItemDetailMenuSnackBarMessage.ItemUnpinnedSuccess)
                 }
 
             actionFlow.update { BottomSheetItemAction.None }
-            eventFlow.update { ItemDetailsMenuEvent.OnItemUnpinned }
         }
     }
 

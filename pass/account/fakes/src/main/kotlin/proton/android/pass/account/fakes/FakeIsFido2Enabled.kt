@@ -16,25 +16,18 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.featureaccount.impl
+package proton.android.pass.account.fakes
 
+import me.proton.core.auth.domain.feature.IsFido2Enabled
 import me.proton.core.domain.entity.UserId
+import javax.inject.Inject
+import javax.inject.Singleton
 
-internal sealed interface AccountContentEvent {
-    data object Back : AccountContentEvent
-    data object Upgrade : AccountContentEvent
-    data object PasswordManagement : AccountContentEvent
-    data object RecoveryEmail : AccountContentEvent
-    data object SecurityKeys : AccountContentEvent
-    data object DeleteAccount : AccountContentEvent
+@Singleton
+class FakeIsFido2Enabled @Inject constructor() : IsFido2Enabled {
+    override fun invoke(userId: UserId?): Boolean = false
 
-    @JvmInline
-    value class SignOut(val userId: UserId) : AccountContentEvent
+    override fun isLocalEnabled(): Boolean = false
 
-    data object Subscription : AccountContentEvent
-    data object ManageAccount : AccountContentEvent
-    data object SetExtraPassword : AccountContentEvent
-
-    @JvmInline
-    value class ExtraPasswordOptions(val userId: UserId) : AccountContentEvent
+    override fun isRemoteEnabled(userId: UserId?): Boolean = false
 }

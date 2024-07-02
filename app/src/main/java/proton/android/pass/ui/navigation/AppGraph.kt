@@ -551,6 +551,8 @@ fun NavGraphBuilder.appGraph(
                 AccountNavigation.SetExtraPassword -> appNavigator.navigate(ExtraPasswordInfoNavItem)
                 is AccountNavigation.ExtraPasswordOptions ->
                     appNavigator.navigate(ExtraPasswordOptionsNavItem)
+
+                AccountNavigation.SecurityKeys -> onNavigate(AppNavigation.SecurityKeys)
             }
         },
         subGraph = {

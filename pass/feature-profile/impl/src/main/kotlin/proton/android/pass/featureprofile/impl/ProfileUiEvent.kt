@@ -72,3 +72,18 @@ sealed interface ProfileUiEvent {
     value class OnSwitchAccount(val userId: UserId) : ProfileUiEvent
 
 }
+
+
+sealed interface AccountSwitchEvent {
+
+    @JvmInline
+    value class OnAccountSelected(val userId: UserId) : AccountSwitchEvent
+
+    @JvmInline
+    value class OnManageAccount(val userId: UserId) : AccountSwitchEvent
+
+    @JvmInline
+    value class OnSignOut(val userId: UserId) : AccountSwitchEvent
+
+    data object OnAddAccount : AccountSwitchEvent
+}

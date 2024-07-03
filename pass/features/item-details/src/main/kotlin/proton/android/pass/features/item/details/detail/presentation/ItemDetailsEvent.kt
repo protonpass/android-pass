@@ -16,24 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.details.detailmenu.presentation
+package proton.android.pass.features.item.details.detail.presentation
 
-internal sealed interface ItemDetailsMenuEvent {
+internal sealed interface ItemDetailsEvent {
 
-    data object Idle : ItemDetailsMenuEvent
+    data object Idle : ItemDetailsEvent
 
-    data object OnItemNotFound : ItemDetailsMenuEvent
-
-    data object OnItemMigrated : ItemDetailsMenuEvent
-
-    data object OnItemMigrationError : ItemDetailsMenuEvent
-
-    data object OnItemPinned : ItemDetailsMenuEvent
-
-    data object OnItemPinningError : ItemDetailsMenuEvent
-
-    data object OnItemUnpinned : ItemDetailsMenuEvent
-
-    data object OnItemUnpinningError : ItemDetailsMenuEvent
+    data object OnItemNotFound : ItemDetailsEvent
 
 }

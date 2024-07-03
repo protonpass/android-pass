@@ -29,15 +29,26 @@ import proton.android.pass.domain.ShareId
 @Stable
 internal sealed interface ItemDetailsState {
 
-    data object Error : ItemDetailsState
+    val event: ItemDetailsEvent
 
-    data object Loading : ItemDetailsState
+    data object Error : ItemDetailsState {
+
+        override val event: ItemDetailsEvent= ItemDetailsEvent.Idle
+
+    }
+
+    data object Loading : ItemDetailsState{
+
+        override val event: ItemDetailsEvent= ItemDetailsEvent.Idle
+
+    }
 
     data class Success(
         internal val shareId: ShareId,
         internal val itemId: ItemId,
         internal val itemDetailState: ItemDetailState,
         internal val itemActions: ItemActions,
+        override val event: ItemDetailsEvent,
         private val userPlan: Plan
     ) : ItemDetailsState {
 

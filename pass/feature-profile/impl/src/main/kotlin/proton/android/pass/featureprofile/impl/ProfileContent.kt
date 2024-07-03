@@ -44,11 +44,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
-import kotlinx.collections.immutable.persistentListOf
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionWeak
-import me.proton.core.domain.entity.UserId
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarEvent
@@ -58,8 +56,6 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.composecomponents.impl.bottombar.PassHomeBottomBar
 import proton.android.pass.composecomponents.impl.buttons.UpgradeButton
-import proton.android.pass.featureprofile.impl.accountswitcher.AccountItem
-import proton.android.pass.featureprofile.impl.accountswitcher.AccountState
 import proton.android.pass.featureprofile.impl.accountswitcher.AccountSwitcherList
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -112,66 +108,10 @@ internal fun ProfileContent(
                     .background(PassTheme.colors.backgroundStrong)
                     .padding(padding)
             ) {
-                if (state.isAccountSwitchEnabled) {
-                    val accountItemList = persistentListOf(
-                        AccountItem(
-                            userId = UserId("1"),
-                            name = "John Doe",
-                            email = "john.doe@proton.me",
-                            state = AccountState.Primary
-                        ),
-                        AccountItem(
-                            userId = UserId("2"),
-                            name = "Jane Doe",
-                            email = "jane.doe@proton.me",
-                            state = AccountState.Ready
-                        ),
-                        AccountItem(
-                            userId = UserId("3"),
-                            name = "John Doe",
-                            email = "john.doe@proton.me",
-                            state = AccountState.Ready
-                        )
-                        /*AccountItem(
-                            userId = UserId("4"),
-                            name = "Jane Doe",
-                            email = "jane.doe@proton.me",
-                            state = AccountState.Ready
-                        ),
-                        AccountItem(
-                            userId = UserId("5"),
-                            name = "John Doe",
-                            email = "john.doe@proton.me",
-                            state = AccountState.Ready
-                        ),
-                        AccountItem(
-                            userId = UserId("6"),
-                            name = "Jane Doe",
-                            email = "jane.doe@proton.me",
-                            state = AccountState.Ready
-                        ),
-                        AccountItem(
-                            userId = UserId("7"),
-                            name = "John Doe",
-                            email = "john.doe@proton.me",
-                            state = AccountState.Ready
-                        ),
-                        AccountItem(
-                            userId = UserId("8"),
-                            name = "Jane Doe",
-                            email = "jane.doe@proton.me",
-                            state = AccountState.Ready
-                        ),
-                        AccountItem(
-                            userId = UserId("9"),
-                            name = "John Doe",
-                            email = "john.doe@proton.me",
-                            state = AccountState.Ready
-                        )*/
-                    )
+                if (state.isAccountSwitchEnabled && state.accounts.isNotEmpty()) {
                     AccountSwitcherList(
                         isExpanded = isExpanded,
-                        accountItemList = accountItemList,
+                        accountItemList = state.accounts,
                         onExpandedChange = { isExpanded = it },
                         onEvent = {
                             // send event upwards

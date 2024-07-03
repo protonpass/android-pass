@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
@@ -57,12 +58,12 @@ import proton.android.pass.featureprofile.impl.R
 fun AccountSwitcherList(
     modifier: Modifier = Modifier,
     isExpanded: Boolean,
-    accountItemList: ImmutableList<AccountItem>,
+    accountItemList: ImmutableList<AccountListItem>,
     onExpandedChange: (Boolean) -> Unit,
     onEvent: (AccountSwitchEvent) -> Unit
 ) {
     var rowSize by remember { mutableStateOf(Size.Zero) }
-    val (primary, other) = accountItemList.partition { it.state == AccountState.Primary }
+    val (primary, other) = accountItemList.partition { it is AccountListItem.Primary }
 
     Column(
         modifier = modifier
@@ -76,7 +77,7 @@ fun AccountSwitcherList(
                     rowSize = coordinates.size.toSize()
                 },
             isCollapsed = true,
-            accountItem = primary.first(),
+            accountItem = primary.first().accountItem,
             onEvent = onEvent
         )
         DropdownMenu(
@@ -88,7 +89,7 @@ fun AccountSwitcherList(
         ) {
             AccountSwitcherRow(
                 modifier = Modifier.clickable { onExpandedChange(false) },
-                accountItem = primary.first(),
+                accountItem = primary.first().accountItem,
                 onEvent = onEvent
             )
             PassDivider(modifier = Modifier.padding(horizontal = Spacing.medium))
@@ -97,12 +98,12 @@ fun AccountSwitcherList(
                 modifier = Modifier.padding(horizontal = Spacing.medium),
                 text = stringResource(R.string.account_switcher_switch_to)
             )
-            other.forEach { accountItem ->
+            other.forEach { accountListItem ->
                 AccountSwitcherRow(
                     modifier = Modifier.clickable {
-                        onEvent(AccountSwitchEvent.OnAccountSelected(accountItem.userId))
+                        onEvent(AccountSwitchEvent.OnAccountSelected(accountListItem.accountItem.userId))
                     },
-                    accountItem = accountItem,
+                    accountItem = accountListItem.accountItem,
                     onEvent = onEvent
                 )
                 PassDivider(modifier = Modifier.padding(horizontal = Spacing.medium))
@@ -120,17 +121,14 @@ fun AccountSwitcherListPreview(@PreviewParameter(ThemePreviewProvider::class) in
             AccountSwitcherList(
                 isExpanded = false,
                 accountItemList = persistentListOf(
-                    AccountItem(
-                        userId = UserId("1"),
-                        name = "John Doe",
-                        email = "john.doe@proton.me",
-                        state = AccountState.Primary
-                    ),
-                    AccountItem(
-                        userId = UserId("3"),
-                        name = "Jane Doe",
-                        email = "jane.doe@proton.me",
-                        state = AccountState.Ready
+                    AccountListItem.Primary(
+                        AccountItem(
+                            userId = UserId("1"),
+                            name = "John Doe",
+                            email = "",
+                            state = AccountState.Ready,
+                            initials = "J"
+                        )
                     )
                 ),
                 onExpandedChange = {},

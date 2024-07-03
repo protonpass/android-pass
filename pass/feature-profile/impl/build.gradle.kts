@@ -44,7 +44,9 @@ dependencies {
     implementation(libs.androidx.compose.runtime)
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
-    implementation(libs.core.accountManager.presentation.compose)
+    implementation(libs.core.account.domain)
+    implementation(libs.core.accountManager.domain)
+    implementation(libs.core.user.domain)
     implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.coroutines.core)
 

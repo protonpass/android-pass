@@ -26,6 +26,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.migrate
 import proton.android.pass.composecomponents.impl.bottomsheet.pin
+import proton.android.pass.composecomponents.impl.bottomsheet.trash
 import proton.android.pass.composecomponents.impl.bottomsheet.unpin
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.features.item.details.detailmenu.presentation.ItemDetailsMenuState
@@ -58,6 +59,15 @@ internal fun ItemDetailsMenuContent(
                 pin(
                     action = action,
                     onClick = { onEvent(ItemDetailsMenuUiEvent.OnPinItemClicked) }
+                )
+            )
+        }
+
+        if(canTrashItem) {
+            add(
+                trash(
+                    action = action,
+                    onClick = { onEvent(ItemDetailsMenuUiEvent.OnTrashItemClicked) }
                 )
             )
         }

@@ -19,13 +19,15 @@
 package proton.android.pass.features.item.details.detail.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.BrowserUtils
-import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination
+import proton.android.pass.features.item.details.detail.presentation.ItemDetailsEvent
 import proton.android.pass.features.item.details.detail.presentation.ItemDetailsViewModel
+import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination
 
 @Composable
 fun ItemDetailsScreen(
@@ -35,13 +37,24 @@ fun ItemDetailsScreen(
     val state by state.collectAsStateWithLifecycle()
     val context = LocalContext.current
 
+    LaunchedEffect(key1 = state.event) {
+        when (state.event) {
+            ItemDetailsEvent.Idle -> {
+            }
+
+            ItemDetailsEvent.OnItemNotFound -> ItemDetailsNavDestination.Home
+                .also(onNavigated)
+        }
+
+        onConsumeEvent(state.event)
+    }
+
     ItemDetailsContent(
         state = state,
         onEvent = { uiEvent ->
             when (uiEvent) {
-                ItemDetailsUiEvent.OnNavigateBack ->
-                    ItemDetailsNavDestination.Back
-                        .also(onNavigated)
+                ItemDetailsUiEvent.OnNavigateBack -> ItemDetailsNavDestination.Back
+                    .also(onNavigated)
 
                 is ItemDetailsUiEvent.OnEditClicked -> ItemDetailsNavDestination.EditItem(
                     shareId = uiEvent.shareId,

@@ -24,6 +24,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -32,6 +33,7 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
+import proton.android.pass.data.api.errors.ItemNotFoundError
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.ObserveItemById
@@ -67,8 +69,19 @@ class ItemDetailsMenuViewModel @Inject constructor(
 
     private val eventFlow = MutableStateFlow<ItemDetailsMenuEvent>(ItemDetailsMenuEvent.Idle)
 
+    private val itemFlow = observeItemById(shareId, itemId)
+        .catch { error ->
+            if (error is ItemNotFoundError) {
+                eventFlow.update { ItemDetailsMenuEvent.OnItemNotFound }
+            } else {
+                PassLogger.w(TAG, "There was an error observing item")
+                PassLogger.w(TAG, error)
+                throw error
+            }
+        }
+
     internal val state: StateFlow<ItemDetailsMenuState> = combine(
-        observeItemById(shareId, itemId),
+        itemFlow,
         actionFlow,
         eventFlow
     ) { item, action, event ->

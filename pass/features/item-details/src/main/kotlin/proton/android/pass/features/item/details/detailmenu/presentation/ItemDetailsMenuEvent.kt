@@ -22,6 +22,8 @@ internal sealed interface ItemDetailsMenuEvent {
 
     data object Idle : ItemDetailsMenuEvent
 
+    data object OnItemNotFound : ItemDetailsMenuEvent
+
     data object OnItemMigrated : ItemDetailsMenuEvent
 
     data object OnItemMigrationError : ItemDetailsMenuEvent

@@ -27,6 +27,8 @@ sealed interface ItemDetailsNavDestination {
 
     data object Back : ItemDetailsNavDestination
 
+    data object Home : ItemDetailsNavDestination
+
     data class EditItem(
         val shareId: ShareId,
         val itemId: ItemId,

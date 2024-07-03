@@ -29,6 +29,12 @@ internal enum class ItemDetailMenuSnackBarMessage(
     override val isClipboard: Boolean = false
 ) : SnackbarMessage {
 
+    ItemNoteCopied(
+        id = CompR.string.snack_bar_message_item_note_copied,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
+
     ItemMigrationError(
         id = CompR.string.snack_bar_message_item_migration_error,
         type = SnackbarType.ERROR

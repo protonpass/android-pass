@@ -45,6 +45,7 @@ fun ItemDetailsMenuBottomSheet(
             ItemDetailsMenuEvent.OnItemMigrated -> ItemDetailsNavDestination.ItemMigration
                 .also(onNavigated)
 
+            ItemDetailsMenuEvent.OnItemNoteCopied,
             ItemDetailsMenuEvent.OnItemMigrationError,
             ItemDetailsMenuEvent.OnItemPinned,
             ItemDetailsMenuEvent.OnItemPinningError,
@@ -61,6 +62,7 @@ fun ItemDetailsMenuBottomSheet(
         state = state,
         onEvent = { uiEvent ->
             when (uiEvent) {
+                ItemDetailsMenuUiEvent.OnCopyItemNoteClicked -> onCopyItemNote()
                 ItemDetailsMenuUiEvent.OnMigrateItemClicked -> onMigrateItem()
                 ItemDetailsMenuUiEvent.OnPinItemClicked -> onPinItem()
                 ItemDetailsMenuUiEvent.OnUnpinItemClicked -> onUnpinItem()

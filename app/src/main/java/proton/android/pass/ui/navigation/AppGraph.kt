@@ -1134,9 +1134,9 @@ fun NavGraphBuilder.appGraph(
                     comesFromBottomsheet = false
                 )
 
-                ItemDetailsNavDestination.Home -> appNavigator.popUpTo(
-                    destination = Home
-                )
+                ItemDetailsNavDestination.Home -> dismissBottomSheet {
+                    appNavigator.popUpTo(destination = Home)
+                }
 
                 is ItemDetailsNavDestination.EditItem -> appNavigator.navigate(
                     destination = getItemDetailsDestination(itemDetailsNavDestination.itemCategory),

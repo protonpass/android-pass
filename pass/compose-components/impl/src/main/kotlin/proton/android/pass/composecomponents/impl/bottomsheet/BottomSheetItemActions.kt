@@ -58,6 +58,9 @@ sealed interface BottomSheetItemAction {
     @Stable
     data object Remove : BottomSheetItemAction
 
+    @Stable
+    data object Trash : BottomSheetItemAction
+
 }
 
 fun migrate(action: BottomSheetItemAction, onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
@@ -214,5 +217,30 @@ fun viewHistory(isFreePlan: Boolean, onClick: () -> Unit): BottomSheetItem = obj
 
     override val isDivider: Boolean
         get() = false
+
+}
+
+fun trash(action: BottomSheetItemAction, onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+
+    override val title: @Composable () -> Unit
+        get() = { BottomSheetItemTitle(text = stringResource(R.string.bottomsheet_move_to_trash)) }
+
+    override val subtitle: @Composable (() -> Unit)?
+        get() = null
+
+    override val leftIcon: @Composable (() -> Unit)
+        get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_trash) }
+
+    override val endIcon: @Composable (() -> Unit)
+        get() = {
+            if (action is BottomSheetItemAction.Trash) {
+                CircularProgressIndicator(modifier = Modifier.size(20.dp))
+            }
+        }
+
+    override val onClick: (() -> Unit)
+        get() = { onClick() }
+
+    override val isDivider = false
 
 }

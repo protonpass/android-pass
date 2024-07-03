@@ -50,7 +50,6 @@ import me.proton.core.auth.presentation.HelpOptionHandler
 import me.proton.core.auth.presentation.ui.LoginActivity
 import me.proton.core.user.domain.UserManager
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordListener
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Singleton
 
 @Module
@@ -65,15 +64,13 @@ object AuthModule {
         accountManager: AccountManager,
         userManager: UserManager,
         sessionManager: SessionManager,
-        authWithExtraPasswordListener: AuthWithExtraPasswordListener,
-        ffRepo: FeatureFlagsPreferencesRepository
+        authWithExtraPasswordListener: AuthWithExtraPasswordListener
     ): PostLoginAccountSetup.UserCheck = PassScopeUserCheck(
         context = context,
         accountManager = accountManager,
         userManager = userManager,
         sessionManager = sessionManager,
-        authWithExtraPasswordListener = authWithExtraPasswordListener,
-        ffRepo = ffRepo
+        authWithExtraPasswordListener = authWithExtraPasswordListener
     )
 
     @Provides

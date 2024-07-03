@@ -20,6 +20,8 @@ package proton.android.pass.features.item.details.detailmenu.ui
 
 internal sealed interface ItemDetailsMenuUiEvent {
 
+    data object OnCopyItemNoteClicked : ItemDetailsMenuUiEvent
+
     data object OnMigrateItemClicked : ItemDetailsMenuUiEvent
 
     data object OnPinItemClicked : ItemDetailsMenuUiEvent

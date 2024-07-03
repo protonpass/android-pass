@@ -29,10 +29,12 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.ItemNotFoundError
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.usecases.GetItemActions
@@ -52,6 +54,8 @@ class ItemDetailsMenuViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     observeItemById: ObserveItemById,
     getItemActions: GetItemActions,
+    private val encryptionContextProvider: EncryptionContextProvider,
+    private val clipboardManager: ClipboardManager,
     private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     private val pinItem: PinItem,
     private val unpinItem: UnpinItem,
@@ -83,15 +87,14 @@ class ItemDetailsMenuViewModel @Inject constructor(
         }
 
     internal val state: StateFlow<ItemDetailsMenuState> = combine(
-        itemFlow,
         actionFlow,
-        eventFlow
-    ) { item, action, event ->
+        eventFlow,
+        itemFlow
+    ) { action, event, item ->
         ItemDetailsMenuState(
-            itemCategory = item.itemType.category,
-            isItemPinned = item.isPinned,
             action = action,
             event = event,
+            itemOption = item.toOption(),
             itemActionsOption = getItemActions(shareId, itemId).toOption()
         )
     }.stateIn(
@@ -102,6 +105,20 @@ class ItemDetailsMenuViewModel @Inject constructor(
 
     internal fun onConsumeEvent(event: ItemDetailsMenuEvent) {
         eventFlow.compareAndSet(event, ItemDetailsMenuEvent.Idle)
+    }
+
+    internal fun onCopyItemNote() {
+        encryptionContextProvider.withEncryptionContext {
+            decrypt(state.value.itemEncryptedNote)
+        }.let { itemNote ->
+            clipboardManager.copyToClipboard(itemNote)
+        }.also {
+            viewModelScope.launch {
+                snackbarDispatcher(ItemDetailMenuSnackBarMessage.ItemNoteCopied)
+            }
+
+            eventFlow.update { ItemDetailsMenuEvent.OnItemNoteCopied }
+        }
     }
 
     internal fun onMigrateItem() {

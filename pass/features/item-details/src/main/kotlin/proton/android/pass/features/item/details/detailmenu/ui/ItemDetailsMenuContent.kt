@@ -24,6 +24,7 @@ import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
+import proton.android.pass.composecomponents.impl.bottomsheet.copyNote
 import proton.android.pass.composecomponents.impl.bottomsheet.migrate
 import proton.android.pass.composecomponents.impl.bottomsheet.pin
 import proton.android.pass.composecomponents.impl.bottomsheet.trash
@@ -38,6 +39,14 @@ internal fun ItemDetailsMenuContent(
     state: ItemDetailsMenuState
 ) = with(state) {
     mutableListOf<BottomSheetItem>().apply {
+        if(canCopyItemNote) {
+            add(
+                copyNote(
+                    onClick = { onEvent(ItemDetailsMenuUiEvent.OnCopyItemNoteClicked) }
+                )
+            )
+        }
+
         if (canMigrateItem) {
             add(
                 migrate(

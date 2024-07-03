@@ -30,6 +30,7 @@
     <string name="bottomsheet_monitor_exclude">Exclude from monitoring</string>
     <string name="bottomsheet_monitor_include">Include in monitoring</string>
     <string name="bottomsheet_migrate_item">Move to another vault</string>
+    <string name="bottomsheet_copy_item_note">Copy note</string>
 
     <!-- Actions -->
     <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Open item action menu</string>
@@ -235,6 +236,7 @@
     </plurals>
 
     <!-- Snack bars -->
+    <string name="snack_bar_message_item_note_copied">Note copied</string>
     <string name="snack_bar_message_item_migration_error">There was an error migrating this item</string>
     <string name="snack_bar_message_item_pinned_success">Item successfully pinned</string>
     <string name="snack_bar_message_item_pinned_error">There was an error pinning this item</string>

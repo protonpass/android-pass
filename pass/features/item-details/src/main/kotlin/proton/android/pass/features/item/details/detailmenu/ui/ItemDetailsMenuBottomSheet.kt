@@ -38,17 +38,18 @@ fun ItemDetailsMenuBottomSheet(
         when (state.event) {
             ItemDetailsMenuEvent.Idle -> {}
 
-            ItemDetailsMenuEvent.OnItemMigrated -> {
-                onNavigated(ItemDetailsNavDestination.ItemMigration)
-            }
+            ItemDetailsMenuEvent.OnItemNotFound -> ItemDetailsNavDestination.Home
+                .also(onNavigated)
+
+            ItemDetailsMenuEvent.OnItemMigrated -> ItemDetailsNavDestination.ItemMigration
+                .also(onNavigated)
 
             ItemDetailsMenuEvent.OnItemMigrationError,
             ItemDetailsMenuEvent.OnItemPinned,
             ItemDetailsMenuEvent.OnItemPinningError,
             ItemDetailsMenuEvent.OnItemUnpinned,
-            ItemDetailsMenuEvent.OnItemUnpinningError -> {
-                onNavigated(ItemDetailsNavDestination.DismissBottomSheet)
-            }
+            ItemDetailsMenuEvent.OnItemUnpinningError -> ItemDetailsNavDestination.DismissBottomSheet
+                .also(onNavigated)
         }
 
         onConsumeEvent(state.event)

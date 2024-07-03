@@ -52,6 +52,16 @@ internal enum class ItemDetailMenuSnackBarMessage(
     ItemUnpinnedError(
         id = CompR.string.snack_bar_message_item_unpinned_error,
         type = SnackbarType.ERROR
+    ),
+
+    ItemTrashedSuccess(
+        id = CompR.string.snack_bar_message_item_trashed_success,
+        type = SnackbarType.SUCCESS
+    ),
+
+    ItemTrashedError(
+        id = CompR.string.snack_bar_message_item_trashed_error,
+        type = SnackbarType.ERROR
     )
 
 }

@@ -37,10 +37,15 @@ internal data class ItemDetailsMenuState(
 
     internal val canMigrateItem: Boolean = when (itemActionsOption) {
         None -> false
-        is Some -> itemActionsOption
-            .value
+        is Some -> itemActionsOption.value
             .canMoveToOtherVault
             .value()
+    }
+
+    internal val canTrashItem: Boolean = when (itemActionsOption) {
+        None -> false
+        is Some -> itemActionsOption.value
+            .canMoveToTrash
     }
 
     internal companion object {

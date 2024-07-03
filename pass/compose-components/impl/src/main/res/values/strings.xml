@@ -240,4 +240,6 @@
     <string name="snack_bar_message_item_pinned_error">There was an error pinning this item</string>
     <string name="snack_bar_message_item_unpinned_success">Item successfully unpinned</string>
     <string name="snack_bar_message_item_unpinned_error">There was an error unpinning this item</string>
+    <string name="snack_bar_message_item_trashed_success">Item successfully trashed</string>
+    <string name="snack_bar_message_item_trashed_error">There was an error trashing this item</string>
 </resources>

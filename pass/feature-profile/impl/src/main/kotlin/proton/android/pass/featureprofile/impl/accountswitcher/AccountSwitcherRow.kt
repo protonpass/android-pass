@@ -19,8 +19,8 @@
 package proton.android.pass.featureprofile.impl.accountswitcher
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -58,7 +58,6 @@ fun AccountSwitcherRow(
 ) {
     Row(
         modifier = modifier
-            .clickable { onEvent(AccountSwitchEvent.OnAccountSelected(accountItem.userId)) }
             .padding(Spacing.medium),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
@@ -81,7 +80,7 @@ fun AccountSwitcherRow(
             )
         } else {
             var expanded by remember { mutableStateOf(false) }
-            Column {
+            Box {
                 IconButton(
                     onClick = { expanded = true }
                 ) {

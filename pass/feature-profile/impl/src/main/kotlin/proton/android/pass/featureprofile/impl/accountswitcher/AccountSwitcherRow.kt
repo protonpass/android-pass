@@ -38,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
@@ -70,7 +71,12 @@ fun AccountSwitcherRow(
         )
         Column(modifier = Modifier.weight(1f)) {
             Text.Body1Regular(text = accountItem.name)
-            Text.Body3Regular(text = accountItem.email, color = PassTheme.colors.textWeak)
+            accountItem.email?.let {
+                Text.Body3Regular(
+                    text = it,
+                    color = PassTheme.colors.textWeak
+                )
+            }
         }
         if (isCollapsed) {
             Icon.Default(
@@ -119,14 +125,15 @@ fun AccountSwitcherRow(
 data class AccountItem(
     val userId: UserId,
     val name: String,
-    val email: String,
-    val state: AccountState
+    val email: String?,
+    val state: AccountState,
+    val initials: String
 )
 
-enum class AccountState {
-    Disabled,
-    Ready,
-    Primary
+sealed class AccountListItem(open val accountItem: AccountItem) {
+    data class Primary(override val accountItem: AccountItem) : AccountListItem(accountItem)
+    data class Ready(override val accountItem: AccountItem) : AccountListItem(accountItem)
+    data class Disabled(override val accountItem: AccountItem) : AccountListItem(accountItem)
 }
 
 @Preview
@@ -140,7 +147,8 @@ fun AccountSwitcherRowPreview(@PreviewParameter(ThemePreviewProvider::class) isD
                     userId = UserId("1"),
                     name = "Username",
                     email = "email@proton.me",
-                    state = AccountState.Primary
+                    state = AccountState.Ready,
+                    initials = "U"
                 ),
                 onEvent = {}
             )

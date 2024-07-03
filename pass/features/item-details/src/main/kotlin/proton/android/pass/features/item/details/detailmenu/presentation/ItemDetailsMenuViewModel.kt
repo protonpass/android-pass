@@ -38,6 +38,7 @@ import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.PinItem
+import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -54,6 +55,7 @@ class ItemDetailsMenuViewModel @Inject constructor(
     private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     private val pinItem: PinItem,
     private val unpinItem: UnpinItem,
+    private val trashItem: TrashItems,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
@@ -155,6 +157,26 @@ class ItemDetailsMenuViewModel @Inject constructor(
                 .onSuccess {
                     eventFlow.update { ItemDetailsMenuEvent.OnItemUnpinned }
                     snackbarDispatcher(ItemDetailMenuSnackBarMessage.ItemUnpinnedSuccess)
+                }
+
+            actionFlow.update { BottomSheetItemAction.None }
+        }
+    }
+
+    internal fun onTrashItem() {
+        viewModelScope.launch {
+            actionFlow.update { BottomSheetItemAction.Trash }
+
+            runCatching { trashItem(items = mapOf(shareId to listOf(itemId))) }
+                .onFailure { error ->
+                    PassLogger.w(TAG, "There was an error trashing item")
+                    PassLogger.w(TAG, error)
+                    eventFlow.update { ItemDetailsMenuEvent.OnItemTrashingError }
+                    snackbarDispatcher(ItemDetailMenuSnackBarMessage.ItemTrashedError)
+                }
+                .onSuccess {
+                    eventFlow.update { ItemDetailsMenuEvent.OnItemTrashed }
+                    snackbarDispatcher(ItemDetailMenuSnackBarMessage.ItemTrashedSuccess)
                 }
 
             actionFlow.update { BottomSheetItemAction.None }

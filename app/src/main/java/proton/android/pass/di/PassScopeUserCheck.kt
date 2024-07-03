@@ -19,7 +19,6 @@
 package proton.android.pass.di
 
 import android.content.Context
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.SessionManager
@@ -33,27 +32,18 @@ import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPasswordResult
 import proton.android.pass.enterextrapassword.EnterExtraPasswordActivity
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 
 class PassScopeUserCheck(
     private val accountManager: AccountManager,
     private val sessionManager: SessionManager,
     private val authWithExtraPasswordListener: AuthWithExtraPasswordListener,
     private val context: Context,
-    private val ffRepo: FeatureFlagsPreferencesRepository,
     userManager: UserManager
 ) : DefaultUserCheck(context, accountManager, userManager) {
     override suspend fun invoke(user: User): PostLoginAccountSetup.UserCheckResult =
         when (val superResult = super.invoke(user)) {
-            is PostLoginAccountSetup.UserCheckResult.Success -> {
-                val isExtraPasswordEnabled = ffRepo.get<Boolean>(FeatureFlag.ACCESS_KEY_V1).first()
-                if (isExtraPasswordEnabled) {
-                    checkPassScope(user, authWithExtraPasswordListener)
-                } else {
-                    superResult
-                }
-            }
+            is PostLoginAccountSetup.UserCheckResult.Success ->
+                checkPassScope(user, authWithExtraPasswordListener)
 
             else -> superResult
         }

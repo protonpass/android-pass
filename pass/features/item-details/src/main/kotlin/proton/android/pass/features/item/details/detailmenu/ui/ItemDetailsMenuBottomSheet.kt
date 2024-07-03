@@ -38,7 +38,8 @@ fun ItemDetailsMenuBottomSheet(
         when (state.event) {
             ItemDetailsMenuEvent.Idle -> {}
 
-            ItemDetailsMenuEvent.OnItemNotFound -> ItemDetailsNavDestination.Home
+            ItemDetailsMenuEvent.OnItemNotFound,
+            ItemDetailsMenuEvent.OnItemTrashed -> ItemDetailsNavDestination.Home
                 .also(onNavigated)
 
             ItemDetailsMenuEvent.OnItemMigrated -> ItemDetailsNavDestination.ItemMigration
@@ -48,7 +49,8 @@ fun ItemDetailsMenuBottomSheet(
             ItemDetailsMenuEvent.OnItemPinned,
             ItemDetailsMenuEvent.OnItemPinningError,
             ItemDetailsMenuEvent.OnItemUnpinned,
-            ItemDetailsMenuEvent.OnItemUnpinningError -> ItemDetailsNavDestination.DismissBottomSheet
+            ItemDetailsMenuEvent.OnItemUnpinningError,
+            ItemDetailsMenuEvent.OnItemTrashingError -> ItemDetailsNavDestination.DismissBottomSheet
                 .also(onNavigated)
         }
 
@@ -62,6 +64,7 @@ fun ItemDetailsMenuBottomSheet(
                 ItemDetailsMenuUiEvent.OnMigrateItemClicked -> onMigrateItem()
                 ItemDetailsMenuUiEvent.OnPinItemClicked -> onPinItem()
                 ItemDetailsMenuUiEvent.OnUnpinItemClicked -> onUnpinItem()
+                ItemDetailsMenuUiEvent.OnTrashItemClicked -> onTrashItem()
             }
         }
     )

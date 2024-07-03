@@ -36,4 +36,8 @@ internal sealed interface ItemDetailsMenuEvent {
 
     data object OnItemUnpinningError : ItemDetailsMenuEvent
 
+    data object OnItemTrashed : ItemDetailsMenuEvent
+
+    data object OnItemTrashingError : ItemDetailsMenuEvent
+
 }

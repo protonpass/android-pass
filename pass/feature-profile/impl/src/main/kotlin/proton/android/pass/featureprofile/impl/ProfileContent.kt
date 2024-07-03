@@ -18,9 +18,13 @@
 
 package proton.android.pass.featureprofile.impl
 
+import androidx.compose.animation.core.TweenSpec
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,6 +42,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
 import kotlinx.collections.immutable.persistentListOf
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
@@ -64,147 +69,210 @@ internal fun ProfileContent(
     state: ProfileUiState,
     onEvent: (ProfileUiEvent) -> Unit
 ) {
-    Scaffold(
-        modifier = modifier.fillMaxSize(),
-        topBar = {
-            ProtonTopAppBar(
-                backgroundColor = PassTheme.colors.backgroundStrong,
-                title = {
-                    Text(
-                        text = stringResource(R.string.profile_screen_title),
-                        style = PassTheme.typography.heroNorm()
-                    )
-                },
-                actions = {
-                    if (state.showUpgradeButton) {
-                        UpgradeButton(
-                            modifier = Modifier.padding(horizontal = Spacing.mediumSmall),
-                            onUpgradeClick = { onEvent(ProfileUiEvent.OnUpgradeClick) }
+    var isExpanded by remember { mutableStateOf(false) }
+    Box(modifier.fillMaxSize()) {
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            topBar = {
+                ProtonTopAppBar(
+                    backgroundColor = PassTheme.colors.backgroundStrong,
+                    title = {
+                        Text(
+                            text = stringResource(R.string.profile_screen_title),
+                            style = PassTheme.typography.heroNorm()
                         )
+                    },
+                    actions = {
+                        if (state.showUpgradeButton) {
+                            UpgradeButton(
+                                modifier = Modifier.padding(horizontal = Spacing.mediumSmall),
+                                onUpgradeClick = { onEvent(ProfileUiEvent.OnUpgradeClick) }
+                            )
+                        }
                     }
-                }
-            )
-        },
-        bottomBar = {
-            PassHomeBottomBar(
-                selection = HomeBottomBarSelection.Profile,
-                onEvent = { homeBottomBarEvent ->
-                    when (homeBottomBarEvent) {
-                        HomeBottomBarEvent.OnHomeSelected -> ProfileUiEvent.OnListClick
-                        HomeBottomBarEvent.OnNewItemSelected -> ProfileUiEvent.OnCreateItemClick
-                        HomeBottomBarEvent.OnProfileSelected -> null
-                        HomeBottomBarEvent.OnSecurityCenterSelected -> ProfileUiEvent.OnSecurityCenterClick
-                    }.also { profileUiEvent -> profileUiEvent?.let(onEvent) }
-                }
-            )
-        }
-    ) { padding ->
-        Column(
-            modifier = Modifier
-                .verticalScroll(rememberScrollState())
-                .background(PassTheme.colors.backgroundStrong)
-                .padding(padding)
-        ) {
-            if (state.isAccountSwitchEnabled) {
-                var isExpanded by remember { mutableStateOf(true) }
-
-                val accountItemList = persistentListOf(
-                    AccountItem(
-                        userId = UserId("1"),
-                        name = "John Doe",
-                        email = "john.doe@proton.me",
-                        state = AccountState.Primary
-                    ),
-                    AccountItem(
-                        userId = UserId("2"),
-                        name = "Jane Doe",
-                        email = "jane.doe@proton.me",
-                        state = AccountState.Ready
-                    ),
-                    AccountItem(
-                        userId = UserId("3"),
-                        name = "John Doe",
-                        email = "john.doe@proton.me",
-                        state = AccountState.Ready
-                    )
                 )
-                AccountSwitcherList(
-                    isExpanded = isExpanded,
-                    accountItemList = accountItemList,
-                    onExpandedChange = { isExpanded = it },
-                    onEvent = {
-                        // send event upwards
-                        isExpanded = true
+            },
+            bottomBar = {
+                PassHomeBottomBar(
+                    selection = HomeBottomBarSelection.Profile,
+                    onEvent = { homeBottomBarEvent ->
+                        when (homeBottomBarEvent) {
+                            HomeBottomBarEvent.OnHomeSelected -> ProfileUiEvent.OnListClick
+                            HomeBottomBarEvent.OnNewItemSelected -> ProfileUiEvent.OnCreateItemClick
+                            HomeBottomBarEvent.OnProfileSelected -> null
+                            HomeBottomBarEvent.OnSecurityCenterSelected -> ProfileUiEvent.OnSecurityCenterClick
+                        }.also { profileUiEvent -> profileUiEvent?.let(onEvent) }
                     }
                 )
             }
-            ItemSummary(
-                modifier = Modifier.padding(
-                    horizontal = Spacing.none,
-                    vertical = Spacing.medium
-                ),
-                isIdentityEnabled = state.isIdentityEnabled,
-                itemSummaryUiState = state.itemSummaryUiState
-            )
+        ) { padding ->
             Column(
-                modifier = Modifier.padding(all = Spacing.medium),
-                verticalArrangement = Arrangement.spacedBy(Spacing.medium)
+                modifier = Modifier
+                    .verticalScroll(rememberScrollState())
+                    .background(PassTheme.colors.backgroundStrong)
+                    .padding(padding)
             ) {
-                AppLockSection(
-                    appLockSectionState = state.appLockSectionState,
-                    onEvent = onEvent
-                )
-                if (state.autofillStatus is AutofillSupportedStatus.Supported) {
-                    AutofillProfileSection(
-                        isChecked = state.autofillStatus.status is AutofillStatus.EnabledByOurService,
-                        userBrowser = state.userBrowser,
-                        onClick = { onEvent(ProfileUiEvent.OnAutofillClicked(it)) }
-                    )
-                }
-
-                if (state.passkeySupport is ProfilePasskeySupportSection.Show) {
-                    PasskeyProfileSection(
-                        support = state.passkeySupport
-                    )
-                }
-
-                if (state.isSecureLinksEnabled) {
-                    ProfileSecureLinksSection(
-                        shouldShowPlusIcon = state.showUpgradeButton,
-                        secureLinksCount = state.secureLinksCount,
-                        onClick = { onEvent(ProfileUiEvent.OnSecureLinksClicked) }
-                    )
-                }
-
-                AccountProfileSection(
-                    planInfo = state.accountType,
-                    onAccountClick = { onEvent(ProfileUiEvent.OnAccountClick) },
-                    onSettingsClick = { onEvent(ProfileUiEvent.OnSettingsClick) }
-                )
-                HelpCenterProfileSection(
-                    onFeedbackClick = { onEvent(ProfileUiEvent.OnFeedbackClick) },
-                    onImportExportClick = { onEvent(ProfileUiEvent.OnImportExportClick) },
-                    onRateAppClick = { onEvent(ProfileUiEvent.OnRateAppClick) },
-                    onTutorialClick = { onEvent(ProfileUiEvent.OnTutorialClick) }
-                )
-                Box(
-                    modifier = Modifier
-                        .combinedClickable(
-                            onClick = { onEvent(ProfileUiEvent.OnCopyAppVersionClick) },
-                            onLongClick = { onEvent(ProfileUiEvent.OnAppVersionLongClick) }
+                if (state.isAccountSwitchEnabled) {
+                    val accountItemList = persistentListOf(
+                        AccountItem(
+                            userId = UserId("1"),
+                            name = "John Doe",
+                            email = "john.doe@proton.me",
+                            state = AccountState.Primary
+                        ),
+                        AccountItem(
+                            userId = UserId("2"),
+                            name = "Jane Doe",
+                            email = "jane.doe@proton.me",
+                            state = AccountState.Ready
+                        ),
+                        AccountItem(
+                            userId = UserId("3"),
+                            name = "John Doe",
+                            email = "john.doe@proton.me",
+                            state = AccountState.Ready
                         )
-                        .fillMaxWidth()
-                        .padding(all = Spacing.large),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = state.appVersion,
-                        style = ProtonTheme.typography.captionWeak
+                        /*AccountItem(
+                            userId = UserId("4"),
+                            name = "Jane Doe",
+                            email = "jane.doe@proton.me",
+                            state = AccountState.Ready
+                        ),
+                        AccountItem(
+                            userId = UserId("5"),
+                            name = "John Doe",
+                            email = "john.doe@proton.me",
+                            state = AccountState.Ready
+                        ),
+                        AccountItem(
+                            userId = UserId("6"),
+                            name = "Jane Doe",
+                            email = "jane.doe@proton.me",
+                            state = AccountState.Ready
+                        ),
+                        AccountItem(
+                            userId = UserId("7"),
+                            name = "John Doe",
+                            email = "john.doe@proton.me",
+                            state = AccountState.Ready
+                        ),
+                        AccountItem(
+                            userId = UserId("8"),
+                            name = "Jane Doe",
+                            email = "jane.doe@proton.me",
+                            state = AccountState.Ready
+                        ),
+                        AccountItem(
+                            userId = UserId("9"),
+                            name = "John Doe",
+                            email = "john.doe@proton.me",
+                            state = AccountState.Ready
+                        )*/
                     )
+                    AccountSwitcherList(
+                        isExpanded = isExpanded,
+                        accountItemList = accountItemList,
+                        onExpandedChange = { isExpanded = it },
+                        onEvent = {
+                            // send event upwards
+                            isExpanded = false
+                        }
+                    )
+                }
+                ItemSummary(
+                    modifier = Modifier.padding(
+                        horizontal = Spacing.none,
+                        vertical = Spacing.medium
+                    ),
+                    isIdentityEnabled = state.isIdentityEnabled,
+                    itemSummaryUiState = state.itemSummaryUiState
+                )
+                Column(
+                    modifier = Modifier.padding(all = Spacing.medium),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.medium)
+                ) {
+                    AppLockSection(
+                        appLockSectionState = state.appLockSectionState,
+                        onEvent = onEvent
+                    )
+                    if (state.autofillStatus is AutofillSupportedStatus.Supported) {
+                        AutofillProfileSection(
+                            isChecked = state.autofillStatus.status is AutofillStatus.EnabledByOurService,
+                            userBrowser = state.userBrowser,
+                            onClick = { onEvent(ProfileUiEvent.OnAutofillClicked(it)) }
+                        )
+                    }
+
+                    if (state.passkeySupport is ProfilePasskeySupportSection.Show) {
+                        PasskeyProfileSection(
+                            support = state.passkeySupport
+                        )
+                    }
+
+                    if (state.isSecureLinksEnabled) {
+                        ProfileSecureLinksSection(
+                            shouldShowPlusIcon = state.showUpgradeButton,
+                            secureLinksCount = state.secureLinksCount,
+                            onClick = { onEvent(ProfileUiEvent.OnSecureLinksClicked) }
+                        )
+                    }
+
+                    AccountProfileSection(
+                        planInfo = state.accountType,
+                        onAccountClick = { onEvent(ProfileUiEvent.OnAccountClick) },
+                        onSettingsClick = { onEvent(ProfileUiEvent.OnSettingsClick) }
+                    )
+                    HelpCenterProfileSection(
+                        onFeedbackClick = { onEvent(ProfileUiEvent.OnFeedbackClick) },
+                        onImportExportClick = { onEvent(ProfileUiEvent.OnImportExportClick) },
+                        onRateAppClick = { onEvent(ProfileUiEvent.OnRateAppClick) },
+                        onTutorialClick = { onEvent(ProfileUiEvent.OnTutorialClick) }
+                    )
+                    Box(
+                        modifier = Modifier
+                            .combinedClickable(
+                                onClick = { onEvent(ProfileUiEvent.OnCopyAppVersionClick) },
+                                onLongClick = { onEvent(ProfileUiEvent.OnAppVersionLongClick) }
+                            )
+                            .fillMaxWidth()
+                            .padding(all = Spacing.large),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = state.appVersion,
+                            style = ProtonTheme.typography.captionWeak
+                        )
+                    }
                 }
             }
         }
+        Scrim(
+            onDismiss = { },
+            visible = isExpanded
+        )
     }
 }
 
+
+@Composable
+fun Scrim(onDismiss: () -> Unit, visible: Boolean) {
+    val alpha by animateFloatAsState(
+        targetValue = if (visible) 1f else 0f,
+        animationSpec = TweenSpec(),
+        label = "scrim"
+    )
+    val dismissModifier = if (visible) {
+        Modifier.pointerInput(Unit) { detectTapGestures { onDismiss() } }
+    } else {
+        Modifier
+    }
+    val color = PassTheme.colors.backdrop
+    Canvas(
+        Modifier
+            .fillMaxSize()
+            .then(dismissModifier)
+    ) {
+        drawRect(color = color, alpha = alpha)
+    }
+}
 

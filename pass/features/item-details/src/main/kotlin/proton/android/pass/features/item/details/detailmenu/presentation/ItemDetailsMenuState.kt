@@ -24,37 +24,50 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
 import proton.android.pass.data.api.usecases.ItemActions
+import proton.android.pass.domain.Item
 import proton.android.pass.domain.items.ItemCategory
 
 @Stable
 internal data class ItemDetailsMenuState(
-    internal val itemCategory: ItemCategory,
-    internal val isItemPinned: Boolean,
     internal val action: BottomSheetItemAction,
     internal val event: ItemDetailsMenuEvent,
+    private val itemOption: Option<Item>,
     private val itemActionsOption: Option<ItemActions>
 ) {
 
+    internal val isItemPinned: Boolean = when (itemOption) {
+        None -> false
+        is Some -> itemOption.value.isPinned
+    }
+
+    internal val canCopyItemNote: Boolean = when (itemOption) {
+        None -> false
+        is Some -> itemOption.value.itemType.category == ItemCategory.Note
+    }
+
     internal val canMigrateItem: Boolean = when (itemActionsOption) {
         None -> false
-        is Some -> itemActionsOption.value
-            .canMoveToOtherVault
-            .value()
+        is Some -> itemActionsOption.value.canMoveToOtherVault.value()
     }
 
     internal val canTrashItem: Boolean = when (itemActionsOption) {
         None -> false
-        is Some -> itemActionsOption.value
-            .canMoveToTrash
+        is Some -> itemActionsOption.value.canMoveToTrash
+    }
+
+    internal val itemEncryptedNote: String by lazy {
+        when (itemOption) {
+            None -> ""
+            is Some -> itemOption.value.note
+        }
     }
 
     internal companion object {
 
         internal val Initial: ItemDetailsMenuState = ItemDetailsMenuState(
-            itemCategory = ItemCategory.Unknown,
-            isItemPinned = false,
             action = BottomSheetItemAction.None,
             event = ItemDetailsMenuEvent.Idle,
+            itemOption = None,
             itemActionsOption = None
         )
 

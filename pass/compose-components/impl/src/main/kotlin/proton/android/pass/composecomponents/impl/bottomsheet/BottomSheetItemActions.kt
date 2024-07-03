@@ -63,6 +63,26 @@ sealed interface BottomSheetItemAction {
 
 }
 
+fun copyNote(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+
+    override val title: @Composable () -> Unit
+        get() = { BottomSheetItemTitle(text = stringResource(R.string.bottomsheet_copy_item_note)) }
+
+    override val subtitle: @Composable (() -> Unit)?
+        get() = null
+
+    override val leftIcon: @Composable (() -> Unit)
+        get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_squares) }
+
+    override val endIcon: (@Composable () -> Unit)
+        get() = {}
+
+    override val onClick: () -> Unit
+        get() = { onClick() }
+
+    override val isDivider = false
+}
+
 fun migrate(action: BottomSheetItemAction, onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
 
     override val title: @Composable () -> Unit

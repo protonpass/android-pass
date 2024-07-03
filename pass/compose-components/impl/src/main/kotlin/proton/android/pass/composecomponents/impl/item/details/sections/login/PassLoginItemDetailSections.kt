@@ -112,17 +112,6 @@ internal fun PassLoginItemDetailSections(
             )
         }
 
-        if (packageInfoSet.isNotEmpty()) {
-            val mapped = remember(packageInfoSet.hashCode()) {
-                packageInfoSet.map { PackageInfoUi(it) }.toPersistentSet()
-            }
-            LinkedAppsListSection(
-                packageInfoUiSet = mapped,
-                isEditable = false,
-                onLinkedAppDelete = {}
-            )
-        }
-
         if (shouldDisplayItemHistorySection) {
             PassItemDetailsHistorySection(
                 lastAutofillAtOption = lastAutofillOption,
@@ -132,6 +121,17 @@ internal fun PassLoginItemDetailSections(
                 itemColors = itemColors,
                 onViewItemHistoryClicked = { onEvent(PassItemDetailsUiEvent.OnViewItemHistoryClick) },
                 shouldDisplayItemHistoryButton = shouldDisplayItemHistoryButton
+            )
+        }
+
+        if (packageInfoSet.isNotEmpty()) {
+            val mapped = remember(packageInfoSet.hashCode()) {
+                packageInfoSet.map { PackageInfoUi(it) }.toPersistentSet()
+            }
+            LinkedAppsListSection(
+                packageInfoUiSet = mapped,
+                isEditable = false,
+                onLinkedAppDelete = {}
             )
         }
 

@@ -19,10 +19,13 @@
 package proton.android.pass.featureprofile.impl
 
 import androidx.compose.runtime.Stable
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.composecomponents.impl.bottombar.AccountType
 import proton.android.pass.data.api.usecases.DefaultBrowser
+import proton.android.pass.featureprofile.impl.accountswitcher.AccountListItem
 import proton.android.pass.passkeys.api.PasskeySupport
 import proton.android.pass.preferences.AppLockTimePreference
 import proton.android.pass.preferences.BiometricSystemLockPreference
@@ -59,7 +62,8 @@ internal data class ProfileUiState(
     val isIdentityEnabled: Boolean,
     val isSecureLinksEnabled: Boolean,
     val isAccountSwitchEnabled: Boolean,
-    val secureLinksCount: Int
+    val secureLinksCount: Int,
+    val accounts: ImmutableList<AccountListItem>
 ) {
 
     internal companion object {
@@ -77,7 +81,8 @@ internal data class ProfileUiState(
             isIdentityEnabled = false,
             isSecureLinksEnabled = false,
             isAccountSwitchEnabled = false,
-            secureLinksCount = 0
+            secureLinksCount = 0,
+            accounts = persistentListOf()
         )
 
     }

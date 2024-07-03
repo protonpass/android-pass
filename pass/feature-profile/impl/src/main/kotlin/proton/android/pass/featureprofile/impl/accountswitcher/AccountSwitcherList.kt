@@ -19,6 +19,7 @@
 package proton.android.pass.featureprofile.impl.accountswitcher
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -69,9 +70,11 @@ fun AccountSwitcherList(
             .roundedContainerNorm()
     ) {
         AccountSwitcherRow(
-            modifier = Modifier.onGloballyPositioned { coordinates ->
-                rowSize = coordinates.size.toSize()
-            },
+            modifier = Modifier
+                .clickable { onExpandedChange(true) }
+                .onGloballyPositioned { coordinates ->
+                    rowSize = coordinates.size.toSize()
+                },
             isCollapsed = true,
             accountItem = primary.first(),
             onEvent = onEvent
@@ -84,6 +87,7 @@ fun AccountSwitcherList(
             onDismissRequest = { onExpandedChange(false) }
         ) {
             AccountSwitcherRow(
+                modifier = Modifier.clickable { onExpandedChange(false) },
                 accountItem = primary.first(),
                 onEvent = onEvent
             )
@@ -95,6 +99,9 @@ fun AccountSwitcherList(
             )
             other.forEach { accountItem ->
                 AccountSwitcherRow(
+                    modifier = Modifier.clickable {
+                        onEvent(AccountSwitchEvent.OnAccountSelected(accountItem.userId))
+                    },
                     accountItem = accountItem,
                     onEvent = onEvent
                 )

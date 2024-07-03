@@ -21,6 +21,7 @@ package proton.android.pass.featureprofile.impl
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -29,10 +30,21 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.core.account.domain.entity.Account
+import me.proton.core.account.domain.entity.AccountState
+import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.accountmanager.domain.getPrimaryAccount
+import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.entity.User
+import me.proton.core.user.domain.extension.getDisplayName
+import me.proton.core.user.domain.extension.getEmail
+import me.proton.core.user.domain.extension.getInitials
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor
 import proton.android.pass.autofill.api.AutofillManager
@@ -53,6 +65,8 @@ import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSet
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
 import proton.android.pass.domain.PlanType
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.AppVersionCopied
+import proton.android.pass.featureprofile.impl.accountswitcher.AccountItem
+import proton.android.pass.featureprofile.impl.accountswitcher.AccountListItem
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.passkeys.api.CheckPasskeySupport
@@ -71,13 +85,15 @@ class ProfileViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val appConfig: AppConfig,
     private val checkPasskeySupport: CheckPasskeySupport,
+    private val userManager: UserManager,
     featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     observeItemCount: ObserveItemCount,
     observeMFACount: ObserveMFACount,
     observeUpgradeInfo: ObserveUpgradeInfo,
     getDefaultBrowser: GetDefaultBrowser,
     observeOrganizationSettings: ObserveOrganizationSettings,
-    observeSecureLinksCount: ObserveSecureLinksCount
+    observeSecureLinksCount: ObserveSecureLinksCount,
+    accountManager: AccountManager
 ) : ViewModel() {
 
     private val userAppLockSectionStateFlow: Flow<AppLockSectionState> = combine(
@@ -170,6 +186,37 @@ class ProfileViewModel @Inject constructor(
         }
         .distinctUntilChanged()
 
+    private val ffFlow = combine(
+        featureFlagsPreferencesRepository[FeatureFlag.IDENTITY_V1],
+        featureFlagsPreferencesRepository[FeatureFlag.SECURE_LINK_V1],
+        featureFlagsPreferencesRepository[FeatureFlag.ACCOUNT_SWITCH_V1],
+        ::FeatureFlags
+    )
+
+    private data class FeatureFlags(
+        val isIdentityEnabled: Boolean,
+        val isSecureLinksEnabled: Boolean,
+        val isAccountSwitchEnabled: Boolean
+    )
+
+    private val accountItemsFlow = accountManager.getAccounts()
+        .flatMapLatest { accounts -> combine(accounts.map { it.getAccountItem() }) { it.toList() } }
+
+    private val primaryAccountFlow = accountManager.getPrimaryAccount()
+        .flatMapLatest { account -> account?.getAccountItem() ?: flowOf(null) }
+
+    private val accountsFlow = primaryAccountFlow.combine(accountItemsFlow) { primary, accounts -> primary to accounts }
+        .mapLatest { (primary, accounts) ->
+            accounts.mapNotNull {
+                when {
+                    primary?.userId == it.userId -> AccountListItem.Primary(primary)
+                    it.state == AccountState.Ready -> AccountListItem.Ready(it)
+                    it.state == AccountState.Disabled -> AccountListItem.Disabled(it)
+                    else -> null
+                }
+            }.toPersistentList()
+        }
+
     internal val state: StateFlow<ProfileUiState> = combineN(
         appLockSectionStateFlow,
         autofillStatusFlow,
@@ -178,12 +225,11 @@ class ProfileViewModel @Inject constructor(
         eventFlow,
         oneShot { getDefaultBrowser() }.asLoadingResult(),
         passkeySupportFlow,
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.IDENTITY_V1),
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.SECURE_LINK_V1),
-        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.ACCOUNT_SWITCH_V1),
-        secureLinksCountFlow
+        ffFlow,
+        secureLinksCountFlow,
+        accountsFlow
     ) { appLockSectionState, autofillStatus, itemSummaryUiState, upgradeInfo, event, browser,
-        passkey, isIdentityEnabled, isSecureLinksEnabled, isAccountSwitchEnabled, secureLinksCount ->
+        passkey, flags, secureLinksCount, accounts ->
         val (accountType, showUpgradeButton) = when (upgradeInfo) {
             LoadingResult.Loading -> PlanInfo.Hide to false
             is LoadingResult.Error -> {
@@ -218,10 +264,11 @@ class ProfileViewModel @Inject constructor(
             showUpgradeButton = showUpgradeButton,
             userBrowser = defaultBrowser,
             passkeySupport = passkey,
-            isIdentityEnabled = isIdentityEnabled,
-            isSecureLinksEnabled = isSecureLinksEnabled,
-            isAccountSwitchEnabled = isAccountSwitchEnabled,
-            secureLinksCount = secureLinksCount
+            isIdentityEnabled = flags.isIdentityEnabled,
+            isSecureLinksEnabled = flags.isSecureLinksEnabled,
+            isAccountSwitchEnabled = flags.isAccountSwitchEnabled,
+            secureLinksCount = secureLinksCount,
+            accounts = accounts
         )
     }.stateIn(
         scope = viewModelScope,
@@ -265,6 +312,17 @@ class ProfileViewModel @Inject constructor(
     internal fun onPinSuccessfullyEntered() {
         eventFlow.update { ProfileEvent.ConfigurePin }
     }
+
+    private fun Account.getAccountItem(): Flow<AccountItem> = userManager.observeUser(userId)
+        .mapLatest { user -> getAccountItem(user) }
+
+    private fun Account.getAccountItem(user: User?): AccountItem = AccountItem(
+        userId = userId,
+        initials = user?.getInitials(count = 1) ?: "?",
+        name = user?.getDisplayName() ?: "unknown",
+        email = user?.getEmail(),
+        state = state
+    )
 
     private companion object {
 

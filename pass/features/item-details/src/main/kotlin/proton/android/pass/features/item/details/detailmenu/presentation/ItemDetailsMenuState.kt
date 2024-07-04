@@ -40,6 +40,11 @@ internal data class ItemDetailsMenuState(
         is Some -> itemOption.value.isPinned
     }
 
+    internal val canBeMonitored: Boolean = when (itemOption) {
+        None -> false
+        is Some -> itemOption.value.itemType.category == ItemCategory.Login
+    }
+
     internal val canCopyItemNote: Boolean = when (itemOption) {
         None -> false
         is Some -> itemOption.value.itemType.category == ItemCategory.Note
@@ -53,6 +58,13 @@ internal data class ItemDetailsMenuState(
     internal val canTrashItem: Boolean = when (itemActionsOption) {
         None -> false
         is Some -> itemActionsOption.value.canMoveToTrash
+    }
+
+    internal val isItemExcludedFromMonitoring: Boolean by lazy {
+        when (itemOption) {
+            None -> false
+            is Some -> itemOption.value.hasSkippedHealthCheck
+        }
     }
 
     internal val itemEncryptedNote: String by lazy {

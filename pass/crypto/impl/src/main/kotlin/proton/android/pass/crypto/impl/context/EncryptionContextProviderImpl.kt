@@ -30,12 +30,20 @@ import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import java.io.File
+import java.util.concurrent.locks.ReentrantReadWriteLock
 import javax.inject.Inject
+import javax.inject.Singleton
+import kotlin.concurrent.withLock
+import kotlin.experimental.xor
 
+@Singleton
 class EncryptionContextProviderImpl @Inject constructor(
     @ApplicationContext private val context: Context,
     private val keyStoreCrypto: KeyStoreCrypto
 ) : EncryptionContextProvider {
+
+    private val lock = ReentrantReadWriteLock()
+    private var storedKey: ByteArray? = null
 
     override fun <R> withEncryptionContext(block: EncryptionContext.() -> R): R {
         val key = runBlocking { getKey() }
@@ -77,13 +85,39 @@ class EncryptionContextProviderImpl @Inject constructor(
     }
 
     private suspend fun getKey(): EncryptionKey = withContext(Dispatchers.IO) {
-        val file = File(context.dataDir, keyFileName)
-        if (file.exists()) {
-            val encryptedKey = file.readBytes()
-            val decryptedKey = keyStoreCrypto.decrypt(EncryptedByteArray(encryptedKey))
-            EncryptionKey(decryptedKey.array)
-        } else {
-            generateKey(file)
+        // Try to get it from the stored value
+        val readLock = lock.readLock()
+        readLock.withLock {
+            storedKey?.let { stored ->
+                val deobfuscated = deobfuscateKey(stored)
+                return@withContext EncryptionKey(deobfuscated)
+            }
+        }
+
+        // It was not stored. Try to get it from the file or generate it
+        val writeLock = lock.writeLock()
+        writeLock.withLock {
+            // Check again if it's stored to see if other thread already stored it
+            storedKey?.let { stored ->
+                val deobfuscated = deobfuscateKey(stored)
+                return@withLock EncryptionKey(deobfuscated)
+            }
+
+            // Guaranteed it's not stored. Read it or generate it
+            val file = File(context.dataDir, KEY_FILE_NAME)
+            val key = if (file.exists()) {
+                val encryptedKey = file.readBytes()
+                val decryptedKey = keyStoreCrypto.decrypt(EncryptedByteArray(encryptedKey))
+                EncryptionKey(decryptedKey.array)
+            } else {
+                generateKey(file)
+            }
+
+            // Store the key obfuscated in memory. We can do it as we are in the writeLock context
+            storedKey = obfuscateKey(key.value())
+
+            // Return the key to be used
+            key
         }
     }
 
@@ -96,6 +130,31 @@ class EncryptionContextProviderImpl @Inject constructor(
     }
 
     companion object {
-        private const val keyFileName = "pass.key"
+        private const val KEY_FILE_NAME = "pass.key"
+        private const val XOR_KEY = 0xDE.toByte()
+
+        private fun obfuscateKey(input: ByteArray): ByteArray {
+            val obfuscated = ByteArray(input.size + 2)
+            for (i in input.indices) {
+                obfuscated[i] = input[i] xor XOR_KEY
+            }
+            obfuscated[input.size] = XOR_KEY
+            obfuscated[input.size + 1] = XOR_KEY
+
+            return obfuscated
+        }
+
+        private fun deobfuscateKey(input: ByteArray): ByteArray {
+            if (input[input.size - 1] != XOR_KEY || input[input.size - 2] != XOR_KEY) {
+                throw IllegalStateException("Invalid obfuscated key")
+            }
+
+            val deobfuscated = ByteArray(input.size - 2)
+            for (i in deobfuscated.indices) {
+                deobfuscated[i] = input[i] xor XOR_KEY
+            }
+
+            return deobfuscated
+        }
     }
 }

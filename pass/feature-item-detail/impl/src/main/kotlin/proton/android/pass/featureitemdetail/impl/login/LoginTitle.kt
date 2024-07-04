@@ -30,9 +30,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.composecomponents.impl.badge.CircledBadge
+import proton.android.pass.composecomponents.impl.badge.OverlayBadge
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
-import proton.android.pass.composecomponents.impl.pinning.BoxedPin
-import proton.android.pass.composecomponents.impl.pinning.CircledPin
 import proton.android.pass.domain.Vault
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleInput
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleText
@@ -56,10 +56,10 @@ fun LoginTitle(
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
 
-        BoxedPin(
+        OverlayBadge(
             isShown = isPinned,
-            pin = {
-                CircledPin(
+            badge = {
+                CircledBadge(
                     backgroundColor = PassTheme.colors.loginInteractionNormMajor1
                 )
             },

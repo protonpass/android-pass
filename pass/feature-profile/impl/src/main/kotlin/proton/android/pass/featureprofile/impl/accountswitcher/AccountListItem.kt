@@ -18,8 +18,8 @@
 
 package proton.android.pass.featureprofile.impl.accountswitcher
 
-sealed class AccountListItem(open val accountItem: AccountItem) {
-    data class Primary(override val accountItem: AccountItem) : AccountListItem(accountItem)
-    data class Ready(override val accountItem: AccountItem) : AccountListItem(accountItem)
-    data class Disabled(override val accountItem: AccountItem) : AccountListItem(accountItem)
+sealed class AccountListItem(internal open val accountItem: AccountItem) {
+    internal data class Primary(override val accountItem: AccountItem) : AccountListItem(accountItem)
+    internal data class Ready(override val accountItem: AccountItem) : AccountListItem(accountItem)
+    internal data class Disabled(override val accountItem: AccountItem) : AccountListItem(accountItem)
 }

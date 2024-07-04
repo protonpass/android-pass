@@ -20,11 +20,13 @@ package proton.android.pass.featureprofile.impl.accountswitcher
 
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.featureprofile.impl.PlanInfo
 
-data class AccountItem(
+internal data class AccountItem(
     val userId: UserId,
     val name: String,
     val email: String?,
     val state: AccountState,
+    val planInfo: PlanInfo,
     val initials: String
 )

@@ -16,8 +16,9 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.composecomponents.impl.pinning
+package proton.android.pass.composecomponents.impl.badge
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.padding
@@ -38,9 +39,11 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.R
 
 @Composable
-fun CircledPin(
+fun CircledBadge(
     modifier: Modifier = Modifier,
     ratio: Float = 1f,
+    @DrawableRes icon: Int = R.drawable.ic_pin_filled,
+    iconColor: Color = PassTheme.colors.backgroundNorm,
     backgroundColor: Color
 ) {
     Icon(
@@ -48,7 +51,7 @@ fun CircledPin(
             .size(24.dp * ratio)
             .border(
                 width = 2.dp * ratio,
-                color = PassTheme.colors.backgroundNorm,
+                color = iconColor,
                 shape = CircleShape
             )
             .padding(2.dp * ratio)
@@ -57,18 +60,18 @@ fun CircledPin(
                 shape = CircleShape
             )
             .padding(Spacing.extraSmall * ratio),
-        painter = painterResource(R.drawable.ic_pin_filled),
-        tint = PassTheme.colors.backgroundNorm,
+        painter = painterResource(icon),
+        tint = iconColor,
         contentDescription = null
     )
 }
 
 @Preview
 @Composable
-fun CircledPinPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+fun CircledBadgePreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            CircledPin(
+            CircledBadge(
                 backgroundColor = PassTheme.colors.noteInteractionNormMajor1
             )
         }

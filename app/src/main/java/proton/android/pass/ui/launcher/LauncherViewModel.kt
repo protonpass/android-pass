@@ -164,7 +164,7 @@ class LauncherViewModel @Inject constructor(
         )
     }
 
-    private fun signIn(userId: UserId? = null) = viewModelScope.launch {
+    internal fun signIn(userId: UserId? = null) = viewModelScope.launch {
         val account = userId?.let { getAccountOrNull(it) }
         authOrchestrator.startLoginWorkflow(requiredAccountType, username = account?.username)
     }

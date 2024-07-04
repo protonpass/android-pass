@@ -10,6 +10,7 @@
     <string name="migrate_item_error_snackbar">Error moving the items</string>
     <string name="migrate_item_some_not_migrated_error_snackbar">Error moving some of the items</string>
     <string name="migrate_item_warning_history">When moving items between vaults we will preserve up to the last 50 modifications performed to each item</string>
+    <string name="migrate_item_warning_secure_link">The item\'s secure links will be removed when it\'s moved to another vault</string>
     <string name="migrate_all_items_success_snackbar">All items moved</string>
     <string name="migrate_all_items_error_snackbar">Error moving all vault items</string>
     <string name="migrate_init_error_snackbar">Could not prepare migrate screen</string>

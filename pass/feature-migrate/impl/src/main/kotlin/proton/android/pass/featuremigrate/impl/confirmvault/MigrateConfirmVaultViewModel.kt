@@ -28,12 +28,15 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.some
@@ -46,6 +49,7 @@ import proton.android.pass.data.api.repositories.MigrateItemsResult
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
 import proton.android.pass.data.api.usecases.MigrateItems
 import proton.android.pass.data.api.usecases.MigrateVault
+import proton.android.pass.data.api.usecases.securelink.ObserveHasAssociatedSecureLinks
 import proton.android.pass.domain.ShareId
 import proton.android.pass.featuremigrate.impl.MigrateModeArg
 import proton.android.pass.featuremigrate.impl.MigrateModeValue
@@ -63,6 +67,7 @@ class MigrateConfirmVaultViewModel @Inject constructor(
     private val migrateVault: MigrateVault,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
+    private val observeHasAssociatedSecureLinks: ObserveHasAssociatedSecureLinks,
     getVaultById: GetVaultWithItemCountById
 ) : ViewModel() {
 
@@ -88,12 +93,21 @@ class MigrateConfirmVaultViewModel @Inject constructor(
         }
         .asLoadingResult()
 
-    val state: StateFlow<MigrateConfirmVaultUiState> = combine(
+    private val hasAssociatedSecureLinksFlow = selectedItemsFlow
+        .flatMapLatest { selectedItemsOption ->
+            when (selectedItemsOption) {
+                None -> flowOf(false)
+                is Some -> observeHasAssociatedSecureLinks(selectedItemsOption.value)
+            }
+        }
+
+    internal val state: StateFlow<MigrateConfirmVaultUiState> = combine(
         isLoadingFlow,
         getVaultFlow,
         eventFlow,
-        selectedItemsFlow
-    ) { isLoading, vaultRes, event, selectedItems ->
+        selectedItemsFlow,
+        hasAssociatedSecureLinksFlow
+    ) { isLoading, vaultRes, event, selectedItems, hasAssociatedSecureLinks ->
         val loading = isLoading is IsLoadingState.Loading || vaultRes is LoadingResult.Loading
         val vault = vaultRes.getOrNull().toOption()
         val itemCount = selectedItems.map { entries -> entries.values.sumOf { it.size } }
@@ -101,16 +115,17 @@ class MigrateConfirmVaultViewModel @Inject constructor(
             isLoading = IsLoadingState.from(loading),
             vault = vault,
             event = event,
-            mode = mode.migrateMode(itemCount)
+            mode = mode.migrateMode(itemCount),
+            hasAssociatedSecureLinks = hasAssociatedSecureLinks
         )
 
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
-        initialValue = MigrateConfirmVaultUiState.Initial(mode.migrateMode(None))
+        initialValue = MigrateConfirmVaultUiState.initial(mode.migrateMode(None))
     )
 
-    fun onConfirm() = viewModelScope.launch {
+    internal fun onConfirm() = viewModelScope.launch {
         when (mode) {
             is Mode.MigrateAllItems -> performAllItemsMigration(
                 sourceShareId = mode.sourceShareId,
@@ -210,7 +225,7 @@ class MigrateConfirmVaultViewModel @Inject constructor(
         isLoadingFlow.update { IsLoadingState.NotLoading }
     }
 
-    fun onCancel() {
+    internal fun onCancel() {
         eventFlow.update { ConfirmMigrateEvent.Close.toOption() }
     }
 
@@ -253,8 +268,10 @@ class MigrateConfirmVaultViewModel @Inject constructor(
         savedStateHandle.require(MigrateModeArg.key)
     )
 
-    companion object {
+    private companion object {
+
         private const val TAG = "MigrateConfirmVaultViewModel"
+
     }
 
 }

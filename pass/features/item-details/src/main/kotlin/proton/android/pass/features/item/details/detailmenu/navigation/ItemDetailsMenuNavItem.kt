@@ -23,8 +23,8 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 
-object ItemDetailsMenuNavItem: NavItem(
-  baseRoute = "item/details/menu",
+object ItemDetailsMenuNavItem : NavItem(
+    baseRoute = "item/details/menu",
     navArgIds = listOf(
         CommonNavArgId.ShareId,
         CommonNavArgId.ItemId

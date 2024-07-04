@@ -26,35 +26,47 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.VaultWithItemCount
 
-sealed interface ConfirmMigrateEvent {
+internal sealed interface ConfirmMigrateEvent {
+
     data object Close : ConfirmMigrateEvent
+
     data class ItemMigrated(val shareId: ShareId, val itemId: ItemId) : ConfirmMigrateEvent
+
     data object AllItemsMigrated : ConfirmMigrateEvent
+
 }
 
 @Stable
-sealed interface MigrateMode {
+internal sealed interface MigrateMode {
+
     @Stable
     @JvmInline
     value class MigrateSelectedItems(val number: Int) : MigrateMode
 
     @Stable
     data object MigrateAll : MigrateMode
+
 }
 
 @Stable
-data class MigrateConfirmVaultUiState(
+internal data class MigrateConfirmVaultUiState(
     val isLoading: IsLoadingState,
     val event: Option<ConfirmMigrateEvent>,
     val vault: Option<VaultWithItemCount>,
-    val mode: MigrateMode
+    val mode: MigrateMode,
+    val hasAssociatedSecureLinks: Boolean
 ) {
-    companion object {
-        fun Initial(mode: MigrateMode) = MigrateConfirmVaultUiState(
+
+    internal companion object {
+
+        internal fun initial(mode: MigrateMode) = MigrateConfirmVaultUiState(
             isLoading = IsLoadingState.NotLoading,
             event = None,
             vault = None,
-            mode = mode
+            mode = mode,
+            hasAssociatedSecureLinks = false
         )
+
     }
+
 }

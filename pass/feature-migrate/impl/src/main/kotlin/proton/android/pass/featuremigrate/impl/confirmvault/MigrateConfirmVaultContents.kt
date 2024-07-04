@@ -41,7 +41,7 @@ import proton.android.pass.composecomponents.impl.container.PassInfoWarningBanne
 import proton.android.pass.featuremigrate.R
 
 @Composable
-fun MigrateConfirmVaultContents(
+internal fun MigrateConfirmVaultContents(
     modifier: Modifier = Modifier,
     state: MigrateConfirmVaultUiState,
     onCancel: () -> Unit,
@@ -61,10 +61,21 @@ fun MigrateConfirmVaultContents(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
     ) {
-        PassInfoWarningBanner(
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            text = stringResource(id = R.string.migrate_item_warning_history)
-        )
+        Column(
+            verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
+        ) {
+            PassInfoWarningBanner(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                text = stringResource(id = R.string.migrate_item_warning_history)
+            )
+
+            if (state.hasAssociatedSecureLinks) {
+                PassInfoWarningBanner(
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    text = stringResource(id = R.string.migrate_item_warning_secure_link)
+                )
+            }
+        }
 
         Text(
             modifier = Modifier

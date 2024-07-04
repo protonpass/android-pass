@@ -160,6 +160,7 @@ import proton.android.pass.data.api.usecases.securelink.DeleteInactiveSecureLink
 import proton.android.pass.data.api.usecases.securelink.DeleteSecureLink
 import proton.android.pass.data.api.usecases.securelink.GenerateSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveActiveSecureLinks
+import proton.android.pass.data.api.usecases.securelink.ObserveHasAssociatedSecureLinks
 import proton.android.pass.data.api.usecases.securelink.ObserveInactiveSecureLinks
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinks
@@ -305,6 +306,7 @@ import proton.android.pass.data.fakes.usecases.securelink.FakeDeleteInactiveSecu
 import proton.android.pass.data.fakes.usecases.securelink.FakeDeleteSecureLink
 import proton.android.pass.data.fakes.usecases.securelink.FakeGenerateSecureLink
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveActiveSecureLinks
+import proton.android.pass.data.fakes.usecases.securelink.FakeObserveHasAssociatedSecureLinks
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveInactiveSecureLinks
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLink
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLinks
@@ -770,5 +772,10 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindObserveSecureLinksCount(impl: FakeObserveSecureLinksCount): ObserveSecureLinksCount
+
+    @Binds
+    abstract fun bindObserveHasAssociatedSecureLinks(
+        impl: FakeObserveHasAssociatedSecureLinks
+    ): ObserveHasAssociatedSecureLinks
 
 }

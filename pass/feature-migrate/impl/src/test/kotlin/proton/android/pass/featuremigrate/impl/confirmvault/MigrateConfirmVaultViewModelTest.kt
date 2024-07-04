@@ -31,6 +31,7 @@ import proton.android.pass.data.fakes.repositories.TestBulkMoveToVaultRepository
 import proton.android.pass.data.fakes.usecases.TestGetVaultWithItemCountById
 import proton.android.pass.data.fakes.usecases.TestMigrateItems
 import proton.android.pass.data.fakes.usecases.TestMigrateVault
+import proton.android.pass.data.fakes.usecases.securelink.FakeObserveHasAssociatedSecureLinks
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
@@ -44,7 +45,7 @@ import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestSavedStateHandle
 
-class MigrateConfirmVaultViewModelTest {
+internal class MigrateConfirmVaultViewModelTest {
 
     @get:Rule
     val dispatcher = MainDispatcherRule()
@@ -55,6 +56,7 @@ class MigrateConfirmVaultViewModelTest {
     private lateinit var getVaultById: TestGetVaultWithItemCountById
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
     private lateinit var bulkMoveToVaultRepository: TestBulkMoveToVaultRepository
+    private lateinit var observeHasAssociatedSecureLinks: FakeObserveHasAssociatedSecureLinks
 
     @Before
     fun setup() {
@@ -63,12 +65,15 @@ class MigrateConfirmVaultViewModelTest {
         snackbarDispatcher = TestSnackbarDispatcher()
         getVaultById = TestGetVaultWithItemCountById()
         bulkMoveToVaultRepository = TestBulkMoveToVaultRepository()
+        observeHasAssociatedSecureLinks = FakeObserveHasAssociatedSecureLinks()
+
         instance = MigrateConfirmVaultViewModel(
             migrateItems = migrateItem,
             migrateVault = migrateVault,
             snackbarDispatcher = snackbarDispatcher,
             getVaultById = getVaultById,
             bulkMoveToVaultRepository = bulkMoveToVaultRepository,
+            observeHasAssociatedSecureLinks = observeHasAssociatedSecureLinks,
             savedStateHandle = TestSavedStateHandle.create().apply {
                 set(CommonNavArgId.ShareId.key, SHARE_ID.id)
                 set(DestinationShareNavArgId.key, DESTINATION_SHARE_ID.id)

@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.impl.repositories
 
+import android.database.sqlite.SQLiteConstraintException
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -44,6 +45,7 @@ import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.securelinks.SecureLink
 import proton.android.pass.domain.securelinks.SecureLinkId
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 interface SecureLinkRepository {
@@ -183,7 +185,23 @@ class SecureLinkRepositoryImpl @Inject constructor(
                 }
             }
             .onSuccess { remoteSecureLinks ->
-                secureLinksLocalDataSource.update(userId, remoteSecureLinks)
+                remoteSecureLinks.map { remoteSecureLink ->
+                    remoteSecureLink.id
+                }.let { remoteSecureLinksIds ->
+                    localSecureLinks.filterNot { localSecureLink ->
+                        remoteSecureLinksIds.contains(localSecureLink.id)
+                    }
+                }.also { secureLinksToBeRemoved ->
+                    secureLinksLocalDataSource.delete(userId, secureLinksToBeRemoved)
+                    try {
+                        secureLinksLocalDataSource.update(userId, remoteSecureLinks)
+                    } catch (exception: SQLiteConstraintException) {
+                        // this is to avoid raising an error to a user due to a race condition
+                        // while secure link removal is propagated to BE BD replicas
+                        PassLogger.w(TAG, "Error syncing remote secure links")
+                        PassLogger.w(TAG, exception)
+                    }
+                }
             }
 
         emitAll(secureLinksLocalDataSource.observeAll(userId))
@@ -282,6 +300,8 @@ class SecureLinkRepositoryImpl @Inject constructor(
     }
 
     private companion object {
+
+        private const val TAG = "SecureLinkRepository"
 
         private const val SECURE_LINK_DOES_NOT_EXITS_ERROR_CODE = 2001
 

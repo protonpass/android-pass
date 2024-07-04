@@ -47,14 +47,18 @@ class SecureLinksLocalDataSourceImpl @Inject constructor(
             database.secureLinksDao().insertOrIgnore(entity)
         }
 
-    override suspend fun delete(userId: UserId, secureLinkId: SecureLinkId) = read(userId, secureLinkId)
-        .let { secureLink ->
-            encryptionContextProvider.withEncryptionContext {
+    override suspend fun delete(userId: UserId, secureLinkId: SecureLinkId) = delete(
+        userId = userId,
+        secureLinks = listOf(read(userId, secureLinkId))
+    )
+
+    override suspend fun delete(userId: UserId, secureLinks: List<SecureLink>) =
+        encryptionContextProvider.withEncryptionContext {
+            secureLinks.map { secureLink ->
                 secureLink.toEntity(userId, this@withEncryptionContext)
             }
-        }
-        .let { entity ->
-            database.secureLinksDao().delete(entity)
+        }.let { entities ->
+            database.secureLinksDao().delete(*entities.toTypedArray())
         }
 
     override suspend fun deleteAllInactive(userId: UserId) = withContext(appDispatchers.io) {

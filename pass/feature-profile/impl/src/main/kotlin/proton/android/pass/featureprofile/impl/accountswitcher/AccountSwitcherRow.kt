@@ -39,6 +39,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.account.domain.entity.AccountState
+import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
@@ -74,11 +75,15 @@ fun AccountSwitcherRow(
             shape = PassTheme.shapes.squircleMediumShape
         )
         Column(modifier = Modifier.weight(1f)) {
-            Text.Body1Regular(text = accountListItem.accountItem.name)
+            val isDisabled = accountListItem.accountItem.state == AccountState.Disabled
+            Text.Body1Regular(
+                text = accountListItem.accountItem.name,
+                color = if (isDisabled) ProtonTheme.colors.textDisabled else ProtonTheme.colors.textNorm
+            )
             accountListItem.accountItem.email?.let {
                 Text.Body3Regular(
                     text = it,
-                    color = PassTheme.colors.textWeak
+                    color = if (isDisabled) ProtonTheme.colors.textDisabled else ProtonTheme.colors.textWeak
                 )
             }
         }
@@ -128,14 +133,14 @@ fun AccountSwitcherRow(
                                         onEvent(AccountSwitchEvent.OnSignOut(accountListItem.accountItem.userId))
                                     }
                                 ) {
-                                    Text.Body1Regular(text = stringResource(R.string.account_switcher_sign_in))
+                                    Text.Body1Regular(text = stringResource(R.string.account_switcher_sign_out))
                                 }
 
                             SignIn ->
                                 DropdownMenuItem(
                                     onClick = {
                                         expanded = false
-                                        onEvent(AccountSwitchEvent.OnSignOut(accountListItem.accountItem.userId))
+                                        onEvent(AccountSwitchEvent.OnSignIn(accountListItem.accountItem.userId))
                                     }
                                 ) {
                                     Text.Body1Regular(text = stringResource(R.string.account_switcher_sign_in))

@@ -61,7 +61,7 @@ internal fun SecurityCenterWeakPassContent(
             weakPassGroups.forEach { weakPassGroup ->
                 items(
                     items = weakPassGroup.itemUiModels,
-                    key = { itemUiModel -> itemUiModel.id.id }
+                    key = { it.key }
                 ) { itemUiModel ->
                     SecurityCenterLoginItemRow(
                         itemUiModel = itemUiModel,

@@ -141,7 +141,10 @@ fun ItemsList(
                 header()
                 items.forEach { (key, value) ->
                     stickyItemListHeader(key)
-                    items(items = value, key = { it.id.id }) { item ->
+                    items(
+                        items = value,
+                        key = { it.key }
+                    ) { item ->
                         val share = shares[item.shareId]
                         val permissions = share?.role?.toPermissions()
                         val isSelectable = permissions?.canCreate() ?: false

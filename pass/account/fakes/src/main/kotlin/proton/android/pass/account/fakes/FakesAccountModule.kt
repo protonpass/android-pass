@@ -26,6 +26,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.payment.domain.PaymentManager
+import me.proton.core.user.domain.UserManager
 import me.proton.core.usersettings.domain.repository.DeviceSettingsRepository
 import proton.android.pass.account.api.AccountOrchestrators
 
@@ -50,4 +51,7 @@ abstract class FakesAccountModule {
 
     @Binds
     abstract fun bindFeatureFlagRepository(impl: TestFeatureFlagRepository): FeatureFlagRepository
+
+    @Binds
+    abstract fun bindUserManager(impl: FakeUserManager): UserManager
 }

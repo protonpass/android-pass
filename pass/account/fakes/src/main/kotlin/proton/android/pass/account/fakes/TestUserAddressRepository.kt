@@ -93,10 +93,11 @@ class TestUserAddressRepository : UserAddressRepository {
     fun generateAddress(
         displayName: String,
         userId: UserId = UserId("userid-123"),
-        email: String = "test@email.local"
+        email: String = "test@email.local",
+        addressId: AddressId = AddressId("addressid-123")
     ): UserAddress = UserAddress(
         userId = userId,
-        addressId = AddressId("addressid-123"),
+        addressId = addressId,
         email = email,
         displayName = displayName,
         signature = null,

@@ -50,10 +50,7 @@ class FakeUserManager @Inject constructor() : UserManager {
         throw IllegalStateException("Not implemented")
     }
 
-    override suspend fun getAddresses(
-        sessionUserId: SessionUserId,
-        refresh: Boolean
-    ): List<UserAddress> {
+    override suspend fun getAddresses(sessionUserId: SessionUserId, refresh: Boolean): List<UserAddress> {
         throw IllegalStateException("Not implemented")
     }
 
@@ -65,10 +62,7 @@ class FakeUserManager @Inject constructor() : UserManager {
         throw IllegalStateException("Not implemented")
     }
 
-    override fun observeAddresses(
-        sessionUserId: SessionUserId,
-        refresh: Boolean
-    ): Flow<List<UserAddress>> {
+    override fun observeAddresses(sessionUserId: SessionUserId, refresh: Boolean): Flow<List<UserAddress>> {
         throw IllegalStateException("Not implemented")
     }
 

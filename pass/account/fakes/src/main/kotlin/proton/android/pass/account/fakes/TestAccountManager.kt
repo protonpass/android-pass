@@ -18,12 +18,13 @@
 
 package proton.android.pass.account.fakes
 
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.map
 import me.proton.core.account.domain.entity.Account
+import me.proton.core.account.domain.entity.AccountDetails
+import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
@@ -34,22 +35,36 @@ import javax.inject.Singleton
 @Singleton
 class TestAccountManager @Inject constructor() : AccountManager(Product.Pass) {
 
+    private val userId = UserId("TestAccountManager-DefaultUserId")
+
     private val primaryUserIdFlow: MutableStateFlow<UserId?> =
-        MutableStateFlow(UserId("TestAccountManager-DefaultUserId"))
+        MutableStateFlow(userId)
+
+    private val accountFlow: MutableStateFlow<Account> =
+        MutableStateFlow(
+            Account(
+                userId = userId,
+                state = AccountState.Ready,
+                details = AccountDetails(null, null),
+                username = null,
+                email = null,
+                sessionId = null,
+                sessionState = null
+            )
+        )
 
     override suspend fun addAccount(account: Account, session: Session) {
         // no-op
     }
 
-    override fun getAccount(userId: UserId): Flow<Account?> = emptyFlow()
+    override fun getAccount(userId: UserId): Flow<Account?> = accountFlow
 
-    override fun getAccounts(): Flow<List<Account>> = emptyFlow()
+    override fun getAccounts(): Flow<List<Account>> = accountFlow.map { listOf(it) }
 
     override suspend fun getPreviousPrimaryUserId(): UserId? = null
 
     @Suppress("MagicNumber")
     override fun getPrimaryUserId(): Flow<UserId?> = primaryUserIdFlow
-        .onStart { delay(500) }
 
     fun sendPrimaryUserId(userId: UserId?) = primaryUserIdFlow.tryEmit(userId)
 

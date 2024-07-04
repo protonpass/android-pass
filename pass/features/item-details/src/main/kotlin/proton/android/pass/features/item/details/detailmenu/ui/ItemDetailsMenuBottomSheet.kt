@@ -47,6 +47,10 @@ fun ItemDetailsMenuBottomSheet(
 
             ItemDetailsMenuEvent.OnItemNoteCopied,
             ItemDetailsMenuEvent.OnItemMigrationError,
+            ItemDetailsMenuEvent.OnItemMonitorExcluded,
+            ItemDetailsMenuEvent.OnItemMonitorExcludedError,
+            ItemDetailsMenuEvent.OnItemMonitorIncluded,
+            ItemDetailsMenuEvent.OnItemMonitorIncludedError,
             ItemDetailsMenuEvent.OnItemPinned,
             ItemDetailsMenuEvent.OnItemPinningError,
             ItemDetailsMenuEvent.OnItemUnpinned,
@@ -66,6 +70,8 @@ fun ItemDetailsMenuBottomSheet(
                 ItemDetailsMenuUiEvent.OnMigrateItemClicked -> onMigrateItem()
                 ItemDetailsMenuUiEvent.OnPinItemClicked -> onPinItem()
                 ItemDetailsMenuUiEvent.OnUnpinItemClicked -> onUnpinItem()
+                ItemDetailsMenuUiEvent.OnExcludeItemMonitorClicked -> onExcludeItemFromMonitoring()
+                ItemDetailsMenuUiEvent.OnIncludeItemMonitorClicked -> onIncludeItemInMonitoring()
                 ItemDetailsMenuUiEvent.OnTrashItemClicked -> onTrashItem()
             }
         }

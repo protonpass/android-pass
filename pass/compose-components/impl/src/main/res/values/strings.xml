@@ -238,6 +238,10 @@
     <!-- Snack bars -->
     <string name="snack_bar_message_item_note_copied">Note copied</string>
     <string name="snack_bar_message_item_migration_error">There was an error migrating this item</string>
+    <string name="snack_bar_message_item_monitor_excluded_success">Item successfully excluded from monitoring</string>
+    <string name="snack_bar_message_item_monitor_excluded_error">There was an error excluding item from monitoring</string>
+    <string name="snack_bar_message_item_monitor_included_success">Item successfully included in monitoring</string>
+    <string name="snack_bar_message_item_monitor_included_error">There was an error including item in monitoring</string>
     <string name="snack_bar_message_item_pinned_success">Item successfully pinned</string>
     <string name="snack_bar_message_item_pinned_error">There was an error pinning this item</string>
     <string name="snack_bar_message_item_unpinned_success">Item successfully unpinned</string>

@@ -58,7 +58,7 @@ println(
 )
 
 val jobId: Int = System.getenv("CI_JOB_ID")?.take(3)?.toInt() ?: 0
-val appVersionName: String = "1.23.1"
+val appVersionName: String = "1.23.2"
 val appVersionCode: Int = versionCode(appVersionName)
 val archivesBaseName = "ProtonPass-$appVersionName"
 

@@ -41,6 +41,8 @@ data class ItemUiModel(
     val revision: Long
 ) {
 
+    val key = "${shareId.id}-${id.id}"
+
     fun isInTrash() = state == ItemState.Trashed.value
 
 }

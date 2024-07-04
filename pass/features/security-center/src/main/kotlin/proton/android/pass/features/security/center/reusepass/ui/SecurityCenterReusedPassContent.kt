@@ -89,7 +89,7 @@ internal fun SecurityCenterReusedPassContent(
                 if (!isGroupCollapsed.contains(reusedPassGroup.key)) {
                     items(
                         items = reusedPassGroup.itemUiModels,
-                        key = { itemUiModel -> itemUiModel.id.id }
+                        key = { it.key }
                     ) { itemUiModel ->
                         SecurityCenterLoginItemRow(
                             itemUiModel = itemUiModel,

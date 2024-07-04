@@ -40,6 +40,26 @@ internal enum class ItemDetailMenuSnackBarMessage(
         type = SnackbarType.ERROR
     ),
 
+    ItemMonitorExcludedSuccess(
+        id = CompR.string.snack_bar_message_item_monitor_excluded_success,
+        type = SnackbarType.SUCCESS
+    ),
+
+    ItemMonitorExcludedError(
+        id = CompR.string.snack_bar_message_item_monitor_excluded_error,
+        type = SnackbarType.ERROR
+    ),
+
+    ItemMonitorIncludedSuccess(
+        id = CompR.string.snack_bar_message_item_monitor_included_success,
+        type = SnackbarType.SUCCESS
+    ),
+
+    ItemMonitorIncludedError(
+        id = CompR.string.snack_bar_message_item_monitor_included_error,
+        type = SnackbarType.ERROR
+    ),
+
     ItemPinnedSuccess(
         id = CompR.string.snack_bar_message_item_pinned_success,
         type = SnackbarType.SUCCESS

@@ -47,6 +47,7 @@ import androidx.compose.ui.res.stringResource
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionWeak
+import me.proton.core.compose.theme.defaultSmallWeak
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.commonpresentation.api.bars.bottom.home.presentation.HomeBottomBarEvent
@@ -109,6 +110,11 @@ internal fun ProfileContent(
                     .padding(padding)
             ) {
                 if (state.isAccountSwitchEnabled && state.accounts.isNotEmpty()) {
+                    Text(
+                        modifier = Modifier.padding(Spacing.medium),
+                        text = stringResource(R.string.profile_option_account),
+                        style = ProtonTheme.typography.defaultSmallWeak
+                    )
                     AccountSwitcherList(
                         isExpanded = isExpanded,
                         accountItemList = state.accounts,
@@ -159,6 +165,7 @@ internal fun ProfileContent(
 
                     AccountProfileSection(
                         planInfo = state.accountType,
+                        isAccountSwitchEnabled = state.isAccountSwitchEnabled,
                         onAccountClick = { onEvent(ProfileUiEvent.OnAccountClick) },
                         onSettingsClick = { onEvent(ProfileUiEvent.OnSettingsClick) }
                     )

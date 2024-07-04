@@ -6,6 +6,12 @@
 
 ### Other
 
+## 1.23.2 (2024-07-04)
+
+### Fixes :bug:
+
+- Bug fixes and improvements.
+
 ## 1.23.1 (2024-07-03)
 
 ### Fixes :bug:

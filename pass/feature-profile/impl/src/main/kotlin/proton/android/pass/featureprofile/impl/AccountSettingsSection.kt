@@ -36,18 +36,21 @@ import proton.android.pass.composecomponents.impl.setting.SettingOption
 internal fun AccountProfileSection(
     modifier: Modifier = Modifier,
     planInfo: PlanInfo,
+    isAccountSwitchEnabled: Boolean,
     onAccountClick: () -> Unit,
     onSettingsClick: () -> Unit
 ) {
     Column(
         modifier = modifier.roundedContainerNorm()
     ) {
-        AccountSetting(
-            modifier = Modifier.testTag(AccountProfileSectionTestTag.ACCOUNT_SETTINGS),
-            planInfo = planInfo,
-            onClick = onAccountClick
-        )
-        Divider(color = PassTheme.colors.inputBorderNorm)
+        if (!isAccountSwitchEnabled) {
+            AccountSetting(
+                modifier = Modifier.testTag(AccountProfileSectionTestTag.ACCOUNT_SETTINGS),
+                planInfo = planInfo,
+                onClick = onAccountClick
+            )
+            Divider(color = PassTheme.colors.inputBorderNorm)
+        }
         SettingOption(
             text = stringResource(R.string.profile_option_settings),
             onClick = onSettingsClick
@@ -68,6 +71,7 @@ internal fun AccountSettingsSectionPreview(@PreviewParameter(ThemePreviewProvide
         Surface {
             AccountProfileSection(
                 planInfo = PlanInfo.Hide,
+                isAccountSwitchEnabled = false,
                 onAccountClick = {},
                 onSettingsClick = {}
             )

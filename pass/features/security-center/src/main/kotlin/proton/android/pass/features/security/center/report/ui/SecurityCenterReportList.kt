@@ -79,7 +79,7 @@ internal fun SecurityCenterReportList(
 
             items(
                 items = usedInLoginItems,
-                key = { itemUiModel -> itemUiModel.id.id }
+                key = { it.key }
             ) { itemUiModel ->
                 SecurityCenterLoginItemRow(
                     itemUiModel = itemUiModel,

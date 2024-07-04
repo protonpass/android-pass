@@ -19,6 +19,7 @@
 package proton.android.pass.account.fakes
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.PlainByteArray
@@ -27,6 +28,7 @@ import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserKey
@@ -66,9 +68,28 @@ class FakeUserManager @Inject constructor() : UserManager {
         throw IllegalStateException("Not implemented")
     }
 
-    override fun observeUser(sessionUserId: SessionUserId, refresh: Boolean): Flow<User?> {
-        throw IllegalStateException("Not implemented")
-    }
+    override fun observeUser(sessionUserId: SessionUserId, refresh: Boolean): Flow<User?> = flowOf(
+        User(
+            userId = UserId(""),
+            email = "email",
+            name = "name",
+            displayName = null,
+            currency = "",
+            type = Type.Proton,
+            credit = 0,
+            createdAtUtc = 0,
+            usedSpace = 0,
+            maxSpace = 0,
+            maxUpload = 0,
+            role = null,
+            private = false,
+            services = 0,
+            subscribed = 0,
+            delinquent = null,
+            keys = listOf(),
+            recovery = null
+        )
+    )
 
     override suspend fun reactivateKey(userKey: UserKey): User {
         throw IllegalStateException("Not implemented")

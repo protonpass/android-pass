@@ -437,10 +437,7 @@ fun HomeScreen(
                         onCopyNumber = remember {
                             {
                                 scope.launch { bottomSheetState.hide() }
-                                homeViewModel.copyToClipboard(
-                                    it,
-                                    HomeClipboardType.CreditCardNumber
-                                )
+                                homeViewModel.copyToClipboard(it, HomeClipboardType.CreditCardNumber)
                             }
                         },
                         onCopyCvv = remember {
@@ -554,8 +551,7 @@ fun HomeScreen(
                                 is ItemContents.Login -> {
                                     val sortedPackages =
                                         contents.packageInfoSet.sortedBy { it.packageName.value }
-                                    val packageName =
-                                        sortedPackages.firstOrNull()?.packageName?.value
+                                    val packageName = sortedPackages.firstOrNull()?.packageName?.value
                                     val website = contents.urls.firstOrNull()
                                     LoginIcon(
                                         text = item.contents.title,

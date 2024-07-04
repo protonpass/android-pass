@@ -30,7 +30,6 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
@@ -61,6 +60,7 @@ import proton.android.pass.data.api.usecases.GetDefaultBrowser
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveMFACount
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
+import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
 import proton.android.pass.domain.PlanType
@@ -200,22 +200,34 @@ class ProfileViewModel @Inject constructor(
     )
 
     private val accountItemsFlow = accountManager.getAccounts()
-        .flatMapLatest { accounts -> combine(accounts.map { it.getAccountItem() }) { it.toList() } }
+        .flatMapLatest { accounts ->
+            combine(
+                accounts.map { account ->
+                    combine(
+                        observeUpgradeInfo(account.userId).asLoadingResult(),
+                        userManager.observeUser(account.userId)
+                    ) { upgradeInfo, user ->
+                        val (planInfo, _) = processUpgradeInfo(upgradeInfo)
+                        account.getAccountItem(user, planInfo)
+                    }
+                }
+            ) { it.toList() }
+        }
 
     private val primaryAccountFlow = accountManager.getPrimaryAccount()
-        .flatMapLatest { account -> account?.getAccountItem() ?: flowOf(null) }
 
-    private val accountsFlow = primaryAccountFlow.combine(accountItemsFlow) { primary, accounts -> primary to accounts }
-        .mapLatest { (primary, accounts) ->
-            accounts.mapNotNull {
-                when {
-                    primary?.userId == it.userId -> AccountListItem.Primary(primary)
-                    it.state == AccountState.Ready -> AccountListItem.Ready(it)
-                    it.state == AccountState.Disabled -> AccountListItem.Disabled(it)
-                    else -> null
-                }
-            }.toPersistentList()
-        }
+    private val accountsFlow =
+        primaryAccountFlow.combine(accountItemsFlow) { primary, accounts -> primary to accounts }
+            .mapLatest { (primary, accounts) ->
+                accounts.mapNotNull {
+                    when {
+                        primary?.userId == it.userId -> AccountListItem.Primary(it)
+                        it.state == AccountState.Ready -> AccountListItem.Ready(it)
+                        it.state == AccountState.Disabled -> AccountListItem.Disabled(it)
+                        else -> null
+                    }
+                }.toPersistentList()
+            }
 
     internal val state: StateFlow<ProfileUiState> = combineN(
         appLockSectionStateFlow,
@@ -230,29 +242,7 @@ class ProfileViewModel @Inject constructor(
         accountsFlow
     ) { appLockSectionState, autofillStatus, itemSummaryUiState, upgradeInfo, event, browser,
         passkey, flags, secureLinksCount, accounts ->
-        val (accountType, showUpgradeButton) = when (upgradeInfo) {
-            LoadingResult.Loading -> PlanInfo.Hide to false
-            is LoadingResult.Error -> {
-                PassLogger.w(TAG, "Error getting upgradeInfo")
-                PassLogger.w(TAG, upgradeInfo.exception)
-                PlanInfo.Hide to false
-            }
-
-            is LoadingResult.Success -> {
-                val info = upgradeInfo.data
-                when (val plan = info.plan.planType) {
-                    is PlanType.Free -> PlanInfo.Hide to info.isUpgradeAvailable
-                    is PlanType.Paid -> PlanInfo.Unlimited(
-                        planName = plan.humanReadableName,
-                        accountType = AccountType.Unlimited
-                    ) to false
-
-                    is PlanType.Trial -> PlanInfo.Trial to info.isUpgradeAvailable
-                    is PlanType.Unknown -> PlanInfo.Hide to info.isUpgradeAvailable
-                }
-            }
-        }
-
+        val (accountType, showUpgradeButton) = processUpgradeInfo(upgradeInfo)
         val defaultBrowser = browser.getOrNull() ?: DefaultBrowser.Other
         ProfileUiState(
             appLockSectionState = appLockSectionState,
@@ -277,6 +267,29 @@ class ProfileViewModel @Inject constructor(
             appVersion = appConfig.versionName
         )
     )
+
+    private fun processUpgradeInfo(upgradeInfo: LoadingResult<UpgradeInfo>) = when (upgradeInfo) {
+        LoadingResult.Loading -> PlanInfo.Hide to false
+        is LoadingResult.Error -> {
+            PassLogger.w(TAG, "Error getting upgradeInfo")
+            PassLogger.w(TAG, upgradeInfo.exception)
+            PlanInfo.Hide to false
+        }
+
+        is LoadingResult.Success -> {
+            val info = upgradeInfo.data
+            when (val plan = info.plan.planType) {
+                is PlanType.Free -> PlanInfo.Hide to info.isUpgradeAvailable
+                is PlanType.Paid -> PlanInfo.Unlimited(
+                    planName = plan.humanReadableName,
+                    accountType = AccountType.Unlimited
+                ) to false
+
+                is PlanType.Trial -> PlanInfo.Trial to info.isUpgradeAvailable
+                is PlanType.Unknown -> PlanInfo.Hide to info.isUpgradeAvailable
+            }
+        }
+    }
 
     internal fun onToggleAutofill(value: Boolean) {
         if (!value) {
@@ -313,14 +326,12 @@ class ProfileViewModel @Inject constructor(
         eventFlow.update { ProfileEvent.ConfigurePin }
     }
 
-    private fun Account.getAccountItem(): Flow<AccountItem> = userManager.observeUser(userId)
-        .mapLatest { user -> getAccountItem(user) }
-
-    private fun Account.getAccountItem(user: User?): AccountItem = AccountItem(
+    private fun Account.getAccountItem(user: User?, planInfo: PlanInfo): AccountItem = AccountItem(
         userId = userId,
         initials = user?.getInitials(count = 1) ?: "?",
         name = user?.getDisplayName() ?: "unknown",
         email = user?.getEmail(),
+        planInfo = planInfo,
         state = state
     )
 

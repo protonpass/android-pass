@@ -34,9 +34,9 @@ import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.composecomponents.impl.badge.CircledBadge
+import proton.android.pass.composecomponents.impl.badge.OverlayBadge
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
-import proton.android.pass.composecomponents.impl.pinning.BoxedPin
-import proton.android.pass.composecomponents.impl.pinning.CircledPin
 import proton.android.pass.domain.ItemContents
 
 private const val MAX_LINES_NOTE_DETAIL = 1
@@ -61,10 +61,10 @@ fun NoteRow(
         modifier = modifier,
         icon = {
             when (selection) {
-                ItemSelectionModeState.NotInSelectionMode -> BoxedPin(
+                ItemSelectionModeState.NotInSelectionMode -> OverlayBadge(
                     isShown = item.isPinned,
-                    pin = {
-                        CircledPin(
+                    badge = {
+                        CircledBadge(
                             ratio = 0.8f,
                             backgroundColor = PassTheme.colors.noteInteractionNormMajor1
                         )
@@ -78,10 +78,10 @@ fun NoteRow(
                     } else {
                         val isEnabled =
                             selection.state != ItemSelectionModeState.ItemSelectionState.NotSelectable
-                        BoxedPin(
+                        OverlayBadge(
                             isShown = item.isPinned,
-                            pin = {
-                                CircledPin(
+                            badge = {
+                                CircledBadge(
                                     ratio = 0.8f,
                                     backgroundColor = PassTheme.colors.noteInteractionNormMajor1
                                 )

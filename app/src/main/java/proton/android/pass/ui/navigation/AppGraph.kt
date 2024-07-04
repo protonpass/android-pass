@@ -627,6 +627,7 @@ fun NavGraphBuilder.appGraph(
 
                 ProfileNavigation.OnAddAccount -> onNavigate(AppNavigation.AddAccount)
                 is ProfileNavigation.OnRemoveAccount -> onNavigate(AppNavigation.RemoveAccount(it.userId))
+                is ProfileNavigation.OnSignIn -> onNavigate(AppNavigation.SignIn(it.userId))
                 is ProfileNavigation.OnSignOut -> onNavigate(AppNavigation.SignOut(it.userId))
                 is ProfileNavigation.OnSwitchAccount -> onNavigate(AppNavigation.SwitchAccount(it.userId))
             }

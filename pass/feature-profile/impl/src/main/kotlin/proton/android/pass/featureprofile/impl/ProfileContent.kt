@@ -114,7 +114,7 @@ internal fun ProfileContent(
                         accountItemList = state.accounts,
                         onExpandedChange = { isExpanded = it },
                         onEvent = {
-                            // send event upwards
+                            onEvent(it)
                             isExpanded = false
                         }
                     )

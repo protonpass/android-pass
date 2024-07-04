@@ -21,8 +21,6 @@ package proton.android.pass.featureprofile.impl.accountswitcher
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.DropdownMenu
@@ -36,23 +34,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
-import proton.android.pass.composecomponents.impl.form.PassDivider
-import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.featureprofile.impl.AccountSwitchEvent
-import proton.android.pass.featureprofile.impl.R
+import proton.android.pass.featureprofile.impl.PlanInfo
 
 @Composable
 fun AccountSwitcherList(
@@ -87,33 +82,16 @@ fun AccountSwitcherList(
             expanded = isExpanded,
             onDismissRequest = { onExpandedChange(false) }
         ) {
-            AccountSwitcherRow(
-                modifier = Modifier.clickable { onExpandedChange(false) },
-                accountListItem = primary.first(),
-                onEvent = onEvent
+            AccountSwitcherMenuContent(
+                primary = primary.toPersistentList(),
+                other = other.toPersistentList(),
+                onEvent = onEvent,
+                onExpandedChange = onExpandedChange
             )
-            PassDivider(modifier = Modifier.padding(horizontal = Spacing.medium))
-            Spacer(modifier = Modifier.height(30.dp))
-            if (other.isNotEmpty()) {
-                Text.Body1Regular(
-                    modifier = Modifier.padding(horizontal = Spacing.medium),
-                    text = stringResource(R.string.account_switcher_switch_to)
-                )
-            }
-            other.forEach { accountListItem ->
-                AccountSwitcherRow(
-                    modifier = Modifier.clickable {
-                        onEvent(AccountSwitchEvent.OnAccountSelected(accountListItem.accountItem.userId))
-                    },
-                    accountListItem = accountListItem,
-                    onEvent = onEvent
-                )
-                PassDivider(modifier = Modifier.padding(horizontal = Spacing.medium))
-            }
-            AddAccount(onClick = { onEvent(AccountSwitchEvent.OnAddAccount) })
         }
     }
 }
+
 
 @Preview
 @Composable
@@ -129,7 +107,8 @@ fun AccountSwitcherListPreview(@PreviewParameter(ThemePreviewProvider::class) in
                             name = "John Doe",
                             email = "",
                             state = AccountState.Ready,
-                            initials = "J"
+                            initials = "J",
+                            planInfo = PlanInfo.Hide
                         )
                     )
                 ),

@@ -39,9 +39,9 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.composecomponents.impl.badge.CircledBadge
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
-import proton.android.pass.composecomponents.impl.pinning.CircledPin
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.Vault
@@ -76,7 +76,7 @@ fun NoteContent(
                     visible = isPinned,
                     enter = expandHorizontally()
                 ) {
-                    CircledPin(
+                    CircledBadge(
                         ratio = 1f,
                         backgroundColor = PassTheme.colors.noteInteractionNormMajor1
                     )

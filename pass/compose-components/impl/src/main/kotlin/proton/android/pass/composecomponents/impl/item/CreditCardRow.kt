@@ -17,9 +17,9 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.StringUtils.maskCreditCardNumber
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.composecomponents.impl.badge.CircledBadge
+import proton.android.pass.composecomponents.impl.badge.OverlayBadge
 import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
-import proton.android.pass.composecomponents.impl.pinning.BoxedPin
-import proton.android.pass.composecomponents.impl.pinning.CircledPin
 import proton.android.pass.domain.ItemContents
 
 private const val MAX_PREVIEW_LENGTH = 128
@@ -58,10 +58,10 @@ fun CreditCardRow(
         modifier = modifier,
         icon = {
             when (selection) {
-                ItemSelectionModeState.NotInSelectionMode -> BoxedPin(
+                ItemSelectionModeState.NotInSelectionMode -> OverlayBadge(
                     isShown = item.isPinned,
-                    pin = {
-                        CircledPin(
+                    badge = {
+                        CircledBadge(
                             ratio = 0.8f,
                             backgroundColor = PassTheme.colors.cardInteractionNormMajor1
                         )
@@ -75,10 +75,10 @@ fun CreditCardRow(
                     } else {
                         val isEnabled =
                             selection.state != ItemSelectionModeState.ItemSelectionState.NotSelectable
-                        BoxedPin(
+                        OverlayBadge(
                             isShown = item.isPinned,
-                            pin = {
-                                CircledPin(
+                            badge = {
+                                CircledBadge(
                                     ratio = 0.8f,
                                     backgroundColor = PassTheme.colors.cardInteractionNormMajor1
                                 )

@@ -52,7 +52,7 @@ fun AddAccount(modifier: Modifier = Modifier, onClick: () -> Unit = {}) {
     ) {
         Icon.Default(
             modifier = Modifier.defaultMinSize(minWidth = 50.dp),
-            id = CoreR.drawable.ic_person_add
+            id = CoreR.drawable.ic_proton_user_plus
         )
         Text.Body1Regular(text = stringResource(R.string.account_switcher_add_account))
     }

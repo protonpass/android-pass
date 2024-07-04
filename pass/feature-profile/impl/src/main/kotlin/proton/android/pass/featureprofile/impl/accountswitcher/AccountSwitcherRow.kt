@@ -48,13 +48,17 @@ import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.featureprofile.impl.AccountSwitchEvent
 import proton.android.pass.featureprofile.impl.R
+import proton.android.pass.featureprofile.impl.accountswitcher.MenuOption.ManageAccount
+import proton.android.pass.featureprofile.impl.accountswitcher.MenuOption.Remove
+import proton.android.pass.featureprofile.impl.accountswitcher.MenuOption.SignIn
+import proton.android.pass.featureprofile.impl.accountswitcher.MenuOption.SignOut
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 fun AccountSwitcherRow(
     modifier: Modifier = Modifier,
     isCollapsed: Boolean = false,
-    accountItem: AccountItem,
+    accountListItem: AccountListItem,
     onEvent: (AccountSwitchEvent) -> Unit
 ) {
     Row(
@@ -64,14 +68,14 @@ fun AccountSwitcherRow(
         horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
         CircleTextIcon(
-            text = accountItem.name.take(1),
+            text = accountListItem.accountItem.initials,
             backgroundColor = PassTheme.colors.interactionNormMinor1,
             textColor = PassTheme.colors.interactionNormMajor2,
             shape = PassTheme.shapes.squircleMediumShape
         )
         Column(modifier = Modifier.weight(1f)) {
-            Text.Body1Regular(text = accountItem.name)
-            accountItem.email?.let {
+            Text.Body1Regular(text = accountListItem.accountItem.name)
+            accountListItem.accountItem.email?.let {
                 Text.Body3Regular(
                     text = it,
                     color = PassTheme.colors.textWeak
@@ -100,21 +104,53 @@ fun AccountSwitcherRow(
                     expanded = expanded,
                     onDismissRequest = { expanded = false }
                 ) {
-                    DropdownMenuItem(
-                        onClick = {
-                            expanded = false
-                            onEvent(AccountSwitchEvent.OnManageAccount(accountItem.userId))
-                        }
-                    ) {
-                        Text.Body1Regular(text = stringResource(R.string.account_switcher_manage_account))
+                    val list = when (accountListItem) {
+                        is AccountListItem.Primary -> listOf(ManageAccount, SignOut, Remove)
+                        is AccountListItem.Disabled -> listOf(SignIn, Remove)
+                        is AccountListItem.Ready -> listOf(SignOut, Remove)
                     }
-                    DropdownMenuItem(
-                        onClick = {
-                            expanded = false
-                            onEvent(AccountSwitchEvent.OnSignOut(accountItem.userId))
+                    list.forEach {
+                        when (it) {
+                            ManageAccount ->
+                                DropdownMenuItem(
+                                    onClick = {
+                                        expanded = false
+                                        onEvent(AccountSwitchEvent.OnManageAccount(accountListItem.accountItem.userId))
+                                    }
+                                ) {
+                                    Text.Body1Regular(text = stringResource(R.string.account_switcher_manage_account))
+                                }
+
+                            SignOut ->
+                                DropdownMenuItem(
+                                    onClick = {
+                                        expanded = false
+                                        onEvent(AccountSwitchEvent.OnSignOut(accountListItem.accountItem.userId))
+                                    }
+                                ) {
+                                    Text.Body1Regular(text = stringResource(R.string.account_switcher_sign_in))
+                                }
+
+                            SignIn ->
+                                DropdownMenuItem(
+                                    onClick = {
+                                        expanded = false
+                                        onEvent(AccountSwitchEvent.OnSignOut(accountListItem.accountItem.userId))
+                                    }
+                                ) {
+                                    Text.Body1Regular(text = stringResource(R.string.account_switcher_sign_in))
+                                }
+
+                            Remove ->
+                                DropdownMenuItem(
+                                    onClick = {
+                                        expanded = false
+                                        onEvent(AccountSwitchEvent.OnRemoveAccount(accountListItem.accountItem.userId))
+                                    }
+                                ) {
+                                    Text.Body1Regular(text = stringResource(R.string.account_switcher_remove))
+                                }
                         }
-                    ) {
-                        Text.Body1Regular(text = stringResource(R.string.account_switcher_sign_out))
                     }
                 }
             }
@@ -122,18 +158,11 @@ fun AccountSwitcherRow(
     }
 }
 
-data class AccountItem(
-    val userId: UserId,
-    val name: String,
-    val email: String?,
-    val state: AccountState,
-    val initials: String
-)
-
-sealed class AccountListItem(open val accountItem: AccountItem) {
-    data class Primary(override val accountItem: AccountItem) : AccountListItem(accountItem)
-    data class Ready(override val accountItem: AccountItem) : AccountListItem(accountItem)
-    data class Disabled(override val accountItem: AccountItem) : AccountListItem(accountItem)
+private enum class MenuOption {
+    ManageAccount,
+    SignOut,
+    SignIn,
+    Remove
 }
 
 @Preview
@@ -143,12 +172,14 @@ fun AccountSwitcherRowPreview(@PreviewParameter(ThemePreviewProvider::class) isD
         Surface {
             AccountSwitcherRow(
                 isCollapsed = false,
-                accountItem = AccountItem(
-                    userId = UserId("1"),
-                    name = "Username",
-                    email = "email@proton.me",
-                    state = AccountState.Ready,
-                    initials = "U"
+                accountListItem = AccountListItem.Primary(
+                    accountItem = AccountItem(
+                        userId = UserId("1"),
+                        name = "Username",
+                        email = "email@proton.me",
+                        state = AccountState.Ready,
+                        initials = "U"
+                    )
                 ),
                 onEvent = {}
             )

@@ -118,6 +118,7 @@ class MainActivity : FragmentActivity() {
                                 is AppNavigation.Finish -> finish()
                                 is AppNavigation.SignOut ->
                                     SignOutDialogActivity.start(this, it.userId)
+                                is AppNavigation.SignIn -> launcherViewModel.signIn(it.userId)
                                 is AppNavigation.ForceSignOut -> {
                                     launcherViewModel.disable()
                                     snackbarDispatcher.reset()

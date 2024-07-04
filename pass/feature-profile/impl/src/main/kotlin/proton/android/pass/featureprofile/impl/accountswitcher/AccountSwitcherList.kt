@@ -94,10 +94,12 @@ fun AccountSwitcherList(
             )
             PassDivider(modifier = Modifier.padding(horizontal = Spacing.medium))
             Spacer(modifier = Modifier.height(30.dp))
-            Text.Body1Regular(
-                modifier = Modifier.padding(horizontal = Spacing.medium),
-                text = stringResource(R.string.account_switcher_switch_to)
-            )
+            if (other.isNotEmpty()) {
+                Text.Body1Regular(
+                    modifier = Modifier.padding(horizontal = Spacing.medium),
+                    text = stringResource(R.string.account_switcher_switch_to)
+                )
+            }
             other.forEach { accountListItem ->
                 AccountSwitcherRow(
                     modifier = Modifier.clickable {

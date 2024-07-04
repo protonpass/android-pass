@@ -85,7 +85,7 @@ internal fun LoginItemDetailReusedPassContent(
                     ) {
                         items(
                             items = duplicatedPasswordLoginItems,
-                            key = { itemUiModel -> itemUiModel.id.id }
+                            key = { it.key }
                         ) { itemUiModel ->
                             LoginRow(
                                 item = itemUiModel,

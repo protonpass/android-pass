@@ -121,7 +121,7 @@ private fun ReusedPasswordCarousel(
         ) {
             items(
                 items = reusedPasswordItems,
-                key = { reusedPasswordItem -> reusedPasswordItem.id.id }
+                key = { it.key }
             ) { reusedPasswordItem ->
                 ReusedPasswordCarouselItem(
                     item = reusedPasswordItem,

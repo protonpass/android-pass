@@ -60,7 +60,7 @@ internal fun SecurityCenterMissingTfaContent(
         ) {
             items(
                 items = state.missingTfaItems,
-                key = { itemUiModel -> itemUiModel.id.id }
+                key = { it.key }
             ) { itemUiModel ->
                 SecurityCenterLoginItemRow(
                     itemUiModel = itemUiModel,

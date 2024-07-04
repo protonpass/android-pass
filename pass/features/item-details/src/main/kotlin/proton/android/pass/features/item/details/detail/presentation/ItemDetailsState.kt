@@ -33,13 +33,13 @@ internal sealed interface ItemDetailsState {
 
     data object Error : ItemDetailsState {
 
-        override val event: ItemDetailsEvent= ItemDetailsEvent.Idle
+        override val event: ItemDetailsEvent = ItemDetailsEvent.Idle
 
     }
 
-    data object Loading : ItemDetailsState{
+    data object Loading : ItemDetailsState {
 
-        override val event: ItemDetailsEvent= ItemDetailsEvent.Idle
+        override val event: ItemDetailsEvent = ItemDetailsEvent.Idle
 
     }
 

@@ -109,10 +109,7 @@ class ItemDetailsViewModel @Inject constructor(
         }
     }
 
-    internal fun onItemHiddenFieldClicked(
-        hiddenState: HiddenState,
-        hiddenFieldType: ItemDetailsFieldType.Hidden
-    ) {
+    internal fun onItemHiddenFieldClicked(hiddenState: HiddenState, hiddenFieldType: ItemDetailsFieldType.Hidden) {
         viewModelScope.launch {
             itemDetailsHandler.onItemDetailsHiddenFieldClicked(hiddenState, hiddenFieldType)
         }

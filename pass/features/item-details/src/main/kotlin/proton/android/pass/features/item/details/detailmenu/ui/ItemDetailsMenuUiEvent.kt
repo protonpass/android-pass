@@ -22,6 +22,10 @@ internal sealed interface ItemDetailsMenuUiEvent {
 
     data object OnCopyItemNoteClicked : ItemDetailsMenuUiEvent
 
+    data object OnExcludeItemMonitorClicked : ItemDetailsMenuUiEvent
+
+    data object OnIncludeItemMonitorClicked : ItemDetailsMenuUiEvent
+
     data object OnMigrateItemClicked : ItemDetailsMenuUiEvent
 
     data object OnPinItemClicked : ItemDetailsMenuUiEvent

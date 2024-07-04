@@ -39,11 +39,13 @@ fun ItemDetailsMenuBottomSheet(
             ItemDetailsMenuEvent.Idle -> {}
 
             ItemDetailsMenuEvent.OnItemNotFound,
-            ItemDetailsMenuEvent.OnItemTrashed -> ItemDetailsNavDestination.Home
-                .also(onNavigated)
+            ItemDetailsMenuEvent.OnItemTrashed ->
+                ItemDetailsNavDestination.Home
+                    .also(onNavigated)
 
-            ItemDetailsMenuEvent.OnItemMigrated -> ItemDetailsNavDestination.ItemMigration
-                .also(onNavigated)
+            ItemDetailsMenuEvent.OnItemMigrated ->
+                ItemDetailsNavDestination.ItemMigration
+                    .also(onNavigated)
 
             ItemDetailsMenuEvent.OnItemNoteCopied,
             ItemDetailsMenuEvent.OnItemMigrationError,
@@ -55,8 +57,9 @@ fun ItemDetailsMenuBottomSheet(
             ItemDetailsMenuEvent.OnItemPinningError,
             ItemDetailsMenuEvent.OnItemUnpinned,
             ItemDetailsMenuEvent.OnItemUnpinningError,
-            ItemDetailsMenuEvent.OnItemTrashingError -> ItemDetailsNavDestination.DismissBottomSheet
-                .also(onNavigated)
+            ItemDetailsMenuEvent.OnItemTrashingError ->
+                ItemDetailsNavDestination.DismissBottomSheet
+                    .also(onNavigated)
         }
 
         onConsumeEvent(state.event)

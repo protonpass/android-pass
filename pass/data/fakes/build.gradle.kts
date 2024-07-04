@@ -31,8 +31,8 @@ androidComponents.beforeVariants { variant ->
 dependencies {
     api(projects.pass.data.api)
 
-    implementation(libs.core.user)
     implementation(libs.core.user.domain)
+    implementation(libs.core.userSettings.domain)
     implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.datetime)
     implementation(projects.pass.common.api)

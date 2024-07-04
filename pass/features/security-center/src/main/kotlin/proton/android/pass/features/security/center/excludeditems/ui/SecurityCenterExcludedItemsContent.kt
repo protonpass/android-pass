@@ -58,7 +58,7 @@ internal fun SecurityCenterExcludedItemsContent(
         ) {
             items(
                 items = excludedItemUiModels,
-                key = { itemUiModel -> itemUiModel.id.id }
+                key = { it.key }
             ) { itemUiModel ->
                 SecurityCenterLoginItemRow(
                     itemUiModel = itemUiModel,

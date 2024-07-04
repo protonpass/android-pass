@@ -63,7 +63,7 @@ fun PinCarousel(
             item {
                 Spacer(modifier = Modifier.width(8.dp))
             }
-            items(items = list.take(PIN_LENGTH), key = { it.id.id }) { item ->
+            items(items = list.take(PIN_LENGTH), key = { it.key }) { item ->
                 PinItem(
                     item = item,
                     canLoadExternalImages = canLoadExternalImages,

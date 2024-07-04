@@ -106,7 +106,7 @@ fun LazyListScope.SelectItemListHeader(
 
     // As items can appear in both lists, we need to use a different key here
     // so there are not two items with the same key
-    items(items = suggestions, key = { "suggestion-${it.id.id}" }) { item ->
+    items(items = suggestions, key = { "suggestion-${it.key}" }) { item ->
         ActionableItemRow(
             item = item,
             showMenuIcon = true,

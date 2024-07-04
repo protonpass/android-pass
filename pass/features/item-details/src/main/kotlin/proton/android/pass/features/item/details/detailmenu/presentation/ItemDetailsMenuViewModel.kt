@@ -42,6 +42,8 @@ import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
+import proton.android.pass.data.api.usecases.items.UpdateItemFlag
+import proton.android.pass.domain.ItemFlag
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
@@ -59,6 +61,7 @@ class ItemDetailsMenuViewModel @Inject constructor(
     private val bulkMoveToVaultRepository: BulkMoveToVaultRepository,
     private val pinItem: PinItem,
     private val unpinItem: UnpinItem,
+    private val updateItemFlag: UpdateItemFlag,
     private val trashItem: TrashItems,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
@@ -108,16 +111,20 @@ class ItemDetailsMenuViewModel @Inject constructor(
     }
 
     internal fun onCopyItemNote() {
-        encryptionContextProvider.withEncryptionContext {
-            decrypt(state.value.itemEncryptedNote)
-        }.let { itemNote ->
-            clipboardManager.copyToClipboard(itemNote)
-        }.also {
-            viewModelScope.launch {
-                snackbarDispatcher(ItemDetailMenuSnackBarMessage.ItemNoteCopied)
-            }
+        state.value.itemEncryptedNote.let { encryptedNote ->
+            if (encryptedNote.isNotEmpty()) {
+                encryptionContextProvider.withEncryptionContext {
+                    decrypt(encryptedNote)
+                }.let { itemNote ->
+                    clipboardManager.copyToClipboard(itemNote)
+                }.also {
+                    viewModelScope.launch {
+                        snackbarDispatcher(ItemDetailMenuSnackBarMessage.ItemNoteCopied)
+                    }
 
-            eventFlow.update { ItemDetailsMenuEvent.OnItemNoteCopied }
+                    eventFlow.update { ItemDetailsMenuEvent.OnItemNoteCopied }
+                }
+            }
         }
     }
 
@@ -175,6 +182,56 @@ class ItemDetailsMenuViewModel @Inject constructor(
                     eventFlow.update { ItemDetailsMenuEvent.OnItemUnpinned }
                     snackbarDispatcher(ItemDetailMenuSnackBarMessage.ItemUnpinnedSuccess)
                 }
+
+            actionFlow.update { BottomSheetItemAction.None }
+        }
+    }
+
+    internal fun onExcludeItemFromMonitoring() {
+        viewModelScope.launch {
+            actionFlow.update { BottomSheetItemAction.MonitorExclude }
+
+            runCatching {
+                updateItemFlag(
+                    shareId = shareId,
+                    itemId = itemId,
+                    flag = ItemFlag.SkipHealthCheck,
+                    isFlagEnabled = true
+                )
+            }.onFailure { error ->
+                PassLogger.w(TAG, "Error excluding item from monitoring")
+                PassLogger.w(TAG, error)
+                eventFlow.update { ItemDetailsMenuEvent.OnItemMonitorExcluded }
+                snackbarDispatcher(ItemDetailMenuSnackBarMessage.ItemMonitorExcludedError)
+            }.onSuccess {
+                eventFlow.update { ItemDetailsMenuEvent.OnItemMonitorExcludedError }
+                snackbarDispatcher(ItemDetailMenuSnackBarMessage.ItemMonitorExcludedSuccess)
+            }
+
+            actionFlow.update { BottomSheetItemAction.None }
+        }
+    }
+
+    internal fun onIncludeItemInMonitoring() {
+        viewModelScope.launch {
+            actionFlow.update { BottomSheetItemAction.MonitorInclude }
+
+            runCatching {
+                updateItemFlag(
+                    shareId = shareId,
+                    itemId = itemId,
+                    flag = ItemFlag.SkipHealthCheck,
+                    isFlagEnabled = false
+                )
+            }.onFailure { error ->
+                PassLogger.w(TAG, "Error including item in monitoring")
+                PassLogger.w(TAG, error)
+                eventFlow.update { ItemDetailsMenuEvent.OnItemMonitorIncluded }
+                snackbarDispatcher(ItemDetailMenuSnackBarMessage.ItemMonitorIncludedError)
+            }.onSuccess {
+                eventFlow.update { ItemDetailsMenuEvent.OnItemMonitorIncludedError }
+                snackbarDispatcher(ItemDetailMenuSnackBarMessage.ItemMonitorIncludedSuccess)
+            }
 
             actionFlow.update { BottomSheetItemAction.None }
         }

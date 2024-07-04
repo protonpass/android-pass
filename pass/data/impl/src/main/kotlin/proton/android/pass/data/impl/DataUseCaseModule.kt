@@ -166,6 +166,7 @@ import proton.android.pass.data.api.usecases.securelink.DeleteInactiveSecureLink
 import proton.android.pass.data.api.usecases.securelink.DeleteSecureLink
 import proton.android.pass.data.api.usecases.securelink.GenerateSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveActiveSecureLinks
+import proton.android.pass.data.api.usecases.securelink.ObserveHasAssociatedSecureLinks
 import proton.android.pass.data.api.usecases.securelink.ObserveInactiveSecureLinks
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinks
@@ -324,6 +325,7 @@ import proton.android.pass.data.impl.usecases.securelink.DeleteInactiveSecureLin
 import proton.android.pass.data.impl.usecases.securelink.DeleteSecureLinkImpl
 import proton.android.pass.data.impl.usecases.securelink.GenerateSecureLinkImpl
 import proton.android.pass.data.impl.usecases.securelink.ObserveActiveSecureLinksImpl
+import proton.android.pass.data.impl.usecases.securelink.ObserveHasAssociatedSecureLinksImpl
 import proton.android.pass.data.impl.usecases.securelink.ObserveInactiveSecureLinksImpl
 import proton.android.pass.data.impl.usecases.securelink.ObserveSecureLinkImpl
 import proton.android.pass.data.impl.usecases.securelink.ObserveSecureLinksCountImpl
@@ -821,5 +823,10 @@ abstract class DataUseCaseModule {
 
     @[Binds Singleton]
     abstract fun bindObserveSecureLinksCount(impl: ObserveSecureLinksCountImpl): ObserveSecureLinksCount
+
+    @[Binds Singleton]
+    abstract fun bindObserveHasAssociatedSecureLinks(
+        impl: ObserveHasAssociatedSecureLinksImpl
+    ): ObserveHasAssociatedSecureLinks
 
 }

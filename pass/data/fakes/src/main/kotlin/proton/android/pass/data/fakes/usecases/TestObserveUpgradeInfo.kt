@@ -21,11 +21,12 @@ package proton.android.pass.data.fakes.usecases
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.UpgradeInfo
-import proton.android.pass.test.TestConstants
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanLimit
+import proton.android.pass.test.TestConstants
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -38,7 +39,7 @@ class TestObserveUpgradeInfo @Inject constructor() : ObserveUpgradeInfo {
         upgradeInfo.tryEmit(value)
     }
 
-    override fun invoke(forceRefresh: Boolean): Flow<UpgradeInfo> = upgradeInfo
+    override fun invoke(userId: UserId?, forceRefresh: Boolean): Flow<UpgradeInfo> = upgradeInfo
 
     companion object {
         val DEFAULT = UpgradeInfo(

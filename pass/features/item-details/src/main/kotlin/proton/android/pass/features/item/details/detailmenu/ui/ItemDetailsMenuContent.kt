@@ -26,6 +26,8 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.copyNote
 import proton.android.pass.composecomponents.impl.bottomsheet.migrate
+import proton.android.pass.composecomponents.impl.bottomsheet.monitorExclude
+import proton.android.pass.composecomponents.impl.bottomsheet.monitorInclude
 import proton.android.pass.composecomponents.impl.bottomsheet.pin
 import proton.android.pass.composecomponents.impl.bottomsheet.trash
 import proton.android.pass.composecomponents.impl.bottomsheet.unpin
@@ -39,7 +41,7 @@ internal fun ItemDetailsMenuContent(
     state: ItemDetailsMenuState
 ) = with(state) {
     mutableListOf<BottomSheetItem>().apply {
-        if(canCopyItemNote) {
+        if (canCopyItemNote) {
             add(
                 copyNote(
                     onClick = { onEvent(ItemDetailsMenuUiEvent.OnCopyItemNoteClicked) }
@@ -72,7 +74,25 @@ internal fun ItemDetailsMenuContent(
             )
         }
 
-        if(canTrashItem) {
+        if (canBeMonitored) {
+            if (isItemExcludedFromMonitoring) {
+                add(
+                    monitorInclude(
+                        action = action,
+                        onClick = { onEvent(ItemDetailsMenuUiEvent.OnIncludeItemMonitorClicked) }
+                    )
+                )
+            } else {
+                add(
+                    monitorExclude(
+                        action = action,
+                        onClick = { onEvent(ItemDetailsMenuUiEvent.OnExcludeItemMonitorClicked) }
+                    )
+                )
+            }
+        }
+
+        if (canTrashItem) {
             add(
                 trash(
                     action = action,

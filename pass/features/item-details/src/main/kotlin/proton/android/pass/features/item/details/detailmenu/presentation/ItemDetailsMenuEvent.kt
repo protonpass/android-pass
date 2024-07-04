@@ -30,6 +30,14 @@ internal sealed interface ItemDetailsMenuEvent {
 
     data object OnItemMigrationError : ItemDetailsMenuEvent
 
+    data object OnItemMonitorExcluded : ItemDetailsMenuEvent
+
+    data object OnItemMonitorExcludedError : ItemDetailsMenuEvent
+
+    data object OnItemMonitorIncluded : ItemDetailsMenuEvent
+
+    data object OnItemMonitorIncludedError : ItemDetailsMenuEvent
+
     data object OnItemPinned : ItemDetailsMenuEvent
 
     data object OnItemPinningError : ItemDetailsMenuEvent

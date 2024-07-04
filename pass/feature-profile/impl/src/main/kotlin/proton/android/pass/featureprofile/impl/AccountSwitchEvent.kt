@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,30 +16,26 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.ui
+package proton.android.pass.featureprofile.impl
 
 import me.proton.core.domain.entity.UserId
 
-sealed interface AppNavigation {
-    data object ForceSignOut : AppNavigation
-    data object Report : AppNavigation
-    data object Subscription : AppNavigation
-    data object Upgrade : AppNavigation
-    data object Finish : AppNavigation
-    data object Restart : AppNavigation
-    data object PasswordManagement : AppNavigation
-    data object RecoveryEmail : AppNavigation
-    data object AddAccount : AppNavigation
+sealed interface AccountSwitchEvent : ProfileUiEvent {
 
     @JvmInline
-    value class SignIn(val userId: UserId? = null) : AppNavigation
+    value class OnAccountSelected(val userId: UserId) : AccountSwitchEvent
 
     @JvmInline
-    value class SignOut(val userId: UserId? = null) : AppNavigation
+    value class OnManageAccount(val userId: UserId) : AccountSwitchEvent
 
     @JvmInline
-    value class RemoveAccount(val userId: UserId) : AppNavigation
+    value class OnSignOut(val userId: UserId) : AccountSwitchEvent
 
     @JvmInline
-    value class SwitchAccount(val userId: UserId) : AppNavigation
+    value class OnSignIn(val userId: UserId) : AccountSwitchEvent
+
+    @JvmInline
+    value class OnRemoveAccount(val userId: UserId) : AccountSwitchEvent
+
+    data object OnAddAccount : AccountSwitchEvent
 }

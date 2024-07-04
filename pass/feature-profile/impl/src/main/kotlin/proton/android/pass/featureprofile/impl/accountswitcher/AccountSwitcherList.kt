@@ -77,7 +77,7 @@ fun AccountSwitcherList(
                     rowSize = coordinates.size.toSize()
                 },
             isCollapsed = true,
-            accountItem = primary.first().accountItem,
+            accountListItem = primary.first(),
             onEvent = onEvent
         )
         DropdownMenu(
@@ -89,7 +89,7 @@ fun AccountSwitcherList(
         ) {
             AccountSwitcherRow(
                 modifier = Modifier.clickable { onExpandedChange(false) },
-                accountItem = primary.first().accountItem,
+                accountListItem = primary.first(),
                 onEvent = onEvent
             )
             PassDivider(modifier = Modifier.padding(horizontal = Spacing.medium))
@@ -103,7 +103,7 @@ fun AccountSwitcherList(
                     modifier = Modifier.clickable {
                         onEvent(AccountSwitchEvent.OnAccountSelected(accountListItem.accountItem.userId))
                     },
-                    accountItem = accountListItem.accountItem,
+                    accountListItem = accountListItem,
                     onEvent = onEvent
                 )
                 PassDivider(modifier = Modifier.padding(horizontal = Spacing.medium))

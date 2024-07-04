@@ -98,6 +98,9 @@ sealed interface ProfileNavigation {
     data object OnAddAccount : ProfileNavigation
 
     @JvmInline
+    value class OnSignIn(val userId: UserId) : ProfileNavigation
+
+    @JvmInline
     value class OnSignOut(val userId: UserId) : ProfileNavigation
 
     @JvmInline

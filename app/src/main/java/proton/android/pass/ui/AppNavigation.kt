@@ -32,6 +32,9 @@ sealed interface AppNavigation {
     data object AddAccount : AppNavigation
 
     @JvmInline
+    value class SignIn(val userId: UserId? = null) : AppNavigation
+
+    @JvmInline
     value class SignOut(val userId: UserId? = null) : AppNavigation
 
     @JvmInline

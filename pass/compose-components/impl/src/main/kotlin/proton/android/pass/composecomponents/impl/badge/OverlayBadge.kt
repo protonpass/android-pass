@@ -16,10 +16,9 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.composecomponents.impl.pinning
+package proton.android.pass.composecomponents.impl.badge
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.Box
@@ -35,12 +34,11 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun BoxedPin(
+fun OverlayBadge(
     modifier: Modifier = Modifier,
     isShown: Boolean = false,
-    pin: @Composable () -> Unit,
+    badge: @Composable () -> Unit,
     content: @Composable () -> Unit
 ) {
     Box(modifier = modifier) {
@@ -53,20 +51,20 @@ fun BoxedPin(
             enter = scaleIn(),
             exit = scaleOut()
         ) {
-            pin()
+            badge()
         }
     }
 }
 
 @Preview
 @Composable
-fun BoxedPinPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+fun OverlayBadgePreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            BoxedPin(
+            OverlayBadge(
                 isShown = true,
-                pin = {
-                    CircledPin(
+                badge = {
+                    CircledBadge(
                         backgroundColor = PassTheme.colors.loginInteractionNormMajor1
                     )
                 },

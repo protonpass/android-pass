@@ -31,6 +31,8 @@ import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
+import proton.android.pass.composecomponents.impl.badge.CircledBadge
+import proton.android.pass.composecomponents.impl.badge.OverlayBadge
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.titles.PassItemDetailSubtitle
 import proton.android.pass.composecomponents.impl.item.details.titles.PassItemDetailTitle
@@ -38,8 +40,6 @@ import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
 import proton.android.pass.composecomponents.impl.item.icon.IdentityIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
-import proton.android.pass.composecomponents.impl.pinning.BoxedPin
-import proton.android.pass.composecomponents.impl.pinning.CircledPin
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
@@ -150,7 +150,7 @@ internal fun PassItemDetailTitleRow(
                             visible = isItemPinned,
                             enter = expandHorizontally()
                         ) {
-                            CircledPin(
+                            CircledBadge(
                                 ratio = 1f,
                                 backgroundColor = itemColors.majorPrimary
                             )
@@ -205,10 +205,10 @@ private fun ItemDetailTitleRow(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
-        BoxedPin(
+        OverlayBadge(
             isShown = isPinned,
-            pin = {
-                CircledPin(
+            badge = {
+                CircledBadge(
                     backgroundColor = itemColors.majorPrimary
                 )
             },

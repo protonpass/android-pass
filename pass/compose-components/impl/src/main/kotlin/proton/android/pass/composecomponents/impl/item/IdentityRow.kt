@@ -33,9 +33,9 @@ import kotlinx.collections.immutable.toImmutableList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.composecomponents.impl.badge.CircledBadge
+import proton.android.pass.composecomponents.impl.badge.OverlayBadge
 import proton.android.pass.composecomponents.impl.item.icon.IdentityIcon
-import proton.android.pass.composecomponents.impl.pinning.BoxedPin
-import proton.android.pass.composecomponents.impl.pinning.CircledPin
 import proton.android.pass.domain.AddressDetailsContent
 import proton.android.pass.domain.ContactDetailsContent
 import proton.android.pass.domain.CustomFieldContent
@@ -82,10 +82,10 @@ fun IdentityRow(
         modifier = modifier,
         icon = {
             when (selection) {
-                ItemSelectionModeState.NotInSelectionMode -> BoxedPin(
+                ItemSelectionModeState.NotInSelectionMode -> OverlayBadge(
                     isShown = item.isPinned,
-                    pin = {
-                        CircledPin(
+                    badge = {
+                        CircledBadge(
                             ratio = 0.8f,
                             backgroundColor = PassTheme.colors.interactionNormMajor1
                         )
@@ -99,10 +99,10 @@ fun IdentityRow(
                     } else {
                         val isEnabled =
                             selection.state != ItemSelectionModeState.ItemSelectionState.NotSelectable
-                        BoxedPin(
+                        OverlayBadge(
                             isShown = item.isPinned,
-                            pin = {
-                                CircledPin(
+                            badge = {
+                                CircledBadge(
                                     ratio = 0.8f,
                                     backgroundColor = PassTheme.colors.interactionNormMajor1
                                 )

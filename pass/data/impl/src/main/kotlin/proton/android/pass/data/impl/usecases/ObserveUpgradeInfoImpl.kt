@@ -22,6 +22,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
+import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.PaymentManager
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItemCount
@@ -40,37 +43,37 @@ class ObserveUpgradeInfoImpl @Inject constructor(
     private val planRepository: PlanRepository,
     private val observeVaultCount: ObserveVaultCount
 ) : ObserveUpgradeInfo {
-    override fun invoke(forceRefresh: Boolean): Flow<UpgradeInfo> = observeCurrentUser()
-        .distinctUntilChanged()
-        .flatMapLatest { user ->
-            val isSubscriptionAvailable = paymentManager.isSubscriptionAvailable(user.userId)
-            val isUpgradeAvailable = paymentManager.isUpgradeAvailable()
-            combine(
-                planRepository.sendUserAccessAndObservePlan(
-                    userId = user.userId,
-                    forceRefresh = forceRefresh
-                ),
-                observeMFACount(),
-                observeItemCount(itemState = null),
-                observeVaultCount(user.userId)
-            ) { plan, mfaCount, itemCount, vaultCount ->
-                val displayUpgrade = when {
-                    plan.hideUpgrade -> false
-                    else -> isUpgradeAvailable && !plan.isPaidPlan
-                }
-                UpgradeInfo(
-                    isUpgradeAvailable = displayUpgrade,
-                    isSubscriptionAvailable = isSubscriptionAvailable,
-                    plan = plan.copy(
-                        vaultLimit = plan.vaultLimit,
-                        aliasLimit = plan.aliasLimit,
-                        totpLimit = plan.totpLimit
+    override fun invoke(userId: UserId?, forceRefresh: Boolean): Flow<UpgradeInfo> =
+        (userId?.let(::flowOf) ?: observeCurrentUser().map { it.userId })
+            .flatMapLatest { id ->
+                val isSubscriptionAvailable = paymentManager.isSubscriptionAvailable(id)
+                val isUpgradeAvailable = paymentManager.isUpgradeAvailable()
+                combine(
+                    planRepository.sendUserAccessAndObservePlan(
+                        userId = id,
+                        forceRefresh = forceRefresh
                     ),
-                    totalVaults = vaultCount,
-                    totalAlias = itemCount.alias.toInt(),
-                    totalTotp = mfaCount
-                )
+                    observeMFACount(),
+                    observeItemCount(itemState = null),
+                    observeVaultCount(id)
+                ) { plan, mfaCount, itemCount, vaultCount ->
+                    val displayUpgrade = when {
+                        plan.hideUpgrade -> false
+                        else -> isUpgradeAvailable && !plan.isPaidPlan
+                    }
+                    UpgradeInfo(
+                        isUpgradeAvailable = displayUpgrade,
+                        isSubscriptionAvailable = isSubscriptionAvailable,
+                        plan = plan.copy(
+                            vaultLimit = plan.vaultLimit,
+                            aliasLimit = plan.aliasLimit,
+                            totpLimit = plan.totpLimit
+                        ),
+                        totalVaults = vaultCount,
+                        totalAlias = itemCount.alias.toInt(),
+                        totalTotp = mfaCount
+                    )
+                }
             }
-        }
-        .distinctUntilChanged()
+            .distinctUntilChanged()
 }

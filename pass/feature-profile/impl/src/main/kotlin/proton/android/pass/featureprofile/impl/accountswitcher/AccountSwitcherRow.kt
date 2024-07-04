@@ -44,10 +44,13 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.composecomponents.impl.badge.CircledBadge
+import proton.android.pass.composecomponents.impl.badge.OverlayBadge
 import proton.android.pass.composecomponents.impl.container.CircleTextIcon
 import proton.android.pass.composecomponents.impl.icon.Icon
 import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.featureprofile.impl.AccountSwitchEvent
+import proton.android.pass.featureprofile.impl.PlanInfo
 import proton.android.pass.featureprofile.impl.R
 import proton.android.pass.featureprofile.impl.accountswitcher.MenuOption.ManageAccount
 import proton.android.pass.featureprofile.impl.accountswitcher.MenuOption.Remove
@@ -68,12 +71,36 @@ fun AccountSwitcherRow(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
-        CircleTextIcon(
-            text = accountListItem.accountItem.initials,
-            backgroundColor = PassTheme.colors.interactionNormMinor1,
-            textColor = PassTheme.colors.interactionNormMajor2,
-            shape = PassTheme.shapes.squircleMediumShape
-        )
+        OverlayBadge(
+            isShown = accountListItem.accountItem.planInfo != PlanInfo.Hide,
+            badge = {
+                when (accountListItem.accountItem.planInfo) {
+                    is PlanInfo.Unlimited -> CircledBadge(
+                        icon = CompR.drawable.account_unlimited_indicator,
+                        iconColor = PassTheme.colors.inputBackgroundNorm,
+                        backgroundColor = PassTheme.colors.noteInteractionNormMajor2
+                    )
+
+                    is PlanInfo.Trial -> CircledBadge(
+                        icon = CompR.drawable.account_trial_indicator,
+                        iconColor = PassTheme.colors.inputBackgroundNorm,
+                        backgroundColor = PassTheme.colors.interactionNormMajor2
+                    )
+
+                    PlanInfo.Hide -> {
+                        // No badge
+                    }
+                }
+            }
+        ) {
+            CircleTextIcon(
+                text = accountListItem.accountItem.initials,
+                backgroundColor = PassTheme.colors.interactionNormMajor2,
+                textColor = PassTheme.colors.textInvert,
+                shape = PassTheme.shapes.squircleSmallShape
+            )
+        }
+
         Column(modifier = Modifier.weight(1f)) {
             val isDisabled = accountListItem.accountItem.state == AccountState.Disabled
             Text.Body1Regular(
@@ -95,6 +122,12 @@ fun AccountSwitcherRow(
             )
         } else {
             var expanded by remember { mutableStateOf(false) }
+            if (accountListItem is AccountListItem.Primary) {
+                Icon.Default(
+                    id = CompR.drawable.ic_checkmark,
+                    tint = PassTheme.colors.interactionNormMajor2
+                )
+            }
             Box {
                 IconButton(
                     onClick = { expanded = true }
@@ -183,7 +216,8 @@ fun AccountSwitcherRowPreview(@PreviewParameter(ThemePreviewProvider::class) isD
                         name = "Username",
                         email = "email@proton.me",
                         state = AccountState.Ready,
-                        initials = "U"
+                        initials = "U",
+                        planInfo = PlanInfo.Hide
                     )
                 ),
                 onEvent = {}

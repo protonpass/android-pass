@@ -23,7 +23,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.IconButton
@@ -56,6 +58,7 @@ import proton.android.pass.featureprofile.impl.accountswitcher.MenuOption.Manage
 import proton.android.pass.featureprofile.impl.accountswitcher.MenuOption.Remove
 import proton.android.pass.featureprofile.impl.accountswitcher.MenuOption.SignIn
 import proton.android.pass.featureprofile.impl.accountswitcher.MenuOption.SignOut
+import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
@@ -156,6 +159,8 @@ fun AccountSwitcherRow(
                                         onEvent(AccountSwitchEvent.OnManageAccount(accountListItem.accountItem.userId))
                                     }
                                 ) {
+                                    Icon.Default(id = CoreR.drawable.ic_proton_cog_wheel)
+                                    Spacer(modifier = Modifier.width(Spacing.small))
                                     Text.Body1Regular(text = stringResource(R.string.account_switcher_manage_account))
                                 }
 
@@ -166,6 +171,8 @@ fun AccountSwitcherRow(
                                         onEvent(AccountSwitchEvent.OnSignOut(accountListItem.accountItem.userId))
                                     }
                                 ) {
+                                    Icon.Default(id = CoreR.drawable.ic_proton_arrow_out_from_rectangle)
+                                    Spacer(modifier = Modifier.width(Spacing.small))
                                     Text.Body1Regular(text = stringResource(R.string.account_switcher_sign_out))
                                 }
 
@@ -176,6 +183,8 @@ fun AccountSwitcherRow(
                                         onEvent(AccountSwitchEvent.OnSignIn(accountListItem.accountItem.userId))
                                     }
                                 ) {
+                                    Icon.Default(id = CoreR.drawable.ic_proton_arrow_in_to_rectangle)
+                                    Spacer(modifier = Modifier.width(Spacing.small))
                                     Text.Body1Regular(text = stringResource(R.string.account_switcher_sign_in))
                                 }
 
@@ -186,6 +195,8 @@ fun AccountSwitcherRow(
                                         onEvent(AccountSwitchEvent.OnRemoveAccount(accountListItem.accountItem.userId))
                                     }
                                 ) {
+                                    Icon.Default(id = CoreR.drawable.ic_remove_account)
+                                    Spacer(modifier = Modifier.width(Spacing.small))
                                     Text.Body1Regular(text = stringResource(R.string.account_switcher_remove))
                                 }
                         }

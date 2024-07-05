@@ -630,6 +630,7 @@ fun NavGraphBuilder.appGraph(
                 is ProfileNavigation.OnSignIn -> onNavigate(AppNavigation.SignIn(it.userId))
                 is ProfileNavigation.OnSignOut -> onNavigate(AppNavigation.SignOut(it.userId))
                 is ProfileNavigation.OnSwitchAccount -> onNavigate(AppNavigation.SwitchAccount(it.userId))
+                ProfileNavigation.SyncDialog -> appNavigator.navigate(SyncNavItem)
             }
         }
     )

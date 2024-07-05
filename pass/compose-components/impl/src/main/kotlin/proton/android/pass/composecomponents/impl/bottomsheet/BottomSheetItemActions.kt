@@ -294,7 +294,7 @@ fun restore(action: BottomSheetItemAction, onClick: () -> Unit): BottomSheetItem
 
 }
 
-fun delete(onClick: () -> Unit) : BottomSheetItem = object : BottomSheetItem {
+fun delete(onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
 
     override val title: @Composable () -> Unit
         get() = {

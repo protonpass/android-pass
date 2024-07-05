@@ -21,8 +21,11 @@ package proton.android.pass.features.item.trash.trashmenu.presentation
 import androidx.compose.runtime.Stable
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
+import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.items.ItemCategory
 
 @Stable
 internal data class ItemTrashMenuState(
@@ -31,6 +34,52 @@ internal data class ItemTrashMenuState(
     internal val canLoadExternalImages: Boolean,
     private val itemUiModelOption: Option<ItemUiModel>
 ) {
+
+    internal val itemTitle: String = when (itemUiModelOption) {
+        None -> ""
+        is Some -> itemUiModelOption.value.contents.title
+    }
+
+    internal val itemSubtitle: String = when (itemUiModelOption) {
+        None -> ""
+        is Some -> when (val itemContents = itemUiModelOption.value.contents) {
+            is ItemContents.Alias -> itemContents.aliasEmail
+            is ItemContents.Login -> itemContents.displayUsername
+            is ItemContents.Note -> itemContents.note.replace("\n", " ")
+            is ItemContents.CreditCard,
+            is ItemContents.Identity,
+            is ItemContents.Unknown -> ""
+        }
+    }
+
+    internal val itemCategory: ItemCategory = when (itemUiModelOption) {
+        None -> ItemCategory.Unknown
+        is Some -> itemUiModelOption.value.category
+    }
+
+    internal val itemWebsite: String = when (itemUiModelOption) {
+        None -> ""
+        is Some -> when (val itemContents = itemUiModelOption.value.contents) {
+            is ItemContents.Login -> itemContents.websiteUrl.orEmpty()
+            is ItemContents.Alias,
+            is ItemContents.Note,
+            is ItemContents.CreditCard,
+            is ItemContents.Identity,
+            is ItemContents.Unknown -> ""
+        }
+    }
+
+    internal val itemPackageName: String = when (itemUiModelOption) {
+        None -> ""
+        is Some -> when (val itemContents = itemUiModelOption.value.contents) {
+            is ItemContents.Login -> itemContents.packageName.orEmpty()
+            is ItemContents.Alias,
+            is ItemContents.Note,
+            is ItemContents.CreditCard,
+            is ItemContents.Identity,
+            is ItemContents.Unknown -> ""
+        }
+    }
 
     internal companion object {
 

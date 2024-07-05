@@ -21,6 +21,7 @@ package proton.android.pass.features.item.trash.trashmenu.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -30,6 +31,7 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.domain.ItemId
@@ -55,6 +57,10 @@ class ItemTrashMenuViewModel @Inject constructor(
         .require<String>(CommonNavArgId.ItemId.key)
         .let(::ItemId)
 
+    private val actionFlow = MutableStateFlow<BottomSheetItemAction>(BottomSheetItemAction.None)
+
+    private val eventFlow = MutableStateFlow<ItemTrashMenuEvent>(ItemTrashMenuEvent.Idle)
+
     private val canLoadExternalImagesFlow = userPreferencesRepository.getUseFaviconsPreference()
         .map { favIconsPreference ->
             favIconsPreference.value()
@@ -68,6 +74,8 @@ class ItemTrashMenuViewModel @Inject constructor(
         }
 
     internal val state: StateFlow<ItemTrashMenuState> = combine(
+        actionFlow,
+        eventFlow,
         canLoadExternalImagesFlow,
         itemUiModelOptionFlow,
         ::ItemTrashMenuState

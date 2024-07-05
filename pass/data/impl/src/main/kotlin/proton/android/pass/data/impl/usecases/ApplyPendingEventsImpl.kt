@@ -22,9 +22,6 @@ import androidx.work.WorkManager
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.first
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.extension.primary
@@ -62,7 +59,6 @@ class ApplyPendingEventsImpl @Inject constructor(
     private val eventRepository: EventRepository,
     private val addressRepository: UserAddressRepository,
     private val itemRepository: ItemRepository,
-    private val accountManager: AccountManager,
     private val shareRepository: ShareRepository,
     private val createVault: CreateVault,
     private val encryptionContextProvider: EncryptionContextProvider,
@@ -70,20 +66,15 @@ class ApplyPendingEventsImpl @Inject constructor(
     private val itemSyncStatusRepository: ItemSyncStatusRepository
 ) : ApplyPendingEvents {
 
-    override suspend fun invoke(userId: UserId?) {
+    override suspend fun invoke(userId: UserId) {
         PassLogger.i(TAG, "Applying pending events started")
 
-        val currentUserId = userId ?: accountManager.getPrimaryUserId()
-            .filterNotNull()
-            .first()
-        PassLogger.i(TAG, "Retrieved current user id")
-
-        shareRepository.refreshShares(currentUserId).let { refreshSharesResult ->
-            PassLogger.i(TAG, "Shares refreshed")
+        shareRepository.refreshShares(userId).let { refreshSharesResult ->
+            PassLogger.i(TAG, "Shares for user: $userId refreshed")
             if (refreshSharesResult.allShareIds.isEmpty()) {
-                handleSharesWhenEmpty(currentUserId)
+                handleSharesWhenEmpty(userId)
             } else {
-                handleExistingShares(currentUserId, refreshSharesResult)
+                handleExistingShares(userId, refreshSharesResult)
             }
         }
     }

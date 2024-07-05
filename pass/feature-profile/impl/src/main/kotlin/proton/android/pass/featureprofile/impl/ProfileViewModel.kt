@@ -29,8 +29,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -39,6 +41,7 @@ import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
+import me.proton.core.accountmanager.domain.onAccountState
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.extension.getDisplayName
@@ -60,6 +63,7 @@ import proton.android.pass.data.api.usecases.GetDefaultBrowser
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveMFACount
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
+import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.api.usecases.organization.ObserveOrganizationSettings
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
@@ -77,6 +81,7 @@ import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 
+@Suppress("LongParameterList")
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository,
@@ -86,6 +91,7 @@ class ProfileViewModel @Inject constructor(
     private val appConfig: AppConfig,
     private val checkPasskeySupport: CheckPasskeySupport,
     private val userManager: UserManager,
+    private val refreshContent: RefreshContent,
     featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     observeItemCount: ObserveItemCount,
     observeMFACount: ObserveMFACount,
@@ -228,6 +234,30 @@ class ProfileViewModel @Inject constructor(
                     }
                 }.toPersistentList()
             }
+
+    internal val onAccountReadyFlow = accountManager.onAccountState(
+        AccountState.Ready,
+        initialState = false
+    )
+        .filterNotNull()
+        .distinctUntilChanged()
+        .onEach {
+            viewModelScope.launch {
+                runCatching { refreshContent() }
+                    .onSuccess {
+                        PassLogger.i(TAG, "Sync completed")
+                    }
+                    .onFailure { error ->
+                        PassLogger.w(TAG, "Error performing sync")
+                        PassLogger.w(TAG, error)
+                    }
+            }
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000L),
+            initialValue = null
+        )
 
     internal val state: StateFlow<ProfileUiState> = combineN(
         appLockSectionStateFlow,

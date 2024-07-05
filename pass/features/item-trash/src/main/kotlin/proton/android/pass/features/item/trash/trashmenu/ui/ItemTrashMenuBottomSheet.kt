@@ -34,7 +34,7 @@ fun ItemTrashMenuBottomSheet(
 
     ItemTrashMenuContent(
         state = state,
-        onUiEvent = { uiEvent ->
+        onEvent = { uiEvent ->
             when (uiEvent) {
                 ItemTrashMenuUiEvent.OnDeleteItemPermanentlyClicked -> TODO()
                 ItemTrashMenuUiEvent.OnRestoreItemClicked -> TODO()

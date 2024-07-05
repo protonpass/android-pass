@@ -31,6 +31,8 @@
     <string name="bottomsheet_monitor_include">Include in monitoring</string>
     <string name="bottomsheet_migrate_item">Move to another vault</string>
     <string name="bottomsheet_copy_item_note">Copy note</string>
+    <string name="bottomsheet_delete_permanently">Delete permanently</string>
+    <string name="bottomsheet_restore">Restore</string>
 
     <!-- Actions -->
     <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Open item action menu</string>

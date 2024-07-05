@@ -27,7 +27,7 @@
   </plurals>
   <string name="auth_unlock_app_title">Odemknout Proton Pass</string>
   <string name="auth_unlock_app_subtitle">Zadejte hlavní heslo pro %s</string>
-  <string name="auth_unlock_app_extra_password_subtitle">Enter the extra password for %s</string>
+  <string name="auth_unlock_app_extra_password_subtitle">Zadejte dodatečné heslo pro %s</string>
   <string name="auth_master_password_label">Hlavní heslo</string>
   <string name="auth_action_reveal_password">Zobrazit hlavní heslo</string>
   <string name="auth_action_conceal_password">Skrýt hlavní heslo</string>
@@ -38,8 +38,8 @@
   <string name="auth_error_empty_password">Heslo nemůže být prázdné</string>
   <string name="auth_error_pin_cannot_be_empty">PIN kód nemůže být prázdný</string>
   <string name="auth_extra_password_label">Zadejte své dodatečné heslo</string>
-  <string name="auth_extra_password_error">Error on authenticating with extra password</string>
-  <string name="auth_extra_password_too_many_attempts">Too many failed login attempts. You have been logged out.</string>
+  <string name="auth_extra_password_error">Chyba při ověřování pomocí dodatečného hesla</string>
+  <string name="auth_extra_password_too_many_attempts">Příliš mnoho neúspěšných pokusů o přihlášení. Byli jste odhlášeni.</string>
   <string name="auth_error_wrong_password_no_attempts">Nesprávné heslo</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Nesprávné heslo. Zbývá %d pokus</item>

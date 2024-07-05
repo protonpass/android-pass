@@ -107,7 +107,7 @@
   <string name="security_center_verify_email_title">დაადასტურეთ თქვენი ელფოსტა</string>
   <string name="security_center_verify_email_subtitle">გადამოწმების კოდი გაგზავნილია მისამართზე %s. შეიყვანეთ ის ქვემოთ:</string>
   <string name="security_center_verify_email_code_resend_header">კოდი არ მიგიღიათ?</string>
-  <string name="security_center_verify_email_code_resend_body">Please check in your Spam for an email called “Please confirm your email address for Proton Pass“</string>
+  <string name="security_center_verify_email_code_resend_body">შეამოწმეთ სპამის საქაღალდე იმეილზე, რომელსაც ჰქვია \"დაადასტურეთ თქვენი ელფოსტის მისამართი Proton Pass-სთვის\"</string>
   <string name="security_center_verify_email_code_resend_link_body" comment="The text that follows is: -request a new code.-">თუ ასეთ ელფოსტას ვერ პოულობთ, შეგიძლიათ </string>
   <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">ახალი კოდის გამოთხოვა.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_success">გამოგზავნილია ახალი მოსაწვევი. შეამოწმეთ თქვენი საფოსტო ყუთი.</string>
@@ -137,7 +137,7 @@
   <string name="security_center_report_detail_snackbar_error">გაჟონვის დეტალების ჩატვირთვა შეუძლებელია</string>
   <string name="security_center_report_detail_excluded_from_monitoring">ამოღებულია მონიტორინგიდან</string>
   <string name="security_center_report_resolve_confirmation_dialog_title">ამოვხსნა ყველა გაჟონვა?</string>
-  <string name="security_center_report_resolve_confirmation_dialog_message">All current breaches will be marked as resolved. In case of future data breaches, you will be notified.</string>
+  <string name="security_center_report_resolve_confirmation_dialog_message">ყველა მიმდინარე გაჟონვა მონიშნული იქნება, როგორც გადაწყვეტილი. თუ გაჟონვა მომავალშიც მოხდება, ამის შესახებ შეტყობინებას მიიღებთ.</string>
   <!-- Proton list -->
   <string name="security_center_proton_list_top_bar_title">Proton-ის მისამართები</string>
   <string name="security_center_proton_list_no_breaches_detected">გაჟონვები აღმოჩენილი არაა</string>
@@ -162,7 +162,7 @@
   <string name="security_center_alias_list_error">მისამართების ჩატვირთვა შეუძლებელია</string>
   <string name="security_center_alias_list_included_in_monitoring">ჩართეთ მონიტორინგი, თუ გნებავთ, მიიღოთ გაფრთხლება, თუ თქვენი Hide-my-email-ის ფსევდონიმები გაჟონავს.</string>
   <string name="security_center_alias_list_monitored">მონიტორინგით</string>
-  <string name="security_center_alias_list_custom_email_message">Aliases with custom domains are not monitored, please add them as a custom email for monitoring.</string>
+  <string name="security_center_alias_list_custom_email_message">მორგებული დომენების მქონე ფსევდონიმების მონიტორინგი არ ხდება. მათი მონიტორინგისთვის ისინი მორგებული ელფოსტის სახით დაამატეთ.</string>
   <string name="security_center_alias_list_options_menu">ფსევდონიმის ეკრანის პარამეტრების მენიუ</string>
   <!-- Dark web help dialogs -->
   <string name="dark_web_help_dialog_title">მონაცემების უსაფრთხოება</string>

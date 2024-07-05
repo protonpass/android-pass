@@ -152,7 +152,7 @@
   <string name="identity_section_address_details">Adres bilgileri</string>
   <string name="identity_section_contact_details">Kişi bilgileri</string>
   <string name="identity_section_work_details">İş bilgileri</string>
-  <string name="identity_add_more_fields">Add another field</string>
+  <string name="identity_add_more_fields">Başka bir alan ekle</string>
   <string name="identity_bottomsheet_add_field">Alan ekle</string>
   <string name="create_identity_init_error">Kimlik bilgileri alınırken sorun çıktı</string>
   <string name="create_identity_item_creation_error">Kimlik oluşturulamadı</string>

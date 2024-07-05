@@ -58,18 +58,6 @@
   <string name="action_conceal_password">Skryť heslo</string>
   <string name="action_reveal_number">Odkryť číslo</string>
   <string name="action_conceal_number">Skryť číslo</string>
-  <string name="more_info_created">Vytvorené:</string>
-  <string name="more_info_modified">Upravené:</string>
-  <string name="more_info_autofilled">Automaticky vyplnené:</string>
-  <string name="more_info_title">Viac informácií</string>
-  <string name="more_info_icon">Ikona zistiť viac</string>
-  <plurals name="more_info_modified_times">
-    <item quantity="one">%d-krát</item>
-    <item quantity="few">%d-krát</item>
-    <item quantity="many">%d-krát</item>
-    <item quantity="other">%d-krát</item>
-  </plurals>
-  <string name="more_info_last_time_modified">Naposledy, %s</string>
   <string name="share_button_content_description">Otvoriť tlačidlo zdieľania</string>
   <string name="open_menu_icon_content_description">Tlačidlo otvorenia ponuky</string>
   <string name="mfa_limit_reached">2FA limit dosiahnutý</string>
@@ -111,9 +99,6 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Nemožno zdieľať</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Na zdieľanie tohto trezora nemáte dostatočné oprávnenia.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Dosiahli ste limit zdieľania trezoru. Ak chcete zdieľať viac trezorov, upgradujte svoj aktuálny plán.</string>
-  <string name="item_detail_history_created">Vytvorené</string>
-  <string name="item_detail_history_modified_last">Posledná zmena</string>
-  <string name="item_detail_history_button_view">Zobraziť históriu položky</string>
   <string name="password_score_vulnerable">Zraniteľné</string>
   <string name="password_score_weak">Slabé</string>
   <string name="password_score_strong">Silné</string>

@@ -81,7 +81,7 @@
   <string name="create_alias_init_error">Problème de récupération des informations de l\'alias</string>
   <string name="alias_created">L\'alias a été créé.</string>
   <string name="cannot_retrieve_alias_options">Impossible de récupérer les options d\'alias</string>
-  <string name="alias_mailbox_dialog_title">Transférer vers</string>
+  <string name="alias_mailbox_dialog_title">Transférer à</string>
   <!-- Create note -->
   <string name="note_hint">Note</string>
   <!-- Create Credit Card -->

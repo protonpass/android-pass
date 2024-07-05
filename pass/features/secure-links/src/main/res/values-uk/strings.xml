@@ -43,8 +43,8 @@
   <string name="secure_links_overview_button_view_all_links">View all your secure links</string>
   <!--List screen-->
   <string name="secure_links_list_title">Secure links</string>
-  <string name="secure_links_list_empty_title">No secure links</string>
-  <string name="secure_links_list_empty_subtitle">You can start creating secure links from an item details sharing options</string>
+  <string name="secure_links_list_empty_title">Немає безпечних посилань</string>
+  <string name="secure_links_list_empty_subtitle">Ви можете почати створювати безпечні посилання з деталей елемента параметрів спільного доступу</string>
   <string name="secure_links_list_expiration_description">Expires in %s</string>
   <string name="secure_links_list_expired_description">Expired</string>
   <plurals name="secure_links_list_viewed_times_description">

@@ -53,7 +53,12 @@ sealed interface ItemDetailsNavDestination {
         val itemCategory: ItemCategory
     ) : ItemDetailsNavDestination
 
-    data class ItemMenu(
+    data class ItemOptionsMenu(
+        val shareId: ShareId,
+        val itemId: ItemId
+    ) : ItemDetailsNavDestination
+
+    data class ItemTrashMenu(
         val shareId: ShareId,
         val itemId: ItemId
     ) : ItemDetailsNavDestination

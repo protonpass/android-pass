@@ -69,7 +69,8 @@ internal fun ItemDetailsContent(
                         onOptionsClick = {
                             ItemDetailsUiEvent.OnMenuClicked(
                                 shareId = shareId,
-                                itemId = itemId
+                                itemId = itemId,
+                                itemState = itemDetailState.itemState
                             ).also(onEvent)
                         },
                         onShareClick = {

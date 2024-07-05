@@ -22,6 +22,7 @@ import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetai
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.items.ItemCategory
 
@@ -74,7 +75,8 @@ internal sealed interface ItemDetailsUiEvent {
 
     data class OnMenuClicked(
         internal val shareId: ShareId,
-        internal val itemId: ItemId
+        internal val itemId: ItemId,
+        internal val itemState: ItemState
     ) : ItemDetailsUiEvent
 
 }

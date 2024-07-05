@@ -166,14 +166,17 @@ class LauncherViewModel @Inject constructor(
 
     internal fun signIn(userId: UserId? = null) = viewModelScope.launch {
         val account = userId?.let { getAccountOrNull(it) }
+        PassLogger.i(TAG, "Signing in: $userId")
         authOrchestrator.startLoginWorkflow(requiredAccountType, username = account?.username)
     }
 
     internal fun disable(userId: UserId? = null) = viewModelScope.launch {
+        PassLogger.i(TAG, "Disabling account: $userId")
         accountManager.disableAccount(requireNotNull(userId ?: getPrimaryUserIdOrNull()))
     }
 
     internal fun remove(userId: UserId? = null) = viewModelScope.launch {
+        PassLogger.i(TAG, "Removing account: $userId")
         accountManager.removeAccount(requireNotNull(userId ?: getPrimaryUserIdOrNull()))
     }
 
@@ -181,8 +184,13 @@ class LauncherViewModel @Inject constructor(
         val account = getAccountOrNull(userId) ?: return@launch
         when {
             account.isDisabled() -> signIn(userId)
-            account.isReady() -> accountManager.setAsPrimary(userId)
+            account.isReady() -> setAsPrimary(userId)
         }
+    }
+
+    private suspend fun setAsPrimary(userId: UserId) {
+        PassLogger.i(TAG, "Setting account as primary: $userId")
+        accountManager.setAsPrimary(userId)
     }
 
     internal fun subscription() = viewModelScope.launch {
@@ -253,8 +261,6 @@ class LauncherViewModel @Inject constructor(
     private suspend fun getAccountOrNull(it: UserId) = accountManager.getAccount(it).firstOrNull()
 
     private suspend fun getPrimaryUserIdOrNull() = accountManager.getPrimaryUserId().firstOrNull()
-
-
 
     internal fun checkForUpdates(updateResultLauncher: ActivityResultLauncher<IntentSenderRequest>) {
         inAppUpdatesManager.checkForUpdates(updateResultLauncher)

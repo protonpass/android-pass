@@ -64,11 +64,7 @@ class ObserveUpgradeInfoImpl @Inject constructor(
                     UpgradeInfo(
                         isUpgradeAvailable = displayUpgrade,
                         isSubscriptionAvailable = isSubscriptionAvailable,
-                        plan = plan.copy(
-                            vaultLimit = plan.vaultLimit,
-                            aliasLimit = plan.aliasLimit,
-                            totpLimit = plan.totpLimit
-                        ),
+                        plan = plan,
                         totalVaults = vaultCount,
                         totalAlias = itemCount.alias.toInt(),
                         totalTotp = mfaCount

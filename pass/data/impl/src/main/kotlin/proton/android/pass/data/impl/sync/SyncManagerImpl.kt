@@ -19,17 +19,19 @@
 package proton.android.pass.data.impl.sync
 
 import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.flowWithLifecycle
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.WorkManager
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
+import me.proton.core.account.domain.entity.Account
+import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.domain.entity.UserId
+import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.eventmanager.domain.work.EventWorkerManager
 import me.proton.core.presentation.app.AppLifecycleProvider
 import proton.android.pass.data.api.usecases.PerformSync
@@ -48,51 +50,17 @@ class SyncManagerImpl @Inject constructor(
     private val accountManager: AccountManager
 ) : SyncManager {
 
-    private data class SyncState(
-        val userId: UserId?,
-        val appLifecycle: AppLifecycleProvider.State
-    )
-
     override fun start() {
         PassLogger.i(TAG, "SyncManager start")
 
-        var hasReportedError = false
-
-        appLifecycleProvider.lifecycle.coroutineScope.launch {
-            while (currentCoroutineContext().isActive) {
-                runCatching {
-                    combine(
-                        accountManager.getPrimaryUserId(),
-                        appLifecycleProvider.state,
-                        ::SyncState
-                    )
-                        .catch {
-                            PassLogger.w(TAG, "Error in SyncManager flow")
-                            PassLogger.w(TAG, it)
-                        }
-                        .collectLatest { syncState ->
-                            if (syncState.userId == null) {
-                                cancelWorker()
-                            } else {
-                                onUserLoggedInPerformSync(
-                                    userId = syncState.userId,
-                                    state = syncState.appLifecycle
-                                )
-                            }
-                        }
-                }
-                    .onFailure { throwable ->
-                        PassLogger.w(TAG, "Error in SyncManager coroutine")
-                        if (!hasReportedError) {
-                            PassLogger.e(TAG, throwable)
-                        }
-                        hasReportedError = true
-                    }
-            }
-        }
+        accountManager.getAccounts(AccountState.Ready)
+            .combine(appLifecycleProvider.state, ::Pair)
+            .mapLatest { (accounts, state) -> onAccountsIsReady(accounts, state) }
+            .flowWithLifecycle(appLifecycleProvider.lifecycle)
+            .launchIn(appLifecycleProvider.lifecycle.coroutineScope)
     }
 
-    private suspend fun onUserLoggedInPerformSync(userId: UserId, state: AppLifecycleProvider.State) {
+    private suspend fun onAccountsIsReady(accounts: List<Account>, state: AppLifecycleProvider.State) {
         when (state) {
             AppLifecycleProvider.State.Background -> {
                 enqueueWorker(eventWorkerManager.getRepeatIntervalBackground())
@@ -102,12 +70,14 @@ class SyncManagerImpl @Inject constructor(
                 cancelWorker()
 
                 while (currentCoroutineContext().isActive) {
-                    runCatching { performSync(userId) }
-                        .onSuccess { PassLogger.i(TAG, "Sync finished") }
-                        .onFailure { error ->
-                            PassLogger.w(TAG, "Error in performSync")
-                            PassLogger.w(TAG, error)
-                        }
+                    accounts.forEach {
+                        runCatching { performSync(it.userId) }
+                            .onSuccess { PassLogger.i(TAG, "Sync finished") }
+                            .onFailure { error ->
+                                PassLogger.w(TAG, "Error in performSync")
+                                PassLogger.w(TAG, error)
+                            }
+                    }
 
                     delay(eventWorkerManager.getRepeatIntervalForeground())
                 }

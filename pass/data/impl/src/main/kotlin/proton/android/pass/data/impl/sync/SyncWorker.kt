@@ -29,7 +29,13 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.mapLatest
+import me.proton.core.account.domain.entity.AccountState
+import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.eventmanager.domain.work.EventWorkerManager
+import proton.android.pass.common.api.transpose
 import proton.android.pass.data.api.usecases.PerformSync
 import proton.android.pass.log.api.PassLogger
 import java.util.concurrent.TimeUnit
@@ -39,23 +45,36 @@ import kotlin.time.Duration
 open class SyncWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParameters: WorkerParameters,
-    private val performSync: PerformSync
+    private val performSync: PerformSync,
+    private val accountManager: AccountManager
 ) : CoroutineWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
         PassLogger.i(TAG, "Starting $TAG attempt $runAttemptCount")
-        return runCatching { performSync() }
-            .fold(
-                onSuccess = {
-                    PassLogger.i(TAG, "$TAG finished successfully")
-                    Result.success()
-                },
-                onFailure = {
-                    PassLogger.w(TAG, "$TAG finished with error")
-                    PassLogger.w(TAG, it)
-                    Result.failure()
+
+        val result = accountManager.getAccounts(AccountState.Ready)
+            .mapLatest { accounts ->
+                accounts.map { account ->
+                    runCatching { performSync(account.userId) }
+                        .onSuccess {
+                            PassLogger.i(TAG, "Sync for ${account.userId} finished successfully")
+                        }
+                        .onFailure {
+                            PassLogger.w(TAG, "Sync for ${account.userId} finished with error")
+                            PassLogger.w(TAG, it)
+                        }
                 }
-            )
+            }
+            .first()
+            .transpose()
+
+        return if (result.isSuccess) {
+            PassLogger.i(TAG, "SyncWorker finished successfully")
+            Result.success()
+        } else {
+            PassLogger.w(TAG, "SyncWorker finished with error")
+            Result.failure()
+        }
     }
 
     companion object {

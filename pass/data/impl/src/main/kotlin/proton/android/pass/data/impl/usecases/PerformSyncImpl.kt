@@ -35,26 +35,26 @@ class PerformSyncImpl @Inject constructor(
     private val refreshInvites: RefreshInvites
 ) : PerformSync {
 
-    override suspend fun invoke(userId: UserId?) = coroutineScope {
-        PassLogger.i(TAG, "Performing sync started")
+    override suspend fun invoke(userId: UserId) = coroutineScope {
+        PassLogger.i(TAG, "Performing sync for $userId started")
 
         val pendingEvents = async { performPendingEvents(userId) }
         pendingEvents.invokeOnCompletion { error ->
             if (error == null) {
-                PassLogger.i(TAG, "Pending events finished")
+                PassLogger.i(TAG, "Pending events for $userId  finished")
             } else {
                 PassLogger.w(TAG, error)
-                PassLogger.i(TAG, "Pending events error")
+                PassLogger.i(TAG, "Pending events for $userId  error")
             }
         }
 
         val refreshInvites = async { performRefreshInvites(userId) }
         refreshInvites.invokeOnCompletion { error ->
             if (error == null) {
-                PassLogger.i(TAG, "Refresh invites finished")
+                PassLogger.i(TAG, "Refresh invites for $userId  finished")
             } else {
                 PassLogger.w(TAG, error)
-                PassLogger.i(TAG, "Refresh invites error")
+                PassLogger.i(TAG, "Refresh invites for $userId  error")
             }
         }
 
@@ -65,14 +65,14 @@ class PerformSyncImpl @Inject constructor(
         ?.let { error -> PassLogger.w(TAG, "Performing sync error: ${error.message}") }
         ?: PassLogger.i(TAG, "Performing sync finished")
 
-    private suspend fun performPendingEvents(userId: UserId?): Result<Unit> =
+    private suspend fun performPendingEvents(userId: UserId): Result<Unit> =
         runCatching { withTimeout(2.minutes) { applyPendingEvents(userId) } }
             .fold(
                 onSuccess = { Result.success(Unit) },
                 onFailure = { Result.failure(it) }
             )
 
-    private suspend fun performRefreshInvites(userId: UserId?): Result<Unit> =
+    private suspend fun performRefreshInvites(userId: UserId): Result<Unit> =
         runCatching { withTimeout(2.minutes) { refreshInvites(userId) } }
             .fold(
                 onSuccess = { Result.success(Unit) },

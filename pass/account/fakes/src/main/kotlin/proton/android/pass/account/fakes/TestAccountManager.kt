@@ -18,10 +18,12 @@
 
 package proton.android.pass.account.fakes
 
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountDetails
 import me.proton.core.account.domain.entity.AccountState
@@ -65,6 +67,7 @@ class TestAccountManager @Inject constructor() : AccountManager(Product.Pass) {
 
     @Suppress("MagicNumber")
     override fun getPrimaryUserId(): Flow<UserId?> = primaryUserIdFlow
+        .onStart { delay(500) }
 
     fun sendPrimaryUserId(userId: UserId?) = primaryUserIdFlow.tryEmit(userId)
 

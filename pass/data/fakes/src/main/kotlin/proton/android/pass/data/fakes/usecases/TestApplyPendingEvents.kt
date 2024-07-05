@@ -32,7 +32,7 @@ class TestApplyPendingEvents @Inject constructor() : ApplyPendingEvents {
         result = value
     }
 
-    override suspend fun invoke(userId: UserId?) {
+    override suspend fun invoke(userId: UserId) {
         result.getOrThrow()
     }
 }

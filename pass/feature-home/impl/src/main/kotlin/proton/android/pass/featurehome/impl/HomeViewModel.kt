@@ -618,8 +618,11 @@ class HomeViewModel @Inject constructor(
 
     fun onRefresh() = viewModelScope.launch(coroutineExceptionHandler) {
         isRefreshing.update { IsRefreshingState.Refreshing }
+
         runCatching {
-            performSync()
+            val userId = observeCurrentUser().firstOrNull()?.userId
+                ?: throw IllegalStateException("User not found")
+            performSync(userId)
         }.onFailure {
             PassLogger.e(TAG, it, "Apply pending events failed")
             snackbarDispatcher(RefreshError)

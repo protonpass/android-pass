@@ -48,7 +48,6 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
         observeIdentityItemContents(item),
         observeVaultById(shareId = item.shareId)
     ) { identityItemContents, vault ->
-        item.flags
         ItemDetailState.Identity(
             itemContents = identityItemContents,
             itemId = item.id,

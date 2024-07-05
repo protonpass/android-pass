@@ -44,22 +44,22 @@
   <string name="secure_links_list_empty_title">Δεν υπάρχουν ασφαλείς σύνδεσμοι</string>
   <string name="secure_links_list_empty_subtitle">Μπορείτε να ξεκινήσετε τη δημιουργία ασφαλών συνδέσεων από τις επιλογές κοινής χρήσης λεπτομερειών ενός στοιχείου</string>
   <string name="secure_links_list_expiration_description">Λήγει σε %s</string>
-  <string name="secure_links_list_expired_description">Expired</string>
+  <string name="secure_links_list_expired_description">Ληγμένο</string>
   <plurals name="secure_links_list_viewed_times_description">
     <item quantity="one">%d προβολή</item>
     <item quantity="other">%d προβολές</item>
   </plurals>
   <string name="secure_links_list_snackbar_message_links_fetch_error">Παρουσιάστηκε σφάλμα κατά τη λήψη ασφαλών συνδέσμων</string>
-  <string name="secure_links_list_header_title_inactive">Inactive links</string>
+  <string name="secure_links_list_header_title_inactive">Ανενεργοί σύνδεσμοι</string>
   <!--Shared-->
   <string name="secure_links_shared_action_copy_link">Αντιγραφή συνδέσμου</string>
   <string name="secure_links_shared_action_share_link">Κοινοποίηση συνδέσμου</string>
   <string name="secure_links_shared_action_delete_link">Αφαίρεση συνδέσμου</string>
-  <string name="secure_links_shared_action_delete_link_inactive">Remove inactive link</string>
-  <string name="secure_links_shared_action_delete_links_inactive">Remove all inactive links</string>
+  <string name="secure_links_shared_action_delete_link_inactive">Κατάργηση ανενεργού συνδέσμου</string>
+  <string name="secure_links_shared_action_delete_links_inactive">Κατάργηση όλων των ανενεργών συνδέσμων</string>
   <string name="secure_links_shared_snackbar_message_link_copied">Ο ασφαλής σύνδεσμος αντιγράφηκε</string>
   <string name="secure_links_shared_snackbar_message_link_deletion_canceled">Η διαγραφή ασφαλούς συνδέσμου ακυρώθηκε</string>
   <string name="secure_links_shared_snackbar_message_link_deletion_error">Παρουσιάστηκε σφάλμα κατά τη διαγραφή ασφαλούς συνδέσμου</string>
-  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Inactive secure links deletion was canceled</string>
-  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">There was an error deleting inactive secure links</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Η διαγραφή ανενεργών ασφαλών συνδέσμων ακυρώθηκε</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">Παρουσιάστηκε σφάλμα κατά τη διαγραφή ανενεργών ασφαλών συνδέσεων</string>
 </resources>

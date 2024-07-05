@@ -37,7 +37,7 @@
   <string name="auth_error_pin_cannot_be_empty">PIN-koodi ei voi olla tyhjä</string>
   <string name="auth_extra_password_label">Syötä lisäsalasanasi</string>
   <string name="auth_extra_password_error">Virhe lisäsalasanalla tunnistautumisessa</string>
-  <string name="auth_extra_password_too_many_attempts">Too many failed login attempts. You have been logged out.</string>
+  <string name="auth_extra_password_too_many_attempts">Liian monta epäonnistunutta kirjautumisyritystä. Sinut on kirjattu ulos.</string>
   <string name="auth_error_wrong_password_no_attempts">Virheellinen salasana</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Virheellinen salasana. %d yritys jäljellä</item>

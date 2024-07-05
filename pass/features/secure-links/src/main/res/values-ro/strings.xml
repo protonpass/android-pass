@@ -45,23 +45,23 @@
   <string name="secure_links_list_empty_title">Nu există legături web</string>
   <string name="secure_links_list_empty_subtitle">Puteți începe să creați legături web securizate din opțiunile de partajare a detaliilor unui articol.</string>
   <string name="secure_links_list_expiration_description">Expiră peste %s</string>
-  <string name="secure_links_list_expired_description">Expired</string>
+  <string name="secure_links_list_expired_description">Expirat</string>
   <plurals name="secure_links_list_viewed_times_description">
     <item quantity="one">%d vizualizare</item>
     <item quantity="few">%d vizualizări</item>
     <item quantity="other">%d de vizualizări</item>
   </plurals>
   <string name="secure_links_list_snackbar_message_links_fetch_error">A apărut o eroare la preluarea legăturilor web sigure.</string>
-  <string name="secure_links_list_header_title_inactive">Inactive links</string>
+  <string name="secure_links_list_header_title_inactive">Legături web inactive</string>
   <!--Shared-->
   <string name="secure_links_shared_action_copy_link">Copiere legătură web</string>
   <string name="secure_links_shared_action_share_link">Partajare legătură web</string>
   <string name="secure_links_shared_action_delete_link">Eliminare legătură web</string>
-  <string name="secure_links_shared_action_delete_link_inactive">Remove inactive link</string>
-  <string name="secure_links_shared_action_delete_links_inactive">Remove all inactive links</string>
+  <string name="secure_links_shared_action_delete_link_inactive">Eliminare legătură web inactivă</string>
+  <string name="secure_links_shared_action_delete_links_inactive">Eliminare toate legăturile web inactive</string>
   <string name="secure_links_shared_snackbar_message_link_copied">Legătura web securizată a fost copiată.</string>
   <string name="secure_links_shared_snackbar_message_link_deletion_canceled">Ștergerea legăturii web sigure a fost anulată.</string>
   <string name="secure_links_shared_snackbar_message_link_deletion_error">A apărut o eroare la ștergerea legăturii web sigure.</string>
-  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Inactive secure links deletion was canceled</string>
-  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">There was an error deleting inactive secure links</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Ștergerea legăturilor web inactive a fost anulată.</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">A apărut o eroare la ștergerea legăturilor web inactive.</string>
 </resources>

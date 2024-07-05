@@ -19,7 +19,7 @@
 <resources>
   <!-- Home screen -->
   <string name="security_center_home_top_bar_title">Pass Monitor</string>
-  <string name="security_center_home_dark_web_monitoring_title">Supervisió del web fosc</string>
+  <string name="security_center_home_dark_web_monitoring_title">Monitoratge de la web fosca</string>
   <string name="security_center_home_widget_breaches_title">S\'ha detectat una violació de les dades</string>
   <string name="security_center_home_widget_breaches_subtitle">La vostra adreça de correu electrònic s\'ha filtrat en almenys 1 infracció de dades.</string>
   <string name="security_center_home_widget_no_breaches_subtitle">Rebeu una notificació si s\'han filtrat el vostre correu electrònic, contrasenya o altres dades personals.</string>
@@ -60,7 +60,7 @@
   <!-- Excluded items screen -->
   <string name="security_center_excluded_items_top_bar_title">Elements exclosos</string>
   <!-- Dark web monitor -->
-  <string name="security_center_dark_web_monitor_top_bar_title">Supervisió del web fosc</string>
+  <string name="security_center_dark_web_monitor_top_bar_title">Monitoratge de la web fosca</string>
   <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Darrera comprovació: %s</string>
   <string name="security_center_dark_web_monitor_custom_emails_title">Adreces de correu electrònic personalitzades</string>
   <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">No verificat</string>

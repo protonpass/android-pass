@@ -59,8 +59,8 @@
   <string name="secure_links_shared_action_copy_link">Kopírovať odkaz</string>
   <string name="secure_links_shared_action_share_link">Zdieľať odkaz</string>
   <string name="secure_links_shared_action_delete_link">Odstrániť odkaz</string>
-  <string name="secure_links_shared_action_delete_link_inactive">Remove inactive link</string>
-  <string name="secure_links_shared_action_delete_links_inactive">Remove all inactive links</string>
+  <string name="secure_links_shared_action_delete_link_inactive">Odstrániť neaktívny odkaz</string>
+  <string name="secure_links_shared_action_delete_links_inactive">Odstrániť všetky neaktívne odkazy</string>
   <string name="secure_links_shared_snackbar_message_link_copied">Bezpečný odkaz skopírovaný</string>
   <string name="secure_links_shared_snackbar_message_link_deletion_canceled">Mazanie bezpečného odkazu bolo zrušené</string>
   <string name="secure_links_shared_snackbar_message_link_deletion_error">Vyskytla sa chyba pri mazaní bezpečného odkazu</string>

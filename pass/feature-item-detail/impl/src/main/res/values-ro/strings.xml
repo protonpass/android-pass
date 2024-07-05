@@ -57,17 +57,6 @@
   <string name="action_conceal_password">Ascundere parolă</string>
   <string name="action_reveal_number">Afișare număr</string>
   <string name="action_conceal_number">Ascundere număr</string>
-  <string name="more_info_created">Creat la:</string>
-  <string name="more_info_modified">Modificat:</string>
-  <string name="more_info_autofilled">Autocompletat:</string>
-  <string name="more_info_title">Detalii</string>
-  <string name="more_info_icon">Pictogramă detalii</string>
-  <plurals name="more_info_modified_times">
-    <item quantity="one">%d dată</item>
-    <item quantity="few">de %d ori</item>
-    <item quantity="other">de %d de ori</item>
-  </plurals>
-  <string name="more_info_last_time_modified">Ultima oară, %s</string>
   <string name="share_button_content_description">Deschidere buton partajare.</string>
   <string name="open_menu_icon_content_description">Buton meniu deschidere</string>
   <string name="mfa_limit_reached">Limită A2F atinsă.</string>
@@ -109,9 +98,6 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Nu se poate partaja</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Nu aveți permisiuni suficiente pentru a participa acest seif.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Ați atins limita de partajare a seifului. Pentru a partaja mai multe seifuri, alegeți alt plan cu plată.</string>
-  <string name="item_detail_history_created">Creat la</string>
-  <string name="item_detail_history_modified_last">Ultima modificare</string>
-  <string name="item_detail_history_button_view">Afișare istoric articol</string>
   <string name="password_score_vulnerable">Vulnerabilă</string>
   <string name="password_score_weak">Slabă</string>
   <string name="password_score_strong">Puternică</string>

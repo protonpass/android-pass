@@ -29,7 +29,7 @@
   <string name="info_extra_password_body">Защитите Proton Pass дополнительным паролем.</string>
   <string name="info_extra_password_button">Установить дополнительный пароль</string>
   <string name="configure_extra_password_cannot_be_blank">Пароль не может быть пустым</string>
-  <string name="configure_extra_password_password_too_short">Extra password must have at least 8 characters</string>
+  <string name="configure_extra_password_password_too_short">Дополнительный пароль должен содержать не менее 8 символов</string>
   <string name="confirm_extra_password_title">Установить дополнительный пароль</string>
   <string name="confirm_extra_password_body">Вы выйдете и будете должны войти снова на всех ваших устройствах.</string>
   <string name="confirm_extra_password_error">Не удалось установить дополнительный пароль</string>

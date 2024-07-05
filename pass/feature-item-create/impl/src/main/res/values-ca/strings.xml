@@ -152,7 +152,7 @@
   <string name="identity_section_address_details">Detalls de l\'adreça</string>
   <string name="identity_section_contact_details">Detalls del contacte</string>
   <string name="identity_section_work_details">Detalls del treball</string>
-  <string name="identity_add_more_fields">Add another field</string>
+  <string name="identity_add_more_fields">Afegeix un altre camp</string>
   <string name="identity_bottomsheet_add_field">Afegeix un camp</string>
   <string name="create_identity_init_error">S\'ha produït un problema en recuperar els detalls d\'identitat</string>
   <string name="create_identity_item_creation_error">No s\'ha pogut crear la identitat.</string>

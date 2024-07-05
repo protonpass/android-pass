@@ -56,16 +56,6 @@
   <string name="action_conceal_password">Ocultar contraseña</string>
   <string name="action_reveal_number">Mostrar número</string>
   <string name="action_conceal_number">Ocultar el número</string>
-  <string name="more_info_created">Creado:</string>
-  <string name="more_info_modified">Modificado:</string>
-  <string name="more_info_autofilled">Rellenado automáticamente:</string>
-  <string name="more_info_title">Más información</string>
-  <string name="more_info_icon">Icono de más información</string>
-  <plurals name="more_info_modified_times">
-    <item quantity="one">%d vez</item>
-    <item quantity="other">%d veces</item>
-  </plurals>
-  <string name="more_info_last_time_modified">Última vez, %s</string>
   <string name="share_button_content_description">Abrir el botón para compartir</string>
   <string name="open_menu_icon_content_description">Botón para abrir el menú</string>
   <string name="mfa_limit_reached">Límite de 2FA alcanzado</string>
@@ -107,9 +97,6 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">No se puede compartir.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">No tienes los permisos suficientes para compartir esta caja fuerte.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Has alcanzado el límite de cajas fuertes compartidas. Mejora tu plan actual para compartir más cajas fuertes.</string>
-  <string name="item_detail_history_created">Creado</string>
-  <string name="item_detail_history_modified_last">Última modificación</string>
-  <string name="item_detail_history_button_view">Mostrar el historial del elemento</string>
   <string name="password_score_vulnerable">Vulnerable</string>
   <string name="password_score_weak">Poco segura</string>
   <string name="password_score_strong">Segura</string>

@@ -56,16 +56,6 @@
   <string name="action_conceal_password">Passwort verstecken</string>
   <string name="action_reveal_number">Nummer anzeigen</string>
   <string name="action_conceal_number">Nummer verstecken</string>
-  <string name="more_info_created">Erstellt:</string>
-  <string name="more_info_modified">Geändert:</string>
-  <string name="more_info_autofilled">Automatisch ausgefüllt:</string>
-  <string name="more_info_title">Weitere Informationen</string>
-  <string name="more_info_icon">Weitere Informationen-Symbol</string>
-  <plurals name="more_info_modified_times">
-    <item quantity="one">%d Mal</item>
-    <item quantity="other">%d Mal</item>
-  </plurals>
-  <string name="more_info_last_time_modified">Letztes Mal, %s</string>
   <string name="share_button_content_description">Schaltfläche \"Teilen\" öffnen</string>
   <string name="open_menu_icon_content_description">Schaltfläche \"Menü öffnen\"</string>
   <string name="mfa_limit_reached">2FA-Limit erreicht</string>
@@ -107,9 +97,6 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Teilen nicht möglich</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Deine Berechtigungen reichen nicht aus, um diesen Tresor freizugeben.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Du hast das Limit für das Teilen von Tresoren erreicht. Um mehr Tresore gemeinsam nutzen zu können, upgrade bitte dein aktueles Abonnement.</string>
-  <string name="item_detail_history_created">Erstellt</string>
-  <string name="item_detail_history_modified_last">Zuletzt geändert</string>
-  <string name="item_detail_history_button_view">Eintragsverlauf anzeigen</string>
   <string name="password_score_vulnerable">Verwundbar</string>
   <string name="password_score_weak">Schwach</string>
   <string name="password_score_strong">Stark</string>

@@ -30,7 +30,7 @@
   <string name="item_details_snackbar_message_facebook_copied">Facebook copied</string>
   <string name="item_details_snackbar_message_first_name_copied">First name copied</string>
   <string name="item_details_snackbar_message_floor_copied">Floor copied</string>
-  <string name="item_details_snackbar_message_full_name_copied">Full name copied</string>
+  <string name="item_details_snackbar_message_full_name_copied">Đã sao chép tên đầy đủ</string>
   <string name="item_details_snackbar_message_gender_copied">Gender copied</string>
   <string name="item_details_snackbar_message_instagram_copied">Instagram copied</string>
   <string name="item_details_snackbar_message_last_name_copied">Last name copied</string>
@@ -38,6 +38,7 @@
   <string name="item_details_snackbar_message_linkedin_copied">LinkedIn copied</string>
   <string name="item_details_snackbar_message_middle_name_copied">Middle name copied</string>
   <string name="item_details_snackbar_message_occupation_copied">Occupation copied</string>
+  <string name="item_details_snackbar_message_organization_copied">Organization copied</string>
   <string name="item_details_snackbar_message_passport_number_copied">Passport number copied</string>
   <string name="item_details_snackbar_message_password_copied">Đã sao chép mật khẩu</string>
   <string name="item_details_snackbar_message_phone_number_copied">Phone number copied</string>

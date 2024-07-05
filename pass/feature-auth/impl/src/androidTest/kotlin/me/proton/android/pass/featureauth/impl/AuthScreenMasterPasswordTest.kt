@@ -37,7 +37,7 @@ import proton.android.pass.biometry.TestBiometryManager
 import proton.android.pass.common.fakes.TestAppDispatchers
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.data.fakes.usecases.TestCheckMasterPassword
-import proton.android.pass.data.fakes.usecases.TestObservePrimaryUserEmail
+import proton.android.pass.data.fakes.usecases.TestObserveUserEmail
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.AuthScreen
 import proton.android.pass.featureauth.impl.AuthViewModel
@@ -98,7 +98,7 @@ class AuthScreenMasterPasswordTest {
                 }
             }
 
-            onNodeWithText(TestObservePrimaryUserEmail.DEFAULT_EMAIL, substring = true).assertExists()
+            onNodeWithText(TestObserveUserEmail.DEFAULT_EMAIL, substring = true).assertExists()
         }
     }
 

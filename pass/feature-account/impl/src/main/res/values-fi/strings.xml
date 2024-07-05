@@ -20,6 +20,7 @@
   <string name="account_settings_list_item_password_hint_grace">Salasanan nollaus odottaa</string>
   <string name="account_settings_list_item_password_hint_insecure">Salasanan nollaus on valmis</string>
   <string name="account_settings_list_item_extra_password_header">Lisäsalasana Proton Passille</string>
+  <string name="account_settings_list_item_extra_password_header_set">Aseta lisäsalasana Proton Passille</string>
   <string name="account_settings_list_item_extra_password_active">Käytössä</string>
   <string name="account_settings_list_item_extra_password_description">Lisäsalasana vaaditaan Passin käyttämiseen. Se toimii ylimääräisenä salasanana Proton-salasanasi lisäksi.</string>
 </resources>

@@ -137,6 +137,7 @@
   <string name="item_details_identity_section_personal_phone_title">Telefono</string>
   <string name="item_details_identity_section_personal_birthday_title">Compleanno</string>
   <string name="item_details_identity_section_address_title">Dettagli dell\'indirizzo</string>
+  <string name="item_details_identity_section_address_organization_title">Organizzazione</string>
   <string name="item_details_identity_section_address_street_address_title">Indirizzo o casella postale</string>
   <string name="item_details_identity_section_address_floor_title">Piano</string>
   <string name="item_details_identity_section_address_city_title">Città</string>
@@ -163,6 +164,14 @@
   <string name="item_details_identity_section_work_phone_number_title">Numero di telefono lavorativo</string>
   <string name="item_details_identity_section_work_personal_website_title">Sito web personale</string>
   <string name="item_details_shared_section_note_title">Nota</string>
+  <string name="item_details_shared_section_item_history_last_autofill_title">Ultima compilazione automatica</string>
+  <string name="item_details_shared_section_item_history_created_title">Creazione</string>
+  <string name="item_details_shared_section_item_history_modified_times_title">Modificato (%d)</string>
+  <string name="item_details_shared_section_item_history_button_view">Visualizza la cronologia dell\'elemento</string>
+  <string name="item_details_shared_section_more_info_header_title">Altre informazioni</string>
+  <string name="item_details_shared_section_more_info_header_icon_content_description">Icona Altre informazioni sull\'elemento</string>
+  <string name="item_details_shared_section_more_info_item_id">ID elemento</string>
+  <string name="item_details_shared_section_more_info_share_id">ID cassaforte</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">La versione della tua applicazione non è più supportata. Aggiorna l\'applicazione.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Passkey</string>

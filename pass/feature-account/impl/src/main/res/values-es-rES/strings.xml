@@ -20,6 +20,7 @@
   <string name="account_settings_list_item_password_hint_grace">Restablecimiento de contraseña pendiente</string>
   <string name="account_settings_list_item_password_hint_insecure">Restablecimiento de contraseña listo</string>
   <string name="account_settings_list_item_extra_password_header">Contraseña adicional para Proton Pass</string>
+  <string name="account_settings_list_item_extra_password_header_set">Configura una contraseña adicional para Proton Pass</string>
   <string name="account_settings_list_item_extra_password_active">Activa</string>
   <string name="account_settings_list_item_extra_password_description">La contraseña adicional se requerirá para usar Pass. Funciona como una contraseña extra por encima de tu contraseña de Proton.</string>
 </resources>

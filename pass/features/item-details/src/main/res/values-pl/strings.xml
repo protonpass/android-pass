@@ -17,6 +17,6 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="item_details_toolbar_content_description_menu_button">Button for displaying menu options</string>
-  <string name="item_details_toolbar_content_description_share_button">Button for sharing an item</string>
+  <string name="item_details_toolbar_content_description_menu_button">Przycisk opcji menu</string>
+  <string name="item_details_toolbar_content_description_share_button">Przycisk udostępniania elementu</string>
 </resources>

@@ -61,5 +61,5 @@
   <string name="secure_links_shared_snackbar_message_link_deletion_canceled">L\'eliminazione del link sicuro è stata annullata</string>
   <string name="secure_links_shared_snackbar_message_link_deletion_error">Si è verificato un errore durante l\'eliminazione del link sicuro</string>
   <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">L\'eliminazione dei link sicuri inattivi è stata annullata</string>
-  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">Si è verificato un errore durante l\'eliminazione dei link sicuri inattivi</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">Eliminazione dei link sicuri inattivi non riuscita</string>
 </resources>

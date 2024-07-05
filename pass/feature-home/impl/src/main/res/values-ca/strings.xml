@@ -30,7 +30,7 @@
   <string name="home_notification_permission_banner_title">Obteniu actualitzacions importants</string>
   <string name="home_notification_permission_banner_text">Habiliteu les notificacions automàtiques per a rebre una notificació quan altres persones comparteixin una caixa forta.</string>
   <string name="home_notification_permission_banner_settings">Activar permisos ›</string>
-  <string name="home_invite_banner_title">Caixa forta compartida amb vosaltres</string>
+  <string name="home_invite_banner_title">Caixa forta compartida amb vós</string>
   <string name="home_invite_banner_subtitle">Esteu convidat a una caixa forta compartida. Toqueu per obtenir més informació.</string>
   <!-- Common bottomsheet -->
   <string name="bottomsheet_copy_password">Copia la contrasenya</string>

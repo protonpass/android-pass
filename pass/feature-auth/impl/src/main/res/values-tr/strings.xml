@@ -37,7 +37,7 @@
   <string name="auth_error_pin_cannot_be_empty">PIN kodu boş olamaz</string>
   <string name="auth_extra_password_label">Ek parolanızı yazın</string>
   <string name="auth_extra_password_error">Ek parola ile kimlik doğrulanırken sorun çıktı</string>
-  <string name="auth_extra_password_too_many_attempts">Too many failed login attempts. You have been logged out.</string>
+  <string name="auth_extra_password_too_many_attempts">Çok fazla sayıda başarısız oturum açma girişimi yapıldığından oturumunuz kapatıldı.</string>
   <string name="auth_error_wrong_password_no_attempts">Parola geçersiz</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Parola geçersiz. %d kez daha deneyebilirsiniz</item>

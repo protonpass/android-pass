@@ -58,18 +58,6 @@
   <string name="action_conceal_password">Приховати пароль</string>
   <string name="action_reveal_number">Показати номер</string>
   <string name="action_conceal_number">Сховати номер</string>
-  <string name="more_info_created">Створено:</string>
-  <string name="more_info_modified">Змінено:</string>
-  <string name="more_info_autofilled">Автозаповнення:</string>
-  <string name="more_info_title">Докладніше</string>
-  <string name="more_info_icon">Піктограма \"Докладніше\"</string>
-  <plurals name="more_info_modified_times">
-    <item quantity="one">%d раз</item>
-    <item quantity="few">%d рази</item>
-    <item quantity="many">%d разів</item>
-    <item quantity="other">%d разів</item>
-  </plurals>
-  <string name="more_info_last_time_modified">Востаннє, %s</string>
   <string name="share_button_content_description">Відкрити кнопку «Поділитися»</string>
   <string name="open_menu_icon_content_description">Кнопка відкриття меню</string>
   <string name="mfa_limit_reached">Досягнуто обмеження 2FA</string>
@@ -111,9 +99,6 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Не може поширювати</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">У вас недостатньо прав для надання спільного доступу до цього сховища.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Ви досягли ліміту спільного доступу до сховища. Щоб отримати доступ до більшої кількості сховищ, будь ласка, оновіть свій поточний тарифний план.</string>
-  <string name="item_detail_history_created">Створено</string>
-  <string name="item_detail_history_modified_last">Востаннє змінено</string>
-  <string name="item_detail_history_button_view">Дивитися історію елемента</string>
   <string name="password_score_vulnerable">Вразливий</string>
   <string name="password_score_weak">Простий</string>
   <string name="password_score_strong">Надійний</string>

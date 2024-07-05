@@ -58,18 +58,6 @@
   <string name="action_conceal_password">Skrij geslo</string>
   <string name="action_reveal_number">Pokaži številko</string>
   <string name="action_conceal_number">Skrij številka</string>
-  <string name="more_info_created">Ustvarjeno:</string>
-  <string name="more_info_modified">Spremenjen:</string>
-  <string name="more_info_autofilled">Samodejno izpolnjeno:</string>
-  <string name="more_info_title">Več informacij</string>
-  <string name="more_info_icon">Ikona za več informacij</string>
-  <plurals name="more_info_modified_times">
-    <item quantity="one">%d-krat</item>
-    <item quantity="two">%d-krat</item>
-    <item quantity="few">%d-krat</item>
-    <item quantity="other">%d-krat</item>
-  </plurals>
-  <string name="more_info_last_time_modified">Zadnjič, %s</string>
   <string name="share_button_content_description">Odpri gumb za skupno rabo</string>
   <string name="open_menu_icon_content_description">Gumb za odpiranje menija</string>
   <string name="mfa_limit_reached">Dosežena je omejitev za 2FA</string>
@@ -111,9 +99,6 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Ni mogoče deliti</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Nimate dovolj dovoljenj za skupno rabo tega trezorja.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Dosegli ste omejitev skupne rabe trezorja. Če želite deliti več trezorjev, nadgradite svoj trenutni paket.</string>
-  <string name="item_detail_history_created">Ustvarjeno</string>
-  <string name="item_detail_history_modified_last">Zadnjič spremenjeno</string>
-  <string name="item_detail_history_button_view">Pokaži zgodovino predmeta</string>
   <string name="password_score_vulnerable">Slab</string>
   <string name="password_score_weak">Šibko</string>
   <string name="password_score_strong">Močno</string>

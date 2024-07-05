@@ -117,6 +117,12 @@
   <string name="share_with_remove_email_content_description">Poista sähköpostiosoite</string>
   <string name="share_with_secure_link_title">Turvallisen linkin kautta</string>
   <string name="share_with_secure_link_description">Luo turvallinen linkki tähän kohteeseen.</string>
+  <string name="share_with_manage_shared_vault_title">Hallitse holvin käyttöoikeuksia</string>
+  <plurals name="share_with_manage_shared_vault_description">
+    <item quantity="one">Kohteen holvi on tällä hetkellä jaettu %d käyttäjän kanssa.</item>
+    <item quantity="other">Kohteen holvi on tällä hetkellä jaettu %d käyttäjän kanssa.</item>
+  </plurals>
+  <string name="share_with_view_shared_vault_members_title">Näytä holvin jäsenet</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Aseta käyttöoikeustaso kaikille jäsenille</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Aseta käyttöoikeustaso jäsenelle %s</string>
   <string name="sharing_edit_permissions_remove_user">Poista käyttäjä</string>

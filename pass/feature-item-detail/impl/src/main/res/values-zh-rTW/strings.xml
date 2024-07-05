@@ -55,15 +55,6 @@
   <string name="action_conceal_password">隱蔽密碼</string>
   <string name="action_reveal_number">顯示號碼</string>
   <string name="action_conceal_number">隱蔽號碼</string>
-  <string name="more_info_created">創建：</string>
-  <string name="more_info_modified">修改於:</string>
-  <string name="more_info_autofilled">自動填入</string>
-  <string name="more_info_title">更多資訊</string>
-  <string name="more_info_icon">更多圖像資訊</string>
-  <plurals name="more_info_modified_times">
-    <item quantity="other">%d 次</item>
-  </plurals>
-  <string name="more_info_last_time_modified">上次使用時間，%s</string>
   <string name="share_button_content_description">開啟共享按鈕</string>
   <string name="open_menu_icon_content_description">開啟清單</string>
   <string name="mfa_limit_reached">雙重驗證已達上限</string>
@@ -105,9 +96,6 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">無法分享</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">You don\'t have enough permissions to share this vault.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
-  <string name="item_detail_history_created">已創建</string>
-  <string name="item_detail_history_modified_last">上次修改時間</string>
-  <string name="item_detail_history_button_view">查看項目歷史</string>
   <string name="password_score_vulnerable">具有風險</string>
   <string name="password_score_weak">弱</string>
   <string name="password_score_strong">強</string>

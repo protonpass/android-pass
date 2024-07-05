@@ -42,24 +42,24 @@
   <!--List screen-->
   <string name="secure_links_list_title">Turvalliset linkit</string>
   <string name="secure_links_list_empty_title">Ei turvallisia linkkejä</string>
-  <string name="secure_links_list_empty_subtitle">You can start creating secure links from an item details sharing options</string>
-  <string name="secure_links_list_expiration_description">Expires in %s</string>
-  <string name="secure_links_list_expired_description">Expired</string>
+  <string name="secure_links_list_empty_subtitle">Voit aloittaa turvallisten linkkien luomisen kohteen jakamisvaihtoehdoista</string>
+  <string name="secure_links_list_expiration_description">Vanhenee: %s</string>
+  <string name="secure_links_list_expired_description">Vanhentunut</string>
   <plurals name="secure_links_list_viewed_times_description">
     <item quantity="one">%d tarkastelukerta</item>
     <item quantity="other">%d tarkastelukertaa</item>
   </plurals>
   <string name="secure_links_list_snackbar_message_links_fetch_error">Turvallisten linkkien noutamisessa tapahtui virhe</string>
-  <string name="secure_links_list_header_title_inactive">Inactive links</string>
+  <string name="secure_links_list_header_title_inactive">Käytöstä poistetut linkit</string>
   <!--Shared-->
   <string name="secure_links_shared_action_copy_link">Kopioi linkki</string>
   <string name="secure_links_shared_action_share_link">Jaa linkki</string>
   <string name="secure_links_shared_action_delete_link">Poista linkki</string>
-  <string name="secure_links_shared_action_delete_link_inactive">Remove inactive link</string>
-  <string name="secure_links_shared_action_delete_links_inactive">Remove all inactive links</string>
+  <string name="secure_links_shared_action_delete_link_inactive">Poista käytöstä poistettu linkki</string>
+  <string name="secure_links_shared_action_delete_links_inactive">Poista kaikki käytöstä poistetut linkit</string>
   <string name="secure_links_shared_snackbar_message_link_copied">Turvallinen linkki kopioitiin</string>
   <string name="secure_links_shared_snackbar_message_link_deletion_canceled">Turvallisen linkin poisto peruttiin</string>
   <string name="secure_links_shared_snackbar_message_link_deletion_error">Turvallisen linkin poistamisessa tapahtui virhe</string>
-  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Inactive secure links deletion was canceled</string>
-  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">There was an error deleting inactive secure links</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Käytöstä poistettujen turvallisten linkkien poisto peruttiin</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">Käytöstä poistettujen turvallisten linkkien poistamisessa tapahtui virhe</string>
 </resources>

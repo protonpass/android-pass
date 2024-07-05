@@ -29,7 +29,7 @@
   <string name="info_extra_password_body">Proton Pass uygulamasını bir ek parola ile koruyun.</string>
   <string name="info_extra_password_button">Ek parolayı ayarla</string>
   <string name="configure_extra_password_cannot_be_blank">Parola boş olamaz</string>
-  <string name="configure_extra_password_password_too_short">Extra password must have at least 8 characters</string>
+  <string name="configure_extra_password_password_too_short">Ek parola en az 8 karakter uzunluğunda olmalıdır</string>
   <string name="confirm_extra_password_title">Ek parolayı ayarla</string>
   <string name="confirm_extra_password_body">Oturumunuz kapatılacak ve diğer tüm aygıtlarınızda yeniden oturum açmanız gerekecek.</string>
   <string name="confirm_extra_password_error">Ek parola ayarlanamadı</string>

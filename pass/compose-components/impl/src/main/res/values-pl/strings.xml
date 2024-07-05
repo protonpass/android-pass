@@ -141,6 +141,7 @@
   <string name="item_details_identity_section_personal_phone_title">Numer telefonu</string>
   <string name="item_details_identity_section_personal_birthday_title">Urodziny</string>
   <string name="item_details_identity_section_address_title">Szczegóły adresu</string>
+  <string name="item_details_identity_section_address_organization_title">Organizacja</string>
   <string name="item_details_identity_section_address_street_address_title">Ulica</string>
   <string name="item_details_identity_section_address_floor_title">Piętro</string>
   <string name="item_details_identity_section_address_city_title">Miasto</string>
@@ -162,11 +163,19 @@
   <string name="item_details_identity_section_contact_instagram_title">Instagram</string>
   <string name="item_details_identity_section_work_title">Szczegóły służbowe</string>
   <string name="item_details_identity_section_work_company_title">Firma</string>
-  <string name="item_details_identity_section_work_occupation_title">Occupation</string>
+  <string name="item_details_identity_section_work_occupation_title">Stanowisko</string>
   <string name="item_details_identity_section_work_email_title">Służbowy adres e-mail</string>
   <string name="item_details_identity_section_work_phone_number_title">Służbowy numer telefonu</string>
   <string name="item_details_identity_section_work_personal_website_title">Osobista strona internetowa</string>
   <string name="item_details_shared_section_note_title">Notatka</string>
+  <string name="item_details_shared_section_item_history_last_autofill_title">Ostatnie autouzupełnianie</string>
+  <string name="item_details_shared_section_item_history_created_title">Utworzono</string>
+  <string name="item_details_shared_section_item_history_modified_times_title">Zmodyfikowano (%d)</string>
+  <string name="item_details_shared_section_item_history_button_view">Pokaż historię elementu</string>
+  <string name="item_details_shared_section_more_info_header_title">Więcej informacji</string>
+  <string name="item_details_shared_section_more_info_header_icon_content_description">More item information icon</string>
+  <string name="item_details_shared_section_more_info_item_id">Identyfikator elementu</string>
+  <string name="item_details_shared_section_more_info_share_id">Identyfikator sejfu</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Wersja aplikacji nie jest obsługiwana. Zaktualizuj aplikację.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Klucz dostępu</string>

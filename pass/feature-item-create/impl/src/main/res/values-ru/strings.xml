@@ -152,7 +152,7 @@
   <string name="identity_section_address_details">Информация о адресе</string>
   <string name="identity_section_contact_details">Информация контакта</string>
   <string name="identity_section_work_details">Информация о работе</string>
-  <string name="identity_add_more_fields">Add another field</string>
+  <string name="identity_add_more_fields">Добавить другое поле</string>
   <string name="identity_bottomsheet_add_field">Добавить поле</string>
   <string name="create_identity_init_error">Проблема с получением информации о личных данных</string>
   <string name="create_identity_item_creation_error">Не удалось создать личные данные</string>

@@ -117,6 +117,12 @@
   <string name="share_with_remove_email_content_description">Ta bort e-post</string>
   <string name="share_with_secure_link_title">Via säker länk</string>
   <string name="share_with_secure_link_description">Generera en säker länk till detta objekt.</string>
+  <string name="share_with_manage_shared_vault_title">Hantera valvåtkomst</string>
+  <plurals name="share_with_manage_shared_vault_description">
+    <item quantity="one">Objektets valv delas för närvarande med %d användare.</item>
+    <item quantity="other">Objektets valv delas för närvarande med %d användare.</item>
+  </plurals>
+  <string name="share_with_view_shared_vault_members_title">Visa valvmedlemmar</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Ställ in åtkomstnivå för alla medlemmar</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Ställ in åtkomstnivå för %s</string>
   <string name="sharing_edit_permissions_remove_user">Ta bort användare</string>

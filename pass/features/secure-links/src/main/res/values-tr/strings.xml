@@ -41,25 +41,25 @@
   <string name="secure_links_overview_button_view_all_links">Tüm güvenli bağlantılarınızı görüntüleyin</string>
   <!--List screen-->
   <string name="secure_links_list_title">Güvenli bağlantılar</string>
-  <string name="secure_links_list_empty_title">No secure links</string>
-  <string name="secure_links_list_empty_subtitle">You can start creating secure links from an item details sharing options</string>
+  <string name="secure_links_list_empty_title">Herhangi bir güvenli bağlantı yok</string>
+  <string name="secure_links_list_empty_subtitle">Bir ögenin ayrıntılar bölümündeki paylaşma seçeneğinden güvenli bağlantılar oluşturabilirsiniz</string>
   <string name="secure_links_list_expiration_description">%s sonra geçerlilik süresi dolacak</string>
-  <string name="secure_links_list_expired_description">Expired</string>
+  <string name="secure_links_list_expired_description">Geçerlilik süresi dolmuş</string>
   <plurals name="secure_links_list_viewed_times_description">
     <item quantity="one">%d görüntülenme</item>
     <item quantity="other">%d görüntülenme</item>
   </plurals>
   <string name="secure_links_list_snackbar_message_links_fetch_error">Güvenli bağlantılar alınırken sorun çıktı</string>
-  <string name="secure_links_list_header_title_inactive">Inactive links</string>
+  <string name="secure_links_list_header_title_inactive">Etkin olmayan bağlantılar</string>
   <!--Shared-->
   <string name="secure_links_shared_action_copy_link">Bağlantıyı kopyala</string>
   <string name="secure_links_shared_action_share_link">Bağlantıyı paylaş</string>
   <string name="secure_links_shared_action_delete_link">Bağlantıyı kaldır</string>
-  <string name="secure_links_shared_action_delete_link_inactive">Remove inactive link</string>
-  <string name="secure_links_shared_action_delete_links_inactive">Remove all inactive links</string>
+  <string name="secure_links_shared_action_delete_link_inactive">Etkin olmayan bağlantıyı kaldır</string>
+  <string name="secure_links_shared_action_delete_links_inactive">Tüm etkin olmayan bağlantıları kaldır</string>
   <string name="secure_links_shared_snackbar_message_link_copied">Güvenli bağlantı kopyalandı</string>
   <string name="secure_links_shared_snackbar_message_link_deletion_canceled">Güvenli bağlantıyı silme işlemi iptal edildi</string>
   <string name="secure_links_shared_snackbar_message_link_deletion_error">Güvenli bağlantı silinirken sorun çıktı</string>
-  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Inactive secure links deletion was canceled</string>
-  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">There was an error deleting inactive secure links</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Etkin olmayan güvenli bağlantıları silme işlemi iptal edildi</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">Etkin olmayan güvenli bağlantılar silinirken sorun çıktı</string>
 </resources>

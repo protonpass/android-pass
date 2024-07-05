@@ -51,28 +51,18 @@
   <string name="field_username_or_email">Nom d\'usuari o adreça de correu electrònic</string>
   <string name="field_password">Contrasenya</string>
   <string name="websites_section_title">Llocs web</string>
-  <string name="totp_section_title">Testimoni A2F (TOTP)</string>
+  <string name="totp_section_title">Testimoni 2FA (TOTP)</string>
   <string name="action_reveal_password">Mostra la contrasenya</string>
   <string name="action_conceal_password">Oculta la contrasenya</string>
   <string name="action_reveal_number">Mostra el número</string>
   <string name="action_conceal_number">Oculta el número</string>
-  <string name="more_info_created">Creat:</string>
-  <string name="more_info_modified">Modificat:</string>
-  <string name="more_info_autofilled">Emplenat automàticament:</string>
-  <string name="more_info_title">Més informació</string>
-  <string name="more_info_icon">Icona de més informació</string>
-  <plurals name="more_info_modified_times">
-    <item quantity="one">%d vegada</item>
-    <item quantity="other">%d vegades</item>
-  </plurals>
-  <string name="more_info_last_time_modified">Última vegada, %s</string>
   <string name="share_button_content_description">Obre el botó de compartició</string>
   <string name="open_menu_icon_content_description">Botó d\'obertura de menú</string>
   <string name="mfa_limit_reached">S\'ha assolit el límit de 2FA</string>
   <string name="mfa_icon_content_description">Icona de 2FA</string>
   <string name="custom_field_text_icon_description">Camp de text personalitzat</string>
   <string name="custom_field_hidden_icon_description">Camp personalitzat ocult</string>
-  <string name="custom_field_totp_icon_description">Camp personalitzat A2F</string>
+  <string name="custom_field_totp_icon_description">Camp personalitzat 2FA</string>
   <!-- Credit card details -->
   <string name="credit_card_cardholder_field_name">Nom a la targeta</string>
   <string name="credit_card_number_field_name">Número de la targeta</string>
@@ -107,9 +97,6 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">No es pot compartir.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">No teniu prou permisos per compartir aquesta caixa forta.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Heu assolit el límit de compartició de la caixa forta. Per compartir més caixes fortes, milloreu el vostre pla actual.</string>
-  <string name="item_detail_history_created">Creat</string>
-  <string name="item_detail_history_modified_last">Última modificació</string>
-  <string name="item_detail_history_button_view">Mostra l\'historial de l\'element</string>
   <string name="password_score_vulnerable">Vulnerable</string>
   <string name="password_score_weak">Feble</string>
   <string name="password_score_strong">Segura</string>

@@ -56,16 +56,6 @@
   <string name="action_conceal_password">Wachtwoord verbergen</string>
   <string name="action_reveal_number">Nummer weergeven</string>
   <string name="action_conceal_number">Nummer verbergen</string>
-  <string name="more_info_created">Aangemaakt:</string>
-  <string name="more_info_modified">Gewijzigd:</string>
-  <string name="more_info_autofilled">Auto-invullen:</string>
-  <string name="more_info_title">Meer informatie</string>
-  <string name="more_info_icon">Meer info icoon</string>
-  <plurals name="more_info_modified_times">
-    <item quantity="one">%d keer</item>
-    <item quantity="other">%d keren</item>
-  </plurals>
-  <string name="more_info_last_time_modified">Laatste keer, %s</string>
   <string name="share_button_content_description">Deelknop openen</string>
   <string name="open_menu_icon_content_description">Menuknop openen</string>
   <string name="mfa_limit_reached">2FA-limiet bereikt</string>
@@ -107,9 +97,6 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Kan niet delen</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">U heeft onvoldoende machtigingen om deze kluis te delen.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">U heeft de limiet van het delen van kluis bereikt. Upgrade uw huidige abonnement om meer kluizen te delen.</string>
-  <string name="item_detail_history_created">Aangemaakt</string>
-  <string name="item_detail_history_modified_last">Voor het laatst gewijzigd</string>
-  <string name="item_detail_history_button_view">Bekijk item geschiedenis</string>
   <string name="password_score_vulnerable">Kwetsbaar</string>
   <string name="password_score_weak">Zwak</string>
   <string name="password_score_strong">Sterk</string>

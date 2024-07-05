@@ -29,7 +29,7 @@
   <string name="info_extra_password_body">추가 비밀버호로 Proton Pass 보호하기</string>
   <string name="info_extra_password_button">추가 비밀번호 설정</string>
   <string name="configure_extra_password_cannot_be_blank">암호는 비워둘 수 없습니다.</string>
-  <string name="configure_extra_password_password_too_short">Extra password must have at least 8 characters</string>
+  <string name="configure_extra_password_password_too_short">추가 비밀번호는 최소 8자여야 합니다.</string>
   <string name="confirm_extra_password_title">추가 비밀번호 설정</string>
   <string name="confirm_extra_password_body">사용자가 로그아웃되고 다른 모든 장치에서 다시 로그인해야 합니다.</string>
   <string name="confirm_extra_password_error">추가 비밀번호를 설정할 수 없음</string>

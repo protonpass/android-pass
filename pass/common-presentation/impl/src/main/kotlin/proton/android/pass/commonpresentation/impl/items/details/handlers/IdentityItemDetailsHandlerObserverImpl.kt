@@ -34,6 +34,7 @@ import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemState
 import javax.inject.Inject
 
 class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
@@ -47,6 +48,7 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
         observeIdentityItemContents(item),
         observeVaultById(shareId = item.shareId)
     ) { identityItemContents, vault ->
+        item.flags
         ItemDetailState.Identity(
             itemContents = identityItemContents,
             itemId = item.id,
@@ -56,6 +58,7 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
             itemModifiedAt = item.modificationTime,
             itemLastAutofillAtOption = item.lastAutofillTime,
             itemRevision = item.revision,
+            itemState = ItemState.from(item.state),
             itemVault = vault
         )
     }

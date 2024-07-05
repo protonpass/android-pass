@@ -25,6 +25,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.BrowserUtils
+import proton.android.pass.domain.ItemState
 import proton.android.pass.features.item.details.detail.presentation.ItemDetailsEvent
 import proton.android.pass.features.item.details.detail.presentation.ItemDetailsViewModel
 import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination
@@ -104,10 +105,17 @@ fun ItemDetailsScreen(
                     itemCategory = uiEvent.itemCategory
                 ).also(onNavigated)
 
-                is ItemDetailsUiEvent.OnMenuClicked -> ItemDetailsNavDestination.ItemMenu(
-                    shareId = uiEvent.shareId,
-                    itemId = uiEvent.itemId
-                ).also(onNavigated)
+                is ItemDetailsUiEvent.OnMenuClicked -> when (uiEvent.itemState) {
+                    ItemState.Active -> ItemDetailsNavDestination.ItemOptionsMenu(
+                        shareId = uiEvent.shareId,
+                        itemId = uiEvent.itemId
+                    )
+
+                    ItemState.Trashed -> ItemDetailsNavDestination.ItemTrashMenu(
+                        shareId = uiEvent.shareId,
+                        itemId = uiEvent.itemId
+                    )
+                }.also(onNavigated)
             }
         }
     )

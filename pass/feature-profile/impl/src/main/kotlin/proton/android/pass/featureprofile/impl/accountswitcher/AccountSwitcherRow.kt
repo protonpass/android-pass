@@ -43,6 +43,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.domain.entity.UserId
+import me.proton.core.util.kotlin.takeIfNotBlank
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -99,7 +100,7 @@ fun AccountSwitcherRow(
             CircleTextIcon(
                 text = accountListItem.accountItem.initials,
                 backgroundColor = PassTheme.colors.interactionNormMajor2,
-                textColor = PassTheme.colors.textInvert,
+                textColor = ProtonTheme.colors.textInverted,
                 shape = PassTheme.shapes.squircleSmallShape
             )
         }
@@ -110,7 +111,7 @@ fun AccountSwitcherRow(
                 text = accountListItem.accountItem.name,
                 color = if (isDisabled) ProtonTheme.colors.textDisabled else ProtonTheme.colors.textNorm
             )
-            accountListItem.accountItem.email?.let {
+            accountListItem.accountItem.email?.takeIfNotBlank()?.let {
                 Text.Body3Regular(
                     text = it,
                     color = if (isDisabled) ProtonTheme.colors.textDisabled else ProtonTheme.colors.textWeak

@@ -56,6 +56,7 @@ class UpdateCreditCardViewModelTest {
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
     private lateinit var getItemById: TestObserveItemById
     private lateinit var updateItem: TestUpdateItem
+    private lateinit var accountManager: TestAccountManager
 
     @Before
     fun setup() {
@@ -63,11 +64,10 @@ class UpdateCreditCardViewModelTest {
         snackbarDispatcher = TestSnackbarDispatcher()
         getItemById = TestObserveItemById()
         updateItem = TestUpdateItem()
-
+        accountManager = TestAccountManager()
+        accountManager.sendPrimaryUserId(UserId("user-id"))
         instance = UpdateCreditCardViewModel(
-            accountManager = TestAccountManager().apply {
-                sendPrimaryUserId(UserId("user-id"))
-            },
+            accountManager = accountManager,
             snackbarDispatcher = snackbarDispatcher,
             savedStateHandleProvider = TestSavedStateHandleProvider().apply {
                 get().set(CommonOptionalNavArgId.ShareId.key, SHARE_ID)
@@ -105,7 +105,6 @@ class UpdateCreditCardViewModelTest {
 
         instance.update()
         instance.state.test {
-            skipItems(1)
 
             val state = awaitItem()
             assertThat(state).isInstanceOf(UpdateCreditCardUiState.Success::class.java)
@@ -152,8 +151,6 @@ class UpdateCreditCardViewModelTest {
 
         instance.update()
         instance.state.test {
-            skipItems(1)
-
             val state = awaitItem()
             assertThat(state).isInstanceOf(UpdateCreditCardUiState.Success::class.java)
 

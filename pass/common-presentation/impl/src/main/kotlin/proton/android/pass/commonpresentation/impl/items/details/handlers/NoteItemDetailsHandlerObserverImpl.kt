@@ -34,6 +34,7 @@ import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemState
 import javax.inject.Inject
 
 class NoteItemDetailsHandlerObserverImpl @Inject constructor(
@@ -56,7 +57,8 @@ class NoteItemDetailsHandlerObserverImpl @Inject constructor(
             itemCreatedAt = item.createTime,
             itemModifiedAt = item.modificationTime,
             itemLastAutofillAtOption = item.lastAutofillTime,
-            itemRevision = item.revision
+            itemRevision = item.revision,
+            itemState = ItemState.from(item.state)
         )
     }
 

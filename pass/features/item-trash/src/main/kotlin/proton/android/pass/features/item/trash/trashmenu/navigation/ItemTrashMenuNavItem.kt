@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,25 +16,21 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.domain
+package proton.android.pass.features.item.trash.trashmenu.navigation
 
-object ItemStateValues {
-    const val ACTIVE = 1
-    const val TRASHED = 2
-}
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.NavItem
 
-enum class ItemState(val value: Int) {
-    Active(ItemStateValues.ACTIVE),
-    Trashed(ItemStateValues.TRASHED);
+object ItemTrashMenuNavItem : NavItem(
+    baseRoute = "item/trash/menu",
+    navArgIds = listOf(
+        CommonNavArgId.ShareId,
+        CommonNavArgId.ItemId
+    )
+) {
 
-    companion object {
-
-        fun from(value: Int): ItemState = when (value) {
-            ItemStateValues.ACTIVE -> Active
-            ItemStateValues.TRASHED -> Trashed
-            else -> throw IllegalArgumentException("Invalid ItemState value: $value")
-        }
-
-    }
+    fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
 
 }

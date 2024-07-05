@@ -37,6 +37,7 @@ import proton.android.pass.domain.AliasDetails
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemState
 import javax.inject.Inject
 
 class AliasItemDetailsHandlerObserverImpl @Inject constructor(
@@ -62,6 +63,7 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
             itemModifiedAt = item.modificationTime,
             itemLastAutofillAtOption = item.lastAutofillTime,
             itemRevision = item.revision,
+            itemState = ItemState.from(item.state),
             mailboxes = aliasDetails.mailboxes
         )
     }

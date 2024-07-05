@@ -55,15 +55,6 @@
   <string name="action_conceal_password">Che mật khẩu</string>
   <string name="action_reveal_number">Hiện số thẻ</string>
   <string name="action_conceal_number">Che số thẻ</string>
-  <string name="more_info_created">Đã tạo:</string>
-  <string name="more_info_modified">Sửa lần cuối:</string>
-  <string name="more_info_autofilled">Đã tự động điền:</string>
-  <string name="more_info_title">Thông tin thêm</string>
-  <string name="more_info_icon">Biểu tượng thông tin thêm</string>
-  <plurals name="more_info_modified_times">
-    <item quantity="other">%d lần</item>
-  </plurals>
-  <string name="more_info_last_time_modified">Lần cuối, %s</string>
   <string name="share_button_content_description">Mở nút chia sẻ</string>
   <string name="open_menu_icon_content_description">Nút mở menu</string>
   <string name="mfa_limit_reached">Đã dạt giới hạn 2FA</string>
@@ -105,9 +96,6 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Không thể chia sẽ</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Bạn không có đủ quyền để chia sẻ kho lưu trữ này.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">You have reached vault sharing limit. In order to share more vaults, please upgrade your current plan.</string>
-  <string name="item_detail_history_created">Đã tạo</string>
-  <string name="item_detail_history_modified_last">Sửa đổi lần cuối</string>
-  <string name="item_detail_history_button_view">Xem lịch sử nội dung</string>
   <string name="password_score_vulnerable">Dễ bị bẻ khóa</string>
   <string name="password_score_weak">Yếu</string>
   <string name="password_score_strong">Mạnh</string>

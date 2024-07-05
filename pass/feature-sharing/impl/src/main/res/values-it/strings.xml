@@ -117,6 +117,12 @@
   <string name="share_with_remove_email_content_description">Rimuovi questo indirizzo email</string>
   <string name="share_with_secure_link_title">Tramite link sicuro</string>
   <string name="share_with_secure_link_description">Genera un link sicuro per questo elemento.</string>
+  <string name="share_with_manage_shared_vault_title">Gestisci l\'accesso alla cassaforte</string>
+  <plurals name="share_with_manage_shared_vault_description">
+    <item quantity="one">L\'elemento della cassaforte è attualmente condiviso con %d utente.</item>
+    <item quantity="other">L\'elemento della cassaforte è attualmente condiviso con %d utenti.</item>
+  </plurals>
+  <string name="share_with_view_shared_vault_members_title">Visualizza i membri della cassaforte</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Imposta il livello di accesso per tutti i membri</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Imposta il livello di accesso per %s</string>
   <string name="sharing_edit_permissions_remove_user">Rimuovi l\'utente</string>

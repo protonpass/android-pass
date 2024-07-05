@@ -20,6 +20,7 @@
   <string name="account_settings_list_item_password_hint_grace">비밀번호 재설정 대기중</string>
   <string name="account_settings_list_item_password_hint_insecure">비밀번호 재설정 준비됨</string>
   <string name="account_settings_list_item_extra_password_header">Proton Pass의 추가 비밀번호</string>
+  <string name="account_settings_list_item_extra_password_header_set">Proton Pass 추가 비밀번호 설정</string>
   <string name="account_settings_list_item_extra_password_active">활성</string>
-  <string name="account_settings_list_item_extra_password_description">추가 비밀번호가 Pass 사용에 필요해 집니다. 사용자의 Proton 비밀번호의 축사적인 비밀번호가 됩니다.</string>
+  <string name="account_settings_list_item_extra_password_description">추가 비밀번호가 Pass 사용에 필요해 집니다. 사용자의 Proton 비밀번호의 추가적인 비밀번호가 됩니다.</string>
 </resources>

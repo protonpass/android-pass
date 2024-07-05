@@ -55,8 +55,8 @@
   <string name="secure_links_shared_action_copy_link">Link kopieren</string>
   <string name="secure_links_shared_action_share_link">Link teilen</string>
   <string name="secure_links_shared_action_delete_link">Link entfernen</string>
-  <string name="secure_links_shared_action_delete_link_inactive">Remove inactive link</string>
-  <string name="secure_links_shared_action_delete_links_inactive">Remove all inactive links</string>
+  <string name="secure_links_shared_action_delete_link_inactive">Inaktiven Link entfernen</string>
+  <string name="secure_links_shared_action_delete_links_inactive">Alle inaktiven Links entfernen</string>
   <string name="secure_links_shared_snackbar_message_link_copied">Sicherer Link kopiert</string>
   <string name="secure_links_shared_snackbar_message_link_deletion_canceled">Löschen des sicheren Links abgebrochen</string>
   <string name="secure_links_shared_snackbar_message_link_deletion_error">Fehler beim Löschen des sicheren Links.</string>

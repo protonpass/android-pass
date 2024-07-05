@@ -20,6 +20,7 @@
   <string name="account_settings_list_item_password_hint_grace">Ожидается сброс пароля</string>
   <string name="account_settings_list_item_password_hint_insecure">Сброс пароля готов</string>
   <string name="account_settings_list_item_extra_password_header">Дополнительный пароль для Proton Pass</string>
+  <string name="account_settings_list_item_extra_password_header_set">Установить дополнительный пароль для Proton Pass</string>
   <string name="account_settings_list_item_extra_password_active">Активный</string>
   <string name="account_settings_list_item_extra_password_description">Для использования Pass потребуется дополнительный пароль. Он действует как дополнительный пароль в дополнение к вашему паролю Proton.</string>
 </resources>

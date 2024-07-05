@@ -20,6 +20,7 @@
   <string name="account_settings_list_item_password_hint_grace">Εκκρεμεί επαναφορά κωδικού πρόσβασης</string>
   <string name="account_settings_list_item_password_hint_insecure">Έτοιμη επαναφορά κωδικού πρόσβασης</string>
   <string name="account_settings_list_item_extra_password_header">Επιπλέον κωδικός πρόσβασης για το Proton Pass</string>
+  <string name="account_settings_list_item_extra_password_header_set">Ορίστε επιπλέον κωδικό πρόσβασης για το Proton Pass</string>
   <string name="account_settings_list_item_extra_password_active">Ενεργό</string>
   <string name="account_settings_list_item_extra_password_description">Ο επιπλέον κωδικός πρόσβασης θα απαιτηθεί για τη χρήση του Pass. Λειτουργεί ως πρόσθετος κωδικός πρόσβασης πάνω από τον κωδικό πρόσβασης Proton.</string>
 </resources>

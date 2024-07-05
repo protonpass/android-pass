@@ -56,16 +56,6 @@
   <string name="action_conceal_password">Ocultar senha</string>
   <string name="action_reveal_number">Exibir número</string>
   <string name="action_conceal_number">Ocultar número</string>
-  <string name="more_info_created">Criação:</string>
-  <string name="more_info_modified">Modificado:</string>
-  <string name="more_info_autofilled">Preenchimento automático:</string>
-  <string name="more_info_title">Mais informações</string>
-  <string name="more_info_icon">Ícone de mais informações</string>
-  <plurals name="more_info_modified_times">
-    <item quantity="one">%d vez</item>
-    <item quantity="other">%d vezes</item>
-  </plurals>
-  <string name="more_info_last_time_modified">Última vez, %s</string>
   <string name="share_button_content_description">Abrir botão de compartilhar</string>
   <string name="open_menu_icon_content_description">Botão de abrir menu</string>
   <string name="mfa_limit_reached">Limite A2F atingido</string>
@@ -107,9 +97,6 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Não pode compartilhar</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Você não tem permissões suficientes para compartilhar este cofre.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Você atingiu o limite de compartilhamento do cofre. Para compartilhar mais cofres, atualize seu plano atual.</string>
-  <string name="item_detail_history_created">Criado</string>
-  <string name="item_detail_history_modified_last">Última modificação</string>
-  <string name="item_detail_history_button_view">Visualizar histórico do item</string>
   <string name="password_score_vulnerable">Vulnerável</string>
   <string name="password_score_weak">Fraco</string>
   <string name="password_score_strong">Forte</string>

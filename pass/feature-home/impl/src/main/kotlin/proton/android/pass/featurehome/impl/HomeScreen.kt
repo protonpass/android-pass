@@ -226,6 +226,7 @@ fun HomeScreen(
             BottomSheetItemAction.Unpin,
             BottomSheetItemAction.History,
             BottomSheetItemAction.Remove,
+            BottomSheetItemAction.Restore,
             BottomSheetItemAction.Trash -> return@LaunchedEffect
         }
     }

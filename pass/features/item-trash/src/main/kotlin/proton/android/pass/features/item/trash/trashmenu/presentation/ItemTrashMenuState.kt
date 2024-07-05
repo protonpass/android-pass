@@ -22,9 +22,12 @@ import androidx.compose.runtime.Stable
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
 
 @Stable
 internal data class ItemTrashMenuState(
+    internal val action: BottomSheetItemAction,
+    internal val event: ItemTrashMenuEvent,
     internal val canLoadExternalImages: Boolean,
     private val itemUiModelOption: Option<ItemUiModel>
 ) {
@@ -32,6 +35,8 @@ internal data class ItemTrashMenuState(
     internal companion object {
 
         internal val Initial: ItemTrashMenuState = ItemTrashMenuState(
+            action = BottomSheetItemAction.None,
+            event = ItemTrashMenuEvent.Idle,
             canLoadExternalImages = false,
             itemUiModelOption = None
         )

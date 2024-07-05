@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.composecomponents.impl.R
 import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -57,6 +58,9 @@ sealed interface BottomSheetItemAction {
 
     @Stable
     data object Remove : BottomSheetItemAction
+
+    @Stable
+    data object Restore : BottomSheetItemAction
 
     @Stable
     data object Trash : BottomSheetItemAction
@@ -263,4 +267,59 @@ fun trash(action: BottomSheetItemAction, onClick: () -> Unit): BottomSheetItem =
 
     override val isDivider = false
 
+}
+
+fun restore(action: BottomSheetItemAction, onClick: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+
+    override val title: @Composable () -> Unit
+        get() = { BottomSheetItemTitle(text = stringResource(R.string.bottomsheet_restore)) }
+
+    override val subtitle: @Composable (() -> Unit)?
+        get() = null
+
+    override val leftIcon: @Composable (() -> Unit)
+        get() = { BottomSheetItemIcon(iconId = CoreR.drawable.ic_proton_clock_rotate_left) }
+
+    override val endIcon: @Composable (() -> Unit)
+        get() = {
+            if (action is BottomSheetItemAction.Restore) {
+                CircularProgressIndicator(modifier = Modifier.size(20.dp))
+            }
+        }
+
+    override val onClick: (() -> Unit)
+        get() = { onClick() }
+
+    override val isDivider = false
+
+}
+
+fun delete(onClick: () -> Unit) : BottomSheetItem = object : BottomSheetItem {
+
+    override val title: @Composable () -> Unit
+        get() = {
+            BottomSheetItemTitle(
+                text = stringResource(R.string.bottomsheet_delete_permanently),
+                color = ProtonTheme.colors.notificationError
+            )
+        }
+
+    override val subtitle: @Composable (() -> Unit)?
+        get() = null
+
+    override val leftIcon: @Composable (() -> Unit)
+        get() = {
+            BottomSheetItemIcon(
+                iconId = CoreR.drawable.ic_proton_trash_cross,
+                tint = ProtonTheme.colors.notificationError
+            )
+        }
+
+    override val endIcon: (@Composable () -> Unit)
+        get() = {}
+
+    override val onClick: () -> Unit
+        get() = { onClick() }
+
+    override val isDivider = false
 }

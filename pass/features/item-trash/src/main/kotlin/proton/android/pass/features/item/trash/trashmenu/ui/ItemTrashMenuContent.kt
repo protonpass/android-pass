@@ -18,14 +18,21 @@
 
 package proton.android.pass.features.item.trash.trashmenu.ui
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemRow
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemSubtitle
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.delete
 import proton.android.pass.composecomponents.impl.bottomsheet.restore
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
+import proton.android.pass.composecomponents.impl.icon.PassItemIcon
 import proton.android.pass.features.item.trash.trashmenu.presentation.ItemTrashMenuState
 
 @Composable
@@ -34,16 +41,35 @@ internal fun ItemTrashMenuContent(
     onEvent: (ItemTrashMenuUiEvent) -> Unit,
     state: ItemTrashMenuState
 ) = with(state) {
-    listOf(
-        restore(
-            action = action,
-            onClick = { onEvent(ItemTrashMenuUiEvent.OnRestoreItemClicked) }
-        ),
-        delete { onEvent(ItemTrashMenuUiEvent.OnDeleteItemPermanentlyClicked) }
-    ).let { bottomSheetItems ->
-        BottomSheetItemList(
-            modifier = modifier.bottomSheet(),
-            items = bottomSheetItems.withDividers().toPersistentList()
+    Column(
+        modifier = modifier.bottomSheet()
+    ) {
+        BottomSheetItemRow(
+            title = { BottomSheetItemTitle(text = itemTitle) },
+            subtitle = { BottomSheetItemSubtitle(text = itemSubtitle) },
+            leftIcon = {
+                PassItemIcon(
+                    itemCategory = itemCategory,
+                    text = itemTitle,
+                    website = itemWebsite,
+                    packageName = itemPackageName,
+                    canLoadExternalImages = canLoadExternalImages
+                )
+            }
         )
+
+        Divider(modifier = Modifier.fillMaxWidth())
+
+        listOf(
+            restore(
+                action = action,
+                onClick = { onEvent(ItemTrashMenuUiEvent.OnRestoreItemClicked) }
+            ),
+            delete { onEvent(ItemTrashMenuUiEvent.OnDeleteItemPermanentlyClicked) }
+        ).let { bottomSheetItems ->
+            BottomSheetItemList(
+                items = bottomSheetItems.withDividers().toPersistentList()
+            )
+        }
     }
 }

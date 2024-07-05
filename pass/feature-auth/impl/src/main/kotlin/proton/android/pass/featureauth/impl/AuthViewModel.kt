@@ -59,7 +59,7 @@ import proton.android.pass.data.api.errors.TooManyExtraPasswordAttemptsException
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.errors.WrongExtraPasswordException
 import proton.android.pass.data.api.usecases.CheckMasterPassword
-import proton.android.pass.data.api.usecases.ObservePrimaryUserEmail
+import proton.android.pass.data.api.usecases.ObserveUserEmail
 import proton.android.pass.data.api.usecases.extrapassword.AuthWithExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.CheckLocalExtraPassword
 import proton.android.pass.data.api.usecases.extrapassword.HasExtraPassword
@@ -89,7 +89,7 @@ class AuthViewModel @Inject constructor(
     private val removeExtraPassword: RemoveExtraPassword,
     private val snackbarDispatcher: SnackbarDispatcher,
     hasExtraPassword: HasExtraPassword,
-    observePrimaryUserEmail: ObservePrimaryUserEmail,
+    observeUserEmail: ObserveUserEmail,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -118,7 +118,7 @@ class AuthViewModel @Inject constructor(
     val state: StateFlow<AuthState> = combine(
         eventFlow,
         formContentFlow,
-        observePrimaryUserEmail().asLoadingResult(),
+        observeUserEmail(userId.value()).asLoadingResult(),
         authMethodFlow,
         oneShot { hasExtraPassword(userId.value()) }.asLoadingResult()
     ) { event, formContent, userEmail, authMethod, hasExtraPassword ->

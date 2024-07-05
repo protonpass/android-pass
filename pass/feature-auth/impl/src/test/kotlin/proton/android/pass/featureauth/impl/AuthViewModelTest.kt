@@ -41,7 +41,7 @@ import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.fakes.usecases.TestCheckMasterPassword
-import proton.android.pass.data.fakes.usecases.TestObservePrimaryUserEmail
+import proton.android.pass.data.fakes.usecases.TestObserveUserEmail
 import proton.android.pass.data.fakes.usecases.accesskey.FakeAuthWithExtraPassword
 import proton.android.pass.data.fakes.usecases.accesskey.FakeCheckLocalExtraPassword
 import proton.android.pass.data.fakes.usecases.accesskey.FakeHasExtraPassword
@@ -79,7 +79,7 @@ internal class AuthViewModelTest {
                 override val default = UnconfinedTestDispatcher()
                 override val io = UnconfinedTestDispatcher()
             },
-            observePrimaryUserEmail = TestObservePrimaryUserEmail().apply {
+            observeUserEmail = TestObserveUserEmail().apply {
                 emit(USER_EMAIL)
             },
             savedStateHandleProvider = TestSavedStateHandleProvider(),

@@ -27,13 +27,13 @@ import kotlinx.coroutines.flow.onStart
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
-import proton.android.pass.data.api.usecases.ObservePrimaryUserEmail
+import proton.android.pass.data.api.usecases.ObserveUserEmail
 import javax.inject.Inject
 
-class ObservePrimaryUserEmailImpl @Inject constructor(
+class ObserveUserEmailImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val userManager: UserManager
-) : ObservePrimaryUserEmail {
+) : ObserveUserEmail {
 
     override fun invoke(userId: UserId?): Flow<String> = getUserId(userId)
         .filterNotNull()

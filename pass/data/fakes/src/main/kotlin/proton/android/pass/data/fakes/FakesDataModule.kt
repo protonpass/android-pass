@@ -85,10 +85,10 @@ import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveMFACount
 import proton.android.pass.data.api.usecases.ObservePinnedItems
-import proton.android.pass.data.api.usecases.ObservePrimaryUserEmail
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveUsableVaults
 import proton.android.pass.data.api.usecases.ObserveUserAccessData
+import proton.android.pass.data.api.usecases.ObserveUserEmail
 import proton.android.pass.data.api.usecases.ObserveVaultById
 import proton.android.pass.data.api.usecases.ObserveVaultWithItemCountById
 import proton.android.pass.data.api.usecases.ObserveVaults
@@ -159,11 +159,11 @@ import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry
 import proton.android.pass.data.api.usecases.securelink.DeleteInactiveSecureLinks
 import proton.android.pass.data.api.usecases.securelink.DeleteSecureLink
 import proton.android.pass.data.api.usecases.securelink.GenerateSecureLink
+import proton.android.pass.data.api.usecases.securelink.ObserveActiveSecureLinks
+import proton.android.pass.data.api.usecases.securelink.ObserveInactiveSecureLinks
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinks
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
-import proton.android.pass.data.api.usecases.securelink.ObserveActiveSecureLinks
-import proton.android.pass.data.api.usecases.securelink.ObserveInactiveSecureLinks
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
 import proton.android.pass.data.api.usecases.vaults.ObserveVaultsGroupedByShareId
@@ -243,11 +243,11 @@ import proton.android.pass.data.fakes.usecases.TestObserveItemsWithPasskeys
 import proton.android.pass.data.fakes.usecases.TestObserveMFACount
 import proton.android.pass.data.fakes.usecases.TestObserveOrganizationSettings
 import proton.android.pass.data.fakes.usecases.TestObservePinnedItems
-import proton.android.pass.data.fakes.usecases.TestObservePrimaryUserEmail
 import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveUsableVaults
 import proton.android.pass.data.fakes.usecases.TestObserveUserAccessData
+import proton.android.pass.data.fakes.usecases.TestObserveUserEmail
 import proton.android.pass.data.fakes.usecases.TestObserveVaultById
 import proton.android.pass.data.fakes.usecases.TestObserveVaultWithItemCountById
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
@@ -304,11 +304,11 @@ import proton.android.pass.data.fakes.usecases.items.FakeUpdateItemFlag
 import proton.android.pass.data.fakes.usecases.securelink.FakeDeleteInactiveSecureLinks
 import proton.android.pass.data.fakes.usecases.securelink.FakeDeleteSecureLink
 import proton.android.pass.data.fakes.usecases.securelink.FakeGenerateSecureLink
+import proton.android.pass.data.fakes.usecases.securelink.FakeObserveActiveSecureLinks
+import proton.android.pass.data.fakes.usecases.securelink.FakeObserveInactiveSecureLinks
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLink
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLinks
 import proton.android.pass.data.fakes.usecases.securelink.FakeObserveSecureLinksCount
-import proton.android.pass.data.fakes.usecases.securelink.FakeObserveActiveSecureLinks
-import proton.android.pass.data.fakes.usecases.securelink.FakeObserveInactiveSecureLinks
 import proton.android.pass.data.fakes.usecases.tooltips.FakeDisableTooltip
 import proton.android.pass.data.fakes.usecases.tooltips.FakeObserveTooltipEnabled
 import proton.android.pass.data.fakes.usecases.vaults.FakeObserveVaultsGroupedByShareId
@@ -483,7 +483,7 @@ abstract class FakesDataModule {
     abstract fun bindCheckMasterPassword(impl: TestCheckMasterPassword): CheckMasterPassword
 
     @Binds
-    abstract fun bindObservePrimaryUserEmail(impl: TestObservePrimaryUserEmail): ObservePrimaryUserEmail
+    abstract fun bindObserveUserEmail(impl: TestObserveUserEmail): ObserveUserEmail
 
     @Binds
     abstract fun bindCheckPin(impl: TestCheckPin): CheckPin

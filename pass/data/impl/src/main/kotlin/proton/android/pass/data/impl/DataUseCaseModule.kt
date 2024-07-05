@@ -82,10 +82,10 @@ import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveMFACount
 import proton.android.pass.data.api.usecases.ObservePinnedItems
-import proton.android.pass.data.api.usecases.ObservePrimaryUserEmail
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveUsableVaults
 import proton.android.pass.data.api.usecases.ObserveUserAccessData
+import proton.android.pass.data.api.usecases.ObserveUserEmail
 import proton.android.pass.data.api.usecases.ObserveVaultById
 import proton.android.pass.data.api.usecases.ObserveVaultCount
 import proton.android.pass.data.api.usecases.ObserveVaultWithItemCountById
@@ -165,11 +165,11 @@ import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry
 import proton.android.pass.data.api.usecases.securelink.DeleteInactiveSecureLinks
 import proton.android.pass.data.api.usecases.securelink.DeleteSecureLink
 import proton.android.pass.data.api.usecases.securelink.GenerateSecureLink
+import proton.android.pass.data.api.usecases.securelink.ObserveActiveSecureLinks
+import proton.android.pass.data.api.usecases.securelink.ObserveInactiveSecureLinks
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLink
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinks
 import proton.android.pass.data.api.usecases.securelink.ObserveSecureLinksCount
-import proton.android.pass.data.api.usecases.securelink.ObserveActiveSecureLinks
-import proton.android.pass.data.api.usecases.securelink.ObserveInactiveSecureLinks
 import proton.android.pass.data.api.usecases.sync.ForceSyncItems
 import proton.android.pass.data.api.usecases.tooltips.DisableTooltip
 import proton.android.pass.data.api.usecases.tooltips.ObserveTooltipEnabled
@@ -239,10 +239,10 @@ import proton.android.pass.data.impl.usecases.ObserveItemCountImpl
 import proton.android.pass.data.impl.usecases.ObserveItemsImpl
 import proton.android.pass.data.impl.usecases.ObserveMFACountImpl
 import proton.android.pass.data.impl.usecases.ObservePinnedItemsImpl
-import proton.android.pass.data.impl.usecases.ObservePrimaryUserEmailImpl
 import proton.android.pass.data.impl.usecases.ObserveUpgradeInfoImpl
 import proton.android.pass.data.impl.usecases.ObserveUsableVaultsImpl
 import proton.android.pass.data.impl.usecases.ObserveUserAccessDataImpl
+import proton.android.pass.data.impl.usecases.ObserveUserEmailImpl
 import proton.android.pass.data.impl.usecases.ObserveVaultByIdImpl
 import proton.android.pass.data.impl.usecases.ObserveVaultCountImpl
 import proton.android.pass.data.impl.usecases.ObserveVaultWithItemCountByIdImpl
@@ -323,11 +323,11 @@ import proton.android.pass.data.impl.usecases.searchentry.ObserveSearchEntryImpl
 import proton.android.pass.data.impl.usecases.securelink.DeleteInactiveSecureLinksImpl
 import proton.android.pass.data.impl.usecases.securelink.DeleteSecureLinkImpl
 import proton.android.pass.data.impl.usecases.securelink.GenerateSecureLinkImpl
+import proton.android.pass.data.impl.usecases.securelink.ObserveActiveSecureLinksImpl
+import proton.android.pass.data.impl.usecases.securelink.ObserveInactiveSecureLinksImpl
 import proton.android.pass.data.impl.usecases.securelink.ObserveSecureLinkImpl
 import proton.android.pass.data.impl.usecases.securelink.ObserveSecureLinksCountImpl
 import proton.android.pass.data.impl.usecases.securelink.ObserveSecureLinksImpl
-import proton.android.pass.data.impl.usecases.securelink.ObserveActiveSecureLinksImpl
-import proton.android.pass.data.impl.usecases.securelink.ObserveInactiveSecureLinksImpl
 import proton.android.pass.data.impl.usecases.sync.ForceSyncItemsImpl
 import proton.android.pass.data.impl.usecases.tooltips.DisableTooltipImpl
 import proton.android.pass.data.impl.usecases.tooltips.ObserveTooltipEnabledImpl
@@ -526,7 +526,7 @@ abstract class DataUseCaseModule {
     abstract fun bindCheckMasterPassword(impl: CheckMasterPasswordImpl): CheckMasterPassword
 
     @Binds
-    abstract fun bindObservePrimaryUserEmail(impl: ObservePrimaryUserEmailImpl): ObservePrimaryUserEmail
+    abstract fun bindObserveUserEmail(impl: ObserveUserEmailImpl): ObserveUserEmail
 
     @Binds
     abstract fun bindCheckPin(impl: CheckPinImpl): CheckPin

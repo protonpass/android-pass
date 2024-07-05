@@ -26,6 +26,7 @@ import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Totp
 import proton.android.pass.domain.Vault
@@ -55,6 +56,8 @@ sealed interface ItemDetailState {
 
     val itemRevision: Long
 
+    val itemState: ItemState
+
     @Stable
     data class Alias(
         override val itemContents: ItemContents.Alias,
@@ -66,6 +69,7 @@ sealed interface ItemDetailState {
         override val itemModifiedAt: Instant,
         override val itemLastAutofillAtOption: Option<Instant>,
         override val itemRevision: Long,
+        override val itemState: ItemState,
         val mailboxes: List<AliasMailbox>
     ) : ItemDetailState {
 
@@ -83,7 +87,8 @@ sealed interface ItemDetailState {
         override val itemCreatedAt: Instant,
         override val itemModifiedAt: Instant,
         override val itemLastAutofillAtOption: Option<Instant>,
-        override val itemRevision: Long
+        override val itemRevision: Long,
+        override val itemState: ItemState
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.CreditCard
@@ -100,7 +105,8 @@ sealed interface ItemDetailState {
         override val itemCreatedAt: Instant,
         override val itemModifiedAt: Instant,
         override val itemLastAutofillAtOption: Option<Instant>,
-        override val itemRevision: Long
+        override val itemRevision: Long,
+        override val itemState: ItemState
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Identity
@@ -118,6 +124,7 @@ sealed interface ItemDetailState {
         override val itemModifiedAt: Instant,
         override val itemLastAutofillAtOption: Option<Instant>,
         override val itemRevision: Long,
+        override val itemState: ItemState,
         val canLoadExternalImages: Boolean,
         val passwordStrength: PasswordStrength,
         val primaryTotp: Totp?,
@@ -140,7 +147,8 @@ sealed interface ItemDetailState {
         override val itemCreatedAt: Instant,
         override val itemModifiedAt: Instant,
         override val itemLastAutofillAtOption: Option<Instant>,
-        override val itemRevision: Long
+        override val itemRevision: Long,
+        override val itemState: ItemState
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Note
@@ -157,7 +165,8 @@ sealed interface ItemDetailState {
         override val itemCreatedAt: Instant,
         override val itemModifiedAt: Instant,
         override val itemLastAutofillAtOption: Option<Instant>,
-        override val itemRevision: Long
+        override val itemRevision: Long,
+        override val itemState: ItemState
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Unknown

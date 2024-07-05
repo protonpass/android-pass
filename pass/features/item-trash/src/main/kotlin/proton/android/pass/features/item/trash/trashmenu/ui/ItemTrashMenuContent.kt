@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,25 +16,17 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.domain
+package proton.android.pass.features.item.trash.trashmenu.ui
 
-object ItemStateValues {
-    const val ACTIVE = 1
-    const val TRASHED = 2
-}
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import proton.android.pass.features.item.trash.trashmenu.presentation.ItemTrashMenuState
 
-enum class ItemState(val value: Int) {
-    Active(ItemStateValues.ACTIVE),
-    Trashed(ItemStateValues.TRASHED);
-
-    companion object {
-
-        fun from(value: Int): ItemState = when (value) {
-            ItemStateValues.ACTIVE -> Active
-            ItemStateValues.TRASHED -> Trashed
-            else -> throw IllegalArgumentException("Invalid ItemState value: $value")
-        }
-
-    }
+@Composable
+internal fun ItemTrashMenuContent(
+    modifier: Modifier = Modifier,
+    onUiEvent: (ItemTrashMenuUiEvent) -> Unit,
+    state: ItemTrashMenuState
+) = with(state) {
 
 }

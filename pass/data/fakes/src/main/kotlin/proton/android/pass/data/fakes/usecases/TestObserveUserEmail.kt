@@ -22,12 +22,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.api.usecases.ObservePrimaryUserEmail
+import proton.android.pass.data.api.usecases.ObserveUserEmail
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TestObservePrimaryUserEmail @Inject constructor() : ObservePrimaryUserEmail {
+class TestObserveUserEmail @Inject constructor() : ObserveUserEmail {
 
     private val flow: MutableStateFlow<String> = MutableStateFlow(DEFAULT_EMAIL)
 

@@ -25,6 +25,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.AppUrls.PASS_STORE
 import proton.android.pass.commonui.api.BrowserUtils.openWebsite
@@ -40,6 +41,13 @@ fun ProfileScreen(
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val accountReady by viewModel.onAccountReadyFlow.collectAsStateWithLifecycle(
+        minActiveState = Lifecycle.State.CREATED
+    )
+    LaunchedEffect(accountReady?.userId) {
+        accountReady ?: return@LaunchedEffect
+        onNavigateEvent(ProfileNavigation.SyncDialog)
+    }
     val context = LocalContext.current
 
     LaunchedEffect(enterPinSuccess) {

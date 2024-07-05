@@ -152,14 +152,6 @@ class CreateCreditCardViewModelTest {
             val secondItem = awaitItem()
             val secondExpected = firstExpected.copy(
                 baseState = firstExpected.baseState.copy(
-                    isLoading = IsLoadingState.Loading.value()
-                )
-            )
-            assertThat(secondItem).isEqualTo(secondExpected)
-
-            val thirdItem = awaitItem()
-            val thirdExpected = secondExpected.copy(
-                baseState = secondExpected.baseState.copy(
                     isLoading = IsLoadingState.NotLoading.value(),
                     isItemSaved = ItemSavedState.Success(
                         itemId = item.id,
@@ -178,7 +170,7 @@ class CreateCreditCardViewModelTest {
                     )
                 )
             )
-            assertThat(thirdItem).isEqualTo(thirdExpected)
+            assertThat(secondItem).isEqualTo(secondExpected)
         }
 
         val memory = telemetryManager.getMemory()
@@ -200,7 +192,6 @@ class CreateCreditCardViewModelTest {
         instance.state.test {
             instance.createItem()
 
-            skipItems(2)
             val item = awaitItem()
             assertThat(createItem.hasBeenInvoked()).isTrue()
 

@@ -158,13 +158,13 @@ internal class CreateLoginViewModelTest {
 
         val titleInput = "Title input"
         instance.onTitleChange(titleInput)
-
-        val userId = UserId("user-id")
-        accountManager.sendPrimaryUserId(userId)
+        accountManager.sendPrimaryUserId(UserId("user-id"))
         createItem.sendItem(Result.success(item))
 
         instance.createLoginUiState.test {
+
             instance.createItem()
+
             val firstItem = awaitItem()
             val firstExpected = baseState.copy(
                 shareUiState = ShareUiState.Success(
@@ -179,22 +179,8 @@ internal class CreateLoginViewModelTest {
             )
             assertThat(firstItem).isEqualTo(firstExpected)
             val secondItem = awaitItem()
-            val secondExpected = firstExpected.copy(
-                baseLoginUiState = firstExpected.baseLoginUiState.copy(
-                    isLoadingState = IsLoadingState.Loading
-                )
-            )
-            assertThat(secondItem).isEqualTo(secondExpected)
-            val thirdItem = awaitItem()
-            val thirdExpected = secondItem.copy(
-                baseLoginUiState = secondItem.baseLoginUiState.copy(
-                    isLoadingState = IsLoadingState.NotLoading
-                )
-            )
-            assertThat(thirdItem).isEqualTo(thirdExpected)
-            val fourthItem = awaitItem()
-            val fourthExpected = thirdItem.copy(
-                baseLoginUiState = thirdItem.baseLoginUiState.copy(
+            val secondExpected = firstItem.copy(
+                baseLoginUiState = firstItem.baseLoginUiState.copy(
                     isLoadingState = IsLoadingState.NotLoading,
                     isItemSaved = ItemSavedState.Success(
                         item.id,
@@ -213,7 +199,7 @@ internal class CreateLoginViewModelTest {
                     )
                 )
             )
-            assertThat(fourthItem).isEqualTo(fourthExpected)
+            assertThat(secondItem).isEqualTo(secondExpected)
         }
 
         val memory = telemetryManager.getMemory()
@@ -230,10 +216,8 @@ internal class CreateLoginViewModelTest {
         createItem.sendItem(Result.failure(IllegalStateException("Test")))
 
         instance.createLoginUiState.test {
-            skipItems(1) // Initial state
             instance.createItem()
 
-            skipItems(1) // Loading
             val item = awaitItem()
             assertThat(createItem.hasBeenInvoked()).isTrue()
 
@@ -254,10 +238,8 @@ internal class CreateLoginViewModelTest {
         createItemAndAlias.setResult(Result.failure(IllegalStateException("Test")))
 
         instance.createLoginUiState.test {
-            skipItems(1) // Initial state
             instance.createItem()
 
-            skipItems(1) // Loading
             val item = awaitItem()
             assertThat(createItemAndAlias.hasBeenInvoked()).isTrue()
 
@@ -278,10 +260,8 @@ internal class CreateLoginViewModelTest {
         createItemAndAlias.setResult(Result.failure(EmailNotValidatedError()))
 
         instance.createLoginUiState.test {
-            skipItems(1) // Initial state
             instance.createItem()
 
-            skipItems(1) // Loading
             val item = awaitItem()
             assertThat(createItemAndAlias.hasBeenInvoked()).isTrue()
 

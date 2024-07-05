@@ -162,7 +162,6 @@ class CreateAliasViewModelTest {
         viewModel.createAliasUiState.test { awaitItem() }
         viewModel.createAlias(TestShare.create().id)
         viewModel.createAliasUiState.test {
-            skipItems(1)
             val item = awaitItem()
 
             assertThat(item.baseAliasUiState.isLoadingState).isEqualTo(IsLoadingState.NotLoading)

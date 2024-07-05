@@ -41,7 +41,7 @@
   <string name="secure_links_overview_button_view_all_links">Ver todos os seus links seguros</string>
   <!--List screen-->
   <string name="secure_links_list_title">Links seguros</string>
-  <string name="secure_links_list_empty_title">No secure links</string>
+  <string name="secure_links_list_empty_title">Nenhum link seguro</string>
   <string name="secure_links_list_empty_subtitle">You can start creating secure links from an item details sharing options</string>
   <string name="secure_links_list_expiration_description">Expira em %s</string>
   <string name="secure_links_list_expired_description">Expirado</string>
@@ -58,8 +58,8 @@
   <string name="secure_links_shared_action_delete_link_inactive">Remover link inativo</string>
   <string name="secure_links_shared_action_delete_links_inactive">Remover todos os link inativo</string>
   <string name="secure_links_shared_snackbar_message_link_copied">Link seguro copiado</string>
-  <string name="secure_links_shared_snackbar_message_link_deletion_canceled">Secure link deletion was canceled</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_canceled">A exclusão do link seguro foi cancelada</string>
   <string name="secure_links_shared_snackbar_message_link_deletion_error">There was an error deleting secure link</string>
-  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Inactive secure links deletion was canceled</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">A exclusão de links seguros inativos foi cancelada</string>
   <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">There was an error deleting inactive secure links</string>
 </resources>

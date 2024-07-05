@@ -55,15 +55,6 @@
   <string name="action_conceal_password">비밀번호 숨기기</string>
   <string name="action_reveal_number">번호 표시하기</string>
   <string name="action_conceal_number">번호 숨기기</string>
-  <string name="more_info_created">생성됨:</string>
-  <string name="more_info_modified">수정됨:</string>
-  <string name="more_info_autofilled">자동 생성됨:</string>
-  <string name="more_info_title">상세 정보</string>
-  <string name="more_info_icon">상세 정보 아이콘</string>
-  <plurals name="more_info_modified_times">
-    <item quantity="other">%d회</item>
-  </plurals>
-  <string name="more_info_last_time_modified">마지막 동기화 시점: %s</string>
   <string name="share_button_content_description">공유 버튼 열기</string>
   <string name="open_menu_icon_content_description">매뉴 버튼 열기</string>
   <string name="mfa_limit_reached">2단계 인증 제한 도달</string>
@@ -105,9 +96,6 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">공유할 수 없음.</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">이 금고를 공유할 권한이 없습니다.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">금고 공유 수 제한에 도달했습니다. 금고를 더 공유하려면 현재 플랜에서 업그레이드 하세요.</string>
-  <string name="item_detail_history_created">생성함</string>
-  <string name="item_detail_history_modified_last">마지막으로 수정함</string>
-  <string name="item_detail_history_button_view">항목 기록 보기</string>
   <string name="password_score_vulnerable">취약</string>
   <string name="password_score_weak">약함</string>
   <string name="password_score_strong">강함</string>

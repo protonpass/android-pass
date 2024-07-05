@@ -56,16 +56,6 @@
   <string name="action_conceal_password">Nascondi la password</string>
   <string name="action_reveal_number">Mostra il numero</string>
   <string name="action_conceal_number">Nascondi il numero</string>
-  <string name="more_info_created">Creato:</string>
-  <string name="more_info_modified">Modificato:</string>
-  <string name="more_info_autofilled">Compilato:</string>
-  <string name="more_info_title">Dettagli</string>
-  <string name="more_info_icon">Icona dettagli</string>
-  <plurals name="more_info_modified_times">
-    <item quantity="one">%d volta</item>
-    <item quantity="other">%d volte</item>
-  </plurals>
-  <string name="more_info_last_time_modified">Ultima volta: %s</string>
   <string name="share_button_content_description">Pulsante apri condivisione</string>
   <string name="open_menu_icon_content_description">Pulsante apri menu</string>
   <string name="mfa_limit_reached">Limite 2FA raggiunto</string>
@@ -107,9 +97,6 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Impossibile condividere</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Non disponi delle autorizzazioni necessarie per condividere questa cassaforte.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Hai raggiunto il limite di condivisione delle casseforti. Effettua l\'upgrade per condividere più casseforti.</string>
-  <string name="item_detail_history_created">Creato</string>
-  <string name="item_detail_history_modified_last">Ultima modifica</string>
-  <string name="item_detail_history_button_view">Visualizza la cronologia dell\'elemento</string>
   <string name="password_score_vulnerable">Vulnerabile</string>
   <string name="password_score_weak">Debole</string>
   <string name="password_score_strong">Sicura</string>

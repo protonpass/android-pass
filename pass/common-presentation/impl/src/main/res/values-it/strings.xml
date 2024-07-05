@@ -38,6 +38,7 @@
   <string name="item_details_snackbar_message_linkedin_copied">LinkedIn copiato</string>
   <string name="item_details_snackbar_message_middle_name_copied">Secondo nome copiato</string>
   <string name="item_details_snackbar_message_occupation_copied">Tipo di occupazione copiato</string>
+  <string name="item_details_snackbar_message_organization_copied">Organizzazione copiata</string>
   <string name="item_details_snackbar_message_passport_number_copied">Passaporto copiato</string>
   <string name="item_details_snackbar_message_password_copied">Password copiata</string>
   <string name="item_details_snackbar_message_phone_number_copied">Telefono copiato</string>

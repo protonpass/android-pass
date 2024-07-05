@@ -25,13 +25,13 @@
   <string name="configure_extra_password_warning">Upozornění: Pokud toto heslo ztratíte, nebudete mít přístup ke svému účtu Pass.</string>
   <string name="configure_extra_password_mismatch">Hesla se neshodují</string>
   <string name="extra_password_options_remove">Odebrat</string>
-  <string name="info_extra_password_title">Extra password</string>
-  <string name="info_extra_password_body">Protect Proton Pass with an extra password.</string>
+  <string name="info_extra_password_title">Dodatečné heslo</string>
+  <string name="info_extra_password_body">Chraňte Proton Pass dodatečným heslem.</string>
   <string name="info_extra_password_button">Nastavte dodatečné heslo</string>
-  <string name="configure_extra_password_cannot_be_blank">Password cannot be blank</string>
-  <string name="configure_extra_password_password_too_short">Extra password must have at least 8 characters</string>
+  <string name="configure_extra_password_cannot_be_blank">Heslo nemůže být prázdné</string>
+  <string name="configure_extra_password_password_too_short">Dodatečné heslo musí mít alespoň 8 znaků</string>
   <string name="confirm_extra_password_title">Nastavte dodatečné heslo</string>
-  <string name="confirm_extra_password_body">You will be logged out and will have to log in again on all of your other devices.</string>
-  <string name="confirm_extra_password_error">Could not set extra password</string>
-  <string name="confirm_extra_password_success">Extra password set</string>
+  <string name="confirm_extra_password_body">Budete odhlášeni a budete se muset znovu přihlásit na všech svých ostatních zařízeních.</string>
+  <string name="confirm_extra_password_error">Nepodařilo se nastavit dodatečné heslo</string>
+  <string name="confirm_extra_password_success">Dodatečné heslo nastaveno</string>
 </resources>

@@ -43,21 +43,21 @@
   <string name="secure_links_list_empty_title">Tidak ada tautan aman</string>
   <string name="secure_links_list_empty_subtitle">Anda dapat mulai membuat tautan aman dari menu pilihan rincian pembagian item</string>
   <string name="secure_links_list_expiration_description">Kedaluwarsa dalam %s</string>
-  <string name="secure_links_list_expired_description">Expired</string>
+  <string name="secure_links_list_expired_description">Kedaluwarsa</string>
   <plurals name="secure_links_list_viewed_times_description">
     <item quantity="other">%d kali dilihat</item>
   </plurals>
   <string name="secure_links_list_snackbar_message_links_fetch_error">Terdapat masalah dalam mengambil tautan aman</string>
-  <string name="secure_links_list_header_title_inactive">Inactive links</string>
+  <string name="secure_links_list_header_title_inactive">Tautan yang tidak aktif</string>
   <!--Shared-->
   <string name="secure_links_shared_action_copy_link">Salin tautan</string>
   <string name="secure_links_shared_action_share_link">Bagikan tautan</string>
   <string name="secure_links_shared_action_delete_link">Hapus tautan</string>
-  <string name="secure_links_shared_action_delete_link_inactive">Remove inactive link</string>
-  <string name="secure_links_shared_action_delete_links_inactive">Remove all inactive links</string>
+  <string name="secure_links_shared_action_delete_link_inactive">Hapus tautan yang tidak aktif</string>
+  <string name="secure_links_shared_action_delete_links_inactive">Hapus seluruh tautan yang tidak aktif</string>
   <string name="secure_links_shared_snackbar_message_link_copied">Tautan aman disalin</string>
   <string name="secure_links_shared_snackbar_message_link_deletion_canceled">Penghapusan tautan aman dibatalkan</string>
   <string name="secure_links_shared_snackbar_message_link_deletion_error">Terdapat masalah dalam menghapus tautan aman</string>
-  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Inactive secure links deletion was canceled</string>
-  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">There was an error deleting inactive secure links</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Penghapusan tautan aman nonaktif dibatalkan</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">Terdapat masalah dalam menghapus tautan aman nonaktif</string>
 </resources>

@@ -38,6 +38,7 @@
   <string name="item_details_snackbar_message_linkedin_copied">LinkedIn kopieret</string>
   <string name="item_details_snackbar_message_middle_name_copied">Mellemnavn kopieret</string>
   <string name="item_details_snackbar_message_occupation_copied">Erhverv kopieret</string>
+  <string name="item_details_snackbar_message_organization_copied">Organisation kopieret</string>
   <string name="item_details_snackbar_message_passport_number_copied">Pasnummer kopieret</string>
   <string name="item_details_snackbar_message_password_copied">Adgangskode kopieret</string>
   <string name="item_details_snackbar_message_phone_number_copied">Telefonnummer kopieret</string>

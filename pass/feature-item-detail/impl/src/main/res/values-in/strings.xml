@@ -55,15 +55,6 @@
   <string name="action_conceal_password">Sembunyikan kata sandi</string>
   <string name="action_reveal_number">Perlihatkan angka</string>
   <string name="action_conceal_number">Sembunyikan angka</string>
-  <string name="more_info_created">Dibuat:</string>
-  <string name="more_info_modified">Diubah:</string>
-  <string name="more_info_autofilled">Diisi otomatis:</string>
-  <string name="more_info_title">Info lebih lanjut</string>
-  <string name="more_info_icon">Ikon info lebih lanjut</string>
-  <plurals name="more_info_modified_times">
-    <item quantity="other">%d kali</item>
-  </plurals>
-  <string name="more_info_last_time_modified">Terakhir kali, %s</string>
   <string name="share_button_content_description">Buka tombol berbagi</string>
   <string name="open_menu_icon_content_description">Buka tombol menu</string>
   <string name="mfa_limit_reached">Batas 2FA tercapai</string>
@@ -105,9 +96,6 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Tidak dapat membagikan</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Anda tidak memiliki izin yang memadai untuk membagikan brankas ini.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Anda telah mencapai batas pembagian brankas Anda. Untuk dapat membagikan lebih banyak brankas, silakan tingkatkan paket Anda saat ini.</string>
-  <string name="item_detail_history_created">Dibuat</string>
-  <string name="item_detail_history_modified_last">Terakhir diubah</string>
-  <string name="item_detail_history_button_view">Lihat riwayat item</string>
   <string name="password_score_vulnerable">Rentan</string>
   <string name="password_score_weak">Lemah</string>
   <string name="password_score_strong">Kuat</string>

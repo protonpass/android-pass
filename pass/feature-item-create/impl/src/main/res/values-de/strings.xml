@@ -152,13 +152,13 @@
   <string name="identity_section_address_details">Adressdetails</string>
   <string name="identity_section_contact_details">Kontaktdetails</string>
   <string name="identity_section_work_details">Geschäftliche Details</string>
-  <string name="identity_add_more_fields">Add another field</string>
+  <string name="identity_add_more_fields">Weiteres Feld hinzufügen</string>
   <string name="identity_bottomsheet_add_field">Feld hinzufügen</string>
-  <string name="create_identity_init_error">Problem retrieving identity details</string>
+  <string name="create_identity_init_error">Problem beim Abrufen von Angaben zur Identität</string>
   <string name="create_identity_item_creation_error">Fehler beim Erstellen der Identität.</string>
   <string name="create_identity_item_creation_success">Identität erstellt</string>
   <string name="update_identity_item_creation_success">Identität bearbeitet.</string>
-  <string name="update_identity_item_creation_error">Could not update identity</string>
+  <string name="update_identity_item_creation_error">Identität konnte nicht aktualisiert werden</string>
   <!--  Common create items  -->
   <string name="title_create">Erstellen</string>
   <string name="changes_saved">Änderungen gespeichert</string>

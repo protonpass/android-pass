@@ -152,7 +152,7 @@
   <string name="identity_section_address_details">Detalii adresă</string>
   <string name="identity_section_contact_details">Detalii contact</string>
   <string name="identity_section_work_details">Loc de muncă</string>
-  <string name="identity_add_more_fields">Add another field</string>
+  <string name="identity_add_more_fields">Adăugare alt câmp</string>
   <string name="identity_bottomsheet_add_field">Adăugare câmp</string>
   <string name="create_identity_init_error">Problemă preluare detalii identitate.</string>
   <string name="create_identity_item_creation_error">Nu s-a putut crea identitatea</string>

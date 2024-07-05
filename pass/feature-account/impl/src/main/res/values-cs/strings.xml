@@ -20,6 +20,7 @@
   <string name="account_settings_list_item_password_hint_grace">Čekání na reset hesla</string>
   <string name="account_settings_list_item_password_hint_insecure">Připraveno pro reset hesla</string>
   <string name="account_settings_list_item_extra_password_header">Dodatečné heslo pro Proton Pass</string>
+  <string name="account_settings_list_item_extra_password_header_set">Nastavte dodatečné heslo pro Proton Pass</string>
   <string name="account_settings_list_item_extra_password_active">Aktivní</string>
   <string name="account_settings_list_item_extra_password_description">Pro použití Pass bude vyžadováno dodatečné heslo. Slouží jako doplněk k vašemu hlavnímu heslu Proton.</string>
 </resources>

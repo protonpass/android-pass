@@ -134,6 +134,9 @@ import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestin
 import proton.android.pass.features.item.history.navigation.itemHistoryNavGraph
 import proton.android.pass.features.item.history.restore.navigation.ItemHistoryRestoreNavItem
 import proton.android.pass.features.item.history.timeline.navigation.ItemHistoryTimelineNavItem
+import proton.android.pass.features.item.trash.shared.navigation.ItemTrashNavDestination
+import proton.android.pass.features.item.trash.shared.navigation.itemTrashNavGraph
+import proton.android.pass.features.item.trash.trashmenu.navigation.ItemTrashMenuNavItem
 import proton.android.pass.features.secure.links.create.navigation.SecureLinksCreateNavItem
 import proton.android.pass.features.secure.links.list.navigation.SecureLinksListNavItem
 import proton.android.pass.features.secure.links.listmenu.navigation.SecureLinksListMenuNavItem
@@ -1185,9 +1188,17 @@ fun NavGraphBuilder.appGraph(
                     backDestination = getItemDetailsDestination(itemDetailsNavDestination.itemCategory)
                 )
 
-                is ItemDetailsNavDestination.ItemMenu -> appNavigator.navigate(
+                is ItemDetailsNavDestination.ItemOptionsMenu -> appNavigator.navigate(
                     destination = ItemDetailsMenuNavItem,
                     route = ItemDetailsMenuNavItem.createNavRoute(
+                        shareId = itemDetailsNavDestination.shareId,
+                        itemId = itemDetailsNavDestination.itemId
+                    )
+                )
+
+                is ItemDetailsNavDestination.ItemTrashMenu -> appNavigator.navigate(
+                    destination = ItemTrashMenuNavItem,
+                    route = ItemTrashMenuNavItem.createNavRoute(
                         shareId = itemDetailsNavDestination.shareId,
                         itemId = itemDetailsNavDestination.itemId
                     )
@@ -1244,6 +1255,16 @@ fun NavGraphBuilder.appGraph(
                         passkey = itemHistoryNavDestination.passkey
                     )
                 )
+            }
+        }
+    )
+
+    itemTrashNavGraph(
+        onNavigated = { itemTrashNavDestination ->
+            when (itemTrashNavDestination) {
+                ItemTrashNavDestination.DismissBottomSheet -> dismissBottomSheet {
+                    appNavigator.navigateBack(comesFromBottomsheet = true)
+                }
             }
         }
     )

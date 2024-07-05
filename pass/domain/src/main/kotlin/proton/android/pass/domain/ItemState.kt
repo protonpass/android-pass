@@ -28,6 +28,13 @@ enum class ItemState(val value: Int) {
     Trashed(ItemStateValues.TRASHED);
 
     companion object {
-        val map = values().associateBy { it.value }
+
+        fun from(value: Int): ItemState = when (value) {
+            ItemStateValues.ACTIVE -> Active
+            ItemStateValues.TRASHED -> Trashed
+            else -> throw IllegalArgumentException("Invalid ItemState value: $value")
+        }
+
     }
+
 }

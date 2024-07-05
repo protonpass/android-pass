@@ -43,6 +43,7 @@ import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Totp
 import proton.android.pass.domain.items.ItemCustomField
 import proton.android.pass.preferences.FeatureFlag
@@ -82,6 +83,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
             itemModifiedAt = item.modificationTime,
             itemLastAutofillAtOption = item.lastAutofillTime,
             itemRevision = item.revision,
+            itemState = ItemState.from(item.state),
             canLoadExternalImages = useFaviconsPreference.value(),
             passwordStrength = encryptionContextProvider.withEncryptionContext {
                 decrypt(loginItemContents.password.encrypted)

@@ -109,6 +109,8 @@ sealed interface ProfileNavigation {
     @JvmInline
     value class OnSwitchAccount(val userId: UserId) : ProfileNavigation
 
+    data object SyncDialog : ProfileNavigation
+
 }
 
 fun NavGraphBuilder.profileGraph(onNavigateEvent: (ProfileNavigation) -> Unit) {

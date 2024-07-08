@@ -16,12 +16,17 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.commonui.api
+package proton.android.pass.featureauth.impl
 
-import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.LocalContentColor
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
+import kotlinx.collections.immutable.ImmutableMap
+import me.proton.core.domain.entity.UserId
 
-@Composable
-fun defaultTint(): Color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current)
+data class AccountItem(
+    val email: String,
+    val isPrimary: Boolean
+)
+
+data class AccountSwitcherState(
+    val isAccountSwitchV1Enabled: Boolean,
+    val accounts: ImmutableMap<UserId, AccountItem>
+)

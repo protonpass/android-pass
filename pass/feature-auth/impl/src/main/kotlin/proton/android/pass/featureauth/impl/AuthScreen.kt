@@ -72,6 +72,7 @@ fun AuthScreen(
 
                 AuthUiEvent.OnAuthAgainClick -> viewModel.onAuthMethodRequested()
                 AuthUiEvent.OnNavigateBack -> navigation(AuthNavigation.Back(viewModel.origin))
+                is AuthUiEvent.OnAccountSwitch -> viewModel.onAccountSwitch(it.userId)
             }
         }
     )

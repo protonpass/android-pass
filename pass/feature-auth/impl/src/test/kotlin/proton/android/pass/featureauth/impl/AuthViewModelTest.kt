@@ -20,11 +20,15 @@ package proton.android.pass.featureauth.impl
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
+import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.account.fakes.FakeUserManager
+import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.biometry.BiometryAuthError
 import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStartupError
@@ -49,6 +53,7 @@ import proton.android.pass.data.fakes.usecases.accesskey.FakeRemoveExtraPassword
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.AppLockTypePreference
+import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.preferences.TestInternalSettingsRepository
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
@@ -59,6 +64,8 @@ internal class AuthViewModelTest {
     private lateinit var preferenceRepository: TestPreferenceRepository
     private lateinit var biometryManager: TestBiometryManager
     private lateinit var checkMasterPassword: TestCheckMasterPassword
+    private lateinit var userManager: FakeUserManager
+    private lateinit var accountManager: TestAccountManager
 
     @get:Rule
     internal val dispatcherRule = MainDispatcherRule()
@@ -68,6 +75,8 @@ internal class AuthViewModelTest {
         preferenceRepository = TestPreferenceRepository()
         biometryManager = TestBiometryManager()
         checkMasterPassword = TestCheckMasterPassword()
+        userManager = FakeUserManager()
+        accountManager = TestAccountManager()
         viewModel = AuthViewModel(
             preferenceRepository = preferenceRepository,
             biometryManager = biometryManager,
@@ -88,7 +97,10 @@ internal class AuthViewModelTest {
             removeExtraPassword = FakeRemoveExtraPassword(),
             snackbarDispatcher = TestSnackbarDispatcher(),
             hasExtraPassword = FakeHasExtraPassword(),
-            checkLocalExtraPassword = FakeCheckLocalExtraPassword()
+            checkLocalExtraPassword = FakeCheckLocalExtraPassword(),
+            featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository(),
+            userManager = userManager,
+            accountManager = accountManager
         )
     }
 
@@ -99,7 +111,14 @@ internal class AuthViewModelTest {
             content = AuthStateContent.default(USER_EMAIL.some()).copy(
                 authMethod = Some(AuthMethod.Fingerprint),
                 showExtraPassword = LoadingResult.Success(false),
-                showPinOrBiometry = true
+                showPinOrBiometry = true,
+                accountSwitcherState = AccountSwitcherState(
+                    isAccountSwitchV1Enabled = false,
+                    accounts = persistentMapOf(
+                        UserId(TestAccountManager.USER_ID) to
+                            AccountItem(FakeUserManager.EMAIL, true)
+                    )
+                )
             )
         )
 
@@ -118,7 +137,9 @@ internal class AuthViewModelTest {
             viewModel.onBiometricsRequired(ClassHolder(None))
 
             viewModel.state.test {
-                assertThat(awaitItem().event).isEqualTo(AuthEvent.Success(AuthOrigin.AUTO_LOCK).some())
+                assertThat(awaitItem().event).isEqualTo(
+                    AuthEvent.Success(AuthOrigin.AUTO_LOCK).some()
+                )
             }
         }
 
@@ -134,7 +155,9 @@ internal class AuthViewModelTest {
             viewModel.onBiometricsRequired(ClassHolder(None))
 
             viewModel.state.test {
-                assertThat(awaitItem().event).isEqualTo(AuthEvent.Success(AuthOrigin.AUTO_LOCK).some())
+                assertThat(awaitItem().event).isEqualTo(
+                    AuthEvent.Success(AuthOrigin.AUTO_LOCK).some()
+                )
             }
 
             assertThat(biometryManager.hasBeenCalled).isFalse()
@@ -147,7 +170,9 @@ internal class AuthViewModelTest {
         viewModel.onBiometricsRequired(ClassHolder(None))
 
         viewModel.state.test {
-            assertThat(awaitItem().event).isEqualTo(AuthEvent.Success(AuthOrigin.AUTO_LOCK).some())
+            assertThat(awaitItem().event).isEqualTo(
+                AuthEvent.Success(AuthOrigin.AUTO_LOCK).some()
+            )
         }
     }
 
@@ -159,7 +184,9 @@ internal class AuthViewModelTest {
         viewModel.onBiometricsRequired(ClassHolder(None))
 
         viewModel.state.test {
-            assertThat(awaitItem().event).isEqualTo(AuthEvent.Success(AuthOrigin.AUTO_LOCK).some())
+            assertThat(awaitItem().event).isEqualTo(
+                AuthEvent.Success(AuthOrigin.AUTO_LOCK).some()
+            )
         }
     }
 
@@ -178,7 +205,14 @@ internal class AuthViewModelTest {
                     content = AuthStateContent.default(USER_EMAIL.some()).copy(
                         authMethod = Some(AuthMethod.Fingerprint),
                         showExtraPassword = LoadingResult.Success(false),
-                        showPinOrBiometry = true
+                        showPinOrBiometry = true,
+                        accountSwitcherState = AccountSwitcherState(
+                            isAccountSwitchV1Enabled = false,
+                            accounts = persistentMapOf(
+                                UserId(TestAccountManager.USER_ID) to
+                                    AccountItem(FakeUserManager.EMAIL, true)
+                            )
+                        )
                     )
                 )
             )
@@ -228,7 +262,9 @@ internal class AuthViewModelTest {
         viewModel.onSubmit(false)
 
         viewModel.state.test {
-            assertThat(awaitItem().event).isEqualTo(AuthEvent.Success(AuthOrigin.AUTO_LOCK).some())
+            assertThat(awaitItem().event).isEqualTo(
+                AuthEvent.Success(AuthOrigin.AUTO_LOCK).some()
+            )
         }
     }
 

@@ -47,8 +47,7 @@ fun SortingButton(
     TransparentTextButton(
         modifier = modifier,
         text = text,
-        icon = R.drawable.ic_sorting,
-        iconContentDescription = null,
+        prefixIcon = R.drawable.ic_sorting,
         color = PassTheme.colors.interactionNormMajor2,
         onClick = onSortingOptionsClick
     )

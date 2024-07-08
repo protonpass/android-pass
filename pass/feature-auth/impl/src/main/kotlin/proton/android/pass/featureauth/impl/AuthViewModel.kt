@@ -23,6 +23,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toPersistentMap
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,12 +32,20 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import me.proton.core.account.domain.entity.AccountState
+import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.accountmanager.domain.getAccounts
+import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.UserManager
 import proton.android.pass.biometry.BiometryAuthError
 import proton.android.pass.biometry.BiometryManager
 import proton.android.pass.biometry.BiometryResult
@@ -44,11 +53,11 @@ import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.BiometryType
 import proton.android.pass.biometry.StoreAuthSuccessful
 import proton.android.pass.common.api.AppDispatchers
-import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.ClassHolder
@@ -71,10 +80,13 @@ import proton.android.pass.navigation.api.UserIdNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.AppLockTypePreference
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 
+@Suppress("LongParameterList")
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val preferenceRepository: UserPreferencesRepository,
@@ -88,6 +100,9 @@ class AuthViewModel @Inject constructor(
     private val checkLocalExtraPassword: CheckLocalExtraPassword,
     private val removeExtraPassword: RemoveExtraPassword,
     private val snackbarDispatcher: SnackbarDispatcher,
+    private val accountManager: AccountManager,
+    private val userManager: UserManager,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     hasExtraPassword: HasExtraPassword,
     observeUserEmail: ObserveUserEmail,
     savedStateHandleProvider: SavedStateHandleProvider
@@ -115,13 +130,38 @@ class AuthViewModel @Inject constructor(
         }
         .distinctUntilChanged()
 
-    val state: StateFlow<AuthState> = combine(
+    private val accountSwitcherFlow = combine(
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.ACCOUNT_SWITCH_V1)
+            .map { it && origin == AuthOrigin.AUTO_LOCK },
+        combine(
+            accountManager.getAccounts(AccountState.Ready),
+            accountManager.getPrimaryAccount()
+        ) { accounts, primaryAccount ->
+            accounts.associate { account ->
+                account.userId to AccountItem(
+                    email = userManager.getUser(account.userId).email.orEmpty(),
+                    isPrimary = primaryAccount?.userId == account.userId
+                )
+            }.toPersistentMap()
+        },
+        ::AccountSwitcherState
+    )
+
+    private val currentUserId = combine(
+        flowOf(userId.value()),
+        accountManager.getPrimaryAccount().map { it?.userId }
+    ) { userId, primaryAccountUserId ->
+        userId ?: primaryAccountUserId
+    }
+
+    val state: StateFlow<AuthState> = combineN(
         eventFlow,
         formContentFlow,
-        observeUserEmail(userId.value()).asLoadingResult(),
+        currentUserId.flatMapLatest { observeUserEmail(it).asLoadingResult() },
         authMethodFlow,
-        oneShot { hasExtraPassword(userId.value()) }.asLoadingResult()
-    ) { event, formContent, userEmail, authMethod, hasExtraPassword ->
+        currentUserId.mapLatest(hasExtraPassword::invoke).asLoadingResult(),
+        accountSwitcherFlow
+    ) { event, formContent, userEmail, authMethod, hasExtraPassword, accountSwitcherState ->
         val address = when (userEmail) {
             LoadingResult.Loading -> None
             is LoadingResult.Error -> {
@@ -143,6 +183,7 @@ class AuthViewModel @Inject constructor(
                 passwordError = formContent.passwordError,
                 address = address,
                 authMethod = authMethod,
+                accountSwitcherState = accountSwitcherState,
                 showExtraPassword = shouldShowExtraPassword(hasExtraPassword),
                 showPinOrBiometry = origin == AuthOrigin.AUTO_LOCK,
                 showLogout = origin != AuthOrigin.EXTRA_PASSWORD_LOGIN,
@@ -156,6 +197,10 @@ class AuthViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5_000L),
             initialValue = AuthState.Initial
         )
+
+    fun onAccountSwitch(userId: UserId) = viewModelScope.launch {
+        accountManager.setAsPrimary(userId)
+    }
 
     private fun shouldShowExtraPassword(hasExtraPassword: LoadingResult<Boolean>) = when (hasExtraPassword) {
         is LoadingResult.Error ->

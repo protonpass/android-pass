@@ -16,7 +16,7 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.trash.trashmenu.ui
+package proton.android.pass.features.item.trash.trashdelete.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -24,44 +24,41 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.item.trash.shared.navigation.ItemTrashNavDestination
-import proton.android.pass.features.item.trash.trashmenu.presentation.ItemTrashMenuEvent
-import proton.android.pass.features.item.trash.trashmenu.presentation.ItemTrashMenuViewModel
+import proton.android.pass.features.item.trash.trashdelete.presentation.ItemTrashDeleteEvent
+import proton.android.pass.features.item.trash.trashdelete.presentation.ItemTrashDeleteViewModel
 
 @Composable
-fun ItemTrashMenuBottomSheet(
+fun ItemTrashDeleteDialog(
     onNavigated: (ItemTrashNavDestination) -> Unit,
-    viewModel: ItemTrashMenuViewModel = hiltViewModel()
+    viewModel: ItemTrashDeleteViewModel = hiltViewModel()
 ) = with(viewModel) {
     val state by state.collectAsStateWithLifecycle()
 
     LaunchedEffect(key1 = state.event) {
-        when (val event = state.event) {
-            ItemTrashMenuEvent.Idle -> {}
+        when (state.event) {
+            ItemTrashDeleteEvent.Idle -> {}
 
-            is ItemTrashMenuEvent.OnDeleteItem -> ItemTrashNavDestination.DeleteItem(
-                shareId = event.shareId,
-                itemId = event.itemId
-            ).also(onNavigated)
-
-            ItemTrashMenuEvent.OnItemRestored ->
-                ItemTrashNavDestination.Home
+            ItemTrashDeleteEvent.OnItemDeleteError ->
+                ItemTrashNavDestination.DismissBottomSheet
                     .also(onNavigated)
 
-            ItemTrashMenuEvent.OnItemNotFound,
-            ItemTrashMenuEvent.OnItemRestoreError ->
-                ItemTrashNavDestination.DismissBottomSheet
+            ItemTrashDeleteEvent.OnItemDeleted ->
+                ItemTrashNavDestination.Home
                     .also(onNavigated)
         }
 
         onConsumeEvent(state.event)
     }
 
-    ItemTrashMenuContent(
+    ItemTrashDeleteContent(
         state = state,
         onEvent = { uiEvent ->
             when (uiEvent) {
-                ItemTrashMenuUiEvent.OnDeleteItemPermanentlyClicked -> onDeleteItem()
-                ItemTrashMenuUiEvent.OnRestoreItemClicked -> onRestoreItem()
+                ItemTrashDeleteUiEvent.OnCancelButtonClicked ->
+                    ItemTrashNavDestination.Back
+                        .also(onNavigated)
+
+                ItemTrashDeleteUiEvent.OnConfirmButtonClicked -> onDeleteItem()
             }
         }
     )

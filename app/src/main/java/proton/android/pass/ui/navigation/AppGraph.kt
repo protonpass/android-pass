@@ -136,6 +136,7 @@ import proton.android.pass.features.item.history.restore.navigation.ItemHistoryR
 import proton.android.pass.features.item.history.timeline.navigation.ItemHistoryTimelineNavItem
 import proton.android.pass.features.item.trash.shared.navigation.ItemTrashNavDestination
 import proton.android.pass.features.item.trash.shared.navigation.itemTrashNavGraph
+import proton.android.pass.features.item.trash.trashdelete.navigation.ItemTrashDeleteNavItem
 import proton.android.pass.features.item.trash.trashmenu.navigation.ItemTrashMenuNavItem
 import proton.android.pass.features.secure.links.create.navigation.SecureLinksCreateNavItem
 import proton.android.pass.features.secure.links.list.navigation.SecureLinksListNavItem
@@ -1290,6 +1291,10 @@ fun NavGraphBuilder.appGraph(
     itemTrashNavGraph(
         onNavigated = { itemTrashNavDestination ->
             when (itemTrashNavDestination) {
+                ItemTrashNavDestination.Back -> appNavigator.navigateBack(
+                    comesFromBottomsheet = false
+                )
+
                 ItemTrashNavDestination.Home -> dismissBottomSheet {
                     appNavigator.popUpTo(destination = Home)
                 }
@@ -1297,6 +1302,14 @@ fun NavGraphBuilder.appGraph(
                 ItemTrashNavDestination.DismissBottomSheet -> dismissBottomSheet {
                     appNavigator.navigateBack(comesFromBottomsheet = true)
                 }
+
+                is ItemTrashNavDestination.DeleteItem -> appNavigator.navigate(
+                    destination = ItemTrashDeleteNavItem,
+                    route = ItemTrashDeleteNavItem.createNavRoute(
+                        shareId = itemTrashNavDestination.shareId,
+                        itemId = itemTrashNavDestination.itemId
+                    )
+                )
             }
         }
     )

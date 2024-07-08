@@ -19,14 +19,21 @@
 package proton.android.pass.features.item.trash.shared.navigation
 
 import androidx.navigation.NavGraphBuilder
+import proton.android.pass.features.item.trash.trashdelete.navigation.ItemTrashDeleteNavItem
+import proton.android.pass.features.item.trash.trashdelete.ui.ItemTrashDeleteDialog
 import proton.android.pass.features.item.trash.trashmenu.navigation.ItemTrashMenuNavItem
 import proton.android.pass.features.item.trash.trashmenu.ui.ItemTrashMenuBottomSheet
 import proton.android.pass.navigation.api.bottomSheet
+import proton.android.pass.navigation.api.dialog
 
 fun NavGraphBuilder.itemTrashNavGraph(onNavigated: (ItemTrashNavDestination) -> Unit) {
 
     bottomSheet(navItem = ItemTrashMenuNavItem) {
         ItemTrashMenuBottomSheet(onNavigated = onNavigated)
+    }
+
+    dialog(navItem = ItemTrashDeleteNavItem) {
+        ItemTrashDeleteDialog(onNavigated = onNavigated)
     }
 
 }

@@ -250,4 +250,6 @@
     <string name="snack_bar_message_item_unpinned_error">There was an error unpinning this item</string>
     <string name="snack_bar_message_item_trashed_success">Item successfully trashed</string>
     <string name="snack_bar_message_item_trashed_error">There was an error trashing this item</string>
+    <string name="snack_bar_message_item_restored_success">Item successfully restored</string>
+    <string name="snack_bar_message_item_restored_error">There was an error restoring this item</string>
 </resources>

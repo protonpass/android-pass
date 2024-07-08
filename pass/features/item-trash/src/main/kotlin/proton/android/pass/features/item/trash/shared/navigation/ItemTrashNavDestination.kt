@@ -20,6 +20,8 @@ package proton.android.pass.features.item.trash.shared.navigation
 
 sealed interface ItemTrashNavDestination {
 
+    data object Home : ItemTrashNavDestination
+
     data object DismissBottomSheet : ItemTrashNavDestination
 
 }

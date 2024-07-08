@@ -1148,14 +1148,42 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.popUpTo(destination = Home)
                 }
 
-                is ItemDetailsNavDestination.EditItem -> appNavigator.navigate(
-                    destination = getItemDetailsDestination(itemDetailsNavDestination.itemCategory),
-                    route = getItemDetailsRoute(
-                        itemCategory = itemDetailsNavDestination.itemCategory,
+                is ItemDetailsNavDestination.EditItem -> when (itemDetailsNavDestination.itemCategory) {
+                    ItemCategory.Alias -> EditAlias to EditAlias.createNavRoute(
                         shareId = itemDetailsNavDestination.shareId,
                         itemId = itemDetailsNavDestination.itemId
                     )
-                )
+
+                    ItemCategory.CreditCard -> EditCreditCard to EditCreditCard.createNavRoute(
+                        shareId = itemDetailsNavDestination.shareId,
+                        itemId = itemDetailsNavDestination.itemId
+                    )
+
+                    ItemCategory.Identity -> UpdateIdentity to UpdateIdentity.createNavRoute(
+                        shareId = itemDetailsNavDestination.shareId,
+                        itemId = itemDetailsNavDestination.itemId
+                    )
+
+                    ItemCategory.Login -> EditLogin to EditLogin.createNavRoute(
+                        shareId = itemDetailsNavDestination.shareId,
+                        itemId = itemDetailsNavDestination.itemId
+                    )
+
+                    ItemCategory.Note -> EditNote to EditNote.createNavRoute(
+                        shareId = itemDetailsNavDestination.shareId,
+                        itemId = itemDetailsNavDestination.itemId
+                    )
+
+                    ItemCategory.Password,
+                    ItemCategory.Unknown -> throw IllegalStateException(
+                        "Cannot edit items with category: ${itemDetailsNavDestination.itemCategory}"
+                    )
+                }.also { (editDestination, editRoute) ->
+                    appNavigator.navigate(
+                        destination = editDestination,
+                        route = editRoute
+                    )
+                }
 
                 is ItemDetailsNavDestination.PasskeyDetails -> appNavigator.navigate(
                     destination = ViewPasskeyDetailsBottomSheet,
@@ -1262,6 +1290,10 @@ fun NavGraphBuilder.appGraph(
     itemTrashNavGraph(
         onNavigated = { itemTrashNavDestination ->
             when (itemTrashNavDestination) {
+                ItemTrashNavDestination.Home -> dismissBottomSheet {
+                    appNavigator.popUpTo(destination = Home)
+                }
+
                 ItemTrashNavDestination.DismissBottomSheet -> dismissBottomSheet {
                     appNavigator.navigateBack(comesFromBottomsheet = true)
                 }

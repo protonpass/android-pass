@@ -24,6 +24,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -35,6 +36,7 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.errors.ItemNotFoundError
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.domain.ItemId
@@ -74,6 +76,15 @@ class ItemTrashMenuViewModel @Inject constructor(
         }
 
     private val itemUiModelOptionFlow = observeItemById(shareId, itemId)
+        .catch { error ->
+            if (error is ItemNotFoundError) {
+                eventFlow.update { ItemTrashMenuEvent.OnItemNotFound }
+            } else {
+                PassLogger.w(TAG, "There was an error observing item")
+                PassLogger.w(TAG, error)
+                throw error
+            }
+        }
         .map { item ->
             encryptionContextProvider.withEncryptionContext {
                 item.toUiModel(this@withEncryptionContext).toOption()
@@ -96,6 +107,10 @@ class ItemTrashMenuViewModel @Inject constructor(
         eventFlow.compareAndSet(event, ItemTrashMenuEvent.Idle)
     }
 
+    internal fun onDeleteItem() {
+        eventFlow.update { ItemTrashMenuEvent.OnDeleteItem(shareId, itemId) }
+    }
+
     internal fun onRestoreItem() {
         viewModelScope.launch {
             actionFlow.update { BottomSheetItemAction.Restore }
@@ -104,7 +119,7 @@ class ItemTrashMenuViewModel @Inject constructor(
                 .onFailure { error ->
                     PassLogger.w(TAG, "There was an error restoring an item from trash")
                     PassLogger.w(TAG, error)
-                    eventFlow.update { ItemTrashMenuEvent.OnItemRestoredError }
+                    eventFlow.update { ItemTrashMenuEvent.OnItemRestoreError }
                     snackbarDispatcher(ItemTrashMenuSnackBarMessage.ItemRestoreError)
                 }
                 .onSuccess {

@@ -19,6 +19,7 @@
 package proton.android.pass.featureauth.impl
 
 import androidx.compose.runtime.Stable
+import kotlinx.collections.immutable.persistentMapOf
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -65,7 +66,8 @@ data class AuthStateContent(
     val showExtraPassword: LoadingResult<Boolean>,
     val showPinOrBiometry: Boolean,
     val showLogout: Boolean,
-    val showBackNavigation: Boolean
+    val showBackNavigation: Boolean,
+    val accountSwitcherState: AccountSwitcherState
 ) {
     companion object {
         fun default(address: Option<String>) = AuthStateContent(
@@ -76,6 +78,10 @@ data class AuthStateContent(
             error = None,
             passwordError = None,
             authMethod = None,
+            accountSwitcherState = AccountSwitcherState(
+                isAccountSwitchV1Enabled = false,
+                accounts = persistentMapOf()
+            ),
             showExtraPassword = LoadingResult.Loading,
             showPinOrBiometry = false,
             showLogout = true,

@@ -19,7 +19,10 @@
 package proton.android.pass.featureauth.impl
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,10 +31,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -47,6 +56,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.persistentMapOf
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.common.api.LoadingResult
@@ -59,11 +69,14 @@ import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.commonui.api.body3Weak
 import proton.android.pass.commonui.api.heroNorm
 import proton.android.pass.composecomponents.impl.buttons.CircleIconButton
+import proton.android.pass.composecomponents.impl.buttons.TransparentTextButton
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
+import proton.android.pass.composecomponents.impl.text.Text
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import me.proton.core.presentation.R as CoreR
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 fun AuthScreenMasterPasswordForm(
@@ -104,22 +117,75 @@ fun AuthScreenMasterPasswordForm(
             style = PassTheme.typography.heroNorm()
         )
         Spacer(modifier = Modifier.height(12.dp))
-        if (state.address is Some && state.address.value.isNotBlank()) {
+
+        if (state.accountSwitcherState.isAccountSwitchV1Enabled) {
             val text = when (state.showExtraPassword) {
                 is LoadingResult.Error,
                 LoadingResult.Loading -> ""
+
                 is LoadingResult.Success -> if (state.showExtraPassword.data) {
-                    stringResource(R.string.auth_unlock_app_extra_password_subtitle, state.address.value)
+                    stringResource(R.string.auth_unlock_app_extra_password_subtitle_account_switch)
                 } else {
-                    stringResource(R.string.auth_unlock_app_subtitle, state.address.value)
+                    stringResource(R.string.auth_unlock_app_subtitle_account_switch)
                 }
             }
-            Text(
+            var isExpanded by remember { mutableStateOf(false) }
+            Column(
                 modifier = Modifier.fillMaxWidth(),
-                text = text,
-                textAlign = TextAlign.Center,
-                style = PassTheme.typography.body3Weak()
-            )
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text.Body3Regular(text, Modifier, ProtonTheme.colors.textWeak)
+                Box {
+                    TransparentTextButton(
+                        text = state.accountSwitcherState.accounts.values
+                            .firstOrNull(AccountItem::isPrimary)
+                            ?.email
+                            .orEmpty(),
+                        color = PassTheme.colors.textNorm,
+                        suffixIcon = CompR.drawable.ic_chevron_tiny_down,
+                        onClick = { isExpanded = !isExpanded }
+                    )
+                    DropdownMenu(
+                        modifier = Modifier.background(PassTheme.colors.inputBackgroundNorm),
+                        expanded = isExpanded,
+                        onDismissRequest = { isExpanded = false }
+                    ) {
+                        state.accountSwitcherState.accounts.forEach { (userId, accountItem) ->
+                            DropdownMenuItem(
+                                onClick = {
+                                    onEvent(AuthUiEvent.OnAccountSwitch(userId))
+                                    isExpanded = false
+                                }
+                            ) {
+                                Text.Body1Regular(text = accountItem.email)
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            if (state.address is Some && state.address.value.isNotBlank()) {
+                val text = when (state.showExtraPassword) {
+                    is LoadingResult.Error,
+                    LoadingResult.Loading -> ""
+
+                    is LoadingResult.Success -> if (state.showExtraPassword.data) {
+                        stringResource(
+                            R.string.auth_unlock_app_extra_password_subtitle,
+                            state.address.value
+                        )
+                    } else {
+                        stringResource(R.string.auth_unlock_app_subtitle, state.address.value)
+                    }
+                }
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = text,
+                    textAlign = TextAlign.Center,
+                    style = PassTheme.typography.body3Weak()
+                )
+            }
         }
         Spacer(modifier = Modifier.height(40.dp))
 
@@ -146,6 +212,7 @@ fun AuthScreenMasterPasswordForm(
                 val text = when (state.showExtraPassword) {
                     is LoadingResult.Error,
                     LoadingResult.Loading -> ""
+
                     is LoadingResult.Success -> if (state.showExtraPassword.data) {
                         stringResource(R.string.auth_extra_password_label)
                     } else {
@@ -253,7 +320,11 @@ fun AuthScreenMasterPasswordFormPreview(
                     showExtraPassword = LoadingResult.Success(input.second.hasExtraPassword),
                     showPinOrBiometry = true,
                     showLogout = true,
-                    showBackNavigation = false
+                    showBackNavigation = false,
+                    accountSwitcherState = AccountSwitcherState(
+                        isAccountSwitchV1Enabled = false,
+                        accounts = persistentMapOf()
+                    )
                 ),
                 onEvent = {},
                 onSubmit = {}

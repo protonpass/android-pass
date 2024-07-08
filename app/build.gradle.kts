@@ -390,7 +390,6 @@ dependencies {
     implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.material)
-    implementation(libs.okhttp)
     implementation(libs.pass.common)
     implementation(libs.plumber)
     implementation(libs.kotlinx.collections)

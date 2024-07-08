@@ -129,10 +129,12 @@ private fun firstSection(input: String, span: MatchSpan) = buildAnnotatedString 
         // Nothing needs to be added
     } else if (span.start < CHARACTER_OFFSET) {
         // Add the first part of the string until the span
-        append(input.substring(0, span.start))
+        append(input.substring(0, span.start.coerceAtMost(input.length)))
     } else {
         // Add the first part of the string until the span
         append(Typography.ellipsis)
-        append(input.substring(span.start - CHARACTER_OFFSET, span.start))
+        val startIdx = (span.start - CHARACTER_OFFSET).coerceAtLeast(0)
+        val endIdx = span.start.coerceAtMost(input.length)
+        append(input.substring(startIdx, endIdx))
     }
 }

@@ -27,6 +27,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
@@ -34,9 +36,12 @@ import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.ObserveItemById
+import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import javax.inject.Inject
@@ -46,7 +51,9 @@ class ItemTrashMenuViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     userPreferencesRepository: UserPreferencesRepository,
     observeItemById: ObserveItemById,
-    encryptionContextProvider: EncryptionContextProvider
+    encryptionContextProvider: EncryptionContextProvider,
+    private val restoreItem: RestoreItems,
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -84,5 +91,35 @@ class ItemTrashMenuViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = ItemTrashMenuState.Initial
     )
+
+    internal fun onConsumeEvent(event: ItemTrashMenuEvent) {
+        eventFlow.compareAndSet(event, ItemTrashMenuEvent.Idle)
+    }
+
+    internal fun onRestoreItem() {
+        viewModelScope.launch {
+            actionFlow.update { BottomSheetItemAction.Restore }
+
+            runCatching { restoreItem(items = mapOf(shareId to listOf(itemId))) }
+                .onFailure { error ->
+                    PassLogger.w(TAG, "There was an error restoring an item from trash")
+                    PassLogger.w(TAG, error)
+                    eventFlow.update { ItemTrashMenuEvent.OnItemRestoredError }
+                    snackbarDispatcher(ItemTrashMenuSnackBarMessage.ItemRestoreError)
+                }
+                .onSuccess {
+                    eventFlow.update { ItemTrashMenuEvent.OnItemRestored }
+                    snackbarDispatcher(ItemTrashMenuSnackBarMessage.ItemRestored)
+                }
+
+            actionFlow.update { BottomSheetItemAction.None }
+        }
+    }
+
+    private companion object {
+
+        private const val TAG = "ItemTrashMenuViewModel"
+
+    }
 
 }

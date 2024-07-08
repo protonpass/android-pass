@@ -16,12 +16,27 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.trash.shared.navigation
+package proton.android.pass.features.item.trash.trashmenu.presentation
 
-sealed interface ItemTrashNavDestination {
+import androidx.annotation.StringRes
+import proton.android.pass.notifications.api.SnackbarMessage
+import proton.android.pass.notifications.api.SnackbarType
+import proton.android.pass.composecomponents.impl.R as CompR
 
-    data object Home : ItemTrashNavDestination
+internal enum class ItemTrashMenuSnackBarMessage(
+    @StringRes override val id: Int,
+    override val type: SnackbarType,
+    override val isClipboard: Boolean = false
+) : SnackbarMessage {
 
-    data object DismissBottomSheet : ItemTrashNavDestination
+    ItemRestored(
+        id = CompR.string.snack_bar_message_item_restored_success,
+        type = SnackbarType.SUCCESS
+    ),
+
+    ItemRestoreError(
+        id = CompR.string.snack_bar_message_item_restored_error,
+        type = SnackbarType.ERROR
+    )
 
 }

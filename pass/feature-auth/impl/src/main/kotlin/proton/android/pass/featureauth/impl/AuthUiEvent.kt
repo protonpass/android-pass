@@ -18,6 +18,8 @@
 
 package proton.android.pass.featureauth.impl
 
+import me.proton.core.domain.entity.UserId
+
 sealed interface AuthUiEvent {
     data object OnNavigateBack : AuthUiEvent
 
@@ -31,5 +33,9 @@ sealed interface AuthUiEvent {
 
     @JvmInline
     value class OnPasswordSubmit(val value: Boolean) : AuthUiEvent
+
+    @JvmInline
+    value class OnAccountSwitch(val userId: UserId) : AuthUiEvent
+
     data object OnSignOut : AuthUiEvent
 }

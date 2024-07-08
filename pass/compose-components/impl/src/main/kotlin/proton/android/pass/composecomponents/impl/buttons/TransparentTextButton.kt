@@ -19,18 +19,16 @@
 package proton.android.pass.composecomponents.impl.buttons
 
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -39,15 +37,18 @@ import androidx.compose.ui.unit.sp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionStrongNorm
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.defaultTint
+import proton.android.pass.composecomponents.impl.icon.Icon
 
 @Composable
 fun TransparentTextButton(
     modifier: Modifier = Modifier,
     text: String,
-    @DrawableRes icon: Int? = null,
-    iconContentDescription: String? = null,
-    color: Color,
+    @DrawableRes prefixIcon: Int? = null,
+    @DrawableRes suffixIcon: Int? = null,
+    color: Color = defaultTint(),
     style: TextStyle = ProtonTheme.typography.captionStrongNorm.copy(fontSize = 14.sp),
     onClick: () -> Unit
 ) {
@@ -57,20 +58,27 @@ fun TransparentTextButton(
         colors = ButtonDefaults.buttonColors(Color.Transparent),
         onClick = onClick
     ) {
-        if (icon != null) {
-            Icon(
-                modifier = Modifier.size(16.dp),
-                painter = painterResource(icon),
-                contentDescription = iconContentDescription,
-                tint = color
+        Row(horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)) {
+            if (prefixIcon != null) {
+                Icon.Default(
+                    id = prefixIcon,
+                    modifier = Modifier.size(16.dp),
+                    tint = color
+                )
+            }
+            Text(
+                text = text,
+                style = style,
+                color = color
             )
-            Spacer(modifier = Modifier.width(5.dp))
+            if (suffixIcon != null) {
+                Icon.Default(
+                    id = suffixIcon,
+                    modifier = Modifier.size(16.dp),
+                    tint = color
+                )
+            }
         }
-        Text(
-            text = text,
-            style = style,
-            color = color
-        )
     }
 }
 
@@ -81,8 +89,7 @@ fun TransparentTextButtonPreview(@PreviewParameter(ThemePreviewProvider::class) 
         Surface {
             TransparentTextButton(
                 text = "A button",
-                icon = me.proton.core.presentation.compose.R.drawable.ic_proton_plus,
-                iconContentDescription = null,
+                prefixIcon = me.proton.core.presentation.compose.R.drawable.ic_proton_plus,
                 color = PassTheme.colors.interactionNormMajor2,
                 onClick = {}
             )

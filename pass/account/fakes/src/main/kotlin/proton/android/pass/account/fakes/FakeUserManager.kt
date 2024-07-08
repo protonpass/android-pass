@@ -19,7 +19,7 @@
 package proton.android.pass.account.fakes
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.MutableStateFlow
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.PlainByteArray
@@ -37,41 +37,11 @@ import javax.inject.Singleton
 
 @Singleton
 class FakeUserManager @Inject constructor() : UserManager {
-    override suspend fun addUser(user: User, addresses: List<UserAddress>) {
-        throw IllegalStateException("Not implemented")
-    }
 
-    override suspend fun changePassword(
-        userId: UserId,
-        newPassword: EncryptedString,
-        secondFactorCode: String,
-        proofs: SrpProofs,
-        srpSession: String,
-        auth: Auth?
-    ): Boolean {
-        throw IllegalStateException("Not implemented")
-    }
-
-    override suspend fun getAddresses(sessionUserId: SessionUserId, refresh: Boolean): List<UserAddress> {
-        throw IllegalStateException("Not implemented")
-    }
-
-    override suspend fun getUser(sessionUserId: SessionUserId, refresh: Boolean): User {
-        throw IllegalStateException("Not implemented")
-    }
-
-    override suspend fun lock(userId: UserId) {
-        throw IllegalStateException("Not implemented")
-    }
-
-    override fun observeAddresses(sessionUserId: SessionUserId, refresh: Boolean): Flow<List<UserAddress>> {
-        throw IllegalStateException("Not implemented")
-    }
-
-    override fun observeUser(sessionUserId: SessionUserId, refresh: Boolean): Flow<User?> = flowOf(
+    private val state: MutableStateFlow<User> = MutableStateFlow(
         User(
-            userId = UserId(""),
-            email = "email",
+            userId = UserId(USER_ID),
+            email = EMAIL,
             name = "name",
             displayName = null,
             currency = "",
@@ -90,6 +60,37 @@ class FakeUserManager @Inject constructor() : UserManager {
             recovery = null
         )
     )
+
+    override suspend fun addUser(user: User, addresses: List<UserAddress>) {
+        state.emit(user)
+    }
+
+    override suspend fun changePassword(
+        userId: UserId,
+        newPassword: EncryptedString,
+        secondFactorCode: String,
+        proofs: SrpProofs,
+        srpSession: String,
+        auth: Auth?
+    ): Boolean {
+        throw IllegalStateException("Not implemented")
+    }
+
+    override suspend fun getAddresses(sessionUserId: SessionUserId, refresh: Boolean): List<UserAddress> {
+        throw IllegalStateException("Not implemented")
+    }
+
+    override suspend fun getUser(sessionUserId: SessionUserId, refresh: Boolean): User = state.value
+
+    override suspend fun lock(userId: UserId) {
+        throw IllegalStateException("Not implemented")
+    }
+
+    override fun observeAddresses(sessionUserId: SessionUserId, refresh: Boolean): Flow<List<UserAddress>> {
+        throw IllegalStateException("Not implemented")
+    }
+
+    override fun observeUser(sessionUserId: SessionUserId, refresh: Boolean): Flow<User?> = state
 
     override suspend fun reactivateKey(userKey: UserKey): User {
         throw IllegalStateException("Not implemented")
@@ -126,5 +127,10 @@ class FakeUserManager @Inject constructor() : UserManager {
         refreshKeySalts: Boolean
     ): UserManager.UnlockResult {
         throw IllegalStateException("Not implemented")
+    }
+
+    companion object {
+        const val USER_ID = "FakeUserManager-DefaultUserId"
+        const val EMAIL = "FakeUserManager-Email"
     }
 }

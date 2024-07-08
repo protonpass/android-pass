@@ -34,7 +34,6 @@ dependencies {
     implementation(libs.androidx.startup.runtime)
     implementation(libs.core.userSettings.domain)
     implementation(libs.core.utilAndroidSentry)
-    implementation(libs.sentry.android.core)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

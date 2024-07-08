@@ -19,10 +19,12 @@
 package proton.android.pass.features.item.trash.trashmenu.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.features.item.trash.shared.navigation.ItemTrashNavDestination
+import proton.android.pass.features.item.trash.trashmenu.presentation.ItemTrashMenuEvent
 import proton.android.pass.features.item.trash.trashmenu.presentation.ItemTrashMenuViewModel
 
 @Composable
@@ -32,12 +34,28 @@ fun ItemTrashMenuBottomSheet(
 ) = with(viewModel) {
     val state by state.collectAsStateWithLifecycle()
 
+    LaunchedEffect(key1 = state.event) {
+        when (state.event) {
+            ItemTrashMenuEvent.Idle -> {}
+
+            ItemTrashMenuEvent.OnItemRestored ->
+                ItemTrashNavDestination.Home
+                    .also(onNavigated)
+
+            ItemTrashMenuEvent.OnItemRestoredError ->
+                ItemTrashNavDestination.DismissBottomSheet
+                    .also(onNavigated)
+        }
+
+        onConsumeEvent(state.event)
+    }
+
     ItemTrashMenuContent(
         state = state,
         onEvent = { uiEvent ->
             when (uiEvent) {
                 ItemTrashMenuUiEvent.OnDeleteItemPermanentlyClicked -> TODO()
-                ItemTrashMenuUiEvent.OnRestoreItemClicked -> TODO()
+                ItemTrashMenuUiEvent.OnRestoreItemClicked -> onRestoreItem()
             }
         }
     )

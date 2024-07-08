@@ -30,12 +30,12 @@ internal enum class ItemTrashMenuSnackBarMessage(
 ) : SnackbarMessage {
 
     ItemRestored(
-        id = CompR.string.snack_bar_message_item_restored_success,
+        id = CompR.string.snack_bar_message_item_restore_success,
         type = SnackbarType.SUCCESS
     ),
 
     ItemRestoreError(
-        id = CompR.string.snack_bar_message_item_restored_error,
+        id = CompR.string.snack_bar_message_item_restore_error,
         type = SnackbarType.ERROR
     )
 

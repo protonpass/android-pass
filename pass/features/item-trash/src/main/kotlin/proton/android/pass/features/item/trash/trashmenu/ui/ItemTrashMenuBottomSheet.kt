@@ -35,14 +35,20 @@ fun ItemTrashMenuBottomSheet(
     val state by state.collectAsStateWithLifecycle()
 
     LaunchedEffect(key1 = state.event) {
-        when (state.event) {
+        when (val event = state.event) {
             ItemTrashMenuEvent.Idle -> {}
+
+            is ItemTrashMenuEvent.OnDeleteItem -> ItemTrashNavDestination.DeleteItem(
+                shareId = event.shareId,
+                itemId = event.itemId
+            ).also(onNavigated)
 
             ItemTrashMenuEvent.OnItemRestored ->
                 ItemTrashNavDestination.Home
                     .also(onNavigated)
 
-            ItemTrashMenuEvent.OnItemRestoredError ->
+            ItemTrashMenuEvent.OnItemNotFound,
+            ItemTrashMenuEvent.OnItemRestoreError ->
                 ItemTrashNavDestination.DismissBottomSheet
                     .also(onNavigated)
         }
@@ -54,7 +60,7 @@ fun ItemTrashMenuBottomSheet(
         state = state,
         onEvent = { uiEvent ->
             when (uiEvent) {
-                ItemTrashMenuUiEvent.OnDeleteItemPermanentlyClicked -> TODO()
+                ItemTrashMenuUiEvent.OnDeleteItemPermanentlyClicked -> onDeleteItem()
                 ItemTrashMenuUiEvent.OnRestoreItemClicked -> onRestoreItem()
             }
         }

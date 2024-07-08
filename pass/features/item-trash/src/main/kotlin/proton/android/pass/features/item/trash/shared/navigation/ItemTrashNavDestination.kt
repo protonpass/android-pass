@@ -18,10 +18,17 @@
 
 package proton.android.pass.features.item.trash.shared.navigation
 
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+
 sealed interface ItemTrashNavDestination {
+
+    data object Back : ItemTrashNavDestination
 
     data object Home : ItemTrashNavDestination
 
     data object DismissBottomSheet : ItemTrashNavDestination
+
+    data class DeleteItem(val shareId: ShareId, val itemId: ItemId) : ItemTrashNavDestination
 
 }

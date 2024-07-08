@@ -16,19 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.trash.shared.navigation
+package proton.android.pass.features.item.trash.trashdelete.ui
 
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
+internal sealed interface ItemTrashDeleteUiEvent {
 
-sealed interface ItemTrashNavDestination {
+    data object OnConfirmButtonClicked : ItemTrashDeleteUiEvent
 
-    data object Back : ItemTrashNavDestination
-
-    data object Home : ItemTrashNavDestination
-
-    data object DismissBottomSheet : ItemTrashNavDestination
-
-    data class DeleteItem(val shareId: ShareId, val itemId: ItemId) : ItemTrashNavDestination
+    data object OnCancelButtonClicked : ItemTrashDeleteUiEvent
 
 }

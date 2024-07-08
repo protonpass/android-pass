@@ -16,19 +16,25 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.trash.shared.navigation
+package proton.android.pass.features.item.trash.trashdelete.presentation
 
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
+import androidx.compose.runtime.Stable
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
-sealed interface ItemTrashNavDestination {
+@Stable
+internal data class ItemTrashDeleteState(
+    internal val event: ItemTrashDeleteEvent,
+    private val isLoadingState: IsLoadingState
+) {
+    internal val isLoading: Boolean = isLoadingState.value()
 
-    data object Back : ItemTrashNavDestination
+    internal companion object {
 
-    data object Home : ItemTrashNavDestination
+        internal val Initial: ItemTrashDeleteState = ItemTrashDeleteState(
+            event = ItemTrashDeleteEvent.Idle,
+            isLoadingState = IsLoadingState.NotLoading
+        )
 
-    data object DismissBottomSheet : ItemTrashNavDestination
-
-    data class DeleteItem(val shareId: ShareId, val itemId: ItemId) : ItemTrashNavDestination
+    }
 
 }

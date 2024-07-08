@@ -16,19 +16,23 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.item.trash.shared.navigation
+package proton.android.pass.features.item.trash.trashdelete.navigation
 
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.NavItemType
 
-sealed interface ItemTrashNavDestination {
+object ItemTrashDeleteNavItem : NavItem(
+    baseRoute = "item/trash/delete",
+    navArgIds = listOf(
+        CommonNavArgId.ShareId,
+        CommonNavArgId.ItemId
+    ),
+    navItemType = NavItemType.Dialog
+) {
 
-    data object Back : ItemTrashNavDestination
-
-    data object Home : ItemTrashNavDestination
-
-    data object DismissBottomSheet : ItemTrashNavDestination
-
-    data class DeleteItem(val shareId: ShareId, val itemId: ItemId) : ItemTrashNavDestination
+    fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
 
 }

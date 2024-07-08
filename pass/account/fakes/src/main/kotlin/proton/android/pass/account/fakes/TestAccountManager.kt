@@ -35,15 +35,13 @@ import javax.inject.Singleton
 @Singleton
 class TestAccountManager @Inject constructor() : AccountManager(Product.Pass) {
 
-    private val userId = UserId("TestAccountManager-DefaultUserId")
-
     private val primaryUserIdFlow: MutableStateFlow<UserId?> =
-        MutableStateFlow(userId)
+        MutableStateFlow(UserId(USER_ID))
 
     private val accountFlow: MutableStateFlow<Account> =
         MutableStateFlow(
             Account(
-                userId = userId,
+                userId = UserId(USER_ID),
                 state = AccountState.Ready,
                 details = AccountDetails(null, null),
                 username = null,
@@ -87,5 +85,9 @@ class TestAccountManager @Inject constructor() : AccountManager(Product.Pass) {
 
     override suspend fun setAsPrimary(userId: UserId) {
         // no-op
+    }
+
+    companion object {
+        const val USER_ID = "TestAccountManager-DefaultUserId"
     }
 }

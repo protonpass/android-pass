@@ -21,6 +21,7 @@ package proton.android.pass.commonui.api
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.LocalContentColor
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 
 @Composable
-fun defaultTint() = LocalContentColor.current.copy(alpha = LocalContentAlpha.current)
+fun defaultTint(): Color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current)

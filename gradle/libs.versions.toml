@@ -70,8 +70,6 @@ haze = "0.7.0"
 jacoco = "0.8.8"
 # JakeWharton
 timber = "5.0.1"
-# Java
-jna = "5.13.0"
 # Kotlin
 kotlin = "1.9.22"
 collections = "0.3.5"
@@ -80,13 +78,10 @@ datetime = "0.4.0"
 serializationJson = "1.6.3"
 # Pass
 passCommon = "0.7.13"
-# Sentry
-sentry = "6.18.1"
 # Showkase
 showkase = "1.0.2"
 # Squareup
 leakCanary = "2.12"
-okhttp = "4.10.0"
 retrofit = "2.9.0"
 # Test
 junit = "4.13.2"
@@ -122,7 +117,6 @@ accompanist-navigation-material = { module = "com.google.accompanist:accompanist
 accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanist" }
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
 accompanist-placeholder = { module = "com.google.accompanist:accompanist-placeholder", version.ref = "accompanist" }
-accompanist-placeholder-material = { module = "com.google.accompanist:accompanist-placeholder-material", version.ref = "accompanist" }
 accompanist-systemUiController = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
 
 # Android tools
@@ -170,7 +164,6 @@ androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-com
 ## Lifecycle
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
-androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-process = { module = "androidx.lifecycle:lifecycle-process", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-viewmodel-savedstate = { module = "androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "androidx-lifecycle" }
@@ -208,7 +201,6 @@ core-accountManager-domain = { module = "me.proton.core:account-manager-domain",
 core-accountManager-presentation-compose = { module = "me.proton.core:account-manager-presentation-compose", version.ref = "core" }
 core-accountManager-test = { module = "me.proton.core:account-manager-test", version.ref = "core" }
 core-accountRecovery = { module = "me.proton.core:account-recovery", version.ref = "core" }
-core-accountRecovery-presentation-compose = { module = "me.proton.core:account-recovery-presentation-compose", version.ref = "core" }
 core-accountRecovery-test = { module = "me.proton.core:account-recovery-test", version.ref = "core" }
 core-auth = { module = "me.proton.core:auth", version.ref = "core" }
 core-auth-test = { module = "me.proton.core:auth-test", version.ref = "core" }
@@ -247,7 +239,6 @@ core-report = { module = "me.proton.core:report", version.ref = "core" }
 core-test-android = { module = "me.proton.core:test-android", version.ref = "core" }
 core-test-android-instrumented = { module = "me.proton.core:test-android-instrumented", version.ref = "core" }
 core-test-kotlin = { module = "me.proton.core:test-kotlin", version.ref = "core" }
-core-telemetry = { module = "me.proton.core:telemetry", version.ref = "core" }
 core-telemetry-data = { module = "me.proton.core:telemetry-data", version.ref = "core" }
 core-telemetry-domain = { module = "me.proton.core:telemetry-domain", version.ref = "core" }
 core-telemetry-presentation = { module = "me.proton.core:telemetry-presentation", version.ref = "core" }
@@ -257,7 +248,6 @@ core-userRecovery = { module = "me.proton.core:user-recovery", version.ref = "co
 core-userRecovery-test = { module = "me.proton.core:user-recovery-test", version.ref = "core" }
 core-userSettings = { module = "me.proton.core:user-settings", version.ref = "core" }
 core-userSettings-domain = { module = "me.proton.core:user-settings-domain", version.ref = "core" }
-core-userSettings-presentation-compose = { module = "me.proton.core:user-settings-presentation-compose", version.ref = "core" }
 core-userSettings-test = { module = "me.proton.core:user-settings-test", version.ref = "core" }
 core-utilAndroidDagger = { module = "me.proton.core:util-android-dagger", version.ref = "core" }
 core-utilAndroidSentry = { module = "me.proton.core:util-android-sentry", version.ref = "core" }
@@ -270,7 +260,6 @@ core-config-dagger-contentProvider = { module = "me.proton.core:configuration-da
 dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "dagger" }
 dagger-hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "dagger" }
 dagger-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "dagger" }
-dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "dagger" }
 
 # Google
 google-protobuf-kotlin-lite = { module = "com.google.protobuf:protobuf-kotlin-lite", version.ref = "protobuf" }
@@ -284,9 +273,6 @@ haze = { module = "dev.chrisbanes.haze:haze", version.ref = "haze" }
 
 # JakeWharton
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
-
-# Java
-java-jna = { module = "net.java.dev.jna:jna", version.ref = "jna", name = "aar" }
 
 # Kotlin
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
@@ -303,18 +289,12 @@ material = { module = "com.google.android.material:material", version.ref = "mat
 # Pass
 pass-common = { module = "me.proton.pass.common:lib", version.ref = "passCommon" }
 
-# Sentry
-sentry = { module = "io.sentry:sentry", version.ref = "sentry" }
-sentry-android-core = { module = "io.sentry:sentry-android-core", version.ref = "sentry" }
-sentry-android-timber = { module = "io.sentry:sentry-android-timber", version.ref = "sentry" }
-
 # Showkase
 showkase = { module = "com.airbnb.android:showkase", version.ref = "showkase" }
 showkaseProcessor = { module = "com.airbnb.android:showkase-processor", version.ref = "showkase" }
 
 # Squareup
 leakCanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakCanary" }
-okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 plumber = { module = "com.squareup.leakcanary:plumber-android", version.ref = "leakCanary" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 

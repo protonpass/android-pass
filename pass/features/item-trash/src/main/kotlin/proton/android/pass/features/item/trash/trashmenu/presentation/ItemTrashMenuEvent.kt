@@ -18,12 +18,22 @@
 
 package proton.android.pass.features.item.trash.trashmenu.presentation
 
+import proton.android.pass.domain.ItemId
+import proton.android.pass.domain.ShareId
+
 internal sealed interface ItemTrashMenuEvent {
 
     data object Idle : ItemTrashMenuEvent
 
+    data class OnDeleteItem(
+        internal val shareId: ShareId,
+        internal val itemId: ItemId
+    ) : ItemTrashMenuEvent
+
+    data object OnItemNotFound : ItemTrashMenuEvent
+
     data object OnItemRestored : ItemTrashMenuEvent
 
-    data object OnItemRestoredError : ItemTrashMenuEvent
+    data object OnItemRestoreError : ItemTrashMenuEvent
 
 }

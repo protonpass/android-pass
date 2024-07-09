@@ -72,7 +72,7 @@ fun AccountSwitcherList(
                     rowSize = coordinates.size.toSize()
                 },
             isCollapsed = true,
-            index = 0,
+            extraOffset = false,
             accountListItem = primary.first(),
             onEvent = onEvent
         )

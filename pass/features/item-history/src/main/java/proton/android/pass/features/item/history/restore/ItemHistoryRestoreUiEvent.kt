@@ -22,13 +22,14 @@ import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetai
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
 import proton.android.pass.features.item.history.restore.presentation.ItemHistoryRestoreEvent
 
 internal sealed interface ItemHistoryRestoreUiEvent {
+
     @JvmInline
     value class OnEventConsumed(val event: ItemHistoryRestoreEvent) : ItemHistoryRestoreUiEvent
+
+    data object OnBackClick : ItemHistoryRestoreUiEvent
 
     data object OnRestoreClick : ItemHistoryRestoreUiEvent
 
@@ -53,11 +54,10 @@ internal sealed interface ItemHistoryRestoreUiEvent {
         val field: ItemDetailsFieldType.Hidden
     ) : ItemHistoryRestoreUiEvent
 
-    data class OnPasskeyClick(
-        val shareId: ShareId,
-        val itemId: ItemId,
-        val passkey: UIPasskeyContent
-    ) : ItemHistoryRestoreUiEvent
+    @JvmInline
+    value class OnPasskeyClick(val passkey: UIPasskeyContent) : ItemHistoryRestoreUiEvent
 
+    @JvmInline
+    value class OnLinkClick(val linkUrl: String) : ItemHistoryRestoreUiEvent
 
 }

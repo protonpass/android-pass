@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -39,6 +40,7 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemRevision
+import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.items.OpenItemRevision
 import proton.android.pass.data.api.usecases.items.RestoreItemRevision
 import proton.android.pass.domain.HiddenState
@@ -61,7 +63,8 @@ class ItemHistoryRestoreViewModel @Inject constructor(
     private val restoreItemRevision: RestoreItemRevision,
     private val itemDetailsHandler: ItemDetailsHandler,
     private val snackbarDispatcher: SnackbarDispatcher,
-    private val encryptionContextProvider: EncryptionContextProvider
+    private val encryptionContextProvider: EncryptionContextProvider,
+    private val getItemById: GetItemById
 ) : ViewModel() {
 
     private val shareId: ShareId = savedStateHandleProvider.get()
@@ -78,21 +81,31 @@ class ItemHistoryRestoreViewModel @Inject constructor(
 
     private val eventFlow = MutableStateFlow<ItemHistoryRestoreEvent>(ItemHistoryRestoreEvent.Idle)
 
-    private val itemDetailsStateFlow: Flow<ItemDetailState> = oneShot {
+    private val currentItemDetailsStateFlow: Flow<ItemDetailState> =
+        oneShot { getItemById(shareId, itemId) }
+            .flatMapLatest(itemDetailsHandler::observeItemDetails)
+            .onEach {
+                println("JIBIRI: Current -> ${it.itemContents.title}")
+            }
+
+    private val revisionItemDetailsStateFlow: Flow<ItemDetailState> = oneShot {
         encryptionContextProvider.withEncryptionContextSuspendable {
             openItemRevision(shareId, itemRevision, this@withEncryptionContextSuspendable)
         }
     }.flatMapLatest(itemDetailsHandler::observeItemDetails)
+        .onEach {
+            println("JIBIRI: Revision -> ${it.itemContents.title}")
+        }
 
     internal val state = combine(
-        itemDetailsStateFlow,
+        currentItemDetailsStateFlow,
+        revisionItemDetailsStateFlow,
         eventFlow
-    ) { itemDetailState, event ->
+    ) { currentItemDetailState, revisionItemDetailState, event ->
         ItemHistoryRestoreState.ItemDetails(
-            shareId = shareId,
-            itemId = itemId,
             itemRevision = itemRevision,
-            itemDetailState = itemDetailState,
+            currentItemDetailState = currentItemDetailState,
+            revisionItemDetailState = revisionItemDetailState,
             event = event
         )
     }.stateIn(
@@ -105,26 +118,31 @@ class ItemHistoryRestoreViewModel @Inject constructor(
         eventFlow.compareAndSet(event, ItemHistoryRestoreEvent.Idle)
     }
 
-    internal fun onItemFieldClicked(text: String, plainFieldType: ItemDetailsFieldType.Plain) = viewModelScope.launch {
-        itemDetailsHandler.onItemDetailsFieldClicked(text, plainFieldType)
+    internal fun onItemFieldClicked(text: String, plainFieldType: ItemDetailsFieldType.Plain) {
+        viewModelScope.launch {
+            itemDetailsHandler.onItemDetailsFieldClicked(text, plainFieldType)
+        }
     }
 
-    internal fun onItemHiddenFieldClicked(hiddenState: HiddenState, hiddenFieldType: ItemDetailsFieldType.Hidden) =
+    internal fun onItemHiddenFieldClicked(hiddenState: HiddenState, hiddenFieldType: ItemDetailsFieldType.Hidden) {
         viewModelScope.launch {
             itemDetailsHandler.onItemDetailsHiddenFieldClicked(hiddenState, hiddenFieldType)
         }
+    }
 
     internal fun onItemHiddenFieldToggled(
         isVisible: Boolean,
         hiddenState: HiddenState,
         hiddenFieldType: ItemDetailsFieldType.Hidden
-    ) = viewModelScope.launch {
-        itemDetailsHandler.onItemDetailsHiddenFieldToggled(
-            isVisible = isVisible,
-            hiddenState = hiddenState,
-            hiddenFieldType = hiddenFieldType,
-            itemCategory = itemDetailsStateFlow.first().itemCategory
-        )
+    ) {
+        viewModelScope.launch {
+            itemDetailsHandler.onItemDetailsHiddenFieldToggled(
+                isVisible = isVisible,
+                hiddenState = hiddenState,
+                hiddenFieldType = hiddenFieldType,
+                itemCategory = revisionItemDetailsStateFlow.first().itemCategory
+            )
+        }
     }
 
     internal fun onRestoreItem() {
@@ -135,19 +153,21 @@ class ItemHistoryRestoreViewModel @Inject constructor(
         eventFlow.update { ItemHistoryRestoreEvent.OnRestoreItemCanceled }
     }
 
-    internal fun onRestoreItemConfirmed(itemContents: ItemContents) = viewModelScope.launch {
-        eventFlow.update { ItemHistoryRestoreEvent.OnRestoreItemConfirmed }
+    internal fun onRestoreItemConfirmed(itemContents: ItemContents) {
+        viewModelScope.launch {
+            eventFlow.update { ItemHistoryRestoreEvent.OnRestoreItemConfirmed }
 
-        runCatching { restoreItemRevision(shareId, itemId, itemContents) }
-            .onSuccess {
-                eventFlow.update { ItemHistoryRestoreEvent.OnItemRestored }
-                snackbarDispatcher(ItemHistoryRestoreSnackbarMessage.RestoreItemRevisionSuccess)
-            }
-            .onFailure { error ->
-                PassLogger.w(TAG, "Error restoring item revision: $error")
-                eventFlow.update { ItemHistoryRestoreEvent.OnRestoreItemCanceled }
-                snackbarDispatcher(ItemHistoryRestoreSnackbarMessage.RestoreItemRevisionError)
-            }
+            runCatching { restoreItemRevision(shareId, itemId, itemContents) }
+                .onSuccess {
+                    eventFlow.update { ItemHistoryRestoreEvent.OnItemRestored }
+                    snackbarDispatcher(ItemHistoryRestoreSnackbarMessage.RestoreItemRevisionSuccess)
+                }
+                .onFailure { error ->
+                    PassLogger.w(TAG, "Error restoring item revision: $error")
+                    eventFlow.update { ItemHistoryRestoreEvent.OnRestoreItemCanceled }
+                    snackbarDispatcher(ItemHistoryRestoreSnackbarMessage.RestoreItemRevisionError)
+                }
+        }
     }
 
 }

@@ -68,7 +68,7 @@ import proton.android.pass.composecomponents.impl.R as CompR
 fun AccountSwitcherRow(
     modifier: Modifier = Modifier,
     isCollapsed: Boolean = false,
-    index: Int,
+    extraOffset: Boolean,
     accountListItem: AccountListItem,
     onEvent: (AccountSwitchEvent) -> Unit
 ) {
@@ -148,7 +148,7 @@ fun AccountSwitcherRow(
                     modifier = Modifier.background(PassTheme.colors.inputBackgroundStrong),
                     expanded = expanded,
                     // Offset to align dropdown with the row since it's not positioned correctly
-                    offset = DpOffset(0.dp, if (index == 0) 40.dp else 80.dp),
+                    offset = DpOffset(0.dp, if (extraOffset) 80.dp else 40.dp),
                     onDismissRequest = { expanded = false }
                 ) {
                     val list = when (accountListItem) {
@@ -227,7 +227,7 @@ fun AccountSwitcherRowPreview(@PreviewParameter(ThemePreviewProvider::class) isD
         Surface {
             AccountSwitcherRow(
                 isCollapsed = false,
-                index = 0,
+                extraOffset = false,
                 accountListItem = AccountListItem.Primary(
                     accountItem = AccountItem(
                         userId = UserId("1"),

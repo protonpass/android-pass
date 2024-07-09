@@ -47,7 +47,6 @@ fun ItemTrashMenuBottomSheet(
                 ItemTrashNavDestination.Home
                     .also(onNavigated)
 
-            ItemTrashMenuEvent.OnItemNotFound,
             ItemTrashMenuEvent.OnItemRestoreError ->
                 ItemTrashNavDestination.DismissBottomSheet
                     .also(onNavigated)

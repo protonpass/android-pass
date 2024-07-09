@@ -62,7 +62,7 @@ sealed interface AutofillItem : Parcelable {
     data class Identity(
         val itemId: String,
         val shareId: String,
-        val fullName: String,
+        val fullName: String?,
         val address: String?,
         val city: String?,
         val postalCode: String?,

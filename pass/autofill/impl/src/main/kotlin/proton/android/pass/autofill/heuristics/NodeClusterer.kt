@@ -24,7 +24,6 @@ import proton.android.pass.autofill.entities.AssistField
 import proton.android.pass.autofill.entities.AutofillFieldId
 import proton.android.pass.autofill.entities.DetectionType
 import proton.android.pass.autofill.entities.FieldType
-import proton.android.pass.log.api.PassLogger
 
 @Parcelize
 sealed interface NodeCluster : Parcelable {
@@ -84,7 +83,7 @@ sealed interface NodeCluster : Parcelable {
 
     @Parcelize
     data class Identity(
-        val fullName: AssistField,
+        val fullName: AssistField?,
         val address: AssistField?,
         val city: AssistField?,
         val postalCode: AssistField?,
@@ -175,8 +174,6 @@ interface IdentifiableNode {
 
 object NodeClusterer {
 
-    private const val TAG = "NodeClusterer"
-
     fun cluster(nodes: List<AssistField>, isIdentityEnabled: Boolean = false): List<NodeCluster> {
         val clusters = mutableListOf<NodeCluster>()
         val addedNodes = mutableSetOf<AssistField>()
@@ -196,27 +193,39 @@ object NodeClusterer {
         addedNodes: MutableSet<AssistField>
     ) {
         val fullNameFields = nodes.getNodesForType(FieldType.FullName, addedNodes)
-        fullNameFields.ifEmpty {
-            PassLogger.d(TAG, "No full name found")
-            return
-        }
-        val firstFullName = fullNameFields.first()
         val addressFields = nodes.getNodesForType(FieldType.Address, addedNodes)
         val cityFields = nodes.getNodesForType(FieldType.City, addedNodes)
         val postalCodeFields = nodes.getNodesForType(FieldType.PostalCode, addedNodes)
         val phoneNumberFields = nodes.getNodesForType(FieldType.Phone, addedNodes)
 
-        if (listOf(addressFields, cityFields, postalCodeFields, phoneNumberFields).any { it.isNotEmpty() }) {
+        val list = listOf(
+            fullNameFields,
+            addressFields,
+            cityFields,
+            postalCodeFields,
+            phoneNumberFields
+        )
+        val nonEmptyLists = list.filter { it.isNotEmpty() }
+        val anyTwoNotEmpty = nonEmptyLists.size >= 2
+        if (anyTwoNotEmpty) {
+            val firstField = nonEmptyLists
+                .firstOrNull { nonEmptyList ->
+                    nonEmptyList.firstOrNull { it.detectionType == DetectionType.ExactMatch } != null
+                }
+                ?.firstOrNull()
+                ?: nonEmptyLists.first().firstOrNull()
+                ?: return
             clusters.add(
                 NodeCluster.Identity(
-                    fullName = firstFullName.also { addedNodes.add(it) },
-                    address = addressFields.findFieldToCluster(firstFullName)
+                    fullName = fullNameFields.findFieldToCluster(firstField)
                         ?.also { addedNodes.add(it) },
-                    city = cityFields.findFieldToCluster(firstFullName)
+                    address = addressFields.findFieldToCluster(firstField)
                         ?.also { addedNodes.add(it) },
-                    postalCode = postalCodeFields.findFieldToCluster(firstFullName)
+                    city = cityFields.findFieldToCluster(firstField)
                         ?.also { addedNodes.add(it) },
-                    phoneNumber = phoneNumberFields.findFieldToCluster(firstFullName)
+                    postalCode = postalCodeFields.findFieldToCluster(firstField)
+                        ?.also { addedNodes.add(it) },
+                    phoneNumber = phoneNumberFields.findFieldToCluster(firstField)
                         ?.also { addedNodes.add(it) }
                 )
             )

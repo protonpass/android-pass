@@ -85,11 +85,18 @@ fun runAutofillTest(
 
     PassLogger.i(
         TAG,
-        "Expected nodes: ${nodesWithExpectedContents.size} (${nodesWithExpectedContents.map { it.second.name }})"
+        "Expected nodes: ${nodesWithExpectedContents.size} " +
+            "(${nodesWithExpectedContents.map { it.second.name + ":" + it.first.id }})"
     )
-    PassLogger.i(TAG, "Detected nodes: ${detectedNodes.fields.size} (${detectedNodes.fields.map { it.type?.name }})")
+    PassLogger.i(
+        TAG,
+        "Detected nodes: ${detectedNodes.fields.size} " +
+            "(${detectedNodes.fields.map { it.type?.name + ":" + it.id.value() }})"
+    )
     PassLogger.i(TAG, "Mapped nodes: ${res.mappings.size}")
-    PassLogger.i(TAG, "Clusters: ${clusters.size} | Focused: $focusedCluster")
+    PassLogger.i(TAG, "Clusters: ${clusters.size}")
+    PassLogger.i(TAG, "Focused cluster type: ${focusedCluster.type()}")
+    PassLogger.i(TAG, "Focused cluster fields: ${focusedCluster.fields().map { it.type?.name + ":" + it.id.value() }}")
 
     for (nodeWithExpectedContents in nodesWithExpectedContents) {
         val (node, expectedAutofill) = nodeWithExpectedContents

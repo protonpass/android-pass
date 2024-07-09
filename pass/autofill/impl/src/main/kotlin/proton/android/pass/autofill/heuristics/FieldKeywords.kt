@@ -48,12 +48,13 @@ internal fun List<FieldKeywords>.match(fields: List<String>): Pair<FieldType, St
 private val ALLOWED_ADDRESS_KEYWORDS = listOf(
     "address",
     "street",
+    "direccion",
     "calle",
     "casa",
     "home",
     "house"
 )
-private val ALLOWED_CITY_KEYWORDS = listOf("city")
+private val ALLOWED_CITY_KEYWORDS = listOf("city", "ciudad")
 private val ALLOWED_POSTAL_CODE_KEYWORDS = listOf("postal", "zip", "zipcode", "postcode")
 private val ALLOWED_PHONE_KEYWORDS = listOf("phone", "telef", "teleph", "mobile", "cellphone")
 private val ALLOWED_EMAIL_KEYWORDS = listOf(View.AUTOFILL_HINT_EMAIL_ADDRESS, "email")

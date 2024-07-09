@@ -27,6 +27,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -58,7 +59,10 @@ fun TransparentTextButton(
         colors = ButtonDefaults.buttonColors(Color.Transparent),
         onClick = onClick
     ) {
-        Row(horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall)) {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(Spacing.extraSmall),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             if (prefixIcon != null) {
                 Icon.Default(
                     id = prefixIcon,
@@ -90,6 +94,7 @@ fun TransparentTextButtonPreview(@PreviewParameter(ThemePreviewProvider::class) 
             TransparentTextButton(
                 text = "A button",
                 prefixIcon = me.proton.core.presentation.compose.R.drawable.ic_proton_plus,
+                suffixIcon = me.proton.core.presentation.compose.R.drawable.ic_proton_chevron_tiny_down,
                 color = PassTheme.colors.interactionNormMajor2,
                 onClick = {}
             )

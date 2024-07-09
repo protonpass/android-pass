@@ -23,7 +23,7 @@ import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.Logger
 import org.junit.Before
 
-open class BaseAutofillTest(private val priority: Int = Log.DEBUG) {
+open class BaseAutofillTest(private val priority: Int = Log.INFO) {
 
     @Before
     fun setup() {

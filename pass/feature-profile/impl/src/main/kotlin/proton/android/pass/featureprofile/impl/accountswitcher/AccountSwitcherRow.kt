@@ -40,6 +40,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.unit.dp
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.domain.entity.UserId
@@ -66,6 +68,7 @@ import proton.android.pass.composecomponents.impl.R as CompR
 fun AccountSwitcherRow(
     modifier: Modifier = Modifier,
     isCollapsed: Boolean = false,
+    index: Int,
     accountListItem: AccountListItem,
     onEvent: (AccountSwitchEvent) -> Unit
 ) {
@@ -144,6 +147,8 @@ fun AccountSwitcherRow(
                 DropdownMenu(
                     modifier = Modifier.background(PassTheme.colors.inputBackgroundStrong),
                     expanded = expanded,
+                    // Offset to align dropdown with the row since it's not positioned correctly
+                    offset = DpOffset(0.dp, if (index == 0) 40.dp else 80.dp),
                     onDismissRequest = { expanded = false }
                 ) {
                     val list = when (accountListItem) {
@@ -222,6 +227,7 @@ fun AccountSwitcherRowPreview(@PreviewParameter(ThemePreviewProvider::class) isD
         Surface {
             AccountSwitcherRow(
                 isCollapsed = false,
+                index = 0,
                 accountListItem = AccountListItem.Primary(
                     accountItem = AccountItem(
                         userId = UserId("1"),

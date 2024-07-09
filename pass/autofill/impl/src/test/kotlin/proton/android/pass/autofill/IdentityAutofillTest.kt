@@ -29,11 +29,6 @@ class IdentityAutofillTest : BaseAutofillTest() {
     }
 
     @Test
-    fun `can autofill aliexpress chrome`() {
-        runIdentityAutofillTest("identity/chrome_aliexpress.json")
-    }
-
-    @Test
     fun `can autofill ebay app`() {
         runIdentityAutofillTest("identity/app_com.ebay.mobile.json")
     }

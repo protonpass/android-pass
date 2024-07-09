@@ -30,8 +30,6 @@ internal sealed interface ItemTrashMenuEvent {
         internal val itemId: ItemId
     ) : ItemTrashMenuEvent
 
-    data object OnItemNotFound : ItemTrashMenuEvent
-
     data object OnItemRestored : ItemTrashMenuEvent
 
     data object OnItemRestoreError : ItemTrashMenuEvent

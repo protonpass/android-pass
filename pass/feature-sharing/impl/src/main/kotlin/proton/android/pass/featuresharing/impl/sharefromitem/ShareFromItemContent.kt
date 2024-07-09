@@ -92,6 +92,9 @@ internal fun ShareFromItemContent(
                             .also(onEvent)
                     }
                 )
+
+                // Under this conditions we don't need to show the rest of possible options nor divider
+                return
             }
 
             PassDivider(

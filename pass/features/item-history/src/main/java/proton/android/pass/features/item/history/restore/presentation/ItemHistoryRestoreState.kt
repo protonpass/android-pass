@@ -21,8 +21,6 @@ package proton.android.pass.features.item.history.restore.presentation
 import androidx.compose.runtime.Stable
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.data.api.repositories.ItemRevision
-import proton.android.pass.domain.ItemId
-import proton.android.pass.domain.ShareId
 
 @Stable
 internal sealed interface ItemHistoryRestoreState {
@@ -32,9 +30,8 @@ internal sealed interface ItemHistoryRestoreState {
 
     @Stable
     data class ItemDetails(
-        internal val shareId: ShareId,
-        internal val itemId: ItemId,
-        internal val itemDetailState: ItemDetailState,
+        internal val currentItemDetailState: ItemDetailState,
+        internal val revisionItemDetailState: ItemDetailState,
         internal val itemRevision: ItemRevision,
         internal val event: ItemHistoryRestoreEvent = ItemHistoryRestoreEvent.Idle
     ) : ItemHistoryRestoreState

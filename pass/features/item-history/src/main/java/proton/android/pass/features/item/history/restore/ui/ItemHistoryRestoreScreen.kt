@@ -20,8 +20,10 @@ package proton.android.pass.features.item.history.restore.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.commonui.api.BrowserUtils
 import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestination
 import proton.android.pass.features.item.history.restore.ItemHistoryRestoreUiEvent
 import proton.android.pass.features.item.history.restore.presentation.ItemHistoryRestoreViewModel
@@ -32,33 +34,55 @@ fun ItemHistoryRestoreScreen(
     viewModel: ItemHistoryRestoreViewModel = hiltViewModel()
 ) = with(viewModel) {
     val state by state.collectAsStateWithLifecycle()
+    val context = LocalContext.current
 
     ItemHistoryRestoreContent(
         onNavigated = onNavigated,
         state = state,
-        onEvent = {
-            when (it) {
-                is ItemHistoryRestoreUiEvent.OnEventConsumed -> onEventConsumed(it.event)
+        onEvent = { uiEvent ->
+            when (uiEvent) {
+                ItemHistoryRestoreUiEvent.OnBackClick -> {
+                    ItemHistoryNavDestination.Back
+                        .also(onNavigated)
+                }
+
+                is ItemHistoryRestoreUiEvent.OnEventConsumed -> {
+                    onEventConsumed(uiEvent.event)
+                }
+
                 is ItemHistoryRestoreUiEvent.OnHiddenSectionClick -> {
-                    onItemHiddenFieldClicked(it.state, it.field)
+                    onItemHiddenFieldClicked(uiEvent.state, uiEvent.field)
                 }
+
                 is ItemHistoryRestoreUiEvent.OnHiddenSectionToggle -> {
-                    onItemHiddenFieldToggled(it.state, it.hiddenState, it.field)
+                    onItemHiddenFieldToggled(uiEvent.state, uiEvent.hiddenState, uiEvent.field)
                 }
+
                 is ItemHistoryRestoreUiEvent.OnPasskeyClick -> {
-                    onNavigated(ItemHistoryNavDestination.PasskeyDetail(it.passkey))
+                    onNavigated(ItemHistoryNavDestination.PasskeyDetail(uiEvent.passkey))
                 }
+
                 ItemHistoryRestoreUiEvent.OnRestoreCancelClick -> {
                     onRestoreItemCanceled()
                 }
+
                 ItemHistoryRestoreUiEvent.OnRestoreClick -> {
                     onRestoreItem()
                 }
+
                 is ItemHistoryRestoreUiEvent.OnRestoreConfirmClick -> {
-                    onRestoreItemConfirmed(it.contents)
+                    onRestoreItemConfirmed(uiEvent.contents)
                 }
+
                 is ItemHistoryRestoreUiEvent.OnSectionClick -> {
-                    onItemFieldClicked(it.section, it.field)
+                    onItemFieldClicked(uiEvent.section, uiEvent.field)
+                }
+
+                is ItemHistoryRestoreUiEvent.OnLinkClick -> {
+                    BrowserUtils.openWebsite(
+                        context = context,
+                        website = uiEvent.linkUrl
+                    )
                 }
             }
         }

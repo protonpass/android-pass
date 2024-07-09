@@ -29,15 +29,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import proton.android.pass.commonui.api.BrowserUtils
-import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsContent
-import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.features.item.history.navigation.ItemHistoryNavDestination
 import proton.android.pass.features.item.history.restore.ItemHistoryRestoreUiEvent
 import proton.android.pass.features.item.history.restore.presentation.ItemHistoryRestoreEvent
 import proton.android.pass.features.item.history.restore.presentation.ItemHistoryRestoreState
+import proton.android.pass.features.item.history.restore.ui.tabs.ItemHistoryRestoreTabContent
 
 @Composable
 internal fun ItemHistoryRestoreContent(
@@ -92,7 +89,7 @@ private fun ItemHistoryRestoreDetails(
                 isDialogVisible = false
                 isDialogLoading = false
                 ItemHistoryNavDestination.Detail(
-                    itemCategory = itemDetailState.itemCategory
+                    itemCategory = revisionItemDetailState.itemCategory
                 ).also(onNavigated)
             }
 
@@ -112,75 +109,19 @@ private fun ItemHistoryRestoreDetails(
         onEvent(ItemHistoryRestoreUiEvent.OnEventConsumed(event))
     }
 
-    val itemColors = passItemColors(itemCategory = itemDetailState.itemCategory)
-    val context = LocalContext.current
-
-    PassItemDetailsContent(
+    ItemHistoryRestoreTabContent(
         modifier = modifier,
-        itemDetailState = itemDetailState,
-        itemColors = itemColors,
-        topBar = {
-            ItemHistoryRestoreTopBar(
-                colors = itemColors,
-                onUpClick = { onNavigated(ItemHistoryNavDestination.Back) },
-                onRestoreClick = { onEvent(ItemHistoryRestoreUiEvent.OnRestoreClick) }
-            )
-        },
-        shouldDisplayItemHistorySection = false,
-        shouldDisplayItemHistoryButton = false,
-        onEvent = { uiEvent ->
-            when (uiEvent) {
-                is PassItemDetailsUiEvent.OnSectionClick -> onEvent(
-                    ItemHistoryRestoreUiEvent.OnSectionClick(
-                        section = uiEvent.section,
-                        field = uiEvent.field
-
-                    )
-                )
-
-                is PassItemDetailsUiEvent.OnHiddenSectionClick -> onEvent(
-                    ItemHistoryRestoreUiEvent.OnHiddenSectionClick(
-                        state = uiEvent.state,
-                        field = uiEvent.field
-                    )
-                )
-
-                is PassItemDetailsUiEvent.OnHiddenSectionToggle -> onEvent(
-                    ItemHistoryRestoreUiEvent.OnHiddenSectionToggle(
-                        state = uiEvent.state,
-                        hiddenState = uiEvent.hiddenState,
-                        field = uiEvent.field
-                    )
-                )
-
-                is PassItemDetailsUiEvent.OnLinkClick -> {
-                    BrowserUtils.openWebsite(context, uiEvent.link)
-                }
-
-                is PassItemDetailsUiEvent.OnPasskeyClick -> onEvent(
-                    ItemHistoryRestoreUiEvent.OnPasskeyClick(
-                        shareId = shareId,
-                        itemId = itemId,
-                        passkey = uiEvent.passkey
-                    )
-                )
-
-                PassItemDetailsUiEvent.OnViewItemHistoryClick -> {
-                    // We do nothing since item history widget shouldn't appear on restore screen
-                }
-
-                is PassItemDetailsUiEvent.OnSharedVaultClick -> {
-                    // We do nothing since we don't allow shared vault management from restore screen
-                }
-            }
-        }
+        revisionItemDetailState = revisionItemDetailState,
+        currentItemDetailState = currentItemDetailState,
+        itemColors = passItemColors(itemCategory = revisionItemDetailState.itemCategory),
+        onEvent = onEvent
     )
 
     ItemHistoryRestoreConfirmationDialog(
         isVisible = isDialogVisible,
         isLoading = isDialogLoading,
         onConfirm = {
-            onEvent(ItemHistoryRestoreUiEvent.OnRestoreConfirmClick(itemDetailState.itemContents))
+            onEvent(ItemHistoryRestoreUiEvent.OnRestoreConfirmClick(revisionItemDetailState.itemContents))
         },
         onDismiss = {
             onEvent(ItemHistoryRestoreUiEvent.OnRestoreCancelClick)

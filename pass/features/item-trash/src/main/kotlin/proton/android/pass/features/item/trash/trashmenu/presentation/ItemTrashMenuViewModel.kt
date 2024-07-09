@@ -24,20 +24,19 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.errors.ItemNotFoundError
-import proton.android.pass.data.api.usecases.ObserveItemById
+import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -52,7 +51,7 @@ import javax.inject.Inject
 class ItemTrashMenuViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     userPreferencesRepository: UserPreferencesRepository,
-    observeItemById: ObserveItemById,
+    getItemById: GetItemById,
     encryptionContextProvider: EncryptionContextProvider,
     private val restoreItem: RestoreItems,
     private val snackbarDispatcher: SnackbarDispatcher
@@ -75,16 +74,7 @@ class ItemTrashMenuViewModel @Inject constructor(
             favIconsPreference.value()
         }
 
-    private val itemUiModelOptionFlow = observeItemById(shareId, itemId)
-        .catch { error ->
-            if (error is ItemNotFoundError) {
-                eventFlow.update { ItemTrashMenuEvent.OnItemNotFound }
-            } else {
-                PassLogger.w(TAG, "There was an error observing item")
-                PassLogger.w(TAG, error)
-                throw error
-            }
-        }
+    private val itemUiModelOptionFlow = oneShot { getItemById(shareId, itemId) }
         .map { item ->
             encryptionContextProvider.withEncryptionContext {
                 item.toUiModel(this@withEncryptionContext).toOption()

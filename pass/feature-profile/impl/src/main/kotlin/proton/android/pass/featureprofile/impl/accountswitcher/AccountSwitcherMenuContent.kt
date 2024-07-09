@@ -55,6 +55,7 @@ fun AccountSwitcherMenuContent(
         AccountSwitcherRow(
             modifier = Modifier.clickable { onExpandedChange(false) },
             accountListItem = primary.first(),
+            index = 0,
             onEvent = onEvent
         )
         PassDivider(modifier = Modifier.padding(horizontal = Spacing.medium))
@@ -65,11 +66,12 @@ fun AccountSwitcherMenuContent(
                 text = stringResource(R.string.account_switcher_switch_to)
             )
         }
-        other.forEach { accountListItem ->
+        other.forEachIndexed { index, accountListItem ->
             AccountSwitcherRow(
                 modifier = Modifier.clickable {
                     onEvent(AccountSwitchEvent.OnAccountSelected(accountListItem.accountItem.userId))
                 },
+                index = index + 1,
                 accountListItem = accountListItem,
                 onEvent = onEvent
             )

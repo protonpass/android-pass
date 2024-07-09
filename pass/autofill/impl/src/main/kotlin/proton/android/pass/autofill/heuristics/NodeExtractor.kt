@@ -514,7 +514,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
 
         if (USERNAME_REGEX.containsMatchIn(sanitizedHint)) return FieldType.Username
         if (EMAIL_REGEX.containsMatchIn(sanitizedHint)) return FieldType.Email
-        if (NAME_REGEX.containsMatchIn(sanitizedHint)) return FieldType.FullName
+        if (FULL_NAME_REGEX.containsMatchIn(sanitizedHint)) return FieldType.FullName
         if (PHONE_REGEX.containsMatchIn(sanitizedHint)) return FieldType.Phone
         if (ADDRESS_REGEX.containsMatchIn(sanitizedHint)) return FieldType.Address
 
@@ -651,7 +651,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
             REGEX_OPTIONS
         )
         private val EMAIL_REGEX = Regex("co(?:urriel|rrei?o)|email", REGEX_OPTIONS)
-        private val NAME_REGEX = Regex("(?<!user)(?<!last)\\b(name|nom(?:bre)?(?:complet)?)\\b", REGEX_OPTIONS)
+        private val FULL_NAME_REGEX = Regex("(?<!user)(?<!last)(name|\\b(nom(?:bre)?(?:complet)?)\\b)", REGEX_OPTIONS)
         private val PHONE_REGEX = Regex("phone|telefon", REGEX_OPTIONS)
         private val ADDRESS_REGEX = Regex("nom.*rue")
     }

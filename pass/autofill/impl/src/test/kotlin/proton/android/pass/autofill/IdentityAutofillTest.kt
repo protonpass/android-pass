@@ -38,6 +38,16 @@ class IdentityAutofillTest : BaseAutofillTest() {
         runIdentityAutofillTest("identity/chrome_shopify.json")
     }
 
+    @Test
+    fun `can autofill vinted chrome en`() {
+        runIdentityAutofillTest("identity/chrome_vinted_en.json")
+    }
+
+    @Test
+    fun `can autofill vinted chrome fr`() {
+        runIdentityAutofillTest("identity/chrome_vinted_fr.json")
+    }
+
     private fun runIdentityAutofillTest(file: String) {
         runAutofillTest(
             file = file,

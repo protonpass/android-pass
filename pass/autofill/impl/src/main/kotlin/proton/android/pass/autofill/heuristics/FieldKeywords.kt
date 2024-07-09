@@ -54,7 +54,7 @@ private val ALLOWED_ADDRESS_KEYWORDS = listOf(
     "house"
 )
 private val ALLOWED_CITY_KEYWORDS = listOf("city")
-private val ALLOWED_POSTAL_CODE_KEYWORDS = listOf("postal", "zip", "zipcode")
+private val ALLOWED_POSTAL_CODE_KEYWORDS = listOf("postal", "zip", "zipcode", "postcode")
 private val ALLOWED_PHONE_KEYWORDS = listOf("phone", "telef", "teleph", "mobile", "cellphone")
 private val ALLOWED_EMAIL_KEYWORDS = listOf(View.AUTOFILL_HINT_EMAIL_ADDRESS, "email")
 private val DEFAULT_DENIED_KEYWORDS = listOf("composer", "message", MOZILLA_BROWSER_PREFIX)

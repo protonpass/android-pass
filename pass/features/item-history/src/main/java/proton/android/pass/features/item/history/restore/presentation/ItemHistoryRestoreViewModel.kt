@@ -25,7 +25,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
@@ -33,6 +32,10 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import proton.android.pass.common.api.FlowUtils.oneShot
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.some
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -79,23 +82,45 @@ class ItemHistoryRestoreViewModel @Inject constructor(
         .require<String>(ItemHistoryRevisionNavArgId.key)
         .let { encodedRevision -> Json.decodeFromString(NavParamEncoder.decode(encodedRevision)) }
 
-    private val eventFlow = MutableStateFlow<ItemHistoryRestoreEvent>(ItemHistoryRestoreEvent.Idle)
-
-    private val currentItemDetailsStateFlow: Flow<ItemDetailState> =
-        oneShot { getItemById(shareId, itemId) }
-            .flatMapLatest(itemDetailsHandler::observeItemDetails)
-            .onEach {
-                println("JIBIRI: Current -> ${it.itemContents.title}")
-            }
+    private val revisionItemContentsUpdateOptionFlow = MutableStateFlow<Option<ItemContents>>(None)
 
     private val revisionItemDetailsStateFlow: Flow<ItemDetailState> = oneShot {
         encryptionContextProvider.withEncryptionContextSuspendable {
             openItemRevision(shareId, itemRevision, this@withEncryptionContextSuspendable)
         }
-    }.flatMapLatest(itemDetailsHandler::observeItemDetails)
-        .onEach {
-            println("JIBIRI: Revision -> ${it.itemContents.title}")
+    }.flatMapLatest { item ->
+        combine(
+            revisionItemContentsUpdateOptionFlow,
+            itemDetailsHandler.observeItemDetails(item)
+        ) { revisionItemContentsUpdateOption, itemDetailState ->
+            when (revisionItemContentsUpdateOption) {
+                None -> itemDetailState
+                is Some -> itemDetailState.update(itemContents = revisionItemContentsUpdateOption.value)
+            }
         }
+    }.onEach {
+        println("JIBIRI: Revision -> ${it.itemContents.title}")
+    }
+
+    private val currentItemContentsUpdateOptionFlow = MutableStateFlow<Option<ItemContents>>(None)
+
+    private val currentItemDetailsStateFlow: Flow<ItemDetailState> = oneShot {
+        getItemById(shareId, itemId)
+    }.flatMapLatest { item ->
+        combine(
+            currentItemContentsUpdateOptionFlow,
+            itemDetailsHandler.observeItemDetails(item)
+        ) { currentItemContentsUpdateOption, itemDetailState ->
+            when (currentItemContentsUpdateOption) {
+                None -> itemDetailState
+                is Some -> itemDetailState.update(itemContents = currentItemContentsUpdateOption.value)
+            }
+        }
+    }.onEach {
+        println("JIBIRI: Current -> ${it.itemContents.title}")
+    }
+
+    private val eventFlow = MutableStateFlow<ItemHistoryRestoreEvent>(ItemHistoryRestoreEvent.Idle)
 
     internal val state = combine(
         currentItemDetailsStateFlow,
@@ -130,18 +155,24 @@ class ItemHistoryRestoreViewModel @Inject constructor(
         }
     }
 
-    internal fun onItemHiddenFieldToggled(
+    internal fun onToggleItemHiddenField(
         isVisible: Boolean,
         hiddenState: HiddenState,
         hiddenFieldType: ItemDetailsFieldType.Hidden
     ) {
-        viewModelScope.launch {
-            itemDetailsHandler.onItemDetailsHiddenFieldToggled(
-                isVisible = isVisible,
-                hiddenState = hiddenState,
-                hiddenFieldType = hiddenFieldType,
-                itemCategory = revisionItemDetailsStateFlow.first().itemCategory
-            )
+        when (val stateValue = state.value) {
+            ItemHistoryRestoreState.Initial -> return
+            is ItemHistoryRestoreState.ItemDetails -> {
+                itemDetailsHandler.updateItemDetailsContent(
+                    isVisible = isVisible,
+                    hiddenState = hiddenState,
+                    hiddenFieldType = hiddenFieldType,
+                    itemCategory = stateValue.revisionItemDetailState.itemCategory,
+                    itemContents = stateValue.revisionItemDetailState.itemContents
+                ).also { updatedItemContents ->
+                    revisionItemContentsUpdateOptionFlow.update { updatedItemContents.some() }
+                }
+            }
         }
     }
 

@@ -19,13 +19,9 @@
 package proton.android.pass.commonpresentation.impl.items.details.handlers
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.update
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonui.api.toItemContents
@@ -44,9 +40,7 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
     private val getVaultById: GetVaultById,
     private val getAliasDetails: GetAliasDetails,
     private val encryptionContextProvider: EncryptionContextProvider
-) : ItemDetailsHandlerObserver {
-
-    private val aliasItemContentsFlow = MutableStateFlow<ItemContents.Alias?>(null)
+) : ItemDetailsHandlerObserver<ItemContents.Alias> {
 
     override fun observe(item: Item): Flow<ItemDetailState> = combine(
         observeAliasItemContents(item),
@@ -72,24 +66,22 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
         encryptionContextProvider.withEncryptionContext {
             item.toItemContents(this@withEncryptionContext) as ItemContents.Alias
         }.let { aliasItemContents ->
-            aliasItemContentsFlow.update { aliasItemContents }
-        }.also {
-            emitAll(aliasItemContentsFlow.filterNotNull())
+            emit(aliasItemContents)
         }
     }
 
     private fun observeAliasDetails(item: Item): Flow<AliasDetails> = getAliasDetails(item.shareId, item.id)
         .onStart { emit(AliasDetails("", emptyList(), emptyList())) }
 
-    override fun updateHiddenState(hiddenFieldType: ItemDetailsFieldType.Hidden, hiddenState: HiddenState) {
-        aliasItemContentsFlow.update { aliasItemContents ->
-            when (hiddenFieldType) {
-                is ItemDetailsFieldType.Hidden.CustomField,
-                ItemDetailsFieldType.Hidden.Cvv,
-                ItemDetailsFieldType.Hidden.Password,
-                ItemDetailsFieldType.Hidden.Pin -> aliasItemContents
-            }
-        }
+    override fun updateItemContents(
+        itemContents: ItemContents.Alias,
+        hiddenFieldType: ItemDetailsFieldType.Hidden,
+        hiddenState: HiddenState
+    ): ItemContents.Alias = when (hiddenFieldType) {
+        is ItemDetailsFieldType.Hidden.CustomField,
+        ItemDetailsFieldType.Hidden.Cvv,
+        ItemDetailsFieldType.Hidden.Password,
+        ItemDetailsFieldType.Hidden.Pin -> itemContents
     }
 
 }

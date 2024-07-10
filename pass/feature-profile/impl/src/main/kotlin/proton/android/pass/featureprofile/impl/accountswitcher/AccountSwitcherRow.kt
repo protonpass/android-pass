@@ -73,12 +73,12 @@ fun AccountSwitcherRow(
     onEvent: (AccountSwitchEvent) -> Unit
 ) {
     Row(
-        modifier = modifier
-            .padding(Spacing.medium),
+        modifier = modifier.padding(vertical = Spacing.small),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.medium)
     ) {
         OverlayBadge(
+            modifier = Modifier.padding(start = Spacing.medium),
             isShown = accountListItem.accountItem.planInfo != PlanInfo.Hide,
             badge = {
                 when (accountListItem.accountItem.planInfo) {
@@ -123,7 +123,7 @@ fun AccountSwitcherRow(
         }
         if (isCollapsed) {
             Icon.Default(
-                modifier = Modifier.padding(horizontal = Spacing.medium),
+                modifier = Modifier.padding(end = Spacing.small),
                 id = CompR.drawable.ic_chevron_tiny_down,
                 tint = PassTheme.colors.textWeak
             )

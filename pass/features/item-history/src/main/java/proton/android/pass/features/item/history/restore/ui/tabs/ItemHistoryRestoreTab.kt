@@ -20,6 +20,7 @@ package proton.android.pass.features.item.history.restore.ui.tabs
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsContent
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
@@ -47,6 +48,7 @@ internal fun ItemHistoryRestoreTab(
         },
         shouldDisplayItemHistorySection = false,
         shouldDisplayItemHistoryButton = false,
+        extraBottomSpacing = Spacing.extraLarge,
         onEvent = { uiEvent ->
             when (uiEvent) {
                 is PassItemDetailsUiEvent.OnSectionClick -> ItemHistoryRestoreUiEvent.OnSectionClick(

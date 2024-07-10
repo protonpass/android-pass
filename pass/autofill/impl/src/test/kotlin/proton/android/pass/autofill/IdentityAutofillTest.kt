@@ -34,6 +34,11 @@ class IdentityAutofillTest : BaseAutofillTest() {
     }
 
     @Test
+    fun `can autofill a random shopify site chrome`() {
+        runIdentityAutofillTest("identity/chrome_shopify_random.json")
+    }
+
+    @Test
     fun `can autofill shopify chrome`() {
         runIdentityAutofillTest("identity/chrome_shopify.json")
     }

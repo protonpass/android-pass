@@ -32,13 +32,14 @@ import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.data.api.errors.ItemNotFoundError
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
 class ItemDetailsHandlerImpl @Inject constructor(
-    private val observers: Map<ItemCategory, @JvmSuppressWildcards ItemDetailsHandlerObserver>,
+    private val observers: Map<ItemCategory, @JvmSuppressWildcards ItemDetailsHandlerObserver<*>>,
     private val clipboardManager: ClipboardManager,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val snackbarDispatcher: SnackbarDispatcher
@@ -115,33 +116,38 @@ class ItemDetailsHandlerImpl @Inject constructor(
         ItemDetailsFieldType.Plain.ZipOrPostalCode -> ItemDetailsSnackbarMessage.ZipOrPostalCodeCopied
     }.let { snackbarMessage -> snackbarDispatcher(snackbarMessage) }
 
-    override fun onItemDetailsHiddenFieldToggled(
+    override fun updateItemDetailsContent(
         isVisible: Boolean,
         hiddenState: HiddenState,
         hiddenFieldType: ItemDetailsFieldType.Hidden,
-        itemCategory: ItemCategory
-    ) {
-        encryptionContextProvider.withEncryptionContext {
-            when {
-                isVisible -> HiddenState.Revealed(
-                    encrypted = hiddenState.encrypted,
-                    clearText = decrypt(hiddenState.encrypted)
-                )
+        itemCategory: ItemCategory,
+        itemContents: ItemContents
+    ): ItemContents = encryptionContextProvider.withEncryptionContext {
+        when {
+            isVisible -> HiddenState.Revealed(
+                encrypted = hiddenState.encrypted,
+                clearText = decrypt(hiddenState.encrypted)
+            )
 
-                decrypt(hiddenState.encrypted.toEncryptedByteArray()).isEmpty() -> HiddenState.Empty(
-                    encrypt("")
-                )
+            decrypt(hiddenState.encrypted.toEncryptedByteArray()).isEmpty() -> HiddenState.Empty(
+                encrypt("")
+            )
 
-                else -> HiddenState.Concealed(encrypted = hiddenState.encrypted)
-            }
-        }.let { toggledHiddenState ->
-            getItemDetailsObserver(itemCategory)
-                .updateHiddenState(hiddenFieldType, toggledHiddenState)
+            else -> HiddenState.Concealed(encrypted = hiddenState.encrypted)
         }
+    }.let { toggledHiddenState ->
+        getItemDetailsObserver(itemCategory).updateItemContents(
+            itemContents = itemContents,
+            hiddenFieldType = hiddenFieldType,
+            hiddenState = toggledHiddenState
+        )
     }
 
-    private fun getItemDetailsObserver(itemCategory: ItemCategory) = observers[itemCategory]
-        ?: throw IllegalStateException("Unsupported item category: $itemCategory")
+    @Suppress("UNCHECKED_CAST")
+    private fun getItemDetailsObserver(itemCategory: ItemCategory): ItemDetailsHandlerObserver<ItemContents> {
+        return observers[itemCategory] as? ItemDetailsHandlerObserver<ItemContents>
+            ?: throw IllegalStateException("Unsupported item category: $itemCategory")
+    }
 
     private companion object {
 

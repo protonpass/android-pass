@@ -19,16 +19,12 @@
 package proton.android.pass.commonpresentation.impl.items.details.handlers
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.update
 import proton.android.pass.common.api.combineN
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
@@ -61,9 +57,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     private val totpManager: TotpManager,
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val emailValidator: EmailValidator
-) : ItemDetailsHandlerObserver {
-
-    private val loginItemContentsFlow = MutableStateFlow<ItemContents.Login?>(null)
+) : ItemDetailsHandlerObserver<ItemContents.Login> {
 
     override fun observe(item: Item): Flow<ItemDetailState> = combineN(
         observeLoginItemContents(item),
@@ -108,10 +102,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
                 }
             }
             .let { loginItemContents ->
-                loginItemContentsFlow.update { loginItemContents }
-            }
-            .also {
-                emitAll(loginItemContentsFlow.filterNotNull())
+                emit(loginItemContents)
             }
     }
 
@@ -178,29 +169,28 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
         }
     }
 
-    override fun updateHiddenState(hiddenFieldType: ItemDetailsFieldType.Hidden, hiddenState: HiddenState) {
-        loginItemContentsFlow.update { loginItemContents ->
-            when (hiddenFieldType) {
-                is ItemDetailsFieldType.Hidden.CustomField -> loginItemContents?.copy(
-                    customFields = loginItemContents.customFields
-                        .mapIndexed { index, customFieldContent ->
-                            if (index == hiddenFieldType.index && customFieldContent is CustomFieldContent.Hidden) {
-                                customFieldContent.copy(value = hiddenState)
-                            } else {
-                                customFieldContent
-                            }
-                        }
-                )
+    override fun updateItemContents(
+        itemContents: ItemContents.Login,
+        hiddenFieldType: ItemDetailsFieldType.Hidden,
+        hiddenState: HiddenState
+    ): ItemContents.Login = when (hiddenFieldType) {
+        is ItemDetailsFieldType.Hidden.CustomField -> itemContents.copy(
+            customFields = itemContents.customFields
+                .mapIndexed { index, customFieldContent ->
+                    if (index == hiddenFieldType.index && customFieldContent is CustomFieldContent.Hidden) {
+                        customFieldContent.copy(value = hiddenState)
+                    } else {
+                        customFieldContent
+                    }
+                }
+        )
 
-                ItemDetailsFieldType.Hidden.Password -> loginItemContents?.copy(
-                    password = hiddenState
-                )
+        ItemDetailsFieldType.Hidden.Password -> itemContents.copy(
+            password = hiddenState
+        )
 
-                ItemDetailsFieldType.Hidden.Cvv,
-                ItemDetailsFieldType.Hidden.Pin -> loginItemContents
-
-            }
-        }
+        ItemDetailsFieldType.Hidden.Cvv,
+        ItemDetailsFieldType.Hidden.Pin -> itemContents
     }
 
 }

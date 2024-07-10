@@ -19,12 +19,8 @@
 package proton.android.pass.commonpresentation.impl.items.details.handlers
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.update
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonui.api.toItemContents
@@ -40,9 +36,7 @@ import javax.inject.Inject
 class NoteItemDetailsHandlerObserverImpl @Inject constructor(
     private val getVaultById: GetVaultById,
     private val encryptionContextProvider: EncryptionContextProvider
-) : ItemDetailsHandlerObserver {
-
-    private val noteItemContentsFlow = MutableStateFlow<ItemContents.Note?>(null)
+) : ItemDetailsHandlerObserver<ItemContents.Note> {
 
     override fun observe(item: Item): Flow<ItemDetailState> = combine(
         observeNoteItemContents(item),
@@ -66,21 +60,19 @@ class NoteItemDetailsHandlerObserverImpl @Inject constructor(
         encryptionContextProvider.withEncryptionContext {
             item.toItemContents(this@withEncryptionContext) as ItemContents.Note
         }.let { noteItemContents ->
-            noteItemContentsFlow.update { noteItemContents }
-        }.also {
-            emitAll(noteItemContentsFlow.filterNotNull())
+            emit(noteItemContents)
         }
     }
 
-    override fun updateHiddenState(hiddenFieldType: ItemDetailsFieldType.Hidden, hiddenState: HiddenState) {
-        noteItemContentsFlow.update { noteItemContents ->
-            when (hiddenFieldType) {
-                is ItemDetailsFieldType.Hidden.CustomField,
-                ItemDetailsFieldType.Hidden.Cvv,
-                ItemDetailsFieldType.Hidden.Password,
-                ItemDetailsFieldType.Hidden.Pin -> noteItemContents
-            }
-        }
+    override fun updateItemContents(
+        itemContents: ItemContents.Note,
+        hiddenFieldType: ItemDetailsFieldType.Hidden,
+        hiddenState: HiddenState
+    ): ItemContents.Note = when (hiddenFieldType) {
+        is ItemDetailsFieldType.Hidden.CustomField,
+        ItemDetailsFieldType.Hidden.Cvv,
+        ItemDetailsFieldType.Hidden.Password,
+        ItemDetailsFieldType.Hidden.Pin -> itemContents
     }
 
 }

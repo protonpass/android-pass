@@ -23,6 +23,7 @@ import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetai
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
+import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.items.ItemCategory
 
 interface ItemDetailsHandler {
@@ -33,11 +34,12 @@ interface ItemDetailsHandler {
 
     suspend fun onItemDetailsHiddenFieldClicked(hiddenState: HiddenState, hiddenFieldType: ItemDetailsFieldType.Hidden)
 
-    fun onItemDetailsHiddenFieldToggled(
+    fun updateItemDetailsContent(
         isVisible: Boolean,
         hiddenState: HiddenState,
         hiddenFieldType: ItemDetailsFieldType.Hidden,
-        itemCategory: ItemCategory
-    )
+        itemCategory: ItemCategory,
+        itemContents: ItemContents
+    ): ItemContents
 
 }

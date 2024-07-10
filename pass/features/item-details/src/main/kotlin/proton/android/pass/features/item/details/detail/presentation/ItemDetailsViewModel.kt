@@ -26,12 +26,15 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.FlowUtils.oneShot
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.some
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -41,6 +44,7 @@ import proton.android.pass.data.api.usecases.GetItemActions
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.domain.HiddenState
+import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.log.api.PassLogger
@@ -52,7 +56,7 @@ class ItemDetailsViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     getItemActions: GetItemActions,
     observeUserPlan: GetUserPlan,
-    private val observeItemById: ObserveItemById,
+    observeItemById: ObserveItemById,
     private val itemDetailsHandler: ItemDetailsHandler
 ) : ViewModel() {
 
@@ -63,8 +67,6 @@ class ItemDetailsViewModel @Inject constructor(
     private val itemId: ItemId = savedStateHandleProvider.get()
         .require<String>(CommonNavArgId.ItemId.key)
         .let(::ItemId)
-
-    private val eventFlow = MutableStateFlow<ItemDetailsEvent>(ItemDetailsEvent.Idle)
 
     private val itemFlow = observeItemById(shareId, itemId)
         .catch { error ->
@@ -77,22 +79,36 @@ class ItemDetailsViewModel @Inject constructor(
             }
         }
 
-    internal val state: StateFlow<ItemDetailsState> = itemFlow.flatMapLatest { item ->
+    private val itemContentsUpdateOptionFlow = MutableStateFlow<Option<ItemContents>>(None)
+
+    private val itemDetailsStateFlow = itemFlow.flatMapLatest { item ->
         combine(
-            itemDetailsHandler.observeItemDetails(item),
-            oneShot { getItemActions(shareId, itemId) },
-            observeUserPlan(),
-            eventFlow
-        ) { itemDetailsState, itemActions, userPlan, event ->
-            ItemDetailsState.Success(
-                shareId = shareId,
-                itemId = itemId,
-                itemDetailState = itemDetailsState,
-                itemActions = itemActions,
-                userPlan = userPlan,
-                event = event
-            )
+            itemContentsUpdateOptionFlow,
+            itemDetailsHandler.observeItemDetails(item)
+        ) { itemContentsUpdateOption, itemDetailState ->
+            when (itemContentsUpdateOption) {
+                None -> itemDetailState
+                is Some -> itemDetailState.update(itemContents = itemContentsUpdateOption.value)
+            }
         }
+    }
+
+    private val eventFlow = MutableStateFlow<ItemDetailsEvent>(ItemDetailsEvent.Idle)
+
+    internal val state: StateFlow<ItemDetailsState> = combine(
+        itemDetailsStateFlow,
+        oneShot { getItemActions(shareId, itemId) },
+        observeUserPlan(),
+        eventFlow
+    ) { itemDetailsState, itemActions, userPlan, event ->
+        ItemDetailsState.Success(
+            shareId = shareId,
+            itemId = itemId,
+            itemDetailState = itemDetailsState,
+            itemActions = itemActions,
+            userPlan = userPlan,
+            event = event
+        )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
@@ -115,18 +131,26 @@ class ItemDetailsViewModel @Inject constructor(
         }
     }
 
-    internal fun onItemHiddenFieldToggled(
+    internal fun onToggleItemHiddenField(
         isVisible: Boolean,
         hiddenState: HiddenState,
         hiddenFieldType: ItemDetailsFieldType.Hidden
     ) {
-        viewModelScope.launch {
-            itemDetailsHandler.onItemDetailsHiddenFieldToggled(
-                isVisible = isVisible,
-                hiddenState = hiddenState,
-                hiddenFieldType = hiddenFieldType,
-                itemCategory = observeItemById(shareId, itemId).first().itemType.category
-            )
+        when (val stateValue = state.value) {
+            ItemDetailsState.Error,
+            ItemDetailsState.Loading -> return
+
+            is ItemDetailsState.Success -> {
+                itemDetailsHandler.updateItemDetailsContent(
+                    isVisible = isVisible,
+                    hiddenState = hiddenState,
+                    hiddenFieldType = hiddenFieldType,
+                    itemCategory = stateValue.itemDetailState.itemCategory,
+                    itemContents = stateValue.itemDetailState.itemContents
+                ).also { updatedItemContents ->
+                    itemContentsUpdateOptionFlow.update { updatedItemContents.some() }
+                }
+            }
         }
     }
 

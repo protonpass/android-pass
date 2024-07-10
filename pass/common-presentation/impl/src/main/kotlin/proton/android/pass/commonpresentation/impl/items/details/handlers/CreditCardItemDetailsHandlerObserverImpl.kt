@@ -19,12 +19,8 @@
 package proton.android.pass.commonpresentation.impl.items.details.handlers
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.update
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonui.api.toItemContents
@@ -40,9 +36,7 @@ import javax.inject.Inject
 class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
     private val getVaultById: GetVaultById,
     private val encryptionContextProvider: EncryptionContextProvider
-) : ItemDetailsHandlerObserver {
-
-    private val creditCardItemContentsFlow = MutableStateFlow<ItemContents.CreditCard?>(null)
+) : ItemDetailsHandlerObserver<ItemContents.CreditCard> {
 
     override fun observe(item: Item): Flow<ItemDetailState> = combine(
         observeCreditCardItemContents(item),
@@ -66,27 +60,24 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
         encryptionContextProvider.withEncryptionContext {
             item.toItemContents(this@withEncryptionContext) as ItemContents.CreditCard
         }.let { creditCardItemContents ->
-            creditCardItemContentsFlow.update { creditCardItemContents }
-        }.also {
-            emitAll(creditCardItemContentsFlow.filterNotNull())
+            emit(creditCardItemContents)
         }
     }
 
-    override fun updateHiddenState(hiddenFieldType: ItemDetailsFieldType.Hidden, hiddenState: HiddenState) {
-        creditCardItemContentsFlow.update { creditCardItemContents ->
-            when (hiddenFieldType) {
-                ItemDetailsFieldType.Hidden.Cvv -> creditCardItemContents?.copy(
-                    cvv = hiddenState
-                )
+    override fun updateItemContents(
+        itemContents: ItemContents.CreditCard,
+        hiddenFieldType: ItemDetailsFieldType.Hidden,
+        hiddenState: HiddenState
+    ): ItemContents.CreditCard = when (hiddenFieldType) {
+        ItemDetailsFieldType.Hidden.Cvv -> itemContents.copy(
+            cvv = hiddenState
+        )
 
-                ItemDetailsFieldType.Hidden.Pin -> creditCardItemContents?.copy(
-                    pin = hiddenState
-                )
+        ItemDetailsFieldType.Hidden.Pin -> itemContents.copy(
+            pin = hiddenState
+        )
 
-                is ItemDetailsFieldType.Hidden.CustomField,
-                ItemDetailsFieldType.Hidden.Password -> creditCardItemContents
-            }
-        }
+        is ItemDetailsFieldType.Hidden.CustomField,
+        ItemDetailsFieldType.Hidden.Password -> itemContents
     }
-
 }

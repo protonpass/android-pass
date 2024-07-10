@@ -58,6 +58,8 @@ sealed interface ItemDetailState {
 
     val itemState: ItemState
 
+    fun update(itemContents: ItemContents): ItemDetailState
+
     @Stable
     data class Alias(
         override val itemContents: ItemContents.Alias,
@@ -74,6 +76,14 @@ sealed interface ItemDetailState {
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Alias
+
+        override fun update(itemContents: ItemContents): ItemDetailState {
+            return if (itemContents is ItemContents.Alias) {
+                this.copy(itemContents = itemContents)
+            } else {
+                this
+            }
+        }
 
     }
 
@@ -93,6 +103,13 @@ sealed interface ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.CreditCard
 
+        override fun update(itemContents: ItemContents): ItemDetailState {
+            return if (itemContents is ItemContents.CreditCard) {
+                this.copy(itemContents = itemContents)
+            } else {
+                this
+            }
+        }
     }
 
     @Stable
@@ -110,6 +127,14 @@ sealed interface ItemDetailState {
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Identity
+
+        override fun update(itemContents: ItemContents): ItemDetailState {
+            return if (itemContents is ItemContents.Identity) {
+                this.copy(itemContents = itemContents)
+            } else {
+                this
+            }
+        }
 
     }
 
@@ -135,6 +160,14 @@ sealed interface ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Login
 
+        override fun update(itemContents: ItemContents): ItemDetailState {
+            return if (itemContents is ItemContents.Login) {
+                this.copy(itemContents = itemContents)
+            } else {
+                this
+            }
+        }
+
     }
 
     @Stable
@@ -153,6 +186,14 @@ sealed interface ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Note
 
+        override fun update(itemContents: ItemContents): ItemDetailState {
+            return if (itemContents is ItemContents.Note) {
+                this.copy(itemContents = itemContents)
+            } else {
+                this
+            }
+        }
+
     }
 
     @Stable
@@ -170,6 +211,14 @@ sealed interface ItemDetailState {
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Unknown
+
+        override fun update(itemContents: ItemContents): ItemDetailState {
+            return if (itemContents is ItemContents.Unknown) {
+                this.copy(itemContents = itemContents)
+            } else {
+                this
+            }
+        }
 
     }
 

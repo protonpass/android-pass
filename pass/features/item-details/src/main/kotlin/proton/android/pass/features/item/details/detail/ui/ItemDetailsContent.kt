@@ -89,9 +89,9 @@ internal fun ItemDetailsContent(
                         )
 
                         is PassItemDetailsUiEvent.OnHiddenSectionToggle -> ItemDetailsUiEvent.OnHiddenFieldToggled(
-                            isVisible = uiEvent.state,
+                            isVisible = uiEvent.isVisible,
                             state = uiEvent.hiddenState,
-                            field = uiEvent.field
+                            field = uiEvent.fieldType
                         )
 
                         is PassItemDetailsUiEvent.OnLinkClick -> ItemDetailsUiEvent.OnLinkClicked(

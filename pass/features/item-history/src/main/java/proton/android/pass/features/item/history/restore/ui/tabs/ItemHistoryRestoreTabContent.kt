@@ -34,6 +34,7 @@ import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.features.item.history.restore.ItemHistoryRestoreUiEvent
+import proton.android.pass.features.item.history.restore.presentation.ItemHistoryRestoreSelection
 
 private const val ITEM_HISTORY_TAB_INDEX_REVISION = 0
 private const val ITEM_HISTORY_TAB_INDEX_CURRENT = 1
@@ -57,7 +58,8 @@ internal fun ItemHistoryRestoreTabContent(
             ),
             itemDetailState = revisionItemDetailState,
             itemColors = itemColors,
-            onEvent = onEvent
+            onEvent = onEvent,
+            selection = ItemHistoryRestoreSelection.Revision
         )
 
         ItemHistoryRestoreTab(
@@ -68,7 +70,8 @@ internal fun ItemHistoryRestoreTabContent(
             ),
             itemDetailState = currentItemDetailState,
             itemColors = itemColors,
-            onEvent = onEvent
+            onEvent = onEvent,
+            selection = ItemHistoryRestoreSelection.Current
         )
 
         ItemHistoryRestoreTabRow(

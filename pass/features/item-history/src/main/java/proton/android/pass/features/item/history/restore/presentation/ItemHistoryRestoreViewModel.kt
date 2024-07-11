@@ -26,7 +26,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -98,8 +97,6 @@ class ItemHistoryRestoreViewModel @Inject constructor(
                 is Some -> itemDetailState.update(itemContents = revisionItemContentsUpdateOption.value)
             }
         }
-    }.onEach {
-        println("JIBIRI: Revision -> ${it.itemContents.title}")
     }
 
     private val currentItemContentsUpdateOptionFlow = MutableStateFlow<Option<ItemContents>>(None)
@@ -116,8 +113,6 @@ class ItemHistoryRestoreViewModel @Inject constructor(
                 is Some -> itemDetailState.update(itemContents = currentItemContentsUpdateOption.value)
             }
         }
-    }.onEach {
-        println("JIBIRI: Current -> ${it.itemContents.title}")
     }
 
     private val eventFlow = MutableStateFlow<ItemHistoryRestoreEvent>(ItemHistoryRestoreEvent.Idle)
@@ -156,6 +151,7 @@ class ItemHistoryRestoreViewModel @Inject constructor(
     }
 
     internal fun onToggleItemHiddenField(
+        selection: ItemHistoryRestoreSelection,
         isVisible: Boolean,
         hiddenState: HiddenState,
         hiddenFieldType: ItemDetailsFieldType.Hidden
@@ -163,14 +159,30 @@ class ItemHistoryRestoreViewModel @Inject constructor(
         when (val stateValue = state.value) {
             ItemHistoryRestoreState.Initial -> return
             is ItemHistoryRestoreState.ItemDetails -> {
-                itemDetailsHandler.updateItemDetailsContent(
-                    isVisible = isVisible,
-                    hiddenState = hiddenState,
-                    hiddenFieldType = hiddenFieldType,
-                    itemCategory = stateValue.revisionItemDetailState.itemCategory,
-                    itemContents = stateValue.revisionItemDetailState.itemContents
-                ).also { updatedItemContents ->
-                    revisionItemContentsUpdateOptionFlow.update { updatedItemContents.some() }
+                when (selection) {
+                    ItemHistoryRestoreSelection.Revision -> {
+                        itemDetailsHandler.updateItemDetailsContent(
+                            isVisible = isVisible,
+                            hiddenState = hiddenState,
+                            hiddenFieldType = hiddenFieldType,
+                            itemCategory = stateValue.revisionItemDetailState.itemCategory,
+                            itemContents = stateValue.revisionItemDetailState.itemContents
+                        ).also { updatedItemContents ->
+                            revisionItemContentsUpdateOptionFlow.update { updatedItemContents.some() }
+                        }
+                    }
+
+                    ItemHistoryRestoreSelection.Current -> {
+                        itemDetailsHandler.updateItemDetailsContent(
+                            isVisible = isVisible,
+                            hiddenState = hiddenState,
+                            hiddenFieldType = hiddenFieldType,
+                            itemCategory = stateValue.currentItemDetailState.itemCategory,
+                            itemContents = stateValue.currentItemDetailState.itemContents
+                        ).also { updatedItemContents ->
+                            currentItemContentsUpdateOptionFlow.update { updatedItemContents.some() }
+                        }
+                    }
                 }
             }
         }

@@ -59,9 +59,9 @@ internal fun PassIdentityItemDetailsCustomFieldRow(
         onToggle = { isVisible ->
             onEvent(
                 PassItemDetailsUiEvent.OnHiddenSectionToggle(
-                    state = isVisible,
+                    isVisible = isVisible,
                     hiddenState = customFieldContent.value,
-                    field = ItemDetailsFieldType.Hidden.CustomField(customFieldIndex)
+                    fieldType = ItemDetailsFieldType.Hidden.CustomField(customFieldIndex)
                 )
             )
         }

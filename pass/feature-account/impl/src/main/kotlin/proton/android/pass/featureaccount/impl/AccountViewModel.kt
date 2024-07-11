@@ -25,7 +25,14 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.take
+import me.proton.core.account.domain.entity.AccountState
+import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.accountmanager.domain.onAccountState
 import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
@@ -46,19 +53,39 @@ class AccountViewModel @Inject constructor(
     observeUpgradeInfo: ObserveUpgradeInfo,
     observeCurrentUserSettings: ObserveCurrentUserSettings,
     featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
-    hasExtraPassword: HasExtraPassword
+    hasExtraPassword: HasExtraPassword,
+    accountManager: AccountManager
 ) : ViewModel() {
 
-    private val currentUser = observeCurrentUser()
+    internal val hasBeenSignedOut: StateFlow<Boolean> =
+        accountManager.onAccountState(
+            AccountState.Disabled,
+            AccountState.Removed,
+            initialState = false
+        )
+            .map { true }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000L),
+                initialValue = false
+            )
+
+    private val currentUserFlow = observeCurrentUser()
+        .filterNotNull()
+        .take(1)
+
+    private val upgradeInfoFlow = currentUserFlow
+        .flatMapLatest { user -> observeUpgradeInfo(userId = user.userId, forceRefresh = true) }
         .distinctUntilChanged()
 
     val state: StateFlow<AccountUiState> = combine(
-        currentUser.asLoadingResult(),
-        observeUpgradeInfo(forceRefresh = true).asLoadingResult(),
+        currentUserFlow.asLoadingResult(),
+        upgradeInfoFlow.asLoadingResult(),
         observeCurrentUserSettings().asLoadingResult(),
         oneShot { hasExtraPassword() }.asLoadingResult(),
         featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.ACCESS_KEY_V1)
     ) { userResult, upgradeInfoResult, currentUserSettingsResult, hasExtraPassword, isAccessKeyV1Enabled ->
+
         val plan = when (upgradeInfoResult) {
             is LoadingResult.Error -> {
                 PassLogger.w(TAG, "Error retrieving user plan")

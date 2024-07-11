@@ -45,10 +45,9 @@ fun ProfileScreen(
         minActiveState = Lifecycle.State.CREATED,
         initialValue = null
     )
-    LaunchedEffect(newAccountReady?.userId?.id) {
-        if (newAccountReady != null) {
-            onNavigateEvent(ProfileNavigation.SyncDialog)
-        }
+    LaunchedEffect(newAccountReady?.userId) {
+        newAccountReady ?: return@LaunchedEffect
+        onNavigateEvent(ProfileNavigation.SyncDialog)
     }
     val context = LocalContext.current
 
@@ -107,20 +106,10 @@ fun ProfileScreen(
                 }
 
                 AccountSwitchEvent.OnAddAccount -> onNavigateEvent(ProfileNavigation.OnAddAccount)
-                is AccountSwitchEvent.OnRemoveAccount -> onNavigateEvent(
-                    ProfileNavigation.OnRemoveAccount(
-                        it.userId
-                    )
-                )
-
+                is AccountSwitchEvent.OnRemoveAccount -> onNavigateEvent(ProfileNavigation.OnRemoveAccount(it.userId))
                 is AccountSwitchEvent.OnSignIn -> onNavigateEvent(ProfileNavigation.OnSignIn(it.userId))
                 is AccountSwitchEvent.OnSignOut -> onNavigateEvent(ProfileNavigation.OnSignOut(it.userId))
-                is AccountSwitchEvent.OnAccountSelected -> onNavigateEvent(
-                    ProfileNavigation.OnSwitchAccount(
-                        it.userId
-                    )
-                )
-
+                is AccountSwitchEvent.OnAccountSelected -> onNavigateEvent(ProfileNavigation.OnSwitchAccount(it.userId))
                 is AccountSwitchEvent.OnManageAccount -> onNavigateEvent(ProfileNavigation.Account)
             }
         }

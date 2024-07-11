@@ -59,6 +59,7 @@ internal fun PassItemDetailTitleRow(
                 isPinned = isItemPinned,
                 itemColors = itemColors,
                 vault = itemVault,
+                shouldWarningTitle = itemDetailState.itemDiffs.isTitleChanged,
                 onSharedVaultClick = { sharedVaultId ->
                     PassItemDetailsUiEvent.OnSharedVaultClick(
                         sharedVaultId = sharedVaultId
@@ -79,6 +80,7 @@ internal fun PassItemDetailTitleRow(
                 isPinned = isItemPinned,
                 itemColors = itemColors,
                 vault = itemVault,
+                shouldWarningTitle = itemDetailState.itemDiffs.isTitleChanged,
                 onSharedVaultClick = { sharedVaultId ->
                     PassItemDetailsUiEvent.OnSharedVaultClick(
                         sharedVaultId = sharedVaultId
@@ -99,6 +101,7 @@ internal fun PassItemDetailTitleRow(
                 isPinned = isItemPinned,
                 itemColors = itemColors,
                 vault = itemVault,
+                shouldWarningTitle = itemDetailState.itemDiffs.isTitleChanged,
                 onSharedVaultClick = { sharedVaultId ->
                     PassItemDetailsUiEvent.OnSharedVaultClick(
                         sharedVaultId = sharedVaultId
@@ -119,6 +122,7 @@ internal fun PassItemDetailTitleRow(
                 isPinned = isItemPinned,
                 itemColors = itemColors,
                 vault = itemVault,
+                shouldWarningTitle = itemDetailState.itemDiffs.isTitleChanged,
                 onSharedVaultClick = { sharedVaultId ->
                     PassItemDetailsUiEvent.OnSharedVaultClick(
                         sharedVaultId = sharedVaultId
@@ -158,7 +162,12 @@ internal fun PassItemDetailTitleRow(
 
                         PassItemDetailTitle(
                             text = itemContents.title,
-                            maxLines = Int.MAX_VALUE
+                            maxLines = Int.MAX_VALUE,
+                            textColor = if (itemDetailState.itemDiffs.isTitleChanged) {
+                                PassTheme.colors.signalWarning
+                            } else {
+                                PassTheme.colors.textNorm
+                            }
                         )
                     }
 
@@ -183,6 +192,7 @@ internal fun PassItemDetailTitleRow(
                 isPinned = false,
                 itemColors = itemColors,
                 vault = itemVault,
+                shouldWarningTitle = itemDetailState.itemDiffs.isTitleChanged,
                 onSharedVaultClick = {},
                 iconContent = {}
             )
@@ -197,6 +207,7 @@ private fun ItemDetailTitleRow(
     isPinned: Boolean,
     itemColors: PassItemColors,
     vault: Vault?,
+    shouldWarningTitle: Boolean,
     onSharedVaultClick: (ShareId) -> Unit,
     iconContent: @Composable RowScope.() -> Unit
 ) {
@@ -220,7 +231,12 @@ private fun ItemDetailTitleRow(
             verticalArrangement = Arrangement.spacedBy(Spacing.small)
         ) {
             PassItemDetailTitle(
-                text = title
+                text = title,
+                textColor = if (shouldWarningTitle) {
+                    PassTheme.colors.signalWarning
+                } else {
+                    PassTheme.colors.textNorm
+                }
             )
 
             vault?.let { itemVault ->

@@ -24,6 +24,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
@@ -61,7 +62,8 @@ internal class AccountViewModelTest {
             observeUpgradeInfo = getUpgradeInfo,
             observeCurrentUserSettings = observeCurrentUserSettings,
             hasExtraPassword = FakeHasExtraPassword(),
-            featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository()
+            featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository(),
+            accountManager = TestAccountManager()
         )
     }
 

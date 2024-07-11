@@ -41,6 +41,7 @@ import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Totp
 import proton.android.pass.preferences.FeatureFlag
@@ -79,6 +80,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
             itemLastAutofillAtOption = item.lastAutofillTime,
             itemRevision = item.revision,
             itemState = ItemState.from(item.state),
+            itemDiffs = ItemDiffs.Login(),
             canLoadExternalImages = useFaviconsPreference.value(),
             passwordStrength = encryptionContextProvider.withEncryptionContext {
                 decrypt(loginItemContents.password.encrypted)
@@ -180,5 +182,12 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
         ItemDetailsFieldType.Hidden.Cvv,
         ItemDetailsFieldType.Hidden.Pin -> itemContents
     }
+
+    override fun calculateItemDiffs(
+        currentItemContents: ItemContents.Login,
+        previousItemContents: ItemContents.Login
+    ): ItemDiffs.Login = ItemDiffs.Login(
+        isTitleChanged = currentItemContents.title != previousItemContents.title
+    )
 
 }

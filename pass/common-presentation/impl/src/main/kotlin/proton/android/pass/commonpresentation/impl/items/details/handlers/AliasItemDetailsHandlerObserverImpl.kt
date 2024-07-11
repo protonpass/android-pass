@@ -34,6 +34,7 @@ import proton.android.pass.domain.AliasDetails
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemState
 import javax.inject.Inject
 
@@ -59,6 +60,7 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
             itemLastAutofillAtOption = item.lastAutofillTime,
             itemRevision = item.revision,
             itemState = ItemState.from(item.state),
+            itemDiffs = ItemDiffs.Alias(),
             mailboxes = aliasDetails.mailboxes
         )
     }
@@ -85,5 +87,12 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
         ItemDetailsFieldType.Hidden.Password,
         ItemDetailsFieldType.Hidden.Pin -> itemContents
     }
+
+    override fun calculateItemDiffs(
+        currentItemContents: ItemContents.Alias,
+        previousItemContents: ItemContents.Alias
+    ): ItemDiffs.Alias = ItemDiffs.Alias(
+        isTitleChanged = currentItemContents.title != previousItemContents.title
+    )
 
 }

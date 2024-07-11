@@ -28,9 +28,11 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Radius
@@ -56,8 +58,12 @@ internal fun ItemHistoryRestoreTabRow(
 
     TabRow(
         modifier = modifier
-            .clip(shape = RoundedCornerShape(size = Radius.large))
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .shadow(
+                elevation = 4.dp,
+                shape = RoundedCornerShape(size = Radius.large)
+            )
+            .clip(shape = RoundedCornerShape(size = Radius.large)),
         selectedTabIndex = selectedTabIndex,
         indicator = {},
         divider = {}
@@ -68,11 +74,11 @@ internal fun ItemHistoryRestoreTabRow(
             Tab(
                 modifier = Modifier
                     .background(color = PassTheme.colors.backgroundMedium)
+                    .clip(shape = RoundedCornerShape(size = Radius.large))
                     .applyIf(
                         condition = isSelected,
                         ifTrue = {
-                            clip(shape = RoundedCornerShape(size = Radius.large))
-                                .background(color = itemColors.majorPrimary)
+                            background(color = itemColors.majorPrimary)
                         }
                     ),
                 selected = isSelected,

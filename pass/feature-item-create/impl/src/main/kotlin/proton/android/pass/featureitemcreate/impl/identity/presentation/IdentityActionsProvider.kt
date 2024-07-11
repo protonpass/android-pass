@@ -54,6 +54,7 @@ interface IdentityActionsProvider : IdentityFormActions {
     fun updateSelectedSection(customExtraField: CustomExtraField)
     fun onItemReceivedState(item: Item)
     fun getReceivedItem(): Item
+    fun observeReceivedItem(): Flow<Option<Item>>
     fun resetLastAddedFieldFocus()
 }
 

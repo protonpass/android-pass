@@ -51,7 +51,8 @@ sealed interface IdentityUiState {
     @Immutable
     data class UpdateIdentity(
         val selectedShareId: ShareId,
-        val sharedState: IdentitySharedUiState
+        val sharedState: IdentitySharedUiState,
+        val hasReceivedItem: Boolean
     ) : IdentityUiState
 
     val hasUserEdited: Boolean
@@ -115,6 +116,11 @@ sealed interface IdentityUiState {
     fun getCanUseCustomFields(): Boolean = when (this) {
         is CreateIdentity -> sharedState.canUseCustomFields
         is UpdateIdentity -> sharedState.canUseCustomFields
+        else -> false
+    }
+
+    fun hasReceivedItem(): Boolean = when (this) {
+        is UpdateIdentity -> hasReceivedItem
         else -> false
     }
 }

@@ -681,6 +681,8 @@ class IdentityActionsProviderImpl @Inject constructor(
     override fun getReceivedItem(): Item =
         itemState.value.value() ?: throw IllegalStateException("Item is not received")
 
+    override fun observeReceivedItem(): Flow<Option<Item>> = itemState
+
     override fun resetLastAddedFieldFocus() {
         identityFieldDraftRepository.resetLastAddedExtraField()
     }

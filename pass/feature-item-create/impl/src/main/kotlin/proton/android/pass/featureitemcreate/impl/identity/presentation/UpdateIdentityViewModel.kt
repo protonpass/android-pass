@@ -23,11 +23,13 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -71,8 +73,16 @@ class UpdateIdentityViewModel @Inject constructor(
         }
     }
 
-    val state: StateFlow<IdentityUiState> = identityActionsProvider.observeSharedState()
-        .mapLatest { IdentityUiState.UpdateIdentity(navShareId, it) }
+    val state: StateFlow<IdentityUiState> = combine(
+        identityActionsProvider.observeSharedState(),
+        identityActionsProvider.observeReceivedItem().map { it is Some }
+    ) { sharedState: IdentitySharedUiState, hasReceivedItem ->
+        IdentityUiState.UpdateIdentity(
+            navShareId,
+            sharedState,
+            hasReceivedItem
+        )
+    }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),

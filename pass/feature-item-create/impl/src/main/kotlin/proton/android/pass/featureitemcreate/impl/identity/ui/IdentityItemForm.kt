@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -66,6 +67,16 @@ fun IdentityItemForm(
 ) {
     val isGroupCollapsed = rememberSaveable(saver = isCollapsedSaver()) {
         mutableStateListOf(ContactDetails, WorkDetails)
+    }
+    LaunchedEffect(identityUiState.hasReceivedItem()) {
+        if (identityUiState.hasReceivedItem()) {
+            if (identityItemFormState.containsContactDetails()) {
+                isGroupCollapsed.remove(ContactDetails)
+            }
+            if (identityItemFormState.containsWorkDetails()) {
+                isGroupCollapsed.remove(WorkDetails)
+            }
+        }
     }
     val enabled = remember(identityUiState) { !identityUiState.getSubmitLoadingState().value() }
     val extraFields = remember(identityUiState) { identityUiState.getExtraFields() }

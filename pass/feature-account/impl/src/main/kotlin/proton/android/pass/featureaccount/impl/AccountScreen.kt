@@ -19,10 +19,12 @@
 package proton.android.pass.featureaccount.impl
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.BrowserUtils.openWebsite
 
@@ -33,6 +35,15 @@ fun AccountScreen(
     viewModel: AccountViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val hasBeenSignedOut by viewModel.hasBeenSignedOut.collectAsStateWithLifecycle(
+        minActiveState = Lifecycle.State.RESUMED
+    )
+    LaunchedEffect(hasBeenSignedOut) {
+        if (hasBeenSignedOut) {
+            onNavigate(AccountNavigation.Back)
+        }
+    }
+
     val context = LocalContext.current
     AccountContent(
         modifier = modifier,

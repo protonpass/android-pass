@@ -28,7 +28,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.zIndex
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.features.item.history.restore.ItemHistoryRestoreUiEvent
@@ -46,21 +48,32 @@ internal fun ItemHistoryRestoreTabContent(
 ) {
     var selectedTabIndex by remember { mutableIntStateOf(ITEM_HISTORY_TAB_INDEX_REVISION) }
 
-    val itemDetailState = when (selectedTabIndex) {
-        ITEM_HISTORY_TAB_INDEX_REVISION -> revisionItemDetailState
-        ITEM_HISTORY_TAB_INDEX_CURRENT -> currentItemDetailState
-        else -> throw IllegalArgumentException("")
-    }
-
     Box(modifier = modifier.fillMaxSize()) {
         ItemHistoryRestoreTab(
-            itemDetailState = itemDetailState,
+            modifier = Modifier.applyIf(
+                condition = selectedTabIndex == ITEM_HISTORY_TAB_INDEX_REVISION,
+                ifTrue = { zIndex(1f) },
+                ifFalse = { zIndex(0f) }
+            ),
+            itemDetailState = revisionItemDetailState,
+            itemColors = itemColors,
+            onEvent = onEvent
+        )
+
+        ItemHistoryRestoreTab(
+            modifier = Modifier.applyIf(
+                condition = selectedTabIndex == ITEM_HISTORY_TAB_INDEX_CURRENT,
+                ifTrue = { zIndex(1f) },
+                ifFalse = { zIndex(0f) }
+            ),
+            itemDetailState = currentItemDetailState,
             itemColors = itemColors,
             onEvent = onEvent
         )
 
         ItemHistoryRestoreTabRow(
             modifier = Modifier
+                .zIndex(2f)
                 .padding(
                     start = Spacing.medium,
                     end = Spacing.medium,

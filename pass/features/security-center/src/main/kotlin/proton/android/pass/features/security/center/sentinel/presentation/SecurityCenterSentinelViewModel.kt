@@ -64,10 +64,14 @@ class SecurityCenterSentinelViewModel @Inject constructor(
         isLoadingFlow,
         observeUserPlan()
     ) { isSentinelEnabled, canEnableSentinelResult, event, isLoading, userPlan ->
+        val isLoadingState = IsLoadingState.from(
+            isLoading.value() ||
+                IsLoadingState.from(canEnableSentinelResult is LoadingResult.Loading).value()
+        )
         SecurityCenterSentinelState(
             isSentinelEnabled = isSentinelEnabled,
             event = event,
-            isLoadingState = isLoading + IsLoadingState.from(canEnableSentinelResult is LoadingResult.Loading),
+            isLoadingState = isLoadingState,
             planType = userPlan.planType,
             canEnableSentinel = canEnableSentinelResult.getOrNull()
         )

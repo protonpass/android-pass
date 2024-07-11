@@ -23,6 +23,7 @@ import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.features.item.history.restore.presentation.ItemHistoryRestoreEvent
+import proton.android.pass.features.item.history.restore.presentation.ItemHistoryRestoreSelection
 
 internal sealed interface ItemHistoryRestoreUiEvent {
 
@@ -49,9 +50,10 @@ internal sealed interface ItemHistoryRestoreUiEvent {
     ) : ItemHistoryRestoreUiEvent
 
     data class OnHiddenSectionToggle(
-        val state: Boolean,
+        val selection: ItemHistoryRestoreSelection,
+        val isVisible: Boolean,
         val hiddenState: HiddenState,
-        val field: ItemDetailsFieldType.Hidden
+        val fieldType: ItemDetailsFieldType.Hidden
     ) : ItemHistoryRestoreUiEvent
 
     @JvmInline

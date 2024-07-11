@@ -153,7 +153,7 @@
     <string name="identity_field_last_name_title">Last name</string>
     <string name="identity_field_last_name_hint" translatable="false">@string/identity_field_last_name_title</string>
     <string name="identity_field_middle_name_title">Middle name</string>
-    <string name="identity_field_middle_name_hint" translatable="false">@string/identity_field_last_name_title</string>
+    <string name="identity_field_middle_name_hint" translatable="false">@string/identity_field_middle_name_title</string>
     <string name="identity_field_birthdate_title">Birthdate</string>
     <string name="identity_field_birthdate_hint" translatable="false">@string/identity_field_birthdate_title</string>
     <string name="identity_field_gender_title">Gender</string>

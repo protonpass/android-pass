@@ -29,7 +29,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
@@ -235,29 +234,21 @@ class ProfileViewModel @Inject constructor(
                 }.toPersistentList()
             }
 
-    internal val onAccountReadyFlow = accountManager.onAccountState(
-        AccountState.Ready,
-        initialState = false
-    )
-        .filterNotNull()
-        .distinctUntilChanged()
-        .onEach {
-            viewModelScope.launch {
-                runCatching { refreshContent() }
-                    .onSuccess {
-                        PassLogger.i(TAG, "Sync completed")
-                    }
-                    .onFailure { error ->
-                        PassLogger.w(TAG, "Error performing sync")
-                        PassLogger.w(TAG, error)
-                    }
+    internal val onAccountReadyFlow =
+        accountManager.onAccountState(AccountState.Ready, initialState = false)
+            .onEach { account ->
+                viewModelScope.launch {
+                    runCatching { refreshContent(account.userId) }
+                        .onSuccess {
+                            PassLogger.i(TAG, "Sync completed")
+                        }
+                        .onFailure { error ->
+                            PassLogger.w(TAG, "Error performing sync")
+                            PassLogger.w(TAG, error)
+                        }
+                }
             }
-        }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000L),
-            initialValue = null
-        )
+
 
     internal val state: StateFlow<ProfileUiState> = combineN(
         appLockSectionStateFlow,

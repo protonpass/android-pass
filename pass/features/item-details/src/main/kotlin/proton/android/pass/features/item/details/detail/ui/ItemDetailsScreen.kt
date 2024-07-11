@@ -82,7 +82,7 @@ fun ItemDetailsScreen(
                 is ItemDetailsUiEvent.OnHiddenFieldToggled -> onToggleItemHiddenField(
                     isVisible = uiEvent.isVisible,
                     hiddenState = uiEvent.state,
-                    hiddenFieldType = uiEvent.field
+                    hiddenFieldType = uiEvent.fieldType
                 )
 
                 is ItemDetailsUiEvent.OnLinkClicked -> BrowserUtils.openWebsite(

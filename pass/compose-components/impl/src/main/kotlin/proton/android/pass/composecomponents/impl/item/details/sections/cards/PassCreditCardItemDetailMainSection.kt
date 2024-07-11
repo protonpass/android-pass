@@ -120,9 +120,9 @@ internal fun PassCreditCardItemDetailMainSection(
                 onToggle = { isVisible ->
                     onEvent(
                         PassItemDetailsUiEvent.OnHiddenSectionToggle(
-                            state = isVisible,
+                            isVisible = isVisible,
                             hiddenState = cvv,
-                            field = ItemDetailsFieldType.Hidden.Cvv
+                            fieldType = ItemDetailsFieldType.Hidden.Cvv
                         )
                     )
                 }
@@ -141,9 +141,9 @@ internal fun PassCreditCardItemDetailMainSection(
                 onToggle = { isVisible ->
                     onEvent(
                         PassItemDetailsUiEvent.OnHiddenSectionToggle(
-                            state = isVisible,
+                            isVisible = isVisible,
                             hiddenState = pin,
-                            field = ItemDetailsFieldType.Hidden.Pin
+                            fieldType = ItemDetailsFieldType.Hidden.Pin
                         )
                     )
                 }

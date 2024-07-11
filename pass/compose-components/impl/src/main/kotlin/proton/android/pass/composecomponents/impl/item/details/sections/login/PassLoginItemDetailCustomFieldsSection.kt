@@ -87,9 +87,9 @@ internal fun PassLoginItemDetailCustomFieldsSection(
                         onToggle = { isVisible ->
                             onEvent(
                                 PassItemDetailsUiEvent.OnHiddenSectionToggle(
-                                    state = isVisible,
+                                    isVisible = isVisible,
                                     hiddenState = customField.hiddenState,
-                                    field = ItemDetailsFieldType.Hidden.CustomField(index)
+                                    fieldType = ItemDetailsFieldType.Hidden.CustomField(index)
                                 )
                             )
                         }

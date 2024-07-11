@@ -36,9 +36,9 @@ sealed interface PassItemDetailsUiEvent {
     ) : PassItemDetailsUiEvent
 
     data class OnHiddenSectionToggle(
-        val state: Boolean,
+        val isVisible: Boolean,
         val hiddenState: HiddenState,
-        val field: ItemDetailsFieldType.Hidden
+        val fieldType: ItemDetailsFieldType.Hidden
     ) : PassItemDetailsUiEvent
 
     @JvmInline

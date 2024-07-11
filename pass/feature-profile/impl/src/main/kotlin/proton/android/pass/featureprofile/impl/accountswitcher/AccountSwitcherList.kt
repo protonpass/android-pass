@@ -65,17 +65,19 @@ fun AccountSwitcherList(
             .padding(horizontal = Spacing.medium)
             .roundedContainerNorm()
     ) {
-        AccountSwitcherRow(
-            modifier = Modifier
-                .clickable { onExpandedChange(true) }
-                .onGloballyPositioned { coordinates ->
-                    rowSize = coordinates.size.toSize()
-                },
-            isCollapsed = true,
-            extraOffset = false,
-            accountListItem = primary.first(),
-            onEvent = onEvent
-        )
+        if (primary.isNotEmpty()) {
+            AccountSwitcherRow(
+                modifier = Modifier
+                    .clickable { onExpandedChange(true) }
+                    .onGloballyPositioned { coordinates ->
+                        rowSize = coordinates.size.toSize()
+                    },
+                isCollapsed = true,
+                extraOffset = false,
+                accountListItem = primary.first(),
+                onEvent = onEvent
+            )
+        }
         DropdownMenu(
             modifier = Modifier
                 .background(PassTheme.colors.inputBackgroundNorm)

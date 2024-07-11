@@ -21,6 +21,7 @@ package proton.android.pass.data.impl.usecases
 import androidx.work.WorkManager
 import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
@@ -38,15 +39,14 @@ class RefreshContentImpl @Inject constructor(
     private val syncStatusRepository: ItemSyncStatusRepository
 ) : RefreshContent {
 
-    override suspend fun invoke() {
+    override suspend fun invoke(userId: UserId?) {
         PassLogger.i(TAG, "Refreshing shares")
         syncStatusRepository.clear()
         syncStatusRepository.setMode(SyncMode.ShownToUser)
         syncStatusRepository.emit(ItemSyncStatus.SyncStarted)
 
         runCatching {
-            accountManager.getPrimaryUserId()
-                .firstOrNull()
+            (userId ?: accountManager.getPrimaryUserId().firstOrNull())
                 ?.let { userId -> shareRepository.refreshShares(userId) }
                 ?: throw UserIdNotAvailableError()
         }
@@ -57,6 +57,8 @@ class RefreshContentImpl @Inject constructor(
                 throw error
             }
             .onSuccess { refreshSharesResult ->
+                PassLogger.i(TAG, "Shares refreshed")
+                PassLogger.i(TAG, "refreshSharesResult = $refreshSharesResult")
                 FetchItemsWorker.getRequestFor(
                     source = FetchItemsWorker.FetchSource.ForceSync,
                     shareIds = refreshSharesResult.allShareIds.toList()

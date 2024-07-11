@@ -26,6 +26,7 @@ import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsCo
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.features.item.history.restore.ItemHistoryRestoreUiEvent
+import proton.android.pass.features.item.history.restore.presentation.ItemHistoryRestoreSelection
 import proton.android.pass.features.item.history.restore.ui.ItemHistoryRestoreTopBar
 
 @Composable
@@ -33,7 +34,8 @@ internal fun ItemHistoryRestoreTab(
     modifier: Modifier = Modifier,
     itemDetailState: ItemDetailState,
     itemColors: PassItemColors,
-    onEvent: (ItemHistoryRestoreUiEvent) -> Unit
+    onEvent: (ItemHistoryRestoreUiEvent) -> Unit,
+    selection: ItemHistoryRestoreSelection
 ) {
     PassItemDetailsContent(
         modifier = modifier,
@@ -62,9 +64,10 @@ internal fun ItemHistoryRestoreTab(
                 ).also(onEvent)
 
                 is PassItemDetailsUiEvent.OnHiddenSectionToggle -> ItemHistoryRestoreUiEvent.OnHiddenSectionToggle(
-                    state = uiEvent.state,
+                    selection = selection,
+                    isVisible = uiEvent.isVisible,
                     hiddenState = uiEvent.hiddenState,
-                    field = uiEvent.field
+                    fieldType = uiEvent.fieldType
                 ).also(onEvent)
 
                 is PassItemDetailsUiEvent.OnLinkClick -> ItemHistoryRestoreUiEvent.OnLinkClick(

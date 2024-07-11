@@ -110,6 +110,34 @@ data class IdentityItemFormState(
         }
     )
 
+    fun containsContactDetails(): Boolean {
+        val list = listOf(
+            uiContactDetails.socialSecurityNumber,
+            uiContactDetails.passportNumber,
+            uiContactDetails.licenseNumber,
+            uiContactDetails.website,
+            uiContactDetails.xHandle,
+            uiContactDetails.secondPhoneNumber,
+            uiContactDetails.linkedin,
+            uiContactDetails.reddit,
+            uiContactDetails.facebook,
+            uiContactDetails.yahoo,
+            uiContactDetails.instagram
+        )
+        return list.any { it.isNotBlank() } || uiContactDetails.customFields.isNotEmpty()
+    }
+
+    fun containsWorkDetails(): Boolean {
+        val list = listOf(
+            uiWorkDetails.company,
+            uiWorkDetails.jobTitle,
+            uiWorkDetails.personalWebsite,
+            uiWorkDetails.workPhoneNumber,
+            uiWorkDetails.workEmail
+        )
+        return list.any { it.isNotBlank() } || uiWorkDetails.customFields.isNotEmpty()
+    }
+
     companion object {
         val EMPTY = IdentityItemFormState(
             title = "",

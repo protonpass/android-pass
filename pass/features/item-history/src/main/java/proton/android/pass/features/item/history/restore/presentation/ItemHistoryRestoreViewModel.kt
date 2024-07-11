@@ -125,8 +125,14 @@ class ItemHistoryRestoreViewModel @Inject constructor(
     ) { currentItemDetailState, revisionItemDetailState, event ->
         ItemHistoryRestoreState.ItemDetails(
             itemRevision = itemRevision,
-            currentItemDetailState = currentItemDetailState,
-            revisionItemDetailState = revisionItemDetailState,
+            currentItemDetailState = itemDetailsWithDiff(
+                baseItemDetailState = currentItemDetailState,
+                otherItemDetailState = revisionItemDetailState
+            ),
+            revisionItemDetailState = itemDetailsWithDiff(
+                baseItemDetailState = revisionItemDetailState,
+                otherItemDetailState = currentItemDetailState
+            ),
             event = event
         )
     }.stateIn(
@@ -134,6 +140,14 @@ class ItemHistoryRestoreViewModel @Inject constructor(
         started = SharingStarted.Eagerly,
         initialValue = ItemHistoryRestoreState.Initial
     )
+
+    private fun itemDetailsWithDiff(baseItemDetailState: ItemDetailState, otherItemDetailState: ItemDetailState) =
+        itemDetailsHandler.updateItemDetailsDiffs(
+            baseItemDetailState = baseItemDetailState,
+            otherItemDetailState = otherItemDetailState
+        ).let { itemDiffs ->
+            baseItemDetailState.update(itemDiffs = itemDiffs)
+        }
 
     internal fun onEventConsumed(event: ItemHistoryRestoreEvent) {
         eventFlow.compareAndSet(event, ItemHistoryRestoreEvent.Idle)

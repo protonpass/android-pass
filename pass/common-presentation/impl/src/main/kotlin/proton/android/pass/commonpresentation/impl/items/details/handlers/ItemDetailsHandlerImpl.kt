@@ -34,6 +34,7 @@ import proton.android.pass.data.api.errors.ItemNotFoundError
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -145,6 +146,14 @@ class ItemDetailsHandlerImpl @Inject constructor(
             hiddenState = toggledHiddenState
         )
     }
+
+    override fun updateItemDetailsDiffs(
+        baseItemDetailState: ItemDetailState,
+        otherItemDetailState: ItemDetailState
+    ): ItemDiffs = getItemDetailsObserver(baseItemDetailState.itemCategory).calculateItemDiffs(
+        currentItemContents = baseItemDetailState.itemContents,
+        previousItemContents = otherItemDetailState.itemContents
+    )
 
     @Suppress("UNCHECKED_CAST")
     private fun getItemDetailsObserver(itemCategory: ItemCategory): ItemDetailsHandlerObserver<ItemContents> {

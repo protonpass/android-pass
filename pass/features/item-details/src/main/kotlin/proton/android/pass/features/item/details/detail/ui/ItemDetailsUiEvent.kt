@@ -49,7 +49,7 @@ internal sealed interface ItemDetailsUiEvent {
     data class OnHiddenFieldToggled(
         internal val isVisible: Boolean,
         internal val state: HiddenState,
-        internal val field: ItemDetailsFieldType.Hidden
+        internal val fieldType: ItemDetailsFieldType.Hidden
     ) : ItemDetailsUiEvent
 
     @JvmInline

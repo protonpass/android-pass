@@ -25,6 +25,7 @@ import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.ShareId
@@ -57,7 +58,11 @@ sealed interface ItemDetailState {
 
     val itemState: ItemState
 
+    val itemDiffs: ItemDiffs
+
     fun update(itemContents: ItemContents): ItemDetailState
+
+    fun update(itemDiffs: ItemDiffs): ItemDetailState
 
     @Stable
     data class Alias(
@@ -71,6 +76,7 @@ sealed interface ItemDetailState {
         override val itemLastAutofillAtOption: Option<Instant>,
         override val itemRevision: Long,
         override val itemState: ItemState,
+        override val itemDiffs: ItemDiffs.Alias,
         val mailboxes: List<AliasMailbox>
     ) : ItemDetailState {
 
@@ -79,6 +85,14 @@ sealed interface ItemDetailState {
         override fun update(itemContents: ItemContents): ItemDetailState {
             return if (itemContents is ItemContents.Alias) {
                 this.copy(itemContents = itemContents)
+            } else {
+                this
+            }
+        }
+
+        override fun update(itemDiffs: ItemDiffs): ItemDetailState {
+            return if (itemDiffs is ItemDiffs.Alias) {
+                this.copy(itemDiffs = itemDiffs)
             } else {
                 this
             }
@@ -97,7 +111,8 @@ sealed interface ItemDetailState {
         override val itemModifiedAt: Instant,
         override val itemLastAutofillAtOption: Option<Instant>,
         override val itemRevision: Long,
-        override val itemState: ItemState
+        override val itemState: ItemState,
+        override val itemDiffs: ItemDiffs.CreditCard
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.CreditCard
@@ -105,6 +120,14 @@ sealed interface ItemDetailState {
         override fun update(itemContents: ItemContents): ItemDetailState {
             return if (itemContents is ItemContents.CreditCard) {
                 this.copy(itemContents = itemContents)
+            } else {
+                this
+            }
+        }
+
+        override fun update(itemDiffs: ItemDiffs): ItemDetailState {
+            return if (itemDiffs is ItemDiffs.CreditCard) {
+                this.copy(itemDiffs = itemDiffs)
             } else {
                 this
             }
@@ -122,7 +145,8 @@ sealed interface ItemDetailState {
         override val itemModifiedAt: Instant,
         override val itemLastAutofillAtOption: Option<Instant>,
         override val itemRevision: Long,
-        override val itemState: ItemState
+        override val itemState: ItemState,
+        override val itemDiffs: ItemDiffs.Identity
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Identity
@@ -130,6 +154,14 @@ sealed interface ItemDetailState {
         override fun update(itemContents: ItemContents): ItemDetailState {
             return if (itemContents is ItemContents.Identity) {
                 this.copy(itemContents = itemContents)
+            } else {
+                this
+            }
+        }
+
+        override fun update(itemDiffs: ItemDiffs): ItemDetailState {
+            return if (itemDiffs is ItemDiffs.Identity) {
+                this.copy(itemDiffs = itemDiffs)
             } else {
                 this
             }
@@ -149,6 +181,7 @@ sealed interface ItemDetailState {
         override val itemLastAutofillAtOption: Option<Instant>,
         override val itemRevision: Long,
         override val itemState: ItemState,
+        override val itemDiffs: ItemDiffs.Login,
         val canLoadExternalImages: Boolean,
         val passwordStrength: PasswordStrength,
         val primaryTotp: Totp?,
@@ -167,6 +200,14 @@ sealed interface ItemDetailState {
             }
         }
 
+        override fun update(itemDiffs: ItemDiffs): ItemDetailState {
+            return if (itemDiffs is ItemDiffs.Login) {
+                this.copy(itemDiffs = itemDiffs)
+            } else {
+                this
+            }
+        }
+
     }
 
     @Stable
@@ -180,7 +221,8 @@ sealed interface ItemDetailState {
         override val itemModifiedAt: Instant,
         override val itemLastAutofillAtOption: Option<Instant>,
         override val itemRevision: Long,
-        override val itemState: ItemState
+        override val itemState: ItemState,
+        override val itemDiffs: ItemDiffs.Note
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Note
@@ -188,6 +230,14 @@ sealed interface ItemDetailState {
         override fun update(itemContents: ItemContents): ItemDetailState {
             return if (itemContents is ItemContents.Note) {
                 this.copy(itemContents = itemContents)
+            } else {
+                this
+            }
+        }
+
+        override fun update(itemDiffs: ItemDiffs): ItemDetailState {
+            return if (itemDiffs is ItemDiffs.Note) {
+                this.copy(itemDiffs = itemDiffs)
             } else {
                 this
             }
@@ -206,7 +256,8 @@ sealed interface ItemDetailState {
         override val itemModifiedAt: Instant,
         override val itemLastAutofillAtOption: Option<Instant>,
         override val itemRevision: Long,
-        override val itemState: ItemState
+        override val itemState: ItemState,
+        override val itemDiffs: ItemDiffs.Unknown
     ) : ItemDetailState {
 
         override val itemCategory: ItemCategory = ItemCategory.Unknown
@@ -214,6 +265,14 @@ sealed interface ItemDetailState {
         override fun update(itemContents: ItemContents): ItemDetailState {
             return if (itemContents is ItemContents.Unknown) {
                 this.copy(itemContents = itemContents)
+            } else {
+                this
+            }
+        }
+
+        override fun update(itemDiffs: ItemDiffs): ItemDetailState {
+            return if (itemDiffs is ItemDiffs.Unknown) {
+                this.copy(itemDiffs = itemDiffs)
             } else {
                 this
             }

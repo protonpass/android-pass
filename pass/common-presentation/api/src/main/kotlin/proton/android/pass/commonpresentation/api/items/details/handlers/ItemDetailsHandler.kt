@@ -25,6 +25,7 @@ import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.items.ItemCategory
 
 interface ItemDetailsHandler {
@@ -44,5 +45,7 @@ interface ItemDetailsHandler {
         itemCategory: ItemCategory,
         itemContents: ItemContents
     ): ItemContents
+
+    fun updateItemDetailsDiffs(baseItemDetailState: ItemDetailState, otherItemDetailState: ItemDetailState): ItemDiffs
 
 }

@@ -25,7 +25,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -70,9 +69,7 @@ class AccountViewModel @Inject constructor(
                 initialValue = false
             )
 
-    private val currentUserFlow = observeCurrentUser()
-        .filterNotNull()
-        .take(1)
+    private val currentUserFlow = observeCurrentUser().take(1)
 
     private val upgradeInfoFlow = currentUserFlow
         .flatMapLatest { user -> observeUpgradeInfo(userId = user.userId, forceRefresh = true) }

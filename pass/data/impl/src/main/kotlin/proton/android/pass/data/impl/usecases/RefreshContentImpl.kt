@@ -57,8 +57,6 @@ class RefreshContentImpl @Inject constructor(
                 throw error
             }
             .onSuccess { refreshSharesResult ->
-                PassLogger.i(TAG, "Shares refreshed")
-                PassLogger.i(TAG, "refreshSharesResult = $refreshSharesResult")
                 FetchItemsWorker.getRequestFor(
                     source = FetchItemsWorker.FetchSource.ForceSync,
                     shareIds = refreshSharesResult.allShareIds.toList()

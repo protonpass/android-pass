@@ -21,6 +21,7 @@ package proton.android.pass.composecomponents.impl.item.details.titles
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
@@ -29,7 +30,8 @@ import androidx.compose.ui.unit.sp
 internal fun PassItemDetailTitle(
     modifier: Modifier = Modifier,
     text: String,
-    maxLines: Int = 2
+    maxLines: Int = 2,
+    textColor: Color
 ) {
     Text(
         modifier = modifier,
@@ -39,6 +41,7 @@ internal fun PassItemDetailTitle(
         letterSpacing = 0.03.sp,
         lineHeight = 34.sp,
         maxLines = maxLines,
-        overflow = TextOverflow.Ellipsis
+        overflow = TextOverflow.Ellipsis,
+        color = textColor
     )
 }

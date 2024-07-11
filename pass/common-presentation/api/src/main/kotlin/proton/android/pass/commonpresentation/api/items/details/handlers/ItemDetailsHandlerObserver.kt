@@ -26,6 +26,7 @@ import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemDiffs
 
 abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
 
@@ -37,6 +38,11 @@ abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
         hiddenFieldSection: ItemDetailsFieldSection,
         hiddenState: HiddenState
     ): ItemContents
+
+    abstract fun calculateItemDiffs(
+        currentItemContents: ITEM_CONTENTS,
+        previousItemContents: ITEM_CONTENTS
+    ): ItemDiffs
 
     protected fun toggleHiddenCustomField(
         customFieldsContent: List<CustomFieldContent>,

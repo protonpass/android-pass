@@ -31,6 +31,7 @@ import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemState
 import javax.inject.Inject
 
@@ -53,7 +54,8 @@ class NoteItemDetailsHandlerObserverImpl @Inject constructor(
             itemModifiedAt = item.modificationTime,
             itemLastAutofillAtOption = item.lastAutofillTime,
             itemRevision = item.revision,
-            itemState = ItemState.from(item.state)
+            itemState = ItemState.from(item.state),
+            itemDiffs = ItemDiffs.Note()
         )
     }
 
@@ -76,5 +78,12 @@ class NoteItemDetailsHandlerObserverImpl @Inject constructor(
         ItemDetailsFieldType.Hidden.Password,
         ItemDetailsFieldType.Hidden.Pin -> itemContents
     }
+
+    override fun calculateItemDiffs(
+        currentItemContents: ItemContents.Note,
+        previousItemContents: ItemContents.Note
+    ): ItemDiffs.Note = ItemDiffs.Note(
+        isTitleChanged = currentItemContents.title != previousItemContents.title
+    )
 
 }

@@ -31,6 +31,7 @@ import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemState
 import javax.inject.Inject
 
@@ -53,7 +54,8 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
             itemModifiedAt = item.modificationTime,
             itemLastAutofillAtOption = item.lastAutofillTime,
             itemRevision = item.revision,
-            itemState = ItemState.from(item.state)
+            itemState = ItemState.from(item.state),
+            itemDiffs = ItemDiffs.CreditCard()
         )
     }
 
@@ -82,4 +84,12 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
         is ItemDetailsFieldType.Hidden.CustomField,
         ItemDetailsFieldType.Hidden.Password -> itemContents
     }
+
+    override fun calculateItemDiffs(
+        currentItemContents: ItemContents.CreditCard,
+        previousItemContents: ItemContents.CreditCard
+    ): ItemDiffs.CreditCard = ItemDiffs.CreditCard(
+        isTitleChanged = currentItemContents.title != previousItemContents.title
+    )
+
 }

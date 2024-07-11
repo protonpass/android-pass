@@ -139,9 +139,9 @@ internal fun PassLoginItemDetailMainSection(
                 onToggle = { isVisible ->
                     onEvent(
                         PassItemDetailsUiEvent.OnHiddenSectionToggle(
-                            state = isVisible,
+                            isVisible = isVisible,
                             hiddenState = password,
-                            field = ItemDetailsFieldType.Hidden.Password
+                            fieldType = ItemDetailsFieldType.Hidden.Password
                         )
                     )
                 },

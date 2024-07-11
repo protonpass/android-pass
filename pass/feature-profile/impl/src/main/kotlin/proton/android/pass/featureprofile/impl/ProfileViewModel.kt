@@ -249,7 +249,6 @@ class ProfileViewModel @Inject constructor(
                 }
             }
 
-
     internal val state: StateFlow<ProfileUiState> = combineN(
         appLockSectionStateFlow,
         autofillStatusFlow,

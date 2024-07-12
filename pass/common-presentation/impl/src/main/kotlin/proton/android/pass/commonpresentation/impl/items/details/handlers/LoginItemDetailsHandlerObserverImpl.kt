@@ -42,7 +42,6 @@ import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Totp
-import proton.android.pass.domain.items.ItemCustomField
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -63,11 +62,11 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     override fun observe(item: Item): Flow<ItemDetailState> = combineN(
         observeLoginItemContents(item),
         observePrimaryTotp(item),
-        observeCustomFields(item),
+        observeSecondaryTotps(item),
         getVaultById(shareId = item.shareId),
         userPreferencesRepository.getUseFaviconsPreference(),
         featureFlagsRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT)
-    ) { loginItemContents, primaryTotp, customFields, vault, useFaviconsPreference, isUsernameSplitEnabled ->
+    ) { loginItemContents, primaryTotp, secondaryTotps, vault, useFaviconsPreference, isUsernameSplitEnabled ->
         ItemDetailState.Login(
             itemContents = loginItemContents,
             itemId = item.id,
@@ -85,7 +84,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
                     .let(passwordStrengthCalculator::calculateStrength)
             },
             primaryTotp = primaryTotp,
-            customFields = customFields,
+            secondaryTotps = secondaryTotps,
             passkeys = loginItemContents.passkeys.map { passkey -> UIPasskeyContent.from(passkey) },
             isUsernameSplitEnabled = isUsernameSplitEnabled
         )
@@ -112,43 +111,31 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
             observeTotp(loginItemContents.primaryTotp)
         }
 
-    private fun observeCustomFields(item: Item): Flow<List<ItemCustomField>> =
+    private fun observeSecondaryTotps(item: Item): Flow<Map<String, Totp?>> =
         observeLoginItemContents(item).flatMapLatest { loginItemContents ->
-            if (loginItemContents.customFields.isEmpty()) {
-                flowOf(emptyList())
-            } else {
-                combine(getCustomFieldsFlows(loginItemContents.customFields)) { itemCustomFields ->
-                    itemCustomFields.asList()
-                }
-            }
-        }
-
-    private fun getCustomFieldsFlows(customFieldsContents: List<CustomFieldContent>): List<Flow<ItemCustomField>> =
-        customFieldsContents.map { customFieldContent ->
-            when (customFieldContent) {
-                is CustomFieldContent.Hidden -> flowOf(
-                    ItemCustomField.Hidden(
-                        title = customFieldContent.label,
-                        hiddenState = customFieldContent.value
-                    )
-                )
-
-                is CustomFieldContent.Text -> flowOf(
-                    ItemCustomField.Plain(
-                        title = customFieldContent.label,
-                        content = customFieldContent.value
-                    )
-                )
-
-                is CustomFieldContent.Totp -> observeTotp(customFieldContent.value)
-                    .map { customFieldTotp ->
-                        ItemCustomField.Totp(
-                            title = customFieldContent.label,
-                            totp = customFieldTotp
-                        )
+            loginItemContents.customFields
+                .filterIsInstance<CustomFieldContent.Totp>()
+                .let { totpCustomFieldsContent ->
+                    combine(
+                        observeTotpCustomFieldsLabels(totpCustomFieldsContent),
+                        observeTotpCustomFieldsValues(totpCustomFieldsContent)
+                    ) { totpCustomFieldsLabels, totpCustomFieldsValues ->
+                        totpCustomFieldsLabels.zip(totpCustomFieldsValues).toMap()
                     }
-            }
+                }
         }
+
+    private fun observeTotpCustomFieldsLabels(
+        totpCustomFieldsContent: List<CustomFieldContent.Totp>
+    ): Flow<List<String>> = totpCustomFieldsContent.map { totpCustomFieldContent ->
+        totpCustomFieldContent.label
+    }.let(::flowOf)
+
+    private fun observeTotpCustomFieldsValues(
+        totpCustomFieldsContent: List<CustomFieldContent.Totp>
+    ): Flow<List<Totp?>> = combine(
+        totpCustomFieldsContent.map { totpCustomFieldContent -> observeTotp(totpCustomFieldContent.value) }
+    ) { customFieldsTotp -> customFieldsTotp.asList() }
 
     private fun observeTotp(hiddenTotpState: HiddenState): Flow<Totp?> = when (hiddenTotpState) {
         is HiddenState.Empty -> ""

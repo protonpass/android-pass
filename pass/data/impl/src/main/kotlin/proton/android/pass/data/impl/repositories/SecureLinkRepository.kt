@@ -185,23 +185,7 @@ class SecureLinkRepositoryImpl @Inject constructor(
                 }
             }
             .onSuccess { remoteSecureLinks ->
-                remoteSecureLinks.map { remoteSecureLink ->
-                    remoteSecureLink.id
-                }.let { remoteSecureLinksIds ->
-                    localSecureLinks.filterNot { localSecureLink ->
-                        remoteSecureLinksIds.contains(localSecureLink.id)
-                    }
-                }.also { secureLinksToBeRemoved ->
-                    secureLinksLocalDataSource.delete(userId, secureLinksToBeRemoved)
-                    try {
-                        secureLinksLocalDataSource.update(userId, remoteSecureLinks)
-                    } catch (exception: SQLiteConstraintException) {
-                        // this is to avoid raising an error to a user due to a race condition
-                        // while secure link removal is propagated to BE BD replicas
-                        PassLogger.w(TAG, "Error syncing remote secure links")
-                        PassLogger.w(TAG, exception)
-                    }
-                }
+                syncSecureLinks(userId, remoteSecureLinks)
             }
 
         emitAll(secureLinksLocalDataSource.observeAll(userId))
@@ -215,10 +199,30 @@ class SecureLinkRepositoryImpl @Inject constructor(
                 throw error
             }
             .onSuccess { remoteSecureLinks ->
-                secureLinksLocalDataSource.update(userId, remoteSecureLinks)
+                syncSecureLinks(userId, remoteSecureLinks)
             }
 
         emitAll(secureLinksLocalDataSource.observeCount(userId))
+    }
+
+    private suspend fun syncSecureLinks(userId: UserId, remoteSecureLinks: List<SecureLink>) {
+        remoteSecureLinks.map { remoteSecureLink ->
+            remoteSecureLink.id
+        }.let { remoteSecureLinksIds ->
+            secureLinksLocalDataSource.getAll(userId).filterNot { localSecureLink ->
+                remoteSecureLinksIds.contains(localSecureLink.id)
+            }
+        }.also { secureLinksToBeRemoved ->
+            secureLinksLocalDataSource.delete(userId, secureLinksToBeRemoved)
+            try {
+                secureLinksLocalDataSource.update(userId, remoteSecureLinks)
+            } catch (exception: SQLiteConstraintException) {
+                // this is to avoid raising an error to a user due to a race condition
+                // while secure link removal is propagated to BE BD replicas
+                PassLogger.w(TAG, "Error syncing remote secure links")
+                PassLogger.w(TAG, exception)
+            }
+        }
     }
 
     private suspend fun fetchSecureLinksFromRemote(userId: UserId): List<SecureLink> {

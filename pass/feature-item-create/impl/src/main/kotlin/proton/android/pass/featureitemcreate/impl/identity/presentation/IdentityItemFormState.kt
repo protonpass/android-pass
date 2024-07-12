@@ -111,6 +111,7 @@ data class IdentityItemFormState(
     )
 
     fun containsContactDetails(): Boolean {
+        if (uiContactDetails.customFields.isNotEmpty()) return true
         val list = listOf(
             uiContactDetails.socialSecurityNumber,
             uiContactDetails.passportNumber,
@@ -124,10 +125,11 @@ data class IdentityItemFormState(
             uiContactDetails.yahoo,
             uiContactDetails.instagram
         )
-        return list.any { it.isNotBlank() } || uiContactDetails.customFields.isNotEmpty()
+        return list.any { it.isNotBlank() }
     }
 
     fun containsWorkDetails(): Boolean {
+        if (uiWorkDetails.customFields.isNotEmpty()) return true
         val list = listOf(
             uiWorkDetails.company,
             uiWorkDetails.jobTitle,
@@ -135,7 +137,7 @@ data class IdentityItemFormState(
             uiWorkDetails.workPhoneNumber,
             uiWorkDetails.workEmail
         )
-        return list.any { it.isNotBlank() } || uiWorkDetails.customFields.isNotEmpty()
+        return list.any { it.isNotBlank() }
     }
 
     companion object {

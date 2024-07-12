@@ -26,6 +26,7 @@ import kotlinx.collections.immutable.toPersistentList
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.common.api.PasswordStrength
+import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonuimodels.api.masks.TextMask
 import proton.android.pass.composecomponents.impl.R
@@ -141,7 +142,8 @@ internal fun PassLoginItemDetailMainSection(
                         PassItemDetailsUiEvent.OnHiddenSectionToggle(
                             isVisible = isVisible,
                             hiddenState = password,
-                            fieldType = ItemDetailsFieldType.Hidden.Password
+                            fieldType = ItemDetailsFieldType.Hidden.Password,
+                            fieldSection = ItemDetailsFieldSection.Main
                         )
                     )
                 },

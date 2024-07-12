@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.datetime.Instant
@@ -43,7 +44,6 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Totp
-import proton.android.pass.domain.items.ItemCustomField
 
 @Composable
 internal fun PassLoginItemDetailSections(
@@ -53,7 +53,7 @@ internal fun PassLoginItemDetailSections(
     contents: ItemContents.Login,
     passwordStrength: PasswordStrength,
     primaryTotp: Totp?,
-    customFields: ImmutableList<ItemCustomField>,
+    secondaryTotps: ImmutableMap<String, Totp?>,
     passkeys: ImmutableList<UIPasskeyContent>,
     itemColors: PassItemColors,
     onEvent: (PassItemDetailsUiEvent) -> Unit,
@@ -106,7 +106,8 @@ internal fun PassLoginItemDetailSections(
 
         if (customFields.isNotEmpty()) {
             PassLoginItemDetailCustomFieldsSection(
-                customFields = customFields,
+                customFields = customFields.toPersistentList(),
+                secondaryTotps = secondaryTotps,
                 itemColors = itemColors,
                 onEvent = onEvent
             )

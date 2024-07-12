@@ -31,7 +31,6 @@ import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Totp
 import proton.android.pass.domain.Vault
 import proton.android.pass.domain.items.ItemCategory
-import proton.android.pass.domain.items.ItemCustomField
 
 @Stable
 sealed interface ItemDetailState {
@@ -153,7 +152,7 @@ sealed interface ItemDetailState {
         val canLoadExternalImages: Boolean,
         val passwordStrength: PasswordStrength,
         val primaryTotp: Totp?,
-        val customFields: List<ItemCustomField>,
+        val secondaryTotps: Map<String, Totp?>,
         val passkeys: List<UIPasskeyContent>,
         val isUsernameSplitEnabled: Boolean
     ) : ItemDetailState {

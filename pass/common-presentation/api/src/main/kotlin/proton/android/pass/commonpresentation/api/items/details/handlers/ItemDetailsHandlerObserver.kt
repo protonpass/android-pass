@@ -19,6 +19,7 @@
 package proton.android.pass.commonpresentation.api.items.details.handlers
 
 import kotlinx.coroutines.flow.Flow
+import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.domain.HiddenState
@@ -32,6 +33,7 @@ interface ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
     fun updateItemContents(
         itemContents: ITEM_CONTENTS,
         hiddenFieldType: ItemDetailsFieldType.Hidden,
+        hiddenFieldSection: ItemDetailsFieldSection,
         hiddenState: HiddenState
     ): ItemContents
 

@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.item.history.restore
 
+import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.domain.HiddenState
@@ -53,7 +54,8 @@ internal sealed interface ItemHistoryRestoreUiEvent {
         val selection: ItemHistoryRestoreSelection,
         val isVisible: Boolean,
         val hiddenState: HiddenState,
-        val fieldType: ItemDetailsFieldType.Hidden
+        val fieldType: ItemDetailsFieldType.Hidden,
+        val fieldSection: ItemDetailsFieldSection
     ) : ItemHistoryRestoreUiEvent
 
     @JvmInline

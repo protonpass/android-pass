@@ -59,7 +59,8 @@ fun ItemHistoryRestoreScreen(
                         selection = uiEvent.selection,
                         isVisible = uiEvent.isVisible,
                         hiddenState = uiEvent.hiddenState,
-                        hiddenFieldType = uiEvent.fieldType
+                        hiddenFieldType = uiEvent.fieldType,
+                        hiddenFieldSection = uiEvent.fieldSection
                     )
                 }
 

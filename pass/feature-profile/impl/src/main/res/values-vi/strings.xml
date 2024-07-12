@@ -64,4 +64,10 @@
     <item quantity="other">Sau %d giờ</item>
   </plurals>
   <string name="profile_less_than_a_minute">Less than a minute</string>
+  <string name="account_switcher_manage_account">Manage account</string>
+  <string name="account_switcher_sign_in">Sign in</string>
+  <string name="account_switcher_sign_out">Sign out</string>
+  <string name="account_switcher_switch_to">Switch to</string>
+  <string name="account_switcher_add_account">Add account</string>
+  <string name="account_switcher_remove">Remove</string>
 </resources>

@@ -27,6 +27,10 @@
   <string name="bottomsheet_view_item_history">Geçmişi görüntüle</string>
   <string name="bottomsheet_monitor_exclude">İzlemeye katma</string>
   <string name="bottomsheet_monitor_include">İzlemeye kat</string>
+  <string name="bottomsheet_migrate_item">Başka bir kasaya taşı</string>
+  <string name="bottomsheet_copy_item_note">Copy note</string>
+  <string name="bottomsheet_delete_permanently">Kalıcı olarak sil</string>
+  <string name="bottomsheet_restore">Restore</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Öge işlem menüsünü aç</string>
   <string name="action_upgrade_now">Şimdi yükselt</string>
@@ -202,4 +206,21 @@
     <item quantity="one">%d saniye</item>
     <item quantity="other">%d saniye</item>
   </plurals>
+  <!-- Snack bars -->
+  <string name="snack_bar_message_item_note_copied">Note copied</string>
+  <string name="snack_bar_message_item_migration_error">There was an error migrating this item</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">Öge izlemeye katılmayacak</string>
+  <string name="snack_bar_message_item_monitor_excluded_error">Öge izlemeye katılmayacak olarak ayarlanırken sorun çıktı</string>
+  <string name="snack_bar_message_item_monitor_included_success">Öge izlemeye katılacak</string>
+  <string name="snack_bar_message_item_monitor_included_error">Öge izlemeye katılacak olarak ayarlanırken sorun çıktı</string>
+  <string name="snack_bar_message_item_pinned_success">Öge sabitlendi</string>
+  <string name="snack_bar_message_item_pinned_error">Bu öge sabitllenirken bir sorun çıktı</string>
+  <string name="snack_bar_message_item_unpinned_success">Ögenin sabitlemesi kaldırıldı</string>
+  <string name="snack_bar_message_item_unpinned_error">Bu ögenin sabitllemesi kaldırılırken bir sorun çıktı</string>
+  <string name="snack_bar_message_item_trashed_success">Item successfully trashed</string>
+  <string name="snack_bar_message_item_trashed_error">There was an error trashing this item</string>
+  <string name="snack_bar_message_item_restore_success">Item successfully restored</string>
+  <string name="snack_bar_message_item_restore_error">There was an error restoring this item</string>
+  <string name="snack_bar_message_item_delete_success">Item successfully deleted</string>
+  <string name="snack_bar_message_item_delete_error">There was an error deleting this item</string>
 </resources>

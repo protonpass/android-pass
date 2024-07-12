@@ -12,6 +12,7 @@
   <string name="migrate_item_error_snackbar">Wystąpił błąd podczas przenoszenia elementów</string>
   <string name="migrate_item_some_not_migrated_error_snackbar">Wystąpił błąd podczas przenoszenia niektórych elementów</string>
   <string name="migrate_item_warning_history">Podczas przenoszenia elementów między sejfami zachowamy historię do 50 ostatnich modyfikacji elementów</string>
+  <string name="migrate_item_warning_secure_link">Po przeniesieniu elementu do innego sejfu link zostanie usunięty</string>
   <string name="migrate_all_items_success_snackbar">Wszystkie elementy zostały przeniesione</string>
   <string name="migrate_all_items_error_snackbar">Wystąpił błąd podczas przenoszenia wszystkich elementów w sejfie</string>
   <string name="migrate_init_error_snackbar">Nie można przygotować ekranu migracji</string>

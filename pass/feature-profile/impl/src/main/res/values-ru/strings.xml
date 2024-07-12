@@ -73,4 +73,10 @@
     <item quantity="other">Через %d часов</item>
   </plurals>
   <string name="profile_less_than_a_minute">Меньше минуты</string>
+  <string name="account_switcher_manage_account">Управление аккаунтом</string>
+  <string name="account_switcher_sign_in">Войти</string>
+  <string name="account_switcher_sign_out">Bыйти</string>
+  <string name="account_switcher_switch_to">Переключить на</string>
+  <string name="account_switcher_add_account">Добавить аккаунт</string>
+  <string name="account_switcher_remove">Удалить</string>
 </resources>

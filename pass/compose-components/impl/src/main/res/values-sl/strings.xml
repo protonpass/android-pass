@@ -29,6 +29,10 @@
   <string name="bottomsheet_view_item_history">Prikaži zgodovino</string>
   <string name="bottomsheet_monitor_exclude">Izključi iz spremljanja</string>
   <string name="bottomsheet_monitor_include">Vključi v spremljanje</string>
+  <string name="bottomsheet_migrate_item">Premakni se v drug trezor</string>
+  <string name="bottomsheet_copy_item_note">Copy note</string>
+  <string name="bottomsheet_delete_permanently">Trajno izbriši</string>
+  <string name="bottomsheet_restore">Restore</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Odpri meni z dejanji predmeta</string>
   <string name="action_upgrade_now">Nadgradi zdaj</string>
@@ -214,4 +218,21 @@
     <item quantity="few">%d sekund</item>
     <item quantity="other">%d sekunde</item>
   </plurals>
+  <!-- Snack bars -->
+  <string name="snack_bar_message_item_note_copied">Note copied</string>
+  <string name="snack_bar_message_item_migration_error">There was an error migrating this item</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">Predmet je bil izključen iz spremljanja.</string>
+  <string name="snack_bar_message_item_monitor_excluded_error">Pri izključevanju predmeta iz spremljanja je prišlo do napake</string>
+  <string name="snack_bar_message_item_monitor_included_success">Predmet je bil vključen v spremljanje.</string>
+  <string name="snack_bar_message_item_monitor_included_error">Pri vključitvi predmeta v nadzor je prišlo do napake</string>
+  <string name="snack_bar_message_item_pinned_success">Predmet je bil pripet.</string>
+  <string name="snack_bar_message_item_pinned_error">Pri pripenjanju tega predmeta je prišlo do napake</string>
+  <string name="snack_bar_message_item_unpinned_success">Predmet je bil odpet.</string>
+  <string name="snack_bar_message_item_unpinned_error">Pri odpenjanju tega predmeta je prišlo do napake</string>
+  <string name="snack_bar_message_item_trashed_success">Item successfully trashed</string>
+  <string name="snack_bar_message_item_trashed_error">There was an error trashing this item</string>
+  <string name="snack_bar_message_item_restore_success">Item successfully restored</string>
+  <string name="snack_bar_message_item_restore_error">There was an error restoring this item</string>
+  <string name="snack_bar_message_item_delete_success">Item successfully deleted</string>
+  <string name="snack_bar_message_item_delete_error">There was an error deleting this item</string>
 </resources>

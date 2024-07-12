@@ -27,6 +27,10 @@
   <string name="bottomsheet_view_item_history">ისტორიის ნახვა</string>
   <string name="bottomsheet_monitor_exclude">მონიტორინგიდან ამოღება</string>
   <string name="bottomsheet_monitor_include">მონიტორინგში ჩასმა</string>
+  <string name="bottomsheet_migrate_item">სხვა საცავში გადატანა</string>
+  <string name="bottomsheet_copy_item_note">შენიშვნის კოპირება</string>
+  <string name="bottomsheet_delete_permanently">სამუდამოდ წაშლა</string>
+  <string name="bottomsheet_restore">აღდგენა</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">ელემენტის ქმედების მენიუს გახსნა</string>
   <string name="action_upgrade_now">ტარიფის განახლება</string>
@@ -164,14 +168,14 @@
   <string name="item_details_identity_section_work_phone_number_title">სამსახურის ტელეფონის ნომერი</string>
   <string name="item_details_identity_section_work_personal_website_title">პირადი ვებგვერდი</string>
   <string name="item_details_shared_section_note_title">შენიშვნა</string>
-  <string name="item_details_shared_section_item_history_last_autofill_title">Last autofill</string>
+  <string name="item_details_shared_section_item_history_last_autofill_title">უკანასკნელი ავტომატური შევსება</string>
   <string name="item_details_shared_section_item_history_created_title">შექმნილია</string>
-  <string name="item_details_shared_section_item_history_modified_times_title">Modified (%d)</string>
+  <string name="item_details_shared_section_item_history_modified_times_title">შეცვლილია (%d)</string>
   <string name="item_details_shared_section_item_history_button_view">ელემენტის ისტორიის ნახვა</string>
-  <string name="item_details_shared_section_more_info_header_title">More info</string>
-  <string name="item_details_shared_section_more_info_header_icon_content_description">More item information icon</string>
-  <string name="item_details_shared_section_more_info_item_id">Item ID</string>
-  <string name="item_details_shared_section_more_info_share_id">Vault ID</string>
+  <string name="item_details_shared_section_more_info_header_title">მეტი ინფორმაცია</string>
+  <string name="item_details_shared_section_more_info_header_icon_content_description">ელემენტის დამატებითი ინფორმაციის ხატულა</string>
+  <string name="item_details_shared_section_more_info_item_id">ელემენტის ID</string>
+  <string name="item_details_shared_section_more_info_share_id">საცავის ID</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">აპის ვერსია მხარდაჭერილი აღარაა. განაახლეთ თქვენი აპი.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">წვდომის გასაღები</string>
@@ -202,4 +206,21 @@
     <item quantity="one">%d წამი</item>
     <item quantity="other">%d წამი</item>
   </plurals>
+  <!-- Snack bars -->
+  <string name="snack_bar_message_item_note_copied">შენიშვნა დაკოპირდა</string>
+  <string name="snack_bar_message_item_migration_error">შეცდომა ამ ელემენტის მიგრაციისას</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">ელემენტის მონიტორინგიდან ამოღება წარმატებულია</string>
+  <string name="snack_bar_message_item_monitor_excluded_error">მონიტორინგიდან ელემენტის ამოღების შეცდომა</string>
+  <string name="snack_bar_message_item_monitor_included_success">ელემენტის მონიტორინგში ჩასმა წარმატებულია</string>
+  <string name="snack_bar_message_item_monitor_included_error">ელემენტის მონიტორინგში ჩასმის შეცდომა</string>
+  <string name="snack_bar_message_item_pinned_success">ელემენტი წარმატებით მიმაგრდა</string>
+  <string name="snack_bar_message_item_pinned_error">ელემენტის მიმაგრების შეცდომა</string>
+  <string name="snack_bar_message_item_unpinned_success">ელემენტის მოხსნა წარმატებულია</string>
+  <string name="snack_bar_message_item_unpinned_error">ელემენტის მოხსნის შეცდომა</string>
+  <string name="snack_bar_message_item_trashed_success">ელემენტის ნაგვის ყუთში გადატანა წარმატებულია</string>
+  <string name="snack_bar_message_item_trashed_error">ამ ელემენტის ნაგვის ყუთში გადატანის შეცდომა</string>
+  <string name="snack_bar_message_item_restore_success">ელემენტი წარმატებით აღდგა</string>
+  <string name="snack_bar_message_item_restore_error">შეცდომა ამ ელემენტის აღდგენისას</string>
+  <string name="snack_bar_message_item_delete_success">ელემენტი წარმატებით წაიშალა</string>
+  <string name="snack_bar_message_item_delete_error">შეცდომა ამ ელემენტი წაშლისას</string>
 </resources>

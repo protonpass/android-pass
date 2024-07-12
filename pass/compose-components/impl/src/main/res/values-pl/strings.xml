@@ -29,6 +29,10 @@
   <string name="bottomsheet_view_item_history">Pokaż historię</string>
   <string name="bottomsheet_monitor_exclude">Wyklucz z monitoringu</string>
   <string name="bottomsheet_monitor_include">Uwzględnij w monitoringu</string>
+  <string name="bottomsheet_migrate_item">Przenieś do innego sejfu</string>
+  <string name="bottomsheet_copy_item_note">Kopiuj notatkę</string>
+  <string name="bottomsheet_delete_permanently">Usuń trwale</string>
+  <string name="bottomsheet_restore">Przywróć</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Otwórz menu akcji elementu</string>
   <string name="action_upgrade_now">Ulepsz teraz</string>
@@ -173,7 +177,7 @@
   <string name="item_details_shared_section_item_history_modified_times_title">Zmodyfikowano (%d)</string>
   <string name="item_details_shared_section_item_history_button_view">Pokaż historię elementu</string>
   <string name="item_details_shared_section_more_info_header_title">Więcej informacji</string>
-  <string name="item_details_shared_section_more_info_header_icon_content_description">More item information icon</string>
+  <string name="item_details_shared_section_more_info_header_icon_content_description">Ikona informacji o elemencie</string>
   <string name="item_details_shared_section_more_info_item_id">Identyfikator elementu</string>
   <string name="item_details_shared_section_more_info_share_id">Identyfikator sejfu</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Wersja aplikacji nie jest obsługiwana. Zaktualizuj aplikację.</string>
@@ -214,4 +218,21 @@
     <item quantity="many">%d sekund</item>
     <item quantity="other">%d sekundy</item>
   </plurals>
+  <!-- Snack bars -->
+  <string name="snack_bar_message_item_note_copied">Notatka została skopiowana</string>
+  <string name="snack_bar_message_item_migration_error">Wystąpił błąd podczas migrowania elementu</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">Element został wykluczony z monitoringu</string>
+  <string name="snack_bar_message_item_monitor_excluded_error">Wystąpił błąd podczas wykluczania elementu z monitoringu</string>
+  <string name="snack_bar_message_item_monitor_included_success">Element został uwzględniony w monitoringu</string>
+  <string name="snack_bar_message_item_monitor_included_error">Wystąpił błąd podczas uwzględniania elementu w monitoringu</string>
+  <string name="snack_bar_message_item_pinned_success">Element został przypięty</string>
+  <string name="snack_bar_message_item_pinned_error">Wystąpił błąd podczas przypinania elementu</string>
+  <string name="snack_bar_message_item_unpinned_success">Element został odpięty</string>
+  <string name="snack_bar_message_item_unpinned_error">Wystąpił błąd podczas odpinania elementu</string>
+  <string name="snack_bar_message_item_trashed_success">Przeniesienie elementu do Kosza</string>
+  <string name="snack_bar_message_item_trashed_error">Wystąpił błąd podczas przenoszenia elementu do Kosza</string>
+  <string name="snack_bar_message_item_restore_success">Element został przywrócony</string>
+  <string name="snack_bar_message_item_restore_error">Wystąpił błąd podczas przywracania elementu z Kosza</string>
+  <string name="snack_bar_message_item_delete_success">Element został usunięty</string>
+  <string name="snack_bar_message_item_delete_error">Wystąpił błąd podczas usuwania elementu</string>
 </resources>

@@ -12,6 +12,7 @@
   <string name="migrate_item_error_snackbar">Chyba při přesouvání položek</string>
   <string name="migrate_item_some_not_migrated_error_snackbar">Chyba při přesouvání některých položek</string>
   <string name="migrate_item_warning_history">Při přesouvání položek mezi trezory uchováme až 50 posledních úprav provedených na každé položce</string>
+  <string name="migrate_item_warning_secure_link">The item\'s secure links will be removed when it\'s moved to another vault</string>
   <string name="migrate_all_items_success_snackbar">Všechny položky byly přesunuty</string>
   <string name="migrate_all_items_error_snackbar">Chyba při přesunu všech položek trezoru</string>
   <string name="migrate_init_error_snackbar">Nelze připravit obrazovku pro migraci</string>

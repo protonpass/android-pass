@@ -28,6 +28,8 @@
   <string name="auth_unlock_app_title">Odemknout Proton Pass</string>
   <string name="auth_unlock_app_subtitle">Zadejte hlavní heslo pro %s</string>
   <string name="auth_unlock_app_extra_password_subtitle">Zadejte dodatečné heslo pro %s</string>
+  <string name="auth_unlock_app_subtitle_account_switch">Zadejte hlavní heslo pro:</string>
+  <string name="auth_unlock_app_extra_password_subtitle_account_switch">Zadejte dodatečné heslo pro:</string>
   <string name="auth_master_password_label">Hlavní heslo</string>
   <string name="auth_action_reveal_password">Zobrazit hlavní heslo</string>
   <string name="auth_action_conceal_password">Skrýt hlavní heslo</string>

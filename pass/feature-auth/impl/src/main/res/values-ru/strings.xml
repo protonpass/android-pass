@@ -28,6 +28,8 @@
   <string name="auth_unlock_app_title">Разблокировать Proton Pass</string>
   <string name="auth_unlock_app_subtitle">Введите мастер-пароль для %s</string>
   <string name="auth_unlock_app_extra_password_subtitle">Введите дополнительный пароль для %s</string>
+  <string name="auth_unlock_app_subtitle_account_switch">Введите мастер-пароль для:</string>
+  <string name="auth_unlock_app_extra_password_subtitle_account_switch">Введите дополнительный пароль для:</string>
   <string name="auth_master_password_label">Мастер-пароль</string>
   <string name="auth_action_reveal_password">Показать мастер-пароль</string>
   <string name="auth_action_conceal_password">Скрыть мастер-пароль</string>

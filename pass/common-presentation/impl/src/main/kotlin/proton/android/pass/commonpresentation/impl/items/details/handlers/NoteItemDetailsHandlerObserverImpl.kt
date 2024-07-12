@@ -37,7 +37,7 @@ import javax.inject.Inject
 class NoteItemDetailsHandlerObserverImpl @Inject constructor(
     private val getVaultById: GetVaultById,
     private val encryptionContextProvider: EncryptionContextProvider
-) : ItemDetailsHandlerObserver<ItemContents.Note> {
+) : ItemDetailsHandlerObserver<ItemContents.Note>() {
 
     override fun observe(item: Item): Flow<ItemDetailState> = combine(
         observeNoteItemContents(item),

@@ -41,7 +41,7 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
     private val getVaultById: GetVaultById,
     private val getAliasDetails: GetAliasDetails,
     private val encryptionContextProvider: EncryptionContextProvider
-) : ItemDetailsHandlerObserver<ItemContents.Alias> {
+) : ItemDetailsHandlerObserver<ItemContents.Alias>() {
 
     override fun observe(item: Item): Flow<ItemDetailState> = combine(
         observeAliasItemContents(item),

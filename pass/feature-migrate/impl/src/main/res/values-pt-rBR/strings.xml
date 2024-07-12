@@ -10,6 +10,7 @@
   <string name="migrate_item_error_snackbar">Erro ao mover os itens</string>
   <string name="migrate_item_some_not_migrated_error_snackbar">Erro ao mover alguns dos itens</string>
   <string name="migrate_item_warning_history">Quando movendo itens entre cofres, nós preservaremos as últimas 50 modificações feitas em cada item.</string>
+  <string name="migrate_item_warning_secure_link">The item\'s secure links will be removed when it\'s moved to another vault</string>
   <string name="migrate_all_items_success_snackbar">Todos os itens movidos</string>
   <string name="migrate_all_items_error_snackbar">Erro ao mover todos os itens do cofre</string>
   <string name="migrate_init_error_snackbar">Não foi possível preparar a tela de migração</string>

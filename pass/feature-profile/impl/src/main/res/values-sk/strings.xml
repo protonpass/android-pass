@@ -73,4 +73,10 @@
     <item quantity="other">Po %d hodinách</item>
   </plurals>
   <string name="profile_less_than_a_minute">Menej než minútu</string>
+  <string name="account_switcher_manage_account">Spravovať účet</string>
+  <string name="account_switcher_sign_in">Prihlásiť sa</string>
+  <string name="account_switcher_sign_out">Odhlásiť sa</string>
+  <string name="account_switcher_switch_to">Prepnúť na</string>
+  <string name="account_switcher_add_account">Pridať účet</string>
+  <string name="account_switcher_remove">Odstrániť</string>
 </resources>

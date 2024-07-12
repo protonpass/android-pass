@@ -27,6 +27,10 @@
   <string name="bottomsheet_view_item_history">Visa historik</string>
   <string name="bottomsheet_monitor_exclude">Exkludera från övervakning</string>
   <string name="bottomsheet_monitor_include">Inkludera i övervakning</string>
+  <string name="bottomsheet_migrate_item">Flytta till annat valv</string>
+  <string name="bottomsheet_copy_item_note">Kopiera anteckning</string>
+  <string name="bottomsheet_delete_permanently">Ta bort permanent</string>
+  <string name="bottomsheet_restore">Återställ</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Öppna åtgärdsmeny för objekt</string>
   <string name="action_upgrade_now">Uppgradera nu</string>
@@ -202,4 +206,21 @@
     <item quantity="one">%d sekund</item>
     <item quantity="other">%d sekunder</item>
   </plurals>
+  <!-- Snack bars -->
+  <string name="snack_bar_message_item_note_copied">Anteckning kopierad</string>
+  <string name="snack_bar_message_item_migration_error">Det gick inte migrera detta objekt</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">Objekt exkluderat från övervakning</string>
+  <string name="snack_bar_message_item_monitor_excluded_error">Det uppstod ett fel när objekt skulle exkluderas från övervakning</string>
+  <string name="snack_bar_message_item_monitor_included_success">Objekt inkluderat i övervakning</string>
+  <string name="snack_bar_message_item_monitor_included_error">Det uppstod ett fel när objekt skulle inkluderas i övervakning</string>
+  <string name="snack_bar_message_item_pinned_success">Lyckades fästa objekt</string>
+  <string name="snack_bar_message_item_pinned_error">Det gick inte att fästa detta objekt</string>
+  <string name="snack_bar_message_item_unpinned_success">Objekt lossat</string>
+  <string name="snack_bar_message_item_unpinned_error">Det gick inte att lossa detta objekt</string>
+  <string name="snack_bar_message_item_trashed_success">Item successfully trashed</string>
+  <string name="snack_bar_message_item_trashed_error">There was an error trashing this item</string>
+  <string name="snack_bar_message_item_restore_success">Objekt återställt</string>
+  <string name="snack_bar_message_item_restore_error">Det gick inte återställa detta objekt</string>
+  <string name="snack_bar_message_item_delete_success">Objekt borttaget</string>
+  <string name="snack_bar_message_item_delete_error">Det gick inte ta bort detta objekt</string>
 </resources>

@@ -126,10 +126,6 @@
   <string name="recent_search_clear">Wissen</string>
   <string name="recent_search_remove_item">Verwijderen uit recente zoekopdrachten</string>
   <!-- Pinning -->
-  <string name="home_snackbar_item_pinned_success">Item succesvol vastgezet</string>
-  <string name="home_snackbar_item_pinned_error">Fout bij het vastmaken van dit item</string>
-  <string name="home_snackbar_item_unpinned_success">Item succesvol losgemaakt</string>
-  <string name="home_snackbar_item_unpinned_error">Er is een fout opgetreden bij het losmaken van dit item</string>
   <string name="home_snackbar_items_pinned_success">Items vastgemaakt met succes</string>
   <string name="home_snackbar_items_pinned_partial_success">Fout bij het vastmaken van sommige items</string>
   <string name="home_snackbar_items_pinned_error">Fout bij vastmaken items</string>

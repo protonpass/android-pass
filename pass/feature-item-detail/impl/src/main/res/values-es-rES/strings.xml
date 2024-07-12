@@ -27,10 +27,6 @@
   <string name="item_permanently_deleted_message_error">Error al eliminar el elemento</string>
   <string name="item_restored_message">Elemento restaurado</string>
   <string name="item_restored_message_error">Error al restaurar el elemento</string>
-  <string name="item_pinned_message">Elemento anclado con éxito</string>
-  <string name="item_pinned_message_error">Se ha producido un error al anclar este elemento.</string>
-  <string name="item_unpinned_message">Elemento desanclado con éxito</string>
-  <string name="item_unpinned_message_error">Se ha producido un error al desanclar este elemento.</string>
   <string name="item_monitor_exclude_message">El elemento ha sido excluido del monitoreo.</string>
   <string name="item_monitor_exclude_message_error">Se ha producido un error al excluir un elemento del monitoreo.</string>
   <string name="item_monitor_include_message">El elemento ha sido incluido en el monitoreo.</string>

@@ -42,15 +42,15 @@
   <!--List screen-->
   <string name="secure_links_list_title">Link sicuri</string>
   <string name="secure_links_list_empty_title">Nessun link sicuro</string>
-  <string name="secure_links_list_empty_subtitle">Puoi iniziare a creare link sicuri dalle opzioni di condivisione dei dettagli di un elemento</string>
+  <string name="secure_links_list_empty_subtitle">Puoi iniziare a creare link sicuri dalle opzioni di condivisione nei dettagli di un elemento</string>
   <string name="secure_links_list_expiration_description">Scade tra %s</string>
   <string name="secure_links_list_expired_description">Scaduto</string>
   <plurals name="secure_links_list_viewed_times_description">
     <item quantity="one">%d visualizzazione</item>
     <item quantity="other">%d visualizzazioni</item>
   </plurals>
-  <string name="secure_links_list_snackbar_message_links_fetch_error">Si è verificato un errore durante il recupero dei link sicuri</string>
-  <string name="secure_links_list_header_title_inactive">Link inattivi</string>
+  <string name="secure_links_list_snackbar_message_links_fetch_error">Si è verificato un errore nel caricamento dei link sicuri</string>
+  <string name="secure_links_list_header_title_inactive">Link non attivi</string>
   <!--Shared-->
   <string name="secure_links_shared_action_copy_link">Copia il link</string>
   <string name="secure_links_shared_action_share_link">Condividi il link</string>
@@ -58,8 +58,8 @@
   <string name="secure_links_shared_action_delete_link_inactive">Rimuovi il link inattivo</string>
   <string name="secure_links_shared_action_delete_links_inactive">Rimuovi tutti i link inattivi</string>
   <string name="secure_links_shared_snackbar_message_link_copied">Link sicuro copiato</string>
-  <string name="secure_links_shared_snackbar_message_link_deletion_canceled">L\'eliminazione del link sicuro è stata annullata</string>
-  <string name="secure_links_shared_snackbar_message_link_deletion_error">Si è verificato un errore durante l\'eliminazione del link sicuro</string>
-  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">L\'eliminazione dei link sicuri inattivi è stata annullata</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_canceled">Eliminazione del link sicuro annullata</string>
+  <string name="secure_links_shared_snackbar_message_link_deletion_error">Si è verificato un errore nell\'eliminazione del link sicuro</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Eliminazione dei link sicuri annullata</string>
   <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">Eliminazione dei link sicuri inattivi non riuscita</string>
 </resources>

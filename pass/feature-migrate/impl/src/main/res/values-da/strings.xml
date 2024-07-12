@@ -10,6 +10,7 @@
   <string name="migrate_item_error_snackbar">Fejl ved flytning af elementerne</string>
   <string name="migrate_item_some_not_migrated_error_snackbar">Fejl ved flytning af nogle elementerne</string>
   <string name="migrate_item_warning_history">Når vi flytter elementer mellem bokse, bevarer vi op til de sidste 50 ændringer, der er foretaget på hvert element.</string>
+  <string name="migrate_item_warning_secure_link">Elementets sikre links fjernes, når det flyttes til en anden boks.</string>
   <string name="migrate_all_items_success_snackbar">Alle elementer flyttet</string>
   <string name="migrate_all_items_error_snackbar">Fejl ved flytning af alle boks-elementer</string>
   <string name="migrate_init_error_snackbar">Kunne ikke forberede migreringsskærm</string>

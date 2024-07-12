@@ -26,6 +26,10 @@
   <string name="bottomsheet_view_item_history">履歴を表示</string>
   <string name="bottomsheet_monitor_exclude">監視から除外</string>
   <string name="bottomsheet_monitor_include">監視に含める</string>
+  <string name="bottomsheet_migrate_item">別の保管庫に移動</string>
+  <string name="bottomsheet_copy_item_note">Copy note</string>
+  <string name="bottomsheet_delete_permanently">完全に削除する</string>
+  <string name="bottomsheet_restore">Restore</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">アイテムアクションメニューを開く</string>
   <string name="action_upgrade_now">今すぐアップグレード</string>
@@ -196,4 +200,21 @@
   <plurals name="time_unit_seconds">
     <item quantity="other">%d 秒</item>
   </plurals>
+  <!-- Snack bars -->
+  <string name="snack_bar_message_item_note_copied">Note copied</string>
+  <string name="snack_bar_message_item_migration_error">There was an error migrating this item</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">アイテムは監視から正常に除外されました</string>
+  <string name="snack_bar_message_item_monitor_excluded_error">監視からアイテムを除外する際にエラーが発生しました</string>
+  <string name="snack_bar_message_item_monitor_included_success">アイテムが監視対象に正常に追加されました</string>
+  <string name="snack_bar_message_item_monitor_included_error">監視中のアイテムにエラーが発生しました</string>
+  <string name="snack_bar_message_item_pinned_success">アイテムが正常にピン留めされました</string>
+  <string name="snack_bar_message_item_pinned_error">このアイテムをピン留めする際にエラーが発生しました</string>
+  <string name="snack_bar_message_item_unpinned_success">アイテムのピン留めが解除されました</string>
+  <string name="snack_bar_message_item_unpinned_error">このアイテムのピン留めを解除する際にエラーが発生しました</string>
+  <string name="snack_bar_message_item_trashed_success">Item successfully trashed</string>
+  <string name="snack_bar_message_item_trashed_error">There was an error trashing this item</string>
+  <string name="snack_bar_message_item_restore_success">Item successfully restored</string>
+  <string name="snack_bar_message_item_restore_error">There was an error restoring this item</string>
+  <string name="snack_bar_message_item_delete_success">Item successfully deleted</string>
+  <string name="snack_bar_message_item_delete_error">There was an error deleting this item</string>
 </resources>

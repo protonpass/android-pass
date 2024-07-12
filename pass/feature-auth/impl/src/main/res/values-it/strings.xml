@@ -26,6 +26,8 @@
   <string name="auth_unlock_app_title">Sblocca Proton Pass</string>
   <string name="auth_unlock_app_subtitle">Inserisci la password principale per %s</string>
   <string name="auth_unlock_app_extra_password_subtitle">Inserisci la password aggiuntiva per %s</string>
+  <string name="auth_unlock_app_subtitle_account_switch">Inserisci la password principale per:</string>
+  <string name="auth_unlock_app_extra_password_subtitle_account_switch">Inserisci la password aggiuntiva per:</string>
   <string name="auth_master_password_label">Password principale</string>
   <string name="auth_action_reveal_password">Mostra la password principale</string>
   <string name="auth_action_conceal_password">Nascondi la password principale</string>
@@ -37,7 +39,7 @@
   <string name="auth_error_pin_cannot_be_empty">PIN necessario</string>
   <string name="auth_extra_password_label">Inserisci la password aggiuntiva</string>
   <string name="auth_extra_password_error">Autenticazione con password aggiuntiva non riuscita</string>
-  <string name="auth_extra_password_too_many_attempts">Troppi tentativi di accesso non riusciti. Sei stato disconnesso.</string>
+  <string name="auth_extra_password_too_many_attempts">Troppi tentativi di accesso non riusciti. Effettua nuovamente l\'accesso.</string>
   <string name="auth_error_wrong_password_no_attempts">Password errata</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Password errata. %d tentativo rimasto.</item>

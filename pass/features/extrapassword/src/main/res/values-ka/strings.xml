@@ -21,7 +21,7 @@
   <string name="configure_extra_password_title">დამატებითი პაროლის დაყენება</string>
   <string name="configure_extra_password_enter_extra_password">დამატებითი პაროლი</string>
   <string name="configure_extra_password_repeat_extra_password">გაიმეორეთ პაროლი</string>
-  <string name="configure_extra_password_description">You will be asked for this password during login and when switching from another Proton app to Proton Pass on web.</string>
+  <string name="configure_extra_password_description">შესვლისას და სხვა Proton-ის აპიდან ვებზე Proton Pass-ზე გადართვისას ამ პაროლს გკითხავთ.</string>
   <string name="configure_extra_password_warning">ფრთხილად: თუ პაროლს დაკარგავთ, Pass-ის ანგარიშთან წვდომა აღარ გექნებათ.</string>
   <string name="configure_extra_password_mismatch">პაროლები არ ემთხვევა</string>
   <string name="extra_password_options_remove">წაშლა</string>

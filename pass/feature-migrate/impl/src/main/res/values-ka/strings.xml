@@ -10,6 +10,7 @@
   <string name="migrate_item_error_snackbar">ელემენტების გადატანის შეცდომა</string>
   <string name="migrate_item_some_not_migrated_error_snackbar">ზოგიერთი ელემენტის გადატანის შეცდომა</string>
   <string name="migrate_item_warning_history">სათავსოებს შორის ნივთების გადაადგილებისას ჩვენ შევინარჩუნებთ თითოეულ ნივთზე შესრულებულ ბოლო 50 მოდიფიკაციას</string>
+  <string name="migrate_item_warning_secure_link">ელემენტის დაცული ბმულების წაშლა შეუძლებელია, როცა მისი სხვა საცავში გადატანა მიმდინარეობს</string>
   <string name="migrate_all_items_success_snackbar">ყველა ელემენტი გადატანილია</string>
   <string name="migrate_all_items_error_snackbar">ყველა საცავის ელემენტის გადატანის შეცდომა</string>
   <string name="migrate_init_error_snackbar">მიგრაციის ეკრანის მომზადება შეუძლებელია</string>

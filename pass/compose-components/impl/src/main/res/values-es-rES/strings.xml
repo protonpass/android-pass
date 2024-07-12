@@ -27,6 +27,10 @@
   <string name="bottomsheet_view_item_history">Mostrar el historial</string>
   <string name="bottomsheet_monitor_exclude">Excluir del monitoreo</string>
   <string name="bottomsheet_monitor_include">Incluir en el monitoreo</string>
+  <string name="bottomsheet_migrate_item">Mover a otra caja fuerte</string>
+  <string name="bottomsheet_copy_item_note">Copiar la nota</string>
+  <string name="bottomsheet_delete_permanently">Eliminar permanentemente</string>
+  <string name="bottomsheet_restore">Restaurar</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Abrir el menú de acciones del elemento</string>
   <string name="action_upgrade_now">Mejorar ahora</string>
@@ -202,4 +206,21 @@
     <item quantity="one">%d segundo</item>
     <item quantity="other">%d segundos</item>
   </plurals>
+  <!-- Snack bars -->
+  <string name="snack_bar_message_item_note_copied">Se ha copiado la nota.</string>
+  <string name="snack_bar_message_item_migration_error">Se ha producido un error al migrar este elemento.</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">El elemento ha sido excluido del monitoreo.</string>
+  <string name="snack_bar_message_item_monitor_excluded_error">Se ha producido un error al excluir un elemento del monitoreo.</string>
+  <string name="snack_bar_message_item_monitor_included_success">El elemento ha sido incluido en el monitoreo.</string>
+  <string name="snack_bar_message_item_monitor_included_error">Se ha producido un error al incluir un elemento en el monitoreo.</string>
+  <string name="snack_bar_message_item_pinned_success">Se ha anclado el elemento.</string>
+  <string name="snack_bar_message_item_pinned_error">Se ha producido un error al anclar este elemento.</string>
+  <string name="snack_bar_message_item_unpinned_success">El elemento ha sido desanclado.</string>
+  <string name="snack_bar_message_item_unpinned_error">Se ha producido un error al desanclar este elemento.</string>
+  <string name="snack_bar_message_item_trashed_success">Se ha eliminado el elemento.</string>
+  <string name="snack_bar_message_item_trashed_error">Se ha producido un error al eliminar este elemento</string>
+  <string name="snack_bar_message_item_restore_success">Elemento restaurado</string>
+  <string name="snack_bar_message_item_restore_error">Se ha producido un error al restaurar este elemento.</string>
+  <string name="snack_bar_message_item_delete_success">Elemento eliminado</string>
+  <string name="snack_bar_message_item_delete_error">Se ha producido un error al eliminar este elemento.</string>
 </resources>

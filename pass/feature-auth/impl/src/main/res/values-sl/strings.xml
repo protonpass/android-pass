@@ -28,6 +28,8 @@
   <string name="auth_unlock_app_title">Odkleni Proton Pass</string>
   <string name="auth_unlock_app_subtitle">Vnesite glavno geslo za %s</string>
   <string name="auth_unlock_app_extra_password_subtitle">Enter the extra password for %s</string>
+  <string name="auth_unlock_app_subtitle_account_switch">Vnesite glavno geslo za:</string>
+  <string name="auth_unlock_app_extra_password_subtitle_account_switch">Enter the extra password for:</string>
   <string name="auth_master_password_label">Glavno geslo</string>
   <string name="auth_action_reveal_password">Razkrij glavno geslo</string>
   <string name="auth_action_conceal_password">Skrij glavno geslo</string>

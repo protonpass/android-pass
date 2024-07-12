@@ -26,6 +26,10 @@
   <string name="bottomsheet_view_item_history">Lihat riwayat</string>
   <string name="bottomsheet_monitor_exclude">Kecualikan dari pemantauan</string>
   <string name="bottomsheet_monitor_include">Masukkan dalam pemantauan</string>
+  <string name="bottomsheet_migrate_item">Pindahkan ke brankas lainnya</string>
+  <string name="bottomsheet_copy_item_note">Salin catatan</string>
+  <string name="bottomsheet_delete_permanently">Hapus secara permanen</string>
+  <string name="bottomsheet_restore">Pulihkan</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Buka menu tindakan item</string>
   <string name="action_upgrade_now">Tingkatkan sekarang</string>
@@ -196,4 +200,21 @@
   <plurals name="time_unit_seconds">
     <item quantity="other">%d detik</item>
   </plurals>
+  <!-- Snack bars -->
+  <string name="snack_bar_message_item_note_copied">Catatan disalin</string>
+  <string name="snack_bar_message_item_migration_error">Terdapat kesalahan dalam memindahkan item ini</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">Item berhasil dikecualikan dari pemantauan</string>
+  <string name="snack_bar_message_item_monitor_excluded_error">Terdapat kesalahan dalam mengecualikan item dari pemantauan</string>
+  <string name="snack_bar_message_item_monitor_included_success">Item berhasil disertakan dalam pemantauan</string>
+  <string name="snack_bar_message_item_monitor_included_error">Terdapat kesalahan dalam menyertakan item pada pemantauan</string>
+  <string name="snack_bar_message_item_pinned_success">Item berhasil disematkan</string>
+  <string name="snack_bar_message_item_pinned_error">Terdapat kesalahan dalam menyematkan item ini</string>
+  <string name="snack_bar_message_item_unpinned_success">Sematan item berhasil dilepas</string>
+  <string name="snack_bar_message_item_unpinned_error">Terdapat kesalahan dalam melepas sematan item ini</string>
+  <string name="snack_bar_message_item_trashed_success">Item berhasil dibuang</string>
+  <string name="snack_bar_message_item_trashed_error">Terdapat kesalahan dalam membuang item ini</string>
+  <string name="snack_bar_message_item_restore_success">Item berhasil dipulihkan</string>
+  <string name="snack_bar_message_item_restore_error">Terdapat kesalahan dalam memulihkan item ini</string>
+  <string name="snack_bar_message_item_delete_success">Item berhasil dihapus</string>
+  <string name="snack_bar_message_item_delete_error">Terdapat kesalahan dalam menghapus item ini</string>
 </resources>

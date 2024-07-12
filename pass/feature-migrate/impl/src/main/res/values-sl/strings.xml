@@ -12,6 +12,7 @@
   <string name="migrate_item_error_snackbar">Napaka pri premikanju predmetov</string>
   <string name="migrate_item_some_not_migrated_error_snackbar">Napaka pri premikanju nekaterih predmetov</string>
   <string name="migrate_item_warning_history">Pri premikanju predmetov med trezorji bomo ohranili do zadnjih 50 sprememb, izvedenih na vsakem predmetu</string>
+  <string name="migrate_item_warning_secure_link">The item\'s secure links will be removed when it\'s moved to another vault</string>
   <string name="migrate_all_items_success_snackbar">Vsi predmeti so premaknjeni</string>
   <string name="migrate_all_items_error_snackbar">Napaka pri premikanju vseh predmetov v trezorju</string>
   <string name="migrate_init_error_snackbar">Ni bilo mogoče pripraviti zaslona za selitev</string>

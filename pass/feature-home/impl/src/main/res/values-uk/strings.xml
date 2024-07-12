@@ -140,10 +140,6 @@
   <string name="recent_search_clear">Очистити</string>
   <string name="recent_search_remove_item">Вилучити з останніх пошуків</string>
   <!-- Pinning -->
-  <string name="home_snackbar_item_pinned_success">Елемент успішно прикріплено</string>
-  <string name="home_snackbar_item_pinned_error">Помилка закріплення цього елемента</string>
-  <string name="home_snackbar_item_unpinned_success">Елемент успішно відкріплено</string>
-  <string name="home_snackbar_item_unpinned_error">Помилка відкріплення цього елемента</string>
   <string name="home_snackbar_items_pinned_success">Елементи успішно прикріплено</string>
   <string name="home_snackbar_items_pinned_partial_success">Помилка прикріплення деяких елементів</string>
   <string name="home_snackbar_items_pinned_error">Помилка прикріплення елементів</string>

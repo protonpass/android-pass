@@ -67,4 +67,10 @@
     <item quantity="other">Efter %d timmar</item>
   </plurals>
   <string name="profile_less_than_a_minute">Mindre än en minut</string>
+  <string name="account_switcher_manage_account">Hantera konto</string>
+  <string name="account_switcher_sign_in">Logga in</string>
+  <string name="account_switcher_sign_out">Logga ut</string>
+  <string name="account_switcher_switch_to">Byt till</string>
+  <string name="account_switcher_add_account">Lägg till konto</string>
+  <string name="account_switcher_remove">Ta bort</string>
 </resources>

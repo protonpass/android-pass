@@ -27,6 +27,10 @@
   <string name="bottomsheet_view_item_history">Vis historikk</string>
   <string name="bottomsheet_monitor_exclude">Ekskluder fra overvåking</string>
   <string name="bottomsheet_monitor_include">Inkluder i overvåking</string>
+  <string name="bottomsheet_migrate_item">Flytt til annet hvelv</string>
+  <string name="bottomsheet_copy_item_note">Kopier notat</string>
+  <string name="bottomsheet_delete_permanently">Slett permanent</string>
+  <string name="bottomsheet_restore">Gjenopprett</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Åpne elementhandlingsmenyen</string>
   <string name="action_upgrade_now">Oppgrader nå</string>
@@ -202,4 +206,21 @@
     <item quantity="one">%d sekund</item>
     <item quantity="other">%d sekunder</item>
   </plurals>
+  <!-- Snack bars -->
+  <string name="snack_bar_message_item_note_copied">Notat kopiert</string>
+  <string name="snack_bar_message_item_migration_error">Det oppstod en feil under overføring av dette elementet</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">Element ekskludert fra overvåking</string>
+  <string name="snack_bar_message_item_monitor_excluded_error">Det oppstod en feil under ekskludering av element fra overvåking</string>
+  <string name="snack_bar_message_item_monitor_included_success">Element inkludert i overvåking</string>
+  <string name="snack_bar_message_item_monitor_included_error">Det oppstod en feil under inkludering av element i overvåking</string>
+  <string name="snack_bar_message_item_pinned_success">Element festet</string>
+  <string name="snack_bar_message_item_pinned_error">Feil ved festing av dette elementet</string>
+  <string name="snack_bar_message_item_unpinned_success">Element løsnet</string>
+  <string name="snack_bar_message_item_unpinned_error">Feil ved løsing av dette elementet</string>
+  <string name="snack_bar_message_item_trashed_success">Elementet ble sendt i papirkurven</string>
+  <string name="snack_bar_message_item_trashed_error">Det oppstod en feil under sletting av dette elementet</string>
+  <string name="snack_bar_message_item_restore_success">Element vellykket gjenopprettet</string>
+  <string name="snack_bar_message_item_restore_error">Det oppstod en feil under gjenoppretting av dette elementet</string>
+  <string name="snack_bar_message_item_delete_success">Element vellykket slettet</string>
+  <string name="snack_bar_message_item_delete_error">Det oppstod en feil under sletting av dette elementet</string>
 </resources>

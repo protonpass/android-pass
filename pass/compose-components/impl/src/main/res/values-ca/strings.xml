@@ -27,6 +27,10 @@
   <string name="bottomsheet_view_item_history">Visualitza l\'historial</string>
   <string name="bottomsheet_monitor_exclude">Exclou de la supervisió</string>
   <string name="bottomsheet_monitor_include">Incloure en la supervisió</string>
+  <string name="bottomsheet_migrate_item">Mou a una altra caixa forta</string>
+  <string name="bottomsheet_copy_item_note">Copia la nota</string>
+  <string name="bottomsheet_delete_permanently">Elimina de manera permanent</string>
+  <string name="bottomsheet_restore">Restaura</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Obre el menú d\'acció de l\'element</string>
   <string name="action_upgrade_now">Millora ara</string>
@@ -169,7 +173,7 @@
   <string name="item_details_shared_section_item_history_modified_times_title">Modificat (%d)</string>
   <string name="item_details_shared_section_item_history_button_view">Mostra l\'historial de l\'element</string>
   <string name="item_details_shared_section_more_info_header_title">Més informació</string>
-  <string name="item_details_shared_section_more_info_header_icon_content_description">More item information icon</string>
+  <string name="item_details_shared_section_more_info_header_icon_content_description">Icona Més informació sobre l\'element</string>
   <string name="item_details_shared_section_more_info_item_id">ID de l\'element</string>
   <string name="item_details_shared_section_more_info_share_id">ID de la caixa forta</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">La versió de l\'aplicació ja no és compatible. Actualitzeu la vostra aplicació.</string>
@@ -202,4 +206,21 @@
     <item quantity="one">%d segon</item>
     <item quantity="other">%d segons</item>
   </plurals>
+  <!-- Snack bars -->
+  <string name="snack_bar_message_item_note_copied">S\'ha copiat la nota</string>
+  <string name="snack_bar_message_item_migration_error">S\'ha produït un error en migrar aquest element</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">S\'ha exclòs l\'element de la supervisió.</string>
+  <string name="snack_bar_message_item_monitor_excluded_error">S\'ha produït un error en excloure l\'element de la supervisió.</string>
+  <string name="snack_bar_message_item_monitor_included_success">Element inclòs correctament al seguiment</string>
+  <string name="snack_bar_message_item_monitor_included_error">S\'ha produït un error en incloure l\'element al seguiment.</string>
+  <string name="snack_bar_message_item_pinned_success">S\'ha ancorat l\'element.</string>
+  <string name="snack_bar_message_item_pinned_error">S\'ha produït un error en ancorar aquest element.</string>
+  <string name="snack_bar_message_item_unpinned_success">S\'ha fixat l\'element.</string>
+  <string name="snack_bar_message_item_unpinned_error">S\'ha produït un error en desancorar aquest element.</string>
+  <string name="snack_bar_message_item_trashed_success">L\'element s\'ha enviat correctament</string>
+  <string name="snack_bar_message_item_trashed_error">S\'ha produït un error en enviar a la paperera aquest element</string>
+  <string name="snack_bar_message_item_restore_success">L\'element s\'ha restaurat correctament.</string>
+  <string name="snack_bar_message_item_restore_error">S\'ha produït un error en restaurar a la paperera aquest element.</string>
+  <string name="snack_bar_message_item_delete_success">L\'element s\'ha eliminat correctament.</string>
+  <string name="snack_bar_message_item_delete_error">S\'ha produït un error en eliminar a la paperera aquest element.</string>
 </resources>

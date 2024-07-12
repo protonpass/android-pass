@@ -26,6 +26,8 @@
   <string name="auth_unlock_app_title">Ontgrendel Proton Pass</string>
   <string name="auth_unlock_app_subtitle">Voer het hoofdwachtwoord in voor %s</string>
   <string name="auth_unlock_app_extra_password_subtitle">Enter the extra password for %s</string>
+  <string name="auth_unlock_app_subtitle_account_switch">Voer het hoofdwachtwoord in voor:</string>
+  <string name="auth_unlock_app_extra_password_subtitle_account_switch">Enter the extra password for:</string>
   <string name="auth_master_password_label">Hoofdwachtwoord</string>
   <string name="auth_action_reveal_password">Hoofdwachtwoord weergeven</string>
   <string name="auth_action_conceal_password">Hoofdwachtwoord verbergen</string>

@@ -25,6 +25,8 @@
   <string name="auth_unlock_app_title">Buka kunci Proton Pass</string>
   <string name="auth_unlock_app_subtitle">Masukkan kata sandi induk untuk %s</string>
   <string name="auth_unlock_app_extra_password_subtitle">Masukkan kata sandi tambahan untuk %s</string>
+  <string name="auth_unlock_app_subtitle_account_switch">Masukkan kata sandi induk untuk:</string>
+  <string name="auth_unlock_app_extra_password_subtitle_account_switch">Masukkan kata sandi tambahan untuk:</string>
   <string name="auth_master_password_label">Kata sandi induk</string>
   <string name="auth_action_reveal_password">Tampilkan kata sandi induk</string>
   <string name="auth_action_conceal_password">Samarkan kata sandi induk</string>

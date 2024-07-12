@@ -26,6 +26,8 @@
   <string name="auth_unlock_app_title">Desbloquear Proton Pass</string>
   <string name="auth_unlock_app_subtitle">Insira a senha mestra para %s</string>
   <string name="auth_unlock_app_extra_password_subtitle">Insira a senha adicional para %s</string>
+  <string name="auth_unlock_app_subtitle_account_switch">Insira a senha mestra para:</string>
+  <string name="auth_unlock_app_extra_password_subtitle_account_switch">Insira a senha adicional para:</string>
   <string name="auth_master_password_label">Senha mestra</string>
   <string name="auth_action_reveal_password">Exibir senha mestra</string>
   <string name="auth_action_conceal_password">Ocultar senha mestra</string>

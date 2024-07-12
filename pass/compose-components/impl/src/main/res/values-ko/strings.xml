@@ -26,6 +26,10 @@
   <string name="bottomsheet_view_item_history">기록 보기</string>
   <string name="bottomsheet_monitor_exclude">감시에서 제외하기</string>
   <string name="bottomsheet_monitor_include">모니터링에 포함</string>
+  <string name="bottomsheet_migrate_item">다른 금고로 이동</string>
+  <string name="bottomsheet_copy_item_note">메모 복사</string>
+  <string name="bottomsheet_delete_permanently">영구적으로 삭제</string>
+  <string name="bottomsheet_restore">복원</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">항목을 액션 매뉴서 열기</string>
   <string name="action_upgrade_now">지금 업그레이드</string>
@@ -162,14 +166,14 @@
   <string name="item_details_identity_section_work_phone_number_title">업무용 휴대폰 번호</string>
   <string name="item_details_identity_section_work_personal_website_title">개인 웹사이트</string>
   <string name="item_details_shared_section_note_title">메모</string>
-  <string name="item_details_shared_section_item_history_last_autofill_title">Last autofill</string>
+  <string name="item_details_shared_section_item_history_last_autofill_title">마지막 자동 완성</string>
   <string name="item_details_shared_section_item_history_created_title">생성됨</string>
-  <string name="item_details_shared_section_item_history_modified_times_title">Modified (%d)</string>
+  <string name="item_details_shared_section_item_history_modified_times_title">수정됨 (%d)</string>
   <string name="item_details_shared_section_item_history_button_view">항목 기록 보기</string>
-  <string name="item_details_shared_section_more_info_header_title">More info</string>
-  <string name="item_details_shared_section_more_info_header_icon_content_description">More item information icon</string>
-  <string name="item_details_shared_section_more_info_item_id">Item ID</string>
-  <string name="item_details_shared_section_more_info_share_id">Vault ID</string>
+  <string name="item_details_shared_section_more_info_header_title">상세 정보</string>
+  <string name="item_details_shared_section_more_info_header_icon_content_description">더 많은 항목 정보 아이콘</string>
+  <string name="item_details_shared_section_more_info_item_id">항목 ID</string>
+  <string name="item_details_shared_section_more_info_share_id">금고 ID</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">더 이상 지원하지 않는 앱 버전입니다. 앱을 업데이트하십시오.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">패스키</string>
@@ -196,4 +200,21 @@
   <plurals name="time_unit_seconds">
     <item quantity="other">%d초</item>
   </plurals>
+  <!-- Snack bars -->
+  <string name="snack_bar_message_item_note_copied">메모 복사됨</string>
+  <string name="snack_bar_message_item_migration_error">이 항목을 이동하는데 오류가 발생했습니다.</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">항목이 모니터링에서 제외되었습니다</string>
+  <string name="snack_bar_message_item_monitor_excluded_error">항목을 모니터링에서 제외하는 중 오류 발생</string>
+  <string name="snack_bar_message_item_monitor_included_success">항목이 모니터링에 포함되었습니다</string>
+  <string name="snack_bar_message_item_monitor_included_error">항목을 모니터링에서 포함하는 중 오류 발생</string>
+  <string name="snack_bar_message_item_pinned_success">항목을 성공적으로 고정했습니다.</string>
+  <string name="snack_bar_message_item_pinned_error">이 항목을 고정하는데 오류가 발생했습니다.</string>
+  <string name="snack_bar_message_item_unpinned_success">항목을 성공적으로 고정 해제했습니다.</string>
+  <string name="snack_bar_message_item_unpinned_error">이 항목을 고정 해제하는데 오류가 발생했습니다.</string>
+  <string name="snack_bar_message_item_trashed_success">항목을 성공적으로 휴지통에 이동했습니다.</string>
+  <string name="snack_bar_message_item_trashed_error">이 항목을 휴지통 이동하는데 오류가 발생했습니다.</string>
+  <string name="snack_bar_message_item_restore_success">항목이 성공적으로 복원되었습니다.</string>
+  <string name="snack_bar_message_item_restore_error">There was an error restoring this item</string>
+  <string name="snack_bar_message_item_delete_success">Item successfully deleted</string>
+  <string name="snack_bar_message_item_delete_error">There was an error deleting this item</string>
 </resources>

@@ -126,10 +126,6 @@
   <string name="recent_search_clear">Εκκαθάριση</string>
   <string name="recent_search_remove_item">Κατάργηση από πρόσφατες αναζητήσεις</string>
   <!-- Pinning -->
-  <string name="home_snackbar_item_pinned_success">Το στοιχείο καρφιτσώθηκε επιτυχώς</string>
-  <string name="home_snackbar_item_pinned_error">Παρουσιάστηκε σφάλμα κατά το καρφίτσωμα αυτού του στοιχείου</string>
-  <string name="home_snackbar_item_unpinned_success">Το στοιχείο ξεκαρφιτσώθηκε επιτυχώς</string>
-  <string name="home_snackbar_item_unpinned_error">Παρουσιάστηκε σφάλμα κατά το ξεκαρφίτσωμα αυτού του στοιχείου</string>
   <string name="home_snackbar_items_pinned_success">Τα στοιχεία καρφιτσώθηκαν με επιτυχία</string>
   <string name="home_snackbar_items_pinned_partial_success">Σφάλμα κατά το καρφίτσωμα ορισμένων στοιχείων</string>
   <string name="home_snackbar_items_pinned_error">Σφάλμα κατά το καρφίτσωμα στοιχείων</string>

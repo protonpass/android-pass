@@ -28,6 +28,8 @@
   <string name="auth_unlock_app_title">Разблакіраваць Proton Pass</string>
   <string name="auth_unlock_app_subtitle">Увядзіце асноўны пароль для %s</string>
   <string name="auth_unlock_app_extra_password_subtitle">Увядзіце дадатковы пароль для %s</string>
+  <string name="auth_unlock_app_subtitle_account_switch">Увядзіце асноўны пароль для:</string>
+  <string name="auth_unlock_app_extra_password_subtitle_account_switch">Увядзіце дадатковы пароль для:</string>
   <string name="auth_master_password_label">Асноўны пароль</string>
   <string name="auth_action_reveal_password">Паказаць асноўны пароль</string>
   <string name="auth_action_conceal_password">Схаваць асноўны пароль</string>

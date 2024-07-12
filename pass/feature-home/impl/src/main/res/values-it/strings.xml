@@ -126,10 +126,6 @@
   <string name="recent_search_clear">Cancella</string>
   <string name="recent_search_remove_item">Rimuovi dalle ricerche recenti</string>
   <!-- Pinning -->
-  <string name="home_snackbar_item_pinned_success">Elemento fissato</string>
-  <string name="home_snackbar_item_pinned_error">Fissaggio dell\'elemento non riuscito</string>
-  <string name="home_snackbar_item_unpinned_success">Elemento non più fissato</string>
-  <string name="home_snackbar_item_unpinned_error">Annullamento del fissaggio dell\'elemento non riuscito</string>
   <string name="home_snackbar_items_pinned_success">Elementi fissati</string>
   <string name="home_snackbar_items_pinned_partial_success">Fissaggio di alcuni elementi non riuscito</string>
   <string name="home_snackbar_items_pinned_error">Fissaggio degli elementi non riuscito</string>

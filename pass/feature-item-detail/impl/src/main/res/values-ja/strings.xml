@@ -27,10 +27,6 @@
   <string name="item_permanently_deleted_message_error">項目の削除エラー</string>
   <string name="item_restored_message">項目を復旧</string>
   <string name="item_restored_message_error">項目の復元中エラー</string>
-  <string name="item_pinned_message">アイテムが正常にピン留めされました</string>
-  <string name="item_pinned_message_error">このアイテムをピン留めする際にエラーが発生しました</string>
-  <string name="item_unpinned_message">アイテムのピン留めが解除されました</string>
-  <string name="item_unpinned_message_error">このアイテムのピン留めを解除する際にエラーが発生しました</string>
   <string name="item_monitor_exclude_message">アイテムは監視から正常に除外されました</string>
   <string name="item_monitor_exclude_message_error">監視からアイテムを除外する際にエラーが発生しました</string>
   <string name="item_monitor_include_message">アイテムが監視対象に正常に追加されました</string>

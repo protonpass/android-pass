@@ -27,6 +27,10 @@
   <string name="bottomsheet_view_item_history">Προβολή ιστορικού</string>
   <string name="bottomsheet_monitor_exclude">Εξαίρεση από την παρακολούθηση</string>
   <string name="bottomsheet_monitor_include">Συμπερίληψη στην παρακολούθηση</string>
+  <string name="bottomsheet_migrate_item">Μετακίνηση σε άλλη κρύπτη</string>
+  <string name="bottomsheet_copy_item_note">Αντιγραφή σημείωσης</string>
+  <string name="bottomsheet_delete_permanently">Οριστική διαγραφή</string>
+  <string name="bottomsheet_restore">Επαναφορά</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Άνοιγμα μενού ενεργειών στοιχείου</string>
   <string name="action_upgrade_now">Αναβάθμιση τώρα</string>
@@ -164,14 +168,14 @@
   <string name="item_details_identity_section_work_phone_number_title">Αριθμός τηλεφώνου εργασίας</string>
   <string name="item_details_identity_section_work_personal_website_title">Προσωπικός ιστότοπος</string>
   <string name="item_details_shared_section_note_title">Σημείωση</string>
-  <string name="item_details_shared_section_item_history_last_autofill_title">Last autofill</string>
+  <string name="item_details_shared_section_item_history_last_autofill_title">Τελευταία αυτόματη συμπλήρωση</string>
   <string name="item_details_shared_section_item_history_created_title">Δημιουργήθηκε</string>
-  <string name="item_details_shared_section_item_history_modified_times_title">Modified (%d)</string>
+  <string name="item_details_shared_section_item_history_modified_times_title">Τροποποιημένα (%d)</string>
   <string name="item_details_shared_section_item_history_button_view">Προβολή ιστορικού στοιχείου</string>
-  <string name="item_details_shared_section_more_info_header_title">More info</string>
-  <string name="item_details_shared_section_more_info_header_icon_content_description">More item information icon</string>
-  <string name="item_details_shared_section_more_info_item_id">Item ID</string>
-  <string name="item_details_shared_section_more_info_share_id">Vault ID</string>
+  <string name="item_details_shared_section_more_info_header_title">Περισσότερες πληροφορίες</string>
+  <string name="item_details_shared_section_more_info_header_icon_content_description">Εικονίδιο \"Περισσότερες πληροφορίες στοιχείων\"</string>
+  <string name="item_details_shared_section_more_info_item_id">Αναγνωριστικό Στοιχείου</string>
+  <string name="item_details_shared_section_more_info_share_id">Αναγνωριστικό Κρύπτης</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Αυτή η έκδοση της εφαρμογής δεν υποστηρίζεται πλέον, παρακαλούμε ενημερώστε την εφαρμογή σας.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Κλειδί πρόσβασης</string>
@@ -202,4 +206,21 @@
     <item quantity="one">%d δευτερόλεπτο</item>
     <item quantity="other">%d δευτερόλεπτα</item>
   </plurals>
+  <!-- Snack bars -->
+  <string name="snack_bar_message_item_note_copied">Η σημείωση αντιγράφηκε</string>
+  <string name="snack_bar_message_item_migration_error">Παρουσιάστηκε σφάλμα κατά τη μετεγκατάσταση αυτού του στοιχείου</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">Το στοιχείο εξαιρέθηκε επιτυχώς από την παρακολούθηση</string>
+  <string name="snack_bar_message_item_monitor_excluded_error">Παρουσιάστηκε σφάλμα κατά την εξαίρεση στοιχείου από την παρακολούθηση</string>
+  <string name="snack_bar_message_item_monitor_included_success">Το στοιχείο συμπεριλήφθηκε επιτυχώς στην παρακολούθηση</string>
+  <string name="snack_bar_message_item_monitor_included_error">Παρουσιάστηκε σφάλμα κατά τη συμπερίληψη στοιχείου στην παρακολούθηση</string>
+  <string name="snack_bar_message_item_pinned_success">Το στοιχείο καρφιτσώθηκε επιτυχώς</string>
+  <string name="snack_bar_message_item_pinned_error">Παρουσιάστηκε σφάλμα κατά το καρφίτσωμα αυτού του στοιχείου</string>
+  <string name="snack_bar_message_item_unpinned_success">Το στοιχείο ξεκαρφιτσώθηκε επιτυχώς</string>
+  <string name="snack_bar_message_item_unpinned_error">Παρουσιάστηκε σφάλμα κατά το ξεκαρφίτσωμα αυτού του στοιχείου</string>
+  <string name="snack_bar_message_item_trashed_success">Το στοιχείο απορρίφθηκε με επιτυχία</string>
+  <string name="snack_bar_message_item_trashed_error">Παρουσιάστηκε σφάλμα κατά το απόρριψη αυτού του στοιχείου</string>
+  <string name="snack_bar_message_item_restore_success">Το στοιχείο αποκαταστάθηκε με επιτυχία</string>
+  <string name="snack_bar_message_item_restore_error">Παρουσιάστηκε σφάλμα κατά το επαναφορά αυτού του στοιχείου</string>
+  <string name="snack_bar_message_item_delete_success">Το στοιχείο διαγράφηκε με επιτυχία</string>
+  <string name="snack_bar_message_item_delete_error">Παρουσιάστηκε σφάλμα κατά το διαγραφή αυτού του στοιχείου</string>
 </resources>

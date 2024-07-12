@@ -27,6 +27,10 @@
   <string name="bottomsheet_view_item_history">Visualizar histórico</string>
   <string name="bottomsheet_monitor_exclude">Excluir do monitoramento</string>
   <string name="bottomsheet_monitor_include">Incluir no monitoramento</string>
+  <string name="bottomsheet_migrate_item">Mover para outro cofre</string>
+  <string name="bottomsheet_copy_item_note">Copiar nota</string>
+  <string name="bottomsheet_delete_permanently">Excluir permanentemente</string>
+  <string name="bottomsheet_restore">Restaurar</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Abrir menu de ação do item</string>
   <string name="action_upgrade_now">Fazer upgrade agora</string>
@@ -202,4 +206,21 @@
     <item quantity="one">%d segundo</item>
     <item quantity="other">%d segundos</item>
   </plurals>
+  <!-- Snack bars -->
+  <string name="snack_bar_message_item_note_copied">Nota copiada</string>
+  <string name="snack_bar_message_item_migration_error">There was an error migrating this item</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">Item excluído com sucesso do monitoramento.</string>
+  <string name="snack_bar_message_item_monitor_excluded_error">Ocorreu um erro ao excluir o item do monitoramento</string>
+  <string name="snack_bar_message_item_monitor_included_success">Elemento incluído com sucesso no monitoramento</string>
+  <string name="snack_bar_message_item_monitor_included_error">Ocorreu um erro ao incluir o item no monitoramento</string>
+  <string name="snack_bar_message_item_pinned_success">Item fixado com sucesso</string>
+  <string name="snack_bar_message_item_pinned_error">Houve um erro ao fixar este item</string>
+  <string name="snack_bar_message_item_unpinned_success">Item desafixado com sucesso</string>
+  <string name="snack_bar_message_item_unpinned_error">Houve um erro ao desafixar este item</string>
+  <string name="snack_bar_message_item_trashed_success">Item successfully trashed</string>
+  <string name="snack_bar_message_item_trashed_error">There was an error trashing this item</string>
+  <string name="snack_bar_message_item_restore_success">Item restaurado com sucesso</string>
+  <string name="snack_bar_message_item_restore_error">Houve um erro ao restaurar este item</string>
+  <string name="snack_bar_message_item_delete_success">Item apagado com sucesso</string>
+  <string name="snack_bar_message_item_delete_error">Houve um erro ao excluir este item</string>
 </resources>

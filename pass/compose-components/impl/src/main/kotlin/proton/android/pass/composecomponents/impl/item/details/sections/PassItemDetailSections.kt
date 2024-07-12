@@ -21,6 +21,7 @@ package proton.android.pass.composecomponents.impl.item.details.sections
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toImmutableMap
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.sections.alias.PassAliasItemDetailSections
@@ -94,7 +95,7 @@ internal fun PassItemDetailSections(
             contents = itemContents,
             passwordStrength = passwordStrength,
             primaryTotp = primaryTotp,
-            customFields = customFields.toImmutableList(),
+            secondaryTotps = secondaryTotps.toImmutableMap(),
             passkeys = passkeys.toImmutableList(),
             itemColors = itemColors,
             onEvent = onEvent,

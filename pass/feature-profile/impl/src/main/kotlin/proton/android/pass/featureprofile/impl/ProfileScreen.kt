@@ -43,11 +43,14 @@ fun ProfileScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
     val newAccountReady by viewModel.onAccountReadyFlow.collectAsStateWithLifecycle(
         minActiveState = Lifecycle.State.CREATED,
-        initialValue = null
+        initialValue = null to false
     )
-    LaunchedEffect(newAccountReady?.userId) {
-        newAccountReady ?: return@LaunchedEffect
-        onNavigateEvent(ProfileNavigation.SyncDialog)
+    LaunchedEffect(newAccountReady.second) {
+        newAccountReady.first ?: return@LaunchedEffect
+        if (newAccountReady.second) {
+            onNavigateEvent(ProfileNavigation.SyncDialog)
+            viewModel.resetSyncDisplayed()
+        }
     }
     val context = LocalContext.current
 

@@ -218,7 +218,7 @@ class SecureLinkRepositoryImpl @Inject constructor(
                 secureLinksLocalDataSource.update(userId, remoteSecureLinks)
             } catch (exception: SQLiteConstraintException) {
                 // this is to avoid raising an error to a user due to a race condition
-                // while secure link removal is propagated to BE BD replicas
+                // while secure link removal is propagated to backend database replicas
                 PassLogger.w(TAG, "Error syncing remote secure links")
                 PassLogger.w(TAG, exception)
             }

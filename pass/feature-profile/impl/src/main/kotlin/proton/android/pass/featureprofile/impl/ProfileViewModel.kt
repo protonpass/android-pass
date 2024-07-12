@@ -235,20 +235,19 @@ class ProfileViewModel @Inject constructor(
                 }.toPersistentList()
             }
 
-    internal val onAccountReadyFlow =
-        accountManager.onAccountState(AccountState.Ready, initialState = false)
-            .onEach { account ->
-                viewModelScope.launch {
-                    runCatching { refreshContent(account.userId) }
-                        .onSuccess {
-                            PassLogger.i(TAG, "Sync completed")
-                        }
-                        .onFailure { error ->
-                            PassLogger.w(TAG, "Error performing sync")
-                            PassLogger.w(TAG, error)
-                        }
-                }
+    private val needsToDisplaySync = MutableStateFlow(false)
+    internal val onAccountReadyFlow = accountManager.onAccountState(
+        AccountState.Ready,
+        initialState = false
+    )
+        .onEach { account ->
+            viewModelScope.launch {
+                needsToDisplaySync.update { true }
+                refreshAccount(account)
             }
+        }
+        .combine(needsToDisplaySync, ::Pair)
+        .distinctUntilChanged()
 
     internal val state: StateFlow<ProfileUiState> = combineN(
         appLockSectionStateFlow,
@@ -355,6 +354,19 @@ class ProfileViewModel @Inject constructor(
         planInfo = planInfo,
         state = state
     )
+
+    private suspend fun ProfileViewModel.refreshAccount(account: Account) {
+        runCatching { refreshContent(account.userId) }
+            .onSuccess {
+                PassLogger.i(TAG, "Sync completed")
+            }
+            .onFailure { error ->
+                PassLogger.w(TAG, "Error performing sync")
+                PassLogger.w(TAG, error)
+            }
+    }
+
+    fun resetSyncDisplayed() = needsToDisplaySync.update { false }
 
     private companion object {
 

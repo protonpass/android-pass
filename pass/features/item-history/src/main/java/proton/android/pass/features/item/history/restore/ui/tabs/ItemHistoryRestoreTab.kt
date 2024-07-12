@@ -67,7 +67,8 @@ internal fun ItemHistoryRestoreTab(
                     selection = selection,
                     isVisible = uiEvent.isVisible,
                     hiddenState = uiEvent.hiddenState,
-                    fieldType = uiEvent.fieldType
+                    fieldType = uiEvent.fieldType,
+                    fieldSection = uiEvent.fieldSection
                 ).also(onEvent)
 
                 is PassItemDetailsUiEvent.OnLinkClick -> ItemHistoryRestoreUiEvent.OnLinkClick(

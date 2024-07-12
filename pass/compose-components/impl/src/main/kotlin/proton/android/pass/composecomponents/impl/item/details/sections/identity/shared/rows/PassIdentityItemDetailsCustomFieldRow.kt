@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
+import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailFieldRow
@@ -37,6 +38,7 @@ internal fun PassIdentityItemDetailsCustomFieldRow(
     modifier: Modifier = Modifier,
     customFieldIndex: Int,
     customFieldContent: CustomFieldContent,
+    customFieldSection: ItemDetailsFieldSection,
     itemColors: PassItemColors,
     onEvent: (PassItemDetailsUiEvent) -> Unit,
     @DrawableRes iconResId: Int? = null
@@ -61,7 +63,8 @@ internal fun PassIdentityItemDetailsCustomFieldRow(
                 PassItemDetailsUiEvent.OnHiddenSectionToggle(
                     isVisible = isVisible,
                     hiddenState = customFieldContent.value,
-                    fieldType = ItemDetailsFieldType.Hidden.CustomField(customFieldIndex)
+                    fieldType = ItemDetailsFieldType.Hidden.CustomField(customFieldIndex),
+                    fieldSection = customFieldSection
                 )
             )
         }
@@ -90,6 +93,7 @@ internal fun PassIdentityItemDetailsCustomFieldRow(
 
 internal fun MutableList<@Composable () -> Unit>.addCustomFieldRows(
     customFields: List<CustomFieldContent>,
+    customFieldSection: ItemDetailsFieldSection,
     itemColors: PassItemColors,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
@@ -98,6 +102,7 @@ internal fun MutableList<@Composable () -> Unit>.addCustomFieldRows(
             PassIdentityItemDetailsCustomFieldRow(
                 customFieldIndex = index,
                 customFieldContent = customFieldContent,
+                customFieldSection = customFieldSection,
                 itemColors = itemColors,
                 onEvent = onEvent
             )

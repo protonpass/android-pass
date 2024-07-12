@@ -129,10 +129,10 @@
   <string name="share_with_secure_link_description">Utwórz link do elementu.</string>
   <string name="share_with_manage_shared_vault_title">Zarządzaj dostępem do sejfu</string>
   <plurals name="share_with_manage_shared_vault_description">
-    <item quantity="one">The item\'s vault is currently shared with %d user.</item>
-    <item quantity="few">The item\'s vault is currently shared with %d users.</item>
-    <item quantity="many">The item\'s vault is currently shared with %d users.</item>
-    <item quantity="other">The item\'s vault is currently shared with %d users.</item>
+    <item quantity="one">Sejf z tym elementem jest udostępniony %d użytkownikowi.</item>
+    <item quantity="few">Sejf z tym elementem jest udostępniony %d użytkownikom.</item>
+    <item quantity="many">Sejf z tym elementem jest udostępniony %d użytkownikom.</item>
+    <item quantity="other">Sejf z tym elementem jest udostępniony %d użytkownikom.</item>
   </plurals>
   <string name="share_with_view_shared_vault_members_title">Zobacz użytkowników sejfu</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Ustaw uprawnienia dla wszystkich użytkowników</string>

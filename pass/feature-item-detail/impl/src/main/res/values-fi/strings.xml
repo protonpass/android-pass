@@ -27,10 +27,6 @@
   <string name="item_permanently_deleted_message_error">Virhe poistettaessa kohdetta</string>
   <string name="item_restored_message">Kohde palautettiin</string>
   <string name="item_restored_message_error">Virhe palautettaessa kohdetta</string>
-  <string name="item_pinned_message">Kohde kiinnitettiin</string>
-  <string name="item_pinned_message_error">Virhe kiinnitettäessä kohdetta</string>
-  <string name="item_unpinned_message">Kohde irrotettiin</string>
-  <string name="item_unpinned_message_error">Virhe irrotettaessa kohdetta</string>
   <string name="item_monitor_exclude_message">Kohde poissuljettiin valvonnasta</string>
   <string name="item_monitor_exclude_message_error">Virhe poissuljettaessa kohdetta valvonnasta</string>
   <string name="item_monitor_include_message">Kohde sisällytettiin valvontaan</string>

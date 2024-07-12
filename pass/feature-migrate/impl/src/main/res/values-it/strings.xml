@@ -10,6 +10,7 @@
   <string name="migrate_item_error_snackbar">Spostamento degli elementi non riuscito</string>
   <string name="migrate_item_some_not_migrated_error_snackbar">Spostamento di alcuni elementi non riuscito</string>
   <string name="migrate_item_warning_history">Spostando gli elementi tra le casseforti, verranno salvate fino alle ultime 50 modifiche apportate a ciascun elemento.</string>
+  <string name="migrate_item_warning_secure_link">I link sicuri vengono rimossi quando l\'elemento viene spostato in un\'altra cassaforte</string>
   <string name="migrate_all_items_success_snackbar">Elementi spostati</string>
   <string name="migrate_all_items_error_snackbar">Spostamento degli elementi non riuscito</string>
   <string name="migrate_init_error_snackbar">Caricamento della schermata di spostamento non riuscito</string>

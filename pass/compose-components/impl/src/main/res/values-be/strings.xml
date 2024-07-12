@@ -29,6 +29,10 @@
   <string name="bottomsheet_view_item_history">Паглядзець гісторыю</string>
   <string name="bottomsheet_monitor_exclude">Выключыць з назірання</string>
   <string name="bottomsheet_monitor_include">Уключыць у назіранне</string>
+  <string name="bottomsheet_migrate_item">Перамясціць у іншае сховішча</string>
+  <string name="bottomsheet_copy_item_note">Скапіяваць нататку</string>
+  <string name="bottomsheet_delete_permanently">Выдаліць незваротна</string>
+  <string name="bottomsheet_restore">Аднавіць</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Адкрыць меню дзеянняў элемента</string>
   <string name="action_upgrade_now">Палепшыць</string>
@@ -214,4 +218,21 @@
     <item quantity="many">%d секунд</item>
     <item quantity="other">%d секунд</item>
   </plurals>
+  <!-- Snack bars -->
+  <string name="snack_bar_message_item_note_copied">Нататка скапіявана</string>
+  <string name="snack_bar_message_item_migration_error">Адбылася памылка падчас міграцыі гэтага элемента</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">Элемент паспяхова выключаны з назірання</string>
+  <string name="snack_bar_message_item_monitor_excluded_error">Адбылася памылка падчас выключэння элемента з назірання</string>
+  <string name="snack_bar_message_item_monitor_included_success">Элемент паспяхова ўключаны ў назіранне</string>
+  <string name="snack_bar_message_item_monitor_included_error">Адбылася памылка падчас уключэння элемента ў назіранне</string>
+  <string name="snack_bar_message_item_pinned_success">Элемент паспяхова замацаваны</string>
+  <string name="snack_bar_message_item_pinned_error">Адбылася памылка падчас замацавання гэтага элемента</string>
+  <string name="snack_bar_message_item_unpinned_success">Элемент паспяхова адмацаваны</string>
+  <string name="snack_bar_message_item_unpinned_error">Адбылася памылка падчас адмацавання гэтага элемента</string>
+  <string name="snack_bar_message_item_trashed_success">Элемент паспяхова перамешчаны ў сметніцу</string>
+  <string name="snack_bar_message_item_trashed_error">Адбылася памылка падчас перамяшчэння ў сметніцу гэтага элемента</string>
+  <string name="snack_bar_message_item_restore_success">Элемент паспяхова адноўлены</string>
+  <string name="snack_bar_message_item_restore_error">Адбылася памылка падчас аднаўлення гэтага элемента</string>
+  <string name="snack_bar_message_item_delete_success">Элемент паспяхова выдалены</string>
+  <string name="snack_bar_message_item_delete_error">Адбылася памылка падчас выдалення гэтага элемента</string>
 </resources>

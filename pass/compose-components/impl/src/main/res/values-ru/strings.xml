@@ -29,6 +29,10 @@
   <string name="bottomsheet_view_item_history">Посмотреть историю</string>
   <string name="bottomsheet_monitor_exclude">Исключить из мониторинга</string>
   <string name="bottomsheet_monitor_include">Включить в мониторинг</string>
+  <string name="bottomsheet_migrate_item">Переместить в другое хранилище</string>
+  <string name="bottomsheet_copy_item_note">Скопировать заметку</string>
+  <string name="bottomsheet_delete_permanently">Удалить безвозвратно</string>
+  <string name="bottomsheet_restore">Восстановить</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Открыть меню действий с элементом</string>
   <string name="action_upgrade_now">Улучшить сейчас</string>
@@ -168,14 +172,14 @@
   <string name="item_details_identity_section_work_phone_number_title">Рабочий номер телефона</string>
   <string name="item_details_identity_section_work_personal_website_title">Личный сайт</string>
   <string name="item_details_shared_section_note_title">Примечания</string>
-  <string name="item_details_shared_section_item_history_last_autofill_title">Last autofill</string>
+  <string name="item_details_shared_section_item_history_last_autofill_title">Последнее автозаполнение</string>
   <string name="item_details_shared_section_item_history_created_title">Создано</string>
-  <string name="item_details_shared_section_item_history_modified_times_title">Modified (%d)</string>
+  <string name="item_details_shared_section_item_history_modified_times_title">Изменено (%d)</string>
   <string name="item_details_shared_section_item_history_button_view">Просмотр истории элементов</string>
-  <string name="item_details_shared_section_more_info_header_title">More info</string>
-  <string name="item_details_shared_section_more_info_header_icon_content_description">More item information icon</string>
-  <string name="item_details_shared_section_more_info_item_id">Item ID</string>
-  <string name="item_details_shared_section_more_info_share_id">Vault ID</string>
+  <string name="item_details_shared_section_more_info_header_title">Подробнее</string>
+  <string name="item_details_shared_section_more_info_header_icon_content_description">Значок дополнительной информации об элементе</string>
+  <string name="item_details_shared_section_more_info_item_id">ID элемента</string>
+  <string name="item_details_shared_section_more_info_share_id">ID хранилища</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Версия приложения больше не поддерживается, пожалуйста, обновите приложение.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Ключ доступа</string>
@@ -214,4 +218,21 @@
     <item quantity="many">%d секунды</item>
     <item quantity="other">%d секунды</item>
   </plurals>
+  <!-- Snack bars -->
+  <string name="snack_bar_message_item_note_copied">Заметка скопирована</string>
+  <string name="snack_bar_message_item_migration_error">Произошла ошибка при миграции этого элемента</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">Элемент успешно удален из мониторинга</string>
+  <string name="snack_bar_message_item_monitor_excluded_error">Произошла ошибка при исключении элемента из мониторинга</string>
+  <string name="snack_bar_message_item_monitor_included_success">Элемент успешно включен в мониторинг</string>
+  <string name="snack_bar_message_item_monitor_included_error">Произошла ошибка при включении элемента в мониторинг</string>
+  <string name="snack_bar_message_item_pinned_success">Элемент закреплен</string>
+  <string name="snack_bar_message_item_pinned_error">При закреплении элемента произошла ошибка</string>
+  <string name="snack_bar_message_item_unpinned_success">Элемент откреплен</string>
+  <string name="snack_bar_message_item_unpinned_error">При откреплении элемента произошла ошибка</string>
+  <string name="snack_bar_message_item_trashed_success">Элемент успешно помещен в корзину</string>
+  <string name="snack_bar_message_item_trashed_error">Произошла ошибка при удалении этого элемента в корзину</string>
+  <string name="snack_bar_message_item_restore_success">Элемент успешно восстановлен</string>
+  <string name="snack_bar_message_item_restore_error">Произошла ошибка при восстановлении этого элемента</string>
+  <string name="snack_bar_message_item_delete_success">Элемент успешно удален.</string>
+  <string name="snack_bar_message_item_delete_error">Произошла ошибка при удалении этого элемента</string>
 </resources>

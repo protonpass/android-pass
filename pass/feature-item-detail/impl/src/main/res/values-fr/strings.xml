@@ -27,10 +27,6 @@
   <string name="item_permanently_deleted_message_error">Une erreur s\'est produite pendant la suppression de l\'élément.</string>
   <string name="item_restored_message">L\'élément a été restauré.</string>
   <string name="item_restored_message_error">Une erreur s\'est produite pendant la restauration de l\'élément.</string>
-  <string name="item_pinned_message">L\'élément a été épinglé.</string>
-  <string name="item_pinned_message_error">Une erreur s\'est produite lors de l\'épinglage de cet élément.</string>
-  <string name="item_unpinned_message">L\'élément a été désépinglé.</string>
-  <string name="item_unpinned_message_error">Une erreur s\'est produite lors du désépinglage de cet élément.</string>
   <string name="item_monitor_exclude_message">L\'élément a été exclu de la surveillance.</string>
   <string name="item_monitor_exclude_message_error">Une erreur s\'est produite lors du retrait d\'un élément de la surveillance.</string>
   <string name="item_monitor_include_message">L\'élément a été inclus dans la surveillance.</string>

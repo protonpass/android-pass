@@ -119,10 +119,6 @@
   <string name="recent_search_clear">クリア</string>
   <string name="recent_search_remove_item">最近の検索から削除</string>
   <!-- Pinning -->
-  <string name="home_snackbar_item_pinned_success">アイテムが正常にピン留めされました</string>
-  <string name="home_snackbar_item_pinned_error">このアイテムをピン留めする際にエラーが発生しました</string>
-  <string name="home_snackbar_item_unpinned_success">アイテムのピン留めが解除されました</string>
-  <string name="home_snackbar_item_unpinned_error">このアイテムのピン留めを解除する際にエラーが発生しました</string>
   <string name="home_snackbar_items_pinned_success">アイテムをピン留めしました</string>
   <string name="home_snackbar_items_pinned_partial_success">一部のアイテムをピン留めする際にエラーが発生しました</string>
   <string name="home_snackbar_items_pinned_error">アイテムのピン留め中にエラーが発生しました</string>

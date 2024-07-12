@@ -27,6 +27,10 @@
   <string name="bottomsheet_view_item_history">Verlauf anzeigen</string>
   <string name="bottomsheet_monitor_exclude">Von der Überwachung ausschließen</string>
   <string name="bottomsheet_monitor_include">In die Überwachung einbeziehen</string>
+  <string name="bottomsheet_migrate_item">In einen anderen Tresor verschieben</string>
+  <string name="bottomsheet_copy_item_note">Notiz kopieren</string>
+  <string name="bottomsheet_delete_permanently">Dauerhaft löschen</string>
+  <string name="bottomsheet_restore">Wiederherstellen</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Aktionsmenü für Eintrag öffnen.</string>
   <string name="action_upgrade_now">Jetzt upgraden</string>
@@ -143,14 +147,14 @@
   <string name="item_details_identity_section_address_city_title">Ort</string>
   <string name="item_details_identity_section_address_zip_or_postal_code_title">Postleitzahl</string>
   <string name="item_details_identity_section_address_state_or_province_title">Bundesland</string>
-  <string name="item_details_identity_section_address_county_title">County</string>
+  <string name="item_details_identity_section_address_county_title">Landkreis</string>
   <string name="item_details_identity_section_address_country_or_region_title">Land oder Region</string>
   <string name="item_details_identity_section_contact_title">Kontaktdetails</string>
   <string name="item_details_identity_section_contact_social_security_number_title">Sozialversicherungsnummer</string>
   <string name="item_details_identity_section_contact_passport_number_title">Passnummer</string>
   <string name="item_details_identity_section_contact_license_number_title">Autokennzeichen</string>
   <string name="item_details_identity_section_contact_website_title">Webseite</string>
-  <string name="item_details_identity_section_contact_x_handle_title">X-Handle</string>
+  <string name="item_details_identity_section_contact_x_handle_title">X-Benutzername</string>
   <string name="item_details_identity_section_contact_secondary_phone_number_title">Weitere Telefonnummer</string>
   <string name="item_details_identity_section_contact_linkedin_title">LinkedIn</string>
   <string name="item_details_identity_section_contact_reddit_title">Reddit</string>
@@ -166,12 +170,12 @@
   <string name="item_details_shared_section_note_title">Notiz</string>
   <string name="item_details_shared_section_item_history_last_autofill_title">Last autofill</string>
   <string name="item_details_shared_section_item_history_created_title">Erstellt</string>
-  <string name="item_details_shared_section_item_history_modified_times_title">Modified (%d)</string>
+  <string name="item_details_shared_section_item_history_modified_times_title">Bearbeitet: (%d)</string>
   <string name="item_details_shared_section_item_history_button_view">Eintragsverlauf anzeigen</string>
-  <string name="item_details_shared_section_more_info_header_title">More info</string>
+  <string name="item_details_shared_section_more_info_header_title">Weitere Informationen</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">More item information icon</string>
-  <string name="item_details_shared_section_more_info_item_id">Item ID</string>
-  <string name="item_details_shared_section_more_info_share_id">Vault ID</string>
+  <string name="item_details_shared_section_more_info_item_id">Eintrag-ID</string>
+  <string name="item_details_shared_section_more_info_share_id">Tresor-ID</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Die App-Version wird nicht mehr unterstützt, bitte aktualisiere deine App.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Passkey</string>
@@ -202,4 +206,21 @@
     <item quantity="one">%d Sekunde</item>
     <item quantity="other">%d Sekunden</item>
   </plurals>
+  <!-- Snack bars -->
+  <string name="snack_bar_message_item_note_copied">Notiz kopiert</string>
+  <string name="snack_bar_message_item_migration_error">Fehler beim Migrieren dieses Eintrags.</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">Eintrag erfolgreich von der Überwachung ausgeschlossen.</string>
+  <string name="snack_bar_message_item_monitor_excluded_error">Fehler beim Ausschließen des Eintrags aus der Überwachung.</string>
+  <string name="snack_bar_message_item_monitor_included_success">Eintrag erfolgreich in die Überwachung einbezogen.</string>
+  <string name="snack_bar_message_item_monitor_included_error">Fehler beim Einbeziehen des Eintrags in die Überwachung.</string>
+  <string name="snack_bar_message_item_pinned_success">Eintrag erfolgreich angeheftet.</string>
+  <string name="snack_bar_message_item_pinned_error">Fehler beim Anheften dieses Eintrags.</string>
+  <string name="snack_bar_message_item_unpinned_success">Eintrag erfolgreich losgelöst.</string>
+  <string name="snack_bar_message_item_unpinned_error">Fehler beim Loslösen dieses Eintrags.</string>
+  <string name="snack_bar_message_item_trashed_success">Eintrag erfolgreich in den Papierkorb verschoben.</string>
+  <string name="snack_bar_message_item_trashed_error">Fehler beim Verschieben des Eintrags in den Papierkorb.</string>
+  <string name="snack_bar_message_item_restore_success">Eintrag erfolgreich wiederhergestellt.</string>
+  <string name="snack_bar_message_item_restore_error">Fehler beim Wiederherstellen des Eintrags.</string>
+  <string name="snack_bar_message_item_delete_success">Eintrag erfolgreich gelöscht.</string>
+  <string name="snack_bar_message_item_delete_error">Fehler beim Löschen des Eintrags.</string>
 </resources>

@@ -67,4 +67,10 @@
     <item quantity="other">%d tunnin kuluttua</item>
   </plurals>
   <string name="profile_less_than_a_minute">Alle minuutti</string>
+  <string name="account_switcher_manage_account">Hallitse tiliä</string>
+  <string name="account_switcher_sign_in">Kirjaudu sisään</string>
+  <string name="account_switcher_sign_out">Kirjaudu ulos</string>
+  <string name="account_switcher_switch_to">Vaihda tiliin</string>
+  <string name="account_switcher_add_account">Lisää tili</string>
+  <string name="account_switcher_remove">Poista</string>
 </resources>

@@ -67,4 +67,10 @@
     <item quantity="other">Μετά από %d ώρες</item>
   </plurals>
   <string name="profile_less_than_a_minute">Λιγότερο από ένα λεπτό</string>
+  <string name="account_switcher_manage_account">Διαχείριση λογαριασμού</string>
+  <string name="account_switcher_sign_in">Σύνδεση</string>
+  <string name="account_switcher_sign_out">Αποσύνδεση</string>
+  <string name="account_switcher_switch_to">Αλλαγή σε</string>
+  <string name="account_switcher_add_account">Προσθήκη λογαριασμού</string>
+  <string name="account_switcher_remove">Αφαίρεση</string>
 </resources>

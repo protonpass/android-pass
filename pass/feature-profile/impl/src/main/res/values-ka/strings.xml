@@ -67,4 +67,10 @@
     <item quantity="other">%d საათის შემდეგ</item>
   </plurals>
   <string name="profile_less_than_a_minute">წუთზე ნაკლები</string>
+  <string name="account_switcher_manage_account">ანგარიშის მართვა</string>
+  <string name="account_switcher_sign_in">შესვლა</string>
+  <string name="account_switcher_sign_out">გასვლა</string>
+  <string name="account_switcher_switch_to">გადართვა</string>
+  <string name="account_switcher_add_account">ანგარიშის დამატება</string>
+  <string name="account_switcher_remove">წაშლა</string>
 </resources>

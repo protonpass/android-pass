@@ -27,6 +27,10 @@
   <string name="bottomsheet_view_item_history">Se historik</string>
   <string name="bottomsheet_monitor_exclude">Undtag fra monitorering</string>
   <string name="bottomsheet_monitor_include">Inkluder i monitorering</string>
+  <string name="bottomsheet_migrate_item">Flyt til en anden boks</string>
+  <string name="bottomsheet_copy_item_note">Kopiér note</string>
+  <string name="bottomsheet_delete_permanently">Slet permanent</string>
+  <string name="bottomsheet_restore">Gendan</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Åbn handlingsmenu for element</string>
   <string name="action_upgrade_now">Opgradér nu</string>
@@ -202,4 +206,21 @@
     <item quantity="one">%d sekund</item>
     <item quantity="other">%d sekunder</item>
   </plurals>
+  <!-- Snack bars -->
+  <string name="snack_bar_message_item_note_copied">Note kopieret</string>
+  <string name="snack_bar_message_item_migration_error">Der var en fejl i flytningen af dette element</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">Elementet er udelukket fra overvågning</string>
+  <string name="snack_bar_message_item_monitor_excluded_error">Der var en fejl ved udelukkelse af element fra overvågning</string>
+  <string name="snack_bar_message_item_monitor_included_success">Elementet er medtaget i overvågningen</string>
+  <string name="snack_bar_message_item_monitor_included_error">Der var en fejl ved medtagelse af element i overvågning</string>
+  <string name="snack_bar_message_item_pinned_success">Element fastgjort</string>
+  <string name="snack_bar_message_item_pinned_error">Der var en fejl ved fastgørelsen af dette element</string>
+  <string name="snack_bar_message_item_unpinned_success">Elementet er blevet frigjort</string>
+  <string name="snack_bar_message_item_unpinned_error">Der var en fejl ved frigørelsen af dette element</string>
+  <string name="snack_bar_message_item_trashed_success">Elementet blev smidt ud</string>
+  <string name="snack_bar_message_item_trashed_error">Der var en fejl ved udsmidning af dette element</string>
+  <string name="snack_bar_message_item_restore_success">Elementet er gendannet</string>
+  <string name="snack_bar_message_item_restore_error">Der var en fejl ved gendannelse af dette element</string>
+  <string name="snack_bar_message_item_delete_success">Elementet er slettet</string>
+  <string name="snack_bar_message_item_delete_error">Der var en fejl ved sletning af dette element</string>
 </resources>

@@ -58,7 +58,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     private val totpManager: TotpManager,
     private val featureFlagsRepository: FeatureFlagsPreferencesRepository,
     private val emailValidator: EmailValidator
-) : ItemDetailsHandlerObserver<ItemContents.Login> {
+) : ItemDetailsHandlerObserver<ItemContents.Login>() {
 
     override fun observe(item: Item): Flow<ItemDetailState> = combineN(
         observeLoginItemContents(item),
@@ -177,14 +177,11 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
         hiddenState: HiddenState
     ): ItemContents = when (hiddenFieldType) {
         is ItemDetailsFieldType.Hidden.CustomField -> itemContents.copy(
-            customFields = itemContents.customFields
-                .mapIndexed { index, customFieldContent ->
-                    if (index == hiddenFieldType.index && customFieldContent is CustomFieldContent.Hidden) {
-                        customFieldContent.copy(value = hiddenState)
-                    } else {
-                        customFieldContent
-                    }
-                }
+            customFields = toggleHiddenCustomField(
+                customFieldsContent = itemContents.customFields,
+                hiddenFieldType = hiddenFieldType,
+                hiddenState = hiddenState
+            )
         )
 
         ItemDetailsFieldType.Hidden.Password -> itemContents.copy(

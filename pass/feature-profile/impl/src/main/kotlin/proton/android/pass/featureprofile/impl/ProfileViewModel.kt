@@ -46,6 +46,7 @@ import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.extension.getDisplayName
 import me.proton.core.user.domain.extension.getEmail
 import me.proton.core.user.domain.extension.getInitials
+import me.proton.core.util.kotlin.takeIfNotBlank
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor
 import proton.android.pass.autofill.api.AutofillManager
@@ -349,7 +350,7 @@ class ProfileViewModel @Inject constructor(
     private fun Account.getAccountItem(user: User?, planInfo: PlanInfo): AccountItem = AccountItem(
         userId = userId,
         initials = user?.getInitials(count = 1) ?: "?",
-        name = user?.getDisplayName() ?: "unknown",
+        name = user?.getDisplayName() ?: this.username?.takeIfNotBlank() ?: "Unknown",
         email = user?.getEmail(),
         planInfo = planInfo,
         state = state

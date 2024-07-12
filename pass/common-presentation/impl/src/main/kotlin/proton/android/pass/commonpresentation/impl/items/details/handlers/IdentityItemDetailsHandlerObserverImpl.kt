@@ -37,7 +37,7 @@ import javax.inject.Inject
 class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
     private val observeVaultById: GetVaultById,
     private val encryptionContextProvider: EncryptionContextProvider
-) : ItemDetailsHandlerObserver<ItemContents.Identity> {
+) : ItemDetailsHandlerObserver<ItemContents.Identity>() {
 
     override fun observe(item: Item): Flow<ItemDetailState> = combine(
         observeIdentityItemContents(item),
@@ -65,13 +65,89 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
         }
     }
 
+    @Suppress("LongMethod")
     override fun updateItemContents(
         itemContents: ItemContents.Identity,
         hiddenFieldType: ItemDetailsFieldType.Hidden,
         hiddenFieldSection: ItemDetailsFieldSection,
         hiddenState: HiddenState
     ): ItemContents = when (hiddenFieldType) {
-        is ItemDetailsFieldType.Hidden.CustomField,
+        is ItemDetailsFieldType.Hidden.CustomField -> {
+            when (hiddenFieldSection) {
+                ItemDetailsFieldSection.Identity.Address -> {
+                    itemContents.copy(
+                        addressDetailsContent = itemContents.addressDetailsContent.copy(
+                            customFields = toggleHiddenCustomField(
+                                customFieldsContent = itemContents.addressDetailsContent.customFields,
+                                hiddenFieldType = hiddenFieldType,
+                                hiddenState = hiddenState
+                            )
+                        )
+                    )
+                }
+
+                ItemDetailsFieldSection.Identity.Contact -> {
+                    itemContents.copy(
+                        contactDetailsContent = itemContents.contactDetailsContent.copy(
+                            customFields = toggleHiddenCustomField(
+                                customFieldsContent = itemContents.contactDetailsContent.customFields,
+                                hiddenFieldType = hiddenFieldType,
+                                hiddenState = hiddenState
+                            )
+                        )
+                    )
+                }
+
+                is ItemDetailsFieldSection.Identity.ExtraSection -> {
+                    itemContents.copy(
+                        extraSectionContentList = itemContents.extraSectionContentList
+                            .toMutableList()
+                            .apply {
+                                itemContents.extraSectionContentList[hiddenFieldSection.index]
+                                    .let { extraSectionContent ->
+                                        set(
+                                            index = hiddenFieldSection.index,
+                                            element = extraSectionContent.copy(
+                                                customFields = toggleHiddenCustomField(
+                                                    customFieldsContent = extraSectionContent.customFields,
+                                                    hiddenFieldType = hiddenFieldType,
+                                                    hiddenState = hiddenState
+                                                )
+                                            )
+                                        )
+                                    }
+                            }
+                    )
+                }
+
+                ItemDetailsFieldSection.Identity.Personal -> {
+                    itemContents.copy(
+                        personalDetailsContent = itemContents.personalDetailsContent.copy(
+                            customFields = toggleHiddenCustomField(
+                                customFieldsContent = itemContents.personalDetailsContent.customFields,
+                                hiddenFieldType = hiddenFieldType,
+                                hiddenState = hiddenState
+                            )
+                        )
+                    )
+                }
+
+                ItemDetailsFieldSection.Identity.Work -> {
+                    itemContents.copy(
+                        workDetailsContent = itemContents.workDetailsContent.copy(
+                            customFields = toggleHiddenCustomField(
+                                customFieldsContent = itemContents.workDetailsContent.customFields,
+                                hiddenFieldType = hiddenFieldType,
+                                hiddenState = hiddenState
+                            )
+                        )
+                    )
+                }
+
+                ItemDetailsFieldSection.Main -> itemContents
+            }
+        }
+
         ItemDetailsFieldType.Hidden.Cvv,
         ItemDetailsFieldType.Hidden.Password,
         ItemDetailsFieldType.Hidden.Pin -> itemContents

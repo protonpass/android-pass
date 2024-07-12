@@ -134,8 +134,9 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     private fun observeTotpCustomFieldsValues(
         totpCustomFieldsContent: List<CustomFieldContent.Totp>
     ): Flow<List<Totp?>> = combine(
-        totpCustomFieldsContent.map { totpCustomFieldContent -> observeTotp(totpCustomFieldContent.value) }
-    ) { customFieldsTotp -> customFieldsTotp.asList() }
+        totpCustomFieldsContent.map { totpCustomFieldContent -> observeTotp(totpCustomFieldContent.value) },
+        Array<Totp?>::asList
+    )
 
     private fun observeTotp(hiddenTotpState: HiddenState): Flow<Totp?> = when (hiddenTotpState) {
         is HiddenState.Empty -> ""

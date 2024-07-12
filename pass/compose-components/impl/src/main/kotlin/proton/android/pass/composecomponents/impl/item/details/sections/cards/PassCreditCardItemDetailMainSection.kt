@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import kotlinx.collections.immutable.toPersistentList
+import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonuimodels.api.masks.TextMask
 import proton.android.pass.composecomponents.impl.R
@@ -122,7 +123,8 @@ internal fun PassCreditCardItemDetailMainSection(
                         PassItemDetailsUiEvent.OnHiddenSectionToggle(
                             isVisible = isVisible,
                             hiddenState = cvv,
-                            fieldType = ItemDetailsFieldType.Hidden.Cvv
+                            fieldType = ItemDetailsFieldType.Hidden.Cvv,
+                            fieldSection = ItemDetailsFieldSection.Main
                         )
                     )
                 }
@@ -143,7 +145,8 @@ internal fun PassCreditCardItemDetailMainSection(
                         PassItemDetailsUiEvent.OnHiddenSectionToggle(
                             isVisible = isVisible,
                             hiddenState = pin,
-                            fieldType = ItemDetailsFieldType.Hidden.Pin
+                            fieldType = ItemDetailsFieldType.Hidden.Pin,
+                            fieldSection = ItemDetailsFieldSection.Main
                         )
                     )
                 }

@@ -35,6 +35,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
+import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -154,7 +155,8 @@ class ItemHistoryRestoreViewModel @Inject constructor(
         selection: ItemHistoryRestoreSelection,
         isVisible: Boolean,
         hiddenState: HiddenState,
-        hiddenFieldType: ItemDetailsFieldType.Hidden
+        hiddenFieldType: ItemDetailsFieldType.Hidden,
+        hiddenFieldSection: ItemDetailsFieldSection
     ) {
         when (val stateValue = state.value) {
             ItemHistoryRestoreState.Initial -> return
@@ -165,6 +167,7 @@ class ItemHistoryRestoreViewModel @Inject constructor(
                             isVisible = isVisible,
                             hiddenState = hiddenState,
                             hiddenFieldType = hiddenFieldType,
+                            hiddenFieldSection = hiddenFieldSection,
                             itemCategory = stateValue.revisionItemDetailState.itemCategory,
                             itemContents = stateValue.revisionItemDetailState.itemContents
                         ).also { updatedItemContents ->
@@ -177,6 +180,7 @@ class ItemHistoryRestoreViewModel @Inject constructor(
                             isVisible = isVisible,
                             hiddenState = hiddenState,
                             hiddenFieldType = hiddenFieldType,
+                            hiddenFieldSection = hiddenFieldSection,
                             itemCategory = stateValue.currentItemDetailState.itemCategory,
                             itemContents = stateValue.currentItemDetailState.itemContents
                         ).also { updatedItemContents ->

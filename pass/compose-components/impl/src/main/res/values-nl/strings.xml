@@ -27,6 +27,10 @@
   <string name="bottomsheet_view_item_history">Geschiedenis bekijken</string>
   <string name="bottomsheet_monitor_exclude">Uitsluiten van controle</string>
   <string name="bottomsheet_monitor_include">Opnemen in monitoring</string>
+  <string name="bottomsheet_migrate_item">Verplaatsen naar andere kluis</string>
+  <string name="bottomsheet_copy_item_note">Copy note</string>
+  <string name="bottomsheet_delete_permanently">Permanent verwijderen</string>
+  <string name="bottomsheet_restore">Restore</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Actiemenu item openen</string>
   <string name="action_upgrade_now">Nu upgraden</string>
@@ -202,4 +206,21 @@
     <item quantity="one">%d seconde</item>
     <item quantity="other">%d seconden</item>
   </plurals>
+  <!-- Snack bars -->
+  <string name="snack_bar_message_item_note_copied">Note copied</string>
+  <string name="snack_bar_message_item_migration_error">There was an error migrating this item</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">Item succesvol uitgesloten van monitoring</string>
+  <string name="snack_bar_message_item_monitor_excluded_error">Er is een fout opgetreden bij het uitsluiten van het item van de monitoring</string>
+  <string name="snack_bar_message_item_monitor_included_success">Item succesvol opgenomen in monitoring</string>
+  <string name="snack_bar_message_item_monitor_included_error">Er is een fout opgetreden bij het opnemen van het item in de monitoring</string>
+  <string name="snack_bar_message_item_pinned_success">Item succesvol vastgezet</string>
+  <string name="snack_bar_message_item_pinned_error">Fout bij het vastmaken van dit item</string>
+  <string name="snack_bar_message_item_unpinned_success">Item succesvol losgemaakt</string>
+  <string name="snack_bar_message_item_unpinned_error">Er is een fout opgetreden bij het losmaken van dit item</string>
+  <string name="snack_bar_message_item_trashed_success">Item successfully trashed</string>
+  <string name="snack_bar_message_item_trashed_error">There was an error trashing this item</string>
+  <string name="snack_bar_message_item_restore_success">Item successfully restored</string>
+  <string name="snack_bar_message_item_restore_error">There was an error restoring this item</string>
+  <string name="snack_bar_message_item_delete_success">Item successfully deleted</string>
+  <string name="snack_bar_message_item_delete_error">There was an error deleting this item</string>
 </resources>

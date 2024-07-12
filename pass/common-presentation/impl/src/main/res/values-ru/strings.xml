@@ -42,7 +42,7 @@
   <string name="item_details_snackbar_message_passport_number_copied">Номер паспорта скопирован</string>
   <string name="item_details_snackbar_message_password_copied">Пароль скопирован</string>
   <string name="item_details_snackbar_message_phone_number_copied">Номер телефона скопирован</string>
-  <string name="item_details_snackbar_message_pin_copied">PIN скопирован</string>
+  <string name="item_details_snackbar_message_pin_copied">PIN-код скопирован</string>
   <string name="item_details_snackbar_message_reddit_copied">Reddit скопирован</string>
   <string name="item_details_snackbar_message_social_security_number_copied">Номер социального страхования скопирован</string>
   <string name="item_details_snackbar_message_state_or_province_copied">Штат или провинция скопированы</string>

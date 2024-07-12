@@ -29,6 +29,10 @@
   <string name="bottomsheet_view_item_history">Переглянути історію</string>
   <string name="bottomsheet_monitor_exclude">Виключити з моніторингу</string>
   <string name="bottomsheet_monitor_include">Включати у моніторинг</string>
+  <string name="bottomsheet_migrate_item">Перемістити в інше сховище</string>
+  <string name="bottomsheet_copy_item_note">Copy note</string>
+  <string name="bottomsheet_delete_permanently">Видалити остаточно</string>
+  <string name="bottomsheet_restore">Restore</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Відкрити меню дій елемента</string>
   <string name="action_upgrade_now">Покращити</string>
@@ -214,4 +218,21 @@
     <item quantity="many">%d секунди</item>
     <item quantity="other">%d секунди</item>
   </plurals>
+  <!-- Snack bars -->
+  <string name="snack_bar_message_item_note_copied">Note copied</string>
+  <string name="snack_bar_message_item_migration_error">There was an error migrating this item</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">Елемент успішно виключено з моніторингу</string>
+  <string name="snack_bar_message_item_monitor_excluded_error">Виникла помилка виключення елемента з моніторингу</string>
+  <string name="snack_bar_message_item_monitor_included_success">Елемент успішно включений у моніторинг</string>
+  <string name="snack_bar_message_item_monitor_included_error">Сталася помилка включення елемента в моніторинг</string>
+  <string name="snack_bar_message_item_pinned_success">Елемент успішно прикріплено</string>
+  <string name="snack_bar_message_item_pinned_error">Помилка закріплення цього елемента</string>
+  <string name="snack_bar_message_item_unpinned_success">Елемент успішно відкріплено</string>
+  <string name="snack_bar_message_item_unpinned_error">Помилка відкріплення цього елемента</string>
+  <string name="snack_bar_message_item_trashed_success">Item successfully trashed</string>
+  <string name="snack_bar_message_item_trashed_error">There was an error trashing this item</string>
+  <string name="snack_bar_message_item_restore_success">Item successfully restored</string>
+  <string name="snack_bar_message_item_restore_error">There was an error restoring this item</string>
+  <string name="snack_bar_message_item_delete_success">Item successfully deleted</string>
+  <string name="snack_bar_message_item_delete_error">There was an error deleting this item</string>
 </resources>

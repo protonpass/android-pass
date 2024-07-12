@@ -22,7 +22,7 @@
   <string name="item_details_snackbar_message_card_number_copied">Numero della carta copiato</string>
   <string name="item_details_snackbar_message_city_copied">Città copiata</string>
   <string name="item_details_snackbar_message_company_copied">Azienda copiata</string>
-  <string name="item_details_snackbar_message_country_or_region_copied">Paese o regione copiata</string>
+  <string name="item_details_snackbar_message_country_or_region_copied">Paese copiato</string>
   <string name="item_details_snackbar_message_county_copied">Provincia copiata</string>
   <string name="item_details_snackbar_message_custom_field_copied">Campo personalizzato copiato</string>
   <string name="item_details_snackbar_message_cvv_copied">Codice di sicurezza copiato</string>
@@ -37,20 +37,20 @@
   <string name="item_details_snackbar_message_license_number_copied">Patente copiata</string>
   <string name="item_details_snackbar_message_linkedin_copied">LinkedIn copiato</string>
   <string name="item_details_snackbar_message_middle_name_copied">Secondo nome copiato</string>
-  <string name="item_details_snackbar_message_occupation_copied">Tipo di occupazione copiato</string>
+  <string name="item_details_snackbar_message_occupation_copied">Impiego copiato</string>
   <string name="item_details_snackbar_message_organization_copied">Organizzazione copiata</string>
   <string name="item_details_snackbar_message_passport_number_copied">Passaporto copiato</string>
   <string name="item_details_snackbar_message_password_copied">Password copiata</string>
-  <string name="item_details_snackbar_message_phone_number_copied">Telefono copiato</string>
+  <string name="item_details_snackbar_message_phone_number_copied">Numero di telefono copiato</string>
   <string name="item_details_snackbar_message_pin_copied">Codice PIN copiato</string>
   <string name="item_details_snackbar_message_reddit_copied">Reddit copiato</string>
   <string name="item_details_snackbar_message_social_security_number_copied">Codice fiscale copiato</string>
-  <string name="item_details_snackbar_message_state_or_province_copied">Stato o provincia copiata</string>
+  <string name="item_details_snackbar_message_state_or_province_copied">Regione copiata</string>
   <string name="item_details_snackbar_message_street_address_copied">Indirizzo copiato</string>
   <string name="item_details_snackbar_message_totp_copied">TOTP copiato</string>
   <string name="item_details_snackbar_message_username_copied">Nome utente copiato</string>
   <string name="item_details_snackbar_message_website_copied">Indirizzo del sito web copiato</string>
-  <string name="item_details_snackbar_message_x_handle_copied">Nome utente di X copiato</string>
+  <string name="item_details_snackbar_message_x_handle_copied">Nome utente X copiato</string>
   <string name="item_details_snackbar_message_yahoo_copied">Yahoo copiato</string>
   <string name="item_details_snackbar_message_zip_or_postal_code_copied">CAP copiato</string>
 </resources>

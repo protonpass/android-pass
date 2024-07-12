@@ -27,10 +27,6 @@
   <string name="item_permanently_deleted_message_error">Error al eliminar el elemento</string>
   <string name="item_restored_message">Elemento restaurado</string>
   <string name="item_restored_message_error">Error al restaurar el elemento</string>
-  <string name="item_pinned_message">Elemento desanclado con éxito</string>
-  <string name="item_pinned_message_error">Ocurrió un error al anclar este elemento</string>
-  <string name="item_unpinned_message">Elemento desanclado con éxito</string>
-  <string name="item_unpinned_message_error">Ocurrió un error al desanclar este elemento</string>
   <string name="item_monitor_exclude_message">Elemento excluido del monitoreo con éxito</string>
   <string name="item_monitor_exclude_message_error">Hubo un error al excluir el elemento del monitoreo</string>
   <string name="item_monitor_include_message">Elemento incluido en el monitoreo con éxito</string>
@@ -69,8 +65,8 @@
   <string name="credit_card_cvv_field_name">Código de seguridad</string>
   <string name="credit_card_pin_field_name">Código PIN</string>
   <string name="credit_card_expiration_date_field_name">Fecha de expiración</string>
-  <string name="credit_card_cardholder_copied_to_clipboard">El nombre del titular de la tarjeta fue copiado al portapapeles.</string>
-  <string name="credit_card_number_copied_to_clipboard">El número de tarjeta fue copiado al portapapeles.</string>
+  <string name="credit_card_cardholder_copied_to_clipboard">Nombre del titular de la tarjeta copiado al portapapeles</string>
+  <string name="credit_card_number_copied_to_clipboard">Número de tarjeta copiado al portapapeles</string>
   <string name="credit_card_verifcation_number_copied_to_clipboard">Código de seguridad copiado al portapapeles</string>
   <!-- Bottomsheet -->
   <string name="move_to_trash_item_detail_bottom_sheet">Mover a la papelera</string>

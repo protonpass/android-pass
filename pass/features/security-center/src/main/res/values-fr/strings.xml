@@ -31,7 +31,7 @@
   <string name="security_center_home_row_insecure_passwords_title">Mots de passe faible</string>
   <string name="security_center_home_row_insecure_passwords_subtitle">Modifiez vos mots de passe</string>
   <string name="security_center_home_row_reused_passwords_title">Mots de passe réutilisés</string>
-  <string name="security_center_home_row_reused_passwords_subtitle">Générez des mots de passe uniques</string>
+  <string name="security_center_home_row_reused_passwords_subtitle">Générer des mots de passe uniques</string>
   <string name="security_center_home_row_missing_tfa_title">L\'authentification A2F n\'est pas active.</string>
   <string name="security_center_home_row_missing_tfa_subtitle">Configurez l\'A2F pour plus de sécurité</string>
   <string name="security_center_home_row_excludes_items_title">Exclus de la surveillance</string>
@@ -64,7 +64,7 @@
   <string name="security_center_dark_web_monitor_top_bar_subtitle" comment="Placeholder will contain a formatted string for the date of the last check, such as Feb 14 2024, 09:41">Dernière vérification : %s</string>
   <string name="security_center_dark_web_monitor_custom_emails_title">Adresses e-mail personnalisées</string>
   <string name="security_center_dark_web_monitor_custom_emails_not_verified_subtitle">Non vérifié</string>
-  <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Ajouter de nouvelles adresse e-mail personnalisées</string>
+  <string name="security_center_dark_web_monitor_custom_emails_add_content_description">Ajouter de nouvelles adresses e-mail personnalisées</string>
   <string name="security_center_dark_web_monitor_custom_emails_add_button">Ajouter</string>
   <plurals name="security_center_dark_web_monitor_custom_emails_used_count">
     <item quantity="one">Utilisation pour %d connexion</item>
@@ -75,7 +75,7 @@
     <item quantity="other">%d fuites de données ont été détectées.</item>
   </plurals>
   <string name="security_center_dark_web_monitor_custom_emails_loading_error">Une erreur s\'est produite lors du chargement des adresses e-mail personnalisées.</string>
-  <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Les adresse e-mail n\'ont pu être obtenues.</string>
+  <string name="security_center_dark_web_monitor_custom_emails_unknown_error">Les adresses e-mail n\'ont pas pu être obtenues.</string>
   <string name="security_center_dark_web_monitor_custom_email_option_verify">Vérifier</string>
   <string name="security_center_dark_web_monitor_custom_email_option_remove">Retirer</string>
   <string name="security_center_dark_web_monitor_latest_breach_on">Dernière fuite de données le %s</string>

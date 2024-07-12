@@ -26,6 +26,10 @@
   <string name="bottomsheet_view_item_history">Xem lịch sử</string>
   <string name="bottomsheet_monitor_exclude">Bỏ qua theo dõi</string>
   <string name="bottomsheet_monitor_include">Thêm vào theo dõi</string>
+  <string name="bottomsheet_migrate_item">Chuyển đến kho lưu trữ khác</string>
+  <string name="bottomsheet_copy_item_note">Copy note</string>
+  <string name="bottomsheet_delete_permanently">Xóa vĩnh viễn</string>
+  <string name="bottomsheet_restore">Restore</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Mở menu tùy chọn nội dung</string>
   <string name="action_upgrade_now">Nâng cấp ngay</string>
@@ -196,4 +200,21 @@
   <plurals name="time_unit_seconds">
     <item quantity="other">%d giây</item>
   </plurals>
+  <!-- Snack bars -->
+  <string name="snack_bar_message_item_note_copied">Note copied</string>
+  <string name="snack_bar_message_item_migration_error">There was an error migrating this item</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">Nội dung được loại bỏ khỏi giám sát thành công</string>
+  <string name="snack_bar_message_item_monitor_excluded_error">Đã xảy ra lỗi khi tiến hành loại bỏ nội dung khỏi giám sát</string>
+  <string name="snack_bar_message_item_monitor_included_success">Nội dung được thêm vào giám sát thành công</string>
+  <string name="snack_bar_message_item_monitor_included_error">Đã xảy ra lỗi khi tiến hành thêm nội dung vào giám sát</string>
+  <string name="snack_bar_message_item_pinned_success">Đã ghim nội dung thành công</string>
+  <string name="snack_bar_message_item_pinned_error">Đã xảy ra lỗi khi ghim nội dung này</string>
+  <string name="snack_bar_message_item_unpinned_success">Đã bỏ ghim nội dung thành công</string>
+  <string name="snack_bar_message_item_unpinned_error">Đã xảy ra lỗi khi bỏ ghim nội dung này</string>
+  <string name="snack_bar_message_item_trashed_success">Item successfully trashed</string>
+  <string name="snack_bar_message_item_trashed_error">There was an error trashing this item</string>
+  <string name="snack_bar_message_item_restore_success">Item successfully restored</string>
+  <string name="snack_bar_message_item_restore_error">There was an error restoring this item</string>
+  <string name="snack_bar_message_item_delete_success">Item successfully deleted</string>
+  <string name="snack_bar_message_item_delete_error">There was an error deleting this item</string>
 </resources>

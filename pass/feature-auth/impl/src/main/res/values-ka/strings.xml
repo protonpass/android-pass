@@ -26,6 +26,8 @@
   <string name="auth_unlock_app_title">განბლოკეთ Proton Pass</string>
   <string name="auth_unlock_app_subtitle">შეიყვანეთ მთავარი პაროლი %s-სთვის</string>
   <string name="auth_unlock_app_extra_password_subtitle">შეიყვანეთ დამატებითი პაროლი %s-სთვის</string>
+  <string name="auth_unlock_app_subtitle_account_switch">შეიყვანეთ მთავარი პაროლი ანგარიშისთვის:</string>
+  <string name="auth_unlock_app_extra_password_subtitle_account_switch">შეიყვანეთ დამატებითი პაროლი ანგარიშისთვის:</string>
   <string name="auth_master_password_label">მთავარი პაროლი</string>
   <string name="auth_action_reveal_password">მთავარი პაროლის გამოჩენა</string>
   <string name="auth_action_conceal_password">მთავარი პაროლის დამალვა</string>

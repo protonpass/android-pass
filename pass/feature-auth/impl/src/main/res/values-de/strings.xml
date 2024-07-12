@@ -26,6 +26,8 @@
   <string name="auth_unlock_app_title">Proton Pass entsperren</string>
   <string name="auth_unlock_app_subtitle">Gib das Master-Passwort für %s ein</string>
   <string name="auth_unlock_app_extra_password_subtitle">Enter the extra password for %s</string>
+  <string name="auth_unlock_app_subtitle_account_switch">Enter the master password for:</string>
+  <string name="auth_unlock_app_extra_password_subtitle_account_switch">Enter the extra password for:</string>
   <string name="auth_master_password_label">Master-Passwort</string>
   <string name="auth_action_reveal_password">Master-Passwort anzeigen</string>
   <string name="auth_action_conceal_password">Master-Passwort ausblenden</string>
@@ -36,8 +38,8 @@
   <string name="auth_error_empty_password">Passwort kann nicht leer sein</string>
   <string name="auth_error_pin_cannot_be_empty">Der PIN-Code darf nicht leer sein</string>
   <string name="auth_extra_password_label">Gib dein zusätzliches Passwort ein.</string>
-  <string name="auth_extra_password_error">Error on authenticating with extra password</string>
-  <string name="auth_extra_password_too_many_attempts">Too many failed login attempts. You have been logged out.</string>
+  <string name="auth_extra_password_error">Fehler beim Authentifizieren mit zusätzlichem Passwort.</string>
+  <string name="auth_extra_password_too_many_attempts">Zu viele fehlgeschlagene Anmeldeversuche. Du wurdest abgemeldet.</string>
   <string name="auth_error_wrong_password_no_attempts">Ungültiges Passwort</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Ungültiges Passwort. %d Versuch verbleibend</item>

@@ -64,4 +64,10 @@
     <item quantity="other">%d시간 뒤</item>
   </plurals>
   <string name="profile_less_than_a_minute">1분 미만</string>
+  <string name="account_switcher_manage_account">계정 관리</string>
+  <string name="account_switcher_sign_in">로그인</string>
+  <string name="account_switcher_sign_out">로그아웃</string>
+  <string name="account_switcher_switch_to">다음으로 전환:</string>
+  <string name="account_switcher_add_account">계정 추가</string>
+  <string name="account_switcher_remove">제거</string>
 </resources>

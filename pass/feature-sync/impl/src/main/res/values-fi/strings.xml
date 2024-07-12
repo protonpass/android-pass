@@ -26,8 +26,8 @@
   <string name="sync_dialog_title_error">Synkronointi epäonnistui</string>
   <string name="sync_dialog_title_success">Synkronointi valmis</string>
   <string name="sync_dialog_subtitle">Kohteitasi ladataan ja niiden salausta puretaan. Tämä saattaa kestää muutaman minuutin.</string>
-  <string name="sync_dialog_subtitle_error">Kohteidesi lataamisessa ja salauksen purkamisessa tapahtui virhe. Yritä uudelleen.</string>
-  <string name="sync_dialog_subtitle_success">Kohteesi lataaminen ja salauksen purkaminen onnistui.</string>
+  <string name="sync_dialog_subtitle_error">Virhe kohteidesi lataamisessa ja salauksen purkamisessa. Yritä uudelleen.</string>
+  <string name="sync_dialog_subtitle_success">Kohde ladattiin ja sen salaus purettiin.</string>
   <string name="sync_item_not_started">Ei aloitettu</string>
   <string name="sync_item_failed">Synkronointi epäonnistui</string>
 </resources>

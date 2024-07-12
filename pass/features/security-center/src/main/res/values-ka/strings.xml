@@ -132,7 +132,7 @@
   <string name="security_center_report_detail_email_address">ელფოსტის მისამართი</string>
   <string name="security_center_report_detail_password">პაროლი</string>
   <string name="security_center_report_detail_recommended_actions">რეკომენდებული ქმედებები</string>
-  <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">The exposed information was leaked from %s. Your Proton Account information remains secure and encrypted.</string>
+  <string name="security_center_report_detail_note" comment="The placeholder argument contains the name of the service where the breach occurred.">ინფორმაციის გაჟონვა %s-დან მოხდა. თქვენი Proton-ის ანგარიშის ინფორმაცია დაცულად და დაშიფრულად რჩება.</string>
   <string name="security_center_report_detail_learn_more">გაიგეთ მეტი</string>
   <string name="security_center_report_detail_snackbar_error">გაჟონვის დეტალების ჩატვირთვა შეუძლებელია</string>
   <string name="security_center_report_detail_excluded_from_monitoring">ამოღებულია მონიტორინგიდან</string>

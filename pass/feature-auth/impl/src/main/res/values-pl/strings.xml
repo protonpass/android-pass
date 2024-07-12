@@ -28,6 +28,8 @@
   <string name="auth_unlock_app_title">Odblokuj Proton Pass</string>
   <string name="auth_unlock_app_subtitle">Wpisz hasło główne dla konta %s</string>
   <string name="auth_unlock_app_extra_password_subtitle">Wpisz dodatkowe hasło %s</string>
+  <string name="auth_unlock_app_subtitle_account_switch">Wpisz hasło główne dla konta:</string>
+  <string name="auth_unlock_app_extra_password_subtitle_account_switch">Wpisz dodatkowe hasło dla konta:</string>
   <string name="auth_master_password_label">Hasło główne</string>
   <string name="auth_action_reveal_password">Pokaż hasło główne</string>
   <string name="auth_action_conceal_password">Ukryj hasło główne</string>
@@ -39,7 +41,7 @@
   <string name="auth_error_pin_cannot_be_empty">Kod PIN nie może być pusty</string>
   <string name="auth_extra_password_label">Wpisz dodatkowe hasło</string>
   <string name="auth_extra_password_error">Wystąpił błąd podczas uwierzytelniania za pomocą dodatkowego hasła</string>
-  <string name="auth_extra_password_too_many_attempts">Too many failed login attempts. You have been logged out.</string>
+  <string name="auth_extra_password_too_many_attempts">Zbyt wiele nieudanych prób logowania. Zostałeś wylogowany.</string>
   <string name="auth_error_wrong_password_no_attempts">Hasło jest nieprawidłowe</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Hasło jest nieprawidłowe. Pozostała %d próba</item>

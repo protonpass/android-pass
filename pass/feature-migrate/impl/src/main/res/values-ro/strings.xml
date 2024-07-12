@@ -11,6 +11,7 @@
   <string name="migrate_item_error_snackbar">Eroare la mutarea articolelor.</string>
   <string name="migrate_item_some_not_migrated_error_snackbar">Eroare la mutarea unor articole.</string>
   <string name="migrate_item_warning_history">La mutarea articolelor între seifuri, vom păstra până la ultimele 50 de modificări efectuate fiecărui articol.</string>
+  <string name="migrate_item_warning_secure_link">Legăturile web securizate ale articolului vor fi eliminate atunci când este mutat într-un alt seif.</string>
   <string name="migrate_all_items_success_snackbar">S-au mutat toate articolele.</string>
   <string name="migrate_all_items_error_snackbar">Eroare la mutarea tuturor articolelor din seif.</string>
   <string name="migrate_init_error_snackbar">Nu s-a putut pregăti ecranul de migrare.</string>

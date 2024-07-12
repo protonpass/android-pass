@@ -29,7 +29,7 @@
   <string name="info_extra_password_body">Schütze Proton Pass mit einem zusätzlichen Passwort.</string>
   <string name="info_extra_password_button">Zusätzliches Passwort festlegen</string>
   <string name="configure_extra_password_cannot_be_blank">Passwort darf nicht leer sein</string>
-  <string name="configure_extra_password_password_too_short">Extra password must have at least 8 characters</string>
+  <string name="configure_extra_password_password_too_short">Zusätzliches Passwort muss mindestens 8 Zeichen enthalten</string>
   <string name="confirm_extra_password_title">Zusätzliches Passwort festlegen</string>
   <string name="confirm_extra_password_body">Du wirst abgemeldet und musst dich auf allen anderen Geräten erneut anmelden.</string>
   <string name="confirm_extra_password_error">Fehler beim Festlegen des zusätzlichen Passworts.</string>

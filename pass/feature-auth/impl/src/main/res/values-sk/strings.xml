@@ -28,6 +28,8 @@
   <string name="auth_unlock_app_title">Odomknúť Proton Pass</string>
   <string name="auth_unlock_app_subtitle">Zadajte hlavné heslo pre %s</string>
   <string name="auth_unlock_app_extra_password_subtitle">Zadajte dodatočné heslo pre %s</string>
+  <string name="auth_unlock_app_subtitle_account_switch">Zadajte hlavné heslo pre:</string>
+  <string name="auth_unlock_app_extra_password_subtitle_account_switch">Zadajte dodatočné heslo pre:</string>
   <string name="auth_master_password_label">Hlavné heslo</string>
   <string name="auth_action_reveal_password">Odkryť hlavné heslo</string>
   <string name="auth_action_conceal_password">Skryť hlavné heslo</string>
@@ -39,7 +41,7 @@
   <string name="auth_error_pin_cannot_be_empty">PIN nemôže byť prázdny</string>
   <string name="auth_extra_password_label">Zadajte vaše dodatočné heslo</string>
   <string name="auth_extra_password_error">Chyba pri overovaní pomocou dodatočného hesla</string>
-  <string name="auth_extra_password_too_many_attempts">Too many failed login attempts. You have been logged out.</string>
+  <string name="auth_extra_password_too_many_attempts">Príliš veľa neúspešných pokusov o prihlásenie. Došlo k odhláseniu.</string>
   <string name="auth_error_wrong_password_no_attempts">Nesprávne heslo</string>
   <plurals name="auth_error_wrong_password">
     <item quantity="one">Nesprávne heslo. Zostáva %d pokus.</item>

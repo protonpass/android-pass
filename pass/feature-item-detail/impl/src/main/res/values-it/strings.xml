@@ -27,10 +27,6 @@
   <string name="item_permanently_deleted_message_error">Eliminazione dell\'elemento non riuscita</string>
   <string name="item_restored_message">Elemento ripristinato</string>
   <string name="item_restored_message_error">Ripristino dell\'elemento non riuscito</string>
-  <string name="item_pinned_message">Elemento fissato</string>
-  <string name="item_pinned_message_error">Fissaggio dell\'elemento non riuscito</string>
-  <string name="item_unpinned_message">Elemento non più fissato</string>
-  <string name="item_unpinned_message_error">Annullamento del fissaggio dell\'elemento non riuscito</string>
   <string name="item_monitor_exclude_message">Elemento escluso dal monitoraggio</string>
   <string name="item_monitor_exclude_message_error">Esclusione dell\'elemento dal monitoraggio non riuscita</string>
   <string name="item_monitor_include_message">Elemento incluso nel monitoraggio</string>

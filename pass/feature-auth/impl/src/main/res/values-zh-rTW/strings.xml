@@ -25,6 +25,8 @@
   <string name="auth_unlock_app_title">解鎖 Proton Pass</string>
   <string name="auth_unlock_app_subtitle">輸入 %s 的主密碼</string>
   <string name="auth_unlock_app_extra_password_subtitle">Enter the extra password for %s</string>
+  <string name="auth_unlock_app_subtitle_account_switch">Enter the master password for:</string>
+  <string name="auth_unlock_app_extra_password_subtitle_account_switch">Enter the extra password for:</string>
   <string name="auth_master_password_label">主密碼</string>
   <string name="auth_action_reveal_password">顯示主密碼</string>
   <string name="auth_action_conceal_password">隱藏主密碼</string>

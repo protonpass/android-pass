@@ -70,4 +70,10 @@
     <item quantity="other">După %d de ore</item>
   </plurals>
   <string name="profile_less_than_a_minute">Mai puțin de un minut</string>
+  <string name="account_switcher_manage_account">Gestionare cont</string>
+  <string name="account_switcher_sign_in">Conectare</string>
+  <string name="account_switcher_sign_out">Deconectare</string>
+  <string name="account_switcher_switch_to">Comutare la</string>
+  <string name="account_switcher_add_account">Adăugare cont</string>
+  <string name="account_switcher_remove">Eliminare</string>
 </resources>

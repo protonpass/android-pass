@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.ImmutableList
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
+import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.masks.TextMask
@@ -89,7 +90,8 @@ internal fun PassLoginItemDetailCustomFieldsSection(
                                 PassItemDetailsUiEvent.OnHiddenSectionToggle(
                                     isVisible = isVisible,
                                     hiddenState = customField.hiddenState,
-                                    fieldType = ItemDetailsFieldType.Hidden.CustomField(index)
+                                    fieldType = ItemDetailsFieldType.Hidden.CustomField(index),
+                                    fieldSection = ItemDetailsFieldSection.Main
                                 )
                             )
                         }

@@ -19,6 +19,7 @@
 package proton.android.pass.commonpresentation.api.items.details.handlers
 
 import kotlinx.coroutines.flow.Flow
+import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.domain.HiddenState
@@ -34,10 +35,12 @@ interface ItemDetailsHandler {
 
     suspend fun onItemDetailsHiddenFieldClicked(hiddenState: HiddenState, hiddenFieldType: ItemDetailsFieldType.Hidden)
 
+    @Suppress("LongParameterList")
     fun updateItemDetailsContent(
         isVisible: Boolean,
         hiddenState: HiddenState,
         hiddenFieldType: ItemDetailsFieldType.Hidden,
+        hiddenFieldSection: ItemDetailsFieldSection,
         itemCategory: ItemCategory,
         itemContents: ItemContents
     ): ItemContents

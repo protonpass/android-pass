@@ -21,6 +21,7 @@ package proton.android.pass.commonpresentation.impl.items.details.handlers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
+import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonui.api.toItemContents
@@ -67,8 +68,9 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
     override fun updateItemContents(
         itemContents: ItemContents.CreditCard,
         hiddenFieldType: ItemDetailsFieldType.Hidden,
+        hiddenFieldSection: ItemDetailsFieldSection,
         hiddenState: HiddenState
-    ): ItemContents.CreditCard = when (hiddenFieldType) {
+    ): ItemContents = when (hiddenFieldType) {
         ItemDetailsFieldType.Hidden.Cvv -> itemContents.copy(
             cvv = hiddenState
         )

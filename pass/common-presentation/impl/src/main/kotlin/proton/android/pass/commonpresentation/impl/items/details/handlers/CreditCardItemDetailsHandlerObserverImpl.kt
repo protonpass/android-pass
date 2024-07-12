@@ -37,7 +37,7 @@ import javax.inject.Inject
 class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
     private val getVaultById: GetVaultById,
     private val encryptionContextProvider: EncryptionContextProvider
-) : ItemDetailsHandlerObserver<ItemContents.CreditCard> {
+) : ItemDetailsHandlerObserver<ItemContents.CreditCard>() {
 
     override fun observe(item: Item): Flow<ItemDetailState> = combine(
         observeCreditCardItemContents(item),

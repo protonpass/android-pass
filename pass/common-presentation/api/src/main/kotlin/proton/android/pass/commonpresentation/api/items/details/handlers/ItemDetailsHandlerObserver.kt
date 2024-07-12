@@ -22,19 +22,32 @@ import kotlinx.coroutines.flow.Flow
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
+import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 
-interface ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
+abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
 
-    fun observe(item: Item): Flow<ItemDetailState>
+    abstract fun observe(item: Item): Flow<ItemDetailState>
 
-    fun updateItemContents(
+    abstract fun updateItemContents(
         itemContents: ITEM_CONTENTS,
         hiddenFieldType: ItemDetailsFieldType.Hidden,
         hiddenFieldSection: ItemDetailsFieldSection,
         hiddenState: HiddenState
     ): ItemContents
+
+    protected fun toggleHiddenCustomField(
+        customFieldsContent: List<CustomFieldContent>,
+        hiddenFieldType: ItemDetailsFieldType.Hidden.CustomField,
+        hiddenState: HiddenState
+    ): List<CustomFieldContent> = customFieldsContent.mapIndexed { index, customFieldContent ->
+        if (index == hiddenFieldType.index && customFieldContent is CustomFieldContent.Hidden) {
+            customFieldContent.copy(value = hiddenState)
+        } else {
+            customFieldContent
+        }
+    }
 
 }

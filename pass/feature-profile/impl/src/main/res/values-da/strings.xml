@@ -67,4 +67,10 @@
     <item quantity="other">Efter %d timer</item>
   </plurals>
   <string name="profile_less_than_a_minute">Mindre end et minut</string>
+  <string name="account_switcher_manage_account">Håndter konto</string>
+  <string name="account_switcher_sign_in">Log ind</string>
+  <string name="account_switcher_sign_out">Log ud</string>
+  <string name="account_switcher_switch_to">Skift til</string>
+  <string name="account_switcher_add_account">Tilføj konto</string>
+  <string name="account_switcher_remove">Fjern</string>
 </resources>

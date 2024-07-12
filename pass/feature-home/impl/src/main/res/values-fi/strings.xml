@@ -126,14 +126,10 @@
   <string name="recent_search_clear">Tyhjennä</string>
   <string name="recent_search_remove_item">Poista viimeisimmistä hauista</string>
   <!-- Pinning -->
-  <string name="home_snackbar_item_pinned_success">Kohde kiinnitettiin</string>
-  <string name="home_snackbar_item_pinned_error">Virhe kiinnitettäessä kohdetta</string>
-  <string name="home_snackbar_item_unpinned_success">Kohde irrotettiin</string>
-  <string name="home_snackbar_item_unpinned_error">Virhe irrotettaessa kohdetta</string>
-  <string name="home_snackbar_items_pinned_success">Kohteiden kiinnitys onnistui</string>
+  <string name="home_snackbar_items_pinned_success">Kohteet kiinnitettiin</string>
   <string name="home_snackbar_items_pinned_partial_success">Virhe joidenkin kohteiden kiinnityksessä</string>
   <string name="home_snackbar_items_pinned_error">Virhe kohteiden kiinnityksessä</string>
-  <string name="home_snackbar_items_unpinned_success">Kohteiden irrotus onnistui</string>
+  <string name="home_snackbar_items_unpinned_success">Kohteet irrotettiin</string>
   <string name="home_snackbar_items_unpinned_partial_success">Virhe joidenkin kohteiden irrotuksessa</string>
   <string name="home_snackbar_items_unpinned_error">Virhe kohteiden irrotuksessa</string>
 </resources>

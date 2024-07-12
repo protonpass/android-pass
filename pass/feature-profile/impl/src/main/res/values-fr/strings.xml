@@ -67,4 +67,10 @@
     <item quantity="other">Après %d heures</item>
   </plurals>
   <string name="profile_less_than_a_minute">Moins de 1 minute</string>
+  <string name="account_switcher_manage_account">Gérer le compte</string>
+  <string name="account_switcher_sign_in">Se connecter</string>
+  <string name="account_switcher_sign_out">Se déconnecter</string>
+  <string name="account_switcher_switch_to">Basculer vers</string>
+  <string name="account_switcher_add_account">Ajouter un compte</string>
+  <string name="account_switcher_remove">Retirer</string>
 </resources>

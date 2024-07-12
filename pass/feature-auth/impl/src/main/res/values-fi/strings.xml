@@ -26,6 +26,8 @@
   <string name="auth_unlock_app_title">Avaa Proton Pass</string>
   <string name="auth_unlock_app_subtitle">Syötä tunnuksen %s pääsalasana</string>
   <string name="auth_unlock_app_extra_password_subtitle">Syötä tunnuksen %s lisäsalasana</string>
+  <string name="auth_unlock_app_subtitle_account_switch">Syötä pääsalasana tilille:</string>
+  <string name="auth_unlock_app_extra_password_subtitle_account_switch">Syötä lisäsalasana tilille:</string>
   <string name="auth_master_password_label">Pääsalasana</string>
   <string name="auth_action_reveal_password">Näytä pääsalasana</string>
   <string name="auth_action_conceal_password">Piilota pääsalasana</string>

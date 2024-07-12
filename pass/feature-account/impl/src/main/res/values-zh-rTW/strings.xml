@@ -15,7 +15,7 @@
   <string name="account_get_user_info_error">無法擷取使用者資訊</string>
   <string name="manage_subscription_icon_content_description">管理訂購授權按鈕</string>
   <string name="account_settings_list_item_password_header">變更密碼</string>
-  <string name="account_settings_list_item_recovery_header">備援電子郵件</string>
+  <string name="account_settings_list_item_recovery_header">復原用電子郵件</string>
   <string name="account_settings_list_item_recovery_hint_not_set">未設定</string>
   <string name="account_settings_list_item_password_hint_grace">密碼重設擱置</string>
   <string name="account_settings_list_item_password_hint_insecure">密碼重設就緒</string>

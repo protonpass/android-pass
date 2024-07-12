@@ -129,10 +129,10 @@
   <string name="share_with_secure_link_description">Vygenerujte bezpečný odkaz na tuto položku.</string>
   <string name="share_with_manage_shared_vault_title">Spravovat přístup do trezoru</string>
   <plurals name="share_with_manage_shared_vault_description">
-    <item quantity="one">The item\'s vault is currently shared with %d user.</item>
-    <item quantity="few">The item\'s vault is currently shared with %d users.</item>
-    <item quantity="many">The item\'s vault is currently shared with %d users.</item>
-    <item quantity="other">The item\'s vault is currently shared with %d users.</item>
+    <item quantity="one">Trezor položky je nyní sdílen s %d uživatelem.</item>
+    <item quantity="few">Trezor položky je nyní sdílen se %d uživateli.</item>
+    <item quantity="many">Trezor položky je nyní sdílen s %d uživateli.</item>
+    <item quantity="other">Trezor položky je nyní sdílen s %d uživateli.</item>
   </plurals>
   <string name="share_with_view_shared_vault_members_title">Zobrazit členy trezoru</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Nastavit přístupovou úroveň pro všechny členy</string>

@@ -73,4 +73,10 @@
     <item quantity="other">Праз %d гадзін</item>
   </plurals>
   <string name="profile_less_than_a_minute">Менш за хвіліну</string>
+  <string name="account_switcher_manage_account">Кіраванне ўліковым запісам</string>
+  <string name="account_switcher_sign_in">Увайсці</string>
+  <string name="account_switcher_sign_out">Выйсці</string>
+  <string name="account_switcher_switch_to">Пераключыцца на</string>
+  <string name="account_switcher_add_account">Дадаць уліковы запіс</string>
+  <string name="account_switcher_remove">Выдаліць</string>
 </resources>

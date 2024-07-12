@@ -36,7 +36,7 @@
   <string name="share_with_email_hint">E‐Mail‐Adresse</string>
   <string name="share_with_email_error">Ungültige E-Mail-Adresse</string>
   <string name="share_with_email_cannot_invite_outside_org">Du kannst keine Personen außerhalb deiner Organisation einladen, kontaktiere den Administrator für weitere Informationen</string>
-  <string name="share_with_email_email_already_added">You have already added this email address</string>
+  <string name="share_with_email_email_already_added">Du hast diese E-Mail-Adresse bereits hinzugefügt.</string>
   <string name="share_permissions_title">Zugriffsstufe festlegen</string>
   <string name="sharing_invitation_from" comment="Text that will appear when the user accesses the details of an invite. The message appears over the vault details">%s lädt dich zum Zugriff auf Elemente ein im Tresor</string>
   <string name="sharing_join_shared_vault">Beitreten und synchronisieren</string>
@@ -117,12 +117,12 @@
   <string name="share_with_remove_email_content_description">E-Mail entfernen</string>
   <string name="share_with_secure_link_title">Über sicheren Link</string>
   <string name="share_with_secure_link_description">Einen sicheren Link zu diesem Eintrag generieren.</string>
-  <string name="share_with_manage_shared_vault_title">Manage vault access</string>
+  <string name="share_with_manage_shared_vault_title">Tresorzugriff verwalten</string>
   <plurals name="share_with_manage_shared_vault_description">
-    <item quantity="one">The item\'s vault is currently shared with %d user.</item>
-    <item quantity="other">The item\'s vault is currently shared with %d users.</item>
+    <item quantity="one">Der Tresor dieses Eintrags ist derzeit mit %d Benutzer geteilt.</item>
+    <item quantity="other">Der Tresor dieses Eintrags ist derzeit mit %d Benutzern geteilt.</item>
   </plurals>
-  <string name="share_with_view_shared_vault_members_title">View vault members</string>
+  <string name="share_with_view_shared_vault_members_title">Tresormitglieder anzeigen</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Zugriffsstufe für alle Mitglieder festlegen</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Zugriffsstufe für %s festlegen</string>
   <string name="sharing_edit_permissions_remove_user">Benutzer entfernen</string>

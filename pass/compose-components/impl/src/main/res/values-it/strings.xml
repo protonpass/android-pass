@@ -27,6 +27,10 @@
   <string name="bottomsheet_view_item_history">Visualizza la cronologia</string>
   <string name="bottomsheet_monitor_exclude">Escludi dal monitoraggio</string>
   <string name="bottomsheet_monitor_include">Includi nel monitoraggio</string>
+  <string name="bottomsheet_migrate_item">Sposta in un\'altra cassaforte</string>
+  <string name="bottomsheet_copy_item_note">Copia la nota</string>
+  <string name="bottomsheet_delete_permanently">Elimina definitivamente</string>
+  <string name="bottomsheet_restore">Ripristina</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Apri menu azioni elemento</string>
   <string name="action_upgrade_now">Effettua l\'upgrade</string>
@@ -134,7 +138,7 @@
   <string name="item_details_identity_section_personal_full_name_title">Nome completo</string>
   <string name="item_details_identity_section_personal_email_title">Indirizzo email</string>
   <string name="item_details_identity_section_personal_gender_title">Sesso</string>
-  <string name="item_details_identity_section_personal_phone_title">Telefono</string>
+  <string name="item_details_identity_section_personal_phone_title">Numero di telefono</string>
   <string name="item_details_identity_section_personal_birthday_title">Compleanno</string>
   <string name="item_details_identity_section_address_title">Dettagli dell\'indirizzo</string>
   <string name="item_details_identity_section_address_organization_title">Organizzazione</string>
@@ -142,15 +146,15 @@
   <string name="item_details_identity_section_address_floor_title">Piano</string>
   <string name="item_details_identity_section_address_city_title">Città</string>
   <string name="item_details_identity_section_address_zip_or_postal_code_title">CAP</string>
-  <string name="item_details_identity_section_address_state_or_province_title">Stato o provincia</string>
+  <string name="item_details_identity_section_address_state_or_province_title">Regione</string>
   <string name="item_details_identity_section_address_county_title">Provincia</string>
-  <string name="item_details_identity_section_address_country_or_region_title">Paese o regione</string>
+  <string name="item_details_identity_section_address_country_or_region_title">Paese</string>
   <string name="item_details_identity_section_contact_title">Dettagli di contatto</string>
   <string name="item_details_identity_section_contact_social_security_number_title">Codice fiscale</string>
   <string name="item_details_identity_section_contact_passport_number_title">Passaporto</string>
   <string name="item_details_identity_section_contact_license_number_title">Patente</string>
   <string name="item_details_identity_section_contact_website_title">Sito web</string>
-  <string name="item_details_identity_section_contact_x_handle_title">Nome utente di X</string>
+  <string name="item_details_identity_section_contact_x_handle_title">Nome utente X</string>
   <string name="item_details_identity_section_contact_secondary_phone_number_title">Numero di telefono secondario</string>
   <string name="item_details_identity_section_contact_linkedin_title">LinkedIn</string>
   <string name="item_details_identity_section_contact_reddit_title">Reddit</string>
@@ -159,7 +163,7 @@
   <string name="item_details_identity_section_contact_instagram_title">Instagram</string>
   <string name="item_details_identity_section_work_title">Dettagli di lavoro</string>
   <string name="item_details_identity_section_work_company_title">Azienda</string>
-  <string name="item_details_identity_section_work_occupation_title">Tipo di occupazione</string>
+  <string name="item_details_identity_section_work_occupation_title">Impiego</string>
   <string name="item_details_identity_section_work_email_title">Indirizzo email lavorativo</string>
   <string name="item_details_identity_section_work_phone_number_title">Numero di telefono lavorativo</string>
   <string name="item_details_identity_section_work_personal_website_title">Sito web personale</string>
@@ -169,7 +173,7 @@
   <string name="item_details_shared_section_item_history_modified_times_title">Modificato (%d)</string>
   <string name="item_details_shared_section_item_history_button_view">Visualizza la cronologia dell\'elemento</string>
   <string name="item_details_shared_section_more_info_header_title">Altre informazioni</string>
-  <string name="item_details_shared_section_more_info_header_icon_content_description">Icona Altre informazioni sull\'elemento</string>
+  <string name="item_details_shared_section_more_info_header_icon_content_description">Altre informazioni sull\'elemento</string>
   <string name="item_details_shared_section_more_info_item_id">ID elemento</string>
   <string name="item_details_shared_section_more_info_share_id">ID cassaforte</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">La versione della tua applicazione non è più supportata. Aggiorna l\'applicazione.</string>
@@ -202,4 +206,21 @@
     <item quantity="one">%d secondo</item>
     <item quantity="other">%d secondi</item>
   </plurals>
+  <!-- Snack bars -->
+  <string name="snack_bar_message_item_note_copied">Nota copiata</string>
+  <string name="snack_bar_message_item_migration_error">Si è verificato un errore nello spostamento di questo elemento</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">Elemento escluso dal monitoraggio</string>
+  <string name="snack_bar_message_item_monitor_excluded_error">Si è verificato un errore nell\'esclusione dell\'elemento dal monitoraggio</string>
+  <string name="snack_bar_message_item_monitor_included_success">Elemento incluso nel monitoraggio</string>
+  <string name="snack_bar_message_item_monitor_included_error">Si è verificato un errore nell\'inclusione dell\'elemento nel monitoraggio</string>
+  <string name="snack_bar_message_item_pinned_success">Elemento fissato</string>
+  <string name="snack_bar_message_item_pinned_error">Fissaggio dell\'elemento non riuscito</string>
+  <string name="snack_bar_message_item_unpinned_success">Elemento non più fissato</string>
+  <string name="snack_bar_message_item_unpinned_error">Annullamento del fissaggio dell\'elemento non riuscito</string>
+  <string name="snack_bar_message_item_trashed_success">Elemento spostato nel cestino</string>
+  <string name="snack_bar_message_item_trashed_error">Si è verificato un errore nello spostamento nel cestino di questo elemento</string>
+  <string name="snack_bar_message_item_restore_success">Elemento ripristinato</string>
+  <string name="snack_bar_message_item_restore_error">Si è verificato un errore nel ripristino di questo elemento</string>
+  <string name="snack_bar_message_item_delete_success">Elemento eliminato</string>
+  <string name="snack_bar_message_item_delete_error">Si è verificato un errore nell\'eliminazione di questo elemento</string>
 </resources>

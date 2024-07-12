@@ -38,19 +38,19 @@
     <item quantity="other">%d Mal</item>
   </plurals>
   <string name="secure_links_overview_widget_max_views_unlimited">Unbegrenzt</string>
-  <string name="secure_links_overview_button_view_all_links">View all your secure links</string>
+  <string name="secure_links_overview_button_view_all_links">Alle sicheren Links anzeigen</string>
   <!--List screen-->
   <string name="secure_links_list_title">Sichere Links</string>
   <string name="secure_links_list_empty_title">Keine sicheren Links</string>
   <string name="secure_links_list_empty_subtitle">You can start creating secure links from an item details sharing options</string>
   <string name="secure_links_list_expiration_description">Läuft ab in %s</string>
-  <string name="secure_links_list_expired_description">Expired</string>
+  <string name="secure_links_list_expired_description">Abgelaufen</string>
   <plurals name="secure_links_list_viewed_times_description">
-    <item quantity="one">%d view</item>
-    <item quantity="other">%d views</item>
+    <item quantity="one">%d Ansicht</item>
+    <item quantity="other">%d Ansichten</item>
   </plurals>
-  <string name="secure_links_list_snackbar_message_links_fetch_error">There was an error fetching secure links</string>
-  <string name="secure_links_list_header_title_inactive">Inactive links</string>
+  <string name="secure_links_list_snackbar_message_links_fetch_error">Fehler beim Abrufen der sicheren Links.</string>
+  <string name="secure_links_list_header_title_inactive">Inaktive Links</string>
   <!--Shared-->
   <string name="secure_links_shared_action_copy_link">Link kopieren</string>
   <string name="secure_links_shared_action_share_link">Link teilen</string>
@@ -61,5 +61,5 @@
   <string name="secure_links_shared_snackbar_message_link_deletion_canceled">Löschen des sicheren Links abgebrochen</string>
   <string name="secure_links_shared_snackbar_message_link_deletion_error">Fehler beim Löschen des sicheren Links.</string>
   <string name="secure_links_shared_snackbar_message_inactive_links_deletion_canceled">Inactive secure links deletion was canceled</string>
-  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">There was an error deleting inactive secure links</string>
+  <string name="secure_links_shared_snackbar_message_inactive_links_deletion_error">Fehler beim Löschen inaktiver sicherer Links.</string>
 </resources>

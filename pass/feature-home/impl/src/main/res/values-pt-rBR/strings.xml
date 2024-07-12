@@ -126,10 +126,6 @@
   <string name="recent_search_clear">Limpar</string>
   <string name="recent_search_remove_item">Remover das pesquisas recentes</string>
   <!-- Pinning -->
-  <string name="home_snackbar_item_pinned_success">Item fixado com sucesso</string>
-  <string name="home_snackbar_item_pinned_error">Houve um erro ao fixar este item</string>
-  <string name="home_snackbar_item_unpinned_success">Item desafixado com sucesso</string>
-  <string name="home_snackbar_item_unpinned_error">Houve um erro ao desafixar este item</string>
   <string name="home_snackbar_items_pinned_success">Itens fixados com sucesso!</string>
   <string name="home_snackbar_items_pinned_partial_success">Erro ao fixar alguns dos itens</string>
   <string name="home_snackbar_items_pinned_error">Erro ao fixar os itens</string>

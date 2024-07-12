@@ -29,7 +29,7 @@
   <string name="info_extra_password_body">Proteggi Proton Pass con una password aggiuntiva.</string>
   <string name="info_extra_password_button">Imposta la password aggiuntiva</string>
   <string name="configure_extra_password_cannot_be_blank">La password non può essere vuota</string>
-  <string name="configure_extra_password_password_too_short">La password aggiuntiva deve contenere almeno 8 caratteri</string>
+  <string name="configure_extra_password_password_too_short">Inserisci una password lunga almeno 8 caratteri</string>
   <string name="confirm_extra_password_title">Imposta la password aggiuntiva</string>
   <string name="confirm_extra_password_body">Verrai disconnesso e dovrai accedere nuovamente su tutti gli altri tuoi dispositivi.</string>
   <string name="confirm_extra_password_error">Impossibile impostare la password aggiuntiva</string>

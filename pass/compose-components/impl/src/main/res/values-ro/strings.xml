@@ -28,6 +28,10 @@
   <string name="bottomsheet_view_item_history">Afișare istoric</string>
   <string name="bottomsheet_monitor_exclude">Excludere din monitorizare</string>
   <string name="bottomsheet_monitor_include">Includere în monitorizare</string>
+  <string name="bottomsheet_migrate_item">Mutare în alt seif</string>
+  <string name="bottomsheet_copy_item_note">Copiere notă</string>
+  <string name="bottomsheet_delete_permanently">Ștergere permanentă</string>
+  <string name="bottomsheet_restore">Restore</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Meniu acțiune deschidere articol</string>
   <string name="action_upgrade_now">Modificare</string>
@@ -166,14 +170,14 @@
   <string name="item_details_identity_section_work_phone_number_title">Telefon serviciu</string>
   <string name="item_details_identity_section_work_personal_website_title">Site web personal</string>
   <string name="item_details_shared_section_note_title">Notă</string>
-  <string name="item_details_shared_section_item_history_last_autofill_title">Last autofill</string>
+  <string name="item_details_shared_section_item_history_last_autofill_title">Ultima autocompletare</string>
   <string name="item_details_shared_section_item_history_created_title">Creată la</string>
-  <string name="item_details_shared_section_item_history_modified_times_title">Modified (%d)</string>
+  <string name="item_details_shared_section_item_history_modified_times_title">Modificat: (%d)</string>
   <string name="item_details_shared_section_item_history_button_view">Afișare istoric articol</string>
-  <string name="item_details_shared_section_more_info_header_title">More info</string>
-  <string name="item_details_shared_section_more_info_header_icon_content_description">More item information icon</string>
-  <string name="item_details_shared_section_more_info_item_id">Item ID</string>
-  <string name="item_details_shared_section_more_info_share_id">Vault ID</string>
+  <string name="item_details_shared_section_more_info_header_title">Detalii</string>
+  <string name="item_details_shared_section_more_info_header_icon_content_description">Pictogramă detalii articol</string>
+  <string name="item_details_shared_section_more_info_item_id">ID articol</string>
+  <string name="item_details_shared_section_more_info_share_id">ID seif</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Versiunea actuală a aplicației nu mai e suportată. Actualizați aplicația.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Cheie de acces</string>
@@ -208,4 +212,21 @@
     <item quantity="few">%d secunde</item>
     <item quantity="other">%d de secunde</item>
   </plurals>
+  <!-- Snack bars -->
+  <string name="snack_bar_message_item_note_copied">Nota a fost copiată.</string>
+  <string name="snack_bar_message_item_migration_error">A apărut o eroare la migrarea acestui articol.</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">Articolul a fost exclus din monitorizare.</string>
+  <string name="snack_bar_message_item_monitor_excluded_error">A apărut o eroare la excluderea articolului din monitorizare.</string>
+  <string name="snack_bar_message_item_monitor_included_success">Articolul a fost inclus în monitorizare.</string>
+  <string name="snack_bar_message_item_monitor_included_error">A apărut o eroare la includerea articolului în monitorizare.</string>
+  <string name="snack_bar_message_item_pinned_success">Elementul a fost fixat.</string>
+  <string name="snack_bar_message_item_pinned_error">A apărut o eroare la fixarea acestui element.</string>
+  <string name="snack_bar_message_item_unpinned_success">Elementul nu mai este fixat.</string>
+  <string name="snack_bar_message_item_unpinned_error">A apărut o eroare la anularea fixării acestui element.</string>
+  <string name="snack_bar_message_item_trashed_success">Articolul a fost mutat în gunoi.</string>
+  <string name="snack_bar_message_item_trashed_error">A apărut o eroare la mutarea în gunoi a acestui articol.</string>
+  <string name="snack_bar_message_item_restore_success">Item successfully restored</string>
+  <string name="snack_bar_message_item_restore_error">There was an error restoring this item</string>
+  <string name="snack_bar_message_item_delete_success">Item successfully deleted</string>
+  <string name="snack_bar_message_item_delete_error">There was an error deleting this item</string>
 </resources>

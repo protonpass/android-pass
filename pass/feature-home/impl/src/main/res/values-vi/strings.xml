@@ -119,10 +119,6 @@
   <string name="recent_search_clear">Xóa</string>
   <string name="recent_search_remove_item">Xoá khỏi tìm kiếm gần đây</string>
   <!-- Pinning -->
-  <string name="home_snackbar_item_pinned_success">Đã ghim nội dung thành công</string>
-  <string name="home_snackbar_item_pinned_error">Đã xảy ra lỗi khi ghim nội dung này</string>
-  <string name="home_snackbar_item_unpinned_success">Đã bỏ ghim nội dung thành công</string>
-  <string name="home_snackbar_item_unpinned_error">Đã xảy ra lỗi khi bỏ ghim nội dung này</string>
   <string name="home_snackbar_items_pinned_success">Đã ghim nội dung thành công</string>
   <string name="home_snackbar_items_pinned_partial_success">Lỗi khi ghim một số nội dung</string>
   <string name="home_snackbar_items_pinned_error">Lỗi khi ghim nội dung</string>

@@ -28,6 +28,9 @@ sealed interface ItemDetailsFieldSection {
 
         data object Contact : Identity
 
+        @JvmInline
+        value class ExtraSection(val index: Int) : Identity
+
         data object Personal : Identity
 
         data object Work : Identity

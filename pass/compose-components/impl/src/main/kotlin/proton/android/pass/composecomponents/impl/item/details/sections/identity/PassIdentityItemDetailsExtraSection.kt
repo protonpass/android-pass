@@ -36,13 +36,13 @@ internal fun PassIdentityItemDetailsExtraSection(
     itemColors: PassItemColors,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
-    extraSectionContents.forEach { extraSectionContent ->
+    extraSectionContents.forEachIndexed { extraSectionIndex, extraSectionContent ->
         if (extraSectionContent.hasCustomFields) {
             val rows = mutableListOf<@Composable () -> Unit>()
 
             rows.addCustomFieldRows(
                 customFields = extraSectionContent.customFields,
-                customFieldSection = ItemDetailsFieldSection.Main,
+                customFieldSection = ItemDetailsFieldSection.Identity.ExtraSection(extraSectionIndex),
                 itemColors = itemColors,
                 onEvent = onEvent
             )

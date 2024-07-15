@@ -22,10 +22,12 @@ import kotlinx.coroutines.flow.Flow
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
+import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemDiffType
 import proton.android.pass.domain.ItemDiffs
 
 abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
@@ -39,10 +41,35 @@ abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
         hiddenState: HiddenState
     ): ItemContents
 
-    abstract fun calculateItemDiffs(
-        currentItemContents: ITEM_CONTENTS,
-        previousItemContents: ITEM_CONTENTS
-    ): ItemDiffs
+    abstract fun calculateItemDiffs(baseItemDetailState: ITEM_CONTENTS, otherItemDetailState: ITEM_CONTENTS): ItemDiffs
+
+    protected fun calculateItemDiffType(
+        encryptionContext: EncryptionContext,
+        baseItemFieldHiddenState: HiddenState,
+        otherItemFieldHiddenState: HiddenState
+    ): ItemDiffType = with(encryptionContext) {
+        decrypt(baseItemFieldHiddenState.encrypted) to decrypt(otherItemFieldHiddenState.encrypted)
+    }.let { (baseItemFieldValue, otherItemFieldValue) ->
+        calculateItemDiffType(baseItemFieldValue, otherItemFieldValue)
+    }
+
+    protected fun calculateItemDiffType(baseItemFieldValue: String, otherItemFieldValue: String): ItemDiffType = when {
+        baseItemFieldValue.isEmpty() && otherItemFieldValue.isEmpty() -> {
+            ItemDiffType.None
+        }
+
+        baseItemFieldValue.isNotEmpty() && otherItemFieldValue.isNotEmpty() -> {
+            if (baseItemFieldValue == otherItemFieldValue) {
+                ItemDiffType.None
+            } else {
+                ItemDiffType.Content
+            }
+        }
+
+        else -> {
+            ItemDiffType.Field
+        }
+    }
 
     protected fun toggleHiddenCustomField(
         customFieldsContent: List<CustomFieldContent>,

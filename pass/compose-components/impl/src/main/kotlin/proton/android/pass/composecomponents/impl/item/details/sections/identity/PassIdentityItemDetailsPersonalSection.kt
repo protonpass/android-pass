@@ -30,6 +30,7 @@ import proton.android.pass.composecomponents.impl.item.details.rows.addItemDetai
 import proton.android.pass.composecomponents.impl.item.details.sections.identity.shared.rows.addCustomFieldRows
 import proton.android.pass.composecomponents.impl.item.details.sections.identity.shared.sections.PassIdentityItemDetailsSection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
+import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.PersonalDetailsContent
 
 @Composable
@@ -37,6 +38,7 @@ internal fun PassIdentityItemDetailsPersonalSection(
     modifier: Modifier = Modifier,
     personalDetailsContent: PersonalDetailsContent,
     itemColors: PassItemColors,
+    itemDiffs: ItemDiffs.Identity,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) = with(personalDetailsContent) {
     val rows = mutableListOf<@Composable () -> Unit>()
@@ -47,6 +49,7 @@ internal fun PassIdentityItemDetailsPersonalSection(
             section = firstName,
             field = ItemDetailsFieldType.Plain.FirstName,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.firstName,
             onEvent = onEvent
         )
     }
@@ -57,6 +60,7 @@ internal fun PassIdentityItemDetailsPersonalSection(
             section = middleName,
             field = ItemDetailsFieldType.Plain.MiddleName,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.middleName,
             onEvent = onEvent
         )
     }
@@ -67,6 +71,7 @@ internal fun PassIdentityItemDetailsPersonalSection(
             section = lastName,
             field = ItemDetailsFieldType.Plain.LastName,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.lastName,
             onEvent = onEvent
         )
     }
@@ -77,6 +82,7 @@ internal fun PassIdentityItemDetailsPersonalSection(
             section = fullName,
             field = ItemDetailsFieldType.Plain.FullName,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.fullName,
             onEvent = onEvent
         )
     }
@@ -87,6 +93,7 @@ internal fun PassIdentityItemDetailsPersonalSection(
             section = email,
             field = ItemDetailsFieldType.Plain.Email,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.email,
             onEvent = onEvent
         )
     }
@@ -97,6 +104,7 @@ internal fun PassIdentityItemDetailsPersonalSection(
             section = gender,
             field = ItemDetailsFieldType.Plain.Gender,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.gender,
             onEvent = onEvent
         )
     }
@@ -107,6 +115,7 @@ internal fun PassIdentityItemDetailsPersonalSection(
             section = phoneNumber,
             field = ItemDetailsFieldType.Plain.PhoneNumber,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.phoneNumber,
             onEvent = onEvent
         )
     }
@@ -117,6 +126,7 @@ internal fun PassIdentityItemDetailsPersonalSection(
             section = birthdate,
             field = ItemDetailsFieldType.Plain.BirthDate,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.birthdate,
             onEvent = onEvent
         )
     }

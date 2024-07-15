@@ -80,10 +80,10 @@ class NoteItemDetailsHandlerObserverImpl @Inject constructor(
     }
 
     override fun calculateItemDiffs(
-        currentItemContents: ItemContents.Note,
-        previousItemContents: ItemContents.Note
+        baseItemDetailState: ItemContents.Note,
+        otherItemDetailState: ItemContents.Note
     ): ItemDiffs.Note = ItemDiffs.Note(
-        isTitleChanged = currentItemContents.title != previousItemContents.title
+        title = calculateItemDiffType(baseItemDetailState.title, otherItemDetailState.title)
     )
 
 }

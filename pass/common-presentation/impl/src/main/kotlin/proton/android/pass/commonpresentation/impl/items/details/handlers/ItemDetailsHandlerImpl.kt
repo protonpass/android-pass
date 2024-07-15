@@ -151,8 +151,8 @@ class ItemDetailsHandlerImpl @Inject constructor(
         baseItemDetailState: ItemDetailState,
         otherItemDetailState: ItemDetailState
     ): ItemDiffs = getItemDetailsObserver(baseItemDetailState.itemCategory).calculateItemDiffs(
-        currentItemContents = baseItemDetailState.itemContents,
-        previousItemContents = otherItemDetailState.itemContents
+        baseItemDetailState = baseItemDetailState.itemContents,
+        otherItemDetailState = otherItemDetailState.itemContents
     )
 
     @Suppress("UNCHECKED_CAST")

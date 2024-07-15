@@ -21,20 +21,29 @@ package proton.android.pass.composecomponents.impl.item
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.domain.ItemDiffType
 
 @Composable
 fun SectionSubtitle(
     modifier: Modifier = Modifier,
     text: AnnotatedString,
-    textStyle: TextStyle = ProtonTheme.typography.defaultNorm
+    textStyle: TextStyle = ProtonTheme.typography.defaultNorm,
+    itemDiffType: ItemDiffType = ItemDiffType.None
 ) {
     Text(
         modifier = modifier,
         text = text,
-        style = textStyle
+        style = textStyle,
+        color = if (itemDiffType == ItemDiffType.Content) {
+            PassTheme.colors.signalWarning
+        } else {
+            Color.Unspecified
+        }
     )
 }

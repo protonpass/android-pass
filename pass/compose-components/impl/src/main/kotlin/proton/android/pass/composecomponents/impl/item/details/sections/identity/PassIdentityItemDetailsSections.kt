@@ -32,6 +32,7 @@ import proton.android.pass.composecomponents.impl.item.details.sections.shared.P
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
@@ -42,6 +43,7 @@ internal fun PassIdentityItemDetailsSections(
     shareId: ShareId,
     contents: ItemContents.Identity,
     itemColors: PassItemColors,
+    itemDiffs: ItemDiffs.Identity,
     onEvent: (PassItemDetailsUiEvent) -> Unit,
     lastAutofillOption: Option<Instant>,
     revision: Long,
@@ -58,6 +60,7 @@ internal fun PassIdentityItemDetailsSections(
             PassIdentityItemDetailsPersonalSection(
                 personalDetailsContent = personalDetailsContent,
                 itemColors = itemColors,
+                itemDiffs = itemDiffs,
                 onEvent = onEvent
             )
         }
@@ -66,6 +69,7 @@ internal fun PassIdentityItemDetailsSections(
             PassIdentityItemDetailsAddressSection(
                 addressDetailsContent = addressDetailsContent,
                 itemColors = itemColors,
+                itemDiffs = itemDiffs,
                 onEvent = onEvent
             )
         }
@@ -74,6 +78,7 @@ internal fun PassIdentityItemDetailsSections(
             PassIdentityItemDetailsContactSection(
                 contactDetailsContent = contactDetailsContent,
                 itemColors = itemColors,
+                itemDiffs = itemDiffs,
                 onEvent = onEvent
             )
         }
@@ -82,6 +87,7 @@ internal fun PassIdentityItemDetailsSections(
             PassIdentityItemDetailsWorkSection(
                 workDetailsContent = workDetailsContent,
                 itemColors = itemColors,
+                itemDiffs = itemDiffs,
                 onEvent = onEvent
             )
         }

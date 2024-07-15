@@ -79,8 +79,7 @@ class AccountListenerInitializer : Initializer<Unit> {
         accountManager.getAccounts()
             .scan(emptyMap<UserId, AccountState>()) { previousStates, accounts ->
                 accounts.associate { it.userId to it.state }.onEach { (userId, currentState) ->
-                    val previousState = previousStates[userId]
-                    if (previousState == AccountState.NotReady && currentState == AccountState.Ready) {
+                    if (previousStates[userId] == AccountState.NotReady && currentState == AccountState.Ready) {
                         val itemSyncStatus = itemSyncStatusRepository.observeSyncStatus().first()
                         itemSyncStatusRepository.setMode(itemSyncStatus.toSyncMode())
                     }

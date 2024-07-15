@@ -31,8 +31,8 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.mapLatest
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -40,7 +40,7 @@ import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
-import me.proton.core.accountmanager.domain.onAccountState
+import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.extension.getDisplayName
@@ -236,18 +236,18 @@ class ProfileViewModel @Inject constructor(
             }
 
     private val needsToDisplaySync = MutableStateFlow(false)
-    internal val onAccountReadyFlow = accountManager.onAccountState(
-        AccountState.Ready,
-        initialState = false
-    )
-        .onEach { account ->
-            viewModelScope.launch {
-                needsToDisplaySync.update { true }
-                refreshAccount(account)
+    internal val onAccountReadyFlow =
+        accountManager.getAccounts()
+            .scan(emptyMap<UserId, AccountState>()) { previousStates, accounts ->
+                accounts.associate { it.userId to it.state }.onEach { (userId, currentState) ->
+                    if (previousStates[userId] == AccountState.NotReady && currentState == AccountState.Ready) {
+                        needsToDisplaySync.update { true }
+                        accounts.firstOrNull { it.userId == userId }?.let { refreshAccount(it) }
+                    }
+                }
             }
-        }
-        .combine(needsToDisplaySync, ::Pair)
-        .distinctUntilChanged()
+            .combine(needsToDisplaySync, ::Pair)
+            .distinctUntilChanged()
 
     internal val state: StateFlow<ProfileUiState> = combineN(
         appLockSectionStateFlow,

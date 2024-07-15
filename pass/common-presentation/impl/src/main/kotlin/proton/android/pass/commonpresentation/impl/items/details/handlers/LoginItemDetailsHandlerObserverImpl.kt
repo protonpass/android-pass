@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import proton.android.pass.common.api.combineN
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
@@ -123,7 +124,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
                         totpCustomFieldsLabels.zip(totpCustomFieldsValues).toMap()
                     }
                 }
-        }
+        }.onStart { emit(emptyMap()) }
 
     private fun observeTotpCustomFieldsLabels(
         totpCustomFieldsContent: List<CustomFieldContent.Totp>

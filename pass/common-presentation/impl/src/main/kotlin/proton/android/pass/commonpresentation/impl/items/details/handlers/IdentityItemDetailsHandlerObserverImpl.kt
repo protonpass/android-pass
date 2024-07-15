@@ -156,10 +156,10 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
     }
 
     override fun calculateItemDiffs(
-        currentItemContents: ItemContents.Identity,
-        previousItemContents: ItemContents.Identity
+        baseItemDetailState: ItemContents.Identity,
+        otherItemDetailState: ItemContents.Identity
     ): ItemDiffs.Identity = ItemDiffs.Identity(
-        isTitleChanged = currentItemContents.title != previousItemContents.title
+        title = calculateItemDiffType(baseItemDetailState.title, otherItemDetailState.title)
     )
 
 }

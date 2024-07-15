@@ -340,10 +340,7 @@ abstract class BaseLoginViewModel(
         aliasLocalItemState.update { aliasItemFormState.toOption() }
 
         aliasItemFormState.aliasToBeCreated?.let { alias ->
-            loginItemFormMutableState = loginItemFormMutableState.copy(
-                email = alias,
-                username = ""
-            )
+            loginItemFormMutableState = loginItemFormMutableState.copy(email = alias)
 
             canUpdateUsernameState.update { false }
         }
@@ -731,7 +728,10 @@ abstract class BaseLoginViewModel(
             }
     }
 
-    private fun updateCustomFieldHiddenOnFocusChange(field: LoginCustomField.CustomFieldHidden, isFocused: Boolean) {
+    private fun updateCustomFieldHiddenOnFocusChange(
+        field: LoginCustomField.CustomFieldHidden,
+        isFocused: Boolean
+    ) {
         val customFields = loginItemFormState.customFields.toMutableList()
         val customFieldContent: UICustomFieldContent.Hidden? = customFields.getOrNull(field.index)
             as? UICustomFieldContent.Hidden

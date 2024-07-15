@@ -20,6 +20,8 @@ package proton.android.pass.initializer
 
 import android.content.Context
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.flowWithLifecycle
 import androidx.startup.Initializer
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
@@ -27,6 +29,8 @@ import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.scan
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
@@ -35,6 +39,7 @@ import me.proton.core.accountmanager.presentation.observe
 import me.proton.core.accountmanager.presentation.onAccountDisabled
 import me.proton.core.accountmanager.presentation.onAccountReady
 import me.proton.core.accountmanager.presentation.onAccountRemoved
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.commonui.api.PassAppLifecycleProvider
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.toSyncMode
@@ -67,11 +72,22 @@ class AccountListenerInitializer : Initializer<Unit> {
             performCleanup(it, entryPoint)
         }.onAccountReady(false) { // this flag is set to false to listen for new accounts only
             PassLogger.i(TAG, "New Account ready")
-            val itemSyncStatus = itemSyncStatusRepository.observeSyncStatus().first()
-            itemSyncStatusRepository.setMode(itemSyncStatus.toSyncMode())
             refreshOrganizationSettings()
         }
 
+        // onAccountReady doesn't notify sometimes when using extra password during login
+        accountManager.getAccounts()
+            .scan(emptyMap<UserId, AccountState>()) { previousStates, accounts ->
+                accounts.associate { it.userId to it.state }.onEach { (userId, currentState) ->
+                    val previousState = previousStates[userId]
+                    if (previousState == AccountState.NotReady && currentState == AccountState.Ready) {
+                        val itemSyncStatus = itemSyncStatusRepository.observeSyncStatus().first()
+                        itemSyncStatusRepository.setMode(itemSyncStatus.toSyncMode())
+                    }
+                }
+            }
+            .flowWithLifecycle(lifecycleProvider.lifecycle)
+            .launchIn(lifecycleProvider.lifecycle.coroutineScope)
     }
 
     override fun dependencies(): List<Class<out Initializer<*>?>> = emptyList()

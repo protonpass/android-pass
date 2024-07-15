@@ -30,6 +30,7 @@ import proton.android.pass.composecomponents.impl.item.details.rows.addItemDetai
 import proton.android.pass.composecomponents.impl.item.details.sections.identity.shared.rows.addCustomFieldRows
 import proton.android.pass.composecomponents.impl.item.details.sections.identity.shared.sections.PassIdentityItemDetailsSection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
+import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.WorkDetailsContent
 
 @Composable
@@ -37,6 +38,7 @@ internal fun PassIdentityItemDetailsWorkSection(
     modifier: Modifier = Modifier,
     workDetailsContent: WorkDetailsContent,
     itemColors: PassItemColors,
+    itemDiffs: ItemDiffs.Identity,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) = with(workDetailsContent) {
     val rows = mutableListOf<@Composable () -> Unit>()
@@ -47,6 +49,7 @@ internal fun PassIdentityItemDetailsWorkSection(
             section = company,
             field = ItemDetailsFieldType.Plain.Company,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.company,
             onEvent = onEvent
         )
     }
@@ -57,6 +60,7 @@ internal fun PassIdentityItemDetailsWorkSection(
             section = jobTitle,
             field = ItemDetailsFieldType.Plain.Occupation,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.jobTitle,
             onEvent = onEvent
         )
     }
@@ -67,6 +71,7 @@ internal fun PassIdentityItemDetailsWorkSection(
             section = workPhoneNumber,
             field = ItemDetailsFieldType.Plain.PhoneNumber,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.workPhoneNumber,
             onEvent = onEvent
         )
     }
@@ -77,6 +82,7 @@ internal fun PassIdentityItemDetailsWorkSection(
             section = workEmail,
             field = ItemDetailsFieldType.Plain.Email,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.workEmail,
             onEvent = onEvent
         )
     }
@@ -87,6 +93,7 @@ internal fun PassIdentityItemDetailsWorkSection(
             section = personalWebsite,
             field = ItemDetailsFieldType.Plain.Website,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.personalWebsite,
             onEvent = onEvent
         )
     }

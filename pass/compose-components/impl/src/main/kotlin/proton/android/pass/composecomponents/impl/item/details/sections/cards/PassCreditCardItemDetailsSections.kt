@@ -31,6 +31,7 @@ import proton.android.pass.composecomponents.impl.item.details.sections.shared.P
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassSharedItemDetailNoteSection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
@@ -41,6 +42,7 @@ internal fun PassCreditCardItemDetailsSections(
     shareId: ShareId,
     contents: ItemContents.CreditCard,
     itemColors: PassItemColors,
+    itemDiffs: ItemDiffs,
     onEvent: (PassItemDetailsUiEvent) -> Unit,
     lastAutofillOption: Option<Instant>,
     revision: Long,
@@ -66,7 +68,8 @@ internal fun PassCreditCardItemDetailsSections(
         if (note.isNotBlank()) {
             PassSharedItemDetailNoteSection(
                 note = note,
-                itemColors = itemColors
+                itemColors = itemColors,
+                itemDiffType = itemDiffs.note
             )
         }
 

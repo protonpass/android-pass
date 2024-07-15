@@ -31,12 +31,14 @@ import proton.android.pass.composecomponents.impl.item.details.sections.identity
 import proton.android.pass.composecomponents.impl.item.details.sections.identity.shared.sections.PassIdentityItemDetailsSection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.ContactDetailsContent
+import proton.android.pass.domain.ItemDiffs
 
 @Composable
 internal fun PassIdentityItemDetailsContactSection(
     modifier: Modifier = Modifier,
     contactDetailsContent: ContactDetailsContent,
     itemColors: PassItemColors,
+    itemDiffs: ItemDiffs.Identity,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) = with(contactDetailsContent) {
     val rows = mutableListOf<@Composable () -> Unit>()
@@ -47,6 +49,7 @@ internal fun PassIdentityItemDetailsContactSection(
             section = socialSecurityNumber,
             field = ItemDetailsFieldType.Plain.SocialSecurityNumber,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.socialSecurityNumber,
             onEvent = onEvent
         )
     }
@@ -57,6 +60,7 @@ internal fun PassIdentityItemDetailsContactSection(
             section = passportNumber,
             field = ItemDetailsFieldType.Plain.PassportNumber,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.passportNumber,
             onEvent = onEvent
         )
     }
@@ -67,6 +71,7 @@ internal fun PassIdentityItemDetailsContactSection(
             section = licenseNumber,
             field = ItemDetailsFieldType.Plain.LicenseNumber,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.licenseNumber,
             onEvent = onEvent
         )
     }
@@ -77,6 +82,7 @@ internal fun PassIdentityItemDetailsContactSection(
             section = website,
             field = ItemDetailsFieldType.Plain.Website,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.website,
             onEvent = onEvent
         )
     }
@@ -87,6 +93,7 @@ internal fun PassIdentityItemDetailsContactSection(
             section = secondPhoneNumber,
             field = ItemDetailsFieldType.Plain.PhoneNumber,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.secondPhoneNumber,
             onEvent = onEvent
         )
     }
@@ -97,6 +104,7 @@ internal fun PassIdentityItemDetailsContactSection(
             section = linkedin,
             field = ItemDetailsFieldType.Plain.LinkedIn,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.linkedin,
             onEvent = onEvent
         )
     }
@@ -107,6 +115,7 @@ internal fun PassIdentityItemDetailsContactSection(
             section = xHandle,
             field = ItemDetailsFieldType.Plain.XHandle,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.xHandle,
             onEvent = onEvent
         )
     }
@@ -117,6 +126,7 @@ internal fun PassIdentityItemDetailsContactSection(
             section = instagram,
             field = ItemDetailsFieldType.Plain.Instagram,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.instagram,
             onEvent = onEvent
         )
     }
@@ -127,6 +137,7 @@ internal fun PassIdentityItemDetailsContactSection(
             section = facebook,
             field = ItemDetailsFieldType.Plain.Facebook,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.facebook,
             onEvent = onEvent
         )
     }
@@ -137,6 +148,7 @@ internal fun PassIdentityItemDetailsContactSection(
             section = reddit,
             field = ItemDetailsFieldType.Plain.Reddit,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.reddit,
             onEvent = onEvent
         )
     }
@@ -147,6 +159,7 @@ internal fun PassIdentityItemDetailsContactSection(
             section = yahoo,
             field = ItemDetailsFieldType.Plain.Yahoo,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.yahoo,
             onEvent = onEvent
         )
     }

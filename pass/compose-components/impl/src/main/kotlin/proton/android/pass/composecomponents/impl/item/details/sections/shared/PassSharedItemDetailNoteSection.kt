@@ -25,13 +25,15 @@ import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailFieldRow
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
+import proton.android.pass.domain.ItemDiffType
 import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun PassSharedItemDetailNoteSection(
     modifier: Modifier = Modifier,
     note: String,
-    itemColors: PassItemColors
+    itemColors: PassItemColors,
+    itemDiffType: ItemDiffType
 ) {
     RoundedCornersColumn(
         modifier = modifier
@@ -41,6 +43,7 @@ internal fun PassSharedItemDetailNoteSection(
             title = stringResource(R.string.item_details_shared_section_note_title),
             subtitle = note,
             itemColors = itemColors,
+            itemDiffType = itemDiffType,
             isSelectable = true
         )
     }

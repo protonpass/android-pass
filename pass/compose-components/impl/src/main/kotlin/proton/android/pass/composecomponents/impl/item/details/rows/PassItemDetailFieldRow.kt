@@ -42,7 +42,9 @@ import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.composecomponents.impl.item.SectionSubtitle
 import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
+import proton.android.pass.composecomponents.impl.item.details.modifiers.contentDiff
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
+import proton.android.pass.domain.ItemDiffType
 
 @Composable
 internal fun PassItemDetailFieldRow(
@@ -51,6 +53,7 @@ internal fun PassItemDetailFieldRow(
     title: String,
     subtitle: String,
     itemColors: PassItemColors,
+    itemDiffType: ItemDiffType = ItemDiffType.None,
     isSelectable: Boolean = false,
     onClick: (() -> Unit)? = null,
     contentInBetween: (@Composable () -> Unit)? = null
@@ -58,6 +61,7 @@ internal fun PassItemDetailFieldRow(
     Row(
         modifier = modifier
             .fillMaxWidth()
+            .contentDiff(itemDiffType = itemDiffType)
             .applyIf(
                 condition = onClick != null,
                 ifTrue = { clickable(onClick = onClick!!) }
@@ -88,27 +92,30 @@ internal fun PassItemDetailFieldRow(
                 SelectionContainer {
                     SectionSubtitle(
                         modifier = Modifier.padding(start = Spacing.small),
-                        text = subtitle.asAnnotatedString()
+                        text = subtitle.asAnnotatedString(),
+                        itemDiffType = itemDiffType
                     )
                 }
             } else {
                 SectionSubtitle(
                     modifier = Modifier.padding(start = Spacing.small),
-                    text = subtitle.asAnnotatedString()
+                    text = subtitle.asAnnotatedString(),
+                    itemDiffType = itemDiffType
                 )
             }
         }
 
         contentInBetween?.invoke()
     }
-
 }
 
+@Suppress("LongParameterList")
 internal fun MutableList<@Composable () -> Unit>.addItemDetailsFieldRow(
     @StringRes titleResId: Int,
     section: String,
     field: ItemDetailsFieldType.Plain,
     itemColors: PassItemColors,
+    itemDiffType: ItemDiffType,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
     add {
@@ -117,6 +124,7 @@ internal fun MutableList<@Composable () -> Unit>.addItemDetailsFieldRow(
             title = stringResource(id = titleResId),
             subtitle = section,
             itemColors = itemColors,
+            itemDiffType = itemDiffType,
             onClick = {
                 PassItemDetailsUiEvent.OnSectionClick(
                     section = section,

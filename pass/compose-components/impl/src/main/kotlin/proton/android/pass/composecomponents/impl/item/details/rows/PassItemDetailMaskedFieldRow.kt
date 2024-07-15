@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import proton.android.pass.commonuimodels.api.masks.TextMask
 import proton.android.pass.composecomponents.impl.toggles.PassVisibilityToggle
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
+import proton.android.pass.domain.ItemDiffType
 
 @Composable
 internal fun PassItemDetailMaskedFieldRow(
@@ -36,6 +37,7 @@ internal fun PassItemDetailMaskedFieldRow(
     title: String,
     maskedSubtitle: TextMask,
     itemColors: PassItemColors,
+    itemDiffType: ItemDiffType = ItemDiffType.None,
     isSelectable: Boolean = false,
     isToggleable: Boolean = false,
     onClick: (() -> Unit)? = null,
@@ -49,6 +51,7 @@ internal fun PassItemDetailMaskedFieldRow(
         title = title,
         subtitle = if (isMasked) maskedSubtitle.masked else maskedSubtitle.unmasked,
         itemColors = itemColors,
+        itemDiffType = itemDiffType,
         isSelectable = isSelectable,
         onClick = onClick
     ) {

@@ -184,10 +184,37 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     }
 
     override fun calculateItemDiffs(
-        currentItemContents: ItemContents.Login,
-        previousItemContents: ItemContents.Login
-    ): ItemDiffs.Login = ItemDiffs.Login(
-        isTitleChanged = currentItemContents.title != previousItemContents.title
-    )
+        baseItemDetailState: ItemContents.Login,
+        otherItemDetailState: ItemContents.Login
+    ): ItemDiffs.Login = encryptionContextProvider.withEncryptionContext {
+        ItemDiffs.Login(
+            title = calculateItemDiffType(
+                baseItemFieldValue = baseItemDetailState.title,
+                otherItemFieldValue = otherItemDetailState.title
+            ),
+            email = calculateItemDiffType(
+                baseItemFieldValue = baseItemDetailState.itemEmail,
+                otherItemFieldValue = otherItemDetailState.itemEmail
+            ),
+            username = calculateItemDiffType(
+                baseItemFieldValue = baseItemDetailState.itemUsername,
+                otherItemFieldValue = otherItemDetailState.itemUsername
+            ),
+            password = calculateItemDiffType(
+                encryptionContext = this@withEncryptionContext,
+                baseItemFieldHiddenState = baseItemDetailState.password,
+                otherItemFieldHiddenState = otherItemDetailState.password
+            ),
+            totp = calculateItemDiffType(
+                encryptionContext = this@withEncryptionContext,
+                baseItemFieldHiddenState = baseItemDetailState.password,
+                otherItemFieldHiddenState = otherItemDetailState.password
+            ),
+            note = calculateItemDiffType(
+                baseItemFieldValue = baseItemDetailState.note,
+                otherItemFieldValue = otherItemDetailState.note
+            )
+        )
+    }
 
 }

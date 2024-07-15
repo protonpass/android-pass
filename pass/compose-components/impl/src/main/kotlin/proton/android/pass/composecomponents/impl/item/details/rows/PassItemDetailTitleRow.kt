@@ -41,6 +41,7 @@ import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
 import proton.android.pass.composecomponents.impl.item.icon.IdentityIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
+import proton.android.pass.domain.ItemDiffType
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Vault
 
@@ -59,7 +60,7 @@ internal fun PassItemDetailTitleRow(
                 isPinned = isItemPinned,
                 itemColors = itemColors,
                 vault = itemVault,
-                shouldWarningTitle = itemDetailState.itemDiffs.isTitleChanged,
+                itemDiffType = itemDetailState.itemDiffs.title,
                 onSharedVaultClick = { sharedVaultId ->
                     PassItemDetailsUiEvent.OnSharedVaultClick(
                         sharedVaultId = sharedVaultId
@@ -80,7 +81,7 @@ internal fun PassItemDetailTitleRow(
                 isPinned = isItemPinned,
                 itemColors = itemColors,
                 vault = itemVault,
-                shouldWarningTitle = itemDetailState.itemDiffs.isTitleChanged,
+                itemDiffType = itemDetailState.itemDiffs.title,
                 onSharedVaultClick = { sharedVaultId ->
                     PassItemDetailsUiEvent.OnSharedVaultClick(
                         sharedVaultId = sharedVaultId
@@ -101,7 +102,7 @@ internal fun PassItemDetailTitleRow(
                 isPinned = isItemPinned,
                 itemColors = itemColors,
                 vault = itemVault,
-                shouldWarningTitle = itemDetailState.itemDiffs.isTitleChanged,
+                itemDiffType = itemDetailState.itemDiffs.title,
                 onSharedVaultClick = { sharedVaultId ->
                     PassItemDetailsUiEvent.OnSharedVaultClick(
                         sharedVaultId = sharedVaultId
@@ -122,7 +123,7 @@ internal fun PassItemDetailTitleRow(
                 isPinned = isItemPinned,
                 itemColors = itemColors,
                 vault = itemVault,
-                shouldWarningTitle = itemDetailState.itemDiffs.isTitleChanged,
+                itemDiffType = itemDetailState.itemDiffs.title,
                 onSharedVaultClick = { sharedVaultId ->
                     PassItemDetailsUiEvent.OnSharedVaultClick(
                         sharedVaultId = sharedVaultId
@@ -163,11 +164,7 @@ internal fun PassItemDetailTitleRow(
                         PassItemDetailTitle(
                             text = itemContents.title,
                             maxLines = Int.MAX_VALUE,
-                            textColor = if (itemDetailState.itemDiffs.isTitleChanged) {
-                                PassTheme.colors.signalWarning
-                            } else {
-                                PassTheme.colors.textNorm
-                            }
+                            itemDiffType = itemDiffs.title
                         )
                     }
 
@@ -192,7 +189,7 @@ internal fun PassItemDetailTitleRow(
                 isPinned = false,
                 itemColors = itemColors,
                 vault = itemVault,
-                shouldWarningTitle = itemDetailState.itemDiffs.isTitleChanged,
+                itemDiffType = itemDetailState.itemDiffs.title,
                 onSharedVaultClick = {},
                 iconContent = {}
             )
@@ -207,7 +204,7 @@ private fun ItemDetailTitleRow(
     isPinned: Boolean,
     itemColors: PassItemColors,
     vault: Vault?,
-    shouldWarningTitle: Boolean,
+    itemDiffType: ItemDiffType,
     onSharedVaultClick: (ShareId) -> Unit,
     iconContent: @Composable RowScope.() -> Unit
 ) {
@@ -232,11 +229,7 @@ private fun ItemDetailTitleRow(
         ) {
             PassItemDetailTitle(
                 text = title,
-                textColor = if (shouldWarningTitle) {
-                    PassTheme.colors.signalWarning
-                } else {
-                    PassTheme.colors.textNorm
-                }
+                itemDiffType = itemDiffType
             )
 
             vault?.let { itemVault ->

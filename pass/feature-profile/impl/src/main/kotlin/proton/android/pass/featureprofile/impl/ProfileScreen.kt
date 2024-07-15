@@ -45,9 +45,10 @@ fun ProfileScreen(
         minActiveState = Lifecycle.State.CREATED,
         initialValue = null to false
     )
-    LaunchedEffect(newAccountReady.second) {
-        newAccountReady.first ?: return@LaunchedEffect
-        if (newAccountReady.second) {
+    val (account, showSync) = newAccountReady
+    LaunchedEffect(account) {
+        account ?: return@LaunchedEffect
+        if (showSync) {
             onNavigateEvent(ProfileNavigation.SyncDialog)
             viewModel.resetSyncDisplayed()
         }

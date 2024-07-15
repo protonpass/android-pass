@@ -43,9 +43,11 @@ import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.commonui.api.toPasswordAnnotatedString
 import proton.android.pass.composecomponents.impl.item.SectionSubtitle
 import proton.android.pass.composecomponents.impl.item.SectionTitle
+import proton.android.pass.composecomponents.impl.item.details.modifiers.contentDiff
 import proton.android.pass.composecomponents.impl.toggles.PassVisibilityToggle
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.HiddenState
+import proton.android.pass.domain.ItemDiffType
 
 @Composable
 internal fun PassItemDetailsHiddenFieldRow(
@@ -55,6 +57,7 @@ internal fun PassItemDetailsHiddenFieldRow(
     hiddenState: HiddenState,
     hiddenTextLength: Int,
     itemColors: PassItemColors,
+    itemDiffType: ItemDiffType = ItemDiffType.None,
     onClick: (() -> Unit)? = null,
     onToggle: ((Boolean) -> Unit)? = null,
     hiddenTextStyle: TextStyle = ProtonTheme.typography.defaultNorm,
@@ -78,6 +81,7 @@ internal fun PassItemDetailsHiddenFieldRow(
     Row(
         modifier = modifier
             .fillMaxWidth()
+            .contentDiff(itemDiffType = itemDiffType)
             .applyIf(
                 condition = onClick != null,
                 ifTrue = { clickable(onClick = onClick!!) }
@@ -107,7 +111,8 @@ internal fun PassItemDetailsHiddenFieldRow(
             SectionSubtitle(
                 modifier = Modifier.padding(start = Spacing.small),
                 text = subtitle,
-                textStyle = hiddenTextStyle
+                textStyle = hiddenTextStyle,
+                itemDiffType = itemDiffType
             )
         }
 

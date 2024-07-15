@@ -31,12 +31,14 @@ import proton.android.pass.composecomponents.impl.item.details.sections.identity
 import proton.android.pass.composecomponents.impl.item.details.sections.identity.shared.sections.PassIdentityItemDetailsSection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.AddressDetailsContent
+import proton.android.pass.domain.ItemDiffs
 
 @Composable
 internal fun PassIdentityItemDetailsAddressSection(
     modifier: Modifier = Modifier,
     addressDetailsContent: AddressDetailsContent,
     itemColors: PassItemColors,
+    itemDiffs: ItemDiffs.Identity,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) = with(addressDetailsContent) {
     val rows = mutableListOf<@Composable () -> Unit>()
@@ -47,6 +49,7 @@ internal fun PassIdentityItemDetailsAddressSection(
             section = organization,
             field = ItemDetailsFieldType.Plain.Organization,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.organization,
             onEvent = onEvent
         )
     }
@@ -57,6 +60,7 @@ internal fun PassIdentityItemDetailsAddressSection(
             section = streetAddress,
             field = ItemDetailsFieldType.Plain.StreetAddress,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.streetAddress,
             onEvent = onEvent
         )
     }
@@ -67,6 +71,7 @@ internal fun PassIdentityItemDetailsAddressSection(
             section = floor,
             field = ItemDetailsFieldType.Plain.Floor,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.floor,
             onEvent = onEvent
         )
     }
@@ -77,6 +82,7 @@ internal fun PassIdentityItemDetailsAddressSection(
             section = city,
             field = ItemDetailsFieldType.Plain.City,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.city,
             onEvent = onEvent
         )
     }
@@ -87,6 +93,7 @@ internal fun PassIdentityItemDetailsAddressSection(
             section = zipOrPostalCode,
             field = ItemDetailsFieldType.Plain.ZipOrPostalCode,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.zipOrPostalCode,
             onEvent = onEvent
         )
     }
@@ -97,6 +104,7 @@ internal fun PassIdentityItemDetailsAddressSection(
             section = stateOrProvince,
             field = ItemDetailsFieldType.Plain.StateOrProvince,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.stateOrProvince,
             onEvent = onEvent
         )
     }
@@ -107,6 +115,7 @@ internal fun PassIdentityItemDetailsAddressSection(
             section = county,
             field = ItemDetailsFieldType.Plain.County,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.county,
             onEvent = onEvent
         )
     }
@@ -117,6 +126,7 @@ internal fun PassIdentityItemDetailsAddressSection(
             section = countryOrRegion,
             field = ItemDetailsFieldType.Plain.CountryOrRegion,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.countryOrRegion,
             onEvent = onEvent
         )
     }

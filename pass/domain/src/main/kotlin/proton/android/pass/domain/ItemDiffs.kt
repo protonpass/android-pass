@@ -18,32 +18,82 @@
 
 package proton.android.pass.domain
 
+enum class ItemDiffType {
+    Content,
+    Field,
+    None
+}
+
 sealed interface ItemDiffs {
 
-    val isTitleChanged: Boolean
+    val title: ItemDiffType
+
+    val note: ItemDiffType
 
     data class Alias(
-        override val isTitleChanged: Boolean = false
+        override val title: ItemDiffType = ItemDiffType.None,
+        override val note: ItemDiffType = ItemDiffType.None
     ) : ItemDiffs
 
     data class CreditCard(
-        override val isTitleChanged: Boolean = false
+        override val title: ItemDiffType = ItemDiffType.None,
+        override val note: ItemDiffType = ItemDiffType.None
     ) : ItemDiffs
 
     data class Identity(
-        override val isTitleChanged: Boolean = false
+        override val title: ItemDiffType = ItemDiffType.None,
+        override val note: ItemDiffType = ItemDiffType.None,
+        val organization: ItemDiffType = ItemDiffType.None,
+        val streetAddress: ItemDiffType = ItemDiffType.None,
+        val floor: ItemDiffType = ItemDiffType.None,
+        val city: ItemDiffType = ItemDiffType.None,
+        val zipOrPostalCode: ItemDiffType = ItemDiffType.None,
+        val stateOrProvince: ItemDiffType = ItemDiffType.None,
+        val county: ItemDiffType = ItemDiffType.None,
+        val countryOrRegion: ItemDiffType = ItemDiffType.None,
+        val socialSecurityNumber: ItemDiffType = ItemDiffType.None,
+        val passportNumber: ItemDiffType = ItemDiffType.None,
+        val licenseNumber: ItemDiffType = ItemDiffType.None,
+        val website: ItemDiffType = ItemDiffType.None,
+        val secondPhoneNumber: ItemDiffType = ItemDiffType.None,
+        val linkedin: ItemDiffType = ItemDiffType.None,
+        val xHandle: ItemDiffType = ItemDiffType.None,
+        val instagram: ItemDiffType = ItemDiffType.None,
+        val facebook: ItemDiffType = ItemDiffType.None,
+        val reddit: ItemDiffType = ItemDiffType.None,
+        val yahoo: ItemDiffType = ItemDiffType.None,
+        val firstName: ItemDiffType = ItemDiffType.None,
+        val middleName: ItemDiffType = ItemDiffType.None,
+        val lastName: ItemDiffType = ItemDiffType.None,
+        val fullName: ItemDiffType = ItemDiffType.None,
+        val email: ItemDiffType = ItemDiffType.None,
+        val gender: ItemDiffType = ItemDiffType.None,
+        val phoneNumber: ItemDiffType = ItemDiffType.None,
+        val birthdate: ItemDiffType = ItemDiffType.None,
+        val company: ItemDiffType = ItemDiffType.None,
+        val jobTitle: ItemDiffType = ItemDiffType.None,
+        val workPhoneNumber: ItemDiffType = ItemDiffType.None,
+        val workEmail: ItemDiffType = ItemDiffType.None,
+        val personalWebsite: ItemDiffType = ItemDiffType.None
     ) : ItemDiffs
 
     data class Login(
-        override val isTitleChanged: Boolean = false
+        override val title: ItemDiffType = ItemDiffType.None,
+        override val note: ItemDiffType = ItemDiffType.None,
+        val email: ItemDiffType = ItemDiffType.None,
+        val username: ItemDiffType = ItemDiffType.None,
+        val password: ItemDiffType = ItemDiffType.None,
+        val totp: ItemDiffType = ItemDiffType.None
     ) : ItemDiffs
 
     data class Note(
-        override val isTitleChanged: Boolean = false
+        override val title: ItemDiffType = ItemDiffType.None,
+        override val note: ItemDiffType = ItemDiffType.None
     ) : ItemDiffs
 
     data class Unknown(
-        override val isTitleChanged: Boolean = false
+        override val title: ItemDiffType = ItemDiffType.None,
+        override val note: ItemDiffType = ItemDiffType.None
     ) : ItemDiffs
 
 }

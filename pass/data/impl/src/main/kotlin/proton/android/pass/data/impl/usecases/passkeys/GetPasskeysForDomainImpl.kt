@@ -27,6 +27,7 @@ import proton.android.pass.data.api.usecases.passkeys.GetPasskeysForDomain
 import proton.android.pass.data.api.usecases.passkeys.ObserveItemsWithPasskeys
 import proton.android.pass.data.api.usecases.passkeys.PasskeyItem
 import proton.android.pass.data.api.usecases.passkeys.PasskeySelection
+import proton.android.pass.data.impl.util.DomainUtils
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
 import proton.android.pass.domain.ShareId
@@ -75,7 +76,7 @@ class GetPasskeysForDomainImpl @Inject constructor(
                     return@filter false
                 }
 
-                parsed.contains(passkeyDomain)
+                DomainUtils.isDomainPartOf(needle = parsed, haystack = passkeyDomain)
             }
 
             val allowedPasskeys = when (selection) {

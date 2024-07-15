@@ -142,8 +142,8 @@ class CreateLoginViewModel @Inject constructor(
         .toOption()
         .map(::ShareId)
 
-    private val initialUsername: Option<String> = savedStateHandleProvider.get()
-        .get<String>(CreateLoginDefaultUsernameArg.key)
+    private val initialEmail: Option<String> = savedStateHandleProvider.get()
+        .get<String>(CreateLoginDefaultEmailArg.key)
         .toOption()
 
     @OptIn(SavedStateHandleSaveableApi::class)
@@ -214,14 +214,16 @@ class CreateLoginViewModel @Inject constructor(
         }
         aliasLocalItemState.update { initialContents.aliasItemFormState.toOption() }
 
-        val username = when {
-            initialContents.username != null -> initialContents.username
+        val email = when {
+            initialContents.email != null -> initialContents.email
             initialContents.aliasItemFormState?.aliasToBeCreated != null ->
                 initialContents.aliasItemFormState.aliasToBeCreated
 
-            initialUsername is Some -> initialUsername.value
+            initialEmail is Some -> initialEmail.value
             else -> currentValue.email
         }
+
+        val username = initialContents.username ?: currentValue.username
 
         if (initialContents.aliasItemFormState?.aliasToBeCreated?.isNotEmpty() == true) {
             canUpdateUsernameState.update { false }
@@ -262,14 +264,15 @@ class CreateLoginViewModel @Inject constructor(
             createPasskeyStateFlow.update {
                 CreatePasskeyState(
                     domain = passkeyData.domain,
-                    username = initialContents.username ?: ""
+                    username = initialContents.username.orEmpty()
                 ).some()
             }
         }
 
         loginItemFormMutableState = loginItemFormState.copy(
             title = initialContents.title ?: currentValue.title,
-            email = username,
+            email = email,
+            username = username,
             password = password,
             passwordStrength = currentValue.passwordStrength,
             urls = websites,

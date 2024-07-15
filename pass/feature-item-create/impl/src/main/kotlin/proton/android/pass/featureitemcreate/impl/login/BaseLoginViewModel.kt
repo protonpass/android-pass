@@ -728,10 +728,7 @@ abstract class BaseLoginViewModel(
             }
     }
 
-    private fun updateCustomFieldHiddenOnFocusChange(
-        field: LoginCustomField.CustomFieldHidden,
-        isFocused: Boolean
-    ) {
+    private fun updateCustomFieldHiddenOnFocusChange(field: LoginCustomField.CustomFieldHidden, isFocused: Boolean) {
         val customFields = loginItemFormState.customFields.toMutableList()
         val customFieldContent: UICustomFieldContent.Hidden? = customFields.getOrNull(field.index)
             as? UICustomFieldContent.Hidden

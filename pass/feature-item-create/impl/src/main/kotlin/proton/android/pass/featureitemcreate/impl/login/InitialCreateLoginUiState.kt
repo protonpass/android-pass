@@ -25,6 +25,7 @@ import proton.android.pass.featureitemcreate.impl.alias.AliasItemFormState
 
 data class InitialCreateLoginUiState(
     val title: String? = null,
+    val email: String? = null,
     val username: String? = null,
     val password: String? = null,
     val url: String? = null,
@@ -79,6 +80,7 @@ data class InitialCreateLoginUiState(
 
 val InitialCreateLoginUiStateSaver: Saver<InitialCreateLoginUiState?, Any> = run {
     val title = "title"
+    val email = "email"
     val username = "username"
     val password = "password"
     val url = "url"
@@ -94,6 +96,7 @@ val InitialCreateLoginUiStateSaver: Saver<InitialCreateLoginUiState?, Any> = run
             if (it != null) {
                 mapOf(
                     title to it.title,
+                    email to it.email,
                     username to it.username,
                     password to it.password,
                     url to it.url,
@@ -126,6 +129,7 @@ val InitialCreateLoginUiStateSaver: Saver<InitialCreateLoginUiState?, Any> = run
 
                 InitialCreateLoginUiState(
                     title = values[title] as? String,
+                    email = values[email] as? String,
                     username = values[username] as? String,
                     password = values[password] as? String,
                     url = values[url] as? String,

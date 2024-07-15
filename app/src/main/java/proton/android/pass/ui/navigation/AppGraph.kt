@@ -1007,7 +1007,7 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigate(
                         destination = CreateLogin,
                         route = CreateLogin.createNavRoute(
-                            username = it.alias.some(),
+                            emailOption = it.alias.some(),
                             shareId = it.shareId.toOption()
                         ),
                         backDestination = Home

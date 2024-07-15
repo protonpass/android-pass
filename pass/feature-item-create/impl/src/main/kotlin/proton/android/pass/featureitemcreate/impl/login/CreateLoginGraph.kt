@@ -47,26 +47,29 @@ import proton.android.pass.navigation.api.toPath
 
 const val CREATE_LOGIN_GRAPH = "create_login_graph"
 
-object CreateLoginDefaultUsernameArg : OptionalNavArgId {
-    override val key = "username"
+object CreateLoginDefaultEmailArg : OptionalNavArgId {
+
+    override val key = "default_email"
+
     override val navType = NavType.StringType
+
 }
 
 object CreateLogin : NavItem(
     baseRoute = "login/create",
-    optionalArgIds = listOf(CommonOptionalNavArgId.ShareId, CreateLoginDefaultUsernameArg)
+    optionalArgIds = listOf(CommonOptionalNavArgId.ShareId, CreateLoginDefaultEmailArg)
 ) {
-    fun createNavRoute(shareId: Option<ShareId> = None, username: Option<String> = None) = buildString {
+    fun createNavRoute(shareId: Option<ShareId> = None, emailOption: Option<String> = None) = buildString {
         append(baseRoute)
-        val map = mutableMapOf<String, Any>()
-        if (shareId is Some) {
-            map[CommonOptionalNavArgId.ShareId.key] = shareId.value.id
-        }
-        if (username is Some) {
-            map[CreateLoginDefaultUsernameArg.key] = username.value
-        }
-        val path = map.toPath()
-        append(path)
+
+        mutableMapOf<String, Any>().apply {
+            if (shareId is Some) {
+                set(CommonOptionalNavArgId.ShareId.key, shareId.value.id)
+            }
+            if (emailOption is Some) {
+                set(CreateLoginDefaultEmailArg.key, emailOption.value)
+            }
+        }.also { optionalArgs -> append(optionalArgs.toPath()) }
     }
 }
 

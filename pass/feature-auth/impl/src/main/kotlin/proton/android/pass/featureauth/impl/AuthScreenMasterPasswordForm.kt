@@ -118,7 +118,10 @@ fun AuthScreenMasterPasswordForm(
         )
         Spacer(modifier = Modifier.height(12.dp))
 
-        if (state.accountSwitcherState.isAccountSwitchV1Enabled) {
+        if (
+            state.accountSwitcherState.isAccountSwitchV1Enabled &&
+            state.accountSwitcherState.accounts.size > 1
+        ) {
             val text = when (state.showExtraPassword) {
                 is LoadingResult.Error,
                 LoadingResult.Loading -> ""

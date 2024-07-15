@@ -41,6 +41,7 @@ import proton.android.pass.composecomponents.impl.item.details.sections.shared.P
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassSharedItemDetailNoteSection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.domain.Totp
@@ -56,6 +57,7 @@ internal fun PassLoginItemDetailSections(
     secondaryTotps: ImmutableMap<String, Totp?>,
     passkeys: ImmutableList<UIPasskeyContent>,
     itemColors: PassItemColors,
+    itemDiffs: ItemDiffs.Login,
     onEvent: (PassItemDetailsUiEvent) -> Unit,
     isUsernameSplitEnabled: Boolean,
     lastAutofillOption: Option<Instant>,
@@ -85,6 +87,7 @@ internal fun PassLoginItemDetailSections(
             passwordStrength = passwordStrength,
             primaryTotp = primaryTotp,
             itemColors = itemColors,
+            itemDiffs = itemDiffs,
             onEvent = onEvent,
             isUsernameSplitEnabled = isUsernameSplitEnabled
         )
@@ -100,7 +103,8 @@ internal fun PassLoginItemDetailSections(
         if (note.isNotBlank()) {
             PassSharedItemDetailNoteSection(
                 note = note,
-                itemColors = itemColors
+                itemColors = itemColors,
+                itemDiffType = itemDiffs.note
             )
         }
 

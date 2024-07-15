@@ -89,10 +89,10 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
     }
 
     override fun calculateItemDiffs(
-        currentItemContents: ItemContents.Alias,
-        previousItemContents: ItemContents.Alias
+        baseItemDetailState: ItemContents.Alias,
+        otherItemDetailState: ItemContents.Alias
     ): ItemDiffs.Alias = ItemDiffs.Alias(
-        isTitleChanged = currentItemContents.title != previousItemContents.title
+        title = calculateItemDiffType(baseItemDetailState.title, otherItemDetailState.title)
     )
 
 }

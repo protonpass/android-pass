@@ -86,10 +86,10 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
     }
 
     override fun calculateItemDiffs(
-        currentItemContents: ItemContents.CreditCard,
-        previousItemContents: ItemContents.CreditCard
+        baseItemDetailState: ItemContents.CreditCard,
+        otherItemDetailState: ItemContents.CreditCard
     ): ItemDiffs.CreditCard = ItemDiffs.CreditCard(
-        isTitleChanged = currentItemContents.title != previousItemContents.title
+        title = calculateItemDiffType(baseItemDetailState.title, otherItemDetailState.title)
     )
 
 }

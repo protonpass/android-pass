@@ -33,6 +33,7 @@ import proton.android.pass.composecomponents.impl.item.details.sections.shared.P
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.AliasMailbox
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
@@ -43,6 +44,7 @@ internal fun PassAliasItemDetailSections(
     shareId: ShareId,
     contents: ItemContents.Alias,
     itemColors: PassItemColors,
+    itemDiffs: ItemDiffs,
     mailboxes: ImmutableList<AliasMailbox>,
     onEvent: (PassItemDetailsUiEvent) -> Unit,
     lastAutofillOption: Option<Instant>,
@@ -66,7 +68,8 @@ internal fun PassAliasItemDetailSections(
         if (note.isNotBlank()) {
             PassSharedItemDetailNoteSection(
                 note = note,
-                itemColors = itemColors
+                itemColors = itemColors,
+                itemDiffType = itemDiffs.note
             )
         }
 

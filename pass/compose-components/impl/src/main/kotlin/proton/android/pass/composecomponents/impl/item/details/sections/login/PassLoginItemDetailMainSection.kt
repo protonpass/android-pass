@@ -39,6 +39,7 @@ import proton.android.pass.composecomponents.impl.item.details.sections.shared.P
 import proton.android.pass.composecomponents.impl.progress.PassTotpProgress
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.HiddenState
+import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.Totp
 import me.proton.core.presentation.R as CoreR
 
@@ -53,6 +54,7 @@ internal fun PassLoginItemDetailMainSection(
     passwordStrength: PasswordStrength,
     primaryTotp: Totp?,
     itemColors: PassItemColors,
+    itemDiffs: ItemDiffs.Login,
     onEvent: (PassItemDetailsUiEvent) -> Unit,
     isUsernameSplitEnabled: Boolean
 ) {
@@ -66,6 +68,7 @@ internal fun PassLoginItemDetailMainSection(
                     title = stringResource(R.string.item_details_login_section_email_title),
                     subtitle = email,
                     itemColors = itemColors,
+                    itemDiffType = itemDiffs.email,
                     onClick = {
                         onEvent(
                             PassItemDetailsUiEvent.OnSectionClick(
@@ -85,6 +88,7 @@ internal fun PassLoginItemDetailMainSection(
                     title = stringResource(R.string.item_details_login_section_username_title),
                     subtitle = username,
                     itemColors = itemColors,
+                    itemDiffType = itemDiffs.username,
                     onClick = {
                         onEvent(
                             PassItemDetailsUiEvent.OnSectionClick(
@@ -105,6 +109,7 @@ internal fun PassLoginItemDetailMainSection(
                     title = stringResource(R.string.item_details_login_section_username_or_username_title),
                     subtitle = email,
                     itemColors = itemColors,
+                    itemDiffType = itemDiffs.email,
                     onClick = {
                         onEvent(
                             PassItemDetailsUiEvent.OnSectionClick(
@@ -127,6 +132,7 @@ internal fun PassLoginItemDetailMainSection(
                 hiddenTextLength = HIDDEN_PASSWORD_TEXT_LENGTH,
                 needsRevealedColors = true,
                 itemColors = itemColors,
+                itemDiffType = itemDiffs.password,
                 hiddenTextStyle = ProtonTheme.typography.defaultNorm
                     .copy(fontFamily = FontFamily.Monospace),
                 onClick = {
@@ -159,6 +165,7 @@ internal fun PassLoginItemDetailMainSection(
                 title = stringResource(R.string.item_details_login_section_primary_totp_title),
                 maskedSubtitle = TextMask.TotpCode(totp.code),
                 itemColors = itemColors,
+                itemDiffType = itemDiffs.totp,
                 onClick = {
                     onEvent(
                         PassItemDetailsUiEvent.OnSectionClick(

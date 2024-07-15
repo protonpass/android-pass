@@ -48,6 +48,7 @@ internal fun PassItemDetailSections(
             shareId = shareId,
             contents = itemContents,
             itemColors = itemColors,
+            itemDiffs = itemDiffs,
             mailboxes = mailboxes.toImmutableList(),
             onEvent = onEvent,
             lastAutofillOption = itemLastAutofillAtOption,
@@ -64,6 +65,7 @@ internal fun PassItemDetailSections(
             shareId = shareId,
             contents = itemContents,
             itemColors = itemColors,
+            itemDiffs = itemDiffs,
             onEvent = onEvent,
             lastAutofillOption = itemLastAutofillAtOption,
             revision = itemRevision,
@@ -79,6 +81,7 @@ internal fun PassItemDetailSections(
             shareId = shareId,
             contents = itemContents,
             itemColors = itemColors,
+            itemDiffs = itemDiffs,
             onEvent = onEvent,
             lastAutofillOption = itemLastAutofillAtOption,
             revision = itemRevision,
@@ -98,6 +101,7 @@ internal fun PassItemDetailSections(
             secondaryTotps = secondaryTotps.toImmutableMap(),
             passkeys = passkeys.toImmutableList(),
             itemColors = itemColors,
+            itemDiffs = itemDiffs,
             onEvent = onEvent,
             isUsernameSplitEnabled = isUsernameSplitEnabled,
             lastAutofillOption = itemLastAutofillAtOption,
@@ -127,7 +131,8 @@ internal fun PassItemDetailSections(
             if (note.isNotBlank()) {
                 PassSharedItemDetailNoteSection(
                     note = note,
-                    itemColors = itemColors
+                    itemColors = itemColors,
+                    itemDiffType = itemDiffs.note
                 )
             }
         }

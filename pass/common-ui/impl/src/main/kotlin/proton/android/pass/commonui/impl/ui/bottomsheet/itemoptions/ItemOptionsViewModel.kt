@@ -29,7 +29,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -38,8 +37,8 @@ import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.flatMap
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetVaultById
-import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemType
@@ -56,7 +55,7 @@ class ItemOptionsViewModel @Inject constructor(
     private val trashItem: TrashItems,
     private val savedStateHandle: SavedStateHandle,
     private val snackbarDispatcher: SnackbarDispatcher,
-    private val getItemById: ObserveItemById,
+    private val getItemById: GetItemById,
     private val clipboardManager: ClipboardManager,
     private val encryptionContextProvider: EncryptionContextProvider,
     getVaultById: GetVaultById
@@ -130,7 +129,7 @@ class ItemOptionsViewModel @Inject constructor(
     }
 
     private suspend fun getLoginItem(): Result<ItemType.Login> = runCatching {
-        getItemById(shareId = shareId, itemId = itemId).first()
+        getItemById(shareId = shareId, itemId = itemId)
     }.flatMap { item ->
         val itemType = item.itemType
         return@flatMap if (itemType !is ItemType.Login) {

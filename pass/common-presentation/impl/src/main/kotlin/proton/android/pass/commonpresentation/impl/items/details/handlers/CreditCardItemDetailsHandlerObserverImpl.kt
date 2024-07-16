@@ -88,8 +88,39 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
     override fun calculateItemDiffs(
         baseItemDetailState: ItemContents.CreditCard,
         otherItemDetailState: ItemContents.CreditCard
-    ): ItemDiffs.CreditCard = ItemDiffs.CreditCard(
-        title = calculateItemDiffType(baseItemDetailState.title, otherItemDetailState.title)
-    )
+    ): ItemDiffs = encryptionContextProvider.withEncryptionContext {
+        ItemDiffs.CreditCard(
+            title = calculateItemDiffType(
+                baseItemFieldValue = baseItemDetailState.title,
+                otherItemFieldValue = otherItemDetailState.title
+            ),
+            note = calculateItemDiffType(
+                baseItemFieldValue = baseItemDetailState.note,
+                otherItemFieldValue = otherItemDetailState.note
+            ),
+            cardHolder = calculateItemDiffType(
+                baseItemFieldValue = baseItemDetailState.cardHolder,
+                otherItemFieldValue = otherItemDetailState.cardHolder
+            ),
+            cardNumber = calculateItemDiffType(
+                baseItemFieldValue = baseItemDetailState.number,
+                otherItemFieldValue = otherItemDetailState.number
+            ),
+            cvv = calculateItemDiffType(
+                encryptionContext = this@withEncryptionContext,
+                baseItemFieldHiddenState = baseItemDetailState.cvv,
+                otherItemFieldHiddenState = otherItemDetailState.cvv
+            ),
+            pin = calculateItemDiffType(
+                encryptionContext = this@withEncryptionContext,
+                baseItemFieldHiddenState = baseItemDetailState.pin,
+                otherItemFieldHiddenState = otherItemDetailState.pin
+            ),
+            expirationDate = calculateItemDiffType(
+                baseItemFieldValue = baseItemDetailState.expirationDate,
+                otherItemFieldValue = otherItemDetailState.expirationDate
+            )
+        )
+    }
 
 }

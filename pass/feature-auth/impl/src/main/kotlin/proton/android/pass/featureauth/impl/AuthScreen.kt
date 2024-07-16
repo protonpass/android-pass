@@ -48,8 +48,8 @@ fun AuthScreen(
                     is AuthEvent.Success -> navigation(AuthNavigation.Success(event.origin))
                     AuthEvent.Failed -> navigation(AuthNavigation.Failed)
                     AuthEvent.Canceled -> navigation(AuthNavigation.Dismissed)
-                    AuthEvent.SignOut -> navigation(AuthNavigation.SignOut)
-                    AuthEvent.ForceSignOut -> navigation(AuthNavigation.ForceSignOut)
+                    is AuthEvent.SignOut -> navigation(AuthNavigation.SignOut(event.userId))
+                    is AuthEvent.ForceSignOut -> navigation(AuthNavigation.ForceSignOut(event.userId))
                     is AuthEvent.EnterPin -> navigation(AuthNavigation.EnterPin(event.origin))
                     AuthEvent.EnterBiometrics -> viewModel.onBiometricsRequired(ctx.toClassHolder())
                     AuthEvent.Unknown -> return@LaunchedEffect

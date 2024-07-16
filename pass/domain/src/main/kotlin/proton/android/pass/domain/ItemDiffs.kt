@@ -32,7 +32,8 @@ sealed interface ItemDiffs {
 
     data class Alias(
         override val title: ItemDiffType = ItemDiffType.None,
-        override val note: ItemDiffType = ItemDiffType.None
+        override val note: ItemDiffType = ItemDiffType.None,
+        val aliasEmail: ItemDiffType = ItemDiffType.None
     ) : ItemDiffs
 
     data class CreditCard(

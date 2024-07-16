@@ -25,9 +25,9 @@ import org.junit.Before
 import org.junit.Test
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.data.api.usecases.capabilities.CanShareVaultStatus
+import proton.android.pass.data.fakes.usecases.FakeGetItemById
 import proton.android.pass.data.fakes.usecases.TestCanShareVault
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
-import proton.android.pass.data.fakes.usecases.TestObserveItemById
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
@@ -42,14 +42,14 @@ import proton.android.pass.test.domain.TestItem
 internal class GetItemActionsImplTest {
 
     private lateinit var instance: GetItemActionsImpl
-    private lateinit var getItemById: TestObserveItemById
+    private lateinit var getItemById: FakeGetItemById
     private lateinit var observeUserPlan: TestGetUserPlan
     private lateinit var canShareVault: TestCanShareVault
     private lateinit var observeVaults: TestObserveVaults
 
     @Before
     fun setup() {
-        getItemById = TestObserveItemById()
+        getItemById = FakeGetItemById()
         observeUserPlan = TestGetUserPlan()
         canShareVault = TestCanShareVault()
         observeVaults = TestObserveVaults()
@@ -274,7 +274,7 @@ internal class GetItemActionsImplTest {
     )
 
     private fun setItem(state: ItemState = ItemState.Active) {
-        getItemById.emitValue(Result.success(TestItem.create().copy(state = state.value)))
+        getItemById.emit(Result.success(TestItem.create().copy(state = state.value)))
     }
 
     private fun setPlan(planType: PlanType) {

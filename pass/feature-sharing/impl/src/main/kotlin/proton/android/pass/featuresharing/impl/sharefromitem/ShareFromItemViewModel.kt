@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
@@ -38,9 +39,9 @@ import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
+import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
-import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.capabilities.CanCreateVault
 import proton.android.pass.data.api.usecases.capabilities.CanManageVaultAccess
@@ -64,7 +65,7 @@ class ShareFromItemViewModel @Inject constructor(
     canCreateVault: CanCreateVault,
     getUserPlan: GetUserPlan,
     featureFlagsRepository: FeatureFlagsPreferencesRepository,
-    observeItemById: ObserveItemById,
+    getItemById: GetItemById,
     canManageVaultAccess: CanManageVaultAccess
 ) : ViewModel() {
 
@@ -103,7 +104,7 @@ class ShareFromItemViewModel @Inject constructor(
     }.asLoadingResult()
 
     private val isSecureLinkAvailableFlow = combine(
-        observeItemById(shareId, itemId),
+        oneShot { getItemById(shareId, itemId) },
         featureFlagsRepository.get<Boolean>(FeatureFlag.SECURE_LINK_V1)
     ) { item, isSecureLinkEnabled ->
         when (item.itemType.category) {

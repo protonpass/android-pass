@@ -37,7 +37,12 @@ sealed interface ItemDiffs {
 
     data class CreditCard(
         override val title: ItemDiffType = ItemDiffType.None,
-        override val note: ItemDiffType = ItemDiffType.None
+        override val note: ItemDiffType = ItemDiffType.None,
+        val cardHolder: ItemDiffType = ItemDiffType.None,
+        val cardNumber: ItemDiffType = ItemDiffType.None,
+        val cvv: ItemDiffType = ItemDiffType.None,
+        val pin: ItemDiffType = ItemDiffType.None,
+        val expirationDate: ItemDiffType = ItemDiffType.None
     ) : ItemDiffs
 
     data class Identity(

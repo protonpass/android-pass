@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import proton.android.pass.clipboard.api.ClipboardManager
-import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldSection
+import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
@@ -122,7 +122,7 @@ class ItemDetailsHandlerImpl @Inject constructor(
         isVisible: Boolean,
         hiddenState: HiddenState,
         hiddenFieldType: ItemDetailsFieldType.Hidden,
-        hiddenFieldSection: ItemDetailsFieldSection,
+        hiddenFieldSection: ItemCustomFieldSection,
         itemCategory: ItemCategory,
         itemContents: ItemContents
     ): ItemContents = encryptionContextProvider.withEncryptionContext {

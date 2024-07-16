@@ -22,18 +22,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
-import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldSection
+import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.sections.identity.shared.rows.addCustomFieldRows
 import proton.android.pass.composecomponents.impl.item.details.sections.identity.shared.sections.PassIdentityItemDetailsSection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.ExtraSectionContent
+import proton.android.pass.domain.ItemDiffs
 
 @Composable
 internal fun PassIdentityItemDetailsExtraSection(
     modifier: Modifier = Modifier,
     extraSectionContents: ImmutableList<ExtraSectionContent>,
     itemColors: PassItemColors,
+    itemDiffs: ItemDiffs.Identity,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
     extraSectionContents.forEachIndexed { extraSectionIndex, extraSectionContent ->
@@ -42,8 +44,9 @@ internal fun PassIdentityItemDetailsExtraSection(
 
             rows.addCustomFieldRows(
                 customFields = extraSectionContent.customFields,
-                customFieldSection = ItemDetailsFieldSection.Identity.ExtraSection(extraSectionIndex),
+                customFieldSection = ItemCustomFieldSection.Identity.ExtraSection(extraSectionIndex),
                 itemColors = itemColors,
+                itemDiffs = itemDiffs,
                 onEvent = onEvent
             )
 

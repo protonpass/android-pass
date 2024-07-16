@@ -186,7 +186,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     override fun calculateItemDiffs(
         baseItemDetailState: ItemContents.Login,
         otherItemDetailState: ItemContents.Login
-    ): ItemDiffs.Login = encryptionContextProvider.withEncryptionContext {
+    ): ItemDiffs = encryptionContextProvider.withEncryptionContext {
         ItemDiffs.Login(
             title = calculateItemDiffType(
                 baseItemFieldValue = baseItemDetailState.title,

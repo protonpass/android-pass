@@ -30,6 +30,7 @@ import proton.android.pass.composecomponents.impl.item.details.sections.shared.P
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsMoreInfoSection
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 
@@ -40,6 +41,7 @@ internal fun PassNoteItemDetailSections(
     shareId: ShareId,
     contents: ItemContents.Note,
     itemColors: PassItemColors,
+    itemDiffs: ItemDiffs.Note,
     onEvent: (PassItemDetailsUiEvent) -> Unit,
     lastAutofillOption: Option<Instant>,
     revision: Long,
@@ -53,7 +55,8 @@ internal fun PassNoteItemDetailSections(
         verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
     ) {
         PassNoteItemDetailMainSection(
-            note = note
+            note = note,
+            itemDiffs = itemDiffs
         )
 
         if (shouldDisplayItemHistorySection) {

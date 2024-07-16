@@ -79,6 +79,7 @@ import proton.android.pass.data.api.usecases.UserPlanWorkerLauncher
 import proton.android.pass.data.api.usecases.organization.RefreshOrganizationSettings
 import proton.android.pass.inappupdates.api.InAppUpdatesManager
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
 @HiltViewModel
@@ -96,6 +97,7 @@ class LauncherViewModel @Inject constructor(
     private val inAppUpdatesManager: InAppUpdatesManager,
     private val refreshOrganizationSettings: RefreshOrganizationSettings,
     private val storeAuthSuccessful: StoreAuthSuccessful,
+    private val snackbarDispatcher: SnackbarDispatcher,
     commonLibraryVersionChecker: CommonLibraryVersionChecker
 ) : ViewModel() {
 
@@ -112,12 +114,12 @@ class LauncherViewModel @Inject constructor(
         viewModelScope.launch { refreshOrganizationSettings() }
     }
 
-    internal val state: StateFlow<State> = accountManager.getAccounts()
+    internal val accountState: StateFlow<AccountState> = accountManager.getAccounts()
         .map { accounts -> getState(accounts) }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.Lazily,
-            initialValue = State.Processing
+            initialValue = AccountState.Processing
         )
 
     internal fun register(context: ComponentActivity) {
@@ -129,7 +131,7 @@ class LauncherViewModel @Inject constructor(
         authOrchestrator.onAddAccountResult { result ->
             viewModelScope.launch {
                 if (result == null && getPrimaryUserIdOrNull() == null) {
-                    context.finish()
+                    addAccount()
                     return@launch
                 }
             }
@@ -143,17 +145,15 @@ class LauncherViewModel @Inject constructor(
             .onAccountCreateAddressNeeded { authOrchestrator.startChooseAddressWorkflow(it) }
     }
 
-    internal fun onUserStateChanged(state: State) = when (state) {
-        State.AccountNeeded -> {
-            storeAuthSuccessful(resetAttempts = false)
-            userPlanWorkerLauncher.cancel()
-        }
+    internal fun onAccountNeeded() {
+        storeAuthSuccessful(resetAttempts = false)
+        userPlanWorkerLauncher.cancel()
+        addAccount()
+    }
 
-        State.PrimaryExist -> userPlanWorkerLauncher.start()
-        State.Processing,
-        State.StepNeeded -> {
-            // no-op
-        }
+    internal fun onPrimaryExist(updateResultLauncher: ActivityResultLauncher<IntentSenderRequest>) {
+        userPlanWorkerLauncher.start()
+        inAppUpdatesManager.checkForUpdates(updateResultLauncher)
     }
 
     internal fun addAccount() = viewModelScope.launch {
@@ -172,6 +172,7 @@ class LauncherViewModel @Inject constructor(
 
     internal fun disable(userId: UserId? = null) = viewModelScope.launch {
         PassLogger.i(TAG, "Disabling account: $userId")
+        snackbarDispatcher.reset()
         accountManager.disableAccount(requireNotNull(userId ?: getPrimaryUserIdOrNull()))
     }
 
@@ -234,11 +235,11 @@ class LauncherViewModel @Inject constructor(
     }
 
     @Suppress("ReturnCount")
-    private fun getState(accounts: List<Account>): State {
+    private fun getState(accounts: List<Account>): AccountState {
 
-        // Check the case where there are either no accounts or all accounts are disabled
-        if (accounts.isEmpty() || accounts.all { it.isDisabled() }) {
-            return State.AccountNeeded
+        // Check the case where there are either no accounts or all accounts are not ready
+        if (accounts.isEmpty() || accounts.all { !it.isReady() }) {
+            return AccountState.AccountNeeded
         }
 
         // Check the case where at least one account is ready
@@ -246,25 +247,21 @@ class LauncherViewModel @Inject constructor(
             accounts.firstOrNull { it.isReady() }?.let {
                 PassLogger.i(TAG, "SessionID=${it.sessionId?.id}")
             }
-            return State.PrimaryExist
+            return AccountState.PrimaryExist
         }
 
         // Check if we are in the case where an account needs a step
         if (accounts.any { it.isStepNeeded() }) {
-            return State.StepNeeded
+            return AccountState.StepNeeded
         }
 
         // Base case
-        return State.Processing
+        return AccountState.Processing
     }
 
     private suspend fun getAccountOrNull(it: UserId) = accountManager.getAccount(it).firstOrNull()
 
     private suspend fun getPrimaryUserIdOrNull() = accountManager.getPrimaryUserId().firstOrNull()
-
-    internal fun checkForUpdates(updateResultLauncher: ActivityResultLauncher<IntentSenderRequest>) {
-        inAppUpdatesManager.checkForUpdates(updateResultLauncher)
-    }
 
     internal fun cancelUpdateListener() {
         inAppUpdatesManager.tearDown()
@@ -272,13 +269,6 @@ class LauncherViewModel @Inject constructor(
 
     internal fun declineUpdate() {
         inAppUpdatesManager.declineUpdate()
-    }
-
-    internal enum class State {
-        Processing,
-        AccountNeeded,
-        PrimaryExist,
-        StepNeeded
     }
 
     private companion object {

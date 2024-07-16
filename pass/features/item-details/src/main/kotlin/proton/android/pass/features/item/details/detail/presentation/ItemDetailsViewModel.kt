@@ -24,6 +24,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
@@ -39,13 +40,15 @@ import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetai
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.data.api.errors.ItemNotFoundError
 import proton.android.pass.data.api.usecases.GetItemActions
-import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetUserPlan
+import proton.android.pass.data.api.usecases.ObserveItemById
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import javax.inject.Inject
 
@@ -54,7 +57,7 @@ class ItemDetailsViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
     getItemActions: GetItemActions,
     observeUserPlan: GetUserPlan,
-    getItemById: GetItemById,
+    observeItemById: ObserveItemById,
     private val itemDetailsHandler: ItemDetailsHandler
 ) : ViewModel() {
 
@@ -66,7 +69,16 @@ class ItemDetailsViewModel @Inject constructor(
         .require<String>(CommonNavArgId.ItemId.key)
         .let(::ItemId)
 
-    private val itemFlow = oneShot { getItemById(shareId, itemId) }
+    private val itemFlow = observeItemById(shareId, itemId)
+        .catch { error ->
+            if (error is ItemNotFoundError) {
+                eventFlow.update { ItemDetailsEvent.OnItemNotFound }
+            } else {
+                PassLogger.w(TAG, "There was an error observing item")
+                PassLogger.w(TAG, error)
+                throw error
+            }
+        }
 
     private val itemContentsUpdateOptionFlow = MutableStateFlow<Option<ItemContents>>(None)
 

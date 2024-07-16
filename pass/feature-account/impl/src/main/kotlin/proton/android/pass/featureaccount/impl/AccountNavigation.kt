@@ -23,11 +23,13 @@ import me.proton.core.domain.entity.UserId
 sealed interface AccountNavigation {
     data object Subscription : AccountNavigation
     data object Upgrade : AccountNavigation
-    data object SignOut : AccountNavigation
     data object Back : AccountNavigation
     data object PasswordManagement : AccountNavigation
     data object RecoveryEmail : AccountNavigation
     data object SetExtraPassword : AccountNavigation
+
+    @JvmInline
+    value class SignOut(val userId: UserId) : AccountNavigation
 
     @JvmInline
     value class ExtraPasswordOptions(val userId: UserId) : AccountNavigation

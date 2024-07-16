@@ -81,9 +81,11 @@ sealed interface AuthNavigation {
 
     data object Dismissed : AuthNavigation
 
-    data object SignOut : AuthNavigation
+    @JvmInline
+    value class SignOut(val userId: UserId) : AuthNavigation
 
-    data object ForceSignOut : AuthNavigation
+    @JvmInline
+    value class ForceSignOut(val userId: UserId) : AuthNavigation
 
     @JvmInline
     value class EnterPin(val origin: AuthOrigin) : AuthNavigation
@@ -111,7 +113,8 @@ fun NavGraphBuilder.authGraph(canLogout: Boolean, navigation: (AuthNavigation) -
                     when (destination) {
                         is EnterPinNavigation.Success ->
                             navigation(AuthNavigation.Success(destination.origin))
-                        EnterPinNavigation.ForceSignOut -> navigation(AuthNavigation.ForceSignOut)
+                        is EnterPinNavigation.ForceSignOut ->
+                            navigation(AuthNavigation.ForceSignOut(destination.userId))
                     }
                 }
             )

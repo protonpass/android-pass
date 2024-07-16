@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
-import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonui.api.toItemContents
@@ -34,6 +33,7 @@ import proton.android.pass.domain.AliasDetails
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemState
 import javax.inject.Inject
@@ -91,8 +91,19 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
     override fun calculateItemDiffs(
         baseItemDetailState: ItemContents.Alias,
         otherItemDetailState: ItemContents.Alias
-    ): ItemDiffs.Alias = ItemDiffs.Alias(
-        title = calculateItemDiffType(baseItemDetailState.title, otherItemDetailState.title)
+    ): ItemDiffs = ItemDiffs.Alias(
+        title = calculateItemDiffType(
+            baseItemFieldValue = baseItemDetailState.title,
+            otherItemFieldValue = otherItemDetailState.title
+        ),
+        note = calculateItemDiffType(
+            baseItemFieldValue = baseItemDetailState.note,
+            otherItemFieldValue = otherItemDetailState.note
+        ),
+        aliasEmail = calculateItemDiffType(
+            baseItemFieldValue = baseItemDetailState.aliasEmail,
+            otherItemFieldValue = otherItemDetailState.aliasEmail
+        )
     )
 
 }

@@ -43,10 +43,13 @@ import proton.android.pass.composecomponents.impl.icon.ForwardIcon
 import proton.android.pass.composecomponents.impl.item.SectionSubtitle
 import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
+import proton.android.pass.composecomponents.impl.item.details.modifiers.contentDiff
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailMainSectionContainer
 import proton.android.pass.composecomponents.impl.item.placeholder
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.AliasMailbox
+import proton.android.pass.domain.ItemDiffType
+import proton.android.pass.domain.ItemDiffs
 import me.proton.core.presentation.R as CoreR
 
 @Composable
@@ -54,6 +57,7 @@ internal fun PassAliasItemDetailMainSection(
     modifier: Modifier = Modifier,
     alias: String,
     itemColors: PassItemColors,
+    itemDiffs: ItemDiffs.Alias,
     mailboxes: ImmutableList<AliasMailbox>,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
@@ -63,6 +67,7 @@ internal fun PassAliasItemDetailMainSection(
         PassAliasItemDetailAddressRow(
             alias = alias,
             itemColors = itemColors,
+            itemDiffType = itemDiffs.aliasEmail,
             onEvent = onEvent
         )
     }
@@ -85,11 +90,13 @@ private fun PassAliasItemDetailAddressRow(
     modifier: Modifier = Modifier,
     alias: String,
     itemColors: PassItemColors,
+    itemDiffType: ItemDiffType,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
+            .contentDiff(itemDiffType = itemDiffType)
             .clickable {
                 onEvent(
                     PassItemDetailsUiEvent.OnSectionClick(

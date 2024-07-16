@@ -44,7 +44,7 @@ internal fun PassAliasItemDetailSections(
     shareId: ShareId,
     contents: ItemContents.Alias,
     itemColors: PassItemColors,
-    itemDiffs: ItemDiffs,
+    itemDiffs: ItemDiffs.Alias,
     mailboxes: ImmutableList<AliasMailbox>,
     onEvent: (PassItemDetailsUiEvent) -> Unit,
     lastAutofillOption: Option<Instant>,
@@ -61,6 +61,7 @@ internal fun PassAliasItemDetailSections(
         PassAliasItemDetailMainSection(
             alias = aliasEmail,
             itemColors = itemColors,
+            itemDiffs = itemDiffs,
             mailboxes = mailboxes,
             onEvent = onEvent
         )

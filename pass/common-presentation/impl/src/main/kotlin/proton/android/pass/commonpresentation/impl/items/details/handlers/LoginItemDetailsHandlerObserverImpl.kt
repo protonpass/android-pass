@@ -207,8 +207,8 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
             ),
             totp = calculateItemDiffType(
                 encryptionContext = this@withEncryptionContext,
-                baseItemFieldHiddenState = baseItemDetailState.password,
-                otherItemFieldHiddenState = otherItemDetailState.password
+                baseItemFieldHiddenState = baseItemDetailState.primaryTotp,
+                otherItemFieldHiddenState = otherItemDetailState.primaryTotp
             ),
             note = calculateItemDiffType(
                 baseItemFieldValue = baseItemDetailState.note,

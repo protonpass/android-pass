@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import proton.android.pass.common.api.combineN
-import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldSection
+import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonrust.api.EmailValidator
@@ -164,7 +164,7 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     override fun updateItemContents(
         itemContents: ItemContents.Login,
         hiddenFieldType: ItemDetailsFieldType.Hidden,
-        hiddenFieldSection: ItemDetailsFieldSection,
+        hiddenFieldSection: ItemCustomFieldSection,
         hiddenState: HiddenState
     ): ItemContents = when (hiddenFieldType) {
         is ItemDetailsFieldType.Hidden.CustomField -> itemContents.copy(

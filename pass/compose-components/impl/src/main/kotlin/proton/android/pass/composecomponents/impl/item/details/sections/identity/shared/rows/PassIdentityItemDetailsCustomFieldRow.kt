@@ -23,13 +23,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
-import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailFieldRow
 import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDetailsHiddenFieldRow
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.CustomFieldContent
+import proton.android.pass.domain.ItemCustomFieldSection
+import proton.android.pass.domain.ItemDiffType
+import proton.android.pass.domain.ItemDiffs
 
 private const val HIDDEN_CUSTOM_FIELD_TEXT_LENGTH = 12
 
@@ -38,8 +40,9 @@ internal fun PassIdentityItemDetailsCustomFieldRow(
     modifier: Modifier = Modifier,
     customFieldIndex: Int,
     customFieldContent: CustomFieldContent,
-    customFieldSection: ItemDetailsFieldSection,
+    customFieldSection: ItemCustomFieldSection,
     itemColors: PassItemColors,
+    itemDiffType: ItemDiffType,
     onEvent: (PassItemDetailsUiEvent) -> Unit,
     @DrawableRes iconResId: Int? = null
 ) = when (customFieldContent) {
@@ -49,6 +52,7 @@ internal fun PassIdentityItemDetailsCustomFieldRow(
         hiddenState = customFieldContent.value,
         hiddenTextLength = HIDDEN_CUSTOM_FIELD_TEXT_LENGTH,
         itemColors = itemColors,
+        itemDiffType = itemDiffType,
         hiddenTextStyle = ProtonTheme.typography.defaultNorm,
         onClick = {
             onEvent(
@@ -76,6 +80,7 @@ internal fun PassIdentityItemDetailsCustomFieldRow(
         title = customFieldContent.label,
         subtitle = customFieldContent.value,
         itemColors = itemColors,
+        itemDiffType = itemDiffType,
         onClick = {
             onEvent(
                 PassItemDetailsUiEvent.OnSectionClick(
@@ -93,8 +98,9 @@ internal fun PassIdentityItemDetailsCustomFieldRow(
 
 internal fun MutableList<@Composable () -> Unit>.addCustomFieldRows(
     customFields: List<CustomFieldContent>,
-    customFieldSection: ItemDetailsFieldSection,
+    customFieldSection: ItemCustomFieldSection,
     itemColors: PassItemColors,
+    itemDiffs: ItemDiffs.Identity,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
     customFields.forEachIndexed { index, customFieldContent ->
@@ -104,6 +110,7 @@ internal fun MutableList<@Composable () -> Unit>.addCustomFieldRows(
                 customFieldContent = customFieldContent,
                 customFieldSection = customFieldSection,
                 itemColors = itemColors,
+                itemDiffType = itemDiffs.customField(customFieldSection, index),
                 onEvent = onEvent
             )
         }

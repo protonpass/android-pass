@@ -33,6 +33,7 @@ import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDeta
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailMainSectionContainer
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.HiddenState
+import proton.android.pass.domain.ItemDiffs
 import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
 
@@ -48,6 +49,7 @@ internal fun PassCreditCardItemDetailMainSection(
     cvv: HiddenState,
     pin: HiddenState,
     itemColors: PassItemColors,
+    itemDiffs: ItemDiffs.CreditCard,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
     val sections = mutableListOf<@Composable () -> Unit>()
@@ -59,6 +61,7 @@ internal fun PassCreditCardItemDetailMainSection(
                 title = stringResource(R.string.item_details_credit_card_section_cardholder_title),
                 subtitle = cardholder,
                 itemColors = itemColors,
+                itemDiffType = itemDiffs.cardHolder,
                 onClick = {
                     onEvent(
                         PassItemDetailsUiEvent.OnSectionClick(
@@ -78,6 +81,7 @@ internal fun PassCreditCardItemDetailMainSection(
                 title = stringResource(R.string.item_details_credit_card_section_card_number_title),
                 maskedSubtitle = TextMask.CardNumber(cardNumber),
                 itemColors = itemColors,
+                itemDiffType = itemDiffs.cardNumber,
                 isToggleable = true,
                 onClick = {
                     onEvent(
@@ -97,7 +101,8 @@ internal fun PassCreditCardItemDetailMainSection(
                 icon = CoreR.drawable.ic_proton_calendar_day,
                 title = stringResource(R.string.item_details_credit_card_section_expiration_date_title),
                 maskedSubtitle = TextMask.ExpirationDate(expirationDate),
-                itemColors = itemColors
+                itemColors = itemColors,
+                itemDiffType = itemDiffs.expirationDate
             )
         }
     }
@@ -110,6 +115,7 @@ internal fun PassCreditCardItemDetailMainSection(
                 hiddenState = cvv,
                 hiddenTextLength = HIDDEN_CVV_TEXT_LENGTH,
                 itemColors = itemColors,
+                itemDiffType = itemDiffs.cvv,
                 onClick = {
                     onEvent(
                         PassItemDetailsUiEvent.OnHiddenSectionClick(
@@ -140,6 +146,7 @@ internal fun PassCreditCardItemDetailMainSection(
                 hiddenState = pin,
                 hiddenTextLength = HIDDEN_PIN_TEXT_LENGTH,
                 itemColors = itemColors,
+                itemDiffType = itemDiffs.pin,
                 onToggle = { isVisible ->
                     onEvent(
                         PassItemDetailsUiEvent.OnHiddenSectionToggle(

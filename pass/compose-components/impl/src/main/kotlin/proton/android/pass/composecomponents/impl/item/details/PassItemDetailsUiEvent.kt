@@ -18,7 +18,7 @@
 
 package proton.android.pass.composecomponents.impl.item.details
 
-import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldSection
+import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.domain.HiddenState
@@ -40,7 +40,7 @@ sealed interface PassItemDetailsUiEvent {
         val isVisible: Boolean,
         val hiddenState: HiddenState,
         val fieldType: ItemDetailsFieldType.Hidden,
-        val fieldSection: ItemDetailsFieldSection
+        val fieldSection: ItemCustomFieldSection
     ) : PassItemDetailsUiEvent
 
     @JvmInline

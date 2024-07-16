@@ -79,8 +79,24 @@ sealed interface ItemDiffs {
         val jobTitle: ItemDiffType = ItemDiffType.None,
         val workPhoneNumber: ItemDiffType = ItemDiffType.None,
         val workEmail: ItemDiffType = ItemDiffType.None,
-        val personalWebsite: ItemDiffType = ItemDiffType.None
-    ) : ItemDiffs
+        val personalWebsite: ItemDiffType = ItemDiffType.None,
+        private val addressCustomFields: List<ItemDiffType> = emptyList(),
+        private val contactCustomFields: List<ItemDiffType> = emptyList(),
+        private val personalCustomFields: List<ItemDiffType> = emptyList(),
+        private val workCustomFields: List<ItemDiffType> = emptyList()
+    ) : ItemDiffs {
+
+        fun customField(section: ItemCustomFieldSection, index: Int): ItemDiffType = when (section) {
+            ItemCustomFieldSection.Login,
+            is ItemCustomFieldSection.Identity.ExtraSection -> emptyList()
+
+            ItemCustomFieldSection.Identity.Address -> addressCustomFields
+            ItemCustomFieldSection.Identity.Contact -> contactCustomFields
+            ItemCustomFieldSection.Identity.Personal -> personalCustomFields
+            ItemCustomFieldSection.Identity.Work -> workCustomFields
+        }.let { customFields -> customFields.getOrElse(index) { ItemDiffType.None } }
+
+    }
 
     data class Login(
         override val title: ItemDiffType = ItemDiffType.None,
@@ -92,7 +108,7 @@ sealed interface ItemDiffs {
         private val customFields: List<ItemDiffType> = emptyList()
     ) : ItemDiffs {
 
-        fun customField(index: Int): ItemDiffType = customFields.getOrNull(index) ?: ItemDiffType.None
+        fun customField(index: Int): ItemDiffType = customFields.getOrElse(index) { ItemDiffType.None }
 
     }
 

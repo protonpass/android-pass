@@ -35,7 +35,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
-import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldSection
+import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
 import proton.android.pass.commonui.api.SavedStateHandleProvider
@@ -136,7 +136,7 @@ class ItemDetailsViewModel @Inject constructor(
         isVisible: Boolean,
         hiddenState: HiddenState,
         hiddenFieldType: ItemDetailsFieldType.Hidden,
-        hiddenFieldSection: ItemDetailsFieldSection
+        hiddenFieldSection: ItemCustomFieldSection
     ) {
         when (val stateValue = state.value) {
             ItemDetailsState.Error,

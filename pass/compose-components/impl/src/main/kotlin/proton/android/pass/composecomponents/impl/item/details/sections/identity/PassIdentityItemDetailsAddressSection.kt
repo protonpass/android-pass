@@ -22,7 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import kotlinx.collections.immutable.toPersistentList
-import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldSection
+import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
@@ -134,8 +134,9 @@ internal fun PassIdentityItemDetailsAddressSection(
     if (hasCustomFields) {
         rows.addCustomFieldRows(
             customFields = customFields,
-            customFieldSection = ItemDetailsFieldSection.Identity.Address,
+            customFieldSection = ItemCustomFieldSection.Identity.Address,
             itemColors = itemColors,
+            itemDiffs = itemDiffs,
             onEvent = onEvent
         )
     }

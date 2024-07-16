@@ -96,6 +96,7 @@ internal fun PassIdentityItemDetailsSections(
             PassIdentityItemDetailsExtraSection(
                 extraSectionContents = extraSectionContentList.toPersistentList(),
                 itemColors = itemColors,
+                itemDiffs = itemDiffs,
                 onEvent = onEvent
             )
         }

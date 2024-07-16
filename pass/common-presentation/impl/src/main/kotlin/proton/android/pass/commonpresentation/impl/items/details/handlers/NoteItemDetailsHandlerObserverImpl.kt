@@ -82,8 +82,15 @@ class NoteItemDetailsHandlerObserverImpl @Inject constructor(
     override fun calculateItemDiffs(
         baseItemDetailState: ItemContents.Note,
         otherItemDetailState: ItemContents.Note
-    ): ItemDiffs.Note = ItemDiffs.Note(
-        title = calculateItemDiffType(baseItemDetailState.title, otherItemDetailState.title)
+    ): ItemDiffs = ItemDiffs.Note(
+        title = calculateItemDiffType(
+            baseItemFieldValue = baseItemDetailState.title,
+            otherItemFieldValue = otherItemDetailState.title
+        ),
+        note = calculateItemDiffType(
+            baseItemFieldValue = baseItemDetailState.note,
+            otherItemFieldValue = otherItemDetailState.note
+        )
     )
 
 }

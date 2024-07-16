@@ -114,6 +114,7 @@ private fun ItemHistoryRestoreDetails(
         revisionItemDetailState = revisionItemDetailState,
         currentItemDetailState = currentItemDetailState,
         itemColors = passItemColors(itemCategory = revisionItemDetailState.itemCategory),
+        revisionTime = itemRevision.revisionTime,
         onEvent = onEvent
     )
 

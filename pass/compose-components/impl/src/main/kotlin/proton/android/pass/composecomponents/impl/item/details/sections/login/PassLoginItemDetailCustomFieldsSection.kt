@@ -38,6 +38,7 @@ import proton.android.pass.composecomponents.impl.item.details.rows.PassItemDeta
 import proton.android.pass.composecomponents.impl.progress.PassTotpProgress
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.CustomFieldContent
+import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.Totp
 import me.proton.core.presentation.R as CoreR
 
@@ -49,6 +50,7 @@ internal fun PassLoginItemDetailCustomFieldsSection(
     customFields: ImmutableList<CustomFieldContent>,
     secondaryTotps: ImmutableMap<String, Totp?>,
     itemColors: PassItemColors,
+    itemDiffs: ItemDiffs.Login,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
     Column(
@@ -63,6 +65,7 @@ internal fun PassLoginItemDetailCustomFieldsSection(
                         title = customFieldContent.label,
                         subtitle = customFieldContent.value,
                         itemColors = itemColors,
+                        itemDiffType = itemDiffs.customField(index),
                         onClick = {
                             onEvent(
                                 PassItemDetailsUiEvent.OnSectionClick(
@@ -79,6 +82,7 @@ internal fun PassLoginItemDetailCustomFieldsSection(
                         hiddenState = customFieldContent.value,
                         hiddenTextLength = HIDDEN_CUSTOM_FIELD_TEXT_LENGTH,
                         itemColors = itemColors,
+                        itemDiffType = itemDiffs.customField(index),
                         hiddenTextStyle = ProtonTheme.typography.defaultNorm,
                         onClick = {
                             onEvent(
@@ -107,6 +111,7 @@ internal fun PassLoginItemDetailCustomFieldsSection(
                                 title = customFieldContent.label,
                                 maskedSubtitle = TextMask.TotpCode(customFieldTotp.code),
                                 itemColors = itemColors,
+                                itemDiffType = itemDiffs.customField(index),
                                 onClick = {
                                     onEvent(
                                         PassItemDetailsUiEvent.OnSectionClick(

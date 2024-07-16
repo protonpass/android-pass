@@ -33,29 +33,29 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import kotlinx.collections.immutable.persistentListOf
+import kotlinx.datetime.Instant
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Radius
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonui.api.body3Norm
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
+import proton.android.pass.composecomponents.impl.utils.passFormattedDateText
 import proton.android.pass.composecomponents.impl.utils.passItemColors
 import proton.android.pass.domain.items.ItemCategory
 import proton.android.pass.features.item.history.R
+
+private const val TAB_COUNT = 2
+private const val TAB_INDEX_CURRENT = 1
 
 @Composable
 internal fun ItemHistoryRestoreTabRow(
     modifier: Modifier = Modifier,
     selectedTabIndex: Int,
     itemColors: PassItemColors,
+    revisionTime: Long,
     onSelectTab: (Int) -> Unit
 ) {
-    val tabTitles = persistentListOf(
-        R.string.item_history_restore_tab_title_revision,
-        R.string.item_history_restore_tab_title_current
-    )
-
     TabRow(
         modifier = modifier
             .fillMaxWidth()
@@ -68,7 +68,7 @@ internal fun ItemHistoryRestoreTabRow(
         indicator = {},
         divider = {}
     ) {
-        tabTitles.forEachIndexed { index, titleResId ->
+        repeat(TAB_COUNT) { index ->
             val isSelected = selectedTabIndex == index
 
             Tab(
@@ -85,7 +85,11 @@ internal fun ItemHistoryRestoreTabRow(
                 onClick = { onSelectTab(index) },
                 text = {
                     Text(
-                        text = stringResource(id = titleResId),
+                        text = if (index == TAB_INDEX_CURRENT) {
+                            stringResource(id = R.string.item_history_restore_tab_title_current)
+                        } else {
+                            passFormattedDateText(endInstant = Instant.fromEpochSeconds(revisionTime))
+                        },
                         style = PassTheme.typography.body3Norm(),
                         color = if (isSelected) {
                             PassTheme.colors.textInvert
@@ -106,6 +110,7 @@ internal fun ItemHistoryRestoreTabRowPreview(@PreviewParameter(ThemePreviewProvi
             ItemHistoryRestoreTabRow(
                 selectedTabIndex = 0,
                 itemColors = passItemColors(itemCategory = ItemCategory.Login),
+                revisionTime = 1_721_125_029_982L,
                 onSelectTab = {}
             )
         }

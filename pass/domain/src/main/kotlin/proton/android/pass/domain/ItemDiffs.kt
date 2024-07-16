@@ -88,8 +88,13 @@ sealed interface ItemDiffs {
         val email: ItemDiffType = ItemDiffType.None,
         val username: ItemDiffType = ItemDiffType.None,
         val password: ItemDiffType = ItemDiffType.None,
-        val totp: ItemDiffType = ItemDiffType.None
-    ) : ItemDiffs
+        val totp: ItemDiffType = ItemDiffType.None,
+        private val customFields: List<ItemDiffType> = emptyList()
+    ) : ItemDiffs {
+
+        fun customField(index: Int): ItemDiffType = customFields.getOrNull(index) ?: ItemDiffType.None
+
+    }
 
     data class Note(
         override val title: ItemDiffType = ItemDiffType.None,

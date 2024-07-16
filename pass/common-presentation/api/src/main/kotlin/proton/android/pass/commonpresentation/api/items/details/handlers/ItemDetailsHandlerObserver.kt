@@ -71,6 +71,64 @@ abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
         }
     }
 
+    protected fun calculateItemDiffTypes(
+        encryptionContext: EncryptionContext,
+        baseItemCustomFieldsContent: List<CustomFieldContent>,
+        otherItemCustomFieldsContent: List<CustomFieldContent>
+    ): List<ItemDiffType> {
+        val itemDiffTypes = mutableListOf<ItemDiffType>()
+        val baseCustomFieldsMap = baseItemCustomFieldsContent.associateBy { it.label }
+        val otherCustomFieldsMap = otherItemCustomFieldsContent.associateBy { it.label }
+
+        val customFieldsLabels = if (baseItemCustomFieldsContent.size > otherItemCustomFieldsContent.size) {
+            baseCustomFieldsMap.keys
+        } else {
+            otherCustomFieldsMap.keys
+        }
+
+        customFieldsLabels.forEach { customFieldsLabel ->
+            val baseCustomField = baseCustomFieldsMap[customFieldsLabel]
+            val otherCustomField = otherCustomFieldsMap[customFieldsLabel]
+
+            when {
+                baseCustomField == null && otherCustomField == null -> {
+                    ItemDiffType.None
+                }
+
+                baseCustomField == null || otherCustomField == null -> {
+                    ItemDiffType.Field
+                }
+
+                baseCustomField is CustomFieldContent.Text && otherCustomField is CustomFieldContent.Text -> {
+                    calculateItemDiffType(
+                        baseItemFieldValue = baseCustomField.value,
+                        otherItemFieldValue = otherCustomField.value
+                    )
+                }
+
+                baseCustomField is CustomFieldContent.Hidden && otherCustomField is CustomFieldContent.Hidden -> {
+                    calculateItemDiffType(
+                        encryptionContext = encryptionContext,
+                        baseItemFieldHiddenState = baseCustomField.value,
+                        otherItemFieldHiddenState = otherCustomField.value
+                    )
+                }
+
+                baseCustomField is CustomFieldContent.Totp && otherCustomField is CustomFieldContent.Totp -> {
+                    calculateItemDiffType(
+                        encryptionContext = encryptionContext,
+                        baseItemFieldHiddenState = baseCustomField.value,
+                        otherItemFieldHiddenState = otherCustomField.value
+                    )
+                }
+
+                else -> ItemDiffType.Content
+            }.also(itemDiffTypes::add)
+        }
+
+        return itemDiffTypes
+    }
+
     protected fun toggleHiddenCustomField(
         customFieldsContent: List<CustomFieldContent>,
         hiddenFieldType: ItemDetailsFieldType.Hidden.CustomField,

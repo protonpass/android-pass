@@ -23,7 +23,6 @@
     <string name="item_history_restore_snackbar_message_error">There was an error restoring item revision</string>
     <string name="item_history_restore_snackbar_message_success">Item revision restored successfully</string>
     <string name="item_history_restore_tab_title_current">Current</string>
-    <string name="item_history_restore_tab_title_revision">Revision</string>
 
     <string name="item_history_timeline_title">History</string>
     <string name="item_history_timeline_node_child_title">Modified</string>

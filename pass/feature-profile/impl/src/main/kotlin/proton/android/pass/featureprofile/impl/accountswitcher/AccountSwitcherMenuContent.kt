@@ -52,14 +52,16 @@ fun AccountSwitcherMenuContent(
     onExpandedChange: (Boolean) -> Unit
 ) {
     Column(modifier) {
-        AccountSwitcherRow(
-            modifier = Modifier.clickable { onExpandedChange(false) },
-            accountListItem = primary.first(),
-            extraOffset = false,
-            onEvent = onEvent
-        )
-        PassDivider(modifier = Modifier.padding(horizontal = Spacing.medium))
-        Spacer(modifier = Modifier.height(30.dp))
+        if (primary.isNotEmpty()) {
+            AccountSwitcherRow(
+                modifier = Modifier.clickable { onExpandedChange(false) },
+                accountListItem = primary.first(),
+                extraOffset = false,
+                onEvent = onEvent
+            )
+            PassDivider(modifier = Modifier.padding(horizontal = Spacing.medium))
+            Spacer(modifier = Modifier.height(30.dp))
+        }
         if (other.isNotEmpty()) {
             Text.Body1Regular(
                 modifier = Modifier.padding(horizontal = Spacing.medium),

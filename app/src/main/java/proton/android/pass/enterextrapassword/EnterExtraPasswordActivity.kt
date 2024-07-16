@@ -18,6 +18,7 @@
 
 package proton.android.pass.enterextrapassword
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -25,7 +26,6 @@ import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentActivity
 import dagger.hilt.android.AndroidEntryPoint
-import me.proton.core.auth.presentation.ui.AddAccountActivity
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -54,8 +54,9 @@ class EnterExtraPasswordActivity : FragmentActivity() {
                 userId = userId,
                 onNavigate = {
                     when (it) {
-                        AppNavigation.Finish -> finishAndGoBackToMain()
-                        is AppNavigation.ForceSignOut -> finishAndRestart()
+                        AppNavigation.Finish,
+                        is AppNavigation.ForceSignOut -> finishAndGoBackTo(MainActivity::class.java)
+
                         else -> {}
                     }
                 }
@@ -63,24 +64,12 @@ class EnterExtraPasswordActivity : FragmentActivity() {
         }
     }
 
-    private fun finishAndRestart() {
+    private fun finishAndGoBackTo(activity: Class<out Activity>) {
         snackbarDispatcher.reset()
-        val intent = Intent(this, AddAccountActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        startActivity(intent)
-        finish()
-    }
-
-    private fun finishAndGoBackToMain() {
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, activity)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
         finish()
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        // no-op, we do not allow back navigation
     }
 
     companion object {

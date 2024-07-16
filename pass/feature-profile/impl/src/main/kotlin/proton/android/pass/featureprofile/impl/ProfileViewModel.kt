@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.scan
@@ -235,19 +236,17 @@ class ProfileViewModel @Inject constructor(
                 }.toPersistentList()
             }
 
-    private val needsToDisplaySync = MutableStateFlow(false)
-    internal val onAccountReadyFlow =
-        accountManager.getAccounts()
-            .scan(emptyMap<UserId, AccountState>()) { previousStates, accounts ->
-                accounts.associate { it.userId to it.state }.onEach { (userId, currentState) ->
-                    if (previousStates[userId] == AccountState.NotReady && currentState == AccountState.Ready) {
-                        needsToDisplaySync.update { true }
-                        accounts.firstOrNull { it.userId == userId }?.let { refreshAccount(it) }
-                    }
-                }
-            }
-            .combine(needsToDisplaySync, ::Pair)
-            .distinctUntilChanged()
+    internal val onAccountReadyFlow = accountManager.getAccounts()
+        .scan(emptyMap<UserId, AccountState>() to emptySet<UserId>()) { (previousStates, _), accounts ->
+            val currentStates = accounts.associate { it.userId to it.state }
+            val newReadyUserIds = currentStates.filter { (userId, currentState) ->
+                previousStates[userId] == AccountState.NotReady && currentState == AccountState.Ready
+            }.keys
+
+            currentStates to newReadyUserIds
+        }
+        .map { (_, readyUserIds) -> readyUserIds }
+        .distinctUntilChanged()
 
     internal val state: StateFlow<ProfileUiState> = combineN(
         appLockSectionStateFlow,
@@ -355,8 +354,8 @@ class ProfileViewModel @Inject constructor(
         state = state
     )
 
-    private suspend fun ProfileViewModel.refreshAccount(account: Account) {
-        runCatching { refreshContent(account.userId) }
+    private suspend fun ProfileViewModel.refreshAccount(userId: UserId) {
+        runCatching { refreshContent(userId) }
             .onSuccess {
                 PassLogger.i(TAG, "Sync completed")
             }
@@ -366,7 +365,13 @@ class ProfileViewModel @Inject constructor(
             }
     }
 
-    fun resetSyncDisplayed() = needsToDisplaySync.update { false }
+    fun onNewAccountReady(newAccountReady: Set<UserId>) {
+        viewModelScope.launch {
+            newAccountReady.forEach {
+                refreshAccount(it)
+            }
+        }
+    }
 
     private companion object {
 

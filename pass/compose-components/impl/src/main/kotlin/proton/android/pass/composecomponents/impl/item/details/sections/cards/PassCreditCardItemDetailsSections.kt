@@ -42,7 +42,7 @@ internal fun PassCreditCardItemDetailsSections(
     shareId: ShareId,
     contents: ItemContents.CreditCard,
     itemColors: PassItemColors,
-    itemDiffs: ItemDiffs,
+    itemDiffs: ItemDiffs.CreditCard,
     onEvent: (PassItemDetailsUiEvent) -> Unit,
     lastAutofillOption: Option<Instant>,
     revision: Long,
@@ -62,6 +62,7 @@ internal fun PassCreditCardItemDetailsSections(
             cvv = cvv,
             pin = pin,
             itemColors = itemColors,
+            itemDiffs = itemDiffs,
             onEvent = onEvent
         )
 

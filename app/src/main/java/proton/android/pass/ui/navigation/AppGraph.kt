@@ -543,7 +543,7 @@ fun NavGraphBuilder.appGraph(
         onNavigate = {
             when (it) {
                 AccountNavigation.Back -> appNavigator.navigateBack()
-                AccountNavigation.SignOut -> onNavigate(AppNavigation.SignOut())
+                is AccountNavigation.SignOut -> onNavigate(AppNavigation.SignOut(it.userId))
                 AccountNavigation.Subscription -> onNavigate(AppNavigation.Subscription)
                 AccountNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
                 AccountNavigation.PasswordManagement -> onNavigate(AppNavigation.PasswordManagement)
@@ -1400,8 +1400,8 @@ fun NavGraphBuilder.appGraph(
 
                 AuthNavigation.Dismissed -> onNavigate(AppNavigation.Finish)
                 AuthNavigation.Failed -> appNavigator.navigateBack()
-                AuthNavigation.SignOut -> onNavigate(AppNavigation.SignOut())
-                AuthNavigation.ForceSignOut -> onNavigate(AppNavigation.ForceSignOut)
+                is AuthNavigation.SignOut -> onNavigate(AppNavigation.SignOut(it.userId))
+                is AuthNavigation.ForceSignOut -> onNavigate(AppNavigation.ForceSignOut(it.userId))
                 is AuthNavigation.EnterPin -> appNavigator.navigate(
                     destination = EnterPin,
                     route = EnterPin.buildRoute(it.origin)

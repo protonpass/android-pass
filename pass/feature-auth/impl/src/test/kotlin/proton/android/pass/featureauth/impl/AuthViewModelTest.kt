@@ -109,6 +109,7 @@ internal class AuthViewModelTest {
         val expectedState = AuthState.Initial.copy(
             event = None,
             content = AuthStateContent.default(USER_EMAIL.some()).copy(
+                userId = UserId(TestAccountManager.USER_ID).some(),
                 authMethod = Some(AuthMethod.Fingerprint),
                 showExtraPassword = LoadingResult.Success(false),
                 showPinOrBiometry = true,
@@ -203,6 +204,7 @@ internal class AuthViewModelTest {
                 AuthState(
                     event = None,
                     content = AuthStateContent.default(USER_EMAIL.some()).copy(
+                        userId = UserId(TestAccountManager.USER_ID).some(),
                         authMethod = Some(AuthMethod.Fingerprint),
                         showExtraPassword = LoadingResult.Success(false),
                         showPinOrBiometry = true,
@@ -248,10 +250,12 @@ internal class AuthViewModelTest {
 
     @Test
     internal fun `WHEN sign out is clicked THEN emits SignOut event`() = runTest {
-        viewModel.onSignOut()
 
         viewModel.state.test {
-            assertThat(awaitItem().event).isEqualTo(AuthEvent.SignOut.some())
+            skipItems(1)
+            viewModel.onSignOut()
+            assertThat(awaitItem().event)
+                .isEqualTo(AuthEvent.SignOut(UserId(TestAccountManager.USER_ID)).some())
         }
     }
 
@@ -337,7 +341,8 @@ internal class AuthViewModelTest {
 
             val stateError = awaitItem()
             assertThat(stateError.content.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
-            assertThat(stateError.event).isEqualTo(AuthEvent.ForceSignOut.some())
+            assertThat(stateError.event)
+                .isEqualTo(AuthEvent.ForceSignOut(UserId(TestAccountManager.USER_ID)).some())
         }
     }
 

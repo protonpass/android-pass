@@ -92,7 +92,12 @@ internal fun AccountContent(
                     onEvent = onEvent
                 )
             }
-            SignOut(onSignOutClick = { onEvent(AccountContentEvent.SignOut) })
+            SignOut(
+                onSignOutClick = {
+                    val userId = state.userId ?: return@SignOut
+                    onEvent(AccountContentEvent.SignOut(userId))
+                }
+            )
             DeleteAccount(onDeleteAccountClick = { onEvent(AccountContentEvent.DeleteAccount) })
             Text(
                 text = stringResource(R.string.account_permanently_delete_warning),

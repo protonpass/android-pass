@@ -26,7 +26,10 @@ internal sealed interface AccountContentEvent {
     data object PasswordManagement : AccountContentEvent
     data object RecoveryEmail : AccountContentEvent
     data object DeleteAccount : AccountContentEvent
-    data object SignOut : AccountContentEvent
+
+    @JvmInline
+    value class SignOut(val userId: UserId) : AccountContentEvent
+
     data object Subscription : AccountContentEvent
     data object ManageAccount : AccountContentEvent
     data object SetExtraPassword : AccountContentEvent

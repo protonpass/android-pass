@@ -118,6 +118,7 @@ internal fun PassItemDetailSections(
             shareId = shareId,
             contents = itemContents,
             itemColors = itemColors,
+            itemDiffs = itemDiffs,
             onEvent = onEvent,
             lastAutofillOption = itemLastAutofillAtOption,
             revision = itemRevision,

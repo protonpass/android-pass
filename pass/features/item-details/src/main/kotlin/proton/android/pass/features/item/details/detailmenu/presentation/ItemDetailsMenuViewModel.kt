@@ -24,21 +24,20 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.FlowUtils.oneShot
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemAction
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.errors.ItemNotFoundError
 import proton.android.pass.data.api.repositories.BulkMoveToVaultRepository
 import proton.android.pass.data.api.usecases.GetItemActions
-import proton.android.pass.data.api.usecases.ObserveItemById
+import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.PinItem
 import proton.android.pass.data.api.usecases.TrashItems
 import proton.android.pass.data.api.usecases.UnpinItem
@@ -54,7 +53,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ItemDetailsMenuViewModel @Inject constructor(
     savedStateHandleProvider: SavedStateHandleProvider,
-    observeItemById: ObserveItemById,
+    getItemById: GetItemById,
     getItemActions: GetItemActions,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val clipboardManager: ClipboardManager,
@@ -78,16 +77,7 @@ class ItemDetailsMenuViewModel @Inject constructor(
 
     private val eventFlow = MutableStateFlow<ItemDetailsMenuEvent>(ItemDetailsMenuEvent.Idle)
 
-    private val itemFlow = observeItemById(shareId, itemId)
-        .catch { error ->
-            if (error is ItemNotFoundError) {
-                eventFlow.update { ItemDetailsMenuEvent.OnItemNotFound }
-            } else {
-                PassLogger.w(TAG, "There was an error observing item")
-                PassLogger.w(TAG, error)
-                throw error
-            }
-        }
+    private val itemFlow = oneShot { getItemById(shareId, itemId) }
 
     internal val state: StateFlow<ItemDetailsMenuState> = combine(
         actionFlow,

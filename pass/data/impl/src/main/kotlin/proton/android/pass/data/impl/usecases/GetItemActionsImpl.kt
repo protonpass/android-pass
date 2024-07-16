@@ -20,7 +20,7 @@ package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.firstOrNull
 import proton.android.pass.data.api.usecases.GetItemActions
-import proton.android.pass.data.api.usecases.ObserveItemById
+import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.data.api.usecases.ObserveVaults
@@ -42,15 +42,14 @@ import javax.inject.Singleton
 
 @Singleton
 class GetItemActionsImpl @Inject constructor(
-    private val getItemById: ObserveItemById,
+    private val getItemById: GetItemById,
     private val observeUserPlan: GetUserPlan,
     private val canShareVault: CanShareVault,
     private val observeVaults: ObserveVaults
 ) : GetItemActions {
 
     override suspend fun invoke(shareId: ShareId, itemId: ItemId): ItemActions {
-        val item = getItemById(shareId, itemId).firstOrNull()
-            ?: throw IllegalStateException("Item not found")
+        val item = getItemById(shareId, itemId)
 
         val vaults = observeVaults().firstOrNull()
             ?: throw IllegalStateException("Could not fetch vaults")

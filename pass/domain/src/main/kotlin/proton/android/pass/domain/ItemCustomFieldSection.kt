@@ -16,13 +16,13 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.commonpresentation.api.items.details.domain
+package proton.android.pass.domain
 
-sealed interface ItemDetailsFieldSection {
+sealed interface ItemCustomFieldSection {
 
-    data object Main : ItemDetailsFieldSection
+    data object Login : ItemCustomFieldSection
 
-    sealed interface Identity : ItemDetailsFieldSection {
+    sealed interface Identity : ItemCustomFieldSection {
 
         data object Address : Identity
 

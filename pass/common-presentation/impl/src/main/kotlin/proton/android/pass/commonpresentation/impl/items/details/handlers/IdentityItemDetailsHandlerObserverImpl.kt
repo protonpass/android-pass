@@ -21,7 +21,6 @@ package proton.android.pass.commonpresentation.impl.items.details.handlers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
-import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonui.api.toItemContents
@@ -31,6 +30,7 @@ import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemState
 import javax.inject.Inject
@@ -71,12 +71,12 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
     override fun updateItemContents(
         itemContents: ItemContents.Identity,
         hiddenFieldType: ItemDetailsFieldType.Hidden,
-        hiddenFieldSection: ItemDetailsFieldSection,
+        hiddenFieldSection: ItemCustomFieldSection,
         hiddenState: HiddenState
     ): ItemContents = when (hiddenFieldType) {
         is ItemDetailsFieldType.Hidden.CustomField -> {
             when (hiddenFieldSection) {
-                ItemDetailsFieldSection.Identity.Address -> {
+                ItemCustomFieldSection.Identity.Address -> {
                     itemContents.copy(
                         addressDetailsContent = itemContents.addressDetailsContent.copy(
                             customFields = toggleHiddenCustomField(
@@ -88,7 +88,7 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
                     )
                 }
 
-                ItemDetailsFieldSection.Identity.Contact -> {
+                ItemCustomFieldSection.Identity.Contact -> {
                     itemContents.copy(
                         contactDetailsContent = itemContents.contactDetailsContent.copy(
                             customFields = toggleHiddenCustomField(
@@ -100,7 +100,7 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
                     )
                 }
 
-                is ItemDetailsFieldSection.Identity.ExtraSection -> {
+                is ItemCustomFieldSection.Identity.ExtraSection -> {
                     itemContents.copy(
                         extraSectionContentList = itemContents.extraSectionContentList
                             .toMutableList()
@@ -122,7 +122,7 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
                     )
                 }
 
-                ItemDetailsFieldSection.Identity.Personal -> {
+                ItemCustomFieldSection.Identity.Personal -> {
                     itemContents.copy(
                         personalDetailsContent = itemContents.personalDetailsContent.copy(
                             customFields = toggleHiddenCustomField(
@@ -134,7 +134,7 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
                     )
                 }
 
-                ItemDetailsFieldSection.Identity.Work -> {
+                ItemCustomFieldSection.Identity.Work -> {
                     itemContents.copy(
                         workDetailsContent = itemContents.workDetailsContent.copy(
                             customFields = toggleHiddenCustomField(
@@ -146,7 +146,7 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
                     )
                 }
 
-                ItemDetailsFieldSection.Main -> itemContents
+                ItemCustomFieldSection.Login -> itemContents
             }
         }
 
@@ -296,6 +296,26 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
             workEmail = calculateItemDiffType(
                 baseItemFieldValue = baseItemDetailState.workDetailsContent.workEmail,
                 otherItemFieldValue = otherItemDetailState.workDetailsContent.workEmail
+            ),
+            addressCustomFields = calculateItemDiffTypes(
+                encryptionContext = this@withEncryptionContext,
+                baseItemCustomFieldsContent = baseItemDetailState.addressDetailsContent.customFields,
+                otherItemCustomFieldsContent = otherItemDetailState.addressDetailsContent.customFields
+            ),
+            contactCustomFields = calculateItemDiffTypes(
+                encryptionContext = this@withEncryptionContext,
+                baseItemCustomFieldsContent = baseItemDetailState.contactDetailsContent.customFields,
+                otherItemCustomFieldsContent = otherItemDetailState.contactDetailsContent.customFields
+            ),
+            personalCustomFields = calculateItemDiffTypes(
+                encryptionContext = this@withEncryptionContext,
+                baseItemCustomFieldsContent = baseItemDetailState.personalDetailsContent.customFields,
+                otherItemCustomFieldsContent = otherItemDetailState.personalDetailsContent.customFields
+            ),
+            workCustomFields = calculateItemDiffTypes(
+                encryptionContext = this@withEncryptionContext,
+                baseItemCustomFieldsContent = baseItemDetailState.workDetailsContent.customFields,
+                otherItemCustomFieldsContent = otherItemDetailState.workDetailsContent.customFields
             )
         )
     }

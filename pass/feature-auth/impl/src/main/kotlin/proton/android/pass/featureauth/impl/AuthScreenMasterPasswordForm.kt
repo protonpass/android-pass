@@ -313,6 +313,7 @@ fun AuthScreenMasterPasswordFormPreview(
         Surface {
             AuthScreenMasterPasswordForm(
                 state = AuthStateContent(
+                    userId = None,
                     password = input.second.password,
                     address = "some@address.test".some(),
                     isLoadingState = IsLoadingState.NotLoading,

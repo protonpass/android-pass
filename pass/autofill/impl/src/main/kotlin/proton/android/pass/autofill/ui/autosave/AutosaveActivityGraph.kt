@@ -63,8 +63,8 @@ fun NavGraphBuilder.autosaveActivityGraph(
                 is AuthNavigation.Success -> appNavigator.navigate(CreateLogin)
                 AuthNavigation.Dismissed -> onNavigate(AutosaveNavigation.Cancel)
                 AuthNavigation.Failed -> onNavigate(AutosaveNavigation.Cancel)
-                AuthNavigation.SignOut -> {}
-                AuthNavigation.ForceSignOut -> onNavigate(AutosaveNavigation.ForceSignOut)
+                is AuthNavigation.SignOut -> {}
+                is AuthNavigation.ForceSignOut -> onNavigate(AutosaveNavigation.ForceSignOut)
                 is AuthNavigation.EnterPin -> appNavigator.navigate(
                     destination = EnterPin,
                     route = EnterPin.buildRoute(it.origin)

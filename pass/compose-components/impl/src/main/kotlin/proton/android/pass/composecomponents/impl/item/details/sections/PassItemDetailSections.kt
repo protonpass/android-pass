@@ -133,7 +133,7 @@ internal fun PassItemDetailSections(
                 PassSharedItemDetailNoteSection(
                     note = note,
                     itemColors = itemColors,
-                    itemDiffType = itemDiffs.note
+                    itemDiffs = itemDiffs
                 )
             }
         }

@@ -104,7 +104,7 @@ internal fun PassLoginItemDetailSections(
             PassSharedItemDetailNoteSection(
                 note = note,
                 itemColors = itemColors,
-                itemDiffType = itemDiffs.note
+                itemDiffs = itemDiffs
             )
         }
 
@@ -113,6 +113,7 @@ internal fun PassLoginItemDetailSections(
                 customFields = customFields.toPersistentList(),
                 secondaryTotps = secondaryTotps,
                 itemColors = itemColors,
+                itemDiffs = itemDiffs,
                 onEvent = onEvent
             )
         }

@@ -213,6 +213,11 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
             note = calculateItemDiffType(
                 baseItemFieldValue = baseItemDetailState.note,
                 otherItemFieldValue = otherItemDetailState.note
+            ),
+            customFields = calculateItemDiffTypes(
+                encryptionContext = this@withEncryptionContext,
+                baseItemCustomFieldsContent = baseItemDetailState.customFields,
+                otherItemCustomFieldsContent = otherItemDetailState.customFields
             )
         )
     }

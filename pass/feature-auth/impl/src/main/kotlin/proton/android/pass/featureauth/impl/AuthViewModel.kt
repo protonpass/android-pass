@@ -160,8 +160,9 @@ class AuthViewModel @Inject constructor(
         currentUserId.flatMapLatest { observeUserEmail(it).asLoadingResult() },
         authMethodFlow,
         currentUserId.mapLatest(hasExtraPassword::invoke).asLoadingResult(),
-        accountSwitcherFlow
-    ) { event, formContent, userEmail, authMethod, hasExtraPassword, accountSwitcherState ->
+        accountSwitcherFlow,
+        currentUserId
+    ) { event, formContent, userEmail, authMethod, hasExtraPassword, accountSwitcherState, currentUserId ->
         val address = when (userEmail) {
             LoadingResult.Loading -> None
             is LoadingResult.Error -> {
@@ -176,6 +177,7 @@ class AuthViewModel @Inject constructor(
         AuthState(
             event = event,
             content = AuthStateContent(
+                userId = currentUserId.toOption(),
                 password = formContent.password,
                 isLoadingState = formContent.isLoadingState,
                 isPasswordVisible = formContent.isPasswordVisible,
@@ -309,7 +311,9 @@ class AuthViewModel @Inject constructor(
                 PassLogger.w(TAG, "Too many attempts")
                 snackbarDispatcher(AuthExtraPasswordTooManyAttemptsError)
                 delay(WRONG_PASSWORD_DELAY_SECONDS)
-                updateAuthEventFlow(AuthEvent.ForceSignOut)
+                state.value.content.userId.value()?.let {
+                    updateAuthEventFlow(AuthEvent.ForceSignOut(it))
+                }
             }
 
             is WrongExtraPasswordException -> {
@@ -325,7 +329,9 @@ class AuthViewModel @Inject constructor(
                 if (remainingAttempts <= 0) {
                     snackbarDispatcher(AuthExtraPasswordTooManyAttemptsError)
                     delay(WRONG_PASSWORD_DELAY_SECONDS)
-                    updateAuthEventFlow(AuthEvent.ForceSignOut)
+                    state.value.content.userId.value()?.let {
+                        updateAuthEventFlow(AuthEvent.ForceSignOut(it))
+                    }
                 } else {
                     formContentFlow.update {
                         it.copy(error = AuthError.WrongPassword(remainingAttempts.some()).some())
@@ -365,7 +371,9 @@ class AuthViewModel @Inject constructor(
 
                         if (remainingAttempts <= 0) {
                             PassLogger.w(TAG, "Too many wrong attempts, logging user out")
-                            updateAuthEventFlow(AuthEvent.ForceSignOut)
+                            state.value.content.userId.value()?.let {
+                                updateAuthEventFlow(AuthEvent.ForceSignOut(it))
+                            }
                         } else {
                             PassLogger.i(
                                 TAG,
@@ -406,7 +414,9 @@ class AuthViewModel @Inject constructor(
     }
 
     fun onSignOut() = viewModelScope.launch {
-        updateAuthEventFlow(AuthEvent.SignOut)
+        state.value.content.userId.value()?.let {
+            updateAuthEventFlow(AuthEvent.SignOut(it))
+        }
     }
 
     fun onTogglePasswordVisibility(value: Boolean) = viewModelScope.launch {

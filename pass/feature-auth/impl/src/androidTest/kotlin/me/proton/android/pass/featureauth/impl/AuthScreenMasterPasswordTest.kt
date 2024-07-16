@@ -110,7 +110,7 @@ class AuthScreenMasterPasswordTest {
                 PassTheme {
                     AuthScreen(
                         navigation = {
-                            if (it == AuthNavigation.SignOut) {
+                            if (it is AuthNavigation.SignOut) {
                                 checker.call()
                             }
                         },
@@ -214,7 +214,7 @@ class AuthScreenMasterPasswordTest {
                 PassTheme {
                     AuthScreen(
                         navigation = {
-                            if (it == AuthNavigation.ForceSignOut) {
+                            if (it is AuthNavigation.ForceSignOut) {
                                 checker.call()
                             }
                         },

@@ -19,6 +19,7 @@
 package proton.android.pass.featureauth.impl
 
 import androidx.compose.runtime.Stable
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
@@ -31,7 +32,8 @@ sealed interface EnterPinUiState {
         val event: EnterPinEvent,
         val pin: String,
         val pinError: Option<PinError>,
-        val isLoadingState: IsLoadingState
+        val isLoadingState: IsLoadingState,
+        val userId: UserId
     ) : EnterPinUiState
 }
 

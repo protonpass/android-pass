@@ -26,10 +26,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.biometry.StoreAuthSuccessful
 import proton.android.pass.common.api.CommonRegex
 import proton.android.pass.common.api.None
@@ -46,6 +49,7 @@ import kotlin.time.Duration.Companion.seconds
 
 @HiltViewModel
 class EnterPinViewModel @Inject constructor(
+    private val accountManager: AccountManager,
     private val checkPin: CheckPin,
     private val storeAuthSuccessful: StoreAuthSuccessful,
     private val internalSettingsRepository: InternalSettingsRepository,
@@ -68,6 +72,7 @@ class EnterPinViewModel @Inject constructor(
         pinState,
         pinErrorState,
         isLoading,
+        accountManager.getPrimaryUserId().filterNotNull(),
         EnterPinUiState::Data
     ).stateIn(
         scope = viewModelScope,
@@ -102,7 +107,8 @@ class EnterPinViewModel @Inject constructor(
                 val remainingAttempts = MAX_PIN_ATTEMPTS - attemptsCount
                 if (remainingAttempts <= 0) {
                     PassLogger.w(TAG, "Too many wrong attempts, logging user out")
-                    eventState.update { EnterPinEvent.ForceSignOut }
+                    val userId = (state.value as EnterPinUiState.Data).userId
+                    eventState.update { EnterPinEvent.ForceSignOut(userId) }
                 } else {
                     pinErrorState.update { PinError.PinIncorrect(remainingAttempts).some() }
                 }
@@ -120,7 +126,8 @@ class EnterPinViewModel @Inject constructor(
 
 sealed interface EnterPinEvent {
 
-    data object ForceSignOut : EnterPinEvent
+    @JvmInline
+    value class ForceSignOut(val userId: UserId) : EnterPinEvent
 
     @JvmInline
     value class Success(val origin: AuthOrigin) : EnterPinEvent

@@ -45,11 +45,11 @@ import proton.android.pass.autofill.di.UserPreferenceEntryPoint
 import proton.android.pass.commonui.api.setSecureMode
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.AllowScreenshotsPreference
-import proton.android.pass.ui.launcher.LauncherViewModel
 import proton.android.pass.ui.launcher.AccountState.AccountNeeded
 import proton.android.pass.ui.launcher.AccountState.PrimaryExist
 import proton.android.pass.ui.launcher.AccountState.Processing
 import proton.android.pass.ui.launcher.AccountState.StepNeeded
+import proton.android.pass.ui.launcher.LauncherViewModel
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -118,7 +118,7 @@ class MainActivity : FragmentActivity() {
                                 SignOutDialogActivity.start(this, it.userId)
 
                             is AppNavigation.SignIn -> launcherViewModel.signIn(it.userId)
-                            is AppNavigation.ForceSignOut -> launcherViewModel.disable()
+                            is AppNavigation.ForceSignOut -> launcherViewModel.disable(it.userId)
                             is AppNavigation.Report -> launcherViewModel.report()
                             is AppNavigation.Subscription -> launcherViewModel.subscription()
                             is AppNavigation.Upgrade -> launcherViewModel.upgrade()

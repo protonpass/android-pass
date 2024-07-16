@@ -20,6 +20,7 @@ package proton.android.pass.featureauth.impl
 
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.persistentMapOf
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -31,8 +32,12 @@ sealed interface AuthEvent {
     value class Success(val origin: AuthOrigin) : AuthEvent
     data object Failed : AuthEvent
     data object Canceled : AuthEvent
-    data object SignOut : AuthEvent
-    data object ForceSignOut : AuthEvent
+
+    @JvmInline
+    value class SignOut(val userId: UserId) : AuthEvent
+
+    @JvmInline
+    value class ForceSignOut(val userId: UserId) : AuthEvent
 
     @JvmInline
     value class EnterPin(val origin: AuthOrigin) : AuthEvent
@@ -56,6 +61,7 @@ sealed interface PasswordError {
 }
 
 data class AuthStateContent(
+    val userId: Option<UserId>,
     val password: String,
     val address: Option<String>,
     val isLoadingState: IsLoadingState,
@@ -71,6 +77,7 @@ data class AuthStateContent(
 ) {
     companion object {
         fun default(address: Option<String>) = AuthStateContent(
+            userId = None,
             password = "",
             address = address,
             isLoadingState = IsLoadingState.NotLoading,

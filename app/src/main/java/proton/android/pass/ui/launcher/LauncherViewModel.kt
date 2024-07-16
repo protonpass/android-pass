@@ -164,21 +164,21 @@ class LauncherViewModel @Inject constructor(
         )
     }
 
-    internal fun signIn(userId: UserId? = null) = viewModelScope.launch {
-        val account = userId?.let { getAccountOrNull(it) }
+    internal fun signIn(userId: UserId) = viewModelScope.launch {
+        val account = getAccountOrNull(userId)
         PassLogger.i(TAG, "Signing in: $userId")
         authOrchestrator.startLoginWorkflow(requiredAccountType, username = account?.username)
     }
 
-    internal fun disable(userId: UserId? = null) = viewModelScope.launch {
+    internal fun disable(userId: UserId) = viewModelScope.launch {
         PassLogger.i(TAG, "Disabling account: $userId")
         snackbarDispatcher.reset()
-        accountManager.disableAccount(requireNotNull(userId ?: getPrimaryUserIdOrNull()))
+        accountManager.disableAccount(userId)
     }
 
-    internal fun remove(userId: UserId? = null) = viewModelScope.launch {
+    internal fun remove(userId: UserId) = viewModelScope.launch {
         PassLogger.i(TAG, "Removing account: $userId")
-        accountManager.removeAccount(requireNotNull(userId ?: getPrimaryUserIdOrNull()))
+        accountManager.removeAccount(userId)
     }
 
     internal fun switch(userId: UserId) = viewModelScope.launch {

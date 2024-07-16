@@ -56,7 +56,7 @@ fun AccountScreen(
                 AccountContentEvent.Upgrade -> onNavigate(AccountNavigation.Upgrade)
                 AccountContentEvent.DeleteAccount -> openWebsite(context, PASS_DELETE_ACCOUNT)
                 AccountContentEvent.ManageAccount -> openWebsite(context, PASS_MANAGE_ACCOUNT)
-                AccountContentEvent.SignOut -> onNavigate(AccountNavigation.SignOut)
+                is AccountContentEvent.SignOut -> onNavigate(AccountNavigation.SignOut(it.userId))
                 AccountContentEvent.Subscription -> onNavigate(AccountNavigation.Subscription)
                 AccountContentEvent.SetExtraPassword -> onNavigate(AccountNavigation.SetExtraPassword)
                 is AccountContentEvent.ExtraPasswordOptions ->

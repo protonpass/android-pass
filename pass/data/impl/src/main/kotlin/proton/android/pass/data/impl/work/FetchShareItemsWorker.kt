@@ -67,7 +67,7 @@ open class FetchShareItemsWorker @AssistedInject constructor(
 
         val result = withContext(appDispatchers.io) {
             runCatching {
-                itemRepository.refreshItemsAndObserveProgress(
+                itemRepository.downloadItemsAndObserveProgress(
                     userId = userId,
                     shareId = shareId,
                     onProgress = { progress ->

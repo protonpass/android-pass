@@ -111,7 +111,7 @@ interface ItemRepository {
 
     suspend fun refreshItems(userId: UserId, shareId: ShareId): List<Item>
 
-    suspend fun refreshItemsAndObserveProgress(
+    suspend fun downloadItemsAndObserveProgress(
         userId: UserId,
         shareId: ShareId,
         onProgress: suspend (VaultProgress) -> Unit
@@ -124,7 +124,11 @@ interface ItemRepository {
         events: PendingEventList
     )
 
-    suspend fun setShareItems(userId: UserId, items: Map<ShareId, List<ItemRevision>>)
+    suspend fun setShareItems(
+        userId: UserId,
+        items: Map<ShareId, List<ItemRevision>>,
+        onProgress: suspend (VaultProgress) -> Unit
+    )
 
     suspend fun applyPendingEvent(event: ItemPendingEvent)
 
@@ -172,6 +176,7 @@ interface ItemRepository {
 }
 
 data class VaultProgress(
+    val shareId: ShareId,
     val total: Int,
     val current: Int
 )

@@ -18,10 +18,10 @@
 
 <resources>
     <plurals name="sync_item_count">
-        <item quantity="one">%d item</item>
-        <item quantity="other">%d items</item>
+        <item quantity="one">Downloaded %d item</item>
+        <item quantity="other">Downloaded %d items</item>
     </plurals>
-    <string name="sync_progress_item_count">%1$d of %2$d items</string>
+    <string name="sync_progress_item_count">Downloading %1$d of %2$d items</string>
     <string name="sync_dialog_title">Syncing items…</string>
     <string name="sync_dialog_title_error">Sync failed</string>
     <string name="sync_dialog_title_success">Sync completed</string>
@@ -30,4 +30,9 @@
     <string name="sync_dialog_subtitle_success">Your items were successfully downloaded and decrypted.</string>
     <string name="sync_item_not_started">Not started</string>
     <string name="sync_item_failed">Sync failed</string>
+    <plurals name="sync_inserted_item_count">
+        <item quantity="one">Inserted %d item</item>
+        <item quantity="other">Inserted %d items</item>
+    </plurals>
+    <string name="sync_inserted_progress_item_count">Inserting %1$d of %2$d items</string>
 </resources>

@@ -24,6 +24,7 @@ import proton.android.pass.data.api.repositories.ItemRevision
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.SyncMode
+import proton.android.pass.data.api.repositories.VaultProgress
 import proton.android.pass.data.api.usecases.sync.ForceSyncItems
 import proton.android.pass.data.api.usecases.sync.ForceSyncResult
 import proton.android.pass.data.impl.util.runConcurrently
@@ -46,50 +47,54 @@ class ForceSyncItemsImpl @Inject constructor(
         val results: List<Result<Pair<ShareId, List<ItemRevision>>>> = runConcurrently(
             items = shareIds,
             block = { shareId ->
-                val shareItems = itemRepository.refreshItemsAndObserveProgress(
+                val shareItems = itemRepository.downloadItemsAndObserveProgress(
                     userId = userId,
                     shareId = shareId,
                     onProgress = { progress ->
                         itemSyncStatusRepository.emit(
-                            ItemSyncStatus.Syncing(
+                            ItemSyncStatus.SyncDownloading(
                                 shareId = shareId,
                                 current = progress.current,
                                 total = progress.total
                             )
                         )
 
-                        PassLogger.d(TAG, "ShareId ${shareId.id} progress: $progress")
+                        PassLogger.d(TAG, "Downloading Share ${shareId.id} progress: $progress")
                     }
                 )
 
                 shareId to shareItems
             },
             onSuccess = { shareId, _ ->
-                PassLogger.d(TAG, "Share ${shareId.id} refreshed successfully")
+                PassLogger.d(TAG, "Downloaded Share ${shareId.id} successfully")
             },
             onFailure = { shareId, err ->
-                PassLogger.w(TAG, "Error refreshing items on share ${shareId.id}")
+                PassLogger.w(TAG, "Error downloading items on share ${shareId.id}")
                 PassLogger.w(TAG, err)
             }
         )
 
-        return handleResults(
-            userId = userId,
-            results = results
-        )
-    }
-
-    private suspend fun handleResults(
-        userId: UserId,
-        results: List<Result<Pair<ShareId, List<ItemRevision>>>>
-    ): ForceSyncResult {
         val (successes, errors) = results.partition { it.isSuccess }
 
         val itemsToInsert: Map<ShareId, List<ItemRevision>> = successes
             .mapNotNull { it.getOrNull() }
             .toMap()
 
-        itemRepository.setShareItems(userId, itemsToInsert)
+        itemRepository.setShareItems(
+            userId = userId,
+            items = itemsToInsert,
+            onProgress = { progress: VaultProgress ->
+                itemSyncStatusRepository.emit(
+                    ItemSyncStatus.SyncInserting(
+                        shareId = progress.shareId,
+                        current = progress.current,
+                        total = progress.total
+                    )
+                )
+
+                PassLogger.d(TAG, "Inserting Share ${progress.shareId.id} progress: $progress")
+            }
+        )
 
         val result = if (errors.isEmpty()) {
             itemSyncStatusRepository.emit(ItemSyncStatus.SyncSuccess)

@@ -82,6 +82,7 @@ internal fun SyncDialogContent(
                             SyncDialogVaultRow(
                                 modifier = Modifier.padding(vertical = Spacing.small),
                                 name = vaultName,
+                                isInserting = isInserting,
                                 itemCurrent = currentItemsCount,
                                 itemTotal = totalItemsCount,
                                 color = vaultColor,

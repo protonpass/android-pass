@@ -89,20 +89,20 @@ class AliasItemDetailsHandlerObserverImpl @Inject constructor(
     }
 
     override fun calculateItemDiffs(
-        baseItemDetailState: ItemContents.Alias,
-        otherItemDetailState: ItemContents.Alias
+        baseItemContents: ItemContents.Alias,
+        otherItemContents: ItemContents.Alias
     ): ItemDiffs = ItemDiffs.Alias(
         title = calculateItemDiffType(
-            baseItemFieldValue = baseItemDetailState.title,
-            otherItemFieldValue = otherItemDetailState.title
+            baseItemFieldValue = baseItemContents.title,
+            otherItemFieldValue = otherItemContents.title
         ),
         note = calculateItemDiffType(
-            baseItemFieldValue = baseItemDetailState.note,
-            otherItemFieldValue = otherItemDetailState.note
+            baseItemFieldValue = baseItemContents.note,
+            otherItemFieldValue = otherItemContents.note
         ),
         aliasEmail = calculateItemDiffType(
-            baseItemFieldValue = baseItemDetailState.aliasEmail,
-            otherItemFieldValue = otherItemDetailState.aliasEmail
+            baseItemFieldValue = baseItemContents.aliasEmail,
+            otherItemFieldValue = otherItemContents.aliasEmail
         )
     )
 

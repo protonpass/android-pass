@@ -19,19 +19,32 @@
 package proton.android.pass.featuresync.impl.presentation
 
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.domain.ShareColor
 import proton.android.pass.domain.ShareIcon
 import proton.android.pass.domain.Vault
 
 internal data class SyncDialogItem(
-    private val currentItemsCountOption: Option<Int>,
-    private val totalItemsCountOption: Option<Int>,
+    private val downloadedItemsCountOption: Option<Int>,
+    private val totalDownloadedItemsCountOption: Option<Int>,
+    private val insertedItemsCountOption: Option<Int>,
+    private val totalInsertedItemsCountOption: Option<Int>,
     private val vault: Vault
 ) {
 
-    internal val currentItemsCount: Int? = currentItemsCountOption.value()
+    internal val isInserting: Boolean = insertedItemsCountOption is Some
 
-    internal val totalItemsCount: Int? = totalItemsCountOption.value()
+    internal val currentItemsCount: Int? = if (isInserting) {
+        insertedItemsCountOption.value()
+    } else {
+        downloadedItemsCountOption.value()
+    }
+
+    internal val totalItemsCount: Int? = if (isInserting) {
+        totalInsertedItemsCountOption.value()
+    } else {
+        totalDownloadedItemsCountOption.value()
+    }
 
     internal val vaultName: String = vault.name
 

@@ -29,14 +29,15 @@ import androidx.work.CoroutineWorker
 import androidx.work.Data
 import androidx.work.ForegroundInfo
 import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.OutOfQuotaPolicy
-import androidx.work.WorkRequest
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.first
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.sync.ForceSyncItems
 import proton.android.pass.data.api.usecases.sync.ForceSyncResult
 import proton.android.pass.data.impl.R
@@ -113,7 +114,7 @@ open class FetchItemsWorker @AssistedInject constructor(
         private const val SYNC_NOTIFICATION_ID = 0
         private const val SYNC_NOTIFICATION_CHANNEL_ID = "SyncNotificationChannel"
 
-        fun getRequestFor(source: FetchSource, shareIds: List<ShareId>): WorkRequest {
+        fun getRequestFor(source: FetchSource, shareIds: List<ShareId>): OneTimeWorkRequest {
             val shareIdsAsString = shareIds.map { it.id }.toTypedArray()
             val extras = mutableMapOf(
                 ARG_SHARE_IDS to shareIdsAsString,
@@ -134,5 +135,7 @@ open class FetchItemsWorker @AssistedInject constructor(
                 .setInputData(data)
                 .build()
         }
+
+        fun getOneTimeUniqueWorkName(userId: UserId?) = "${FetchItemsWorker::class.simpleName}-one-time-$userId"
     }
 }

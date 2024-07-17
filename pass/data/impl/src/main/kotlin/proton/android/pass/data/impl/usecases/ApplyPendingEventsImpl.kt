@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.impl.usecases
 
+import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -98,6 +99,7 @@ class ApplyPendingEventsImpl @Inject constructor(
     private suspend fun handleExistingShares(userId: UserId, refreshSharesResult: RefreshSharesResult) {
         PassLogger.i(TAG, "Received a list of shares, applying pending events")
         enqueueRefreshItems(
+            userId = userId,
             shares = refreshSharesResult.newShareIds,
             wasFirstSync = refreshSharesResult.wasFirstSync
         )
@@ -216,7 +218,11 @@ class ApplyPendingEventsImpl @Inject constructor(
         }
     }
 
-    private fun enqueueRefreshItems(shares: Set<ShareId>, wasFirstSync: Boolean) {
+    private fun enqueueRefreshItems(
+        userId: UserId,
+        shares: Set<ShareId>,
+        wasFirstSync: Boolean
+    ) {
         if (shares.isEmpty()) return
 
         val source = if (wasFirstSync) {
@@ -230,7 +236,11 @@ class ApplyPendingEventsImpl @Inject constructor(
         )
 
         PassLogger.i(TAG, "Enqueuing FetchItemsWorker")
-        workManager.enqueue(request)
+        workManager.enqueueUniqueWork(
+            FetchItemsWorker.getOneTimeUniqueWorkName(userId),
+            ExistingWorkPolicy.REPLACE,
+            request
+        )
     }
 
     private fun EventList.toDomain(): PendingEventList = PendingEventList(

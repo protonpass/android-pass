@@ -86,39 +86,39 @@ class CreditCardItemDetailsHandlerObserverImpl @Inject constructor(
     }
 
     override fun calculateItemDiffs(
-        baseItemDetailState: ItemContents.CreditCard,
-        otherItemDetailState: ItemContents.CreditCard
+        baseItemContents: ItemContents.CreditCard,
+        otherItemContents: ItemContents.CreditCard
     ): ItemDiffs = encryptionContextProvider.withEncryptionContext {
         ItemDiffs.CreditCard(
             title = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.title,
-                otherItemFieldValue = otherItemDetailState.title
+                baseItemFieldValue = baseItemContents.title,
+                otherItemFieldValue = otherItemContents.title
             ),
             note = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.note,
-                otherItemFieldValue = otherItemDetailState.note
+                baseItemFieldValue = baseItemContents.note,
+                otherItemFieldValue = otherItemContents.note
             ),
             cardHolder = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.cardHolder,
-                otherItemFieldValue = otherItemDetailState.cardHolder
+                baseItemFieldValue = baseItemContents.cardHolder,
+                otherItemFieldValue = otherItemContents.cardHolder
             ),
             cardNumber = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.number,
-                otherItemFieldValue = otherItemDetailState.number
+                baseItemFieldValue = baseItemContents.number,
+                otherItemFieldValue = otherItemContents.number
             ),
             cvv = calculateItemDiffType(
                 encryptionContext = this@withEncryptionContext,
-                baseItemFieldHiddenState = baseItemDetailState.cvv,
-                otherItemFieldHiddenState = otherItemDetailState.cvv
+                baseItemFieldHiddenState = baseItemContents.cvv,
+                otherItemFieldHiddenState = otherItemContents.cvv
             ),
             pin = calculateItemDiffType(
                 encryptionContext = this@withEncryptionContext,
-                baseItemFieldHiddenState = baseItemDetailState.pin,
-                otherItemFieldHiddenState = otherItemDetailState.pin
+                baseItemFieldHiddenState = baseItemContents.pin,
+                otherItemFieldHiddenState = otherItemContents.pin
             ),
             expirationDate = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.expirationDate,
-                otherItemFieldValue = otherItemDetailState.expirationDate
+                baseItemFieldValue = baseItemContents.expirationDate,
+                otherItemFieldValue = otherItemContents.expirationDate
             )
         )
     }

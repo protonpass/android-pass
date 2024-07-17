@@ -158,172 +158,172 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
 
     @Suppress("LongMethod")
     override fun calculateItemDiffs(
-        baseItemDetailState: ItemContents.Identity,
-        otherItemDetailState: ItemContents.Identity
+        baseItemContents: ItemContents.Identity,
+        otherItemContents: ItemContents.Identity
     ): ItemDiffs = encryptionContextProvider.withEncryptionContext {
         ItemDiffs.Identity(
             title = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.title,
-                otherItemFieldValue = otherItemDetailState.title
+                baseItemFieldValue = baseItemContents.title,
+                otherItemFieldValue = otherItemContents.title
             ),
             note = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.note,
-                otherItemFieldValue = otherItemDetailState.note
+                baseItemFieldValue = baseItemContents.note,
+                otherItemFieldValue = otherItemContents.note
             ),
             fullName = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.personalDetailsContent.fullName,
-                otherItemFieldValue = otherItemDetailState.personalDetailsContent.fullName
+                baseItemFieldValue = baseItemContents.personalDetailsContent.fullName,
+                otherItemFieldValue = otherItemContents.personalDetailsContent.fullName
             ),
             firstName = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.personalDetailsContent.firstName,
-                otherItemFieldValue = otherItemDetailState.personalDetailsContent.firstName
+                baseItemFieldValue = baseItemContents.personalDetailsContent.firstName,
+                otherItemFieldValue = otherItemContents.personalDetailsContent.firstName
             ),
             middleName = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.personalDetailsContent.middleName,
-                otherItemFieldValue = otherItemDetailState.personalDetailsContent.middleName
+                baseItemFieldValue = baseItemContents.personalDetailsContent.middleName,
+                otherItemFieldValue = otherItemContents.personalDetailsContent.middleName
             ),
             lastName = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.personalDetailsContent.lastName,
-                otherItemFieldValue = otherItemDetailState.personalDetailsContent.lastName
+                baseItemFieldValue = baseItemContents.personalDetailsContent.lastName,
+                otherItemFieldValue = otherItemContents.personalDetailsContent.lastName
             ),
             birthdate = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.personalDetailsContent.birthdate,
-                otherItemFieldValue = otherItemDetailState.personalDetailsContent.birthdate
+                baseItemFieldValue = baseItemContents.personalDetailsContent.birthdate,
+                otherItemFieldValue = otherItemContents.personalDetailsContent.birthdate
             ),
             gender = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.personalDetailsContent.gender,
-                otherItemFieldValue = otherItemDetailState.personalDetailsContent.gender
+                baseItemFieldValue = baseItemContents.personalDetailsContent.gender,
+                otherItemFieldValue = otherItemContents.personalDetailsContent.gender
             ),
             email = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.personalDetailsContent.email,
-                otherItemFieldValue = otherItemDetailState.personalDetailsContent.email
+                baseItemFieldValue = baseItemContents.personalDetailsContent.email,
+                otherItemFieldValue = otherItemContents.personalDetailsContent.email
             ),
             phoneNumber = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.personalDetailsContent.phoneNumber,
-                otherItemFieldValue = otherItemDetailState.personalDetailsContent.phoneNumber
+                baseItemFieldValue = baseItemContents.personalDetailsContent.phoneNumber,
+                otherItemFieldValue = otherItemContents.personalDetailsContent.phoneNumber
             ),
             organization = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.addressDetailsContent.organization,
-                otherItemFieldValue = otherItemDetailState.addressDetailsContent.organization
+                baseItemFieldValue = baseItemContents.addressDetailsContent.organization,
+                otherItemFieldValue = otherItemContents.addressDetailsContent.organization
             ),
             streetAddress = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.addressDetailsContent.streetAddress,
-                otherItemFieldValue = otherItemDetailState.addressDetailsContent.streetAddress
+                baseItemFieldValue = baseItemContents.addressDetailsContent.streetAddress,
+                otherItemFieldValue = otherItemContents.addressDetailsContent.streetAddress
             ),
             zipOrPostalCode = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.addressDetailsContent.zipOrPostalCode,
-                otherItemFieldValue = otherItemDetailState.addressDetailsContent.zipOrPostalCode
+                baseItemFieldValue = baseItemContents.addressDetailsContent.zipOrPostalCode,
+                otherItemFieldValue = otherItemContents.addressDetailsContent.zipOrPostalCode
             ),
             city = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.addressDetailsContent.city,
-                otherItemFieldValue = otherItemDetailState.addressDetailsContent.city
+                baseItemFieldValue = baseItemContents.addressDetailsContent.city,
+                otherItemFieldValue = otherItemContents.addressDetailsContent.city
             ),
             stateOrProvince = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.addressDetailsContent.stateOrProvince,
-                otherItemFieldValue = otherItemDetailState.addressDetailsContent.stateOrProvince
+                baseItemFieldValue = baseItemContents.addressDetailsContent.stateOrProvince,
+                otherItemFieldValue = otherItemContents.addressDetailsContent.stateOrProvince
             ),
             countryOrRegion = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.addressDetailsContent.countryOrRegion,
-                otherItemFieldValue = otherItemDetailState.addressDetailsContent.countryOrRegion
+                baseItemFieldValue = baseItemContents.addressDetailsContent.countryOrRegion,
+                otherItemFieldValue = otherItemContents.addressDetailsContent.countryOrRegion
             ),
             floor = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.addressDetailsContent.floor,
-                otherItemFieldValue = otherItemDetailState.addressDetailsContent.floor
+                baseItemFieldValue = baseItemContents.addressDetailsContent.floor,
+                otherItemFieldValue = otherItemContents.addressDetailsContent.floor
             ),
             county = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.addressDetailsContent.county,
-                otherItemFieldValue = otherItemDetailState.addressDetailsContent.county
+                baseItemFieldValue = baseItemContents.addressDetailsContent.county,
+                otherItemFieldValue = otherItemContents.addressDetailsContent.county
             ),
             socialSecurityNumber = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.contactDetailsContent.socialSecurityNumber,
-                otherItemFieldValue = otherItemDetailState.contactDetailsContent.socialSecurityNumber
+                baseItemFieldValue = baseItemContents.contactDetailsContent.socialSecurityNumber,
+                otherItemFieldValue = otherItemContents.contactDetailsContent.socialSecurityNumber
             ),
             passportNumber = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.contactDetailsContent.passportNumber,
-                otherItemFieldValue = otherItemDetailState.contactDetailsContent.passportNumber
+                baseItemFieldValue = baseItemContents.contactDetailsContent.passportNumber,
+                otherItemFieldValue = otherItemContents.contactDetailsContent.passportNumber
             ),
             licenseNumber = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.contactDetailsContent.licenseNumber,
-                otherItemFieldValue = otherItemDetailState.contactDetailsContent.licenseNumber
+                baseItemFieldValue = baseItemContents.contactDetailsContent.licenseNumber,
+                otherItemFieldValue = otherItemContents.contactDetailsContent.licenseNumber
             ),
             website = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.contactDetailsContent.website,
-                otherItemFieldValue = otherItemDetailState.contactDetailsContent.website
+                baseItemFieldValue = baseItemContents.contactDetailsContent.website,
+                otherItemFieldValue = otherItemContents.contactDetailsContent.website
             ),
             xHandle = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.contactDetailsContent.xHandle,
-                otherItemFieldValue = otherItemDetailState.contactDetailsContent.xHandle
+                baseItemFieldValue = baseItemContents.contactDetailsContent.xHandle,
+                otherItemFieldValue = otherItemContents.contactDetailsContent.xHandle
             ),
             secondPhoneNumber = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.contactDetailsContent.secondPhoneNumber,
-                otherItemFieldValue = otherItemDetailState.contactDetailsContent.secondPhoneNumber
+                baseItemFieldValue = baseItemContents.contactDetailsContent.secondPhoneNumber,
+                otherItemFieldValue = otherItemContents.contactDetailsContent.secondPhoneNumber
             ),
             linkedin = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.contactDetailsContent.linkedin,
-                otherItemFieldValue = otherItemDetailState.contactDetailsContent.linkedin
+                baseItemFieldValue = baseItemContents.contactDetailsContent.linkedin,
+                otherItemFieldValue = otherItemContents.contactDetailsContent.linkedin
             ),
             reddit = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.contactDetailsContent.reddit,
-                otherItemFieldValue = otherItemDetailState.contactDetailsContent.reddit
+                baseItemFieldValue = baseItemContents.contactDetailsContent.reddit,
+                otherItemFieldValue = otherItemContents.contactDetailsContent.reddit
             ),
             facebook = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.contactDetailsContent.facebook,
-                otherItemFieldValue = otherItemDetailState.contactDetailsContent.facebook
+                baseItemFieldValue = baseItemContents.contactDetailsContent.facebook,
+                otherItemFieldValue = otherItemContents.contactDetailsContent.facebook
             ),
             yahoo = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.contactDetailsContent.yahoo,
-                otherItemFieldValue = otherItemDetailState.contactDetailsContent.yahoo
+                baseItemFieldValue = baseItemContents.contactDetailsContent.yahoo,
+                otherItemFieldValue = otherItemContents.contactDetailsContent.yahoo
             ),
             instagram = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.contactDetailsContent.instagram,
-                otherItemFieldValue = otherItemDetailState.contactDetailsContent.instagram
+                baseItemFieldValue = baseItemContents.contactDetailsContent.instagram,
+                otherItemFieldValue = otherItemContents.contactDetailsContent.instagram
             ),
             company = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.workDetailsContent.company,
-                otherItemFieldValue = otherItemDetailState.workDetailsContent.company
+                baseItemFieldValue = baseItemContents.workDetailsContent.company,
+                otherItemFieldValue = otherItemContents.workDetailsContent.company
             ),
             jobTitle = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.workDetailsContent.jobTitle,
-                otherItemFieldValue = otherItemDetailState.workDetailsContent.jobTitle
+                baseItemFieldValue = baseItemContents.workDetailsContent.jobTitle,
+                otherItemFieldValue = otherItemContents.workDetailsContent.jobTitle
             ),
             personalWebsite = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.workDetailsContent.personalWebsite,
-                otherItemFieldValue = otherItemDetailState.workDetailsContent.personalWebsite
+                baseItemFieldValue = baseItemContents.workDetailsContent.personalWebsite,
+                otherItemFieldValue = otherItemContents.workDetailsContent.personalWebsite
             ),
             workPhoneNumber = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.workDetailsContent.workPhoneNumber,
-                otherItemFieldValue = otherItemDetailState.workDetailsContent.workPhoneNumber
+                baseItemFieldValue = baseItemContents.workDetailsContent.workPhoneNumber,
+                otherItemFieldValue = otherItemContents.workDetailsContent.workPhoneNumber
             ),
             workEmail = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.workDetailsContent.workEmail,
-                otherItemFieldValue = otherItemDetailState.workDetailsContent.workEmail
+                baseItemFieldValue = baseItemContents.workDetailsContent.workEmail,
+                otherItemFieldValue = otherItemContents.workDetailsContent.workEmail
             ),
             addressCustomFields = calculateItemDiffTypes(
                 encryptionContext = this@withEncryptionContext,
-                baseItemCustomFieldsContent = baseItemDetailState.addressDetailsContent.customFields,
-                otherItemCustomFieldsContent = otherItemDetailState.addressDetailsContent.customFields
+                baseItemCustomFieldsContent = baseItemContents.addressDetailsContent.customFields,
+                otherItemCustomFieldsContent = otherItemContents.addressDetailsContent.customFields
             ),
             contactCustomFields = calculateItemDiffTypes(
                 encryptionContext = this@withEncryptionContext,
-                baseItemCustomFieldsContent = baseItemDetailState.contactDetailsContent.customFields,
-                otherItemCustomFieldsContent = otherItemDetailState.contactDetailsContent.customFields
+                baseItemCustomFieldsContent = baseItemContents.contactDetailsContent.customFields,
+                otherItemCustomFieldsContent = otherItemContents.contactDetailsContent.customFields
             ),
             personalCustomFields = calculateItemDiffTypes(
                 encryptionContext = this@withEncryptionContext,
-                baseItemCustomFieldsContent = baseItemDetailState.personalDetailsContent.customFields,
-                otherItemCustomFieldsContent = otherItemDetailState.personalDetailsContent.customFields
+                baseItemCustomFieldsContent = baseItemContents.personalDetailsContent.customFields,
+                otherItemCustomFieldsContent = otherItemContents.personalDetailsContent.customFields
             ),
             workCustomFields = calculateItemDiffTypes(
                 encryptionContext = this@withEncryptionContext,
-                baseItemCustomFieldsContent = baseItemDetailState.workDetailsContent.customFields,
-                otherItemCustomFieldsContent = otherItemDetailState.workDetailsContent.customFields
+                baseItemCustomFieldsContent = baseItemContents.workDetailsContent.customFields,
+                otherItemCustomFieldsContent = otherItemContents.workDetailsContent.customFields
             ),
             extraCustomFields = mutableListOf<List<ItemDiffType>>().apply {
-                baseItemDetailState.extraSectionContentList.forEachIndexed { index, extraSectionContent ->
+                baseItemContents.extraSectionContentList.forEachIndexed { index, extraSectionContent ->
                     calculateItemDiffTypes(
                         encryptionContext = this@withEncryptionContext,
                         baseItemCustomFieldsContent = extraSectionContent.customFields,
-                        otherItemCustomFieldsContent = otherItemDetailState.extraSectionContentList
+                        otherItemCustomFieldsContent = otherItemContents.extraSectionContentList
                             .getOrNull(index)
                             ?.customFields
                             ?: emptyList()

@@ -41,7 +41,7 @@ abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
         hiddenState: HiddenState
     ): ItemContents
 
-    abstract fun calculateItemDiffs(baseItemDetailState: ITEM_CONTENTS, otherItemDetailState: ITEM_CONTENTS): ItemDiffs
+    abstract fun calculateItemDiffs(baseItemContents: ITEM_CONTENTS, otherItemContents: ITEM_CONTENTS): ItemDiffs
 
     protected fun calculateItemDiffTypes(
         encryptionContext: EncryptionContext,
@@ -84,6 +84,30 @@ abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
 
                 else -> ItemDiffType.Content
             }.also(::add)
+        }
+    }
+
+    protected fun calculateItemDiffTypes(
+        baseItemFieldValues: List<String>,
+        otherItemFieldValues: List<String>
+    ): Pair<ItemDiffType, List<ItemDiffType>> = when {
+        baseItemFieldValues.isEmpty() -> {
+            ItemDiffType.None to emptyList()
+        }
+
+        otherItemFieldValues.isEmpty() -> {
+            ItemDiffType.Field to List(baseItemFieldValues.size) { ItemDiffType.None }
+        }
+
+        else -> {
+            ItemDiffType.None to mutableListOf<ItemDiffType>().apply {
+                baseItemFieldValues.forEachIndexed { index, baseItemFieldValue ->
+                    calculateItemDiffType(
+                        baseItemFieldValue = baseItemFieldValue,
+                        otherItemFieldValue = otherItemFieldValues.getOrNull(index).orEmpty()
+                    ).also(::add)
+                }
+            }
         }
     }
 

@@ -31,6 +31,7 @@ import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemCustomFieldSection
+import proton.android.pass.domain.ItemDiffType
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemState
 import javax.inject.Inject
@@ -316,7 +317,19 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
                 encryptionContext = this@withEncryptionContext,
                 baseItemCustomFieldsContent = baseItemDetailState.workDetailsContent.customFields,
                 otherItemCustomFieldsContent = otherItemDetailState.workDetailsContent.customFields
-            )
+            ),
+            extraCustomFields = mutableListOf<List<ItemDiffType>>().apply {
+                baseItemDetailState.extraSectionContentList.forEachIndexed { index, extraSectionContent ->
+                    calculateItemDiffTypes(
+                        encryptionContext = this@withEncryptionContext,
+                        baseItemCustomFieldsContent = extraSectionContent.customFields,
+                        otherItemCustomFieldsContent = otherItemDetailState.extraSectionContentList
+                            .getOrNull(index)
+                            ?.customFields
+                            ?: emptyList()
+                    ).also(::add)
+                }
+            }
         )
     }
 

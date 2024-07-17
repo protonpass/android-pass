@@ -108,6 +108,7 @@ sealed interface ItemDiffs {
         val username: ItemDiffType = ItemDiffType.None,
         val password: ItemDiffType = ItemDiffType.None,
         val totp: ItemDiffType = ItemDiffType.None,
+        val urls: Pair<ItemDiffType, List<ItemDiffType>> = Pair(ItemDiffType.None, emptyList()),
         private val customFields: List<ItemDiffType> = emptyList()
     ) : ItemDiffs {
 

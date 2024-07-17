@@ -184,40 +184,45 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
     }
 
     override fun calculateItemDiffs(
-        baseItemDetailState: ItemContents.Login,
-        otherItemDetailState: ItemContents.Login
+        baseItemContents: ItemContents.Login,
+        otherItemContents: ItemContents.Login
     ): ItemDiffs = encryptionContextProvider.withEncryptionContext {
+        baseItemContents.itemEmail
         ItemDiffs.Login(
             title = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.title,
-                otherItemFieldValue = otherItemDetailState.title
+                baseItemFieldValue = baseItemContents.title,
+                otherItemFieldValue = otherItemContents.title
             ),
             email = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.itemEmail,
-                otherItemFieldValue = otherItemDetailState.itemEmail
+                baseItemFieldValue = baseItemContents.itemEmail,
+                otherItemFieldValue = otherItemContents.itemEmail
             ),
             username = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.itemUsername,
-                otherItemFieldValue = otherItemDetailState.itemUsername
+                baseItemFieldValue = baseItemContents.itemUsername,
+                otherItemFieldValue = otherItemContents.itemUsername
             ),
             password = calculateItemDiffType(
                 encryptionContext = this@withEncryptionContext,
-                baseItemFieldHiddenState = baseItemDetailState.password,
-                otherItemFieldHiddenState = otherItemDetailState.password
+                baseItemFieldHiddenState = baseItemContents.password,
+                otherItemFieldHiddenState = otherItemContents.password
             ),
             totp = calculateItemDiffType(
                 encryptionContext = this@withEncryptionContext,
-                baseItemFieldHiddenState = baseItemDetailState.primaryTotp,
-                otherItemFieldHiddenState = otherItemDetailState.primaryTotp
+                baseItemFieldHiddenState = baseItemContents.primaryTotp,
+                otherItemFieldHiddenState = otherItemContents.primaryTotp
             ),
             note = calculateItemDiffType(
-                baseItemFieldValue = baseItemDetailState.note,
-                otherItemFieldValue = otherItemDetailState.note
+                baseItemFieldValue = baseItemContents.note,
+                otherItemFieldValue = otherItemContents.note
+            ),
+            urls = calculateItemDiffTypes(
+                baseItemFieldValues = baseItemContents.urls,
+                otherItemFieldValues = otherItemContents.urls
             ),
             customFields = calculateItemDiffTypes(
                 encryptionContext = this@withEncryptionContext,
-                baseItemCustomFieldsContent = baseItemDetailState.customFields,
-                otherItemCustomFieldsContent = otherItemDetailState.customFields
+                baseItemCustomFieldsContent = baseItemContents.customFields,
+                otherItemCustomFieldsContent = otherItemContents.customFields
             )
         )
     }

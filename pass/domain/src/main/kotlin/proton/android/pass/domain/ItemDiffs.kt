@@ -84,17 +84,19 @@ sealed interface ItemDiffs {
         private val addressCustomFields: List<ItemDiffType> = emptyList(),
         private val contactCustomFields: List<ItemDiffType> = emptyList(),
         private val personalCustomFields: List<ItemDiffType> = emptyList(),
-        private val workCustomFields: List<ItemDiffType> = emptyList()
+        private val workCustomFields: List<ItemDiffType> = emptyList(),
+        private val extraCustomFields: List<List<ItemDiffType>> = emptyList()
     ) : ItemDiffs {
 
         fun customField(section: ItemCustomFieldSection, index: Int): ItemDiffType = when (section) {
-            ItemCustomFieldSection.Login,
-            is ItemCustomFieldSection.Identity.ExtraSection -> emptyList()
-
+            ItemCustomFieldSection.Login -> emptyList()
             ItemCustomFieldSection.Identity.Address -> addressCustomFields
             ItemCustomFieldSection.Identity.Contact -> contactCustomFields
             ItemCustomFieldSection.Identity.Personal -> personalCustomFields
             ItemCustomFieldSection.Identity.Work -> workCustomFields
+            is ItemCustomFieldSection.Identity.ExtraSection -> extraCustomFields.getOrElse(section.index) {
+                emptyList()
+            }
         }.let { customFields -> customFields.getOrElse(index) { ItemDiffType.None } }
 
     }

@@ -96,6 +96,7 @@ internal fun PassLoginItemDetailSections(
             PassLoginItemDetailWebsitesSection(
                 websiteUrls = urls.toPersistentList(),
                 itemColors = itemColors,
+                itemDiffs = itemDiffs,
                 onEvent = onEvent
             )
         }

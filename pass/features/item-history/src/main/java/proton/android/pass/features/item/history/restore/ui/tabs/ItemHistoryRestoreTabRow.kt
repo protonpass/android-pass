@@ -110,7 +110,7 @@ internal fun ItemHistoryRestoreTabRowPreview(@PreviewParameter(ThemePreviewProvi
             ItemHistoryRestoreTabRow(
                 selectedTabIndex = 0,
                 itemColors = passItemColors(itemCategory = ItemCategory.Login),
-                revisionTime = 1_721_125_029_982L,
+                revisionTime = 1_721_125_029L,
                 onSelectTab = {}
             )
         }

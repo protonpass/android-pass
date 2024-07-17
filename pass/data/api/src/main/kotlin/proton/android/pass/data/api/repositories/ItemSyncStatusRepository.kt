@@ -27,11 +27,25 @@ sealed interface ItemSyncStatus {
 
     data object SyncStarted : ItemSyncStatus
 
-    data class Syncing(val shareId: ShareId, val current: Int, val total: Int) : ItemSyncStatus
+    data class SyncDownloading(val shareId: ShareId, val current: Int, val total: Int) :
+        ItemSyncStatus
+
+    data class SyncInserting(val shareId: ShareId, val current: Int, val total: Int) :
+        ItemSyncStatus
 
     data object SyncSuccess : ItemSyncStatus
 
     data object SyncError : ItemSyncStatus
+
+    fun isSyncing(): Boolean = when (this) {
+        SyncError,
+        SyncNotStarted,
+        SyncSuccess -> false
+
+        SyncStarted,
+        is SyncInserting,
+        is SyncDownloading -> true
+    }
 }
 
 data class ItemSyncStatusPayload(
@@ -48,7 +62,8 @@ fun ItemSyncStatus.toSyncMode(): SyncMode = when (this) {
     ItemSyncStatus.SyncError,
     ItemSyncStatus.SyncStarted,
     ItemSyncStatus.SyncNotStarted,
-    is ItemSyncStatus.Syncing -> SyncMode.ShownToUser
+    is ItemSyncStatus.SyncInserting,
+    is ItemSyncStatus.SyncDownloading -> SyncMode.ShownToUser
 
     ItemSyncStatus.SyncSuccess -> SyncMode.Background
 }
@@ -57,14 +72,7 @@ data class SyncState(
     val syncStatus: ItemSyncStatus,
     val syncMode: SyncMode
 ) {
-    val isSyncing: Boolean = when (syncStatus) {
-        ItemSyncStatus.SyncError,
-        ItemSyncStatus.SyncNotStarted,
-        ItemSyncStatus.SyncSuccess -> false
-
-        ItemSyncStatus.SyncStarted,
-        is ItemSyncStatus.Syncing -> true
-    }
+    val isSyncing: Boolean = syncStatus.isSyncing()
 
     val isVisibleSyncing: Boolean = syncMode == SyncMode.ShownToUser
 }
@@ -85,7 +93,9 @@ interface ItemSyncStatusRepository {
 
     fun observeSyncStatus(): Flow<ItemSyncStatus>
 
-    fun observeAccSyncStatus(): Flow<Map<ShareId, ItemSyncStatusPayload>>
+    fun observeDownloadedItemsStatus(): Flow<Map<ShareId, ItemSyncStatusPayload>>
+
+    fun observeInsertedItemsStatus(): Flow<Map<ShareId, ItemSyncStatusPayload>>
 
     fun observeSyncState(): Flow<SyncState>
 

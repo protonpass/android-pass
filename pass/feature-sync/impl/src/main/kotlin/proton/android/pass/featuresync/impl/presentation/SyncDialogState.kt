@@ -23,7 +23,7 @@ import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toPersistentMap
 import proton.android.pass.common.api.LoadingResult
-import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusPayload
 import proton.android.pass.domain.ShareId
@@ -32,7 +32,8 @@ import proton.android.pass.domain.Vault
 @Stable
 internal data class SyncDialogState(
     private val itemSyncStatus: ItemSyncStatus,
-    private val itemSyncPayloadMap: Map<ShareId, ItemSyncStatusPayload>,
+    private val downloadedItemsMap: Map<ShareId, ItemSyncStatusPayload>,
+    private val insertedItemsMap: Map<ShareId, ItemSyncStatusPayload>,
     private val vaultsLoadingResult: LoadingResult<List<Vault>>
 ) {
 
@@ -48,13 +49,13 @@ internal data class SyncDialogState(
             vaultsLoadingResult.data
                 .associateBy { vault -> vault.shareId }
                 .mapValues { (shareId, vault) ->
-                    itemSyncPayloadMap[shareId].let { itemSyncPayload ->
-                        SyncDialogItem(
-                            vault = vault,
-                            currentItemsCountOption = Option.fromNullable(itemSyncPayload?.current),
-                            totalItemsCountOption = Option.fromNullable(itemSyncPayload?.total)
-                        )
-                    }
+                    SyncDialogItem(
+                        vault = vault,
+                        downloadedItemsCountOption = downloadedItemsMap[shareId]?.current.toOption(),
+                        totalDownloadedItemsCountOption = downloadedItemsMap[shareId]?.total.toOption(),
+                        insertedItemsCountOption = insertedItemsMap[shareId]?.current.toOption(),
+                        totalInsertedItemsCountOption = insertedItemsMap[shareId]?.total.toOption()
+                    )
                 }
                 .toPersistentMap()
     }
@@ -63,7 +64,8 @@ internal data class SyncDialogState(
 
         internal val Initial: SyncDialogState = SyncDialogState(
             itemSyncStatus = ItemSyncStatus.SyncNotStarted,
-            itemSyncPayloadMap = emptyMap(),
+            downloadedItemsMap = emptyMap(),
+            insertedItemsMap = emptyMap(),
             vaultsLoadingResult = LoadingResult.Loading
         )
 

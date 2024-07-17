@@ -591,7 +591,7 @@ class ItemRepositoryImpl @Inject constructor(
         return refreshItems(userId, share)
     }
 
-    override suspend fun refreshItemsAndObserveProgress(
+    override suspend fun downloadItemsAndObserveProgress(
         userId: UserId,
         shareId: ShareId,
         onProgress: suspend (VaultProgress) -> Unit
@@ -605,7 +605,13 @@ class ItemRepositoryImpl @Inject constructor(
             }
             .collect { itemTotal ->
                 items.addAll(itemTotal.items)
-                onProgress(VaultProgress(total = itemTotal.total, current = itemTotal.created))
+                onProgress(
+                    VaultProgress(
+                        shareId = shareId,
+                        total = itemTotal.total,
+                        current = itemTotal.created
+                    )
+                )
             }
 
         return items
@@ -657,7 +663,11 @@ class ItemRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun setShareItems(userId: UserId, items: Map<ShareId, List<ItemRevision>>) {
+    override suspend fun setShareItems(
+        userId: UserId,
+        items: Map<ShareId, List<ItemRevision>>,
+        onProgress: suspend (VaultProgress) -> Unit
+    ) {
         if (items.isEmpty()) return
 
         val plans: List<Result<SetShareItemsPlan>> = coroutineScope {
@@ -677,26 +687,26 @@ class ItemRepositoryImpl @Inject constructor(
             }
         }
 
-        val successPlans = successes.mapNotNull { it.getOrNull() }
-        val itemsToUpsert = successPlans.flatMap { it.itemsToUpsert }
-        val itemsToDelete = successPlans.map { it.itemsToDelete }
+        val successPlans: List<SetShareItemsPlan> = successes.mapNotNull { it.getOrNull() }
 
-        val insertItemCount = itemsToUpsert.size
-        val deleteItemCount = itemsToDelete.flatMap { it.second }.size
-        PassLogger.i(
-            TAG,
-            "Going to insert $insertItemCount items and delete $deleteItemCount items"
-        )
+        successPlans.forEach { plan ->
+            val upsertChunks: List<List<ItemEntity>> =
+                plan.itemsToUpsert.chunked(MAX_ITEMS_PER_TRANSACTION)
+            upsertChunks.forEachIndexed { idx, chunk ->
+                PassLogger.i(TAG, "setShareItems insert(${idx + 1}/${upsertChunks.size})")
+                localItemDataSource.upsertItems(chunk)
+                val itemProgress = idx * MAX_ITEMS_PER_TRANSACTION + chunk.size
+                onProgress(
+                    VaultProgress(
+                        shareId = plan.shareId,
+                        total = plan.itemsToUpsert.size,
+                        current = itemProgress.coerceAtMost(plan.itemsToUpsert.size)
+                    )
+                )
+            }
 
-        val upsertChunks: List<List<ItemEntity>> = itemsToUpsert.chunked(MAX_ITEMS_PER_TRANSACTION)
-        upsertChunks.forEachIndexed { idx, chunk ->
-            PassLogger.i(TAG, "setShareItems insert(${idx + 1}/${upsertChunks.size})")
-            localItemDataSource.upsertItems(chunk)
-        }
-
-        database.inTransaction("setShareItems delete") {
-            itemsToDelete.forEach { (shareId, toDelete) ->
-                localItemDataSource.deleteList(shareId, toDelete)
+            database.inTransaction("setShareItems delete") {
+                localItemDataSource.deleteList(plan.shareId, plan.itemsToDelete)
             }
         }
     }
@@ -913,7 +923,8 @@ class ItemRepositoryImpl @Inject constructor(
         }
 
         SetShareItemsPlan(
-            itemsToDelete = shareId to itemsNotPresentInRemote,
+            shareId = shareId,
+            itemsToDelete = itemsNotPresentInRemote,
             itemsToUpsert = itemsToUpsert
         )
     }.onFailure {
@@ -1378,8 +1389,9 @@ class ItemRepositoryImpl @Inject constructor(
     }
 
     private data class SetShareItemsPlan(
+        val shareId: ShareId,
         val itemsToUpsert: List<ItemEntity>,
-        val itemsToDelete: Pair<ShareId, List<ItemId>>
+        val itemsToDelete: List<ItemId>
     )
 
     companion object {

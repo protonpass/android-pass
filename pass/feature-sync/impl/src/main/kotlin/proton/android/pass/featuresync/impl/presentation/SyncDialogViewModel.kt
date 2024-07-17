@@ -45,7 +45,8 @@ class SyncDialogViewModel @Inject constructor(
 
     internal val state: StateFlow<SyncDialogState> = combine(
         syncStatusRepository.observeSyncStatus(),
-        syncStatusRepository.observeAccSyncStatus(),
+        syncStatusRepository.observeDownloadedItemsStatus(),
+        syncStatusRepository.observeInsertedItemsStatus(),
         observeVaults().asLoadingResult(),
         ::SyncDialogState
     ).stateIn(

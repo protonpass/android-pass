@@ -169,7 +169,7 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun refreshItemsAndObserveProgress(
+    override suspend fun downloadItemsAndObserveProgress(
         userId: UserId,
         shareId: ShareId,
         onProgress: suspend (VaultProgress) -> Unit

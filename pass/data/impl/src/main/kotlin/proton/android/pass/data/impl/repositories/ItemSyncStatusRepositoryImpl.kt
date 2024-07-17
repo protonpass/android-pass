@@ -22,6 +22,7 @@ import androidx.lifecycle.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -43,9 +44,14 @@ class ItemSyncStatusRepositoryImpl @Inject constructor(
     private val syncStatus: MutableSharedFlow<ItemSyncStatus> =
         MutableSharedFlow<ItemSyncStatus>(replay = 1, extraBufferCapacity = 3)
             .apply { tryEmit(ItemSyncStatus.SyncNotStarted) }
-    private val accSyncStatus: MutableSharedFlow<Map<ShareId, ItemSyncStatusPayload>> =
+    private val downloadedItemsState: MutableSharedFlow<Map<ShareId, ItemSyncStatusPayload>> =
         MutableSharedFlow(replay = 1, extraBufferCapacity = 3)
-    private val payloadMutableMap: MutableMap<ShareId, ItemSyncStatusPayload> = mutableMapOf()
+    private val downloadedItemsMutableMap: MutableMap<ShareId, ItemSyncStatusPayload> =
+        mutableMapOf()
+    private val insertedItemsState: MutableSharedFlow<Map<ShareId, ItemSyncStatusPayload>> =
+        MutableSharedFlow(replay = 1, extraBufferCapacity = 3)
+
+    private val insertedItemsMutableMap: MutableMap<ShareId, ItemSyncStatusPayload> = mutableMapOf()
     private val modeFlow: MutableSharedFlow<SyncMode> = MutableSharedFlow<SyncMode>(
         replay = 1, extraBufferCapacity = 1
     ).apply { tryEmit(SyncMode.Background) }
@@ -55,18 +61,29 @@ class ItemSyncStatusRepositoryImpl @Inject constructor(
     private suspend fun updateSyncStatus(status: ItemSyncStatus, emit: suspend (ItemSyncStatus) -> Unit) {
         mutex.withLock {
             when (status) {
-                is ItemSyncStatus.Syncing -> {
-                    payloadMutableMap[status.shareId] =
+                is ItemSyncStatus.SyncInserting -> {
+                    insertedItemsMutableMap[status.shareId] =
                         ItemSyncStatusPayload(status.current, status.total)
-                    accSyncStatus.emit(payloadMutableMap.toMap())
+                    insertedItemsState.emit(insertedItemsMutableMap.toMap())
+                }
+
+                is ItemSyncStatus.SyncDownloading -> {
+                    downloadedItemsMutableMap[status.shareId] =
+                        ItemSyncStatusPayload(status.current, status.total)
+                    downloadedItemsState.emit(downloadedItemsMutableMap.toMap())
                 }
 
                 ItemSyncStatus.SyncNotStarted -> {
-                    payloadMutableMap.clear()
-                    accSyncStatus.emit(payloadMutableMap.toMap())
+                    downloadedItemsMutableMap.clear()
+                    downloadedItemsState.emit(emptyMap())
+                    insertedItemsMutableMap.clear()
+                    insertedItemsState.emit(emptyMap())
                 }
 
-                else -> {}
+                ItemSyncStatus.SyncError,
+                ItemSyncStatus.SyncStarted,
+                ItemSyncStatus.SyncSuccess -> {
+                }
             }
         }
         emit(status)
@@ -92,14 +109,20 @@ class ItemSyncStatusRepositoryImpl @Inject constructor(
     override fun observeMode(): Flow<SyncMode> = modeFlow
 
     override suspend fun clear() {
-        payloadMutableMap.clear()
-        accSyncStatus.emit(emptyMap())
+        downloadedItemsMutableMap.clear()
+        downloadedItemsState.emit(emptyMap())
+        insertedItemsMutableMap.clear()
+        insertedItemsState.emit(emptyMap())
         syncStatus.emit(ItemSyncStatus.SyncNotStarted)
     }
 
     override fun observeSyncStatus(): Flow<ItemSyncStatus> = syncStatus
 
-    override fun observeAccSyncStatus(): Flow<Map<ShareId, ItemSyncStatusPayload>> = accSyncStatus
+    override fun observeDownloadedItemsStatus(): Flow<Map<ShareId, ItemSyncStatusPayload>> =
+        downloadedItemsState.onStart { emit(emptyMap()) }
+
+    override fun observeInsertedItemsStatus(): Flow<Map<ShareId, ItemSyncStatusPayload>> =
+        insertedItemsState.onStart { emit(emptyMap()) }
 
     override fun observeSyncState(): Flow<SyncState> = combine(
         observeSyncStatus(),

@@ -24,5 +24,11 @@ internal enum class AccountState {
     PrimaryExist,
     StepNeeded;
 
-    fun isLoading(): Boolean = this == Processing || this == StepNeeded
+    fun isLoading(): Boolean = when (this) {
+        Processing,
+        StepNeeded -> true
+
+        AccountNeeded,
+        PrimaryExist -> false
+    }
 }

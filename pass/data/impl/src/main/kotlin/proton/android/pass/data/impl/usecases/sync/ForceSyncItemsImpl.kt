@@ -86,13 +86,12 @@ class ForceSyncItemsImpl @Inject constructor(
             onProgress = { progress: VaultProgress ->
                 itemSyncStatusRepository.emit(
                     ItemSyncStatus.SyncInserting(
-                        shareId = progress.shareId,
                         current = progress.current,
                         total = progress.total
                     )
                 )
 
-                PassLogger.d(TAG, "Inserting Share ${progress.shareId.id} progress: $progress")
+                PassLogger.d(TAG, "Inserting ${progress.current} of: ${progress.total}")
             }
         )
 

@@ -19,12 +19,12 @@
 package proton.android.pass.commonpresentation.api.items.details.handlers
 
 import kotlinx.coroutines.flow.Flow
-import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.items.ItemCategory
 
@@ -46,6 +46,10 @@ interface ItemDetailsHandler {
         itemContents: ItemContents
     ): ItemContents
 
-    fun updateItemDetailsDiffs(baseItemDetailState: ItemDetailState, otherItemDetailState: ItemDetailState): ItemDiffs
+    fun updateItemDetailsDiffs(
+        itemCategory: ItemCategory,
+        baseItemContents: ItemContents,
+        otherItemContents: ItemContents
+    ): ItemDiffs
 
 }

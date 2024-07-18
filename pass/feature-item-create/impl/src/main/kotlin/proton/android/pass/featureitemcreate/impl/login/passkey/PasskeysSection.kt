@@ -18,8 +18,8 @@
 
 package proton.android.pass.featureitemcreate.impl.login.passkey
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.ImmutableList
@@ -33,10 +33,12 @@ internal fun PasskeysSection(
     passkeys: ImmutableList<UIPasskeyContent>,
     onEvent: (LoginContentEvent) -> Unit
 ) {
-    Column(modifier = modifier) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
+    ) {
         passkeys.forEachIndexed { idx, passkey ->
             PasskeyEditRow(
-                modifier = Modifier.padding(vertical = Spacing.small),
                 domain = passkey.domain,
                 username = passkey.userName,
                 canDelete = true,

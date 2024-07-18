@@ -123,6 +123,8 @@ internal fun LoginItemForm(
                 onChange = { onEvent(LoginContentEvent.OnTitleChange(it)) }
             )
 
+            Spacer(modifier = Modifier.height(height = Spacing.extraSmall))
+
             if (passkeyState is Some) {
                 PasskeyEditRow(
                     domain = passkeyState.value.domain,

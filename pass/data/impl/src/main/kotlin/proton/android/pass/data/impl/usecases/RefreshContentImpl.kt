@@ -18,6 +18,7 @@
 
 package proton.android.pass.data.impl.usecases
 
+import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
 import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
@@ -45,11 +46,9 @@ class RefreshContentImpl @Inject constructor(
         syncStatusRepository.setMode(SyncMode.ShownToUser)
         syncStatusRepository.emit(ItemSyncStatus.SyncStarted)
 
-        runCatching {
-            (userId ?: accountManager.getPrimaryUserId().firstOrNull())
-                ?.let { userId -> shareRepository.refreshShares(userId) }
-                ?: throw UserIdNotAvailableError()
-        }
+        val actualUserId = userId ?: accountManager.getPrimaryUserId().firstOrNull()
+            ?: throw UserIdNotAvailableError()
+        runCatching { shareRepository.refreshShares(actualUserId) }
             .onFailure { error ->
                 PassLogger.w(TAG, "Error refreshing shares")
                 PassLogger.w(TAG, error)
@@ -57,10 +56,16 @@ class RefreshContentImpl @Inject constructor(
                 throw error
             }
             .onSuccess { refreshSharesResult ->
-                FetchItemsWorker.getRequestFor(
+                val request = FetchItemsWorker.getRequestFor(
                     source = FetchItemsWorker.FetchSource.ForceSync,
+                    userId = actualUserId,
                     shareIds = refreshSharesResult.allShareIds.toList()
-                ).also(workManager::enqueue)
+                )
+                workManager.enqueueUniqueWork(
+                    FetchItemsWorker.getOneTimeUniqueWorkName(userId),
+                    ExistingWorkPolicy.REPLACE,
+                    request
+                )
             }
     }
 

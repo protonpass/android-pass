@@ -31,6 +31,7 @@ import kotlinx.coroutines.launch
 import proton.android.pass.inappreview.api.InAppReviewTriggerMetrics
 import proton.android.pass.initializer.MainInitializer
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.UserPreferencesRepository
 import java.lang.ref.WeakReference
 import javax.inject.Inject
@@ -42,7 +43,7 @@ class App : Application(), ImageLoaderFactory {
     lateinit var imageLoader: Provider<ImageLoader>
 
     @Inject
-    lateinit var preferenceRepository: UserPreferencesRepository
+    lateinit var userPreferencesRepository: UserPreferencesRepository
 
     @Inject
     lateinit var inAppReviewTriggerMetrics: InAppReviewTriggerMetrics
@@ -58,6 +59,8 @@ class App : Application(), ImageLoaderFactory {
     override fun onCreate() {
         super.onCreate()
         MainInitializer.init(this)
+        userPreferencesRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
+
         registerActivityLifecycleCallbacks(
             activityLifecycleCallbacks(
                 onActivityCreated = { activity, _ ->

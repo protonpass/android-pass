@@ -24,17 +24,16 @@ import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 
-class StoreAuthOnStopImpl @Inject constructor(
+class ExtendAuthTimeImpl @Inject constructor(
     private val biometryAuthTimeHolder: BiometryAuthTimeHolder,
     private val bootCountRetriever: BootCountRetriever,
     private val elapsedTimeProvider: ElapsedTimeProvider,
     private val userPreferencesRepository: UserPreferencesRepository
-) : StoreAuthOnStop {
+) : ExtendAuthTime {
     override suspend fun invoke() {
         val isAuthenticated = userPreferencesRepository.getHasAuthenticated()
             .first() is HasAuthenticated.Authenticated
         if (isAuthenticated) {
-            userPreferencesRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
             biometryAuthTimeHolder.storeBiometryAuthData(
                 AuthData(
                     authTime = elapsedTimeProvider.getElapsedTime().some(),

@@ -38,7 +38,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.account.api.AccountOrchestrators
 import proton.android.pass.account.api.Orchestrator
 import proton.android.pass.biometry.NeedsBiometricAuth
-import proton.android.pass.biometry.StoreAuthOnStop
+import proton.android.pass.biometry.ExtendAuthTime
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -128,7 +128,7 @@ class SelectPasskeyActivityViewModel @Inject constructor(
     private val accountOrchestrators: AccountOrchestrators,
     private val accountManager: AccountManager,
     private val toastManager: ToastManager,
-    private val storeAuthOnStop: StoreAuthOnStop,
+    private val extendAuthTime: ExtendAuthTime,
     preferenceRepository: UserPreferencesRepository,
     needsBiometricAuth: NeedsBiometricAuth
 ) : ViewModel() {
@@ -207,7 +207,7 @@ class SelectPasskeyActivityViewModel @Inject constructor(
     }
 
     fun onStop() = viewModelScope.launch {
-        storeAuthOnStop()
+        extendAuthTime()
     }
 
     fun signOut() = viewModelScope.launch {

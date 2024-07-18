@@ -607,7 +607,6 @@ class ItemRepositoryImpl @Inject constructor(
                 items.addAll(itemTotal.items)
                 onProgress(
                     VaultProgress(
-                        shareId = shareId,
                         total = itemTotal.total,
                         current = itemTotal.created
                     )
@@ -687,26 +686,33 @@ class ItemRepositoryImpl @Inject constructor(
             }
         }
 
-        val successPlans: List<SetShareItemsPlan> = successes.mapNotNull { it.getOrNull() }
+        val successPlans = successes.mapNotNull { it.getOrNull() }
+        val itemsToUpsert = successPlans.flatMap { it.itemsToUpsert }
+        val itemsToDelete = successPlans.map { it.itemsToDelete }
 
-        successPlans.forEach { plan ->
-            val upsertChunks: List<List<ItemEntity>> =
-                plan.itemsToUpsert.chunked(MAX_ITEMS_PER_TRANSACTION)
-            upsertChunks.forEachIndexed { idx, chunk ->
-                PassLogger.i(TAG, "setShareItems insert(${idx + 1}/${upsertChunks.size})")
-                localItemDataSource.upsertItems(chunk)
-                val itemProgress = idx * MAX_ITEMS_PER_TRANSACTION + chunk.size
-                onProgress(
-                    VaultProgress(
-                        shareId = plan.shareId,
-                        total = plan.itemsToUpsert.size,
-                        current = itemProgress.coerceAtMost(plan.itemsToUpsert.size)
-                    )
+        val insertItemCount = itemsToUpsert.size
+        val deleteItemCount = itemsToDelete.flatMap { it.second }.size
+        PassLogger.i(
+            TAG,
+            "Going to insert $insertItemCount items and delete $deleteItemCount items"
+        )
+
+        val upsertChunks: List<List<ItemEntity>> = itemsToUpsert.chunked(MAX_ITEMS_PER_TRANSACTION)
+        upsertChunks.forEachIndexed { idx, chunk ->
+            PassLogger.i(TAG, "setShareItems insert(${idx + 1}/${upsertChunks.size})")
+            localItemDataSource.upsertItems(chunk)
+            val progress = idx * MAX_ITEMS_PER_TRANSACTION + chunk.size
+            onProgress(
+                VaultProgress(
+                    total = insertItemCount,
+                    current = progress.coerceAtMost(insertItemCount)
                 )
-            }
+            )
+        }
 
-            database.inTransaction("setShareItems delete") {
-                localItemDataSource.deleteList(plan.shareId, plan.itemsToDelete)
+        database.inTransaction("setShareItems delete") {
+            itemsToDelete.forEach { (shareId, toDelete) ->
+                localItemDataSource.deleteList(shareId, toDelete)
             }
         }
     }
@@ -923,8 +929,7 @@ class ItemRepositoryImpl @Inject constructor(
         }
 
         SetShareItemsPlan(
-            shareId = shareId,
-            itemsToDelete = itemsNotPresentInRemote,
+            itemsToDelete = shareId to itemsNotPresentInRemote,
             itemsToUpsert = itemsToUpsert
         )
     }.onFailure {
@@ -1389,9 +1394,8 @@ class ItemRepositoryImpl @Inject constructor(
     }
 
     private data class SetShareItemsPlan(
-        val shareId: ShareId,
         val itemsToUpsert: List<ItemEntity>,
-        val itemsToDelete: List<ItemId>
+        val itemsToDelete: Pair<ShareId, List<ItemId>>
     )
 
     companion object {

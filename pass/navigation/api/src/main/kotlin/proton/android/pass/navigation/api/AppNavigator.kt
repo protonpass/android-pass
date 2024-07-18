@@ -46,11 +46,12 @@ class AppNavigator(
     fun navigate(
         destination: NavItem,
         route: String? = null,
-        backDestination: NavItem? = null
+        backDestination: NavItem? = null,
+        force: Boolean = false
     ) {
         val destinationRoute = route ?: destination.route
         // Discard duplicated nav events
-        if (!lifecycleIsResumed() && destination.navItemType == NavItemType.Screen) {
+        if (!force && !lifecycleIsResumed() && destination.navItemType == NavItemType.Screen) {
             PassLogger.d(
                 TAG,
                 "Navigate: Navigation event discarded as it was duplicated. " +

@@ -75,6 +75,7 @@ internal fun PassLoginItemDetailSections(
             PasskeysSection(
                 passkeys = passkeys,
                 itemDiffs = itemDiffs,
+                itemColors = itemColors,
                 onSelected = { passkeyContent ->
                     onEvent(PassItemDetailsUiEvent.OnPasskeyClick(passkeyContent))
                 }

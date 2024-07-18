@@ -24,10 +24,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,18 +33,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import kotlinx.datetime.Instant
-import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultNorm
-import me.proton.core.compose.theme.defaultWeak
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
 import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.form.PassDivider
+import proton.android.pass.composecomponents.impl.item.SectionSubtitle
+import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.composecomponents.impl.utils.passFormattedDateText
 import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.PasskeyCreationData
@@ -74,21 +71,27 @@ internal fun PasskeyDetailBottomSheetContent(modifier: Modifier = Modifier, pass
             PasskeyDetailRow(
                 title = stringResource(R.string.passkey_detail_bottomsheet_username),
                 subtitle = passkey.userName,
-                icon = CompR.drawable.ic_passkey
+                icon = CompR.drawable.ic_person_key
             )
+
             PassDivider()
+
             PasskeyDetailRow(
                 title = stringResource(R.string.passkey_detail_bottomsheet_domain),
                 subtitle = passkey.domain,
                 icon = CoreR.drawable.ic_proton_earth
             )
+
             PassDivider()
+
             PasskeyDetailRow(
                 title = stringResource(R.string.passkey_detail_bottomsheet_key),
                 subtitle = passkey.id.value,
                 icon = CoreR.drawable.ic_proton_key
             )
+
             PassDivider()
+
             PasskeyDetailRow(
                 title = stringResource(R.string.passkey_detail_bottomsheet_created),
                 subtitle = passFormattedDateText(endInstant = passkey.createTime),
@@ -113,21 +116,18 @@ private fun PasskeyDetailRow(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            modifier = Modifier.size(24.dp),
             painter = painterResource(id = icon),
             contentDescription = null,
             tint = PassTheme.colors.loginInteractionNormMajor2
         )
 
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = title,
-                style = ProtonTheme.typography.defaultWeak
-            )
-            Text(
-                text = subtitle,
-                style = ProtonTheme.typography.defaultNorm
-            )
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall)
+        ) {
+            SectionTitle(text = title)
+
+            SectionSubtitle(text = subtitle.asAnnotatedString())
         }
     }
 }
@@ -135,8 +135,11 @@ private fun PasskeyDetailRow(
 @Preview
 @Composable
 @Suppress("MagicNumber")
-fun PasskeyDetailBottomSheetContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun PasskeyDetailBottomSheetContentPreview(
+    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
+) {
     val now = Instant.fromEpochSeconds(1_708_677_937)
+
     PassTheme(isDark = isDark) {
         Surface {
             PasskeyDetailBottomSheetContent(

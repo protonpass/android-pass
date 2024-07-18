@@ -21,7 +21,10 @@ package proton.android.pass.data.fakes.usecases
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOf
 import proton.android.pass.common.api.FlowUtils.testFlow
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusPayload
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
@@ -73,7 +76,7 @@ class TestItemSyncStatusRepository @Inject constructor() : ItemSyncStatusReposit
 
     override fun observeDownloadedItemsStatus(): Flow<Map<ShareId, ItemSyncStatusPayload>> = accumulatedFlow
 
-    override fun observeInsertedItemsStatus(): Flow<Map<ShareId, ItemSyncStatusPayload>> = accumulatedFlow
+    override fun observeInsertedItemsStatus(): Flow<Option<ItemSyncStatusPayload>> = flowOf(None)
 
     override fun observeSyncState(): Flow<SyncState> = combine(syncStatusFlow, syncModeFlow, ::SyncState)
 

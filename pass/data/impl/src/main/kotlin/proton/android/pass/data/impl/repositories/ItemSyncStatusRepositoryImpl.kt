@@ -27,6 +27,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import me.proton.core.presentation.app.AppLifecycleProvider
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.some
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusPayload
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
@@ -48,10 +51,8 @@ class ItemSyncStatusRepositoryImpl @Inject constructor(
         MutableSharedFlow(replay = 1, extraBufferCapacity = 3)
     private val downloadedItemsMutableMap: MutableMap<ShareId, ItemSyncStatusPayload> =
         mutableMapOf()
-    private val insertedItemsState: MutableSharedFlow<Map<ShareId, ItemSyncStatusPayload>> =
+    private val insertedItemsState: MutableSharedFlow<Option<ItemSyncStatusPayload>> =
         MutableSharedFlow(replay = 1, extraBufferCapacity = 3)
-
-    private val insertedItemsMutableMap: MutableMap<ShareId, ItemSyncStatusPayload> = mutableMapOf()
     private val modeFlow: MutableSharedFlow<SyncMode> = MutableSharedFlow<SyncMode>(
         replay = 1, extraBufferCapacity = 1
     ).apply { tryEmit(SyncMode.Background) }
@@ -62,11 +63,8 @@ class ItemSyncStatusRepositoryImpl @Inject constructor(
         mutex.withLock {
             when (status) {
                 is ItemSyncStatus.SyncInserting -> {
-                    insertedItemsMutableMap[status.shareId] =
-                        ItemSyncStatusPayload(status.current, status.total)
-                    insertedItemsState.emit(insertedItemsMutableMap.toMap())
+                    insertedItemsState.emit(ItemSyncStatusPayload(status.current, status.total).some())
                 }
-
                 is ItemSyncStatus.SyncDownloading -> {
                     downloadedItemsMutableMap[status.shareId] =
                         ItemSyncStatusPayload(status.current, status.total)
@@ -76,8 +74,7 @@ class ItemSyncStatusRepositoryImpl @Inject constructor(
                 ItemSyncStatus.SyncNotStarted -> {
                     downloadedItemsMutableMap.clear()
                     downloadedItemsState.emit(emptyMap())
-                    insertedItemsMutableMap.clear()
-                    insertedItemsState.emit(emptyMap())
+                    insertedItemsState.emit(None)
                 }
 
                 ItemSyncStatus.SyncError,
@@ -111,8 +108,7 @@ class ItemSyncStatusRepositoryImpl @Inject constructor(
     override suspend fun clear() {
         downloadedItemsMutableMap.clear()
         downloadedItemsState.emit(emptyMap())
-        insertedItemsMutableMap.clear()
-        insertedItemsState.emit(emptyMap())
+        insertedItemsState.emit(None)
         syncStatus.emit(ItemSyncStatus.SyncNotStarted)
     }
 
@@ -121,8 +117,8 @@ class ItemSyncStatusRepositoryImpl @Inject constructor(
     override fun observeDownloadedItemsStatus(): Flow<Map<ShareId, ItemSyncStatusPayload>> =
         downloadedItemsState.onStart { emit(emptyMap()) }
 
-    override fun observeInsertedItemsStatus(): Flow<Map<ShareId, ItemSyncStatusPayload>> =
-        insertedItemsState.onStart { emit(emptyMap()) }
+    override fun observeInsertedItemsStatus(): Flow<Option<ItemSyncStatusPayload>> =
+        insertedItemsState.onStart { emit(None) }
 
     override fun observeSyncState(): Flow<SyncState> = combine(
         observeSyncStatus(),

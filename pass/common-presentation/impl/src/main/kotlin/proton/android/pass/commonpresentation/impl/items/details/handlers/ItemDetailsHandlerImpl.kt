@@ -148,11 +148,12 @@ class ItemDetailsHandlerImpl @Inject constructor(
     }
 
     override fun updateItemDetailsDiffs(
-        baseItemDetailState: ItemDetailState,
-        otherItemDetailState: ItemDetailState
-    ): ItemDiffs = getItemDetailsObserver(baseItemDetailState.itemCategory).calculateItemDiffs(
-        baseItemContents = baseItemDetailState.itemContents,
-        otherItemContents = otherItemDetailState.itemContents
+        itemCategory: ItemCategory,
+        baseItemContents: ItemContents,
+        otherItemContents: ItemContents
+    ): ItemDiffs = getItemDetailsObserver(itemCategory).calculateItemDiffs(
+        baseItemContents = baseItemContents,
+        otherItemContents = otherItemContents
     )
 
     @Suppress("UNCHECKED_CAST")

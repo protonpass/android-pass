@@ -30,6 +30,11 @@ sealed interface ItemDiffs {
 
     val note: ItemDiffType
 
+    data object None : ItemDiffs {
+        override val title: ItemDiffType = ItemDiffType.None
+        override val note: ItemDiffType = ItemDiffType.None
+    }
+
     data class Alias(
         override val title: ItemDiffType = ItemDiffType.None,
         override val note: ItemDiffType = ItemDiffType.None,
@@ -94,7 +99,9 @@ sealed interface ItemDiffs {
             ItemCustomFieldSection.Identity.Contact -> contactCustomFields
             ItemCustomFieldSection.Identity.Personal -> personalCustomFields
             ItemCustomFieldSection.Identity.Work -> workCustomFields
-            is ItemCustomFieldSection.Identity.ExtraSection -> extraCustomFields.getOrElse(section.index) {
+            is ItemCustomFieldSection.Identity.ExtraSection -> extraCustomFields.getOrElse(
+                section.index
+            ) {
                 emptyList()
             }
         }.let { customFields -> customFields.getOrElse(index) { ItemDiffType.None } }

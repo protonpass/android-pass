@@ -20,6 +20,6 @@ package proton.android.pass.biometry
 
 import javax.inject.Inject
 
-class FakeStoreAuthOnStop @Inject constructor() : StoreAuthOnStop {
+class FakeExtendAuthTime @Inject constructor() : ExtendAuthTime {
     override suspend fun invoke() {}
 }

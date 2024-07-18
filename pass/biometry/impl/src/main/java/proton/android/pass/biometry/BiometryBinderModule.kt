@@ -46,5 +46,5 @@ abstract class BiometryBinderModule {
     abstract fun bindStoreAuthSuccessful(impl: StoreAuthSuccessfulImpl): StoreAuthSuccessful
 
     @Binds
-    abstract fun bindStoreAuthOnStop(impl: StoreAuthOnStopImpl): StoreAuthOnStop
+    abstract fun bindStoreAuthOnStop(impl: ExtendAuthTimeImpl): ExtendAuthTime
 }

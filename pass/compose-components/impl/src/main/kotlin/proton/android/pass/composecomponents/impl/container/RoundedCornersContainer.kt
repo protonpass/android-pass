@@ -39,7 +39,6 @@ fun RoundedCornersColumn(
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
     onClick: (() -> Unit)? = null,
     backgroundColor: Color = Color.Transparent,
-    borderColor: Color = ProtonTheme.colors.separatorNorm,
     content: @Composable () -> Unit
 ) {
     val cornerShape = RoundedCornerShape(size = Radius.mediumSmall)
@@ -53,7 +52,7 @@ fun RoundedCornersColumn(
             )
             .border(
                 width = 1.dp,
-                color = borderColor,
+                color = ProtonTheme.colors.separatorNorm,
                 shape = cornerShape
             ),
         verticalArrangement = verticalArrangement

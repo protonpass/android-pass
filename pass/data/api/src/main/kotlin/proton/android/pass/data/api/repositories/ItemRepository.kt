@@ -176,7 +176,6 @@ interface ItemRepository {
 }
 
 data class VaultProgress(
-    val shareId: ShareId,
     val total: Int,
     val current: Int
 )

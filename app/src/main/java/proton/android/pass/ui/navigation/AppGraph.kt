@@ -332,11 +332,12 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 HomeNavigation.Finish -> onNavigate(AppNavigation.Finish)
-                HomeNavigation.SyncDialog -> appNavigator.navigate(SyncNavItem)
+                HomeNavigation.SyncDialog -> appNavigator.navigate(destination = SyncNavItem, force = true)
 
-                HomeNavigation.OnBoarding -> appNavigator.navigate(destination = OnBoarding)
+                HomeNavigation.OnBoarding -> appNavigator.navigate(destination = OnBoarding, force = true)
                 HomeNavigation.ConfirmedInvite -> appNavigator.navigate(
-                    destination = InviteConfirmed
+                    destination = InviteConfirmed,
+                    force = true
                 )
 
                 is HomeNavigation.SearchOptions -> appNavigator.navigate(

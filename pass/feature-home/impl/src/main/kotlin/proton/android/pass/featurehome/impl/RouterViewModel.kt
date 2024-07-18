@@ -22,10 +22,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.SyncMode
@@ -44,23 +45,22 @@ class RouterViewModel @Inject constructor(
     internal val routerEventState = MutableSharedFlow<RouterEvent>(replay = 1)
 
     init {
-        viewModelScope.launch {
-            combine(
-                userPreferencesRepository.getHasCompletedOnBoarding(),
-                observeHasConfirmedInvite()
-                    .map { hasConfirmedInvite ->
-                        if (hasConfirmedInvite) {
-                            observeHasConfirmedInvite.clear()
-                        }
-                        hasConfirmedInvite
+        combine(
+            userPreferencesRepository.getHasCompletedOnBoarding(),
+            observeHasConfirmedInvite()
+                .map { hasConfirmedInvite ->
+                    if (hasConfirmedInvite) {
+                        observeHasConfirmedInvite.clear()
                     }
-                    .distinctUntilChanged(),
-                itemSyncStatusRepository.observeMode().distinctUntilChanged(),
-                ::routerEvent
-            )
-                .distinctUntilChanged()
-                .collectLatest { routerEventState.emit(it) }
-        }
+                    hasConfirmedInvite
+                }
+                .distinctUntilChanged(),
+            itemSyncStatusRepository.observeMode().distinctUntilChanged(),
+            ::routerEvent
+        )
+            .distinctUntilChanged()
+            .onEach { routerEventState.emit(it) }
+            .launchIn(viewModelScope)
     }
 
     internal fun clearEvent() {

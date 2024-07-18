@@ -19,6 +19,7 @@
 package proton.android.pass.data.api.repositories
 
 import kotlinx.coroutines.flow.Flow
+import proton.android.pass.common.api.Option
 import proton.android.pass.domain.ShareId
 
 sealed interface ItemSyncStatus {
@@ -30,8 +31,7 @@ sealed interface ItemSyncStatus {
     data class SyncDownloading(val shareId: ShareId, val current: Int, val total: Int) :
         ItemSyncStatus
 
-    data class SyncInserting(val shareId: ShareId, val current: Int, val total: Int) :
-        ItemSyncStatus
+    data class SyncInserting(val current: Int, val total: Int) : ItemSyncStatus
 
     data object SyncSuccess : ItemSyncStatus
 
@@ -95,7 +95,7 @@ interface ItemSyncStatusRepository {
 
     fun observeDownloadedItemsStatus(): Flow<Map<ShareId, ItemSyncStatusPayload>>
 
-    fun observeInsertedItemsStatus(): Flow<Map<ShareId, ItemSyncStatusPayload>>
+    fun observeInsertedItemsStatus(): Flow<Option<ItemSyncStatusPayload>>
 
     fun observeSyncState(): Flow<SyncState>
 

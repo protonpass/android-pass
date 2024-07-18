@@ -23,6 +23,8 @@ import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toPersistentMap
 import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusPayload
@@ -33,13 +35,21 @@ import proton.android.pass.domain.Vault
 internal data class SyncDialogState(
     private val itemSyncStatus: ItemSyncStatus,
     private val downloadedItemsMap: Map<ShareId, ItemSyncStatusPayload>,
-    private val insertedItemsMap: Map<ShareId, ItemSyncStatusPayload>,
+    private val insertedItems: Option<ItemSyncStatusPayload>,
     private val vaultsLoadingResult: LoadingResult<List<Vault>>
 ) {
 
     internal val hasSyncFailed: Boolean = itemSyncStatus is ItemSyncStatus.SyncError
 
     internal val hasSyncSucceeded: Boolean = itemSyncStatus is ItemSyncStatus.SyncSuccess
+
+    internal val hasSyncFinished: Boolean = hasSyncFailed || hasSyncSucceeded
+
+    internal val insertingProgress: Option<Float> =
+        insertedItems.map { it.current.toFloat() / it.total }
+
+    internal val isInserting: Boolean =
+        insertedItems.map { it.current > 0 && it.current != it.total }.value() ?: false
 
     internal val syncItemsMap: ImmutableMap<ShareId, SyncDialogItem> = when (vaultsLoadingResult) {
         is LoadingResult.Error,
@@ -52,9 +62,7 @@ internal data class SyncDialogState(
                     SyncDialogItem(
                         vault = vault,
                         downloadedItemsCountOption = downloadedItemsMap[shareId]?.current.toOption(),
-                        totalDownloadedItemsCountOption = downloadedItemsMap[shareId]?.total.toOption(),
-                        insertedItemsCountOption = insertedItemsMap[shareId]?.current.toOption(),
-                        totalInsertedItemsCountOption = insertedItemsMap[shareId]?.total.toOption()
+                        totalDownloadedItemsCountOption = downloadedItemsMap[shareId]?.total.toOption()
                     )
                 }
                 .toPersistentMap()
@@ -65,7 +73,7 @@ internal data class SyncDialogState(
         internal val Initial: SyncDialogState = SyncDialogState(
             itemSyncStatus = ItemSyncStatus.SyncNotStarted,
             downloadedItemsMap = emptyMap(),
-            insertedItemsMap = emptyMap(),
+            insertedItems = None,
             vaultsLoadingResult = LoadingResult.Loading
         )
 

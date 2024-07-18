@@ -17,6 +17,7 @@
   -->
 
 <resources>
+    <string name="sync_item_empty">Empty vault</string>
     <plurals name="sync_item_count">
         <item quantity="one">Downloaded %d item</item>
         <item quantity="other">Downloaded %d items</item>
@@ -30,9 +31,4 @@
     <string name="sync_dialog_subtitle_success">Your items were successfully downloaded and decrypted.</string>
     <string name="sync_item_not_started">Not started</string>
     <string name="sync_item_failed">Sync failed</string>
-    <plurals name="sync_inserted_item_count">
-        <item quantity="one">Inserted %d item</item>
-        <item quantity="other">Inserted %d items</item>
-    </plurals>
-    <string name="sync_inserted_progress_item_count">Inserting %1$d of %2$d items</string>
 </resources>

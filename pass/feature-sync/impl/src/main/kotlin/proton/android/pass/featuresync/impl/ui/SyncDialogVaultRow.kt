@@ -56,7 +56,7 @@ import me.proton.core.presentation.compose.R as CoreR
 internal fun SyncDialogVaultRow(
     modifier: Modifier = Modifier,
     name: String,
-    isInserting: Boolean,
+    hasSyncFinished: Boolean,
     itemCurrent: Int?,
     itemTotal: Int?,
     color: ShareColor,
@@ -82,33 +82,18 @@ internal fun SyncDialogVaultRow(
                 overflow = TextOverflow.Ellipsis
             )
 
-            val subtitle = if (isInserting) {
-                when {
-                    itemTotal != null && itemCurrent == itemTotal ->
-                        pluralStringResource(R.plurals.sync_inserted_item_count, itemTotal, itemTotal)
+            val subtitle = when {
+                itemTotal == 0 -> stringResource(id = R.string.sync_item_empty)
 
-                    hasSyncFailed -> stringResource(id = R.string.sync_item_failed)
+                itemTotal != null && itemCurrent == itemTotal ->
+                    pluralStringResource(R.plurals.sync_item_count, itemTotal, itemTotal)
 
-                    itemCurrent != null && itemTotal != null -> stringResource(
-                        R.string.sync_inserted_progress_item_count,
-                        itemCurrent,
-                        itemTotal
-                    )
+                hasSyncFailed -> stringResource(id = R.string.sync_item_failed)
 
-                    else -> stringResource(R.string.sync_item_not_started)
-                }
-            } else {
-                when {
-                    itemTotal != null && itemCurrent == itemTotal ->
-                        pluralStringResource(R.plurals.sync_item_count, itemTotal, itemTotal)
+                itemCurrent != null && itemTotal != null ->
+                    stringResource(R.string.sync_progress_item_count, itemCurrent, itemTotal)
 
-                    hasSyncFailed -> stringResource(id = R.string.sync_item_failed)
-
-                    itemCurrent != null && itemTotal != null ->
-                        stringResource(R.string.sync_progress_item_count, itemCurrent, itemTotal)
-
-                    else -> stringResource(R.string.sync_item_not_started)
-                }
+                else -> stringResource(R.string.sync_item_not_started)
             }
             Text(
                 text = subtitle,
@@ -122,7 +107,7 @@ internal fun SyncDialogVaultRow(
             contentAlignment = Alignment.Center
         ) {
             when {
-                isInserting && itemCurrent != null && itemCurrent == itemTotal -> {
+                hasSyncFinished && itemCurrent != null && itemCurrent == itemTotal -> {
                     Icon(
                         painter = painterResource(id = CoreR.drawable.ic_proton_checkmark),
                         tint = PassTheme.colors.interactionNormMajor1,
@@ -165,7 +150,7 @@ internal fun SyncVaultLoadingRowPreview(@PreviewParameter(ThemePreviewProvider::
                     color = ShareColor.Color1,
                     icon = ShareIcon.Icon1,
                     hasSyncFailed = false,
-                    isInserting = false
+                    hasSyncFinished = false
                 )
             }
         }
@@ -185,7 +170,7 @@ internal fun SyncVaultNotLoadingRowPreview(@PreviewParameter(ThemePreviewProvide
                     color = ShareColor.Color1,
                     icon = ShareIcon.Icon1,
                     hasSyncFailed = false,
-                    isInserting = false
+                    hasSyncFinished = false
                 )
             }
         }

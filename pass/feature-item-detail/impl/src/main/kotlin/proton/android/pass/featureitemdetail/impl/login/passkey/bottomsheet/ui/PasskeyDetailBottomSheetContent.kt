@@ -135,9 +135,7 @@ private fun PasskeyDetailRow(
 @Preview
 @Composable
 @Suppress("MagicNumber")
-internal fun PasskeyDetailBottomSheetContentPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+internal fun PasskeyDetailBottomSheetContentPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     val now = Instant.fromEpochSeconds(1_708_677_937)
 
     PassTheme(isDark = isDark) {

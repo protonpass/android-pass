@@ -81,11 +81,9 @@ private fun SharedAuthScreen(onNavigate: (AppNavigation) -> Unit, appNavigator: 
                 AuthNavigation.Dismissed,
                 is AuthNavigation.Back -> onNavigate(AppNavigation.Finish)
 
-                is AuthNavigation.Success ->
-                    when (it.origin) {
-                        AuthOrigin.EXTRA_PASSWORD_LOGIN -> onNavigate(AppNavigation.Finish)
-                        else -> throw IllegalStateException("Unexpected origin: ${it.origin}")
-                    }
+                is AuthNavigation.Success -> if (it.origin == AuthOrigin.EXTRA_PASSWORD_LOGIN) {
+                    onNavigate(AppNavigation.Finish)
+                }
 
                 AuthNavigation.Failed -> appNavigator.navigateBack()
                 is AuthNavigation.SignOut -> onNavigate(AppNavigation.SignOut(it.userId))

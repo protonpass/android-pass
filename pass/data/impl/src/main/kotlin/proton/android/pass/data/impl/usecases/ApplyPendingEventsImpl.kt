@@ -232,6 +232,7 @@ class ApplyPendingEventsImpl @Inject constructor(
         }
         val request = FetchItemsWorker.getRequestFor(
             source = source,
+            userId = userId,
             shareIds = shares.toList()
         )
 

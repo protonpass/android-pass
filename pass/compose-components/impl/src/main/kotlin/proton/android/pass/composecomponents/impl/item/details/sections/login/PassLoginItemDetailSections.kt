@@ -74,6 +74,7 @@ internal fun PassLoginItemDetailSections(
         if (passkeys.isNotEmpty()) {
             PasskeysSection(
                 passkeys = passkeys,
+                itemDiffs = itemDiffs,
                 onSelected = { passkeyContent ->
                     onEvent(PassItemDetailsUiEvent.OnPasskeyClick(passkeyContent))
                 }

@@ -24,7 +24,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.asLoadingResult
@@ -45,7 +44,7 @@ class SyncDialogViewModel @Inject constructor(
 ) : ViewModel() {
 
     internal val state: StateFlow<SyncDialogState> = combine(
-        syncStatusRepository.observeSyncStatus().onEach { PassLogger.d(TAG, "Sync status: $it") },
+        syncStatusRepository.observeSyncStatus(),
         syncStatusRepository.observeDownloadedItemsStatus(),
         syncStatusRepository.observeInsertedItemsStatus(),
         observeVaults().asLoadingResult(),

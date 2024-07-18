@@ -27,7 +27,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import proton.android.pass.common.api.combineN
-import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandlerObserver
 import proton.android.pass.commonrust.api.EmailValidator
@@ -41,6 +40,7 @@ import proton.android.pass.domain.CustomFieldContent
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemState
 import proton.android.pass.domain.Totp
@@ -223,6 +223,10 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
                 encryptionContext = this@withEncryptionContext,
                 baseItemCustomFieldsContent = baseItemContents.customFields,
                 otherItemCustomFieldsContent = otherItemContents.customFields
+            ),
+            passkeys = calculateItemDiffTypes(
+                baseItemPasskeys = baseItemContents.passkeys,
+                otherItemPasskeys = otherItemContents.passkeys
             )
         )
     }

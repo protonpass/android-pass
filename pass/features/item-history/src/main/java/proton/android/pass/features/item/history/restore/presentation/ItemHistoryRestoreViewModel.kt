@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -35,11 +36,11 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
-import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonpresentation.api.items.details.handlers.ItemDetailsHandler
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemRevision
@@ -48,6 +49,8 @@ import proton.android.pass.data.api.usecases.items.OpenItemRevision
 import proton.android.pass.data.api.usecases.items.RestoreItemRevision
 import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.ItemContents
+import proton.android.pass.domain.ItemCustomFieldSection
+import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
 import proton.android.pass.features.item.history.navigation.ItemHistoryRevisionNavArgId
@@ -82,38 +85,60 @@ class ItemHistoryRestoreViewModel @Inject constructor(
         .require<String>(ItemHistoryRevisionNavArgId.key)
         .let { encodedRevision -> Json.decodeFromString(NavParamEncoder.decode(encodedRevision)) }
 
-    private val revisionItemContentsUpdateOptionFlow = MutableStateFlow<Option<ItemContents>>(None)
-
-    private val revisionItemDetailsStateFlow: Flow<ItemDetailState> = oneShot {
+    private val revisionItemFlow = oneShot {
         encryptionContextProvider.withEncryptionContextSuspendable {
             openItemRevision(shareId, itemRevision, this@withEncryptionContextSuspendable)
         }
-    }.flatMapLatest { item ->
-        combine(
-            revisionItemContentsUpdateOptionFlow,
-            itemDetailsHandler.observeItemDetails(item)
-        ) { revisionItemContentsUpdateOption, itemDetailState ->
-            when (revisionItemContentsUpdateOption) {
-                None -> itemDetailState
-                is Some -> itemDetailState.update(itemContents = revisionItemContentsUpdateOption.value)
-            }
+    }
+
+    private val revisionItemContentsFlow = revisionItemFlow.map { revisionItem ->
+        encryptionContextProvider.withEncryptionContext {
+            revisionItem.toItemContents(this@withEncryptionContext)
         }
     }
 
+    private val currentItemFlow = oneShot {
+        getItemById(shareId, itemId)
+    }
+
+    private val currentItemContentsFlow = currentItemFlow.map { currentItem ->
+        encryptionContextProvider.withEncryptionContext {
+            currentItem.toItemContents(this@withEncryptionContext)
+        }
+    }
+
+    private val revisionItemDiffsFlow = combine(
+        revisionItemFlow.map { revisionItem -> revisionItem.itemType.category },
+        revisionItemContentsFlow,
+        currentItemContentsFlow,
+        itemDetailsHandler::updateItemDetailsDiffs
+    )
+
+    private val revisionItemContentsUpdateOptionFlow = MutableStateFlow<Option<ItemContents>>(None)
+
+    private val revisionItemDetailsStateFlow = revisionItemFlow.flatMapLatest { item ->
+        createItemDetailsStateFlow(
+            itemContentsUpdateOptionFlow = revisionItemContentsUpdateOptionFlow,
+            itemDetailStateFlow = itemDetailsHandler.observeItemDetails(item),
+            itemDiffsFlow = revisionItemDiffsFlow
+        )
+    }
+
+    private val currentItemDiffsFlow = combine(
+        currentItemFlow.map { currentItem -> currentItem.itemType.category },
+        currentItemContentsFlow,
+        revisionItemContentsFlow,
+        itemDetailsHandler::updateItemDetailsDiffs
+    )
+
     private val currentItemContentsUpdateOptionFlow = MutableStateFlow<Option<ItemContents>>(None)
 
-    private val currentItemDetailsStateFlow: Flow<ItemDetailState> = oneShot {
-        getItemById(shareId, itemId)
-    }.flatMapLatest { item ->
-        combine(
-            currentItemContentsUpdateOptionFlow,
-            itemDetailsHandler.observeItemDetails(item)
-        ) { currentItemContentsUpdateOption, itemDetailState ->
-            when (currentItemContentsUpdateOption) {
-                None -> itemDetailState
-                is Some -> itemDetailState.update(itemContents = currentItemContentsUpdateOption.value)
-            }
-        }
+    private val currentItemDetailsStateFlow = currentItemFlow.flatMapLatest { item ->
+        createItemDetailsStateFlow(
+            itemContentsUpdateOptionFlow = currentItemContentsUpdateOptionFlow,
+            itemDetailStateFlow = itemDetailsHandler.observeItemDetails(item),
+            itemDiffsFlow = currentItemDiffsFlow
+        )
     }
 
     private val eventFlow = MutableStateFlow<ItemHistoryRestoreEvent>(ItemHistoryRestoreEvent.Idle)
@@ -125,14 +150,8 @@ class ItemHistoryRestoreViewModel @Inject constructor(
     ) { currentItemDetailState, revisionItemDetailState, event ->
         ItemHistoryRestoreState.ItemDetails(
             itemRevision = itemRevision,
-            currentItemDetailState = itemDetailsWithDiff(
-                baseItemDetailState = currentItemDetailState,
-                otherItemDetailState = revisionItemDetailState
-            ),
-            revisionItemDetailState = itemDetailsWithDiff(
-                baseItemDetailState = revisionItemDetailState,
-                otherItemDetailState = currentItemDetailState
-            ),
+            currentItemDetailState = currentItemDetailState,
+            revisionItemDetailState = revisionItemDetailState,
             event = event
         )
     }.stateIn(
@@ -141,13 +160,22 @@ class ItemHistoryRestoreViewModel @Inject constructor(
         initialValue = ItemHistoryRestoreState.Initial
     )
 
-    private fun itemDetailsWithDiff(baseItemDetailState: ItemDetailState, otherItemDetailState: ItemDetailState) =
-        itemDetailsHandler.updateItemDetailsDiffs(
-            baseItemDetailState = baseItemDetailState,
-            otherItemDetailState = otherItemDetailState
-        ).let { itemDiffs ->
-            baseItemDetailState.update(itemDiffs = itemDiffs)
+    private fun createItemDetailsStateFlow(
+        itemContentsUpdateOptionFlow: Flow<Option<ItemContents>>,
+        itemDetailStateFlow: Flow<ItemDetailState>,
+        itemDiffsFlow: Flow<ItemDiffs>
+    ) = combine(
+        itemContentsUpdateOptionFlow,
+        itemDetailStateFlow,
+        itemDiffsFlow
+    ) { itemContentsUpdateOption, itemDetailState, itemDiffs ->
+        when (itemContentsUpdateOption) {
+            None -> itemDetailState.itemContents
+            is Some -> itemContentsUpdateOption.value
+        }.let { itemContents ->
+            itemDetailState.update(itemContents = itemContents, itemDiffs = itemDiffs)
         }
+    }
 
     internal fun onEventConsumed(event: ItemHistoryRestoreEvent) {
         eventFlow.compareAndSet(event, ItemHistoryRestoreEvent.Idle)

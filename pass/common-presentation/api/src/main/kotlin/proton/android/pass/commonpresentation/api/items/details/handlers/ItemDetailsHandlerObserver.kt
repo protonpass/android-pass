@@ -41,17 +41,20 @@ abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
         hiddenState: HiddenState
     ): ItemContents
 
-    abstract fun calculateItemDiffs(baseItemContents: ITEM_CONTENTS, otherItemContents: ITEM_CONTENTS): ItemDiffs
+    abstract fun calculateItemDiffs(
+        baseItemContents: ITEM_CONTENTS,
+        otherItemContents: ITEM_CONTENTS
+    ): ItemDiffs
 
     protected fun calculateItemDiffTypes(
         encryptionContext: EncryptionContext,
         baseItemCustomFieldsContent: List<CustomFieldContent>,
         otherItemCustomFieldsContent: List<CustomFieldContent>
-    ): List<ItemDiffType> = mutableListOf<ItemDiffType>().apply {
+    ): List<ItemDiffType> {
         val baseCustomFieldsMap = baseItemCustomFieldsContent.associateBy { it.label }
         val otherCustomFieldsMap = otherItemCustomFieldsContent.associateBy { it.label }
 
-        baseCustomFieldsMap.forEach { (baseLabel, baseContent) ->
+        return baseCustomFieldsMap.map { (baseLabel, baseContent) ->
             val otherContent = otherCustomFieldsMap[baseLabel]
 
             when {
@@ -83,7 +86,7 @@ abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
                 }
 
                 else -> ItemDiffType.Content
-            }.also(::add)
+            }
         }
     }
 
@@ -100,13 +103,11 @@ abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
         }
 
         else -> {
-            ItemDiffType.None to mutableListOf<ItemDiffType>().apply {
-                baseItemFieldValues.forEachIndexed { index, baseItemFieldValue ->
-                    calculateItemDiffType(
-                        baseItemFieldValue = baseItemFieldValue,
-                        otherItemFieldValue = otherItemFieldValues.getOrNull(index).orEmpty()
-                    ).also(::add)
-                }
+            ItemDiffType.None to baseItemFieldValues.mapIndexed { index, baseItemFieldValue ->
+                calculateItemDiffType(
+                    baseItemFieldValue = baseItemFieldValue,
+                    otherItemFieldValue = otherItemFieldValues.getOrNull(index).orEmpty()
+                )
             }
         }
     }
@@ -121,7 +122,10 @@ abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
         calculateItemDiffType(baseItemFieldValue, otherItemFieldValue)
     }
 
-    protected fun calculateItemDiffType(baseItemFieldValue: String, otherItemFieldValue: String): ItemDiffType = when {
+    protected fun calculateItemDiffType(
+        baseItemFieldValue: String,
+        otherItemFieldValue: String
+    ): ItemDiffType = when {
         baseItemFieldValue.isEmpty() && otherItemFieldValue.isEmpty() -> {
             ItemDiffType.None
         }

@@ -90,6 +90,7 @@ internal fun LoginContent(
         if (passkeys.isNotEmpty()) {
             PasskeysSection(
                 passkeys = passkeys,
+                itemColors = passItemColors(itemCategory = ItemCategory.Login),
                 onSelected = {
                     onEvent(LoginDetailEvent.OnSelectPasskey(it))
                 }

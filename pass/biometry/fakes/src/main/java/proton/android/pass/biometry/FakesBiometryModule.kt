@@ -40,5 +40,5 @@ abstract class FakesBiometryModule {
     abstract fun bindStoreAuthSuccessful(impl: TestStoreAuthSuccessful): StoreAuthSuccessful
 
     @Binds
-    abstract fun bindStoreAuthOnStop(impl: FakeStoreAuthOnStop): StoreAuthOnStop
+    abstract fun bindExtendAuthTime(impl: FakeExtendAuthTime): ExtendAuthTime
 }

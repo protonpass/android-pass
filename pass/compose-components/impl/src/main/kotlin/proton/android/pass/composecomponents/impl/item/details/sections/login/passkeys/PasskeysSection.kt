@@ -18,13 +18,14 @@
 
 package proton.android.pass.composecomponents.impl.item.details.sections.login.passkeys
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
+import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.domain.ItemDiffs
 
 @Composable
@@ -32,15 +33,19 @@ fun PasskeysSection(
     modifier: Modifier = Modifier,
     passkeys: ImmutableList<UIPasskeyContent>,
     onSelected: (UIPasskeyContent) -> Unit,
+    itemColors: PassItemColors,
     itemDiffs: ItemDiffs.Login = ItemDiffs.Login()
 ) {
-    Column(modifier = modifier) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
+    ) {
         passkeys.forEach { passkey ->
             PasskeyRow(
-                modifier = Modifier.padding(vertical = Spacing.small),
                 domain = passkey.domain,
                 username = passkey.userName,
                 itemDiffType = itemDiffs.passkey(passkeyId = passkey.id),
+                itemColors = itemColors,
                 onClick = { onSelected(passkey) }
             )
         }

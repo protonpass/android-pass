@@ -34,20 +34,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultWeak
+import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.R
-import proton.android.pass.composecomponents.impl.container.roundedContainerStrong
+import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
-fun PasskeyEditRow(
+internal fun PasskeyEditRow(
     modifier: Modifier = Modifier,
     domain: String,
     username: String,
@@ -61,27 +60,32 @@ fun PasskeyEditRow(
 
     Row(
         modifier = modifier
-            .roundedContainerStrong()
+            .roundedContainerNorm()
             .fillMaxWidth()
-            .padding(Spacing.medium),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
+            .padding(
+                start = Spacing.medium,
+                top = Spacing.medium,
+                end = Spacing.extraSmall,
+                bottom = Spacing.medium
+            ),
+        horizontalArrangement = Arrangement.spacedBy(space = Spacing.medium),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            painter = painterResource(R.drawable.ic_passkey),
+            painter = painterResource(R.drawable.ic_person_key),
             contentDescription = null,
-            tint = PassTheme.colors.loginInteractionNormMajor2
+            tint = ProtonTheme.colors.iconWeak
         )
 
         Column(modifier = Modifier.weight(1f)) {
             ProtonTextFieldLabel(
-                text = label,
-                color = ProtonTheme.colors.textWeak
+                text = label
             )
 
             Text(
                 text = username,
-                style = ProtonTheme.typography.defaultWeak()
+                style = ProtonTheme.typography.defaultNorm(),
+                color = PassTheme.colors.textWeak
             )
         }
 
@@ -93,13 +97,17 @@ fun PasskeyEditRow(
 
 @Preview
 @Composable
-fun PasskeyEditRowPreview(@PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>) {
-    PassTheme(isDark = input.first) {
+internal fun PasskeyEditRowPreview(
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+) {
+    val (isDark, canDelete) = input
+
+    PassTheme(isDark = isDark) {
         Surface {
             PasskeyEditRow(
                 domain = "domain.local",
                 username = "some@user.name",
-                canDelete = input.second,
+                canDelete = canDelete,
                 onDeleteClick = {}
             )
         }

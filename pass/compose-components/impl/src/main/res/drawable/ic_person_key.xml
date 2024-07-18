@@ -1,0 +1,40 @@
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and Proton Pass.
+  ~
+  ~ Proton Pass is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Proton Pass is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="20.842106dp"
+    android:autoMirrored="true"
+    android:viewportWidth="152"
+    android:viewportHeight="132">
+
+    <path
+        android:fillColor="#000000"
+        android:fillType="evenOdd"
+        android:pathData="M90,30c0,16.57 -13.43,30 -30,30 -16.57,0 -30,-13.43 -30,-30C30,13.43 43.43,0 60,0c16.57,0 30,13.43 30,30ZM80,30c0,11.05 -8.95,20 -20,20s-20,-8.95 -20,-20 8.95,-20 20,-20 20,8.95 20,20Z" />
+
+    <path
+        android:fillColor="#000000"
+        android:pathData="M18.56,89.8C22.25,83.79 29,80 36.41,80h47.18c3.43,0 6.72,0.81 9.63,2.28a37.88,37.88 0,0 1,-5.82 -12.05,31.55 31.55,0 0,0 -3.8,-0.23H36.41c-10.8,0 -20.81,5.53 -26.37,14.56L2.21,97.28C-3.93,107.28 3.45,120 15.4,120h83.18a13.99,13.99 0,0 1,-0.58 -4v-6H15.4c-4.57,0 -6.49,-4.52 -4.67,-7.48l7.82,-12.72ZM116,56a8,8 0,1 1,16 0,8 8,0 0,1 -16,0Z" />
+
+    <path
+        android:fillColor="#000000"
+        android:fillType="evenOdd"
+        android:pathData="M96,60c0,-15.47 12.54,-28 28,-28s28,12.53 28,28c0,10.64 -5.94,19.89 -14.67,24.63L137.33,90l9.07,6.8a4,4 0,0 1,0 6.4L140,108l6.4,4.8a4,4 0,0 1,0 6.4l-16,12a4,4 0,0 1,-4.8 0l-16,-12a4,4 0,0 1,-1.6 -3.2L108,82.98C100.75,77.93 96,69.52 96,60ZM124,40c-11.05,0 -20,8.95 -20,20 0,7.4 4.01,13.86 10,17.33A4,4 0,0 1,116 80.79L116,114l12,9 9.33,-7 -6.4,-4.8a4,4 0,0 1,0 -6.4l6.4,-4.8 -6.4,-4.8a4,4 0,0 1,-1.6 -3.2v-9.88a4,4 0,0 1,2.44 -3.68C138.97,75.39 144,68.28 144,60c0,-11.05 -8.95,-20 -20,-20Z" />
+
+</vector>

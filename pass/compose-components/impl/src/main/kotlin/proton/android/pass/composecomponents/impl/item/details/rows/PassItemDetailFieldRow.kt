@@ -86,7 +86,7 @@ internal fun PassItemDetailFieldRow(
                 text = title
             )
 
-            Spacer(modifier = Modifier.height(Spacing.small))
+            Spacer(modifier = Modifier.height(Spacing.extraSmall))
 
             if (isSelectable) {
                 SelectionContainer {

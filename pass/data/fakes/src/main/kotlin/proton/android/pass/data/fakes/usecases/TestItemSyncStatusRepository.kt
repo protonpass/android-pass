@@ -73,6 +73,8 @@ class TestItemSyncStatusRepository @Inject constructor() : ItemSyncStatusReposit
 
     override fun observeDownloadedItemsStatus(): Flow<Map<ShareId, ItemSyncStatusPayload>> = accumulatedFlow
 
+    override fun observeInsertedItemsStatus(): Flow<Map<ShareId, ItemSyncStatusPayload>> = accumulatedFlow
+
     override fun observeSyncState(): Flow<SyncState> = combine(syncStatusFlow, syncModeFlow, ::SyncState)
 
 }

@@ -29,6 +29,7 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffType
 import proton.android.pass.domain.ItemDiffs
+import proton.android.pass.domain.Passkey
 
 abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
 
@@ -41,10 +42,7 @@ abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
         hiddenState: HiddenState
     ): ItemContents
 
-    abstract fun calculateItemDiffs(
-        baseItemContents: ITEM_CONTENTS,
-        otherItemContents: ITEM_CONTENTS
-    ): ItemDiffs
+    abstract fun calculateItemDiffs(baseItemContents: ITEM_CONTENTS, otherItemContents: ITEM_CONTENTS): ItemDiffs
 
     protected fun calculateItemDiffTypes(
         encryptionContext: EncryptionContext,
@@ -112,6 +110,22 @@ abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
         }
     }
 
+    protected fun calculateItemDiffTypes(
+        baseItemPasskeys: List<Passkey>,
+        otherItemPasskeys: List<Passkey>
+    ): Map<String, ItemDiffType> = otherItemPasskeys
+        .map { otherPasskey -> otherPasskey.id }
+        .toSet()
+        .let { otherPasskeysIds ->
+            baseItemPasskeys.associate { basePasskey ->
+                basePasskey.id.value to if (otherPasskeysIds.contains(basePasskey.id)) {
+                    ItemDiffType.None
+                } else {
+                    ItemDiffType.Field
+                }
+            }
+        }
+
     protected fun calculateItemDiffType(
         encryptionContext: EncryptionContext,
         baseItemFieldHiddenState: HiddenState,
@@ -122,10 +136,7 @@ abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
         calculateItemDiffType(baseItemFieldValue, otherItemFieldValue)
     }
 
-    protected fun calculateItemDiffType(
-        baseItemFieldValue: String,
-        otherItemFieldValue: String
-    ): ItemDiffType = when {
+    protected fun calculateItemDiffType(baseItemFieldValue: String, otherItemFieldValue: String): ItemDiffType = when {
         baseItemFieldValue.isEmpty() && otherItemFieldValue.isEmpty() -> {
             ItemDiffType.None
         }

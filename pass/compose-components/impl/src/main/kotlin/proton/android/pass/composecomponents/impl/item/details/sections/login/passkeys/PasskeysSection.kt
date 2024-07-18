@@ -25,12 +25,14 @@ import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
+import proton.android.pass.domain.ItemDiffs
 
 @Composable
 fun PasskeysSection(
     modifier: Modifier = Modifier,
     passkeys: ImmutableList<UIPasskeyContent>,
-    onSelected: (UIPasskeyContent) -> Unit
+    onSelected: (UIPasskeyContent) -> Unit,
+    itemDiffs: ItemDiffs.Login = ItemDiffs.Login()
 ) {
     Column(modifier = modifier) {
         passkeys.forEach { passkey ->
@@ -38,6 +40,7 @@ fun PasskeysSection(
                 modifier = Modifier.padding(vertical = Spacing.small),
                 domain = passkey.domain,
                 username = passkey.userName,
+                itemDiffType = itemDiffs.passkey(passkeyId = passkey.id),
                 onClick = { onSelected(passkey) }
             )
         }

@@ -35,7 +35,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultWeak
 import proton.android.pass.commonui.api.PassTheme
@@ -44,13 +43,16 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.roundedContainerStrong
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
+import proton.android.pass.composecomponents.impl.item.details.modifiers.contentDiff
+import proton.android.pass.domain.ItemDiffType
 import me.proton.core.presentation.R as CoreR
 
 @Composable
-fun PasskeyRow(
+internal fun PasskeyRow(
     modifier: Modifier = Modifier,
     domain: String,
     username: String,
+    itemDiffType: ItemDiffType,
     onClick: () -> Unit
 ) {
     val labelTitle = stringResource(id = R.string.passkey_field_label)
@@ -60,11 +62,12 @@ fun PasskeyRow(
 
     Row(
         modifier = modifier
+            .contentDiff(itemDiffType = itemDiffType)
             .roundedContainerStrong()
             .fillMaxWidth()
             .clickable(onClick = onClick)
-            .padding(Spacing.medium),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
+            .padding(all = Spacing.medium),
+        horizontalArrangement = Arrangement.spacedBy(space = Spacing.medium),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
@@ -95,12 +98,13 @@ fun PasskeyRow(
 
 @Preview
 @Composable
-fun PasskeyRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
+internal fun PasskeyRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             PasskeyRow(
                 domain = "test.domain",
                 username = "test.username",
+                itemDiffType = ItemDiffType.None,
                 onClick = {}
             )
         }

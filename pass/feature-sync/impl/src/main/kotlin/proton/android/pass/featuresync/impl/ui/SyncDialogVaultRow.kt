@@ -85,8 +85,11 @@ internal fun SyncDialogVaultRow(
             val subtitle = when {
                 itemTotal == 0 -> stringResource(id = R.string.sync_item_empty)
 
-                itemTotal != null && itemCurrent == itemTotal ->
+                !hasSyncFinished && itemTotal != null && itemCurrent == itemTotal ->
                     pluralStringResource(R.plurals.sync_item_count, itemTotal, itemTotal)
+
+                hasSyncFinished && itemTotal != null && itemCurrent == itemTotal ->
+                    pluralStringResource(R.plurals.sync_finished_item_count, itemTotal, itemTotal)
 
                 hasSyncFailed -> stringResource(id = R.string.sync_item_failed)
 
@@ -107,7 +110,7 @@ internal fun SyncDialogVaultRow(
             contentAlignment = Alignment.Center
         ) {
             when {
-                hasSyncFinished && itemCurrent != null && itemCurrent == itemTotal -> {
+                itemCurrent != null && itemCurrent == itemTotal -> {
                     Icon(
                         painter = painterResource(id = CoreR.drawable.ic_proton_checkmark),
                         tint = PassTheme.colors.interactionNormMajor1,

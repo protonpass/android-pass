@@ -31,7 +31,6 @@ import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemCustomFieldSection
-import proton.android.pass.domain.ItemDiffType
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemState
 import javax.inject.Inject
@@ -318,17 +317,15 @@ class IdentityItemDetailsHandlerObserverImpl @Inject constructor(
                 baseItemCustomFieldsContent = baseItemContents.workDetailsContent.customFields,
                 otherItemCustomFieldsContent = otherItemContents.workDetailsContent.customFields
             ),
-            extraCustomFields = mutableListOf<List<ItemDiffType>>().apply {
-                baseItemContents.extraSectionContentList.forEachIndexed { index, extraSectionContent ->
-                    calculateItemDiffTypes(
-                        encryptionContext = this@withEncryptionContext,
-                        baseItemCustomFieldsContent = extraSectionContent.customFields,
-                        otherItemCustomFieldsContent = otherItemContents.extraSectionContentList
-                            .getOrNull(index)
-                            ?.customFields
-                            ?: emptyList()
-                    ).also(::add)
-                }
+            extraCustomFields = baseItemContents.extraSectionContentList.mapIndexed { index, extraSectionContent ->
+                calculateItemDiffTypes(
+                    encryptionContext = this@withEncryptionContext,
+                    baseItemCustomFieldsContent = extraSectionContent.customFields,
+                    otherItemCustomFieldsContent = otherItemContents.extraSectionContentList
+                        .getOrNull(index)
+                        ?.customFields
+                        ?: emptyList()
+                )
             }
         )
     }

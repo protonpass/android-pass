@@ -23,7 +23,7 @@ plugins {
     id("org.jetbrains.kotlin.kapt")
 }
 
-val appVersionName: String = "1.23.2"
+val appVersionName: String = "1.24.0"
 val appVersionCode: Int = versionCode(appVersionName)
 val archivesBaseName = "FeatureHomeApp-$appVersionName"
 

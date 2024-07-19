@@ -68,6 +68,7 @@ internal fun AddressDetails(
     enabled: Boolean,
     extraFields: PersistentSet<AddressDetailsField>,
     focusedField: Option<FocusedField>,
+    showAddAddressDetailsButton: Boolean,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
     val field = focusedField.value()
@@ -165,7 +166,9 @@ internal fun AddressDetails(
             )
 
         }
-        AddMoreButton(onClick = { onEvent(IdentityContentEvent.OnAddAddressDetailField) })
+        if (showAddAddressDetailsButton) {
+            AddMoreButton(onClick = { onEvent(IdentityContentEvent.OnAddAddressDetailField) })
+        }
     }
 }
 
@@ -179,7 +182,8 @@ fun AddressDetailsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark:
                 enabled = true,
                 extraFields = persistentSetOf(),
                 focusedField = None,
-                onEvent = {}
+                onEvent = {},
+                showAddAddressDetailsButton = true
             )
         }
     }

@@ -124,6 +124,7 @@ fun IdentityItemForm(
                 uiPersonalDetails = identityItemFormState.uiPersonalDetails,
                 extraFields = extraFields.filterIsInstance<PersonalDetailsField>()
                     .toPersistentSet(),
+                showAddPersonalDetailsButton = identityUiState.showAddPersonalDetailsButton(),
                 focusedField = focusedField,
                 onEvent = onEvent
             )
@@ -146,6 +147,7 @@ fun IdentityItemForm(
                 uiAddressDetails = identityItemFormState.uiAddressDetails,
                 extraFields = extraFields.filterIsInstance<AddressDetailsField>().toPersistentSet(),
                 focusedField = focusedField,
+                showAddAddressDetailsButton = identityUiState.showAddAddressDetailsButton(),
                 onEvent = onEvent
             )
         }
@@ -167,6 +169,7 @@ fun IdentityItemForm(
                 uiContactDetails = identityItemFormState.uiContactDetails,
                 extraFields = extraFields.filterIsInstance<ContactDetailsField>().toPersistentSet(),
                 focusedField = focusedField,
+                showAddContactDetailsButton = identityUiState.showAddContactDetailsButton(),
                 onEvent = onEvent
             )
         }
@@ -188,6 +191,7 @@ fun IdentityItemForm(
                 uiWorkDetails = identityItemFormState.uiWorkDetails,
                 extraFields = extraFields.filterIsInstance<WorkDetailsField>().toPersistentSet(),
                 focusedField = focusedField,
+                showAddWorkDetailsButton = identityUiState.showAddWorkDetailsButton(),
                 onEvent = onEvent
             )
         }

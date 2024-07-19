@@ -63,6 +63,11 @@ class IdentityAutofillTest : BaseAutofillTest() {
         runIdentityAutofillTest("identity/chrome_paypal_es.json")
     }
 
+    @Test
+    fun `can autofill fill dev chrome`() {
+        runIdentityAutofillTest("identity/chrome_fill_dev.json")
+    }
+
     private fun runIdentityAutofillTest(file: String) {
         runAutofillTest(
             file = file,

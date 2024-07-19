@@ -25,6 +25,7 @@ import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.capabilities.CanShareVault
+import proton.android.pass.data.api.usecases.capabilities.CanShareVaultStatus
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ItemState
@@ -77,7 +78,11 @@ class GetItemActionsImpl @Inject constructor(
         val permissions = vault.role.toPermissions()
 
         val isTrashed = item.state == ItemState.Trashed.value
-        val canShare = canShareVault(vault)
+        val canShare = if (isTrashed) {
+            CanShareVaultStatus.CannotShare(reason = CanShareVaultStatus.CannotShareReason.ItemInTrash)
+        } else {
+            canShareVault(vault)
+        }
         val canMoveToTrash = !isTrashed && permissions.canTrash()
         val canDelete = isTrashed && permissions.canDelete()
 

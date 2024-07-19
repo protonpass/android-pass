@@ -40,6 +40,7 @@ import proton.android.pass.common.api.removeAccents
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.log.api.PassLogger
+import kotlin.math.abs
 
 class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) {
 
@@ -75,7 +76,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
             AutofillTraversalContext(
                 node = node,
                 parent = None,
-                siblings = emptyList(),
+                siblings = emptyMap(),
                 parentPath = emptyList(),
                 parentUrl = node.url
             )
@@ -108,11 +109,12 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
                 None -> {}
             }
         } else {
-            context.node.children.forEach {
+            context.node.children.forEachIndexed { position, it ->
+                val proximityMap = getElementsByProximity(context.node.children, position)
                 val newContext = AutofillTraversalContext(
                     node = it,
                     parent = Some(context),
-                    siblings = context.node.children,
+                    siblings = proximityMap,
                     parentPath = pathToCurrentNode,
                     parentUrl = context.parentUrl.orRight(context.node.url)
                 )
@@ -264,21 +266,37 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         if (!autofillContext.node.isEditText()) return None
 
         // Fetch the context nodes
-        val contextNodes = getContextNodes(autofillContext)
+        val contextNodes: Map<Int, Map<Int, List<AutofillNode>>> = getContextNodes(autofillContext)
 
         // Now that we have all the context nodes, aggregate the autofillHints and htmlAttributes lists
-        val autofillHints = contextNodes.flatMap { it.autofillHints }
-            .filter { it.isNotBlank() }
-            .toSet()
-        val htmlAttributes = contextNodes.flatMap { it.htmlAttributes }
-            .filter { it.first.isNotBlank() && it.second.isNotBlank() }
-        val hintKeywordList = contextNodes.flatMap { it.hintKeywordList }.filter { it.isNotBlank() }
+        val autofillHintsFlattened = contextNodes.flatMap { byLevel ->
+            byLevel.value.flatMap { byProximity ->
+                byProximity.value.flatMap {
+                    it.autofillHints.filter { hint -> hint.isNotBlank() }
+                }
+            }
+        }.toSet()
+
+        val htmlAttributesFlattened = contextNodes.flatMap { byLevel ->
+            byLevel.value.flatMap { byProximity ->
+                byProximity.value.flatMap {
+                    it.htmlAttributes.filter { attr -> attr.first.isNotBlank() && attr.second.isNotBlank() }
+                }
+            }
+        }
+        val hintKeywordListFlattened = contextNodes.flatMap { byLevel ->
+            byLevel.value.flatMap { byProximity ->
+                byProximity.value.flatMap {
+                    it.hintKeywordList.filter { hint -> hint.isNotBlank() }
+                }
+            }
+        }
 
         // Check if we can extract info from these
-        val hasValidHints = nodeHasValidHints(autofillHints.toSet())
-        val hasValidHtmlInfo = nodeHasValidHtmlInfo(htmlAttributes)
+        val hasValidHints = nodeHasValidHints(autofillHintsFlattened.toSet())
+        val hasValidHtmlInfo = nodeHasValidHtmlInfo(htmlAttributesFlattened)
         val hasUsefulKeywords =
-            detectFieldTypeUsingHintKeywordList(hintKeywordList) != FieldType.Unknown
+            detectFieldTypeUsingHintKeywordList(hintKeywordListFlattened) != FieldType.Unknown
 
         if (hasValidHints is CheckHintsResult.Found) {
             PassLogger.d(
@@ -300,16 +318,18 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
                 TAG,
                 "[node=${autofillContext.node.id}] Adding with context because it has useful keywords"
             )
+            PassLogger.d(
+                TAG,
+                "[node=${autofillContext.node.id}] hintKeywordList ${hintKeywordListFlattened.joinToString()}"
+            )
         }
 
         return if (hasValidHints is CheckHintsResult.Found || hasValidHtmlInfo || hasUsefulKeywords) {
             val fieldType = when (hasValidHints) {
                 is CheckHintsResult.Found -> hasValidHints.fieldType
-                CheckHintsResult.NoneFound -> detectFieldType(
-                    autofillHints = autofillHints,
-                    htmlAttributes = htmlAttributes,
-                    inputType = autofillContext.node.inputType,
-                    hintKeywordList = hintKeywordList
+                CheckHintsResult.NoneFound -> detectContextualFieldType(
+                    contextNodes = contextNodes,
+                    inputType = autofillContext.node.inputType
                 )
             }
 
@@ -336,22 +356,24 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         }
     }
 
-    private fun getContextNodes(context: AutofillTraversalContext): List<AutofillNode> {
+    private fun getContextNodes(context: AutofillTraversalContext): Map<Int, Map<Int, List<AutofillNode>>> {
         // List that will contain the context nodes
-        val contextNodes = mutableListOf<AutofillNode>()
+        val contextNodes: MutableMap<Int, MutableMap<Int, List<AutofillNode>>> = mutableMapOf()
 
         val isNodeAlreadyAdded = { node: AutofillNode ->
             autoFillNodes.any { it.id == node.id }
         }
 
-        val unprocessedSiblings = context.siblings.filter { !isNodeAlreadyAdded(it) }
+        val unprocessedSiblings: MutableMap<Int, List<AutofillNode>> = context.siblings
+            .mapValues { list -> list.value.filter { !isNodeAlreadyAdded(it) } }
+            .toMutableMap()
 
         // Start adding the current node siblings
-        contextNodes.addAll(unprocessedSiblings)
+        contextNodes[0] = unprocessedSiblings
 
         // Starting from the parent do as many jumps as possible until MAX_CONTEXT_JUMPS
         var parent = context.parent
-        repeat(MAX_CONTEXT_JUMPS) {
+        for (level in 1..MAX_CONTEXT_JUMPS) {
             when (val localParent = parent) {
                 // If we have reached the root, nothing else to do
                 None -> return contextNodes
@@ -359,15 +381,17 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
                 // If we have a parent, add the parent and the siblings to the current node
                 is Some -> {
                     val parentNode = localParent.value
-
+                    contextNodes[level] = mutableMapOf()
                     // Add the parent
                     if (!isNodeAlreadyAdded(parentNode.node)) {
-                        contextNodes.add(parentNode.node)
+                        contextNodes[level]?.put(0, listOf(parentNode.node))
                     }
 
                     // Add the parents siblings
-                    val nonAddedSiblings = parentNode.siblings.filter { !isNodeAlreadyAdded(it) }
-                    contextNodes.addAll(nonAddedSiblings)
+                    parentNode.siblings.forEach { (proximity, item) ->
+                        val nonAddedSiblings = item.filter { !isNodeAlreadyAdded(it) }
+                        contextNodes[level]?.put(proximity + 1, nonAddedSiblings.toMutableList())
+                    }
 
                     parent = parentNode.parent
                 }
@@ -453,6 +477,39 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         }
         if (fieldType == FieldType.Unknown) {
             fieldType = detectFieldTypeUsingHintKeywordList(hintKeywordList)
+        }
+
+        return fieldType
+    }
+
+    @Suppress("ReturnCount")
+    private fun detectContextualFieldType(
+        contextNodes: Map<Int, Map<Int, List<AutofillNode>>>,
+        inputType: InputTypeValue
+    ): FieldType {
+        var fieldType: FieldType = FieldType.Unknown
+
+        contextNodes.toSortedMap().forEach { (_: Int, byLevel: Map<Int, List<AutofillNode>>) ->
+            byLevel.toSortedMap().forEach { (_: Int, byProximity: List<AutofillNode>) ->
+                byProximity.forEach { node ->
+                    fieldType = detectFieldTypeUsingAutofillHints(node.autofillHints.toSet())
+                    if (fieldType != FieldType.Unknown) {
+                        return fieldType
+                    }
+                    fieldType = detectFieldTypeUsingHtmlInfo(node.htmlAttributes)
+                    if (fieldType != FieldType.Unknown) {
+                        return fieldType
+                    }
+                    fieldType = detectFieldTypeUsingInputType(inputType)
+                    if (fieldType != FieldType.Unknown) {
+                        return fieldType
+                    }
+                    fieldType = detectFieldTypeUsingHintKeywordList(node.hintKeywordList)
+                    if (fieldType != FieldType.Unknown) {
+                        return fieldType
+                    }
+                }
+            }
         }
 
         return fieldType
@@ -630,7 +687,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
     data class AutofillTraversalContext(
         val node: AutofillNode,
         val parent: Option<AutofillTraversalContext>,
-        val siblings: List<AutofillNode>,
+        val siblings: Map<Int, List<AutofillNode>>,
         val parentPath: List<AutofillFieldId>,
         val parentUrl: Option<String>
     )
@@ -651,10 +708,19 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
             REGEX_OPTIONS
         )
         private val EMAIL_REGEX = Regex("co(?:urriel|rrei?o)|email", REGEX_OPTIONS)
-        private val FULL_NAME_REGEX = Regex("(?<!user)(?<!last)(name|\\b(nom(?:bre)?(?:complet)?)\\b)", REGEX_OPTIONS)
+        private val FULL_NAME_REGEX =
+            Regex("(?<!user)(?<!last)(name|\\b(nom(?:bre)?(?:complet)?)\\b)", REGEX_OPTIONS)
         private val PHONE_REGEX = Regex("phone|telefon", REGEX_OPTIONS)
         private val ADDRESS_REGEX = Regex("nom.*rue")
     }
+}
+
+private fun <T> getElementsByProximity(list: List<T>, position: Int): Map<Int, List<T>> {
+    require(position in list.indices) { "Position out of bounds" }
+
+    return list.mapIndexed { index, element -> abs(index - position) to element }
+        .groupBy { it.first }
+        .mapValues { entry -> entry.value.map { it.second } }
 }
 
 fun AssistStructure.ViewNode.toAutofillNode(): AutofillNode {

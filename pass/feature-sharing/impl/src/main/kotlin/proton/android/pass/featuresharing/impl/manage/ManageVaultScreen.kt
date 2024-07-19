@@ -48,12 +48,15 @@ fun ManageVaultScreen(
             ManageVaultEvent.Close -> {
                 onNavigateEvent(SharingNavigation.BackToHome)
             }
+
             is ManageVaultEvent.ShowInvitesInfo -> {
                 onNavigateEvent(SharingNavigation.ShowInvitesInfo(event.shareId))
             }
+
             ManageVaultEvent.Unknown -> {}
         }
-        viewModel.clearEvent()
+
+        viewModel.onConsumeEvent(state.event)
     }
 
     ManageVaultContent(

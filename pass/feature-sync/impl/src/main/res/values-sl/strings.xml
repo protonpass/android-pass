@@ -17,13 +17,20 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="sync_item_empty">Empty vault</string>
   <plurals name="sync_item_count">
-    <item quantity="one">%d predmet</item>
-    <item quantity="two">%d predmeta</item>
-    <item quantity="few">%d predmeti</item>
-    <item quantity="other">%d predmetov</item>
+    <item quantity="one">Downloaded %d item</item>
+    <item quantity="two">Downloaded %d items</item>
+    <item quantity="few">Downloaded %d items</item>
+    <item quantity="other">Downloaded %d items</item>
   </plurals>
-  <string name="sync_progress_item_count">%1$d od %2$d predmetov</string>
+  <plurals name="sync_finished_item_count">
+    <item quantity="one">%d item synchronized</item>
+    <item quantity="two">%d items synchronized</item>
+    <item quantity="few">%d items synchronized</item>
+    <item quantity="other">%d items synchronized</item>
+  </plurals>
+  <string name="sync_progress_item_count">Downloading %1$d of %2$d items</string>
   <string name="sync_dialog_title">Sinhronizacija predmetov …</string>
   <string name="sync_dialog_title_error">Sinhronizacija ni uspela</string>
   <string name="sync_dialog_title_success">Sinhronizacija je končana</string>
@@ -32,4 +39,6 @@
   <string name="sync_dialog_subtitle_success">Vaši elementi so bili uspešno preneseni in dešifriran</string>
   <string name="sync_item_not_started">Ni se začelo</string>
   <string name="sync_item_failed">Sinhronizacija ni uspela</string>
+  <string name="sync_dialog_title_inserting">Inserting items…</string>
+  <string name="sync_dialog_subtitle_inserting">Completing last step, almost there.</string>
 </resources>

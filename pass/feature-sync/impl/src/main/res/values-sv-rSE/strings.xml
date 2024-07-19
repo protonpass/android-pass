@@ -17,11 +17,16 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="sync_item_empty">Tomt valv</string>
   <plurals name="sync_item_count">
-    <item quantity="one">%d objekt</item>
-    <item quantity="other">%d objekt</item>
+    <item quantity="one">Laddade ner %d objekt</item>
+    <item quantity="other">Laddade ner %d objekt</item>
   </plurals>
-  <string name="sync_progress_item_count">%1$d av %2$d objekt</string>
+  <plurals name="sync_finished_item_count">
+    <item quantity="one">%d objekt synkroniserat</item>
+    <item quantity="other">%d objekt synkroniserade</item>
+  </plurals>
+  <string name="sync_progress_item_count">Laddar ner %1$d av %2$d objekt</string>
   <string name="sync_dialog_title">Synkroniserar objekt…</string>
   <string name="sync_dialog_title_error">Synkronisering misslyckades</string>
   <string name="sync_dialog_title_success">Synkronisering slutförd</string>
@@ -30,4 +35,6 @@
   <string name="sync_dialog_subtitle_success">Dina objekt har laddats ner och dekrypterats.</string>
   <string name="sync_item_not_started">Inte startad</string>
   <string name="sync_item_failed">Synkronisering misslyckades</string>
+  <string name="sync_dialog_title_inserting">Infogar objekt…</string>
+  <string name="sync_dialog_subtitle_inserting">Completing last step, almost there.</string>
 </resources>

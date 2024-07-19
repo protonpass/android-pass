@@ -22,6 +22,7 @@
   <string name="item_history_restore_confirmation_dialog_message" comment="The item will be reverted to a version from an specific date, for instance: Your current item will revert to the version from 19 February 2024 at 09:30">Το τρέχον στοιχείο σας θα επανέλθει στην έκδοση από %1$s</string>
   <string name="item_history_restore_snackbar_message_error">Παρουσιάστηκε σφάλμα κατά την επαναφορά της αναθεώρησης στοιχείων</string>
   <string name="item_history_restore_snackbar_message_success">Η αναθεώρηση στοιχείου αποκαταστάθηκε με επιτυχία</string>
+  <string name="item_history_restore_tab_title_current">Τρέχουσα</string>
   <string name="item_history_timeline_title">Ιστορικό</string>
   <string name="item_history_timeline_node_child_title">Τροποποιήθηκε</string>
   <string name="item_history_timeline_node_leaf_title">Δημιουργήθηκε</string>

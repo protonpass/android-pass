@@ -16,6 +16,7 @@
   <string name="manage_subscription_icon_content_description">Buton gestionare abonament</string>
   <string name="account_settings_list_item_password_header">Schimbare parolă</string>
   <string name="account_settings_list_item_recovery_header">E-mail de recuperare</string>
+  <string name="account_settings_list_item_security_keys">Chei de securitate</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Nesetat</string>
   <string name="account_settings_list_item_password_hint_grace">Resetarea parolei este în așteptare.</string>
   <string name="account_settings_list_item_password_hint_insecure">Resetarea parolei este disponibilă.</string>
@@ -23,4 +24,11 @@
   <string name="account_settings_list_item_extra_password_header_set">Setare parolă suplimentară pentru Proton Pass</string>
   <string name="account_settings_list_item_extra_password_active">Activă</string>
   <string name="account_settings_list_item_extra_password_description">Va fi necesară o parolă suplimentară pentru a utiliza Pass. Acționează ca o parolă suplimentară pe lângă parola contului Proton.</string>
+  <string name="account_settings_list_item_security_keys_hint_not_set">Nesetat</string>
+  <string name="account_settings_list_item_security_keys_hint_single">%s</string>
+  <plurals name="account_settings_list_item_security_keys_hint_many">
+    <item quantity="one">%d cheie de securitate setată</item>
+    <item quantity="few">%d chei de securitate setate</item>
+    <item quantity="other">%d de chei de securitate setate</item>
+  </plurals>
 </resources>

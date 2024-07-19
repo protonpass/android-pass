@@ -28,9 +28,24 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.domain.Item
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.common.CustomFieldIndexTitle
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Birthdate
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.County
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.CustomExtraField
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.ExtraField
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Facebook
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.FirstName
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Floor
 import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.FocusedField
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Gender
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Instagram
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.LastName
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Linkedin
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.MiddleName
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.PersonalWebsite
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Reddit
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.WorkEmail
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.WorkPhoneNumber
+import proton.android.pass.featureitemcreate.impl.identity.presentation.bottomsheets.Yahoo
 
 @Suppress("ComplexInterface", "TooManyFunctions")
 interface IdentityFormActions {
@@ -67,6 +82,31 @@ data class IdentitySharedUiState(
     val focusedField: Option<FocusedField>,
     val canUseCustomFields: Boolean
 ) {
+
+    val showAddPersonalDetailsButton: Boolean = if (canUseCustomFields) {
+        true
+    } else {
+        !extraFields.containsAll(setOf(FirstName, MiddleName, LastName, Birthdate, Gender))
+    }
+
+    val showAddAddressDetailsButton: Boolean = if (canUseCustomFields) {
+        true
+    } else {
+        !extraFields.containsAll(setOf(Floor, County))
+    }
+
+    val showAddContactDetailsButton: Boolean = if (canUseCustomFields) {
+        true
+    } else {
+        !extraFields.containsAll(setOf(Linkedin, Reddit, Facebook, Yahoo, Instagram))
+    }
+
+    val showAddWorkDetailsButton: Boolean = if (canUseCustomFields) {
+        true
+    } else {
+        !extraFields.containsAll(setOf(PersonalWebsite, WorkPhoneNumber, WorkEmail))
+    }
+
     companion object {
         val Initial = IdentitySharedUiState(
             isLoadingState = IsLoadingState.NotLoading,

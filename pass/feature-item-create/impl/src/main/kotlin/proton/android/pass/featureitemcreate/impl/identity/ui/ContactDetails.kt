@@ -74,6 +74,7 @@ internal fun ContactDetails(
     enabled: Boolean,
     extraFields: PersistentSet<ContactDetailsField>,
     focusedField: Option<FocusedField>,
+    showAddContactDetailsButton: Boolean,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
     val field = focusedField.value()
@@ -201,7 +202,9 @@ internal fun ContactDetails(
                 callback = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
             )
         }
-        AddMoreButton(onClick = { onEvent(IdentityContentEvent.OnAddContactDetailField) })
+        if (showAddContactDetailsButton) {
+            AddMoreButton(onClick = { onEvent(IdentityContentEvent.OnAddContactDetailField) })
+        }
     }
 }
 
@@ -215,7 +218,8 @@ fun ContactDetailsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark:
                 enabled = true,
                 extraFields = persistentSetOf(),
                 focusedField = None,
-                onEvent = {}
+                onEvent = {},
+                showAddContactDetailsButton = true
             )
         }
     }

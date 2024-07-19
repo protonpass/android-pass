@@ -123,4 +123,28 @@ sealed interface IdentityUiState {
         is UpdateIdentity -> hasReceivedItem
         else -> false
     }
+
+    fun showAddPersonalDetailsButton(): Boolean = when (this) {
+        is CreateIdentity -> sharedState.showAddPersonalDetailsButton
+        is UpdateIdentity -> sharedState.showAddPersonalDetailsButton
+        else -> false
+    }
+
+    fun showAddAddressDetailsButton(): Boolean = when (this) {
+        is CreateIdentity -> sharedState.showAddAddressDetailsButton
+        is UpdateIdentity -> sharedState.showAddAddressDetailsButton
+        else -> false
+    }
+
+    fun showAddContactDetailsButton(): Boolean = when (this) {
+        is CreateIdentity -> sharedState.showAddContactDetailsButton
+        is UpdateIdentity -> sharedState.showAddContactDetailsButton
+        else -> false
+    }
+
+    fun showAddWorkDetailsButton(): Boolean = when (this) {
+        is CreateIdentity -> sharedState.showAddWorkDetailsButton
+        is UpdateIdentity -> sharedState.showAddWorkDetailsButton
+        else -> false
+    }
 }

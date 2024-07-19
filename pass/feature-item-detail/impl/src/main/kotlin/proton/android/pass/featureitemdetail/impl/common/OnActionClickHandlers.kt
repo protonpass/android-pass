@@ -85,6 +85,14 @@ fun onShareClick(
                 )
             }
 
+            CanShareVaultStatus.CannotShareReason.ItemInTrash -> {
+                onNavigate(
+                    ItemDetailNavigation.CannotPerformAction(
+                        ItemDetailCannotPerformActionType.CannotShareBecauseItemInTrash
+                    )
+                )
+            }
+
             CanShareVaultStatus.CannotShareReason.Unknown -> {}
         }
     }

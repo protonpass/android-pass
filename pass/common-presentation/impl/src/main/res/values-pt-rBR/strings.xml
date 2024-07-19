@@ -29,14 +29,14 @@
   <string name="item_details_snackbar_message_email_copied">Endereço de e-mail copiado</string>
   <string name="item_details_snackbar_message_facebook_copied">Facebook copiado</string>
   <string name="item_details_snackbar_message_first_name_copied">Primeiro nome copiado</string>
-  <string name="item_details_snackbar_message_floor_copied">Floor copied</string>
+  <string name="item_details_snackbar_message_floor_copied">Piso copiado</string>
   <string name="item_details_snackbar_message_full_name_copied">Nome completo copiado</string>
   <string name="item_details_snackbar_message_gender_copied">Gênero copiado</string>
   <string name="item_details_snackbar_message_instagram_copied">Instagram copiado</string>
   <string name="item_details_snackbar_message_last_name_copied">Sobrenome copiado</string>
   <string name="item_details_snackbar_message_license_number_copied">Número de licença copiado</string>
   <string name="item_details_snackbar_message_linkedin_copied">LinkedIn copiado</string>
-  <string name="item_details_snackbar_message_middle_name_copied">Middle name copied</string>
+  <string name="item_details_snackbar_message_middle_name_copied">Segundo nome copiado</string>
   <string name="item_details_snackbar_message_occupation_copied">Ocupação copiado</string>
   <string name="item_details_snackbar_message_organization_copied">Organização copiada</string>
   <string name="item_details_snackbar_message_passport_number_copied">Número do passaporte copiado</string>
@@ -50,7 +50,7 @@
   <string name="item_details_snackbar_message_totp_copied">TOTP copiado</string>
   <string name="item_details_snackbar_message_username_copied">Nome de usuário copiado</string>
   <string name="item_details_snackbar_message_website_copied">URL do site copiado</string>
-  <string name="item_details_snackbar_message_x_handle_copied">X handle copied</string>
+  <string name="item_details_snackbar_message_x_handle_copied">Usuário no X copiado</string>
   <string name="item_details_snackbar_message_yahoo_copied">Yahoo copiado</string>
   <string name="item_details_snackbar_message_zip_or_postal_code_copied">CEP ou código portal copiado</string>
 </resources>

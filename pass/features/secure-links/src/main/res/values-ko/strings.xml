@@ -19,7 +19,7 @@
 <resources>
   <!--Create screen-->
   <string name="secure_links_create_title">안전한 링크로 공유하기</string>
-  <string name="secure_links_create_row_expiration_title">링크 만료시점은</string>
+  <string name="secure_links_create_row_expiration_title">링크 만료시점</string>
   <string name="secure_links_create_row_expiration_options_one_hour">1시간</string>
   <string name="secure_links_create_row_expiration_options_one_day">1일</string>
   <string name="secure_links_create_row_expiration_options_seven_days">7일</string>

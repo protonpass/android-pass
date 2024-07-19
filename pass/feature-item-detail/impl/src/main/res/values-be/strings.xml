@@ -87,7 +87,7 @@
     It would translate to
     12 February 2023 12:34
     -->
-  <string name="date_full_date_format_with_year">dd LLLL yyyy у HH:mm</string>
+  <string name="date_full_date_format_with_year">dd LLLL yyyy \'у\' HH:mm</string>
   <string name="item_detail_cannot_perform_action_edit_title">Немагчыма рэдагаваць</string>
   <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Вы не можаце рэдагаваць гэты элемент, бо ў вас недастаткова правоў для гэтай аперацыі.</string>
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Вам толькі дазволена рэдагаваць элементы ў сваіх больш старых сховішчах. Палепшыце свой бягучы тарыфны план, каб рэдагаваць гэты элемент.</string>

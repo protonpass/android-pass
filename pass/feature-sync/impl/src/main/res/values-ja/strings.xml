@@ -17,10 +17,14 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="sync_item_empty">Empty vault</string>
   <plurals name="sync_item_count">
-    <item quantity="other">%d 個のアイテム</item>
+    <item quantity="other">Downloaded %d items</item>
   </plurals>
-  <string name="sync_progress_item_count">%1$d/%2$d 個のアイテム</string>
+  <plurals name="sync_finished_item_count">
+    <item quantity="other">%d items synchronized</item>
+  </plurals>
+  <string name="sync_progress_item_count">Downloading %1$d of %2$d items</string>
   <string name="sync_dialog_title">アイテムを同期中…</string>
   <string name="sync_dialog_title_error">同期に失敗しました</string>
   <string name="sync_dialog_title_success">同期が完了しました</string>
@@ -29,4 +33,6 @@
   <string name="sync_dialog_subtitle_success">アイテムは正常にダウンロードされ、復号化されました。</string>
   <string name="sync_item_not_started">始まっていない</string>
   <string name="sync_item_failed">同期に失敗しました</string>
+  <string name="sync_dialog_title_inserting">Inserting items…</string>
+  <string name="sync_dialog_subtitle_inserting">Completing last step, almost there.</string>
 </resources>

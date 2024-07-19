@@ -16,6 +16,7 @@
   <string name="manage_subscription_icon_content_description">გამოწერის ღილაკის მართვა</string>
   <string name="account_settings_list_item_password_header">პაროლის შეცვლა</string>
   <string name="account_settings_list_item_recovery_header">აღდგენის ელფოსტა</string>
+  <string name="account_settings_list_item_security_keys">Security keys</string>
   <string name="account_settings_list_item_recovery_hint_not_set">დაყენებული არაა</string>
   <string name="account_settings_list_item_password_hint_grace">პაროლის ჩამოყრა რიგშია</string>
   <string name="account_settings_list_item_password_hint_insecure">პაროლის ჩამოყრა მზადაა</string>
@@ -23,4 +24,10 @@
   <string name="account_settings_list_item_extra_password_header_set">დააყენეთ დამატებითი პაროლი Proton Pass-სთვის</string>
   <string name="account_settings_list_item_extra_password_active">აქტიური</string>
   <string name="account_settings_list_item_extra_password_description">დამატებითი პაროლი აუცილებელია Pass-ის გამოყენებისას. ის Proton-ის პაროლთან ერთად დამატებით პაროლად გამოიყენება.</string>
+  <string name="account_settings_list_item_security_keys_hint_not_set">დაყენებული არაა</string>
+  <string name="account_settings_list_item_security_keys_hint_single">%s</string>
+  <plurals name="account_settings_list_item_security_keys_hint_many">
+    <item quantity="one">დაყენებულია %d უსაფრთხოების გასაღები</item>
+    <item quantity="other">დაყენებულია %d უსაფრთხოების გასაღები</item>
+  </plurals>
 </resources>

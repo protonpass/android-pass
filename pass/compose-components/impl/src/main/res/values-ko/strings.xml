@@ -214,7 +214,7 @@
   <string name="snack_bar_message_item_trashed_success">항목을 성공적으로 휴지통에 이동했습니다.</string>
   <string name="snack_bar_message_item_trashed_error">이 항목을 휴지통 이동하는데 오류가 발생했습니다.</string>
   <string name="snack_bar_message_item_restore_success">항목이 성공적으로 복원되었습니다.</string>
-  <string name="snack_bar_message_item_restore_error">There was an error restoring this item</string>
-  <string name="snack_bar_message_item_delete_success">Item successfully deleted</string>
-  <string name="snack_bar_message_item_delete_error">There was an error deleting this item</string>
+  <string name="snack_bar_message_item_restore_error">항목 복구 중 오류가 발생했습니다.</string>
+  <string name="snack_bar_message_item_delete_success">항목을 성공적으로 생성했습니다.</string>
+  <string name="snack_bar_message_item_delete_error">항목 삭제 중 오류가 발생했습니다.</string>
 </resources>

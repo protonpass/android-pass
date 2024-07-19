@@ -17,13 +17,20 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="sync_item_empty">Пустое сховішча</string>
   <plurals name="sync_item_count">
-    <item quantity="one">%d элемент</item>
-    <item quantity="few">%d элементы</item>
-    <item quantity="many">%d элементаў</item>
-    <item quantity="other">%d элементаў</item>
+    <item quantity="one">Спампаваны %d элемент</item>
+    <item quantity="few">Спампаваны %d элементы</item>
+    <item quantity="many">Спампаваны %d элементаў</item>
+    <item quantity="other">Спампаваны %d элементаў</item>
   </plurals>
-  <string name="sync_progress_item_count">%1$d з %2$d элементаў</string>
+  <plurals name="sync_finished_item_count">
+    <item quantity="one">%d элемент сінхранізаваны</item>
+    <item quantity="few">%d элементы сінхранізаваны</item>
+    <item quantity="many">%d элементаў сінхранізаваны</item>
+    <item quantity="other">%d элементаў сінхранізаваны</item>
+  </plurals>
+  <string name="sync_progress_item_count">Спампоўваецца элементаў: %1$d з %2$d</string>
   <string name="sync_dialog_title">Сінхранізацыя элементаў…</string>
   <string name="sync_dialog_title_error">Збой сінхранізацыі</string>
   <string name="sync_dialog_title_success">Сінхранізацыя завершана</string>
@@ -32,4 +39,6 @@
   <string name="sync_dialog_subtitle_success">Вашы элементы былі паспяхова спампаваны і расшыфраваны.</string>
   <string name="sync_item_not_started">Не запушчана</string>
   <string name="sync_item_failed">Збой сінхранізацыі</string>
+  <string name="sync_dialog_title_inserting">Устаўка элементаў…</string>
+  <string name="sync_dialog_subtitle_inserting">Завяршэнне апошняга крока. Амаль гатова.</string>
 </resources>

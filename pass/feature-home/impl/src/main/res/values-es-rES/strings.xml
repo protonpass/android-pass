@@ -91,7 +91,7 @@
   <string name="trash_error_deleting_item">Error al eliminar el elemento</string>
   <string name="trash_success_deleting_item">El elemento ha sido eliminado.</string>
   <string name="trash_deleting_items_error">Error al eliminar los elementos</string>
-  <string name="trash_deleting_items_success">Los elementos han sido eliminados.</string>
+  <string name="trash_deleting_items_success">Se han eliminado los elementos.</string>
   <!-- Alerts -->
   <string name="alert_confirm_clear_trash_title">¿Vaciar la papelera?</string>
   <string name="alert_confirm_clear_trash_message">¿Estás seguro de que quieres vaciar la papelera? Todos sus elementos se eliminarán permanentemente.</string>

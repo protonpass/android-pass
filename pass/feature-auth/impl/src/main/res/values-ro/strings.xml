@@ -27,8 +27,8 @@
   <string name="auth_unlock_app_title">Deblocare Proton Pass</string>
   <string name="auth_unlock_app_subtitle">Introduceți parola principală pentru [%s]</string>
   <string name="auth_unlock_app_extra_password_subtitle">Introduceți parola suplimentară pentru [%s]</string>
-  <string name="auth_unlock_app_subtitle_account_switch">Enter the master password for:</string>
-  <string name="auth_unlock_app_extra_password_subtitle_account_switch">Enter the extra password for:</string>
+  <string name="auth_unlock_app_subtitle_account_switch">Introduceți parola principală pentru:</string>
+  <string name="auth_unlock_app_extra_password_subtitle_account_switch">Introduceți parola suplimentară pentru:</string>
   <string name="auth_master_password_label">Parolă principală</string>
   <string name="auth_action_reveal_password">Afișare parolă principală</string>
   <string name="auth_action_conceal_password">Ascundere parolă principală</string>

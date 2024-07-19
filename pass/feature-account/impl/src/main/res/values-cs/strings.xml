@@ -16,6 +16,7 @@
   <string name="manage_subscription_icon_content_description">Tlačítko správy předplatného</string>
   <string name="account_settings_list_item_password_header">Změnit heslo</string>
   <string name="account_settings_list_item_recovery_header">E-mail pro obnovení</string>
+  <string name="account_settings_list_item_security_keys">Security keys</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Nenastaveno</string>
   <string name="account_settings_list_item_password_hint_grace">Čekání na reset hesla</string>
   <string name="account_settings_list_item_password_hint_insecure">Připraveno pro reset hesla</string>
@@ -23,4 +24,12 @@
   <string name="account_settings_list_item_extra_password_header_set">Nastavte dodatečné heslo pro Proton Pass</string>
   <string name="account_settings_list_item_extra_password_active">Aktivní</string>
   <string name="account_settings_list_item_extra_password_description">Pro použití Pass bude vyžadováno dodatečné heslo. Slouží jako doplněk k vašemu hlavnímu heslu Proton.</string>
+  <string name="account_settings_list_item_security_keys_hint_not_set">Nenastaveno</string>
+  <string name="account_settings_list_item_security_keys_hint_single">%s</string>
+  <plurals name="account_settings_list_item_security_keys_hint_many">
+    <item quantity="one">Sada %d bezpečnostního klíče</item>
+    <item quantity="few">Sada %d bezpečnostních klíčů</item>
+    <item quantity="many">Sada %d bezpečnostních klíčů</item>
+    <item quantity="other">Sada %d bezpečnostních klíčů</item>
+  </plurals>
 </resources>

@@ -22,6 +22,7 @@
   <string name="item_history_restore_confirmation_dialog_message" comment="The item will be reverted to a version from an specific date, for instance: Your current item will revert to the version from 19 February 2024 at 09:30">Vaša aktuálna položka sa vráti na verziu z %1$s</string>
   <string name="item_history_restore_snackbar_message_error">Pri obnove revízie položiek sa vyskytla chyba</string>
   <string name="item_history_restore_snackbar_message_success">Revízia položky bola úspešne obnovená</string>
+  <string name="item_history_restore_tab_title_current">Aktuálna</string>
   <string name="item_history_timeline_title">História</string>
   <string name="item_history_timeline_node_child_title">Upravené</string>
   <string name="item_history_timeline_node_leaf_title">Vytvorené</string>

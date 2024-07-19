@@ -18,6 +18,6 @@
   -->
 <resources>
   <!-- Delete dialog -->
-  <string name="item_trash_delete_dialog_title">Voleu eliminar permanentment?</string>
+  <string name="item_trash_delete_dialog_title">Voleu eliminar-lo permanentment?</string>
   <string name="item_trash_delete_dialog_message">Aquesta acció és irreversible</string>
 </resources>

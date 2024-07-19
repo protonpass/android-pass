@@ -17,11 +17,16 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="sync_item_empty">La cassaforte è vuota</string>
   <plurals name="sync_item_count">
-    <item quantity="one">%d elemento</item>
-    <item quantity="other">%d elementi</item>
+    <item quantity="one">%d elemento scaricato</item>
+    <item quantity="other">%d elementi scaricati</item>
   </plurals>
-  <string name="sync_progress_item_count">%1$d / %2$d elementi</string>
+  <plurals name="sync_finished_item_count">
+    <item quantity="one">%d elemento sincronizzato</item>
+    <item quantity="other">%d elementi sincronizzati</item>
+  </plurals>
+  <string name="sync_progress_item_count">%1$d / %2$d elementi scaricati</string>
   <string name="sync_dialog_title">Sincronizzazione degli elementi in corso</string>
   <string name="sync_dialog_title_error">Sincronizzazione non riuscita</string>
   <string name="sync_dialog_title_success">Sincronizzazione completata</string>
@@ -30,4 +35,6 @@
   <string name="sync_dialog_subtitle_success">Elementi scaricati e decrittografati</string>
   <string name="sync_item_not_started">Sincronizzazione non iniziata</string>
   <string name="sync_item_failed">Sincronizzazione non riuscita</string>
+  <string name="sync_dialog_title_inserting">Inserimento degli elementi in corso</string>
+  <string name="sync_dialog_subtitle_inserting">Quasi finito</string>
 </resources>

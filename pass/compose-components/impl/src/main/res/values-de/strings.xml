@@ -168,7 +168,7 @@
   <string name="item_details_identity_section_work_phone_number_title">Geschäftliche Rufnummer</string>
   <string name="item_details_identity_section_work_personal_website_title">Persönliche Website</string>
   <string name="item_details_shared_section_note_title">Notiz</string>
-  <string name="item_details_shared_section_item_history_last_autofill_title">Last autofill</string>
+  <string name="item_details_shared_section_item_history_last_autofill_title">Letztes Auto-Ausfüllen</string>
   <string name="item_details_shared_section_item_history_created_title">Erstellt</string>
   <string name="item_details_shared_section_item_history_modified_times_title">Bearbeitet: (%d)</string>
   <string name="item_details_shared_section_item_history_button_view">Eintragsverlauf anzeigen</string>

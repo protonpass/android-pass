@@ -27,7 +27,7 @@
   <string name="security_center_home_row_data_breaches_title">Alerta del web fosc</string>
   <string name="security_center_home_row_data_breaches_subtitle">S\'han detectat infraccions</string>
   <string name="security_center_home_row_sentinel_title">Proton Sentinel</string>
-  <string name="security_center_home_row_sentinel_subtitle">Programa avançat de protecció de comptes</string>
+  <string name="security_center_home_row_sentinel_subtitle">Programa de protecció avançada de comptes</string>
   <string name="security_center_home_row_insecure_passwords_title">Contrasenyes febles</string>
   <string name="security_center_home_row_insecure_passwords_subtitle">Canvieu les vostres contrasenyes</string>
   <string name="security_center_home_row_reused_passwords_title">Contrasenyes reutilitzades</string>
@@ -41,8 +41,8 @@
   <!-- Sentinel bottom sheet -->
   <string name="security_center_sentinel_title">Proton Sentinel</string>
   <string name="security_center_sentinel_subtitle">Proton Sentinel és un programa avançat de protecció de comptes impulsat per sistemes d\'IA sofisticats i especialistes que treballen les 24 hores del dia per protegir-vos dels mals actors i les amenaces de seguretat.</string>
-  <string name="security_center_sentinel_button_enable">Activa Proton Sentinel</string>
-  <string name="security_center_sentinel_button_disable">Desactiva Proton Sentinel</string>
+  <string name="security_center_sentinel_button_enable">Activa el Proton Sentinel</string>
+  <string name="security_center_sentinel_button_disable">Desactiva el Proton Sentinel</string>
   <string name="security_center_sentinel_snackbar_message_enable_canceled">S\'ha cancel·lat l\'activació de la protecció Proton Sentinel</string>
   <string name="security_center_sentinel_snackbar_message_enable_error">S\'ha produït un error en activar la protecció Proton Sentinel. Si us plau, torni-ho a intentar.</string>
   <string name="security_center_sentinel_snackbar_message_disable_canceled">La desactivació de la protecció de Proton Sentinel s\'ha cancel·lat</string>

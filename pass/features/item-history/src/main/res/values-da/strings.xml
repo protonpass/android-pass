@@ -22,6 +22,7 @@
   <string name="item_history_restore_confirmation_dialog_message" comment="The item will be reverted to a version from an specific date, for instance: Your current item will revert to the version from 19 February 2024 at 09:30">Dit aktuelle element vil gendannes til versionen fra %1$s</string>
   <string name="item_history_restore_snackbar_message_error">Der opstod en fejl ved gendannelse af elementrevision</string>
   <string name="item_history_restore_snackbar_message_success">Elementrevision gendannet</string>
+  <string name="item_history_restore_tab_title_current">Nuværende</string>
   <string name="item_history_timeline_title">Historik</string>
   <string name="item_history_timeline_node_child_title">Ændret</string>
   <string name="item_history_timeline_node_leaf_title">Oprettet</string>

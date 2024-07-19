@@ -25,8 +25,8 @@
   <string name="auth_unlock_app_title">Proton Pass 잠금 해제</string>
   <string name="auth_unlock_app_subtitle">%s의 마스터 비밀번호 입력</string>
   <string name="auth_unlock_app_extra_password_subtitle">%s의 추가 비밀번호를 입력하세요</string>
-  <string name="auth_unlock_app_subtitle_account_switch">Enter the master password for:</string>
-  <string name="auth_unlock_app_extra_password_subtitle_account_switch">Enter the extra password for:</string>
+  <string name="auth_unlock_app_subtitle_account_switch">다음을 수행하려면 마스터 비밀번호를 입력하십시오:</string>
+  <string name="auth_unlock_app_extra_password_subtitle_account_switch">다음을 수행하려면 추가 비밀번호를 입력하세요:</string>
   <string name="auth_master_password_label">마스터 비밀번호</string>
   <string name="auth_action_reveal_password">마스터 비밀번호 보이기</string>
   <string name="auth_action_conceal_password">마스터 비밀번호 숨기기</string>

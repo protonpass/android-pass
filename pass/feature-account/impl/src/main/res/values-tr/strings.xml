@@ -16,6 +16,7 @@
   <string name="manage_subscription_icon_content_description">Abonelik düğmesi yönetimi</string>
   <string name="account_settings_list_item_password_header">Parolayı değiştir</string>
   <string name="account_settings_list_item_recovery_header">Kurtarma e-posta adresi</string>
+  <string name="account_settings_list_item_security_keys">Güvenlik anahtarları</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Ayarlanmamış</string>
   <string name="account_settings_list_item_password_hint_grace">Parola sıfırlaması bekliyor</string>
   <string name="account_settings_list_item_password_hint_insecure">Parola sıfırlanmaya hazır</string>
@@ -23,4 +24,10 @@
   <string name="account_settings_list_item_extra_password_header_set">Proton Pass ek parolasını ayarlayın</string>
   <string name="account_settings_list_item_extra_password_active">Etkin</string>
   <string name="account_settings_list_item_extra_password_description">Pass uygulamasını kullanmak için ek parola gerekir. Proton parolanızın üstüne ek bir koruma sağlar.</string>
+  <string name="account_settings_list_item_security_keys_hint_not_set">Ayarlanmamış</string>
+  <string name="account_settings_list_item_security_keys_hint_single">%s</string>
+  <plurals name="account_settings_list_item_security_keys_hint_many">
+    <item quantity="one">%d güvenlik anahtarı ayarlanmış</item>
+    <item quantity="other">%d güvenlik anahtarı ayarlanmış</item>
+  </plurals>
 </resources>

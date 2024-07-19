@@ -33,7 +33,7 @@
   <string name="security_center_home_row_reused_passwords_title">Mots de passe réutilisés</string>
   <string name="security_center_home_row_reused_passwords_subtitle">Générer des mots de passe uniques</string>
   <string name="security_center_home_row_missing_tfa_title">L\'authentification A2F n\'est pas active.</string>
-  <string name="security_center_home_row_missing_tfa_subtitle">Configurez l\'A2F pour plus de sécurité</string>
+  <string name="security_center_home_row_missing_tfa_subtitle">Configurez l\'authentification à deux facteurs (A2F) pour plus de sécurité</string>
   <string name="security_center_home_row_excludes_items_title">Exclus de la surveillance</string>
   <string name="security_center_home_row_excludes_items_subtitle">Ces éléments sont toujours menacés.</string>
   <string name="security_center_get_breaches_error">Les fuites de données n\'ont pas pu être chargées.</string>
@@ -49,7 +49,7 @@
   <string name="security_center_sentinel_snackbar_message_disable_error">Une erreur s\'est produite lors de la désactivation de la protection Proton Sentinel. Veuillez réessayer plus tard.</string>
   <!-- Weak passwords screen -->
   <string name="security_center_weak_pass_top_bar_title">Mots de passe faibles</string>
-  <string name="security_center_weak_pass_top_bar_subtitle">Les mots de passe faibles sont plus facile à deviner. Générez un mot de passe complexe afin de mieux sécuriser vos comptes.</string>
+  <string name="security_center_weak_pass_top_bar_subtitle">Les mots de passe faibles sont plus facile à deviner. Générez un mot de passe complexe pour sécuriser vos comptes.</string>
   <!-- Reused passwords screen -->
   <string name="security_center_reused_pass_top_bar_title">Mots de passe réutilisés</string>
   <string name="security_center_reused_pass_top_bar_subtitle">Générez un mot de passe unique à chaque compte afin d\'améliorer votre sécurité.</string>
@@ -86,7 +86,7 @@
   <string name="security_center_dark_web_monitor_found_in_breaches">Aucune fuite de données n\'a été détectée.</string>
   <string name="security_center_dark_web_monitor_proton_addresses">Adresses Proton</string>
   <string name="security_center_dark_web_monitor_hide_my_email_aliases">Alias « hide-my-email »</string>
-  <string name="security_center_dark_web_monitor_proton_addresses_error">Les adresses Proton n\'ont pu être récupérées.</string>
+  <string name="security_center_dark_web_monitor_proton_addresses_error">Les adresses Proton n\'ont pas pu être récupérées.</string>
   <string name="security_center_dark_web_monitor_alias_addresses_error">Une erreur s\'est produite lors de la récupération des alias « hide-my-email ».</string>
   <string name="security_center_dark_web_monitor_monitoring_disabled">Sans surveillance</string>
   <string name="security_center_dark_web_monitor_see_all">Tout afficher</string>
@@ -112,7 +112,7 @@
   <string name="security_center_verify_email_code_resend_link_link" comment="The text that precedes is: -If you can’t find such email, you can -">demander un nouveau code.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_success">Une nouvelle vérification a été envoyée. Vérifiez votre boite de réception.</string>
   <string name="security_center_verify_email_snackbar_message_resend_code_error">Une erreur est survenue lors de l\'envoi du code de vérification. Veuillez réessayer plus tard.</string>
-  <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">Trop de vérifications ne sont pas valides. Retrait de l\'e-mail personnalisé.</string>
+  <string name="security_center_verify_email_snackbar_message_too_many_verifications_error">En raison de trop nombreuses vérifications non valides, l\'e-mail personnalisé est retiré.</string>
   <!-- Verify email monitoring -->
   <string name="security_center_verify_report_title_detected">Des fuites de données ont été détectées pour</string>
   <string name="security_center_verify_report_title_none">Aucune fuite de données n\'a été détectée pour</string>
@@ -122,7 +122,7 @@
   <string name="security_center_email_report_resolved_breaches_header">Fuites de données résolues</string>
   <string name="security_center_email_report_mark_as_resolved">Marquer comme résolue</string>
   <string name="security_center_email_report_snackbar_marked_as_resolved_success">La fuite de données a été marquée comme résolue.</string>
-  <string name="security_center_email_report_snackbar_marked_as_resolved_error">Impossible de marquer comme résolue</string>
+  <string name="security_center_email_report_snackbar_marked_as_resolved_error">Ceci n\'a pas pu être marqué comme résolu.</string>
   <string name="security_center_email_report_snackbar_get_breaches_error">Les fuites de données n\'ont pas pu être chargées.</string>
   <string name="security_center_email_report_options_menu">Menu des options de rapports de fuites de données</string>
   <!-- Breach report detail-->

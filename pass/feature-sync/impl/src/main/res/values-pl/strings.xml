@@ -17,13 +17,20 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="sync_item_empty">Sejf jest pusty</string>
   <plurals name="sync_item_count">
-    <item quantity="one">%d element</item>
-    <item quantity="few">%d elementy</item>
-    <item quantity="many">%d elementów</item>
-    <item quantity="other">%d elementów</item>
+    <item quantity="one">Pobrano %d element</item>
+    <item quantity="few">Pobrano %d elementy</item>
+    <item quantity="many">Pobrano %d elementów</item>
+    <item quantity="other">Pobrano %d elementów</item>
   </plurals>
-  <string name="sync_progress_item_count">%1$d z %2$d elementów</string>
+  <plurals name="sync_finished_item_count">
+    <item quantity="one">%d item synchronized</item>
+    <item quantity="few">%d items synchronized</item>
+    <item quantity="many">%d items synchronized</item>
+    <item quantity="other">%d items synchronized</item>
+  </plurals>
+  <string name="sync_progress_item_count">Pobieranie %1$d z %2$d elementów</string>
   <string name="sync_dialog_title">Synchronizacja elementów…</string>
   <string name="sync_dialog_title_error">Synchronizacja nie powiodła się</string>
   <string name="sync_dialog_title_success">Synchronizacja została zakończona</string>
@@ -32,4 +39,6 @@
   <string name="sync_dialog_subtitle_success">Elementy zostały pobrane i odszyfrowane.</string>
   <string name="sync_item_not_started">Nie rozpoczęto</string>
   <string name="sync_item_failed">Synchronizacja nie powiodła się</string>
+  <string name="sync_dialog_title_inserting">Inserting items…</string>
+  <string name="sync_dialog_subtitle_inserting">Completing last step, almost there.</string>
 </resources>

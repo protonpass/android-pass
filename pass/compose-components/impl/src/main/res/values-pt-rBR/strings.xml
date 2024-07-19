@@ -173,7 +173,7 @@
   <string name="item_details_shared_section_item_history_modified_times_title">Modificação (%d)</string>
   <string name="item_details_shared_section_item_history_button_view">Visualizar histórico do item</string>
   <string name="item_details_shared_section_more_info_header_title">Mais informações</string>
-  <string name="item_details_shared_section_more_info_header_icon_content_description">More item information icon</string>
+  <string name="item_details_shared_section_more_info_header_icon_content_description">Ícone de item de mais formações</string>
   <string name="item_details_shared_section_more_info_item_id">ID do item</string>
   <string name="item_details_shared_section_more_info_share_id">ID do cofre</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">A versão do aplicativo não é mais suportada. Atualize seu aplicativo.</string>
@@ -208,7 +208,7 @@
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Nota copiada</string>
-  <string name="snack_bar_message_item_migration_error">There was an error migrating this item</string>
+  <string name="snack_bar_message_item_migration_error">Houve um erro ao migrar este item</string>
   <string name="snack_bar_message_item_monitor_excluded_success">Item excluído com sucesso do monitoramento.</string>
   <string name="snack_bar_message_item_monitor_excluded_error">Ocorreu um erro ao excluir o item do monitoramento</string>
   <string name="snack_bar_message_item_monitor_included_success">Elemento incluído com sucesso no monitoramento</string>
@@ -217,8 +217,8 @@
   <string name="snack_bar_message_item_pinned_error">Houve um erro ao fixar este item</string>
   <string name="snack_bar_message_item_unpinned_success">Item desafixado com sucesso</string>
   <string name="snack_bar_message_item_unpinned_error">Houve um erro ao desafixar este item</string>
-  <string name="snack_bar_message_item_trashed_success">Item successfully trashed</string>
-  <string name="snack_bar_message_item_trashed_error">There was an error trashing this item</string>
+  <string name="snack_bar_message_item_trashed_success">Item excluído com sucesso</string>
+  <string name="snack_bar_message_item_trashed_error">Houve um erro ao excluir este item</string>
   <string name="snack_bar_message_item_restore_success">Item restaurado com sucesso</string>
   <string name="snack_bar_message_item_restore_error">Houve um erro ao restaurar este item</string>
   <string name="snack_bar_message_item_delete_success">Item apagado com sucesso</string>

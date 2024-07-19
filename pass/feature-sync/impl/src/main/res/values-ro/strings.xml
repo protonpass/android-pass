@@ -17,12 +17,18 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="sync_item_empty">Empty vault</string>
   <plurals name="sync_item_count">
-    <item quantity="one">%d articol</item>
-    <item quantity="few">%d articole</item>
-    <item quantity="other">%d de articole</item>
+    <item quantity="one">Downloaded %d item</item>
+    <item quantity="few">Downloaded %d items</item>
+    <item quantity="other">Downloaded %d items</item>
   </plurals>
-  <string name="sync_progress_item_count">%1$d din %2$d articole</string>
+  <plurals name="sync_finished_item_count">
+    <item quantity="one">%d item synchronized</item>
+    <item quantity="few">%d items synchronized</item>
+    <item quantity="other">%d items synchronized</item>
+  </plurals>
+  <string name="sync_progress_item_count">Downloading %1$d of %2$d items</string>
   <string name="sync_dialog_title">Se sincronizează articolele…</string>
   <string name="sync_dialog_title_error">Sincronizarea nereușită</string>
   <string name="sync_dialog_title_success">Sincronizare finalizată</string>
@@ -31,4 +37,6 @@
   <string name="sync_dialog_subtitle_success">Articolele au fost descărcate și decriptate cu succes.</string>
   <string name="sync_item_not_started">Neefectuată</string>
   <string name="sync_item_failed">Sincronizarea nereușită</string>
+  <string name="sync_dialog_title_inserting">Inserting items…</string>
+  <string name="sync_dialog_subtitle_inserting">Completing last step, almost there.</string>
 </resources>

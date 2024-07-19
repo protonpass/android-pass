@@ -55,7 +55,7 @@
   <string name="sharing_snackbar_invite_sent_error">No se ha podido enviar la invitación.</string>
   <string name="sharing_snackbar_get_vault_members_error">No se han podido obtener los miembros de la caja fuerte.</string>
   <string name="sharing_snackbar_change_permission_success">Los permisos han cambiado.</string>
-  <string name="sharing_snackbar_change_permission_error">Error al modifcar los permisos</string>
+  <string name="sharing_snackbar_change_permission_error">Error al modificar los permisos</string>
   <string name="sharing_snackbar_remove_member_success">El miembro ha sido eliminado de la caja fuerte.</string>
   <string name="sharing_snackbar_remove_member_error">Error al eliminar de la caja fuerte</string>
   <string name="share_summary_title">Revisar y compartir</string>

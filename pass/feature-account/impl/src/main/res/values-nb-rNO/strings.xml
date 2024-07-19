@@ -16,6 +16,7 @@
   <string name="manage_subscription_icon_content_description">Knapp for å behandle abonnement</string>
   <string name="account_settings_list_item_password_header">Endre passord</string>
   <string name="account_settings_list_item_recovery_header">E-post for gjenoppretting</string>
+  <string name="account_settings_list_item_security_keys">Sikkerhetsnøkler</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Ikke angitt</string>
   <string name="account_settings_list_item_password_hint_grace">Venter på tilbakestilling av passord</string>
   <string name="account_settings_list_item_password_hint_insecure">Klargjort for tilbakestilling av passord</string>
@@ -23,4 +24,10 @@
   <string name="account_settings_list_item_extra_password_header_set">Angi ekstra passord for Proton Pass</string>
   <string name="account_settings_list_item_extra_password_active">Aktiv</string>
   <string name="account_settings_list_item_extra_password_description">Det ekstra passordet kreves for å bruke Pass. Det fungerer som et ekstra passord på toppen av Proton-passordet ditt.</string>
+  <string name="account_settings_list_item_security_keys_hint_not_set">Ikke angitt</string>
+  <string name="account_settings_list_item_security_keys_hint_single">%s</string>
+  <plurals name="account_settings_list_item_security_keys_hint_many">
+    <item quantity="one">%d sikkerhetsnøkkel angitt</item>
+    <item quantity="other">%d sikkerhetsnøkler angitt</item>
+  </plurals>
 </resources>

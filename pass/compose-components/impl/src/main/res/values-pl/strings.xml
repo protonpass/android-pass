@@ -229,7 +229,7 @@
   <string name="snack_bar_message_item_pinned_error">Wystąpił błąd podczas przypinania elementu</string>
   <string name="snack_bar_message_item_unpinned_success">Element został odpięty</string>
   <string name="snack_bar_message_item_unpinned_error">Wystąpił błąd podczas odpinania elementu</string>
-  <string name="snack_bar_message_item_trashed_success">Przeniesienie elementu do Kosza</string>
+  <string name="snack_bar_message_item_trashed_success">Element został przeniesiony do Kosza</string>
   <string name="snack_bar_message_item_trashed_error">Wystąpił błąd podczas przenoszenia elementu do Kosza</string>
   <string name="snack_bar_message_item_restore_success">Element został przywrócony</string>
   <string name="snack_bar_message_item_restore_error">Wystąpił błąd podczas przywracania elementu z Kosza</string>

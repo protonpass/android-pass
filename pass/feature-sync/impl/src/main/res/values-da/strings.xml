@@ -17,11 +17,16 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="sync_item_empty">Tom boks</string>
   <plurals name="sync_item_count">
-    <item quantity="one">%d element</item>
-    <item quantity="other">%d elementer</item>
+    <item quantity="one">Hentet %d element</item>
+    <item quantity="other">Hentet %d elementer</item>
   </plurals>
-  <string name="sync_progress_item_count">%1$d af %2$d elementer</string>
+  <plurals name="sync_finished_item_count">
+    <item quantity="one">%d element synkroniseret</item>
+    <item quantity="other">%d elementer synkroniseret</item>
+  </plurals>
+  <string name="sync_progress_item_count">Henter %1$d af %2$d elementer</string>
   <string name="sync_dialog_title">Synkroniserer elementer...</string>
   <string name="sync_dialog_title_error">Synkronisering fejlede</string>
   <string name="sync_dialog_title_success">Synkronisering gennemført</string>
@@ -30,4 +35,6 @@
   <string name="sync_dialog_subtitle_success">Dine elementer blev downloadet og dekrypteret.</string>
   <string name="sync_item_not_started">Ikke startet</string>
   <string name="sync_item_failed">Synkronisering mislykkedes</string>
+  <string name="sync_dialog_title_inserting">Indsætter elementer…</string>
+  <string name="sync_dialog_subtitle_inserting">Færdiggør sidste trin, er næsten i mål.</string>
 </resources>

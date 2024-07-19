@@ -6,6 +6,27 @@
 
 ### Other
 
+## 1.24.0 (2024-07-19)
+
+### Features :tada:
+
+- History item revisions diffing.
+
+### Fixes :bug:
+
+- Improved item syncing.
+- Fixed migrated items secure links syncing.
+- Improved passkey domain matching.
+- Avoid username field auto-clear when attaching an alias.
+- Improved user auth flow security.
+- Solved formatted date display issues for some locales.
+- UI tweaks.
+
+### Other
+
+- Updated core libraries.
+- Updated translations.
+
 ## 1.23.2 (2024-07-04)
 
 ### Fixes :bug:

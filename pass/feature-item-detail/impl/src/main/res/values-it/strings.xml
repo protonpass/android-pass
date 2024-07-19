@@ -85,7 +85,7 @@
     It would translate to
     12 February 2023 12:34
     -->
-  <string name="date_full_date_format_with_year">dd LLLL yyyy alle HH:mm</string>
+  <string name="date_full_date_format_with_year">dd LLLL yyyy \'alle\' HH:mm</string>
   <string name="item_detail_cannot_perform_action_edit_title">Impossibile modificare</string>
   <string name="item_detail_cannot_perform_action_edit_no_permissions_message">Non disponi delle autorizzazioni necessarie per modificare questo elemento.</string>
   <string name="item_detail_cannot_perform_action_edit_needs_upgrade_message">Puoi modificare solamente gli elementi nelle tue casseforti più vecchie. Effettua l\'upgrade per modificare questo elemento.</string>

@@ -140,7 +140,7 @@
   <string name="item_details_identity_section_personal_gender_title">Genre</string>
   <string name="item_details_identity_section_personal_phone_title">Numéro de téléphone</string>
   <string name="item_details_identity_section_personal_birthday_title">Date de naissance</string>
-  <string name="item_details_identity_section_address_title">Informations de l\'adresse</string>
+  <string name="item_details_identity_section_address_title">Informations sur l\'adresse</string>
   <string name="item_details_identity_section_address_organization_title">Organisation</string>
   <string name="item_details_identity_section_address_street_address_title">Adresse postale, boîte postale</string>
   <string name="item_details_identity_section_address_floor_title">Étage</string>
@@ -152,7 +152,7 @@
   <string name="item_details_identity_section_contact_title">Informations du contact</string>
   <string name="item_details_identity_section_contact_social_security_number_title">Numéro de sécurité sociale</string>
   <string name="item_details_identity_section_contact_passport_number_title">Numéro de passeport</string>
-  <string name="item_details_identity_section_contact_license_number_title">Numéro de permis/licence</string>
+  <string name="item_details_identity_section_contact_license_number_title">Numéro de permis</string>
   <string name="item_details_identity_section_contact_website_title">Site internet</string>
   <string name="item_details_identity_section_contact_x_handle_title">Compte X</string>
   <string name="item_details_identity_section_contact_secondary_phone_number_title">Numéro de téléphone secondaire</string>
@@ -209,16 +209,16 @@
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">La note a été copiée.</string>
   <string name="snack_bar_message_item_migration_error">Une erreur s\'est produite lors de la migration de cet élément</string>
-  <string name="snack_bar_message_item_monitor_excluded_success">Élément exclu avec succès de la surveillance</string>
-  <string name="snack_bar_message_item_monitor_excluded_error">Une erreur s\'est produite lors de l\'exclusion d\'un élément de la surveillance</string>
-  <string name="snack_bar_message_item_monitor_included_success">Élément inclus avec succès dans la surveillance</string>
-  <string name="snack_bar_message_item_monitor_included_error">Une erreur s\'est produite lors de l\'inclusion d\'un élément dans la surveillance</string>
+  <string name="snack_bar_message_item_monitor_excluded_success">L\'élément a été exclu de la surveillance.</string>
+  <string name="snack_bar_message_item_monitor_excluded_error">Une erreur s\'est produite lors de l\'exclusion d\'un élément de la surveillance.</string>
+  <string name="snack_bar_message_item_monitor_included_success">L\'élément a été inclus dans la surveillance.</string>
+  <string name="snack_bar_message_item_monitor_included_error">Une erreur s\'est produite lors de l\'ajout d\'un élément à la surveillance.</string>
   <string name="snack_bar_message_item_pinned_success">L\'élément a été épinglé.</string>
-  <string name="snack_bar_message_item_pinned_error">Une erreur s\'est produite lors de l\'épinglage de cet élément</string>
+  <string name="snack_bar_message_item_pinned_error">Une erreur s\'est produite lors de l\'épinglage de cet élément.</string>
   <string name="snack_bar_message_item_unpinned_success">L\'élément a été désépinglé.</string>
-  <string name="snack_bar_message_item_unpinned_error">Une erreur s\'est produite lors du désépinglage de cet élément</string>
-  <string name="snack_bar_message_item_trashed_success">L\'élément a été déposé dans la corbeille.</string>
-  <string name="snack_bar_message_item_trashed_error">Une erreur s\'est produite lors de la mise à la corbeille de cet élément</string>
+  <string name="snack_bar_message_item_unpinned_error">Une erreur s\'est produite lorsque cet élément a été désépinglé.</string>
+  <string name="snack_bar_message_item_trashed_success">L\'élément a été mis dans la corbeille.</string>
+  <string name="snack_bar_message_item_trashed_error">Une erreur s\'est produite lors de la mise à la corbeille de cet élément.</string>
   <string name="snack_bar_message_item_restore_success">L\'élément a été restauré.</string>
   <string name="snack_bar_message_item_restore_error">Une erreur s\'est produite lors de la restauration de cet élément</string>
   <string name="snack_bar_message_item_delete_success">L\'élément a été supprimé.</string>

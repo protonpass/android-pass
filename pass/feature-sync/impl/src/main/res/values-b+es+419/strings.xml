@@ -17,11 +17,16 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="sync_item_empty">Empty vault</string>
   <plurals name="sync_item_count">
-    <item quantity="one">%d elemento</item>
-    <item quantity="other">%d elementos</item>
+    <item quantity="one">%d elemento descargado</item>
+    <item quantity="other">%d elementos descargados</item>
   </plurals>
-  <string name="sync_progress_item_count">%1$d of %2$d elementos</string>
+  <plurals name="sync_finished_item_count">
+    <item quantity="one">%d item synchronized</item>
+    <item quantity="other">%d items synchronized</item>
+  </plurals>
+  <string name="sync_progress_item_count">Descargando %1$d de %2$d elementos</string>
   <string name="sync_dialog_title">Sincronizando elementos…</string>
   <string name="sync_dialog_title_error">Error de sincronización</string>
   <string name="sync_dialog_title_success">Sincronización completada</string>
@@ -30,4 +35,6 @@
   <string name="sync_dialog_subtitle_success">Se han descargado y descifrado los elementos.</string>
   <string name="sync_item_not_started">No iniciado</string>
   <string name="sync_item_failed">Error de sincronización</string>
+  <string name="sync_dialog_title_inserting">Inserting items…</string>
+  <string name="sync_dialog_subtitle_inserting">Completing last step, almost there.</string>
 </resources>

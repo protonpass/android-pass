@@ -30,9 +30,9 @@
   <string name="bottomsheet_monitor_exclude">Vyloučit ze sledování</string>
   <string name="bottomsheet_monitor_include">Zahrnout do sledování</string>
   <string name="bottomsheet_migrate_item">Přesunout do jiného trezoru</string>
-  <string name="bottomsheet_copy_item_note">Copy note</string>
+  <string name="bottomsheet_copy_item_note">Kopírovat poznámku</string>
   <string name="bottomsheet_delete_permanently">Trvale smazat</string>
-  <string name="bottomsheet_restore">Restore</string>
+  <string name="bottomsheet_restore">Obnovit</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Otevřít nabídku akcí položky</string>
   <string name="action_upgrade_now">Navýšit nyní</string>
@@ -120,7 +120,7 @@
     It would translate to
     12 February 2023 12:34
     -->
-  <string name="date_full_date_format_with_year">dd LLLL rrrr HH:mm</string>
+  <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">Alias adresa</string>
   <string name="item_details_alias_section_mailboxes_title">Přeposílání na</string>
@@ -172,14 +172,14 @@
   <string name="item_details_identity_section_work_phone_number_title">Pracovní telefonní číslo</string>
   <string name="item_details_identity_section_work_personal_website_title">Osobní web</string>
   <string name="item_details_shared_section_note_title">Poznámka</string>
-  <string name="item_details_shared_section_item_history_last_autofill_title">Last autofill</string>
+  <string name="item_details_shared_section_item_history_last_autofill_title">Poslední automatické vyplnění</string>
   <string name="item_details_shared_section_item_history_created_title">Vytvořeno</string>
-  <string name="item_details_shared_section_item_history_modified_times_title">Modified (%d)</string>
+  <string name="item_details_shared_section_item_history_modified_times_title">Změněno (%d)</string>
   <string name="item_details_shared_section_item_history_button_view">Zobrazit historii položky</string>
-  <string name="item_details_shared_section_more_info_header_title">More info</string>
-  <string name="item_details_shared_section_more_info_header_icon_content_description">More item information icon</string>
-  <string name="item_details_shared_section_more_info_item_id">Item ID</string>
-  <string name="item_details_shared_section_more_info_share_id">Vault ID</string>
+  <string name="item_details_shared_section_more_info_header_title">Více informací</string>
+  <string name="item_details_shared_section_more_info_header_icon_content_description">Ikona více informací o položce</string>
+  <string name="item_details_shared_section_more_info_item_id">ID položky</string>
+  <string name="item_details_shared_section_more_info_share_id">ID trezoru</string>
   <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Verze aplikace již není podporována, aktualizujte prosím svou aplikaci.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Přístupový klíč</string>
@@ -219,8 +219,8 @@
     <item quantity="other">%d sekund</item>
   </plurals>
   <!-- Snack bars -->
-  <string name="snack_bar_message_item_note_copied">Note copied</string>
-  <string name="snack_bar_message_item_migration_error">There was an error migrating this item</string>
+  <string name="snack_bar_message_item_note_copied">Poznámka zkopírována</string>
+  <string name="snack_bar_message_item_migration_error">Při převodu této položky došlo k chybě</string>
   <string name="snack_bar_message_item_monitor_excluded_success">Položka úspěšně vyloučena ze sledování</string>
   <string name="snack_bar_message_item_monitor_excluded_error">Při vyloučení položky ze sledování došlo k chybě</string>
   <string name="snack_bar_message_item_monitor_included_success">Položka úspěšně zahrnuta do sledování</string>
@@ -229,10 +229,10 @@
   <string name="snack_bar_message_item_pinned_error">Při připínání této položky došlo k chybě</string>
   <string name="snack_bar_message_item_unpinned_success">Položka úspěšně odepnuta</string>
   <string name="snack_bar_message_item_unpinned_error">Při odepínání této položky došlo k chybě</string>
-  <string name="snack_bar_message_item_trashed_success">Item successfully trashed</string>
-  <string name="snack_bar_message_item_trashed_error">There was an error trashing this item</string>
-  <string name="snack_bar_message_item_restore_success">Item successfully restored</string>
-  <string name="snack_bar_message_item_restore_error">There was an error restoring this item</string>
-  <string name="snack_bar_message_item_delete_success">Item successfully deleted</string>
-  <string name="snack_bar_message_item_delete_error">There was an error deleting this item</string>
+  <string name="snack_bar_message_item_trashed_success">Položka úspěšně přesunuta do koše</string>
+  <string name="snack_bar_message_item_trashed_error">Došlo k chybě při přesunu položky do koše</string>
+  <string name="snack_bar_message_item_restore_success">Položka úspěšně obnovena</string>
+  <string name="snack_bar_message_item_restore_error">Došlo k chybě při obnově této položky</string>
+  <string name="snack_bar_message_item_delete_success">Položka úspěšně smazána</string>
+  <string name="snack_bar_message_item_delete_error">Došlo k chybě při smazání této položky</string>
 </resources>

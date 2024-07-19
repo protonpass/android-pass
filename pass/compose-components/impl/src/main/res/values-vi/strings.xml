@@ -27,9 +27,9 @@
   <string name="bottomsheet_monitor_exclude">Bỏ qua theo dõi</string>
   <string name="bottomsheet_monitor_include">Thêm vào theo dõi</string>
   <string name="bottomsheet_migrate_item">Chuyển đến kho lưu trữ khác</string>
-  <string name="bottomsheet_copy_item_note">Copy note</string>
+  <string name="bottomsheet_copy_item_note">Sao chép ghi chú</string>
   <string name="bottomsheet_delete_permanently">Xóa vĩnh viễn</string>
-  <string name="bottomsheet_restore">Restore</string>
+  <string name="bottomsheet_restore">Khôi phục</string>
   <!-- Actions -->
   <string name="action_content_description_menu" comment="Alt description for accessibility purposes on the three dots button that opens a contextual menu">Mở menu tùy chọn nội dung</string>
   <string name="action_upgrade_now">Nâng cấp ngay</string>
@@ -130,20 +130,20 @@
   <string name="item_details_login_section_primary_totp_title">Mã bảo mật 2FA (TOTP)</string>
   <string name="item_details_login_section_websites_title">Các trang web</string>
   <string name="item_details_identity_section_personal_title">Thông tin cá nhân</string>
-  <string name="item_details_identity_section_personal_first_name_title">First name</string>
-  <string name="item_details_identity_section_personal_middle_name_title">Middle name</string>
-  <string name="item_details_identity_section_personal_last_name_title">Last name</string>
-  <string name="item_details_identity_section_personal_full_name_title">Full name</string>
-  <string name="item_details_identity_section_personal_email_title">Email address</string>
-  <string name="item_details_identity_section_personal_gender_title">Gender</string>
-  <string name="item_details_identity_section_personal_phone_title">Phone number</string>
-  <string name="item_details_identity_section_personal_birthday_title">Birthday</string>
+  <string name="item_details_identity_section_personal_first_name_title">Họ</string>
+  <string name="item_details_identity_section_personal_middle_name_title">Tên đệm</string>
+  <string name="item_details_identity_section_personal_last_name_title">Tên</string>
+  <string name="item_details_identity_section_personal_full_name_title">Tên đầy đủ</string>
+  <string name="item_details_identity_section_personal_email_title">Địa chỉ email</string>
+  <string name="item_details_identity_section_personal_gender_title">Giới tính</string>
+  <string name="item_details_identity_section_personal_phone_title">Số điện thoại</string>
+  <string name="item_details_identity_section_personal_birthday_title">Ngày sinh</string>
   <string name="item_details_identity_section_address_title">Thông tin địa chỉ</string>
-  <string name="item_details_identity_section_address_organization_title">Organization</string>
+  <string name="item_details_identity_section_address_organization_title">Tổ chức</string>
   <string name="item_details_identity_section_address_street_address_title">Tên đường, hộp thư thuê bao</string>
   <string name="item_details_identity_section_address_floor_title">Floor</string>
-  <string name="item_details_identity_section_address_city_title">City</string>
-  <string name="item_details_identity_section_address_zip_or_postal_code_title">ZIP or postal code</string>
+  <string name="item_details_identity_section_address_city_title">Thành phố</string>
+  <string name="item_details_identity_section_address_zip_or_postal_code_title">Mã ZIP hoặc mã bưu chính</string>
   <string name="item_details_identity_section_address_state_or_province_title">Tỉnh thành</string>
   <string name="item_details_identity_section_address_county_title">County</string>
   <string name="item_details_identity_section_address_country_or_region_title">Country or region</string>
@@ -166,7 +166,7 @@
   <string name="item_details_identity_section_work_phone_number_title">Số điện thoại công việc</string>
   <string name="item_details_identity_section_work_personal_website_title">Trang web cá nhân</string>
   <string name="item_details_shared_section_note_title">Ghi chú</string>
-  <string name="item_details_shared_section_item_history_last_autofill_title">Last autofill</string>
+  <string name="item_details_shared_section_item_history_last_autofill_title">Lần cuối tự động điền</string>
   <string name="item_details_shared_section_item_history_created_title">Created</string>
   <string name="item_details_shared_section_item_history_modified_times_title">Modified (%d)</string>
   <string name="item_details_shared_section_item_history_button_view">Xem lịch sử nội dung</string>
@@ -202,7 +202,7 @@
   </plurals>
   <!-- Snack bars -->
   <string name="snack_bar_message_item_note_copied">Note copied</string>
-  <string name="snack_bar_message_item_migration_error">There was an error migrating this item</string>
+  <string name="snack_bar_message_item_migration_error">Đã xảy ra lỗi khi di chuyển mục này</string>
   <string name="snack_bar_message_item_monitor_excluded_success">Nội dung được loại bỏ khỏi giám sát thành công</string>
   <string name="snack_bar_message_item_monitor_excluded_error">Đã xảy ra lỗi khi tiến hành loại bỏ nội dung khỏi giám sát</string>
   <string name="snack_bar_message_item_monitor_included_success">Nội dung được thêm vào giám sát thành công</string>
@@ -211,10 +211,10 @@
   <string name="snack_bar_message_item_pinned_error">Đã xảy ra lỗi khi ghim nội dung này</string>
   <string name="snack_bar_message_item_unpinned_success">Đã bỏ ghim nội dung thành công</string>
   <string name="snack_bar_message_item_unpinned_error">Đã xảy ra lỗi khi bỏ ghim nội dung này</string>
-  <string name="snack_bar_message_item_trashed_success">Item successfully trashed</string>
-  <string name="snack_bar_message_item_trashed_error">There was an error trashing this item</string>
-  <string name="snack_bar_message_item_restore_success">Item successfully restored</string>
-  <string name="snack_bar_message_item_restore_error">There was an error restoring this item</string>
-  <string name="snack_bar_message_item_delete_success">Item successfully deleted</string>
-  <string name="snack_bar_message_item_delete_error">There was an error deleting this item</string>
+  <string name="snack_bar_message_item_trashed_success">Đã xoá mục thành công</string>
+  <string name="snack_bar_message_item_trashed_error">Đã xảy ra lỗi khi chuyển mục này vào thùng rác</string>
+  <string name="snack_bar_message_item_restore_success">Đã khôi phục mục thành công</string>
+  <string name="snack_bar_message_item_restore_error">Đã xảy ra lỗi khi khôi phục mục này</string>
+  <string name="snack_bar_message_item_delete_success">Đã xoá mục thành công</string>
+  <string name="snack_bar_message_item_delete_error">Đã xảy ra lỗi khi xoá mục này</string>
 </resources>

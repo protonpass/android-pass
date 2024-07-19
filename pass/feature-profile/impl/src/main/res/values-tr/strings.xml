@@ -67,10 +67,10 @@
     <item quantity="other">%d saat sonra</item>
   </plurals>
   <string name="profile_less_than_a_minute">Bir dakikadan daha az</string>
-  <string name="account_switcher_manage_account">Manage account</string>
-  <string name="account_switcher_sign_in">Sign in</string>
-  <string name="account_switcher_sign_out">Sign out</string>
-  <string name="account_switcher_switch_to">Switch to</string>
-  <string name="account_switcher_add_account">Add account</string>
-  <string name="account_switcher_remove">Remove</string>
+  <string name="account_switcher_manage_account">Hesap yönetimi</string>
+  <string name="account_switcher_sign_in">Oturum aç</string>
+  <string name="account_switcher_sign_out">Oturumu kapat</string>
+  <string name="account_switcher_switch_to">Şuna geç</string>
+  <string name="account_switcher_add_account">Hesap ekle</string>
+  <string name="account_switcher_remove">Kaldır</string>
 </resources>

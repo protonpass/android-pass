@@ -73,10 +73,10 @@
     <item quantity="other">Po %d hodinách</item>
   </plurals>
   <string name="profile_less_than_a_minute">Méně než minutu</string>
-  <string name="account_switcher_manage_account">Manage account</string>
-  <string name="account_switcher_sign_in">Sign in</string>
-  <string name="account_switcher_sign_out">Sign out</string>
-  <string name="account_switcher_switch_to">Switch to</string>
-  <string name="account_switcher_add_account">Add account</string>
-  <string name="account_switcher_remove">Remove</string>
+  <string name="account_switcher_manage_account">Spravovat účet</string>
+  <string name="account_switcher_sign_in">Přihlásit se</string>
+  <string name="account_switcher_sign_out">Odhlásit se</string>
+  <string name="account_switcher_switch_to">Přepnout na</string>
+  <string name="account_switcher_add_account">Přidat účet</string>
+  <string name="account_switcher_remove">Odebrat</string>
 </resources>

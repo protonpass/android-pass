@@ -71,6 +71,7 @@ internal fun PersonalDetails(
     enabled: Boolean,
     extraFields: PersistentSet<PersonalDetailsField>,
     focusedField: Option<FocusedField>,
+    showAddPersonalDetailsButton: Boolean,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
     val field = focusedField.value()
@@ -181,7 +182,9 @@ internal fun PersonalDetails(
                 callback = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
             )
         }
-        AddMoreButton(onClick = { onEvent(IdentityContentEvent.OnAddPersonalDetailField) })
+        if (showAddPersonalDetailsButton) {
+            AddMoreButton(onClick = { onEvent(IdentityContentEvent.OnAddPersonalDetailField) })
+        }
     }
 }
 
@@ -195,6 +198,7 @@ fun PersonalDetailsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark
                 enabled = true,
                 extraFields = persistentSetOf(),
                 focusedField = None,
+                showAddPersonalDetailsButton = true,
                 onEvent = { }
             )
         }

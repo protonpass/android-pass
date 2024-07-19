@@ -158,7 +158,6 @@ internal val fieldKeywordsList = listOf(
         deniedKeywords = ALLOWED_EMAIL_KEYWORDS +
             ALLOWED_POSTAL_CODE_KEYWORDS +
             ALLOWED_PHONE_KEYWORDS +
-            ALLOWED_CITY_KEYWORDS +
             listOf("country", "button")
     ),
     kw(

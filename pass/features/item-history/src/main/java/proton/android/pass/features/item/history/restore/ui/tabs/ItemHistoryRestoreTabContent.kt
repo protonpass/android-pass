@@ -28,16 +28,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.zIndex
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
 import proton.android.pass.features.item.history.restore.ItemHistoryRestoreUiEvent
 import proton.android.pass.features.item.history.restore.presentation.ItemHistoryRestoreSelection
 
 private const val ITEM_HISTORY_TAB_INDEX_REVISION = 0
-private const val ITEM_HISTORY_TAB_INDEX_CURRENT = 1
 
 @Composable
 internal fun ItemHistoryRestoreTabContent(
@@ -50,34 +47,22 @@ internal fun ItemHistoryRestoreTabContent(
 ) {
     var selectedTabIndex by remember { mutableIntStateOf(ITEM_HISTORY_TAB_INDEX_REVISION) }
 
+    val (selection, itemDetailState) = if (selectedTabIndex == ITEM_HISTORY_TAB_INDEX_REVISION) {
+        ItemHistoryRestoreSelection.Revision to revisionItemDetailState
+    } else {
+        ItemHistoryRestoreSelection.Current to currentItemDetailState
+    }
+
     Box(modifier = modifier.fillMaxSize()) {
         ItemHistoryRestoreTab(
-            modifier = Modifier.applyIf(
-                condition = selectedTabIndex == ITEM_HISTORY_TAB_INDEX_REVISION,
-                ifTrue = { zIndex(1f) },
-                ifFalse = { zIndex(0f) }
-            ),
-            itemDetailState = revisionItemDetailState,
+            itemDetailState = itemDetailState,
             itemColors = itemColors,
             onEvent = onEvent,
-            selection = ItemHistoryRestoreSelection.Revision
-        )
-
-        ItemHistoryRestoreTab(
-            modifier = Modifier.applyIf(
-                condition = selectedTabIndex == ITEM_HISTORY_TAB_INDEX_CURRENT,
-                ifTrue = { zIndex(1f) },
-                ifFalse = { zIndex(0f) }
-            ),
-            itemDetailState = currentItemDetailState,
-            itemColors = itemColors,
-            onEvent = onEvent,
-            selection = ItemHistoryRestoreSelection.Current
+            selection = selection
         )
 
         ItemHistoryRestoreTabRow(
             modifier = Modifier
-                .zIndex(2f)
                 .padding(
                     start = Spacing.medium,
                     end = Spacing.medium,

@@ -34,6 +34,7 @@ class ExtendAuthTimeImpl @Inject constructor(
         val isAuthenticated = userPreferencesRepository.getHasAuthenticated()
             .first() is HasAuthenticated.Authenticated
         if (isAuthenticated) {
+            userPreferencesRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
             biometryAuthTimeHolder.storeBiometryAuthData(
                 AuthData(
                     authTime = elapsedTimeProvider.getElapsedTime().some(),

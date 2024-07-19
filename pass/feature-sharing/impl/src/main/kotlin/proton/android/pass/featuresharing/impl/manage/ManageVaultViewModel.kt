@@ -74,8 +74,9 @@ class ManageVaultViewModel @Inject constructor(
     private val confirmNewUserInvite: ConfirmNewUserInvite
 ) : ViewModel() {
 
-    private val navShareId: ShareId =
-        ShareId(savedStateHandleProvider.get().require(CommonNavArgId.ShareId.key))
+    private val navShareId: ShareId = savedStateHandleProvider.get()
+        .require<String>(CommonNavArgId.ShareId.key)
+        .let(::ShareId)
 
     private val refreshFlow: MutableStateFlow<Boolean> = MutableStateFlow(true)
 
@@ -111,7 +112,7 @@ class ManageVaultViewModel @Inject constructor(
     private val invitesBeingConfirmedFlow: Flow<Set<NewUserInviteId>> =
         invitesBeingConfirmedMutableFlow
 
-    val state: StateFlow<ManageVaultUiState> = combineN(
+    internal val state: StateFlow<ManageVaultUiState> = combineN(
         membersFlow,
         vaultFlow,
         showShareButtonFlow,
@@ -171,6 +172,7 @@ class ManageVaultViewModel @Inject constructor(
                         )
                     }
 
+                    CanShareVaultStatus.CannotShareReason.ItemInTrash,
                     CanShareVaultStatus.CannotShareReason.NotEnoughPermissions,
                     CanShareVaultStatus.CannotShareReason.Unknown -> ShareOptions.Hide
                 }
@@ -189,15 +191,15 @@ class ManageVaultViewModel @Inject constructor(
         initialValue = ManageVaultUiState.Initial
     )
 
-    fun refresh() = viewModelScope.launch {
+    internal fun refresh() {
         refreshFlow.update { true }
     }
 
-    fun clearEvent() {
-        eventFlow.update { ManageVaultEvent.Unknown }
+    internal fun onConsumeEvent(event: ManageVaultEvent) {
+        eventFlow.compareAndSet(event, ManageVaultEvent.Unknown)
     }
 
-    fun onConfirmInvite(invite: VaultMember.NewUserInvitePending) = viewModelScope.launch {
+    internal fun onConfirmInvite(invite: VaultMember.NewUserInvitePending) = viewModelScope.launch {
         val inviteId = invite.newUserInviteId
         val isAlreadyRunning = invitesBeingConfirmedMutableFlow.value.contains(inviteId)
         if (isAlreadyRunning) return@launch
@@ -225,7 +227,7 @@ class ManageVaultViewModel @Inject constructor(
         }
     }
 
-    fun onPendingInvitesClick() = viewModelScope.launch {
+    internal fun onPendingInvitesClick() {
         eventFlow.update { ManageVaultEvent.ShowInvitesInfo(navShareId) }
     }
 
@@ -279,8 +281,10 @@ class ManageVaultViewModel @Inject constructor(
         val invites: ImmutableList<VaultMember>
     )
 
-    companion object {
+    private companion object {
+
         private const val TAG = "ManageVaultViewModel"
+
     }
 
 }

@@ -35,6 +35,7 @@ sealed interface CanShareVaultStatus {
     sealed interface CannotShareReason {
         data object NotEnoughPermissions : CannotShareReason
         data object NotEnoughInvites : CannotShareReason
+        data object ItemInTrash : CannotShareReason
         data object Unknown : CannotShareReason
     }
 }

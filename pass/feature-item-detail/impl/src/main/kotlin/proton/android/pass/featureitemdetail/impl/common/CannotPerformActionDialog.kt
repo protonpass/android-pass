@@ -80,6 +80,13 @@ sealed class CannotPerformActionDialogType(
         message = R.string.item_detail_cannot_perform_action_share_no_permissions_message,
         showUpgrade = false
     )
+
+    @Stable
+    data object CannotShareBecauseItemInTrash : CannotPerformActionDialogType(
+        title = R.string.item_detail_cannot_perform_action_share_no_permissions_title,
+        message = R.string.item_detail_cannot_perform_action_share_item_in_trash_message,
+        showUpgrade = false
+    )
 }
 
 @Composable

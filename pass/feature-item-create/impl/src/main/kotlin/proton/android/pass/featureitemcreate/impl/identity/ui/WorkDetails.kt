@@ -66,6 +66,7 @@ internal fun WorkDetails(
     enabled: Boolean,
     extraFields: PersistentSet<WorkDetailsField>,
     focusedField: Option<FocusedField>,
+    showAddWorkDetailsButton: Boolean,
     onEvent: (IdentityContentEvent) -> Unit
 ) {
     val field = focusedField.value()
@@ -148,7 +149,9 @@ internal fun WorkDetails(
                 callback = { onEvent(IdentityContentEvent.ClearLastAddedFieldFocus) }
             )
         }
-        AddMoreButton(onClick = { onEvent(IdentityContentEvent.OnAddWorkField) })
+        if (showAddWorkDetailsButton) {
+            AddMoreButton(onClick = { onEvent(IdentityContentEvent.OnAddWorkField) })
+        }
     }
 }
 
@@ -162,7 +165,8 @@ fun WorkDetailsPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Bo
                 enabled = true,
                 extraFields = persistentSetOf(),
                 focusedField = None,
-                onEvent = {}
+                onEvent = {},
+                showAddWorkDetailsButton = true
             )
         }
     }

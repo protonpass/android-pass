@@ -80,11 +80,6 @@ class AutoSaveActivity : FragmentActivity() {
         }
     }
 
-    override fun onStop() {
-        viewModel.onStop()
-        super.onStop()
-    }
-
     private fun onStateReceived(state: Option<AutosaveEvent>) {
         val event = state.value() ?: return
         if (event == AutosaveEvent.Close) {

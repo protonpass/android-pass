@@ -40,7 +40,7 @@ import proton.android.pass.common.api.removeAccents
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.log.api.PassLogger
-import kotlin.math.abs
+import kotlin.math.absoluteValue
 
 typealias Level = Int
 typealias Proximity = Int
@@ -66,6 +66,15 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
     private var autoFillNodes = mutableListOf<AssistField>()
     private var detectedUrl: Option<String> = None
     private var inCreditCardContext = false
+
+    private val proximityComparator = Comparator<Int> { a, b ->
+        val absCompare = a.absoluteValue.compareTo(b.absoluteValue)
+        if (absCompare != 0) {
+            absCompare
+        } else {
+            a.compareTo(b)
+        }
+    }
 
     // For testing purposes
     var visitedNodes = 0
@@ -270,7 +279,8 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         if (!autofillContext.node.isEditText()) return None
 
         // Fetch the context nodes
-        val contextNodes: Map<Level, Map<Proximity, List<AutofillNode>>> = getContextNodes(autofillContext)
+        val contextNodes: Map<Level, Map<Proximity, List<AutofillNode>>> =
+            getContextNodes(autofillContext)
 
         // Now that we have all the context nodes, aggregate the autofillHints and htmlAttributes lists
         val autofillHintsFlattened = contextNodes.flatMap { byLevel ->
@@ -329,8 +339,8 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         }
 
         return if (hasValidHints is CheckHintsResult.Found || hasValidHtmlInfo || hasUsefulKeywords) {
-            val fieldType = when (hasValidHints) {
-                is CheckHintsResult.Found -> hasValidHints.fieldType
+            val (fieldType, isContextBeforeField) = when (hasValidHints) {
+                is CheckHintsResult.Found -> hasValidHints.fieldType to true
                 CheckHintsResult.NoneFound -> detectContextualFieldType(
                     contextNodes = contextNodes,
                     inputType = autofillContext.node.inputType
@@ -341,7 +351,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
                 AssistField(
                     id = autofillContext.node.id!!,
                     type = fieldType,
-                    detectionType = DetectionType.ContextMatch,
+                    detectionType = DetectionType.ContextMatch(isContextBeforeField),
                     value = autofillContext.node.autofillValue,
                     text = autofillContext.node.text,
                     isFocused = autofillContext.node.isFocused,
@@ -489,53 +499,55 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
     private fun detectContextualFieldType(
         contextNodes: Map<Level, Map<Proximity, List<AutofillNode>>>,
         inputType: InputTypeValue
-    ): FieldType {
+    ): Pair<FieldType, Boolean> {
         var fieldType: FieldType = FieldType.Unknown
-
-        contextNodes.toSortedMap().forEach { (level: Level, byLevel: Map<Proximity, List<AutofillNode>>) ->
-            byLevel.toSortedMap().forEach { (proximity: Proximity, byProximity: List<AutofillNode>) ->
-                byProximity.forEach { node ->
-                    fieldType = detectFieldTypeUsingAutofillHints(node.autofillHints.toSet())
-                    if (fieldType != FieldType.Unknown) {
-                        PassLogger.v(
-                            TAG,
-                            "Found field type $fieldType " +
-                                "using contextual [$level, $proximity] autofill hints"
-                        )
-                        return fieldType
+        contextNodes.toSortedMap()
+            .forEach { (level: Level, byLevel: Map<Proximity, List<AutofillNode>>) ->
+                byLevel.toSortedMap(proximityComparator)
+                    .forEach { (proximity: Proximity, byProximity: List<AutofillNode>) ->
+                        byProximity.forEach { node ->
+                            fieldType =
+                                detectFieldTypeUsingAutofillHints(node.autofillHints.toSet())
+                            if (fieldType != FieldType.Unknown) {
+                                PassLogger.v(
+                                    TAG,
+                                    "Found field type $fieldType " +
+                                        "using contextual [$level, $proximity] autofill hints"
+                                )
+                                return fieldType to (proximity < 0)
+                            }
+                            fieldType = detectFieldTypeUsingHtmlInfo(node.htmlAttributes)
+                            if (fieldType != FieldType.Unknown) {
+                                PassLogger.v(
+                                    TAG,
+                                    "Found field type $fieldType " +
+                                        "using contextual [$level, $proximity] html info"
+                                )
+                                return fieldType to (proximity < 0)
+                            }
+                            fieldType = detectFieldTypeUsingInputType(inputType)
+                            if (fieldType != FieldType.Unknown) {
+                                PassLogger.v(
+                                    TAG,
+                                    "Found field type $fieldType " +
+                                        "using contextual [$level, $proximity] input type"
+                                )
+                                return fieldType to (proximity < 0)
+                            }
+                            fieldType = detectFieldTypeUsingHintKeywordList(node.hintKeywordList)
+                            if (fieldType != FieldType.Unknown) {
+                                PassLogger.v(
+                                    TAG,
+                                    "Found field type $fieldType " +
+                                        "using contextual [$level, $proximity] hint keyword list"
+                                )
+                                return fieldType to (proximity < 0)
+                            }
+                        }
                     }
-                    fieldType = detectFieldTypeUsingHtmlInfo(node.htmlAttributes)
-                    if (fieldType != FieldType.Unknown) {
-                        PassLogger.v(
-                            TAG,
-                            "Found field type $fieldType " +
-                                "using contextual [$level, $proximity] html info"
-                        )
-                        return fieldType
-                    }
-                    fieldType = detectFieldTypeUsingInputType(inputType)
-                    if (fieldType != FieldType.Unknown) {
-                        PassLogger.v(
-                            TAG,
-                            "Found field type $fieldType " +
-                                "using contextual [$level, $proximity] input type"
-                        )
-                        return fieldType
-                    }
-                    fieldType = detectFieldTypeUsingHintKeywordList(node.hintKeywordList)
-                    if (fieldType != FieldType.Unknown) {
-                        PassLogger.v(
-                            TAG,
-                            "Found field type $fieldType " +
-                                "using contextual [$level, $proximity] hint keyword list"
-                        )
-                        return fieldType
-                    }
-                }
             }
-        }
 
-        return fieldType
+        return fieldType to true
     }
 
     @Suppress("ReturnCount")
@@ -741,8 +753,10 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
 private fun <T> getElementsByProximity(list: List<T>, position: Int): Map<Int, List<T>> {
     require(position in list.indices) { "Position out of bounds" }
 
-    return list.mapIndexed { index, element -> abs(index - position) to element }
-        .groupBy { it.first }
+    return list.mapIndexed { index, element ->
+        val distance = if (index < position) -(position - index) else index - position
+        distance to element
+    }.groupBy { it.first }
         .mapValues { entry -> entry.value.map { it.second } }
 }
 

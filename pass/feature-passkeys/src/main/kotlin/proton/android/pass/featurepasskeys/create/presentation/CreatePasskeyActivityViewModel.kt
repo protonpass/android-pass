@@ -39,7 +39,6 @@ import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.account.api.AccountOrchestrators
 import proton.android.pass.account.api.Orchestrator
 import proton.android.pass.biometry.NeedsBiometricAuth
-import proton.android.pass.biometry.ExtendAuthTime
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -68,7 +67,6 @@ class CreatePasskeyActivityViewModel @Inject constructor(
     private val parseCreatePasskeyRequest: ParseCreatePasskeyRequest,
     private val toastManager: ToastManager,
     private val telemetryManager: TelemetryManager,
-    private val extendAuthTime: ExtendAuthTime,
     preferenceRepository: UserPreferencesRepository,
     needsBiometricAuth: NeedsBiometricAuth
 ) : ViewModel() {
@@ -148,10 +146,6 @@ class CreatePasskeyActivityViewModel @Inject constructor(
 
     fun upgrade() = viewModelScope.launch {
         accountOrchestrators.start(Orchestrator.PlansOrchestrator)
-    }
-
-    fun onStop() = viewModelScope.launch {
-        extendAuthTime()
     }
 
     fun signOut() = viewModelScope.launch {

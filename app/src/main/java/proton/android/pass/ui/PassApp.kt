@@ -42,7 +42,6 @@ fun PassApp(
     SystemUIEffect(isDark = isDark)
     LifecycleEffect(
         onStop = { appViewModel.onStop() },
-        onStart = { appViewModel.onStart() },
         onResume = { appViewModel.onResume() }
     )
     PassTheme(isDark = isDark) {

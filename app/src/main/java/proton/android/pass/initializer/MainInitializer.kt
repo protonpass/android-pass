@@ -74,6 +74,7 @@ class MainInitializer : Initializer<Unit> {
         UnAuthSessionFetcherInitializer::class.java,
         UnredeemedPurchaseInitializer::class.java,
         AccountListenerInitializer::class.java,
+        AppLockListenerInitializer::class.java,
         DeviceRecoveryInitializer::class.java
     )
 

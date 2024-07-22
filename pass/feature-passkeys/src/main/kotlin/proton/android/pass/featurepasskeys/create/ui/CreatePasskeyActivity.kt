@@ -70,11 +70,6 @@ class CreatePasskeyActivity : FragmentActivity() {
         }
     }
 
-    override fun onStop() {
-        viewModel.onStop()
-        super.onStop()
-    }
-
     private fun onStateReceived(request: CreatePasskeyRequest, state: CreatePasskeyAppState) {
         when (state) {
             CreatePasskeyAppState.Close -> sendResponse(CreatePasskeyResponse.Cancel)

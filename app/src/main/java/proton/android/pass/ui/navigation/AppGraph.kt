@@ -127,6 +127,7 @@ import proton.android.pass.features.extrapassword.extraPasswordGraph
 import proton.android.pass.features.extrapassword.infosheet.navigation.ExtraPasswordInfoNavItem
 import proton.android.pass.features.extrapassword.options.navigation.ExtraPasswordOptionsNavItem
 import proton.android.pass.features.item.details.detail.navigation.ItemDetailsNavItem
+import proton.android.pass.features.item.details.detailforbidden.navigation.ItemDetailsForbiddenNavItem
 import proton.android.pass.features.item.details.detailmenu.navigation.ItemDetailsMenuNavItem
 import proton.android.pass.features.item.details.shared.navigation.ItemDetailsNavDestination
 import proton.android.pass.features.item.details.shared.navigation.itemDetailsNavGraph
@@ -332,9 +333,16 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 HomeNavigation.Finish -> onNavigate(AppNavigation.Finish)
-                HomeNavigation.SyncDialog -> appNavigator.navigate(destination = SyncNavItem, force = true)
+                HomeNavigation.SyncDialog -> appNavigator.navigate(
+                    destination = SyncNavItem,
+                    force = true
+                )
 
-                HomeNavigation.OnBoarding -> appNavigator.navigate(destination = OnBoarding, force = true)
+                HomeNavigation.OnBoarding -> appNavigator.navigate(
+                    destination = OnBoarding,
+                    force = true
+                )
+
                 HomeNavigation.ConfirmedInvite -> appNavigator.navigate(
                     destination = InviteConfirmed,
                     force = true
@@ -1248,6 +1256,15 @@ fun NavGraphBuilder.appGraph(
                 ItemDetailsNavDestination.DismissBottomSheet -> dismissBottomSheet {
                     appNavigator.navigateBack(comesFromBottomsheet = true)
                 }
+
+                is ItemDetailsNavDestination.ItemActionForbidden -> appNavigator.navigate(
+                    destination = ItemDetailsForbiddenNavItem,
+                    route = ItemDetailsForbiddenNavItem.createNavRoute(
+                        reason = itemDetailsNavDestination.reason
+                    )
+                )
+
+                ItemDetailsNavDestination.Upgrade -> onNavigate(AppNavigation.Upgrade)
             }
         }
     )

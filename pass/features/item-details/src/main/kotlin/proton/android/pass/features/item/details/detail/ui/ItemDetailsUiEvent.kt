@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.item.details.detail.ui
 
+import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsActionForbiddenReason
 import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsFieldType
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
@@ -35,6 +36,11 @@ internal sealed interface ItemDetailsUiEvent {
         internal val shareId: ShareId,
         internal val itemId: ItemId,
         internal val itemCategory: ItemCategory
+    ) : ItemDetailsUiEvent
+
+    @JvmInline
+    value class OnDisabledEditClicked(
+        internal val reason: ItemDetailsActionForbiddenReason?
     ) : ItemDetailsUiEvent
 
     data class OnFieldClicked(
@@ -68,6 +74,11 @@ internal sealed interface ItemDetailsUiEvent {
     data class OnShareItemClicked(
         internal val shareId: ShareId,
         internal val itemId: ItemId
+    ) : ItemDetailsUiEvent
+
+    @JvmInline
+    value class OnDisabledShareItemClicked(
+        internal val reason: ItemDetailsActionForbiddenReason?
     ) : ItemDetailsUiEvent
 
     data class OnSharedVaultClicked(

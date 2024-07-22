@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.item.details.shared.navigation
 
+import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsActionForbiddenReason
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.ShareId
@@ -66,5 +67,12 @@ sealed interface ItemDetailsNavDestination {
     data object ItemMigration : ItemDetailsNavDestination
 
     data object DismissBottomSheet : ItemDetailsNavDestination
+
+    @JvmInline
+    value class ItemActionForbidden(
+        val reason: ItemDetailsActionForbiddenReason
+    ) : ItemDetailsNavDestination
+
+    data object Upgrade : ItemDetailsNavDestination
 
 }

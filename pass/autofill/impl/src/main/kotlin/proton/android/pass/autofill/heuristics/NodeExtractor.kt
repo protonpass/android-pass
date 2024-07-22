@@ -42,6 +42,10 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.log.api.PassLogger
 import kotlin.math.abs
 
+typealias Level = Int
+typealias Proximity = Int
+
+@Suppress("LargeClass")
 class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) {
 
     data class ExtractionResult(
@@ -266,7 +270,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         if (!autofillContext.node.isEditText()) return None
 
         // Fetch the context nodes
-        val contextNodes: Map<Int, Map<Int, List<AutofillNode>>> = getContextNodes(autofillContext)
+        val contextNodes: Map<Level, Map<Proximity, List<AutofillNode>>> = getContextNodes(autofillContext)
 
         // Now that we have all the context nodes, aggregate the autofillHints and htmlAttributes lists
         val autofillHintsFlattened = contextNodes.flatMap { byLevel ->
@@ -356,20 +360,18 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         }
     }
 
-    private fun getContextNodes(context: AutofillTraversalContext): Map<Int, Map<Int, List<AutofillNode>>> {
-        // List that will contain the context nodes
-        val contextNodes: MutableMap<Int, MutableMap<Int, List<AutofillNode>>> = mutableMapOf()
-
+    private fun getContextNodes(context: AutofillTraversalContext): Map<Level, Map<Proximity, List<AutofillNode>>> {
         val isNodeAlreadyAdded = { node: AutofillNode ->
             autoFillNodes.any { it.id == node.id }
         }
 
-        val unprocessedSiblings: MutableMap<Int, List<AutofillNode>> = context.siblings
+        val unprocessedSiblings: MutableMap<Proximity, List<AutofillNode>> = context.siblings
             .mapValues { list -> list.value.filter { !isNodeAlreadyAdded(it) } }
             .toMutableMap()
 
         // Start adding the current node siblings
-        contextNodes[0] = unprocessedSiblings
+        val contextNodes: MutableMap<Level, Map<Proximity, List<AutofillNode>>> =
+            mutableMapOf(0 to unprocessedSiblings)
 
         // Starting from the parent do as many jumps as possible until MAX_CONTEXT_JUMPS
         var parent = context.parent
@@ -381,18 +383,19 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
                 // If we have a parent, add the parent and the siblings to the current node
                 is Some -> {
                     val parentNode = localParent.value
-                    contextNodes[level] = mutableMapOf()
+                    val levelMap = mutableMapOf<Proximity, List<AutofillNode>>()
                     // Add the parent
                     if (!isNodeAlreadyAdded(parentNode.node)) {
-                        contextNodes[level]?.put(0, listOf(parentNode.node))
+                        levelMap[0] = mutableListOf(parentNode.node)
                     }
 
                     // Add the parents siblings
                     parentNode.siblings.forEach { (proximity, item) ->
                         val nonAddedSiblings = item.filter { !isNodeAlreadyAdded(it) }
-                        contextNodes[level]?.put(proximity + 1, nonAddedSiblings.toMutableList())
+                        levelMap[proximity + 1] = nonAddedSiblings.toMutableList()
                     }
 
+                    contextNodes[level] = levelMap
                     parent = parentNode.parent
                 }
             }
@@ -484,28 +487,48 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
 
     @Suppress("ReturnCount")
     private fun detectContextualFieldType(
-        contextNodes: Map<Int, Map<Int, List<AutofillNode>>>,
+        contextNodes: Map<Level, Map<Proximity, List<AutofillNode>>>,
         inputType: InputTypeValue
     ): FieldType {
         var fieldType: FieldType = FieldType.Unknown
 
-        contextNodes.toSortedMap().forEach { (_: Int, byLevel: Map<Int, List<AutofillNode>>) ->
-            byLevel.toSortedMap().forEach { (_: Int, byProximity: List<AutofillNode>) ->
+        contextNodes.toSortedMap().forEach { (level: Level, byLevel: Map<Proximity, List<AutofillNode>>) ->
+            byLevel.toSortedMap().forEach { (proximity: Proximity, byProximity: List<AutofillNode>) ->
                 byProximity.forEach { node ->
                     fieldType = detectFieldTypeUsingAutofillHints(node.autofillHints.toSet())
                     if (fieldType != FieldType.Unknown) {
+                        PassLogger.v(
+                            TAG,
+                            "Found field type $fieldType " +
+                                "using contextual [$level, $proximity] autofill hints"
+                        )
                         return fieldType
                     }
                     fieldType = detectFieldTypeUsingHtmlInfo(node.htmlAttributes)
                     if (fieldType != FieldType.Unknown) {
+                        PassLogger.v(
+                            TAG,
+                            "Found field type $fieldType " +
+                                "using contextual [$level, $proximity] html info"
+                        )
                         return fieldType
                     }
                     fieldType = detectFieldTypeUsingInputType(inputType)
                     if (fieldType != FieldType.Unknown) {
+                        PassLogger.v(
+                            TAG,
+                            "Found field type $fieldType " +
+                                "using contextual [$level, $proximity] input type"
+                        )
                         return fieldType
                     }
                     fieldType = detectFieldTypeUsingHintKeywordList(node.hintKeywordList)
                     if (fieldType != FieldType.Unknown) {
+                        PassLogger.v(
+                            TAG,
+                            "Found field type $fieldType " +
+                                "using contextual [$level, $proximity] hint keyword list"
+                        )
                         return fieldType
                     }
                 }

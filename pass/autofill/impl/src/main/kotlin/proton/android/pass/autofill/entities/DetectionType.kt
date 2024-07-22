@@ -28,5 +28,5 @@ sealed interface DetectionType : Parcelable {
     data object ExactMatch : DetectionType
 
     @Parcelize
-    data object ContextMatch : DetectionType
+    data class ContextMatch(val isContextBeforeField: Boolean) : DetectionType
 }

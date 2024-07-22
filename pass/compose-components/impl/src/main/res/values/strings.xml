@@ -133,11 +133,24 @@
     <string name="date_full_date_format">dd LLLL HH:mm</string>
 
     <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to 12 Feb 12:34
+    -->
+    <string comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale"
+        name="date_full_date_format_compact_month">dd LLL HH:mm</string>
+
+    <!--
     Pattern used when displaying a date including the year.
     It would translate to
     12 February 2023 12:34
     -->
     <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
+    <!--
+   Pattern used when displaying a date including the year.
+   It would translate to 12 Feb 2023 12:34
+   -->
+    <string comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale"
+        name="date_full_date_format_with_year_compact_month">dd LLL yyyy HH:mm</string>
 
     <!-- Items -->
     <string name="item_details_alias_section_alias_title">Alias address</string>

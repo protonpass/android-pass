@@ -65,6 +65,11 @@ fun ItemDetailsScreen(
                     itemCategory = uiEvent.itemCategory
                 ).also(onNavigated)
 
+                is ItemDetailsUiEvent.OnDisabledEditClicked -> uiEvent.reason?.let { reason ->
+                    ItemDetailsNavDestination.ItemActionForbidden(reason = reason)
+                        .also(onNavigated)
+                }
+
                 is ItemDetailsUiEvent.OnPasskeyClicked -> ItemDetailsNavDestination.PasskeyDetails(
                     passkeyContent = uiEvent.passkeyContent
                 ).also(onNavigated)
@@ -100,6 +105,11 @@ fun ItemDetailsScreen(
                     shareId = uiEvent.shareId,
                     itemId = uiEvent.itemId
                 ).also(onNavigated)
+
+                is ItemDetailsUiEvent.OnDisabledShareItemClicked -> uiEvent.reason?.let { reason ->
+                    ItemDetailsNavDestination.ItemActionForbidden(reason = reason)
+                        .also(onNavigated)
+                }
 
                 is ItemDetailsUiEvent.OnSharedVaultClicked -> ItemDetailsNavDestination.ManageSharedVault(
                     sharedVaultId = uiEvent.sharedVaultId,

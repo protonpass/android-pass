@@ -42,7 +42,6 @@ import proton.android.pass.composecomponents.impl.buttons.CircleIconButton
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
 import proton.android.pass.composecomponents.impl.utils.PassItemColors
-import proton.android.pass.data.api.usecases.ItemActions
 import proton.android.pass.features.item.details.R
 import me.proton.core.presentation.R as CoreR
 import proton.android.pass.composecomponents.impl.R as CompR
@@ -52,10 +51,11 @@ internal fun ItemDetailsTopBar(
     modifier: Modifier = Modifier,
     itemColors: PassItemColors,
     onUpClick: () -> Unit,
+    isEditEnabled: Boolean,
     onEditClick: () -> Unit,
     onOptionsClick: () -> Unit,
+    isShareEnabled: Boolean,
     onShareClick: () -> Unit,
-    actions: ItemActions,
     isLoading: Boolean
 ) {
     ProtonTopAppBar(
@@ -74,92 +74,63 @@ internal fun ItemDetailsTopBar(
             )
         },
         actions = {
-            ItemTopBarActions(
-                actions = actions,
-                isLoading = isLoading,
-                actionColor = itemColors.majorPrimary,
-                iconColor = itemColors.majorSecondary,
-                iconBackgroundColor = itemColors.minorPrimary,
-                onEditClick = onEditClick,
-                onOptionsClick = onOptionsClick,
-                onShareClick = onShareClick
-            )
+            Row(
+                modifier = modifier
+                    .height(height = 48.dp)
+                    .padding(
+                        horizontal = Spacing.mediumSmall,
+                        vertical = Spacing.extraSmall
+                    ),
+                horizontalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                ItemDetailEditButton(
+                    isLoading = isLoading,
+                    actionColor = itemColors.majorPrimary,
+                    isEnabled = isEditEnabled,
+                    onEditClick = onEditClick
+                )
+
+                ItemDetailShareButton(
+                    isEnabled = isShareEnabled,
+                    iconBackgroundColor = itemColors.minorPrimary,
+                    iconColor = itemColors.majorSecondary,
+                    onShareClick = onShareClick
+                )
+
+                ItemDetailOptionsButton(
+                    isVisible = !isLoading,
+                    iconBackgroundColor = itemColors.minorPrimary,
+                    iconColor = itemColors.majorSecondary,
+                    onOptionsClick = onOptionsClick
+                )
+            }
         }
     )
-}
-
-@Composable
-private fun ItemTopBarActions(
-    modifier: Modifier = Modifier,
-    actions: ItemActions,
-    isLoading: Boolean,
-    actionColor: Color,
-    iconColor: Color,
-    iconBackgroundColor: Color,
-    onEditClick: () -> Unit,
-    onOptionsClick: () -> Unit,
-    onShareClick: () -> Unit
-) {
-    Row(
-        modifier = modifier
-            .height(height = 48.dp)
-            .padding(
-                horizontal = Spacing.mediumSmall,
-                vertical = Spacing.extraSmall
-            ),
-        horizontalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        ItemDetailEditButton(
-            isLoading = isLoading,
-            actionColor = actionColor,
-            actions = actions,
-            onEditClick = onEditClick
-        )
-
-        ItemDetailShareButton(
-            isEnabled = actions.canShare.value(),
-            iconBackgroundColor = iconBackgroundColor,
-            iconColor = iconColor,
-            onShareClick = onShareClick
-        )
-
-        ItemDetailOptionsButton(
-            isVisible = !isLoading,
-            iconBackgroundColor = iconBackgroundColor,
-            iconColor = iconColor,
-            onOptionsClick = onOptionsClick
-        )
-    }
 }
 
 @Composable
 private fun ItemDetailEditButton(
     modifier: Modifier = Modifier,
     isLoading: Boolean,
-    actions: ItemActions,
+    isEnabled: Boolean,
     actionColor: Color,
     onEditClick: () -> Unit
 ) {
     val textInvertColor = PassTheme.colors.textInvert
     val textNormColor = PassTheme.colors.textNorm
-    val (
-        editButtonBackgroundColor,
-        editButtonForegroundColor,
-        editButtonEnabled
-    ) = remember(isLoading, actions.canEdit) {
-        val enabled = !isLoading && actions.canEdit is ItemActions.CanEditActionState.Enabled
-        if (enabled) {
-            Triple(actionColor, textInvertColor, true)
+    val (editButtonBackgroundColor, editButtonForegroundColor) = remember(isLoading, isEnabled) {
+        if (!isLoading && isEnabled) {
+            actionColor to textInvertColor
         } else {
-            Triple(actionColor.copy(alpha = 0.1f), textNormColor.copy(alpha = 0.2f), false)
+            actionColor.copy(alpha = 0.1f) to textNormColor.copy(alpha = 0.2f)
         }
     }
+
     LoadingCircleButton(
         modifier = modifier,
         color = editButtonBackgroundColor,
         isLoading = isLoading,
-        buttonEnabled = editButtonEnabled,
         text = {
             Text(
                 text = stringResource(id = CompR.string.action_edit),
@@ -194,7 +165,8 @@ private fun ItemDetailShareButton(
         tintColor = iconColor,
         iconContentDescription = stringResource(id = R.string.item_details_toolbar_content_description_share_button),
         enabled = isEnabled,
-        onClick = onShareClick
+        onClick = onShareClick,
+        onDisabledClick = onShareClick
     )
 }
 

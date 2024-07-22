@@ -19,8 +19,10 @@
 package proton.android.pass.features.item.details.detail.presentation
 
 import androidx.compose.runtime.Stable
+import proton.android.pass.commonpresentation.api.items.details.domain.ItemDetailsActionForbiddenReason
 import proton.android.pass.commonuimodels.api.items.ItemDetailState
 import proton.android.pass.data.api.usecases.ItemActions
+import proton.android.pass.data.api.usecases.capabilities.CanShareVaultStatus
 import proton.android.pass.domain.ItemId
 import proton.android.pass.domain.Plan
 import proton.android.pass.domain.PlanType
@@ -47,8 +49,8 @@ internal sealed interface ItemDetailsState {
         internal val shareId: ShareId,
         internal val itemId: ItemId,
         internal val itemDetailState: ItemDetailState,
-        internal val itemActions: ItemActions,
         override val event: ItemDetailsEvent,
+        private val itemActions: ItemActions,
         private val userPlan: Plan
     ) : ItemDetailsState {
 
@@ -59,6 +61,49 @@ internal sealed interface ItemDetailsState {
             is PlanType.Free,
             is PlanType.Unknown -> false
         }
+
+        internal val isEditEnabled: Boolean =
+            itemActions.canEdit is ItemActions.CanEditActionState.Enabled
+
+        internal val cannotEditReason: ItemDetailsActionForbiddenReason? =
+            when (val canEdit = itemActions.canEdit) {
+                ItemActions.CanEditActionState.Enabled -> null
+                is ItemActions.CanEditActionState.Disabled -> when (canEdit.reason) {
+                    ItemActions.CanEditActionState.CanEditDisabledReason.Downgraded -> {
+                        ItemDetailsActionForbiddenReason.EditItemUpgradeRequired
+                    }
+
+                    ItemActions.CanEditActionState.CanEditDisabledReason.ItemInTrash -> {
+                        ItemDetailsActionForbiddenReason.EditItemTrashed
+                    }
+
+                    ItemActions.CanEditActionState.CanEditDisabledReason.NotEnoughPermission -> {
+                        ItemDetailsActionForbiddenReason.EditItemPermissionRequired
+                    }
+                }
+            }
+
+        internal val isShareEnabled: Boolean = itemActions.canShare.value()
+
+        internal val cannotShareReason: ItemDetailsActionForbiddenReason? =
+            when (val canShare = itemActions.canShare) {
+                is CanShareVaultStatus.CanShare -> null
+                is CanShareVaultStatus.CannotShare -> when (canShare.reason) {
+                    CanShareVaultStatus.CannotShareReason.ItemInTrash -> {
+                        ItemDetailsActionForbiddenReason.ShareItemTrashed
+                    }
+
+                    CanShareVaultStatus.CannotShareReason.NotEnoughInvites -> {
+                        ItemDetailsActionForbiddenReason.ShareItemLimitReached
+                    }
+
+                    CanShareVaultStatus.CannotShareReason.NotEnoughPermissions -> {
+                        ItemDetailsActionForbiddenReason.ShareItemPermissionRequired
+                    }
+
+                    CanShareVaultStatus.CannotShareReason.Unknown -> null
+                }
+            }
 
     }
 

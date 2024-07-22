@@ -54,17 +54,21 @@ internal fun ItemDetailsContent(
                     ItemDetailsTopBar(
                         isLoading = false,
                         itemColors = itemColors,
-                        actions = itemActions,
                         onUpClick = {
                             ItemDetailsUiEvent.OnNavigateBack
                                 .also(onEvent)
                         },
+                        isEditEnabled = isEditEnabled,
                         onEditClick = {
-                            ItemDetailsUiEvent.OnEditClicked(
-                                shareId = shareId,
-                                itemId = itemId,
-                                itemCategory = itemDetailState.itemCategory
-                            ).also(onEvent)
+                            if (isEditEnabled) {
+                                ItemDetailsUiEvent.OnEditClicked(
+                                    shareId = shareId,
+                                    itemId = itemId,
+                                    itemCategory = itemDetailState.itemCategory
+                                )
+                            } else {
+                                ItemDetailsUiEvent.OnDisabledEditClicked(reason = cannotEditReason)
+                            }.also(onEvent)
                         },
                         onOptionsClick = {
                             ItemDetailsUiEvent.OnMenuClicked(
@@ -73,11 +77,16 @@ internal fun ItemDetailsContent(
                                 itemState = itemDetailState.itemState
                             ).also(onEvent)
                         },
+                        isShareEnabled = isShareEnabled,
                         onShareClick = {
-                            ItemDetailsUiEvent.OnShareItemClicked(
-                                shareId = shareId,
-                                itemId = itemId
-                            ).also(onEvent)
+                            if (isShareEnabled) {
+                                ItemDetailsUiEvent.OnShareItemClicked(
+                                    shareId = shareId,
+                                    itemId = itemId
+                                )
+                            } else {
+                                ItemDetailsUiEvent.OnDisabledShareItemClicked(reason = cannotShareReason)
+                            }.also(onEvent)
                         }
                     )
                 },

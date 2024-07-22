@@ -89,6 +89,10 @@
                 android:name="proton.android.pass.initializer.AccountListenerInitializer"
                 android:value="androidx.startup"
                 tools:node="remove" />
+            <meta-data
+                android:name="proton.android.pass.initializer.AppLockListenerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
 
             <meta-data
                 android:name="me.proton.core.paymentiap.presentation.GooglePurchaseHandlerInitializer"

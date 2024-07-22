@@ -234,6 +234,7 @@ object NodeClusterer {
 
     private fun List<AssistField>.findFieldToCluster(referenceField: AssistField): AssistField? =
         firstOrNull { it.detectionType == DetectionType.ExactMatch }
+            ?: firstOrNull { it.detectionType == DetectionType.ContextMatch(isContextBeforeField = true) }
             ?: HeuristicsUtils.findNearestNodeByParentId(referenceField, this)
 
     private fun clusterLogins(

@@ -44,7 +44,6 @@ import proton.android.pass.autofill.ui.autofill.AutofillIntentExtras.ARG_EXTRAS_
 import proton.android.pass.autofill.ui.autofill.AutofillUiState.NotValidAutofillUiState
 import proton.android.pass.autofill.ui.autofill.AutofillUiState.UninitialisedAutofillUiState
 import proton.android.pass.biometry.NeedsBiometricAuth
-import proton.android.pass.biometry.ExtendAuthTime
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.flatMap
 import proton.android.pass.commonui.api.require
@@ -63,7 +62,6 @@ class AutofillActivityViewModel @Inject constructor(
     private val internalSettingsRepository: InternalSettingsRepository,
     private val accountManager: AccountManager,
     private val toastManager: ToastManager,
-    private val extendAuthTime: ExtendAuthTime,
     private val savedStateHandle: SavedStateHandle,
     needsBiometricAuth: NeedsBiometricAuth
 ) : ViewModel() {
@@ -104,10 +102,6 @@ class AutofillActivityViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = UninitialisedAutofillUiState
         )
-
-    fun authOnStop() = viewModelScope.launch {
-        extendAuthTime()
-    }
 
     fun register(context: ComponentActivity) {
         accountOrchestrators.register(context, listOf(Orchestrator.PlansOrchestrator))

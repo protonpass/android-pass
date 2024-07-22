@@ -88,7 +88,10 @@ internal fun ItemHistoryRestoreTabRow(
                         text = if (index == TAB_INDEX_CURRENT) {
                             stringResource(id = R.string.item_history_restore_tab_title_current)
                         } else {
-                            passFormattedDateText(endInstant = Instant.fromEpochSeconds(revisionTime))
+                            passFormattedDateText(
+                                endInstant = Instant.fromEpochSeconds(revisionTime),
+                                useCompactMonth = true
+                            )
                         },
                         style = PassTheme.typography.body3Norm(),
                         color = if (isSelected) {

@@ -35,7 +35,8 @@ private const val DEFAULT_DATE_TEXT = ""
 fun passFormattedDateText(
     endInstant: Instant,
     startInstant: Instant = Instant.fromEpochSeconds(epochSeconds = 0),
-    locale: Locale = Locale.getDefault()
+    locale: Locale = Locale.getDefault(),
+    useCompactMonth: Boolean = false
 ): String = when (
     DateFormatUtils.getFormat(
         now = startInstant,
@@ -50,19 +51,27 @@ fun passFormattedDateText(
     )
 ) {
     DateFormatUtils.Format.Date -> runCatching {
-        DateTimeFormatter.ofPattern(stringResource(R.string.date_full_date_format_with_year))
+        val pattern = if (useCompactMonth) {
+            stringResource(R.string.date_full_date_format_with_year_compact_month)
+        } else {
+            stringResource(R.string.date_full_date_format_with_year)
+        }
+
+        DateTimeFormatter.ofPattern(pattern)
             .withLocale(locale)
-            .format(
-                endInstant.toLocalDateTime(TimeZone.currentSystemDefault()).toJavaLocalDateTime()
-            )
+            .format(endInstant.toLocalDateTime(TimeZone.currentSystemDefault()).toJavaLocalDateTime())
     }.getOrDefault(DEFAULT_DATE_TEXT)
 
     DateFormatUtils.Format.DateOfSameYear -> runCatching {
-        DateTimeFormatter.ofPattern(stringResource(R.string.date_full_date_format))
+        val pattern = if (useCompactMonth) {
+            stringResource(R.string.date_full_date_format_compact_month)
+        } else {
+            stringResource(R.string.date_full_date_format)
+        }
+
+        DateTimeFormatter.ofPattern(pattern)
             .withLocale(locale)
-            .format(
-                endInstant.toLocalDateTime(TimeZone.currentSystemDefault()).toJavaLocalDateTime()
-            )
+            .format(endInstant.toLocalDateTime(TimeZone.currentSystemDefault()).toJavaLocalDateTime())
     }.getOrDefault(DEFAULT_DATE_TEXT)
 
     DateFormatUtils.Format.Today -> runCatching {

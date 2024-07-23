@@ -65,6 +65,7 @@ internal class AuthViewModelTest {
     private lateinit var checkMasterPassword: TestCheckMasterPassword
     private lateinit var userManager: FakeUserManager
     private lateinit var accountManager: TestAccountManager
+    private lateinit var internalSettingsRepository: TestInternalSettingsRepository
 
     @get:Rule
     internal val dispatcherRule = MainDispatcherRule()
@@ -76,12 +77,13 @@ internal class AuthViewModelTest {
         checkMasterPassword = TestCheckMasterPassword()
         userManager = FakeUserManager()
         accountManager = TestAccountManager()
+        internalSettingsRepository = TestInternalSettingsRepository()
         viewModel = AuthViewModel(
             preferenceRepository = preferenceRepository,
             biometryManager = biometryManager,
             checkMasterPassword = checkMasterPassword,
             storeAuthSuccessful = TestStoreAuthSuccessful(),
-            internalSettingsRepository = TestInternalSettingsRepository(),
+            internalSettingsRepository = internalSettingsRepository,
             observeUserEmail = TestObserveUserEmail().apply {
                 emit(USER_EMAIL)
             },
@@ -296,12 +298,9 @@ internal class AuthViewModelTest {
 
             val state2 = awaitItem()
             assertThat(state2.content.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
-            assertThat(state2.content.error.value()).isEqualTo(
-                AuthError.WrongPassword(
-                    remainingAttempts = testAttempts.some()
-                )
-            )
-            assertThat(state2.content.password).isEqualTo(password)
+            val state3 = awaitItem()
+            assertThat(state3.content.remainingPasswordAttempts.value()).isEqualTo(testAttempts)
+            assertThat(state3.content.password).isEqualTo(password)
         }
     }
 
@@ -326,9 +325,9 @@ internal class AuthViewModelTest {
 
                 val stateError = awaitItem()
                 assertThat(stateError.content.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
-
-                val expected = AuthError.WrongPassword(remainingAttempts = (testAttempts - attempt).some())
-                assertThat(stateError.content.error.value()).isEqualTo(expected)
+                val stateError2 = awaitItem()
+                val expected = testAttempts - attempt
+                assertThat(stateError2.content.remainingPasswordAttempts.value()).isEqualTo(expected)
             }
 
             // Fail one more time

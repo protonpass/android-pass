@@ -101,7 +101,8 @@ fun AuthScreenMasterPasswordForm(
 
     val errorMessage = when (state.passwordError.value()) {
         PasswordError.EmptyPassword -> stringResource(R.string.auth_error_empty_password)
-        else -> ""
+        PasswordError.IncorrectPassword -> stringResource(R.string.auth_error_wrong_password_no_attempts)
+        null -> ""
     }
 
     val isEditAllowed = !state.isLoadingState.value()
@@ -224,7 +225,7 @@ fun AuthScreenMasterPasswordForm(
                 }
                 ProtonTextFieldLabel(
                     text = text,
-                    isError = state.passwordError.value() == PasswordError.EmptyPassword
+                    isError = state.passwordError.isNotEmpty()
                 )
             },
             leadingIcon = {

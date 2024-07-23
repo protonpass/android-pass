@@ -149,6 +149,12 @@ internal fun ProfileContent(
                         )
                     }
 
+                    if (true) {
+                        ProfileAliasesSection(
+                            onclick = { onEvent(ProfileUiEvent.OnAliasesClicked) }
+                        )
+                    }
+
                     if (state.passkeySupport is ProfilePasskeySupportSection.Show) {
                         PasskeyProfileSection(
                             support = state.passkeySupport

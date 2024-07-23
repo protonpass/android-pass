@@ -20,6 +20,12 @@ package proton.android.pass.biometry
 
 import me.proton.core.domain.entity.UserId
 
+sealed interface UnlockMethod {
+    @JvmInline
+    value class Password(val userId: UserId) : UnlockMethod
+    data object PinOrBiometrics : UnlockMethod
+}
+
 interface StoreAuthSuccessful {
-    operator fun invoke(userId: UserId, resetAttempts: Boolean)
+    operator fun invoke(unlockMethod: UnlockMethod)
 }

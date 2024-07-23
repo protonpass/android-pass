@@ -21,7 +21,6 @@ package proton.android.pass.featureauth.impl
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.collections.immutable.persistentMapOf
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
@@ -35,7 +34,6 @@ import proton.android.pass.biometry.BiometryStartupError
 import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.TestBiometryManager
 import proton.android.pass.biometry.TestStoreAuthSuccessful
-import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
@@ -50,6 +48,7 @@ import proton.android.pass.data.fakes.usecases.accesskey.FakeAuthWithExtraPasswo
 import proton.android.pass.data.fakes.usecases.accesskey.FakeCheckLocalExtraPassword
 import proton.android.pass.data.fakes.usecases.accesskey.FakeHasExtraPassword
 import proton.android.pass.data.fakes.usecases.accesskey.FakeRemoveExtraPassword
+import proton.android.pass.featureauth.impl.AuthViewModel.Companion.MAX_WRONG_PASSWORD_ATTEMPTS
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.AppLockTypePreference
@@ -83,11 +82,6 @@ internal class AuthViewModelTest {
             checkMasterPassword = checkMasterPassword,
             storeAuthSuccessful = TestStoreAuthSuccessful(),
             internalSettingsRepository = TestInternalSettingsRepository(),
-            appDispatchers = object : AppDispatchers {
-                override val main = dispatcherRule.testDispatcher
-                override val default = UnconfinedTestDispatcher()
-                override val io = UnconfinedTestDispatcher()
-            },
             observeUserEmail = TestObserveUserEmail().apply {
                 emit(USER_EMAIL)
             },
@@ -294,6 +288,8 @@ internal class AuthViewModelTest {
 
         viewModel.onPasswordChanged(password)
         viewModel.onSubmit(false)
+        val testAttempts = MAX_WRONG_PASSWORD_ATTEMPTS - 1
+
         viewModel.state.test {
             val state1 = awaitItem()
             assertThat(state1.content.isLoadingState).isEqualTo(IsLoadingState.Loading)
@@ -302,7 +298,7 @@ internal class AuthViewModelTest {
             assertThat(state2.content.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
             assertThat(state2.content.error.value()).isEqualTo(
                 AuthError.WrongPassword(
-                    remainingAttempts = 4.some()
+                    remainingAttempts = testAttempts.some()
                 )
             )
             assertThat(state2.content.password).isEqualTo(password)
@@ -318,11 +314,12 @@ internal class AuthViewModelTest {
 
         viewModel.onPasswordChanged(password)
 
+        val testAttempts = MAX_WRONG_PASSWORD_ATTEMPTS - 1
         viewModel.state.test {
             skipItems(1)
 
             // Fail 4 times
-            for (attempt in 0 until 4) {
+            for (attempt in 0 until testAttempts) {
                 viewModel.onSubmit(false)
                 val stateLoading = awaitItem()
                 assertThat(stateLoading.content.isLoadingState).isEqualTo(IsLoadingState.Loading)
@@ -330,7 +327,7 @@ internal class AuthViewModelTest {
                 val stateError = awaitItem()
                 assertThat(stateError.content.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
 
-                val expected = AuthError.WrongPassword(remainingAttempts = (4 - attempt).some())
+                val expected = AuthError.WrongPassword(remainingAttempts = (testAttempts - attempt).some())
                 assertThat(stateError.content.error.value()).isEqualTo(expected)
             }
 

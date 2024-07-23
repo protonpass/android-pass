@@ -28,20 +28,25 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.biometry.StoreAuthSuccessful
+import proton.android.pass.biometry.UnlockMethod
 import proton.android.pass.common.api.CommonRegex
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.usecases.CheckPin
 import proton.android.pass.featureauth.impl.EnterPinUiState.NotInitialised
+import proton.android.pass.featureauth.impl.PinConstants.MAX_PIN_ATTEMPTS
+import proton.android.pass.featureauth.impl.PinConstants.MAX_PIN_LENGTH
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.InternalSettingsRepository
 import javax.inject.Inject
@@ -96,7 +101,7 @@ class EnterPinViewModel @Inject constructor(
         runCatching {
             val isMatch = checkPin(pinState.value.encodeToByteArray())
             if (isMatch) {
-                storeAuthSuccessful()
+                storeAuthSuccessful(UnlockMethod.PinOrBiometrics)
                 eventState.update { EnterPinEvent.Success(origin) }
             } else {
                 isLoading.update { IsLoadingState.Loading }
@@ -107,8 +112,9 @@ class EnterPinViewModel @Inject constructor(
                 val remainingAttempts = MAX_PIN_ATTEMPTS - attemptsCount
                 if (remainingAttempts <= 0) {
                     PassLogger.w(TAG, "Too many wrong attempts, logging user out")
-                    val userId = (state.value as EnterPinUiState.Data).userId
-                    eventState.update { EnterPinEvent.ForceSignOut(userId) }
+                    val userId = accountManager.getPrimaryUserId().firstOrNull()
+                        ?: throw UserIdNotAvailableError()
+                    eventState.update { EnterPinEvent.ForcePassword(userId) }
                 } else {
                     pinErrorState.update { PinError.PinIncorrect(remainingAttempts).some() }
                 }
@@ -118,8 +124,6 @@ class EnterPinViewModel @Inject constructor(
 
     companion object {
         private val WRONG_PIN_DELAY_SECONDS = 2.seconds
-        private const val MAX_PIN_ATTEMPTS = 5
-        private const val MAX_PIN_LENGTH = 100
         private const val TAG = "EnterPinViewModel"
     }
 }
@@ -127,7 +131,7 @@ class EnterPinViewModel @Inject constructor(
 sealed interface EnterPinEvent {
 
     @JvmInline
-    value class ForceSignOut(val userId: UserId) : EnterPinEvent
+    value class ForcePassword(val userId: UserId) : EnterPinEvent
 
     @JvmInline
     value class Success(val origin: AuthOrigin) : EnterPinEvent

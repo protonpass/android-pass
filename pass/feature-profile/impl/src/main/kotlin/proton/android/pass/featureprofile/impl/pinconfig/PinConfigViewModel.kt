@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.biometry.StoreAuthSuccessful
+import proton.android.pass.biometry.UnlockMethod
 import proton.android.pass.common.api.CommonRegex.NON_DIGIT_REGEX
 import proton.android.pass.data.api.usecases.CreatePin
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.PinLockEnabled
@@ -79,7 +80,7 @@ class PinConfigViewModel @Inject constructor(
                 runCatching {
                     createPin(currentState.pin.encodeToByteArray())
                 }.onSuccess {
-                    storeAuthSuccessful()
+                    storeAuthSuccessful(UnlockMethod.PinOrBiometrics)
                     userPreferencesRepository.setAppLockState(AppLockState.Enabled)
                     userPreferencesRepository.setAppLockTypePreference(AppLockTypePreference.Pin)
                         .onSuccess {

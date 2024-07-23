@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and Proton Pass.
  *
  * Proton Pass is free software: you can redistribute it and/or modify
@@ -16,16 +16,9 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.biometry
+package proton.android.pass.featureauth.impl
 
-import me.proton.core.domain.entity.UserId
-
-sealed interface UnlockMethod {
-    @JvmInline
-    value class Password(val userId: UserId) : UnlockMethod
-    data object PinOrBiometrics : UnlockMethod
-}
-
-interface StoreAuthSuccessful {
-    operator fun invoke(unlockMethod: UnlockMethod)
+object PinConstants {
+    internal const val MAX_PIN_ATTEMPTS = 3
+    internal const val MAX_PIN_LENGTH = 100
 }

@@ -113,8 +113,7 @@ fun NavGraphBuilder.authGraph(canLogout: Boolean, navigation: (AuthNavigation) -
                     when (destination) {
                         is EnterPinNavigation.Success ->
                             navigation(AuthNavigation.Success(destination.origin))
-                        is EnterPinNavigation.ForceSignOut ->
-                            navigation(AuthNavigation.ForceSignOut(destination.userId))
+                        is EnterPinNavigation.Close -> navigation(AuthNavigation.Dismissed)
                     }
                 }
             )

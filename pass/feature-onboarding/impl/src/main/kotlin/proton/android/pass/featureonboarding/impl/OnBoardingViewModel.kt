@@ -40,6 +40,8 @@ import proton.android.pass.biometry.BiometryManager
 import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.BiometryType
+import proton.android.pass.biometry.StoreAuthSuccessful
+import proton.android.pass.biometry.UnlockMethod
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.data.api.usecases.ObserveUserAccessData
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Autofill
@@ -53,7 +55,6 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.AppLockState
 import proton.android.pass.preferences.AppLockTypePreference
-import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.HasCompletedOnBoarding
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -65,7 +66,8 @@ class OnBoardingViewModel @Inject constructor(
     private val biometryManager: BiometryManager,
     private val userPreferencesRepository: UserPreferencesRepository,
     private val snackbarDispatcher: SnackbarDispatcher,
-    private val observeUserAccessData: ObserveUserAccessData
+    private val observeUserAccessData: ObserveUserAccessData,
+    private val storeAuthSuccessful: StoreAuthSuccessful
 ) : ViewModel() {
 
     private val _onBoardingUiState = MutableStateFlow(OnBoardingUiState.Initial)
@@ -188,7 +190,7 @@ class OnBoardingViewModel @Inject constructor(
 
     private fun onBiometrySuccess() {
         viewModelScope.launch {
-            userPreferencesRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
+            storeAuthSuccessful(UnlockMethod.PinOrBiometrics)
             userPreferencesRepository.setAppLockTypePreference(AppLockTypePreference.Biometrics)
             userPreferencesRepository.setAppLockState(AppLockState.Enabled)
             snackbarDispatcher(FingerprintLockEnabled)

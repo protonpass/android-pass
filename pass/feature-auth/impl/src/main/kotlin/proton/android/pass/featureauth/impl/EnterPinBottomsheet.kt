@@ -25,12 +25,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import me.proton.core.domain.entity.UserId
 
 sealed interface EnterPinNavigation {
 
-    @JvmInline
-    value class ForceSignOut(val userId: UserId) : EnterPinNavigation
+    data object Close : EnterPinNavigation
 
     @JvmInline
     value class Success(val origin: AuthOrigin) : EnterPinNavigation
@@ -66,7 +64,7 @@ private fun EventLaunchedEffect(data: EnterPinUiState.Data?, onNavigate: (EnterP
 
     LaunchedEffect(data.event) {
         when (val event = data.event) {
-            is EnterPinEvent.ForceSignOut -> onNavigate(EnterPinNavigation.ForceSignOut(event.userId))
+            is EnterPinEvent.ForcePassword -> onNavigate(EnterPinNavigation.Close)
             is EnterPinEvent.Success -> onNavigate(EnterPinNavigation.Success(event.origin))
             EnterPinEvent.Unknown -> {}
         }

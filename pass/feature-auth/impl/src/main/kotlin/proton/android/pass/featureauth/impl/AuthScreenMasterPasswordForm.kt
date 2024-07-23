@@ -272,24 +272,17 @@ fun AuthScreenMasterPasswordForm(
             )
         }
 
-        if (state.error is Some) {
-            val errorText = when (val error = state.error.value) {
-                AuthError.UnknownError -> stringResource(R.string.auth_error_verifying_password)
-                is AuthError.WrongPassword -> when (error.remainingAttempts) {
-                    is Some -> pluralStringResource(
-                        R.plurals.auth_error_wrong_password,
-                        error.remainingAttempts.value,
-                        error.remainingAttempts.value
-                    )
-
-                    is None -> stringResource(id = R.string.auth_error_wrong_password_no_attempts)
-                }
-            }
+        if (state.remainingPasswordAttempts is Some) {
+            val remainingAttemptsText = pluralStringResource(
+                R.plurals.auth_attempts_remaining,
+                state.remainingPasswordAttempts.value,
+                state.remainingPasswordAttempts.value
+            )
 
             Spacer(modifier = Modifier.height(40.dp))
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = errorText,
+                text = remainingAttemptsText,
                 textAlign = TextAlign.Center,
                 style = PassTheme.typography.body3Norm(),
                 color = ProtonTheme.colors.notificationError
@@ -318,7 +311,7 @@ fun AuthScreenMasterPasswordFormPreview(
                     address = "some@address.test".some(),
                     isLoadingState = IsLoadingState.NotLoading,
                     isPasswordVisible = input.second.isPasswordVisible,
-                    error = input.second.error,
+                    remainingPasswordAttempts = input.second.remainingAttempts,
                     passwordError = input.second.passwordError,
                     authMethod = None,
                     showExtraPassword = LoadingResult.Success(input.second.hasExtraPassword),

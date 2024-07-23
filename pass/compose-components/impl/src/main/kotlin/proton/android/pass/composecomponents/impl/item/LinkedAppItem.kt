@@ -21,6 +21,7 @@ package proton.android.pass.composecomponents.impl.item
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -28,31 +29,44 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.AndroidUtils.getApplicationName
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.Circle
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
+import proton.android.pass.composecomponents.impl.item.details.modifiers.contentDiff
 import proton.android.pass.composecomponents.impl.item.icon.LinkedAppIcon
+import proton.android.pass.domain.ItemDiffType
 
 @Composable
 fun LinkedAppItem(
     modifier: Modifier = Modifier,
     packageInfoUi: PackageInfoUi,
     isEditable: Boolean,
-    onLinkedAppDelete: (PackageInfoUi) -> Unit
+    onLinkedAppDelete: (PackageInfoUi) -> Unit,
+    itemDiffType: ItemDiffType = ItemDiffType.None
 ) {
     Row(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .contentDiff(itemDiffType)
+            .applyIf(
+                condition = itemDiffType == ItemDiffType.Field,
+                ifTrue = {
+                    padding(all = Spacing.small)
+                }
+            ),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(10.dp)
+        horizontalArrangement = Arrangement.spacedBy(space = Spacing.mediumSmall)
     ) {
         val context = LocalContext.current
         val appName = remember(packageInfoUi.packageName) {
@@ -75,11 +89,18 @@ fun LinkedAppItem(
                 }
             }
         )
+
         Text(
             modifier = Modifier.weight(1f),
             text = appName,
-            style = ProtonTheme.typography.defaultNorm
+            style = ProtonTheme.typography.defaultNorm,
+            color = if (itemDiffType == ItemDiffType.Content) {
+                PassTheme.colors.signalWarning
+            } else {
+                Color.Unspecified
+            }
         )
+
         if (isEditable) {
             SmallCrossIconButton { onLinkedAppDelete(packageInfoUi) }
         }

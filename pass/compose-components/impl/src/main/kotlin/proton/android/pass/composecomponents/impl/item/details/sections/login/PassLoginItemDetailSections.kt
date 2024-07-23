@@ -33,7 +33,6 @@ import proton.android.pass.common.api.PasswordStrength
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.UIPasskeyContent
-import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
 import proton.android.pass.composecomponents.impl.item.details.PassItemDetailsUiEvent
 import proton.android.pass.composecomponents.impl.item.details.sections.login.passkeys.PasskeysSection
 import proton.android.pass.composecomponents.impl.item.details.sections.shared.PassItemDetailsHistorySection
@@ -137,10 +136,12 @@ internal fun PassLoginItemDetailSections(
             val mapped = remember(packageInfoSet.hashCode()) {
                 packageInfoSet.map { PackageInfoUi(it) }.toPersistentSet()
             }
-            LinkedAppsListSection(
+
+            PassLoginItemDetailLinkedAppsSection(
                 packageInfoUiSet = mapped,
                 isEditable = false,
-                onLinkedAppDelete = {}
+                onLinkedAppDelete = {},
+                itemDiffs = itemDiffs
             )
         }
 

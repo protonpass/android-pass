@@ -41,9 +41,12 @@ import proton.android.pass.domain.HiddenState
 import proton.android.pass.domain.Item
 import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemCustomFieldSection
+import proton.android.pass.domain.ItemDiffType
 import proton.android.pass.domain.ItemDiffs
 import proton.android.pass.domain.ItemState
+import proton.android.pass.domain.Passkey
 import proton.android.pass.domain.Totp
+import proton.android.pass.domain.entity.PackageInfo
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -187,7 +190,6 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
         baseItemContents: ItemContents.Login,
         otherItemContents: ItemContents.Login
     ): ItemDiffs = encryptionContextProvider.withEncryptionContext {
-        baseItemContents.itemEmail
         ItemDiffs.Login(
             title = calculateItemDiffType(
                 baseItemFieldValue = baseItemContents.title,
@@ -219,6 +221,10 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
                 baseItemFieldValues = baseItemContents.urls,
                 otherItemFieldValues = otherItemContents.urls
             ),
+            linkedApps = calculateItemDiffTypes(
+                basePackagesInfo = baseItemContents.packageInfoSet,
+                otherPackagesInfo = otherItemContents.packageInfoSet
+            ),
             customFields = calculateItemDiffTypes(
                 encryptionContext = this@withEncryptionContext,
                 baseItemCustomFieldsContent = baseItemContents.customFields,
@@ -229,6 +235,50 @@ class LoginItemDetailsHandlerObserverImpl @Inject constructor(
                 otherItemPasskeys = otherItemContents.passkeys
             )
         )
+    }
+
+    private fun calculateItemDiffTypes(
+        baseItemPasskeys: List<Passkey>,
+        otherItemPasskeys: List<Passkey>
+    ): Map<String, ItemDiffType> = otherItemPasskeys
+        .map { otherPasskey -> otherPasskey.id }
+        .toSet()
+        .let { otherPasskeysIds ->
+            baseItemPasskeys.associate { basePasskey ->
+                basePasskey.id.value to if (otherPasskeysIds.contains(basePasskey.id)) {
+                    ItemDiffType.None
+                } else {
+                    ItemDiffType.Field
+                }
+            }
+        }
+
+    private fun calculateItemDiffTypes(
+        basePackagesInfo: Set<PackageInfo>,
+        otherPackagesInfo: Set<PackageInfo>
+    ): Pair<ItemDiffType, List<ItemDiffType>> = when {
+        basePackagesInfo.isEmpty() -> {
+            ItemDiffType.None to emptyList()
+        }
+
+        otherPackagesInfo.isEmpty() -> {
+            ItemDiffType.Field to List(basePackagesInfo.size) { ItemDiffType.None }
+        }
+
+        else -> {
+            otherPackagesInfo.associate { otherPackageInfo ->
+                otherPackageInfo.packageName.value to otherPackageInfo.appName.value
+            }.let { otherPackagesInfoValues ->
+                basePackagesInfo.map { basePackageInfo ->
+                    calculateItemDiffType(
+                        baseItemFieldValue = basePackageInfo.appName.value,
+                        otherItemFieldValue = otherPackagesInfoValues[basePackageInfo.packageName.value].orEmpty()
+                    )
+                }
+            }.let { itemDiffTypes ->
+                ItemDiffType.None to itemDiffTypes
+            }
+        }
     }
 
 }

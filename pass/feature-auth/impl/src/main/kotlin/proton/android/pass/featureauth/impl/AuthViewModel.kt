@@ -159,14 +159,15 @@ class AuthViewModel @Inject constructor(
         userId ?: primaryAccountUserId
     }
 
-    private val remainingPasswordAttemptCountFlow = accountManager.getPrimaryAccount().map { it?.userId }
-        .filterNotNull()
-        .flatMapLatest { internalSettingsRepository.getMasterPasswordAttemptsCount(it) }
-        .map {
-            (MAX_WRONG_PASSWORD_ATTEMPTS - it).takeIf { attempts ->
-                attempts > 0 && attempts != MAX_WRONG_PASSWORD_ATTEMPTS
-            }.toOption()
-        }
+    private val remainingPasswordAttemptCountFlow =
+        accountManager.getPrimaryAccount().map { it?.userId }
+            .filterNotNull()
+            .flatMapLatest { internalSettingsRepository.getMasterPasswordAttemptsCount(it) }
+            .map {
+                (MAX_WRONG_PASSWORD_ATTEMPTS - it).takeIf { attempts ->
+                    attempts > 0 && attempts != MAX_WRONG_PASSWORD_ATTEMPTS
+                }.toOption()
+            }
 
     val state: StateFlow<AuthState> = combineN(
         eventFlow,
@@ -256,7 +257,7 @@ class AuthViewModel @Inject constructor(
 
     fun onSubmit(hasExtraPassword: Boolean) {
         val password = formContentFlow.value.password
-        if (!isPasswordValid(password)) return
+        if (isPasswordEmpty(password)) return
         formContentFlow.update {
             it.copy(
                 isPasswordVisible = false, // Hide password on submit by default
@@ -355,14 +356,17 @@ class AuthViewModel @Inject constructor(
                 val remainingAttempts = MAX_WRONG_PASSWORD_ATTEMPTS - currentFailedAttempts - 1
                 if (remainingAttempts <= 0) {
                     snackbarDispatcher(AuthTooManyAttemptsError)
+                    delay(WRONG_PASSWORD_DELAY_SECONDS)
                     internalSettingsRepository.setMasterPasswordAttemptsCount(
                         userId = userId,
                         count = currentFailedAttempts + 1
                     )
-                    delay(WRONG_PASSWORD_DELAY_SECONDS)
-                    state.value.content.userId.value()?.let {
-                        updateAuthEventFlow(AuthEvent.ForceSignOut(it))
-                    }
+                    updateAuthEventFlow(AuthEvent.ForceSignOut(userId))
+                } else {
+                    internalSettingsRepository.setMasterPasswordAttemptsCount(
+                        userId = userId,
+                        count = currentFailedAttempts + 1
+                    )
                 }
             }
 
@@ -374,13 +378,13 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    private fun isPasswordValid(password: String): Boolean = if (password.isEmpty()) {
+    private fun isPasswordEmpty(password: String): Boolean = if (password.isEmpty()) {
         formContentFlow.update {
             it.copy(passwordError = PasswordError.EmptyPassword.some())
         }
-        false
-    } else {
         true
+    } else {
+        false
     }
 
     private fun submitMasterPassword(password: String) {
@@ -394,23 +398,26 @@ class AuthViewModel @Inject constructor(
                         val currentFailedAttempts = internalSettingsRepository
                             .getMasterPasswordAttemptsCount(userId)
                             .first()
-                        val remainingAttempts = MAX_WRONG_PASSWORD_ATTEMPTS - currentFailedAttempts - 1
+                        val remainingAttempts =
+                            MAX_WRONG_PASSWORD_ATTEMPTS - currentFailedAttempts - 1
                         if (remainingAttempts <= 0) {
                             snackbarDispatcher(AuthTooManyAttemptsError)
+                            PassLogger.w(TAG, "Too many wrong attempts, logging user out")
+                            delay(WRONG_PASSWORD_DELAY_SECONDS)
                             internalSettingsRepository.setMasterPasswordAttemptsCount(
                                 userId = userId,
                                 count = currentFailedAttempts + 1
                             )
-                            PassLogger.w(TAG, "Too many wrong attempts, logging user out")
-                            delay(WRONG_PASSWORD_DELAY_SECONDS)
-                            state.value.content.userId.value()?.let {
-                                updateAuthEventFlow(AuthEvent.ForceSignOut(it))
-                            }
+                            updateAuthEventFlow(AuthEvent.ForceSignOut(userId))
                         } else {
                             delay(WRONG_PASSWORD_DELAY_SECONDS)
                             formContentFlow.update {
                                 it.copy(passwordError = PasswordError.IncorrectPassword.some())
                             }
+                            internalSettingsRepository.setMasterPasswordAttemptsCount(
+                                userId = userId,
+                                count = currentFailedAttempts + 1
+                            )
                             PassLogger.i(
                                 TAG,
                                 "Wrong password. Remaining attempts: $remainingAttempts"

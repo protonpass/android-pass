@@ -92,8 +92,6 @@ sealed interface ProfileNavigation {
 
     data object SecureLinks : ProfileNavigation
 
-    data object Aliases : ProfileNavigation
-
     @JvmInline
     value class UpsellSecureLinks(val paidFeature: PaidFeature) : ProfileNavigation
 
@@ -112,6 +110,10 @@ sealed interface ProfileNavigation {
     value class OnSwitchAccount(val userId: UserId) : ProfileNavigation
 
     data object SyncDialog : ProfileNavigation
+
+    data object AliasesDetail : ProfileNavigation
+
+    data object AliasesSync : ProfileNavigation
 
 }
 

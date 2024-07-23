@@ -63,7 +63,8 @@ internal data class ProfileUiState(
     val isSecureLinksEnabled: Boolean,
     val isAccountSwitchEnabled: Boolean,
     val secureLinksCount: Int,
-    val accounts: ImmutableList<AccountListItem>
+    val accounts: ImmutableList<AccountListItem>,
+    val isSimpleLoginAliasesSyncEnabled: Boolean
 ) {
 
     internal companion object {
@@ -82,7 +83,8 @@ internal data class ProfileUiState(
             isSecureLinksEnabled = false,
             isAccountSwitchEnabled = false,
             secureLinksCount = 0,
-            accounts = persistentListOf()
+            accounts = persistentListOf(),
+            isSimpleLoginAliasesSyncEnabled = false
         )
 
     }

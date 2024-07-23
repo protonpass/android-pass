@@ -31,10 +31,7 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.setting.SettingOption
 
 @Composable
-internal fun ProfileAliasesSection(
-    modifier: Modifier = Modifier,
-    onclick: () -> Unit
-) {
+internal fun ProfileAliasesSection(modifier: Modifier = Modifier, onclick: () -> Unit) {
     Column(
         modifier = modifier.roundedContainerNorm()
     ) {
@@ -46,9 +43,7 @@ internal fun ProfileAliasesSection(
 }
 
 @[Preview Composable]
-internal fun ProfileAliasesSectionRowPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+internal fun ProfileAliasesSectionRowPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
             ProfileAliasesSection(

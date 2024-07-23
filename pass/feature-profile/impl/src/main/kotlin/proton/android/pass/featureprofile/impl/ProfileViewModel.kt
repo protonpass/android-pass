@@ -197,13 +197,15 @@ class ProfileViewModel @Inject constructor(
         featureFlagsPreferencesRepository[FeatureFlag.IDENTITY_V1],
         featureFlagsPreferencesRepository[FeatureFlag.SECURE_LINK_V1],
         featureFlagsPreferencesRepository[FeatureFlag.ACCOUNT_SWITCH_V1],
+        featureFlagsPreferencesRepository[FeatureFlag.SL_ALIASES_SYNC],
         ::FeatureFlags
     )
 
     private data class FeatureFlags(
         val isIdentityEnabled: Boolean,
         val isSecureLinksEnabled: Boolean,
-        val isAccountSwitchEnabled: Boolean
+        val isAccountSwitchEnabled: Boolean,
+        val isSimpleLoginAliasesSyncEnabled: Boolean
     )
 
     private val accountItemsFlow = accountManager.getAccounts()
@@ -277,7 +279,8 @@ class ProfileViewModel @Inject constructor(
             isSecureLinksEnabled = flags.isSecureLinksEnabled,
             isAccountSwitchEnabled = flags.isAccountSwitchEnabled,
             secureLinksCount = secureLinksCount,
-            accounts = accounts
+            accounts = accounts,
+            isSimpleLoginAliasesSyncEnabled = flags.isSimpleLoginAliasesSyncEnabled
         )
     }.stateIn(
         scope = viewModelScope,

@@ -25,12 +25,14 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.autofill.fakes.TestAutofillManager
 import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.TestBiometryManager
+import proton.android.pass.biometry.TestStoreAuthSuccessful
 import proton.android.pass.common.api.None
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.data.fakes.usecases.TestObserveUserAccessData
@@ -57,6 +59,8 @@ class OnBoardingViewModelTest {
     private lateinit var biometryManager: TestBiometryManager
     private lateinit var autofillManager: TestAutofillManager
     private lateinit var observeUserAccessData: TestObserveUserAccessData
+    private lateinit var accountManager: TestAccountManager
+    private lateinit var storeAuthSuccessful: TestStoreAuthSuccessful
 
     @Before
     fun setUp() {
@@ -65,6 +69,8 @@ class OnBoardingViewModelTest {
         biometryManager = TestBiometryManager()
         autofillManager = TestAutofillManager()
         observeUserAccessData = TestObserveUserAccessData()
+        accountManager = TestAccountManager()
+        storeAuthSuccessful = TestStoreAuthSuccessful()
     }
 
     @Test
@@ -361,6 +367,8 @@ class OnBoardingViewModelTest {
         biometryManager = biometryManager,
         userPreferencesRepository = preferenceRepository,
         snackbarDispatcher = snackbarMessageRepository,
-        observeUserAccessData = observeUserAccessData
+        observeUserAccessData = observeUserAccessData,
+        accountManager = accountManager,
+        storeAuthSuccessful = storeAuthSuccessful
     )
 }

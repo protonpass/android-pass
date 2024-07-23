@@ -50,12 +50,6 @@ enum class AuthMethod {
     Fingerprint
 }
 
-sealed interface AuthError {
-    @JvmInline
-    value class WrongPassword(val remainingAttempts: Option<Int>) : AuthError
-    data object UnknownError : AuthError
-}
-
 sealed interface PasswordError {
     data object EmptyPassword : PasswordError
 }
@@ -66,7 +60,7 @@ data class AuthStateContent(
     val address: Option<String>,
     val isLoadingState: IsLoadingState,
     val isPasswordVisible: Boolean,
-    val error: Option<AuthError>,
+    val remainingPasswordAttempts: Option<Int>,
     val passwordError: Option<PasswordError>,
     val authMethod: Option<AuthMethod>,
     val showExtraPassword: LoadingResult<Boolean>,
@@ -82,7 +76,7 @@ data class AuthStateContent(
             address = address,
             isLoadingState = IsLoadingState.NotLoading,
             isPasswordVisible = false,
-            error = None,
+            remainingPasswordAttempts = None,
             passwordError = None,
             authMethod = None,
             accountSwitcherState = AccountSwitcherState(

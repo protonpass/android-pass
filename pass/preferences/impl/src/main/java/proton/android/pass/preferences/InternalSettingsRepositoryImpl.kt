@@ -124,14 +124,20 @@ class InternalSettingsRepositoryImpl @Inject constructor(
         SelectedVaultPreference.fromValue(vault)
     }
 
-    override fun setPinAttemptsCount(count: Int): Result<Unit> = setPreference {
-        it.setPinAttempts(count)
+    override fun setPinAttemptsCount(userId: UserId, count: Int): Result<Unit> = setPreference {
+        it.putPinAttemptsPerUser(userId.id, count)
     }
 
-    override fun getPinAttemptsCount(): Flow<Int> = getPreference { it.pinAttempts }
+    override fun getPinAttemptsCount(userId: UserId): Flow<Int> = getPreference {
+        it.getPinAttemptsPerUserOrDefault(userId.id, 0)
+    }
 
-    override fun getMasterPasswordAttemptsCount(): Flow<Int> = getPreference {
-        it.masterPasswordAttempts
+    override fun getMasterPasswordAttemptsCount(userId: UserId): Flow<Int> = getPreference {
+        it.getMasterPasswordAttemptsPerUserOrDefault(userId.id, 0)
+    }
+
+    override fun setMasterPasswordAttemptsCount(userId: UserId, count: Int): Result<Unit> = setPreference {
+        it.putMasterPasswordAttemptsPerUser(userId.id, count)
     }
 
     override fun setItemCreateCount(count: Int): Result<Unit> = setPreference {
@@ -179,10 +185,6 @@ class InternalSettingsRepositoryImpl @Inject constructor(
 
     override fun getDarkWebAliasMessageVisibility(): Flow<IsDarkWebAliasMessageDismissedPreference> = getPreference {
         IsDarkWebAliasMessageDismissedPreference.from(it.darkWebAliasMessageDismissed)
-    }
-
-    override fun setMasterPasswordAttemptsCount(count: Int): Result<Unit> = setPreference {
-        it.setMasterPasswordAttempts(count)
     }
 
     override fun setLastItemAutofill(lastItemAutofillPreference: LastItemAutofillPreference): Result<Unit> =

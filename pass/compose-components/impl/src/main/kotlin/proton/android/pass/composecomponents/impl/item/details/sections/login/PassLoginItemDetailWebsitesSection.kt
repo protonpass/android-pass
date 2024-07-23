@@ -58,7 +58,7 @@ internal fun PassLoginItemDetailWebsitesSection(
     itemDiffs: ItemDiffs.Login,
     onEvent: (PassItemDetailsUiEvent) -> Unit
 ) {
-    val (webSectionItemDiffType, webFieldsItemDiffTypes) = remember { itemDiffs.urls }
+    val (webSectionItemDiffType, webFieldsItemDiffTypes) = remember(itemDiffs) { itemDiffs.urls }
 
     RoundedCornersColumn(
         modifier = modifier

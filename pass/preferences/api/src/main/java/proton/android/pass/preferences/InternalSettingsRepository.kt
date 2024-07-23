@@ -51,9 +51,11 @@ interface InternalSettingsRepository {
 
     fun setPinAttemptsCount(userId: UserId, count: Int): Result<Unit>
     fun getPinAttemptsCount(userId: UserId): Flow<Int>
+    fun clearPinAttemptsCount(): Result<Unit>
 
     fun setMasterPasswordAttemptsCount(userId: UserId, count: Int): Result<Unit>
     fun getMasterPasswordAttemptsCount(userId: UserId): Flow<Int>
+    fun clearMasterPasswordAttemptsCount(): Result<Unit>
 
     fun setItemCreateCount(count: Int): Result<Unit>
     fun getItemCreateCount(): Flow<Int>

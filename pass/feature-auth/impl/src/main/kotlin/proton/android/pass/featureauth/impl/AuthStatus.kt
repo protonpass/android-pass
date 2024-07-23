@@ -51,6 +51,7 @@ enum class AuthMethod {
 }
 
 sealed interface PasswordError {
+    data object IncorrectPassword : PasswordError
     data object EmptyPassword : PasswordError
 }
 

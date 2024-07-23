@@ -337,14 +337,28 @@ class AuthViewModel @Inject constructor(
             }
 
             is WrongExtraPasswordException -> {
+                formContentFlow.update {
+                    it.copy(passwordError = PasswordError.IncorrectPassword.some())
+                }
                 PassLogger.w(TAG, "Wrong extra password")
             }
 
             is WrongLocalCheckExtraPasswordException -> {
+                formContentFlow.update {
+                    it.copy(passwordError = PasswordError.IncorrectPassword.some())
+                }
                 PassLogger.w(TAG, "Wrong local extra password")
-                val remainingAttempts = incrementAttemptAndReturnRemaining()
+                val userId = currentUserId.firstOrNull() ?: throw UserIdNotAvailableError()
+                val currentFailedAttempts = internalSettingsRepository
+                    .getMasterPasswordAttemptsCount(userId)
+                    .first()
+                val remainingAttempts = MAX_WRONG_PASSWORD_ATTEMPTS - currentFailedAttempts - 1
                 if (remainingAttempts <= 0) {
                     snackbarDispatcher(AuthTooManyAttemptsError)
+                    internalSettingsRepository.setMasterPasswordAttemptsCount(
+                        userId = userId,
+                        count = currentFailedAttempts + 1
+                    )
                     delay(WRONG_PASSWORD_DELAY_SECONDS)
                     state.value.content.userId.value()?.let {
                         updateAuthEventFlow(AuthEvent.ForceSignOut(it))
@@ -376,16 +390,27 @@ class AuthViewModel @Inject constructor(
                     if (isPasswordRight) {
                         onAuthenticatedWithMasterPassword()
                     } else {
-                        val remainingAttempts = incrementAttemptAndReturnRemaining()
+                        val userId = currentUserId.firstOrNull() ?: throw UserIdNotAvailableError()
+                        val currentFailedAttempts = internalSettingsRepository
+                            .getMasterPasswordAttemptsCount(userId)
+                            .first()
+                        val remainingAttempts = MAX_WRONG_PASSWORD_ATTEMPTS - currentFailedAttempts - 1
                         if (remainingAttempts <= 0) {
-                            PassLogger.w(TAG, "Too many wrong attempts, logging user out")
                             snackbarDispatcher(AuthTooManyAttemptsError)
+                            internalSettingsRepository.setMasterPasswordAttemptsCount(
+                                userId = userId,
+                                count = currentFailedAttempts + 1
+                            )
+                            PassLogger.w(TAG, "Too many wrong attempts, logging user out")
                             delay(WRONG_PASSWORD_DELAY_SECONDS)
                             state.value.content.userId.value()?.let {
                                 updateAuthEventFlow(AuthEvent.ForceSignOut(it))
                             }
                         } else {
                             delay(WRONG_PASSWORD_DELAY_SECONDS)
+                            formContentFlow.update {
+                                it.copy(passwordError = PasswordError.IncorrectPassword.some())
+                            }
                             PassLogger.i(
                                 TAG,
                                 "Wrong password. Remaining attempts: $remainingAttempts"
@@ -408,18 +433,6 @@ class AuthViewModel @Inject constructor(
         }
         formContentFlow.update { it.copy(password = "", isPasswordVisible = false) }
         updateAuthEventFlow(AuthEvent.Success(origin))
-    }
-
-    private suspend fun incrementAttemptAndReturnRemaining(): Int {
-        val userId = currentUserId.firstOrNull() ?: throw UserIdNotAvailableError()
-        val currentFailedAttempts = internalSettingsRepository
-            .getMasterPasswordAttemptsCount(userId)
-            .first()
-        internalSettingsRepository.setMasterPasswordAttemptsCount(
-            userId = userId,
-            count = currentFailedAttempts + 1
-        )
-        return MAX_WRONG_PASSWORD_ATTEMPTS - currentFailedAttempts - 1
     }
 
     fun onSignOut() = viewModelScope.launch {

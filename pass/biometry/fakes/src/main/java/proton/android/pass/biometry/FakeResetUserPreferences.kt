@@ -18,9 +18,8 @@
 
 package proton.android.pass.biometry
 
-import me.proton.core.domain.entity.UserId
 import javax.inject.Inject
 
-class TestStoreAuthSuccessful @Inject constructor() : StoreAuthSuccessful {
-    override fun invoke(userId: UserId, resetAttempts: Boolean) {}
+class FakeResetUserPreferences @Inject constructor() : ResetUserPreferences {
+    override fun invoke() {}
 }

@@ -57,4 +57,7 @@ sealed interface ProfileUiEvent {
     data object OnUpgradeClick : ProfileUiEvent
 
     data object OnSecureLinksClicked : ProfileUiEvent
+
+    data object OnAliasesClicked : ProfileUiEvent
+
 }

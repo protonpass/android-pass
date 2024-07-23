@@ -16,55 +16,68 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.security.center.home.ui
+package proton.android.pass.featureprofile.impl
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.composecomponents.impl.icon.PassPlusIcon
 import proton.android.pass.composecomponents.impl.widgets.PassSingleActionWidget
-import proton.android.pass.features.security.center.R
 import proton.android.pass.composecomponents.impl.R as CompR
+import me.proton.core.presentation.R as CoreR
 
-@[Composable Suppress("FunctionMaxLength")]
-internal fun SecurityCenterHomeNoDataBreachesWidget(modifier: Modifier = Modifier, onActionClick: () -> Unit) {
+@Composable
+internal fun ProfileAliasesWidget(
+    modifier: Modifier = Modifier,
+    onActionClick: () -> Unit,
+    onCloseClick: () -> Unit
+) {
     PassSingleActionWidget(
-        modifier = modifier,
-        title = stringResource(id = R.string.security_center_home_dark_web_monitoring_title),
-        message = stringResource(id = R.string.security_center_home_widget_no_breaches_subtitle),
-        actionText = stringResource(id = CompR.string.action_enable),
+        modifier = modifier.padding(horizontal = Spacing.medium),
+        title = stringResource(id = CompR.string.simple_login_widget_title),
+        message = stringResource(id = CompR.string.simple_login_widget_message),
+        actionText = stringResource(id = CompR.string.simple_login_widget_action),
         onActionClick = onActionClick,
         topRightIcon = {
-            PassPlusIcon(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        top = Spacing.small,
-                        end = Spacing.small
-                    ),
-                alignment = Alignment.CenterEnd
-            )
+            Box(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                IconButton(
+                    modifier = Modifier.align(Alignment.CenterEnd),
+                    onClick = onCloseClick
+                ) {
+                    Icon(
+                        painter = painterResource(id = CoreR.drawable.ic_close),
+                        tint = PassTheme.colors.textWeak,
+                        contentDescription = stringResource(
+                            id = CompR.string.simple_login_widget_close_content_description
+                        )
+                    )
+                }
+            }
         }
     )
 }
 
-@[Preview Composable Suppress("FunctionMaxLength")]
-internal fun SecurityCenterHomeNoDataBreachesWidgetPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
+@[Preview Composable]
+internal fun ProfileAliasesWidgetPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
     PassTheme(isDark = isDark) {
         Surface {
-            SecurityCenterHomeNoDataBreachesWidget(
-                onActionClick = {}
+            ProfileAliasesWidget(
+                onActionClick = {},
+                onCloseClick = {}
             )
         }
     }

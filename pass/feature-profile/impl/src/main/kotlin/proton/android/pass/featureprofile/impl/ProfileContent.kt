@@ -125,6 +125,7 @@ internal fun ProfileContent(
                         }
                     )
                 }
+
                 ItemSummary(
                     modifier = Modifier.padding(
                         horizontal = Spacing.none,
@@ -133,6 +134,14 @@ internal fun ProfileContent(
                     isIdentityEnabled = state.isIdentityEnabled,
                     itemSummaryUiState = state.itemSummaryUiState
                 )
+
+                if (state.isSimpleLoginAliasesSyncEnabled) {
+                    ProfileAliasesWidget(
+                        onActionClick = { onEvent(ProfileUiEvent.OnSyncAliasesClicked) },
+                        onCloseClick = { onEvent(ProfileUiEvent.OnCloseAliasesWidgetClicked) }
+                    )
+                }
+
                 Column(
                     modifier = Modifier.padding(all = Spacing.medium),
                     verticalArrangement = Arrangement.spacedBy(Spacing.medium)
@@ -175,12 +184,14 @@ internal fun ProfileContent(
                         onAccountClick = { onEvent(ProfileUiEvent.OnAccountClick) },
                         onSettingsClick = { onEvent(ProfileUiEvent.OnSettingsClick) }
                     )
+
                     HelpCenterProfileSection(
                         onFeedbackClick = { onEvent(ProfileUiEvent.OnFeedbackClick) },
                         onImportExportClick = { onEvent(ProfileUiEvent.OnImportExportClick) },
                         onRateAppClick = { onEvent(ProfileUiEvent.OnRateAppClick) },
                         onTutorialClick = { onEvent(ProfileUiEvent.OnTutorialClick) }
                     )
+
                     Box(
                         modifier = Modifier
                             .combinedClickable(

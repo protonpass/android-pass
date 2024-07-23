@@ -86,7 +86,6 @@ class BiometryManagerImpl @Inject constructor(
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     PassLogger.i(TAG, "Auth succeeded")
-                    storeAuthSuccessful()
                     trySend(BiometryResult.Success)
                     close()
                 }

@@ -30,6 +30,6 @@ class ResetUserPreferencesImpl @Inject constructor(
     override fun invoke() {
         userPreferencesRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
         internalSettingsRepository.clearMasterPasswordAttemptsCount()
-        internalSettingsRepository.clearPinAttemptsCount()
+        internalSettingsRepository.setPinAttemptsCount(0)
     }
 }

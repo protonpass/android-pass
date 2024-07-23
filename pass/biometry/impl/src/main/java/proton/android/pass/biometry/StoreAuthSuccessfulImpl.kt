@@ -18,6 +18,7 @@
 
 package proton.android.pass.biometry
 
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.some
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.InternalSettingsRepository
@@ -31,11 +32,11 @@ class StoreAuthSuccessfulImpl @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository,
     private val internalSettingsRepository: InternalSettingsRepository
 ) : StoreAuthSuccessful {
-    override fun invoke(resetAttempts: Boolean) {
+    override fun invoke(userId: UserId, resetAttempts: Boolean) {
         userPreferencesRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
         if (resetAttempts) {
-            internalSettingsRepository.setMasterPasswordAttemptsCount(0)
-            internalSettingsRepository.setPinAttemptsCount(0)
+            internalSettingsRepository.setMasterPasswordAttemptsCount(userId, 0)
+            internalSettingsRepository.setPinAttemptsCount(userId, 0)
         }
         biometryAuthTimeHolder.storeBiometryAuthData(
             AuthData(

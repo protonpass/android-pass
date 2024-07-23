@@ -29,6 +29,7 @@ import proton.android.pass.preferences.FeatureFlag.IDENTITY_V1
 import proton.android.pass.preferences.FeatureFlag.SECURE_LINK_V1
 import proton.android.pass.preferences.FeatureFlag.SECURITY_CENTER_V1
 import proton.android.pass.preferences.FeatureFlag.USERNAME_SPLIT
+import proton.android.pass.preferences.FeatureFlag.SL_ALIASES_SYNC
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -49,6 +50,7 @@ class TestFeatureFlagsPreferenceRepository @Inject constructor() :
             ACCESS_KEY_V1 -> it.getOrDefault(ACCESS_KEY_V1, false) as T
             SECURE_LINK_V1 -> it.getOrDefault(SECURE_LINK_V1, false) as T
             ACCOUNT_SWITCH_V1 -> it.getOrDefault(ACCOUNT_SWITCH_V1, false) as T
+            SL_ALIASES_SYNC -> it.getOrDefault(ACCOUNT_SWITCH_V1, false) as T
         }
     }
 

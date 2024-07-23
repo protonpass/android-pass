@@ -157,17 +157,15 @@ class AuthViewModel @Inject constructor(
         accountManager.getPrimaryAccount().map { it?.userId }
     ) { userId, primaryAccountUserId ->
         userId ?: primaryAccountUserId
-    }
+    }.filterNotNull()
 
-    private val remainingPasswordAttemptCountFlow =
-        accountManager.getPrimaryAccount().map { it?.userId }
-            .filterNotNull()
-            .flatMapLatest { internalSettingsRepository.getMasterPasswordAttemptsCount(it) }
-            .map {
-                (MAX_WRONG_PASSWORD_ATTEMPTS - it).takeIf { attempts ->
-                    attempts > 0 && attempts != MAX_WRONG_PASSWORD_ATTEMPTS
-                }.toOption()
-            }
+    private val remainingPasswordAttemptCountFlow = currentUserId
+        .flatMapLatest { internalSettingsRepository.getMasterPasswordAttemptsCount(it) }
+        .map {
+            (MAX_WRONG_PASSWORD_ATTEMPTS - it).takeIf { attempts ->
+                attempts > 0 && attempts != MAX_WRONG_PASSWORD_ATTEMPTS
+            }.toOption()
+        }
 
     val state: StateFlow<AuthState> = combineN(
         eventFlow,
@@ -346,9 +344,6 @@ class AuthViewModel @Inject constructor(
             }
 
             is WrongLocalCheckExtraPasswordException -> {
-                formContentFlow.update {
-                    it.copy(passwordError = PasswordError.IncorrectPassword.some())
-                }
                 PassLogger.w(TAG, "Wrong local extra password")
                 val userId = currentUserId.firstOrNull() ?: throw UserIdNotAvailableError()
                 val currentFailedAttempts = internalSettingsRepository
@@ -358,17 +353,11 @@ class AuthViewModel @Inject constructor(
                 if (remainingAttempts <= 0) {
                     snackbarDispatcher(AuthTooManyAttemptsError)
                     delay(WRONG_PASSWORD_DELAY_SECONDS)
-                    internalSettingsRepository.setMasterPasswordAttemptsCount(
-                        userId = userId,
-                        count = currentFailedAttempts + 1
-                    )
+                    setIncorrectPasswordData(userId, currentFailedAttempts)
                     updateAuthEventFlow(AuthEvent.ForceSignOut(userId))
                 } else {
                     delay(WRONG_PASSWORD_DELAY_SECONDS)
-                    internalSettingsRepository.setMasterPasswordAttemptsCount(
-                        userId = userId,
-                        count = currentFailedAttempts + 1
-                    )
+                    setIncorrectPasswordData(userId, currentFailedAttempts)
                 }
             }
 
@@ -377,6 +366,16 @@ class AuthViewModel @Inject constructor(
                 PassLogger.w(TAG, err)
                 snackbarDispatcher(AuthExtraPasswordError)
             }
+        }
+    }
+
+    private fun setIncorrectPasswordData(userId: UserId, currentFailedAttempts: Int) {
+        internalSettingsRepository.setMasterPasswordAttemptsCount(
+            userId = userId,
+            count = currentFailedAttempts + 1
+        )
+        formContentFlow.update {
+            it.copy(passwordError = PasswordError.IncorrectPassword.some())
         }
     }
 

@@ -37,6 +37,7 @@ import proton.android.pass.preferences.FeatureFlag.AUTOFILL_DEBUG_MODE
 import proton.android.pass.preferences.FeatureFlag.IDENTITY_V1
 import proton.android.pass.preferences.FeatureFlag.SECURE_LINK_V1
 import proton.android.pass.preferences.FeatureFlag.SECURITY_CENTER_V1
+import proton.android.pass.preferences.FeatureFlag.SL_ALIASES_SYNC
 import proton.android.pass.preferences.FeatureFlag.USERNAME_SPLIT
 import java.io.IOException
 import javax.inject.Inject
@@ -85,6 +86,11 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
             key = featureFlag.key,
             defaultValue = featureFlag.isEnabledDefault
         ) { accountSwitchV1Enabled.value }
+
+        SL_ALIASES_SYNC -> getFeatureFlag(
+            key = featureFlag.key,
+            defaultValue = featureFlag.isEnabledDefault
+        ) { simpleLoginAliasesSyncEnabled.value }
     }
 
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> = when (featureFlag) {
@@ -114,6 +120,10 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
 
         ACCOUNT_SWITCH_V1 -> setFeatureFlag {
             accountSwitchV1Enabled = boolFlagPrefProto(value)
+        }
+
+        SL_ALIASES_SYNC -> setFeatureFlag {
+            simpleLoginAliasesSyncEnabled = boolFlagPrefProto(value)
         }
     }
 

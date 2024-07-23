@@ -24,7 +24,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import proton.android.pass.common.api.combineN
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
@@ -35,23 +34,25 @@ class FeatureFlagsViewModel @Inject constructor(
     private val ffRepository: FeatureFlagsPreferencesRepository
 ) : ViewModel() {
 
-    val state: StateFlow<Map<FeatureFlag, Boolean>> =
+    internal val state: StateFlow<Map<FeatureFlag, Boolean>> =
         combineN(
             ffRepository.get<Boolean>(FeatureFlag.SECURITY_CENTER_V1),
             ffRepository.get<Boolean>(FeatureFlag.IDENTITY_V1),
             ffRepository.get<Boolean>(FeatureFlag.USERNAME_SPLIT),
             ffRepository.get<Boolean>(FeatureFlag.ACCESS_KEY_V1),
             ffRepository.get<Boolean>(FeatureFlag.SECURE_LINK_V1),
-            ffRepository.get<Boolean>(FeatureFlag.ACCOUNT_SWITCH_V1)
+            ffRepository.get<Boolean>(FeatureFlag.ACCOUNT_SWITCH_V1),
+            ffRepository.get<Boolean>(FeatureFlag.SL_ALIASES_SYNC),
         ) { isSecurityCenterEnabled, isIdentityEnabled, isUsernameSplitEnabled,
-            isAccessKeyEnabled, isSecureLinkEnabled, isAccountSwitchEnabled ->
+            isAccessKeyEnabled, isSecureLinkEnabled, isAccountSwitchEnabled, isSimpleLoginAliasesSyncEnabled ->
             mapOf(
                 FeatureFlag.SECURITY_CENTER_V1 to isSecurityCenterEnabled,
                 FeatureFlag.IDENTITY_V1 to isIdentityEnabled,
                 FeatureFlag.USERNAME_SPLIT to isUsernameSplitEnabled,
                 FeatureFlag.ACCESS_KEY_V1 to isAccessKeyEnabled,
                 FeatureFlag.SECURE_LINK_V1 to isSecureLinkEnabled,
-                FeatureFlag.ACCOUNT_SWITCH_V1 to isAccountSwitchEnabled
+                FeatureFlag.ACCOUNT_SWITCH_V1 to isAccountSwitchEnabled,
+                FeatureFlag.SL_ALIASES_SYNC to isSimpleLoginAliasesSyncEnabled
             )
         }.stateIn(
             scope = viewModelScope,
@@ -59,7 +60,7 @@ class FeatureFlagsViewModel @Inject constructor(
             initialValue = emptyMap()
         )
 
-    fun <T> override(featureFlag: FeatureFlag, value: T) = viewModelScope.launch {
+    internal fun <T> override(featureFlag: FeatureFlag, value: T) {
         ffRepository.set(featureFlag = featureFlag, value = value)
     }
 

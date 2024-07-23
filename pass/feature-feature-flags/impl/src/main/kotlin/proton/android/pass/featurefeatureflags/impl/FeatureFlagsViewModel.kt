@@ -42,7 +42,7 @@ class FeatureFlagsViewModel @Inject constructor(
             ffRepository.get<Boolean>(FeatureFlag.ACCESS_KEY_V1),
             ffRepository.get<Boolean>(FeatureFlag.SECURE_LINK_V1),
             ffRepository.get<Boolean>(FeatureFlag.ACCOUNT_SWITCH_V1),
-            ffRepository.get<Boolean>(FeatureFlag.SL_ALIASES_SYNC),
+            ffRepository.get<Boolean>(FeatureFlag.SL_ALIASES_SYNC)
         ) { isSecurityCenterEnabled, isIdentityEnabled, isUsernameSplitEnabled,
             isAccessKeyEnabled, isSecureLinkEnabled, isAccountSwitchEnabled, isSimpleLoginAliasesSyncEnabled ->
             mapOf(

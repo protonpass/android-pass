@@ -58,6 +58,10 @@ sealed interface ProfileUiEvent {
 
     data object OnSecureLinksClicked : ProfileUiEvent
 
+    data object OnCloseAliasesWidgetClicked : ProfileUiEvent
+
+    data object OnSyncAliasesClicked : ProfileUiEvent
+
     data object OnAliasesClicked : ProfileUiEvent
 
 }

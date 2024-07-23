@@ -18,6 +18,8 @@
 
 package proton.android.pass.biometry
 
+import me.proton.core.domain.entity.UserId
+
 interface StoreAuthSuccessful {
-    operator fun invoke(resetAttempts: Boolean = true)
+    operator fun invoke(userId: UserId, resetAttempts: Boolean)
 }

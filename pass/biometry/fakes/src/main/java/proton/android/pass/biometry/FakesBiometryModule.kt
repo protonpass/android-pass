@@ -40,7 +40,7 @@ abstract class FakesBiometryModule {
     abstract fun bindStoreAuthSuccessful(impl: TestStoreAuthSuccessful): StoreAuthSuccessful
 
     @Binds
-    abstract fun bindResetUserPreferences(impl: FakeResetUserPreferences): ResetUserPreferences
+    abstract fun bindResetAuthPreferences(impl: FakeResetAuthPreferences): ResetAuthPreferences
 
     @Binds
     abstract fun bindExtendAuthTime(impl: FakeExtendAuthTime): ExtendAuthTime

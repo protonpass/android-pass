@@ -65,5 +65,11 @@ enum class FeatureFlag(
         description = "Enable account switch",
         key = "PassAccountSwitchV1",
         isEnabledDefault = false
+    ),
+    SL_ALIASES_SYNC(
+        title = "SL aliases sync",
+        description = "Enable SL aliases sync",
+        key = "PassSimpleLoginAliasesSync",
+        isEnabledDefault = false
     )
 }

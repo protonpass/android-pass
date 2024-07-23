@@ -25,7 +25,6 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.autofill.fakes.TestAutofillManager
@@ -59,7 +58,6 @@ class OnBoardingViewModelTest {
     private lateinit var biometryManager: TestBiometryManager
     private lateinit var autofillManager: TestAutofillManager
     private lateinit var observeUserAccessData: TestObserveUserAccessData
-    private lateinit var accountManager: TestAccountManager
     private lateinit var storeAuthSuccessful: TestStoreAuthSuccessful
 
     @Before
@@ -69,7 +67,6 @@ class OnBoardingViewModelTest {
         biometryManager = TestBiometryManager()
         autofillManager = TestAutofillManager()
         observeUserAccessData = TestObserveUserAccessData()
-        accountManager = TestAccountManager()
         storeAuthSuccessful = TestStoreAuthSuccessful()
     }
 
@@ -368,7 +365,6 @@ class OnBoardingViewModelTest {
         userPreferencesRepository = preferenceRepository,
         snackbarDispatcher = snackbarMessageRepository,
         observeUserAccessData = observeUserAccessData,
-        accountManager = accountManager,
         storeAuthSuccessful = storeAuthSuccessful
     )
 }

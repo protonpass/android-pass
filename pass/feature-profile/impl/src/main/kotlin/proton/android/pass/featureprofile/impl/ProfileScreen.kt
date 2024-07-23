@@ -106,7 +106,11 @@ fun ProfileScreen(
                         ProfileNavigation.SecureLinks
                     }.also(onNavigateEvent)
                 }
-                ProfileUiEvent.OnAliasesClicked -> onNavigateEvent(ProfileNavigation.Aliases)
+                ProfileUiEvent.OnCloseAliasesWidgetClicked -> {
+                    // Will be implemented in IDTEAM-3637
+                }
+                ProfileUiEvent.OnSyncAliasesClicked -> onNavigateEvent(ProfileNavigation.AliasesSync)
+                ProfileUiEvent.OnAliasesClicked -> onNavigateEvent(ProfileNavigation.AliasesDetail)
 
                 AccountSwitchEvent.OnAddAccount -> onNavigateEvent(ProfileNavigation.OnAddAccount)
                 is AccountSwitchEvent.OnRemoveAccount -> onNavigateEvent(ProfileNavigation.OnRemoveAccount(it.userId))

@@ -21,4 +21,5 @@ message FeatureFlagsPreferences {
   BoolFlagPrefProto access_key_v1_enabled = 13;
   BoolFlagPrefProto public_link_v1_enabled = 14;
   BoolFlagPrefProto account_switch_v1_enabled = 15;
+  BoolFlagPrefProto simple_login_aliases_sync_enabled = 16;
 }

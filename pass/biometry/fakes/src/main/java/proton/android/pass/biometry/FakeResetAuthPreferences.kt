@@ -18,18 +18,8 @@
 
 package proton.android.pass.biometry
 
-import proton.android.pass.preferences.HasAuthenticated
-import proton.android.pass.preferences.InternalSettingsRepository
-import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 
-class ResetUserPreferencesImpl @Inject constructor(
-    private val userPreferencesRepository: UserPreferencesRepository,
-    private val internalSettingsRepository: InternalSettingsRepository
-) : ResetUserPreferences {
-    override fun invoke() {
-        userPreferencesRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
-        internalSettingsRepository.clearMasterPasswordAttemptsCount()
-        internalSettingsRepository.setPinAttemptsCount(0)
-    }
+class FakeResetAuthPreferences @Inject constructor() : ResetAuthPreferences {
+    override fun invoke() {}
 }

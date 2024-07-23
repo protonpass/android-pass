@@ -28,6 +28,5 @@ sealed class TotpUriException(message: String) : IllegalArgumentException(messag
     class NoSecret(message: String) : TotpUriException(message)
     class EmptySecret(message: String) : TotpUriException(message)
     class NoQueries(message: String) : TotpUriException(message)
-    class SystemTimeException(message: String) : TotpUriException(message)
     class SecretParseException(message: String) : TotpUriException(message)
 }

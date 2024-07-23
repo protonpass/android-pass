@@ -72,7 +72,7 @@ import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.plan.presentation.onUpgradeResult
 import me.proton.core.report.presentation.ReportOrchestrator
 import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
-import proton.android.pass.biometry.StoreAuthSuccessful
+import proton.android.pass.biometry.ResetUserPreferences
 import proton.android.pass.commonrust.api.CommonLibraryVersionChecker
 import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.data.api.usecases.UserPlanWorkerLauncher
@@ -96,7 +96,7 @@ class LauncherViewModel @Inject constructor(
     private val refreshPlan: RefreshPlan,
     private val inAppUpdatesManager: InAppUpdatesManager,
     private val refreshOrganizationSettings: RefreshOrganizationSettings,
-    private val storeAuthSuccessful: StoreAuthSuccessful,
+    private val resetUserPreferences: ResetUserPreferences,
     private val snackbarDispatcher: SnackbarDispatcher,
     commonLibraryVersionChecker: CommonLibraryVersionChecker
 ) : ViewModel() {
@@ -145,8 +145,8 @@ class LauncherViewModel @Inject constructor(
             .onAccountCreateAddressNeeded { authOrchestrator.startChooseAddressWorkflow(it) }
     }
 
-    internal fun onAccountNeeded() {
-        storeAuthSuccessful(resetAttempts = false)
+    internal fun onAccountNeeded() = viewModelScope.launch {
+        resetUserPreferences()
         userPlanWorkerLauncher.cancel()
         addAccount()
     }

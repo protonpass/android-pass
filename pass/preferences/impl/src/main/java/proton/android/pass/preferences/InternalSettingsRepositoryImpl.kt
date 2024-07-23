@@ -132,8 +132,16 @@ class InternalSettingsRepositoryImpl @Inject constructor(
         it.getPinAttemptsPerUserOrDefault(userId.id, 0)
     }
 
+    override fun clearPinAttemptsCount(userId: UserId): Result<Unit> = setPreference {
+        it.clearPinAttemptsPerUser()
+    }
+
     override fun getMasterPasswordAttemptsCount(userId: UserId): Flow<Int> = getPreference {
         it.getMasterPasswordAttemptsPerUserOrDefault(userId.id, 0)
+    }
+
+    override fun clearMasterPasswordAttemptsCount(): Result<Unit> = setPreference {
+        it.clearMasterPasswordAttemptsPerUser()
     }
 
     override fun setMasterPasswordAttemptsCount(userId: UserId, count: Int): Result<Unit> = setPreference {

@@ -18,8 +18,6 @@
 
 package proton.android.pass.biometry
 
-import javax.inject.Inject
-
-class FakeResetUserPreferences @Inject constructor() : ResetUserPreferences {
-    override fun invoke() {}
+interface ResetAuthPreferences {
+    operator fun invoke()
 }

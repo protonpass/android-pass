@@ -124,16 +124,12 @@ class InternalSettingsRepositoryImpl @Inject constructor(
         SelectedVaultPreference.fromValue(vault)
     }
 
-    override fun setPinAttemptsCount(userId: UserId, count: Int): Result<Unit> = setPreference {
-        it.putPinAttemptsPerUser(userId.id, count)
+    override fun setPinAttemptsCount(count: Int): Result<Unit> = setPreference {
+        it.setPinAttempts(count)
     }
 
-    override fun getPinAttemptsCount(userId: UserId): Flow<Int> = getPreference {
-        it.getPinAttemptsPerUserOrDefault(userId.id, 0)
-    }
-
-    override fun clearPinAttemptsCount(userId: UserId): Result<Unit> = setPreference {
-        it.clearPinAttemptsPerUser()
+    override fun getPinAttemptsCount(): Flow<Int> = getPreference {
+        it.pinAttempts
     }
 
     override fun getMasterPasswordAttemptsCount(userId: UserId): Flow<Int> = getPreference {

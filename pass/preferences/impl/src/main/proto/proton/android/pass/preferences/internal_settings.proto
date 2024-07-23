@@ -13,7 +13,7 @@ message InternalSettings {
   int32 home_sorting_option = 4;
   int32 autofill_sorting_option = 5;
   string selected_vault = 6; // This is now stored in selected_vault_per_user
-  // int32 pin_attempts = 7; This is now stored in pin_attempts_per_user
+  int32 pin_attempts = 7;
   // int32 master_password_attempts = 8; This is now stored in master_password_attempts_per_user
   int32 item_create_count = 9;
   bool in_app_review_triggered = 10;
@@ -23,6 +23,5 @@ message InternalSettings {
   bool dark_web_alias_message_dismissed = 14;
   LastItemAutofill last_item_autofill = 15;
   map<string, string> selected_vault_per_user = 16;
-  map<string, int32> pin_attempts_per_user = 17;
-  map<string, int32> master_password_attempts_per_user = 18;
+  map<string, int32> master_password_attempts_per_user = 17;
 }

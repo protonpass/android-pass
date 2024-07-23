@@ -48,4 +48,8 @@
         <item quantity="one">Incorrect password. %d attempt remaining</item>
         <item quantity="other">Incorrect password. %d attempts remaining</item>
     </plurals>
+    <plurals name="auth_attempts_remaining">
+        <item quantity="one">%d attempt remaining</item>
+        <item quantity="other">%d attempts remaining</item>
+    </plurals>
 </resources>

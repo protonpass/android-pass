@@ -29,7 +29,6 @@ import proton.android.pass.domain.ItemContents
 import proton.android.pass.domain.ItemCustomFieldSection
 import proton.android.pass.domain.ItemDiffType
 import proton.android.pass.domain.ItemDiffs
-import proton.android.pass.domain.Passkey
 
 abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
 
@@ -109,22 +108,6 @@ abstract class ItemDetailsHandlerObserver<in ITEM_CONTENTS : ItemContents> {
             }
         }
     }
-
-    protected fun calculateItemDiffTypes(
-        baseItemPasskeys: List<Passkey>,
-        otherItemPasskeys: List<Passkey>
-    ): Map<String, ItemDiffType> = otherItemPasskeys
-        .map { otherPasskey -> otherPasskey.id }
-        .toSet()
-        .let { otherPasskeysIds ->
-            baseItemPasskeys.associate { basePasskey ->
-                basePasskey.id.value to if (otherPasskeysIds.contains(basePasskey.id)) {
-                    ItemDiffType.None
-                } else {
-                    ItemDiffType.Field
-                }
-            }
-        }
 
     protected fun calculateItemDiffType(
         encryptionContext: EncryptionContext,

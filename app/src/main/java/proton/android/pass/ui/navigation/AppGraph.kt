@@ -646,6 +646,10 @@ fun NavGraphBuilder.appGraph(
                 is ProfileNavigation.OnSignOut -> onNavigate(AppNavigation.SignOut(it.userId))
                 is ProfileNavigation.OnSwitchAccount -> onNavigate(AppNavigation.SwitchAccount(it.userId))
                 ProfileNavigation.SyncDialog -> appNavigator.navigate(SyncNavItem)
+
+                ProfileNavigation.Aliases -> {
+                    // Will be implemented in IDTEAM-3635
+                }
             }
         }
     )

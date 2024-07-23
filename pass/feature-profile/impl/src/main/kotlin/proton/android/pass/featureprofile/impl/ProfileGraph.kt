@@ -92,6 +92,8 @@ sealed interface ProfileNavigation {
 
     data object SecureLinks : ProfileNavigation
 
+    data object Aliases : ProfileNavigation
+
     @JvmInline
     value class UpsellSecureLinks(val paidFeature: PaidFeature) : ProfileNavigation
 

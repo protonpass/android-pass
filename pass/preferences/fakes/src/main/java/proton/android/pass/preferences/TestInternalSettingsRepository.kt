@@ -111,19 +111,19 @@ class TestInternalSettingsRepository @Inject constructor() : InternalSettingsRep
 
     override fun getSelectedVault(userId: UserId): Flow<SelectedVaultPreference> = selectedVaultFlow
 
-    override fun setPinAttemptsCount(count: Int): Result<Unit> {
+    override fun setPinAttemptsCount(userId: UserId, count: Int): Result<Unit> {
         pinAttemptsCountFlow.update { count }
         return Result.success(Unit)
     }
 
-    override fun getPinAttemptsCount(): Flow<Int> = pinAttemptsCountFlow
+    override fun getPinAttemptsCount(userId: UserId): Flow<Int> = pinAttemptsCountFlow
 
-    override fun setMasterPasswordAttemptsCount(count: Int): Result<Unit> {
+    override fun setMasterPasswordAttemptsCount(userId: UserId, count: Int): Result<Unit> {
         masterPasswordAttemptsCountFlow.update { count }
         return Result.success(Unit)
     }
 
-    override fun getMasterPasswordAttemptsCount(): Flow<Int> = masterPasswordAttemptsCountFlow
+    override fun getMasterPasswordAttemptsCount(userId: UserId): Flow<Int> = masterPasswordAttemptsCountFlow
 
     override fun setItemCreateCount(count: Int): Result<Unit> {
         itemCreateCountFlow.update { count }

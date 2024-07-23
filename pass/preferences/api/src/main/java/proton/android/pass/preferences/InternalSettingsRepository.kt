@@ -49,11 +49,11 @@ interface InternalSettingsRepository {
     fun setSelectedVault(userId: UserId, selectedVault: SelectedVaultPreference): Result<Unit>
     fun getSelectedVault(userId: UserId): Flow<SelectedVaultPreference>
 
-    fun setPinAttemptsCount(count: Int): Result<Unit>
-    fun getPinAttemptsCount(): Flow<Int>
+    fun setPinAttemptsCount(userId: UserId, count: Int): Result<Unit>
+    fun getPinAttemptsCount(userId: UserId): Flow<Int>
 
-    fun setMasterPasswordAttemptsCount(count: Int): Result<Unit>
-    fun getMasterPasswordAttemptsCount(): Flow<Int>
+    fun setMasterPasswordAttemptsCount(userId: UserId, count: Int): Result<Unit>
+    fun getMasterPasswordAttemptsCount(userId: UserId): Flow<Int>
 
     fun setItemCreateCount(count: Int): Result<Unit>
     fun getItemCreateCount(): Flow<Int>

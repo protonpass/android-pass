@@ -41,6 +41,7 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
@@ -137,8 +138,11 @@ class AuthViewModel @Inject constructor(
         combine(
             accountManager.getAccounts(AccountState.Ready),
             accountManager.getPrimaryAccount()
-        ) { accounts, primaryAccount ->
-            accounts.associate { account ->
+        ) { accounts: List<Account>, primaryAccount: Account? ->
+            val orderedAccounts = primaryAccount?.let { primary ->
+                listOf(primary) + accounts.filter { it.userId != primary.userId }
+            } ?: accounts
+            orderedAccounts.associate { account ->
                 account.userId to AccountItem(
                     email = userManager.getUser(account.userId).email.orEmpty(),
                     isPrimary = primaryAccount?.userId == account.userId

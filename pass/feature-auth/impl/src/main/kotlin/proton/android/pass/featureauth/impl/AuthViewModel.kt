@@ -376,17 +376,16 @@ class AuthViewModel @Inject constructor(
                     if (isPasswordRight) {
                         onAuthenticatedWithMasterPassword()
                     } else {
-                        delay(WRONG_PASSWORD_DELAY_SECONDS)
-
                         val remainingAttempts = incrementAttemptAndReturnRemaining()
-
                         if (remainingAttempts <= 0) {
                             PassLogger.w(TAG, "Too many wrong attempts, logging user out")
                             snackbarDispatcher(AuthTooManyAttemptsError)
+                            delay(WRONG_PASSWORD_DELAY_SECONDS)
                             state.value.content.userId.value()?.let {
                                 updateAuthEventFlow(AuthEvent.ForceSignOut(it))
                             }
                         } else {
+                            delay(WRONG_PASSWORD_DELAY_SECONDS)
                             PassLogger.i(
                                 TAG,
                                 "Wrong password. Remaining attempts: $remainingAttempts"

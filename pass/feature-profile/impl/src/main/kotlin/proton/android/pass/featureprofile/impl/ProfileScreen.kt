@@ -106,6 +106,7 @@ fun ProfileScreen(
                         ProfileNavigation.SecureLinks
                     }.also(onNavigateEvent)
                 }
+                ProfileUiEvent.OnAliasesClicked -> onNavigateEvent(ProfileNavigation.Aliases)
 
                 AccountSwitchEvent.OnAddAccount -> onNavigateEvent(ProfileNavigation.OnAddAccount)
                 is AccountSwitchEvent.OnRemoveAccount -> onNavigateEvent(ProfileNavigation.OnRemoveAccount(it.userId))

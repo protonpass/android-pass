@@ -338,6 +338,7 @@ class AuthViewModel @Inject constructor(
             }
 
             is WrongExtraPasswordException -> {
+                delay(WRONG_PASSWORD_DELAY_SECONDS)
                 formContentFlow.update {
                     it.copy(passwordError = PasswordError.IncorrectPassword.some())
                 }
@@ -363,6 +364,7 @@ class AuthViewModel @Inject constructor(
                     )
                     updateAuthEventFlow(AuthEvent.ForceSignOut(userId))
                 } else {
+                    delay(WRONG_PASSWORD_DELAY_SECONDS)
                     internalSettingsRepository.setMasterPasswordAttemptsCount(
                         userId = userId,
                         count = currentFailedAttempts + 1

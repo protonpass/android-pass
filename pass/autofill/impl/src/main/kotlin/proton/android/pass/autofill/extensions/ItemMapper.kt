@@ -54,10 +54,15 @@ fun ItemUiModel.toAutoFillItem(): AutofillItem = when (val content = contents) {
         shareId = shareId.id,
         itemId = id.id,
         fullName = content.personalDetailsContent.fullName,
+        firstName = content.personalDetailsContent.firstName,
+        middleName = content.personalDetailsContent.middleName,
+        lastName = content.personalDetailsContent.lastName,
         address = content.addressDetailsContent.streetAddress,
         city = content.addressDetailsContent.city,
         postalCode = content.addressDetailsContent.zipOrPostalCode,
-        phoneNumber = content.personalDetailsContent.phoneNumber
+        phoneNumber = content.personalDetailsContent.phoneNumber,
+        organization = content.addressDetailsContent.organization,
+        country = content.addressDetailsContent.countryOrRegion
     )
 
     is ItemContents.Note,

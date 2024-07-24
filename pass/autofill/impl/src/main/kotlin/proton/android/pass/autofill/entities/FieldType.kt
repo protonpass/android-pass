@@ -45,10 +45,15 @@ enum class FieldType : Parcelable {
     CardCvv,
 
     // Identity
+    FirstName,
+    MiddleName,
+    LastName,
     Address,
     City,
     PostalCode,
-    Phone
+    Phone,
+    Organization,
+    Country
     ;
 
     fun isCreditCardField(): Boolean = when (this) {
@@ -60,14 +65,21 @@ enum class FieldType : Parcelable {
         CardExpirationYY,
         CardExpirationYYYY,
         CardCvv -> true
+
         else -> false
     }
 
     fun isIdentityField(): Boolean = when (this) {
+        FirstName,
+        MiddleName,
+        LastName,
+        Organization,
+        Country,
         Address,
         City,
         PostalCode,
         Phone -> true
+
         else -> false
     }
 

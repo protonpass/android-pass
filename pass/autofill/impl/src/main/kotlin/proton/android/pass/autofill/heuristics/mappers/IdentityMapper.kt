@@ -32,10 +32,15 @@ object IdentityMapper {
     fun mapIdentityFields(autofillItem: AutofillItem.Identity, cluster: NodeCluster.Identity): AutofillMappings {
         val mappings = mutableListOf<DatasetMapping>()
         mappings.addMapping(cluster.fullName, autofillItem.fullName)
+        mappings.addMapping(cluster.firstName, autofillItem.firstName)
+        mappings.addMapping(cluster.middleName, autofillItem.middleName)
+        mappings.addMapping(cluster.lastName, autofillItem.lastName)
         mappings.addMapping(cluster.address, autofillItem.address)
         mappings.addMapping(cluster.city, autofillItem.city)
         mappings.addMapping(cluster.postalCode, autofillItem.postalCode)
         mappings.addMapping(cluster.phoneNumber, autofillItem.phoneNumber)
+        mappings.addMapping(cluster.organization, autofillItem.organization)
+        mappings.addMapping(cluster.country, autofillItem.country)
 
         if (mappings.isEmpty()) {
             PassLogger.w(TAG, "No mappings found for autofill")

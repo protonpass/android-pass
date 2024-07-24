@@ -84,13 +84,29 @@ sealed interface NodeCluster : Parcelable {
     @Parcelize
     data class Identity(
         val fullName: AssistField?,
+        val firstName: AssistField?,
+        val middleName: AssistField?,
+        val lastName: AssistField?,
         val address: AssistField?,
         val city: AssistField?,
         val postalCode: AssistField?,
-        val phoneNumber: AssistField?
+        val phoneNumber: AssistField?,
+        val organization: AssistField?,
+        val country: AssistField?,
     ) : NodeCluster {
         override fun isFocused() = fields().any { it.isFocused }
-        override fun fields(): List<AssistField> = listOfNotNull(fullName, address, city, postalCode, phoneNumber)
+        override fun fields(): List<AssistField> = listOfNotNull(
+            fullName,
+            firstName,
+            middleName,
+            lastName,
+            address,
+            city,
+            postalCode,
+            phoneNumber,
+            organization,
+            country
+        )
 
         override fun type() = "Identity"
     }
@@ -193,17 +209,27 @@ object NodeClusterer {
         addedNodes: MutableSet<AssistField>
     ) {
         val fullNameFields = nodes.getNodesForType(FieldType.FullName, addedNodes)
+        val firstNameFields = nodes.getNodesForType(FieldType.FirstName, addedNodes)
+        val middleNameFields = nodes.getNodesForType(FieldType.MiddleName, addedNodes)
+        val lastNameFields = nodes.getNodesForType(FieldType.LastName, addedNodes)
         val addressFields = nodes.getNodesForType(FieldType.Address, addedNodes)
         val cityFields = nodes.getNodesForType(FieldType.City, addedNodes)
         val postalCodeFields = nodes.getNodesForType(FieldType.PostalCode, addedNodes)
         val phoneNumberFields = nodes.getNodesForType(FieldType.Phone, addedNodes)
+        val organizationFields = nodes.getNodesForType(FieldType.Organization, addedNodes)
+        val countryFields = nodes.getNodesForType(FieldType.Country, addedNodes)
 
         val list = listOf(
             fullNameFields,
+            firstNameFields,
+            middleNameFields,
+            lastNameFields,
             addressFields,
             cityFields,
             postalCodeFields,
-            phoneNumberFields
+            phoneNumberFields,
+            organizationFields,
+            countryFields
         )
         val nonEmptyLists = list.filter { it.isNotEmpty() }
         val anyTwoNotEmpty = nonEmptyLists.size >= 2
@@ -219,6 +245,12 @@ object NodeClusterer {
                 NodeCluster.Identity(
                     fullName = fullNameFields.findFieldToCluster(firstField)
                         ?.also { addedNodes.add(it) },
+                    firstName = firstNameFields.findFieldToCluster(firstField)
+                        ?.also { addedNodes.add(it) },
+                    middleName = middleNameFields.findFieldToCluster(firstField)
+                        ?.also { addedNodes.add(it) },
+                    lastName = lastNameFields.findFieldToCluster(firstField)
+                        ?.also { addedNodes.add(it) },
                     address = addressFields.findFieldToCluster(firstField)
                         ?.also { addedNodes.add(it) },
                     city = cityFields.findFieldToCluster(firstField)
@@ -226,6 +258,10 @@ object NodeClusterer {
                     postalCode = postalCodeFields.findFieldToCluster(firstField)
                         ?.also { addedNodes.add(it) },
                     phoneNumber = phoneNumberFields.findFieldToCluster(firstField)
+                        ?.also { addedNodes.add(it) },
+                    organization = organizationFields.findFieldToCluster(firstField)
+                        ?.also { addedNodes.add(it) },
+                    country = countryFields.findFieldToCluster(firstField)
                         ?.also { addedNodes.add(it) }
                 )
             )
@@ -454,15 +490,22 @@ object NodeClusterer {
         }
     }
 
-    private fun List<AssistField>.getUsernames(addedNodes: Set<AssistField>): List<AssistField> = filter {
-        !addedNodes.contains(it) && (it.type == FieldType.Username || it.type == FieldType.Email)
-    }
+    private fun List<AssistField>.getUsernames(addedNodes: Set<AssistField>): List<AssistField> =
+        filter {
+            !addedNodes.contains(it) && (it.type == FieldType.Username || it.type == FieldType.Email)
+        }
 
-    private fun List<AssistField>.getNodesForType(type: FieldType, addedNodes: Set<AssistField>): List<AssistField> =
+    private fun List<AssistField>.getNodesForType(
+        type: FieldType,
+        addedNodes: Set<AssistField>
+    ): List<AssistField> =
         filter {
             !addedNodes.contains(it) && it.type == type
         }
 
-    private fun List<AssistField>.getNodeOfType(type: FieldType, addedNodes: Set<AssistField>): AssistField? =
+    private fun List<AssistField>.getNodeOfType(
+        type: FieldType,
+        addedNodes: Set<AssistField>
+    ): AssistField? =
         getNodesForType(type, addedNodes).firstOrNull()
 }

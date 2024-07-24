@@ -56,6 +56,8 @@ private val ALLOWED_ADDRESS_KEYWORDS = listOf(
 )
 private val DENIED_ADDRESS_KEYWORDS = listOf("street")
 private val ALLOWED_CITY_KEYWORDS = listOf("city", "ciudad")
+private val ALLOWED_ORGANIZATION_KEYWORDS = listOf("organization")
+private val ALLOWED_COUNTRY_KEYWORDS = listOf("country", "pais")
 private val ALLOWED_POSTAL_CODE_KEYWORDS = listOf("postal", "zip", "zipcode", "postcode")
 private val ALLOWED_PHONE_KEYWORDS = listOf("phone", "telef", "teleph", "mobile", "cellphone")
 private val ALLOWED_EMAIL_KEYWORDS = listOf(View.AUTOFILL_HINT_EMAIL_ADDRESS, "email")
@@ -97,17 +99,6 @@ internal val fieldKeywordsList = listOf(
     kw(
         fieldType = FieldType.CardCvv,
         allowedKeywords = listOf("cvc", "cvv", "securitycode")
-    ),
-
-    // Keywords for cardholder name are order-sensitve. First we want to test if we find
-    // different fields for first name and last name, and if we can't, fallback to CardholderName
-    kw(
-        fieldType = FieldType.CardholderFirstName,
-        allowedKeywords = listOf("firstname")
-    ),
-    kw(
-        fieldType = FieldType.CardholderLastName,
-        allowedKeywords = listOf("lastname")
     ),
     kw(
         fieldType = FieldType.FullName,
@@ -173,6 +164,14 @@ internal val fieldKeywordsList = listOf(
     kw(
         fieldType = FieldType.Phone,
         allowedKeywords = ALLOWED_PHONE_KEYWORDS
+    ),
+    kw(
+        fieldType = FieldType.Country,
+        allowedKeywords = ALLOWED_COUNTRY_KEYWORDS
+    ),
+    kw(
+        fieldType = FieldType.Organization,
+        allowedKeywords = ALLOWED_ORGANIZATION_KEYWORDS
     )
 )
 

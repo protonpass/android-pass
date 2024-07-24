@@ -589,8 +589,6 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
             View.AUTOFILL_HINT_USERNAME -> return FieldType.Username
             View.AUTOFILL_HINT_PASSWORD, HINT_CURRENT_PASSWORD -> return FieldType.Password
 
-            View.AUTOFILL_HINT_NAME -> return FieldType.FullName
-
             View.AUTOFILL_HINT_CREDIT_CARD_NUMBER -> return FieldType.CardNumber
             View.AUTOFILL_HINT_CREDIT_CARD_EXPIRATION_MONTH -> return FieldType.CardExpirationMM
             View.AUTOFILL_HINT_CREDIT_CARD_EXPIRATION_YEAR -> return FieldType.CardExpirationYY

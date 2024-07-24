@@ -237,12 +237,17 @@ class TestObserveItems @Inject constructor() : ObserveItems {
                 note = "note",
                 personalDetailsContent = PersonalDetailsContent.EMPTY.copy(
                     fullName = fullName,
+                    firstName = "First name",
+                    middleName = "Middle name",
+                    lastName = "Last name",
                     phoneNumber = "1234567890"
                 ),
                 addressDetailsContent = AddressDetailsContent.EMPTY.copy(
                     streetAddress = "123 Main St",
                     zipOrPostalCode = "12345",
-                    city = "City"
+                    city = "City",
+                    countryOrRegion = "Country",
+                    organization = "Organization"
                 ),
                 contactDetailsContent = ContactDetailsContent.EMPTY,
                 workDetailsContent = WorkDetailsContent.EMPTY,

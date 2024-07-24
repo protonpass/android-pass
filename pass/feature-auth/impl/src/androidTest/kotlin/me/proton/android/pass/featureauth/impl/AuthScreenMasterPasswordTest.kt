@@ -119,7 +119,8 @@ class AuthScreenMasterPasswordTest {
                 }
             }
 
-            val contentDescription = activity.getString(CoreR.string.presentation_menu_item_title_sign_out)
+            val contentDescription =
+                activity.getString(CoreR.string.presentation_menu_item_title_sign_out)
             onNodeWithContentDescription(contentDescription).assertExists().performClick()
 
             waitUntil { checker.isCalled }
@@ -138,7 +139,8 @@ class AuthScreenMasterPasswordTest {
                 }
             }
 
-            val contentDescription = activity.getString(CoreR.string.presentation_menu_item_title_sign_out)
+            val contentDescription =
+                activity.getString(CoreR.string.presentation_menu_item_title_sign_out)
             onNodeWithContentDescription(contentDescription).assertDoesNotExist()
         }
     }
@@ -194,10 +196,14 @@ class AuthScreenMasterPasswordTest {
 
             val unlockButtonText = activity.getString(R.string.auth_unlock_button)
             onNodeWithText(unlockButtonText).performClick()
-
+            waitForIdle()
             appDispatchers.advanceTimeBy(2500L)
-
-            val errorText = activity.resources.getQuantityString(R.plurals.auth_error_wrong_password, 4, 4)
+            val attemptsRemaining = AuthViewModel.MAX_WRONG_PASSWORD_ATTEMPTS - 1
+            val errorText = activity.resources.getQuantityString(
+                R.plurals.auth_attempts_remaining,
+                attemptsRemaining,
+                attemptsRemaining
+            )
             waitUntilExists(hasText(errorText), timeoutMillis = 2500)
         }
     }
@@ -244,7 +250,7 @@ class AuthScreenMasterPasswordTest {
                 }
                 val expectedNumber = maxWrongAttempts - it - 1
                 val errorText = activity.resources.getQuantityString(
-                    R.plurals.auth_error_wrong_password,
+                    R.plurals.auth_attempts_remaining,
                     expectedNumber,
                     expectedNumber
                 )
@@ -256,6 +262,7 @@ class AuthScreenMasterPasswordTest {
 
             onNodeWithText(unlockButtonText).performClick()
 
+            waitForIdle()
             appDispatchers.advanceTimeBy(2500L)
 
             waitUntil { checker.isCalled }

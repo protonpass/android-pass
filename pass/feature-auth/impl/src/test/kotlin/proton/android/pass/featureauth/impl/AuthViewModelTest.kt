@@ -38,6 +38,7 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
+import proton.android.pass.common.fakes.TestAppDispatchers
 import proton.android.pass.commonui.api.ClassHolder
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -96,7 +97,8 @@ internal class AuthViewModelTest {
             checkLocalExtraPassword = FakeCheckLocalExtraPassword(),
             featureFlagsPreferencesRepository = TestFeatureFlagsPreferenceRepository(),
             userManager = userManager,
-            accountManager = accountManager
+            accountManager = accountManager,
+            appDispatchers = TestAppDispatchers()
         )
     }
 

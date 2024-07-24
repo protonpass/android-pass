@@ -71,7 +71,7 @@ sealed interface AutofillItem : Parcelable {
         val postalCode: String?,
         val phoneNumber: String?,
         val organization: String?,
-        val country: String?,
+        val country: String?
     ) : AutofillItem {
         override fun shareId() = ShareId(shareId)
         override fun itemId() = ItemId(itemId)

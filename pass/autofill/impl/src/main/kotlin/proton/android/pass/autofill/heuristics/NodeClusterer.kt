@@ -92,7 +92,7 @@ sealed interface NodeCluster : Parcelable {
         val postalCode: AssistField?,
         val phoneNumber: AssistField?,
         val organization: AssistField?,
-        val country: AssistField?,
+        val country: AssistField?
     ) : NodeCluster {
         override fun isFocused() = fields().any { it.isFocused }
         override fun fields(): List<AssistField> = listOfNotNull(
@@ -490,22 +490,15 @@ object NodeClusterer {
         }
     }
 
-    private fun List<AssistField>.getUsernames(addedNodes: Set<AssistField>): List<AssistField> =
-        filter {
-            !addedNodes.contains(it) && (it.type == FieldType.Username || it.type == FieldType.Email)
-        }
+    private fun List<AssistField>.getUsernames(addedNodes: Set<AssistField>): List<AssistField> = filter {
+        !addedNodes.contains(it) && (it.type == FieldType.Username || it.type == FieldType.Email)
+    }
 
-    private fun List<AssistField>.getNodesForType(
-        type: FieldType,
-        addedNodes: Set<AssistField>
-    ): List<AssistField> =
+    private fun List<AssistField>.getNodesForType(type: FieldType, addedNodes: Set<AssistField>): List<AssistField> =
         filter {
             !addedNodes.contains(it) && it.type == type
         }
 
-    private fun List<AssistField>.getNodeOfType(
-        type: FieldType,
-        addedNodes: Set<AssistField>
-    ): AssistField? =
+    private fun List<AssistField>.getNodeOfType(type: FieldType, addedNodes: Set<AssistField>): AssistField? =
         getNodesForType(type, addedNodes).firstOrNull()
 }

@@ -75,10 +75,15 @@ class IdentityAutofillTest : BaseAutofillTest() {
                 itemId = "itemID",
                 shareId = "shareID",
                 fullName = ExpectedAutofill.IDENTITY_FULL_NAME.value,
+                firstName = ExpectedAutofill.IDENTITY_FIRST_NAME.value,
+                middleName = ExpectedAutofill.IDENTITY_MIDDLE_NAME.value,
+                lastName = ExpectedAutofill.IDENTITY_LAST_NAME.value,
                 address = ExpectedAutofill.IDENTITY_ADDRESS.value,
                 city = ExpectedAutofill.IDENTITY_CITY.value,
                 phoneNumber = ExpectedAutofill.IDENTITY_PHONE.value,
-                postalCode = ExpectedAutofill.IDENTITY_POSTAL_CODE.value
+                postalCode = ExpectedAutofill.IDENTITY_POSTAL_CODE.value,
+                organization = ExpectedAutofill.IDENTITY_ORGANIZATION.value,
+                country = ExpectedAutofill.IDENTITY_COUNTRY.value
             )
         )
     }

@@ -50,10 +50,15 @@ enum class ExpectedAutofill(val value: String, val assertedValue: String = value
     CC_CVV("card_cvv"),
 
     IDENTITY_FULL_NAME("identity_full_name"),
+    IDENTITY_FIRST_NAME("identity_first_name"),
+    IDENTITY_MIDDLE_NAME("identity_middle_name"),
+    IDENTITY_LAST_NAME("identity_last_name"),
     IDENTITY_ADDRESS("identity_address"),
     IDENTITY_CITY("identity_city"),
     IDENTITY_POSTAL_CODE("identity_postal_code"),
-    IDENTITY_PHONE("identity_phone")
+    IDENTITY_PHONE("identity_phone"),
+    IDENTITY_ORGANIZATION("identity_organization"),
+    IDENTITY_COUNTRY("identity_country")
 
     ;
 

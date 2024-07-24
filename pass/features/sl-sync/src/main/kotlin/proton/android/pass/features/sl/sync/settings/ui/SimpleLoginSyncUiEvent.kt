@@ -24,4 +24,9 @@ internal sealed interface SimpleLoginSyncUiEvent {
 
     data object OnConfirmClicked : SimpleLoginSyncUiEvent
 
+    data object OnLinkClicked : SimpleLoginSyncUiEvent
+
+    @JvmInline
+    value class OnNoteStoringFlagChanged(internal val isEnabled: Boolean) : SimpleLoginSyncUiEvent
+
 }

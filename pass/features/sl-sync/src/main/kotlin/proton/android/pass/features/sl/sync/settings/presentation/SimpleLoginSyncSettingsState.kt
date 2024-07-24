@@ -18,9 +18,26 @@
 
 package proton.android.pass.features.sl.sync.settings.presentation
 
-import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import androidx.compose.runtime.Stable
+import proton.android.pass.domain.Vault
 
-@HiltViewModel
-class SimpleLoginSyncViewModel @Inject constructor() : ViewModel()
+@Stable
+internal data class SimpleLoginSyncSettingsState(
+    internal val isNotesStoringEnabled: Boolean,
+    private val vaults: List<Vault>
+) {
+
+    internal val hasVaults: Boolean = vaults.isNotEmpty()
+
+    internal val selectedVault: Vault by lazy { vaults.first() }
+
+    internal companion object {
+
+        internal val Initial: SimpleLoginSyncSettingsState = SimpleLoginSyncSettingsState(
+            isNotesStoringEnabled = false,
+            vaults = emptyList()
+        )
+
+    }
+
+}

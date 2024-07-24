@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.sl.sync.settings.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -58,11 +59,14 @@ internal fun SimpleLoginSyncSettingsNotes(
             modifier = Modifier
                 .roundedContainerNorm()
                 .fillMaxWidth()
+                .clickable { onCheckedChange(!isChecked) }
                 .padding(all = Spacing.medium),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             SectionSubtitle(
-                modifier = Modifier.weight(weight = 1f),
+                modifier = Modifier
+                    .weight(weight = 1f)
+                    .padding(end = Spacing.medium),
                 text = stringResource(id = R.string.simple_login_sync_settings_notes_title)
                     .asAnnotatedString(),
             )
@@ -72,7 +76,7 @@ internal fun SimpleLoginSyncSettingsNotes(
                 colors = SwitchDefaults.colors(
                     checkedThumbColor = PassTheme.colors.interactionNormMajor1
                 ),
-                onCheckedChange = onCheckedChange
+                onCheckedChange = null
             )
         }
 
@@ -80,10 +84,10 @@ internal fun SimpleLoginSyncSettingsNotes(
             modifier = Modifier.padding(horizontal = Spacing.small),
             text = stringResource(id = R.string.simple_login_sync_settings_notes_description),
             innerLink = stringResource(id = CompR.string.action_learn_more),
-            style = PassTheme.typography.body3Norm().copy(color = PassTheme.colors.textWeak),
+            style = PassTheme.typography.body3Norm()
+                .copy(color = PassTheme.colors.textWeak),
             onClick = onLinkClick
         )
-
     }
 }
 

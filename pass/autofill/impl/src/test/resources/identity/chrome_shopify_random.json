@@ -888,7 +888,7 @@
                                                                                                                                     "isImportantForAutofill": true,
                                                                                                                                     "text": "",
                                                                                                                                     "isFocused": true,
-                                                                                                                                    "expectedAutofill": "identity_full_name",
+                                                                                                                                    "expectedAutofill": "identity_first_name",
                                                                                                                                     "hintKeywordList": [
                                                                                                                                       "",
                                                                                                                                       "First name (optional)"
@@ -945,6 +945,7 @@
                                                                                                                                     "className": "android.widget.EditText",
                                                                                                                                     "isImportantForAutofill": true,
                                                                                                                                     "text": "",
+                                                                                                                                    "expectedAutofill": "identity_last_name",
                                                                                                                                     "hintKeywordList": [
                                                                                                                                       "",
                                                                                                                                       "Last name"

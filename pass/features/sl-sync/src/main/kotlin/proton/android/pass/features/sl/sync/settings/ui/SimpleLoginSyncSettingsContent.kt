@@ -47,10 +47,16 @@ internal fun SimpleLoginSyncSettingsContent(
         Column(
             modifier = Modifier
                 .padding(paddingValues = innerPaddingValue)
-                .padding(horizontal = Spacing.medium),
+                .padding(all = Spacing.medium),
             verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
         ) {
+            SimpleLoginSyncSettingsVault()
 
+            SimpleLoginSyncSettingsNotes(
+                isChecked = true,
+                onCheckedChange = {},
+                onLinkClick = {}
+            )
         }
     }
 }

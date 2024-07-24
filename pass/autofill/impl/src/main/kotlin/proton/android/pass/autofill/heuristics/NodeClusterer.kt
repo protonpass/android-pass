@@ -403,8 +403,8 @@ object NodeClusterer {
         nodes: List<AssistField>,
         addedNodes: MutableSet<AssistField>
     ): NodeCluster.CreditCard.CardHolder? {
-        val cardHolderFirstNameNode = nodes.getNodeOfType(FieldType.CardholderFirstName, addedNodes)
-        val cardHolderLastNameNode = nodes.getNodeOfType(FieldType.CardholderLastName, addedNodes)
+        val cardHolderFirstNameNode = nodes.getNodeOfType(FieldType.FirstName, addedNodes)
+        val cardHolderLastNameNode = nodes.getNodeOfType(FieldType.LastName, addedNodes)
 
         val anyCardNode = nodes.find { it.type?.isCreditCardField() ?: false } ?: return null
         val cardHolderNodes = nodes.getNodesForType(FieldType.FullName, addedNodes)

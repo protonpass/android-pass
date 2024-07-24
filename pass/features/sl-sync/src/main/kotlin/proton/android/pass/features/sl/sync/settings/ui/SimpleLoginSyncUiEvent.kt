@@ -16,17 +16,12 @@
  * along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package proton.android.pass.features.sl.sync.shared.navigation
+package proton.android.pass.features.sl.sync.settings.ui
 
-import androidx.navigation.NavGraphBuilder
-import proton.android.pass.features.sl.sync.settings.navigation.SimpleLoginSyncSettingsNavItem
-import proton.android.pass.features.sl.sync.settings.ui.SimpleLoginSyncSettingsScreen
-import proton.android.pass.navigation.api.composable
+internal sealed interface SimpleLoginSyncUiEvent {
 
-fun NavGraphBuilder.simpleLoginSyncNavGraph(onNavigated: (SimpleLoginSyncNavDestination) -> Unit) {
+    data object OnCloseClicked : SimpleLoginSyncUiEvent
 
-    composable(navItem = SimpleLoginSyncSettingsNavItem) {
-        SimpleLoginSyncSettingsScreen(onNavigated = onNavigated)
-    }
+    data object OnConfirmClicked : SimpleLoginSyncUiEvent
 
 }

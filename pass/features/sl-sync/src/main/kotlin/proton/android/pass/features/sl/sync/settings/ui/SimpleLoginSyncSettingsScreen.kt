@@ -19,23 +19,44 @@
 package proton.android.pass.features.sl.sync.settings.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
-import proton.android.pass.features.sl.sync.settings.presentation.SimpleLoginSyncViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.commonui.api.BrowserUtils
+import proton.android.pass.features.sl.sync.settings.presentation.SimpleLoginSyncSettingsViewModel
 import proton.android.pass.features.sl.sync.shared.navigation.SimpleLoginSyncNavDestination
 
 @Composable
 fun SimpleLoginSyncSettingsScreen(
     onNavigated: (SimpleLoginSyncNavDestination) -> Unit,
-    viewModel: SimpleLoginSyncViewModel = hiltViewModel(),
-) {
+    viewModel: SimpleLoginSyncSettingsViewModel = hiltViewModel(),
+) = with(viewModel) {
+    val state by state.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+
     SimpleLoginSyncSettingsContent(
+        state = state,
         onUiEvent = { uiEvent ->
             when (uiEvent) {
-                SimpleLoginSyncUiEvent.OnCloseClicked -> SimpleLoginSyncNavDestination.Back
-                    .also(onNavigated)
+                SimpleLoginSyncUiEvent.OnCloseClicked -> {
+                    SimpleLoginSyncNavDestination.Back
+                        .also(onNavigated)
+                }
 
                 SimpleLoginSyncUiEvent.OnConfirmClicked -> {
 
+                }
+
+                SimpleLoginSyncUiEvent.OnLinkClicked -> {
+                    BrowserUtils.openWebsite(
+                        context = context,
+                        website = "https://proton.me/support/pass-trial"
+                    )
+                }
+
+                is SimpleLoginSyncUiEvent.OnNoteStoringFlagChanged -> {
+                    onChangeNotesStoringFlag(isEnabled = uiEvent.isEnabled)
                 }
             }
         }

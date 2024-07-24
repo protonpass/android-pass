@@ -111,9 +111,9 @@ sealed interface ProfileNavigation {
 
     data object SyncDialog : ProfileNavigation
 
-    data object AliasesDetail : ProfileNavigation
+    data object AliasesSyncDetails : ProfileNavigation
 
-    data object AliasesSync : ProfileNavigation
+    data object AliasesSyncSettings : ProfileNavigation
 
 }
 

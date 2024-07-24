@@ -37,15 +37,20 @@ import proton.android.pass.commonui.api.Spacing
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
+import proton.android.pass.composecomponents.impl.extension.toColor
+import proton.android.pass.composecomponents.impl.extension.toResource
+import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.composecomponents.impl.item.SectionSubtitle
 import proton.android.pass.composecomponents.impl.item.SectionTitle
+import proton.android.pass.domain.Vault
 import proton.android.pass.features.sl.sync.R
 import proton.android.pass.features.sl.sync.shared.ui.SimpleLoginSyncDescriptionText
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 internal fun SimpleLoginSyncSettingsVault(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    selectedVault: Vault,
 ) {
     Column(
         modifier = modifier,
@@ -57,7 +62,14 @@ internal fun SimpleLoginSyncSettingsVault(
                 .fillMaxWidth()
                 .padding(all = Spacing.medium),
             verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(space = Spacing.medium)
         ) {
+            VaultIcon(
+                backgroundColor = selectedVault.color.toColor(true),
+                icon = selectedVault.icon.toResource(),
+                iconColor = selectedVault.color.toColor()
+            )
+
             Column(
                 modifier = Modifier.weight(weight = 1f),
                 verticalArrangement = Arrangement.spacedBy(space = Spacing.extraSmall),
@@ -67,7 +79,7 @@ internal fun SimpleLoginSyncSettingsVault(
                 )
 
                 SectionSubtitle(
-                    text = "Personal".asAnnotatedString(),
+                    text = selectedVault.name.asAnnotatedString(),
                 )
             }
 
@@ -90,7 +102,7 @@ internal fun SimpleLoginSyncSettingsVaultPreview(
 ) {
     PassTheme(isDark = isDark) {
         Surface {
-            SimpleLoginSyncSettingsVault()
+//            SimpleLoginSyncSettingsVault()
         }
     }
 }

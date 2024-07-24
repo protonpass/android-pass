@@ -18,16 +18,26 @@
 
 package proton.android.pass.features.sl.sync.settings.ui
 
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import proton.android.pass.features.sl.sync.settings.presentation.SimpleLoginSyncViewModel
 import proton.android.pass.features.sl.sync.shared.navigation.SimpleLoginSyncNavDestination
 
 @Composable
-fun SimpleLoginSyncScreen(
+fun SimpleLoginSyncSettingsScreen(
     onNavigated: (SimpleLoginSyncNavDestination) -> Unit,
     viewModel: SimpleLoginSyncViewModel = hiltViewModel(),
 ) {
-    Text(text = "SimpleLoginSyncScreen")
+    SimpleLoginSyncSettingsContent(
+        onUiEvent = { uiEvent ->
+            when (uiEvent) {
+                SimpleLoginSyncUiEvent.OnCloseClicked -> SimpleLoginSyncNavDestination.Back
+                    .also(onNavigated)
+
+                SimpleLoginSyncUiEvent.OnConfirmClicked -> {
+
+                }
+            }
+        }
+    )
 }

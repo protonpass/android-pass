@@ -464,6 +464,7 @@ dependencies {
     implementation(projects.pass.features.itemTrash)
     implementation(projects.pass.features.secureLinks)
     implementation(projects.pass.features.securityCenter)
+    implementation(projects.pass.features.slSync)
     implementation(projects.pass.features.upsell)
     implementation(projects.pass.log.api)
     implementation(projects.pass.log.impl)

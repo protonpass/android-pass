@@ -6,6 +6,18 @@
 
 ### Other
 
+## 1.24.1 (2024-07-25)
+
+### Fixes :bug:
+
+- Fix linked apps item revision diffing.
+- Fix sharing trashed item.
+- Fix extra password crash.
+
+### Other
+
+- Updated core libraries.
+
 ## 1.24.0 (2024-07-19)
 
 ### Features :tada:

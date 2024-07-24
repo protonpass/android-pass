@@ -25,12 +25,14 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.Spacing
+import proton.android.pass.features.sl.sync.settings.presentation.SimpleLoginSyncSettingsState
 
 @Composable
 internal fun SimpleLoginSyncSettingsContent(
     modifier: Modifier = Modifier,
-    onUiEvent: (SimpleLoginSyncUiEvent) -> Unit
-) {
+    onUiEvent: (SimpleLoginSyncUiEvent) -> Unit,
+    state: SimpleLoginSyncSettingsState
+) = with(state) {
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -50,12 +52,20 @@ internal fun SimpleLoginSyncSettingsContent(
                 .padding(all = Spacing.medium),
             verticalArrangement = Arrangement.spacedBy(space = Spacing.medium)
         ) {
-            SimpleLoginSyncSettingsVault()
+            if (hasVaults) {
+                SimpleLoginSyncSettingsVault(
+                    selectedVault = selectedVault
+                )
+            }
 
             SimpleLoginSyncSettingsNotes(
-                isChecked = true,
-                onCheckedChange = {},
-                onLinkClick = {}
+                isChecked = isNotesStoringEnabled,
+                onCheckedChange = { isChecked ->
+                    SimpleLoginSyncUiEvent.OnNoteStoringFlagChanged(
+                        isEnabled = isChecked
+                    ).also(onUiEvent)
+                },
+                onLinkClick = { onUiEvent(SimpleLoginSyncUiEvent.OnLinkClicked) }
             )
         }
     }

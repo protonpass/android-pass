@@ -109,8 +109,8 @@ fun ProfileScreen(
                 ProfileUiEvent.OnCloseAliasesWidgetClicked -> {
                     // Will be implemented in IDTEAM-3637
                 }
-                ProfileUiEvent.OnSyncAliasesClicked -> onNavigateEvent(ProfileNavigation.AliasesSync)
-                ProfileUiEvent.OnAliasesClicked -> onNavigateEvent(ProfileNavigation.AliasesDetail)
+                ProfileUiEvent.OnSyncAliasesClicked -> onNavigateEvent(ProfileNavigation.AliasesSyncSettings)
+                ProfileUiEvent.OnAliasesClicked -> onNavigateEvent(ProfileNavigation.AliasesSyncDetails)
 
                 AccountSwitchEvent.OnAddAccount -> onNavigateEvent(ProfileNavigation.OnAddAccount)
                 is AccountSwitchEvent.OnRemoveAccount -> onNavigateEvent(ProfileNavigation.OnRemoveAccount(it.userId))

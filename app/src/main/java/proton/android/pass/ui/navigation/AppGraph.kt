@@ -174,6 +174,9 @@ import proton.android.pass.features.security.center.shared.navigation.SecurityCe
 import proton.android.pass.features.security.center.shared.navigation.securityCenterNavGraph
 import proton.android.pass.features.security.center.verifyemail.navigation.SecurityCenterVerifyEmailNavItem
 import proton.android.pass.features.security.center.weakpass.navigation.SecurityCenterWeakPassNavItem
+import proton.android.pass.features.sl.sync.settings.navigation.SimpleLoginSyncSettingsNavItem
+import proton.android.pass.features.sl.sync.shared.navigation.SimpleLoginSyncNavDestination
+import proton.android.pass.features.sl.sync.shared.navigation.simpleLoginSyncNavGraph
 import proton.android.pass.features.upsell.navigation.UpsellNavDestination
 import proton.android.pass.features.upsell.navigation.UpsellNavItem
 import proton.android.pass.features.upsell.navigation.upsellNavGraph
@@ -647,13 +650,13 @@ fun NavGraphBuilder.appGraph(
                 is ProfileNavigation.OnSwitchAccount -> onNavigate(AppNavigation.SwitchAccount(it.userId))
                 ProfileNavigation.SyncDialog -> appNavigator.navigate(SyncNavItem)
 
-                ProfileNavigation.AliasesDetail -> {
+                ProfileNavigation.AliasesSyncDetails -> {
                     // Will be implemented in IDTEAM-3635
                 }
 
-                ProfileNavigation.AliasesSync -> {
-                    // Will be implemented in IDTEAM-3636
-                }
+                ProfileNavigation.AliasesSyncSettings -> appNavigator.navigate(
+                    destination = SimpleLoginSyncSettingsNavItem
+                )
             }
         }
     )
@@ -1904,6 +1907,16 @@ fun NavGraphBuilder.appGraph(
                 is SecureLinksNavDestination.SecureLinksListMenu -> appNavigator.navigate(
                     destination = SecureLinksListMenuNavItem,
                     route = SecureLinksListMenuNavItem.createNavRoute(destination.secureLinkId)
+                )
+            }
+        }
+    )
+
+    simpleLoginSyncNavGraph(
+        onNavigated = { destination ->
+            when (destination) {
+                SimpleLoginSyncNavDestination.Back -> appNavigator.navigateBack(
+                    comesFromBottomsheet = false
                 )
             }
         }

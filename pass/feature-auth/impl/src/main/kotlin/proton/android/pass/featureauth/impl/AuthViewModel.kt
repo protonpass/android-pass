@@ -41,6 +41,7 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
@@ -55,6 +56,7 @@ import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.BiometryType
 import proton.android.pass.biometry.StoreAuthSuccessful
 import proton.android.pass.biometry.UnlockMethod
+import proton.android.pass.common.api.AppDispatchers
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -104,6 +106,7 @@ class AuthViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val accountManager: AccountManager,
     private val userManager: UserManager,
+    private val appDispatchers: AppDispatchers,
     featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     hasExtraPassword: HasExtraPassword,
     observeUserEmail: ObserveUserEmail,
@@ -329,14 +332,18 @@ class AuthViewModel @Inject constructor(
             is TooManyExtraPasswordAttemptsException -> {
                 PassLogger.w(TAG, "Too many attempts")
                 snackbarDispatcher(AuthTooManyAttemptsError)
-                delay(WRONG_PASSWORD_DELAY_SECONDS)
+                withContext(appDispatchers.default) {
+                    delay(WRONG_PASSWORD_DELAY_SECONDS)
+                }
                 state.value.content.userId.value()?.let {
                     updateAuthEventFlow(AuthEvent.ForceSignOut(it))
                 }
             }
 
             is WrongExtraPasswordException -> {
-                delay(WRONG_PASSWORD_DELAY_SECONDS)
+                withContext(appDispatchers.default) {
+                    delay(WRONG_PASSWORD_DELAY_SECONDS)
+                }
                 formContentFlow.update {
                     it.copy(passwordError = PasswordError.IncorrectPassword.some())
                 }
@@ -352,11 +359,15 @@ class AuthViewModel @Inject constructor(
                 val remainingAttempts = MAX_WRONG_PASSWORD_ATTEMPTS - currentFailedAttempts - 1
                 if (remainingAttempts <= 0) {
                     snackbarDispatcher(AuthTooManyAttemptsError)
-                    delay(WRONG_PASSWORD_DELAY_SECONDS)
+                    withContext(appDispatchers.default) {
+                        delay(WRONG_PASSWORD_DELAY_SECONDS)
+                    }
                     setIncorrectPasswordData(userId, currentFailedAttempts)
                     updateAuthEventFlow(AuthEvent.ForceSignOut(userId))
                 } else {
-                    delay(WRONG_PASSWORD_DELAY_SECONDS)
+                    withContext(appDispatchers.default) {
+                        delay(WRONG_PASSWORD_DELAY_SECONDS)
+                    }
                     setIncorrectPasswordData(userId, currentFailedAttempts)
                 }
             }
@@ -404,14 +415,18 @@ class AuthViewModel @Inject constructor(
                         if (remainingAttempts <= 0) {
                             snackbarDispatcher(AuthTooManyAttemptsError)
                             PassLogger.w(TAG, "Too many wrong attempts, logging user out")
-                            delay(WRONG_PASSWORD_DELAY_SECONDS)
+                            withContext(appDispatchers.default) {
+                                delay(WRONG_PASSWORD_DELAY_SECONDS)
+                            }
                             internalSettingsRepository.setMasterPasswordAttemptsCount(
                                 userId = userId,
                                 count = currentFailedAttempts + 1
                             )
                             updateAuthEventFlow(AuthEvent.ForceSignOut(userId))
                         } else {
-                            delay(WRONG_PASSWORD_DELAY_SECONDS)
+                            withContext(appDispatchers.default) {
+                                delay(WRONG_PASSWORD_DELAY_SECONDS)
+                            }
                             formContentFlow.update {
                                 it.copy(passwordError = PasswordError.IncorrectPassword.some())
                             }

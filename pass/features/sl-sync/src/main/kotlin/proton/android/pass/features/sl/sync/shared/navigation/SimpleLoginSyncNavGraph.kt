@@ -20,13 +20,13 @@ package proton.android.pass.features.sl.sync.shared.navigation
 
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.features.sl.sync.settings.navigation.SimpleLoginSyncSettingsNavItem
-import proton.android.pass.features.sl.sync.settings.ui.SimpleLoginSyncScreen
+import proton.android.pass.features.sl.sync.settings.ui.SimpleLoginSyncSettingsScreen
 import proton.android.pass.navigation.api.composable
 
 fun NavGraphBuilder.simpleLoginSyncNavGraph(onNavigated: (SimpleLoginSyncNavDestination) -> Unit) {
 
     composable(navItem = SimpleLoginSyncSettingsNavItem) {
-        SimpleLoginSyncScreen(onNavigated = onNavigated)
+        SimpleLoginSyncSettingsScreen(onNavigated = onNavigated)
     }
 
 }

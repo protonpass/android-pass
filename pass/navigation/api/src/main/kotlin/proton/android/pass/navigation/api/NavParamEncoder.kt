@@ -29,7 +29,7 @@ object NavParamEncoder {
 
     fun decode(value: String): String = String(
         Base64.decodeBase64(
-            array = value.trimEnd('/').trimEnd('\n').encodeToByteArray(),
+            array = value.replace("/", "").replace("\n", "").encodeToByteArray(),
             mode = Base64.Mode.UrlSafe
         )
     )

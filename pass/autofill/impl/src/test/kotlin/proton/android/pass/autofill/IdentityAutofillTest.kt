@@ -68,6 +68,11 @@ class IdentityAutofillTest : BaseAutofillTest() {
         runIdentityAutofillTest("identity/chrome_fill_dev.json")
     }
 
+    @Test
+    fun `can autofill chrome address es`() {
+        runIdentityAutofillTest("identity/chrome_address_es.json")
+    }
+
     private fun runIdentityAutofillTest(file: String) {
         runAutofillTest(
             file = file,

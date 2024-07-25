@@ -98,6 +98,14 @@ fun runAutofillTest(
         "Detected nodes: ${detectedNodes.fields.size} " +
             "(${detectedNodes.fields.map { it.type?.name + ":" + it.id.value() }})"
     )
+    val notFound = nodesWithExpectedContents.filter { (node, _) ->
+        res.mappings.none { (it.autofillFieldId as TestAutofillId).id == node.id }
+    }
+    PassLogger.i(
+        TAG,
+        "Expected nodes not detected: " +
+            "${notFound.size} (${notFound.map { it.second.name + ":" + it.first.id }})"
+    )
     PassLogger.i(TAG, "Mapped nodes: ${res.mappings.size}")
     PassLogger.i(TAG, "Clusters: ${clusters.size}")
     PassLogger.i(TAG, "Focused cluster type: ${focusedCluster.type()}")

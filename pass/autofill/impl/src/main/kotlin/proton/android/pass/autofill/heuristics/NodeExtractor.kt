@@ -592,39 +592,37 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
 
     @Suppress("ComplexMethod", "CyclomaticComplexMethod", "ReturnCount")
     fun detectFieldTypeUsingAutofillHint(hint: String): FieldType {
-        when (hint) {
-            View.AUTOFILL_HINT_EMAIL_ADDRESS -> return FieldType.Email
-            View.AUTOFILL_HINT_USERNAME -> return FieldType.Username
-            View.AUTOFILL_HINT_PASSWORD, HINT_CURRENT_PASSWORD -> return FieldType.Password
+        val fieldType: FieldType = when (hint) {
+            View.AUTOFILL_HINT_EMAIL_ADDRESS -> FieldType.Email
+            View.AUTOFILL_HINT_USERNAME -> FieldType.Username
+            View.AUTOFILL_HINT_PASSWORD, HINT_CURRENT_PASSWORD -> FieldType.Password
 
-            View.AUTOFILL_HINT_CREDIT_CARD_NUMBER -> return FieldType.CardNumber
-            View.AUTOFILL_HINT_CREDIT_CARD_EXPIRATION_MONTH -> return FieldType.CardExpirationMM
-            View.AUTOFILL_HINT_CREDIT_CARD_EXPIRATION_YEAR -> return FieldType.CardExpirationYY
-            View.AUTOFILL_HINT_CREDIT_CARD_SECURITY_CODE -> return FieldType.CardCvv
+            View.AUTOFILL_HINT_CREDIT_CARD_NUMBER -> FieldType.CardNumber
+            View.AUTOFILL_HINT_CREDIT_CARD_EXPIRATION_MONTH -> FieldType.CardExpirationMM
+            View.AUTOFILL_HINT_CREDIT_CARD_EXPIRATION_YEAR -> FieldType.CardExpirationYY
+            View.AUTOFILL_HINT_CREDIT_CARD_SECURITY_CODE -> FieldType.CardCvv
 
-            View.AUTOFILL_HINT_POSTAL_ADDRESS -> return FieldType.Address
-            View.AUTOFILL_HINT_POSTAL_CODE -> return FieldType.PostalCode
-            View.AUTOFILL_HINT_PHONE -> return FieldType.Phone
-            else -> {}
+            View.AUTOFILL_HINT_POSTAL_ADDRESS -> FieldType.Address
+            View.AUTOFILL_HINT_POSTAL_CODE -> FieldType.PostalCode
+            View.AUTOFILL_HINT_PHONE -> FieldType.Phone
+            else -> FieldType.Unknown
+        }
+        if (fieldType != FieldType.Unknown) {
+            PassLogger.v(TAG, "Found field type $fieldType using hint $hint")
+            return fieldType
         }
 
         val sanitizedHint = sanitizeHint(hint)
 
         if (USERNAME_REGEX.containsMatchIn(sanitizedHint)) return FieldType.Username
         if (EMAIL_REGEX.containsMatchIn(sanitizedHint)) return FieldType.Email
-        if (FIRST_NAME_REGEX.containsMatchIn(sanitizedHint)) return FieldType.FirstName
-        if (MIDDLE_NAME_REGEX.containsMatchIn(sanitizedHint)) return FieldType.MiddleName
-        if (LAST_NAME_REGEX.containsMatchIn(sanitizedHint)) return FieldType.LastName
-        if (FULL_NAME_REGEX.containsMatchIn(sanitizedHint)) return FieldType.FullName
-        if (PHONE_REGEX.containsMatchIn(sanitizedHint)) return FieldType.Phone
-        if (ADDRESS_REGEX.containsMatchIn(sanitizedHint)) return FieldType.Address
-        if (ORGANIZATION_REGEX.containsMatchIn(sanitizedHint)) return FieldType.Organization
-
-        val (fieldType, match) = fieldKeywordsList.match(sanitizedHint)
-        if (fieldType != FieldType.Unknown) {
+        val (fieldTypeKw, match) = fieldKeywordsList.match(sanitizedHint)
+        if (fieldTypeKw != FieldType.Unknown) {
             PassLogger.v(TAG, "Found field type $fieldType using hint $match")
+            return fieldTypeKw
         }
-        return fieldType
+        if (FULL_NAME_REGEX.containsMatchIn(sanitizedHint)) return FieldType.FullName
+        return FieldType.Unknown
     }
 
     private fun sanitizeHint(hint: String): String = hint.lowercase()
@@ -746,12 +744,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         private val EMAIL_REGEX = Regex("co(?:urriel|rrei?o)|email", REGEX_OPTIONS)
         private val FULL_NAME_REGEX =
             Regex("(?<!user)(?<!last)(name|\\b(nom(?:bre)?(?:complet)?)\\b)", REGEX_OPTIONS)
-        private val FIRST_NAME_REGEX = Regex("firstname", REGEX_OPTIONS)
-        private val MIDDLE_NAME_REGEX = Regex("middlename", REGEX_OPTIONS)
-        private val LAST_NAME_REGEX = Regex("lastname", REGEX_OPTIONS)
-        private val PHONE_REGEX = Regex("phone|telefon", REGEX_OPTIONS)
         private val ADDRESS_REGEX = Regex("nom.*rue")
-        private val ORGANIZATION_REGEX = Regex("organi", REGEX_OPTIONS)
     }
 }
 

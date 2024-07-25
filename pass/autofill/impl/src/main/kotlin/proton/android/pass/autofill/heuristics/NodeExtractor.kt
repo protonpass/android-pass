@@ -23,6 +23,7 @@ import android.os.Build
 import android.text.InputType
 import android.view.View
 import android.view.autofill.AutofillId
+import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import proton.android.pass.autofill.RequestFlags
 import proton.android.pass.autofill.entities.AndroidAutofillFieldId
@@ -195,22 +196,22 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         val hasAutofillInfo = nodeHasAutofillInfo(node)
         debugNode(node, isImportant, hasAutofillInfo)
 
-        val isEditText = node.isEditText()
+        val isSupportedInput = node.isSupportedInput()
         if (node.id == null) {
-            if (isEditText) {
+            if (isSupportedInput) {
                 PassLogger.d(TAG, "Discarding node because id is null")
             }
 
             return NodeSupportsAutofillResult.No
         }
 
-        if (!isImportant && !isEditText) {
+        if (!isImportant && !isSupportedInput) {
             return NodeSupportsAutofillResult.No
         }
 
         return when (hasAutofillInfo) {
             // If the node doesn't have autofill info but it's an edit text, maybe we can check the context
-            HasAutofillInfoResult.No -> if (isEditText) {
+            HasAutofillInfoResult.No -> if (isSupportedInput) {
                 val fieldType = detectFieldTypeUsingHintKeywordList(node.hintKeywordList)
                 if (fieldType != FieldType.Unknown) {
                     PassLogger.d(TAG, "[node=${node.id}] Marking as Yes because hintKeyword")
@@ -226,7 +227,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
             }
 
             HasAutofillInfoResult.Yes -> {
-                if (isEditText) {
+                if (isSupportedInput) {
                     PassLogger.d(
                         TAG,
                         "[node=${node.id}] Accepting node because it has autofill info"
@@ -236,7 +237,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
             }
 
             is HasAutofillInfoResult.YesWithFieldType -> {
-                if (isEditText) {
+                if (isSupportedInput) {
                     PassLogger.d(
                         TAG,
                         "[node=${node.id}] Accepting node because it has autofill " +
@@ -255,7 +256,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
     ) {
         if (node.id == null) return
         val nodeId = node.id.value()
-        if (node.isEditText()) {
+        if (node.isSupportedInput()) {
             val inputTypeFlags = InputTypeFlags.fromValue(node.inputType)
             val hasValidHints = nodeHasValidHints(node.autofillHints.toSet())
             val hasValidHtmlInfo = nodeHasValidHtmlInfo(node.htmlAttributes)
@@ -275,8 +276,8 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
 
     @Suppress("LongMethod")
     private fun getAutofillNodeFromContext(autofillContext: AutofillTraversalContext): Option<AssistField> {
-        // Invariant: node must be an EditText
-        if (!autofillContext.node.isEditText()) return None
+        // Invariant: node must be a supported input
+        if (!autofillContext.node.isSupportedInput()) return None
 
         // Fetch the context nodes
         val contextNodes: Map<Level, Map<Proximity, List<AutofillNode>>> =
@@ -413,30 +414,27 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         return contextNodes
     }
 
-    private fun nodeHasAutofillInfo(node: AutofillNode): HasAutofillInfoResult =
-        when (val hintsRes = nodeHasValidHints(node.autofillHints.toSet())) {
-            is CheckHintsResult.Found -> {
-                HasAutofillInfoResult.YesWithFieldType(hintsRes.fieldType)
-            }
-
-            CheckHintsResult.NoneFound -> {
-                val hasHtmlInfo = nodeHasValidHtmlInfo(node.htmlAttributes)
-                when (val hasValidInputType = nodeHasValidInputType(node)) {
-                    is CheckInputTypeResult.Found -> {
-                        HasAutofillInfoResult.YesWithFieldType(hasValidInputType.fieldType)
-                    }
-
-                    CheckInputTypeResult.DoNotAutofill -> HasAutofillInfoResult.No
-
-                    CheckInputTypeResult.NoneFound -> if (hasHtmlInfo) {
-                        HasAutofillInfoResult.Yes
-                    } else {
-                        HasAutofillInfoResult.No
-                    }
-                }
-            }
+    @Suppress("ReturnCount")
+    private fun nodeHasAutofillInfo(node: AutofillNode): HasAutofillInfoResult {
+        val hasValidHints = nodeHasValidHints(node.autofillHints.toSet())
+        if (hasValidHints is CheckHintsResult.Found) {
+            return HasAutofillInfoResult.YesWithFieldType(hasValidHints.fieldType)
         }
 
+        val hasValidInputType = nodeHasValidInputType(node)
+        if (hasValidInputType is CheckInputTypeResult.Found) {
+            return HasAutofillInfoResult.YesWithFieldType(hasValidInputType.fieldType)
+        }
+        if (hasValidInputType is CheckInputTypeResult.DoNotAutofill) {
+            return HasAutofillInfoResult.No
+        }
+        val hasValidHtmlInfo = nodeHasValidHtmlInfo(node.htmlAttributes)
+        if (hasValidHtmlInfo) {
+            return HasAutofillInfoResult.Yes
+        }
+
+        return HasAutofillInfoResult.No
+    }
 
     private fun nodeHasValidHints(autofillHints: Set<String>): CheckHintsResult {
         for (hint in autofillHints) {
@@ -610,6 +608,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         if (FULL_NAME_REGEX.containsMatchIn(sanitizedHint)) return FieldType.FullName
         if (PHONE_REGEX.containsMatchIn(sanitizedHint)) return FieldType.Phone
         if (ADDRESS_REGEX.containsMatchIn(sanitizedHint)) return FieldType.Address
+        if (ORGANIZATION_REGEX.containsMatchIn(sanitizedHint)) return FieldType.Organization
 
         return fieldKeywordsList.match(sanitizedHint).also {
             if (it != FieldType.Unknown) {
@@ -751,6 +750,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         private val LAST_NAME_REGEX = Regex("lastname", REGEX_OPTIONS)
         private val PHONE_REGEX = Regex("phone|telefon", REGEX_OPTIONS)
         private val ADDRESS_REGEX = Regex("nom.*rue")
+        private val ORGANIZATION_REGEX = Regex("organi", REGEX_OPTIONS)
     }
 }
 
@@ -790,7 +790,11 @@ fun AssistStructure.ViewNode.toAutofillNode(): AutofillNode {
     )
 }
 
-private fun AutofillNode.isEditText() = className == EditText::class.java.name
+private fun AutofillNode.isSupportedInput() = when (className) {
+    EditText::class.java.name -> true
+    AutoCompleteTextView::class.java.name -> true
+    else -> false
+}
 
 private fun AssistStructure.ViewNode.getUrl(): Option<String> {
     val domain = webDomain ?: return None

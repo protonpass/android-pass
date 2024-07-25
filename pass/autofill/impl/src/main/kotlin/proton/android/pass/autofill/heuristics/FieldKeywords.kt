@@ -149,16 +149,16 @@ internal val fieldKeywordsList = listOf(
         deniedKeywords = ALLOWED_PHONE_KEYWORDS + DENIED_ADDRESS_KEYWORDS
     ),
     kw(
+        fieldType = FieldType.PostalCode,
+        allowedKeywords = ALLOWED_POSTAL_CODE_KEYWORDS,
+        deniedKeywords = listOf("address", "direccion")
+    ),
+    kw(
         fieldType = FieldType.Address,
         allowedKeywords = ALLOWED_ADDRESS_KEYWORDS,
         deniedKeywords = ALLOWED_EMAIL_KEYWORDS +
-            ALLOWED_POSTAL_CODE_KEYWORDS +
             ALLOWED_PHONE_KEYWORDS +
             listOf("country", "button")
-    ),
-    kw(
-        fieldType = FieldType.PostalCode,
-        allowedKeywords = ALLOWED_POSTAL_CODE_KEYWORDS
     ),
     kw(
         fieldType = FieldType.Phone,

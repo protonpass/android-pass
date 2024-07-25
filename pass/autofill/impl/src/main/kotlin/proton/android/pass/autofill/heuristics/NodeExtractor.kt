@@ -210,7 +210,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         }
 
         return when (hasAutofillInfo) {
-            // If the node doesn't have autofill info but it's an edit text, maybe we can check the context
+            // If the node doesn't have autofill info but it's a supported input, maybe we can check the context
             HasAutofillInfoResult.No -> if (isSupportedInput) {
                 val fieldType = detectFieldTypeUsingHintKeywordList(node.hintKeywordList)
                 if (fieldType != FieldType.Unknown) {
@@ -262,14 +262,24 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
             val hasValidHtmlInfo = nodeHasValidHtmlInfo(node.htmlAttributes)
             val hasValidInputType = nodeHasValidInputType(node)
             PassLogger.v(TAG, "------------------------------------")
-            PassLogger.v(TAG, "[$nodeId] nodeInputTypeFlags $inputTypeFlags")
-            PassLogger.v(TAG, "[$nodeId] htmlAttributes ${node.htmlAttributes.joinToString()}")
-            PassLogger.v(TAG, "[$nodeId] hintKeywordList ${node.hintKeywordList.joinToString()}")
-            PassLogger.v(TAG, "[$nodeId] isImportant $isImportant")
-            PassLogger.v(TAG, "[$nodeId] hasAutofillInfo $hasAutofillInfo")
-            PassLogger.v(TAG, "[$nodeId] nodeHasValidHints $hasValidHints")
-            PassLogger.v(TAG, "[$nodeId] nodeHasValidHtmlInfo $hasValidHtmlInfo")
-            PassLogger.v(TAG, "[$nodeId] nodeHasValidInputType $hasValidInputType")
+            PassLogger.v(TAG, "[$nodeId] Node Input Type Flags: $inputTypeFlags")
+            val htmlAttributesOutput = if (node.htmlAttributes.isEmpty()) {
+                "No HTML attributes"
+            } else {
+                node.htmlAttributes.joinToString()
+            }
+            PassLogger.v(TAG, "[$nodeId] HTML Attributes: $htmlAttributesOutput")
+            val hintKeywordListOutput = if (node.hintKeywordList.isEmpty()) {
+                "No hint keywords"
+            } else {
+                node.hintKeywordList.joinToString()
+            }
+            PassLogger.v(TAG, "[$nodeId] Hint Keyword List: $hintKeywordListOutput")
+            PassLogger.v(TAG, "[$nodeId] Is Important: $isImportant")
+            PassLogger.v(TAG, "[$nodeId] Has Autofill Info: $hasAutofillInfo")
+            PassLogger.v(TAG, "[$nodeId] Node Has Valid Hints: $hasValidHints")
+            PassLogger.v(TAG, "[$nodeId] Node Has Valid HTML Info: $hasValidHtmlInfo")
+            PassLogger.v(TAG, "[$nodeId] Node Has Valid Input Type: $hasValidInputType")
             PassLogger.v(TAG, "------------------------------------")
         }
     }
@@ -563,7 +573,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
 
         val htmlValues = attributes.map { it.second }.map(::sanitizeHint)
 
-        val (fieldType, match) = fieldKeywordsList.match(htmlValues)
+        val (fieldType, match) = fieldKeywordsList.match(*htmlValues.toTypedArray())
         if (fieldType != FieldType.Unknown) {
             PassLogger.v(TAG, "Found field type $fieldType using html attr $match")
         }
@@ -610,11 +620,11 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
         if (ADDRESS_REGEX.containsMatchIn(sanitizedHint)) return FieldType.Address
         if (ORGANIZATION_REGEX.containsMatchIn(sanitizedHint)) return FieldType.Organization
 
-        return fieldKeywordsList.match(sanitizedHint).also {
-            if (it != FieldType.Unknown) {
-                PassLogger.v(TAG, "Found field type $it using hint $hint")
-            }
+        val (fieldType, match) = fieldKeywordsList.match(sanitizedHint)
+        if (fieldType != FieldType.Unknown) {
+            PassLogger.v(TAG, "Found field type $fieldType using hint $match")
         }
+        return fieldType
     }
 
     private fun sanitizeHint(hint: String): String = hint.lowercase()

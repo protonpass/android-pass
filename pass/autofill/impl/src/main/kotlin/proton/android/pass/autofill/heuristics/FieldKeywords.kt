@@ -56,7 +56,6 @@ private val ALLOWED_ADDRESS_KEYWORDS = listOf(
 )
 private val DENIED_ADDRESS_KEYWORDS = listOf("street")
 private val ALLOWED_CITY_KEYWORDS = listOf("city", "ciudad")
-private val ALLOWED_ORGANIZATION_KEYWORDS = listOf("organization")
 private val ALLOWED_COUNTRY_KEYWORDS = listOf("country", "pais")
 private val ALLOWED_POSTAL_CODE_KEYWORDS = listOf("postal", "zip", "zipcode", "postcode")
 private val ALLOWED_PHONE_KEYWORDS = listOf("phone", "telef", "teleph", "mobile", "cellphone")
@@ -168,10 +167,6 @@ internal val fieldKeywordsList = listOf(
     kw(
         fieldType = FieldType.Country,
         allowedKeywords = ALLOWED_COUNTRY_KEYWORDS
-    ),
-    kw(
-        fieldType = FieldType.Organization,
-        allowedKeywords = ALLOWED_ORGANIZATION_KEYWORDS
     )
 )
 

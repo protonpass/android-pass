@@ -333,6 +333,7 @@
                             "isImportantForAutofill": true,
                             "text": "",
                             "inputType": 598017,
+                            "expectedAutofill": "identity_country",
                             "hintKeywordList": [
                               "",
                               "actv_country",

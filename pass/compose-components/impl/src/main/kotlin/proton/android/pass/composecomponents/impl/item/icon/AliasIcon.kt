@@ -28,31 +28,40 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.Spacing
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.container.BoxedIcon
 
 @Composable
 fun AliasIcon(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    activeAlias: Boolean = true,
     size: Int = 40,
     shape: Shape = PassTheme.shapes.squircleMediumShape,
-    backgroundColor: Color = if (enabled) {
-        PassTheme.colors.aliasInteractionNormMinor1
-    } else {
-        PassTheme.colors.aliasInteractionNormMinor2
+    backgroundColor: Color = when {
+        enabled && activeAlias -> PassTheme.colors.aliasInteractionNormMinor1
+        !activeAlias -> PassTheme.colors.backgroundNorm
+        else -> PassTheme.colors.aliasInteractionNormMinor2
     },
-    foregroundColor: Color = if (enabled) {
-        PassTheme.colors.aliasInteractionNormMajor2
-    } else {
-        PassTheme.colors.aliasInteractionNormMinor1
+    foregroundColor: Color = when {
+        enabled && activeAlias -> PassTheme.colors.aliasInteractionNormMajor2
+        enabled && !activeAlias -> PassTheme.colors.aliasInteractionNormMajor2
+        !enabled && !activeAlias -> PassTheme.colors.aliasInteractionNormMinor1
+        else -> PassTheme.colors.aliasInteractionNormMinor1
+    },
+    borderColor: Color? = when {
+        !activeAlias && enabled -> PassTheme.colors.aliasInteractionNormMinor1
+        !activeAlias && !enabled -> PassTheme.colors.aliasInteractionNormMinor2
+        else -> null
     }
 ) {
     BoxedIcon(
         modifier = modifier,
         backgroundColor = backgroundColor,
+        borderColor = borderColor,
         size = size,
         shape = shape
     ) {
@@ -65,12 +74,34 @@ fun AliasIcon(
     }
 }
 
+class AliasIconPreviewProvider : PreviewParameterProvider<AliasIconParams> {
+    override val values: Sequence<AliasIconParams>
+        get() = sequence {
+            for (isEnabled in listOf(true, false)) {
+                for (isActive in listOf(true, false)) {
+                    yield(AliasIconParams(isEnabled, isActive))
+                }
+            }
+        }
+}
+
+data class AliasIconParams(
+    val enabled: Boolean,
+    val active: Boolean
+)
+
+class ThemeAndAliasIconProvider :
+    ThemePairPreviewProvider<AliasIconParams>(AliasIconPreviewProvider())
+
 @Preview
 @Composable
-fun AliasIconPreview(@PreviewParameter(ThemePreviewProvider::class) isDark: Boolean) {
-    PassTheme(isDark = isDark) {
+fun AliasIconPreview(@PreviewParameter(ThemeAndAliasIconProvider::class) input: Pair<Boolean, AliasIconParams>) {
+    PassTheme(isDark = input.first) {
         Surface {
-            AliasIcon()
+            AliasIcon(
+                enabled = input.second.enabled,
+                activeAlias = input.second.active
+            )
         }
     }
 }

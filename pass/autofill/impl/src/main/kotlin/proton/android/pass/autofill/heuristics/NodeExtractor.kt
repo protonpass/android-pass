@@ -656,14 +656,6 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
             InputType.TYPE_CLASS_PHONE
         ) -> FieldType.Phone
 
-        inputType.hasVariations(
-            InputType.TYPE_TEXT_VARIATION_POSTAL_ADDRESS
-        ) -> FieldType.Address
-        /*
-        inputType.hasVariations(
-            InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-        ) -> FieldType.Username
-         */
         else -> FieldType.Unknown
     }
 
@@ -684,8 +676,7 @@ class NodeExtractor(private val requestFlags: List<RequestFlags> = emptyList()) 
             }
         }
 
-        val inputTypeFlags = InputTypeFlags.fromValue(node.inputType)
-        return !inputTypeFlags.contains(InputTypeFlags.TEXT_FLAG_MULTI_LINE)
+        return true
     }
 
     sealed interface CheckHintsResult {

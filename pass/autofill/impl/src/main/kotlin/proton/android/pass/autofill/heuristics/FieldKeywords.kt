@@ -20,6 +20,9 @@ package proton.android.pass.autofill.heuristics
 
 import android.view.View
 import proton.android.pass.autofill.entities.FieldType
+import proton.android.pass.autofill.heuristics.Language.English
+import proton.android.pass.autofill.heuristics.Language.French
+import proton.android.pass.autofill.heuristics.Language.Spanish
 
 private const val MOZILLA_BROWSER_PREFIX = "mozac"
 
@@ -43,22 +46,60 @@ internal fun Set<FieldKeywords>.match(vararg fields: String): Pair<FieldType, St
     return FieldType.Unknown to ""
 }
 
-private val ALLOWED_ADDRESS_KEYWORDS = setOf(
-    "address",
-    "street",
-    "direccion",
-    "calle",
-    "casa",
-    "home",
-    "house",
-    "adresse"
+enum class Language {
+    English,
+    Spanish,
+    French
+}
+
+private val ALLOWED_ADDRESS_KEYWORDS = mapOf(
+    English to setOf("address", "street", "home", "house"),
+    Spanish to setOf("direccion", "calle", "casa"),
+    French to setOf("adresse")
 )
-private val DENIED_ADDRESS_KEYWORDS = setOf("street")
-private val ALLOWED_CITY_KEYWORDS = setOf("city", "ciudad", "ville")
-private val ALLOWED_COUNTRY_KEYWORDS = setOf("country", "pais")
-private val ALLOWED_POSTAL_CODE_KEYWORDS = setOf("postal", "zip", "zipcode", "postcode")
-private val ALLOWED_PHONE_KEYWORDS = setOf("phone", "telef", "teleph", "mobile", "cellphone")
-private val ALLOWED_EMAIL_KEYWORDS = setOf(View.AUTOFILL_HINT_EMAIL_ADDRESS, "email")
+private val DENIED_ADDRESS_KEYWORDS = mapOf(
+    English to setOf("line2"),
+    Spanish to setOf("linea2"),
+    French to setOf("ligne2")
+)
+
+private val DENIED_CITY_KEYWORDS = mapOf(
+    English to setOf("street"),
+    Spanish to setOf("calle"),
+    French to setOf("rue")
+)
+
+private val ALLOWED_CITY_KEYWORDS = mapOf(
+    English to setOf("city"),
+    Spanish to setOf("ciudad"),
+    French to setOf("ville")
+)
+
+private val ALLOWED_COUNTRY_KEYWORDS = mapOf(
+    English to setOf("country"),
+    Spanish to setOf("pais"),
+    French to setOf("pays")
+)
+private val ALLOWED_POSTAL_CODE_KEYWORDS = mapOf(
+    English to setOf("postal", "zip", "zipcode", "postcode")
+)
+private val ALLOWED_PHONE_KEYWORDS = mapOf(
+    English to setOf("phone", "teleph", "mobile", "cellphone"),
+    Spanish to setOf("telef", "movil", "celular")
+)
+private val ALLOWED_EMAIL_KEYWORDS = setOf("email")
+private val ALLOWED_ORGANIZATION_KEYWORDS = mapOf(
+    English to setOf("organi")
+)
+private val ALLOWED_FIRST_NAME_KEYWORDS = mapOf(
+    English to setOf("firstname")
+)
+private val ALLOWED_MIDDLE_NAME_KEYWORDS = mapOf(
+    English to setOf("middlename")
+)
+private val ALLOWED_LAST_NAME_KEYWORDS = mapOf(
+    English to setOf("lastname")
+)
 private val DEFAULT_DENIED_KEYWORDS = setOf("composer", "message", MOZILLA_BROWSER_PREFIX)
 
 internal val fieldKeywordsList = setOf(
@@ -97,6 +138,18 @@ internal val fieldKeywordsList = setOf(
     kw(
         fieldType = FieldType.CardCvv,
         allowedKeywords = setOf("cvc", "cvv", "securitycode")
+    ),
+    kw(
+        fieldType = FieldType.FirstName,
+        allowedKeywords = ALLOWED_FIRST_NAME_KEYWORDS.flattenedValues()
+    ),
+    kw(
+        fieldType = FieldType.MiddleName,
+        allowedKeywords = ALLOWED_MIDDLE_NAME_KEYWORDS.flattenedValues()
+    ),
+    kw(
+        fieldType = FieldType.LastName,
+        allowedKeywords = ALLOWED_LAST_NAME_KEYWORDS.flattenedValues()
     ),
     kw(
         fieldType = FieldType.FullName,
@@ -144,30 +197,38 @@ internal val fieldKeywordsList = setOf(
     ),
     kw(
         fieldType = FieldType.City,
-        allowedKeywords = ALLOWED_CITY_KEYWORDS,
-        deniedKeywords = ALLOWED_PHONE_KEYWORDS + DENIED_ADDRESS_KEYWORDS
+        allowedKeywords = ALLOWED_CITY_KEYWORDS.values.flatten().toSet(),
+        deniedKeywords = ALLOWED_PHONE_KEYWORDS.flattenedValues() + DENIED_CITY_KEYWORDS.flattenedValues()
     ),
     kw(
         fieldType = FieldType.PostalCode,
-        allowedKeywords = ALLOWED_POSTAL_CODE_KEYWORDS,
+        allowedKeywords = ALLOWED_POSTAL_CODE_KEYWORDS.flattenedValues(),
         deniedKeywords = setOf("address", "direccion", "adresse")
     ),
     kw(
         fieldType = FieldType.Address,
-        allowedKeywords = ALLOWED_ADDRESS_KEYWORDS,
-        deniedKeywords = ALLOWED_EMAIL_KEYWORDS +
-            ALLOWED_PHONE_KEYWORDS +
-            setOf("country", "button")
+        allowedKeywords = ALLOWED_ADDRESS_KEYWORDS.flattenedValues(),
+        deniedKeywords = DENIED_ADDRESS_KEYWORDS.flattenedValues() +
+            ALLOWED_EMAIL_KEYWORDS +
+            ALLOWED_PHONE_KEYWORDS.flattenedValues() +
+            ALLOWED_COUNTRY_KEYWORDS.flattenedValues() +
+            setOf("button")
     ),
     kw(
         fieldType = FieldType.Phone,
-        allowedKeywords = ALLOWED_PHONE_KEYWORDS
+        allowedKeywords = ALLOWED_PHONE_KEYWORDS.flattenedValues()
     ),
     kw(
         fieldType = FieldType.Country,
-        allowedKeywords = ALLOWED_COUNTRY_KEYWORDS
+        allowedKeywords = ALLOWED_COUNTRY_KEYWORDS.flattenedValues()
+    ),
+    kw(
+        fieldType = FieldType.Organization,
+        allowedKeywords = ALLOWED_ORGANIZATION_KEYWORDS.flattenedValues()
     )
 )
+
+private fun Map<Language, Set<String>>.flattenedValues() = values.flatten().toSet()
 
 private fun kw(
     fieldType: FieldType,

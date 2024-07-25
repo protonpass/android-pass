@@ -25,11 +25,11 @@ private const val MOZILLA_BROWSER_PREFIX = "mozac"
 
 internal data class FieldKeywords(
     val fieldType: FieldType,
-    val allowedKeywords: List<String>,
-    val deniedKeywords: List<String>
+    val allowedKeywords: Set<String>,
+    val deniedKeywords: Set<String>
 )
 
-internal fun List<FieldKeywords>.match(vararg fields: String): Pair<FieldType, String> {
+internal fun Set<FieldKeywords>.match(vararg fields: String): Pair<FieldType, String> {
     for ((fieldType, allowed, denied) in this) {
         for (value in fields) {
             for (keyword in allowed) {
@@ -43,7 +43,7 @@ internal fun List<FieldKeywords>.match(vararg fields: String): Pair<FieldType, S
     return FieldType.Unknown to ""
 }
 
-private val ALLOWED_ADDRESS_KEYWORDS = listOf(
+private val ALLOWED_ADDRESS_KEYWORDS = setOf(
     "address",
     "street",
     "direccion",
@@ -53,18 +53,18 @@ private val ALLOWED_ADDRESS_KEYWORDS = listOf(
     "house",
     "adresse"
 )
-private val DENIED_ADDRESS_KEYWORDS = listOf("street")
-private val ALLOWED_CITY_KEYWORDS = listOf("city", "ciudad", "ville")
-private val ALLOWED_COUNTRY_KEYWORDS = listOf("country", "pais")
-private val ALLOWED_POSTAL_CODE_KEYWORDS = listOf("postal", "zip", "zipcode", "postcode")
-private val ALLOWED_PHONE_KEYWORDS = listOf("phone", "telef", "teleph", "mobile", "cellphone")
-private val ALLOWED_EMAIL_KEYWORDS = listOf(View.AUTOFILL_HINT_EMAIL_ADDRESS, "email")
-private val DEFAULT_DENIED_KEYWORDS = listOf("composer", "message", MOZILLA_BROWSER_PREFIX)
+private val DENIED_ADDRESS_KEYWORDS = setOf("street")
+private val ALLOWED_CITY_KEYWORDS = setOf("city", "ciudad", "ville")
+private val ALLOWED_COUNTRY_KEYWORDS = setOf("country", "pais")
+private val ALLOWED_POSTAL_CODE_KEYWORDS = setOf("postal", "zip", "zipcode", "postcode")
+private val ALLOWED_PHONE_KEYWORDS = setOf("phone", "telef", "teleph", "mobile", "cellphone")
+private val ALLOWED_EMAIL_KEYWORDS = setOf(View.AUTOFILL_HINT_EMAIL_ADDRESS, "email")
+private val DEFAULT_DENIED_KEYWORDS = setOf("composer", "message", MOZILLA_BROWSER_PREFIX)
 
-internal val fieldKeywordsList = listOf(
+internal val fieldKeywordsList = setOf(
     kw(
         fieldType = FieldType.Username,
-        allowedKeywords = listOf(
+        allowedKeywords = setOf(
             View.AUTOFILL_HINT_USERNAME,
             "username",
             "identifier",
@@ -78,15 +78,15 @@ internal val fieldKeywordsList = listOf(
     ),
     kw(
         fieldType = FieldType.Password,
-        allowedKeywords = listOf("password")
+        allowedKeywords = setOf("password")
     ),
     kw(
         fieldType = FieldType.Totp,
-        allowedKeywords = listOf("otp", "totp", "mfa", "2fa", "tfa")
+        allowedKeywords = setOf("otp", "totp", "mfa", "2fa", "tfa")
     ),
     kw(
         fieldType = FieldType.CardNumber,
-        allowedKeywords = listOf(
+        allowedKeywords = setOf(
             "cardnumber",
             "cardnum",
             "ccnumber",
@@ -96,11 +96,11 @@ internal val fieldKeywordsList = listOf(
     ),
     kw(
         fieldType = FieldType.CardCvv,
-        allowedKeywords = listOf("cvc", "cvv", "securitycode")
+        allowedKeywords = setOf("cvc", "cvv", "securitycode")
     ),
     kw(
         fieldType = FieldType.FullName,
-        allowedKeywords = listOf(
+        allowedKeywords = setOf(
             "cardholder",
             "cardname",
             "holdername",
@@ -115,11 +115,11 @@ internal val fieldKeywordsList = listOf(
     // so it needs to be evaluated first.
     kw(
         fieldType = FieldType.CardExpirationMMYY,
-        allowedKeywords = listOf("mmyy", "mmaa")
+        allowedKeywords = setOf("mmyy", "mmaa")
     ),
     kw(
         fieldType = FieldType.CardExpirationMM,
-        allowedKeywords = listOf(
+        allowedKeywords = setOf(
             "cardmonth",
             "expmonth",
             "expirationmonth",
@@ -129,11 +129,11 @@ internal val fieldKeywordsList = listOf(
     ),
     kw(
         fieldType = FieldType.CardExpirationYYYY,
-        allowedKeywords = listOf("4digityear", "yyyy")
+        allowedKeywords = setOf("4digityear", "yyyy")
     ),
     kw(
         fieldType = FieldType.CardExpirationYY,
-        allowedKeywords = listOf(
+        allowedKeywords = setOf(
             "cardyear",
             "expyear",
             "expirationyear",
@@ -150,14 +150,14 @@ internal val fieldKeywordsList = listOf(
     kw(
         fieldType = FieldType.PostalCode,
         allowedKeywords = ALLOWED_POSTAL_CODE_KEYWORDS,
-        deniedKeywords = listOf("address", "direccion", "adresse")
+        deniedKeywords = setOf("address", "direccion", "adresse")
     ),
     kw(
         fieldType = FieldType.Address,
         allowedKeywords = ALLOWED_ADDRESS_KEYWORDS,
         deniedKeywords = ALLOWED_EMAIL_KEYWORDS +
             ALLOWED_PHONE_KEYWORDS +
-            listOf("country", "button")
+            setOf("country", "button")
     ),
     kw(
         fieldType = FieldType.Phone,
@@ -171,6 +171,6 @@ internal val fieldKeywordsList = listOf(
 
 private fun kw(
     fieldType: FieldType,
-    allowedKeywords: List<String>,
-    deniedKeywords: List<String> = emptyList()
+    allowedKeywords: Set<String>,
+    deniedKeywords: Set<String> = emptySet()
 ) = FieldKeywords(fieldType, allowedKeywords, deniedKeywords + DEFAULT_DENIED_KEYWORDS)

@@ -17,20 +17,20 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="sync_item_empty">Empty vault</string>
+  <string name="sync_item_empty">Prázdny trezor</string>
   <plurals name="sync_item_count">
-    <item quantity="one">Downloaded %d item</item>
-    <item quantity="few">Downloaded %d items</item>
-    <item quantity="many">Downloaded %d items</item>
-    <item quantity="other">Downloaded %d items</item>
+    <item quantity="one">Stiahnutá %d položka</item>
+    <item quantity="few">Stiahnuté %d položky</item>
+    <item quantity="many">Stiahnutých %d položiek</item>
+    <item quantity="other">Stiahnutých %d položiek</item>
   </plurals>
   <plurals name="sync_finished_item_count">
-    <item quantity="one">%d item synchronized</item>
-    <item quantity="few">%d items synchronized</item>
-    <item quantity="many">%d items synchronized</item>
-    <item quantity="other">%d items synchronized</item>
+    <item quantity="one">%d položka synchronizovaná</item>
+    <item quantity="few">%d položky synchronizované</item>
+    <item quantity="many">%d položiek synchronizovaných</item>
+    <item quantity="other">%d položiek synchronizovaných</item>
   </plurals>
-  <string name="sync_progress_item_count">Downloading %1$d of %2$d items</string>
+  <string name="sync_progress_item_count">Sťahujem %1$d z %2$d položiek</string>
   <string name="sync_dialog_title">Synchronizácia položiek…</string>
   <string name="sync_dialog_title_error">Synchronizácia zlyhala</string>
   <string name="sync_dialog_title_success">Synchronizácia je dokončená</string>
@@ -39,6 +39,6 @@
   <string name="sync_dialog_subtitle_success">Vaše položky boli úspešne stiahnuté a dešifrované.</string>
   <string name="sync_item_not_started">Nezačala</string>
   <string name="sync_item_failed">Synchronizácia zlyhala</string>
-  <string name="sync_dialog_title_inserting">Inserting items…</string>
-  <string name="sync_dialog_subtitle_inserting">Completing last step, almost there.</string>
+  <string name="sync_dialog_title_inserting">Vkladám položky…</string>
+  <string name="sync_dialog_subtitle_inserting">Dokončuje sa posledný krok, už je to takmer hotové.</string>
 </resources>

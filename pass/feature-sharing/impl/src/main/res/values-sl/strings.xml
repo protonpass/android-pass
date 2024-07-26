@@ -127,14 +127,14 @@
   <string name="share_with_remove_email_content_description">Odstrani e-pošto</string>
   <string name="share_with_secure_link_title">Via secure link</string>
   <string name="share_with_secure_link_description">Generate a secure link to this item.</string>
-  <string name="share_with_manage_shared_vault_title">Manage vault access</string>
+  <string name="share_with_manage_shared_vault_title">Upravljajte dostop do trezorja</string>
   <plurals name="share_with_manage_shared_vault_description">
-    <item quantity="one">The item\'s vault is currently shared with %d user.</item>
-    <item quantity="two">The item\'s vault is currently shared with %d users.</item>
-    <item quantity="few">The item\'s vault is currently shared with %d users.</item>
-    <item quantity="other">The item\'s vault is currently shared with %d users.</item>
+    <item quantity="one">Trezor predmeta je trenutno v skupni rabi z uporabnikom %d.</item>
+    <item quantity="two">Trezor predmeta je trenutno v skupni rabi z %d uporabnikoma.</item>
+    <item quantity="few">Trezor predmeta je trenutno v skupni rabi z %d uporabniki.</item>
+    <item quantity="other">Trezor predmeta je trenutno v skupni rabi z %d uporabniki.</item>
   </plurals>
-  <string name="share_with_view_shared_vault_members_title">View vault members</string>
+  <string name="share_with_view_shared_vault_members_title">Oglejte si člane trezorja</string>
   <string name="sharing_edit_permissions_set_access_level_all_members">Nastavite raven dostopa za vse člane</string>
   <string name="sharing_edit_permissions_set_access_level_single_member">Nastavi raven dostopa za %s</string>
   <string name="sharing_edit_permissions_remove_user">Odstranite uporabnika</string>

@@ -93,6 +93,7 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Paylaşılamaz</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">Bu kasayı paylaşmak için yeterli izniniz yok.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">Paylaşılabilecek kasa sayısı sınırına ulaştınız. Daha fazla kasa paylaşmak için tarifenizi yükseltin.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">You cannot share this item because it\'s in the trash. Please move it out of the trash before sharing it.</string>
   <string name="password_score_vulnerable">Çok zayıf</string>
   <string name="password_score_weak">Zayıf</string>
   <string name="password_score_strong">Güçlü</string>

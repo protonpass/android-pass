@@ -25,7 +25,7 @@
   <string name="field_username_title">Nome de usuário</string>
   <string name="field_username_hint">Adicionar nome de usuário</string>
   <string name="field_username_or_email_title">Nome de usuário ou endereço de e-mail</string>
-  <string name="field_username_or_email_hint">Adicionar um nome de usuário ou endereço de e-mail</string>
+  <string name="field_username_or_email_hint">Adicionar nome de usuário ou endereço de e-mail</string>
   <string name="field_password_title">Senha</string>
   <string name="field_password_hint">Adicionar senha</string>
   <string name="field_website_address_title">Site</string>

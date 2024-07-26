@@ -19,4 +19,13 @@
 <resources>
   <string name="item_details_toolbar_content_description_menu_button">Κουμπί για την εμφάνιση επιλογών μενού</string>
   <string name="item_details_toolbar_content_description_share_button">Κουμπί για κοινή χρήση στοιχείου</string>
+  <!-- Item details forbidden actions -->
+  <string name="item_details_forbidden_actions_edit_title">Δεν είναι δυνατή η επεξεργασία</string>
+  <string name="item_details_forbidden_actions_edit_permission">Δεν μπορείτε να επεξεργαστείτε αυτό το στοιχείο, επειδή δεν έχετε αρκετά δικαιώματα.</string>
+  <string name="item_details_forbidden_actions_edit_trash">Δεν μπορείτε να επεξεργαστείτε αυτό το στοιχείο επειδή βρίσκεται στα διαγραμμένα. Μετακινήστε το από τα διαγραμμένα πριν το επεξεργαστείτε.</string>
+  <string name="item_details_forbidden_actions_edit_upgrade">Επιτρέπεται μόνο η επεξεργασία στοιχείων στις παλαιότερες κρύπτες σας. Για να επεξεργαστείτε αυτό το στοιχείο, αναβαθμίστε το τρέχον πλάνο σας.</string>
+  <string name="item_details_forbidden_actions_share_title">Δεν είναι δυνατή η κοινή χρήση</string>
+  <string name="item_details_forbidden_actions_share_limit">Έχετε συμπληρώσει το όριο κοινής χρήσης κρύπτης. Για να μοιραστείτε περισσότερες κρύπτες, αναβαθμίστε το τρέχον πλάνο σας.</string>
+  <string name="item_details_forbidden_actions_share_permission">Δεν έχετε αρκετά δικαιώματα για να μοιραστείτε αυτήν την κρύπτη</string>
+  <string name="item_details_forbidden_actions_share_trash">Δεν μπορείτε να κοινοποιήσετε αυτό το στοιχείο επειδή βρίσκεται στα διαγραμμένα. Παρακαλούμε μετακινήστε το από τα διαγραμμένα πριν το επεξεργαστείτε.</string>
 </resources>

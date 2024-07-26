@@ -23,16 +23,16 @@
   <string name="secure_links_create_row_expiration_options_one_hour">1 hour</string>
   <string name="secure_links_create_row_expiration_options_one_day">1 day</string>
   <string name="secure_links_create_row_expiration_options_seven_days">7 days</string>
-  <string name="secure_links_create_row_expiration_options_fourteen_days">14 days</string>
+  <string name="secure_links_create_row_expiration_options_fourteen_days">14 dni</string>
   <string name="secure_links_create_row_expiration_options_thirty_days">30 dni</string>
   <string name="secure_links_create_row_max_views_title">Omejite število dostopov</string>
   <string name="secure_links_create_row_max_views_subtitle">Maximum views: %d</string>
-  <string name="secure_links_create_button_generate">Generate secure link</string>
+  <string name="secure_links_create_button_generate">Ustvari varno povezavo</string>
   <string name="secure_links_create_snackbar_message_error">There was an error generating secure link</string>
   <!--Overview screen-->
   <string name="secure_links_overview_widget_expiration_title">Expires in:</string>
   <string name="secure_links_overview_widget_max_views_title">Can be viewed:</string>
-  <string name="secure_links_overview_widget_open_times_title">Opened:</string>
+  <string name="secure_links_overview_widget_open_times_title">Odprto:</string>
   <plurals name="secure_links_overview_widget_max_views_limited">
     <item quantity="one">%d-krat</item>
     <item quantity="two">%d krat</item>
@@ -46,7 +46,7 @@
   <string name="secure_links_list_empty_title">No secure links</string>
   <string name="secure_links_list_empty_subtitle">You can start creating secure links from an item details sharing options</string>
   <string name="secure_links_list_expiration_description">Expires in %s</string>
-  <string name="secure_links_list_expired_description">Expired</string>
+  <string name="secure_links_list_expired_description">Poteklo</string>
   <plurals name="secure_links_list_viewed_times_description">
     <item quantity="one">%d view</item>
     <item quantity="two">%d views</item>

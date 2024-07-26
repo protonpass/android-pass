@@ -10,10 +10,10 @@
   <string name="migrate_item_error_snackbar">Virhe kohteiden siirrossa</string>
   <string name="migrate_item_some_not_migrated_error_snackbar">Virhe joidenkin kohteiden siirrossa</string>
   <string name="migrate_item_warning_history">Kun kohteita siirretään holvista toiseen, säilytämme enintään 50 viimeisintä kuhunkin kohteeseen tehtyä muokkausta</string>
-  <string name="migrate_item_warning_secure_link">Kohteen turvalliset linkit poistetaan, kun se siirretään toiseen holviin</string>
+  <string name="migrate_item_warning_secure_link">Kohteen suojatut linkit poistetaan, kun se siirretään toiseen holviin</string>
   <string name="migrate_all_items_success_snackbar">Kaikki kohteet siirrettiin</string>
   <string name="migrate_all_items_error_snackbar">Virhe siirrettäessä holvin kaikkia kohteita</string>
-  <string name="migrate_init_error_snackbar">Siirtoruutua ei voitu valmistella</string>
+  <string name="migrate_init_error_snackbar">Siirtonäyttöä ei voitu valmistella</string>
   <string name="migrate_disabled_vault_reason_no_permission">Et voi luoda kohteita tähän holviin</string>
   <string name="migrate_disabled_vault_reason_same_vault">Et voi siirtää kohdetta samaan holviin</string>
 </resources>

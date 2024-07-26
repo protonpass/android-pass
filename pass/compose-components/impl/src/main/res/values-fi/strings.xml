@@ -73,12 +73,12 @@
   <!-- List group by most recents -->
   <string name="most_recent_today">Tänään</string>
   <string name="most_recent_yesterday">Eilen</string>
-  <string name="most_recent_this_week">Viikon aikana</string>
-  <string name="most_recent_last_two_weeks">Kahden viikon aikana</string>
+  <string name="most_recent_this_week">Viikon sisällä</string>
+  <string name="most_recent_last_two_weeks">Kahden viikon sisällä</string>
   <string name="most_recent_last_30_days">Kuukauden sisällä</string>
-  <string name="most_recent_last_60_days">60 päivän aikana</string>
-  <string name="most_recent_last_90_days">90 päivän aikana</string>
-  <string name="most_recent_within_the_last_year">Vuoden aikana</string>
+  <string name="most_recent_last_60_days">60 päivän sisällä</string>
+  <string name="most_recent_last_90_days">90 päivän sisällä</string>
+  <string name="most_recent_within_the_last_year">Vuoden sisällä</string>
   <string name="most_recent_more_than_1_year">Yli vuosi sitten</string>
   <!-- Search Top Bar -->
   <string name="search_topbar_icon_content_description">Hakukuvake</string>
@@ -112,14 +112,24 @@
     -->
   <string name="date_full_date_format">dd. LLLL HH.mm</string>
   <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to 12 Feb 12:34
+    -->
+  <string comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale" name="date_full_date_format_compact_month">dd LLL HH:mm</string>
+  <!--
     Pattern used when displaying a date including the year.
     It would translate to
     12 February 2023 12:34
     -->
   <string name="date_full_date_format_with_year">dd. LLLL yyyy HH.mm</string>
+  <!--
+   Pattern used when displaying a date including the year.
+   It would translate to 12 Feb 2023 12:34
+   -->
+  <string comment="Do not add any extra text when translating as always should have to keep the same length. Please, just reorder the parts according to country locale" name="date_full_date_format_with_year_compact_month">dd LLL yyyy HH:mm</string>
   <!-- Items -->
   <string name="item_details_alias_section_alias_title">Aliasosoite</string>
-  <string name="item_details_alias_section_mailboxes_title">Välitetään osoitteeseen</string>
+  <string name="item_details_alias_section_mailboxes_title">Ohjaa osoitteeseen</string>
   <string name="item_details_credit_card_section_cardholder_title">Kortinhaltijan nimi</string>
   <string name="item_details_credit_card_section_card_number_title">Kortin numero</string>
   <string name="item_details_credit_card_section_expiration_date_title">Voimassaolo päättyy</string>
@@ -147,15 +157,15 @@
   <string name="item_details_identity_section_address_city_title">Kaupunki</string>
   <string name="item_details_identity_section_address_zip_or_postal_code_title">Postinumero</string>
   <string name="item_details_identity_section_address_state_or_province_title">Osavaltio tai maakunta</string>
-  <string name="item_details_identity_section_address_county_title">Maakunta</string>
+  <string name="item_details_identity_section_address_county_title">Piirikunta</string>
   <string name="item_details_identity_section_address_country_or_region_title">Maa tai alue</string>
-  <string name="item_details_identity_section_contact_title">Yhteystiedon tiedot</string>
+  <string name="item_details_identity_section_contact_title">Yhteystiedot</string>
   <string name="item_details_identity_section_contact_social_security_number_title">Henkilötunnus</string>
   <string name="item_details_identity_section_contact_passport_number_title">Passin numero</string>
   <string name="item_details_identity_section_contact_license_number_title">Ajokortin numero</string>
   <string name="item_details_identity_section_contact_website_title">Verkkosivusto</string>
   <string name="item_details_identity_section_contact_x_handle_title">X-tunnus</string>
-  <string name="item_details_identity_section_contact_secondary_phone_number_title">Toinen puhelinnumero</string>
+  <string name="item_details_identity_section_contact_secondary_phone_number_title">Toissijainen puhelinnumero</string>
   <string name="item_details_identity_section_contact_linkedin_title">LinkedIn</string>
   <string name="item_details_identity_section_contact_reddit_title">Reddit</string>
   <string name="item_details_identity_section_contact_facebook_title">Facebook</string>
@@ -168,15 +178,15 @@
   <string name="item_details_identity_section_work_phone_number_title">Työpuhelin</string>
   <string name="item_details_identity_section_work_personal_website_title">Henkilökohtainen verkkosivusto</string>
   <string name="item_details_shared_section_note_title">Muistiinpano</string>
-  <string name="item_details_shared_section_item_history_last_autofill_title">Automaattitäytetty viimeksi</string>
+  <string name="item_details_shared_section_item_history_last_autofill_title">Automaattitäytetty</string>
   <string name="item_details_shared_section_item_history_created_title">Luotu</string>
   <string name="item_details_shared_section_item_history_modified_times_title">Muokattu (%d)</string>
   <string name="item_details_shared_section_item_history_button_view">Näytä kohteen historia</string>
-  <string name="item_details_shared_section_more_info_header_title">Lisätietoja</string>
+  <string name="item_details_shared_section_more_info_header_title">Lisätiedot</string>
   <string name="item_details_shared_section_more_info_header_icon_content_description">Lisää kohteen tietoja -kuvake</string>
   <string name="item_details_shared_section_more_info_item_id">Kohteen ID</string>
   <string name="item_details_shared_section_more_info_share_id">Holvin ID</string>
-  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Sovellusversiota ei enää tueta, päivitä sovelluksesi.</string>
+  <string name="home_app_needs_update_message" comment="Message displayed when the app needs to be updated">Tätä sovellusversiota ei enää tueta. Päivitä sovelluksesi.</string>
   <!-- Passkeys -->
   <string name="passkey_field_label" comment="Label of the passkey field in the edit item screen">Suojausavain</string>
   <!-- Upgrade -->
@@ -188,11 +198,11 @@
   <string name="email_address">Sähköpostiosoite</string>
   <string name="password">Salasana</string>
   <!-- Tooltips -->
-  <string name="tooltip_dismiss_button_content_description">Painike, jolla voit hylätä tämän työkaluvihjeen ja estää sen näyttämisen uudelleen</string>
+  <string name="tooltip_dismiss_button_content_description">Painike, joka sulkee työkaluvihjeen ja estää sitä näkymästä uudelleen.</string>
   <!-- Time units -->
   <plurals name="time_unit_days">
-    <item quantity="one">%d päivä</item>
-    <item quantity="other">%d päivää</item>
+    <item quantity="one">%d vuorokausi</item>
+    <item quantity="other">%d vuorokautta</item>
   </plurals>
   <plurals name="time_unit_hours">
     <item quantity="one">%d tunti</item>
@@ -207,12 +217,12 @@
     <item quantity="other">%d sekuntia</item>
   </plurals>
   <!-- Snack bars -->
-  <string name="snack_bar_message_item_note_copied">Muistiinpano kopioitu</string>
+  <string name="snack_bar_message_item_note_copied">Muistiinpano kopioitiin</string>
   <string name="snack_bar_message_item_migration_error">Virhe siirrettäessä kohdetta</string>
   <string name="snack_bar_message_item_monitor_excluded_success">Kohde poissuljettiin valvonnasta</string>
   <string name="snack_bar_message_item_monitor_excluded_error">Virhe poissuljettaessa kohdetta valvonnasta</string>
   <string name="snack_bar_message_item_monitor_included_success">Kohde sisällytettiin valvontaan</string>
-  <string name="snack_bar_message_item_monitor_included_error">Virhe kohteen valvontaan lisäämisessä</string>
+  <string name="snack_bar_message_item_monitor_included_error">Virhe lisättäessä kohdetta valvontaan</string>
   <string name="snack_bar_message_item_pinned_success">Kohde kiinnitettiin</string>
   <string name="snack_bar_message_item_pinned_error">Virhe kiinnitettäessä kohdetta</string>
   <string name="snack_bar_message_item_unpinned_success">Kohde irrotettiin</string>
@@ -223,4 +233,9 @@
   <string name="snack_bar_message_item_restore_error">Virhe palautettaessa kohdetta</string>
   <string name="snack_bar_message_item_delete_success">Kohde poistettiin</string>
   <string name="snack_bar_message_item_delete_error">Virhe poistettaessa kohdetta</string>
+  <!-- Simple Login -->
+  <string name="simple_login_widget_title">Ota SimpleLogin-synkronointi käyttöön</string>
+  <string name="simple_login_widget_message">We detected that you have 16 aliases that are present in SimpleLogin but missing in Proton Pass. Would you like to import them?</string>
+  <string name="simple_login_widget_action">Synkronoi aliakset</string>
+  <string name="simple_login_widget_close_content_description">Button to close simple login aliases sync widget</string>
 </resources>

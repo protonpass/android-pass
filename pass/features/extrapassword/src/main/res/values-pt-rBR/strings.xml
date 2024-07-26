@@ -31,7 +31,7 @@
   <string name="configure_extra_password_cannot_be_blank">A senha não pode estar em branco</string>
   <string name="configure_extra_password_password_too_short">Senha adicional deve ter pelo menos 8 caracteres</string>
   <string name="confirm_extra_password_title">Defina senha adicional</string>
-  <string name="confirm_extra_password_body">You will be logged out and will have to log in again on all of your other devices.</string>
-  <string name="confirm_extra_password_error">Could not set extra password</string>
+  <string name="confirm_extra_password_body">Você será desconectado e terá que iniciar sessão novamente em todos os seus outros dispositivos.</string>
+  <string name="confirm_extra_password_error">Não foi possível definir uma senha adicional</string>
   <string name="confirm_extra_password_success">Senha adicional configurada</string>
 </resources>

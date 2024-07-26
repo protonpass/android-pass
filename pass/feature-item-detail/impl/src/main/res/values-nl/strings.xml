@@ -93,6 +93,7 @@
   <string name="item_detail_cannot_perform_action_share_no_permissions_title">Kan niet delen</string>
   <string name="item_detail_cannot_perform_action_share_no_permissions_message">U heeft onvoldoende machtigingen om deze kluis te delen.</string>
   <string name="item_detail_cannot_perform_action_share_limit_reached">U heeft de limiet van het delen van kluis bereikt. Upgrade uw huidige abonnement om meer kluizen te delen.</string>
+  <string name="item_detail_cannot_perform_action_share_item_in_trash_message">You cannot share this item because it\'s in the trash. Please move it out of the trash before sharing it.</string>
   <string name="password_score_vulnerable">Kwetsbaar</string>
   <string name="password_score_weak">Zwak</string>
   <string name="password_score_strong">Sterk</string>

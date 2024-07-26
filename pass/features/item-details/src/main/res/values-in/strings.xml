@@ -19,4 +19,13 @@
 <resources>
   <string name="item_details_toolbar_content_description_menu_button">Tombol untuk menampilkan menu pilihan</string>
   <string name="item_details_toolbar_content_description_share_button">Tombol untuk membagikan item</string>
+  <!-- Item details forbidden actions -->
+  <string name="item_details_forbidden_actions_edit_title">Tidak dapat menyunting</string>
+  <string name="item_details_forbidden_actions_edit_permission">Anda tidak dapat menyunting item ini karena perizinan Anda tidak memadai.</string>
+  <string name="item_details_forbidden_actions_edit_trash">Anda tidak dapat menyunting item ini karena item berada di sampah. Silakan keluarkan item dari sampah sebelum menyunting.</string>
+  <string name="item_details_forbidden_actions_edit_upgrade">Anda hanya dapat menyunting item yang berada pada brankas terlawas Anda. Untuk menyunting item ini, tingkatkan paket langganan Anda.</string>
+  <string name="item_details_forbidden_actions_share_title">Tidak dapat membagikan</string>
+  <string name="item_details_forbidden_actions_share_limit">Anda telah mencapai batas pembagian brankas Anda. Untuk dapat membagikan lebih banyak brankas, silakan tingkatkan paket Anda saat ini.</string>
+  <string name="item_details_forbidden_actions_share_permission">Anda tidak memiliki izin yang memadai untuk membagikan brankas ini.</string>
+  <string name="item_details_forbidden_actions_share_trash">Anda tidak dapat membagikan item ini karena item berada di sampah. Silakan keluarkan item dari sampah sebelum menyunting.</string>
 </resources>

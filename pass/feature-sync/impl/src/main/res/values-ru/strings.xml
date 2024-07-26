@@ -17,20 +17,20 @@
   ~ along with Proton Pass.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="sync_item_empty">Empty vault</string>
+  <string name="sync_item_empty">Пустое хранилище</string>
   <plurals name="sync_item_count">
-    <item quantity="one">Downloaded %d item</item>
-    <item quantity="few">Downloaded %d items</item>
-    <item quantity="many">Downloaded %d items</item>
-    <item quantity="other">Downloaded %d items</item>
+    <item quantity="one">Скачан %d элемент</item>
+    <item quantity="few">Скачаны %d элемента</item>
+    <item quantity="many">Скачаны %d элементов</item>
+    <item quantity="other">Скачаны %d элементов</item>
   </plurals>
   <plurals name="sync_finished_item_count">
-    <item quantity="one">%d item synchronized</item>
-    <item quantity="few">%d items synchronized</item>
-    <item quantity="many">%d items synchronized</item>
-    <item quantity="other">%d items synchronized</item>
+    <item quantity="one">%d элемент синхронизирован</item>
+    <item quantity="few">%d элемента синхронизировано</item>
+    <item quantity="many">%d элементов синхронизировано</item>
+    <item quantity="other">%d элементов синхронизировано</item>
   </plurals>
-  <string name="sync_progress_item_count">Downloading %1$d of %2$d items</string>
+  <string name="sync_progress_item_count">Загрузка %1$d из %2$d элементов</string>
   <string name="sync_dialog_title">Синхронизируем элементы…</string>
   <string name="sync_dialog_title_error">Ошибка синхронизации</string>
   <string name="sync_dialog_title_success">Синхронизация завершена</string>
@@ -39,6 +39,6 @@
   <string name="sync_dialog_subtitle_success">Ваши элементы были успешно скачаны и расшифрованы.</string>
   <string name="sync_item_not_started">Не начата</string>
   <string name="sync_item_failed">Ошибка синхронизации</string>
-  <string name="sync_dialog_title_inserting">Inserting items…</string>
-  <string name="sync_dialog_subtitle_inserting">Completing last step, almost there.</string>
+  <string name="sync_dialog_title_inserting">Вставка элементов…</string>
+  <string name="sync_dialog_subtitle_inserting">Завершение последнего шага почти закончено.</string>
 </resources>

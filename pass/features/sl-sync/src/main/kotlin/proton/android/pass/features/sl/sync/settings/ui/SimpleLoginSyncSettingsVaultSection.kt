@@ -18,6 +18,7 @@
 
 package proton.android.pass.features.sl.sync.settings.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -48,12 +49,13 @@ import proton.android.pass.features.sl.sync.shared.ui.SimpleLoginSyncDescription
 import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
-internal fun SimpleLoginSyncSettingsVault(
+internal fun SimpleLoginSyncSettingsVaultSection(
     modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
     selectedVault: Vault,
 ) {
     Column(
-        modifier = modifier,
+        modifier = modifier.clickable { onClick() },
         verticalArrangement = Arrangement.spacedBy(space = Spacing.small)
     ) {
         Row(

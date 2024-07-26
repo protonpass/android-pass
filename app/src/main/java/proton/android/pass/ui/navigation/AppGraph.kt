@@ -1918,6 +1918,13 @@ fun NavGraphBuilder.appGraph(
                 SimpleLoginSyncNavDestination.Back -> appNavigator.navigateBack(
                     comesFromBottomsheet = false
                 )
+
+                is SimpleLoginSyncNavDestination.SelectVault -> appNavigator.navigate(
+                    destination = SelectVaultBottomsheet,
+                    route = SelectVaultBottomsheet.createNavRoute(
+                        selectedVault = destination.shareId
+                    )
+                )
             }
         }
     )
